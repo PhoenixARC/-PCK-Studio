@@ -29,7 +29,7 @@ namespace MinecraftUSkinEditor
         #region Variables
         string saveLocation;//Save location for pck file
         int fileCount = 0;//variable for number of minefiles
-        string Version = "4.5";//template for program version
+        string Version = "4.6";//template for program version
         string hosturl = File.ReadAllText(Environment.CurrentDirectory + "\\settings.ini").Split(new[] { "\r\n", "\n" }, StringSplitOptions.None)[0];
         
 
@@ -108,12 +108,16 @@ namespace MinecraftUSkinEditor
                 }
                 foreach (object[] entry in mineFile.entries)
                 {
-                    //if (entry[0].ToString() == "LOCK" && (new pckLocked(entry[1].ToString(), correct).ShowDialog() != DialogResult.OK || !correct))
-                    //{
-                    //    return;
-                    //}
+                    if (entry[0].ToString() == "LOCK")
+                    {
+                        if((new pckLocked(entry[1].ToString(), correct).ShowDialog() != DialogResult.OK || !correct))
+                        {
+                            return;
+                        }
+                    }
                 }
             }
+            addPasswordToolStripMenuItem.Enabled = true;
             openedPCKS.SelectedTab.Text = Path.GetFileName(filePath);
             saveLocation = filePath;
             _ = treeViewMain;
@@ -3240,6 +3244,40 @@ namespace MinecraftUSkinEditor
         private void menuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
 
+        }
+
+        private void addPasswordToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            treeViewMain.SelectedNode = treeViewMain.Nodes[0];
+            mf = (PCK.MineFile)treeViewMain.Nodes[0].Tag;//Sets minefile to selected node
+                foreach (object[] entry in mf.entries)
+                {
+                    if (entry[0].ToString() == "LOCK")
+                    {
+                        MessageBox.Show("Remove current LOCK before adding a new one!");
+                    return;
+                    }
+                }
+            AddPCKPassword add = new AddPCKPassword(mf, currentPCK);//sets metadata adding dialog
+            add.ShowDialog();//displays metadata adding dialog
+            add.Dispose();//diposes generated metadata adding dialog data
+
+            //Sets up combobox for metadata entries from main metadatabase
+            treeMeta.Nodes.Clear();
+            foreach (int type in types.Keys)
+                comboBox1.Items.Add(types[type]);
+
+            //loads all of selected minefiles metadata into metadata treeview
+            foreach (object[] entry in file.entries)
+            {
+                object[] strings = (object[])entry; TreeNode meta = new TreeNode();
+
+                foreach (object[] entryy in file.entries)
+                    meta.Text = (string)strings[0];
+                meta.Tag = entry;
+                treeMeta.Nodes.Add(meta);
+            }
+            saved = false;
         }
     }
 }

@@ -7,46 +7,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MinecraftUSkinEditor;
+using MetroFramework.Forms;
 
 namespace minekampf.Forms
 {
-    public partial class pckLocked : MetroFramework.Forms.MetroForm
+    public partial class AddPCKPassword : MetroForm
     {
-        string pass;
-
-        public pckLocked(string pass, bool correct)
+        MinecraftUSkinEditor.PCK currentPCK;
+        MinecraftUSkinEditor.PCK.MineFile file;
+        public AddPCKPassword(MinecraftUSkinEditor.PCK.MineFile fileIn, MinecraftUSkinEditor.PCK currentPCKIn)
         {
-            this.pass = pass;
-
 
             InitializeComponent();
-        }
-
-        private void textBoxPass_Click(object sender, EventArgs e)
-        {
+            file = fileIn;
+            currentPCK = currentPCKIn;
         }
 
         private void buttonUnlocked_Click(object sender, EventArgs e)
         {
-            if (MD5(textBoxPass.Text) == pass || MD5(textBoxPass.Text) == MD5(pass))
-            {
-                FormMain.correct = true;
-                this.Close();
-            }
-            else
-            {
-                MessageBox.Show("Incorrect password!");
-                textBoxPass.Text = "";
-            }
-        }
-
-        private void textBoxPass_TextChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void textBoxPass_Enter(object sender, EventArgs e)
-        {
+            object[] obj = { "LOCK", MD5(textBoxPass.Text) };
+            file.entries.Add(obj);
+            this.Close();
         }
 
         public string MD5(string s)
@@ -61,7 +42,5 @@ namespace minekampf.Forms
                 return builder.ToString();
             }
         }
-
-
     }
 }

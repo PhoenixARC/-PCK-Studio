@@ -297,6 +297,12 @@
     <Compile Include="Forms\addnewskin.Designer.cs">
       <DependentUpon>addnewskin.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\AddPCKPassword.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AddPCKPassword.Designer.cs">
+      <DependentUpon>AddPCKPassword.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\AdvancedOptions.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -471,6 +477,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\addnewskin.resx">
       <DependentUpon>addnewskin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AddPCKPassword.resx">
+      <DependentUpon>AddPCKPassword.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AdvancedOptions.ja.resx">
       <DependentUpon>AdvancedOptions.cs</DependentUpon>

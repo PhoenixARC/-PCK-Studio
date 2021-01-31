@@ -117,26 +117,68 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="BypassButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="textBoxPass.Location" type="System.Drawing.Point, System.Drawing">
+    <value>23, 67</value>
   </data>
+  <data name="textBoxPass.Size" type="System.Drawing.Size, System.Drawing">
+    <value>244, 20</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="textBoxPass.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="textBoxPass.Text" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="&gt;&gt;textBoxPass.Name" xml:space="preserve">
+    <value>textBoxPass</value>
+  </data>
+  <data name="&gt;&gt;textBoxPass.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;textBoxPass.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;textBoxPass.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="buttonUnlocked.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
   </data>
-  <data name="&gt;&gt;buttonUnlocked.ZOrder" xml:space="preserve">
+  <data name="buttonUnlocked.Location" type="System.Drawing.Point, System.Drawing">
+    <value>273, 65</value>
+  </data>
+  <data name="buttonUnlocked.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="buttonUnlocked.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="buttonUnlocked.Text" xml:space="preserve">
+    <value>Let me in!</value>
+  </data>
+  <data name="&gt;&gt;buttonUnlocked.Name" xml:space="preserve">
+    <value>buttonUnlocked</value>
+  </data>
+  <data name="&gt;&gt;buttonUnlocked.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;buttonUnlocked.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;buttonUnlocked.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>6, 13</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="BypassButton.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="textBoxPass.Location" type="System.Drawing.Point, System.Drawing">
-    <value>23, 67</value>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>357, 129</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1863,88 +1905,16 @@
         AABJRU5ErkJggg==
 </value>
   </data>
-  <data name="&gt;&gt;BypassButton.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="BypassButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
-  </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>MetroFramework.Forms.MetroForm, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="textBoxPass.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;BypassButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;textBoxPass.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="buttonUnlocked.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
-  </data>
-  <data name="&gt;&gt;BypassButton.Name" xml:space="preserve">
-    <value>BypassButton</value>
-  </data>
-  <data name="buttonUnlocked.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;buttonUnlocked.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>428, 129</value>
-  </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterParent</value>
-  </data>
-  <data name="textBoxPass.Text" xml:space="preserve">
-    <value>Password</value>
-  </data>
-  <data name="&gt;&gt;buttonUnlocked.Name" xml:space="preserve">
-    <value>buttonUnlocked</value>
-  </data>
-  <data name="BypassButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>345, 65</value>
-  </data>
-  <data name="&gt;&gt;textBoxPass.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="buttonUnlocked.Text" xml:space="preserve">
-    <value>Let me in!</value>
-  </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>pckLocked</value>
-  </data>
-  <data name="&gt;&gt;textBoxPass.Name" xml:space="preserve">
-    <value>textBoxPass</value>
-  </data>
-  <data name="&gt;&gt;buttonUnlocked.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="BypassButton.Text" xml:space="preserve">
-    <value>Bypass!</value>
-  </data>
-  <data name="buttonUnlocked.Location" type="System.Drawing.Point, System.Drawing">
-    <value>264, 65</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>This PCK is locked!</value>
   </data>
-  <data name="textBoxPass.Size" type="System.Drawing.Size, System.Drawing">
-    <value>244, 20</value>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>pckLocked</value>
   </data>
-  <data name="&gt;&gt;textBoxPass.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>MetroFramework.Forms.MetroForm, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
   </data>
-  <data name="&gt;&gt;BypassButton.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="$this.Language" type="System.Globalization.CultureInfo, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>ja</value>
-  </metadata>
 </root>

@@ -52,6 +52,7 @@
             this.saveToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.metaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addPasswordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.advancedMetaAddingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.convertToBedrockToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -90,32 +91,6 @@
             this.directorySearcher1 = new System.DirectoryServices.DirectorySearcher();
             this.openedPCKS = new MetroFramework.Controls.MetroTabControl();
             this.tabPage1 = new MetroFramework.Controls.MetroTabPage();
-            this.labelImageSize = new System.Windows.Forms.Label();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.DBGLabel = new System.Windows.Forms.Label();
-            this.metroTabControl1 = new MetroFramework.Controls.MetroTabControl();
-            this.metroTabPage1 = new MetroFramework.Controls.MetroTabPage();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.myTablePanelStartScreen = new minekampf.Forms.MyTablePanel();
-            this.richTextBoxChangelog = new System.Windows.Forms.RichTextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.pckOpen = new System.Windows.Forms.PictureBox();
-            this.myTablePanel2 = new minekampf.Forms.MyTablePanel();
-            this.treeView1 = new System.Windows.Forms.TreeView();
-            this.pictureBoxWithInterpolationMode1 = new MinecraftUSkinEditor.PictureBoxWithInterpolationMode();
-            this.label4 = new System.Windows.Forms.Label();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.myTablePanel3 = new minekampf.Forms.MyTablePanel();
-            this.treeView2 = new System.Windows.Forms.TreeView();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
             this.myTablePanelPckEdit = new minekampf.Forms.MyTablePanel();
             this.treeViewMain = new System.Windows.Forms.TreeView();
             this.pictureBoxImagePreview = new MinecraftUSkinEditor.PictureBoxWithInterpolationMode();
@@ -131,26 +106,52 @@
             this.label3 = new System.Windows.Forms.Label();
             this.labelEntryData = new System.Windows.Forms.Label();
             this.buttonEdit = new System.Windows.Forms.Button();
+            this.labelImageSize = new System.Windows.Forms.Label();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.DBGLabel = new System.Windows.Forms.Label();
+            this.metroTabControl1 = new MetroFramework.Controls.MetroTabControl();
+            this.metroTabPage1 = new MetroFramework.Controls.MetroTabPage();
+            this.myTablePanel2 = new minekampf.Forms.MyTablePanel();
+            this.treeView1 = new System.Windows.Forms.TreeView();
+            this.pictureBoxWithInterpolationMode1 = new MinecraftUSkinEditor.PictureBoxWithInterpolationMode();
+            this.label4 = new System.Windows.Forms.Label();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.myTablePanel3 = new minekampf.Forms.MyTablePanel();
+            this.treeView2 = new System.Windows.Forms.TreeView();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.myTablePanelStartScreen = new minekampf.Forms.MyTablePanel();
+            this.richTextBoxChangelog = new System.Windows.Forms.RichTextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.pckOpen = new System.Windows.Forms.PictureBox();
             this.contextMenuPCKEntries.SuspendLayout();
             this.menuStrip.SuspendLayout();
             this.contextMenuMetaTree.SuspendLayout();
             this.openedPCKS.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            this.metroTabControl1.SuspendLayout();
-            this.metroTabPage1.SuspendLayout();
-            this.myTablePanelStartScreen.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pckOpen)).BeginInit();
-            this.myTablePanel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxWithInterpolationMode1)).BeginInit();
-            this.tabControl1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
-            this.myTablePanel3.SuspendLayout();
             this.myTablePanelPckEdit.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImagePreview)).BeginInit();
             this.tabDataDisplay.SuspendLayout();
             this.tabMetaDisplay.SuspendLayout();
             this.myTablePanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            this.metroTabControl1.SuspendLayout();
+            this.metroTabPage1.SuspendLayout();
+            this.myTablePanel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxWithInterpolationMode1)).BeginInit();
+            this.tabControl1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            this.myTablePanel3.SuspendLayout();
+            this.myTablePanelStartScreen.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pckOpen)).BeginInit();
             this.SuspendLayout();
             // 
             // contextMenuPCKEntries
@@ -272,7 +273,8 @@
             this.extractToolStripMenuItem1,
             this.saveToolStripMenuItem1,
             this.saveToolStripMenuItem,
-            this.metaToolStripMenuItem});
+            this.metaToolStripMenuItem,
+            this.addPasswordToolStripMenuItem});
             this.fileToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             resources.ApplyResources(this.fileToolStripMenuItem, "fileToolStripMenuItem");
@@ -312,6 +314,12 @@
             resources.ApplyResources(this.metaToolStripMenuItem, "metaToolStripMenuItem");
             this.metaToolStripMenuItem.Name = "metaToolStripMenuItem";
             this.metaToolStripMenuItem.Click += new System.EventHandler(this.metaToolStripMenuItem_Click);
+            // 
+            // addPasswordToolStripMenuItem
+            // 
+            resources.ApplyResources(this.addPasswordToolStripMenuItem, "addPasswordToolStripMenuItem");
+            this.addPasswordToolStripMenuItem.Name = "addPasswordToolStripMenuItem";
+            this.addPasswordToolStripMenuItem.Click += new System.EventHandler(this.addPasswordToolStripMenuItem_Click);
             // 
             // editToolStripMenuItem
             // 
@@ -596,216 +604,6 @@
             this.tabPage1.VerticalScrollbarHighlightOnWheel = false;
             this.tabPage1.VerticalScrollbarSize = 0;
             // 
-            // labelImageSize
-            // 
-            resources.ApplyResources(this.labelImageSize, "labelImageSize");
-            this.labelImageSize.Name = "labelImageSize";
-            // 
-            // pictureBox2
-            // 
-            resources.ApplyResources(this.pictureBox2, "pictureBox2");
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.TabStop = false;
-            // 
-            // DBGLabel
-            // 
-            resources.ApplyResources(this.DBGLabel, "DBGLabel");
-            this.DBGLabel.ForeColor = System.Drawing.Color.Red;
-            this.DBGLabel.Name = "DBGLabel";
-            // 
-            // metroTabControl1
-            // 
-            this.metroTabControl1.Controls.Add(this.metroTabPage1);
-            resources.ApplyResources(this.metroTabControl1, "metroTabControl1");
-            this.metroTabControl1.Name = "metroTabControl1";
-            this.metroTabControl1.SelectedIndex = 0;
-            this.metroTabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
-            this.metroTabControl1.Style = MetroFramework.MetroColorStyle.White;
-            this.metroTabControl1.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.metroTabControl1.UseSelectable = true;
-            // 
-            // metroTabPage1
-            // 
-            this.metroTabPage1.BackColor = System.Drawing.Color.Transparent;
-            this.metroTabPage1.Controls.Add(this.myTablePanel2);
-            this.metroTabPage1.Controls.Add(this.label10);
-            this.metroTabPage1.Controls.Add(this.label11);
-            this.metroTabPage1.HorizontalScrollbarBarColor = true;
-            this.metroTabPage1.HorizontalScrollbarHighlightOnWheel = false;
-            this.metroTabPage1.HorizontalScrollbarSize = 0;
-            resources.ApplyResources(this.metroTabPage1, "metroTabPage1");
-            this.metroTabPage1.Name = "metroTabPage1";
-            this.metroTabPage1.Style = MetroFramework.MetroColorStyle.White;
-            this.metroTabPage1.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.metroTabPage1.VerticalScrollbarBarColor = true;
-            this.metroTabPage1.VerticalScrollbarHighlightOnWheel = false;
-            this.metroTabPage1.VerticalScrollbarSize = 0;
-            // 
-            // label10
-            // 
-            resources.ApplyResources(this.label10, "label10");
-            this.label10.Name = "label10";
-            // 
-            // label11
-            // 
-            resources.ApplyResources(this.label11, "label11");
-            this.label11.Name = "label11";
-            // 
-            // myTablePanelStartScreen
-            // 
-            resources.ApplyResources(this.myTablePanelStartScreen, "myTablePanelStartScreen");
-            this.myTablePanelStartScreen.Controls.Add(this.richTextBoxChangelog, 1, 1);
-            this.myTablePanelStartScreen.Controls.Add(this.label5, 1, 0);
-            this.myTablePanelStartScreen.Controls.Add(this.pckOpen, 0, 0);
-            this.myTablePanelStartScreen.Name = "myTablePanelStartScreen";
-            // 
-            // richTextBoxChangelog
-            // 
-            this.richTextBoxChangelog.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
-            this.richTextBoxChangelog.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            resources.ApplyResources(this.richTextBoxChangelog, "richTextBoxChangelog");
-            this.richTextBoxChangelog.ForeColor = System.Drawing.Color.White;
-            this.richTextBoxChangelog.Name = "richTextBoxChangelog";
-            this.richTextBoxChangelog.ReadOnly = true;
-            // 
-            // label5
-            // 
-            resources.ApplyResources(this.label5, "label5");
-            this.label5.ForeColor = System.Drawing.Color.White;
-            this.label5.Name = "label5";
-            // 
-            // pckOpen
-            // 
-            resources.ApplyResources(this.pckOpen, "pckOpen");
-            this.pckOpen.Image = global::minekampf.Properties.Resources.pckClosed;
-            this.pckOpen.Name = "pckOpen";
-            this.myTablePanelStartScreen.SetRowSpan(this.pckOpen, 2);
-            this.pckOpen.TabStop = false;
-            this.pckOpen.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
-            this.pckOpen.DragDrop += new System.Windows.Forms.DragEventHandler(this.OpenPck_DragDrop);
-            this.pckOpen.DragEnter += new System.Windows.Forms.DragEventHandler(this.OpenPck_DragEnter);
-            this.pckOpen.DragLeave += new System.EventHandler(this.OpenPck_DragLeave);
-            this.pckOpen.MouseEnter += new System.EventHandler(this.OpenPck_MouseEnter);
-            this.pckOpen.MouseLeave += new System.EventHandler(this.OpenPck_MouseLeave);
-            // 
-            // myTablePanel2
-            // 
-            resources.ApplyResources(this.myTablePanel2, "myTablePanel2");
-            this.myTablePanel2.Controls.Add(this.treeView1, 0, 0);
-            this.myTablePanel2.Controls.Add(this.pictureBoxWithInterpolationMode1, 1, 0);
-            this.myTablePanel2.Controls.Add(this.label4, 2, 0);
-            this.myTablePanel2.Controls.Add(this.tabControl1, 1, 4);
-            this.myTablePanel2.Name = "myTablePanel2";
-            // 
-            // treeView1
-            // 
-            this.treeView1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.treeView1.ContextMenuStrip = this.contextMenuPCKEntries;
-            resources.ApplyResources(this.treeView1, "treeView1");
-            this.treeView1.ForeColor = System.Drawing.Color.White;
-            this.treeView1.LabelEdit = true;
-            this.treeView1.Name = "treeView1";
-            this.myTablePanel2.SetRowSpan(this.treeView1, 6);
-            // 
-            // pictureBoxWithInterpolationMode1
-            // 
-            resources.ApplyResources(this.pictureBoxWithInterpolationMode1, "pictureBoxWithInterpolationMode1");
-            this.pictureBoxWithInterpolationMode1.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
-            this.pictureBoxWithInterpolationMode1.Name = "pictureBoxWithInterpolationMode1";
-            this.myTablePanel2.SetRowSpan(this.pictureBoxWithInterpolationMode1, 4);
-            this.pictureBoxWithInterpolationMode1.TabStop = false;
-            // 
-            // label4
-            // 
-            resources.ApplyResources(this.label4, "label4");
-            this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Name = "label4";
-            this.label4.UseCompatibleTextRendering = true;
-            // 
-            // tabControl1
-            // 
-            this.myTablePanel2.SetColumnSpan(this.tabControl1, 2);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            resources.ApplyResources(this.tabControl1, "tabControl1");
-            this.tabControl1.Name = "tabControl1";
-            this.myTablePanel2.SetRowSpan(this.tabControl1, 2);
-            this.tabControl1.SelectedIndex = 0;
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.tabPage2.Controls.Add(this.myTablePanel3);
-            resources.ApplyResources(this.tabPage2, "tabPage2");
-            this.tabPage2.Name = "tabPage2";
-            // 
-            // myTablePanel3
-            // 
-            resources.ApplyResources(this.myTablePanel3, "myTablePanel3");
-            this.myTablePanel3.Controls.Add(this.treeView2, 0, 0);
-            this.myTablePanel3.Controls.Add(this.comboBox2, 1, 1);
-            this.myTablePanel3.Controls.Add(this.label6, 1, 4);
-            this.myTablePanel3.Controls.Add(this.textBox2, 1, 3);
-            this.myTablePanel3.Controls.Add(this.label7, 1, 0);
-            this.myTablePanel3.Controls.Add(this.label8, 1, 5);
-            this.myTablePanel3.Controls.Add(this.label9, 1, 2);
-            this.myTablePanel3.Controls.Add(this.button1, 0, 6);
-            this.myTablePanel3.Name = "myTablePanel3";
-            // 
-            // treeView2
-            // 
-            this.treeView2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.treeView2.ContextMenuStrip = this.contextMenuMetaTree;
-            resources.ApplyResources(this.treeView2, "treeView2");
-            this.treeView2.ForeColor = System.Drawing.Color.White;
-            this.treeView2.Name = "treeView2";
-            this.myTablePanel3.SetRowSpan(this.treeView2, 6);
-            // 
-            // comboBox2
-            // 
-            resources.ApplyResources(this.comboBox2, "comboBox2");
-            this.comboBox2.BackColor = System.Drawing.Color.White;
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Name = "comboBox2";
-            // 
-            // label6
-            // 
-            resources.ApplyResources(this.label6, "label6");
-            this.label6.ForeColor = System.Drawing.Color.White;
-            this.label6.Name = "label6";
-            // 
-            // textBox2
-            // 
-            resources.ApplyResources(this.textBox2, "textBox2");
-            this.textBox2.BackColor = System.Drawing.Color.White;
-            this.textBox2.Name = "textBox2";
-            // 
-            // label7
-            // 
-            resources.ApplyResources(this.label7, "label7");
-            this.label7.ForeColor = System.Drawing.Color.White;
-            this.label7.Name = "label7";
-            // 
-            // label8
-            // 
-            resources.ApplyResources(this.label8, "label8");
-            this.label8.ForeColor = System.Drawing.Color.White;
-            this.label8.Name = "label8";
-            // 
-            // label9
-            // 
-            resources.ApplyResources(this.label9, "label9");
-            this.label9.ForeColor = System.Drawing.Color.White;
-            this.label9.Name = "label9";
-            // 
-            // button1
-            // 
-            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.myTablePanel3.SetColumnSpan(this.button1, 2);
-            resources.ApplyResources(this.button1, "button1");
-            this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Name = "button1";
-            this.button1.UseVisualStyleBackColor = false;
-            // 
             // myTablePanelPckEdit
             // 
             resources.ApplyResources(this.myTablePanelPckEdit, "myTablePanelPckEdit");
@@ -932,6 +730,216 @@
             this.buttonEdit.UseVisualStyleBackColor = false;
             this.buttonEdit.Click += new System.EventHandler(this.buttonEditModel_Click);
             // 
+            // labelImageSize
+            // 
+            resources.ApplyResources(this.labelImageSize, "labelImageSize");
+            this.labelImageSize.Name = "labelImageSize";
+            // 
+            // pictureBox2
+            // 
+            resources.ApplyResources(this.pictureBox2, "pictureBox2");
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.TabStop = false;
+            // 
+            // DBGLabel
+            // 
+            resources.ApplyResources(this.DBGLabel, "DBGLabel");
+            this.DBGLabel.ForeColor = System.Drawing.Color.Red;
+            this.DBGLabel.Name = "DBGLabel";
+            // 
+            // metroTabControl1
+            // 
+            this.metroTabControl1.Controls.Add(this.metroTabPage1);
+            resources.ApplyResources(this.metroTabControl1, "metroTabControl1");
+            this.metroTabControl1.Name = "metroTabControl1";
+            this.metroTabControl1.SelectedIndex = 0;
+            this.metroTabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
+            this.metroTabControl1.Style = MetroFramework.MetroColorStyle.White;
+            this.metroTabControl1.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.metroTabControl1.UseSelectable = true;
+            // 
+            // metroTabPage1
+            // 
+            this.metroTabPage1.BackColor = System.Drawing.Color.Transparent;
+            this.metroTabPage1.Controls.Add(this.myTablePanel2);
+            this.metroTabPage1.Controls.Add(this.label10);
+            this.metroTabPage1.Controls.Add(this.label11);
+            this.metroTabPage1.HorizontalScrollbarBarColor = true;
+            this.metroTabPage1.HorizontalScrollbarHighlightOnWheel = false;
+            this.metroTabPage1.HorizontalScrollbarSize = 0;
+            resources.ApplyResources(this.metroTabPage1, "metroTabPage1");
+            this.metroTabPage1.Name = "metroTabPage1";
+            this.metroTabPage1.Style = MetroFramework.MetroColorStyle.White;
+            this.metroTabPage1.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.metroTabPage1.VerticalScrollbarBarColor = true;
+            this.metroTabPage1.VerticalScrollbarHighlightOnWheel = false;
+            this.metroTabPage1.VerticalScrollbarSize = 0;
+            // 
+            // myTablePanel2
+            // 
+            resources.ApplyResources(this.myTablePanel2, "myTablePanel2");
+            this.myTablePanel2.Controls.Add(this.treeView1, 0, 0);
+            this.myTablePanel2.Controls.Add(this.pictureBoxWithInterpolationMode1, 1, 0);
+            this.myTablePanel2.Controls.Add(this.label4, 2, 0);
+            this.myTablePanel2.Controls.Add(this.tabControl1, 1, 4);
+            this.myTablePanel2.Name = "myTablePanel2";
+            // 
+            // treeView1
+            // 
+            this.treeView1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.treeView1.ContextMenuStrip = this.contextMenuPCKEntries;
+            resources.ApplyResources(this.treeView1, "treeView1");
+            this.treeView1.ForeColor = System.Drawing.Color.White;
+            this.treeView1.LabelEdit = true;
+            this.treeView1.Name = "treeView1";
+            this.myTablePanel2.SetRowSpan(this.treeView1, 6);
+            // 
+            // pictureBoxWithInterpolationMode1
+            // 
+            resources.ApplyResources(this.pictureBoxWithInterpolationMode1, "pictureBoxWithInterpolationMode1");
+            this.pictureBoxWithInterpolationMode1.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
+            this.pictureBoxWithInterpolationMode1.Name = "pictureBoxWithInterpolationMode1";
+            this.myTablePanel2.SetRowSpan(this.pictureBoxWithInterpolationMode1, 4);
+            this.pictureBoxWithInterpolationMode1.TabStop = false;
+            // 
+            // label4
+            // 
+            resources.ApplyResources(this.label4, "label4");
+            this.label4.ForeColor = System.Drawing.Color.White;
+            this.label4.Name = "label4";
+            this.label4.UseCompatibleTextRendering = true;
+            // 
+            // tabControl1
+            // 
+            this.myTablePanel2.SetColumnSpan(this.tabControl1, 2);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            resources.ApplyResources(this.tabControl1, "tabControl1");
+            this.tabControl1.Name = "tabControl1";
+            this.myTablePanel2.SetRowSpan(this.tabControl1, 2);
+            this.tabControl1.SelectedIndex = 0;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.tabPage2.Controls.Add(this.myTablePanel3);
+            resources.ApplyResources(this.tabPage2, "tabPage2");
+            this.tabPage2.Name = "tabPage2";
+            // 
+            // myTablePanel3
+            // 
+            resources.ApplyResources(this.myTablePanel3, "myTablePanel3");
+            this.myTablePanel3.Controls.Add(this.treeView2, 0, 0);
+            this.myTablePanel3.Controls.Add(this.comboBox2, 1, 1);
+            this.myTablePanel3.Controls.Add(this.label6, 1, 4);
+            this.myTablePanel3.Controls.Add(this.textBox2, 1, 3);
+            this.myTablePanel3.Controls.Add(this.label7, 1, 0);
+            this.myTablePanel3.Controls.Add(this.label8, 1, 5);
+            this.myTablePanel3.Controls.Add(this.label9, 1, 2);
+            this.myTablePanel3.Controls.Add(this.button1, 0, 6);
+            this.myTablePanel3.Name = "myTablePanel3";
+            // 
+            // treeView2
+            // 
+            this.treeView2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.treeView2.ContextMenuStrip = this.contextMenuMetaTree;
+            resources.ApplyResources(this.treeView2, "treeView2");
+            this.treeView2.ForeColor = System.Drawing.Color.White;
+            this.treeView2.Name = "treeView2";
+            this.myTablePanel3.SetRowSpan(this.treeView2, 6);
+            // 
+            // comboBox2
+            // 
+            resources.ApplyResources(this.comboBox2, "comboBox2");
+            this.comboBox2.BackColor = System.Drawing.Color.White;
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Name = "comboBox2";
+            // 
+            // label6
+            // 
+            resources.ApplyResources(this.label6, "label6");
+            this.label6.ForeColor = System.Drawing.Color.White;
+            this.label6.Name = "label6";
+            // 
+            // textBox2
+            // 
+            resources.ApplyResources(this.textBox2, "textBox2");
+            this.textBox2.BackColor = System.Drawing.Color.White;
+            this.textBox2.Name = "textBox2";
+            // 
+            // label7
+            // 
+            resources.ApplyResources(this.label7, "label7");
+            this.label7.ForeColor = System.Drawing.Color.White;
+            this.label7.Name = "label7";
+            // 
+            // label8
+            // 
+            resources.ApplyResources(this.label8, "label8");
+            this.label8.ForeColor = System.Drawing.Color.White;
+            this.label8.Name = "label8";
+            // 
+            // label9
+            // 
+            resources.ApplyResources(this.label9, "label9");
+            this.label9.ForeColor = System.Drawing.Color.White;
+            this.label9.Name = "label9";
+            // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.myTablePanel3.SetColumnSpan(this.button1, 2);
+            resources.ApplyResources(this.button1, "button1");
+            this.button1.ForeColor = System.Drawing.Color.White;
+            this.button1.Name = "button1";
+            this.button1.UseVisualStyleBackColor = false;
+            // 
+            // label10
+            // 
+            resources.ApplyResources(this.label10, "label10");
+            this.label10.Name = "label10";
+            // 
+            // label11
+            // 
+            resources.ApplyResources(this.label11, "label11");
+            this.label11.Name = "label11";
+            // 
+            // myTablePanelStartScreen
+            // 
+            resources.ApplyResources(this.myTablePanelStartScreen, "myTablePanelStartScreen");
+            this.myTablePanelStartScreen.Controls.Add(this.richTextBoxChangelog, 1, 1);
+            this.myTablePanelStartScreen.Controls.Add(this.label5, 1, 0);
+            this.myTablePanelStartScreen.Controls.Add(this.pckOpen, 0, 0);
+            this.myTablePanelStartScreen.Name = "myTablePanelStartScreen";
+            // 
+            // richTextBoxChangelog
+            // 
+            this.richTextBoxChangelog.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
+            this.richTextBoxChangelog.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            resources.ApplyResources(this.richTextBoxChangelog, "richTextBoxChangelog");
+            this.richTextBoxChangelog.ForeColor = System.Drawing.Color.White;
+            this.richTextBoxChangelog.Name = "richTextBoxChangelog";
+            this.richTextBoxChangelog.ReadOnly = true;
+            // 
+            // label5
+            // 
+            resources.ApplyResources(this.label5, "label5");
+            this.label5.ForeColor = System.Drawing.Color.White;
+            this.label5.Name = "label5";
+            // 
+            // pckOpen
+            // 
+            resources.ApplyResources(this.pckOpen, "pckOpen");
+            this.pckOpen.Image = global::minekampf.Properties.Resources.pckClosed;
+            this.pckOpen.Name = "pckOpen";
+            this.myTablePanelStartScreen.SetRowSpan(this.pckOpen, 2);
+            this.pckOpen.TabStop = false;
+            this.pckOpen.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+            this.pckOpen.DragDrop += new System.Windows.Forms.DragEventHandler(this.OpenPck_DragDrop);
+            this.pckOpen.DragEnter += new System.Windows.Forms.DragEventHandler(this.OpenPck_DragEnter);
+            this.pckOpen.DragLeave += new System.EventHandler(this.OpenPck_DragLeave);
+            this.pckOpen.MouseEnter += new System.EventHandler(this.OpenPck_MouseEnter);
+            this.pckOpen.MouseLeave += new System.EventHandler(this.OpenPck_MouseLeave);
+            // 
             // FormMain
             // 
             this.ApplyImageInvert = true;
@@ -958,20 +966,6 @@
             this.openedPCKS.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            this.metroTabControl1.ResumeLayout(false);
-            this.metroTabPage1.ResumeLayout(false);
-            this.metroTabPage1.PerformLayout();
-            this.myTablePanelStartScreen.ResumeLayout(false);
-            this.myTablePanelStartScreen.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pckOpen)).EndInit();
-            this.myTablePanel2.ResumeLayout(false);
-            this.myTablePanel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxWithInterpolationMode1)).EndInit();
-            this.tabControl1.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
-            this.myTablePanel3.ResumeLayout(false);
-            this.myTablePanel3.PerformLayout();
             this.myTablePanelPckEdit.ResumeLayout(false);
             this.myTablePanelPckEdit.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImagePreview)).EndInit();
@@ -979,6 +973,20 @@
             this.tabMetaDisplay.ResumeLayout(false);
             this.myTablePanel1.ResumeLayout(false);
             this.myTablePanel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            this.metroTabControl1.ResumeLayout(false);
+            this.metroTabPage1.ResumeLayout(false);
+            this.metroTabPage1.PerformLayout();
+            this.myTablePanel2.ResumeLayout(false);
+            this.myTablePanel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxWithInterpolationMode1)).EndInit();
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
+            this.myTablePanel3.ResumeLayout(false);
+            this.myTablePanel3.PerformLayout();
+            this.myTablePanelStartScreen.ResumeLayout(false);
+            this.myTablePanelStartScreen.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pckOpen)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1087,6 +1095,7 @@
         private System.Windows.Forms.ToolStripMenuItem VitaPCKInstallerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toNobledezJackToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toPhoenixARCDeveloperToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addPasswordToolStripMenuItem;
     }
 }
 

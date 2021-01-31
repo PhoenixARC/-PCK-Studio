@@ -1,6 +1,7 @@
-﻿namespace minekampf.Forms
+﻿
+namespace minekampf.Forms
 {
-    partial class pckLocked
+    partial class AddPCKPassword
     {
         /// <summary>
         /// Required designer variable.
@@ -28,41 +29,43 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(pckLocked));
-            this.textBoxPass = new System.Windows.Forms.TextBox();
             this.buttonUnlocked = new System.Windows.Forms.Button();
+            this.textBoxPass = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
-            // 
-            // textBoxPass
-            // 
-            resources.ApplyResources(this.textBoxPass, "textBoxPass");
-            this.textBoxPass.Name = "textBoxPass";
-            this.textBoxPass.Click += new System.EventHandler(this.textBoxPass_Click);
-            this.textBoxPass.TextChanged += new System.EventHandler(this.textBoxPass_TextChanged);
-            this.textBoxPass.Enter += new System.EventHandler(this.textBoxPass_Enter);
             // 
             // buttonUnlocked
             // 
             this.buttonUnlocked.DialogResult = System.Windows.Forms.DialogResult.OK;
-            resources.ApplyResources(this.buttonUnlocked, "buttonUnlocked");
+            this.buttonUnlocked.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonUnlocked.ForeColor = System.Drawing.Color.White;
+            this.buttonUnlocked.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.buttonUnlocked.Location = new System.Drawing.Point(266, 53);
             this.buttonUnlocked.Name = "buttonUnlocked";
+            this.buttonUnlocked.Size = new System.Drawing.Size(75, 23);
+            this.buttonUnlocked.TabIndex = 3;
+            this.buttonUnlocked.Text = "Lock!";
             this.buttonUnlocked.UseVisualStyleBackColor = true;
             this.buttonUnlocked.Click += new System.EventHandler(this.buttonUnlocked_Click);
             // 
-            // pckLocked
+            // textBoxPass
             // 
-            resources.ApplyResources(this, "$this");
+            this.textBoxPass.Location = new System.Drawing.Point(16, 55);
+            this.textBoxPass.Name = "textBoxPass";
+            this.textBoxPass.Size = new System.Drawing.Size(244, 20);
+            this.textBoxPass.TabIndex = 2;
+            this.textBoxPass.Text = "Password";
+            // 
+            // AddPCKPassword
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BorderStyle = MetroFramework.Forms.MetroFormBorderStyle.FixedSingle;
+            this.ClientSize = new System.Drawing.Size(357, 129);
             this.Controls.Add(this.buttonUnlocked);
             this.Controls.Add(this.textBoxPass);
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.Name = "pckLocked";
+            this.Name = "AddPCKPassword";
             this.Resizable = false;
-            this.ShadowType = MetroFramework.Forms.MetroFormShadowType.DropShadow;
             this.Style = MetroFramework.MetroColorStyle.Silver;
+            this.Text = "Add Password";
             this.TextAlign = MetroFramework.Forms.MetroFormTextAlign.Center;
             this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.ResumeLayout(false);
@@ -72,7 +75,7 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox textBoxPass;
         private System.Windows.Forms.Button buttonUnlocked;
+        private System.Windows.Forms.TextBox textBoxPass;
     }
 }
