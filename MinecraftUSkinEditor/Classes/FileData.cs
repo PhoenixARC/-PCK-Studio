@@ -73,15 +73,15 @@ namespace MinecraftUSkinEditor
 
 		public int readByte()
 		{
-			return b[p++] & 0xFF;
+				return b[p++] & 0xFF;
 		}
 
 		public byte[] readBytes(int length)
 		{
 			List<byte> list = new List<byte>();
 			for (int i = 0; i < length; i++)
-			{
-				list.Add((byte)readByte());
+            {
+					list.Add((byte)readByte());
 			}
 			return list.ToArray();
 		}

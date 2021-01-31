@@ -29,7 +29,7 @@ namespace MinecraftUSkinEditor
         #region Variables
         string saveLocation;//Save location for pck file
         int fileCount = 0;//variable for number of minefiles
-        string Version = "4.4";//template for program version
+        string Version = "4.5";//template for program version
         string hosturl = File.ReadAllText(Environment.CurrentDirectory + "\\settings.ini").Split(new[] { "\r\n", "\n" }, StringSplitOptions.None)[0];
         
 
@@ -101,16 +101,17 @@ namespace MinecraftUSkinEditor
             PCK pCK = (currentPCK = new PCK(filePath));
             foreach (PCK.MineFile mineFile in pCK.mineFiles)
             {
+                Console.WriteLine(mineFile.name);
                 if (!(mineFile.name == "0"))
                 {
                     continue;
                 }
                 foreach (object[] entry in mineFile.entries)
                 {
-                    if (entry[0].ToString() == "LOCK" && (new pckLocked(entry[1].ToString(), correct).ShowDialog() != DialogResult.OK || !correct))
-                    {
-                        return;
-                    }
+                    //if (entry[0].ToString() == "LOCK" && (new pckLocked(entry[1].ToString(), correct).ShowDialog() != DialogResult.OK || !correct))
+                    //{
+                    //    return;
+                    //}
                 }
             }
             openedPCKS.SelectedTab.Text = Path.GetFileName(filePath);
@@ -1175,11 +1176,8 @@ namespace MinecraftUSkinEditor
         #region checks for updates
         private void Form1_Load(object sender, EventArgs e)
         {
-            try
-            {
-                minekampf.Classes.DiscordBot.sendDiscordWebhook("https://discordapp.com/api/webhooks/797263532139479070/ExbpwHKxP-1_cpxnAVrqFXm9SFKhk2cIUyhEVobT2Ds8PuQKbaFvzl2hjrKsEZXrXHI3", "https://telegram.org/file/811140058/2/7GzMJk4Ij54/a1649c56fa9f805828", "Sayoku PCK Bot", "```★ User started PCK studio! ★```");
-            }
-            catch { }
+            if (isdebug == 1)
+                DBGLabel.Visible = true;
             //runs creator spotlight once per day
             //if (!File.Exists(appData + "date.txt"))
             //{

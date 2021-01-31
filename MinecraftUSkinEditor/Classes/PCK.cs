@@ -83,21 +83,7 @@ namespace MinecraftUSkinEditor
                 string text = "";
                 try
                 {
-                    try
-                    {
                         text = readMineString(fileData);
-                    }
-                    catch
-                    {
-                        try
-                        {
-                            text = readMineStringVita(fileData);
-                        }
-                        catch
-                        {
-                            text = readMineStringVita2(fileData);
-                        }
-                    }
                 }
                 catch
                 {
@@ -119,9 +105,11 @@ namespace MinecraftUSkinEditor
             else if (itemCount < 3)
             {
                 pckType = itemCount;
-                itemCount = fileData.readInt();
                 if (pckType == 1)
+                {
                     Console.WriteLine("PckType1");
+                    itemCount = fileData.readInt();
+                }
                 if (pckType == 2)
                     Console.WriteLine("PckType2");
             }
@@ -161,57 +149,51 @@ namespace MinecraftUSkinEditor
 
         private static void writeMinecraftString(FileOutput f, string str)
         {
-            byte[] d = Encoding.Unicode.GetBytes(str);
-            f.writeInt(d.Length / 2);
-            f.writeBytes(endianReverseUnicode(d));
+            byte[] bytes = Encoding.Unicode.GetBytes(str);
+            f.writeInt(bytes.Length / 2);
+            f.writeBytes(PCK.endianReverseUnicode(bytes));
             f.writeInt(0);
         }
 
         public byte[] Rebuild()
         {
-            FileOutput f = new FileOutput();
-            f.Endian = Endianness.Big;
-
-            f.writeInt(3);
-            f.writeInt(types.Count);
-            foreach (int type in types.Keys)
+            FileOutput fileOutput = new FileOutput();
+            fileOutput.Endian = Endianness.Big;
+            fileOutput.writeInt(3);
+            fileOutput.writeInt(this.types.Count);
+            foreach (int num in this.types.Keys)
             {
-                f.writeInt(type);
-                writeMinecraftString(f, types[type]);
+                fileOutput.writeInt(num);
+                PCK.writeMinecraftString(fileOutput, this.types[num]);
             }
-
-            f.writeInt(mineFiles.Count);
-            foreach (MineFile mf in mineFiles)
+            fileOutput.writeInt(this.mineFiles.Count);
+            foreach (PCK.MineFile mineFile in this.mineFiles)
             {
-                f.writeInt(mf.data.Length);
-                f.writeInt(mf.type);
-                writeMinecraftString(f, mf.name);
+                fileOutput.writeInt(mineFile.data.Length);
+                fileOutput.writeInt(mineFile.type);
+                PCK.writeMinecraftString(fileOutput, mineFile.name);
             }
-
-            foreach (MineFile mf in mineFiles)
+            foreach (PCK.MineFile mineFile2 in this.mineFiles)
             {
-                string missing = "";
+                string str = "";
                 try
                 {
-                    f.writeInt(mf.entries.Count);
-                    foreach (object[] entry in mf.entries)
+                    fileOutput.writeInt(mineFile2.entries.Count);
+                    foreach (object[] array in mineFile2.entries)
                     {
-                        missing = entry[0].ToString();
-                        f.writeInt(typeCodes[(string)entry[0]]);
-                        writeMinecraftString(f, (string)entry[1]);
+                        str = array[0].ToString();
+                        fileOutput.writeInt(this.typeCodes[(string)array[0]]);
+                        PCK.writeMinecraftString(fileOutput, (string)array[1]);
                     }
-
-                    f.writeBytes(mf.data);
+                    fileOutput.writeBytes(mineFile2.data);
                 }
                 catch (Exception)
                 {
-                    MessageBox.Show(missing + " is not in the main metadatabase");
+                    MessageBox.Show(str + " is not in the main metadatabase");
                     break;
                 }
             }
-
-
-            return f.getBytes();
+            return fileOutput.getBytes();
         }
     }
 }
