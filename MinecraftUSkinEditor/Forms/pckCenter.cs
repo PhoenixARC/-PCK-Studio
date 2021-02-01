@@ -16,7 +16,7 @@ namespace minekampf.Forms
     public partial class pckCenter : MetroFramework.Forms.MetroForm
     {
         string[] mods;
-        string hosturl = File.ReadAllText(Environment.CurrentDirectory + "\\settings.ini").Split(new[] { "\r\n", "\n" }, StringSplitOptions.None)[1];
+        string hosturl = File.ReadAllText(Environment.CurrentDirectory + "\\settings.ini").Split(new[] { "\r\n", "\n" }, StringSplitOptions.None)[1] + "/studio/PCK/api/";
         string loadDirectory = File.ReadAllText(Environment.CurrentDirectory + "\\settings.ini").Split(new[] { "\r\n", "\n" }, StringSplitOptions.None)[1] + "pckCenterList.txt";
         string appData = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/PCK Studio/";
         string cacheDir;
@@ -89,7 +89,7 @@ namespace minekampf.Forms
                         if (File.Exists(cacheDir + mod + ".png") && checkNeeded == true)
                         {
                             //image cache
-                            HttpWebRequest textureFile = (HttpWebRequest)WebRequest.Create(hosturl + "mod/pcks/" + mod + ".png");
+                            HttpWebRequest textureFile = (HttpWebRequest)WebRequest.Create(hosturl + "pcks/" + mod + ".png");
                             HttpWebResponse textureFileResponse = (HttpWebResponse)textureFile.GetResponse();
 
                             DateTime localImageModifiedTime = File.GetLastWriteTime(cacheDir + mod + ".png");
@@ -101,7 +101,7 @@ namespace minekampf.Forms
                             }
                             else
                             {
-                                client.DownloadFile(hosturl + "mod/pcks/" + mod + ".png", cacheDir + mod + ".png");
+                                client.DownloadFile(hosturl + "pcks/" + mod + ".png", cacheDir + mod + ".png");
                             }
                         }
                         else if(mod.Length == 0) { }
@@ -112,13 +112,13 @@ namespace minekampf.Forms
                         else
                         {
                            // MessageBox.Show(mod + ".png");
-                            client.DownloadFile(hosturl + "mod/pcks/" + mod + ".png", cacheDir + mod + ".png");
+                            client.DownloadFile(hosturl + "pcks/" + mod + ".png", cacheDir + mod + ".png");
                         }
 
                         if (File.Exists(cacheDir + mod + ".desc") && checkNeeded == true)
                         {
                             //desc cache
-                            HttpWebRequest descFile = (HttpWebRequest)WebRequest.Create(hosturl + "mod/pcks/" + mod + ".desc");
+                            HttpWebRequest descFile = (HttpWebRequest)WebRequest.Create(hosturl + "pcks/" + mod + ".desc");
                             HttpWebResponse descFileResponse = (HttpWebResponse)descFile.GetResponse();
 
                             DateTime localDescModifiedTime = File.GetLastWriteTime(cacheDir + mod + ".desc");
@@ -131,7 +131,7 @@ namespace minekampf.Forms
                             }
                             else
                             {
-                                client.DownloadFile(hosturl + "mod/pcks/" + mod + ".desc", cacheDir + mod + ".desc");
+                                client.DownloadFile(hosturl + "pcks/" + mod + ".desc", cacheDir + mod + ".desc");
                             }
                         }
                         else if (File.Exists(cacheDir + mod + ".png") && checkNeeded == false)
@@ -141,7 +141,7 @@ namespace minekampf.Forms
                         else if(mod.Length == 0) { }
                         else
                         {
-                            client.DownloadFile(hosturl + "mod/pcks/" + mod + ".desc", cacheDir + mod + ".desc");
+                            client.DownloadFile(hosturl + "pcks/" + mod + ".desc", cacheDir + mod + ".desc");
                         }
                         if (mod.Length != 0)
                         {

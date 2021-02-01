@@ -29,7 +29,7 @@ namespace MinecraftUSkinEditor
         #region Variables
         string saveLocation;//Save location for pck file
         int fileCount = 0;//variable for number of minefiles
-        string Version = "4.6";//template for program version
+        string Version = "4.7";//template for program version
         string hosturl = File.ReadAllText(Environment.CurrentDirectory + "\\settings.ini").Split(new[] { "\r\n", "\n" }, StringSplitOptions.None)[0];
         
 

@@ -11,7 +11,7 @@ namespace MinecraftUSkinEditor
 
     static class Program
     {
-        public static string baseurl = "http://www.pckstudio.tk/";
+        public static string baseurl = "http://www.pckstudio.tk/studio/PCK/api/";
 
         public static FormMain formMain;
         /// <summary>
