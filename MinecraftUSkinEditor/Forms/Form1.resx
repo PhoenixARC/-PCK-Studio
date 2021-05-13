@@ -367,7 +367,7 @@
 </value>
   </data>
   <data name="newToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>149, 22</value>
   </data>
   <data name="newToolStripMenuItem.Text" xml:space="preserve">
     <value>New</value>
@@ -381,7 +381,7 @@
 </value>
   </data>
   <data name="openToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>149, 22</value>
   </data>
   <data name="openToolStripMenuItem.Text" xml:space="preserve">
     <value>Open</value>
@@ -395,7 +395,7 @@
 </value>
   </data>
   <data name="extractToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>149, 22</value>
   </data>
   <data name="extractToolStripMenuItem1.Text" xml:space="preserve">
     <value>Extract</value>
@@ -414,7 +414,7 @@
 </value>
   </data>
   <data name="saveToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>149, 22</value>
   </data>
   <data name="saveToolStripMenuItem1.Text" xml:space="preserve">
     <value>Save</value>
@@ -433,7 +433,7 @@
 </value>
   </data>
   <data name="saveToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>149, 22</value>
   </data>
   <data name="saveToolStripMenuItem.Text" xml:space="preserve">
     <value>Save As</value>
@@ -452,7 +452,7 @@
 </value>
   </data>
   <data name="metaToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>149, 22</value>
   </data>
   <data name="metaToolStripMenuItem.Text" xml:space="preserve">
     <value>Meta</value>
@@ -470,7 +470,7 @@
 </value>
   </data>
   <data name="addPasswordToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>149, 22</value>
   </data>
   <data name="addPasswordToolStripMenuItem.Text" xml:space="preserve">
     <value>Add Password</value>
@@ -3709,13 +3709,13 @@
     <value>Help</value>
   </data>
   <data name="openToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>176, 22</value>
+    <value>212, 22</value>
   </data>
   <data name="openToolStripMenuItem1.Text" xml:space="preserve">
     <value>Open PCK Center</value>
   </data>
   <data name="wiiUPCKInstallerToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>176, 22</value>
+    <value>212, 22</value>
   </data>
   <data name="wiiUPCKInstallerToolStripMenuItem.Text" xml:space="preserve">
     <value>Wii U PCK Installer</value>
@@ -3724,16 +3724,25 @@
     <value>False</value>
   </data>
   <data name="PS3PCKInstallerToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>176, 22</value>
+    <value>212, 22</value>
   </data>
   <data name="PS3PCKInstallerToolStripMenuItem.Text" xml:space="preserve">
     <value>PS3 PCK Installer</value>
   </data>
+  <data name="VitaPCKInstallerToolStripMenuItem.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
   <data name="VitaPCKInstallerToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>176, 22</value>
+    <value>212, 22</value>
   </data>
   <data name="VitaPCKInstallerToolStripMenuItem.Text" xml:space="preserve">
     <value>PSVita PCK Installer</value>
+  </data>
+  <data name="joinDevelopmentDiscordToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>212, 22</value>
+  </data>
+  <data name="joinDevelopmentDiscordToolStripMenuItem.Text" xml:space="preserve">
+    <value>Join Development Discord</value>
   </data>
   <data name="storeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>63, 20</value>
@@ -4363,7 +4372,7 @@
     <value>myTablePanel1</value>
   </data>
   <data name="&gt;&gt;myTablePanel1.Type" xml:space="preserve">
-    <value>minekampf.Forms.MyTablePanel, PCK Studio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>PckStudio.Forms.MyTablePanel, PCK Studio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;myTablePanel1.Parent" xml:space="preserve">
     <value>tabMetaDisplay</value>
@@ -4450,7 +4459,7 @@
     <value>myTablePanelPckEdit</value>
   </data>
   <data name="&gt;&gt;myTablePanelPckEdit.Type" xml:space="preserve">
-    <value>minekampf.Forms.MyTablePanel, PCK Studio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>PckStudio.Forms.MyTablePanel, PCK Studio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;myTablePanelPckEdit.Parent" xml:space="preserve">
     <value>tabPage1</value>
@@ -5740,7 +5749,7 @@
     <value>myTablePanel3</value>
   </data>
   <data name="&gt;&gt;myTablePanel3.Type" xml:space="preserve">
-    <value>minekampf.Forms.MyTablePanel, PCK Studio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>PckStudio.Forms.MyTablePanel, PCK Studio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;myTablePanel3.Parent" xml:space="preserve">
     <value>tabPage2</value>
@@ -5827,7 +5836,7 @@
     <value>myTablePanel2</value>
   </data>
   <data name="&gt;&gt;myTablePanel2.Type" xml:space="preserve">
-    <value>minekampf.Forms.MyTablePanel, PCK Studio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>PckStudio.Forms.MyTablePanel, PCK Studio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;myTablePanel2.Parent" xml:space="preserve">
     <value>metroTabPage1</value>
@@ -5949,6 +5958,9 @@
   <data name="&gt;&gt;metroTabControl1.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
+  <metadata name="timer1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>781, 23</value>
+  </metadata>
   <data name="myTablePanelStartScreen.ColumnCount" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
@@ -6073,7 +6085,7 @@
     <value>myTablePanelStartScreen</value>
   </data>
   <data name="&gt;&gt;myTablePanelStartScreen.Type" xml:space="preserve">
-    <value>minekampf.Forms.MyTablePanel, PCK Studio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>PckStudio.Forms.MyTablePanel, PCK Studio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;myTablePanelStartScreen.Parent" xml:space="preserve">
     <value>$this</value>
@@ -8118,6 +8130,12 @@
   <data name="&gt;&gt;VitaPCKInstallerToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;joinDevelopmentDiscordToolStripMenuItem.Name" xml:space="preserve">
+    <value>joinDevelopmentDiscordToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;joinDevelopmentDiscordToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;uPDATEToolStripMenuItem1.Name" xml:space="preserve">
     <value>uPDATEToolStripMenuItem1</value>
   </data>
@@ -8153,6 +8171,12 @@
   </data>
   <data name="&gt;&gt;directorySearcher1.Type" xml:space="preserve">
     <value>System.DirectoryServices.DirectorySearcher, System.DirectoryServices, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="&gt;&gt;timer1.Name" xml:space="preserve">
+    <value>timer1</value>
+  </data>
+  <data name="&gt;&gt;timer1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Timer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>FormMain</value>

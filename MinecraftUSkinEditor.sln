@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30320.27
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinecraftUSkinEditor", "MinecraftUSkinEditor\MinecraftUSkinEditor.csproj", "{0ACAAEDE-93F5-4B5D-B8D7-A0C43359C0D6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PckStudio", "MinecraftUSkinEditor\PckStudio.csproj", "{0ACAAEDE-93F5-4B5D-B8D7-A0C43359C0D6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nobleUpdater", "nobleUpdater\nobleUpdater.csproj", "{F77A61F1-0C6F-45DC-A5B5-A7BF38D64322}"
 EndProject

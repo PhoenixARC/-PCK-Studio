@@ -4,7 +4,7 @@ using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-namespace minekampf.Classes
+namespace PckStudio.Classes
 {
 	internal class Bink
 	{
@@ -23,10 +23,10 @@ namespace minekampf.Classes
 			if (flag)
 			{
 				working = Path.GetTempPath() + DateTime.Now.Second.ToString();
-				text = minekampf.Classes.Bink.ExtractResource("Resources.binka_encode.exe", working, "binka_encode.exe");
-				text2 = minekampf.Classes.Bink.ExtractResource("Resources.mss32.dll", working, "mss32.dll");
-				path = minekampf.Classes.Bink.ExtractResource("Resources.binkawin.asi", working, "binkawin.asi");
-				minekampf.Classes.Bink.library = minekampf.Classes.Bink.LoadLibrary(text2);
+				text = PckStudio.Classes.Bink.ExtractResource("Resources.binka_encode.exe", working, "binka_encode.exe");
+				text2 = PckStudio.Classes.Bink.ExtractResource("Resources.mss32.dll", working, "mss32.dll");
+				path = PckStudio.Classes.Bink.ExtractResource("Resources.binkawin.asi", working, "binkawin.asi");
+				PckStudio.Classes.Bink.library = PckStudio.Classes.Bink.LoadLibrary(text2);
 			}
 			else
 			{
@@ -34,10 +34,10 @@ namespace minekampf.Classes
 				text2 = working + "\\mss32.dll";
 				path = working + "\\binkawin.asi";
 			}
-			bool flag2 = minekampf.Classes.Bink.getType(infile) == "WAV";
+			bool flag2 = PckStudio.Classes.Bink.getType(infile) == "WAV";
 			if (flag2)
 			{
-				string[] array = minekampf.Classes.Bink.createArg(infile, outDir);
+				string[] array = PckStudio.Classes.Bink.createArg(infile, outDir);
 				Process process = new Process();
 				process.StartInfo.FileName = text;
 				process.StartInfo.Arguments = string.Concat(new string[]
@@ -54,31 +54,31 @@ namespace minekampf.Classes
 			}
 			else
 			{
-				bool flag3 = minekampf.Classes.Bink.getType(infile) == "BINKA";
+				bool flag3 = PckStudio.Classes.Bink.getType(infile) == "BINKA";
 				if (flag3)
 				{
-					string[] array2 = minekampf.Classes.Bink.createArg(infile, outDir);
+					string[] array2 = PckStudio.Classes.Bink.createArg(infile, outDir);
 					byte[] array3 = File.ReadAllBytes(array2[0]);
 					uint num = 0U;
-					minekampf.Classes.Bink.AIL_set_redist_directory(".");
-					minekampf.Classes.Bink.AIL_startup();
+					PckStudio.Classes.Bink.AIL_set_redist_directory(".");
+					PckStudio.Classes.Bink.AIL_startup();
 					IntPtr intPtr;
-					bool flag4 = minekampf.Classes.Bink.AIL_decompress_ASI(array3, (uint)array3.Length, ".binka", &intPtr, &num, 0U) == 0;
+					bool flag4 = PckStudio.Classes.Bink.AIL_decompress_ASI(array3, (uint)array3.Length, ".binka", &intPtr, &num, 0U) == 0;
 					if (flag4)
 					{
 						throw new Exception("AIL ERROR");
 					}
 					byte[] array4 = new byte[num];
 					Marshal.Copy(intPtr, array4, 0, array4.Length);
-					minekampf.Classes.Bink.AIL_mem_free_lock(intPtr);
-					minekampf.Classes.Bink.AIL_shutdown();
+					PckStudio.Classes.Bink.AIL_mem_free_lock(intPtr);
+					PckStudio.Classes.Bink.AIL_shutdown();
 					File.WriteAllBytes(array2[1], array4);
 				}
 			}
 			if (last)
 			{
-				minekampf.Classes.Bink.FreeLibrary(minekampf.Classes.Bink.library);
-				minekampf.Classes.Bink.FreeLibrary(minekampf.Classes.Bink.library);
+				PckStudio.Classes.Bink.FreeLibrary(PckStudio.Classes.Bink.library);
+				PckStudio.Classes.Bink.FreeLibrary(PckStudio.Classes.Bink.library);
 				File.Delete(text);
 				File.Delete(path);
 				while (File.Exists(text2))
@@ -89,7 +89,7 @@ namespace minekampf.Classes
 					}
 					catch
 					{
-						minekampf.Classes.Bink.FreeLibrary(minekampf.Classes.Bink.library);
+						PckStudio.Classes.Bink.FreeLibrary(PckStudio.Classes.Bink.library);
 					}
 				}
 			}
@@ -122,7 +122,7 @@ namespace minekampf.Classes
 			string[] array = new string[2];
 			array[0] = inFile;
 			string[] array2 = array;
-			string type = minekampf.Classes.Bink.getType(inFile);
+			string type = PckStudio.Classes.Bink.getType(inFile);
 			bool flag = type == "BINKA";
 			if (flag)
 			{

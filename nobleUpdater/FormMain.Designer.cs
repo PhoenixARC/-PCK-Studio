@@ -1,18 +1,18 @@
 ﻿namespace nobleUpdater
 {
-	public partial class FormMain : global::System.Windows.Forms.Form
-	{
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
+    public partial class FormMain : global::System.Windows.Forms.Form
+    {
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && this.components != null)
+            {
+                this.components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
 
-		private void InitializeComponent()
-		{
+        private void InitializeComponent()
+        {
             this.progressBarUpdate = new System.Windows.Forms.ProgressBar();
             this.labelProgress = new System.Windows.Forms.Label();
             this.SuspendLayout();
@@ -55,12 +55,12 @@
             this.ResumeLayout(false);
             this.PerformLayout();
 
-		}
+        }
 
-		private global::System.ComponentModel.IContainer components;
+        private global::System.ComponentModel.IContainer components;
 
-		private global::System.Windows.Forms.ProgressBar progressBarUpdate;
+        private global::System.Windows.Forms.ProgressBar progressBarUpdate;
 
-		private global::System.Windows.Forms.Label labelProgress;
-	}
+        private global::System.Windows.Forms.Label labelProgress;
+    }
 }

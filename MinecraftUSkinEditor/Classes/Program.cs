@@ -1,9 +1,11 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Windows.Forms;
+using PckStudio.Classes;
 
 namespace MinecraftUSkinEditor
 {
@@ -12,6 +14,7 @@ namespace MinecraftUSkinEditor
     static class Program
     {
         public static string baseurl = "http://www.pckstudio.tk/studio/PCK/api/";
+        public static string backurl = "https://phoenixarc.github.io/pckstudio.tk/studio/PCK/api/";
 
         public static FormMain formMain;
         /// <summary>
@@ -20,13 +23,17 @@ namespace MinecraftUSkinEditor
         [STAThread]
         static void Main()
         {
-            System.Globalization.CultureInfo ci = new System.Globalization.CultureInfo("ja");
-            Thread.CurrentThread.CurrentCulture = ci;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            minekampf.Forms.goodbye gg = new minekampf.Forms.goodbye();
+
+            PckStudio.Forms.goodbye gg = new PckStudio.Forms.goodbye();
+            PckStudio.Forms.Job gj = new PckStudio.Forms.Job();
+
+
             if(!System.IO.File.Exists(Environment.CurrentDirectory + "\\goodbyemark"))
             gg.ShowDialog();
+            if(!System.IO.File.Exists(Environment.CurrentDirectory + "\\discordmark"))
+            gj.ShowDialog();
             Application.Run(new FormMain());
         }
     }

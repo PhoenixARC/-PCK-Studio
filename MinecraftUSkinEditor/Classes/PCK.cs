@@ -96,6 +96,7 @@ namespace MinecraftUSkinEditor
 
             int itemCount = fileData.readInt();
 
+            Console.WriteLine(itemCount);
             // no metadata
             if (entryTypeCount == 0)
             {

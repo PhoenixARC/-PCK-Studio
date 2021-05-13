@@ -15,12 +15,13 @@ using System.Net;
 using System.Diagnostics;
 using System.Linq.Expressions;
 using System.Resources;
-using minekampf.Properties;
+using PckStudio.Properties;
 using Ohana3DS_Rebirth.Ohana;
-using minekampf;
-using minekampf.Forms;
+using PckStudio;
+using PckStudio.Forms;
 using System.IO.Packaging;
 using System.Drawing.Imaging;
+using RichPresenceClient;
 
 namespace MinecraftUSkinEditor
 {
@@ -29,9 +30,11 @@ namespace MinecraftUSkinEditor
         #region Variables
         string saveLocation;//Save location for pck file
         int fileCount = 0;//variable for number of minefiles
-        string Version = "4.7";//template for program version
+        string Version = "5.2";//template for program version
         string hosturl = File.ReadAllText(Environment.CurrentDirectory + "\\settings.ini").Split(new[] { "\r\n", "\n" }, StringSplitOptions.None)[0];
-        
+        string basurl = "";
+        string PCKFile = "";
+        string PCKFileBCKUP = "x";
 
 
         PCK.MineFile mf;//Template minefile variable
@@ -84,6 +87,7 @@ namespace MinecraftUSkinEditor
 
                     if (ofd.ShowDialog() == DialogResult.OK)
                     {
+                        PCKFile = Path.GetFileName(ofd.FileName);
                         openPck(ofd.FileName);
                     }
                 }
@@ -621,6 +625,7 @@ namespace MinecraftUSkinEditor
                             openedPCKS.SelectedTab.Text = Path.GetFileName(ofd.FileName);
                             saved = true;
                             MessageBox.Show("PCK Saved!");
+                            PCKFile = Path.GetFileName(ofd.FileName);
                         }
                         catch (Exception)
                         {
@@ -1135,6 +1140,7 @@ namespace MinecraftUSkinEditor
             try
             {
                 openPck(Environment.CurrentDirectory + "\\templates\\UntitledSkinPCK.pck");
+                PCKFile = "UntitledSkinPCK.pck";
             }
             catch { }
             saveLocation = "";
@@ -1171,15 +1177,36 @@ namespace MinecraftUSkinEditor
         private void programInfoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //open program info dialog
-            minekampf.programInfo info = new minekampf.programInfo();
+            PckStudio.programInfo info = new PckStudio.programInfo();
             info.ShowDialog();
             info.Dispose();
         }
         #endregion
 
+
+
         #region checks for updates
         private void Form1_Load(object sender, EventArgs e)
         {
+            try
+            {
+                RPC.SetRPC("825875166574673940", "Sitting alone", "Program by PhoenixARC", "pcklgo", "PCK Studio", "pcklgo");
+                timer1.Start();
+                timer1.Enabled = true;
+            }
+            catch
+            {
+                Console.WriteLine("ERROR WITH RPC");
+            }
+            try
+            {
+                new WebClient().DownloadString(Program.baseurl + "PCKChangeLog.txt");
+                basurl = Program.baseurl;
+            }
+            catch
+            {
+                basurl = Program.backurl;
+            }
             if (isdebug == 1)
                 DBGLabel.Visible = true;
             //runs creator spotlight once per day
@@ -1219,8 +1246,8 @@ namespace MinecraftUSkinEditor
             {
                 using (WebClient client = new WebClient())
                 {
-                    File.WriteAllText(appData + "pckStudioChangelog.txt", client.DownloadString(MinecraftUSkinEditor.Program.baseurl + "PCKChangeLog.txt"));
-                    richTextBoxChangelog.Text = File.ReadAllText(appData + "pckStudioChangelog.txt");
+                        File.WriteAllText(appData + "pckStudioChangelog.txt", client.DownloadString(basurl + "PCKChangeLog.txt"));
+                        richTextBoxChangelog.Text = File.ReadAllText(appData + "pckStudioChangelog.txt");
                 }
             }
             catch
@@ -1233,9 +1260,9 @@ namespace MinecraftUSkinEditor
                 File.WriteAllText(Application.StartupPath + @"\ver.txt", Version);
             }
             
-            if(new WebClient().DownloadString(MinecraftUSkinEditor.Program.baseurl + "updatePCKStudio.txt").Replace("\n","") != Version)
+            if(float.Parse(new WebClient().DownloadString(basurl + "updatePCKStudio.txt").Replace("\n","")) > float.Parse(Version))
             {
-                Console.WriteLine(new WebClient().DownloadString(MinecraftUSkinEditor.Program.baseurl + "updatePCKStudio.txt").Replace("\n", "") + " != " + Version);
+                Console.WriteLine(new WebClient().DownloadString(basurl + "updatePCKStudio.txt").Replace("\n", "") + " != " + Version);
                 if(MessageBox.Show("Update avaliable!\ndo you want to update?", "UPDATE", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 Process.Start(Environment.CurrentDirectory + "\\nobleUpdater.exe");
                 else
@@ -2804,7 +2831,6 @@ namespace MinecraftUSkinEditor
         }
         #endregion
 
-
         #region currently scrapped 3ds feature
         private void ds(){
             /*private struct loadedTexture
@@ -3076,6 +3102,7 @@ namespace MinecraftUSkinEditor
 
         private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
         {
+            RPC.CloseRPC();
             if (saved == false)
             {
                 if (MessageBox.Show("Save PCK?", "Unsaved PCK", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
@@ -3210,9 +3237,9 @@ namespace MinecraftUSkinEditor
         private void uPDATEToolStripMenuItem1_Click(object sender, EventArgs e)
         {
 
-            if (new WebClient().DownloadString(MinecraftUSkinEditor.Program.baseurl + "updatePCKStudio.txt").Replace("\n", "") != Version)
+            if (new WebClient().DownloadString(basurl + "updatePCKStudio.txt").Replace("\n", "") != Version)
             {
-                Console.WriteLine(new WebClient().DownloadString(MinecraftUSkinEditor.Program.baseurl + "updatePCKStudio.txt").Replace("\n", "") + " != " + Version);
+                Console.WriteLine(new WebClient().DownloadString(basurl + "updatePCKStudio.txt").Replace("\n", "") + " != " + Version);
                 if (MessageBox.Show("Update avaliable!\ndo you want to update?", "UPDATE", MessageBoxButtons.YesNo) == DialogResult.Yes)
                     Process.Start(Environment.CurrentDirectory + "\\nobleUpdater.exe");
                 else
@@ -3278,6 +3305,39 @@ namespace MinecraftUSkinEditor
                 treeMeta.Nodes.Add(meta);
             }
             saved = false;
+        }
+
+        private void joinDevelopmentDiscordToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://discord.gg/Byh4hcq25w");
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (PCKFile != PCKFileBCKUP)
+            {
+                RPC.CloseRPC();
+                if (string.IsNullOrWhiteSpace(PCKFile))
+                    try
+                    {
+                        RPC.SetRPC("825875166574673940", "Sitting alone", "Program by PhoenixARC", "pcklgo", "PCK Studio", "pcklgo");
+                    }
+                    catch
+                    {
+                        Console.WriteLine("ERROR WITH RPC");
+                    }
+                else
+
+                    try
+                    {
+                        RPC.SetRPC("825875166574673940", "Developing " + PCKFile, "Program by PhoenixARC", "pcklgo", "PCK Studio", "pcklgo");
+                    }
+                    catch
+                    {
+                        Console.WriteLine("ERROR WITH RPC");
+                    }
+                PCKFileBCKUP = PCKFile;
+            }
         }
     }
 }

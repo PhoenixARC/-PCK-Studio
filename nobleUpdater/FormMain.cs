@@ -15,7 +15,7 @@ namespace nobleUpdater
 		public FormMain()
 		{
 			this.InitializeComponent();
-			
+
 		}
 
 		private void updateTool()
@@ -76,11 +76,9 @@ namespace nobleUpdater
 				this.progressBarUpdate.Maximum = this.progressBarUpdate.Value;
 				this.labelProgress.Text = "Download Complete";
 			}
-			string contents = new WebClient().DownloadString("http://www.pckstudio.tk/updatePCKStudio.txt");
-			File.WriteAllText(Application.StartupPath + "\\ver.txt", contents);
 			new Process
 			{
-				StartInfo = 
+				StartInfo =
 				{
 					FileName = this.localFile
 				}
@@ -89,7 +87,7 @@ namespace nobleUpdater
 		}
 
 		private string serverFile = "http://www.pckstudio.tk/programs/PCKSTUDIO_Update.exe";
-		private string ServerXML = "http://www.pckstudio.tk/PCK/update.xml";
+		private string ServerXML = "http://www.pckstudio.tk/studio/PCK/update.xml";
 
 		private string appData = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "\\PCK Studio\\";
 
@@ -99,13 +97,14 @@ namespace nobleUpdater
 
 		private WebClient webClient;
 
-        private void FormMain_Load(object sender, EventArgs e)
-        {
+		private void FormMain_Load(object sender, EventArgs e)
+		{
+			Console.WriteLine(new WebClient().DownloadString(new Uri("http://www.pckstudio.tk/studio/PCK/update.xml")));
 			downloadUpdate();
 		}
 
 		public void downloadUpdate()
-        {
+		{
 			try
 			{
 				foreach (Process proc in Process.GetProcessesByName("PCK Studio"))
@@ -119,7 +118,8 @@ namespace nobleUpdater
 			}
 			catch { }
 
-			string[] raw = new WebClient().DownloadString(ServerXML).Split(new[] { "\n", "\r\n" }, StringSplitOptions.None);
+			string TryXMLDl = new WebClient().DownloadString(ServerXML);
+			string[] raw = TryXMLDl.Split(new[] { "\n", "\r\n" }, StringSplitOptions.None);
 			XmlTextReader reader = new XmlTextReader(ServerXML);
 			while (reader.Read())
 			{
@@ -128,56 +128,53 @@ namespace nobleUpdater
 					case XmlNodeType.Element: // The node is an element.
 						Console.Write("<" + reader.Name + " || " + reader.LineNumber);
 						Console.WriteLine(">");
-						if(reader.Name == "FileUpdateTask")
-                        {
+						if (reader.Name == "FileUpdateTask")
+						{
 							try
 							{
 								Directory.CreateDirectory(Path.GetDirectoryName(Environment.CurrentDirectory + raw[reader.LineNumber - 1].Replace("	<FileUpdateTask localPath=\"", "").Replace("\">", "").Replace("/", "\\")));
 								string url = ServerXML.Replace(".xml", "") + raw[reader.LineNumber - 1].Replace("	<FileUpdateTask localPath=\"", "").Replace("\">", "");
 								new WebClient().DownloadFile(url, Environment.CurrentDirectory + raw[reader.LineNumber - 1].Replace("	<FileUpdateTask localPath=\"", "").Replace("\">", "").Replace("/", "\\"));
 							}
-                            catch { }
+							catch { }
 						}
 						break;
 				}
 			}
-				new Process
-				{
-					StartInfo =
+			new Process
+			{
+				StartInfo =
 				{
 					FileName = this.localFile
 				}
-				}.Start();
-				Application.Exit();
+			}.Start();
+			Application.Exit();
 		}
 
 		public void mainus()
-        {
-
-			string onlinever = new WebClient().DownloadString("http://www.pckstudio.tk/updatePCKStudio.txt");
-			if (File.ReadAllText(Environment.CurrentDirectory + "\\ver.txt") != onlinever)
+		{
+			Stopwatch stopwatch = new Stopwatch();
+			stopwatch.Start();
+			int num = 0;
+			for (; ; )
 			{
-				Stopwatch stopwatch = new Stopwatch();
-				stopwatch.Start();
-				int num = 0;
-				for (; ; )
+				if (num % 100000 == 0)
 				{
-					if (num % 100000 == 0)
+					stopwatch.Stop();
+					if (stopwatch.ElapsedMilliseconds > 5000L)
 					{
-						stopwatch.Stop();
-						if (stopwatch.ElapsedMilliseconds > 5000L)
-						{
-							break;
-						}
-						stopwatch.Start();
+						break;
 					}
-					num++;
+					stopwatch.Start();
 				}
-				this.updateTool();
+				num++;
 			}
-			else
-			{
-			}
+			this.updateTool();
 		}
-    }
+
+		private void progressBarUpdate_Click(object sender, EventArgs e)
+		{
+
+		}
+	}
 }
