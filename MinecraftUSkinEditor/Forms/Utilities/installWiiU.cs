@@ -60,7 +60,15 @@ namespace PckStudio.Forms
 
                     using (WebClient client = new WebClient())
                     {
-                        client.DownloadFile("http://nobledez.com/programs/assets/WiiUMapManager/apps.zip", sdRoot + "/wiiu/apps/apps.zip");
+                        try
+                        {
+                            File.WriteAllBytes(sdRoot + "/wiiu/apps/apps.zip", PckStudio.Properties.Resources.apps);
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Could not extract resources to:\n" + sdRoot + "/wiiu/apps/apps.zip");
+                            return;
+                        }
                     }
 
                     string zipPath = sdRoot + "/wiiu/apps/apps.zip";
@@ -78,10 +86,6 @@ namespace PckStudio.Forms
                     if (!Directory.Exists(sdRoot + "/wiiu/apps/mocha_fshax"))
                     {
                         Directory.Move(sdRoot + "/wiiu/apps/temp/mocha_fshax", sdRoot + "/wiiu/apps/mocha_fshax");
-                    }
-                    if (!File.Exists(sdRoot + "/wiiu/apps/.DS_Store"))
-                    {
-                        File.Move(sdRoot + "/wiiu/apps/temp/.DS_Store", sdRoot + "/wiiu/apps/.DS_Store");
                     }
                     if (!File.Exists(sdRoot + "/wiiu/apps/sign_c2w_patcher.elf"))
                     {
@@ -248,7 +252,7 @@ namespace PckStudio.Forms
                         request2.Timeout = 1200000;
 
                         ServicePoint sp2 = request2.ServicePoint;
-                        Console.WriteLine("NOBLEDEZ WAS HERE", sp2.ConnectionLimit);
+                        Console.WriteLine("NOBLEDEZ//PHOENIXARC WAS HERE", sp2.ConnectionLimit);
                         sp2.ConnectionLimit = 1;
 
                         using (var response = (FtpWebResponse)request2.GetResponse())

@@ -15,14 +15,20 @@ namespace MinecraftUSkinEditor
     {
         public static string baseurl = "http://www.pckstudio.tk/studio/PCK/api/";
         public static string backurl = "https://phoenixarc.github.io/pckstudio.tk/studio/PCK/api/";
-
+        public static bool IsDev = false;
         public static FormMain formMain;
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
+            try
+            {
+                if (args[0] == "-dev")
+                    IsDev = true;
+            }
+            catch { }
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 

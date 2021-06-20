@@ -51,7 +51,6 @@
             this.radioLOCAL = new System.Windows.Forms.RadioButton();
             this.labelSelectTexture = new System.Windows.Forms.Label();
             this.radioSERVER = new System.Windows.Forms.RadioButton();
-            this.webBrowser1 = new System.Windows.Forms.WebBrowser();
             this.pictureBoxWithInterpolationMode1 = new MinecraftUSkinEditor.PictureBoxWithInterpolationMode();
             this.pictureBoxTexture = new MinecraftUSkinEditor.PictureBoxWithInterpolationMode();
             this.contextMenuSkin.SuspendLayout();
@@ -69,10 +68,10 @@
             // 
             // contextMenuSkin
             // 
-            resources.ApplyResources(this.contextMenuSkin, "contextMenuSkin");
             this.contextMenuSkin.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.replaceToolStripMenuItem});
             this.contextMenuSkin.Name = "contextMenuSkin";
+            resources.ApplyResources(this.contextMenuSkin, "contextMenuSkin");
             // 
             // replaceToolStripMenuItem
             // 
@@ -82,10 +81,10 @@
             // 
             // contextMenuCape
             // 
-            resources.ApplyResources(this.contextMenuCape, "contextMenuCape");
             this.contextMenuCape.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.replaceToolStripMenuItem1});
             this.contextMenuCape.Name = "contextMenuCape";
+            resources.ApplyResources(this.contextMenuCape, "contextMenuCape");
             // 
             // replaceToolStripMenuItem1
             // 
@@ -135,9 +134,9 @@
             // 
             // displayBox
             // 
-            resources.ApplyResources(this.displayBox, "displayBox");
             this.displayBox.BackColor = System.Drawing.SystemColors.ControlDark;
             this.displayBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            resources.ApplyResources(this.displayBox, "displayBox");
             this.displayBox.Name = "displayBox";
             this.displayBox.TabStop = false;
             // 
@@ -149,8 +148,8 @@
             // 
             // textThemeName
             // 
-            resources.ApplyResources(this.textThemeName, "textThemeName");
             this.textThemeName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            resources.ApplyResources(this.textThemeName, "textThemeName");
             this.textThemeName.Name = "textThemeName";
             this.textThemeName.TextChanged += new System.EventHandler(this.textThemeName_TextChanged);
             this.textThemeName.VisibleChanged += new System.EventHandler(this.textThemeName_VisibleChanged);
@@ -163,8 +162,8 @@
             // 
             // textSkinName
             // 
-            resources.ApplyResources(this.textSkinName, "textSkinName");
             this.textSkinName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            resources.ApplyResources(this.textSkinName, "textSkinName");
             this.textSkinName.Name = "textSkinName";
             this.textSkinName.TextChanged += new System.EventHandler(this.textSkinName_TextChanged);
             this.textSkinName.VisibleChanged += new System.EventHandler(this.textSkinName_VisibleChanged);
@@ -177,8 +176,8 @@
             // 
             // textSkinID
             // 
-            resources.ApplyResources(this.textSkinID, "textSkinID");
             this.textSkinID.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            resources.ApplyResources(this.textSkinID, "textSkinID");
             this.textSkinID.Name = "textSkinID";
             this.textSkinID.TextChanged += new System.EventHandler(this.textSkinID_TextChanged_1);
             // 
@@ -215,15 +214,6 @@
             this.radioSERVER.UseVisualStyleBackColor = true;
             this.radioSERVER.CheckedChanged += new System.EventHandler(this.radioSERVER_CheckedChanged);
             // 
-            // webBrowser1
-            // 
-            resources.ApplyResources(this.webBrowser1, "webBrowser1");
-            this.webBrowser1.IsWebBrowserContextMenuEnabled = false;
-            this.webBrowser1.Name = "webBrowser1";
-            this.webBrowser1.ScriptErrorsSuppressed = true;
-            this.webBrowser1.ScrollBarsEnabled = false;
-            this.webBrowser1.Url = new System.Uri("http://nobledez.ga/nobledez.ga/pckStudio/SkinID.php", System.UriKind.Absolute);
-            // 
             // pictureBoxWithInterpolationMode1
             // 
             resources.ApplyResources(this.pictureBoxWithInterpolationMode1, "pictureBoxWithInterpolationMode1");
@@ -245,7 +235,6 @@
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BorderStyle = MetroFramework.Forms.MetroFormBorderStyle.FixedSingle;
-            this.Controls.Add(this.webBrowser1);
             this.Controls.Add(this.radioSERVER);
             this.Controls.Add(this.labelSelectTexture);
             this.Controls.Add(this.radioLOCAL);
@@ -307,6 +296,5 @@
         private System.Windows.Forms.RadioButton radioLOCAL;
         private System.Windows.Forms.Label labelSelectTexture;
         private System.Windows.Forms.RadioButton radioSERVER;
-        private System.Windows.Forms.WebBrowser webBrowser1;
     }
 }

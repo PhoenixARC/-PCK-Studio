@@ -120,15 +120,15 @@
   <data name="&gt;&gt;buttonSelect.Parent" xml:space="preserve">
     <value>panel1</value>
   </data>
+  <data name="&gt;&gt;radioButtonEur.Parent" xml:space="preserve">
+    <value>myTablePanel1</value>
+  </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="listViewPCKS.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>Install to Wii U</value>
-  </data>
-  <data name="&gt;&gt;listViewPCKS.Name" xml:space="preserve">
-    <value>listViewPCKS</value>
+  <data name="&gt;&gt;radioButtonSystem.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="radioButtonEur.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -177,8 +177,8 @@
   <data name="&gt;&gt;panel1.Name" xml:space="preserve">
     <value>panel1</value>
   </data>
-  <data name="myTablePanel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
+  <data name="myTablePanel1.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
   </data>
   <data name="metroTabPageMain.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 38</value>
@@ -192,9 +192,6 @@
   <data name="buttonSelect.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="resource.MaximumSize" type="System.Drawing.Size, System.Drawing">
-    <value>0, 0</value>
-  </data>
   <data name="myTablePanel1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
   </data>
@@ -204,23 +201,11 @@
   <data name="radioButtonEur.Size" type="System.Drawing.Size, System.Drawing">
     <value>136, 30</value>
   </data>
-  <data name="radioButtonJap.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="resource.AccessibleDescription" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
   <data name="buttonServerToggle.Text" xml:space="preserve">
     <value>Start</value>
   </data>
-  <data name="&gt;&gt;metroTabControlMain.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="radioButtonEur.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="&gt;&gt;radioButtonEur.Parent" xml:space="preserve">
-    <value>myTablePanel1</value>
+  <data name="resource.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>None</value>
   </data>
   <data name="radioButtonUs.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -228,14 +213,11 @@
   <data name="radioButtonUs.Location" type="System.Drawing.Point, System.Drawing">
     <value>145, 72</value>
   </data>
-  <data name="replaceToolStripMenuItem.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
-    <value>TextAboveImage</value>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Install to Wii U</value>
   </data>
-  <data name="textBoxHost.Size" type="System.Drawing.Size, System.Drawing">
-    <value>278, 20</value>
-  </data>
-  <data name="resource.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
+  <data name="myTablePanel1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
   </data>
   <data name="resource.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left</value>
@@ -245,6 +227,9 @@
   </data>
   <data name="myTablePanel1.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
     <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="buttonServerToggle" Row="0" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="panel1" Row="1" RowSpan="1" Column="0" ColumnSpan="3" /&gt;&lt;Control Name="textBoxHost" Row="0" RowSpan="1" Column="0" ColumnSpan="2" /&gt;&lt;Control Name="radioButtonEur" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="radioButtonUs" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="radioButtonJap" Row="2" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="listViewPCKS" Row="3" RowSpan="1" Column="0" ColumnSpan="3" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,33.33333,Percent,33.33334,Percent,33.33334" /&gt;&lt;Rows Styles="AutoSize,0,Absolute,36,Absolute,36,Percent,100,AutoSize,0,AutoSize,0,AutoSize,0" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
+  <data name="radioButtonSystem.CheckAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>BottomRight</value>
   </data>
   <data name="listViewPCKS.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 108</value>
@@ -1989,20 +1974,20 @@
         AABJRU5ErkJggg==
 </value>
   </data>
-  <data name="metroTabControlMain.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+  <data name="replacePCKToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>211, 22</value>
   </data>
-  <data name="&gt;&gt;textBoxHost.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroTextBox, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  <data name="&gt;&gt;metroTabPageMain.Name" xml:space="preserve">
+    <value>metroTabPageMain</value>
   </data>
   <data name="radioButtonJap.Size" type="System.Drawing.Size, System.Drawing">
     <value>137, 30</value>
   </data>
-  <data name="radioButtonEur.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleCenter</value>
+  <data name="&gt;&gt;replacePCKToolStripMenuItem.Name" xml:space="preserve">
+    <value>replacePCKToolStripMenuItem</value>
   </data>
-  <data name="&gt;&gt;metroTabPageMain.Name" xml:space="preserve">
-    <value>metroTabPageMain</value>
+  <data name="textBoxHost.Size" type="System.Drawing.Size, System.Drawing">
+    <value>278, 20</value>
   </data>
   <data name="buttonSelect.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Zoom</value>
@@ -2022,35 +2007,41 @@
   <data name="radioButtonUs.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="metroTabPageMain.Text" xml:space="preserve">
-    <value>Perma Installer</value>
+  <data name="&gt;&gt;listViewPCKS.Name" xml:space="preserve">
+    <value>listViewPCKS</value>
   </data>
   <data name="radioButtonSystem.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 0</value>
   </data>
-  <data name="&gt;&gt;metroTabPageMain.ZOrder" xml:space="preserve">
-    <value>0</value>
+  <data name="metroTabControlMain.Location" type="System.Drawing.Point, System.Drawing">
+    <value>20, 60</value>
   </data>
   <data name="&gt;&gt;panel1.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="metroTabPageMain.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+  <data name="radioButtonEur.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
   </data>
   <data name="buttonServerToggle.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
   </data>
+  <data name="&gt;&gt;radioButtonSystem.Parent" xml:space="preserve">
+    <value>panel1</value>
+  </data>
   <data name="radioButtonJap.Location" type="System.Drawing.Point, System.Drawing">
     <value>287, 72</value>
   </data>
-  <data name="listViewPCKS.Size" type="System.Drawing.Size, System.Drawing">
-    <value>421, 426</value>
+  <data name="resource.AccessibleDescription" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="&gt;&gt;metroTabPageMain.Parent" xml:space="preserve">
     <value>metroTabControlMain</value>
   </data>
-  <data name="&gt;&gt;radioButtonUSB.Name" xml:space="preserve">
-    <value>radioButtonUSB</value>
+  <data name="&gt;&gt;listViewPCKS.Parent" xml:space="preserve">
+    <value>myTablePanel1</value>
+  </data>
+  <data name="resource.ImageKey" xml:space="preserve">
+    <value />
   </data>
   <data name="myTablePanel1.ColumnCount" type="System.Int32, mscorlib">
     <value>3</value>
@@ -2070,11 +2061,11 @@
   <data name="&gt;&gt;radioButtonSystem.Type" xml:space="preserve">
     <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="metroTabControlMain.Size" type="System.Drawing.Size, System.Drawing">
+    <value>435, 579</value>
+  </data>
   <data name="&gt;&gt;textBoxHost.Parent" xml:space="preserve">
     <value>myTablePanel1</value>
-  </data>
-  <data name="replacePCKToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>211, 22</value>
   </data>
   <data name="&gt;&gt;contextMenuStripCaffiine.Name" xml:space="preserve">
     <value>contextMenuStripCaffiine</value>
@@ -2082,8 +2073,8 @@
   <data name="radioButtonUSB.Location" type="System.Drawing.Point, System.Drawing">
     <value>145, 0</value>
   </data>
-  <data name="metroTabControlMain.Location" type="System.Drawing.Point, System.Drawing">
-    <value>20, 60</value>
+  <data name="listViewPCKS.Size" type="System.Drawing.Size, System.Drawing">
+    <value>421, 426</value>
   </data>
   <data name="resource.Location" type="System.Drawing.Point, System.Drawing">
     <value>260, 2</value>
@@ -2097,20 +2088,17 @@
   <data name="radioButtonUs.Size" type="System.Drawing.Size, System.Drawing">
     <value>136, 30</value>
   </data>
-  <data name="resource.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleCenter</value>
-  </data>
   <data name="radioButtonUs.Appearance" type="System.Windows.Forms.Appearance, System.Windows.Forms">
     <value>Button</value>
   </data>
-  <data name="panel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>427, 36</value>
+  <data name="&gt;&gt;metroTabControlMain.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
-  <data name="resource.ImageKey" xml:space="preserve">
-    <value />
+  <data name="resource.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
   </data>
-  <data name="metroTabControlMain.Size" type="System.Drawing.Size, System.Drawing">
-    <value>435, 579</value>
+  <data name="&gt;&gt;metroTabControlMain.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <data name="resource.AccessibleName" type="System.Resources.ResXNullRef, System.Windows.Forms">
     <value />
@@ -2124,17 +2112,14 @@
   <data name="&gt;&gt;radioButtonJap.Type" xml:space="preserve">
     <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="radioButtonUs.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
   <data name="&gt;&gt;radioButtonUSB.Type" xml:space="preserve">
     <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;panel1.Parent" xml:space="preserve">
     <value>myTablePanel1</value>
-  </data>
-  <data name="resource.BackgroundImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="resource.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
-    <value>GrowOnly</value>
   </data>
   <data name="resource.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>Inherit</value>
@@ -2151,14 +2136,11 @@
   <data name="resource.Image" type="System.Resources.ResXNullRef, System.Windows.Forms">
     <value />
   </data>
+  <data name="metroTabPageMain.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
   <data name="radioButtonSystem.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
-  </data>
-  <data name="&gt;&gt;replacePCKToolStripMenuItem.Name" xml:space="preserve">
-    <value>replacePCKToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;radioButtonUs.ZOrder" xml:space="preserve">
-    <value>4</value>
   </data>
   <data name="radioButtonJap.CheckAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>BottomRight</value>
@@ -2166,20 +2148,20 @@
   <data name="myTablePanel1.Size" type="System.Drawing.Size, System.Drawing">
     <value>427, 537</value>
   </data>
+  <data name="radioButtonJap.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="radioButtonEur.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
   <data name="listViewPCKS.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="radioButtonJap.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
+  <data name="resource.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>0, 0</value>
   </data>
   <data name="&gt;&gt;myTablePanel1.ZOrder" xml:space="preserve">
     <value>2</value>
-  </data>
-  <data name="resource.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>None</value>
   </data>
   <data name="radioButtonEur.Appearance" type="System.Windows.Forms.Appearance, System.Windows.Forms">
     <value>Button</value>
@@ -2190,8 +2172,11 @@
   <data name="&gt;&gt;myTablePanel1.Parent" xml:space="preserve">
     <value>metroTabPageMain</value>
   </data>
+  <data name="&gt;&gt;radioButtonUSB.Name" xml:space="preserve">
+    <value>radioButtonUSB</value>
+  </data>
   <data name="&gt;&gt;myTablePanel1.Type" xml:space="preserve">
-    <value>PckStudio.Forms.MyTablePanel, PCK Studio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>PckStudio.Forms.MyTablePanel, PCK Studio, Version=5.3.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;radioButtonUSB.Parent" xml:space="preserve">
     <value>panel1</value>
@@ -2238,11 +2223,14 @@
   <data name="buttonSelect.Size" type="System.Drawing.Size, System.Drawing">
     <value>137, 36</value>
   </data>
-  <data name="contextMenuStripCaffiine.Size" type="System.Drawing.Size, System.Drawing">
-    <value>212, 48</value>
+  <data name="&gt;&gt;buttonServerToggle.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;radioButtonJap.Name" xml:space="preserve">
     <value>radioButtonJap</value>
+  </data>
+  <data name="&gt;&gt;radioButtonUs.Name" xml:space="preserve">
+    <value>radioButtonUs</value>
   </data>
   <data name="radioButtonUs.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
@@ -2262,6 +2250,9 @@
   <data name="&gt;&gt;listViewPCKS.ZOrder" xml:space="preserve">
     <value>6</value>
   </data>
+  <data name="radioButtonUSB.Appearance" type="System.Windows.Forms.Appearance, System.Windows.Forms">
+    <value>Button</value>
+  </data>
   <data name="metroTabPageMain.Size" type="System.Drawing.Size, System.Drawing">
     <value>427, 537</value>
   </data>
@@ -2274,14 +2265,17 @@
   <data name="buttonSelect.Location" type="System.Drawing.Point, System.Drawing">
     <value>287, 0</value>
   </data>
+  <data name="radioButtonJap.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
   <data name="radioButtonUs.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI, 12pt</value>
   </data>
   <data name="replaceToolStripMenuItem.Text" xml:space="preserve">
     <value>Replace</value>
   </data>
-  <data name="&gt;&gt;radioButtonEur.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="contextMenuStripCaffiine.Size" type="System.Drawing.Size, System.Drawing">
+    <value>212, 48</value>
   </data>
   <data name="&gt;&gt;radioButtonUSB.ZOrder" xml:space="preserve">
     <value>2</value>
@@ -2292,8 +2286,8 @@
   <data name="myTablePanel1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="radioButtonJap.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="replaceToolStripMenuItem.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
+    <value>TextAboveImage</value>
   </data>
   <data name="&gt;&gt;radioButtonUs.Type" xml:space="preserve">
     <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -2303,6 +2297,9 @@
   </data>
   <data name="resource.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Standard</value>
+  </data>
+  <data name="&gt;&gt;metroTabPageMain.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="&gt;&gt;buttonSelect.Name" xml:space="preserve">
     <value>buttonSelect</value>
@@ -2331,26 +2328,26 @@
   <data name="&gt;&gt;radioButtonEur.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="resource.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Tile</value>
-  </data>
   <data name="radioButtonJap.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
   </data>
   <data name="&gt;&gt;radioButtonUs.Parent" xml:space="preserve">
     <value>myTablePanel1</value>
   </data>
+  <data name="radioButtonJap.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
   <data name="&gt;&gt;myTablePanel1.Name" xml:space="preserve">
     <value>myTablePanel1</value>
   </data>
-  <data name="&gt;&gt;radioButtonUs.Name" xml:space="preserve">
-    <value>radioButtonUs</value>
+  <data name="&gt;&gt;radioButtonUs.ZOrder" xml:space="preserve">
+    <value>4</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>475, 659</value>
   </data>
-  <data name="radioButtonUSB.Appearance" type="System.Windows.Forms.Appearance, System.Windows.Forms">
-    <value>Button</value>
+  <data name="metroTabControlMain.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
   <data name="&gt;&gt;metroTabControlMain.Name" xml:space="preserve">
     <value>metroTabControlMain</value>
@@ -2358,17 +2355,14 @@
   <data name="metroTabControlMain.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="&gt;&gt;metroTabControlMain.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;buttonServerToggle.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;textBoxHost.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroTextBox, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
   </data>
   <data name="radioButtonJap.Appearance" type="System.Windows.Forms.Appearance, System.Windows.Forms">
     <value>Button</value>
   </data>
-  <data name="radioButtonUs.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleCenter</value>
+  <data name="&gt;&gt;radioButtonEur.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="resource.AutoSize" type="System.Boolean, mscorlib">
     <value>False</value>
@@ -2382,33 +2376,36 @@
   <data name="&gt;&gt;buttonSelect.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;radioButtonSystem.Parent" xml:space="preserve">
-    <value>panel1</value>
+  <data name="radioButtonEur.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
   </data>
-  <data name="&gt;&gt;listViewPCKS.Parent" xml:space="preserve">
-    <value>myTablePanel1</value>
+  <data name="resource.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
+    <value>GrowOnly</value>
+  </data>
+  <data name="metroTabPageMain.Text" xml:space="preserve">
+    <value>Perma Installer</value>
   </data>
   <data name="replaceToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>211, 22</value>
   </data>
-  <data name="myTablePanel1.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
+  <data name="resource.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
-  <data name="&gt;&gt;radioButtonSystem.ZOrder" xml:space="preserve">
-    <value>0</value>
+  <data name="resource.BackgroundImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="resource.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Tile</value>
   </data>
   <data name="radioButtonSystem.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
   </data>
-  <data name="radioButtonSystem.CheckAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>BottomRight</value>
+  <data name="panel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>427, 36</value>
   </data>
   <data name="panel1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <metadata name="$this.Language" type="System.Globalization.CultureInfo, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>ja</value>
-  </metadata>
   <metadata name="contextMenuStripCaffiine.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>

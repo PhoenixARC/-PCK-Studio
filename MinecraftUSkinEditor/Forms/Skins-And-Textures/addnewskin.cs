@@ -652,10 +652,8 @@ namespace MinecraftUSkinEditor
                 try
                 {
                     WebClient wc = new WebClient();
-                    webBrowser1.Refresh();
-                    textSkinID.Text = webBrowser1.DocumentText;
+                    textSkinID.Text = wc.DownloadString("http://vylryna.ddns.net/id") ;
                     textSkinID.Enabled = false;
-
                 }
                 catch
                 {

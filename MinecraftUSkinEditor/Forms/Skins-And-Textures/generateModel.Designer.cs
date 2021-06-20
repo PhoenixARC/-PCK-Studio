@@ -187,16 +187,16 @@
             // 
             // textTextureX
             // 
-            resources.ApplyResources(this.textTextureX, "textTextureX");
             this.tableLayoutPanelMain.SetColumnSpan(this.textTextureX, 2);
+            resources.ApplyResources(this.textTextureX, "textTextureX");
             this.textTextureX.Name = "textTextureX";
             this.textTextureX.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             this.textTextureX.Leave += new System.EventHandler(this.textXc_Leave);
             // 
             // buttonIMPORT
             // 
-            resources.ApplyResources(this.buttonIMPORT, "buttonIMPORT");
             this.tableLayoutPanelMain.SetColumnSpan(this.buttonIMPORT, 3);
+            resources.ApplyResources(this.buttonIMPORT, "buttonIMPORT");
             this.buttonIMPORT.ForeColor = System.Drawing.Color.White;
             this.buttonIMPORT.Name = "buttonIMPORT";
             this.buttonIMPORT.UseVisualStyleBackColor = true;
@@ -211,8 +211,8 @@
             // 
             // buttonZcplus
             // 
-            resources.ApplyResources(this.buttonZcplus, "buttonZcplus");
             this.tableLayoutPanelMain.SetColumnSpan(this.buttonZcplus, 2);
+            resources.ApplyResources(this.buttonZcplus, "buttonZcplus");
             this.buttonZcplus.ForeColor = System.Drawing.Color.White;
             this.buttonZcplus.Name = "buttonZcplus";
             this.buttonZcplus.UseVisualStyleBackColor = true;
@@ -220,8 +220,8 @@
             // 
             // buttonXcminus
             // 
-            resources.ApplyResources(this.buttonXcminus, "buttonXcminus");
             this.tableLayoutPanelMain.SetColumnSpan(this.buttonXcminus, 2);
+            resources.ApplyResources(this.buttonXcminus, "buttonXcminus");
             this.buttonXcminus.ForeColor = System.Drawing.Color.White;
             this.buttonXcminus.Name = "buttonXcminus";
             this.buttonXcminus.UseVisualStyleBackColor = true;
@@ -229,8 +229,8 @@
             // 
             // buttonYcminus
             // 
-            resources.ApplyResources(this.buttonYcminus, "buttonYcminus");
             this.tableLayoutPanelMain.SetColumnSpan(this.buttonYcminus, 2);
+            resources.ApplyResources(this.buttonYcminus, "buttonYcminus");
             this.buttonYcminus.ForeColor = System.Drawing.Color.White;
             this.buttonYcminus.Name = "buttonYcminus";
             this.buttonYcminus.UseVisualStyleBackColor = true;
@@ -238,8 +238,8 @@
             // 
             // buttonZcminus
             // 
-            resources.ApplyResources(this.buttonZcminus, "buttonZcminus");
             this.tableLayoutPanelMain.SetColumnSpan(this.buttonZcminus, 2);
+            resources.ApplyResources(this.buttonZcminus, "buttonZcminus");
             this.buttonZcminus.ForeColor = System.Drawing.Color.White;
             this.buttonZcminus.Name = "buttonZcminus";
             this.buttonZcminus.UseVisualStyleBackColor = true;
@@ -247,8 +247,8 @@
             // 
             // buttonYcplus
             // 
-            resources.ApplyResources(this.buttonYcplus, "buttonYcplus");
             this.tableLayoutPanelMain.SetColumnSpan(this.buttonYcplus, 2);
+            resources.ApplyResources(this.buttonYcplus, "buttonYcplus");
             this.buttonYcplus.ForeColor = System.Drawing.Color.White;
             this.buttonYcplus.Name = "buttonYcplus";
             this.buttonYcplus.UseVisualStyleBackColor = true;
@@ -256,8 +256,8 @@
             // 
             // buttonXcplus
             // 
-            resources.ApplyResources(this.buttonXcplus, "buttonXcplus");
             this.tableLayoutPanelMain.SetColumnSpan(this.buttonXcplus, 2);
+            resources.ApplyResources(this.buttonXcplus, "buttonXcplus");
             this.buttonXcplus.ForeColor = System.Drawing.Color.White;
             this.buttonXcplus.Name = "buttonXcplus";
             this.buttonXcplus.UseVisualStyleBackColor = true;
@@ -265,8 +265,8 @@
             // 
             // buttonZfplus
             // 
-            resources.ApplyResources(this.buttonZfplus, "buttonZfplus");
             this.tableLayoutPanelMain.SetColumnSpan(this.buttonZfplus, 2);
+            resources.ApplyResources(this.buttonZfplus, "buttonZfplus");
             this.buttonZfplus.ForeColor = System.Drawing.Color.White;
             this.buttonZfplus.Name = "buttonZfplus";
             this.buttonZfplus.UseVisualStyleBackColor = true;
@@ -274,8 +274,8 @@
             // 
             // buttonXfminus
             // 
-            resources.ApplyResources(this.buttonXfminus, "buttonXfminus");
             this.tableLayoutPanelMain.SetColumnSpan(this.buttonXfminus, 2);
+            resources.ApplyResources(this.buttonXfminus, "buttonXfminus");
             this.buttonXfminus.ForeColor = System.Drawing.Color.White;
             this.buttonXfminus.Name = "buttonXfminus";
             this.buttonXfminus.UseVisualStyleBackColor = true;
@@ -283,8 +283,8 @@
             // 
             // buttonYfminus
             // 
-            resources.ApplyResources(this.buttonYfminus, "buttonYfminus");
             this.tableLayoutPanelMain.SetColumnSpan(this.buttonYfminus, 2);
+            resources.ApplyResources(this.buttonYfminus, "buttonYfminus");
             this.buttonYfminus.ForeColor = System.Drawing.Color.White;
             this.buttonYfminus.Name = "buttonYfminus";
             this.buttonYfminus.UseVisualStyleBackColor = true;
@@ -292,8 +292,8 @@
             // 
             // buttonZfminus
             // 
-            resources.ApplyResources(this.buttonZfminus, "buttonZfminus");
             this.tableLayoutPanelMain.SetColumnSpan(this.buttonZfminus, 2);
+            resources.ApplyResources(this.buttonZfminus, "buttonZfminus");
             this.buttonZfminus.ForeColor = System.Drawing.Color.White;
             this.buttonZfminus.Name = "buttonZfminus";
             this.buttonZfminus.UseVisualStyleBackColor = true;
@@ -301,8 +301,8 @@
             // 
             // buttonYfplus
             // 
-            resources.ApplyResources(this.buttonYfplus, "buttonYfplus");
             this.tableLayoutPanelMain.SetColumnSpan(this.buttonYfplus, 2);
+            resources.ApplyResources(this.buttonYfplus, "buttonYfplus");
             this.buttonYfplus.ForeColor = System.Drawing.Color.White;
             this.buttonYfplus.Name = "buttonYfplus";
             this.buttonYfplus.UseVisualStyleBackColor = true;
@@ -310,8 +310,8 @@
             // 
             // buttonXfplus
             // 
-            resources.ApplyResources(this.buttonXfplus, "buttonXfplus");
             this.tableLayoutPanelMain.SetColumnSpan(this.buttonXfplus, 2);
+            resources.ApplyResources(this.buttonXfplus, "buttonXfplus");
             this.buttonXfplus.ForeColor = System.Drawing.Color.White;
             this.buttonXfplus.Name = "buttonXfplus";
             this.buttonXfplus.UseVisualStyleBackColor = true;
@@ -319,8 +319,8 @@
             // 
             // buttonEXPORT
             // 
-            resources.ApplyResources(this.buttonEXPORT, "buttonEXPORT");
             this.tableLayoutPanelMain.SetColumnSpan(this.buttonEXPORT, 3);
+            resources.ApplyResources(this.buttonEXPORT, "buttonEXPORT");
             this.buttonEXPORT.ForeColor = System.Drawing.Color.White;
             this.buttonEXPORT.Name = "buttonEXPORT";
             this.buttonEXPORT.UseVisualStyleBackColor = true;
@@ -335,9 +335,9 @@
             // 
             // buttonDone
             // 
-            resources.ApplyResources(this.buttonDone, "buttonDone");
             this.tableLayoutPanelMain.SetColumnSpan(this.buttonDone, 3);
             this.buttonDone.DialogResult = System.Windows.Forms.DialogResult.OK;
+            resources.ApplyResources(this.buttonDone, "buttonDone");
             this.buttonDone.ForeColor = System.Drawing.Color.White;
             this.buttonDone.Name = "buttonDone";
             this.buttonDone.UseVisualStyleBackColor = true;
@@ -345,48 +345,48 @@
             // 
             // textYc
             // 
-            resources.ApplyResources(this.textYc, "textYc");
             this.tableLayoutPanelMain.SetColumnSpan(this.textYc, 2);
+            resources.ApplyResources(this.textYc, "textYc");
             this.textYc.Name = "textYc";
             this.textYc.TextChanged += new System.EventHandler(this.textYc_TextChanged);
             this.textYc.Leave += new System.EventHandler(this.textXc_Leave);
             // 
             // textZc
             // 
-            resources.ApplyResources(this.textZc, "textZc");
             this.tableLayoutPanelMain.SetColumnSpan(this.textZc, 2);
+            resources.ApplyResources(this.textZc, "textZc");
             this.textZc.Name = "textZc";
             this.textZc.TextChanged += new System.EventHandler(this.textZc_TextChanged);
             this.textZc.Leave += new System.EventHandler(this.textXc_Leave);
             // 
             // textXf
             // 
-            resources.ApplyResources(this.textXf, "textXf");
             this.tableLayoutPanelMain.SetColumnSpan(this.textXf, 2);
+            resources.ApplyResources(this.textXf, "textXf");
             this.textXf.Name = "textXf";
             this.textXf.TextChanged += new System.EventHandler(this.textXf_TextChanged);
             this.textXf.Leave += new System.EventHandler(this.textXc_Leave);
             // 
             // textYf
             // 
-            resources.ApplyResources(this.textYf, "textYf");
             this.tableLayoutPanelMain.SetColumnSpan(this.textYf, 2);
+            resources.ApplyResources(this.textYf, "textYf");
             this.textYf.Name = "textYf";
             this.textYf.TextChanged += new System.EventHandler(this.textYf_TextChanged);
             this.textYf.Leave += new System.EventHandler(this.textXc_Leave);
             // 
             // textZf
             // 
-            resources.ApplyResources(this.textZf, "textZf");
             this.tableLayoutPanelMain.SetColumnSpan(this.textZf, 2);
+            resources.ApplyResources(this.textZf, "textZf");
             this.textZf.Name = "textZf";
             this.textZf.TextChanged += new System.EventHandler(this.textZf_TextChanged);
             this.textZf.Leave += new System.EventHandler(this.textXc_Leave);
             // 
             // textXc
             // 
-            resources.ApplyResources(this.textXc, "textXc");
             this.tableLayoutPanelMain.SetColumnSpan(this.textXc, 2);
+            resources.ApplyResources(this.textXc, "textXc");
             this.textXc.Name = "textXc";
             this.textXc.TextChanged += new System.EventHandler(this.textXc_TextChanged);
             this.textXc.Leave += new System.EventHandler(this.textXc_Leave);
@@ -400,9 +400,9 @@
             // 
             // groupBox1
             // 
-            resources.ApplyResources(this.groupBox1, "groupBox1");
             this.tableLayoutPanelMain.SetColumnSpan(this.groupBox1, 6);
             this.groupBox1.Controls.Add(this.tabBody);
+            resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.ForeColor = System.Drawing.Color.White;
             this.groupBox1.Name = "groupBox1";
             this.tableLayoutPanelMain.SetRowSpan(this.groupBox1, 2);
@@ -410,17 +410,17 @@
             // 
             // tabBody
             // 
-            resources.ApplyResources(this.tabBody, "tabBody");
             this.tabBody.Controls.Add(this.tabPage1);
             this.tabBody.Controls.Add(this.tabArmor);
+            resources.ApplyResources(this.tabBody, "tabBody");
             this.tabBody.Name = "tabBody";
             this.tabBody.SelectedIndex = 0;
             // 
             // tabPage1
             // 
-            resources.ApplyResources(this.tabPage1, "tabPage1");
             this.tabPage1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
             this.tabPage1.Controls.Add(this.myTablePanel2);
+            resources.ApplyResources(this.tabPage1, "tabPage1");
             this.tabPage1.Name = "tabPage1";
             // 
             // myTablePanel2
@@ -486,9 +486,9 @@
             // 
             // tabArmor
             // 
-            resources.ApplyResources(this.tabArmor, "tabArmor");
             this.tabArmor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
             this.tabArmor.Controls.Add(this.myTablePanel1);
+            resources.ApplyResources(this.tabArmor, "tabArmor");
             this.tabArmor.Name = "tabArmor";
             // 
             // myTablePanel1
@@ -560,7 +560,6 @@
             // 
             // comboParent
             // 
-            resources.ApplyResources(this.comboParent, "comboParent");
             this.comboParent.FormattingEnabled = true;
             this.comboParent.Items.AddRange(new object[] {
             resources.GetString("comboParent.Items"),
@@ -569,6 +568,7 @@
             resources.GetString("comboParent.Items3"),
             resources.GetString("comboParent.Items4"),
             resources.GetString("comboParent.Items5")});
+            resources.ApplyResources(this.comboParent, "comboParent");
             this.comboParent.Name = "comboParent";
             this.comboParent.SelectedValueChanged += new System.EventHandler(this.comboParent_SelectedIndexChanged);
             // 
@@ -580,9 +580,9 @@
             // 
             // listViewBoxes
             // 
-            resources.ApplyResources(this.listViewBoxes, "listViewBoxes");
             this.listViewBoxes.Activation = System.Windows.Forms.ItemActivation.OneClick;
             this.listViewBoxes.ContextMenuStrip = this.contextMenuStrip1;
+            resources.ApplyResources(this.listViewBoxes, "listViewBoxes");
             this.listViewBoxes.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.listViewBoxes.HideSelection = false;
             this.listViewBoxes.LabelEdit = true;
@@ -598,7 +598,6 @@
             // 
             // contextMenuStrip1
             // 
-            resources.ApplyResources(this.contextMenuStrip1, "contextMenuStrip1");
             this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.createToolStripMenuItem,
@@ -606,6 +605,7 @@
             this.deleteToolStripMenuItem,
             this.changeColorToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
+            resources.ApplyResources(this.contextMenuStrip1, "contextMenuStrip1");
             // 
             // createToolStripMenuItem
             // 
@@ -729,9 +729,9 @@
             // 
             // displayBox
             // 
-            resources.ApplyResources(this.displayBox, "displayBox");
             this.displayBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tableLayoutPanelMain.SetColumnSpan(this.displayBox, 3);
+            resources.ApplyResources(this.displayBox, "displayBox");
             this.displayBox.Image = global::PckStudio.Properties.Resources.bg2;
             this.displayBox.Name = "displayBox";
             this.tableLayoutPanelMain.SetRowSpan(this.displayBox, 17);
@@ -739,9 +739,9 @@
             // 
             // texturePreview
             // 
-            resources.ApplyResources(this.texturePreview, "texturePreview");
             this.texturePreview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tableLayoutPanelMain.SetColumnSpan(this.texturePreview, 6);
+            resources.ApplyResources(this.texturePreview, "texturePreview");
             this.texturePreview.Name = "texturePreview";
             this.tableLayoutPanelMain.SetRowSpan(this.texturePreview, 5);
             this.texturePreview.TabStop = false;

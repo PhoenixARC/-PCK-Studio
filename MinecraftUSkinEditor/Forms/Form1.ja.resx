@@ -432,6 +432,18 @@
   <data name="metaToolStripMenuItem.Text" xml:space="preserve">
     <value>メタ</value>
   </data>
+  <data name="addPasswordToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        wwAADsMBx2+oZAAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4yMfEgaZUAAACRSURBVFhH7Y45
+        DoAwDATz/09DZWRF62utUIBHmgayk6xhaHBtvs5/HmBdor97/1roUEcaFGOkQTHGFpVg5WyaarB6PoSJ
+        MZsHPd7NgrZiCBqJWdBWDEEjMQvaiiFoJGZBW7EMM2Y2JjqWCVbPh+xBL1o5mwIFGWlQjJEGxRhbWCH9
+        3ft3DH3J0Yss5gHDF1jrBvn6/wGuM1ZgAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="addPasswordToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>170, 22</value>
+  </data>
   <data name="fileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>56, 20</value>
   </data>
@@ -3644,20 +3656,11 @@
   <data name="helpToolStripMenuItem.Text" xml:space="preserve">
     <value>助けて</value>
   </data>
-  <data name="openToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>193, 22</value>
-  </data>
   <data name="openToolStripMenuItem1.Text" xml:space="preserve">
     <value>PCKセンターを開く</value>
   </data>
-  <data name="wiiUPCKInstallerToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>193, 22</value>
-  </data>
   <data name="wiiUPCKInstallerToolStripMenuItem.Text" xml:space="preserve">
     <value>Wii UPCKインストーラー</value>
-  </data>
-  <data name="PS3PCKInstallerToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>193, 22</value>
   </data>
   <data name="PS3PCKInstallerToolStripMenuItem.Text" xml:space="preserve">
     <value>PS3PCKインストーラー</value>
@@ -3667,6 +3670,12 @@
   </data>
   <data name="storeToolStripMenuItem.Text" xml:space="preserve">
     <value>もっと</value>
+  </data>
+  <data name="uPDATEToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>45, 20</value>
+  </data>
+  <data name="uPDATEToolStripMenuItem1.Text" xml:space="preserve">
+    <value>更新</value>
   </data>
   <data name="addPresetToolStripMenuItem1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -4641,6 +4650,21 @@
   </data>
   <data name="label9.Text" xml:space="preserve">
     <value>エントリーデータ</value>
+  </data>
+  <data name="ChangeURL.Size" type="System.Drawing.Size, System.Drawing">
+    <value>108, 13</value>
+  </data>
+  <data name="ChangeURL.Text" xml:space="preserve">
+    <value>PCKChangeLogJp.txt</value>
+  </data>
+  <data name="LittleEndianCheckBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>630, 42</value>
+  </data>
+  <data name="LittleEndianCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>168, 15</value>
+  </data>
+  <data name="LittleEndianCheckBox.Text" xml:space="preserve">
+    <value>PS Vita/PS4 PACKとして保存</value>
   </data>
   <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
     <value>154, 31</value>
@@ -6372,5 +6396,9 @@
         G+hjDW20iAiLRHOFixxnkP0cZJRpF1U/QwpVsgOg8KFHYQQTM7dSnLR5QRAEQRAE+D85YJDPCXlFCwAA
         AABJRU5ErkJggg==
 </value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>Inherit</value>
   </data>
 </root>

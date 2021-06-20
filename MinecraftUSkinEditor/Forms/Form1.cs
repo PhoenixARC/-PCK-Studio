@@ -22,6 +22,7 @@ using PckStudio.Forms;
 using System.IO.Packaging;
 using System.Drawing.Imaging;
 using RichPresenceClient;
+using System.Resources;
 
 namespace MinecraftUSkinEditor
 {
@@ -30,7 +31,7 @@ namespace MinecraftUSkinEditor
         #region Variables
         string saveLocation;//Save location for pck file
         int fileCount = 0;//variable for number of minefiles
-        string Version = "5.2";//template for program version
+        string Version = "5.6";//template for program version
         string hosturl = File.ReadAllText(Environment.CurrentDirectory + "\\settings.ini").Split(new[] { "\r\n", "\n" }, StringSplitOptions.None)[0];
         string basurl = "";
         string PCKFile = "";
@@ -47,7 +48,7 @@ namespace MinecraftUSkinEditor
         bool saved = true;
         string appData = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/PCK Studio/";
         public static bool correct = false;
-        int isdebug = 0;
+        bool isdebug = false;
 
         public class displayId
         {
@@ -63,6 +64,8 @@ namespace MinecraftUSkinEditor
             Thread.CurrentThread.CurrentCulture = ci;
             InitializeComponent();
 
+            if (Program.IsDev)
+                isdebug = true;
 
             FormBorderStyle = FormBorderStyle.None;
             labelVersion.Text += Version;
@@ -88,13 +91,13 @@ namespace MinecraftUSkinEditor
                     if (ofd.ShowDialog() == DialogResult.OK)
                     {
                         PCKFile = Path.GetFileName(ofd.FileName);
-                        openPck(ofd.FileName);
+                            openPck(ofd.FileName);
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception err)
             {
-                MessageBox.Show("The PCK you're trying to use currently isn't supported");//Error handling for PCKs that give errors when trying to be opened
+                MessageBox.Show("The PCK you're trying to use currently isn't supported\n" + err.StackTrace + "\n\n" + err.Message);//Error handling for PCKs that give errors when trying to be opened
             }
         }
 
@@ -247,6 +250,8 @@ namespace MinecraftUSkinEditor
             }
             labelAmount.Text = "Files:" + fileCount;
             saved = false;
+            LittleEndianCheckBox.Visible = true;
+            LittleEndianCheckBox.Checked = currentPCK.IsLittleEndian;
         }
         #endregion
 
@@ -298,7 +303,21 @@ namespace MinecraftUSkinEditor
                         buttonEdit.Text = "EDIT BOXES";
                         buttonEdit.Visible = true;
                     }
-                    else if (boxes==0)
+                    else if (entry[0].ToString() == "ANIM")
+                    {
+                        Console.WriteLine(entry[1]);
+                        Console.WriteLine((entry[1].ToString() == "0x80000").ToString() + " - " + entry[1]);
+                        Console.WriteLine((entry[1].ToString() == "0x40000").ToString() + " - "+ entry[1]);
+
+
+                        if ((entry[1].ToString() == "0x40000") || (entry[1].ToString() == "0x80000"))
+                        {
+                            buttonEdit.Text = "View Skin";
+                            boxes += 1;
+                            buttonEdit.Visible = true;
+                        }
+                    }
+                    else if(boxes == 0)
                     {
                         buttonEdit.Visible = false;
                     }
@@ -620,7 +639,18 @@ namespace MinecraftUSkinEditor
                     {
                         try
                         {
-                            File.WriteAllBytes(ofd.FileName, currentPCK.Rebuild());
+                            Console.WriteLine(currentPCK.IsLittleEndian.ToString() + "--");
+                            if (LittleEndianCheckBox.Checked)
+                            {
+                                byte[] oouput = currentPCK.RebuildVita();
+                                oouput[0] = 0x03;
+                                File.WriteAllBytes(ofd.FileName, currentPCK.RebuildVita());
+                            }
+                            else
+                            {
+                                byte[] oouput = currentPCK.Rebuild();
+                                File.WriteAllBytes(ofd.FileName, currentPCK.Rebuild());
+                            }
                             saveLocation = ofd.FileName;
                             openedPCKS.SelectedTab.Text = Path.GetFileName(ofd.FileName);
                             saved = true;
@@ -645,7 +675,18 @@ namespace MinecraftUSkinEditor
                     {
                         try
                         {
-                            File.WriteAllBytes(ofd.FileName, currentPCK.Rebuild());
+                            Console.WriteLine(currentPCK.IsLittleEndian.ToString() + "--");
+                            if (LittleEndianCheckBox.Checked)
+                            {
+                                byte[] oouput = currentPCK.RebuildVita();
+                                oouput[0] = 0x03;
+                                File.WriteAllBytes(ofd.FileName, currentPCK.RebuildVita());
+                            }
+                            else
+                            {
+                                byte[] oouput = currentPCK.Rebuild();
+                                File.WriteAllBytes(ofd.FileName, currentPCK.Rebuild());
+                            }
                             saveLocation = ofd.FileName;
                             openedPCKS.SelectedTab.Text = Path.GetFileName(ofd.FileName);
                             saved = true;
@@ -664,7 +705,18 @@ namespace MinecraftUSkinEditor
                 {
                     try
                     {
-                        File.WriteAllBytes(saveLocation, currentPCK.Rebuild());
+                        Console.WriteLine(currentPCK.IsLittleEndian.ToString() + "--");
+                        if (LittleEndianCheckBox.Checked)
+                        {
+                            byte[] oouput = currentPCK.RebuildVita();
+                            oouput[0] = 0x03;
+                            File.WriteAllBytes(saveLocation, currentPCK.RebuildVita());
+                        }
+                        else
+                        {
+                            byte[] oouput = currentPCK.Rebuild();
+                            File.WriteAllBytes(saveLocation, currentPCK.Rebuild());
+                        }
                     }
                     catch (Exception)
                     {
@@ -928,7 +980,23 @@ namespace MinecraftUSkinEditor
                 //Checks to see if selected minefile is a col file
                 if (Path.GetExtension(mf.name) == ".col")
                 {
-                    MessageBox.Show(".COL Editor Coming Soon!");
+                    //MessageBox.Show(".COL Editor Coming Soon!");
+
+                    if (treeViewMain.SelectedNode.Tag is PCK.MineFile)
+                    {
+                        try
+                        {
+                            PckStudio.Forms.Utilities.COLEditor diag = new PckStudio.Forms.Utilities.COLEditor(mf.data, mf);
+                            diag.Show();
+                        }
+                        catch
+                        {
+                            MessageBox.Show("No Color data found.", "Error", MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+                            return;
+                        }
+                        //mf.data = l.Rebuild();//Rebuilds loc file with locdata in grid view after closing dialog
+                    }
                 }
 
                 //Checks to see if selected minefile is a binka file
@@ -1200,14 +1268,14 @@ namespace MinecraftUSkinEditor
             }
             try
             {
-                new WebClient().DownloadString(Program.baseurl + "PCKChangeLog.txt");
+                new WebClient().DownloadString(Program.baseurl + ChangeURL.Text);
                 basurl = Program.baseurl;
             }
             catch
             {
                 basurl = Program.backurl;
             }
-            if (isdebug == 1)
+            if (isdebug)
                 DBGLabel.Visible = true;
             //runs creator spotlight once per day
             //if (!File.Exists(appData + "date.txt"))
@@ -1246,7 +1314,10 @@ namespace MinecraftUSkinEditor
             {
                 using (WebClient client = new WebClient())
                 {
-                        File.WriteAllText(appData + "pckStudioChangelog.txt", client.DownloadString(basurl + "PCKChangeLog.txt"));
+                    if(isdebug)
+                        File.WriteAllText(appData + "pckStudioChangelog.txt", File.ReadAllText("C:\\WEBSITES\\PCKStudio\\studio\\PCK\\api\\" + ChangeURL.Text));
+                    else
+                        File.WriteAllText(appData + "pckStudioChangelog.txt", client.DownloadString(basurl + ChangeURL.Text));
                         richTextBoxChangelog.Text = File.ReadAllText(appData + "pckStudioChangelog.txt");
                 }
             }
@@ -3058,7 +3129,18 @@ namespace MinecraftUSkinEditor
             PCK.MineFile mf = (PCK.MineFile)treeViewMain.SelectedNode.Tag;
 
             if (Path.GetExtension(mf.name) == ".png")
-                editModel(mf);
+            {
+                if (buttonEdit.Text == "EDIT BOXES")
+                    editModel(mf);
+                else if (buttonEdit.Text == "View Skin")
+                {
+                    using (var ms = new MemoryStream(mf.data))
+                    {
+                        SkinPreview frm = new SkinPreview(Image.FromStream(ms));
+                        frm.Show();
+                    }
+                }
+            }
 
             if (Path.GetExtension(mf.name) == ".loc")
                 {
@@ -3102,7 +3184,6 @@ namespace MinecraftUSkinEditor
 
         private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
         {
-            RPC.CloseRPC();
             if (saved == false)
             {
                 if (MessageBox.Show("Save PCK?", "Unsaved PCK", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
@@ -3338,6 +3419,17 @@ namespace MinecraftUSkinEditor
                     }
                 PCKFileBCKUP = PCKFile;
             }
+        }
+
+        private void tSTToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Testx_12 form1 = new Testx_12();
+            form1.Show();
+        }
+
+        private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            RPC.CloseRPC();
         }
     }
 }

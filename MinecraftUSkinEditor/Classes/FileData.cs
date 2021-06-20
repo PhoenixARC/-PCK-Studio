@@ -19,6 +19,7 @@ namespace MinecraftUSkinEditor
 
 		public FileData(byte[] b)
 		{
+			this.p = 0;
 			this.b = b;
 		}
 
@@ -50,7 +51,9 @@ namespace MinecraftUSkinEditor
 			{
 				return (b[p++] & 0xFF) | ((b[p++] & 0xFF) << 8) | ((b[p++] & 0xFF) << 16) | ((b[p++] & 0xFF) << 24);
 			}
-			return ((b[p++] & 0xFF) << 24) | ((b[p++] & 0xFF) << 16) | ((b[p++] & 0xFF) << 8) | (b[p++] & 0xFF);
+			int d = p;
+			int oot = ((b[p++] & 0xFF) << 24) | ((b[p++] & 0xFF) << 16) | ((b[p++] & 0xFF) << 8) | (b[p++] & 0xFF);
+			return oot;
 		}
 
 		public int readThree()
@@ -65,6 +68,35 @@ namespace MinecraftUSkinEditor
 		public int readShort()
 		{
 			if (Endian == Endianness.Little)
+			{
+				return (b[p++] & 0xFF) | ((b[p++] & 0xFF) << 8);
+			}
+			return ((b[p++] & 0xFF) << 8) | (b[p++] & 0xFF);
+		}
+
+		public int readIntVita()
+		{
+			if (Endian != Endianness.Little)
+			{
+				int d = p;
+				return (b[p++] & 0xFF) | ((b[p++] & 0xFF) << 8) | ((b[p++] & 0xFF) << 16) | ((b[p++] & 0xFF) << 24);
+			}
+			int oot = ((b[p++] & 0xFF) << 24) | ((b[p++] & 0xFF) << 16) | ((b[p++] & 0xFF) << 8) | (b[p++] & 0xFF);
+			return oot;
+		}
+
+		public int readThreeVita()
+		{
+			if (Endian != Endianness.Little)
+			{
+				return (b[p++] & 0xFF) | ((b[p++] & 0xFF) << 8) | ((b[p++] & 0xFF) << 16);
+			}
+			return ((b[p++] & 0xFF) << 16) | ((b[p++] & 0xFF) << 8) | (b[p++] & 0xFF);
+		}
+
+		public int readShortVita()
+		{
+			if (Endian != Endianness.Little)
 			{
 				return (b[p++] & 0xFF) | ((b[p++] & 0xFF) << 8);
 			}

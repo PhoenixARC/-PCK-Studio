@@ -431,8 +431,8 @@ namespace PckStudio
                                 //Maps imported Texture if auto texture is disabled
                                 if (autoTexture != true)
                                 {
-                                    RectangleF destRect = new RectangleF( 
-                                        (float)(x + double.Parse(listViewItem.SubItems[3].Text) * 5), 
+                                    RectangleF destRect = new RectangleF(
+                                        (float)(x + double.Parse(listViewItem.SubItems[3].Text) * 5),
                                         (float)(y + double.Parse(listViewItem.SubItems[2].Text) * 5),
                                         (float)(double.Parse(listViewItem.SubItems[6].Text) * 5),
                                         (float)(double.Parse(listViewItem.SubItems[5].Text) * 5));
@@ -1864,7 +1864,7 @@ namespace PckStudio
                 IEnumerator enumerator = listView.Items.GetEnumerator();
                 try
                 {
-                    label_33:
+                label_33:
                     if (enumerator.MoveNext())
                     {
                         ListViewItem current = (ListViewItem)enumerator.Current;

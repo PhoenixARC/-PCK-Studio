@@ -87,6 +87,24 @@ namespace MinecraftUSkinEditor
 			}
 		}
 
+		public void writeIntVita(int i)
+		{
+			if (Endian != Endianness.Little)
+			{
+				data.Add((byte)((i) & 0xFF));
+				data.Add((byte)((i >> 8) & 0xFF));
+				data.Add((byte)((i >> 16) & 0xFF));
+				data.Add((byte)((i >> 24) & 0xFF));
+			}
+			else
+			{
+				data.Add((byte)((i >> 24) & 0xFF));
+				data.Add((byte)((i >> 16) & 0xFF));
+				data.Add((byte)((i >> 8) & 0xFF));
+				data.Add((byte)((i) & 0xFF));
+			}
+		}
+
 		public void align(int i){
 			while(data.Count % i != 0)
 				writeByte(0);

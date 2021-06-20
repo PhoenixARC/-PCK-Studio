@@ -3,6 +3,9 @@
   <Import Project="..\packages\Costura.Fody.5.0.0-alpha0281\build\Costura.Fody.props" Condition="Exists('..\packages\Costura.Fody.5.0.0-alpha0281\build\Costura.Fody.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
+    <LangVersion>preview</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{0ACAAEDE-93F5-4B5D-B8D7-A0C43359C0D6}</ProjectGuid>
@@ -10,7 +13,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>PckStudio</RootNamespace>
     <AssemblyName>PCK Studio</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <NuGetPackageImportStamp>
@@ -282,6 +285,34 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\Bink.cs" />
+    <Compile Include="Classes\COL.cs" />
+    <Compile Include="Classes\CSM.cs" />
+    <Compile Include="Classes\Models\DefaultModels\CharacterModel.cs" />
+    <Compile Include="Classes\Models\DefaultModels\ModelBase.cs" />
+    <Compile Include="Classes\Models\DefaultModels\Texture.cs" />
+    <Compile Include="Classes\Models\DefaultModels\TextureSelector.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Classes\Models\Backgrounds.cs" />
+    <Compile Include="Classes\Models\BackgroundTypes.cs" />
+    <Compile Include="Classes\Models\Box.cs" />
+    <Compile Include="Classes\Models\Effects.cs" />
+    <Compile Include="Classes\Models\Matrix3D.cs" />
+    <Compile Include="Classes\Models\ModelView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Models\ModelView.Designer.cs">
+      <DependentUpon>ModelView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\Models\Object3D.cs" />
+    <Compile Include="Classes\Models\Object3DGroup.cs" />
+    <Compile Include="Classes\Models\Point3D.cs" />
+    <Compile Include="Classes\Models\Positions.cs" />
+    <Compile Include="Classes\Models\ProjectionTypes.cs" />
+    <Compile Include="Classes\Models\RotationOrders.cs" />
+    <Compile Include="Classes\Models\Texel.cs" />
+    <Compile Include="Classes\Models\TexelComparer.cs" />
+    <Compile Include="Classes\Models\TexturePlane.cs" />
     <Compile Include="Classes\RichPresenceClient.cs" />
     <Compile Include="Forms\Skins-And-Textures\addAnimatedTexture.cs">
       <SubType>Form</SubType>
@@ -346,11 +377,35 @@
     <Compile Include="Forms\Skins-And-Textures\generateModel.Designer.cs">
       <DependentUpon>generateModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Skins-And-Textures\generateModelRENDR.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Skins-And-Textures\generateModelRENDR.Designer.cs">
+      <DependentUpon>generateModelRENDR.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Additional-Popups\goodbye.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\Additional-Popups\goodbye.Designer.cs">
       <DependentUpon>goodbye.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Skins-And-Textures\SkinPreview.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Skins-And-Textures\SkinPreview.Designer.cs">
+      <DependentUpon>SkinPreview.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Testx-12.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Testx-12.Designer.cs">
+      <DependentUpon>Testx-12.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Utilities\COLEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Utilities\COLEditor.Designer.cs">
+      <DependentUpon>COLEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Utilities\installPS3.cs">
       <SubType>Form</SubType>
@@ -521,11 +576,29 @@
     <EmbeddedResource Include="Forms\Skins-And-Textures\generateModel.resx">
       <DependentUpon>generateModel.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Skins-And-Textures\generateModelRENDR.ja.resx">
+      <DependentUpon>generateModelRENDR.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Skins-And-Textures\generateModelRENDR.resx">
+      <DependentUpon>generateModelRENDR.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\goodbye.ja.resx">
       <DependentUpon>goodbye.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\goodbye.resx">
       <DependentUpon>goodbye.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Skins-And-Textures\SkinPreview.resx">
+      <DependentUpon>SkinPreview.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Testx-12.resx">
+      <DependentUpon>Testx-12.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Utilities\COLEditor.ja.resx">
+      <DependentUpon>COLEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Utilities\COLEditor.resx">
+      <DependentUpon>COLEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Utilities\installPS3.resx">
       <DependentUpon>installPS3.cs</DependentUpon>
@@ -629,6 +702,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\apps.zip" />
     <None Include="Resources\binkawin.asi" />
     <None Include="xbox.png" />
     <None Include="youtube_PNG15.png" />
@@ -650,6 +724,9 @@
     <Content Include="lib\sharpdx_direct3d11_1_effects_x86.dll" />
     <None Include="wiiu.png" />
     <Content Include="Resources\binka_encode.exe" />
+    <None Include="Resources\discord.png" />
+    <None Include="Resources\man.png" />
+    <None Include="Resources\external-content.duckduckgo.png" />
     <Content Include="Resources\mss32.dll" />
     <None Include="Resources\sdDownload.png" />
     <None Include="Resources\Replace.png" />
