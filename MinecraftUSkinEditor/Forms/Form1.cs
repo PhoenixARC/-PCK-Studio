@@ -1,28 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Threading;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 using System.IO.Compression;
 using System.Net;
 using System.Diagnostics;
-using System.Linq.Expressions;
-using System.Resources;
 using PckStudio.Properties;
 using Ohana3DS_Rebirth.Ohana;
 using PckStudio;
 using PckStudio.Forms;
-using System.IO.Packaging;
 using System.Drawing.Imaging;
 using RichPresenceClient;
-using System.Resources;
 
 namespace MinecraftUSkinEditor
 {
@@ -31,11 +23,12 @@ namespace MinecraftUSkinEditor
         #region Variables
         string saveLocation;//Save location for pck file
         int fileCount = 0;//variable for number of minefiles
-        string Version = "5.6";//template for program version
+        string Version = "5.7";//template for program version
         string hosturl = File.ReadAllText(Environment.CurrentDirectory + "\\settings.ini").Split(new[] { "\r\n", "\n" }, StringSplitOptions.None)[0];
         string basurl = "";
         string PCKFile = "";
         string PCKFileBCKUP = "x";
+        loadedTexture tex = new loadedTexture(); //3DS feature variable
 
 
         PCK.MineFile mf;//Template minefile variable
@@ -1268,6 +1261,30 @@ namespace MinecraftUSkinEditor
             }
             try
             {
+                label1.Theme = this.Theme;
+                labelVersion.Theme = this.Theme;
+                label2.Theme = this.Theme;
+                label3.Theme = this.Theme;
+                labelImageSize.Theme = this.Theme;
+                labelAmount.Theme = this.Theme;
+                labelEntryType.Theme = this.Theme;
+                labelEntryData.Theme = this.Theme;
+                DBGLabel.Theme = this.Theme;
+                label4.Theme = this.Theme;
+                label6.Theme = this.Theme;
+                label7.Theme = this.Theme;
+                label8.Theme = this.Theme;
+                label9.Theme = this.Theme;
+                label10.Theme = this.Theme;
+                label11.Theme = this.Theme;
+                ChangeURL.Theme = this.Theme;
+                label5.Theme = this.Theme;
+                openedPCKS.Theme = this.Theme;
+                tabPage1.Theme = this.Theme;
+                metroTabControl1.Theme = this.Theme;
+                metroTabPage1.Theme = this.Theme;
+                LittleEndianCheckBox.Theme = this.Theme;
+
                 new WebClient().DownloadString(Program.baseurl + ChangeURL.Text);
                 basurl = Program.baseurl;
             }
@@ -1902,16 +1919,7 @@ namespace MinecraftUSkinEditor
             {
                 try
                 {
-                    bool latest = false;
-                    if (MessageBox.Show("Latest Version?", "Latest?", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                    {
-                        latest = true;
-                    }
-
-                    if (latest == true)
-                    {
-
-                    }
+                    bool latest = true;
 
                     string packName = openedPCKS.SelectedTab.Text.Remove(openedPCKS.SelectedTab.Text.Count() - 4, 4);//Determines skin packs name off of pck file name
 
@@ -2753,6 +2761,7 @@ namespace MinecraftUSkinEditor
                                     writeSkins.WriteLine("  }");
                                 }
                             }
+                            Console.WriteLine(writeSkins);
                         }
                         Random rnd = new Random();
                         int month = rnd.Next(1, 13); // creates a number between 1 and 12
@@ -2902,9 +2911,9 @@ namespace MinecraftUSkinEditor
         }
         #endregion
 
-        #region currently scrapped 3ds feature
-        private void ds(){
-            /*private struct loadedTexture
+        #region 3ds feature in testing
+
+        private struct loadedTexture
         {
             public bool modified;
             public uint gpuCommandsOffset;
@@ -2999,32 +3008,31 @@ namespace MinecraftUSkinEditor
                     BinaryReader input = new BinaryReader(data);
                     BinaryWriter output = new BinaryWriter(data);
                     
-                    MemoryStream png = new MemoryStream(mf.data); //Gets image data from minefile data
+                    MemoryStream png = new MemoryStream(((PCK.MineFile)(treeViewMain.SelectedNode.Tag)).data); //Gets image data from minefile data
                     Image skinPicture = Image.FromStream(png); //Constructs image data into image
                     pictureBoxImagePreview.Image = skinPicture; //Sets image preview to image
 
                     byte[] buffer = new byte[skinPicture.Width * skinPicture.Height * 4];
                     input.Read(buffer, 0, buffer.Length);
-                    Bitmap texture = TextureCodec.decode(buffer, skinPicture.Width, skinPicture.Height, fmt);
-
+                    Bitmap texture = TextureCodec.decode(buffer, skinPicture.Width, skinPicture.Height, RenderBase.OTextureFormat.rgba8);
                     tex.texture = new RenderBase.OTexture(texture, "Texure");
                     
-                    tex.texture = treeViewMain.SelectedNode.Tag;
+                    //tex.texture = treeViewMain.SelectedNode.Tag;
                     
                     for (int i = 0; i < bch.textures.Count; i++)
                     {
-                        loadedTexture tex = bch.textures[i];
+                        tex = bch.textures[i];
                         tex.modified = true;
 
                     if (tex.modified)
                         {
-                            byte[] buffer = align(TextureCodec.encode(tex.texture.texture, RenderBase.OTextureFormat.rgba8));
-                            int diff = buffer.Length - tex.length;
+                            byte[] bufferx = align(TextureCodec.encode(tex.texture.texture, RenderBase.OTextureFormat.rgba8));
+                            int diff = bufferx.Length - tex.length;
 
-                            replaceData(data, tex.offset, tex.length, buffer);
+                            replaceData(data, tex.offset, tex.length, bufferx);
 
                             //Update offsets of next textures
-                            tex.length = buffer.Length;
+                            tex.length = bufferx.Length;
                             tex.modified = false;
                             updateTexture(i, tex);
                             for (int j = i; j < bch.textures.Count; j++)
@@ -3115,13 +3123,29 @@ namespace MinecraftUSkinEditor
                             updateAddress(data, input, output, diff);
                         }
                     }
+                    using (Stream file = File.Create(currentFile + ".tmp"))
+                    {
+                        CopyStream(output.BaseStream, file);
+                    }
+
                 }
 
                 MessageBox.Show("Done!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
-        }*/
         }
+
+
+        public static void CopyStream(Stream input, Stream output)
+        {
+            byte[] buffer = new byte[8 * 1024];
+            int len;
+            while ((len = input.Read(buffer, 0, buffer.Length)) > 0)
+            {
+                output.Write(buffer, 0, len);
+            }
+        }
+
         #endregion
 
         private void buttonEditModel_Click(object sender, EventArgs e)
@@ -3310,11 +3334,6 @@ namespace MinecraftUSkinEditor
             pckm.Show();
         }
 
-        private void uPDATEToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void uPDATEToolStripMenuItem1_Click(object sender, EventArgs e)
         {
 
@@ -3430,6 +3449,12 @@ namespace MinecraftUSkinEditor
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             RPC.CloseRPC();
+        }
+
+        private void convertPCTextrurePackToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PckStudio.Forms.Utilities.TextureConverterUtility tex = new PckStudio.Forms.Utilities.TextureConverterUtility(treeViewMain, currentPCK);
+            tex.ShowDialog();
         }
     }
 }

@@ -13,9 +13,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>PckStudio</RootNamespace>
     <AssemblyName>PCK Studio</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
@@ -49,14 +49,15 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>favicon %286%29.ico</ApplicationIcon>
+    <ApplicationIcon>Sin_titulo991.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>
@@ -118,24 +119,28 @@
       <HintPath>..\packages\SharpZipLib.1.0.0-alpha2\lib\netstandard1.3\ICSharpCode.SharpZipLib.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Ionic.Zip, Version=1.9.1.8, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ionic.Zip.1.9.1.8\lib\Ionic.Zip.dll</HintPath>
+    </Reference>
+    <Reference Include="Lidgren.Network, Version=2012.1.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lidgren.Network.1.0.2\lib\net451\Lidgren.Network.dll</HintPath>
+    </Reference>
     <Reference Include="MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
       <HintPath>..\packages\MetroModernUI.1.4.0.0\lib\net\MetroFramework.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="MetroFramework.Design, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
       <HintPath>..\packages\MetroModernUI.1.4.0.0\lib\net\MetroFramework.Design.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="MetroFramework.Fonts, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
       <HintPath>..\packages\MetroModernUI.1.4.0.0\lib\net\MetroFramework.Fonts.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.SqlServer.Types, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <HintPath>..\packages\MapSuiteDependency-MicrosoftSqlServerTypes.10.2.0\lib\net45\Microsoft.SqlServer.Types.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Win32.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Win32.Primitives.4.3.0\lib\net46\Microsoft.Win32.Primitives.dll</HintPath>
+    <Reference Include="Microsoft.Win32.Primitives, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Win32.Primitives.4.0.0\lib\net46\Microsoft.Win32.Primitives.dll</HintPath>
+      <Private>True</Private>
       <Private>True</Private>
     </Reference>
     <Reference Include="MySql.Data">
@@ -147,6 +152,10 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
+      <HintPath>..\packages\OpenTK.1.1.2225.0\lib\net20\OpenTK.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="PowerCollections, Version=1.0.0.0, Culture=neutral, PublicKeyToken=2573bf8a1bdddcd5, processorArchitecture=MSIL">
       <HintPath>..\packages\MapSuiteDependency-NetTopologySuite.10.2.0\lib\net45\PowerCollections.dll</HintPath>
@@ -195,11 +204,18 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.ComponentModel.Primitives, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Primitives.4.0.0\lib\net46\System.ComponentModel.Primitives.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Console, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Console.4.3.0\lib\net46\System.Console.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
     <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.3.0\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
       <Private>True</Private>
@@ -314,6 +330,137 @@
     <Compile Include="Classes\Models\TexelComparer.cs" />
     <Compile Include="Classes\Models\TexturePlane.cs" />
     <Compile Include="Classes\RichPresenceClient.cs" />
+    <Compile Include="Classes\StoneVOX\brush\BrushAdd.cs" />
+    <Compile Include="Classes\StoneVOX\brush\BrushColorSelection.cs" />
+    <Compile Include="Classes\StoneVOX\brush\BrushMatrixSelection.cs" />
+    <Compile Include="Classes\StoneVOX\brush\BrushRecolor.cs" />
+    <Compile Include="Classes\StoneVOX\brush\BrushRemove.cs" />
+    <Compile Include="Classes\StoneVOX\brush\BrushVoxelSelection.cs" />
+    <Compile Include="Classes\StoneVOX\brush\IVoxelBrush.cs" />
+    <Compile Include="Classes\StoneVOX\brush\VoxelBrushType.cs" />
+    <Compile Include="Classes\StoneVOX\client\Broadcaster.cs" />
+    <Compile Include="Classes\StoneVOX\client\BrushManager.cs" />
+    <Compile Include="Classes\StoneVOX\client\Camera.cs" />
+    <Compile Include="Classes\StoneVOX\client\Colort.cs" />
+    <Compile Include="Classes\StoneVOX\client\ConsoleCommands.cs" />
+    <Compile Include="Classes\StoneVOX\client\DragDropTarget.cs" />
+    <Compile Include="Classes\StoneVOX\client\Floor.cs" />
+    <Compile Include="Classes\StoneVOX\client\GLWindow.cs" />
+    <Compile Include="Classes\StoneVOX\client\GUI.cs" />
+    <Compile Include="Classes\StoneVOX\client\Input.cs" />
+    <Compile Include="Classes\StoneVOX\client\QbManger.cs" />
+    <Compile Include="Classes\StoneVOX\client\Raycaster.cs" />
+    <Compile Include="Classes\StoneVOX\client\Raycaster2.cs" />
+    <Compile Include="Classes\StoneVOX\client\Selection.cs" />
+    <Compile Include="Classes\StoneVOX\client\Singleton.cs" />
+    <Compile Include="Classes\StoneVOX\client\SyncWindow.cs" />
+    <Compile Include="Classes\StoneVOX\client\UndoRedo.cs" />
+    <Compile Include="Classes\StoneVOX\CSM.cs" />
+    <Compile Include="Classes\StoneVOX\gui\Appearence.cs" />
+    <Compile Include="Classes\StoneVOX\gui\appearences\Picture.cs" />
+    <Compile Include="Classes\StoneVOX\gui\appearences\PlainBackground.cs" />
+    <Compile Include="Classes\StoneVOX\gui\appearences\PlainBorder.cs" />
+    <Compile Include="Classes\StoneVOX\gui\appearences\PlainText.cs" />
+    <Compile Include="Classes\StoneVOX\gui\appearences\SmoothBackground.cs" />
+    <Compile Include="Classes\StoneVOX\gui\CollectionEditorHook.cs" />
+    <Compile Include="Classes\StoneVOX\gui\editor\Attributes\GUIAppearenceDataTypeAttribute.cs" />
+    <Compile Include="Classes\StoneVOX\gui\editor\Attributes\GUIAppearenceNameAttribute.cs" />
+    <Compile Include="Classes\StoneVOX\gui\editor\Attributes\GUIWidgetDataType.cs" />
+    <Compile Include="Classes\StoneVOX\gui\editor\Attributes\GUIWidgetNameAttribute.cs" />
+    <Compile Include="Classes\StoneVOX\gui\editor\Data\Appearence\AppearenceData.cs" />
+    <Compile Include="Classes\StoneVOX\gui\editor\Data\Appearence\PictureData.cs" />
+    <Compile Include="Classes\StoneVOX\gui\editor\Data\Appearence\PlainBackgroundData.cs" />
+    <Compile Include="Classes\StoneVOX\gui\editor\Data\Appearence\PlainBorderData.cs" />
+    <Compile Include="Classes\StoneVOX\gui\editor\Data\Appearence\PlainTextData.cs" />
+    <Compile Include="Classes\StoneVOX\gui\editor\Data\ColorData.cs" />
+    <Compile Include="Classes\StoneVOX\gui\editor\Data\GUIData.cs" />
+    <Compile Include="Classes\StoneVOX\gui\editor\Data\Vector2Data.cs" />
+    <Compile Include="Classes\StoneVOX\gui\editor\Data\Widget\ButtonData.cs" />
+    <Compile Include="Classes\StoneVOX\gui\editor\Data\Widget\Slider.cs" />
+    <Compile Include="Classes\StoneVOX\gui\editor\Data\Widget\TextBoxData.cs" />
+    <Compile Include="Classes\StoneVOX\gui\editor\Data\Widget\WidgetData.cs" />
+    <Compile Include="Classes\StoneVOX\gui\editor\GUIEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Classes\StoneVOX\gui\editor\GUIEditor.Designer.cs">
+      <DependentUpon>GUIEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\StoneVOX\gui\Widget.cs" />
+    <Compile Include="Classes\StoneVOX\gui\WidgetAppearence.cs" />
+    <Compile Include="Classes\StoneVOX\gui\WidgetCommands.cs" />
+    <Compile Include="Classes\StoneVOX\io\exporters\ExporterObj.cs" />
+    <Compile Include="Classes\StoneVOX\io\exporters\ExporterQb.cs" />
+    <Compile Include="Classes\StoneVOX\io\exporters\ExporterSVP.cs" />
+    <Compile Include="Classes\StoneVOX\io\IExporter.cs" />
+    <Compile Include="Classes\StoneVOX\io\IImporter.cs" />
+    <Compile Include="Classes\StoneVOX\io\importers\ImporterQb.cs" />
+    <Compile Include="Classes\StoneVOX\io\importers\ImporterSVP.cs" />
+    <Compile Include="Classes\StoneVOX\memory\VoxelBuffer.cs" />
+    <Compile Include="Classes\StoneVOX\memory\VoxelSideBuffer.cs" />
+    <Compile Include="Classes\StoneVOX\Mod\Alias.cs" />
+    <Compile Include="Classes\StoneVOX\Mod\FileReference.cs" />
+    <Compile Include="Classes\StoneVOX\Mod\Manifest.cs" />
+    <Compile Include="Classes\StoneVOX\Mod\StoneHearthMod.cs" />
+    <Compile Include="Classes\StoneVOX\networking\Client.cs" />
+    <Compile Include="Classes\StoneVOX\networking\NetConfig.cs" />
+    <Compile Include="Classes\StoneVOX\networking\NetEndPoint.cs" />
+    <Compile Include="Classes\StoneVOX\networking\packet\IPacket.cs" />
+    <Compile Include="Classes\StoneVOX\networking\packet\Packet.cs" />
+    <Compile Include="Classes\StoneVOX\networking\packet\PacketHandler.cs" />
+    <Compile Include="Classes\StoneVOX\networking\packet\PacketID.cs" />
+    <Compile Include="Classes\StoneVOX\networking\packet\packets\Packet_Chat.cs" />
+    <Compile Include="Classes\StoneVOX\networking\packet\packets\Packet_MatrixRename.cs" />
+    <Compile Include="Classes\StoneVOX\networking\packet\packets\Packet_QbImported.cs" />
+    <Compile Include="Classes\StoneVOX\networking\packet\PacketWriter.cs" />
+    <Compile Include="Classes\StoneVOX\networking\Server.cs" />
+    <Compile Include="Classes\StoneVOX\Program.cs" />
+    <Compile Include="Classes\StoneVOX\qbtypes\QbMatrix.cs" />
+    <Compile Include="Classes\StoneVOX\qbtypes\QbMatrixSide.cs" />
+    <Compile Include="Classes\StoneVOX\qbtypes\QbModel.cs" />
+    <Compile Include="Classes\StoneVOX\qbtypes\Voxel.cs" />
+    <Compile Include="Classes\StoneVOX\qbtypes\VoxelColor.cs" />
+    <Compile Include="Classes\StoneVOX\qbtypes\VoxelLocation.cs" />
+    <Compile Include="Classes\StoneVOX\qbtypes\VoxelModifier.cs" />
+    <Compile Include="Classes\StoneVOX\qbtypes\VoxelSide.cs" />
+    <Compile Include="Classes\StoneVOX\qbtypes\VoxelVolume.cs" />
+    <Compile Include="Classes\StoneVOX\QFont\Builder.cs" />
+    <Compile Include="Classes\StoneVOX\QFont\Configuration\QFontBuilderConfiguration.cs" />
+    <Compile Include="Classes\StoneVOX\QFont\Configuration\QFontConfiguration.cs" />
+    <Compile Include="Classes\StoneVOX\QFont\Configuration\QFontKerningConfiguration.cs" />
+    <Compile Include="Classes\StoneVOX\QFont\Configuration\QFontLoaderConfiguration.cs" />
+    <Compile Include="Classes\StoneVOX\QFont\Configuration\QFontShadowConfiguration.cs" />
+    <Compile Include="Classes\StoneVOX\QFont\FontLoadDescription.cs" />
+    <Compile Include="Classes\StoneVOX\QFont\Helper.cs" />
+    <Compile Include="Classes\StoneVOX\QFont\JBitmap.cs" />
+    <Compile Include="Classes\StoneVOX\QFont\JMath.cs" />
+    <Compile Include="Classes\StoneVOX\QFont\JTexture.cs" />
+    <Compile Include="Classes\StoneVOX\QFont\JTextureManager.cs" />
+    <Compile Include="Classes\StoneVOX\QFont\KerningCalculator.cs" />
+    <Compile Include="Classes\StoneVOX\QFont\ProjectionStack.cs" />
+    <Compile Include="Classes\StoneVOX\QFont\QBitmap.cs" />
+    <Compile Include="Classes\StoneVOX\QFont\QFont.cs" />
+    <Compile Include="Classes\StoneVOX\QFont\QFontData.cs" />
+    <Compile Include="Classes\StoneVOX\QFont\QFontGlyph.cs" />
+    <Compile Include="Classes\StoneVOX\QFont\QFontRenderOptions.cs" />
+    <Compile Include="Classes\StoneVOX\QFont\TextNodeList.cs" />
+    <Compile Include="Classes\StoneVOX\QFont\TexturePage.cs" />
+    <Compile Include="Classes\StoneVOX\renderer\IRenderer.cs" />
+    <Compile Include="Classes\StoneVOX\renderer\SSAO.cs" />
+    <Compile Include="Classes\StoneVOX\renderer\Wireframe.cs" />
+    <Compile Include="Classes\StoneVOX\utils\ColorConversion.cs" />
+    <Compile Include="Classes\StoneVOX\utils\ConsoleUtil.cs" />
+    <Compile Include="Classes\StoneVOX\utils\Extensions.cs" />
+    <Compile Include="Classes\StoneVOX\utils\GLUtils.cs" />
+    <Compile Include="Classes\StoneVOX\utils\ImportExportUtil.cs" />
+    <Compile Include="Classes\StoneVOX\utils\Native.cs" />
+    <Compile Include="Classes\StoneVOX\utils\NetworkUtil.cs" />
+    <Compile Include="Classes\StoneVOX\utils\Scale.cs" />
+    <Compile Include="Classes\StoneVOX\utils\Screenshot.cs" />
+    <Compile Include="Classes\StoneVOX\utils\ShaderUtil.cs" />
+    <Compile Include="Classes\StoneVOX\utils\SideUtil.cs" />
+    <Compile Include="Classes\StoneVOX\utils\StatusText.cs" />
+    <Compile Include="Classes\StoneVOX\utils\StopwatchUtil.cs" />
+    <Compile Include="Classes\StoneVOX\utils\VectorUtils.cs" />
     <Compile Include="Forms\Skins-And-Textures\addAnimatedTexture.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -467,6 +614,12 @@
     <Compile Include="Forms\Additional-Popups\Promo.Designer.cs">
       <DependentUpon>Promo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Utilities\TextureConverterUtility.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Utilities\TextureConverterUtility.Designer.cs">
+      <DependentUpon>TextureConverterUtility.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ZipArchive.cs" />
     <Compile Include="generateModelOLD.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -519,6 +672,9 @@
     <Compile Include="Classes\RenderBase.cs" />
     <Compile Include="Classes\TextureCodec.cs" />
     <Compile Include="Classes\TextureUtils.cs" />
+    <EmbeddedResource Include="Classes\StoneVOX\gui\editor\GUIEditor.resx">
+      <DependentUpon>GUIEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Skins-And-Textures\addAnimatedTexture.ja.resx">
       <DependentUpon>addAnimatedTexture.cs</DependentUpon>
     </EmbeddedResource>
@@ -660,6 +816,9 @@
     <EmbeddedResource Include="Forms\Additional-Popups\Promo.resx">
       <DependentUpon>Promo.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Utilities\TextureConverterUtility.resx">
+      <DependentUpon>TextureConverterUtility.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="generateModelOLD.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>generateModelOLD.Designer.cs</LastGenOutput>
@@ -685,6 +844,29 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="bin\Release\templates\UntitledSkinPCK.pck" />
+    <Content Include="Classes\StoneVOX\data\fonts\Bigfish.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="Classes\StoneVOX\data\gui\Standard.svui" />
+    <Content Include="Classes\StoneVOX\data\shaders\QuadInterpolation.vs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="Classes\StoneVOX\data\shaders\SSAO_geometry.vs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Classes\StoneVOX\data\shaders\SSAO_pass.vs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Classes\StoneVOX\data\shaders\SSAO_voxel.vs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Content Include="Classes\StoneVOX\data\shaders\voxel.vs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\shaders\wireframe.vs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
     <None Include="PCKStudio.pfx" />
     <None Include="Properties\app.manifest" />
@@ -719,6 +901,350 @@
     <None Include="More2.png" />
     <None Include="Resources\turn-off %281%291.png" />
     <None Include="MROE.png" />
+    <Content Include="Classes\StoneVOX\data\images\add.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\addmatrix.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\addmatrix_highlight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\add_highlight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\arrowSide.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\arrowSide_highlight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\arrowUp.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\arrowUp_highlight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\backgroundcolor.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\backgroundcolor_highlight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\brush.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\brush_highlight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\camera.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\camera_highlight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\center_aligned.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\center_aligned_highlight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\colorpicker_cancel.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\colorpicker_cancel_highlight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\colorpicker_header.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\colorpicker_ok.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\colorpicker_ok_highlight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\colorpicker_selectionlocation.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\colorpicker_swatches.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\colorselector.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\colorselector_background.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\cursor_add.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\cursor_eyedrop.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\cursor_paint.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\cursor_remove.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\edit.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\edit_highlight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\eyedropper.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\eyedropper_highlight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\floorcolor.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\floorcolor_highlight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\FontInfo.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\gridoptions.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\gridoptions_highlight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\hue.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\hue_arrow.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\import.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\import_highlight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\matrix_add.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\matrix_add_highlight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\matrix_remove.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\matrix_remove_highlight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\model_tab.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\objsave_highlight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\open.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\open_highlight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\project_settings.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\project_settings_button_off.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\project_settings_button_off_highlight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\project_settings_button_on.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\project_settings_button_on_highlight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\qbsave.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\qbsave_highlight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\qb_matrix_visibility_off.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\qb_matrix_visibility_on.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\redo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\redo_highlight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\remove.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\removematrix.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\removematrix_highlight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\remove_highlight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\save.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\save_highlight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\save_window_background.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\screenshot_bg.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\screenshot_cancel.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\screenshot_cancel_highlight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\screenshot_save.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\screenshot_save_highlight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\selection.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\selection_highlight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\settings.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\settings_highlight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\sub_toolmenu_manyoptions.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\sub_toolmenu_oneoption.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\sub_toolmenu_someoptions.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\tab.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\tab_highlight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\tab_main.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\tab_main_highlight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\tab_matrix.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\tab_matrix_highlight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\target.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\target_cursor.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\target_highlight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\toggelmatrixvisiblity_off.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\toggelmatrixvisiblity_on.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\toolmenu_background.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\undo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\undo_highlight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\view_reset.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\view_reset_highlight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\voxel_add.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\voxel_add_highlight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\voxel_brush.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\voxel_brush_highlight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\voxel_bucket.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\voxel_bucket_highlight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\voxel_button.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\voxel_button_highlight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\voxel_remove.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\voxel_remove_highlight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\voxel_volume.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\images\voxel_volume_highlight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\shaders\QuadInterpolation.fs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\shaders\SSAO_geometry.fs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\shaders\SSAO_pass.fs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\shaders\SSAO_voxel.fs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\shaders\voxel.fs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Classes\StoneVOX\data\shaders\wireframe.fs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="Classes\StoneVOX\OpenTK.dll" />
+    <Content Include="Classes\StoneVOX\QFont\ChangeLog.txt" />
     <Content Include="lib\sharpdx_direct3d11_1_effects_arm.dll" />
     <Content Include="lib\sharpdx_direct3d11_1_effects_x64.dll" />
     <Content Include="lib\sharpdx_direct3d11_1_effects_x86.dll" />
@@ -730,6 +1256,8 @@
     <Content Include="Resources\mss32.dll" />
     <None Include="Resources\sdDownload.png" />
     <None Include="Resources\Replace.png" />
+    <None Include="Resources\pack.png" />
+    <Content Include="Sin_titulo991.ico" />
     <Content Include="x64\d3dcompiler_47.dll" />
     <Content Include="x86\d3dcompiler_47.dll" />
     <None Include="Splash.png" />
@@ -773,8 +1301,10 @@
     <Error Condition="!Exists('..\packages\ThinkGeo.MapSuite.11.0.0-beta042\build\net45\ThinkGeo.MapSuite.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\ThinkGeo.MapSuite.11.0.0-beta042\build\net45\ThinkGeo.MapSuite.targets'))" />
     <Error Condition="!Exists('..\packages\Fody.6.2.0\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.6.2.0\build\Fody.targets'))" />
     <Error Condition="!Exists('..\packages\Costura.Fody.5.0.0-alpha0281\build\Costura.Fody.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Costura.Fody.5.0.0-alpha0281\build\Costura.Fody.props'))" />
+    <Error Condition="!Exists('..\packages\NETStandard.Library.2.0.0\build\netstandard2.0\NETStandard.Library.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NETStandard.Library.2.0.0\build\netstandard2.0\NETStandard.Library.targets'))" />
   </Target>
   <Import Project="..\packages\Fody.6.2.0\build\Fody.targets" Condition="Exists('..\packages\Fody.6.2.0\build\Fody.targets')" />
+  <Import Project="..\packages\NETStandard.Library.2.0.0\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('..\packages\NETStandard.Library.2.0.0\build\netstandard2.0\NETStandard.Library.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

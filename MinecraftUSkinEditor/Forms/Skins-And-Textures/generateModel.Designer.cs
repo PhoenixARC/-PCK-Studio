@@ -78,6 +78,7 @@
             this.label12 = new System.Windows.Forms.Label();
             this.tabArmor = new System.Windows.Forms.TabPage();
             this.myTablePanel1 = new PckStudio.Forms.MyTablePanel();
+            this.label8 = new System.Windows.Forms.Label();
             this.offsetBoots = new System.Windows.Forms.TextBox();
             this.offsetPants = new System.Windows.Forms.TextBox();
             this.offsetTool = new System.Windows.Forms.TextBox();
@@ -86,6 +87,11 @@
             this.offsetHelmet = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.offsetShoulder = new System.Windows.Forms.TextBox();
+            this.offsetWaist = new System.Windows.Forms.TextBox();
+            this.Chest = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.comboParent = new System.Windows.Forms.ComboBox();
             this.labelModeParts = new System.Windows.Forms.Label();
@@ -103,6 +109,7 @@
             this.tableLayoutPanelMain = new System.Windows.Forms.TableLayoutPanel();
             this.displayBox = new System.Windows.Forms.PictureBox();
             this.texturePreview = new System.Windows.Forms.PictureBox();
+            this.button3 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.tabBody.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -494,6 +501,7 @@
             // myTablePanel1
             // 
             resources.ApplyResources(this.myTablePanel1, "myTablePanel1");
+            this.myTablePanel1.Controls.Add(this.label8, 0, 6);
             this.myTablePanel1.Controls.Add(this.offsetBoots, 1, 3);
             this.myTablePanel1.Controls.Add(this.offsetPants, 1, 2);
             this.myTablePanel1.Controls.Add(this.offsetTool, 1, 1);
@@ -502,7 +510,18 @@
             this.myTablePanel1.Controls.Add(this.offsetHelmet, 1, 0);
             this.myTablePanel1.Controls.Add(this.label15, 0, 3);
             this.myTablePanel1.Controls.Add(this.label16, 0, 2);
+            this.myTablePanel1.Controls.Add(this.label1, 0, 5);
+            this.myTablePanel1.Controls.Add(this.label2, 0, 4);
+            this.myTablePanel1.Controls.Add(this.offsetShoulder, 1, 4);
+            this.myTablePanel1.Controls.Add(this.offsetWaist, 1, 5);
+            this.myTablePanel1.Controls.Add(this.Chest, 1, 6);
             this.myTablePanel1.Name = "myTablePanel1";
+            // 
+            // label8
+            // 
+            resources.ApplyResources(this.label8, "label8");
+            this.label8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.label8.Name = "label8";
             // 
             // offsetBoots
             // 
@@ -551,6 +570,33 @@
             resources.ApplyResources(this.label16, "label16");
             this.label16.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
             this.label16.Name = "label16";
+            // 
+            // label1
+            // 
+            resources.ApplyResources(this.label1, "label1");
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.label1.Name = "label1";
+            // 
+            // label2
+            // 
+            resources.ApplyResources(this.label2, "label2");
+            this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.label2.Name = "label2";
+            // 
+            // offsetShoulder
+            // 
+            resources.ApplyResources(this.offsetShoulder, "offsetShoulder");
+            this.offsetShoulder.Name = "offsetShoulder";
+            // 
+            // offsetWaist
+            // 
+            resources.ApplyResources(this.offsetWaist, "offsetWaist");
+            this.offsetWaist.Name = "offsetWaist";
+            // 
+            // Chest
+            // 
+            resources.ApplyResources(this.Chest, "Chest");
+            this.Chest.Name = "Chest";
             // 
             // label6
             // 
@@ -746,10 +792,19 @@
             this.tableLayoutPanelMain.SetRowSpan(this.texturePreview, 5);
             this.texturePreview.TabStop = false;
             // 
+            // button3
+            // 
+            resources.ApplyResources(this.button3, "button3");
+            this.button3.ForeColor = System.Drawing.Color.White;
+            this.button3.Name = "button3";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click_1);
+            // 
             // generateModel
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.button3);
             this.Controls.Add(this.tableLayoutPanelMain);
             this.MaximizeBox = false;
             this.Name = "generateModel";
@@ -852,5 +907,12 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelMain;
         private Forms.MyTablePanel myTablePanel2;
         private Forms.MyTablePanel myTablePanel1;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox offsetShoulder;
+        private System.Windows.Forms.TextBox offsetWaist;
+        private System.Windows.Forms.TextBox Chest;
+        private System.Windows.Forms.Button button3;
     }
 }

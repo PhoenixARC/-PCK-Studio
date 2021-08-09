@@ -53,6 +53,7 @@
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.metaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addPasswordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.convertPCTextrurePackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.advancedMetaAddingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.convertToBedrockToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -83,12 +84,12 @@
             this.joinDevelopmentDiscordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.uPDATEToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.tSTToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.label1 = new System.Windows.Forms.Label();
+            this.label1 = new MetroFramework.Controls.MetroLabel();
             this.contextMenuMetaTree = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addPresetToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.addEntryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteEntryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.labelVersion = new System.Windows.Forms.Label();
+            this.labelVersion = new MetroFramework.Controls.MetroLabel();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.directorySearcher1 = new System.DirectoryServices.DirectorySearcher();
             this.openedPCKS = new MetroFramework.Controls.MetroTabControl();
@@ -96,46 +97,46 @@
             this.myTablePanelPckEdit = new PckStudio.Forms.MyTablePanel();
             this.treeViewMain = new System.Windows.Forms.TreeView();
             this.pictureBoxImagePreview = new MinecraftUSkinEditor.PictureBoxWithInterpolationMode();
-            this.labelAmount = new System.Windows.Forms.Label();
+            this.labelAmount = new MetroFramework.Controls.MetroLabel();
             this.tabDataDisplay = new System.Windows.Forms.TabControl();
             this.tabMetaDisplay = new System.Windows.Forms.TabPage();
             this.myTablePanel1 = new PckStudio.Forms.MyTablePanel();
             this.treeMeta = new System.Windows.Forms.TreeView();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.label2 = new MetroFramework.Controls.MetroLabel();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.labelEntryType = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.labelEntryData = new System.Windows.Forms.Label();
+            this.labelEntryType = new MetroFramework.Controls.MetroLabel();
+            this.label3 = new MetroFramework.Controls.MetroLabel();
+            this.labelEntryData = new MetroFramework.Controls.MetroLabel();
             this.buttonEdit = new System.Windows.Forms.Button();
-            this.labelImageSize = new System.Windows.Forms.Label();
+            this.labelImageSize = new MetroFramework.Controls.MetroLabel();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.DBGLabel = new System.Windows.Forms.Label();
+            this.DBGLabel = new MetroFramework.Controls.MetroLabel();
             this.metroTabControl1 = new MetroFramework.Controls.MetroTabControl();
             this.metroTabPage1 = new MetroFramework.Controls.MetroTabPage();
             this.myTablePanel2 = new PckStudio.Forms.MyTablePanel();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.pictureBoxWithInterpolationMode1 = new MinecraftUSkinEditor.PictureBoxWithInterpolationMode();
-            this.label4 = new System.Windows.Forms.Label();
+            this.label4 = new MetroFramework.Controls.MetroLabel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.myTablePanel3 = new PckStudio.Forms.MyTablePanel();
             this.treeView2 = new System.Windows.Forms.TreeView();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.label6 = new System.Windows.Forms.Label();
+            this.label6 = new MetroFramework.Controls.MetroLabel();
             this.textBox2 = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
+            this.label7 = new MetroFramework.Controls.MetroLabel();
+            this.label8 = new MetroFramework.Controls.MetroLabel();
+            this.label9 = new MetroFramework.Controls.MetroLabel();
             this.button1 = new System.Windows.Forms.Button();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
+            this.label10 = new MetroFramework.Controls.MetroLabel();
+            this.label11 = new MetroFramework.Controls.MetroLabel();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.ChangeURL = new System.Windows.Forms.Label();
+            this.ChangeURL = new MetroFramework.Controls.MetroLabel();
             this.LittleEndianCheckBox = new MetroFramework.Controls.MetroCheckBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.richTextBoxChangelog = new System.Windows.Forms.RichTextBox();
             this.myTablePanelStartScreen = new PckStudio.Forms.MyTablePanel();
+            this.richTextBoxChangelog = new System.Windows.Forms.RichTextBox();
+            this.label5 = new MetroFramework.Controls.MetroLabel();
             this.pckOpen = new System.Windows.Forms.PictureBox();
             this.contextMenuPCKEntries.SuspendLayout();
             this.menuStrip.SuspendLayout();
@@ -280,7 +281,8 @@
             this.saveToolStripMenuItem1,
             this.saveToolStripMenuItem,
             this.metaToolStripMenuItem,
-            this.addPasswordToolStripMenuItem});
+            this.addPasswordToolStripMenuItem,
+            this.convertPCTextrurePackToolStripMenuItem});
             this.fileToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             resources.ApplyResources(this.fileToolStripMenuItem, "fileToolStripMenuItem");
@@ -326,6 +328,12 @@
             resources.ApplyResources(this.addPasswordToolStripMenuItem, "addPasswordToolStripMenuItem");
             this.addPasswordToolStripMenuItem.Name = "addPasswordToolStripMenuItem";
             this.addPasswordToolStripMenuItem.Click += new System.EventHandler(this.addPasswordToolStripMenuItem_Click);
+            // 
+            // convertPCTextrurePackToolStripMenuItem
+            // 
+            this.convertPCTextrurePackToolStripMenuItem.Name = "convertPCTextrurePackToolStripMenuItem";
+            resources.ApplyResources(this.convertPCTextrurePackToolStripMenuItem, "convertPCTextrurePackToolStripMenuItem");
+            this.convertPCTextrurePackToolStripMenuItem.Click += new System.EventHandler(this.convertPCTextrurePackToolStripMenuItem_Click);
             // 
             // editToolStripMenuItem
             // 
@@ -590,6 +598,7 @@
             resources.ApplyResources(this.labelVersion, "labelVersion");
             this.labelVersion.ForeColor = System.Drawing.Color.White;
             this.labelVersion.Name = "labelVersion";
+            this.labelVersion.Theme = MetroFramework.MetroThemeStyle.Dark;
             // 
             // directorySearcher1
             // 
@@ -660,7 +669,6 @@
             resources.ApplyResources(this.labelAmount, "labelAmount");
             this.labelAmount.ForeColor = System.Drawing.Color.White;
             this.labelAmount.Name = "labelAmount";
-            this.labelAmount.UseCompatibleTextRendering = true;
             // 
             // tabDataDisplay
             // 
@@ -767,6 +775,7 @@
             resources.ApplyResources(this.DBGLabel, "DBGLabel");
             this.DBGLabel.ForeColor = System.Drawing.Color.Red;
             this.DBGLabel.Name = "DBGLabel";
+            this.DBGLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
             // 
             // metroTabControl1
             // 
@@ -828,7 +837,6 @@
             resources.ApplyResources(this.label4, "label4");
             this.label4.ForeColor = System.Drawing.Color.White;
             this.label4.Name = "label4";
-            this.label4.UseCompatibleTextRendering = true;
             // 
             // tabControl1
             // 
@@ -932,6 +940,7 @@
             // 
             resources.ApplyResources(this.ChangeURL, "ChangeURL");
             this.ChangeURL.Name = "ChangeURL";
+            this.ChangeURL.Theme = MetroFramework.MetroThemeStyle.Dark;
             // 
             // LittleEndianCheckBox
             // 
@@ -941,11 +950,13 @@
             this.LittleEndianCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.LittleEndianCheckBox.UseSelectable = true;
             // 
-            // label5
+            // myTablePanelStartScreen
             // 
-            resources.ApplyResources(this.label5, "label5");
-            this.label5.ForeColor = System.Drawing.Color.White;
-            this.label5.Name = "label5";
+            resources.ApplyResources(this.myTablePanelStartScreen, "myTablePanelStartScreen");
+            this.myTablePanelStartScreen.Controls.Add(this.richTextBoxChangelog, 1, 1);
+            this.myTablePanelStartScreen.Controls.Add(this.label5, 1, 0);
+            this.myTablePanelStartScreen.Controls.Add(this.pckOpen, 0, 0);
+            this.myTablePanelStartScreen.Name = "myTablePanelStartScreen";
             // 
             // richTextBoxChangelog
             // 
@@ -956,13 +967,12 @@
             this.richTextBoxChangelog.Name = "richTextBoxChangelog";
             this.richTextBoxChangelog.ReadOnly = true;
             // 
-            // myTablePanelStartScreen
+            // label5
             // 
-            resources.ApplyResources(this.myTablePanelStartScreen, "myTablePanelStartScreen");
-            this.myTablePanelStartScreen.Controls.Add(this.richTextBoxChangelog, 1, 1);
-            this.myTablePanelStartScreen.Controls.Add(this.label5, 1, 0);
-            this.myTablePanelStartScreen.Controls.Add(this.pckOpen, 0, 0);
-            this.myTablePanelStartScreen.Name = "myTablePanelStartScreen";
+            resources.ApplyResources(this.label5, "label5");
+            this.label5.ForeColor = System.Drawing.Color.White;
+            this.label5.Name = "label5";
+            this.label5.Theme = MetroFramework.MetroThemeStyle.Dark;
             // 
             // pckOpen
             // 
@@ -1038,7 +1048,6 @@
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ContextMenuStrip contextMenuPCKEntries;
         private System.Windows.Forms.ToolStripMenuItem extractToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem replaceToolStripMenuItem;
@@ -1057,7 +1066,6 @@
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem programInfoToolStripMenuItem;
         private System.Windows.Forms.PictureBox OpenPck;
-        private System.Windows.Forms.Label labelVersion;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.ToolStripMenuItem extractToolStripMenuItem1;
         private System.DirectoryServices.DirectorySearcher directorySearcher1;
@@ -1080,22 +1088,37 @@
         private System.Windows.Forms.ToolStripMenuItem tutorialsToolStripMenuItem;
         private MetroFramework.Controls.MetroTabControl openedPCKS;
         private MetroFramework.Controls.MetroTabPage tabPage1;
+        private MetroFramework.Controls.MetroTabControl metroTabControl1;
+        private MetroFramework.Controls.MetroTabPage metroTabPage1;
+        private MetroFramework.Controls.MetroCheckBox LittleEndianCheckBox;
+        private MetroFramework.Controls.MetroLabel label1;
+        private MetroFramework.Controls.MetroLabel labelVersion;
+        private MetroFramework.Controls.MetroLabel label2;
+        private MetroFramework.Controls.MetroLabel label3;
+        private MetroFramework.Controls.MetroLabel labelImageSize;
+        private MetroFramework.Controls.MetroLabel labelAmount;
+        private MetroFramework.Controls.MetroLabel labelEntryType;
+        private MetroFramework.Controls.MetroLabel labelEntryData;
+        private MetroFramework.Controls.MetroLabel DBGLabel;
+        private MetroFramework.Controls.MetroLabel label4;
+        private MetroFramework.Controls.MetroLabel label6;
+        private MetroFramework.Controls.MetroLabel label7;
+        private MetroFramework.Controls.MetroLabel label8;
+        private MetroFramework.Controls.MetroLabel label9;
+        private MetroFramework.Controls.MetroLabel label10;
+        private MetroFramework.Controls.MetroLabel label11;
+        private MetroFramework.Controls.MetroLabel ChangeURL;
+        private MetroFramework.Controls.MetroLabel label5;
         private System.Windows.Forms.TreeView treeViewMain;
         private System.Windows.Forms.TabControl tabDataDisplay;
         private System.Windows.Forms.TabPage tabMetaDisplay;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.TreeView treeMeta;
         private PictureBoxWithInterpolationMode pictureBoxImagePreview;
-        private System.Windows.Forms.Label labelImageSize;
         private PckStudio.Forms.MyTablePanel myTablePanelPckEdit;
         private System.Windows.Forms.Button buttonEdit;
-        private System.Windows.Forms.Label labelAmount;
         private PckStudio.Forms.MyTablePanel myTablePanel1;
-        private System.Windows.Forms.Label labelEntryType;
-        private System.Windows.Forms.Label labelEntryData;
         private System.Windows.Forms.ToolStripMenuItem wiiUPCKInstallerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem videosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem howToMakeABasicSkinPackToolStripMenuItem;
@@ -1105,26 +1128,16 @@
         private System.Windows.Forms.ToolStripMenuItem howToInstallPcksDirectlyToWiiUToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pCKCenterReleaseToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem howPCKsWorkToolStripMenuItem;
-        private System.Windows.Forms.Label DBGLabel;
-        private MetroFramework.Controls.MetroTabControl metroTabControl1;
-        private MetroFramework.Controls.MetroTabPage metroTabPage1;
         private PckStudio.Forms.MyTablePanel myTablePanel2;
         private System.Windows.Forms.TreeView treeView1;
         private PictureBoxWithInterpolationMode pictureBoxWithInterpolationMode1;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage2;
         private PckStudio.Forms.MyTablePanel myTablePanel3;
         private System.Windows.Forms.TreeView treeView2;
         private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label11;
         private System.Windows.Forms.ToolStripMenuItem PS3PCKInstallerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem administrativeToolsToolStripMenuItem;
@@ -1135,13 +1148,11 @@
         private System.Windows.Forms.ToolStripMenuItem addPasswordToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem joinDevelopmentDiscordToolStripMenuItem;
         private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.Label ChangeURL;
         private System.Windows.Forms.ToolStripMenuItem tSTToolStripMenuItem;
-        private MetroFramework.Controls.MetroCheckBox LittleEndianCheckBox;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.RichTextBox richTextBoxChangelog;
         private PckStudio.Forms.MyTablePanel myTablePanelStartScreen;
         private System.Windows.Forms.PictureBox pckOpen;
+        private System.Windows.Forms.ToolStripMenuItem convertPCTextrurePackToolStripMenuItem;
     }
 }
 

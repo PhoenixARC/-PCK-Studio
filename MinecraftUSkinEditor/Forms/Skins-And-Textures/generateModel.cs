@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Threading;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -7,6 +9,9 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Collections;
 using System.IO;
+using stonevox;
+using Lidgren.Network;
+using OpenTK.Graphics;
 using Brush = System.Drawing.Brush;
 using Color = System.Drawing.Color;
 
@@ -1835,6 +1840,7 @@ namespace PckStudio
                 }
                 contents = contents + (listViewItem.Text + Environment.NewLine + listViewItem.Tag) + Environment.NewLine + str;
             }
+
             File.WriteAllText(saveFileDialog.FileName, contents);
         }
 
@@ -2106,6 +2112,35 @@ namespace PckStudio
         private void textXc_Leave(object sender, EventArgs e)
         {
             textBoxFailCheck((TextBox)sender);
+        }
+
+        public static  GLWindow window;
+
+        private void button3_Click_1(object sender, EventArgs e)
+        {
+
+            string contents = "";
+            foreach (ListViewItem listViewItem in this.listViewBoxes.Items)
+            {
+                string str = "";
+                foreach (ListViewItem.ListViewSubItem subItem in listViewItem.SubItems)
+                {
+                    if (subItem.Text != "unchecked")
+                        str = str + subItem.Text + Environment.NewLine;
+                }
+                contents = contents + (listViewItem.Text + Environment.NewLine + listViewItem.Tag) + Environment.NewLine + str;
+            }
+            Console.WriteLine(contents);
+            try
+            {
+                window = new GLWindow(640, 480, new GraphicsMode(new ColorFormat(32), 8, 0, 4), contents);
+            }
+            catch
+            {
+                window = new GLWindow(640, 480, new GraphicsMode(new ColorFormat(32), 8, 0, 0), contents);
+            }
+            window.Context.SwapInterval = 0;
+            window.Run_NoErrorCatching(120);
         }
     }
 }
