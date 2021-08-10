@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>GeoAPI.Bootstrapper.NetTopologySuite</name>
+    </assembly>
+    <members>
+        <member name="T:GeoAPI.NetTopologySuiteBootstrapper">
+            <summary>
+            A utility class to register NTS as GeoAPI implementation to use
+            </summary>
+        </member>
+        <member name="M:GeoAPI.NetTopologySuiteBootstrapper.Bootstrap">
+            <summary>
+            Method to register NTS as GeoAPI implementation to use.
+            </summary>
+        </member>
+    </members>
+</doc>

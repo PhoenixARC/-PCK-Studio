@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>HelixToolkit</name>
+    </assembly>
+    <members>
+        <member name="T:HelixToolkit.StringExtensions">
+            <summary>
+            Extension methods for strings.
+            </summary>
+        </member>
+        <member name="F:HelixToolkit.StringExtensions.oneOrMoreWhitespaces">
+            <summary>
+            A regular expression containing "a one or more whitespaces" pattern.
+            </summary>
+        </member>
+        <member name="M:HelixToolkit.StringExtensions.SplitOnWhitespace(System.String)">
+            <summary>
+            Splits the string on whitespace.
+            </summary>
+            <param name="input">The input string.</param>
+            <returns>Array of strings.</returns>
+        </member>
+        <member name="M:HelixToolkit.StringExtensions.EnumerateToString(System.Collections.IEnumerable,System.String,System.String)">
+            <summary>
+            Creates a string from the items in an enumerable.
+            </summary>
+            <param name="items">The items.</param>
+            <param name="prefix">The prefix.</param>
+            <param name="separator">The separator.</param>
+            <returns>
+            A string.
+            </returns>
+        </member>
+    </members>
+</doc>
