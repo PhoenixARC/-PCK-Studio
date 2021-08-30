@@ -26,7 +26,11 @@ Modify .PCK archives as you please!
 
 * download
 
-* run `UnblockAllFiles.ps1`
+* run powershell as administrator
+
+* type `Set-ExecutionPolicy Unrestricted`
+
+* run `UnblockAllFiles.ps1` in powershell
 
 * Open `MinecraftUSkinEditor.sln`
 
