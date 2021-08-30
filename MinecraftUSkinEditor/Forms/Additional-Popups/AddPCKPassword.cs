@@ -13,9 +13,9 @@ namespace PckStudio.Forms
 {
     public partial class AddPCKPassword : MetroForm
     {
-        MinecraftUSkinEditor.PCK currentPCK;
-        MinecraftUSkinEditor.PCK.MineFile file;
-        public AddPCKPassword(MinecraftUSkinEditor.PCK.MineFile fileIn, MinecraftUSkinEditor.PCK currentPCKIn)
+        PckStudio.PCK currentPCK;
+        PckStudio.PCK.MineFile file;
+        public AddPCKPassword(PckStudio.PCK.MineFile fileIn, PckStudio.PCK currentPCKIn)
         {
 
             InitializeComponent();

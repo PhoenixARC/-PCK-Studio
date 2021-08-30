@@ -121,6 +121,29 @@
     <value>134, 23</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="contextMenuPCKEntries.Size" type="System.Drawing.Size, System.Drawing">
+    <value>139, 158</value>
+  </data>
+  <data name="&gt;&gt;contextMenuPCKEntries.Name" xml:space="preserve">
+    <value>contextMenuPCKEntries</value>
+  </data>
+  <data name="&gt;&gt;contextMenuPCKEntries.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="createToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        wQAADsEBuJFr7QAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xOdTWsmQAAAA3SURBVDhPY/j/
+        /z9FGKsgGIsCKWSMTQ0QYxUE45FmALpiYvFwMgAbxqIYG8YqCMajBhCJ/zMAAPGwpV/Xje8RAAAAAElF
+        TkSuQmCC
+</value>
+  </data>
+  <data name="createToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>138, 22</value>
+  </data>
+  <data name="createToolStripMenuItem.Text" xml:space="preserve">
+    <value>Create</value>
+  </data>
   <data name="folderToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
@@ -179,19 +202,20 @@
   <data name="createAnimatedTextureToolStripMenuItem.Text" xml:space="preserve">
     <value>Animated Texture</value>
   </data>
-  <data name="createToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="importSkinsToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wQAADsEBuJFr7QAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xOdTWsmQAAAA3SURBVDhPY/j/
-        /z9FGKsgGIsCKWSMTQ0QYxUE45FmALpiYvFwMgAbxqIYG8YqCMajBhCJ/zMAAPGwpV/Xje8RAAAAAElF
+        wgAADsIBFShKgAAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xOdTWsmQAAABzSURBVDhPpYzB
+        DQAhCARp4hr3Txu254WTjYRb9cEmk/BgRjBVHTv85Twmgt77PcJEYIFrhIkAgWOEiSAGthEmgtbaD9fW
+        mBgpB4xywCgFxiMf5YDdrq3l5wjEjKtzTARMNlydY2IGot2ureVnRjkQmZbICyCi7XU5cfqKAAAAAElF
         TkSuQmCC
 </value>
   </data>
-  <data name="createToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="importSkinsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>138, 22</value>
   </data>
-  <data name="createToolStripMenuItem.Text" xml:space="preserve">
-    <value>Create</value>
+  <data name="importSkinsToolStripMenuItem.Text" xml:space="preserve">
+    <value>Import</value>
   </data>
   <data name="importSkinToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -247,21 +271,6 @@
   </data>
   <data name="importFileToolStripMenuItem.Text" xml:space="preserve">
     <value>Import File</value>
-  </data>
-  <data name="importSkinsToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wgAADsIBFShKgAAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xOdTWsmQAAABzSURBVDhPpYzB
-        DQAhCARp4hr3Txu254WTjYRb9cEmk/BgRjBVHTv85Twmgt77PcJEYIFrhIkAgWOEiSAGthEmgtbaD9fW
-        mBgpB4xywCgFxiMf5YDdrq3l5wjEjKtzTARMNlydY2IGot2ureVnRjkQmZbICyCi7XU5cfqKAAAAAElF
-        TkSuQmCC
-</value>
-  </data>
-  <data name="importSkinsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>138, 22</value>
-  </data>
-  <data name="importSkinsToolStripMenuItem.Text" xml:space="preserve">
-    <value>Import</value>
   </data>
   <data name="extractToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -339,21 +348,42 @@
   <data name="moveDownToolStripMenuItem.Text" xml:space="preserve">
     <value>Move Down</value>
   </data>
-  <data name="contextMenuPCKEntries.Size" type="System.Drawing.Size, System.Drawing">
-    <value>139, 158</value>
-  </data>
-  <data name="&gt;&gt;contextMenuPCKEntries.Name" xml:space="preserve">
-    <value>contextMenuPCKEntries</value>
-  </data>
-  <data name="&gt;&gt;contextMenuPCKEntries.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <metadata name="menuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="menuStrip.AutoSize" type="System.Boolean, mscorlib">
     <value>False</value>
+  </data>
+  <data name="menuStrip.Location" type="System.Drawing.Point, System.Drawing">
+    <value>20, 60</value>
+  </data>
+  <data name="menuStrip.Size" type="System.Drawing.Size, System.Drawing">
+    <value>778, 24</value>
+  </data>
+  <data name="menuStrip.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="menuStrip.Text" xml:space="preserve">
+    <value>menuStrip1</value>
+  </data>
+  <data name="&gt;&gt;menuStrip.Name" xml:space="preserve">
+    <value>menuStrip</value>
+  </data>
+  <data name="&gt;&gt;menuStrip.Type" xml:space="preserve">
+    <value>System.Windows.Forms.MenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;menuStrip.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;menuStrip.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="fileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>37, 20</value>
+  </data>
+  <data name="fileToolStripMenuItem.Text" xml:space="preserve">
+    <value>File</value>
   </data>
   <data name="newToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -481,11 +511,11 @@
   <data name="convertPCTextrurePackToolStripMenuItem.Text" xml:space="preserve">
     <value>Convert to PC Textrure pack</value>
   </data>
-  <data name="fileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>37, 20</value>
+  <data name="editToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>39, 20</value>
   </data>
-  <data name="fileToolStripMenuItem.Text" xml:space="preserve">
-    <value>File</value>
+  <data name="editToolStripMenuItem.Text" xml:space="preserve">
+    <value>Edit</value>
   </data>
   <data name="advancedMetaAddingToolStripMenuItem.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
@@ -500,7 +530,7 @@
 </value>
   </data>
   <data name="advancedMetaAddingToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>176, 22</value>
   </data>
   <data name="advancedMetaAddingToolStripMenuItem.Text" xml:space="preserve">
     <value>Advanced Bulk</value>
@@ -526,16 +556,16 @@
 </value>
   </data>
   <data name="convertToBedrockToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>176, 22</value>
   </data>
   <data name="convertToBedrockToolStripMenuItem.Text" xml:space="preserve">
     <value>Convert to Bedrock</value>
   </data>
-  <data name="editToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>39, 20</value>
+  <data name="videosToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>54, 20</value>
   </data>
-  <data name="editToolStripMenuItem.Text" xml:space="preserve">
-    <value>Edit</value>
+  <data name="videosToolStripMenuItem.Text" xml:space="preserve">
+    <value>Videos</value>
   </data>
   <data name="howToMakeABasicSkinPackToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>312, 22</value>
@@ -579,11 +609,11 @@
   <data name="howPCKsWorkToolStripMenuItem.Text" xml:space="preserve">
     <value>How PCKs work</value>
   </data>
-  <data name="videosToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>54, 20</value>
+  <data name="helpToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>44, 20</value>
   </data>
-  <data name="videosToolStripMenuItem.Text" xml:space="preserve">
-    <value>Videos</value>
+  <data name="helpToolStripMenuItem.Text" xml:space="preserve">
+    <value>Help</value>
   </data>
   <data name="programInfoToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -3134,6 +3164,12 @@
   <data name="fAQToolStripMenuItem1.Text" xml:space="preserve">
     <value>FAQ</value>
   </data>
+  <data name="donateToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>181, 22</value>
+  </data>
+  <data name="donateToolStripMenuItem.Text" xml:space="preserve">
+    <value>Buy a coffee</value>
+  </data>
   <data name="toNobledezJackToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>221, 22</value>
   </data>
@@ -3145,12 +3181,6 @@
   </data>
   <data name="toPhoenixARCDeveloperToolStripMenuItem.Text" xml:space="preserve">
     <value>For PhoenixARC(Developer)</value>
-  </data>
-  <data name="donateToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>181, 22</value>
-  </data>
-  <data name="donateToolStripMenuItem.Text" xml:space="preserve">
-    <value>Buy a coffee</value>
   </data>
   <data name="settingsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>181, 22</value>
@@ -3164,11 +3194,11 @@
   <data name="administrativeToolsToolStripMenuItem.Text" xml:space="preserve">
     <value>Administrative Tools</value>
   </data>
-  <data name="helpToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>44, 20</value>
+  <data name="storeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>63, 20</value>
   </data>
-  <data name="helpToolStripMenuItem.Text" xml:space="preserve">
-    <value>Help</value>
+  <data name="storeToolStripMenuItem.Text" xml:space="preserve">
+    <value>More</value>
   </data>
   <data name="openToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
     <value>212, 22</value>
@@ -3206,12 +3236,6 @@
   <data name="joinDevelopmentDiscordToolStripMenuItem.Text" xml:space="preserve">
     <value>Join Development Discord</value>
   </data>
-  <data name="storeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>63, 20</value>
-  </data>
-  <data name="storeToolStripMenuItem.Text" xml:space="preserve">
-    <value>More</value>
-  </data>
   <data name="uPDATEToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
     <value>61, 20</value>
   </data>
@@ -3226,30 +3250,6 @@
   </data>
   <data name="tSTToolStripMenuItem.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
-  </data>
-  <data name="menuStrip.Location" type="System.Drawing.Point, System.Drawing">
-    <value>20, 60</value>
-  </data>
-  <data name="menuStrip.Size" type="System.Drawing.Size, System.Drawing">
-    <value>778, 24</value>
-  </data>
-  <data name="menuStrip.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="menuStrip.Text" xml:space="preserve">
-    <value>menuStrip1</value>
-  </data>
-  <data name="&gt;&gt;menuStrip.Name" xml:space="preserve">
-    <value>menuStrip</value>
-  </data>
-  <data name="&gt;&gt;menuStrip.Type" xml:space="preserve">
-    <value>System.Windows.Forms.MenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;menuStrip.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;menuStrip.ZOrder" xml:space="preserve">
-    <value>10</value>
   </data>
   <data name="label1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -3278,6 +3278,15 @@
   <metadata name="contextMenuMetaTree.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>289, 23</value>
   </metadata>
+  <data name="contextMenuMetaTree.Size" type="System.Drawing.Size, System.Drawing">
+    <value>138, 70</value>
+  </data>
+  <data name="&gt;&gt;contextMenuMetaTree.Name" xml:space="preserve">
+    <value>contextMenuMetaTree</value>
+  </data>
+  <data name="&gt;&gt;contextMenuMetaTree.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="addPresetToolStripMenuItem1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
@@ -3321,15 +3330,6 @@
   <data name="deleteEntryToolStripMenuItem.Text" xml:space="preserve">
     <value>Delete Entry</value>
   </data>
-  <data name="contextMenuMetaTree.Size" type="System.Drawing.Size, System.Drawing">
-    <value>138, 70</value>
-  </data>
-  <data name="&gt;&gt;contextMenuMetaTree.Name" xml:space="preserve">
-    <value>contextMenuMetaTree</value>
-  </data>
-  <data name="&gt;&gt;contextMenuMetaTree.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="labelVersion.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
@@ -3367,598 +3367,6 @@
   <metadata name="directorySearcher1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>627, 23</value>
   </metadata>
-  <data name="myTablePanelPckEdit.ColumnCount" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="treeViewMain.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="treeViewMain.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="treeViewMain.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="treeViewMain.Size" type="System.Drawing.Size, System.Drawing">
-    <value>200, 466</value>
-  </data>
-  <data name="treeViewMain.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
-  </data>
-  <data name="&gt;&gt;treeViewMain.Name" xml:space="preserve">
-    <value>treeViewMain</value>
-  </data>
-  <data name="&gt;&gt;treeViewMain.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TreeView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;treeViewMain.Parent" xml:space="preserve">
-    <value>myTablePanelPckEdit</value>
-  </data>
-  <data name="&gt;&gt;treeViewMain.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="pictureBoxImagePreview.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        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
-        AAAASUVORK5CYII=
-</value>
-  </data>
-  <data name="pictureBoxImagePreview.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="pictureBoxImagePreview.Location" type="System.Drawing.Point, System.Drawing">
-    <value>203, 3</value>
-  </data>
-  <data name="pictureBoxImagePreview.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>157, 157</value>
-  </data>
-  <data name="pictureBoxImagePreview.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 157</value>
-  </data>
-  <data name="pictureBoxImagePreview.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
-    <value>StretchImage</value>
-  </data>
-  <data name="pictureBoxImagePreview.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
-  </data>
-  <data name="&gt;&gt;pictureBoxImagePreview.Name" xml:space="preserve">
-    <value>pictureBoxImagePreview</value>
-  </data>
-  <data name="&gt;&gt;pictureBoxImagePreview.Type" xml:space="preserve">
-    <value>MinecraftUSkinEditor.PictureBoxWithInterpolationMode, PCK Studio, Version=5.3.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;pictureBoxImagePreview.Parent" xml:space="preserve">
-    <value>myTablePanelPckEdit</value>
-  </data>
-  <data name="&gt;&gt;pictureBoxImagePreview.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="labelAmount.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="labelAmount.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="labelAmount.Location" type="System.Drawing.Point, System.Drawing">
-    <value>717, 0</value>
-  </data>
-  <data name="labelAmount.Size" type="System.Drawing.Size, System.Drawing">
-    <value>50, 19</value>
-  </data>
-  <data name="labelAmount.TabIndex" type="System.Int32, mscorlib">
-    <value>18</value>
-  </data>
-  <data name="labelAmount.Text" xml:space="preserve">
-    <value>Entries:</value>
-  </data>
-  <data name="labelAmount.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;labelAmount.Name" xml:space="preserve">
-    <value>labelAmount</value>
-  </data>
-  <data name="&gt;&gt;labelAmount.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;labelAmount.Parent" xml:space="preserve">
-    <value>myTablePanelPckEdit</value>
-  </data>
-  <data name="&gt;&gt;labelAmount.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="myTablePanel1.ColumnCount" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="treeMeta.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="treeMeta.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="treeMeta.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="treeMeta.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="treeMeta.Size" type="System.Drawing.Size, System.Drawing">
-    <value>278, 199</value>
-  </data>
-  <data name="treeMeta.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;treeMeta.Name" xml:space="preserve">
-    <value>treeMeta</value>
-  </data>
-  <data name="&gt;&gt;treeMeta.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TreeView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;treeMeta.Parent" xml:space="preserve">
-    <value>myTablePanel1</value>
-  </data>
-  <data name="&gt;&gt;treeMeta.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="comboBox1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top</value>
-  </data>
-  <data name="comboBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>339, 66</value>
-  </data>
-  <data name="comboBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>155, 21</value>
-  </data>
-  <data name="comboBox1.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;comboBox1.Name" xml:space="preserve">
-    <value>comboBox1</value>
-  </data>
-  <data name="&gt;&gt;comboBox1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;comboBox1.Parent" xml:space="preserve">
-    <value>myTablePanel1</value>
-  </data>
-  <data name="&gt;&gt;comboBox1.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="label2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom</value>
-  </data>
-  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>388, 135</value>
-  </data>
-  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>57, 1</value>
-  </data>
-  <data name="label2.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
-  </data>
-  <data name="label2.Text" xml:space="preserve">
-    <value>Entry Data</value>
-  </data>
-  <data name="&gt;&gt;label2.Name" xml:space="preserve">
-    <value>label2</value>
-  </data>
-  <data name="&gt;&gt;label2.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;label2.Parent" xml:space="preserve">
-    <value>myTablePanel1</value>
-  </data>
-  <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="textBox1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom</value>
-  </data>
-  <data name="textBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>338, 112</value>
-  </data>
-  <data name="textBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 20</value>
-  </data>
-  <data name="textBox1.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;textBox1.Name" xml:space="preserve">
-    <value>textBox1</value>
-  </data>
-  <data name="&gt;&gt;textBox1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;textBox1.Parent" xml:space="preserve">
-    <value>myTablePanel1</value>
-  </data>
-  <data name="&gt;&gt;textBox1.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="labelEntryType.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom</value>
-  </data>
-  <data name="labelEntryType.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="labelEntryType.Location" type="System.Drawing.Point, System.Drawing">
-    <value>382, 44</value>
-  </data>
-  <data name="labelEntryType.Size" type="System.Drawing.Size, System.Drawing">
-    <value>70, 19</value>
-  </data>
-  <data name="labelEntryType.TabIndex" type="System.Int32, mscorlib">
-    <value>18</value>
-  </data>
-  <data name="labelEntryType.Text" xml:space="preserve">
-    <value>Entry Type</value>
-  </data>
-  <data name="&gt;&gt;labelEntryType.Name" xml:space="preserve">
-    <value>labelEntryType</value>
-  </data>
-  <data name="&gt;&gt;labelEntryType.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;labelEntryType.Parent" xml:space="preserve">
-    <value>myTablePanel1</value>
-  </data>
-  <data name="&gt;&gt;labelEntryType.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="label3.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom</value>
-  </data>
-  <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>388, 198</value>
-  </data>
-  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>58, 1</value>
-  </data>
-  <data name="label3.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
-  </data>
-  <data name="label3.Text" xml:space="preserve">
-    <value>Entry Type</value>
-  </data>
-  <data name="&gt;&gt;label3.Name" xml:space="preserve">
-    <value>label3</value>
-  </data>
-  <data name="&gt;&gt;label3.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;label3.Parent" xml:space="preserve">
-    <value>myTablePanel1</value>
-  </data>
-  <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="labelEntryData.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom</value>
-  </data>
-  <data name="labelEntryData.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="labelEntryData.Location" type="System.Drawing.Point, System.Drawing">
-    <value>382, 90</value>
-  </data>
-  <data name="labelEntryData.Size" type="System.Drawing.Size, System.Drawing">
-    <value>70, 19</value>
-  </data>
-  <data name="labelEntryData.TabIndex" type="System.Int32, mscorlib">
-    <value>19</value>
-  </data>
-  <data name="labelEntryData.Text" xml:space="preserve">
-    <value>Entry Data</value>
-  </data>
-  <data name="&gt;&gt;labelEntryData.Name" xml:space="preserve">
-    <value>labelEntryData</value>
-  </data>
-  <data name="&gt;&gt;labelEntryData.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;labelEntryData.Parent" xml:space="preserve">
-    <value>myTablePanel1</value>
-  </data>
-  <data name="&gt;&gt;labelEntryData.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="buttonEdit.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="buttonEdit.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="buttonEdit.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="buttonEdit.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 202</value>
-  </data>
-  <data name="buttonEdit.Size" type="System.Drawing.Size, System.Drawing">
-    <value>550, 66</value>
-  </data>
-  <data name="buttonEdit.TabIndex" type="System.Int32, mscorlib">
-    <value>17</value>
-  </data>
-  <data name="buttonEdit.Text" xml:space="preserve">
-    <value>EDIT BOXES</value>
-  </data>
-  <data name="buttonEdit.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
-    <value>TextBeforeImage</value>
-  </data>
-  <data name="buttonEdit.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;buttonEdit.Name" xml:space="preserve">
-    <value>buttonEdit</value>
-  </data>
-  <data name="&gt;&gt;buttonEdit.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;buttonEdit.Parent" xml:space="preserve">
-    <value>myTablePanel1</value>
-  </data>
-  <data name="&gt;&gt;buttonEdit.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="myTablePanel1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="myTablePanel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
-  </data>
-  <data name="myTablePanel1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="myTablePanel1.RowCount" type="System.Int32, mscorlib">
-    <value>7</value>
-  </data>
-  <data name="myTablePanel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>556, 271</value>
-  </data>
-  <data name="myTablePanel1.TabIndex" type="System.Int32, mscorlib">
-    <value>19</value>
-  </data>
-  <data name="&gt;&gt;myTablePanel1.Name" xml:space="preserve">
-    <value>myTablePanel1</value>
-  </data>
-  <data name="&gt;&gt;myTablePanel1.Type" xml:space="preserve">
-    <value>PckStudio.Forms.MyTablePanel, PCK Studio, Version=5.3.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;myTablePanel1.Parent" xml:space="preserve">
-    <value>tabMetaDisplay</value>
-  </data>
-  <data name="&gt;&gt;myTablePanel1.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="myTablePanel1.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="treeMeta" Row="0" RowSpan="6" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="comboBox1" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label2" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="textBox1" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="labelEntryType" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label3" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="labelEntryData" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="buttonEdit" Row="6" RowSpan="1" Column="0" ColumnSpan="2" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,50,Percent,50" /&gt;&lt;Rows Styles="Percent,50,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,Percent,50,AutoSize,0" /&gt;&lt;/TableLayoutSettings&gt;</value>
-  </data>
-  <data name="tabMetaDisplay.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 22</value>
-  </data>
-  <data name="tabMetaDisplay.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
-  </data>
-  <data name="tabMetaDisplay.Size" type="System.Drawing.Size, System.Drawing">
-    <value>562, 277</value>
-  </data>
-  <data name="tabMetaDisplay.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="tabMetaDisplay.Text" xml:space="preserve">
-    <value>Meta</value>
-  </data>
-  <data name="&gt;&gt;tabMetaDisplay.Name" xml:space="preserve">
-    <value>tabMetaDisplay</value>
-  </data>
-  <data name="&gt;&gt;tabMetaDisplay.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tabMetaDisplay.Parent" xml:space="preserve">
-    <value>tabDataDisplay</value>
-  </data>
-  <data name="&gt;&gt;tabMetaDisplay.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="tabDataDisplay.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="tabDataDisplay.Location" type="System.Drawing.Point, System.Drawing">
-    <value>200, 163</value>
-  </data>
-  <data name="tabDataDisplay.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="tabDataDisplay.Size" type="System.Drawing.Size, System.Drawing">
-    <value>570, 303</value>
-  </data>
-  <data name="tabDataDisplay.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
-  </data>
-  <data name="&gt;&gt;tabDataDisplay.Name" xml:space="preserve">
-    <value>tabDataDisplay</value>
-  </data>
-  <data name="&gt;&gt;tabDataDisplay.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tabDataDisplay.Parent" xml:space="preserve">
-    <value>myTablePanelPckEdit</value>
-  </data>
-  <data name="&gt;&gt;tabDataDisplay.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="myTablePanelPckEdit.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="myTablePanelPckEdit.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="myTablePanelPckEdit.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="myTablePanelPckEdit.RowCount" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="myTablePanelPckEdit.Size" type="System.Drawing.Size, System.Drawing">
-    <value>770, 466</value>
-  </data>
-  <data name="myTablePanelPckEdit.TabIndex" type="System.Int32, mscorlib">
-    <value>16</value>
-  </data>
-  <data name="&gt;&gt;myTablePanelPckEdit.Name" xml:space="preserve">
-    <value>myTablePanelPckEdit</value>
-  </data>
-  <data name="&gt;&gt;myTablePanelPckEdit.Type" xml:space="preserve">
-    <value>PckStudio.Forms.MyTablePanel, PCK Studio, Version=5.3.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;myTablePanelPckEdit.Parent" xml:space="preserve">
-    <value>tabPage1</value>
-  </data>
-  <data name="&gt;&gt;myTablePanelPckEdit.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="myTablePanelPckEdit.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="treeViewMain" Row="0" RowSpan="6" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="pictureBoxImagePreview" Row="0" RowSpan="4" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="labelAmount" Row="0" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="tabDataDisplay" Row="4" RowSpan="2" Column="1" ColumnSpan="2" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,200,Percent,100,AutoSize,0" /&gt;&lt;Rows Styles="AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
-  </data>
-  <data name="labelImageSize.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="labelImageSize.Location" type="System.Drawing.Point, System.Drawing">
-    <value>385, 157</value>
-  </data>
-  <data name="labelImageSize.Size" type="System.Drawing.Size, System.Drawing">
-    <value>97, 19</value>
-  </data>
-  <data name="labelImageSize.TabIndex" type="System.Int32, mscorlib">
-    <value>15</value>
-  </data>
-  <data name="labelImageSize.Text" xml:space="preserve">
-    <value>labelImageSize</value>
-  </data>
-  <data name="&gt;&gt;labelImageSize.Name" xml:space="preserve">
-    <value>labelImageSize</value>
-  </data>
-  <data name="&gt;&gt;labelImageSize.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;labelImageSize.Parent" xml:space="preserve">
-    <value>tabPage1</value>
-  </data>
-  <data name="&gt;&gt;labelImageSize.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="tabPage1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 38</value>
-  </data>
-  <data name="tabPage1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>770, 466</value>
-  </data>
-  <data name="tabPage1.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="tabPage1.Text" xml:space="preserve">
-    <value>                                                                    </value>
-  </data>
   <data name="&gt;&gt;tabPage1.Name" xml:space="preserve">
     <value>tabPage1</value>
   </data>
@@ -4000,6 +3408,84 @@
   </data>
   <data name="&gt;&gt;openedPCKS.ZOrder" xml:space="preserve">
     <value>7</value>
+  </data>
+  <data name="&gt;&gt;myTablePanelPckEdit.Name" xml:space="preserve">
+    <value>myTablePanelPckEdit</value>
+  </data>
+  <data name="&gt;&gt;myTablePanelPckEdit.Type" xml:space="preserve">
+    <value>PckStudio.Forms.MyTablePanel, PCK Studio, Version=5.3.0.0, Culture=neutral, PublicKeyToken=be377238ae1b2e97</value>
+  </data>
+  <data name="&gt;&gt;myTablePanelPckEdit.Parent" xml:space="preserve">
+    <value>tabPage1</value>
+  </data>
+  <data name="&gt;&gt;myTablePanelPckEdit.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="myTablePanelPckEdit.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="treeViewMain" Row="0" RowSpan="6" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="pictureBoxImagePreview" Row="0" RowSpan="4" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="labelAmount" Row="0" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="tabDataDisplay" Row="4" RowSpan="2" Column="1" ColumnSpan="2" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,200,Percent,100,AutoSize,0" /&gt;&lt;Rows Styles="AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
+  <data name="&gt;&gt;labelImageSize.Name" xml:space="preserve">
+    <value>labelImageSize</value>
+  </data>
+  <data name="&gt;&gt;labelImageSize.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;labelImageSize.Parent" xml:space="preserve">
+    <value>tabPage1</value>
+  </data>
+  <data name="&gt;&gt;labelImageSize.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="tabPage1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 38</value>
+  </data>
+  <data name="tabPage1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>770, 466</value>
+  </data>
+  <data name="tabPage1.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="tabPage1.Text" xml:space="preserve">
+    <value>                                                                    </value>
+  </data>
+  <data name="&gt;&gt;tabPage1.Name" xml:space="preserve">
+    <value>tabPage1</value>
+  </data>
+  <data name="&gt;&gt;tabPage1.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroTabPage, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;tabPage1.Parent" xml:space="preserve">
+    <value>openedPCKS</value>
+  </data>
+  <data name="&gt;&gt;tabPage1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="labelImageSize.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="labelImageSize.Location" type="System.Drawing.Point, System.Drawing">
+    <value>385, 157</value>
+  </data>
+  <data name="labelImageSize.Size" type="System.Drawing.Size, System.Drawing">
+    <value>97, 19</value>
+  </data>
+  <data name="labelImageSize.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="labelImageSize.Text" xml:space="preserve">
+    <value>labelImageSize</value>
+  </data>
+  <data name="&gt;&gt;labelImageSize.Name" xml:space="preserve">
+    <value>labelImageSize</value>
+  </data>
+  <data name="&gt;&gt;labelImageSize.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;labelImageSize.Parent" xml:space="preserve">
+    <value>tabPage1</value>
+  </data>
+  <data name="&gt;&gt;labelImageSize.ZOrder" xml:space="preserve">
+    <value>3</value>
   </data>
   <data name="pictureBox2.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -4694,10 +4180,10 @@
     <value>True</value>
   </data>
   <data name="DBGLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>566, 596</value>
+    <value>548, 596</value>
   </data>
   <data name="DBGLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>118, 19</value>
+    <value>129, 19</value>
   </data>
   <data name="DBGLabel.TabIndex" type="System.Int32, mscorlib">
     <value>17</value>
@@ -4720,8 +4206,473 @@
   <data name="&gt;&gt;DBGLabel.ZOrder" xml:space="preserve">
     <value>6</value>
   </data>
+  <data name="&gt;&gt;metroTabPage1.Name" xml:space="preserve">
+    <value>metroTabPage1</value>
+  </data>
+  <data name="&gt;&gt;metroTabPage1.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroTabPage, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;metroTabPage1.Parent" xml:space="preserve">
+    <value>metroTabControl1</value>
+  </data>
+  <data name="&gt;&gt;metroTabPage1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="metroTabControl1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="metroTabControl1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>20, 84</value>
+  </data>
+  <data name="metroTabControl1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="metroTabControl1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>778, 508</value>
+  </data>
+  <data name="metroTabControl1.TabIndex" type="System.Int32, mscorlib">
+    <value>18</value>
+  </data>
+  <data name="metroTabControl1.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;metroTabControl1.Name" xml:space="preserve">
+    <value>metroTabControl1</value>
+  </data>
+  <data name="&gt;&gt;metroTabControl1.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroTabControl, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;metroTabControl1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;metroTabControl1.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;myTablePanel2.Name" xml:space="preserve">
+    <value>myTablePanel2</value>
+  </data>
+  <data name="&gt;&gt;myTablePanel2.Type" xml:space="preserve">
+    <value>PckStudio.Forms.MyTablePanel, PCK Studio, Version=5.3.0.0, Culture=neutral, PublicKeyToken=be377238ae1b2e97</value>
+  </data>
+  <data name="&gt;&gt;myTablePanel2.Parent" xml:space="preserve">
+    <value>metroTabPage1</value>
+  </data>
+  <data name="&gt;&gt;myTablePanel2.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="myTablePanel2.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="treeView1" Row="0" RowSpan="6" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="pictureBoxWithInterpolationMode1" Row="0" RowSpan="4" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label4" Row="0" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="tabControl1" Row="4" RowSpan="2" Column="1" ColumnSpan="2" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,200,Percent,100,AutoSize,0" /&gt;&lt;Rows Styles="AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
+  <data name="&gt;&gt;label10.Name" xml:space="preserve">
+    <value>label10</value>
+  </data>
+  <data name="&gt;&gt;label10.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;label10.Parent" xml:space="preserve">
+    <value>metroTabPage1</value>
+  </data>
+  <data name="&gt;&gt;label10.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;label11.Name" xml:space="preserve">
+    <value>label11</value>
+  </data>
+  <data name="&gt;&gt;label11.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;label11.Parent" xml:space="preserve">
+    <value>metroTabPage1</value>
+  </data>
+  <data name="&gt;&gt;label11.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="metroTabPage1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 38</value>
+  </data>
+  <data name="metroTabPage1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>770, 466</value>
+  </data>
+  <data name="metroTabPage1.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="metroTabPage1.Text" xml:space="preserve">
+    <value>                                                                    </value>
+  </data>
+  <data name="&gt;&gt;metroTabPage1.Name" xml:space="preserve">
+    <value>metroTabPage1</value>
+  </data>
+  <data name="&gt;&gt;metroTabPage1.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroTabPage, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;metroTabPage1.Parent" xml:space="preserve">
+    <value>metroTabControl1</value>
+  </data>
+  <data name="&gt;&gt;metroTabPage1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="label10.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label10.Location" type="System.Drawing.Point, System.Drawing">
+    <value>385, 157</value>
+  </data>
+  <data name="label10.Size" type="System.Drawing.Size, System.Drawing">
+    <value>49, 19</value>
+  </data>
+  <data name="label10.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="label10.Text" xml:space="preserve">
+    <value>label10</value>
+  </data>
+  <data name="&gt;&gt;label10.Name" xml:space="preserve">
+    <value>label10</value>
+  </data>
+  <data name="&gt;&gt;label10.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;label10.Parent" xml:space="preserve">
+    <value>metroTabPage1</value>
+  </data>
+  <data name="&gt;&gt;label10.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="label11.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label11.Location" type="System.Drawing.Point, System.Drawing">
+    <value>428, 21</value>
+  </data>
+  <data name="label11.Size" type="System.Drawing.Size, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="label11.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;label11.Name" xml:space="preserve">
+    <value>label11</value>
+  </data>
+  <data name="&gt;&gt;label11.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;label11.Parent" xml:space="preserve">
+    <value>metroTabPage1</value>
+  </data>
+  <data name="&gt;&gt;label11.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <metadata name="timer1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>781, 23</value>
+  </metadata>
+  <data name="ChangeURL.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="ChangeURL.Location" type="System.Drawing.Point, System.Drawing">
+    <value>715, -10</value>
+  </data>
+  <data name="ChangeURL.Size" type="System.Drawing.Size, System.Drawing">
+    <value>116, 19</value>
+  </data>
+  <data name="ChangeURL.TabIndex" type="System.Int32, mscorlib">
+    <value>20</value>
+  </data>
+  <data name="ChangeURL.Text" xml:space="preserve">
+    <value>PCKChangeLog.txt</value>
+  </data>
+  <data name="ChangeURL.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;ChangeURL.Name" xml:space="preserve">
+    <value>ChangeURL</value>
+  </data>
+  <data name="&gt;&gt;ChangeURL.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;ChangeURL.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;ChangeURL.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="LittleEndianCheckBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="LittleEndianCheckBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>665, 42</value>
+  </data>
+  <data name="LittleEndianCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>133, 15</value>
+  </data>
+  <data name="LittleEndianCheckBox.TabIndex" type="System.Int32, mscorlib">
+    <value>21</value>
+  </data>
+  <data name="LittleEndianCheckBox.Text" xml:space="preserve">
+    <value>Save as Vita/PS4 PCK</value>
+  </data>
+  <data name="LittleEndianCheckBox.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;LittleEndianCheckBox.Name" xml:space="preserve">
+    <value>LittleEndianCheckBox</value>
+  </data>
+  <data name="&gt;&gt;LittleEndianCheckBox.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroCheckBox, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;LittleEndianCheckBox.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;LittleEndianCheckBox.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="myTablePanelStartScreen.ColumnCount" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;richTextBoxChangelog.Name" xml:space="preserve">
+    <value>richTextBoxChangelog</value>
+  </data>
+  <data name="&gt;&gt;richTextBoxChangelog.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RichTextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;richTextBoxChangelog.Parent" xml:space="preserve">
+    <value>myTablePanelStartScreen</value>
+  </data>
+  <data name="&gt;&gt;richTextBoxChangelog.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;label5.Name" xml:space="preserve">
+    <value>label5</value>
+  </data>
+  <data name="&gt;&gt;label5.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;label5.Parent" xml:space="preserve">
+    <value>myTablePanelStartScreen</value>
+  </data>
+  <data name="&gt;&gt;label5.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;pckOpen.Name" xml:space="preserve">
+    <value>pckOpen</value>
+  </data>
+  <data name="&gt;&gt;pckOpen.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;pckOpen.Parent" xml:space="preserve">
+    <value>myTablePanelStartScreen</value>
+  </data>
+  <data name="&gt;&gt;pckOpen.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="myTablePanelStartScreen.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="myTablePanelStartScreen.Location" type="System.Drawing.Point, System.Drawing">
+    <value>20, 84</value>
+  </data>
+  <data name="myTablePanelStartScreen.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="myTablePanelStartScreen.RowCount" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="myTablePanelStartScreen.Size" type="System.Drawing.Size, System.Drawing">
+    <value>778, 508</value>
+  </data>
+  <data name="myTablePanelStartScreen.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="&gt;&gt;myTablePanelStartScreen.Name" xml:space="preserve">
+    <value>myTablePanelStartScreen</value>
+  </data>
+  <data name="&gt;&gt;myTablePanelStartScreen.Type" xml:space="preserve">
+    <value>PckStudio.Forms.MyTablePanel, PCK Studio, Version=5.3.0.0, Culture=neutral, PublicKeyToken=be377238ae1b2e97</value>
+  </data>
+  <data name="&gt;&gt;myTablePanelStartScreen.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;myTablePanelStartScreen.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="myTablePanelStartScreen.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="richTextBoxChangelog" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label5" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="pckOpen" Row="0" RowSpan="2" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,57.96915,Percent,42.03085" /&gt;&lt;Rows Styles="Absolute,70,Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
+  <data name="richTextBoxChangelog.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="richTextBoxChangelog.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 8.25pt</value>
+  </data>
+  <data name="richTextBoxChangelog.Location" type="System.Drawing.Point, System.Drawing">
+    <value>450, 70</value>
+  </data>
+  <data name="richTextBoxChangelog.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 30, 30</value>
+  </data>
+  <data name="richTextBoxChangelog.Size" type="System.Drawing.Size, System.Drawing">
+    <value>298, 408</value>
+  </data>
+  <data name="richTextBoxChangelog.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="richTextBoxChangelog.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;richTextBoxChangelog.Name" xml:space="preserve">
+    <value>richTextBoxChangelog</value>
+  </data>
+  <data name="&gt;&gt;richTextBoxChangelog.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RichTextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;richTextBoxChangelog.Parent" xml:space="preserve">
+    <value>myTablePanelStartScreen</value>
+  </data>
+  <data name="&gt;&gt;richTextBoxChangelog.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="label5.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="label5.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label5.Location" type="System.Drawing.Point, System.Drawing">
+    <value>453, 51</value>
+  </data>
+  <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>81, 19</value>
+  </data>
+  <data name="label5.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="label5.Text" xml:space="preserve">
+    <value>Whats New?</value>
+  </data>
+  <data name="&gt;&gt;label5.Name" xml:space="preserve">
+    <value>label5</value>
+  </data>
+  <data name="&gt;&gt;label5.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;label5.Parent" xml:space="preserve">
+    <value>myTablePanelStartScreen</value>
+  </data>
+  <data name="&gt;&gt;label5.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="pckOpen.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="pckOpen.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="pckOpen.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="pckOpen.Size" type="System.Drawing.Size, System.Drawing">
+    <value>444, 502</value>
+  </data>
+  <data name="pckOpen.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
+    <value>Zoom</value>
+  </data>
+  <data name="pckOpen.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="&gt;&gt;pckOpen.Name" xml:space="preserve">
+    <value>pckOpen</value>
+  </data>
+  <data name="&gt;&gt;pckOpen.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;pckOpen.Parent" xml:space="preserve">
+    <value>myTablePanelStartScreen</value>
+  </data>
+  <data name="&gt;&gt;pckOpen.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
   <data name="myTablePanel2.ColumnCount" type="System.Int32, mscorlib">
     <value>3</value>
+  </data>
+  <data name="&gt;&gt;treeView1.Name" xml:space="preserve">
+    <value>treeView1</value>
+  </data>
+  <data name="&gt;&gt;treeView1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TreeView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;treeView1.Parent" xml:space="preserve">
+    <value>myTablePanel2</value>
+  </data>
+  <data name="&gt;&gt;treeView1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;pictureBoxWithInterpolationMode1.Name" xml:space="preserve">
+    <value>pictureBoxWithInterpolationMode1</value>
+  </data>
+  <data name="&gt;&gt;pictureBoxWithInterpolationMode1.Type" xml:space="preserve">
+    <value>PckStudio.PictureBoxWithInterpolationMode, PCK Studio, Version=5.3.0.0, Culture=neutral, PublicKeyToken=be377238ae1b2e97</value>
+  </data>
+  <data name="&gt;&gt;pictureBoxWithInterpolationMode1.Parent" xml:space="preserve">
+    <value>myTablePanel2</value>
+  </data>
+  <data name="&gt;&gt;pictureBoxWithInterpolationMode1.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;label4.Name" xml:space="preserve">
+    <value>label4</value>
+  </data>
+  <data name="&gt;&gt;label4.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;label4.Parent" xml:space="preserve">
+    <value>myTablePanel2</value>
+  </data>
+  <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;tabControl1.Name" xml:space="preserve">
+    <value>tabControl1</value>
+  </data>
+  <data name="&gt;&gt;tabControl1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabControl1.Parent" xml:space="preserve">
+    <value>myTablePanel2</value>
+  </data>
+  <data name="&gt;&gt;tabControl1.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="myTablePanel2.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="myTablePanel2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="myTablePanel2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="myTablePanel2.RowCount" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="myTablePanel2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>770, 466</value>
+  </data>
+  <data name="myTablePanel2.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="&gt;&gt;myTablePanel2.Name" xml:space="preserve">
+    <value>myTablePanel2</value>
+  </data>
+  <data name="&gt;&gt;myTablePanel2.Type" xml:space="preserve">
+    <value>PckStudio.Forms.MyTablePanel, PCK Studio, Version=5.3.0.0, Culture=neutral, PublicKeyToken=be377238ae1b2e97</value>
+  </data>
+  <data name="&gt;&gt;myTablePanel2.Parent" xml:space="preserve">
+    <value>metroTabPage1</value>
+  </data>
+  <data name="&gt;&gt;myTablePanel2.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="myTablePanel2.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="treeView1" Row="0" RowSpan="6" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="pictureBoxWithInterpolationMode1" Row="0" RowSpan="4" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label4" Row="0" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="tabControl1" Row="4" RowSpan="2" Column="1" ColumnSpan="2" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,200,Percent,100,AutoSize,0" /&gt;&lt;Rows Styles="AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="treeView1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -4878,7 +4829,7 @@
     <value>pictureBoxWithInterpolationMode1</value>
   </data>
   <data name="&gt;&gt;pictureBoxWithInterpolationMode1.Type" xml:space="preserve">
-    <value>MinecraftUSkinEditor.PictureBoxWithInterpolationMode, PCK Studio, Version=5.3.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>PckStudio.PictureBoxWithInterpolationMode, PCK Studio, Version=5.3.0.0, Culture=neutral, PublicKeyToken=be377238ae1b2e97</value>
   </data>
   <data name="&gt;&gt;pictureBoxWithInterpolationMode1.Parent" xml:space="preserve">
     <value>myTablePanel2</value>
@@ -4919,8 +4870,218 @@
   <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
+  <data name="&gt;&gt;tabPage2.Name" xml:space="preserve">
+    <value>tabPage2</value>
+  </data>
+  <data name="&gt;&gt;tabPage2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabPage2.Parent" xml:space="preserve">
+    <value>tabControl1</value>
+  </data>
+  <data name="&gt;&gt;tabPage2.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="tabControl1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="tabControl1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>200, 163</value>
+  </data>
+  <data name="tabControl1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="tabControl1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>570, 303</value>
+  </data>
+  <data name="tabControl1.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;tabControl1.Name" xml:space="preserve">
+    <value>tabControl1</value>
+  </data>
+  <data name="&gt;&gt;tabControl1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabControl1.Parent" xml:space="preserve">
+    <value>myTablePanel2</value>
+  </data>
+  <data name="&gt;&gt;tabControl1.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;myTablePanel3.Name" xml:space="preserve">
+    <value>myTablePanel3</value>
+  </data>
+  <data name="&gt;&gt;myTablePanel3.Type" xml:space="preserve">
+    <value>PckStudio.Forms.MyTablePanel, PCK Studio, Version=5.3.0.0, Culture=neutral, PublicKeyToken=be377238ae1b2e97</value>
+  </data>
+  <data name="&gt;&gt;myTablePanel3.Parent" xml:space="preserve">
+    <value>tabPage2</value>
+  </data>
+  <data name="&gt;&gt;myTablePanel3.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="myTablePanel3.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="treeView2" Row="0" RowSpan="6" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="comboBox2" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label6" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="textBox2" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label7" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label8" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label9" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="button1" Row="6" RowSpan="1" Column="0" ColumnSpan="2" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,50,Percent,50" /&gt;&lt;Rows Styles="Percent,50,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,Percent,50,AutoSize,0" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
+  <data name="tabPage2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
+  <data name="tabPage2.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="tabPage2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>562, 277</value>
+  </data>
+  <data name="tabPage2.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="tabPage2.Text" xml:space="preserve">
+    <value>Meta</value>
+  </data>
+  <data name="&gt;&gt;tabPage2.Name" xml:space="preserve">
+    <value>tabPage2</value>
+  </data>
+  <data name="&gt;&gt;tabPage2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabPage2.Parent" xml:space="preserve">
+    <value>tabControl1</value>
+  </data>
+  <data name="&gt;&gt;tabPage2.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="myTablePanel3.ColumnCount" type="System.Int32, mscorlib">
     <value>2</value>
+  </data>
+  <data name="&gt;&gt;treeView2.Name" xml:space="preserve">
+    <value>treeView2</value>
+  </data>
+  <data name="&gt;&gt;treeView2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TreeView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;treeView2.Parent" xml:space="preserve">
+    <value>myTablePanel3</value>
+  </data>
+  <data name="&gt;&gt;treeView2.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;comboBox2.Name" xml:space="preserve">
+    <value>comboBox2</value>
+  </data>
+  <data name="&gt;&gt;comboBox2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;comboBox2.Parent" xml:space="preserve">
+    <value>myTablePanel3</value>
+  </data>
+  <data name="&gt;&gt;comboBox2.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;label6.Name" xml:space="preserve">
+    <value>label6</value>
+  </data>
+  <data name="&gt;&gt;label6.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;label6.Parent" xml:space="preserve">
+    <value>myTablePanel3</value>
+  </data>
+  <data name="&gt;&gt;label6.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;textBox2.Name" xml:space="preserve">
+    <value>textBox2</value>
+  </data>
+  <data name="&gt;&gt;textBox2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;textBox2.Parent" xml:space="preserve">
+    <value>myTablePanel3</value>
+  </data>
+  <data name="&gt;&gt;textBox2.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;label7.Name" xml:space="preserve">
+    <value>label7</value>
+  </data>
+  <data name="&gt;&gt;label7.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;label7.Parent" xml:space="preserve">
+    <value>myTablePanel3</value>
+  </data>
+  <data name="&gt;&gt;label7.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;label8.Name" xml:space="preserve">
+    <value>label8</value>
+  </data>
+  <data name="&gt;&gt;label8.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;label8.Parent" xml:space="preserve">
+    <value>myTablePanel3</value>
+  </data>
+  <data name="&gt;&gt;label8.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;label9.Name" xml:space="preserve">
+    <value>label9</value>
+  </data>
+  <data name="&gt;&gt;label9.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;label9.Parent" xml:space="preserve">
+    <value>myTablePanel3</value>
+  </data>
+  <data name="&gt;&gt;label9.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;button1.Name" xml:space="preserve">
+    <value>button1</value>
+  </data>
+  <data name="&gt;&gt;button1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;button1.Parent" xml:space="preserve">
+    <value>myTablePanel3</value>
+  </data>
+  <data name="&gt;&gt;button1.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="myTablePanel3.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="myTablePanel3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="myTablePanel3.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="myTablePanel3.RowCount" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="myTablePanel3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>556, 271</value>
+  </data>
+  <data name="myTablePanel3.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="&gt;&gt;myTablePanel3.Name" xml:space="preserve">
+    <value>myTablePanel3</value>
+  </data>
+  <data name="&gt;&gt;myTablePanel3.Type" xml:space="preserve">
+    <value>PckStudio.Forms.MyTablePanel, PCK Studio, Version=5.3.0.0, Culture=neutral, PublicKeyToken=be377238ae1b2e97</value>
+  </data>
+  <data name="&gt;&gt;myTablePanel3.Parent" xml:space="preserve">
+    <value>tabPage2</value>
+  </data>
+  <data name="&gt;&gt;myTablePanel3.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="myTablePanel3.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="treeView2" Row="0" RowSpan="6" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="comboBox2" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label6" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="textBox2" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label7" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label8" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label9" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="button1" Row="6" RowSpan="1" Column="0" ColumnSpan="2" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,50,Percent,50" /&gt;&lt;Rows Styles="Percent,50,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,Percent,50,AutoSize,0" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="treeView2.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -5153,422 +5314,729 @@
   <data name="&gt;&gt;button1.ZOrder" xml:space="preserve">
     <value>7</value>
   </data>
-  <data name="myTablePanel3.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="myTablePanel3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
-  </data>
-  <data name="myTablePanel3.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="myTablePanel3.RowCount" type="System.Int32, mscorlib">
-    <value>7</value>
-  </data>
-  <data name="myTablePanel3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>556, 271</value>
-  </data>
-  <data name="myTablePanel3.TabIndex" type="System.Int32, mscorlib">
-    <value>19</value>
-  </data>
-  <data name="&gt;&gt;myTablePanel3.Name" xml:space="preserve">
-    <value>myTablePanel3</value>
-  </data>
-  <data name="&gt;&gt;myTablePanel3.Type" xml:space="preserve">
-    <value>PckStudio.Forms.MyTablePanel, PCK Studio, Version=5.3.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;myTablePanel3.Parent" xml:space="preserve">
-    <value>tabPage2</value>
-  </data>
-  <data name="&gt;&gt;myTablePanel3.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="myTablePanel3.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="treeView2" Row="0" RowSpan="6" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="comboBox2" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label6" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="textBox2" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label7" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label8" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label9" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="button1" Row="6" RowSpan="1" Column="0" ColumnSpan="2" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,50,Percent,50" /&gt;&lt;Rows Styles="Percent,50,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,Percent,50,AutoSize,0" /&gt;&lt;/TableLayoutSettings&gt;</value>
-  </data>
-  <data name="tabPage2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 22</value>
-  </data>
-  <data name="tabPage2.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
-  </data>
-  <data name="tabPage2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>562, 277</value>
-  </data>
-  <data name="tabPage2.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="tabPage2.Text" xml:space="preserve">
-    <value>Meta</value>
-  </data>
-  <data name="&gt;&gt;tabPage2.Name" xml:space="preserve">
-    <value>tabPage2</value>
-  </data>
-  <data name="&gt;&gt;tabPage2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tabPage2.Parent" xml:space="preserve">
-    <value>tabControl1</value>
-  </data>
-  <data name="&gt;&gt;tabPage2.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="tabControl1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="tabControl1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>200, 163</value>
-  </data>
-  <data name="tabControl1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="tabControl1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>570, 303</value>
-  </data>
-  <data name="tabControl1.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
-  </data>
-  <data name="&gt;&gt;tabControl1.Name" xml:space="preserve">
-    <value>tabControl1</value>
-  </data>
-  <data name="&gt;&gt;tabControl1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tabControl1.Parent" xml:space="preserve">
-    <value>myTablePanel2</value>
-  </data>
-  <data name="&gt;&gt;tabControl1.ZOrder" xml:space="preserve">
+  <data name="myTablePanelPckEdit.ColumnCount" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
-  <data name="myTablePanel2.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
+  <data name="&gt;&gt;treeViewMain.Name" xml:space="preserve">
+    <value>treeViewMain</value>
   </data>
-  <data name="myTablePanel2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
+  <data name="&gt;&gt;treeViewMain.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TreeView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="myTablePanel2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
+  <data name="&gt;&gt;treeViewMain.Parent" xml:space="preserve">
+    <value>myTablePanelPckEdit</value>
   </data>
-  <data name="myTablePanel2.RowCount" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="myTablePanel2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>770, 466</value>
-  </data>
-  <data name="myTablePanel2.TabIndex" type="System.Int32, mscorlib">
-    <value>16</value>
-  </data>
-  <data name="&gt;&gt;myTablePanel2.Name" xml:space="preserve">
-    <value>myTablePanel2</value>
-  </data>
-  <data name="&gt;&gt;myTablePanel2.Type" xml:space="preserve">
-    <value>PckStudio.Forms.MyTablePanel, PCK Studio, Version=5.3.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;myTablePanel2.Parent" xml:space="preserve">
-    <value>metroTabPage1</value>
-  </data>
-  <data name="&gt;&gt;myTablePanel2.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="myTablePanel2.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="treeView1" Row="0" RowSpan="6" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="pictureBoxWithInterpolationMode1" Row="0" RowSpan="4" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label4" Row="0" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="tabControl1" Row="4" RowSpan="2" Column="1" ColumnSpan="2" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,200,Percent,100,AutoSize,0" /&gt;&lt;Rows Styles="AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
-  </data>
-  <data name="label10.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label10.Location" type="System.Drawing.Point, System.Drawing">
-    <value>385, 157</value>
-  </data>
-  <data name="label10.Size" type="System.Drawing.Size, System.Drawing">
-    <value>49, 19</value>
-  </data>
-  <data name="label10.TabIndex" type="System.Int32, mscorlib">
-    <value>15</value>
-  </data>
-  <data name="label10.Text" xml:space="preserve">
-    <value>label10</value>
-  </data>
-  <data name="&gt;&gt;label10.Name" xml:space="preserve">
-    <value>label10</value>
-  </data>
-  <data name="&gt;&gt;label10.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;label10.Parent" xml:space="preserve">
-    <value>metroTabPage1</value>
-  </data>
-  <data name="&gt;&gt;label10.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="label11.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label11.Location" type="System.Drawing.Point, System.Drawing">
-    <value>428, 21</value>
-  </data>
-  <data name="label11.Size" type="System.Drawing.Size, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="label11.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;label11.Name" xml:space="preserve">
-    <value>label11</value>
-  </data>
-  <data name="&gt;&gt;label11.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;label11.Parent" xml:space="preserve">
-    <value>metroTabPage1</value>
-  </data>
-  <data name="&gt;&gt;label11.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="metroTabPage1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 38</value>
-  </data>
-  <data name="metroTabPage1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>770, 466</value>
-  </data>
-  <data name="metroTabPage1.TabIndex" type="System.Int32, mscorlib">
+  <data name="&gt;&gt;treeViewMain.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="metroTabPage1.Text" xml:space="preserve">
-    <value>                                                                    </value>
+  <data name="&gt;&gt;pictureBoxImagePreview.Name" xml:space="preserve">
+    <value>pictureBoxImagePreview</value>
   </data>
-  <data name="&gt;&gt;metroTabPage1.Name" xml:space="preserve">
-    <value>metroTabPage1</value>
+  <data name="&gt;&gt;pictureBoxImagePreview.Type" xml:space="preserve">
+    <value>PckStudio.PictureBoxWithInterpolationMode, PCK Studio, Version=5.3.0.0, Culture=neutral, PublicKeyToken=be377238ae1b2e97</value>
   </data>
-  <data name="&gt;&gt;metroTabPage1.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroTabPage, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  <data name="&gt;&gt;pictureBoxImagePreview.Parent" xml:space="preserve">
+    <value>myTablePanelPckEdit</value>
   </data>
-  <data name="&gt;&gt;metroTabPage1.Parent" xml:space="preserve">
-    <value>metroTabControl1</value>
-  </data>
-  <data name="&gt;&gt;metroTabPage1.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="metroTabControl1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="metroTabControl1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>20, 84</value>
-  </data>
-  <data name="metroTabControl1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="metroTabControl1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>778, 508</value>
-  </data>
-  <data name="metroTabControl1.TabIndex" type="System.Int32, mscorlib">
-    <value>18</value>
-  </data>
-  <data name="metroTabControl1.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;metroTabControl1.Name" xml:space="preserve">
-    <value>metroTabControl1</value>
-  </data>
-  <data name="&gt;&gt;metroTabControl1.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroTabControl, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;metroTabControl1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;metroTabControl1.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <metadata name="timer1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>781, 23</value>
-  </metadata>
-  <data name="ChangeURL.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="ChangeURL.Location" type="System.Drawing.Point, System.Drawing">
-    <value>715, -10</value>
-  </data>
-  <data name="ChangeURL.Size" type="System.Drawing.Size, System.Drawing">
-    <value>116, 19</value>
-  </data>
-  <data name="ChangeURL.TabIndex" type="System.Int32, mscorlib">
-    <value>20</value>
-  </data>
-  <data name="ChangeURL.Text" xml:space="preserve">
-    <value>PCKChangeLog.txt</value>
-  </data>
-  <data name="ChangeURL.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;ChangeURL.Name" xml:space="preserve">
-    <value>ChangeURL</value>
-  </data>
-  <data name="&gt;&gt;ChangeURL.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;ChangeURL.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;ChangeURL.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="LittleEndianCheckBox.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="LittleEndianCheckBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>665, 42</value>
-  </data>
-  <data name="LittleEndianCheckBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>133, 15</value>
-  </data>
-  <data name="LittleEndianCheckBox.TabIndex" type="System.Int32, mscorlib">
-    <value>21</value>
-  </data>
-  <data name="LittleEndianCheckBox.Text" xml:space="preserve">
-    <value>Save as Vita/PS4 PCK</value>
-  </data>
-  <data name="LittleEndianCheckBox.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;LittleEndianCheckBox.Name" xml:space="preserve">
-    <value>LittleEndianCheckBox</value>
-  </data>
-  <data name="&gt;&gt;LittleEndianCheckBox.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroCheckBox, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;LittleEndianCheckBox.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;LittleEndianCheckBox.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="myTablePanelStartScreen.ColumnCount" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="richTextBoxChangelog.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="richTextBoxChangelog.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Segoe UI, 8.25pt</value>
-  </data>
-  <data name="richTextBoxChangelog.Location" type="System.Drawing.Point, System.Drawing">
-    <value>450, 70</value>
-  </data>
-  <data name="richTextBoxChangelog.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 30, 30</value>
-  </data>
-  <data name="richTextBoxChangelog.Size" type="System.Drawing.Size, System.Drawing">
-    <value>298, 408</value>
-  </data>
-  <data name="richTextBoxChangelog.TabIndex" type="System.Int32, mscorlib">
-    <value>15</value>
-  </data>
-  <data name="richTextBoxChangelog.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;richTextBoxChangelog.Name" xml:space="preserve">
-    <value>richTextBoxChangelog</value>
-  </data>
-  <data name="&gt;&gt;richTextBoxChangelog.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RichTextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;richTextBoxChangelog.Parent" xml:space="preserve">
-    <value>myTablePanelStartScreen</value>
-  </data>
-  <data name="&gt;&gt;richTextBoxChangelog.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="label5.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left</value>
-  </data>
-  <data name="label5.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label5.Location" type="System.Drawing.Point, System.Drawing">
-    <value>453, 51</value>
-  </data>
-  <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>81, 19</value>
-  </data>
-  <data name="label5.TabIndex" type="System.Int32, mscorlib">
-    <value>12</value>
-  </data>
-  <data name="label5.Text" xml:space="preserve">
-    <value>Whats New?</value>
-  </data>
-  <data name="&gt;&gt;label5.Name" xml:space="preserve">
-    <value>label5</value>
-  </data>
-  <data name="&gt;&gt;label5.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;label5.Parent" xml:space="preserve">
-    <value>myTablePanelStartScreen</value>
-  </data>
-  <data name="&gt;&gt;label5.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;pictureBoxImagePreview.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="pckOpen.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
+  <data name="&gt;&gt;labelAmount.Name" xml:space="preserve">
+    <value>labelAmount</value>
   </data>
-  <data name="pckOpen.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="&gt;&gt;labelAmount.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
   </data>
-  <data name="pckOpen.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
+  <data name="&gt;&gt;labelAmount.Parent" xml:space="preserve">
+    <value>myTablePanelPckEdit</value>
   </data>
-  <data name="pckOpen.Size" type="System.Drawing.Size, System.Drawing">
-    <value>444, 502</value>
-  </data>
-  <data name="pckOpen.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
-    <value>Zoom</value>
-  </data>
-  <data name="pckOpen.TabIndex" type="System.Int32, mscorlib">
-    <value>16</value>
-  </data>
-  <data name="&gt;&gt;pckOpen.Name" xml:space="preserve">
-    <value>pckOpen</value>
-  </data>
-  <data name="&gt;&gt;pckOpen.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;pckOpen.Parent" xml:space="preserve">
-    <value>myTablePanelStartScreen</value>
-  </data>
-  <data name="&gt;&gt;pckOpen.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;labelAmount.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="myTablePanelStartScreen.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+  <data name="&gt;&gt;tabDataDisplay.Name" xml:space="preserve">
+    <value>tabDataDisplay</value>
+  </data>
+  <data name="&gt;&gt;tabDataDisplay.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabDataDisplay.Parent" xml:space="preserve">
+    <value>myTablePanelPckEdit</value>
+  </data>
+  <data name="&gt;&gt;tabDataDisplay.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="myTablePanelPckEdit.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="myTablePanelStartScreen.Location" type="System.Drawing.Point, System.Drawing">
-    <value>20, 84</value>
+  <data name="myTablePanelPckEdit.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
   </data>
-  <data name="myTablePanelStartScreen.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <data name="myTablePanelPckEdit.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
   </data>
-  <data name="myTablePanelStartScreen.RowCount" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="myTablePanelStartScreen.Size" type="System.Drawing.Size, System.Drawing">
-    <value>778, 508</value>
-  </data>
-  <data name="myTablePanelStartScreen.TabIndex" type="System.Int32, mscorlib">
-    <value>19</value>
-  </data>
-  <data name="&gt;&gt;myTablePanelStartScreen.Name" xml:space="preserve">
-    <value>myTablePanelStartScreen</value>
-  </data>
-  <data name="&gt;&gt;myTablePanelStartScreen.Type" xml:space="preserve">
-    <value>PckStudio.Forms.MyTablePanel, PCK Studio, Version=5.3.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;myTablePanelStartScreen.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;myTablePanelStartScreen.ZOrder" xml:space="preserve">
+  <data name="myTablePanelPckEdit.RowCount" type="System.Int32, mscorlib">
     <value>4</value>
   </data>
-  <data name="myTablePanelStartScreen.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="richTextBoxChangelog" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label5" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="pckOpen" Row="0" RowSpan="2" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,57.96915,Percent,42.03085" /&gt;&lt;Rows Styles="Absolute,70,Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  <data name="myTablePanelPckEdit.Size" type="System.Drawing.Size, System.Drawing">
+    <value>770, 466</value>
+  </data>
+  <data name="myTablePanelPckEdit.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="&gt;&gt;myTablePanelPckEdit.Name" xml:space="preserve">
+    <value>myTablePanelPckEdit</value>
+  </data>
+  <data name="&gt;&gt;myTablePanelPckEdit.Type" xml:space="preserve">
+    <value>PckStudio.Forms.MyTablePanel, PCK Studio, Version=5.3.0.0, Culture=neutral, PublicKeyToken=be377238ae1b2e97</value>
+  </data>
+  <data name="&gt;&gt;myTablePanelPckEdit.Parent" xml:space="preserve">
+    <value>tabPage1</value>
+  </data>
+  <data name="&gt;&gt;myTablePanelPckEdit.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="myTablePanelPckEdit.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="treeViewMain" Row="0" RowSpan="6" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="pictureBoxImagePreview" Row="0" RowSpan="4" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="labelAmount" Row="0" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="tabDataDisplay" Row="4" RowSpan="2" Column="1" ColumnSpan="2" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,200,Percent,100,AutoSize,0" /&gt;&lt;Rows Styles="AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
+  <data name="treeViewMain.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="treeViewMain.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="treeViewMain.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="treeViewMain.Size" type="System.Drawing.Size, System.Drawing">
+    <value>200, 466</value>
+  </data>
+  <data name="treeViewMain.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;treeViewMain.Name" xml:space="preserve">
+    <value>treeViewMain</value>
+  </data>
+  <data name="&gt;&gt;treeViewMain.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TreeView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;treeViewMain.Parent" xml:space="preserve">
+    <value>myTablePanelPckEdit</value>
+  </data>
+  <data name="&gt;&gt;treeViewMain.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="pictureBoxImagePreview.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        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
+        AAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="pictureBoxImagePreview.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="pictureBoxImagePreview.Location" type="System.Drawing.Point, System.Drawing">
+    <value>203, 3</value>
+  </data>
+  <data name="pictureBoxImagePreview.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>157, 157</value>
+  </data>
+  <data name="pictureBoxImagePreview.Size" type="System.Drawing.Size, System.Drawing">
+    <value>157, 157</value>
+  </data>
+  <data name="pictureBoxImagePreview.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
+    <value>StretchImage</value>
+  </data>
+  <data name="pictureBoxImagePreview.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;pictureBoxImagePreview.Name" xml:space="preserve">
+    <value>pictureBoxImagePreview</value>
+  </data>
+  <data name="&gt;&gt;pictureBoxImagePreview.Type" xml:space="preserve">
+    <value>PckStudio.PictureBoxWithInterpolationMode, PCK Studio, Version=5.3.0.0, Culture=neutral, PublicKeyToken=be377238ae1b2e97</value>
+  </data>
+  <data name="&gt;&gt;pictureBoxImagePreview.Parent" xml:space="preserve">
+    <value>myTablePanelPckEdit</value>
+  </data>
+  <data name="&gt;&gt;pictureBoxImagePreview.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="labelAmount.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="labelAmount.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="labelAmount.Location" type="System.Drawing.Point, System.Drawing">
+    <value>717, 0</value>
+  </data>
+  <data name="labelAmount.Size" type="System.Drawing.Size, System.Drawing">
+    <value>50, 19</value>
+  </data>
+  <data name="labelAmount.TabIndex" type="System.Int32, mscorlib">
+    <value>18</value>
+  </data>
+  <data name="labelAmount.Text" xml:space="preserve">
+    <value>Entries:</value>
+  </data>
+  <data name="labelAmount.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;labelAmount.Name" xml:space="preserve">
+    <value>labelAmount</value>
+  </data>
+  <data name="&gt;&gt;labelAmount.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;labelAmount.Parent" xml:space="preserve">
+    <value>myTablePanelPckEdit</value>
+  </data>
+  <data name="&gt;&gt;labelAmount.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;tabMetaDisplay.Name" xml:space="preserve">
+    <value>tabMetaDisplay</value>
+  </data>
+  <data name="&gt;&gt;tabMetaDisplay.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabMetaDisplay.Parent" xml:space="preserve">
+    <value>tabDataDisplay</value>
+  </data>
+  <data name="&gt;&gt;tabMetaDisplay.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="tabDataDisplay.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="tabDataDisplay.Location" type="System.Drawing.Point, System.Drawing">
+    <value>200, 163</value>
+  </data>
+  <data name="tabDataDisplay.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="tabDataDisplay.Size" type="System.Drawing.Size, System.Drawing">
+    <value>570, 303</value>
+  </data>
+  <data name="tabDataDisplay.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;tabDataDisplay.Name" xml:space="preserve">
+    <value>tabDataDisplay</value>
+  </data>
+  <data name="&gt;&gt;tabDataDisplay.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabDataDisplay.Parent" xml:space="preserve">
+    <value>myTablePanelPckEdit</value>
+  </data>
+  <data name="&gt;&gt;tabDataDisplay.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;myTablePanel1.Name" xml:space="preserve">
+    <value>myTablePanel1</value>
+  </data>
+  <data name="&gt;&gt;myTablePanel1.Type" xml:space="preserve">
+    <value>PckStudio.Forms.MyTablePanel, PCK Studio, Version=5.3.0.0, Culture=neutral, PublicKeyToken=be377238ae1b2e97</value>
+  </data>
+  <data name="&gt;&gt;myTablePanel1.Parent" xml:space="preserve">
+    <value>tabMetaDisplay</value>
+  </data>
+  <data name="&gt;&gt;myTablePanel1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="myTablePanel1.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="treeMeta" Row="0" RowSpan="6" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="comboBox1" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label2" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="textBox1" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="labelEntryType" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label3" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="labelEntryData" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="buttonEdit" Row="6" RowSpan="1" Column="0" ColumnSpan="2" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,50,Percent,50" /&gt;&lt;Rows Styles="Percent,50,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,Percent,50,AutoSize,0" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
+  <data name="tabMetaDisplay.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
+  <data name="tabMetaDisplay.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="tabMetaDisplay.Size" type="System.Drawing.Size, System.Drawing">
+    <value>562, 277</value>
+  </data>
+  <data name="tabMetaDisplay.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="tabMetaDisplay.Text" xml:space="preserve">
+    <value>Meta</value>
+  </data>
+  <data name="&gt;&gt;tabMetaDisplay.Name" xml:space="preserve">
+    <value>tabMetaDisplay</value>
+  </data>
+  <data name="&gt;&gt;tabMetaDisplay.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabMetaDisplay.Parent" xml:space="preserve">
+    <value>tabDataDisplay</value>
+  </data>
+  <data name="&gt;&gt;tabMetaDisplay.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="myTablePanel1.ColumnCount" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;treeMeta.Name" xml:space="preserve">
+    <value>treeMeta</value>
+  </data>
+  <data name="&gt;&gt;treeMeta.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TreeView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;treeMeta.Parent" xml:space="preserve">
+    <value>myTablePanel1</value>
+  </data>
+  <data name="&gt;&gt;treeMeta.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;comboBox1.Name" xml:space="preserve">
+    <value>comboBox1</value>
+  </data>
+  <data name="&gt;&gt;comboBox1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;comboBox1.Parent" xml:space="preserve">
+    <value>myTablePanel1</value>
+  </data>
+  <data name="&gt;&gt;comboBox1.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;label2.Name" xml:space="preserve">
+    <value>label2</value>
+  </data>
+  <data name="&gt;&gt;label2.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;label2.Parent" xml:space="preserve">
+    <value>myTablePanel1</value>
+  </data>
+  <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;textBox1.Name" xml:space="preserve">
+    <value>textBox1</value>
+  </data>
+  <data name="&gt;&gt;textBox1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;textBox1.Parent" xml:space="preserve">
+    <value>myTablePanel1</value>
+  </data>
+  <data name="&gt;&gt;textBox1.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;labelEntryType.Name" xml:space="preserve">
+    <value>labelEntryType</value>
+  </data>
+  <data name="&gt;&gt;labelEntryType.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;labelEntryType.Parent" xml:space="preserve">
+    <value>myTablePanel1</value>
+  </data>
+  <data name="&gt;&gt;labelEntryType.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;label3.Name" xml:space="preserve">
+    <value>label3</value>
+  </data>
+  <data name="&gt;&gt;label3.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;label3.Parent" xml:space="preserve">
+    <value>myTablePanel1</value>
+  </data>
+  <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;labelEntryData.Name" xml:space="preserve">
+    <value>labelEntryData</value>
+  </data>
+  <data name="&gt;&gt;labelEntryData.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;labelEntryData.Parent" xml:space="preserve">
+    <value>myTablePanel1</value>
+  </data>
+  <data name="&gt;&gt;labelEntryData.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;buttonEdit.Name" xml:space="preserve">
+    <value>buttonEdit</value>
+  </data>
+  <data name="&gt;&gt;buttonEdit.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;buttonEdit.Parent" xml:space="preserve">
+    <value>myTablePanel1</value>
+  </data>
+  <data name="&gt;&gt;buttonEdit.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="myTablePanel1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="myTablePanel1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="myTablePanel1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="myTablePanel1.RowCount" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="myTablePanel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>556, 271</value>
+  </data>
+  <data name="myTablePanel1.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="&gt;&gt;myTablePanel1.Name" xml:space="preserve">
+    <value>myTablePanel1</value>
+  </data>
+  <data name="&gt;&gt;myTablePanel1.Type" xml:space="preserve">
+    <value>PckStudio.Forms.MyTablePanel, PCK Studio, Version=5.3.0.0, Culture=neutral, PublicKeyToken=be377238ae1b2e97</value>
+  </data>
+  <data name="&gt;&gt;myTablePanel1.Parent" xml:space="preserve">
+    <value>tabMetaDisplay</value>
+  </data>
+  <data name="&gt;&gt;myTablePanel1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="myTablePanel1.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="treeMeta" Row="0" RowSpan="6" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="comboBox1" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label2" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="textBox1" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="labelEntryType" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label3" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="labelEntryData" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="buttonEdit" Row="6" RowSpan="1" Column="0" ColumnSpan="2" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,50,Percent,50" /&gt;&lt;Rows Styles="Percent,50,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,Percent,50,AutoSize,0" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
+  <data name="treeMeta.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="treeMeta.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="treeMeta.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="treeMeta.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="treeMeta.Size" type="System.Drawing.Size, System.Drawing">
+    <value>278, 199</value>
+  </data>
+  <data name="treeMeta.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;treeMeta.Name" xml:space="preserve">
+    <value>treeMeta</value>
+  </data>
+  <data name="&gt;&gt;treeMeta.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TreeView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;treeMeta.Parent" xml:space="preserve">
+    <value>myTablePanel1</value>
+  </data>
+  <data name="&gt;&gt;treeMeta.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="comboBox1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="comboBox1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>339, 66</value>
+  </data>
+  <data name="comboBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>155, 21</value>
+  </data>
+  <data name="comboBox1.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;comboBox1.Name" xml:space="preserve">
+    <value>comboBox1</value>
+  </data>
+  <data name="&gt;&gt;comboBox1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;comboBox1.Parent" xml:space="preserve">
+    <value>myTablePanel1</value>
+  </data>
+  <data name="&gt;&gt;comboBox1.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="label2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom</value>
+  </data>
+  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>388, 135</value>
+  </data>
+  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>57, 1</value>
+  </data>
+  <data name="label2.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="label2.Text" xml:space="preserve">
+    <value>Entry Data</value>
+  </data>
+  <data name="&gt;&gt;label2.Name" xml:space="preserve">
+    <value>label2</value>
+  </data>
+  <data name="&gt;&gt;label2.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;label2.Parent" xml:space="preserve">
+    <value>myTablePanel1</value>
+  </data>
+  <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="textBox1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom</value>
+  </data>
+  <data name="textBox1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>338, 112</value>
+  </data>
+  <data name="textBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>157, 20</value>
+  </data>
+  <data name="textBox1.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;textBox1.Name" xml:space="preserve">
+    <value>textBox1</value>
+  </data>
+  <data name="&gt;&gt;textBox1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;textBox1.Parent" xml:space="preserve">
+    <value>myTablePanel1</value>
+  </data>
+  <data name="&gt;&gt;textBox1.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="labelEntryType.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom</value>
+  </data>
+  <data name="labelEntryType.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="labelEntryType.Location" type="System.Drawing.Point, System.Drawing">
+    <value>382, 44</value>
+  </data>
+  <data name="labelEntryType.Size" type="System.Drawing.Size, System.Drawing">
+    <value>70, 19</value>
+  </data>
+  <data name="labelEntryType.TabIndex" type="System.Int32, mscorlib">
+    <value>18</value>
+  </data>
+  <data name="labelEntryType.Text" xml:space="preserve">
+    <value>Entry Type</value>
+  </data>
+  <data name="&gt;&gt;labelEntryType.Name" xml:space="preserve">
+    <value>labelEntryType</value>
+  </data>
+  <data name="&gt;&gt;labelEntryType.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;labelEntryType.Parent" xml:space="preserve">
+    <value>myTablePanel1</value>
+  </data>
+  <data name="&gt;&gt;labelEntryType.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="label3.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom</value>
+  </data>
+  <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>388, 198</value>
+  </data>
+  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>58, 1</value>
+  </data>
+  <data name="label3.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="label3.Text" xml:space="preserve">
+    <value>Entry Type</value>
+  </data>
+  <data name="&gt;&gt;label3.Name" xml:space="preserve">
+    <value>label3</value>
+  </data>
+  <data name="&gt;&gt;label3.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;label3.Parent" xml:space="preserve">
+    <value>myTablePanel1</value>
+  </data>
+  <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="labelEntryData.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom</value>
+  </data>
+  <data name="labelEntryData.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="labelEntryData.Location" type="System.Drawing.Point, System.Drawing">
+    <value>382, 90</value>
+  </data>
+  <data name="labelEntryData.Size" type="System.Drawing.Size, System.Drawing">
+    <value>70, 19</value>
+  </data>
+  <data name="labelEntryData.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="labelEntryData.Text" xml:space="preserve">
+    <value>Entry Data</value>
+  </data>
+  <data name="&gt;&gt;labelEntryData.Name" xml:space="preserve">
+    <value>labelEntryData</value>
+  </data>
+  <data name="&gt;&gt;labelEntryData.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;labelEntryData.Parent" xml:space="preserve">
+    <value>myTablePanel1</value>
+  </data>
+  <data name="&gt;&gt;labelEntryData.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="buttonEdit.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="buttonEdit.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="buttonEdit.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="buttonEdit.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 202</value>
+  </data>
+  <data name="buttonEdit.Size" type="System.Drawing.Size, System.Drawing">
+    <value>550, 66</value>
+  </data>
+  <data name="buttonEdit.TabIndex" type="System.Int32, mscorlib">
+    <value>17</value>
+  </data>
+  <data name="buttonEdit.Text" xml:space="preserve">
+    <value>EDIT BOXES</value>
+  </data>
+  <data name="buttonEdit.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
+    <value>TextBeforeImage</value>
+  </data>
+  <data name="buttonEdit.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;buttonEdit.Name" xml:space="preserve">
+    <value>buttonEdit</value>
+  </data>
+  <data name="&gt;&gt;buttonEdit.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;buttonEdit.Parent" xml:space="preserve">
+    <value>myTablePanel1</value>
+  </data>
+  <data name="&gt;&gt;buttonEdit.ZOrder" xml:space="preserve">
+    <value>7</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>

@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MetroFramework.Forms;
-using MinecraftUSkinEditor;
+using PckStudio;
 
 namespace PckStudio.Forms.Utilities
 {

@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace MinecraftUSkinEditor
+namespace PckStudio
 {
     public partial class AdvancedOptions : MetroFramework.Forms.MetroForm
     {
@@ -36,7 +36,7 @@ namespace MinecraftUSkinEditor
 
         private void addEntryToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MinecraftUSkinEditor.addMetaAdvanced add = new MinecraftUSkinEditor.addMetaAdvanced(treeMeta);
+            PckStudio.addMetaAdvanced add = new PckStudio.addMetaAdvanced(treeMeta);
             add.ShowDialog();
             add.Dispose();
         }

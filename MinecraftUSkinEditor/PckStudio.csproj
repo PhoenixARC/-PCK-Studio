@@ -60,13 +60,13 @@
     <ApplicationIcon>Sin_titulo991.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>PCKStudio.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>CommunityKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
     <TargetZone>LocalIntranet</TargetZone>
@@ -76,10 +76,20 @@
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup>
-    <StartupObject>MinecraftUSkinEditor.Program</StartupObject>
+    <StartupObject>PckStudio.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DelaySign>false</DelaySign>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>1A350BCC742C98A4A39065C40B7D81A6F94CE8C1</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>
+    </ManifestKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Costura, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -96,8 +106,8 @@
       <HintPath>..\packages\ExpandablePanel.2.0.0\lib\4.0\ExpandablePanel.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="FileTransferProtocolLib">
-      <HintPath>..\..\..\..\Desktop\Desktop Files\PCK\Costura\FileTransferProtocolLib.dll</HintPath>
+    <Reference Include="filetransferprotocollib">
+      <HintPath>..\filetransferprotocollib.dll</HintPath>
     </Reference>
     <Reference Include="GeoAPI, Version=1.7.4.0, Culture=neutral, PublicKeyToken=a1a0da7def465678, processorArchitecture=MSIL">
       <HintPath>..\packages\MapSuiteDependency-GeoAPI.10.2.0\lib\net45\GeoAPI.dll</HintPath>
@@ -143,8 +153,9 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
-    <Reference Include="MySql.Data">
-      <HintPath>..\..\..\..\Desktop\Desktop Files\pckStudio\MySql.Data.dll</HintPath>
+    <Reference Include="MySql.Data, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="NetTopologySuite, Version=1.14.0.0, Culture=neutral, PublicKeyToken=f580a05016ebada1, processorArchitecture=MSIL">
       <HintPath>..\packages\MapSuiteDependency-NetTopologySuite.10.2.0\lib\net45\NetTopologySuite.dll</HintPath>
@@ -329,6 +340,7 @@
     <Compile Include="Classes\Models\Texel.cs" />
     <Compile Include="Classes\Models\TexelComparer.cs" />
     <Compile Include="Classes\Models\TexturePlane.cs" />
+    <Compile Include="Classes\PCK.cs" />
     <Compile Include="Classes\RichPresenceClient.cs" />
     <Compile Include="Classes\StoneVOX\brush\BrushAdd.cs" />
     <Compile Include="Classes\StoneVOX\brush\BrushColorSelection.cs" />
@@ -649,7 +661,6 @@
     <Compile Include="Forms\Additional-Popups\MetaADD.Designer.cs">
       <DependentUpon>MetaADD.cs</DependentUpon>
     </Compile>
-    <Compile Include="Classes\PCK.cs" />
     <Compile Include="Forms\Additional-Popups\presetMeta.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -664,11 +675,6 @@
       <DependentUpon>programInfo.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Classes\RenderBase.cs" />
     <Compile Include="Classes\TextureCodec.cs" />
     <Compile Include="Classes\TextureUtils.cs" />
@@ -843,6 +849,7 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="bin\Release\settings.ini" />
     <None Include="bin\Release\templates\UntitledSkinPCK.pck" />
     <Content Include="Classes\StoneVOX\data\fonts\Bigfish.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -866,6 +873,7 @@
     <Content Include="Classes\StoneVOX\data\shaders\wireframe.vs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="CommunityKey.snk" />
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
     <None Include="PCKStudio.pfx" />
@@ -874,6 +882,11 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -886,6 +899,8 @@
   <ItemGroup>
     <None Include="Resources\apps.zip" />
     <None Include="Resources\binkawin.asi" />
+    <None Include="Resources\settings.ini" />
+    <None Include="Resources\UntitledSkinPCK.pck" />
     <None Include="xbox.png" />
     <None Include="youtube_PNG15.png" />
     <None Include="Resources\Del.png" />

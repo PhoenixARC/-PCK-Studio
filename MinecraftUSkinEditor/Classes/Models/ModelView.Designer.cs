@@ -1,5 +1,5 @@
 ﻿
-namespace MinecraftUSkinEditor.Models
+namespace PckStudio.Models
 {
     partial class MinecraftModelView
     {
@@ -37,7 +37,7 @@ namespace MinecraftUSkinEditor.Models
         }
 
 
-        private MinecraftUSkinEditor.Models.BackgroundTypes backgroundType;
+        private PckStudio.Models.BackgroundTypes backgroundType;
 
         private System.Drawing.Brush backgroundBrush = new System.Drawing.SolidBrush(System.Drawing.Color.SkyBlue);
 
@@ -49,7 +49,7 @@ namespace MinecraftUSkinEditor.Models
 
         private System.Drawing.Point mouseLastLocation;
 
-        private MinecraftUSkinEditor.Models.Object3D rotatingObject3D;
+        private PckStudio.Models.Object3D rotatingObject3D;
 
         private System.Drawing.Color backgroundColor = System.Drawing.Color.Transparent;
 
@@ -65,15 +65,15 @@ namespace MinecraftUSkinEditor.Models
 
         private System.Drawing.Image versionImage;
 
-        internal MinecraftUSkinEditor.Models.Matrix3D GlobalTransformation = MinecraftUSkinEditor.Models.Matrix3D.Identity;
+        internal PckStudio.Models.Matrix3D GlobalTransformation = PckStudio.Models.Matrix3D.Identity;
 
-        private System.Collections.Generic.List<MinecraftUSkinEditor.Models.Texel> texelList = new System.Collections.Generic.List<MinecraftUSkinEditor.Models.Texel>();
+        private System.Collections.Generic.List<PckStudio.Models.Texel> texelList = new System.Collections.Generic.List<PckStudio.Models.Texel>();
 
-        private MinecraftUSkinEditor.Models.TexelComparer texelComparer = new MinecraftUSkinEditor.Models.TexelComparer();
+        private PckStudio.Models.TexelComparer texelComparer = new PckStudio.Models.TexelComparer();
 
-        private System.Collections.Generic.List<MinecraftUSkinEditor.Models.Object3D> object3DList = new System.Collections.Generic.List<MinecraftUSkinEditor.Models.Object3D>();
+        private System.Collections.Generic.List<PckStudio.Models.Object3D> object3DList = new System.Collections.Generic.List<PckStudio.Models.Object3D>();
 
-        private System.Collections.Generic.List<MinecraftUSkinEditor.Models.Object3D> dynamicObject3DtList = new System.Collections.Generic.List<MinecraftUSkinEditor.Models.Object3D>();
+        private System.Collections.Generic.List<PckStudio.Models.Object3D> dynamicObject3DtList = new System.Collections.Generic.List<PckStudio.Models.Object3D>();
         #endregion
     }
 }

@@ -13,7 +13,7 @@ using MySql.Data.MySqlClient;
 using System.Net;
 using PckStudio;
 
-namespace MinecraftUSkinEditor
+namespace PckStudio
 {
     public partial class addnewskin : MetroFramework.Forms.MetroForm
     {

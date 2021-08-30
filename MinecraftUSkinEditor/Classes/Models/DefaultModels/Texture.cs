@@ -4,7 +4,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading;
 
-namespace MinecraftUSkinEditor.Models
+namespace PckStudio.Models
 {
 	public class Texture
 	{

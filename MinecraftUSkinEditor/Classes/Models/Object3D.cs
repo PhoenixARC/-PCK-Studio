@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MinecraftUSkinEditor.Models
+namespace PckStudio.Models
 {
 	public abstract class Object3D
 	{
@@ -186,12 +186,12 @@ namespace MinecraftUSkinEditor.Models
 			}
 			set
 			{
-				this.scaleTransformation = global::MinecraftUSkinEditor.Models.Matrix3D.CreateScale(value);
+				this.scaleTransformation = global::PckStudio.Models.Matrix3D.CreateScale(value);
 				this.localTransformation = this.positionTranslation * this.localRotation * this.originTranslation * this.scaleTransformation;
 			}
 		}
 
-		public global::MinecraftUSkinEditor.Models.RotationOrders RotationOrder
+		public global::PckStudio.Models.RotationOrders RotationOrder
 		{
 			get
 			{
@@ -202,29 +202,29 @@ namespace MinecraftUSkinEditor.Models
 				this.order = value;
 				switch (this.order)
 				{
-				case global::MinecraftUSkinEditor.Models.RotationOrders.XY:
-					this.Rotate = new global::MinecraftUSkinEditor.Models.Object3D.RotateMethod(this.RotateXY);
-					this.UpdateRotation = new global::MinecraftUSkinEditor.Models.Object3D.UpdateRotationMethod(this.UpdateRotationXY);
+				case global::PckStudio.Models.RotationOrders.XY:
+					this.Rotate = new global::PckStudio.Models.Object3D.RotateMethod(this.RotateXY);
+					this.UpdateRotation = new global::PckStudio.Models.Object3D.UpdateRotationMethod(this.UpdateRotationXY);
 					return;
-				case global::MinecraftUSkinEditor.Models.RotationOrders.YX:
-					this.Rotate = new global::MinecraftUSkinEditor.Models.Object3D.RotateMethod(this.RotateYX);
-					this.UpdateRotation = new global::MinecraftUSkinEditor.Models.Object3D.UpdateRotationMethod(this.UpdateRotationYX);
+				case global::PckStudio.Models.RotationOrders.YX:
+					this.Rotate = new global::PckStudio.Models.Object3D.RotateMethod(this.RotateYX);
+					this.UpdateRotation = new global::PckStudio.Models.Object3D.UpdateRotationMethod(this.UpdateRotationYX);
 					return;
-				case global::MinecraftUSkinEditor.Models.RotationOrders.XZ:
-					this.Rotate = new global::MinecraftUSkinEditor.Models.Object3D.RotateMethod(this.RotateXZ);
-					this.UpdateRotation = new global::MinecraftUSkinEditor.Models.Object3D.UpdateRotationMethod(this.UpdateRotationXZ);
+				case global::PckStudio.Models.RotationOrders.XZ:
+					this.Rotate = new global::PckStudio.Models.Object3D.RotateMethod(this.RotateXZ);
+					this.UpdateRotation = new global::PckStudio.Models.Object3D.UpdateRotationMethod(this.UpdateRotationXZ);
 					return;
-				case global::MinecraftUSkinEditor.Models.RotationOrders.ZX:
-					this.Rotate = new global::MinecraftUSkinEditor.Models.Object3D.RotateMethod(this.RotateZX);
-					this.UpdateRotation = new global::MinecraftUSkinEditor.Models.Object3D.UpdateRotationMethod(this.UpdateRotationZX);
+				case global::PckStudio.Models.RotationOrders.ZX:
+					this.Rotate = new global::PckStudio.Models.Object3D.RotateMethod(this.RotateZX);
+					this.UpdateRotation = new global::PckStudio.Models.Object3D.UpdateRotationMethod(this.UpdateRotationZX);
 					return;
-				case global::MinecraftUSkinEditor.Models.RotationOrders.YZ:
-					this.Rotate = new global::MinecraftUSkinEditor.Models.Object3D.RotateMethod(this.RotateYZ);
-					this.UpdateRotation = new global::MinecraftUSkinEditor.Models.Object3D.UpdateRotationMethod(this.UpdateRotationYZ);
+				case global::PckStudio.Models.RotationOrders.YZ:
+					this.Rotate = new global::PckStudio.Models.Object3D.RotateMethod(this.RotateYZ);
+					this.UpdateRotation = new global::PckStudio.Models.Object3D.UpdateRotationMethod(this.UpdateRotationYZ);
 					return;
-				case global::MinecraftUSkinEditor.Models.RotationOrders.ZY:
-					this.Rotate = new global::MinecraftUSkinEditor.Models.Object3D.RotateMethod(this.RotateZY);
-					this.UpdateRotation = new global::MinecraftUSkinEditor.Models.Object3D.UpdateRotationMethod(this.UpdateRotationZY);
+				case global::PckStudio.Models.RotationOrders.ZY:
+					this.Rotate = new global::PckStudio.Models.Object3D.RotateMethod(this.RotateZY);
+					this.UpdateRotation = new global::PckStudio.Models.Object3D.UpdateRotationMethod(this.UpdateRotationZY);
 					return;
 				default:
 					return;
@@ -232,7 +232,7 @@ namespace MinecraftUSkinEditor.Models
 			}
 		}
 
-		internal virtual global::MinecraftUSkinEditor.Models.MinecraftModelView Viewport
+		internal virtual global::PckStudio.Models.MinecraftModelView Viewport
 		{
 			set
 			{
@@ -240,28 +240,28 @@ namespace MinecraftUSkinEditor.Models
 			}
 		}
 
-		public global::MinecraftUSkinEditor.Models.Point3D Origin
+		public global::PckStudio.Models.Point3D Origin
 		{
 			get
 			{
-				return new global::MinecraftUSkinEditor.Models.Point3D(-this.originTranslation.M14, -this.originTranslation.M24, -this.originTranslation.M34);
+				return new global::PckStudio.Models.Point3D(-this.originTranslation.M14, -this.originTranslation.M24, -this.originTranslation.M34);
 			}
 			set
 			{
-				this.originTranslation = global::MinecraftUSkinEditor.Models.Matrix3D.CreateTranslation(-value.X, -value.Y, -value.Z);
+				this.originTranslation = global::PckStudio.Models.Matrix3D.CreateTranslation(-value.X, -value.Y, -value.Z);
 				this.localTransformation = this.positionTranslation * this.localRotation * this.originTranslation * this.scaleTransformation;
 			}
 		}
 
-		public global::MinecraftUSkinEditor.Models.Point3D Position
+		public global::PckStudio.Models.Point3D Position
 		{
 			get
 			{
-				return new global::MinecraftUSkinEditor.Models.Point3D(this.positionTranslation.M14, this.positionTranslation.M24, this.positionTranslation.M34);
+				return new global::PckStudio.Models.Point3D(this.positionTranslation.M14, this.positionTranslation.M24, this.positionTranslation.M34);
 			}
 			set
 			{
-				this.positionTranslation = global::MinecraftUSkinEditor.Models.Matrix3D.CreateTranslation(value);
+				this.positionTranslation = global::PckStudio.Models.Matrix3D.CreateTranslation(value);
 				this.localTransformation = this.positionTranslation * this.localRotation * this.originTranslation * this.scaleTransformation;
 				this.Update();
 			}
@@ -269,7 +269,7 @@ namespace MinecraftUSkinEditor.Models
 
 		internal abstract void Update();
 
-		public global::MinecraftUSkinEditor.Models.Matrix3D GlobalTransformation
+		public global::PckStudio.Models.Matrix3D GlobalTransformation
 		{
 			get
 			{
@@ -282,7 +282,7 @@ namespace MinecraftUSkinEditor.Models
 			}
 		}
 
-		public global::MinecraftUSkinEditor.Models.Matrix3D LocalTransformation
+		public global::PckStudio.Models.Matrix3D LocalTransformation
 		{
 			get
 			{
@@ -379,42 +379,42 @@ namespace MinecraftUSkinEditor.Models
 		private void UpdateRotationXY()
 		{
 			this.CorrectAngles();
-			this.localRotation = global::MinecraftUSkinEditor.Models.Matrix3D.CreateRotationY(this.angle1) * global::MinecraftUSkinEditor.Models.Matrix3D.CreateRotationX(this.angle2);
+			this.localRotation = global::PckStudio.Models.Matrix3D.CreateRotationY(this.angle1) * global::PckStudio.Models.Matrix3D.CreateRotationX(this.angle2);
 			this.localTransformation = this.positionTranslation * this.localRotation * this.originTranslation * this.scaleTransformation;
 		}
 
 		private void UpdateRotationYX()
 		{
 			this.CorrectAngles();
-			this.localRotation = global::MinecraftUSkinEditor.Models.Matrix3D.CreateRotationX(this.angle2) * global::MinecraftUSkinEditor.Models.Matrix3D.CreateRotationY(this.angle1);
+			this.localRotation = global::PckStudio.Models.Matrix3D.CreateRotationX(this.angle2) * global::PckStudio.Models.Matrix3D.CreateRotationY(this.angle1);
 			this.localTransformation = this.positionTranslation * this.localRotation * this.originTranslation * this.scaleTransformation;
 		}
 
 		private void UpdateRotationXZ()
 		{
 			this.CorrectAngles();
-			this.localRotation = global::MinecraftUSkinEditor.Models.Matrix3D.CreateRotationZ(this.angle1) * global::MinecraftUSkinEditor.Models.Matrix3D.CreateRotationX(this.angle2);
+			this.localRotation = global::PckStudio.Models.Matrix3D.CreateRotationZ(this.angle1) * global::PckStudio.Models.Matrix3D.CreateRotationX(this.angle2);
 			this.localTransformation = this.positionTranslation * this.localRotation * this.originTranslation * this.scaleTransformation;
 		}
 
 		private void UpdateRotationZX()
 		{
 			this.CorrectAngles();
-			this.localRotation = global::MinecraftUSkinEditor.Models.Matrix3D.CreateRotationX(this.angle2) * global::MinecraftUSkinEditor.Models.Matrix3D.CreateRotationZ(this.angle1);
+			this.localRotation = global::PckStudio.Models.Matrix3D.CreateRotationX(this.angle2) * global::PckStudio.Models.Matrix3D.CreateRotationZ(this.angle1);
 			this.localTransformation = this.positionTranslation * this.localRotation * this.originTranslation * this.scaleTransformation;
 		}
 
 		private void UpdateRotationZY()
 		{
 			this.CorrectAngles();
-			this.localRotation = global::MinecraftUSkinEditor.Models.Matrix3D.CreateRotationY(this.angle2) * global::MinecraftUSkinEditor.Models.Matrix3D.CreateRotationZ(this.angle1);
+			this.localRotation = global::PckStudio.Models.Matrix3D.CreateRotationY(this.angle2) * global::PckStudio.Models.Matrix3D.CreateRotationZ(this.angle1);
 			this.localTransformation = this.positionTranslation * this.localRotation * this.originTranslation * this.scaleTransformation;
 		}
 
 		private void UpdateRotationYZ()
 		{
 			this.CorrectAngles();
-			this.localRotation = global::MinecraftUSkinEditor.Models.Matrix3D.CreateRotationZ(this.angle2) * global::MinecraftUSkinEditor.Models.Matrix3D.CreateRotationY(this.angle1);
+			this.localRotation = global::PckStudio.Models.Matrix3D.CreateRotationZ(this.angle2) * global::PckStudio.Models.Matrix3D.CreateRotationY(this.angle1);
 			this.localTransformation = this.positionTranslation * this.localRotation * this.originTranslation * this.scaleTransformation;
 		}
 
@@ -424,17 +424,17 @@ namespace MinecraftUSkinEditor.Models
 
 		public const float PIby180 = 0.0174532924f;
 
-		protected global::MinecraftUSkinEditor.Models.Matrix3D originTranslation = global::MinecraftUSkinEditor.Models.Matrix3D.Identity;
+		protected global::PckStudio.Models.Matrix3D originTranslation = global::PckStudio.Models.Matrix3D.Identity;
 
-		protected global::MinecraftUSkinEditor.Models.Matrix3D positionTranslation = global::MinecraftUSkinEditor.Models.Matrix3D.Identity;
+		protected global::PckStudio.Models.Matrix3D positionTranslation = global::PckStudio.Models.Matrix3D.Identity;
 
-		protected global::MinecraftUSkinEditor.Models.Matrix3D scaleTransformation = global::MinecraftUSkinEditor.Models.Matrix3D.Identity;
+		protected global::PckStudio.Models.Matrix3D scaleTransformation = global::PckStudio.Models.Matrix3D.Identity;
 
-		protected global::MinecraftUSkinEditor.Models.Matrix3D localRotation = global::MinecraftUSkinEditor.Models.Matrix3D.Identity;
+		protected global::PckStudio.Models.Matrix3D localRotation = global::PckStudio.Models.Matrix3D.Identity;
 
-		protected global::MinecraftUSkinEditor.Models.Matrix3D localTransformation = global::MinecraftUSkinEditor.Models.Matrix3D.Identity;
+		protected global::PckStudio.Models.Matrix3D localTransformation = global::PckStudio.Models.Matrix3D.Identity;
 
-		protected global::MinecraftUSkinEditor.Models.Matrix3D globalTransformation = global::MinecraftUSkinEditor.Models.Matrix3D.Identity;
+		protected global::PckStudio.Models.Matrix3D globalTransformation = global::PckStudio.Models.Matrix3D.Identity;
 
 		private float angle1;
 
@@ -448,13 +448,13 @@ namespace MinecraftUSkinEditor.Models
 
 		private float minAngle2 = -3.14159274f;
 
-		private global::MinecraftUSkinEditor.Models.RotationOrders order;
+		private global::PckStudio.Models.RotationOrders order;
 
-		protected global::MinecraftUSkinEditor.Models.MinecraftModelView viewport;
+		protected global::PckStudio.Models.MinecraftModelView viewport;
 
-		private global::MinecraftUSkinEditor.Models.Object3D.RotateMethod Rotate;
+		private global::PckStudio.Models.Object3D.RotateMethod Rotate;
 
-		private global::MinecraftUSkinEditor.Models.Object3D.UpdateRotationMethod UpdateRotation;
+		private global::PckStudio.Models.Object3D.UpdateRotationMethod UpdateRotation;
 
 		private delegate void RotateMethod(float deltaX, float deltaY);
 

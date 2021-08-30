@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace MinecraftUSkinEditor
+namespace PckStudio
 {
     public partial class meta : MetroFramework.Forms.MetroForm
     {
@@ -53,7 +53,7 @@ namespace MinecraftUSkinEditor
 
         private void addToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MinecraftUSkinEditor.MetaADD add = new MinecraftUSkinEditor.MetaADD(currentPCK, treeView1);
+            PckStudio.MetaADD add = new PckStudio.MetaADD(currentPCK, treeView1);
             add.TopMost = true;
             add.TopLevel = true;
             add.ShowDialog();

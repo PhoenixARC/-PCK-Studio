@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MinecraftUSkinEditor.Models
+namespace PckStudio.Models
 {
 	public enum BackgroundTypes
 	{

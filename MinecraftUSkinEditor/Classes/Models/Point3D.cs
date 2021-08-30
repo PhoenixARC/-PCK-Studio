@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MinecraftUSkinEditor.Models
+namespace PckStudio.Models
 {
 	public struct Point3D
 	{
@@ -11,11 +11,11 @@ namespace MinecraftUSkinEditor.Models
 			this.Z = z;
 		}
 
-		public static global::MinecraftUSkinEditor.Models.Point3D Zero
+		public static global::PckStudio.Models.Point3D Zero
 		{
 			get
 			{
-				return default(global::MinecraftUSkinEditor.Models.Point3D);
+				return default(global::PckStudio.Models.Point3D);
 			}
 		}
 
@@ -33,24 +33,24 @@ namespace MinecraftUSkinEditor.Models
 			});
 		}
 
-		public static global::MinecraftUSkinEditor.Models.Point3D operator +(global::MinecraftUSkinEditor.Models.Point3D a, global::MinecraftUSkinEditor.Models.Point3D b)
+		public static global::PckStudio.Models.Point3D operator +(global::PckStudio.Models.Point3D a, global::PckStudio.Models.Point3D b)
 		{
-			return new global::MinecraftUSkinEditor.Models.Point3D(a.X + b.X, a.Y + b.Y, a.Z + b.Z);
+			return new global::PckStudio.Models.Point3D(a.X + b.X, a.Y + b.Y, a.Z + b.Z);
 		}
 
-		public static global::MinecraftUSkinEditor.Models.Point3D operator -(global::MinecraftUSkinEditor.Models.Point3D a, global::MinecraftUSkinEditor.Models.Point3D b)
+		public static global::PckStudio.Models.Point3D operator -(global::PckStudio.Models.Point3D a, global::PckStudio.Models.Point3D b)
 		{
-			return new global::MinecraftUSkinEditor.Models.Point3D(a.X - b.X, a.Y - b.Y, a.Z - b.Z);
+			return new global::PckStudio.Models.Point3D(a.X - b.X, a.Y - b.Y, a.Z - b.Z);
 		}
 
-		public static global::MinecraftUSkinEditor.Models.Point3D operator *(global::MinecraftUSkinEditor.Models.Point3D p, float s)
+		public static global::PckStudio.Models.Point3D operator *(global::PckStudio.Models.Point3D p, float s)
 		{
-			return new global::MinecraftUSkinEditor.Models.Point3D(p.X * s, p.Y * s, p.Z * s);
+			return new global::PckStudio.Models.Point3D(p.X * s, p.Y * s, p.Z * s);
 		}
 
-		public static global::MinecraftUSkinEditor.Models.Point3D operator /(global::MinecraftUSkinEditor.Models.Point3D p, float s)
+		public static global::PckStudio.Models.Point3D operator /(global::PckStudio.Models.Point3D p, float s)
 		{
-			return new global::MinecraftUSkinEditor.Models.Point3D(p.X / s, p.Y / s, p.Z / s);
+			return new global::PckStudio.Models.Point3D(p.X / s, p.Y / s, p.Z / s);
 		}
 
 		public float X;

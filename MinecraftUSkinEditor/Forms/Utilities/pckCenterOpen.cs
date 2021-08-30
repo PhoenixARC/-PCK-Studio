@@ -13,9 +13,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Media.Imaging;
 using System.IO.Packaging;
-using MinecraftUSkinEditor;
+using PckStudio;
 using System.IO.Compression;
-using static MinecraftUSkinEditor.FormMain;
+using static PckStudio.FormMain;
 
 namespace PckStudio.Forms
 {

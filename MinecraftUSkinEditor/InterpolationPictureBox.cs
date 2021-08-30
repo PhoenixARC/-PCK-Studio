@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
-namespace MinecraftUSkinEditor
+namespace PckStudio
 {
     /// <summary>
     /// Inherits from PictureBox; adds Interpolation Mode Setting

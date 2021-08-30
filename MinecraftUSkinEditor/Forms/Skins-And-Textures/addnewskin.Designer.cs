@@ -1,4 +1,4 @@
-﻿namespace MinecraftUSkinEditor
+﻿namespace PckStudio
 {
     partial class addnewskin
     {
@@ -51,8 +51,8 @@
             this.radioLOCAL = new System.Windows.Forms.RadioButton();
             this.labelSelectTexture = new System.Windows.Forms.Label();
             this.radioSERVER = new System.Windows.Forms.RadioButton();
-            this.pictureBoxWithInterpolationMode1 = new MinecraftUSkinEditor.PictureBoxWithInterpolationMode();
-            this.pictureBoxTexture = new MinecraftUSkinEditor.PictureBoxWithInterpolationMode();
+            this.pictureBoxWithInterpolationMode1 = new PckStudio.PictureBoxWithInterpolationMode();
+            this.pictureBoxTexture = new PckStudio.PictureBoxWithInterpolationMode();
             this.contextMenuSkin.SuspendLayout();
             this.contextMenuCape.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.displayBox)).BeginInit();

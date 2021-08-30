@@ -1,9 +1,9 @@
 ﻿using System;
-using MinecraftUSkinEditor.Models;
+using PckStudio.Models;
 using System.Runtime.CompilerServices;
 using System.Threading;
 
-namespace MinecraftUSkinEditor.Models
+namespace PckStudio.Models
 {
 	public abstract class ModelBase
 	{

@@ -26,7 +26,7 @@ namespace PckStudio.Forms
             {
                 using (WebClient getData = new WebClient())
                 {
-                    data = getData.DownloadString(MinecraftUSkinEditor.Program.baseurl + "Promo/PromoFC");
+                    data = getData.DownloadString(PckStudio.Program.baseurl + "Promo/PromoFC");
                     //data = "k_EPynYjxmc";
 
                     webBrowser1.ScrollBarsEnabled = false;

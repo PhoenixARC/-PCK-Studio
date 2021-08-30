@@ -1,10 +1,10 @@
 ﻿using System;
 using System.IO;
 using System.Drawing;
-using MinecraftUSkinEditor.Models;
+using PckStudio.Models;
 using PckStudio.Properties;
 
-namespace MinecraftUSkinEditor.Models
+namespace PckStudio.Models
 {
 	internal class CharacterModel : ModelBase
 	{

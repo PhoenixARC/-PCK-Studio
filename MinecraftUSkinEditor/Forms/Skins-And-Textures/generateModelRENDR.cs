@@ -7,7 +7,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Collections;
 using System.IO;
-using MinecraftUSkinEditor.Models;
+using PckStudio.Models;
 using Brush = System.Drawing.Brush;
 using Color = System.Drawing.Color;
 

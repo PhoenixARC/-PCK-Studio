@@ -4,44 +4,11 @@ using System.Text;
 using System.IO;
 using System.Windows.Forms;
 
-namespace MinecraftUSkinEditor
+namespace PckStudio
 {
     public class PCK
     {
 
-        public PCK(string filename)
-        {
-            try
-            {
-                IsLittleEndian = !(Read(File.ReadAllBytes(filename)));
-                if(IsLittleEndian)
-                    ReadVita(File.ReadAllBytes(filename));
-            }
-            catch
-            {
-            }
-        }
-
-        private static byte[] endianReverseUnicode(byte[] str)
-        {
-            List<byte> NewBte = new List<byte>();
-            NewBte.AddRange(str);
-            NewBte.Reverse();
-            return NewBte.ToArray();
-
-
-            /*   Old Endian Reverse Code
-            byte[] newStr = new byte[str.Length];
-            for (int i = 0; i < str.Length; i += 2)
-            {
-                newStr[i] = str[i + 1];
-                newStr[i + 1] = str[i];
-            }
-            return newStr;
-            */
-        }
-
-        #region Variables
 
         public class MineFile
         {
@@ -51,23 +18,49 @@ namespace MinecraftUSkinEditor
             public byte[] data;
             public List<object[]> entries = new List<object[]>();
         }
-        public bool IsLittleEndian;
-        public int pckType = 0;
 
         public Dictionary<int, string> types = new Dictionary<int, string>();
         public Dictionary<string, int> typeCodes = new Dictionary<string, int>();
         public List<MineFile> mineFiles = new List<MineFile>();
+        public bool IsLittleEndian = false;
+        public int pckType = 0;
 
-        #endregion
+        public PCK()
+        {
+
+        }
+
+        public PCK(string filename)
+        {
+            try
+            {
+                IsLittleEndian = !(Read(File.ReadAllBytes(filename)));
+                if (IsLittleEndian)
+                    ReadVita(File.ReadAllBytes(filename));
+            }
+            catch (Exception err)
+            {
+                Console.WriteLine(err.Message);
+            }
+        }
 
         #region NormalPCK
 
-        public static string readMineString(FileData f)
+        private static byte[] endianReverseUnicode(byte[] str)
+        {
+            byte[] newStr = new byte[str.Length];
+            for (int i = 0; i < str.Length; i += 2)
+            {
+                newStr[i] = str[i + 1];
+                newStr[i + 1] = str[i];
+            }
+            return newStr;
+        }
+
+        static string readMineString(FileData f)
         {
             int length = f.readInt() * 2;
-            Console.WriteLine(length.ToString());
             return Encoding.Unicode.GetString(endianReverseUnicode(f.readBytes(length)));
-
         }
 
         public bool Read(byte[] data)
@@ -81,9 +74,9 @@ namespace MinecraftUSkinEditor
 
                 FileData fileData = new FileData(data);
                 fileData.Endian = Endianness.Big;
+
                 fileData.readInt();
                 int entryTypeCount = fileData.readInt();
-                //int a = 0;
                 for (int i = 0; i < entryTypeCount; i++)
                 {
                     int unk = fileData.readInt();
@@ -91,8 +84,6 @@ namespace MinecraftUSkinEditor
                     try
                     {
                         text = readMineString(fileData);
-                        //File.WriteAllText(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "\\exp\\PCKDump" + a + ".bin", text);
-                        //a++;
                     }
                     catch
                     {
@@ -129,31 +120,31 @@ namespace MinecraftUSkinEditor
                     Console.WriteLine("NormalPCK");
                 }
 
-
-                for (int j = 0; j < itemCount; j++)
+                for (int i = 0; i < itemCount; i++)
                 {
-                    MineFile mineFile = new MineFile();
-                    mineFile.filesize = fileData.readInt();
-                    mineFile.type = fileData.readInt();
+                    MineFile mf = new MineFile();
+                    mf.filesize = fileData.readInt();
+                    mf.type = fileData.readInt();
                     int length = fileData.readInt() * 2;
-                    mineFile.name = Encoding.Unicode.GetString(endianReverseUnicode(fileData.readBytes(length)));
+                    mf.name = Encoding.Unicode.GetString(endianReverseUnicode(fileData.readBytes(length)));
                     fileData.skip(4);
-                    mineFiles.Add(mineFile);
+                    mineFiles.Add(mf);
                 }
 
-                foreach (MineFile mineFile2 in mineFiles)
+                foreach (MineFile mf in mineFiles)
                 {
-                    int num4 = fileData.readInt();
-                    for (int k = 0; k < num4; k++)
+                    int entryCount = fileData.readInt();
+                    for (int i = 0; i < entryCount; i++)
                     {
-                        object[] array = new object[2];
-                        int key = fileData.readInt();
-                        array[0] = types[key];
-                        array[1] = readMineString(fileData);
+                        object[] temp = new object[2];
+                        int entryTypeInt = fileData.readInt();
+                        temp[0] = types[entryTypeInt]; //Entry type
+                        temp[1] = readMineString(fileData); //Entry data
+
                         fileData.skip(4);
-                        mineFile2.entries.Add(array);
+                        mf.entries.Add(temp);
                     }
-                    mineFile2.data = fileData.readBytes(mineFile2.filesize);
+                    mf.data = fileData.readBytes(mf.filesize);
                 }
                 return true;
             }
@@ -165,63 +156,68 @@ namespace MinecraftUSkinEditor
 
         private static void writeMinecraftString(FileOutput f, string str)
         {
-            byte[] bytes = Encoding.Unicode.GetBytes(str);
-            f.writeInt(bytes.Length / 2);
-            f.writeBytes(PCK.endianReverseUnicode(bytes));
+            byte[] d = Encoding.Unicode.GetBytes(str);
+            f.writeInt(d.Length / 2);
+            f.writeBytes(endianReverseUnicode(d));
             f.writeInt(0);
         }
 
         public byte[] Rebuild()
         {
-            FileOutput fileOutput = new FileOutput();
-            fileOutput.Endian = Endianness.Big;
-            fileOutput.writeInt(3);
-            fileOutput.writeInt(this.types.Count);
-            foreach (int num in this.types.Keys)
+            FileOutput f = new FileOutput();
+            f.Endian = Endianness.Big;
+
+            f.writeInt(3);
+            f.writeInt(types.Count);
+            foreach (int type in types.Keys)
             {
-                fileOutput.writeInt(num);
-                PCK.writeMinecraftString(fileOutput, this.types[num]);
+                f.writeInt(type);
+                writeMinecraftString(f, types[type]);
             }
-            fileOutput.writeInt(this.mineFiles.Count);
-            foreach (PCK.MineFile mineFile in this.mineFiles)
+
+            f.writeInt(mineFiles.Count);
+            foreach (MineFile mf in mineFiles)
             {
-                fileOutput.writeInt(mineFile.data.Length);
-                fileOutput.writeInt(mineFile.type);
-                PCK.writeMinecraftString(fileOutput, mineFile.name);
+                f.writeInt(mf.data.Length);
+                f.writeInt(mf.type);
+                writeMinecraftString(f, mf.name);
             }
-            foreach (PCK.MineFile mineFile2 in this.mineFiles)
+
+            foreach (MineFile mf in mineFiles)
             {
-                string str = "";
+                string missing = "";
                 try
                 {
-                    fileOutput.writeInt(mineFile2.entries.Count);
-                    foreach (object[] array in mineFile2.entries)
+                    f.writeInt(mf.entries.Count);
+                    foreach (object[] entry in mf.entries)
                     {
-                        str = array[0].ToString();
-                        fileOutput.writeInt(this.typeCodes[(string)array[0]]);
-                        PCK.writeMinecraftString(fileOutput, (string)array[1]);
+                        missing = entry[0].ToString();
+                        f.writeInt(typeCodes[(string)entry[0]]);
+                        writeMinecraftString(f, (string)entry[1]);
                     }
-                    fileOutput.writeBytes(mineFile2.data);
+
+                    f.writeBytes(mf.data);
                 }
                 catch (Exception)
                 {
-                    MessageBox.Show(str + " is not in the main metadatabase");
+                    MessageBox.Show(missing + " is not in the main metadatabase");
                     break;
                 }
             }
-            return fileOutput.getBytes();
+
+
+            return f.getBytes();
         }
 
         #endregion
 
-        #region VitaPCK
+        #region Vita/PS4 PCK
 
-        public static string readMineStringVita(FileData f)
+        static string readMineStringVita(FileData f)
         {
             int length = f.readIntVita() * 2;
             Console.WriteLine(length.ToString());
             return Encoding.Unicode.GetString((f.readBytes(length)));
-
         }
 
         public void ReadVita(byte[] data)

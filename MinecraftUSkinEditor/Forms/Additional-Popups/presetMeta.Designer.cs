@@ -1,4 +1,4 @@
-﻿namespace MinecraftUSkinEditor
+﻿namespace PckStudio
 {
     partial class presetMeta
     {

@@ -9,7 +9,7 @@ using System.Net;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace MinecraftUSkinEditor.Models
+namespace PckStudio.Models
 {
     public partial class MinecraftModelView : Control
     {
