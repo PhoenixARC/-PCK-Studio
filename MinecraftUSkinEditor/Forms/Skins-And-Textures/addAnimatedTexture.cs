@@ -11,7 +11,7 @@ using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 using System.Linq.Expressions;
 
-namespace MinecraftUSkinEditor
+namespace PckStudio
 {
     public partial class addAnimatedTexture : MetroFramework.Forms.MetroForm
     {

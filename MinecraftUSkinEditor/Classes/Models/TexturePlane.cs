@@ -4,7 +4,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Drawing;
 
-namespace MinecraftUSkinEditor.Models
+namespace PckStudio.Models
 {
 	public class TexturePlane : Object3D
 	{

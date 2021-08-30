@@ -439,7 +439,7 @@
     <value>minecraftModelView1</value>
   </data>
   <data name="&gt;&gt;minecraftModelView1.Type" xml:space="preserve">
-    <value>MinecraftUSkinEditor.Models.MinecraftModelView, PCK Studio, Version=5.3.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>PckStudio.Models.MinecraftModelView, PCK Studio, Version=5.3.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;minecraftModelView1.Parent" xml:space="preserve">
     <value>tableLayoutPanelMain</value>

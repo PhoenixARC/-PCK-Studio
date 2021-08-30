@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace MinecraftUSkinEditor.Models
+namespace PckStudio.Models
 {
-	public class Box : global::MinecraftUSkinEditor.Models.Object3D
+	public class Box : global::PckStudio.Models.Object3D
 	{
 		public override global::System.Drawing.Image Image
 		{
@@ -12,7 +12,7 @@ namespace MinecraftUSkinEditor.Models
 			}
 		}
 
-		internal override global::MinecraftUSkinEditor.Models.MinecraftModelView Viewport
+		internal override global::PckStudio.Models.MinecraftModelView Viewport
 		{
 			set
 			{
@@ -29,7 +29,7 @@ namespace MinecraftUSkinEditor.Models
 
 		internal override void Update()
 		{
-			global::MinecraftUSkinEditor.Models.Matrix3D a = this.globalTransformation * this.localTransformation;
+			global::PckStudio.Models.Matrix3D a = this.globalTransformation * this.localTransformation;
 			this.top.LocalTransformation = a * this.topLocalTransformation;
 			this.bottom.LocalTransformation = a * this.bottomLocalTransformation;
 			this.front.LocalTransformation = a * this.frontLocalTransformation;
@@ -38,7 +38,7 @@ namespace MinecraftUSkinEditor.Models
 			this.right.LocalTransformation = a * this.rightLocalTransformation;
 		}
 
-		public Box(global::System.Drawing.Image image, global::System.Drawing.Rectangle srcTopBottom, global::System.Drawing.Rectangle srcSides, global::MinecraftUSkinEditor.Models.Point3D origin, global::MinecraftUSkinEditor.Models.Effects effects)
+		public Box(global::System.Drawing.Image image, global::System.Drawing.Rectangle srcTopBottom, global::System.Drawing.Rectangle srcSides, global::PckStudio.Models.Point3D origin, global::PckStudio.Models.Effects effects)
 		{
 			this.effects = effects;
 			base.Origin = origin;
@@ -61,17 +61,17 @@ namespace MinecraftUSkinEditor.Models
 
 		private void SetImage(global::System.Drawing.Image image)
 		{
-			bool flag = (byte)(this.effects & global::MinecraftUSkinEditor.Models.Effects.FlipHorizontally) == 1;
-			bool flag2 = (byte)(this.effects & global::MinecraftUSkinEditor.Models.Effects.FlipVertically) == 2;
+			bool flag = (byte)(this.effects & global::PckStudio.Models.Effects.FlipHorizontally) == 1;
+			bool flag2 = (byte)(this.effects & global::PckStudio.Models.Effects.FlipVertically) == 2;
 			int width = this.srcFront.Width;
 			int height = this.srcFront.Height;
 			int width2 = this.srcLeft.Width;
-			this.top = new global::MinecraftUSkinEditor.Models.TexturePlane(image, flag2 ? this.srcBottom : this.srcTop, new global::MinecraftUSkinEditor.Models.Point3D((float)width * 0.5f, (float)width2 * 0.5f, (float)(-(float)height) * 0.5f), new global::MinecraftUSkinEditor.Models.Point3D(0f, 1f, 0f), this.effects & global::MinecraftUSkinEditor.Models.Effects.FlipHorizontally);
-			this.bottom = new global::MinecraftUSkinEditor.Models.TexturePlane(image, flag2 ? this.srcTop : this.srcBottom, new global::MinecraftUSkinEditor.Models.Point3D((float)width / 2f, (float)width2 / 2f, (float)height / 2f), new global::MinecraftUSkinEditor.Models.Point3D(0f, -1f, 0f), this.effects & global::MinecraftUSkinEditor.Models.Effects.FlipHorizontally);
-			this.front = new global::MinecraftUSkinEditor.Models.TexturePlane(image, this.srcFront, new global::MinecraftUSkinEditor.Models.Point3D((float)width * 0.5f, (float)height * 0.5f, (float)(-(float)width2) * 0.5f), new global::MinecraftUSkinEditor.Models.Point3D(0f, 0f, 1f), this.effects);
-			this.back = new global::MinecraftUSkinEditor.Models.TexturePlane(image, this.srcBack, new global::MinecraftUSkinEditor.Models.Point3D((float)width * 0.5f, (float)height * 0.5f, (float)(-(float)width2) * 0.5f), new global::MinecraftUSkinEditor.Models.Point3D(0f, 0f, -1f), this.effects);
-			this.left = new global::MinecraftUSkinEditor.Models.TexturePlane(image, flag ? this.srcRight : this.srcLeft, new global::MinecraftUSkinEditor.Models.Point3D((float)width2 * 0.5f, (float)height * 0.5f, (float)(-(float)width) * 0.5f), new global::MinecraftUSkinEditor.Models.Point3D(-1f, 0f, 0f), this.effects);
-			this.right = new global::MinecraftUSkinEditor.Models.TexturePlane(image, flag ? this.srcLeft : this.srcRight, new global::MinecraftUSkinEditor.Models.Point3D((float)width2 * 0.5f, (float)height * 0.5f, (float)(-(float)width) * 0.5f), new global::MinecraftUSkinEditor.Models.Point3D(1f, 0f, 0f), this.effects);
+			this.top = new global::PckStudio.Models.TexturePlane(image, flag2 ? this.srcBottom : this.srcTop, new global::PckStudio.Models.Point3D((float)width * 0.5f, (float)width2 * 0.5f, (float)(-(float)height) * 0.5f), new global::PckStudio.Models.Point3D(0f, 1f, 0f), this.effects & global::PckStudio.Models.Effects.FlipHorizontally);
+			this.bottom = new global::PckStudio.Models.TexturePlane(image, flag2 ? this.srcTop : this.srcBottom, new global::PckStudio.Models.Point3D((float)width / 2f, (float)width2 / 2f, (float)height / 2f), new global::PckStudio.Models.Point3D(0f, -1f, 0f), this.effects & global::PckStudio.Models.Effects.FlipHorizontally);
+			this.front = new global::PckStudio.Models.TexturePlane(image, this.srcFront, new global::PckStudio.Models.Point3D((float)width * 0.5f, (float)height * 0.5f, (float)(-(float)width2) * 0.5f), new global::PckStudio.Models.Point3D(0f, 0f, 1f), this.effects);
+			this.back = new global::PckStudio.Models.TexturePlane(image, this.srcBack, new global::PckStudio.Models.Point3D((float)width * 0.5f, (float)height * 0.5f, (float)(-(float)width2) * 0.5f), new global::PckStudio.Models.Point3D(0f, 0f, -1f), this.effects);
+			this.left = new global::PckStudio.Models.TexturePlane(image, flag ? this.srcRight : this.srcLeft, new global::PckStudio.Models.Point3D((float)width2 * 0.5f, (float)height * 0.5f, (float)(-(float)width) * 0.5f), new global::PckStudio.Models.Point3D(-1f, 0f, 0f), this.effects);
+			this.right = new global::PckStudio.Models.TexturePlane(image, flag ? this.srcLeft : this.srcRight, new global::PckStudio.Models.Point3D((float)width2 * 0.5f, (float)height * 0.5f, (float)(-(float)width) * 0.5f), new global::PckStudio.Models.Point3D(1f, 0f, 0f), this.effects);
 			this.top.Viewport = this.viewport;
 			this.bottom.Viewport = this.viewport;
 			this.front.Viewport = this.viewport;
@@ -116,17 +116,17 @@ namespace MinecraftUSkinEditor.Models
 			return num;
 		}
 
-		private global::MinecraftUSkinEditor.Models.TexturePlane top;
+		private global::PckStudio.Models.TexturePlane top;
 
-		private global::MinecraftUSkinEditor.Models.TexturePlane bottom;
+		private global::PckStudio.Models.TexturePlane bottom;
 
-		private global::MinecraftUSkinEditor.Models.TexturePlane front;
+		private global::PckStudio.Models.TexturePlane front;
 
-		private global::MinecraftUSkinEditor.Models.TexturePlane back;
+		private global::PckStudio.Models.TexturePlane back;
 
-		private global::MinecraftUSkinEditor.Models.TexturePlane left;
+		private global::PckStudio.Models.TexturePlane left;
 
-		private global::MinecraftUSkinEditor.Models.TexturePlane right;
+		private global::PckStudio.Models.TexturePlane right;
 
 		private global::System.Drawing.Rectangle srcTop;
 
@@ -140,18 +140,18 @@ namespace MinecraftUSkinEditor.Models
 
 		private global::System.Drawing.Rectangle srcRight;
 
-		private global::MinecraftUSkinEditor.Models.Matrix3D topLocalTransformation = global::MinecraftUSkinEditor.Models.Matrix3D.CreateRotationX(-1.57079637f);
+		private global::PckStudio.Models.Matrix3D topLocalTransformation = global::PckStudio.Models.Matrix3D.CreateRotationX(-1.57079637f);
 
-		private global::MinecraftUSkinEditor.Models.Matrix3D bottomLocalTransformation = global::MinecraftUSkinEditor.Models.Matrix3D.CreateRotationX(-1.57079637f);
+		private global::PckStudio.Models.Matrix3D bottomLocalTransformation = global::PckStudio.Models.Matrix3D.CreateRotationX(-1.57079637f);
 
-		private global::MinecraftUSkinEditor.Models.Matrix3D frontLocalTransformation = global::MinecraftUSkinEditor.Models.Matrix3D.Identity;
+		private global::PckStudio.Models.Matrix3D frontLocalTransformation = global::PckStudio.Models.Matrix3D.Identity;
 
-		private global::MinecraftUSkinEditor.Models.Matrix3D backLocalTransformation = global::MinecraftUSkinEditor.Models.Matrix3D.CreateRotationY(3.14159274f);
+		private global::PckStudio.Models.Matrix3D backLocalTransformation = global::PckStudio.Models.Matrix3D.CreateRotationY(3.14159274f);
 
-		private global::MinecraftUSkinEditor.Models.Matrix3D leftLocalTransformation = global::MinecraftUSkinEditor.Models.Matrix3D.CreateRotationY(-1.57079637f);
+		private global::PckStudio.Models.Matrix3D leftLocalTransformation = global::PckStudio.Models.Matrix3D.CreateRotationY(-1.57079637f);
 
-		private global::MinecraftUSkinEditor.Models.Matrix3D rightLocalTransformation = global::MinecraftUSkinEditor.Models.Matrix3D.CreateRotationY(1.57079637f);
+		private global::PckStudio.Models.Matrix3D rightLocalTransformation = global::PckStudio.Models.Matrix3D.CreateRotationY(1.57079637f);
 
-		private global::MinecraftUSkinEditor.Models.Effects effects;
+		private global::PckStudio.Models.Effects effects;
 	}
 }

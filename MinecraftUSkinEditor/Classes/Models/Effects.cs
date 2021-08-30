@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MinecraftUSkinEditor.Models
+namespace PckStudio.Models
 {
 	[global::System.Flags]
 	public enum Effects : byte

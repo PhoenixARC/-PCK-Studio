@@ -30,7 +30,7 @@ namespace PckStudio.Forms
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.minecraftModelView1 = new MinecraftUSkinEditor.Models.MinecraftModelView(this.components);
+            this.minecraftModelView1 = new PckStudio.Models.MinecraftModelView(this.components);
             this.SuspendLayout();
             // 
             // minecraftModelView1
@@ -38,7 +38,7 @@ namespace PckStudio.Forms
             this.minecraftModelView1.BackColor = System.Drawing.Color.Black;
             this.minecraftModelView1.BackGradientColor1 = System.Drawing.SystemColors.ActiveCaptionText;
             this.minecraftModelView1.BackGradientColor2 = System.Drawing.SystemColors.ActiveCaptionText;
-            this.minecraftModelView1.BackgroundType = MinecraftUSkinEditor.Models.BackgroundTypes.Color;
+            this.minecraftModelView1.BackgroundType = PckStudio.Models.BackgroundTypes.Color;
             this.minecraftModelView1.DegreesX = 0;
             this.minecraftModelView1.DegreesY = 0;
             this.minecraftModelView1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -47,7 +47,7 @@ namespace PckStudio.Forms
             this.minecraftModelView1.FOV = 70;
             this.minecraftModelView1.Location = new System.Drawing.Point(0, 0);
             this.minecraftModelView1.Name = "minecraftModelView1";
-            this.minecraftModelView1.Projection = MinecraftUSkinEditor.Models.ProjectionTypes.Perspective;
+            this.minecraftModelView1.Projection = PckStudio.Models.ProjectionTypes.Perspective;
             this.minecraftModelView1.ShowUsername = false;
             this.minecraftModelView1.Size = new System.Drawing.Size(323, 375);
             this.minecraftModelView1.TabIndex = 0;
@@ -69,6 +69,6 @@ namespace PckStudio.Forms
 
         #endregion
 
-        private MinecraftUSkinEditor.Models.MinecraftModelView minecraftModelView1;
+        private PckStudio.Models.MinecraftModelView minecraftModelView1;
     }
 }

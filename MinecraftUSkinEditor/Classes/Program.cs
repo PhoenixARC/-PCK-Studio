@@ -7,7 +7,7 @@ using System.Threading;
 using System.Windows.Forms;
 using PckStudio.Classes;
 
-namespace MinecraftUSkinEditor
+namespace PckStudio
 {
 
 

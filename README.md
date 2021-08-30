@@ -1,4 +1,5 @@
-# MineKampf
+# PCK Studio
+_previously MinecraftUSkinEditor_
 A minecraft for Wii U editor
 
 Modify .PCK archives as you please!
@@ -20,6 +21,10 @@ Modify .PCK archives as you please!
 
 ### To compile:
 
-Just download, open the solution in visual studio and hit build.
+* download
 
-[Latest build](https://github.com/jam1garner/MineKamf/releases)
+* run `UnblockAllFiles.ps1`
+
+* Open `MinecraftUSkinEditor.sln`
+
+* hit run *or* hit **Shift+b**

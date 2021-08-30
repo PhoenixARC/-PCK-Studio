@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace MinecraftUSkinEditor
+namespace PckStudio
 {
 	public class FileData
 	{

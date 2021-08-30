@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace MinecraftUSkinEditor.Models
+namespace PckStudio.Models
 {
 	internal struct Texel
 	{
-		internal Texel(global::MinecraftUSkinEditor.Models.TexturePlane texturePlane, int x, int y, global::System.Drawing.Color color)
+		internal Texel(global::PckStudio.Models.TexturePlane texturePlane, int x, int y, global::System.Drawing.Color color)
 		{
 			this.TexturePlane = texturePlane;
 			this.X = x;
@@ -34,7 +34,7 @@ namespace MinecraftUSkinEditor.Models
 			g.FillPolygon(this.brush, points);
 		}
 
-		internal global::MinecraftUSkinEditor.Models.TexturePlane TexturePlane;
+		internal global::PckStudio.Models.TexturePlane TexturePlane;
 
 		internal int X;
 

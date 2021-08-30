@@ -84,7 +84,7 @@
             this.listViewBGs = new System.Windows.Forms.ListView();
             this.tableLayoutPanelMain = new System.Windows.Forms.TableLayoutPanel();
             this.texturePreview = new System.Windows.Forms.PictureBox();
-            this.minecraftModelView1 = new MinecraftUSkinEditor.Models.MinecraftModelView(this.components);
+            this.minecraftModelView1 = new PckStudio.Models.MinecraftModelView(this.components);
             this.myTablePanel2 = new PckStudio.Forms.MyTablePanel();
             this.offsetArms = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
@@ -620,7 +620,7 @@
             this.minecraftModelView1.BackColor = System.Drawing.Color.Black;
             this.minecraftModelView1.BackGradientColor1 = System.Drawing.SystemColors.ActiveCaptionText;
             this.minecraftModelView1.BackGradientColor2 = System.Drawing.SystemColors.ActiveCaptionText;
-            this.minecraftModelView1.BackgroundType = MinecraftUSkinEditor.Models.BackgroundTypes.Color;
+            this.minecraftModelView1.BackgroundType = PckStudio.Models.BackgroundTypes.Color;
             this.tableLayoutPanelMain.SetColumnSpan(this.minecraftModelView1, 3);
             this.minecraftModelView1.DegreesX = 0;
             this.minecraftModelView1.DegreesY = 0;
@@ -628,7 +628,7 @@
             this.minecraftModelView1.ForeColor = System.Drawing.Color.Black;
             this.minecraftModelView1.FOV = 70;
             this.minecraftModelView1.Name = "minecraftModelView1";
-            this.minecraftModelView1.Projection = MinecraftUSkinEditor.Models.ProjectionTypes.Perspective;
+            this.minecraftModelView1.Projection = PckStudio.Models.ProjectionTypes.Perspective;
             this.tableLayoutPanelMain.SetRowSpan(this.minecraftModelView1, 17);
             this.minecraftModelView1.ShowUsername = false;
             this.minecraftModelView1.Username = "";
@@ -869,7 +869,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelMain;
         private Forms.MyTablePanel myTablePanel2;
         private Forms.MyTablePanel myTablePanel1;
-        private MinecraftUSkinEditor.Models.MinecraftModelView minecraftModelView1;
+        private PckStudio.Models.MinecraftModelView minecraftModelView1;
         private System.Windows.Forms.PictureBox displayBox;
     }
 }

@@ -16,7 +16,7 @@ using PckStudio.Forms;
 using System.Drawing.Imaging;
 using RichPresenceClient;
 
-namespace MinecraftUSkinEditor
+namespace PckStudio
 {
     public partial class FormMain : MetroFramework.Forms.MetroForm
     {
@@ -24,7 +24,7 @@ namespace MinecraftUSkinEditor
         string saveLocation;//Save location for pck file
         int fileCount = 0;//variable for number of minefiles
         string Version = "5.7";//template for program version
-        string hosturl = File.ReadAllText(Environment.CurrentDirectory + "\\settings.ini").Split(new[] { "\r\n", "\n" }, StringSplitOptions.None)[0];
+        string hosturl = "";
         string basurl = "";
         string PCKFile = "";
         string PCKFileBCKUP = "x";
@@ -41,7 +41,7 @@ namespace MinecraftUSkinEditor
         bool saved = true;
         string appData = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/PCK Studio/";
         public static bool correct = false;
-        bool isdebug = false;
+        bool isdebug = true;
 
         public class displayId
         {
@@ -53,8 +53,16 @@ namespace MinecraftUSkinEditor
         #region form startup page
         public FormMain()
         {
-            System.Globalization.CultureInfo ci = new System.Globalization.CultureInfo("ja");
-            Thread.CurrentThread.CurrentCulture = ci;
+
+
+            Directory.CreateDirectory(Environment.CurrentDirectory + "\\template");
+            if (!File.Exists(Environment.CurrentDirectory + "\\template\\UntitledSkinPCK.pck"))
+                File.WriteAllBytes(Environment.CurrentDirectory + "\\template\\UntitledSkinPCK.pck", Resources.UntitledSkinPCK);
+            if (!File.Exists(Environment.CurrentDirectory + "\\settings.ini"))
+                File.WriteAllText(Environment.CurrentDirectory + "\\settings.ini", Resources.settings);
+            hosturl = File.ReadAllText(Environment.CurrentDirectory + "\\settings.ini").Split(new[] { "\r\n", "\n" }, StringSplitOptions.None)[0];
+
+
             InitializeComponent();
 
             if (Program.IsDev)
@@ -915,7 +923,7 @@ namespace MinecraftUSkinEditor
                 MessageBox.Show("No localization data found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            MinecraftUSkinEditor.addnewskin add = new MinecraftUSkinEditor.addnewskin(currentPCK, treeViewMain, tempIDD.ToString(), l);//Sets dialog data for skin creator
+            PckStudio.addnewskin add = new PckStudio.addnewskin(currentPCK, treeViewMain, tempIDD.ToString(), l);//Sets dialog data for skin creator
             add.ShowDialog();//opens skin creator
             mf.data = l.Rebuild();//rebuilds loc data
             add.Dispose();//disposes generated skin creator data
@@ -933,7 +941,7 @@ namespace MinecraftUSkinEditor
 
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
-                    MinecraftUSkinEditor.addAnimatedTexture add = new MinecraftUSkinEditor.addAnimatedTexture(currentPCK, treeViewMain, ofd.FileName, Path.GetFileName(ofd.FileName).Remove(Path.GetFileName(ofd.FileName).Length - 4, 4));//presets texture generator dialog with needed data including selected picture
+                    PckStudio.addAnimatedTexture add = new PckStudio.addAnimatedTexture(currentPCK, treeViewMain, ofd.FileName, Path.GetFileName(ofd.FileName).Remove(Path.GetFileName(ofd.FileName).Length - 4, 4));//presets texture generator dialog with needed data including selected picture
                     add.ShowDialog();//Shows dialog
                     add.Dispose();//Diposes generated dialog data
                 }
@@ -1062,7 +1070,7 @@ namespace MinecraftUSkinEditor
         private void addEntryToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             mf = (PCK.MineFile)treeViewMain.SelectedNode.Tag;//Sets minefile to selected node
-            MinecraftUSkinEditor.addMeta add = new MinecraftUSkinEditor.addMeta(mf, currentPCK);//sets metadata adding dialog
+            PckStudio.addMeta add = new PckStudio.addMeta(mf, currentPCK);//sets metadata adding dialog
             add.ShowDialog();//displays metadata adding dialog
             add.Dispose();//diposes generated metadata adding dialog data
 
@@ -1138,7 +1146,7 @@ namespace MinecraftUSkinEditor
         {
             try
             {
-                MinecraftUSkinEditor.meta edit = new MinecraftUSkinEditor.meta(currentPCK);
+                PckStudio.meta edit = new PckStudio.meta(currentPCK);
                 edit.TopMost = true;
                 edit.TopLevel = true;
                 edit.Show();
@@ -1155,7 +1163,7 @@ namespace MinecraftUSkinEditor
         private void addPresetToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             mf = (PCK.MineFile)treeViewMain.SelectedNode.Tag;//Sets selected minefile from node
-            MinecraftUSkinEditor.presetMeta add = new MinecraftUSkinEditor.presetMeta(mf, currentPCK);//sets data for preset adding dialog
+            PckStudio.presetMeta add = new PckStudio.presetMeta(mf, currentPCK);//sets data for preset adding dialog
             add.ShowDialog();//displays preset adding dialog
             add.Dispose();//disposes generated preset adding data
 
@@ -1215,7 +1223,7 @@ namespace MinecraftUSkinEditor
             if (openedPCKS.Visible == true)
             {
                 //opens dialog for bulk minefile editing
-                MinecraftUSkinEditor.AdvancedOptions advanced = new MinecraftUSkinEditor.AdvancedOptions(currentPCK);
+                PckStudio.AdvancedOptions advanced = new PckStudio.AdvancedOptions(currentPCK);
                 advanced.ShowDialog();
                 advanced.Dispose();
                 saved = false;
@@ -3448,7 +3456,11 @@ namespace MinecraftUSkinEditor
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            RPC.CloseRPC();
+            try
+            {
+                RPC.CloseRPC();
+            }
+            catch { }
         }
 
         private void convertPCTextrurePackToolStripMenuItem_Click(object sender, EventArgs e)

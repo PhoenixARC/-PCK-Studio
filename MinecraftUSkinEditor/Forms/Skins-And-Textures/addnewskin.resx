@@ -644,7 +644,7 @@
     <value>pictureBoxWithInterpolationMode1</value>
   </data>
   <data name="&gt;&gt;pictureBoxWithInterpolationMode1.Type" xml:space="preserve">
-    <value>MinecraftUSkinEditor.PictureBoxWithInterpolationMode, PCK Studio, Version=5.3.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>PckStudio.PictureBoxWithInterpolationMode, PCK Studio, Version=5.3.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;pictureBoxWithInterpolationMode1.Parent" xml:space="preserve">
     <value>$this</value>
@@ -668,7 +668,7 @@
     <value>pictureBoxTexture</value>
   </data>
   <data name="&gt;&gt;pictureBoxTexture.Type" xml:space="preserve">
-    <value>MinecraftUSkinEditor.PictureBoxWithInterpolationMode, PCK Studio, Version=5.3.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>PckStudio.PictureBoxWithInterpolationMode, PCK Studio, Version=5.3.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;pictureBoxTexture.Parent" xml:space="preserve">
     <value>$this</value>

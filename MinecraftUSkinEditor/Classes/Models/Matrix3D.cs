@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MinecraftUSkinEditor.Models
+namespace PckStudio.Models
 {
 	public struct Matrix3D
 	{
@@ -24,55 +24,55 @@ namespace MinecraftUSkinEditor.Models
 			this.M44 = m44;
 		}
 
-		public static global::MinecraftUSkinEditor.Models.Matrix3D CreateRotationX(float radians)
+		public static global::PckStudio.Models.Matrix3D CreateRotationX(float radians)
 		{
 			float num = (float)global::System.Math.Sin((double)radians);
 			float num2 = (float)global::System.Math.Cos((double)radians);
-			return new global::MinecraftUSkinEditor.Models.Matrix3D(1f, 0f, 0f, 0f, 0f, num2, -num, 0f, 0f, num, num2, 0f, 0f, 0f, 0f, 1f);
+			return new global::PckStudio.Models.Matrix3D(1f, 0f, 0f, 0f, 0f, num2, -num, 0f, 0f, num, num2, 0f, 0f, 0f, 0f, 1f);
 		}
 
-		public static global::MinecraftUSkinEditor.Models.Matrix3D CreateRotationX(float sin, float cos)
+		public static global::PckStudio.Models.Matrix3D CreateRotationX(float sin, float cos)
 		{
-			return new global::MinecraftUSkinEditor.Models.Matrix3D(1f, 0f, 0f, 0f, 0f, cos, -sin, 0f, 0f, sin, cos, 0f, 0f, 0f, 0f, 1f);
+			return new global::PckStudio.Models.Matrix3D(1f, 0f, 0f, 0f, 0f, cos, -sin, 0f, 0f, sin, cos, 0f, 0f, 0f, 0f, 1f);
 		}
 
-		public static global::MinecraftUSkinEditor.Models.Matrix3D CreateRotationY(float radians)
-		{
-			float num = (float)global::System.Math.Sin((double)radians);
-			float num2 = (float)global::System.Math.Cos((double)radians);
-			return new global::MinecraftUSkinEditor.Models.Matrix3D(num2, 0f, num, 0f, 0f, 1f, 0f, 0f, -num, 0f, num2, 0f, 0f, 0f, 0f, 1f);
-		}
-
-		public static global::MinecraftUSkinEditor.Models.Matrix3D CreateRotationY(float sin, float cos)
-		{
-			return new global::MinecraftUSkinEditor.Models.Matrix3D(cos, 0f, sin, 0f, 0f, 1f, 0f, 0f, -sin, 0f, cos, 0f, 0f, 0f, 0f, 1f);
-		}
-
-		public static global::MinecraftUSkinEditor.Models.Matrix3D CreateRotationZ(float radians)
+		public static global::PckStudio.Models.Matrix3D CreateRotationY(float radians)
 		{
 			float num = (float)global::System.Math.Sin((double)radians);
 			float num2 = (float)global::System.Math.Cos((double)radians);
-			return new global::MinecraftUSkinEditor.Models.Matrix3D(num2, -num, 0f, 0f, num, num2, 0f, 0f, 0f, 0f, 1f, 0f, 0f, 0f, 0f, 1f);
+			return new global::PckStudio.Models.Matrix3D(num2, 0f, num, 0f, 0f, 1f, 0f, 0f, -num, 0f, num2, 0f, 0f, 0f, 0f, 1f);
 		}
 
-		public static global::MinecraftUSkinEditor.Models.Matrix3D CreateRotationZ(float sin, float cos)
+		public static global::PckStudio.Models.Matrix3D CreateRotationY(float sin, float cos)
 		{
-			return new global::MinecraftUSkinEditor.Models.Matrix3D(cos, -sin, 0f, 0f, sin, cos, 0f, 0f, 0f, 0f, 1f, 0f, 0f, 0f, 0f, 1f);
+			return new global::PckStudio.Models.Matrix3D(cos, 0f, sin, 0f, 0f, 1f, 0f, 0f, -sin, 0f, cos, 0f, 0f, 0f, 0f, 1f);
 		}
 
-		public static global::MinecraftUSkinEditor.Models.Matrix3D CreateTranslation(float x, float y, float z)
+		public static global::PckStudio.Models.Matrix3D CreateRotationZ(float radians)
 		{
-			return new global::MinecraftUSkinEditor.Models.Matrix3D(1f, 0f, 0f, x, 0f, 1f, 0f, y, 0f, 0f, 1f, z, 0f, 0f, 0f, 1f);
+			float num = (float)global::System.Math.Sin((double)radians);
+			float num2 = (float)global::System.Math.Cos((double)radians);
+			return new global::PckStudio.Models.Matrix3D(num2, -num, 0f, 0f, num, num2, 0f, 0f, 0f, 0f, 1f, 0f, 0f, 0f, 0f, 1f);
 		}
 
-		public static global::MinecraftUSkinEditor.Models.Matrix3D CreateTranslation(global::MinecraftUSkinEditor.Models.Point3D point)
+		public static global::PckStudio.Models.Matrix3D CreateRotationZ(float sin, float cos)
 		{
-			return new global::MinecraftUSkinEditor.Models.Matrix3D(1f, 0f, 0f, point.X, 0f, 1f, 0f, point.Y, 0f, 0f, 1f, point.Z, 0f, 0f, 0f, 1f);
+			return new global::PckStudio.Models.Matrix3D(cos, -sin, 0f, 0f, sin, cos, 0f, 0f, 0f, 0f, 1f, 0f, 0f, 0f, 0f, 1f);
 		}
 
-		public static global::MinecraftUSkinEditor.Models.Matrix3D CreateScale(float s)
+		public static global::PckStudio.Models.Matrix3D CreateTranslation(float x, float y, float z)
 		{
-			return new global::MinecraftUSkinEditor.Models.Matrix3D(s, 0f, 0f, 0f, 0f, s, 0f, 0f, 0f, 0f, s, 0f, 0f, 0f, 0f, 1f);
+			return new global::PckStudio.Models.Matrix3D(1f, 0f, 0f, x, 0f, 1f, 0f, y, 0f, 0f, 1f, z, 0f, 0f, 0f, 1f);
+		}
+
+		public static global::PckStudio.Models.Matrix3D CreateTranslation(global::PckStudio.Models.Point3D point)
+		{
+			return new global::PckStudio.Models.Matrix3D(1f, 0f, 0f, point.X, 0f, 1f, 0f, point.Y, 0f, 0f, 1f, point.Z, 0f, 0f, 0f, 1f);
+		}
+
+		public static global::PckStudio.Models.Matrix3D CreateScale(float s)
+		{
+			return new global::PckStudio.Models.Matrix3D(s, 0f, 0f, 0f, 0f, s, 0f, 0f, 0f, 0f, s, 0f, 0f, 0f, 0f, 1f);
 		}
 
 		public float Determinant
@@ -83,63 +83,63 @@ namespace MinecraftUSkinEditor.Models
 			}
 		}
 
-		public static global::MinecraftUSkinEditor.Models.Matrix3D Identity
+		public static global::PckStudio.Models.Matrix3D Identity
 		{
 			get
 			{
-				return new global::MinecraftUSkinEditor.Models.Matrix3D(1f, 0f, 0f, 0f, 0f, 1f, 0f, 0f, 0f, 0f, 1f, 0f, 0f, 0f, 0f, 1f);
+				return new global::PckStudio.Models.Matrix3D(1f, 0f, 0f, 0f, 0f, 1f, 0f, 0f, 0f, 0f, 1f, 0f, 0f, 0f, 0f, 1f);
 			}
 		}
 
-		public static global::MinecraftUSkinEditor.Models.Matrix3D Transpose(global::MinecraftUSkinEditor.Models.Matrix3D m)
+		public static global::PckStudio.Models.Matrix3D Transpose(global::PckStudio.Models.Matrix3D m)
 		{
-			return new global::MinecraftUSkinEditor.Models.Matrix3D(m.M11, m.M21, m.M31, m.M41, m.M12, m.M22, m.M32, m.M42, m.M13, m.M23, m.M33, m.M43, m.M14, m.M24, m.M34, m.M44);
+			return new global::PckStudio.Models.Matrix3D(m.M11, m.M21, m.M31, m.M41, m.M12, m.M22, m.M32, m.M42, m.M13, m.M23, m.M33, m.M43, m.M14, m.M24, m.M34, m.M44);
 		}
 
-		public static global::MinecraftUSkinEditor.Models.Matrix3D Invert(global::MinecraftUSkinEditor.Models.Matrix3D m)
+		public static global::PckStudio.Models.Matrix3D Invert(global::PckStudio.Models.Matrix3D m)
 		{
 			float determinant = m.Determinant;
-			return new global::MinecraftUSkinEditor.Models.Matrix3D((m.M22 * m.M33 * m.M44 + m.M32 * m.M43 * m.M24 + m.M42 * m.M23 * m.M34 - m.M24 * m.M33 * m.M42 - m.M34 * m.M43 * m.M22 - m.M44 * m.M23 * m.M32) / determinant, -(m.M12 * m.M33 * m.M44 + m.M32 * m.M43 * m.M14 + m.M42 * m.M13 * m.M34 - m.M14 * m.M33 * m.M42 - m.M34 * m.M43 * m.M12 - m.M44 * m.M13 * m.M32) / determinant, (m.M12 * m.M23 * m.M44 + m.M22 * m.M43 * m.M14 + m.M42 * m.M13 * m.M24 - m.M14 * m.M23 * m.M42 - m.M24 * m.M43 * m.M12 - m.M44 * m.M13 * m.M22) / determinant, -(m.M12 * m.M23 * m.M34 + m.M22 * m.M33 * m.M14 + m.M32 * m.M13 * m.M24 - m.M14 * m.M23 * m.M32 - m.M24 * m.M33 * m.M12 - m.M34 * m.M13 * m.M22) / determinant, -(m.M21 * m.M33 * m.M44 + m.M31 * m.M43 * m.M24 + m.M41 * m.M23 * m.M34 - m.M24 * m.M33 * m.M41 - m.M34 * m.M43 * m.M21 - m.M44 * m.M23 * m.M31) / determinant, (m.M11 * m.M33 * m.M44 + m.M31 * m.M43 * m.M14 + m.M41 * m.M13 * m.M34 - m.M14 * m.M33 * m.M41 - m.M34 * m.M43 * m.M11 - m.M44 * m.M13 * m.M31) / determinant, -(m.M11 * m.M23 * m.M44 + m.M21 * m.M43 * m.M14 + m.M41 * m.M13 * m.M24 - m.M14 * m.M23 * m.M41 - m.M24 * m.M43 * m.M11 - m.M44 * m.M13 * m.M21) / determinant, (m.M11 * m.M23 * m.M34 + m.M21 * m.M33 * m.M14 + m.M31 * m.M13 * m.M24 - m.M14 * m.M23 * m.M31 - m.M24 * m.M33 * m.M11 - m.M34 * m.M13 * m.M21) / determinant, (m.M21 * m.M32 * m.M44 + m.M31 * m.M42 * m.M24 + m.M41 * m.M22 * m.M34 - m.M24 * m.M32 * m.M41 - m.M34 * m.M42 * m.M21 - m.M44 * m.M22 * m.M31) / determinant, -(m.M11 * m.M32 * m.M44 + m.M31 * m.M42 * m.M14 + m.M41 * m.M12 * m.M34 - m.M14 * m.M32 * m.M41 - m.M34 * m.M42 * m.M11 - m.M44 * m.M12 * m.M31) / determinant, (m.M11 * m.M32 * m.M44 + m.M21 * m.M42 * m.M14 + m.M41 * m.M12 * m.M24 - m.M14 * m.M22 * m.M41 - m.M24 * m.M42 * m.M11 - m.M44 * m.M12 * m.M21) / determinant, -(m.M11 * m.M22 * m.M34 + m.M21 * m.M32 * m.M14 + m.M31 * m.M12 * m.M24 - m.M14 * m.M22 * m.M31 - m.M24 * m.M32 * m.M11 - m.M34 * m.M12 * m.M21) / determinant, -(m.M21 * m.M32 * m.M43 + m.M31 * m.M42 * m.M23 + m.M41 * m.M22 * m.M33 - m.M23 * m.M32 * m.M41 - m.M33 * m.M42 * m.M21 - m.M43 * m.M22 * m.M31) / determinant, (m.M11 * m.M32 * m.M43 + m.M31 * m.M42 * m.M13 + m.M41 * m.M12 * m.M33 - m.M13 * m.M32 * m.M41 - m.M33 * m.M42 * m.M11 - m.M43 * m.M12 * m.M31) / determinant, -(m.M11 * m.M22 * m.M43 + m.M21 * m.M42 * m.M13 + m.M41 * m.M12 * m.M23 - m.M13 * m.M22 * m.M41 - m.M23 * m.M42 * m.M11 - m.M43 * m.M12 * m.M21) / determinant, (m.M11 * m.M22 * m.M33 + m.M21 * m.M32 * m.M13 + m.M31 * m.M12 * m.M23 - m.M13 * m.M22 * m.M31 - m.M23 * m.M32 * m.M11 - m.M33 * m.M12 * m.M21) / determinant);
+			return new global::PckStudio.Models.Matrix3D((m.M22 * m.M33 * m.M44 + m.M32 * m.M43 * m.M24 + m.M42 * m.M23 * m.M34 - m.M24 * m.M33 * m.M42 - m.M34 * m.M43 * m.M22 - m.M44 * m.M23 * m.M32) / determinant, -(m.M12 * m.M33 * m.M44 + m.M32 * m.M43 * m.M14 + m.M42 * m.M13 * m.M34 - m.M14 * m.M33 * m.M42 - m.M34 * m.M43 * m.M12 - m.M44 * m.M13 * m.M32) / determinant, (m.M12 * m.M23 * m.M44 + m.M22 * m.M43 * m.M14 + m.M42 * m.M13 * m.M24 - m.M14 * m.M23 * m.M42 - m.M24 * m.M43 * m.M12 - m.M44 * m.M13 * m.M22) / determinant, -(m.M12 * m.M23 * m.M34 + m.M22 * m.M33 * m.M14 + m.M32 * m.M13 * m.M24 - m.M14 * m.M23 * m.M32 - m.M24 * m.M33 * m.M12 - m.M34 * m.M13 * m.M22) / determinant, -(m.M21 * m.M33 * m.M44 + m.M31 * m.M43 * m.M24 + m.M41 * m.M23 * m.M34 - m.M24 * m.M33 * m.M41 - m.M34 * m.M43 * m.M21 - m.M44 * m.M23 * m.M31) / determinant, (m.M11 * m.M33 * m.M44 + m.M31 * m.M43 * m.M14 + m.M41 * m.M13 * m.M34 - m.M14 * m.M33 * m.M41 - m.M34 * m.M43 * m.M11 - m.M44 * m.M13 * m.M31) / determinant, -(m.M11 * m.M23 * m.M44 + m.M21 * m.M43 * m.M14 + m.M41 * m.M13 * m.M24 - m.M14 * m.M23 * m.M41 - m.M24 * m.M43 * m.M11 - m.M44 * m.M13 * m.M21) / determinant, (m.M11 * m.M23 * m.M34 + m.M21 * m.M33 * m.M14 + m.M31 * m.M13 * m.M24 - m.M14 * m.M23 * m.M31 - m.M24 * m.M33 * m.M11 - m.M34 * m.M13 * m.M21) / determinant, (m.M21 * m.M32 * m.M44 + m.M31 * m.M42 * m.M24 + m.M41 * m.M22 * m.M34 - m.M24 * m.M32 * m.M41 - m.M34 * m.M42 * m.M21 - m.M44 * m.M22 * m.M31) / determinant, -(m.M11 * m.M32 * m.M44 + m.M31 * m.M42 * m.M14 + m.M41 * m.M12 * m.M34 - m.M14 * m.M32 * m.M41 - m.M34 * m.M42 * m.M11 - m.M44 * m.M12 * m.M31) / determinant, (m.M11 * m.M32 * m.M44 + m.M21 * m.M42 * m.M14 + m.M41 * m.M12 * m.M24 - m.M14 * m.M22 * m.M41 - m.M24 * m.M42 * m.M11 - m.M44 * m.M12 * m.M21) / determinant, -(m.M11 * m.M22 * m.M34 + m.M21 * m.M32 * m.M14 + m.M31 * m.M12 * m.M24 - m.M14 * m.M22 * m.M31 - m.M24 * m.M32 * m.M11 - m.M34 * m.M12 * m.M21) / determinant, -(m.M21 * m.M32 * m.M43 + m.M31 * m.M42 * m.M23 + m.M41 * m.M22 * m.M33 - m.M23 * m.M32 * m.M41 - m.M33 * m.M42 * m.M21 - m.M43 * m.M22 * m.M31) / determinant, (m.M11 * m.M32 * m.M43 + m.M31 * m.M42 * m.M13 + m.M41 * m.M12 * m.M33 - m.M13 * m.M32 * m.M41 - m.M33 * m.M42 * m.M11 - m.M43 * m.M12 * m.M31) / determinant, -(m.M11 * m.M22 * m.M43 + m.M21 * m.M42 * m.M13 + m.M41 * m.M12 * m.M23 - m.M13 * m.M22 * m.M41 - m.M23 * m.M42 * m.M11 - m.M43 * m.M12 * m.M21) / determinant, (m.M11 * m.M22 * m.M33 + m.M21 * m.M32 * m.M13 + m.M31 * m.M12 * m.M23 - m.M13 * m.M22 * m.M31 - m.M23 * m.M32 * m.M11 - m.M33 * m.M12 * m.M21) / determinant);
 		}
 
-		public static global::MinecraftUSkinEditor.Models.Matrix3D operator +(global::MinecraftUSkinEditor.Models.Matrix3D a, global::MinecraftUSkinEditor.Models.Matrix3D b)
+		public static global::PckStudio.Models.Matrix3D operator +(global::PckStudio.Models.Matrix3D a, global::PckStudio.Models.Matrix3D b)
 		{
-			return new global::MinecraftUSkinEditor.Models.Matrix3D(a.M11 + b.M11, a.M12 + b.M12, a.M13 + b.M13, a.M14 + b.M14, a.M21 + b.M21, a.M22 + b.M22, a.M23 + b.M23, a.M24 + b.M24, a.M31 + b.M31, a.M32 + b.M32, a.M33 + b.M33, a.M34 + b.M34, a.M41 + b.M41, a.M42 + b.M42, a.M43 + b.M43, a.M44 + b.M44);
+			return new global::PckStudio.Models.Matrix3D(a.M11 + b.M11, a.M12 + b.M12, a.M13 + b.M13, a.M14 + b.M14, a.M21 + b.M21, a.M22 + b.M22, a.M23 + b.M23, a.M24 + b.M24, a.M31 + b.M31, a.M32 + b.M32, a.M33 + b.M33, a.M34 + b.M34, a.M41 + b.M41, a.M42 + b.M42, a.M43 + b.M43, a.M44 + b.M44);
 		}
 
-		public static global::MinecraftUSkinEditor.Models.Matrix3D operator -(global::MinecraftUSkinEditor.Models.Matrix3D a, global::MinecraftUSkinEditor.Models.Matrix3D b)
+		public static global::PckStudio.Models.Matrix3D operator -(global::PckStudio.Models.Matrix3D a, global::PckStudio.Models.Matrix3D b)
 		{
-			return new global::MinecraftUSkinEditor.Models.Matrix3D(a.M11 - b.M11, a.M12 - b.M12, a.M13 - b.M13, a.M14 - b.M14, a.M21 - b.M21, a.M22 - b.M22, a.M23 - b.M23, a.M24 - b.M24, a.M31 - b.M31, a.M32 - b.M32, a.M33 - b.M33, a.M34 - b.M34, a.M41 - b.M41, a.M42 - b.M42, a.M43 - b.M43, a.M44 - b.M44);
+			return new global::PckStudio.Models.Matrix3D(a.M11 - b.M11, a.M12 - b.M12, a.M13 - b.M13, a.M14 - b.M14, a.M21 - b.M21, a.M22 - b.M22, a.M23 - b.M23, a.M24 - b.M24, a.M31 - b.M31, a.M32 - b.M32, a.M33 - b.M33, a.M34 - b.M34, a.M41 - b.M41, a.M42 - b.M42, a.M43 - b.M43, a.M44 - b.M44);
 		}
 
-		public static global::MinecraftUSkinEditor.Models.Matrix3D operator *(global::MinecraftUSkinEditor.Models.Matrix3D a, global::MinecraftUSkinEditor.Models.Matrix3D b)
+		public static global::PckStudio.Models.Matrix3D operator *(global::PckStudio.Models.Matrix3D a, global::PckStudio.Models.Matrix3D b)
 		{
-			return new global::MinecraftUSkinEditor.Models.Matrix3D(a.M11 * b.M11 + a.M12 * b.M21 + a.M13 * b.M31 + a.M14 * b.M41, a.M11 * b.M12 + a.M12 * b.M22 + a.M13 * b.M32 + a.M14 * b.M42, a.M11 * b.M13 + a.M12 * b.M23 + a.M13 * b.M33 + a.M14 * b.M43, a.M11 * b.M14 + a.M12 * b.M24 + a.M13 * b.M34 + a.M14 * b.M44, a.M21 * b.M11 + a.M22 * b.M21 + a.M23 * b.M31 + a.M24 * b.M41, a.M21 * b.M12 + a.M22 * b.M22 + a.M23 * b.M32 + a.M24 * b.M42, a.M21 * b.M13 + a.M22 * b.M23 + a.M23 * b.M33 + a.M24 * b.M43, a.M21 * b.M14 + a.M22 * b.M24 + a.M23 * b.M34 + a.M24 * b.M44, a.M31 * b.M11 + a.M32 * b.M21 + a.M33 * b.M31 + a.M34 * b.M41, a.M31 * b.M12 + a.M32 * b.M22 + a.M33 * b.M32 + a.M34 * b.M42, a.M31 * b.M13 + a.M32 * b.M23 + a.M33 * b.M33 + a.M34 * b.M43, a.M31 * b.M14 + a.M32 * b.M24 + a.M33 * b.M34 + a.M34 * b.M44, a.M41 * b.M11 + a.M42 * b.M21 + a.M43 * b.M31 + a.M44 * b.M41, a.M41 * b.M12 + a.M42 * b.M22 + a.M43 * b.M32 + a.M44 * b.M42, a.M41 * b.M13 + a.M42 * b.M23 + a.M43 * b.M33 + a.M44 * b.M43, a.M41 * b.M14 + a.M42 * b.M24 + a.M43 * b.M34 + a.M44 * b.M44);
+			return new global::PckStudio.Models.Matrix3D(a.M11 * b.M11 + a.M12 * b.M21 + a.M13 * b.M31 + a.M14 * b.M41, a.M11 * b.M12 + a.M12 * b.M22 + a.M13 * b.M32 + a.M14 * b.M42, a.M11 * b.M13 + a.M12 * b.M23 + a.M13 * b.M33 + a.M14 * b.M43, a.M11 * b.M14 + a.M12 * b.M24 + a.M13 * b.M34 + a.M14 * b.M44, a.M21 * b.M11 + a.M22 * b.M21 + a.M23 * b.M31 + a.M24 * b.M41, a.M21 * b.M12 + a.M22 * b.M22 + a.M23 * b.M32 + a.M24 * b.M42, a.M21 * b.M13 + a.M22 * b.M23 + a.M23 * b.M33 + a.M24 * b.M43, a.M21 * b.M14 + a.M22 * b.M24 + a.M23 * b.M34 + a.M24 * b.M44, a.M31 * b.M11 + a.M32 * b.M21 + a.M33 * b.M31 + a.M34 * b.M41, a.M31 * b.M12 + a.M32 * b.M22 + a.M33 * b.M32 + a.M34 * b.M42, a.M31 * b.M13 + a.M32 * b.M23 + a.M33 * b.M33 + a.M34 * b.M43, a.M31 * b.M14 + a.M32 * b.M24 + a.M33 * b.M34 + a.M34 * b.M44, a.M41 * b.M11 + a.M42 * b.M21 + a.M43 * b.M31 + a.M44 * b.M41, a.M41 * b.M12 + a.M42 * b.M22 + a.M43 * b.M32 + a.M44 * b.M42, a.M41 * b.M13 + a.M42 * b.M23 + a.M43 * b.M33 + a.M44 * b.M43, a.M41 * b.M14 + a.M42 * b.M24 + a.M43 * b.M34 + a.M44 * b.M44);
 		}
 
-		public static global::MinecraftUSkinEditor.Models.Point3D operator *(global::MinecraftUSkinEditor.Models.Matrix3D m, global::MinecraftUSkinEditor.Models.Point3D p)
+		public static global::PckStudio.Models.Point3D operator *(global::PckStudio.Models.Matrix3D m, global::PckStudio.Models.Point3D p)
 		{
-			return new global::MinecraftUSkinEditor.Models.Point3D(p.X * m.M11 + p.Y * m.M12 + p.Z * m.M13 + m.M14, p.X * m.M21 + p.Y * m.M22 + p.Z * m.M23 + m.M24, p.X * m.M31 + p.Y * m.M32 + p.Z * m.M33 + m.M34);
+			return new global::PckStudio.Models.Point3D(p.X * m.M11 + p.Y * m.M12 + p.Z * m.M13 + m.M14, p.X * m.M21 + p.Y * m.M22 + p.Z * m.M23 + m.M24, p.X * m.M31 + p.Y * m.M32 + p.Z * m.M33 + m.M34);
 		}
 
-		public static global::MinecraftUSkinEditor.Models.Matrix3D operator +(global::MinecraftUSkinEditor.Models.Matrix3D m, float n)
+		public static global::PckStudio.Models.Matrix3D operator +(global::PckStudio.Models.Matrix3D m, float n)
 		{
-			return new global::MinecraftUSkinEditor.Models.Matrix3D(m.M11 + n, m.M12 + n, m.M13 + n, m.M14 + n, m.M21 + n, m.M22 + n, m.M23 + n, m.M24 + n, m.M31 + n, m.M32 + n, m.M33 + n, m.M34 + n, m.M41 + n, m.M42 + n, m.M43 + n, m.M44 + n);
+			return new global::PckStudio.Models.Matrix3D(m.M11 + n, m.M12 + n, m.M13 + n, m.M14 + n, m.M21 + n, m.M22 + n, m.M23 + n, m.M24 + n, m.M31 + n, m.M32 + n, m.M33 + n, m.M34 + n, m.M41 + n, m.M42 + n, m.M43 + n, m.M44 + n);
 		}
 
-		public static global::MinecraftUSkinEditor.Models.Matrix3D operator -(global::MinecraftUSkinEditor.Models.Matrix3D m, float n)
+		public static global::PckStudio.Models.Matrix3D operator -(global::PckStudio.Models.Matrix3D m, float n)
 		{
-			return new global::MinecraftUSkinEditor.Models.Matrix3D(m.M11 - n, m.M12 - n, m.M13 - n, m.M14 - n, m.M21 - n, m.M22 - n, m.M23 - n, m.M24 - n, m.M31 - n, m.M32 - n, m.M33 - n, m.M34 - n, m.M41 - n, m.M42 - n, m.M43 - n, m.M44 - n);
+			return new global::PckStudio.Models.Matrix3D(m.M11 - n, m.M12 - n, m.M13 - n, m.M14 - n, m.M21 - n, m.M22 - n, m.M23 - n, m.M24 - n, m.M31 - n, m.M32 - n, m.M33 - n, m.M34 - n, m.M41 - n, m.M42 - n, m.M43 - n, m.M44 - n);
 		}
 
-		public static global::MinecraftUSkinEditor.Models.Matrix3D operator *(global::MinecraftUSkinEditor.Models.Matrix3D m, float n)
+		public static global::PckStudio.Models.Matrix3D operator *(global::PckStudio.Models.Matrix3D m, float n)
 		{
-			return new global::MinecraftUSkinEditor.Models.Matrix3D(m.M11 * n, m.M12 * n, m.M13 * n, m.M14 * n, m.M21 * n, m.M22 * n, m.M23 * n, m.M24 * n, m.M31 * n, m.M32 * n, m.M33 * n, m.M34 * n, m.M41 * n, m.M42 * n, m.M43 * n, m.M44 * n);
+			return new global::PckStudio.Models.Matrix3D(m.M11 * n, m.M12 * n, m.M13 * n, m.M14 * n, m.M21 * n, m.M22 * n, m.M23 * n, m.M24 * n, m.M31 * n, m.M32 * n, m.M33 * n, m.M34 * n, m.M41 * n, m.M42 * n, m.M43 * n, m.M44 * n);
 		}
 
-		public static global::MinecraftUSkinEditor.Models.Matrix3D operator /(global::MinecraftUSkinEditor.Models.Matrix3D m, float n)
+		public static global::PckStudio.Models.Matrix3D operator /(global::PckStudio.Models.Matrix3D m, float n)
 		{
-			return new global::MinecraftUSkinEditor.Models.Matrix3D(m.M11 / n, m.M12 / n, m.M13 / n, m.M14 / n, m.M21 / n, m.M22 / n, m.M23 / n, m.M24 / n, m.M31 / n, m.M32 / n, m.M33 / n, m.M34 / n, m.M41 / n, m.M42 / n, m.M43 / n, m.M44 / n);
+			return new global::PckStudio.Models.Matrix3D(m.M11 / n, m.M12 / n, m.M13 / n, m.M14 / n, m.M21 / n, m.M22 / n, m.M23 / n, m.M24 / n, m.M31 / n, m.M32 / n, m.M33 / n, m.M34 / n, m.M41 / n, m.M42 / n, m.M43 / n, m.M44 / n);
 		}
 
 		public float M11;

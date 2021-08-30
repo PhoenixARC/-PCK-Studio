@@ -1,4 +1,4 @@
-﻿namespace MinecraftUSkinEditor
+﻿namespace PckStudio
 {
     partial class addAnimatedTexture
     {
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(addAnimatedTexture));
-            this.pictureBox1 = new MinecraftUSkinEditor.PictureBoxWithInterpolationMode();
+            this.pictureBox1 = new PckStudio.PictureBoxWithInterpolationMode();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.textBox3 = new System.Windows.Forms.TextBox();

@@ -65,7 +65,7 @@ namespace MinecraftUSkinEditor.Models
 			base.PerformLayout();
 		}
 
-		public global::MinecraftUSkinEditor.Models.Texture Texture
+		public global::PckStudio.Models.Texture Texture
 		{
 			get
 			{
@@ -190,6 +190,6 @@ namespace MinecraftUSkinEditor.Models
 
 		private global::System.Windows.Forms.Button reloadButton;
 
-		private global::MinecraftUSkinEditor.Models.Texture texture;
+		private global::PckStudio.Models.Texture texture;
 	}
 }

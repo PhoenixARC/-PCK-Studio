@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace MinecraftUSkinEditor.Models
+namespace PckStudio.Models
 {
-	public class Object3DGroup : global::MinecraftUSkinEditor.Models.Object3D
+	public class Object3DGroup : global::PckStudio.Models.Object3D
 	{
-		internal override global::MinecraftUSkinEditor.Models.MinecraftModelView Viewport
+		internal override global::PckStudio.Models.MinecraftModelView Viewport
 		{
 			set
 			{
 				base.Viewport = value;
-				foreach (global::MinecraftUSkinEditor.Models.Object3D object3D in this.object3DList)
+				foreach (global::PckStudio.Models.Object3D object3D in this.object3DList)
 				{
 					object3D.Viewport = value;
 				}
@@ -21,7 +21,7 @@ namespace MinecraftUSkinEditor.Models
 		{
 			set
 			{
-				foreach (global::MinecraftUSkinEditor.Models.Object3D object3D in this.object3DList)
+				foreach (global::PckStudio.Models.Object3D object3D in this.object3DList)
 				{
 					object3D.Image = value;
 				}
@@ -30,7 +30,7 @@ namespace MinecraftUSkinEditor.Models
 
 		internal override void Update()
 		{
-			global::MinecraftUSkinEditor.Models.Matrix3D globalTransformation = this.globalTransformation * this.localTransformation;
+			global::PckStudio.Models.Matrix3D globalTransformation = this.globalTransformation * this.localTransformation;
 			for (int i = 0; i < this.object3DList.Count; i++)
 			{
 				this.object3DList[i].GlobalTransformation = globalTransformation;
@@ -40,7 +40,7 @@ namespace MinecraftUSkinEditor.Models
 		public override float HitTest(global::System.Drawing.PointF location)
 		{
 			float num = -1000f;
-			foreach (global::MinecraftUSkinEditor.Models.Object3D object3D in this.object3DList)
+			foreach (global::PckStudio.Models.Object3D object3D in this.object3DList)
 			{
 				float num2 = object3D.HitTest(location);
 				if (num2 > num)
@@ -51,7 +51,7 @@ namespace MinecraftUSkinEditor.Models
 			return num;
 		}
 
-		public void Add(global::MinecraftUSkinEditor.Models.Object3D object3D)
+		public void Add(global::PckStudio.Models.Object3D object3D)
 		{
 			if (object3D == this)
 			{
@@ -64,6 +64,6 @@ namespace MinecraftUSkinEditor.Models
 		{
 		}
 
-		private global::System.Collections.Generic.List<global::MinecraftUSkinEditor.Models.Object3D> object3DList = new global::System.Collections.Generic.List<global::MinecraftUSkinEditor.Models.Object3D>();
+		private global::System.Collections.Generic.List<global::PckStudio.Models.Object3D> object3DList = new global::System.Collections.Generic.List<global::PckStudio.Models.Object3D>();
 	}
 }
