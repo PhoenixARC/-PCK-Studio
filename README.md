@@ -18,6 +18,8 @@ Modify .PCK archives as you please!
 
 * PNG previewing
 
+* Support for PS4 and PSVita PCKs!
+
 * And much more!
 
 ### To compile:
