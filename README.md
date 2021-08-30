@@ -1,7 +1,7 @@
 # PCK Studio
 _previously MinecraftUSkinEditor_
 
-A minecraft for Wii U editor
+A minecraft Legacy console PCK editor
 
 Modify .PCK archives as you please!
 
