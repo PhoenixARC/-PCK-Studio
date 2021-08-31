@@ -23,7 +23,7 @@ namespace PckStudio
         #region Variables
         string saveLocation;//Save location for pck file
         int fileCount = 0;//variable for number of minefiles
-        string Version = "5.7";//template for program version
+        string Version = "5.8";//template for program version
         string hosturl = "";
         string basurl = "";
         string PCKFile = "";
@@ -1429,6 +1429,16 @@ namespace PckStudio
                     {
                         foreach (PCK.MineFile mf in new PCK(ofd.FileName).mineFiles)
                         {
+                            foreach (object[] entry in mf.entries)
+                            {
+                                if (entry[0].ToString() == "LOCK") // Check for lock on PCK File
+                                {
+                                    if ((new pckLocked(entry[1].ToString(), correct).ShowDialog() != DialogResult.OK || !correct))
+                                    {
+                                        return; // cancel extraction if password not provided
+                                    }
+                                }
+                            }
                             System.IO.FileInfo file = new System.IO.FileInfo(sfd.SelectedPath + @"\" + mf.name);
                             file.Directory.Create(); // If the directory already exists, this method does nothing.
                             File.WriteAllBytes(sfd.SelectedPath + @"\" + mf.name, mf.data); //writes minefile to file
