@@ -117,20 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="buttonBedrock.Text" xml:space="preserve">
-    <value>Bedrockに変換</value>
-  </data>
-  <data name="buttonDelete.Text" xml:space="preserve">
-    <value>削除</value>
-  </data>
   <data name="buttonDirect.Text" xml:space="preserve">
     <value>コレクションにダウンロード</value>
-  </data>
-  <data name="buttonExport.Text" xml:space="preserve">
-    <value>取得する</value>
-  </data>
-  <data name="labelDesc.Text" xml:space="preserve">
-    <value>ラベルの説明</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="labelName.Size" type="System.Drawing.Size, System.Drawing">
@@ -138,5 +126,17 @@
   </data>
   <data name="labelName.Text" xml:space="preserve">
     <value>スキンパック</value>
+  </data>
+  <data name="labelDesc.Text" xml:space="preserve">
+    <value>ラベルの説明</value>
+  </data>
+  <data name="buttonDelete.Text" xml:space="preserve">
+    <value>削除</value>
+  </data>
+  <data name="buttonExport.Text" xml:space="preserve">
+    <value>取得する</value>
+  </data>
+  <data name="buttonBedrock.Text" xml:space="preserve">
+    <value>Bedrockに変換</value>
   </data>
 </root>

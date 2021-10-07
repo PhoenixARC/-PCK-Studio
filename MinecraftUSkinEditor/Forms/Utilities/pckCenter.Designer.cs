@@ -46,6 +46,7 @@
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.PSVitaPCKCheckbox = new MetroFramework.Controls.MetroCheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tableLayoutPanel2.SuspendLayout();
@@ -142,8 +143,8 @@
             // 
             // buttonSubmit
             // 
-            resources.ApplyResources(this.buttonSubmit, "buttonSubmit");
             this.buttonSubmit.FlatAppearance.BorderSize = 0;
+            resources.ApplyResources(this.buttonSubmit, "buttonSubmit");
             this.buttonSubmit.ForeColor = System.Drawing.Color.White;
             this.buttonSubmit.Name = "buttonSubmit";
             this.buttonSubmit.UseVisualStyleBackColor = true;
@@ -171,9 +172,9 @@
             // 
             // panel1
             // 
-            resources.ApplyResources(this.panel1, "panel1");
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.panel1.Controls.Add(this.pckLayout);
+            resources.ApplyResources(this.panel1, "panel1");
             this.panel1.Name = "panel1";
             // 
             // pckLayout
@@ -187,29 +188,39 @@
             // 
             // contextMenuStripPCK
             // 
-            resources.ApplyResources(this.contextMenuStripPCK, "contextMenuStripPCK");
             this.contextMenuStripPCK.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.deleteToolStripMenuItem,
             this.exportToolStripMenuItem});
             this.contextMenuStripPCK.Name = "contextMenuStripPCK";
+            resources.ApplyResources(this.contextMenuStripPCK, "contextMenuStripPCK");
             // 
             // deleteToolStripMenuItem
             // 
-            resources.ApplyResources(this.deleteToolStripMenuItem, "deleteToolStripMenuItem");
             this.deleteToolStripMenuItem.Image = global::PckStudio.Properties.Resources.Del;
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            resources.ApplyResources(this.deleteToolStripMenuItem, "deleteToolStripMenuItem");
             // 
             // exportToolStripMenuItem
             // 
-            resources.ApplyResources(this.exportToolStripMenuItem, "exportToolStripMenuItem");
             this.exportToolStripMenuItem.Image = global::PckStudio.Properties.Resources.ExportFile;
             this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
+            resources.ApplyResources(this.exportToolStripMenuItem, "exportToolStripMenuItem");
+            // 
+            // PSVitaPCKCheckbox
+            // 
+            resources.ApplyResources(this.PSVitaPCKCheckbox, "PSVitaPCKCheckbox");
+            this.PSVitaPCKCheckbox.Name = "PSVitaPCKCheckbox";
+            this.PSVitaPCKCheckbox.Style = MetroFramework.MetroColorStyle.Silver;
+            this.PSVitaPCKCheckbox.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.PSVitaPCKCheckbox.UseSelectable = true;
+            this.PSVitaPCKCheckbox.CheckedChanged += new System.EventHandler(this.PSVitaPCKCheckbox_CheckedChanged);
             // 
             // pckCenter
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BorderStyle = MetroFramework.Forms.MetroFormBorderStyle.FixedSingle;
+            this.Controls.Add(this.PSVitaPCKCheckbox);
             this.Controls.Add(this.tableLayoutPanel2);
             this.Name = "pckCenter";
             this.ShadowType = MetroFramework.Forms.MetroFormShadowType.DropShadow;
@@ -223,6 +234,7 @@
             this.contextMenuStripPCK.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -243,5 +255,6 @@
         private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
         private System.Windows.Forms.Button buttonSubmit;
         private System.Windows.Forms.RadioButton radioButtonTex;
+        private MetroFramework.Controls.MetroCheckBox PSVitaPCKCheckbox;
     }
 }

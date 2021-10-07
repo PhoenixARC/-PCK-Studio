@@ -312,7 +312,7 @@ namespace PckStudio.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to http://nobledez.ga/
-        ///http://www.pckstudio.tk/.
+        ///http://www.pckstudio.xyz/.
         /// </summary>
         internal static string settings {
             get {

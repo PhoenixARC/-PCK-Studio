@@ -13,8 +13,8 @@ namespace PckStudio
 
     static class Program
     {
-        public static string baseurl = "http://www.pckstudio.tk/studio/PCK/api/";
-        public static string backurl = "https://phoenixarc.github.io/pckstudio.tk/studio/PCK/api/";
+        public static string baseurl = "https://www.pckstudio.xyz/studio/PCK/api/";
+        public static string backurl = "https://raw.githubusercontent.com/PhoenixARC/pckstudio.tk/main/studio/PCK/api/";
         public static bool IsDev = false;
         public static FormMain formMain;
         /// <summary>
