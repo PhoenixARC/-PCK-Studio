@@ -60,10 +60,10 @@
     <ApplicationIcon>Sin_titulo991.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>CommunityKey.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>PCKStudio.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <SignManifests>false</SignManifests>

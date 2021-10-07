@@ -86,8 +86,8 @@ namespace nobleUpdater
 			Application.Exit();
 		}
 
-		private string serverFile = "http://www.pckstudio.tk/programs/PCKSTUDIO_Update.exe";
-		private string ServerXML = "http://www.pckstudio.tk/studio/PCK/update.xml";
+		private string serverFile = "http://www.pckstudio.xyz/programs/PCKSTUDIO_Update.exe";
+		private string ServerXML = "http://www.pckstudio.xyz/studio/PCK/update.xml";
 
 		private string appData = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "\\PCK Studio\\";
 
@@ -99,7 +99,7 @@ namespace nobleUpdater
 
 		private void FormMain_Load(object sender, EventArgs e)
 		{
-			Console.WriteLine(new WebClient().DownloadString(new Uri("http://www.pckstudio.tk/studio/PCK/update.xml")));
+			Console.WriteLine(new WebClient().DownloadString(new Uri("http://www.pckstudio.xyz/studio/PCK/update.xml")));
 			downloadUpdate();
 		}
 

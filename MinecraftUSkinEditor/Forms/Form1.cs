@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 using System.IO.Compression;
@@ -11,7 +10,6 @@ using System.Net;
 using System.Diagnostics;
 using PckStudio.Properties;
 using Ohana3DS_Rebirth.Ohana;
-using PckStudio;
 using PckStudio.Forms;
 using System.Drawing.Imaging;
 using RichPresenceClient;
@@ -23,7 +21,7 @@ namespace PckStudio
         #region Variables
         string saveLocation;//Save location for pck file
         int fileCount = 0;//variable for number of minefiles
-        string Version = "5.8";//template for program version
+        string Version = "6.1";//template for program version
         string hosturl = "";
         string basurl = "";
         string PCKFile = "";
@@ -41,7 +39,7 @@ namespace PckStudio
         bool saved = true;
         string appData = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/PCK Studio/";
         public static bool correct = false;
-        bool isdebug = true;
+        bool isdebug = false;
 
         public class displayId
         {
@@ -493,17 +491,24 @@ namespace PckStudio
         #region extracts pck entry
         private void extractToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            
+            if(treeViewMain.SelectedNode.Nodes.Count > 0)
+            {
+                MessageBox.Show("Cannot extract folders!");
+                return;
+            }
             if (treeViewMain.SelectedNode.Tag is PCK.MineFile)//Makes sure item being extracted is minefile and not folder or null item
             {
                 SaveFileDialog exFile = new SaveFileDialog();//extract location
+                exFile.FileName = treeViewMain.SelectedNode.Text;
+                exFile.Filter = Path.GetExtension(treeViewMain.SelectedNode.Text).Replace(".", "") + " File|*" + Path.GetExtension(treeViewMain.SelectedNode.Text);
                 exFile.ShowDialog();
 
                 string appPath = exFile.FileName;//Chosen file path
-                string extractPath = Path.Combine(appPath, ((PCK.MineFile)treeViewMain.SelectedNode.Tag).name);//combines file path with file path & name of minefile being extracted
+                string extractPath = exFile.FileName;
 
                 if (!String.IsNullOrWhiteSpace(Path.GetDirectoryName(extractPath)))//Makes sure chosen directory isn't null or whitespace AKA makes sure its usable
                 {
-                    Directory.CreateDirectory(Path.GetDirectoryName(extractPath));//Creates directory variable out of generated/chosen extract path
                     File.WriteAllBytes(extractPath, ((PCK.MineFile)treeViewMain.SelectedNode.Tag).data);//extracts minefile data to directory
 
                     //Generates metadata file in form of txt file if metadata for the file exists
@@ -1190,28 +1195,8 @@ namespace PckStudio
         private void skinPackToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //Loads skin pack template
-            myTablePanelStartScreen.Visible = false;
-            pckOpen.Visible = false;
-            label5.Visible = false;
-            labelAmount.Visible = true;
-            richTextBoxChangelog.Visible = false;
-            openedPCKS.Visible = true;
-            foreach (ToolStripMenuItem item in fileToolStripMenuItem.DropDownItems)
-            {
-                item.Enabled = true;
-            }
-            foreach (ToolStripMenuItem item in editToolStripMenuItem.DropDownItems)
-            {
-                item.Enabled = true;
-            }
-
-            openedPCKS.SelectedTab.Text = "Empty_Skin_Pack.pck";
-            try
-            {
-                openPck(Environment.CurrentDirectory + "\\templates\\UntitledSkinPCK.pck");
-                PCKFile = "UntitledSkinPCK.pck";
-            }
-            catch { }
+            PCKFile = Path.GetFileName(Environment.CurrentDirectory + "\\template\\UntitledSkinPCK.pck");
+            openPck(Environment.CurrentDirectory + "\\template\\UntitledSkinPCK.pck");
             saveLocation = "";
             saved = false;
         }
@@ -1251,8 +1236,6 @@ namespace PckStudio
             info.Dispose();
         }
         #endregion
-
-
 
         #region checks for updates
         private void Form1_Load(object sender, EventArgs e)
@@ -1295,11 +1278,37 @@ namespace PckStudio
 
                 new WebClient().DownloadString(Program.baseurl + ChangeURL.Text);
                 basurl = Program.baseurl;
+                Console.WriteLine(basurl + ChangeURL.Text);
             }
             catch
             {
-                basurl = Program.backurl;
+                try
+                {
+                    new WebClient().DownloadString(Program.backurl + ChangeURL.Text);
+                    basurl = Program.backurl;
+                    Console.WriteLine(basurl + ChangeURL.Text);
+                }
+                catch
+                {
+                    try
+                    {
+                        new WebClient().DownloadString("https://google.com");
+                        MessageBox.Show("PCK Studio Service is offline, the domain may have changed.\nOpening website");
+                        Process.Start("https://phoenixarc.github.io/pckstudio.tk/");
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Could not connect to service, internet may be offline");
+                    }
+                }
             }
+
+
+            Directory.CreateDirectory(Environment.CurrentDirectory + "\\template");
+            if (!File.Exists(Environment.CurrentDirectory + "\\template\\UntitledSkinPCK.pck"))
+                File.WriteAllBytes(Environment.CurrentDirectory + "\\template\\UntitledSkinPCK.pck", Resources.UntitledSkinPCK);
+
+
             if (isdebug)
                 DBGLabel.Visible = true;
             //runs creator spotlight once per day
@@ -1355,18 +1364,24 @@ namespace PckStudio
             {
                 File.WriteAllText(Application.StartupPath + @"\ver.txt", Version);
             }
-            
-            if(float.Parse(new WebClient().DownloadString(basurl + "updatePCKStudio.txt").Replace("\n","")) > float.Parse(Version))
+            try
             {
-                Console.WriteLine(new WebClient().DownloadString(basurl + "updatePCKStudio.txt").Replace("\n", "") + " != " + Version);
-                if(MessageBox.Show("Update avaliable!\ndo you want to update?", "UPDATE", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                Process.Start(Environment.CurrentDirectory + "\\nobleUpdater.exe");
+                if (float.Parse(new WebClient().DownloadString(basurl + "updatePCKStudio.txt").Replace("\n", "")) > float.Parse(Version))
+                {
+                    Console.WriteLine(new WebClient().DownloadString(basurl + "updatePCKStudio.txt").Replace("\n", "") + " != " + Version);
+                    if (MessageBox.Show("Update avaliable!\ndo you want to update?", "UPDATE", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                        Process.Start(Environment.CurrentDirectory + "\\nobleUpdater.exe");
+                    else
+                        uPDATEToolStripMenuItem1.Visible = true;
+                }
                 else
-                uPDATEToolStripMenuItem1.Visible = true;
+                {
+                    uPDATEToolStripMenuItem1.Visible = false;
+                }
             }
-            else
+            catch
             {
-                uPDATEToolStripMenuItem1.Visible = false;
+                MessageBox.Show("Could not load Version Information");
             }
         }
         #endregion
@@ -3166,42 +3181,7 @@ namespace PckStudio
 
         #endregion
 
-        private void buttonEditModel_Click(object sender, EventArgs e)
-        {
-            PCK.MineFile mf = (PCK.MineFile)treeViewMain.SelectedNode.Tag;
-
-            if (Path.GetExtension(mf.name) == ".png")
-            {
-                if (buttonEdit.Text == "EDIT BOXES")
-                    editModel(mf);
-                else if (buttonEdit.Text == "View Skin")
-                {
-                    using (var ms = new MemoryStream(mf.data))
-                    {
-                        SkinPreview frm = new SkinPreview(Image.FromStream(ms));
-                        frm.Show();
-                    }
-                }
-            }
-
-            if (Path.GetExtension(mf.name) == ".loc")
-                {
-                LOC l;
-                try
-                {
-                    l = new LOC(mf.data);
-                }
-                catch
-                {
-                    MessageBox.Show("No localization data found.", "Error", MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-                    return;
-                }
-                        (new LOCEditor(l)).ShowDialog();//Opens LOC Editor
-                mf.data = l.Rebuild();//Rebuilds loc file with locdata in grid view after closing dialog
-            }
-
-        }
+        #region Tool/MenuStrips
 
         private void openToolStripMenuItem1_Click(object sender, EventArgs e)
         {
@@ -3209,87 +3189,9 @@ namespace PckStudio
             open.Show();
         }
 
-        private void OpenPck_MouseEnter(object sender, EventArgs e)
-        {
-            pckOpen.Image = Resources.pckOpen;
-        }
-
-        private void OpenPck_MouseLeave(object sender, EventArgs e)
-        {
-            pckOpen.Image = Resources.pckClosed;
-        }
-
         private void tutorialsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start(hosturl + "pckStudio#tutorials");
-        }
-
-        private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            if (saved == false)
-            {
-                if (MessageBox.Show("Save PCK?", "Unsaved PCK", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                {
-                    if (saveLocation == Application.StartupPath + @"\templates\UntitledSkinPCK.pck")
-                    {
-                        save("Save As");
-                    }
-                    else
-                    {
-                        save("Save");
-                    }
-                }
-            }
-            if (needsUpdate)
-            {
-                Process UPDATE = new Process();//sets up updater
-                UPDATE.StartInfo.FileName = Application.StartupPath + @"\nobleUpdater.exe";//updater program path
-                UPDATE.Start();//starts updater
-                Application.Exit();//closes PCK Studio to let updatear finish the job
-            }
-        }
-
-        private void OpenPck_DragEnter(object sender, DragEventArgs e)
-        {
-            pckOpen.Image = Resources.pckDrop;
-            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-            foreach (var file in files)
-            {
-                var ext = System.IO.Path.GetExtension(file);
-                if (ext.Equals(".pck", StringComparison.CurrentCultureIgnoreCase))
-                e.Effect = DragDropEffects.Copy;
-                return;
-            }
-        }
-
-        private void OpenPck_DragDrop(object sender, DragEventArgs e)
-        {
-            string[] FileList = (string[])e.Data.GetData(DataFormats.FileDrop, false);
-
-            foreach (string pck in FileList)
-            {
-                openPck(pck);
-            }
-        }
-
-        private void OpenPck_DragLeave(object sender, EventArgs e)
-        {
-            pckOpen.Image = Resources.pckClosed;
-        }
-
-        private void savePCK(object sender, EventArgs e)
-        {
-            save("Save");
-        }
-
-        private void saveAsPCK(object sender, EventArgs e)
-        {
-            save("Save As");
-        }
-
-        private void openPck(object sender, EventArgs e)
-        {
-
         }
 
         private void wiiUPCKInstallerToolStripMenuItem_Click(object sender, EventArgs e)
@@ -3430,6 +3332,136 @@ namespace PckStudio
             System.Diagnostics.Process.Start("https://discord.gg/Byh4hcq25w");
         }
 
+        private void tSTToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Testx_12 form1 = new Testx_12();
+            form1.Show();
+        }
+
+        private void convertPCTextrurePackToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PckStudio.Forms.Utilities.TextureConverterUtility tex = new PckStudio.Forms.Utilities.TextureConverterUtility(treeViewMain, currentPCK);
+            tex.ShowDialog();
+        }
+
+#endregion
+
+
+        private void buttonEditModel_Click(object sender, EventArgs e)
+        {
+            PCK.MineFile mf = (PCK.MineFile)treeViewMain.SelectedNode.Tag;
+
+            if (Path.GetExtension(mf.name) == ".png")
+            {
+                if (buttonEdit.Text == "EDIT BOXES")
+                    editModel(mf);
+                else if (buttonEdit.Text == "View Skin")
+                {
+                    using (var ms = new MemoryStream(mf.data))
+                    {
+                        SkinPreview frm = new SkinPreview(Image.FromStream(ms));
+                        frm.Show();
+                    }
+                }
+            }
+
+            if (Path.GetExtension(mf.name) == ".loc")
+                {
+                LOC l;
+                try
+                {
+                    l = new LOC(mf.data);
+                }
+                catch
+                {
+                    MessageBox.Show("No localization data found.", "Error", MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                    return;
+                }
+                        (new LOCEditor(l)).ShowDialog();//Opens LOC Editor
+                mf.data = l.Rebuild();//Rebuilds loc file with locdata in grid view after closing dialog
+            }
+
+        }
+
+        private void OpenPck_MouseEnter(object sender, EventArgs e)
+        {
+            pckOpen.Image = Resources.pckOpen;
+        }
+
+        private void OpenPck_MouseLeave(object sender, EventArgs e)
+        {
+            pckOpen.Image = Resources.pckClosed;
+        }
+
+        private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (saved == false)
+            {
+                if (MessageBox.Show("Save PCK?", "Unsaved PCK", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                {
+                    if (saveLocation == Application.StartupPath + @"\templates\UntitledSkinPCK.pck")
+                    {
+                        save("Save As");
+                    }
+                    else
+                    {
+                        save("Save");
+                    }
+                }
+            }
+            if (needsUpdate)
+            {
+                Process UPDATE = new Process();//sets up updater
+                UPDATE.StartInfo.FileName = Application.StartupPath + @"\nobleUpdater.exe";//updater program path
+                UPDATE.Start();//starts updater
+                Application.Exit();//closes PCK Studio to let updatear finish the job
+            }
+        }
+
+        private void OpenPck_DragEnter(object sender, DragEventArgs e)
+        {
+            pckOpen.Image = Resources.pckDrop;
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            foreach (var file in files)
+            {
+                var ext = System.IO.Path.GetExtension(file);
+                if (ext.Equals(".pck", StringComparison.CurrentCultureIgnoreCase))
+                e.Effect = DragDropEffects.Copy;
+                return;
+            }
+        }
+
+        private void OpenPck_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] FileList = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+
+            foreach (string pck in FileList)
+            {
+                openPck(pck);
+            }
+        }
+
+        private void OpenPck_DragLeave(object sender, EventArgs e)
+        {
+            pckOpen.Image = Resources.pckClosed;
+        }
+
+        private void savePCK(object sender, EventArgs e)
+        {
+            save("Save");
+        }
+
+        private void saveAsPCK(object sender, EventArgs e)
+        {
+            save("Save As");
+        }
+
+        private void openPck(object sender, EventArgs e)
+        {
+
+        }
+
         private void timer1_Tick(object sender, EventArgs e)
         {
             if (PCKFile != PCKFileBCKUP)
@@ -3458,12 +3490,6 @@ namespace PckStudio
             }
         }
 
-        private void tSTToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Testx_12 form1 = new Testx_12();
-            form1.Show();
-        }
-
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             try
@@ -3473,10 +3499,26 @@ namespace PckStudio
             catch { }
         }
 
-        private void convertPCTextrurePackToolStripMenuItem_Click(object sender, EventArgs e)
+        private void FormMain_Deactivate(object sender, EventArgs e)
         {
-            PckStudio.Forms.Utilities.TextureConverterUtility tex = new PckStudio.Forms.Utilities.TextureConverterUtility(treeViewMain, currentPCK);
-            tex.ShowDialog();
+            try
+            {
+                RPC.CloseRPC();
+                timer1.Stop();
+                timer1.Enabled = false;
+            }
+            catch { }
+        }
+
+        private void FormMain_Activated(object sender, EventArgs e)
+        {
+            try
+            {
+            RPC.SetRPC("825875166574673940", "Sitting alone", "Program by PhoenixARC", "pcklgo", "PCK Studio", "pcklgo");
+            timer1.Start();
+            timer1.Enabled = true;
+            }
+            catch { }
         }
     }
 }
