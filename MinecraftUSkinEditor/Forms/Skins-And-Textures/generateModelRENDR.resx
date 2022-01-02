@@ -439,7 +439,7 @@
     <value>minecraftModelView1</value>
   </data>
   <data name="&gt;&gt;minecraftModelView1.Type" xml:space="preserve">
-    <value>PckStudio.Models.MinecraftModelView, PCK Studio, Version=5.3.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>PckStudio.Models.MinecraftModelView, PCK Studio - Ultimatecraft Edition, Version=2.0.0.0, Culture=neutral, PublicKeyToken=be377238ae1b2e97</value>
   </data>
   <data name="&gt;&gt;minecraftModelView1.Parent" xml:space="preserve">
     <value>tableLayoutPanelMain</value>
@@ -1645,7 +1645,7 @@
     <value>myTablePanel2</value>
   </data>
   <data name="&gt;&gt;myTablePanel2.Type" xml:space="preserve">
-    <value>PckStudio.Forms.MyTablePanel, PCK Studio, Version=5.3.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>PckStudio.Forms.MyTablePanel, PCK Studio - Ultimatecraft Edition, Version=2.0.0.0, Culture=neutral, PublicKeyToken=be377238ae1b2e97</value>
   </data>
   <data name="&gt;&gt;myTablePanel2.Parent" xml:space="preserve">
     <value>tabPage1</value>
@@ -1945,7 +1945,7 @@
     <value>myTablePanel1</value>
   </data>
   <data name="&gt;&gt;myTablePanel1.Type" xml:space="preserve">
-    <value>PckStudio.Forms.MyTablePanel, PCK Studio, Version=5.3.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>PckStudio.Forms.MyTablePanel, PCK Studio - Ultimatecraft Edition, Version=2.0.0.0, Culture=neutral, PublicKeyToken=be377238ae1b2e97</value>
   </data>
   <data name="&gt;&gt;myTablePanel1.Parent" xml:space="preserve">
     <value>tabArmor</value>
@@ -2350,10 +2350,10 @@
     <value>NoControl</value>
   </data>
   <data name="displayBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>580, 5</value>
+    <value>670, 30</value>
   </data>
   <data name="displayBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>82, 164</value>
+    <value>10, 15</value>
   </data>
   <data name="displayBox.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
     <value>StretchImage</value>
@@ -4113,9 +4113,6 @@
         AABJRU5ErkJggg==
 </value>
   </data>
-  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <data name="$this.MaximumSize" type="System.Drawing.Size, System.Drawing">
     <value>1114, 1000</value>
   </data>
@@ -4153,7 +4150,7 @@
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>generateModel</value>
+    <value>generateModelRENDR</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>MetroFramework.Forms.MetroForm, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>

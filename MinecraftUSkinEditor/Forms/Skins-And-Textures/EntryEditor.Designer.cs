@@ -43,14 +43,19 @@
             // 
             // textBox1
             // 
+            this.textBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox1.ForeColor = System.Drawing.Color.White;
             resources.ApplyResources(this.textBox1, "textBox1");
             this.textBox1.Name = "textBox1";
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // comboBox1
             // 
-            resources.ApplyResources(this.comboBox1, "comboBox1");
+            this.comboBox1.BackColor = System.Drawing.Color.White;
+            this.comboBox1.ForeColor = System.Drawing.Color.Black;
             this.comboBox1.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox1, "comboBox1");
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
@@ -66,41 +71,46 @@
             // 
             // treeView1
             // 
-            resources.ApplyResources(this.treeView1, "treeView1");
+            this.treeView1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.treeView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.treeView1.ContextMenuStrip = this.contextMenuStrip1;
+            this.treeView1.ForeColor = System.Drawing.Color.White;
             this.treeView1.HideSelection = false;
+            resources.ApplyResources(this.treeView1, "treeView1");
             this.treeView1.Name = "treeView1";
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
             // 
             // contextMenuStrip1
             // 
-            resources.ApplyResources(this.contextMenuStrip1, "contextMenuStrip1");
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addEntryToolStripMenuItem,
             this.deleteEntryToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
+            resources.ApplyResources(this.contextMenuStrip1, "contextMenuStrip1");
             // 
             // addEntryToolStripMenuItem
             // 
-            resources.ApplyResources(this.addEntryToolStripMenuItem, "addEntryToolStripMenuItem");
             this.addEntryToolStripMenuItem.Name = "addEntryToolStripMenuItem";
+            resources.ApplyResources(this.addEntryToolStripMenuItem, "addEntryToolStripMenuItem");
             this.addEntryToolStripMenuItem.Click += new System.EventHandler(this.addEntryToolStripMenuItem_Click);
             // 
             // deleteEntryToolStripMenuItem
             // 
-            resources.ApplyResources(this.deleteEntryToolStripMenuItem, "deleteEntryToolStripMenuItem");
             this.deleteEntryToolStripMenuItem.Name = "deleteEntryToolStripMenuItem";
+            resources.ApplyResources(this.deleteEntryToolStripMenuItem, "deleteEntryToolStripMenuItem");
             this.deleteEntryToolStripMenuItem.Click += new System.EventHandler(this.deleteEntryToolStripMenuItem_Click);
             // 
             // EntryEditor
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
             this.Controls.Add(this.treeView1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.textBox1);
+            this.ForeColor = System.Drawing.Color.White;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "EntryEditor";
             this.Load += new System.EventHandler(this.EntryEditor_Load);

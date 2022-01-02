@@ -35,25 +35,30 @@ namespace PckStudio.Forms
             // 
             // buttonUnlocked
             // 
+            this.buttonUnlocked.BackColor = System.Drawing.Color.DodgerBlue;
             this.buttonUnlocked.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonUnlocked.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonUnlocked.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.buttonUnlocked.ForeColor = System.Drawing.Color.White;
             this.buttonUnlocked.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.buttonUnlocked.Location = new System.Drawing.Point(266, 53);
+            this.buttonUnlocked.Location = new System.Drawing.Point(141, 83);
             this.buttonUnlocked.Name = "buttonUnlocked";
             this.buttonUnlocked.Size = new System.Drawing.Size(75, 23);
             this.buttonUnlocked.TabIndex = 3;
             this.buttonUnlocked.Text = "Lock!";
-            this.buttonUnlocked.UseVisualStyleBackColor = true;
+            this.buttonUnlocked.UseVisualStyleBackColor = false;
             this.buttonUnlocked.Click += new System.EventHandler(this.buttonUnlocked_Click);
             // 
             // textBoxPass
             // 
+            this.textBoxPass.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.textBoxPass.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBoxPass.ForeColor = System.Drawing.Color.White;
             this.textBoxPass.Location = new System.Drawing.Point(16, 55);
+            this.textBoxPass.Multiline = true;
             this.textBoxPass.Name = "textBoxPass";
-            this.textBoxPass.Size = new System.Drawing.Size(244, 20);
+            this.textBoxPass.Size = new System.Drawing.Size(325, 20);
             this.textBoxPass.TabIndex = 2;
-            this.textBoxPass.Text = "Password";
+            this.textBoxPass.Text = " Password";
             // 
             // AddPCKPassword
             // 
@@ -64,7 +69,7 @@ namespace PckStudio.Forms
             this.Controls.Add(this.textBoxPass);
             this.Name = "AddPCKPassword";
             this.Resizable = false;
-            this.Style = MetroFramework.MetroColorStyle.Silver;
+            this.Style = MetroFramework.MetroColorStyle.Black;
             this.Text = "Add Password";
             this.TextAlign = MetroFramework.Forms.MetroFormTextAlign.Center;
             this.Theme = MetroFramework.MetroThemeStyle.Dark;

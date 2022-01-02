@@ -44,9 +44,9 @@
             // 
             // buttonDirect
             // 
-            resources.ApplyResources(this.buttonDirect, "buttonDirect");
             this.buttonDirect.BackColor = System.Drawing.Color.Purple;
             this.buttonDirect.FlatAppearance.BorderSize = 0;
+            resources.ApplyResources(this.buttonDirect, "buttonDirect");
             this.buttonDirect.ForeColor = System.Drawing.Color.White;
             this.buttonDirect.Name = "buttonDirect";
             this.buttonDirect.UseVisualStyleBackColor = false;
@@ -55,6 +55,7 @@
             // labelName
             // 
             resources.ApplyResources(this.labelName, "labelName");
+            this.labelName.BackColor = System.Drawing.Color.Transparent;
             this.labelName.ForeColor = System.Drawing.Color.White;
             this.labelName.Name = "labelName";
             // 
@@ -66,9 +67,9 @@
             // 
             // buttonDelete
             // 
-            resources.ApplyResources(this.buttonDelete, "buttonDelete");
             this.buttonDelete.BackColor = System.Drawing.Color.Red;
             this.buttonDelete.FlatAppearance.BorderSize = 0;
+            resources.ApplyResources(this.buttonDelete, "buttonDelete");
             this.buttonDelete.ForeColor = System.Drawing.Color.White;
             this.buttonDelete.Name = "buttonDelete";
             this.buttonDelete.UseVisualStyleBackColor = false;
@@ -76,9 +77,9 @@
             // 
             // buttonExport
             // 
-            resources.ApplyResources(this.buttonExport, "buttonExport");
             this.buttonExport.BackColor = System.Drawing.Color.SlateGray;
             this.buttonExport.FlatAppearance.BorderSize = 0;
+            resources.ApplyResources(this.buttonExport, "buttonExport");
             this.buttonExport.ForeColor = System.Drawing.Color.White;
             this.buttonExport.Name = "buttonExport";
             this.buttonExport.UseVisualStyleBackColor = false;
@@ -86,9 +87,9 @@
             // 
             // buttonInstallPs3
             // 
-            resources.ApplyResources(this.buttonInstallPs3, "buttonInstallPs3");
             this.buttonInstallPs3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
             this.buttonInstallPs3.BackgroundImage = global::PckStudio.Properties.Resources.ps3;
+            resources.ApplyResources(this.buttonInstallPs3, "buttonInstallPs3");
             this.buttonInstallPs3.FlatAppearance.BorderSize = 0;
             this.buttonInstallPs3.ForeColor = System.Drawing.Color.White;
             this.buttonInstallPs3.Name = "buttonInstallPs3";
@@ -97,9 +98,9 @@
             // 
             // buttonInstallXbox
             // 
-            resources.ApplyResources(this.buttonInstallXbox, "buttonInstallXbox");
             this.buttonInstallXbox.BackColor = System.Drawing.Color.Lime;
             this.buttonInstallXbox.BackgroundImage = global::PckStudio.Properties.Resources.xbox;
+            resources.ApplyResources(this.buttonInstallXbox, "buttonInstallXbox");
             this.buttonInstallXbox.FlatAppearance.BorderSize = 0;
             this.buttonInstallXbox.ForeColor = System.Drawing.Color.White;
             this.buttonInstallXbox.Name = "buttonInstallXbox";
@@ -108,9 +109,9 @@
             // 
             // buttonInstallWiiU
             // 
-            resources.ApplyResources(this.buttonInstallWiiU, "buttonInstallWiiU");
             this.buttonInstallWiiU.BackColor = System.Drawing.Color.DeepSkyBlue;
             this.buttonInstallWiiU.BackgroundImage = global::PckStudio.Properties.Resources.wiiu;
+            resources.ApplyResources(this.buttonInstallWiiU, "buttonInstallWiiU");
             this.buttonInstallWiiU.FlatAppearance.BorderSize = 0;
             this.buttonInstallWiiU.ForeColor = System.Drawing.Color.White;
             this.buttonInstallWiiU.Name = "buttonInstallWiiU";
@@ -125,9 +126,9 @@
             // 
             // buttonBedrock
             // 
-            resources.ApplyResources(this.buttonBedrock, "buttonBedrock");
             this.buttonBedrock.BackColor = System.Drawing.Color.Green;
             this.buttonBedrock.FlatAppearance.BorderSize = 0;
+            resources.ApplyResources(this.buttonBedrock, "buttonBedrock");
             this.buttonBedrock.ForeColor = System.Drawing.Color.White;
             this.buttonBedrock.Name = "buttonBedrock";
             this.buttonBedrock.UseVisualStyleBackColor = false;
@@ -152,7 +153,8 @@
             this.Name = "pckCenterOpen";
             this.Resizable = false;
             this.ShadowType = MetroFramework.Forms.MetroFormShadowType.DropShadow;
-            this.Style = MetroFramework.MetroColorStyle.White;
+            this.Style = MetroFramework.MetroColorStyle.Black;
+            this.TextAlign = MetroFramework.Forms.MetroFormTextAlign.Center;
             this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.Load += new System.EventHandler(this.pckCenterOpen_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxDisplay)).EndInit();

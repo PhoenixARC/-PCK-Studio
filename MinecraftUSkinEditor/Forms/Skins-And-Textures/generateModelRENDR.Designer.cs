@@ -67,7 +67,25 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tabBody = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.myTablePanel2 = new PckStudio.Forms.MyTablePanel();
+            this.offsetArms = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.offsetBody = new System.Windows.Forms.TextBox();
+            this.offsetLegs = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.offsetHead = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
             this.tabArmor = new System.Windows.Forms.TabPage();
+            this.myTablePanel1 = new PckStudio.Forms.MyTablePanel();
+            this.offsetBoots = new System.Windows.Forms.TextBox();
+            this.offsetPants = new System.Windows.Forms.TextBox();
+            this.offsetTool = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.offsetHelmet = new System.Windows.Forms.TextBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.comboParent = new System.Windows.Forms.ComboBox();
             this.labelModeParts = new System.Windows.Forms.Label();
@@ -83,36 +101,18 @@
             this.labelTheme = new System.Windows.Forms.Label();
             this.listViewBGs = new System.Windows.Forms.ListView();
             this.tableLayoutPanelMain = new System.Windows.Forms.TableLayoutPanel();
-            this.texturePreview = new System.Windows.Forms.PictureBox();
             this.minecraftModelView1 = new PckStudio.Models.MinecraftModelView(this.components);
-            this.myTablePanel2 = new PckStudio.Forms.MyTablePanel();
-            this.offsetArms = new System.Windows.Forms.TextBox();
-            this.label14 = new System.Windows.Forms.Label();
-            this.offsetBody = new System.Windows.Forms.TextBox();
-            this.offsetLegs = new System.Windows.Forms.TextBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.offsetHead = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.myTablePanel1 = new PckStudio.Forms.MyTablePanel();
-            this.offsetBoots = new System.Windows.Forms.TextBox();
-            this.offsetPants = new System.Windows.Forms.TextBox();
-            this.offsetTool = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.offsetHelmet = new System.Windows.Forms.TextBox();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
+            this.texturePreview = new System.Windows.Forms.PictureBox();
             this.displayBox = new System.Windows.Forms.PictureBox();
             this.groupBox1.SuspendLayout();
             this.tabBody.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.myTablePanel2.SuspendLayout();
             this.tabArmor.SuspendLayout();
+            this.myTablePanel1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.tableLayoutPanelMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.texturePreview)).BeginInit();
-            this.myTablePanel2.SuspendLayout();
-            this.myTablePanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.displayBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -424,12 +424,134 @@
             resources.ApplyResources(this.tabPage1, "tabPage1");
             this.tabPage1.Name = "tabPage1";
             // 
+            // myTablePanel2
+            // 
+            resources.ApplyResources(this.myTablePanel2, "myTablePanel2");
+            this.myTablePanel2.Controls.Add(this.offsetArms, 1, 3);
+            this.myTablePanel2.Controls.Add(this.label14, 0, 3);
+            this.myTablePanel2.Controls.Add(this.offsetBody, 1, 1);
+            this.myTablePanel2.Controls.Add(this.offsetLegs, 1, 2);
+            this.myTablePanel2.Controls.Add(this.label10, 0, 0);
+            this.myTablePanel2.Controls.Add(this.label13, 0, 2);
+            this.myTablePanel2.Controls.Add(this.offsetHead, 1, 0);
+            this.myTablePanel2.Controls.Add(this.label12, 0, 1);
+            this.myTablePanel2.Name = "myTablePanel2";
+            // 
+            // offsetArms
+            // 
+            resources.ApplyResources(this.offsetArms, "offsetArms");
+            this.offsetArms.Name = "offsetArms";
+            this.offsetArms.TextChanged += new System.EventHandler(this.offsetHead_TextChanged);
+            // 
+            // label14
+            // 
+            resources.ApplyResources(this.label14, "label14");
+            this.label14.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.label14.Name = "label14";
+            // 
+            // offsetBody
+            // 
+            resources.ApplyResources(this.offsetBody, "offsetBody");
+            this.offsetBody.Name = "offsetBody";
+            this.offsetBody.TextChanged += new System.EventHandler(this.offsetHead_TextChanged);
+            // 
+            // offsetLegs
+            // 
+            resources.ApplyResources(this.offsetLegs, "offsetLegs");
+            this.offsetLegs.Name = "offsetLegs";
+            this.offsetLegs.TextChanged += new System.EventHandler(this.offsetHead_TextChanged);
+            // 
+            // label10
+            // 
+            resources.ApplyResources(this.label10, "label10");
+            this.label10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.label10.Name = "label10";
+            // 
+            // label13
+            // 
+            resources.ApplyResources(this.label13, "label13");
+            this.label13.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+            this.label13.Name = "label13";
+            // 
+            // offsetHead
+            // 
+            resources.ApplyResources(this.offsetHead, "offsetHead");
+            this.offsetHead.Name = "offsetHead";
+            this.offsetHead.TextChanged += new System.EventHandler(this.offsetHead_TextChanged);
+            // 
+            // label12
+            // 
+            resources.ApplyResources(this.label12, "label12");
+            this.label12.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.label12.Name = "label12";
+            // 
             // tabArmor
             // 
             this.tabArmor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
             this.tabArmor.Controls.Add(this.myTablePanel1);
             resources.ApplyResources(this.tabArmor, "tabArmor");
             this.tabArmor.Name = "tabArmor";
+            // 
+            // myTablePanel1
+            // 
+            resources.ApplyResources(this.myTablePanel1, "myTablePanel1");
+            this.myTablePanel1.Controls.Add(this.offsetBoots, 1, 3);
+            this.myTablePanel1.Controls.Add(this.offsetPants, 1, 2);
+            this.myTablePanel1.Controls.Add(this.offsetTool, 1, 1);
+            this.myTablePanel1.Controls.Add(this.label4, 0, 1);
+            this.myTablePanel1.Controls.Add(this.label9, 0, 0);
+            this.myTablePanel1.Controls.Add(this.offsetHelmet, 1, 0);
+            this.myTablePanel1.Controls.Add(this.label15, 0, 3);
+            this.myTablePanel1.Controls.Add(this.label16, 0, 2);
+            this.myTablePanel1.Name = "myTablePanel1";
+            // 
+            // offsetBoots
+            // 
+            resources.ApplyResources(this.offsetBoots, "offsetBoots");
+            this.offsetBoots.Name = "offsetBoots";
+            this.offsetBoots.TextChanged += new System.EventHandler(this.offsetBoots_TextChanged);
+            // 
+            // offsetPants
+            // 
+            resources.ApplyResources(this.offsetPants, "offsetPants");
+            this.offsetPants.Name = "offsetPants";
+            this.offsetPants.TextChanged += new System.EventHandler(this.offsetPants_TextChanged);
+            // 
+            // offsetTool
+            // 
+            resources.ApplyResources(this.offsetTool, "offsetTool");
+            this.offsetTool.Name = "offsetTool";
+            this.offsetTool.TextChanged += new System.EventHandler(this.offsetTool_TextChanged);
+            // 
+            // label4
+            // 
+            resources.ApplyResources(this.label4, "label4");
+            this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.label4.Name = "label4";
+            // 
+            // label9
+            // 
+            resources.ApplyResources(this.label9, "label9");
+            this.label9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.label9.Name = "label9";
+            // 
+            // offsetHelmet
+            // 
+            resources.ApplyResources(this.offsetHelmet, "offsetHelmet");
+            this.offsetHelmet.Name = "offsetHelmet";
+            this.offsetHelmet.TextChanged += new System.EventHandler(this.offsetHelmet_TextChanged);
+            // 
+            // label15
+            // 
+            resources.ApplyResources(this.label15, "label15");
+            this.label15.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.label15.Name = "label15";
+            // 
+            // label16
+            // 
+            resources.ApplyResources(this.label16, "label16");
+            this.label16.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.label16.Name = "label16";
             // 
             // label6
             // 
@@ -606,15 +728,6 @@
             this.tableLayoutPanelMain.Controls.Add(this.buttonDone, 8, 19);
             this.tableLayoutPanelMain.Name = "tableLayoutPanelMain";
             // 
-            // texturePreview
-            // 
-            this.texturePreview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tableLayoutPanelMain.SetColumnSpan(this.texturePreview, 6);
-            resources.ApplyResources(this.texturePreview, "texturePreview");
-            this.texturePreview.Name = "texturePreview";
-            this.tableLayoutPanelMain.SetRowSpan(this.texturePreview, 5);
-            this.texturePreview.TabStop = false;
-            // 
             // minecraftModelView1
             // 
             this.minecraftModelView1.BackColor = System.Drawing.Color.Black;
@@ -633,127 +746,14 @@
             this.minecraftModelView1.ShowUsername = false;
             this.minecraftModelView1.Username = "";
             // 
-            // myTablePanel2
+            // texturePreview
             // 
-            resources.ApplyResources(this.myTablePanel2, "myTablePanel2");
-            this.myTablePanel2.Controls.Add(this.offsetArms, 1, 3);
-            this.myTablePanel2.Controls.Add(this.label14, 0, 3);
-            this.myTablePanel2.Controls.Add(this.offsetBody, 1, 1);
-            this.myTablePanel2.Controls.Add(this.offsetLegs, 1, 2);
-            this.myTablePanel2.Controls.Add(this.label10, 0, 0);
-            this.myTablePanel2.Controls.Add(this.label13, 0, 2);
-            this.myTablePanel2.Controls.Add(this.offsetHead, 1, 0);
-            this.myTablePanel2.Controls.Add(this.label12, 0, 1);
-            this.myTablePanel2.Name = "myTablePanel2";
-            // 
-            // offsetArms
-            // 
-            resources.ApplyResources(this.offsetArms, "offsetArms");
-            this.offsetArms.Name = "offsetArms";
-            this.offsetArms.TextChanged += new System.EventHandler(this.offsetHead_TextChanged);
-            // 
-            // label14
-            // 
-            resources.ApplyResources(this.label14, "label14");
-            this.label14.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            this.label14.Name = "label14";
-            // 
-            // offsetBody
-            // 
-            resources.ApplyResources(this.offsetBody, "offsetBody");
-            this.offsetBody.Name = "offsetBody";
-            this.offsetBody.TextChanged += new System.EventHandler(this.offsetHead_TextChanged);
-            // 
-            // offsetLegs
-            // 
-            resources.ApplyResources(this.offsetLegs, "offsetLegs");
-            this.offsetLegs.Name = "offsetLegs";
-            this.offsetLegs.TextChanged += new System.EventHandler(this.offsetHead_TextChanged);
-            // 
-            // label10
-            // 
-            resources.ApplyResources(this.label10, "label10");
-            this.label10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.label10.Name = "label10";
-            // 
-            // label13
-            // 
-            resources.ApplyResources(this.label13, "label13");
-            this.label13.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-            this.label13.Name = "label13";
-            // 
-            // offsetHead
-            // 
-            resources.ApplyResources(this.offsetHead, "offsetHead");
-            this.offsetHead.Name = "offsetHead";
-            this.offsetHead.TextChanged += new System.EventHandler(this.offsetHead_TextChanged);
-            // 
-            // label12
-            // 
-            resources.ApplyResources(this.label12, "label12");
-            this.label12.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.label12.Name = "label12";
-            // 
-            // myTablePanel1
-            // 
-            resources.ApplyResources(this.myTablePanel1, "myTablePanel1");
-            this.myTablePanel1.Controls.Add(this.offsetBoots, 1, 3);
-            this.myTablePanel1.Controls.Add(this.offsetPants, 1, 2);
-            this.myTablePanel1.Controls.Add(this.offsetTool, 1, 1);
-            this.myTablePanel1.Controls.Add(this.label4, 0, 1);
-            this.myTablePanel1.Controls.Add(this.label9, 0, 0);
-            this.myTablePanel1.Controls.Add(this.offsetHelmet, 1, 0);
-            this.myTablePanel1.Controls.Add(this.label15, 0, 3);
-            this.myTablePanel1.Controls.Add(this.label16, 0, 2);
-            this.myTablePanel1.Name = "myTablePanel1";
-            // 
-            // offsetBoots
-            // 
-            resources.ApplyResources(this.offsetBoots, "offsetBoots");
-            this.offsetBoots.Name = "offsetBoots";
-            this.offsetBoots.TextChanged += new System.EventHandler(this.offsetBoots_TextChanged);
-            // 
-            // offsetPants
-            // 
-            resources.ApplyResources(this.offsetPants, "offsetPants");
-            this.offsetPants.Name = "offsetPants";
-            this.offsetPants.TextChanged += new System.EventHandler(this.offsetPants_TextChanged);
-            // 
-            // offsetTool
-            // 
-            resources.ApplyResources(this.offsetTool, "offsetTool");
-            this.offsetTool.Name = "offsetTool";
-            this.offsetTool.TextChanged += new System.EventHandler(this.offsetTool_TextChanged);
-            // 
-            // label4
-            // 
-            resources.ApplyResources(this.label4, "label4");
-            this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.label4.Name = "label4";
-            // 
-            // label9
-            // 
-            resources.ApplyResources(this.label9, "label9");
-            this.label9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.label9.Name = "label9";
-            // 
-            // offsetHelmet
-            // 
-            resources.ApplyResources(this.offsetHelmet, "offsetHelmet");
-            this.offsetHelmet.Name = "offsetHelmet";
-            this.offsetHelmet.TextChanged += new System.EventHandler(this.offsetHelmet_TextChanged);
-            // 
-            // label15
-            // 
-            resources.ApplyResources(this.label15, "label15");
-            this.label15.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            this.label15.Name = "label15";
-            // 
-            // label16
-            // 
-            resources.ApplyResources(this.label16, "label16");
-            this.label16.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.label16.Name = "label16";
+            this.texturePreview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tableLayoutPanelMain.SetColumnSpan(this.texturePreview, 6);
+            resources.ApplyResources(this.texturePreview, "texturePreview");
+            this.texturePreview.Name = "texturePreview";
+            this.tableLayoutPanelMain.SetRowSpan(this.texturePreview, 5);
+            this.texturePreview.TabStop = false;
             // 
             // displayBox
             // 
@@ -763,15 +763,16 @@
             this.displayBox.Name = "displayBox";
             this.displayBox.TabStop = false;
             // 
-            // generateModel
+            // generateModelRENDR
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tableLayoutPanelMain);
             this.Controls.Add(this.displayBox);
             this.MaximizeBox = false;
-            this.Name = "generateModel";
-            this.Style = MetroFramework.MetroColorStyle.Silver;
+            this.Name = "generateModelRENDR";
+            this.Style = MetroFramework.MetroColorStyle.Black;
+            this.TextAlign = MetroFramework.Forms.MetroFormTextAlign.Center;
             this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.generateModel_FormClosing);
             this.Load += new System.EventHandler(this.generateModel_Load);
@@ -781,15 +782,15 @@
             this.groupBox1.ResumeLayout(false);
             this.tabBody.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.myTablePanel2.ResumeLayout(false);
+            this.myTablePanel2.PerformLayout();
             this.tabArmor.ResumeLayout(false);
+            this.myTablePanel1.ResumeLayout(false);
+            this.myTablePanel1.PerformLayout();
             this.contextMenuStrip1.ResumeLayout(false);
             this.tableLayoutPanelMain.ResumeLayout(false);
             this.tableLayoutPanelMain.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.texturePreview)).EndInit();
-            this.myTablePanel2.ResumeLayout(false);
-            this.myTablePanel2.PerformLayout();
-            this.myTablePanel1.ResumeLayout(false);
-            this.myTablePanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.displayBox)).EndInit();
             this.ResumeLayout(false);
 

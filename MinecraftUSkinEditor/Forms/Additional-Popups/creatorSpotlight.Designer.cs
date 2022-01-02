@@ -35,15 +35,16 @@
             // 
             // webBrowser1
             // 
-            resources.ApplyResources(this.webBrowser1, "webBrowser1");
             this.webBrowser1.AllowWebBrowserDrop = false;
+            resources.ApplyResources(this.webBrowser1, "webBrowser1");
             this.webBrowser1.Name = "webBrowser1";
             this.webBrowser1.ScrollBarsEnabled = false;
+            this.webBrowser1.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.webBrowser1_DocumentCompleted);
             // 
             // buttonOpenInBrowser
             // 
+            this.buttonOpenInBrowser.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             resources.ApplyResources(this.buttonOpenInBrowser, "buttonOpenInBrowser");
-            this.buttonOpenInBrowser.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.buttonOpenInBrowser.ForeColor = System.Drawing.Color.White;
             this.buttonOpenInBrowser.Name = "buttonOpenInBrowser";
             this.buttonOpenInBrowser.UseVisualStyleBackColor = false;
@@ -59,6 +60,8 @@
             this.Name = "creatorSpotlight";
             this.Resizable = false;
             this.ShadowType = MetroFramework.Forms.MetroFormShadowType.DropShadow;
+            this.Style = MetroFramework.MetroColorStyle.Black;
+            this.TextAlign = MetroFramework.Forms.MetroFormTextAlign.Center;
             this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.Load += new System.EventHandler(this.creatorSpotlight_Load);
             this.ResumeLayout(false);

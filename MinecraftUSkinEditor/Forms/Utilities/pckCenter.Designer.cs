@@ -46,7 +46,6 @@
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.PSVitaPCKCheckbox = new MetroFramework.Controls.MetroCheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tableLayoutPanel2.SuspendLayout();
@@ -57,6 +56,7 @@
             // 
             // tableLayoutPanel1
             // 
+            this.tableLayoutPanel1.BackColor = System.Drawing.Color.Black;
             resources.ApplyResources(this.tableLayoutPanel1, "tableLayoutPanel1");
             this.tableLayoutPanel1.Controls.Add(this.radioButtonMine, 0, 5);
             this.tableLayoutPanel1.Controls.Add(this.radioButtonDevPicks, 0, 3);
@@ -137,6 +137,7 @@
             // 
             // pictureBox1
             // 
+            this.pictureBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             resources.ApplyResources(this.pictureBox1, "pictureBox1");
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.TabStop = false;
@@ -166,6 +167,7 @@
             // tableLayoutPanel2
             // 
             resources.ApplyResources(this.tableLayoutPanel2, "tableLayoutPanel2");
+            this.tableLayoutPanel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel1, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.panel1, 1, 0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -180,6 +182,7 @@
             // pckLayout
             // 
             resources.ApplyResources(this.pckLayout, "pckLayout");
+            this.pckLayout.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.pckLayout.Name = "pckLayout";
             this.pckLayout.ControlRemoved += new System.Windows.Forms.ControlEventHandler(this.pckLayout_ControlRemoved);
             this.pckLayout.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pckLayout_MouseClick);
@@ -206,25 +209,17 @@
             this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
             resources.ApplyResources(this.exportToolStripMenuItem, "exportToolStripMenuItem");
             // 
-            // PSVitaPCKCheckbox
-            // 
-            resources.ApplyResources(this.PSVitaPCKCheckbox, "PSVitaPCKCheckbox");
-            this.PSVitaPCKCheckbox.Name = "PSVitaPCKCheckbox";
-            this.PSVitaPCKCheckbox.Style = MetroFramework.MetroColorStyle.Silver;
-            this.PSVitaPCKCheckbox.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.PSVitaPCKCheckbox.UseSelectable = true;
-            this.PSVitaPCKCheckbox.CheckedChanged += new System.EventHandler(this.PSVitaPCKCheckbox_CheckedChanged);
-            // 
             // pckCenter
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BorderStyle = MetroFramework.Forms.MetroFormBorderStyle.FixedSingle;
-            this.Controls.Add(this.PSVitaPCKCheckbox);
             this.Controls.Add(this.tableLayoutPanel2);
+            this.ForeColor = System.Drawing.Color.White;
             this.Name = "pckCenter";
             this.ShadowType = MetroFramework.Forms.MetroFormShadowType.DropShadow;
-            this.Style = MetroFramework.MetroColorStyle.White;
+            this.Style = MetroFramework.MetroColorStyle.Black;
+            this.TextAlign = MetroFramework.Forms.MetroFormTextAlign.Center;
             this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.Load += new System.EventHandler(this.pckCenter_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
@@ -234,7 +229,6 @@
             this.contextMenuStripPCK.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -255,6 +249,5 @@
         private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
         private System.Windows.Forms.Button buttonSubmit;
         private System.Windows.Forms.RadioButton radioButtonTex;
-        private MetroFramework.Controls.MetroCheckBox PSVitaPCKCheckbox;
     }
 }

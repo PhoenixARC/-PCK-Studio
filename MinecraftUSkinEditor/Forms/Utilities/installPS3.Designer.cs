@@ -81,7 +81,6 @@
             this.myTablePanel1.Controls.Add(this.USDisc, 2, 2);
             this.myTablePanel1.Controls.Add(this.listViewPCKS, 0, 3);
             this.myTablePanel1.Controls.Add(this.JPDig, 0, 1);
-            this.myTablePanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.myTablePanel1.Location = new System.Drawing.Point(0, 0);
             this.myTablePanel1.Margin = new System.Windows.Forms.Padding(0);
             this.myTablePanel1.Name = "myTablePanel1";
@@ -100,17 +99,17 @@
             // 
             this.EurDig.Appearance = System.Windows.Forms.Appearance.Button;
             this.EurDig.AutoSize = true;
-            this.EurDig.BackColor = System.Drawing.Color.Transparent;
+            this.EurDig.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.EurDig.CheckAlign = System.Drawing.ContentAlignment.BottomRight;
             this.EurDig.FlatAppearance.CheckedBackColor = System.Drawing.Color.Teal;
             this.EurDig.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Aqua;
             this.EurDig.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.EurDig.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.EurDig.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.EurDig.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.EurDig.ForeColor = System.Drawing.Color.White;
             this.EurDig.Location = new System.Drawing.Point(145, 36);
             this.EurDig.Name = "EurDig";
-            this.EurDig.Size = new System.Drawing.Size(100, 30);
+            this.EurDig.Size = new System.Drawing.Size(98, 30);
             this.EurDig.TabIndex = 11;
             this.EurDig.Text = "EUR Digital";
             this.EurDig.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -121,17 +120,17 @@
             // 
             this.USDig.Appearance = System.Windows.Forms.Appearance.Button;
             this.USDig.AutoSize = true;
-            this.USDig.BackColor = System.Drawing.Color.Transparent;
+            this.USDig.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.USDig.CheckAlign = System.Drawing.ContentAlignment.BottomRight;
             this.USDig.FlatAppearance.CheckedBackColor = System.Drawing.Color.Teal;
             this.USDig.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Aqua;
             this.USDig.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.USDig.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.USDig.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.USDig.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.USDig.ForeColor = System.Drawing.Color.White;
             this.USDig.Location = new System.Drawing.Point(287, 36);
             this.USDig.Name = "USDig";
-            this.USDig.Size = new System.Drawing.Size(91, 30);
+            this.USDig.Size = new System.Drawing.Size(89, 30);
             this.USDig.TabIndex = 12;
             this.USDig.Text = "US Digital";
             this.USDig.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -141,7 +140,7 @@
             // buttonServerToggle
             // 
             this.buttonServerToggle.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.buttonServerToggle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(178)))), ((int)(((byte)(13)))));
+            this.buttonServerToggle.BackColor = System.Drawing.Color.DodgerBlue;
             this.buttonServerToggle.FlatAppearance.BorderSize = 0;
             this.buttonServerToggle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonServerToggle.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -196,17 +195,17 @@
             // 
             this.EurDisc.Appearance = System.Windows.Forms.Appearance.Button;
             this.EurDisc.AutoSize = true;
-            this.EurDisc.BackColor = System.Drawing.Color.Transparent;
+            this.EurDisc.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.EurDisc.CheckAlign = System.Drawing.ContentAlignment.BottomRight;
             this.EurDisc.FlatAppearance.CheckedBackColor = System.Drawing.Color.Teal;
             this.EurDisc.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Aqua;
             this.EurDisc.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.EurDisc.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.EurDisc.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.EurDisc.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.EurDisc.ForeColor = System.Drawing.Color.White;
             this.EurDisc.Location = new System.Drawing.Point(145, 72);
             this.EurDisc.Name = "EurDisc";
-            this.EurDisc.Size = new System.Drawing.Size(84, 30);
+            this.EurDisc.Size = new System.Drawing.Size(82, 30);
             this.EurDisc.TabIndex = 0;
             this.EurDisc.Text = "EUR Disc";
             this.EurDisc.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -217,17 +216,17 @@
             // 
             this.USDisc.Appearance = System.Windows.Forms.Appearance.Button;
             this.USDisc.AutoSize = true;
-            this.USDisc.BackColor = System.Drawing.Color.Transparent;
+            this.USDisc.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.USDisc.CheckAlign = System.Drawing.ContentAlignment.BottomRight;
             this.USDisc.FlatAppearance.CheckedBackColor = System.Drawing.Color.Teal;
             this.USDisc.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Aqua;
             this.USDisc.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.USDisc.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.USDisc.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.USDisc.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.USDisc.ForeColor = System.Drawing.Color.White;
             this.USDisc.Location = new System.Drawing.Point(287, 72);
             this.USDisc.Name = "USDisc";
-            this.USDisc.Size = new System.Drawing.Size(75, 30);
+            this.USDisc.Size = new System.Drawing.Size(73, 30);
             this.USDisc.TabIndex = 2;
             this.USDisc.Text = "US Disc";
             this.USDisc.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -237,9 +236,12 @@
             // listViewPCKS
             // 
             this.listViewPCKS.Activation = System.Windows.Forms.ItemActivation.TwoClick;
+            this.listViewPCKS.BackColor = System.Drawing.Color.Black;
+            this.listViewPCKS.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.myTablePanel1.SetColumnSpan(this.listViewPCKS, 3);
             this.listViewPCKS.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listViewPCKS.Enabled = false;
+            this.listViewPCKS.ForeColor = System.Drawing.Color.White;
             this.listViewPCKS.HideSelection = false;
             this.listViewPCKS.Location = new System.Drawing.Point(3, 108);
             this.listViewPCKS.Name = "listViewPCKS";
@@ -256,17 +258,17 @@
             // 
             this.JPDig.Appearance = System.Windows.Forms.Appearance.Button;
             this.JPDig.AutoSize = true;
-            this.JPDig.BackColor = System.Drawing.Color.Transparent;
+            this.JPDig.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.JPDig.CheckAlign = System.Drawing.ContentAlignment.BottomRight;
             this.JPDig.FlatAppearance.CheckedBackColor = System.Drawing.Color.Teal;
             this.JPDig.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Aqua;
             this.JPDig.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.JPDig.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.JPDig.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.JPDig.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.JPDig.ForeColor = System.Drawing.Color.White;
             this.JPDig.Location = new System.Drawing.Point(3, 36);
             this.JPDig.Name = "JPDig";
-            this.JPDig.Size = new System.Drawing.Size(47, 30);
+            this.JPDig.Size = new System.Drawing.Size(45, 30);
             this.JPDig.TabIndex = 1;
             this.JPDig.Text = "JAP";
             this.JPDig.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -319,12 +321,14 @@
             this.BorderStyle = MetroFramework.Forms.MetroFormBorderStyle.FixedSingle;
             this.ClientSize = new System.Drawing.Size(475, 659);
             this.Controls.Add(this.metroTabControlMain);
+            this.ForeColor = System.Drawing.Color.White;
             this.MaximizeBox = false;
             this.Name = "installPS3";
             this.Resizable = false;
             this.ShadowType = MetroFramework.Forms.MetroFormShadowType.SystemShadow;
-            this.Style = MetroFramework.MetroColorStyle.White;
-            this.Text = "Install to Playstation®3";
+            this.Style = MetroFramework.MetroColorStyle.Black;
+            this.Text = "Install To Playstation®3";
+            this.TextAlign = MetroFramework.Forms.MetroFormTextAlign.Center;
             this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.Load += new System.EventHandler(this.installPS3_Load);
             this.metroTabPageMain.ResumeLayout(false);
@@ -340,17 +344,17 @@
 
         private MetroFramework.Controls.MetroTabPage metroTabPageMain;
         private MyTablePanel myTablePanel1;
-        private System.Windows.Forms.RadioButton USDisc;
         private System.Windows.Forms.RadioButton JPDig;
-        private System.Windows.Forms.RadioButton EurDisc;
         private System.Windows.Forms.ListView listViewPCKS;
         private MetroFramework.Controls.MetroTabControl metroTabControlMain;
         private System.Windows.Forms.ContextMenuStrip contextMenuStripCaffiine;
         private System.Windows.Forms.ToolStripMenuItem replacePCKToolStripMenuItem;
-        private System.Windows.Forms.Button buttonServerToggle;
         private MetroFramework.Controls.MetroTextBox textBoxHost;
         private System.Windows.Forms.ToolStripMenuItem replaceToolStripMenuItem;
-        private System.Windows.Forms.RadioButton USDig;
         private System.Windows.Forms.RadioButton EurDig;
+        private System.Windows.Forms.RadioButton USDig;
+        private System.Windows.Forms.Button buttonServerToggle;
+        private System.Windows.Forms.RadioButton EurDisc;
+        private System.Windows.Forms.RadioButton USDisc;
     }
 }

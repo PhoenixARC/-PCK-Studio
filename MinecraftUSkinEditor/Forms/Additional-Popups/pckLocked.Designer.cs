@@ -35,6 +35,9 @@
             // 
             // textBoxPass
             // 
+            this.textBoxPass.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.textBoxPass.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBoxPass.ForeColor = System.Drawing.Color.White;
             resources.ApplyResources(this.textBoxPass, "textBoxPass");
             this.textBoxPass.Name = "textBoxPass";
             this.textBoxPass.Click += new System.EventHandler(this.textBoxPass_Click);
@@ -43,11 +46,12 @@
             // 
             // buttonUnlocked
             // 
+            this.buttonUnlocked.BackColor = System.Drawing.Color.DodgerBlue;
             this.buttonUnlocked.DialogResult = System.Windows.Forms.DialogResult.OK;
             resources.ApplyResources(this.buttonUnlocked, "buttonUnlocked");
             this.buttonUnlocked.ForeColor = System.Drawing.Color.White;
             this.buttonUnlocked.Name = "buttonUnlocked";
-            this.buttonUnlocked.UseVisualStyleBackColor = true;
+            this.buttonUnlocked.UseVisualStyleBackColor = false;
             this.buttonUnlocked.Click += new System.EventHandler(this.buttonUnlocked_Click);
             // 
             // pckLocked
@@ -62,7 +66,7 @@
             this.Name = "pckLocked";
             this.Resizable = false;
             this.ShadowType = MetroFramework.Forms.MetroFormShadowType.DropShadow;
-            this.Style = MetroFramework.MetroColorStyle.Silver;
+            this.Style = MetroFramework.MetroColorStyle.Black;
             this.TextAlign = MetroFramework.Forms.MetroFormTextAlign.Center;
             this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.ResumeLayout(false);

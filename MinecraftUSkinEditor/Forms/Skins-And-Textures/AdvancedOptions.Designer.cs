@@ -46,18 +46,21 @@
             // 
             // treeMeta
             // 
-            resources.ApplyResources(this.treeMeta, "treeMeta");
+            this.treeMeta.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.treeMeta.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.treeMeta.ContextMenuStrip = this.contextMenuStrip2;
+            this.treeMeta.ForeColor = System.Drawing.Color.White;
+            resources.ApplyResources(this.treeMeta, "treeMeta");
             this.treeMeta.Name = "treeMeta";
             this.treeMeta.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeMeta_AfterSelect);
             // 
             // contextMenuStrip2
             // 
-            resources.ApplyResources(this.contextMenuStrip2, "contextMenuStrip2");
             this.contextMenuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addEntryToolStripMenuItem,
             this.deleteEntryToolStripMenuItem});
             this.contextMenuStrip2.Name = "contextMenuStrip1";
+            resources.ApplyResources(this.contextMenuStrip2, "contextMenuStrip2");
             // 
             // addEntryToolStripMenuItem
             // 
@@ -73,13 +76,13 @@
             // 
             // comboBox1
             // 
-            resources.ApplyResources(this.comboBox1, "comboBox1");
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Items.AddRange(new object[] {
             resources.GetString("comboBox1.Items"),
             resources.GetString("comboBox1.Items1"),
             resources.GetString("comboBox1.Items2"),
             resources.GetString("comboBox1.Items3")});
+            resources.ApplyResources(this.comboBox1, "comboBox1");
             this.comboBox1.Name = "comboBox1";
             // 
             // label1
@@ -90,10 +93,11 @@
             // 
             // button1
             // 
+            this.button1.BackColor = System.Drawing.Color.DodgerBlue;
             resources.ApplyResources(this.button1, "button1");
             this.button1.ForeColor = System.Drawing.Color.White;
             this.button1.Name = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // label2
@@ -101,6 +105,7 @@
             resources.ApplyResources(this.label2, "label2");
             this.label2.ForeColor = System.Drawing.Color.White;
             this.label2.Name = "label2";
+            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // label3
             // 
@@ -110,14 +115,16 @@
             // 
             // textBox1
             // 
+            this.textBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox1.ForeColor = System.Drawing.Color.White;
             resources.ApplyResources(this.textBox1, "textBox1");
-            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBox1.Name = "textBox1";
             // 
             // comboBox2
             // 
-            resources.ApplyResources(this.comboBox2, "comboBox2");
             this.comboBox2.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox2, "comboBox2");
             this.comboBox2.Name = "comboBox2";
             // 
             // AdvancedOptions
@@ -138,7 +145,8 @@
             this.Name = "AdvancedOptions";
             this.Resizable = false;
             this.ShadowType = MetroFramework.Forms.MetroFormShadowType.DropShadow;
-            this.Style = MetroFramework.MetroColorStyle.Silver;
+            this.Style = MetroFramework.MetroColorStyle.Black;
+            this.TextAlign = MetroFramework.Forms.MetroFormTextAlign.Center;
             this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.Load += new System.EventHandler(this.AdvancedOptions_Load);
             this.contextMenuStrip2.ResumeLayout(false);

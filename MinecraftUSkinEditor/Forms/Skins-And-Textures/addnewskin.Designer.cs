@@ -94,18 +94,20 @@
             // 
             // buttonDone
             // 
+            this.buttonDone.BackColor = System.Drawing.Color.DodgerBlue;
             resources.ApplyResources(this.buttonDone, "buttonDone");
             this.buttonDone.ForeColor = System.Drawing.Color.White;
             this.buttonDone.Name = "buttonDone";
-            this.buttonDone.UseVisualStyleBackColor = true;
+            this.buttonDone.UseVisualStyleBackColor = false;
             this.buttonDone.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // buttonModelGen
             // 
+            this.buttonModelGen.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             resources.ApplyResources(this.buttonModelGen, "buttonModelGen");
             this.buttonModelGen.ForeColor = System.Drawing.Color.White;
             this.buttonModelGen.Name = "buttonModelGen";
-            this.buttonModelGen.UseVisualStyleBackColor = true;
+            this.buttonModelGen.UseVisualStyleBackColor = false;
             this.buttonModelGen.Click += new System.EventHandler(this.button2_Click_1);
             // 
             // comboBoxSkinType
@@ -148,7 +150,9 @@
             // 
             // textThemeName
             // 
-            this.textThemeName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textThemeName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.textThemeName.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textThemeName.ForeColor = System.Drawing.Color.White;
             resources.ApplyResources(this.textThemeName, "textThemeName");
             this.textThemeName.Name = "textThemeName";
             this.textThemeName.TextChanged += new System.EventHandler(this.textThemeName_TextChanged);
@@ -162,7 +166,9 @@
             // 
             // textSkinName
             // 
-            this.textSkinName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textSkinName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.textSkinName.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textSkinName.ForeColor = System.Drawing.Color.White;
             resources.ApplyResources(this.textSkinName, "textSkinName");
             this.textSkinName.Name = "textSkinName";
             this.textSkinName.TextChanged += new System.EventHandler(this.textSkinName_TextChanged);
@@ -176,7 +182,9 @@
             // 
             // textSkinID
             // 
-            this.textSkinID.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textSkinID.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.textSkinID.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textSkinID.ForeColor = System.Drawing.Color.White;
             resources.ApplyResources(this.textSkinID, "textSkinID");
             this.textSkinID.Name = "textSkinID";
             this.textSkinID.TextChanged += new System.EventHandler(this.textSkinID_TextChanged_1);
@@ -209,9 +217,10 @@
             // radioSERVER
             // 
             resources.ApplyResources(this.radioSERVER, "radioSERVER");
+            this.radioSERVER.BackColor = System.Drawing.Color.Transparent;
             this.radioSERVER.ForeColor = System.Drawing.Color.White;
             this.radioSERVER.Name = "radioSERVER";
-            this.radioSERVER.UseVisualStyleBackColor = true;
+            this.radioSERVER.UseVisualStyleBackColor = false;
             this.radioSERVER.CheckedChanged += new System.EventHandler(this.radioSERVER_CheckedChanged);
             // 
             // pictureBoxWithInterpolationMode1
@@ -224,7 +233,6 @@
             // pictureBoxTexture
             // 
             resources.ApplyResources(this.pictureBoxTexture, "pictureBoxTexture");
-            this.pictureBoxTexture.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pictureBoxTexture.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
             this.pictureBoxTexture.Name = "pictureBoxTexture";
             this.pictureBoxTexture.TabStop = false;
@@ -253,11 +261,13 @@
             this.Controls.Add(this.textSkinName);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textSkinID);
+            this.ForeColor = System.Drawing.Color.White;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MaximizeBox = false;
             this.Name = "addnewskin";
             this.Resizable = false;
-            this.Style = MetroFramework.MetroColorStyle.Silver;
+            this.Style = MetroFramework.MetroColorStyle.Black;
+            this.TextAlign = MetroFramework.Forms.MetroFormTextAlign.Center;
             this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.Load += new System.EventHandler(this.addnewskin_Load);
             this.contextMenuSkin.ResumeLayout(false);

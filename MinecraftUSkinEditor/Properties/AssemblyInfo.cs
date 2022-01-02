@@ -7,13 +7,13 @@ using System.Security.Permissions;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("PCK Studio")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("PCK Studio - UltimateCraft Edition")]
+[assembly: AssemblyDescription("A simple tool that makes Minecraft console DLC modding easy")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Nobledez & PhoenixARC")]
-[assembly: AssemblyProduct("PCK Studio")]
-[assembly: AssemblyCopyright("Copyright ©  2021")]
-[assembly: AssemblyTrademark("PCK Studio")]
+[assembly: AssemblyCompany("EternalModz, Nobledez & PhoenixARC")]
+[assembly: AssemblyProduct("PCK Studio - UltimateCraft Edition")]
+[assembly: AssemblyCopyright("Copyright © UltimateCraft Official 2021")]
+[assembly: AssemblyTrademark("PCK Studio - UltimateCraft Edition")]
 [assembly: AssemblyCulture("")]
 [assembly: SecurityPermission(SecurityAction.RequestMinimum, SkipVerification = true)]
 // Setting ComVisible to false makes the types in this assembly not visible 
@@ -34,6 +34,6 @@ using System.Security.Permissions;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("5.3.0.0")]
-[assembly: AssemblyFileVersion("5.3.0.0")]
+[assembly: AssemblyVersion("3.0.0.0")]
+[assembly: AssemblyFileVersion("3.0.0.0")]
 [assembly: NeutralResourcesLanguage("")]

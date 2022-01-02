@@ -127,7 +127,7 @@
 </value>
   </data>
   <data name="addEntryToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>147, 22</value>
+    <value>140, 22</value>
   </data>
   <data name="addEntryToolStripMenuItem.Text" xml:space="preserve">
     <value>エントリを追加</value>
@@ -142,13 +142,13 @@
 </value>
   </data>
   <data name="deleteEntryToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>147, 22</value>
+    <value>140, 22</value>
   </data>
   <data name="deleteEntryToolStripMenuItem.Text" xml:space="preserve">
     <value>記入を消す</value>
   </data>
   <data name="contextMenuStrip2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>148, 48</value>
+    <value>141, 48</value>
   </data>
   <data name="comboBox1.Items" xml:space="preserve">
     <value>すべて</value>

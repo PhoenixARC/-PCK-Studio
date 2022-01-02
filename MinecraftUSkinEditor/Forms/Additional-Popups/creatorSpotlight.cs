@@ -53,5 +53,10 @@ namespace PckStudio.Forms
                 string trackClick = track.DownloadString("http://nobledez.com/creatorSpotlight.php");
             }
         }
+
+        private void webBrowser1_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        {
+
+        }
     }
 }

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\Costura.Fody.5.0.0-alpha0281\build\Costura.Fody.props" Condition="Exists('..\packages\Costura.Fody.5.0.0-alpha0281\build\Costura.Fody.props')" />
+  <Import Project="..\packages\Costura.Fody.5.7.0\build\Costura.Fody.props" Condition="Exists('..\packages\Costura.Fody.5.7.0\build\Costura.Fody.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <LangVersion>preview</LangVersion>
@@ -12,7 +12,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>PckStudio</RootNamespace>
-    <AssemblyName>PCK Studio</AssemblyName>
+    <AssemblyName>PCK Studio - UltimateCraft Edition</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
@@ -92,8 +92,8 @@
     </ManifestKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Costura, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Costura.Fody.5.0.0-alpha0281\lib\netstandard1.0\Costura.dll</HintPath>
+    <Reference Include="Costura, Version=5.7.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Costura.Fody.5.7.0\lib\netstandard1.0\Costura.dll</HintPath>
     </Reference>
     <Reference Include="Cyotek.Drawing.BitmapFont, Version=1.0.0.0, Culture=neutral, PublicKeyToken=58daa28b0b2de221, processorArchitecture=MSIL">
       <HintPath>..\packages\Cyotek.Drawing.BitmapFont.1.3.2\lib\net20\Cyotek.Drawing.BitmapFont.dll</HintPath>
@@ -509,11 +509,11 @@
     <Compile Include="Forms\Skins-And-Textures\AdvancedOptions.Designer.cs">
       <DependentUpon>AdvancedOptions.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Additional-Popups\creatorSpotlight.cs">
+    <Compile Include="Forms\Additional-Popups\CreatorSpotlight.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Additional-Popups\creatorSpotlight.Designer.cs">
-      <DependentUpon>creatorSpotlight.cs</DependentUpon>
+    <Compile Include="Forms\Additional-Popups\CreatorSpotlight.Designer.cs">
+      <DependentUpon>CreatorSpotlight.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Skins-And-Textures\EntryEditor.cs">
       <SubType>Form</SubType>
@@ -542,11 +542,11 @@
     <Compile Include="Forms\Skins-And-Textures\generateModelRENDR.Designer.cs">
       <DependentUpon>generateModelRENDR.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Additional-Popups\goodbye.cs">
+    <Compile Include="Forms\Additional-Popups\UltimateCraft RTM Promo.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Additional-Popups\goodbye.Designer.cs">
-      <DependentUpon>goodbye.cs</DependentUpon>
+    <Compile Include="Forms\Additional-Popups\UltimateCraft RTM Promo.Designer.cs">
+      <DependentUpon>UltimateCraft RTM Promo.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Skins-And-Textures\SkinPreview.cs">
       <SubType>Form</SubType>
@@ -584,11 +584,11 @@
     <Compile Include="Forms\Utilities\installWiiU.Designer.cs">
       <DependentUpon>installWiiU.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Additional-Popups\Job.cs">
+    <Compile Include="Forms\Additional-Popups\DiscordPromo.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Additional-Popups\Job.Designer.cs">
-      <DependentUpon>Job.cs</DependentUpon>
+    <Compile Include="Forms\Additional-Popups\DiscordPromo.Designer.cs">
+      <DependentUpon>DiscordPromo.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Utilities\PCK Manager.cs">
       <SubType>Form</SubType>
@@ -649,11 +649,11 @@
     <Compile Include="Forms\Utilities\LOCEditor.Designer.cs">
       <DependentUpon>LOCEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Additional-Popups\meta.cs">
+    <Compile Include="Forms\Additional-Popups\Meta.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Additional-Popups\meta.Designer.cs">
-      <DependentUpon>meta.cs</DependentUpon>
+    <Compile Include="Forms\Additional-Popups\Meta.Designer.cs">
+      <DependentUpon>Meta.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Additional-Popups\MetaADD.cs">
       <SubType>Form</SubType>
@@ -714,11 +714,11 @@
     <EmbeddedResource Include="Forms\Skins-And-Textures\AdvancedOptions.resx">
       <DependentUpon>AdvancedOptions.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Additional-Popups\creatorSpotlight.ja.resx">
-      <DependentUpon>creatorSpotlight.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Additional-Popups\CreatorSpotlight.ja.resx">
+      <DependentUpon>CreatorSpotlight.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Additional-Popups\creatorSpotlight.resx">
-      <DependentUpon>creatorSpotlight.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Additional-Popups\CreatorSpotlight.resx">
+      <DependentUpon>CreatorSpotlight.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Skins-And-Textures\EntryEditor.ja.resx">
       <DependentUpon>EntryEditor.cs</DependentUpon>
@@ -744,11 +744,11 @@
     <EmbeddedResource Include="Forms\Skins-And-Textures\generateModelRENDR.resx">
       <DependentUpon>generateModelRENDR.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Additional-Popups\goodbye.ja.resx">
-      <DependentUpon>goodbye.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Additional-Popups\UltimateCraft RTM Promo.ja.resx">
+      <DependentUpon>UltimateCraft RTM Promo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Additional-Popups\goodbye.resx">
-      <DependentUpon>goodbye.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Additional-Popups\UltimateCraft RTM Promo.resx">
+      <DependentUpon>UltimateCraft RTM Promo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Skins-And-Textures\SkinPreview.resx">
       <DependentUpon>SkinPreview.cs</DependentUpon>
@@ -774,14 +774,14 @@
     <EmbeddedResource Include="Forms\Utilities\installWiiU.resx">
       <DependentUpon>installWiiU.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Additional-Popups\Job.resx">
-      <DependentUpon>Job.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Additional-Popups\DiscordPromo.resx">
+      <DependentUpon>DiscordPromo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Utilities\LOCEditor.ja.resx">
       <DependentUpon>LOCEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Additional-Popups\meta.ja.resx">
-      <DependentUpon>meta.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Additional-Popups\Meta.ja.resx">
+      <DependentUpon>Meta.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\MetaADD.ja.resx">
       <DependentUpon>MetaADD.cs</DependentUpon>
@@ -832,8 +832,8 @@
     <EmbeddedResource Include="Forms\Utilities\LOCEditor.resx">
       <DependentUpon>LOCEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Additional-Popups\meta.resx">
-      <DependentUpon>meta.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Additional-Popups\Meta.resx">
+      <DependentUpon>Meta.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\MetaADD.resx">
       <DependentUpon>MetaADD.cs</DependentUpon>
@@ -1314,12 +1314,14 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\ThinkGeo.MapSuite.11.0.0-beta042\build\net45\ThinkGeo.MapSuite.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\ThinkGeo.MapSuite.11.0.0-beta042\build\net45\ThinkGeo.MapSuite.targets'))" />
-    <Error Condition="!Exists('..\packages\Fody.6.2.0\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.6.2.0\build\Fody.targets'))" />
-    <Error Condition="!Exists('..\packages\Costura.Fody.5.0.0-alpha0281\build\Costura.Fody.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Costura.Fody.5.0.0-alpha0281\build\Costura.Fody.props'))" />
     <Error Condition="!Exists('..\packages\NETStandard.Library.2.0.0\build\netstandard2.0\NETStandard.Library.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NETStandard.Library.2.0.0\build\netstandard2.0\NETStandard.Library.targets'))" />
+    <Error Condition="!Exists('..\packages\Fody.6.5.5\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.6.5.5\build\Fody.targets'))" />
+    <Error Condition="!Exists('..\packages\Costura.Fody.5.7.0\build\Costura.Fody.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Costura.Fody.5.7.0\build\Costura.Fody.props'))" />
+    <Error Condition="!Exists('..\packages\Costura.Fody.5.7.0\build\Costura.Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Costura.Fody.5.7.0\build\Costura.Fody.targets'))" />
   </Target>
-  <Import Project="..\packages\Fody.6.2.0\build\Fody.targets" Condition="Exists('..\packages\Fody.6.2.0\build\Fody.targets')" />
   <Import Project="..\packages\NETStandard.Library.2.0.0\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('..\packages\NETStandard.Library.2.0.0\build\netstandard2.0\NETStandard.Library.targets')" />
+  <Import Project="..\packages\Fody.6.5.5\build\Fody.targets" Condition="Exists('..\packages\Fody.6.5.5\build\Fody.targets')" />
+  <Import Project="..\packages\Costura.Fody.5.7.0\build\Costura.Fody.targets" Condition="Exists('..\packages\Costura.Fody.5.7.0\build\Costura.Fody.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

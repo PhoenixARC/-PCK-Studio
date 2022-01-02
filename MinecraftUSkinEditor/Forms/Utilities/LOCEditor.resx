@@ -117,32 +117,173 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <metadata name="contextMenuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="deleteDisplayIDToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="addDisplayIDToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>162, 22</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="locSort.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>901, 667</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="dataGridViewLocEntryData.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;textBoxReplaceAll.Name" xml:space="preserve">
-    <value>textBoxReplaceAll</value>
   </data>
   <data name="addDisplayIDToolStripMenuItem.Text" xml:space="preserve">
     <value>Add Display ID</value>
   </data>
-  <data name="&gt;&gt;deleteDisplayIDToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="deleteDisplayIDToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>162, 22</value>
+  </data>
+  <data name="deleteDisplayIDToolStripMenuItem.Text" xml:space="preserve">
+    <value>Delete Display ID</value>
+  </data>
+  <data name="contextMenuStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>163, 48</value>
+  </data>
+  <data name="&gt;&gt;contextMenuStrip1.Name" xml:space="preserve">
+    <value>contextMenuStrip1</value>
+  </data>
+  <data name="&gt;&gt;contextMenuStrip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="locSort.ColumnCount" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="buttonReplaceAll.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Popup</value>
+  </data>
+  <data name="buttonReplaceAll.Location" type="System.Drawing.Point, System.Drawing">
+    <value>784, 3</value>
+  </data>
+  <data name="buttonReplaceAll.Size" type="System.Drawing.Size, System.Drawing">
+    <value>74, 23</value>
+  </data>
+  <data name="buttonReplaceAll.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="buttonReplaceAll.Text" xml:space="preserve">
+    <value>Replace All</value>
+  </data>
+  <data name="&gt;&gt;buttonReplaceAll.Name" xml:space="preserve">
+    <value>buttonReplaceAll</value>
+  </data>
+  <data name="&gt;&gt;buttonReplaceAll.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;buttonReplaceAll.Parent" xml:space="preserve">
+    <value>locSort</value>
+  </data>
+  <data name="&gt;&gt;buttonReplaceAll.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="dataGridViewLocEntryData.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="dataGridViewLocEntryData.Location" type="System.Drawing.Point, System.Drawing">
+    <value>303, 32</value>
+  </data>
+  <data name="dataGridViewLocEntryData.Size" type="System.Drawing.Size, System.Drawing">
+    <value>555, 552</value>
+  </data>
+  <data name="dataGridViewLocEntryData.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewLocEntryData.Name" xml:space="preserve">
+    <value>dataGridViewLocEntryData</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewLocEntryData.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewLocEntryData.Parent" xml:space="preserve">
+    <value>locSort</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewLocEntryData.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="textBoxReplaceAll.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
   </data>
   <data name="textBoxReplaceAll.Location" type="System.Drawing.Point, System.Drawing">
     <value>303, 3</value>
+  </data>
+  <data name="textBoxReplaceAll.Size" type="System.Drawing.Size, System.Drawing">
+    <value>475, 13</value>
+  </data>
+  <data name="textBoxReplaceAll.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;textBoxReplaceAll.Name" xml:space="preserve">
+    <value>textBoxReplaceAll</value>
+  </data>
+  <data name="&gt;&gt;textBoxReplaceAll.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;textBoxReplaceAll.Parent" xml:space="preserve">
+    <value>locSort</value>
+  </data>
+  <data name="&gt;&gt;textBoxReplaceAll.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="treeViewLocEntries.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="treeViewLocEntries.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="treeViewLocEntries.Size" type="System.Drawing.Size, System.Drawing">
+    <value>294, 581</value>
+  </data>
+  <data name="treeViewLocEntries.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;treeViewLocEntries.Name" xml:space="preserve">
+    <value>treeViewLocEntries</value>
+  </data>
+  <data name="&gt;&gt;treeViewLocEntries.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TreeView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;treeViewLocEntries.Parent" xml:space="preserve">
+    <value>locSort</value>
+  </data>
+  <data name="&gt;&gt;treeViewLocEntries.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="locSort.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="locSort.Location" type="System.Drawing.Point, System.Drawing">
+    <value>20, 60</value>
+  </data>
+  <data name="locSort.RowCount" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="locSort.Size" type="System.Drawing.Size, System.Drawing">
+    <value>861, 587</value>
+  </data>
+  <data name="locSort.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;locSort.Name" xml:space="preserve">
+    <value>locSort</value>
+  </data>
+  <data name="&gt;&gt;locSort.Type" xml:space="preserve">
+    <value>PckStudio.Forms.MyTablePanel, PCK Studio - UltimateCraft Edition, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;locSort.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;locSort.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="locSort.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="buttonReplaceAll" Row="0" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="dataGridViewLocEntryData" Row="1" RowSpan="1" Column="1" ColumnSpan="2" /&gt;&lt;Control Name="textBoxReplaceAll" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="treeViewLocEntries" Row="0" RowSpan="2" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,300,Percent,100,AutoSize,0" /&gt;&lt;Rows Styles="AutoSize,0,Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 13</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>901, 667</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1869,175 +2010,31 @@
         AABJRU5ErkJggg==
 </value>
   </data>
-  <data name="&gt;&gt;contextMenuStrip1.Name" xml:space="preserve">
-    <value>contextMenuStrip1</value>
-  </data>
-  <data name="&gt;&gt;treeViewLocEntries.Name" xml:space="preserve">
-    <value>treeViewLocEntries</value>
-  </data>
-  <data name="textBoxReplaceAll.Size" type="System.Drawing.Size, System.Drawing">
-    <value>475, 20</value>
-  </data>
-  <data name="contextMenuStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>163, 48</value>
-  </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>LOC Editor</value>
-  </data>
-  <data name="buttonReplaceAll.Location" type="System.Drawing.Point, System.Drawing">
-    <value>784, 3</value>
-  </data>
-  <data name="locSort.RowCount" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;locSort.Name" xml:space="preserve">
-    <value>locSort</value>
-  </data>
-  <data name="&gt;&gt;dataGridViewLocEntryData.Parent" xml:space="preserve">
-    <value>locSort</value>
-  </data>
-  <data name="locSort.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="treeViewLocEntries.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="buttonReplaceAll.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
     <value>901, 667</value>
-  </data>
-  <data name="dataGridViewLocEntryData.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="buttonReplaceAll.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="locSort.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="buttonReplaceAll" Row="0" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="dataGridViewLocEntryData" Row="1" RowSpan="1" Column="1" ColumnSpan="2" /&gt;&lt;Control Name="textBoxReplaceAll" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="treeViewLocEntries" Row="0" RowSpan="2" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,300,Percent,100,AutoSize,0" /&gt;&lt;Rows Styles="AutoSize,0,Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
-  </data>
-  <data name="deleteDisplayIDToolStripMenuItem.Text" xml:space="preserve">
-    <value>Delete Display ID</value>
-  </data>
-  <data name="buttonReplaceAll.Text" xml:space="preserve">
-    <value>Replace All</value>
-  </data>
-  <data name="locSort.ColumnCount" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;textBoxReplaceAll.Parent" xml:space="preserve">
-    <value>locSort</value>
-  </data>
-  <data name="&gt;&gt;addDisplayIDToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="locSort.Size" type="System.Drawing.Size, System.Drawing">
-    <value>861, 587</value>
-  </data>
-  <data name="locSort.Location" type="System.Drawing.Point, System.Drawing">
-    <value>20, 60</value>
-  </data>
-  <data name="dataGridViewLocEntryData.Size" type="System.Drawing.Size, System.Drawing">
-    <value>555, 552</value>
-  </data>
-  <data name="textBoxReplaceAll.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="treeViewLocEntries.Size" type="System.Drawing.Size, System.Drawing">
-    <value>294, 581</value>
-  </data>
-  <data name="treeViewLocEntries.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
-  </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>LOCEditor</value>
-  </data>
-  <data name="&gt;&gt;textBoxReplaceAll.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="dataGridViewLocEntryData.Location" type="System.Drawing.Point, System.Drawing">
-    <value>303, 32</value>
-  </data>
-  <data name="buttonReplaceAll.Size" type="System.Drawing.Size, System.Drawing">
-    <value>74, 23</value>
-  </data>
-  <data name="&gt;&gt;treeViewLocEntries.Parent" xml:space="preserve">
-    <value>locSort</value>
-  </data>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 13</value>
-  </data>
-  <data name="treeViewLocEntries.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;locSort.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;buttonReplaceAll.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;treeViewLocEntries.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TreeView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;dataGridViewLocEntryData.Name" xml:space="preserve">
-    <value>dataGridViewLocEntryData</value>
-  </data>
-  <data name="&gt;&gt;dataGridViewLocEntryData.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;textBoxReplaceAll.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="addDisplayIDToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>162, 22</value>
-  </data>
-  <data name="&gt;&gt;locSort.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;buttonReplaceAll.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterParent</value>
   </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>LOC Editor</value>
+  </data>
   <data name="&gt;&gt;addDisplayIDToolStripMenuItem.Name" xml:space="preserve">
     <value>addDisplayIDToolStripMenuItem</value>
   </data>
-  <data name="&gt;&gt;dataGridViewLocEntryData.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;treeViewLocEntries.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="textBoxReplaceAll.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>MetroFramework.Forms.MetroForm, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;locSort.Type" xml:space="preserve">
-    <value>PckStudio.Forms.MyTablePanel, PCK Studio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;buttonReplaceAll.Parent" xml:space="preserve">
-    <value>locSort</value>
-  </data>
-  <data name="&gt;&gt;contextMenuStrip1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;addDisplayIDToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;deleteDisplayIDToolStripMenuItem.Name" xml:space="preserve">
     <value>deleteDisplayIDToolStripMenuItem</value>
   </data>
-  <data name="&gt;&gt;buttonReplaceAll.Name" xml:space="preserve">
-    <value>buttonReplaceAll</value>
+  <data name="&gt;&gt;deleteDisplayIDToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="contextMenuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
-  <metadata name="$this.Language" type="System.Globalization.CultureInfo, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>ja</value>
-  </metadata>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>LOCEditor</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>MetroFramework.Forms.MetroForm, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
 </root>

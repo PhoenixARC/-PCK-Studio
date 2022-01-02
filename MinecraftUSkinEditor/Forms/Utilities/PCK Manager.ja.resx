@@ -117,389 +117,91 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="metroButton1.Text" xml:space="preserve">
+    <value>ブラウズ</value>
+  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="resource.AccessibleDescription" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="resource.AccessibleName" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="resource.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="resource.AutoSize" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="resource.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
-    <value>GrowOnly</value>
-  </data>
-  <data name="resource.BackgroundImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="resource.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Tile</value>
-  </data>
-  <data name="resource.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>None</value>
-  </data>
-  <data name="resource.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Standard</value>
-  </data>
-  <data name="resource.Font" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
+  <data name="resource.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="resource.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleCenter</value>
+  <data name="metroLabel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>163, 19</value>
   </data>
-  <data name="resource.ImageIndex" type="System.Int32, mscorlib">
-    <value>-1</value>
+  <data name="metroLabel1.Text" xml:space="preserve">
+    <value>ディレクトリの読み込み</value>
   </data>
-  <data name="resource.ImageKey" xml:space="preserve">
-    <value />
+  <data name="metroButton2.Text" xml:space="preserve">
+    <value>負荷</value>
   </data>
-  <data name="resource.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>Inherit</value>
+  <data name="metroLabel7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>93, 19</value>
   </data>
-  <data name="resource.MaximumSize" type="System.Drawing.Size, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="resource.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
-    <value>Inherit</value>
-  </data>
-  <data name="resource.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleCenter</value>
-  </data>
-  <data name="resource.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
-    <value>Overlay</value>
-  </data>
-  <data name="resource.AccessibleDescription1" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="resource.AccessibleName1" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="resource.Anchor1" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left</value>
-  </data>
-  <data name="resource.AutoSize1" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="resource.AutoSizeMode1" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
-    <value>GrowOnly</value>
-  </data>
-  <data name="resource.BackgroundImage1" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="resource.BackgroundImageLayout1" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Tile</value>
-  </data>
-  <data name="resource.Dock1" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>None</value>
-  </data>
-  <data name="resource.FlatStyle1" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Standard</value>
-  </data>
-  <data name="resource.Font1" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="resource.ImageAlign1" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleCenter</value>
-  </data>
-  <data name="resource.ImageIndex1" type="System.Int32, mscorlib">
-    <value>-1</value>
-  </data>
-  <data name="resource.ImageKey1" xml:space="preserve">
-    <value />
+  <data name="metroLabel7.Text" xml:space="preserve">
+    <value>パックの説明</value>
   </data>
   <data name="resource.ImeMode1" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>Inherit</value>
+    <value>NoControl</value>
   </data>
-  <data name="resource.MaximumSize1" type="System.Drawing.Size, System.Drawing">
-    <value>0, 0</value>
+  <data name="metroLabel6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>93, 19</value>
   </data>
-  <data name="resource.RightToLeft1" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
-    <value>Inherit</value>
-  </data>
-  <data name="resource.TextAlign1" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleCenter</value>
-  </data>
-  <data name="resource.TextImageRelation1" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
-    <value>Overlay</value>
-  </data>
-  <data name="resource.AccessibleDescription2" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="resource.AccessibleName2" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="resource.Anchor2" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left</value>
-  </data>
-  <data name="resource.AutoSize2" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="resource.AutoSizeMode2" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
-    <value>GrowOnly</value>
-  </data>
-  <data name="resource.BackgroundImage2" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="resource.BackgroundImageLayout2" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Tile</value>
-  </data>
-  <data name="resource.Dock2" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>None</value>
-  </data>
-  <data name="resource.FlatStyle2" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Standard</value>
-  </data>
-  <data name="resource.Font2" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="resource.ImageAlign2" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleCenter</value>
-  </data>
-  <data name="resource.ImageIndex2" type="System.Int32, mscorlib">
-    <value>-1</value>
-  </data>
-  <data name="resource.ImageKey2" xml:space="preserve">
-    <value />
+  <data name="metroLabel6.Text" xml:space="preserve">
+    <value>パック作成者</value>
   </data>
   <data name="resource.ImeMode2" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>Inherit</value>
+    <value>NoControl</value>
   </data>
-  <data name="resource.MaximumSize2" type="System.Drawing.Size, System.Drawing">
-    <value>0, 0</value>
+  <data name="metroButton5.Text" xml:space="preserve">
+    <value>追加</value>
   </data>
-  <data name="resource.RightToLeft2" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
-    <value>Inherit</value>
+  <data name="metroLabel5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>116, 19</value>
   </data>
-  <data name="resource.TextAlign2" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleCenter</value>
+  <data name="metroLabel5.Text" xml:space="preserve">
+    <value>ダウンロードURL</value>
   </data>
-  <data name="resource.TextImageRelation2" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
-    <value>Overlay</value>
+  <data name="metroLabel4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>61, 19</value>
   </data>
-  <data name="resource.AccessibleDescription3" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
+  <data name="metroLabel4.Text" xml:space="preserve">
+    <value>PCK画像</value>
   </data>
-  <data name="resource.AccessibleName3" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
+  <data name="metroLabel3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>89, 19</value>
   </data>
-  <data name="resource.Anchor3" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left</value>
+  <data name="metroLabel3.Text" xml:space="preserve">
+    <value>PCKファイル</value>
   </data>
-  <data name="resource.AutoSize3" type="System.Boolean, mscorlib">
-    <value>False</value>
+  <data name="metroLabel2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>65, 19</value>
   </data>
-  <data name="resource.AutoSizeMode3" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
-    <value>GrowOnly</value>
+  <data name="metroLabel2.Text" xml:space="preserve">
+    <value>パック名</value>
   </data>
-  <data name="resource.BackgroundImage3" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
+  <data name="metroButton4.Text" xml:space="preserve">
+    <value>ブラウズ</value>
   </data>
-  <data name="resource.BackgroundImageLayout3" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Tile</value>
-  </data>
-  <data name="resource.Dock3" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>None</value>
-  </data>
-  <data name="resource.FlatStyle3" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Standard</value>
-  </data>
-  <data name="resource.Font3" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="resource.ImageAlign3" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleCenter</value>
-  </data>
-  <data name="resource.ImageIndex3" type="System.Int32, mscorlib">
-    <value>-1</value>
-  </data>
-  <data name="resource.ImageKey3" xml:space="preserve">
-    <value />
+  <data name="metroButton3.Text" xml:space="preserve">
+    <value>ブラウズ</value>
   </data>
   <data name="resource.ImeMode3" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>Inherit</value>
-  </data>
-  <data name="resource.MaximumSize3" type="System.Drawing.Size, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="resource.RightToLeft3" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
-    <value>Inherit</value>
-  </data>
-  <data name="resource.TextAlign3" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleCenter</value>
-  </data>
-  <data name="resource.TextImageRelation3" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
-    <value>Overlay</value>
-  </data>
-  <data name="resource.AccessibleDescription4" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="resource.AccessibleName4" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="resource.Anchor4" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left</value>
-  </data>
-  <data name="resource.AutoSize4" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="resource.AutoSizeMode4" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
-    <value>GrowOnly</value>
-  </data>
-  <data name="resource.BackgroundImage4" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="resource.BackgroundImageLayout4" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Tile</value>
-  </data>
-  <data name="resource.Dock4" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>None</value>
-  </data>
-  <data name="resource.FlatStyle4" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Standard</value>
-  </data>
-  <data name="resource.Font4" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="resource.ImageAlign4" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleCenter</value>
-  </data>
-  <data name="resource.ImageIndex4" type="System.Int32, mscorlib">
-    <value>-1</value>
-  </data>
-  <data name="resource.ImageKey4" xml:space="preserve">
-    <value />
+    <value>NoControl</value>
   </data>
   <data name="resource.ImeMode4" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>Inherit</value>
-  </data>
-  <data name="resource.MaximumSize4" type="System.Drawing.Size, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="resource.RightToLeft4" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
-    <value>Inherit</value>
-  </data>
-  <data name="resource.TextAlign4" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleCenter</value>
-  </data>
-  <data name="resource.TextImageRelation4" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
-    <value>Overlay</value>
-  </data>
-  <data name="resource.AccessibleDescription5" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="resource.AccessibleName5" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="resource.Anchor5" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left</value>
-  </data>
-  <data name="resource.AutoSize5" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="resource.AutoSizeMode5" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
-    <value>GrowOnly</value>
-  </data>
-  <data name="resource.BackgroundImage5" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="resource.BackgroundImageLayout5" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Tile</value>
-  </data>
-  <data name="resource.Dock5" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>None</value>
-  </data>
-  <data name="resource.FlatStyle5" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Standard</value>
-  </data>
-  <data name="resource.Font5" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="resource.ImageAlign5" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleCenter</value>
-  </data>
-  <data name="resource.ImageIndex5" type="System.Int32, mscorlib">
-    <value>-1</value>
-  </data>
-  <data name="resource.ImageKey5" xml:space="preserve">
-    <value />
+    <value>NoControl</value>
   </data>
   <data name="resource.ImeMode5" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>Inherit</value>
-  </data>
-  <data name="resource.MaximumSize5" type="System.Drawing.Size, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="resource.RightToLeft5" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
-    <value>Inherit</value>
-  </data>
-  <data name="resource.TextAlign5" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleCenter</value>
-  </data>
-  <data name="resource.TextImageRelation5" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
-    <value>Overlay</value>
-  </data>
-  <data name="resource.AccessibleDescription6" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="resource.AccessibleName6" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="resource.Anchor6" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left</value>
-  </data>
-  <data name="resource.AutoSize6" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="resource.AutoSizeMode6" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
-    <value>GrowOnly</value>
-  </data>
-  <data name="resource.BackgroundImage6" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="resource.BackgroundImageLayout6" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Tile</value>
-  </data>
-  <data name="resource.Dock6" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>None</value>
-  </data>
-  <data name="resource.FlatStyle6" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Standard</value>
-  </data>
-  <data name="resource.Font6" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="resource.ImageAlign6" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleCenter</value>
-  </data>
-  <data name="resource.ImageIndex6" type="System.Int32, mscorlib">
-    <value>-1</value>
-  </data>
-  <data name="resource.ImageKey6" xml:space="preserve">
-    <value />
+    <value>NoControl</value>
   </data>
   <data name="resource.ImeMode6" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>Inherit</value>
+    <value>NoControl</value>
   </data>
-  <data name="resource.MaximumSize6" type="System.Drawing.Size, System.Drawing">
-    <value>0, 0</value>
+  <data name="FileName.HeaderText" xml:space="preserve">
+    <value>パック名</value>
   </data>
-  <data name="resource.RightToLeft6" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
-    <value>Inherit</value>
-  </data>
-  <data name="resource.TextAlign6" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleCenter</value>
-  </data>
-  <data name="resource.TextImageRelation6" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
-    <value>Overlay</value>
-  </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>PCKマネージャー</value>
+  <data name="DownloadUrl.HeaderText" xml:space="preserve">
+    <value>ダウンロードURL</value>
   </data>
   <data name="Author.HeaderText" xml:space="preserve">
     <value>著者</value>
@@ -507,52 +209,13 @@
   <data name="Desc.HeaderText" xml:space="preserve">
     <value>説明</value>
   </data>
-  <data name="DownloadUrl.HeaderText" xml:space="preserve">
-    <value>ダウンロードURL</value>
-  </data>
-  <data name="FileName.HeaderText" xml:space="preserve">
-    <value>パック名</value>
-  </data>
-  <data name="metroButton1.Text" xml:space="preserve">
-    <value>ブラウズ</value>
-  </data>
-  <data name="metroButton2.Text" xml:space="preserve">
-    <value>負荷</value>
-  </data>
-  <data name="metroButton3.Text" xml:space="preserve">
-    <value>ブラウズ</value>
-  </data>
-  <data name="metroButton4.Text" xml:space="preserve">
-    <value>ブラウズ</value>
-  </data>
-  <data name="metroButton5.Text" xml:space="preserve">
-    <value>追加</value>
+  <data name="removeToolStripMenuItem.Text" xml:space="preserve">
+    <value>削除する</value>
   </data>
   <data name="metroButton6.Text" xml:space="preserve">
     <value>セーブ</value>
   </data>
-  <data name="metroLabel1.Text" xml:space="preserve">
-    <value>ディレクトリの読み込み</value>
-  </data>
-  <data name="metroLabel2.Text" xml:space="preserve">
-    <value>パック名</value>
-  </data>
-  <data name="metroLabel3.Text" xml:space="preserve">
-    <value>PCKファイル</value>
-  </data>
-  <data name="metroLabel4.Text" xml:space="preserve">
-    <value>PCK画像</value>
-  </data>
-  <data name="metroLabel5.Text" xml:space="preserve">
-    <value>ダウンロードURL</value>
-  </data>
-  <data name="metroLabel6.Text" xml:space="preserve">
-    <value>パック作成者</value>
-  </data>
-  <data name="metroLabel7.Text" xml:space="preserve">
-    <value>パックの説明</value>
-  </data>
-  <data name="removeToolStripMenuItem.Text" xml:space="preserve">
-    <value>削除する</value>
+  <data name="$this.Text" xml:space="preserve">
+    <value>PCKマネージャー</value>
   </data>
 </root>

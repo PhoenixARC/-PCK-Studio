@@ -149,5 +149,10 @@ namespace PckStudio
             comboBox2.Text = treeMeta.SelectedNode.Text;
             textBox1.Text = treeMeta.SelectedNode.Tag.ToString();
         }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

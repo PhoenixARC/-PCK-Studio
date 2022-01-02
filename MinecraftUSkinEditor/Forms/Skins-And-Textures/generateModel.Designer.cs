@@ -107,9 +107,9 @@
             this.labelTheme = new System.Windows.Forms.Label();
             this.listViewBGs = new System.Windows.Forms.ListView();
             this.tableLayoutPanelMain = new System.Windows.Forms.TableLayoutPanel();
+            this.button3 = new System.Windows.Forms.Button();
             this.displayBox = new System.Windows.Forms.PictureBox();
             this.texturePreview = new System.Windows.Forms.PictureBox();
-            this.button3 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.tabBody.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -125,17 +125,19 @@
             // buttonImportModel
             // 
             resources.ApplyResources(this.buttonImportModel, "buttonImportModel");
+            this.buttonImportModel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.buttonImportModel.ForeColor = System.Drawing.Color.White;
             this.buttonImportModel.Name = "buttonImportModel";
-            this.buttonImportModel.UseVisualStyleBackColor = true;
+            this.buttonImportModel.UseVisualStyleBackColor = false;
             this.buttonImportModel.Click += new System.EventHandler(this.buttonImportModel_Click);
             // 
             // buttonExportModel
             // 
             resources.ApplyResources(this.buttonExportModel, "buttonExportModel");
+            this.buttonExportModel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.buttonExportModel.ForeColor = System.Drawing.Color.White;
             this.buttonExportModel.Name = "buttonExportModel";
-            this.buttonExportModel.UseVisualStyleBackColor = true;
+            this.buttonExportModel.UseVisualStyleBackColor = false;
             this.buttonExportModel.Click += new System.EventHandler(this.buttonExportModel_Click);
             // 
             // checkTextureGenerate
@@ -164,18 +166,20 @@
             // 
             // button2
             // 
+            this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             resources.ApplyResources(this.button2, "button2");
             this.button2.ForeColor = System.Drawing.Color.White;
             this.button2.Name = "button2";
-            this.button2.UseVisualStyleBackColor = true;
+            this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button1
             // 
             resources.ApplyResources(this.button1, "button1");
+            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.button1.ForeColor = System.Drawing.Color.White;
             this.button1.Name = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // label7
@@ -202,11 +206,12 @@
             // 
             // buttonIMPORT
             // 
+            this.buttonIMPORT.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.tableLayoutPanelMain.SetColumnSpan(this.buttonIMPORT, 3);
             resources.ApplyResources(this.buttonIMPORT, "buttonIMPORT");
             this.buttonIMPORT.ForeColor = System.Drawing.Color.White;
             this.buttonIMPORT.Name = "buttonIMPORT";
-            this.buttonIMPORT.UseVisualStyleBackColor = true;
+            this.buttonIMPORT.UseVisualStyleBackColor = false;
             this.buttonIMPORT.Click += new System.EventHandler(this.buttonIMPORT_Click);
             // 
             // label5
@@ -326,11 +331,12 @@
             // 
             // buttonEXPORT
             // 
+            this.buttonEXPORT.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.tableLayoutPanelMain.SetColumnSpan(this.buttonEXPORT, 3);
             resources.ApplyResources(this.buttonEXPORT, "buttonEXPORT");
             this.buttonEXPORT.ForeColor = System.Drawing.Color.White;
             this.buttonEXPORT.Name = "buttonEXPORT";
-            this.buttonEXPORT.UseVisualStyleBackColor = true;
+            this.buttonEXPORT.UseVisualStyleBackColor = false;
             this.buttonEXPORT.Click += new System.EventHandler(this.buttonEXPORT_Click);
             // 
             // labelTextureMappingPreview
@@ -342,12 +348,13 @@
             // 
             // buttonDone
             // 
+            this.buttonDone.BackColor = System.Drawing.Color.DodgerBlue;
             this.tableLayoutPanelMain.SetColumnSpan(this.buttonDone, 3);
             this.buttonDone.DialogResult = System.Windows.Forms.DialogResult.OK;
             resources.ApplyResources(this.buttonDone, "buttonDone");
             this.buttonDone.ForeColor = System.Drawing.Color.White;
             this.buttonDone.Name = "buttonDone";
-            this.buttonDone.UseVisualStyleBackColor = true;
+            this.buttonDone.UseVisualStyleBackColor = false;
             this.buttonDone.Click += new System.EventHandler(this.buttonDone_Click);
             // 
             // textYc
@@ -400,9 +407,11 @@
             // 
             // buttonTemplate
             // 
+            this.buttonTemplate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             resources.ApplyResources(this.buttonTemplate, "buttonTemplate");
+            this.buttonTemplate.ForeColor = System.Drawing.Color.White;
             this.buttonTemplate.Name = "buttonTemplate";
-            this.buttonTemplate.UseVisualStyleBackColor = true;
+            this.buttonTemplate.UseVisualStyleBackColor = false;
             this.buttonTemplate.Click += new System.EventHandler(this.buttonTemplate_Click);
             // 
             // groupBox1
@@ -627,9 +636,11 @@
             // listViewBoxes
             // 
             this.listViewBoxes.Activation = System.Windows.Forms.ItemActivation.OneClick;
+            this.listViewBoxes.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.listViewBoxes.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.listViewBoxes.ContextMenuStrip = this.contextMenuStrip1;
             resources.ApplyResources(this.listViewBoxes, "listViewBoxes");
-            this.listViewBoxes.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.listViewBoxes.ForeColor = System.Drawing.Color.White;
             this.listViewBoxes.HideSelection = false;
             this.listViewBoxes.LabelEdit = true;
             this.listViewBoxes.MultiSelect = false;
@@ -706,7 +717,10 @@
             // 
             // listViewBGs
             // 
+            this.listViewBGs.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.listViewBGs.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             resources.ApplyResources(this.listViewBGs, "listViewBGs");
+            this.listViewBGs.ForeColor = System.Drawing.Color.White;
             this.listViewBGs.HideSelection = false;
             this.listViewBGs.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             ((System.Windows.Forms.ListViewItem)(resources.GetObject("listViewBGs.Items"))),
@@ -725,12 +739,11 @@
             // tableLayoutPanelMain
             // 
             resources.ApplyResources(this.tableLayoutPanelMain, "tableLayoutPanelMain");
+            this.tableLayoutPanelMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.tableLayoutPanelMain.Controls.Add(this.labelModeParts, 0, 0);
             this.tableLayoutPanelMain.Controls.Add(this.listViewBoxes, 0, 1);
-            this.tableLayoutPanelMain.Controls.Add(this.buttonExportModel, 3, 0);
+            this.tableLayoutPanelMain.Controls.Add(this.button3, 2, 0);
             this.tableLayoutPanelMain.Controls.Add(this.displayBox, 1, 1);
-            this.tableLayoutPanelMain.Controls.Add(this.buttonImportModel, 2, 0);
-            this.tableLayoutPanelMain.Controls.Add(this.labelFullSkinPreview, 1, 0);
             this.tableLayoutPanelMain.Controls.Add(this.labelTextureMappingPreview, 5, 0);
             this.tableLayoutPanelMain.Controls.Add(this.texturePreview, 5, 1);
             this.tableLayoutPanelMain.Controls.Add(this.buttonIMPORT, 5, 6);
@@ -765,13 +778,23 @@
             this.tableLayoutPanelMain.Controls.Add(this.labelTheme, 0, 15);
             this.tableLayoutPanelMain.Controls.Add(this.listViewBGs, 0, 16);
             this.tableLayoutPanelMain.Controls.Add(this.button2, 1, 18);
-            this.tableLayoutPanelMain.Controls.Add(this.button1, 3, 18);
             this.tableLayoutPanelMain.Controls.Add(this.labelView, 2, 18);
             this.tableLayoutPanelMain.Controls.Add(this.checkGuide, 1, 19);
             this.tableLayoutPanelMain.Controls.Add(this.checkTextureGenerate, 2, 19);
-            this.tableLayoutPanelMain.Controls.Add(this.checkBoxArmor, 3, 19);
             this.tableLayoutPanelMain.Controls.Add(this.buttonDone, 8, 19);
+            this.tableLayoutPanelMain.Controls.Add(this.checkBoxArmor, 3, 19);
+            this.tableLayoutPanelMain.Controls.Add(this.button1, 3, 18);
+            this.tableLayoutPanelMain.ForeColor = System.Drawing.Color.White;
             this.tableLayoutPanelMain.Name = "tableLayoutPanelMain";
+            // 
+            // button3
+            // 
+            resources.ApplyResources(this.button3, "button3");
+            this.button3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.button3.ForeColor = System.Drawing.Color.White;
+            this.button3.Name = "button3";
+            this.button3.UseVisualStyleBackColor = false;
+            this.button3.Click += new System.EventHandler(this.button3_Click_1);
             // 
             // displayBox
             // 
@@ -785,6 +808,7 @@
             // 
             // texturePreview
             // 
+            this.texturePreview.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.texturePreview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tableLayoutPanelMain.SetColumnSpan(this.texturePreview, 6);
             resources.ApplyResources(this.texturePreview, "texturePreview");
@@ -792,23 +816,18 @@
             this.tableLayoutPanelMain.SetRowSpan(this.texturePreview, 5);
             this.texturePreview.TabStop = false;
             // 
-            // button3
-            // 
-            resources.ApplyResources(this.button3, "button3");
-            this.button3.ForeColor = System.Drawing.Color.White;
-            this.button3.Name = "button3";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click_1);
-            // 
             // generateModel
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.button3);
             this.Controls.Add(this.tableLayoutPanelMain);
+            this.Controls.Add(this.buttonExportModel);
+            this.Controls.Add(this.buttonImportModel);
+            this.Controls.Add(this.labelFullSkinPreview);
             this.MaximizeBox = false;
             this.Name = "generateModel";
-            this.Style = MetroFramework.MetroColorStyle.Silver;
+            this.Style = MetroFramework.MetroColorStyle.Black;
+            this.TextAlign = MetroFramework.Forms.MetroFormTextAlign.Center;
             this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.generateModel_FormClosing);
             this.Load += new System.EventHandler(this.generateModel_Load);
@@ -829,6 +848,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.displayBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.texturePreview)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 

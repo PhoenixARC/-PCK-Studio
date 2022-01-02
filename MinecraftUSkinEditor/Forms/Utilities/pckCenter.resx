@@ -147,6 +147,9 @@
   <data name="radioButtonMine.Text" xml:space="preserve">
     <value>My Collection</value>
   </data>
+  <data name="radioButtonMine.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
   <data name="&gt;&gt;radioButtonMine.Name" xml:space="preserve">
     <value>radioButtonMine</value>
   </data>
@@ -181,7 +184,10 @@
     <value>12</value>
   </data>
   <data name="radioButtonDevPicks.Text" xml:space="preserve">
-    <value>Dev Picks</value>
+    <value>Developer Picks</value>
+  </data>
+  <data name="radioButtonDevPicks.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
   </data>
   <data name="&gt;&gt;radioButtonDevPicks.Name" xml:space="preserve">
     <value>radioButtonDevPicks</value>
@@ -219,6 +225,9 @@
   <data name="radioButtonNew.Text" xml:space="preserve">
     <value>New</value>
   </data>
+  <data name="radioButtonNew.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
   <data name="&gt;&gt;radioButtonNew.Name" xml:space="preserve">
     <value>radioButtonNew</value>
   </data>
@@ -253,7 +262,10 @@
     <value>10</value>
   </data>
   <data name="radioButtonAll.Text" xml:space="preserve">
-    <value>NoblePCKs</value>
+    <value>Nobledez PCKs</value>
+  </data>
+  <data name="radioButtonAll.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
   </data>
   <data name="&gt;&gt;radioButtonAll.Name" xml:space="preserve">
     <value>radioButtonAll</value>
@@ -290,6 +302,9 @@
   </data>
   <data name="radioButtonCommunity.Text" xml:space="preserve">
     <value>Community</value>
+  </data>
+  <data name="radioButtonCommunity.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
   </data>
   <data name="&gt;&gt;radioButtonCommunity.Name" xml:space="preserve">
     <value>radioButtonCommunity</value>
@@ -2186,9 +2201,6 @@
   <data name="buttonSubmit.Text" xml:space="preserve">
     <value>Submit PCK</value>
   </data>
-  <data name="buttonSubmit.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleLeft</value>
-  </data>
   <data name="&gt;&gt;buttonSubmit.Name" xml:space="preserve">
     <value>buttonSubmit</value>
   </data>
@@ -2224,6 +2236,9 @@
   </data>
   <data name="radioButtonTex.Text" xml:space="preserve">
     <value>Texture Packs</value>
+  </data>
+  <data name="radioButtonTex.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
   </data>
   <data name="&gt;&gt;radioButtonTex.Name" xml:space="preserve">
     <value>radioButtonTex</value>
@@ -2349,7 +2364,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;tableLayoutPanel2.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>1</value>
   </data>
   <data name="tableLayoutPanel2.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
     <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="tableLayoutPanel1" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="panel1" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,200,Absolute,610" /&gt;&lt;Rows Styles="Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
@@ -2381,36 +2396,6 @@
   <metadata name="bindingSource1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>188, 17</value>
   </metadata>
-  <data name="PSVitaPCKCheckbox.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="PSVitaPCKCheckbox.CheckAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>BottomLeft</value>
-  </data>
-  <data name="PSVitaPCKCheckbox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>717, 42</value>
-  </data>
-  <data name="PSVitaPCKCheckbox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>110, 15</value>
-  </data>
-  <data name="PSVitaPCKCheckbox.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="PSVitaPCKCheckbox.Text" xml:space="preserve">
-    <value>PS4/PSVita PCKs</value>
-  </data>
-  <data name="&gt;&gt;PSVitaPCKCheckbox.Name" xml:space="preserve">
-    <value>PSVitaPCKCheckbox</value>
-  </data>
-  <data name="&gt;&gt;PSVitaPCKCheckbox.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroCheckBox, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;PSVitaPCKCheckbox.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;PSVitaPCKCheckbox.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>

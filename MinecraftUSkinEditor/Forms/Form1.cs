@@ -131,8 +131,6 @@ namespace PckStudio
             _ = treeMeta;
             _ = textBox1;
             _ = label1;
-            _ = label2;
-            _ = tabDataDisplay;
             ImageList imageList = new ImageList();
             imageList.ColorDepth = ColorDepth.Depth32Bit;
             imageList.ImageSize = new Size(20, 20);
@@ -218,8 +216,6 @@ namespace PckStudio
             myTablePanelStartScreen.Visible = false;
             pckOpen.Visible = false;
             label5.Visible = false;
-            labelAmount.Visible = true;
-            richTextBoxChangelog.Visible = false;
             openedPCKS.Visible = true;
             openedPCKS.AllowDrop = true;
             foreach (ToolStripMenuItem dropDownItem in fileToolStripMenuItem.DropDownItems)
@@ -247,7 +243,6 @@ namespace PckStudio
                 _ = mineFile3;
                 fileCount++;
             }
-            labelAmount.Text = "Files:" + fileCount;
             saved = false;
             LittleEndianCheckBox.Visible = true;
             LittleEndianCheckBox.Checked = currentPCK.IsLittleEndian;
@@ -267,7 +262,6 @@ namespace PckStudio
                 {
                     fileCount += 1;
                 }
-                labelAmount.Text = "Files:" + fileCount;//Displays amount
                 Dictionary<int, string> pckTypes = currentPCK.types; //Retrieves metadatabase
 
                 PCK.MineFile mf = (PCK.MineFile)e.Node.Tag; //Sets current minefile being read
@@ -335,13 +329,11 @@ namespace PckStudio
                     if (skinPicture.Size.Height == skinPicture.Size.Width / 2)
                     {
                         pictureBoxImagePreview.Size = new Size(pictureBoxMaxHeight * 2, pictureBoxMaxHeight); //Sets 64x32 ratio images to appear at largest relative size to program window size
-                        labelImageSize.Text = skinPicture.Size.Width.ToString() + "x" + skinPicture.Size.Height.ToString();
                         return;
                     }
                     else if (skinPicture.Size.Height == skinPicture.Size.Width)
                     {
                         pictureBoxImagePreview.Size = new Size(pictureBoxMaxHeight, pictureBoxMaxHeight); //SWets 64x64 ratio images to appear at largest relative size to program window size
-                        labelImageSize.Text = skinPicture.Size.Width.ToString() + "x" + skinPicture.Size.Height.ToString();
                         return;
                     }
                     else
@@ -406,7 +398,6 @@ namespace PckStudio
                         {
                             pictureBoxImagePreview.Size = new Size(skinPicture.Size.Width, skinPicture.Size.Height);
                         }
-                        labelImageSize.Text = skinPicture.Size.Width.ToString() + "x" + skinPicture.Size.Height.ToString();
                         return;
                     }
                 }
@@ -421,7 +412,6 @@ namespace PckStudio
                     //Sets preview image to "NO IMAGE" if selected file data isn't image data
                     pictureBoxImagePreview.Image = (Image)Resources.NoImageFound;
                     pictureBoxImagePreview.Size = new Size(pictureBoxMaxHeight, pictureBoxMaxHeight);
-                    labelImageSize.Text = "";
                 }
             }
             else
@@ -430,7 +420,6 @@ namespace PckStudio
                 pictureBoxImagePreview.Image = (Image)Resources.NoImageFound;
                 pictureBoxImagePreview.Size = new Size(pictureBoxMaxHeight, pictureBoxMaxHeight);
             }
-            labelImageSize.Text = "";//Resets image size display if theres no image
         }
         #endregion
 
@@ -1242,7 +1231,7 @@ namespace PckStudio
         {
             try
             {
-                RPC.SetRPC("825875166574673940", "Sitting alone", "Program by PhoenixARC", "pcklgo", "PCK Studio", "pcklgo");
+                RPC.SetRPC("825875166574673940", "Sitting alone", "Program by EternalModz", "pcklgo", "PCK Studio - UltimateCraft Edition", "pcklgo");
                 timer1.Start();
                 timer1.Enabled = true;
             }
@@ -1254,26 +1243,12 @@ namespace PckStudio
             {
                 label1.Theme = this.Theme;
                 labelVersion.Theme = this.Theme;
-                label2.Theme = this.Theme;
-                label3.Theme = this.Theme;
-                labelImageSize.Theme = this.Theme;
-                labelAmount.Theme = this.Theme;
                 labelEntryType.Theme = this.Theme;
                 labelEntryData.Theme = this.Theme;
-                DBGLabel.Theme = this.Theme;
-                label4.Theme = this.Theme;
-                label6.Theme = this.Theme;
-                label7.Theme = this.Theme;
-                label8.Theme = this.Theme;
-                label9.Theme = this.Theme;
-                label10.Theme = this.Theme;
-                label11.Theme = this.Theme;
                 ChangeURL.Theme = this.Theme;
                 label5.Theme = this.Theme;
                 openedPCKS.Theme = this.Theme;
                 tabPage1.Theme = this.Theme;
-                metroTabControl1.Theme = this.Theme;
-                metroTabPage1.Theme = this.Theme;
                 LittleEndianCheckBox.Theme = this.Theme;
 
                 new WebClient().DownloadString(Program.baseurl + ChangeURL.Text);
@@ -1294,7 +1269,7 @@ namespace PckStudio
                     {
                         new WebClient().DownloadString("https://google.com");
                         MessageBox.Show("PCK Studio Service is offline, the domain may have changed.\nOpening website");
-                        Process.Start("https://phoenixarc.github.io/pckstudio.tk/");
+                        Process.Start("https://ultimatecraft.webflow.io/");
                     }
                     catch
                     {
@@ -1310,7 +1285,7 @@ namespace PckStudio
 
 
             if (isdebug)
-                DBGLabel.Visible = true;
+              
             //runs creator spotlight once per day
             //if (!File.Exists(appData + "date.txt"))
             //{
@@ -1348,16 +1323,14 @@ namespace PckStudio
             {
                 using (WebClient client = new WebClient())
                 {
-                    if(isdebug)
-                        File.WriteAllText(appData + "pckStudioChangelog.txt", File.ReadAllText("C:\\WEBSITES\\PCKStudio\\studio\\PCK\\api\\" + ChangeURL.Text));
-                    else
-                        File.WriteAllText(appData + "pckStudioChangelog.txt", client.DownloadString(basurl + ChangeURL.Text));
-                        richTextBoxChangelog.Text = File.ReadAllText(appData + "pckStudioChangelog.txt");
+
+
+
                 }
             }
             catch
             {
-                MessageBox.Show("Could not load changelog");
+                MessageBox.Show("Welcome to PCK Studio - UltimateCraft Edition");
             }
 
             if (!File.Exists(Application.StartupPath + @"\ver.txt"))
@@ -1369,7 +1342,7 @@ namespace PckStudio
                 if (float.Parse(new WebClient().DownloadString(basurl + "updatePCKStudio.txt").Replace("\n", "")) > float.Parse(Version))
                 {
                     Console.WriteLine(new WebClient().DownloadString(basurl + "updatePCKStudio.txt").Replace("\n", "") + " != " + Version);
-                    if (MessageBox.Show("Update avaliable!\ndo you want to update?", "UPDATE", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    if (MessageBox.Show("For updates, visit https://UltimateCraft.webflow.io!", "UPDATES", MessageBoxButtons.OK) == DialogResult.Yes)
                         Process.Start(Environment.CurrentDirectory + "\\nobleUpdater.exe");
                     else
                         uPDATEToolStripMenuItem1.Visible = true;
@@ -3278,9 +3251,9 @@ namespace PckStudio
             install.ShowDialog();
         }
 
-        private void toPhoenixARCDeveloperToolStripMenuItem_Click(object sender, EventArgs e)
+        private void toEternalModzDeveloperToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("https://cash.app/$PhoenixARC");
+            System.Diagnostics.Process.Start("https://cash.app/$EternalModz");
         }
 
         private void toNobledezJackToolStripMenuItem_Click(object sender, EventArgs e)
@@ -3329,7 +3302,7 @@ namespace PckStudio
 
         private void joinDevelopmentDiscordToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("https://discord.gg/Byh4hcq25w");
+            System.Diagnostics.Process.Start("https://discord.gg/dPWCK5wE3N");
         }
 
         private void tSTToolStripMenuItem_Click(object sender, EventArgs e)
@@ -3470,7 +3443,7 @@ namespace PckStudio
                 if (string.IsNullOrWhiteSpace(PCKFile))
                     try
                     {
-                        RPC.SetRPC("825875166574673940", "Sitting alone", "Program by PhoenixARC", "pcklgo", "PCK Studio", "pcklgo");
+                        RPC.SetRPC("825875166574673940", "Sitting alone", "Program by EternalModz", "pcklgo", "PCK Studio", "pcklgo");
                     }
                     catch
                     {
@@ -3480,7 +3453,7 @@ namespace PckStudio
 
                     try
                     {
-                        RPC.SetRPC("825875166574673940", "Developing " + PCKFile, "Program by PhoenixARC", "pcklgo", "PCK Studio", "pcklgo");
+                        RPC.SetRPC("825875166574673940", "Developing " + PCKFile, "Program by EternalModz", "pcklgo", "PCK Studio", "pcklgo");
                     }
                     catch
                     {
@@ -3514,11 +3487,46 @@ namespace PckStudio
         {
             try
             {
-            RPC.SetRPC("825875166574673940", "Sitting alone", "Program by PhoenixARC", "pcklgo", "PCK Studio", "pcklgo");
+            RPC.SetRPC("825875166574673940", "Sitting alone", "Program by EternalModz", "pcklgo", "PCK Studio", "pcklgo");
             timer1.Start();
             timer1.Enabled = true;
             }
             catch { }
+        }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void DBGLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void labelVersion_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void richTextBoxChangelog_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void myTablePanelStartScreen_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tabPage1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

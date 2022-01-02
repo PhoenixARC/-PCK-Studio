@@ -30,6 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LOCEditor));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addDisplayIDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteDisplayIDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -45,58 +47,86 @@
             // 
             // contextMenuStrip1
             // 
-            resources.ApplyResources(this.contextMenuStrip1, "contextMenuStrip1");
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addDisplayIDToolStripMenuItem,
             this.deleteDisplayIDToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
+            resources.ApplyResources(this.contextMenuStrip1, "contextMenuStrip1");
             // 
             // addDisplayIDToolStripMenuItem
             // 
-            resources.ApplyResources(this.addDisplayIDToolStripMenuItem, "addDisplayIDToolStripMenuItem");
             this.addDisplayIDToolStripMenuItem.Name = "addDisplayIDToolStripMenuItem";
+            resources.ApplyResources(this.addDisplayIDToolStripMenuItem, "addDisplayIDToolStripMenuItem");
             // 
             // deleteDisplayIDToolStripMenuItem
             // 
-            resources.ApplyResources(this.deleteDisplayIDToolStripMenuItem, "deleteDisplayIDToolStripMenuItem");
             this.deleteDisplayIDToolStripMenuItem.Name = "deleteDisplayIDToolStripMenuItem";
+            resources.ApplyResources(this.deleteDisplayIDToolStripMenuItem, "deleteDisplayIDToolStripMenuItem");
             this.deleteDisplayIDToolStripMenuItem.Click += new System.EventHandler(this.deleteDisplayIDToolStripMenuItem_Click);
             // 
             // locSort
             // 
-            resources.ApplyResources(this.locSort, "locSort");
             this.locSort.AccessibleRole = System.Windows.Forms.AccessibleRole.Table;
+            this.locSort.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            resources.ApplyResources(this.locSort, "locSort");
             this.locSort.Controls.Add(this.buttonReplaceAll, 2, 0);
             this.locSort.Controls.Add(this.dataGridViewLocEntryData, 1, 1);
             this.locSort.Controls.Add(this.textBoxReplaceAll, 1, 0);
             this.locSort.Controls.Add(this.treeViewLocEntries, 0, 0);
+            this.locSort.ForeColor = System.Drawing.Color.DimGray;
             this.locSort.Name = "locSort";
             // 
             // buttonReplaceAll
             // 
+            this.buttonReplaceAll.BackColor = System.Drawing.Color.DodgerBlue;
             resources.ApplyResources(this.buttonReplaceAll, "buttonReplaceAll");
             this.buttonReplaceAll.ForeColor = System.Drawing.Color.White;
             this.buttonReplaceAll.Name = "buttonReplaceAll";
-            this.buttonReplaceAll.UseVisualStyleBackColor = true;
+            this.buttonReplaceAll.UseVisualStyleBackColor = false;
             this.buttonReplaceAll.Click += new System.EventHandler(this.buttonReplaceAll_Click);
             // 
             // dataGridViewLocEntryData
             // 
-            resources.ApplyResources(this.dataGridViewLocEntryData, "dataGridViewLocEntryData");
+            this.dataGridViewLocEntryData.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.dataGridViewLocEntryData.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewLocEntryData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridViewLocEntryData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.locSort.SetColumnSpan(this.dataGridViewLocEntryData, 2);
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.DimGray;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewLocEntryData.DefaultCellStyle = dataGridViewCellStyle2;
+            resources.ApplyResources(this.dataGridViewLocEntryData, "dataGridViewLocEntryData");
+            this.dataGridViewLocEntryData.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.dataGridViewLocEntryData.Name = "dataGridViewLocEntryData";
             this.dataGridViewLocEntryData.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEndEdit);
             // 
             // textBoxReplaceAll
             // 
+            this.textBoxReplaceAll.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.textBoxReplaceAll.BorderStyle = System.Windows.Forms.BorderStyle.None;
             resources.ApplyResources(this.textBoxReplaceAll, "textBoxReplaceAll");
+            this.textBoxReplaceAll.ForeColor = System.Drawing.Color.White;
             this.textBoxReplaceAll.Name = "textBoxReplaceAll";
             // 
             // treeViewLocEntries
             // 
-            resources.ApplyResources(this.treeViewLocEntries, "treeViewLocEntries");
+            this.treeViewLocEntries.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.treeViewLocEntries.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.treeViewLocEntries.ContextMenuStrip = this.contextMenuStrip1;
+            resources.ApplyResources(this.treeViewLocEntries, "treeViewLocEntries");
+            this.treeViewLocEntries.ForeColor = System.Drawing.Color.White;
             this.treeViewLocEntries.LabelEdit = true;
             this.treeViewLocEntries.Name = "treeViewLocEntries";
             this.locSort.SetRowSpan(this.treeViewLocEntries, 2);
@@ -108,8 +138,10 @@
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.locSort);
+            this.ForeColor = System.Drawing.Color.White;
             this.Name = "LOCEditor";
-            this.Style = MetroFramework.MetroColorStyle.Silver;
+            this.Style = MetroFramework.MetroColorStyle.Black;
+            this.TextAlign = MetroFramework.Forms.MetroFormTextAlign.Center;
             this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.Load += new System.EventHandler(this.LOCEditor_Load);
             this.contextMenuStrip1.ResumeLayout(false);

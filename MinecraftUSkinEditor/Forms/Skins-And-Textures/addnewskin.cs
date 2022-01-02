@@ -660,6 +660,13 @@ namespace PckStudio
                 }
             }
         }
+
+        private void label4_Click_1(object sender, EventArgs e)
+        {
+            {
+                contextMenuCape.Show(System.Windows.Forms.Form.ActiveForm.Location.X + buttonCape.Location.X + 2, System.Windows.Forms.Form.ActiveForm.Location.Y + buttonCape.Location.Y + 23);
+            }
+        }
     }
 }
 

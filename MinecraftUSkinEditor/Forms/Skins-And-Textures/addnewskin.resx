@@ -193,7 +193,7 @@
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="buttonDone.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
+    <value>Popup</value>
   </data>
   <data name="buttonDone.Location" type="System.Drawing.Point, System.Drawing">
     <value>388, 262</value>
@@ -220,7 +220,7 @@
     <value>6</value>
   </data>
   <data name="buttonModelGen.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
+    <value>Popup</value>
   </data>
   <data name="buttonModelGen.Location" type="System.Drawing.Point, System.Drawing">
     <value>14, 259</value>
@@ -291,7 +291,7 @@
 </value>
   </data>
   <data name="buttonCape.Location" type="System.Drawing.Point, System.Drawing">
-    <value>443, 212</value>
+    <value>443, 217</value>
   </data>
   <data name="buttonCape.Size" type="System.Drawing.Size, System.Drawing">
     <value>23, 22</value>
@@ -320,7 +320,7 @@
 </value>
   </data>
   <data name="buttonSkin.Location" type="System.Drawing.Point, System.Drawing">
-    <value>359, 212</value>
+    <value>359, 217</value>
   </data>
   <data name="buttonSkin.Size" type="System.Drawing.Size, System.Drawing">
     <value>23, 22</value>
@@ -364,8 +364,11 @@
   <data name="label3.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="label3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>215, 129</value>
+    <value>215, 126</value>
   </data>
   <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
     <value>71, 13</value>
@@ -392,7 +395,7 @@
     <value>292, 126</value>
   </data>
   <data name="textThemeName.Size" type="System.Drawing.Size, System.Drawing">
-    <value>174, 20</value>
+    <value>174, 13</value>
   </data>
   <data name="textThemeName.TabIndex" type="System.Int32, mscorlib">
     <value>105</value>
@@ -412,8 +415,11 @@
   <data name="label2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="label2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>215, 97</value>
+    <value>215, 94</value>
   </data>
   <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
     <value>59, 13</value>
@@ -440,7 +446,7 @@
     <value>292, 94</value>
   </data>
   <data name="textSkinName.Size" type="System.Drawing.Size, System.Drawing">
-    <value>174, 20</value>
+    <value>174, 13</value>
   </data>
   <data name="textSkinName.TabIndex" type="System.Int32, mscorlib">
     <value>103</value>
@@ -459,6 +465,9 @@
   </data>
   <data name="label1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
+  </data>
+  <data name="label1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
     <value>215, 64</value>
@@ -491,13 +500,16 @@
     <value>8</value>
   </data>
   <data name="textSkinID.Size" type="System.Drawing.Size, System.Drawing">
-    <value>66, 20</value>
+    <value>66, 13</value>
   </data>
   <data name="textSkinID.TabIndex" type="System.Int32, mscorlib">
     <value>101</value>
   </data>
   <data name="textSkinID.Text" xml:space="preserve">
     <value>XXXXXXXX</value>
+  </data>
+  <data name="textSkinID.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Center</value>
   </data>
   <data name="&gt;&gt;textSkinID.Name" xml:space="preserve">
     <value>textSkinID</value>
@@ -572,7 +584,7 @@
     <value>Microsoft Sans Serif, 8.25pt, style=Underline</value>
   </data>
   <data name="labelSelectTexture.Location" type="System.Drawing.Point, System.Drawing">
-    <value>261, 186</value>
+    <value>261, 191</value>
   </data>
   <data name="labelSelectTexture.Size" type="System.Drawing.Size, System.Drawing">
     <value>76, 13</value>
@@ -601,6 +613,9 @@
   <data name="radioSERVER.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
+  <data name="radioSERVER.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="radioSERVER.Location" type="System.Drawing.Point, System.Drawing">
     <value>388, 28</value>
   </data>
@@ -612,9 +627,6 @@
   </data>
   <data name="radioSERVER.Text" xml:space="preserve">
     <value>SERVER</value>
-  </data>
-  <data name="radioSERVER.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
   </data>
   <data name="&gt;&gt;radioSERVER.Name" xml:space="preserve">
     <value>radioSERVER</value>
@@ -631,11 +643,14 @@
   <data name="pictureBoxWithInterpolationMode1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>None</value>
   </data>
+  <data name="pictureBoxWithInterpolationMode1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="pictureBoxWithInterpolationMode1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>387, 152</value>
+    <value>387, 157</value>
   </data>
   <data name="pictureBoxWithInterpolationMode1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>208, 88</value>
+    <value>82, 82</value>
   </data>
   <data name="pictureBoxWithInterpolationMode1.TabIndex" type="System.Int32, mscorlib">
     <value>109</value>
@@ -644,7 +659,7 @@
     <value>pictureBoxWithInterpolationMode1</value>
   </data>
   <data name="&gt;&gt;pictureBoxWithInterpolationMode1.Type" xml:space="preserve">
-    <value>PckStudio.PictureBoxWithInterpolationMode, PCK Studio, Version=5.3.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>PckStudio.PictureBoxWithInterpolationMode, PCK Studio - UltimateCraft Edition, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;pictureBoxWithInterpolationMode1.Parent" xml:space="preserve">
     <value>$this</value>
@@ -655,8 +670,11 @@
   <data name="pictureBoxTexture.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>None</value>
   </data>
+  <data name="pictureBoxTexture.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="pictureBoxTexture.Location" type="System.Drawing.Point, System.Drawing">
-    <value>217, 152</value>
+    <value>217, 157</value>
   </data>
   <data name="pictureBoxTexture.Size" type="System.Drawing.Size, System.Drawing">
     <value>164, 82</value>
@@ -668,7 +686,7 @@
     <value>pictureBoxTexture</value>
   </data>
   <data name="&gt;&gt;pictureBoxTexture.Type" xml:space="preserve">
-    <value>PckStudio.PictureBoxWithInterpolationMode, PCK Studio, Version=5.3.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>PckStudio.PictureBoxWithInterpolationMode, PCK Studio - UltimateCraft Edition, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;pictureBoxTexture.Parent" xml:space="preserve">
     <value>$this</value>

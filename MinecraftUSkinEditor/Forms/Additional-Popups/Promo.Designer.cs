@@ -1,6 +1,6 @@
 ﻿namespace PckStudio.Forms
 {
-    partial class Promo
+    partial class goodbye
     {
         /// <summary>
         /// Required designer variable.
@@ -28,57 +28,58 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.webBrowser1 = new System.Windows.Forms.WebBrowser();
-            this.buttonOpenInBrowser = new System.Windows.Forms.Button();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(goodbye));
+            this.label1 = new System.Windows.Forms.Label();
+            this.buttonDonate = new System.Windows.Forms.Button();
+            this.buttonClose = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // webBrowser1
+            // label1
             // 
-            this.webBrowser1.AllowWebBrowserDrop = false;
-            this.webBrowser1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.webBrowser1.Location = new System.Drawing.Point(20, 60);
-            this.webBrowser1.Margin = new System.Windows.Forms.Padding(0);
-            this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
-            this.webBrowser1.Name = "webBrowser1";
-            this.webBrowser1.ScrollBarsEnabled = false;
-            this.webBrowser1.Size = new System.Drawing.Size(741, 462);
-            this.webBrowser1.TabIndex = 0;
+            resources.ApplyResources(this.label1, "label1");
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Name = "label1";
             // 
-            // buttonOpenInBrowser
+            // buttonDonate
             // 
-            this.buttonOpenInBrowser.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.buttonOpenInBrowser.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonOpenInBrowser.ForeColor = System.Drawing.Color.White;
-            this.buttonOpenInBrowser.Location = new System.Drawing.Point(670, 499);
-            this.buttonOpenInBrowser.Name = "buttonOpenInBrowser";
-            this.buttonOpenInBrowser.Size = new System.Drawing.Size(98, 29);
-            this.buttonOpenInBrowser.TabIndex = 1;
-            this.buttonOpenInBrowser.Text = "Open in Browser";
-            this.buttonOpenInBrowser.UseVisualStyleBackColor = false;
-            this.buttonOpenInBrowser.Click += new System.EventHandler(this.buttonOpenInBrowser_Click);
+            this.buttonDonate.BackColor = System.Drawing.Color.Red;
+            resources.ApplyResources(this.buttonDonate, "buttonDonate");
+            this.buttonDonate.ForeColor = System.Drawing.Color.White;
+            this.buttonDonate.Name = "buttonDonate";
+            this.buttonDonate.UseVisualStyleBackColor = false;
+            this.buttonDonate.Click += new System.EventHandler(this.buttonDonate_Click);
             // 
-            // Promo
+            // buttonClose
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.buttonClose.BackColor = System.Drawing.Color.DodgerBlue;
+            resources.ApplyResources(this.buttonClose, "buttonClose");
+            this.buttonClose.ForeColor = System.Drawing.Color.White;
+            this.buttonClose.Name = "buttonClose";
+            this.buttonClose.UseVisualStyleBackColor = false;
+            this.buttonClose.Click += new System.EventHandler(this.buttonClose_Click);
+            // 
+            // goodbye
+            // 
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(781, 542);
-            this.Controls.Add(this.buttonOpenInBrowser);
-            this.Controls.Add(this.webBrowser1);
-            this.Font = new System.Drawing.Font("Segoe UI Semibold", 8.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.MaximizeBox = false;
-            this.Name = "Promo";
+            this.Controls.Add(this.buttonClose);
+            this.Controls.Add(this.buttonDonate);
+            this.Controls.Add(this.label1);
+            this.Name = "goodbye";
             this.Resizable = false;
-            this.ShadowType = MetroFramework.Forms.MetroFormShadowType.DropShadow;
-            this.Text = "Download Freecraft for the PS3!";
+            this.Style = MetroFramework.MetroColorStyle.Black;
+            this.TextAlign = MetroFramework.Forms.MetroFormTextAlign.Center;
             this.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.Load += new System.EventHandler(this.Promo_Load);
+            this.Load += new System.EventHandler(this.goodbye_Load);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.WebBrowser webBrowser1;
-        private System.Windows.Forms.Button buttonOpenInBrowser;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button buttonDonate;
+        private System.Windows.Forms.Button buttonClose;
     }
 }

@@ -39,30 +39,33 @@
             // 
             // treeView1
             // 
-            resources.ApplyResources(this.treeView1, "treeView1");
+            this.treeView1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.treeView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.treeView1.ContextMenuStrip = this.contextMenuStrip1;
+            this.treeView1.ForeColor = System.Drawing.Color.White;
+            resources.ApplyResources(this.treeView1, "treeView1");
             this.treeView1.Name = "treeView1";
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
             this.treeView1.Click += new System.EventHandler(this.treeView1_Click);
             // 
             // contextMenuStrip1
             // 
-            resources.ApplyResources(this.contextMenuStrip1, "contextMenuStrip1");
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addToolStripMenuItem,
             this.deleteToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
+            resources.ApplyResources(this.contextMenuStrip1, "contextMenuStrip1");
             // 
             // addToolStripMenuItem
             // 
-            resources.ApplyResources(this.addToolStripMenuItem, "addToolStripMenuItem");
             this.addToolStripMenuItem.Name = "addToolStripMenuItem";
+            resources.ApplyResources(this.addToolStripMenuItem, "addToolStripMenuItem");
             this.addToolStripMenuItem.Click += new System.EventHandler(this.addToolStripMenuItem_Click);
             // 
             // deleteToolStripMenuItem
             // 
-            resources.ApplyResources(this.deleteToolStripMenuItem, "deleteToolStripMenuItem");
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            resources.ApplyResources(this.deleteToolStripMenuItem, "deleteToolStripMenuItem");
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
             // meta

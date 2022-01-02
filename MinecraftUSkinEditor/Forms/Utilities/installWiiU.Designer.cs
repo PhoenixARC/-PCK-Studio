@@ -55,11 +55,11 @@
             // 
             // metroTabPageMain
             // 
-            resources.ApplyResources(this.metroTabPageMain, "metroTabPageMain");
             this.metroTabPageMain.Controls.Add(this.myTablePanel1);
             this.metroTabPageMain.HorizontalScrollbarBarColor = true;
             this.metroTabPageMain.HorizontalScrollbarHighlightOnWheel = false;
             this.metroTabPageMain.HorizontalScrollbarSize = 10;
+            resources.ApplyResources(this.metroTabPageMain, "metroTabPageMain");
             this.metroTabPageMain.Name = "metroTabPageMain";
             this.metroTabPageMain.Style = MetroFramework.MetroColorStyle.Blue;
             this.metroTabPageMain.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -69,8 +69,8 @@
             // 
             // myTablePanel1
             // 
-            resources.ApplyResources(this.myTablePanel1, "myTablePanel1");
             this.myTablePanel1.BackColor = System.Drawing.Color.Transparent;
+            resources.ApplyResources(this.myTablePanel1, "myTablePanel1");
             this.myTablePanel1.Controls.Add(this.buttonServerToggle, 2, 0);
             this.myTablePanel1.Controls.Add(this.panel1, 0, 1);
             this.myTablePanel1.Controls.Add(this.textBoxHost, 0, 0);
@@ -83,7 +83,7 @@
             // buttonServerToggle
             // 
             resources.ApplyResources(this.buttonServerToggle, "buttonServerToggle");
-            this.buttonServerToggle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(178)))), ((int)(((byte)(13)))));
+            this.buttonServerToggle.BackColor = System.Drawing.Color.DodgerBlue;
             this.buttonServerToggle.FlatAppearance.BorderSize = 0;
             this.buttonServerToggle.ForeColor = System.Drawing.Color.White;
             this.buttonServerToggle.Name = "buttonServerToggle";
@@ -92,17 +92,17 @@
             // 
             // panel1
             // 
-            resources.ApplyResources(this.panel1, "panel1");
             this.myTablePanel1.SetColumnSpan(this.panel1, 3);
             this.panel1.Controls.Add(this.radioButtonSystem);
             this.panel1.Controls.Add(this.buttonSelect);
             this.panel1.Controls.Add(this.radioButtonUSB);
+            resources.ApplyResources(this.panel1, "panel1");
             this.panel1.Name = "panel1";
             // 
             // radioButtonSystem
             // 
             resources.ApplyResources(this.radioButtonSystem, "radioButtonSystem");
-            this.radioButtonSystem.BackColor = System.Drawing.Color.Transparent;
+            this.radioButtonSystem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.radioButtonSystem.FlatAppearance.CheckedBackColor = System.Drawing.Color.Teal;
             this.radioButtonSystem.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Aqua;
             this.radioButtonSystem.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
@@ -114,17 +114,18 @@
             // 
             // buttonSelect
             // 
-            resources.ApplyResources(this.buttonSelect, "buttonSelect");
+            this.buttonSelect.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.buttonSelect.BackgroundImage = global::PckStudio.Properties.Resources.sdDownload;
+            resources.ApplyResources(this.buttonSelect, "buttonSelect");
             this.buttonSelect.ForeColor = System.Drawing.Color.White;
             this.buttonSelect.Name = "buttonSelect";
-            this.buttonSelect.UseVisualStyleBackColor = true;
+            this.buttonSelect.UseVisualStyleBackColor = false;
             this.buttonSelect.Click += new System.EventHandler(this.buttonSelect_Click);
             // 
             // radioButtonUSB
             // 
             resources.ApplyResources(this.radioButtonUSB, "radioButtonUSB");
-            this.radioButtonUSB.BackColor = System.Drawing.Color.Transparent;
+            this.radioButtonUSB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.radioButtonUSB.FlatAppearance.CheckedBackColor = System.Drawing.Color.Teal;
             this.radioButtonUSB.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Aqua;
             this.radioButtonUSB.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
@@ -142,30 +143,13 @@
             // 
             // 
             // 
-            this.textBoxHost.CustomButton.AccessibleDescription = resources.GetString("resource.AccessibleDescription");
-            this.textBoxHost.CustomButton.AccessibleName = resources.GetString("resource.AccessibleName");
-            this.textBoxHost.CustomButton.Anchor = ((System.Windows.Forms.AnchorStyles)(resources.GetObject("resource.Anchor")));
-            this.textBoxHost.CustomButton.AutoSize = ((bool)(resources.GetObject("resource.AutoSize")));
-            this.textBoxHost.CustomButton.AutoSizeMode = ((System.Windows.Forms.AutoSizeMode)(resources.GetObject("resource.AutoSizeMode")));
-            this.textBoxHost.CustomButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("resource.BackgroundImage")));
-            this.textBoxHost.CustomButton.BackgroundImageLayout = ((System.Windows.Forms.ImageLayout)(resources.GetObject("resource.BackgroundImageLayout")));
-            this.textBoxHost.CustomButton.Dock = ((System.Windows.Forms.DockStyle)(resources.GetObject("resource.Dock")));
-            this.textBoxHost.CustomButton.FlatStyle = ((System.Windows.Forms.FlatStyle)(resources.GetObject("resource.FlatStyle")));
-            this.textBoxHost.CustomButton.Font = ((System.Drawing.Font)(resources.GetObject("resource.Font")));
             this.textBoxHost.CustomButton.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image")));
-            this.textBoxHost.CustomButton.ImageAlign = ((System.Drawing.ContentAlignment)(resources.GetObject("resource.ImageAlign")));
-            this.textBoxHost.CustomButton.ImageIndex = ((int)(resources.GetObject("resource.ImageIndex")));
-            this.textBoxHost.CustomButton.ImageKey = resources.GetString("resource.ImageKey");
             this.textBoxHost.CustomButton.ImeMode = ((System.Windows.Forms.ImeMode)(resources.GetObject("resource.ImeMode")));
             this.textBoxHost.CustomButton.Location = ((System.Drawing.Point)(resources.GetObject("resource.Location")));
-            this.textBoxHost.CustomButton.MaximumSize = ((System.Drawing.Size)(resources.GetObject("resource.MaximumSize")));
             this.textBoxHost.CustomButton.Name = "";
-            this.textBoxHost.CustomButton.RightToLeft = ((System.Windows.Forms.RightToLeft)(resources.GetObject("resource.RightToLeft")));
             this.textBoxHost.CustomButton.Size = ((System.Drawing.Size)(resources.GetObject("resource.Size")));
             this.textBoxHost.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
             this.textBoxHost.CustomButton.TabIndex = ((int)(resources.GetObject("resource.TabIndex")));
-            this.textBoxHost.CustomButton.TextAlign = ((System.Drawing.ContentAlignment)(resources.GetObject("resource.TextAlign")));
-            this.textBoxHost.CustomButton.TextImageRelation = ((System.Windows.Forms.TextImageRelation)(resources.GetObject("resource.TextImageRelation")));
             this.textBoxHost.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
             this.textBoxHost.CustomButton.UseSelectable = true;
             this.textBoxHost.CustomButton.Visible = ((bool)(resources.GetObject("resource.Visible")));
@@ -190,7 +174,7 @@
             // radioButtonEur
             // 
             resources.ApplyResources(this.radioButtonEur, "radioButtonEur");
-            this.radioButtonEur.BackColor = System.Drawing.Color.Transparent;
+            this.radioButtonEur.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.radioButtonEur.FlatAppearance.CheckedBackColor = System.Drawing.Color.Teal;
             this.radioButtonEur.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Aqua;
             this.radioButtonEur.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
@@ -203,7 +187,7 @@
             // radioButtonUs
             // 
             resources.ApplyResources(this.radioButtonUs, "radioButtonUs");
-            this.radioButtonUs.BackColor = System.Drawing.Color.Transparent;
+            this.radioButtonUs.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.radioButtonUs.FlatAppearance.CheckedBackColor = System.Drawing.Color.Teal;
             this.radioButtonUs.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Aqua;
             this.radioButtonUs.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
@@ -216,7 +200,7 @@
             // radioButtonJap
             // 
             resources.ApplyResources(this.radioButtonJap, "radioButtonJap");
-            this.radioButtonJap.BackColor = System.Drawing.Color.Transparent;
+            this.radioButtonJap.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.radioButtonJap.FlatAppearance.CheckedBackColor = System.Drawing.Color.Teal;
             this.radioButtonJap.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Aqua;
             this.radioButtonJap.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
@@ -228,9 +212,12 @@
             // 
             // listViewPCKS
             // 
-            resources.ApplyResources(this.listViewPCKS, "listViewPCKS");
             this.listViewPCKS.Activation = System.Windows.Forms.ItemActivation.TwoClick;
+            this.listViewPCKS.BackColor = System.Drawing.Color.Black;
+            this.listViewPCKS.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.myTablePanel1.SetColumnSpan(this.listViewPCKS, 3);
+            resources.ApplyResources(this.listViewPCKS, "listViewPCKS");
+            this.listViewPCKS.ForeColor = System.Drawing.Color.White;
             this.listViewPCKS.HideSelection = false;
             this.listViewPCKS.Name = "listViewPCKS";
             this.listViewPCKS.UseCompatibleStateImageBehavior = false;
@@ -241,8 +228,8 @@
             // 
             // metroTabControlMain
             // 
-            resources.ApplyResources(this.metroTabControlMain, "metroTabControlMain");
             this.metroTabControlMain.Controls.Add(this.metroTabPageMain);
+            resources.ApplyResources(this.metroTabControlMain, "metroTabControlMain");
             this.metroTabControlMain.Name = "metroTabControlMain";
             this.metroTabControlMain.SelectedIndex = 0;
             this.metroTabControlMain.Style = MetroFramework.MetroColorStyle.White;
@@ -251,25 +238,25 @@
             // 
             // contextMenuStripCaffiine
             // 
-            resources.ApplyResources(this.contextMenuStripCaffiine, "contextMenuStripCaffiine");
             this.contextMenuStripCaffiine.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.replaceToolStripMenuItem,
             this.replacePCKToolStripMenuItem});
             this.contextMenuStripCaffiine.Name = "contextMenuStripCaffiine";
+            resources.ApplyResources(this.contextMenuStripCaffiine, "contextMenuStripCaffiine");
             this.contextMenuStripCaffiine.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStripCaffiine_Opening);
             // 
             // replaceToolStripMenuItem
             // 
-            resources.ApplyResources(this.replaceToolStripMenuItem, "replaceToolStripMenuItem");
             this.replaceToolStripMenuItem.Image = global::PckStudio.Properties.Resources.Replace;
             this.replaceToolStripMenuItem.Name = "replaceToolStripMenuItem";
+            resources.ApplyResources(this.replaceToolStripMenuItem, "replaceToolStripMenuItem");
             this.replaceToolStripMenuItem.Click += new System.EventHandler(this.replaceToolStripMenuItem_Click);
             // 
             // replacePCKToolStripMenuItem
             // 
-            resources.ApplyResources(this.replacePCKToolStripMenuItem, "replacePCKToolStripMenuItem");
             this.replacePCKToolStripMenuItem.Image = global::PckStudio.Properties.Resources.Replace;
             this.replacePCKToolStripMenuItem.Name = "replacePCKToolStripMenuItem";
+            resources.ApplyResources(this.replacePCKToolStripMenuItem, "replacePCKToolStripMenuItem");
             this.replacePCKToolStripMenuItem.Click += new System.EventHandler(this.replacePCKToolStripMenuItem_Click);
             // 
             // installWiiU
@@ -278,11 +265,13 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BorderStyle = MetroFramework.Forms.MetroFormBorderStyle.FixedSingle;
             this.Controls.Add(this.metroTabControlMain);
+            this.ForeColor = System.Drawing.Color.White;
             this.MaximizeBox = false;
             this.Name = "installWiiU";
             this.Resizable = false;
             this.ShadowType = MetroFramework.Forms.MetroFormShadowType.SystemShadow;
-            this.Style = MetroFramework.MetroColorStyle.White;
+            this.Style = MetroFramework.MetroColorStyle.Black;
+            this.TextAlign = MetroFramework.Forms.MetroFormTextAlign.Center;
             this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.metroTabPageMain.ResumeLayout(false);
             this.myTablePanel1.ResumeLayout(false);

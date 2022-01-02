@@ -59,8 +59,7 @@ namespace PckStudio.Forms.Utilities
             // 
             // metroPanel1
             // 
-            resources.ApplyResources(this.metroPanel1, "metroPanel1");
-            this.metroPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.metroPanel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.metroPanel1.Controls.Add(this.numericUpDown3);
             this.metroPanel1.Controls.Add(this.numericUpDown2);
             this.metroPanel1.Controls.Add(this.numericUpDown1);
@@ -73,12 +72,16 @@ namespace PckStudio.Forms.Utilities
             this.metroPanel1.Controls.Add(this.metroTextBox1);
             this.metroPanel1.Controls.Add(this.metroLabel1);
             this.metroPanel1.Controls.Add(this.pictureBox1);
+            resources.ApplyResources(this.metroPanel1, "metroPanel1");
+            this.metroPanel1.ForeColor = System.Drawing.Color.White;
             this.metroPanel1.HorizontalScrollbarBarColor = true;
             this.metroPanel1.HorizontalScrollbarHighlightOnWheel = false;
             this.metroPanel1.HorizontalScrollbarSize = 10;
             this.metroPanel1.Name = "metroPanel1";
-            this.metroPanel1.Style = MetroFramework.MetroColorStyle.Silver;
+            this.metroPanel1.Style = MetroFramework.MetroColorStyle.Black;
             this.metroPanel1.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.metroPanel1.UseCustomBackColor = true;
+            this.metroPanel1.UseCustomForeColor = true;
             this.metroPanel1.VerticalScrollbarBarColor = true;
             this.metroPanel1.VerticalScrollbarHighlightOnWheel = false;
             this.metroPanel1.VerticalScrollbarSize = 10;
@@ -134,64 +137,59 @@ namespace PckStudio.Forms.Utilities
             // metroLabel5
             // 
             resources.ApplyResources(this.metroLabel5, "metroLabel5");
+            this.metroLabel5.BackColor = System.Drawing.Color.Transparent;
             this.metroLabel5.Name = "metroLabel5";
             this.metroLabel5.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.metroLabel5.UseCustomBackColor = true;
+            this.metroLabel5.UseCustomForeColor = true;
             // 
             // metroLabel4
             // 
             resources.ApplyResources(this.metroLabel4, "metroLabel4");
+            this.metroLabel4.BackColor = System.Drawing.Color.Transparent;
             this.metroLabel4.Name = "metroLabel4";
             this.metroLabel4.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.metroLabel4.UseCustomBackColor = true;
+            this.metroLabel4.UseCustomForeColor = true;
             // 
             // metroLabel3
             // 
             resources.ApplyResources(this.metroLabel3, "metroLabel3");
+            this.metroLabel3.BackColor = System.Drawing.Color.Transparent;
             this.metroLabel3.Name = "metroLabel3";
             this.metroLabel3.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.metroLabel3.UseCustomBackColor = true;
+            this.metroLabel3.UseCustomForeColor = true;
             // 
             // metroCheckBox1
             // 
             resources.ApplyResources(this.metroCheckBox1, "metroCheckBox1");
+            this.metroCheckBox1.BackColor = System.Drawing.Color.Transparent;
             this.metroCheckBox1.Name = "metroCheckBox1";
             this.metroCheckBox1.Style = MetroFramework.MetroColorStyle.Silver;
             this.metroCheckBox1.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.metroCheckBox1.UseCustomBackColor = true;
+            this.metroCheckBox1.UseCustomForeColor = true;
             this.metroCheckBox1.UseSelectable = true;
             this.metroCheckBox1.CheckedChanged += new System.EventHandler(this.metroCheckBox1_CheckedChanged);
             // 
             // metroTextBox2
             // 
-            resources.ApplyResources(this.metroTextBox2, "metroTextBox2");
             // 
             // 
             // 
-            this.metroTextBox2.CustomButton.AccessibleDescription = resources.GetString("resource.AccessibleDescription");
-            this.metroTextBox2.CustomButton.AccessibleName = resources.GetString("resource.AccessibleName");
-            this.metroTextBox2.CustomButton.Anchor = ((System.Windows.Forms.AnchorStyles)(resources.GetObject("resource.Anchor")));
-            this.metroTextBox2.CustomButton.AutoSize = ((bool)(resources.GetObject("resource.AutoSize")));
-            this.metroTextBox2.CustomButton.AutoSizeMode = ((System.Windows.Forms.AutoSizeMode)(resources.GetObject("resource.AutoSizeMode")));
-            this.metroTextBox2.CustomButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("resource.BackgroundImage")));
-            this.metroTextBox2.CustomButton.BackgroundImageLayout = ((System.Windows.Forms.ImageLayout)(resources.GetObject("resource.BackgroundImageLayout")));
-            this.metroTextBox2.CustomButton.Dock = ((System.Windows.Forms.DockStyle)(resources.GetObject("resource.Dock")));
-            this.metroTextBox2.CustomButton.FlatStyle = ((System.Windows.Forms.FlatStyle)(resources.GetObject("resource.FlatStyle")));
-            this.metroTextBox2.CustomButton.Font = ((System.Drawing.Font)(resources.GetObject("resource.Font")));
             this.metroTextBox2.CustomButton.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image")));
-            this.metroTextBox2.CustomButton.ImageAlign = ((System.Drawing.ContentAlignment)(resources.GetObject("resource.ImageAlign")));
-            this.metroTextBox2.CustomButton.ImageIndex = ((int)(resources.GetObject("resource.ImageIndex")));
-            this.metroTextBox2.CustomButton.ImageKey = resources.GetString("resource.ImageKey");
             this.metroTextBox2.CustomButton.ImeMode = ((System.Windows.Forms.ImeMode)(resources.GetObject("resource.ImeMode")));
             this.metroTextBox2.CustomButton.Location = ((System.Drawing.Point)(resources.GetObject("resource.Location")));
-            this.metroTextBox2.CustomButton.MaximumSize = ((System.Drawing.Size)(resources.GetObject("resource.MaximumSize")));
             this.metroTextBox2.CustomButton.Name = "";
-            this.metroTextBox2.CustomButton.RightToLeft = ((System.Windows.Forms.RightToLeft)(resources.GetObject("resource.RightToLeft")));
             this.metroTextBox2.CustomButton.Size = ((System.Drawing.Size)(resources.GetObject("resource.Size")));
             this.metroTextBox2.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
             this.metroTextBox2.CustomButton.TabIndex = ((int)(resources.GetObject("resource.TabIndex")));
-            this.metroTextBox2.CustomButton.TextAlign = ((System.Drawing.ContentAlignment)(resources.GetObject("resource.TextAlign")));
-            this.metroTextBox2.CustomButton.TextImageRelation = ((System.Windows.Forms.TextImageRelation)(resources.GetObject("resource.TextImageRelation")));
             this.metroTextBox2.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
             this.metroTextBox2.CustomButton.UseSelectable = true;
             this.metroTextBox2.CustomButton.Visible = ((bool)(resources.GetObject("resource.Visible")));
             this.metroTextBox2.Lines = new string[0];
+            resources.ApplyResources(this.metroTextBox2, "metroTextBox2");
             this.metroTextBox2.MaxLength = 32767;
             this.metroTextBox2.Name = "metroTextBox2";
             this.metroTextBox2.PasswordChar = '\0';
@@ -208,43 +206,29 @@ namespace PckStudio.Forms.Utilities
             // metroLabel2
             // 
             resources.ApplyResources(this.metroLabel2, "metroLabel2");
+            this.metroLabel2.BackColor = System.Drawing.Color.Transparent;
             this.metroLabel2.Name = "metroLabel2";
             this.metroLabel2.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.metroLabel2.UseCustomBackColor = true;
+            this.metroLabel2.UseCustomForeColor = true;
             // 
             // metroTextBox1
             // 
-            resources.ApplyResources(this.metroTextBox1, "metroTextBox1");
             // 
             // 
             // 
-            this.metroTextBox1.CustomButton.AccessibleDescription = resources.GetString("resource.AccessibleDescription1");
-            this.metroTextBox1.CustomButton.AccessibleName = resources.GetString("resource.AccessibleName1");
-            this.metroTextBox1.CustomButton.Anchor = ((System.Windows.Forms.AnchorStyles)(resources.GetObject("resource.Anchor1")));
-            this.metroTextBox1.CustomButton.AutoSize = ((bool)(resources.GetObject("resource.AutoSize1")));
-            this.metroTextBox1.CustomButton.AutoSizeMode = ((System.Windows.Forms.AutoSizeMode)(resources.GetObject("resource.AutoSizeMode1")));
-            this.metroTextBox1.CustomButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("resource.BackgroundImage1")));
-            this.metroTextBox1.CustomButton.BackgroundImageLayout = ((System.Windows.Forms.ImageLayout)(resources.GetObject("resource.BackgroundImageLayout1")));
-            this.metroTextBox1.CustomButton.Dock = ((System.Windows.Forms.DockStyle)(resources.GetObject("resource.Dock1")));
-            this.metroTextBox1.CustomButton.FlatStyle = ((System.Windows.Forms.FlatStyle)(resources.GetObject("resource.FlatStyle1")));
-            this.metroTextBox1.CustomButton.Font = ((System.Drawing.Font)(resources.GetObject("resource.Font1")));
             this.metroTextBox1.CustomButton.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image1")));
-            this.metroTextBox1.CustomButton.ImageAlign = ((System.Drawing.ContentAlignment)(resources.GetObject("resource.ImageAlign1")));
-            this.metroTextBox1.CustomButton.ImageIndex = ((int)(resources.GetObject("resource.ImageIndex1")));
-            this.metroTextBox1.CustomButton.ImageKey = resources.GetString("resource.ImageKey1");
             this.metroTextBox1.CustomButton.ImeMode = ((System.Windows.Forms.ImeMode)(resources.GetObject("resource.ImeMode1")));
             this.metroTextBox1.CustomButton.Location = ((System.Drawing.Point)(resources.GetObject("resource.Location1")));
-            this.metroTextBox1.CustomButton.MaximumSize = ((System.Drawing.Size)(resources.GetObject("resource.MaximumSize1")));
             this.metroTextBox1.CustomButton.Name = "";
-            this.metroTextBox1.CustomButton.RightToLeft = ((System.Windows.Forms.RightToLeft)(resources.GetObject("resource.RightToLeft1")));
             this.metroTextBox1.CustomButton.Size = ((System.Drawing.Size)(resources.GetObject("resource.Size1")));
             this.metroTextBox1.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
             this.metroTextBox1.CustomButton.TabIndex = ((int)(resources.GetObject("resource.TabIndex1")));
-            this.metroTextBox1.CustomButton.TextAlign = ((System.Drawing.ContentAlignment)(resources.GetObject("resource.TextAlign1")));
-            this.metroTextBox1.CustomButton.TextImageRelation = ((System.Windows.Forms.TextImageRelation)(resources.GetObject("resource.TextImageRelation1")));
             this.metroTextBox1.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
             this.metroTextBox1.CustomButton.UseSelectable = true;
             this.metroTextBox1.CustomButton.Visible = ((bool)(resources.GetObject("resource.Visible1")));
             this.metroTextBox1.Lines = new string[0];
+            resources.ApplyResources(this.metroTextBox1, "metroTextBox1");
             this.metroTextBox1.MaxLength = 32767;
             this.metroTextBox1.Name = "metroTextBox1";
             this.metroTextBox1.PasswordChar = '\0';
@@ -262,55 +246,68 @@ namespace PckStudio.Forms.Utilities
             // metroLabel1
             // 
             resources.ApplyResources(this.metroLabel1, "metroLabel1");
+            this.metroLabel1.BackColor = System.Drawing.Color.Transparent;
             this.metroLabel1.Name = "metroLabel1";
+            this.metroLabel1.Style = MetroFramework.MetroColorStyle.Black;
             this.metroLabel1.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.metroLabel1.UseCustomBackColor = true;
+            this.metroLabel1.UseCustomForeColor = true;
             // 
             // pictureBox1
             // 
-            resources.ApplyResources(this.pictureBox1, "pictureBox1");
             this.pictureBox1.BackColor = System.Drawing.Color.Gray;
+            resources.ApplyResources(this.pictureBox1, "pictureBox1");
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.TabStop = false;
             // 
             // menuStrip
             // 
             resources.ApplyResources(this.menuStrip, "menuStrip");
-            this.menuStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.menuStrip.BackColor = System.Drawing.Color.Black;
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem});
             this.menuStrip.Name = "menuStrip";
             // 
             // fileToolStripMenuItem
             // 
-            resources.ApplyResources(this.fileToolStripMenuItem, "fileToolStripMenuItem");
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.saveToolStripMenuItem1});
             this.fileToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            resources.ApplyResources(this.fileToolStripMenuItem, "fileToolStripMenuItem");
             // 
             // saveToolStripMenuItem1
             // 
+            this.saveToolStripMenuItem1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.saveToolStripMenuItem1.ForeColor = System.Drawing.Color.White;
             resources.ApplyResources(this.saveToolStripMenuItem1, "saveToolStripMenuItem1");
             this.saveToolStripMenuItem1.Name = "saveToolStripMenuItem1";
             this.saveToolStripMenuItem1.Click += new System.EventHandler(this.saveToolStripMenuItem1_Click);
             // 
             // metroPanel2
             // 
-            resources.ApplyResources(this.metroPanel2, "metroPanel2");
-            this.metroPanel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.metroPanel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.metroPanel2.Controls.Add(this.treeView1);
+            resources.ApplyResources(this.metroPanel2, "metroPanel2");
+            this.metroPanel2.ForeColor = System.Drawing.Color.White;
             this.metroPanel2.HorizontalScrollbarBarColor = true;
             this.metroPanel2.HorizontalScrollbarHighlightOnWheel = false;
             this.metroPanel2.HorizontalScrollbarSize = 10;
             this.metroPanel2.Name = "metroPanel2";
+            this.metroPanel2.Style = MetroFramework.MetroColorStyle.Black;
+            this.metroPanel2.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.metroPanel2.UseCustomBackColor = true;
+            this.metroPanel2.UseCustomForeColor = true;
+            this.metroPanel2.UseStyleColors = true;
             this.metroPanel2.VerticalScrollbarBarColor = true;
             this.metroPanel2.VerticalScrollbarHighlightOnWheel = false;
             this.metroPanel2.VerticalScrollbarSize = 10;
             // 
             // treeView1
             // 
+            this.treeView1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.treeView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             resources.ApplyResources(this.treeView1, "treeView1");
-            this.treeView1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.treeView1.ForeColor = System.Drawing.Color.White;
             this.treeView1.LabelEdit = true;
             this.treeView1.Name = "treeView1";
@@ -324,7 +321,8 @@ namespace PckStudio.Forms.Utilities
             this.Controls.Add(this.menuStrip);
             this.Controls.Add(this.metroPanel1);
             this.Name = "COLEditor";
-            this.Style = MetroFramework.MetroColorStyle.Silver;
+            this.Style = MetroFramework.MetroColorStyle.Black;
+            this.TextAlign = MetroFramework.Forms.MetroFormTextAlign.Center;
             this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.metroPanel1.ResumeLayout(false);
             this.metroPanel1.PerformLayout();

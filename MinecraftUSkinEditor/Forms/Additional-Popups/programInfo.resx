@@ -120,4 +120,23 @@
   <metadata name="folderBrowserDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <data name="label1.Text" xml:space="preserve">
+    <value>PCK Studio UltimateCraft Edition has been created by EternalModz
+
+About PCK Studio
+Program Version: 3.0
+Works on: Windows 11 and lower
+
+For updates to this software, please visit 
+https://ultimatecraft.webflow.io
+
+If you have any questions feel free to add me on Discord!
+EternalModz (Developer)#3988
+
+Program Maintained by PhoenixARC
+3D skin renderer by Łukasz Rejman
+Utilizing the Nobledez Website by Newagent
+3D renderer found by Newagent
+Support from KKC Zombie</value>
+  </data>
 </root>

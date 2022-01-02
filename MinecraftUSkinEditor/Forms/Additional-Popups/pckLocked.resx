@@ -121,15 +121,18 @@
   <data name="textBoxPass.Location" type="System.Drawing.Point, System.Drawing">
     <value>23, 67</value>
   </data>
-  <data name="textBoxPass.Size" type="System.Drawing.Size, System.Drawing">
-    <value>244, 20</value>
-  </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="textBoxPass.Multiline" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="textBoxPass.Size" type="System.Drawing.Size, System.Drawing">
+    <value>325, 20</value>
+  </data>
   <data name="textBoxPass.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
   <data name="textBoxPass.Text" xml:space="preserve">
-    <value>Password</value>
+    <value> Password</value>
   </data>
   <data name="&gt;&gt;textBoxPass.Name" xml:space="preserve">
     <value>textBoxPass</value>
@@ -145,10 +148,10 @@
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="buttonUnlocked.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
+    <value>Popup</value>
   </data>
   <data name="buttonUnlocked.Location" type="System.Drawing.Point, System.Drawing">
-    <value>273, 65</value>
+    <value>141, 93</value>
   </data>
   <data name="buttonUnlocked.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>

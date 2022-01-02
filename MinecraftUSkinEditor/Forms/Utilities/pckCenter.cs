@@ -27,7 +27,6 @@ namespace PckStudio.Forms
         bool devPicksLoaded = true;
         bool communityLoaded = true;
         bool TexLoaded = true;
-        bool isVita = false;
         
 
         public pckCenter()
@@ -41,8 +40,6 @@ namespace PckStudio.Forms
             {
                 Directory.CreateDirectory(cacheDir);
             }
-            if(isVita)
-                loadDirectory = File.ReadAllText(Environment.CurrentDirectory + "\\settings.ini").Split(new[] { "\r\n", "\n" }, StringSplitOptions.None)[1] + "/studio/PCK/api/pckCenterVitaList.txt";
         }
 
         private void reload(bool checkNeeded)
@@ -158,14 +155,12 @@ namespace PckStudio.Forms
                                 string desc = parseDesc[2];
                                 string direct = parseDesc[3];
                                 string ad = parseDesc[4];
-                                bool IsVita = (parseDesc[5] == "true" || parseDesc[5] == "True");
-                                string Packname = parseDesc[6];
 
-                                PckPreview pckPreview = new PckPreview(pckName, author, desc, direct, ad, bmp, 0, mod, null, IsVita, Packname);
+                                PckPreview pckPreview = new PckPreview(pckName, author, desc, direct, ad, bmp, 0, mod, null);
                                 pckLayout.Controls.Add(pckPreview);
                             }
                         }
-                        catch(Exception err) { Console.WriteLine(err.Message); }
+                        catch { }
                     }
                 }
             }
@@ -180,9 +175,7 @@ namespace PckStudio.Forms
             if (radioButtonNew.Checked == true)
             {
                 loadDirectory = hosturl + "pckCenterNew.txt";
-                if (isVita)
-                    loadDirectory = hosturl + "pckCenterVitaNew.txt";
-                if (!string.IsNullOrWhiteSpace(new WebClient().DownloadString(loadDirectory)))
+                if (new WebClient().DownloadString(loadDirectory) != " ")
                 {
                     reload(newLoaded);
                     newLoaded = false;
@@ -196,9 +189,7 @@ namespace PckStudio.Forms
             if (radioButtonDevPicks.Checked == true)
             {
                 loadDirectory = hosturl + "pckCenterPicks.txt";
-                if (isVita)
-                    loadDirectory = hosturl + "pckCenterVitaPicks.txt";
-                if (!string.IsNullOrWhiteSpace(new WebClient().DownloadString(loadDirectory)))
+                    if (new WebClient().DownloadString(loadDirectory) != " ")
                     {
                         reload(devPicksLoaded);
                         devPicksLoaded = false;
@@ -212,9 +203,7 @@ namespace PckStudio.Forms
             if (radioButtonCommunity.Checked == true)
             {
                 loadDirectory = hosturl + "pckCenterCommunity.txt";
-                if(isVita)
-                    loadDirectory = hosturl + "pckCenterVitaCommunity.txt";
-                if (!string.IsNullOrWhiteSpace(new WebClient().DownloadString(loadDirectory)))
+                if (new WebClient().DownloadString(loadDirectory) != " ")
                 {
                     reload(communityLoaded);
                     communityLoaded = false;
@@ -272,7 +261,7 @@ namespace PckStudio.Forms
                     bmp = (Bitmap)Image.FromStream(memStream);
                 }
 
-                PckPreview pckPreview = new PckPreview(pckName, author, desc, direct, ad, bmp, 1, mod, loadCollectdion, PSVitaPCKCheckbox.Checked, "");
+                PckPreview pckPreview = new PckPreview(pckName, author, desc, direct, ad, bmp, 1, mod, loadCollectdion);
                 pckLayout.Controls.Add(pckPreview);
             }
             pckLayout.Enabled = true;
@@ -283,9 +272,7 @@ namespace PckStudio.Forms
             if (radioButtonAll.Checked == true)
             {
                 loadDirectory = hosturl + "pckCenterList.txt";
-                if (isVita)
-                    loadDirectory = hosturl + "pckCenterVitaList.txt";
-                if (!string.IsNullOrWhiteSpace(new WebClient().DownloadString(loadDirectory)))
+                if (new WebClient().DownloadString(loadDirectory) != " ")
                 {
                     reload(nobleLoaded);
                     nobleLoaded = false;
@@ -334,10 +321,7 @@ namespace PckStudio.Forms
 
         private void buttonSubmit_Click(object sender, EventArgs e)
         {
-            if(!isVita)
             System.Diagnostics.Process.Start("mailto:phoenixarc.canarynotifs@gmail.com?subject=PCK%20Submission&body=Pack%20name(%E3%83%91%E3%83%83%E3%82%AF%E5%90%8D)%3A%0A%0Aauthor(%E8%91%97%E8%80%85)%3A%0A%0Adescription(%E8%AA%AC%E6%98%8E)%3A%0A%0Aimage(%E7%94%BB%E5%83%8F)%3A");
-            if(isVita)
-            System.Diagnostics.Process.Start("mailto:phoenixarc.canarynotifs@gmail.com?subject=PCK%20Submission--Vita--&body=Pack%20name(%E3%83%91%E3%83%83%E3%82%AF%E5%90%8D)%3A%0A%0Aauthor(%E8%91%97%E8%80%85)%3A%0A%0Adescription(%E8%AA%AC%E6%98%8E)%3A%0A%0Aimage(%E7%94%BB%E5%83%8F)%3A%3A%0A%0APack%20To%20Replace%3A%0A%0A");
         }
 
         private void radioButtonTex_CheckedChanged(object sender, EventArgs e)
@@ -345,39 +329,13 @@ namespace PckStudio.Forms
             if (radioButtonTex.Checked == true)
             {
                 loadDirectory = hosturl + "pckCenterTex.txt";
-                if (isVita)
-                    loadDirectory = hosturl + "pckCenterVitaTex.txt";
-                if (!string.IsNullOrWhiteSpace(new WebClient().DownloadString(loadDirectory)))
+                if (new WebClient().DownloadString(loadDirectory) != " ")
                 {
                     reload(TexLoaded);
                     TexLoaded = false;
                 }
                 else { MessageBox.Show("No Packs Avaliable!"); }
             }
-        }
-
-        private void PSVitaPCKCheckbox_CheckedChanged(object sender, EventArgs e)
-        {
-            isVita = PSVitaPCKCheckbox.Checked;
-
-
-            nobleLoaded = true;
-            newLoaded = true;
-            devPicksLoaded = true;
-            communityLoaded = true;
-            TexLoaded = true;
-
-            radioButtonAll.Checked = true;
-            loadDirectory = hosturl + "pckCenterList.txt";
-
-            if (isVita)
-                loadDirectory = hosturl + "pckCenterVitaList.txt";
-            if (!string.IsNullOrWhiteSpace(new WebClient().DownloadString(loadDirectory)))
-            {
-                reload(nobleLoaded);
-                nobleLoaded = false;
-            }
-            else { MessageBox.Show("No Packs Avaliable!"); }
         }
     }
 
@@ -390,8 +348,6 @@ namespace PckStudio.Forms
         string ad;
         int mode;
         string mod;
-        bool IsVita;
-        string Pack;
 
         Bitmap icon;
 
@@ -400,7 +356,7 @@ namespace PckStudio.Forms
         MyTablePanel layout = new MyTablePanel();
         MethodInvoker reloader;
 
-        public PckPreview(string name, string author, string desc, string direct, string ad, Bitmap icon, int mode, string mod, MethodInvoker Reloader, bool vita, string packName) : base()
+        public PckPreview(string name, string author, string desc, string direct, string ad, Bitmap icon, int mode, string mod, MethodInvoker Reloader) : base()
         {
             this.reloader = Reloader;
             nameLabel.parentPreview = this;
@@ -413,8 +369,6 @@ namespace PckStudio.Forms
             this.mode = mode;
             this.mod = mod;
             this.icon = icon;
-            this.IsVita = vita;
-            this.Pack = packName;
             layout.BackColor = Color.White;
             this.Size = new Size(250, 280);
             nameLabel.Dock = DockStyle.Fill;
@@ -453,10 +407,9 @@ namespace PckStudio.Forms
         }
         public void onClick()
         {
-
             layout.BackColor = Color.Gray;
             layout.Refresh();
-            pckCenterOpen openPck = new pckCenterOpen(name, author, desc, direct, ad, icon, mode, mod, reloader, IsVita, Pack);
+            pckCenterOpen openPck = new pckCenterOpen(name, author, desc, direct, ad, icon, mode, mod, reloader);
             openPck.ShowDialog();
         }
         public void onDoubleClick()

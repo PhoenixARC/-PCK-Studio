@@ -36,26 +36,28 @@
             // 
             // listView1
             // 
-            resources.ApplyResources(this.listView1, "listView1");
-            this.listView1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.listView1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.listView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.listView1.ForeColor = System.Drawing.Color.White;
             this.listView1.HideSelection = false;
+            resources.ApplyResources(this.listView1, "listView1");
             this.listView1.Name = "listView1";
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.List;
             // 
             // button1
             // 
+            this.button1.BackColor = System.Drawing.Color.DodgerBlue;
             resources.ApplyResources(this.button1, "button1");
             this.button1.ForeColor = System.Drawing.Color.White;
             this.button1.Name = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // labelSearch
             // 
             resources.ApplyResources(this.labelSearch, "labelSearch");
-            this.labelSearch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.labelSearch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.labelSearch.ForeColor = System.Drawing.Color.White;
             this.labelSearch.Name = "labelSearch";
             // 
@@ -73,7 +75,8 @@
             this.Name = "presetMeta";
             this.Resizable = false;
             this.ShadowType = MetroFramework.Forms.MetroFormShadowType.DropShadow;
-            this.Style = MetroFramework.MetroColorStyle.Silver;
+            this.Style = MetroFramework.MetroColorStyle.Black;
+            this.TextAlign = MetroFramework.Forms.MetroFormTextAlign.Center;
             this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.Load += new System.EventHandler(this.presetMeta_Load);
             this.ResumeLayout(false);

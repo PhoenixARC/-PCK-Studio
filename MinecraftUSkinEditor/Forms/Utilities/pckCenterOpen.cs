@@ -30,10 +30,8 @@ namespace PckStudio.Forms
         string mod;
         string appData = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/PCK Studio/";
         MethodInvoker reloader;
-        bool IsVita;
-        string Pack;
 
-        public pckCenterOpen(string name, string authorIn, string descIn, string directIn, string adIn, Bitmap display, int mode, string mod, MethodInvoker reloader, bool Vita, string PackName)
+        public pckCenterOpen(string name, string authorIn, string descIn, string directIn, string adIn, Bitmap display, int mode, string mod, MethodInvoker reloader)
         {
             InitializeComponent();
             pictureBoxDisplay.Image = display;
@@ -48,8 +46,6 @@ namespace PckStudio.Forms
             desc = descIn;
             direct = directIn;
             ad = adIn;
-            IsVita = Vita;
-            Pack = PackName;
         }
 
         private void pckCenterOpen_Load(object sender, EventArgs e)
@@ -82,22 +78,9 @@ namespace PckStudio.Forms
                 buttonExport.Visible = true;
                 buttonDirect.Visible = false;
             }
-            if (IsVita)
-            {
-                buttonBedrock.Visible = false;
-                buttonDelete.Visible = false;
-                buttonExport.Visible = false;
-                buttonInstallPs3.Visible = false;
-                buttonInstallXbox.Visible = false;
-                buttonInstallWiiU.Visible = false;
-            }
 
             labelName.Text = name;
             labelDesc.Text = desc;
-            if(IsVita)
-            labelDesc.Text += "\nPS4 / PSVita PCK";
-            if(IsVita)
-            labelDesc.Text += "\nPack: " + Pack;
             labelDesc.Text += Environment.NewLine + Environment.NewLine + "Creator: " + author;
         }
 
