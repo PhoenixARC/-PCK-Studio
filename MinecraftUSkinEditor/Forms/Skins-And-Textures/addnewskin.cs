@@ -649,15 +649,6 @@ namespace PckStudio
 
             if (radioSERVER.Checked == true)
             {
-                try
-                {
-                    WebClient wc = new WebClient();
-                    textSkinID.Text = wc.DownloadString("http://vylryna.ddns.net/id") ;
-                    textSkinID.Enabled = false;
-                }
-                catch
-                {
-                }
             }
         }
     }
