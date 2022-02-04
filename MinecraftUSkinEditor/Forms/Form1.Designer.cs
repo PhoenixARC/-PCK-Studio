@@ -40,6 +40,8 @@
             this.importExtractedSkinsFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.extractToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cloneFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem(); // Clone file tool
+            this.renameFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem(); // Rename file tool
             this.replaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.moveUpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -164,8 +166,10 @@
             // 
             this.contextMenuPCKEntries.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.createToolStripMenuItem,
+            this.cloneFileToolStripMenuItem,
             this.importSkinsToolStripMenuItem,
             this.extractToolStripMenuItem,
+            this.renameFileToolStripMenuItem,
             this.replaceToolStripMenuItem,
             this.moveUpToolStripMenuItem,
             this.deleteFileToolStripMenuItem,
@@ -232,6 +236,18 @@
             resources.ApplyResources(this.extractToolStripMenuItem, "extractToolStripMenuItem");
             this.extractToolStripMenuItem.Name = "extractToolStripMenuItem";
             this.extractToolStripMenuItem.Click += new System.EventHandler(this.extractToolStripMenuItem_Click);
+            // 
+            // cloneFileToolStripMenuItem
+            // 
+            resources.ApplyResources(this.cloneFileToolStripMenuItem, "cloneFileToolStripMenuItem");
+            this.cloneFileToolStripMenuItem.Name = "cloneFileToolStripMenuItem";
+            this.cloneFileToolStripMenuItem.Click += new System.EventHandler(this.cloneFileToolStripMenuItem_Click);
+            // 
+            // renameFileToolStripMenuItem
+            // 
+            resources.ApplyResources(this.renameFileToolStripMenuItem, "renameFileToolStripMenuItem");
+            this.renameFileToolStripMenuItem.Name = "renameFileToolStripMenuItem";
+            this.renameFileToolStripMenuItem.Click += new System.EventHandler(this.renameFileToolStripMenuItem_Click);
             // 
             // replaceToolStripMenuItem
             // 
@@ -1052,7 +1068,9 @@
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
         private System.Windows.Forms.ContextMenuStrip contextMenuPCKEntries;
+        private System.Windows.Forms.ToolStripMenuItem cloneFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem extractToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem renameFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem replaceToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteFileToolStripMenuItem;
         private System.Windows.Forms.ContextMenuStrip contextMenuMetaTree;

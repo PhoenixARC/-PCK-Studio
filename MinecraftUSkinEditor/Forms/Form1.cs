@@ -818,6 +818,70 @@ namespace PckStudio
         }
         #endregion
 
+        #region renames pck entry from treeview and pck.minefiles
+        private void renameFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PCK.MineFile mf = (PCK.MineFile)treeViewMain.SelectedNode.Tag;
+            string old_name = treeViewMain.SelectedNode.Text;
+            string new_name = Microsoft.VisualBasic.Interaction.InputBox("Please insert the new file name", "Rename File", mf.name);
+
+            if (new_name == "") new_name = old_name;
+            currentPCK.mineFiles[currentPCK.mineFiles.IndexOf(mf)].name = new_name;
+            mf.name = new_name;
+            treeViewMain.SelectedNode.Text = Path.GetFileName(new_name);
+        }
+        #endregion
+
+        #region clones pck entry from treeview and pck.minefiles
+        private void cloneFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (treeViewMain.SelectedNode.Tag == null) return;
+
+            PCK.MineFile mfO = (PCK.MineFile)treeViewMain.SelectedNode.Tag;
+            FileInfo mfCO = new FileInfo(mfO.name);
+
+            PCK.MineFile mf = new PCK.MineFile();//Creates new minefile template
+            mf.data = mfO.data;//adds file data to minefile
+            mf.filesize = mfO.data.Length;//gets filesize for minefile
+            mf.name = Path.GetDirectoryName(mfO.name).Replace("\\", "/") + "/" + Path.GetFileNameWithoutExtension(mfO.name) + "_clone" + mfCO.Extension;//sets minfile name to file name
+            if (treeViewMain.SelectedNode.Parent == null && mf.name.StartsWith("/")) mf.name = mf.name.Remove(0, 1);
+            mf.entries = mfO.entries;
+            mf.type = 0;//sets minefile type to default
+            TreeNode add = new TreeNode(Path.GetFileName(mf.name)) { Tag = mf };//creates node for minefile
+
+            //Gets proper file icon for minefile
+            if (Path.GetExtension(add.Text) == ".binka")
+            {
+                add.ImageIndex = 1;
+                add.SelectedImageIndex = 1;
+            }
+            else if (Path.GetExtension(add.Text) == ".png")
+            {
+                add.ImageIndex = 2;
+                add.SelectedImageIndex = 2;
+            }
+            else if (Path.GetExtension(add.Text) == ".loc")
+            {
+                add.ImageIndex = 3;
+                add.SelectedImageIndex = 3;
+            }
+            else if (Path.GetExtension(add.Text) == ".pck")
+            {
+                add.ImageIndex = 4;
+                add.SelectedImageIndex = 4;
+            }
+            else
+            {
+                add.ImageIndex = 5;
+                add.SelectedImageIndex = 5;
+            }
+
+            currentPCK.mineFiles.Insert(currentPCK.mineFiles.IndexOf(mfO) + 1, mf); //inserts minefile into proper list index
+            if (treeViewMain.SelectedNode.Parent == null) treeViewMain.Nodes.Insert(treeViewMain.SelectedNode.Index + 1, add); //adds generated minefile node
+            else treeViewMain.SelectedNode.Parent.Nodes.Insert(treeViewMain.SelectedNode.Index + 1, add);//adds generated minefile node to selected folder
+        }
+        #endregion
+
         #region adds file to treeview and pck.minefiles
         private void addFileToolStripMenuItem_Click(object sender, EventArgs e)
         {

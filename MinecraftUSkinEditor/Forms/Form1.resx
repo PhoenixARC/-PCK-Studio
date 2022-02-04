@@ -309,6 +309,28 @@
   <data name="moveUpToolStripMenuItem.Text" xml:space="preserve">
     <value>Move Up</value>
   </data>
+  <data name="cloneFileToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+	<value>
+	  iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAMUExURZ2dnba2tpKSkgAAAGUs/dQAAAAEdFJOU////wBAKqn0AAAACXBIWXMAAA7DAAAOwwHHb6hkAAAANElEQVQoU63IMQIAIAjDQLT//7OWDlBZzZYLIBRUwRog6ZBiQCnYrEOKAcXhygMxgPcfgAOqpAEWLNB/5wAAAABJRU5ErkJggg==
+	</value>
+  </data>
+  <data name="cloneFileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+	<value>228, 22</value>
+  </data>
+  <data name="cloneFileToolStripMenuItem.Text" xml:space="preserve">
+    <value>Clone</value>
+  </data>
+  <data name="renameFileToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+	<value>
+	  iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAtSURBVDhPY2TABP+hNC6ATQ9OADIMr4FMUJpsMGrAqAEgMGoA9qxJQnZmYAAAuTwEG2FXInEAAAAASUVORK5CYII=
+	</value>
+  </data>
+  <data name="renameFileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+	<value>138, 22</value>
+  </data>
+  <data name="renameFileToolStripMenuItem.Text" xml:space="preserve">
+    <value>Rename</value>
+  </data>
   <data name="deleteFileToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
