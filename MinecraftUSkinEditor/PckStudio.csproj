@@ -705,14 +705,8 @@
     <EmbeddedResource Include="Forms\Skins-And-Textures\addAnimatedTexture.resx">
       <DependentUpon>addAnimatedTexture.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Skins-And-Textures\rename.ja.resx">
-      <DependentUpon>rename.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Skins-And-Textures\rename.resx">
       <DependentUpon>rename.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Skins-And-Textures\addCategory.ja.resx">
-      <DependentUpon>addCategory.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Skins-And-Textures\addCategory.resx">
       <DependentUpon>addCategory.cs</DependentUpon>

@@ -175,6 +175,7 @@ namespace PckStudio.Forms.Utilities
 		private void removeCategoryStripMenuItem_Click(object sender, EventArgs e)
 		{
 			cats.Remove(getCatID(treeView1.SelectedNode.Text));
+			audioPCK.mineFiles.Remove((PCK.MineFile)treeView1.SelectedNode.Tag);
 			treeView1.SelectedNode.Remove();
 		}
 
