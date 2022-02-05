@@ -148,7 +148,6 @@
       <HintPath>..\packages\MapSuiteDependency-MicrosoftSqlServerTypes.10.2.0\lib\net45\Microsoft.SqlServer.Types.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Microsoft.Win32.Primitives, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Win32.Primitives.4.0.0\lib\net46\Microsoft.Win32.Primitives.dll</HintPath>
       <Private>True</Private>
@@ -480,6 +479,18 @@
     <Compile Include="Forms\Skins-And-Textures\addAnimatedTexture.Designer.cs">
       <DependentUpon>addAnimatedTexture.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Skins-And-Textures\rename.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Skins-And-Textures\rename.Designer.cs">
+      <DependentUpon>rename.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Skins-And-Textures\addCategory.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Skins-And-Textures\addCategory.Designer.cs">
+      <DependentUpon>addCategory.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Skins-And-Textures\addMeta.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -560,6 +571,12 @@
     </Compile>
     <Compile Include="Forms\Testx-12.Designer.cs">
       <DependentUpon>Testx-12.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Utilities\AudioEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Utilities\AudioEditor.Designer.cs">
+      <DependentUpon>AudioEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Utilities\COLEditor.cs">
       <SubType>Form</SubType>
@@ -688,6 +705,18 @@
     <EmbeddedResource Include="Forms\Skins-And-Textures\addAnimatedTexture.resx">
       <DependentUpon>addAnimatedTexture.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Skins-And-Textures\rename.ja.resx">
+      <DependentUpon>rename.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Skins-And-Textures\rename.resx">
+      <DependentUpon>rename.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Skins-And-Textures\addCategory.ja.resx">
+      <DependentUpon>addCategory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Skins-And-Textures\addCategory.resx">
+      <DependentUpon>addCategory.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Skins-And-Textures\addMeta.ja.resx">
       <DependentUpon>addMeta.cs</DependentUpon>
     </EmbeddedResource>
@@ -758,6 +787,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Testx-12.resx">
       <DependentUpon>Testx-12.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Utilities\AudioEditor.resx">
+      <DependentUpon>AudioEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Utilities\COLEditor.ja.resx">
       <DependentUpon>COLEditor.cs</DependentUpon>
