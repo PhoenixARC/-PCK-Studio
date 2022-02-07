@@ -473,6 +473,12 @@
     <Compile Include="Classes\StoneVOX\utils\StatusText.cs" />
     <Compile Include="Classes\StoneVOX\utils\StopwatchUtil.cs" />
     <Compile Include="Classes\StoneVOX\utils\VectorUtils.cs" />
+    <Compile Include="Forms\Form1_provisional.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Form1_provisional.Designer.cs">
+      <DependentUpon>Form1_provisional.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Skins-And-Textures\addAnimatedTexture.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -698,6 +704,9 @@
     <Compile Include="Classes\TextureUtils.cs" />
     <EmbeddedResource Include="Classes\StoneVOX\gui\editor\GUIEditor.resx">
       <DependentUpon>GUIEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Form1_provisional.resx">
+      <DependentUpon>Form1_provisional.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Skins-And-Textures\addAnimatedTexture.ja.resx">
       <DependentUpon>addAnimatedTexture.cs</DependentUpon>

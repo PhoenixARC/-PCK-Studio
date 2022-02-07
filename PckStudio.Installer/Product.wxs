@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Id="*"
+           Name="PCK Studio"
+           Language="1033"
+           Version="2.8.0.0"
+           Manufacturer="PhoenixARC"
+           UpgradeCode="0bfb1026-21f2-4552-ad71-ca90aae10a25">
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MediaTemplate EmbedCab="yes" />
+
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLDIR"/>
+    <UI>
+      <UIRef Id="WixUI_InstallDir" />
+
+      <Publish Dialog="ExitDialog"
+               Control="Finish"
+               Event="DoAction"
+               Value="CA.LaunchApplication">WIXUI_EXITDIALOGOPTIONALCHECKBOX = 1 and NOT Installed</Publish>
+    </UI>
+
+    <WixVariable Id="WixUILicenseRtf" Value="License.rtf" />
+
+    <WixVariable Id="WixUIBannerBmp" Value="Bitmaps/Banner.png" />
+    <WixVariable Id="WixUIDialogBmp" Value="Bitmaps/Dialog.png" />
+
+    <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="Launch PCK Studio" />
+    <Property Id="WixShellExecTarget" Value="[#PCK Studio.exe]" />
+    <CustomAction Id="CA.LaunchApplication" BinaryKey="WixCA" DllEntry="WixShellExec" Impersonate="yes" />
+
+
+
+    <Icon Id="I.MainIcon" SourceFile="Icon.ico" />
+    <Property Id="ARPPRODUCTICON" Value="I.MainIcon" />
+
+    <Feature Id="F.MainApplication" Title="PCK Studio" Level="1">
+      <ComponentGroupRef Id="CG.StartMenu" />
+      <ComponentGroupRef Id="CG.ProductComponents" />
+    </Feature>
+  </Product>
+
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="D.StartFolder" Name="PCK Studio" />
+      </Directory>
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLDIR" Name="PCK Studio" />
+      </Directory>
+    </Directory>
+
+    <ComponentGroup Id="CG.StartMenu" Directory="D.StartFolder">
+      <Component Id="C.NBTEShortcut" Guid="*">
+        <Shortcut Id="S.NBTEShortcut"
+                  Name="PCK Studio"
+                  Target="[INSTALLDIR]PCK Studio.exe"
+                  WorkingDirectory="INSTALLDIR" />
+        <RemoveFolder Id="RF.StartFolder" On="uninstall" />
+        <RegistryValue Id="RV.NBTEShortcut" Root="HKCU" Key="Software\PCKStudio" Name="installed" Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+      <Component Id="C.Uninstall" Guid="*">
+        <Shortcut Id="S.Uninstall"
+                  Name="Uninstall PCK Studio"
+                  Target="[SystemFolder]msiexec.exe"
+                  Arguments="/x [ProductCode]"
+                  Description="Uninstalls the PCK Studio Application" />
+        <RemoveFolder Id="RF.Uninstall" On ="uninstall" />
+        <RegistryValue Id="RV.Uninstall" Root="HKCU" Key="Software\PCKStudio" Name="uninstall" Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+    </ComponentGroup>
+
+    <ComponentGroup Id="CG.ProductComponents" Directory="INSTALLDIR">
+      <Component Id="C.PCKStudio" Guid="*">
+        <File Source="../MinecraftUSkinEditor/bin/Release/PCK Studio.exe" KeyPath="yes" />
+      </Component>
+      <Component Id="C.settings.ini" Guid="*">
+        <File Source="../MinecraftUSkinEditor/bin/Release/settings.ini" KeyPath="yes" />
+      </Component>
+      <Component Id="C.ver.txt" Guid="*">
+        <File Source="../MinecraftUSkinEditor/bin/Release/ver.txt" KeyPath="yes" />
+      </Component>
+      <Component Id="C.nobleUpdater.exe" Guid="*">
+        <File Source="../MinecraftUSkinEditor/bin/Release/nobleUpdater.exe" KeyPath="yes" />
+      </Component>
+      <Component Id="C.discordrpcw32.dll" Guid="*">
+        <File Source="../MinecraftUSkinEditor/bin/Release/discord-rpc-w32.dll" KeyPath="yes" />
+      </Component>
+      <Component Id="C.templates.UntitledSkinPCK.pck" Guid="*">
+        <File Source="../MinecraftUSkinEditor/bin/Release/templates/UntitledSkinPCK.pck" KeyPath="yes" />
+      </Component>
+      <Component Id="C.ja.PCKStudio.resources.dll" Guid="*">
+        <File Source="../MinecraftUSkinEditor/bin/Release/ja/PCK Studio.resources.dll" KeyPath="yes" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>

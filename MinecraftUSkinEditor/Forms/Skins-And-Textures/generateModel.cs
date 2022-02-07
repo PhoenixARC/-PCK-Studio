@@ -1045,6 +1045,10 @@ namespace PckStudio
             this.listViewBoxes.Columns.Add("Zf", 25);
             this.listViewBoxes.Columns.Add("Xo", 25);
             this.listViewBoxes.Columns.Add("Yo", 25);
+            if(System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height < 780 || System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width < 1080)
+            {
+                this.Size = new Size(753, 707);
+            }
         }
 
 

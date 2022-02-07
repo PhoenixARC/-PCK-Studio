@@ -15,6 +15,7 @@ namespace PckStudio
     {
         public static string baseurl = "https://www.pckstudio.xyz/studio/PCK/api/";
         public static string backurl = "https://raw.githubusercontent.com/PhoenixARC/pckstudio.tk/main/studio/PCK/api/";
+        public static string Appdata = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
         public static bool IsDev = false;
         public static FormMain formMain;
         /// <summary>
@@ -29,18 +30,16 @@ namespace PckStudio
                     IsDev = true;
             }
             catch { }
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
 
             PckStudio.Forms.goodbye gg = new PckStudio.Forms.goodbye();
             PckStudio.Forms.Job gj = new PckStudio.Forms.Job();
 
 
-            if(!System.IO.File.Exists(Environment.CurrentDirectory + "\\goodbyemark"))
+            if(!System.IO.File.Exists(Appdata + "\\goodbyemark"))
             gg.ShowDialog();
-            if(!System.IO.File.Exists(Environment.CurrentDirectory + "\\discordmark"))
+            if(!System.IO.File.Exists(Appdata + "\\discordmark"))
             gj.ShowDialog();
-            Application.Run(new FormMain());
+            Application.Run(new PckStudio.FormMain());
         }
     }
 }

@@ -31,7 +31,7 @@ namespace PckStudio.Forms
 
         private void goodbye_Load(object sender, EventArgs e)
         {
-            System.IO.File.Create(Environment.CurrentDirectory + "\\goodbyemark");
+            System.IO.File.Create(Program.Appdata + "\\goodbyemark");
         }
     }
 }
