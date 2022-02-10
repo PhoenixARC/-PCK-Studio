@@ -471,50 +471,34 @@ namespace PckStudio.Forms
 
         protected override void OnMouseEnter(EventArgs e)
         {
-            try
+            if (parentPreview != null)
             {
-                //parentPreview.setHover(true);
-                //base.OnMouseEnter(e);
-            }
-            catch (Exception)
-            {
-
+                parentPreview.setHover(true);
+                base.OnMouseLeave(e);
             }
         }
         protected override void OnMouseLeave(EventArgs e)
         {
-            try
+            if(parentPreview != null)
             {
-                //parentPreview.setHover(false);
-                //base.OnMouseLeave(e);
-            }
-            catch (Exception)
-            {
-
+                parentPreview.setHover(false);
+                base.OnMouseLeave(e);
             }
         }
         protected override void OnMouseClick(MouseEventArgs e)
         {
-            try
+            if (parentPreview != null)
             {
                 parentPreview.onClick();
                 base.OnMouseClick(e);
             }
-            catch (Exception)
-            {
-
-            }
         }
         protected override void OnMouseDoubleClick(MouseEventArgs e)
         {
-            try
+            if (parentPreview != null)
             {
                 parentPreview.onDoubleClick();
                 base.OnMouseDoubleClick(e);
-            }
-            catch (Exception)
-            {
-
             }
         }
     }

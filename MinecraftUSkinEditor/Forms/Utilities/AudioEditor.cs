@@ -19,7 +19,7 @@ namespace PckStudio.Forms.Utilities
 		public string defaultType;
 		public string cat;
 		public List<int> cats = new List<int>();
-
+		public List<int> totalCats = new List<int>();
 		public string getCatString(int cat)
 		{
 			switch (cat)
@@ -32,7 +32,7 @@ namespace PckStudio.Forms.Utilities
 				case 5: return "Battle"; break;
 				case 6: return "Tumble"; break;
 				case 7: return "Glide"; break;
-				case 8: return "Unused"; break;
+				case 8: return "Unused"; break; // Unknown what this is used for. Probably the scrapped Mini Game 4 referenced in the code
 				default: return "Not valid"; break;
 			}
 		}
@@ -49,7 +49,7 @@ namespace PckStudio.Forms.Utilities
 				case "Battle": return 5; break;
 				case "Tumble": return 6; break;
 				case "Glide": return 7; break;
-				case "Unused": return 8; break;
+				case "Unused": return 8; break; // Unknown what this is used for. Probably the scrapped Mini Game 4 referenced in the code
 				default: return -1; break;
 			}
 		}
@@ -60,16 +60,35 @@ namespace PckStudio.Forms.Utilities
 		{
 			InitializeComponent();
 			audioPCK.Read(data);
-			mf = MineFile;
-			TreeNode treeViewMain = new TreeNode();
-			foreach (PCK.MineFile mineFile in audioPCK.mineFiles)
+			int check; // This is needed for the TryGetValue function which is annoying
+			if(!audioPCK.typeCodes.TryGetValue("CUENAME", out check))
 			{
-				Console.WriteLine(mineFile.name);
-				TreeNode treeNode = new TreeNode();
-				if (!cats.Contains<int>(mineFile.type)) cats.Add(mineFile.type);
-				treeNode.Text = getCatString(mineFile.type);
-				treeNode.Tag = mineFile;
-				treeView1.Nodes.Add(treeNode);
+				throw new System.Exception("This is not a valid audio.pck file");
+			}
+			mf = MineFile;
+			int index = 0;
+			List<PCK.MineFile> tempMineFiles = audioPCK.mineFiles.ToList();
+			foreach (PCK.MineFile mineFile in tempMineFiles)
+			{
+				mineFile.name = getCatString(mineFile.type);
+				Console.WriteLine("Category Found: " + mineFile.name);
+				if (cats.Contains<int>(mineFile.type))
+				{
+					Console.WriteLine("Duplicate category found, " + getCatString(mineFile.type) + ". Combining...");
+					List<object[]> newEntries = mineFile.entries.ToList();
+					audioPCK.mineFiles.Remove(mineFile);
+					audioPCK.mineFiles.Find(category => category.name == getCatString(mineFile.type)).entries.AddRange(newEntries);
+				}
+				else
+				{
+					TreeNode treeNode = new TreeNode();
+					treeNode.Text = mineFile.name;
+					treeNode.Tag = mineFile;
+					treeView1.Nodes.Add(treeNode);
+					cats.Add(mineFile.type);
+				}
+
+				index++;
 				continue;
 			}
 		}
@@ -171,12 +190,21 @@ namespace PckStudio.Forms.Utilities
 			treeView2.Nodes.Insert(treeView2.SelectedNode == null ? 0 : treeView2.SelectedNode.Index + 1, meta);
 			((PCK.MineFile)treeView1.SelectedNode.Tag).entries.Add(obj);
 		}
+		public void treeView2_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Delete && treeView2.SelectedNode != null)
+			{
+				((PCK.MineFile)treeView1.SelectedNode.Tag).entries.Remove((object[])treeView2.SelectedNode.Tag);
+				treeView2.SelectedNode.Remove();
+			}
+		}
 
 		private void removeCategoryStripMenuItem_Click(object sender, EventArgs e)
 		{
 			cats.Remove(getCatID(treeView1.SelectedNode.Text));
 			audioPCK.mineFiles.Remove((PCK.MineFile)treeView1.SelectedNode.Tag);
 			treeView1.SelectedNode.Remove();
+			treeView2.Nodes.Clear();
 		}
 
 		private void removeEntryMenuItem_Click(object sender, EventArgs e)
@@ -220,6 +248,7 @@ namespace PckStudio.Forms.Utilities
 			f.writeInt(audioPCK.mineFiles.Count);
 			foreach (PCK.MineFile mf in audioPCK.mineFiles)
 			{
+				mf.name = "";
 				f.writeInt(mf.data.Length);
 				f.writeInt(mf.type);
 				writeMinecraftString(f, mf.name);
@@ -249,6 +278,11 @@ namespace PckStudio.Forms.Utilities
 
 
 			mf.data = f.getBytes();
+		}
+
+		private void metroLabel2_Click(object sender, EventArgs e)
+		{
+
 		}
 	}
 }

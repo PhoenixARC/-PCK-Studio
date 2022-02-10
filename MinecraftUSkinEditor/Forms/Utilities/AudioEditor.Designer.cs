@@ -44,6 +44,8 @@ namespace PckStudio.Forms.Utilities
 			this.removeEntryMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.comboBox1 = new System.Windows.Forms.ComboBox();
 			this.textBox1 = new System.Windows.Forms.TextBox();
+			this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
+			this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
 			this.contextMenuStrip1.SuspendLayout();
 			this.menuStrip.SuspendLayout();
 			this.contextMenuStrip2.SuspendLayout();
@@ -110,6 +112,7 @@ namespace PckStudio.Forms.Utilities
 			resources.ApplyResources(this.treeView2, "treeView2");
 			this.treeView2.Name = "treeView2";
 			this.treeView2.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView2_AfterSelect);
+			this.treeView2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView2_KeyDown);
 			// 
 			// contextMenuStrip2
 			// 
@@ -146,10 +149,25 @@ namespace PckStudio.Forms.Utilities
 			this.textBox1.Name = "textBox1";
 			this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
 			// 
+			// metroLabel2
+			// 
+			resources.ApplyResources(this.metroLabel2, "metroLabel2");
+			this.metroLabel2.Name = "metroLabel2";
+			this.metroLabel2.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.metroLabel2.Click += new System.EventHandler(this.metroLabel2_Click);
+			// 
+			// metroLabel1
+			// 
+			resources.ApplyResources(this.metroLabel1, "metroLabel1");
+			this.metroLabel1.Name = "metroLabel1";
+			this.metroLabel1.Theme = MetroFramework.MetroThemeStyle.Dark;
+			// 
 			// AudioEditor
 			// 
 			resources.ApplyResources(this, "$this");
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.Controls.Add(this.metroLabel1);
+			this.Controls.Add(this.metroLabel2);
 			this.Controls.Add(this.treeView1);
 			this.Controls.Add(this.textBox1);
 			this.Controls.Add(this.comboBox1);
@@ -182,5 +200,7 @@ namespace PckStudio.Forms.Utilities
 		private System.Windows.Forms.ContextMenuStrip contextMenuStrip2;
 		private System.Windows.Forms.ToolStripMenuItem addEntryMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem removeEntryMenuItem;
+		private MetroFramework.Controls.MetroLabel metroLabel2;
+		private MetroFramework.Controls.MetroLabel metroLabel1;
 	}
 }

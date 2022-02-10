@@ -1341,6 +1341,7 @@ namespace PckStudio
 				label2.Theme = this.Theme;
 				label3.Theme = this.Theme;
 				labelImageSize.Theme = this.Theme;
+				labelImageSize.Text = "";
 				labelAmount.Theme = this.Theme;
 				labelEntryType.Theme = this.Theme;
 				labelEntryData.Theme = this.Theme;
@@ -3372,11 +3373,6 @@ namespace PckStudio
 			System.Diagnostics.Process.Start("https://www.paypal.me/realnobledez");
 		}
 
-		private void menuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-		{
-
-		}
-
 		private void addPasswordToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			treeViewMain.SelectedNode = treeViewMain.Nodes[0];
@@ -3555,11 +3551,6 @@ namespace PckStudio
 			save("Save As");
 		}
 
-		private void openPck(object sender, EventArgs e)
-		{
-
-		}
-
 		private void timer1_Tick(object sender, EventArgs e)
 		{
 			if (PCKFile != PCKFileBCKUP)
@@ -3617,6 +3608,11 @@ namespace PckStudio
 			timer1.Enabled = true;
 			}
 			catch { }
+		}
+
+		private void forMattNLContributorToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			System.Diagnostics.Process.Start("https://www.paypal.com/donate?business=X7Z3PMXC4L5LY&no_recurring=1&item_name=Consider+this+my+tip+jar.+It%27s+completely+optional+but+is+absolutely+appreciated.+%28%3A&currency_code=USD");
 		}
 	}
 }
