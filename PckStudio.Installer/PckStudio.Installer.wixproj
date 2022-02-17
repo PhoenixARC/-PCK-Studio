@@ -6,7 +6,7 @@
     <ProductVersion>3.10</ProductVersion>
     <ProjectGuid>7ed78fd8-f3e6-475b-8979-fd5220545430</ProjectGuid>
     <SchemaVersion>2.0</SchemaVersion>
-    <OutputName>PckStudio.Installer</OutputName>
+    <OutputName>PCKStudio-Setup</OutputName>
     <OutputType>Package</OutputType>
     <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' AND '$(MSBuildExtensionsPath32)' != '' ">$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets</WixTargetsPath>
     <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' ">$(MSBuildExtensionsPath)\Microsoft\WiX\v3.x\Wix.targets</WixTargetsPath>
@@ -22,6 +22,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Product.wxs" />
+    <Compile Include="HeatGeneratedFileList.wxs" />
   </ItemGroup>
   <ItemGroup>
     <WixExtension Include="WixUtilExtension">
@@ -47,6 +48,10 @@
   <Target Name="EnsureWixToolsetInstalled" Condition=" '$(WixTargetsImported)' != 'true' ">
     <Error Text="The WiX Toolset v3.11 (or newer) build tools must be installed to build this project. To download the WiX Toolset, see http://wixtoolset.org/releases/" />
   </Target>
+  <PropertyGroup>
+    <PreBuildEvent></PreBuildEvent>
+	<DefineConstants>HarvestPath=..\MinecraftUSkinEditor\bin\Release\ja</DefineConstants>
+  </PropertyGroup>
   <!--
 	To modify your build process, add your task inside one of the targets below and uncomment it.
 	Other similar extension points exist, see Wix.targets.
@@ -54,5 +59,19 @@
 	</Target>
 	<Target Name="AfterBuild">
 	</Target>
+	
+	
+	<Target Name="BeforeBuild">
+  <HeatDirectory Directory="..\MinecraftUSkinEditor\bin\Release\ja" 
+    PreprocessorVariable="var.HarvestPath" 
+    OutputFile="HeatGeneratedFileList.wxs" 
+    ComponentGroupName="HeatGenerated" 
+    DirectoryRefId="INSTALLDIR" 
+    AutogenerateGuids="false" 
+    ToolPath="$(WixToolPath)" 
+    SuppressFragments="true" 
+    SuppressRegistry="true" 
+    SuppressRootDirectory="true" />  
+</Target>
 	-->
 </Project>

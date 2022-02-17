@@ -3,7 +3,7 @@
   <Product Id="*"
            Name="PCK Studio"
            Language="1033"
-           Version="2.8.0.0"
+           Version="6.4.0.0"
            Manufacturer="PhoenixARC"
            UpgradeCode="0bfb1026-21f2-4552-ad71-ca90aae10a25">
     <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
@@ -38,6 +38,7 @@
     <Feature Id="F.MainApplication" Title="PCK Studio" Level="1">
       <ComponentGroupRef Id="CG.StartMenu" />
       <ComponentGroupRef Id="CG.ProductComponents" />
+      <ComponentGroupRef Id="HeatGenerated" />
     </Feature>
   </Product>
 
@@ -47,7 +48,9 @@
         <Directory Id="D.StartFolder" Name="PCK Studio" />
       </Directory>
       <Directory Id="ProgramFilesFolder">
-        <Directory Id="INSTALLDIR" Name="PCK Studio" />
+        <Directory Id="INSTALLDIR" Name="PCK Studio">
+          <Directory Id="JapanResource" Name="ja" />
+        </Directory>
       </Directory>
     </Directory>
 
@@ -75,24 +78,10 @@
       <Component Id="C.PCKStudio" Guid="*">
         <File Source="../MinecraftUSkinEditor/bin/Release/PCK Studio.exe" KeyPath="yes" />
       </Component>
-      <Component Id="C.settings.ini" Guid="*">
-        <File Source="../MinecraftUSkinEditor/bin/Release/settings.ini" KeyPath="yes" />
-      </Component>
-      <Component Id="C.ver.txt" Guid="*">
-        <File Source="../MinecraftUSkinEditor/bin/Release/ver.txt" KeyPath="yes" />
-      </Component>
-      <Component Id="C.nobleUpdater.exe" Guid="*">
-        <File Source="../MinecraftUSkinEditor/bin/Release/nobleUpdater.exe" KeyPath="yes" />
-      </Component>
       <Component Id="C.discordrpcw32.dll" Guid="*">
         <File Source="../MinecraftUSkinEditor/bin/Release/discord-rpc-w32.dll" KeyPath="yes" />
       </Component>
-      <Component Id="C.templates.UntitledSkinPCK.pck" Guid="*">
-        <File Source="../MinecraftUSkinEditor/bin/Release/templates/UntitledSkinPCK.pck" KeyPath="yes" />
-      </Component>
-      <Component Id="C.ja.PCKStudio.resources.dll" Guid="*">
-        <File Source="../MinecraftUSkinEditor/bin/Release/ja/PCK Studio.resources.dll" KeyPath="yes" />
-      </Component>
     </ComponentGroup>
+    
   </Fragment>
 </Wix>

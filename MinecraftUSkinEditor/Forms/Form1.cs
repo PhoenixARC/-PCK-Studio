@@ -21,7 +21,7 @@ namespace PckStudio
 		#region Variables
 		string saveLocation;//Save location for pck file
 		int fileCount = 0;//variable for number of minefiles
-		string Version = "6.3";//template for program version
+		string Version = Classes.Network.Version;//template for program version
 		string hosturl = "";
 		string basurl = "";
 		string PCKFile = "";
@@ -53,12 +53,12 @@ namespace PckStudio
 		{
 
 
-			Directory.CreateDirectory(Environment.CurrentDirectory + "\\template");
-			if (!File.Exists(Environment.CurrentDirectory + "\\template\\UntitledSkinPCK.pck"))
-				File.WriteAllBytes(Environment.CurrentDirectory + "\\template\\UntitledSkinPCK.pck", Resources.UntitledSkinPCK);
-			if (!File.Exists(Environment.CurrentDirectory + "\\settings.ini"))
-				File.WriteAllText(Environment.CurrentDirectory + "\\settings.ini", Resources.settings);
-			hosturl = File.ReadAllText(Environment.CurrentDirectory + "\\settings.ini").Split(new[] { "\r\n", "\n" }, StringSplitOptions.None)[0];
+			Directory.CreateDirectory(appData + "\\template");
+			if (!File.Exists(appData + "\\template\\UntitledSkinPCK.pck"))
+				File.WriteAllBytes(appData + "\\template\\UntitledSkinPCK.pck", Resources.UntitledSkinPCK);
+			if (!File.Exists(appData + "\\settings.ini"))
+				File.WriteAllText(appData + "\\settings.ini", Resources.settings);
+			hosturl = File.ReadAllText(appData + "\\settings.ini").Split(new[] { "\r\n", "\n" }, StringSplitOptions.None)[0];
 
 
 			InitializeComponent();
@@ -638,7 +638,7 @@ namespace PckStudio
 			for (int i = 0; i < saveStructure.Nodes.Count; i++)
 				currentPCK.mineFiles[i].name = saveStructure.Nodes[i].Text;
 
-			if (saveLocation == Application.StartupPath + @"\templates\UntitledSkinPCK.pck")
+			if (saveLocation == appData + @"\templates\UntitledSkinPCK.pck")
 			{
 				//writes pck data if pck is actually opened
 				using (var ofd = new SaveFileDialog())
@@ -1279,8 +1279,8 @@ namespace PckStudio
 		private void skinPackToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			//Loads skin pack template
-			PCKFile = Path.GetFileName(Environment.CurrentDirectory + "\\template\\UntitledSkinPCK.pck");
-			openPck(Environment.CurrentDirectory + "\\template\\UntitledSkinPCK.pck");
+			PCKFile = Path.GetFileName(appData + "\\template\\UntitledSkinPCK.pck");
+			openPck(appData + "\\template\\UntitledSkinPCK.pck");
 			saveLocation = "";
 			saved = false;
 		}
@@ -1389,9 +1389,9 @@ namespace PckStudio
 			}
 
 
-			Directory.CreateDirectory(Environment.CurrentDirectory + "\\template");
-			if (!File.Exists(Environment.CurrentDirectory + "\\template\\UntitledSkinPCK.pck"))
-				File.WriteAllBytes(Environment.CurrentDirectory + "\\template\\UntitledSkinPCK.pck", Resources.UntitledSkinPCK);
+			Directory.CreateDirectory(appData + "\\template");
+			if (!File.Exists(appData + "\\template\\UntitledSkinPCK.pck"))
+				File.WriteAllBytes(appData + "\\template\\UntitledSkinPCK.pck", Resources.UntitledSkinPCK);
 
 
 			if (isdebug)
@@ -1421,9 +1421,9 @@ namespace PckStudio
 				Directory.CreateDirectory(appData);
 			}
 
-			if (!Directory.Exists(Environment.CurrentDirectory + "\\cache\\mods\\"))
+			if (!Directory.Exists(appData + "\\cache\\mods\\"))
 			{
-				Directory.CreateDirectory(Environment.CurrentDirectory + "\\cache\\mods\\");
+				Directory.CreateDirectory(appData + "\\cache\\mods\\");
 			}
 
 
@@ -1445,24 +1445,13 @@ namespace PckStudio
 				MessageBox.Show("Could not load changelog");
 			}
 
-			if (!File.Exists(Application.StartupPath + @"\ver.txt"))
+			if (!File.Exists(appData + @"\ver.txt"))
 			{
-				File.WriteAllText(Application.StartupPath + @"\ver.txt", Version);
+				File.WriteAllText(appData + @"\ver.txt", Version);
 			}
 			try
 			{
-				if (float.Parse(new WebClient().DownloadString(basurl + "updatePCKStudio.txt").Replace("\n", "")) > float.Parse(Version) && !System.Diagnostics.Debugger.IsAttached)
-				{
-					Console.WriteLine(new WebClient().DownloadString(basurl + "updatePCKStudio.txt").Replace("\n", "") + " != " + Version);
-					if (MessageBox.Show("Update avaliable!\ndo you want to update?", "UPDATE", MessageBoxButtons.YesNo) == DialogResult.Yes)
-						Process.Start(Environment.CurrentDirectory + "\\nobleUpdater.exe");
-					else
-						uPDATEToolStripMenuItem1.Visible = true;
-				}
-				else
-				{
-					uPDATEToolStripMenuItem1.Visible = false;
-				}
+				Classes.Network.CheckUpdate();
 			}
 			catch
 			{
@@ -3346,7 +3335,7 @@ namespace PckStudio
 			{
 				Console.WriteLine(new WebClient().DownloadString(basurl + "updatePCKStudio.txt").Replace("\n", "") + " != " + Version);
 				if (MessageBox.Show("Update avaliable!\ndo you want to update?", "UPDATE", MessageBoxButtons.YesNo) == DialogResult.Yes)
-					Process.Start(Environment.CurrentDirectory + "\\nobleUpdater.exe");
+					Process.Start(appData + "\\nobleUpdater.exe");
 				else
 					uPDATEToolStripMenuItem1.Visible = true;
 			}
@@ -3494,7 +3483,7 @@ namespace PckStudio
 			{
 				if (MessageBox.Show("Save PCK?", "Unsaved PCK", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
 				{
-					if (saveLocation == Application.StartupPath + @"\templates\UntitledSkinPCK.pck")
+					if (saveLocation == appData + @"\templates\UntitledSkinPCK.pck")
 					{
 						save("Save As");
 					}
@@ -3507,7 +3496,7 @@ namespace PckStudio
 			if (needsUpdate)
 			{
 				Process UPDATE = new Process();//sets up updater
-				UPDATE.StartInfo.FileName = Application.StartupPath + @"\nobleUpdater.exe";//updater program path
+				UPDATE.StartInfo.FileName = appData + @"\nobleUpdater.exe";//updater program path
 				UPDATE.Start();//starts updater
 				Application.Exit();//closes PCK Studio to let updatear finish the job
 			}

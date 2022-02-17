@@ -9,7 +9,6 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Collections;
 using System.IO;
-using stonevox;
 using Lidgren.Network;
 using OpenTK.Graphics;
 using Brush = System.Drawing.Brush;
@@ -2118,7 +2117,6 @@ namespace PckStudio
             textBoxFailCheck((TextBox)sender);
         }
 
-        public static  GLWindow window;
 
         private void button3_Click_1(object sender, EventArgs e)
         {
@@ -2135,16 +2133,6 @@ namespace PckStudio
                 contents = contents + (listViewItem.Text + Environment.NewLine + listViewItem.Tag) + Environment.NewLine + str;
             }
             Console.WriteLine(contents);
-            try
-            {
-                window = new GLWindow(640, 480, new GraphicsMode(new ColorFormat(32), 8, 0, 4), contents);
-            }
-            catch
-            {
-                window = new GLWindow(640, 480, new GraphicsMode(new ColorFormat(32), 8, 0, 0), contents);
-            }
-            window.Context.SwapInterval = 0;
-            window.Run_NoErrorCatching(120);
         }
     }
 }

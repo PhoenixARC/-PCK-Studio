@@ -17,9 +17,9 @@ namespace PckStudio.Forms
     public partial class pckCenter : MetroFramework.Forms.MetroForm
     {
         string[] mods;
-        string hosturl = File.ReadAllText(Environment.CurrentDirectory + "\\settings.ini").Split(new[] { "\r\n", "\n" }, StringSplitOptions.None)[1] + "/studio/PCK/api/";
-        string loadDirectory = File.ReadAllText(Environment.CurrentDirectory + "\\settings.ini").Split(new[] { "\r\n", "\n" }, StringSplitOptions.None)[1] + "/studio/PCK/api/pckCenterList.txt";
-        string appData = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/PCK Studio/";
+        string hosturl = File.ReadAllText(appData + "\\settings.ini").Split(new[] { "\r\n", "\n" }, StringSplitOptions.None)[1] + "/studio/PCK/api/";
+        string loadDirectory = File.ReadAllText(appData + "\\settings.ini").Split(new[] { "\r\n", "\n" }, StringSplitOptions.None)[1] + "/studio/PCK/api/pckCenterList.txt";
+        static string appData = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/PCK Studio/";
         string cacheDir;
 
         bool nobleLoaded = true;
@@ -35,14 +35,14 @@ namespace PckStudio.Forms
             InitializeComponent();
             //listViewNav.SmallImageList = imgList;
 
-            cacheDir = Environment.CurrentDirectory + "\\cache\\mods\\";
+            cacheDir = appData + "\\cache\\mods\\";
 
             if (!Directory.Exists(cacheDir))
             {
                 Directory.CreateDirectory(cacheDir);
             }
             if(isVita)
-                loadDirectory = File.ReadAllText(Environment.CurrentDirectory + "\\settings.ini").Split(new[] { "\r\n", "\n" }, StringSplitOptions.None)[1] + "/studio/PCK/api/pckCenterVitaList.txt";
+                loadDirectory = File.ReadAllText(appData + "\\settings.ini").Split(new[] { "\r\n", "\n" }, StringSplitOptions.None)[1] + "/studio/PCK/api/pckCenterVitaList.txt";
         }
 
         private void reload(bool checkNeeded)

@@ -321,6 +321,16 @@ namespace PckStudio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to http://nobledez.ga/
+        ///http://www.pckstudio.xyz/.
+        /// </summary>
+        internal static string settings1 {
+            get {
+                return ResourceManager.GetString("settings1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap Splash {
