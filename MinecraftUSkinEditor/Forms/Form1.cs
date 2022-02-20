@@ -3330,17 +3330,14 @@ namespace PckStudio
 
 		private void uPDATEToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
-
-			if (new WebClient().DownloadString(basurl + "updatePCKStudio.txt").Replace("\n", "") != Version)
+			try
 			{
-				Console.WriteLine(new WebClient().DownloadString(basurl + "updatePCKStudio.txt").Replace("\n", "") + " != " + Version);
-				if (MessageBox.Show("Update avaliable!\ndo you want to update?", "UPDATE", MessageBoxButtons.YesNo) == DialogResult.Yes)
-					Process.Start(appData + "\\nobleUpdater.exe");
-				else
-					uPDATEToolStripMenuItem1.Visible = true;
+				Classes.Network.CheckUpdate();
+				uPDATEToolStripMenuItem1.Visible = false;
 			}
-			else
+			catch
 			{
+				MessageBox.Show("Could not load Version Information");
 				uPDATEToolStripMenuItem1.Visible = false;
 			}
 		}
