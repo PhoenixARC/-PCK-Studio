@@ -20,6 +20,11 @@ namespace PckStudio.Classes
                 Thread.CurrentThread.IsBackground = true;
                 fb.ShowDialog();
             });
+            if (Classes.Network.Portable)
+            {
+                UpdateURL = UpdateURL.Replace(".msi","Portable.msi");
+                BetaUpdateURL = BetaUpdateURL.Replace(".msi","Portable.msi");
+            }
                 string DLPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\Temp\\";
             try
             {

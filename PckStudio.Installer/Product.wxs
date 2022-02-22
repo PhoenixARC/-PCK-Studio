@@ -6,12 +6,15 @@
            Version="6.4.0.0"
            Manufacturer="PhoenixARC"
            UpgradeCode="0bfb1026-21f2-4552-ad71-ca90aae10a25">
-    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perUser" />
 
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
     <MediaTemplate EmbedCab="yes" />
-
+    
+    
     <Property Id="WIXUI_INSTALLDIR" Value="INSTALLDIR"/>
+    <Property Id='ALLUSERS' Value='2' />
+    <Property Id='MSIINSTALLPERUSER' Value='1' />
     <UI>
       <UIRef Id="WixUI_InstallDir" />
 

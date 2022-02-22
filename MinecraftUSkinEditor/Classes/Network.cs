@@ -8,6 +8,7 @@ namespace PckStudio.Classes
     {
         public static string Version = "6.4";
         public static bool Beta = true;
+        public static bool Portable = true;
         public static bool NeedsUpdate = false;
         public static string MainURL = "https://www.pckstudio.xyz/";
         public static string BackURL = "http://phoenixarc.ddns.net/";

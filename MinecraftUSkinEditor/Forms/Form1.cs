@@ -3395,7 +3395,7 @@ namespace PckStudio
 
 		private void joinDevelopmentDiscordToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			System.Diagnostics.Process.Start("https://discord.gg/Byh4hcq25w");
+			System.Diagnostics.Process.Start("https://discord.gg/aJtZNFVQTv");
 		}
 
 		private void tSTToolStripMenuItem_Click(object sender, EventArgs e)

@@ -91,6 +91,16 @@
     <ManifestKeyFile>
     </ManifestKeyFile>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleasePortable|AnyCPU'">
+    <OutputPath>bin\ReleasePortable\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>preview</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Costura, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Costura.Fody.5.0.0-alpha0281\lib\netstandard1.0\Costura.dll</HintPath>
@@ -527,7 +537,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>generateModelOLD.resx</DependentUpon>
     </Compile>
-    <Compile Include="InterpolationPictureBox.cs">
+    <Compile Include="Classes\InterpolationPictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Classes\KeyValuePair.cs" />
