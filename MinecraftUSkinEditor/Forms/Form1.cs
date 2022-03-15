@@ -74,10 +74,6 @@ namespace PckStudio
 
 		#region opens and loads pck file
 
-
-
-
-
 		private void openToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			try
@@ -431,6 +427,7 @@ namespace PckStudio
 			}
 			else
 			{
+				buttonEdit.Visible = false;
 				//Sets preview image to "NO IMAGE" if selected file data isn't image data
 				pictureBoxImagePreview.Image = (Image)Resources.NoImageFound;
 				pictureBoxImagePreview.Size = new Size(pictureBoxMaxHeight, pictureBoxMaxHeight);
@@ -825,11 +822,12 @@ namespace PckStudio
 		#region renames pck entry from treeview and pck.minefiles
 		private void renameFileToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			PCK.MineFile mf = (PCK.MineFile)treeViewMain.SelectedNode.Tag;
-			PckStudio.rename diag = new PckStudio.rename(mf);
+			TreeNode node = treeViewMain.SelectedNode;
+			PckStudio.rename diag = new PckStudio.rename(node);
 			diag.ShowDialog(this);
 			diag.Dispose();//diposes generated metadata adding dialog data
-			treeViewMain.SelectedNode.Text = Path.GetFileName(mf.name);
+			treeViewMain.SelectedNode.Text = Path.GetFileName(node.Name);
+			treeViewToMineFiles(treeViewMain);
 		}
 		#endregion
 
@@ -1023,6 +1021,7 @@ namespace PckStudio
 		#region deciphers what happens when certain pck entries are double clicked
 		private void treeView1_DoubleClick(object sender, EventArgs e)
 		{
+			if (treeViewMain.SelectedNode != null) return;
 			if (treeViewMain.SelectedNode.Tag != null)
 			{
 				mf = (PCK.MineFile)treeViewMain.SelectedNode.Tag;
@@ -1228,6 +1227,190 @@ namespace PckStudio
 			}
 			saved = false;
 		}
+		#endregion
+
+		#region drag and drop for main tree node
+
+		public void getChildren(List<TreeNode> Nodes, TreeNode Node)
+		{
+			foreach (TreeNode thisNode in Node.Nodes)
+			{
+				Nodes.Add(thisNode);
+				getChildren(Nodes, thisNode);
+			}
+		}
+
+		public string getFullMineFilePath(TreeNode node)
+		{
+			try
+			{
+				string path = Path.GetDirectoryName(node.FullPath);
+				string fullNew = path + "/" + Path.GetFileName(node.Text);
+				fullNew = fullNew.Replace("\\", "/");
+				return fullNew.TrimStart('/');
+			}
+			catch (System.ArgumentException e)
+			{
+				return node.Text;
+			}
+		}
+
+		public void treeViewToMineFiles(TreeView tree)
+		{
+			int i = 1;
+			List<TreeNode> children = new List<TreeNode>();
+			List<PCK.MineFile> newMineFiles = new List<PCK.MineFile>();
+			foreach (TreeNode node in tree.Nodes)
+			{
+				string nodePath = getFullMineFilePath(node);
+
+				if(node.Tag == null)
+				{
+					getChildren(children, node);
+					foreach (TreeNode child in children)
+					{
+						string childPath = getFullMineFilePath(child);
+
+						if(child.Tag != null)
+						{
+							PCK.MineFile mf = (PCK.MineFile)child.Tag;
+							mf.name = childPath;
+							newMineFiles.Add((PCK.MineFile)child.Tag);
+							Console.WriteLine("Minefile " + i + ": " + childPath);
+							i++;
+						}
+					}
+				}
+				else
+				{
+					PCK.MineFile mf = (PCK.MineFile)node.Tag;
+					mf.name = nodePath;
+					newMineFiles.Add((PCK.MineFile)node.Tag);
+					Console.WriteLine("Minefile " + i + ": " + nodePath);
+					i++;
+				}
+			}
+			currentPCK.mineFiles = newMineFiles;
+		}
+
+		// Most of the code below is modified code from this link: https://docs.microsoft.com/en-us/dotnet/api/system.windows.forms.treeview.itemdrag?view=windowsdesktop-6.0
+		// - MattNL
+
+		private void treeViewMain_ItemDrag(object sender, ItemDragEventArgs e)
+		{
+			// Move the dragged node when the left mouse button is used.
+			if (e.Button == MouseButtons.Left)
+			{
+				DoDragDrop(e.Item, DragDropEffects.Move);
+			}
+
+			// Copy the dragged node when the right mouse button is used.
+			else if (e.Button == MouseButtons.Right)
+			{
+				DoDragDrop(e.Item, DragDropEffects.Copy);
+			}
+		}
+
+		// Set the target drop effect to the effect 
+		// specified in the ItemDrag event handler.
+		private void treeViewMain_DragEnter(object sender, DragEventArgs e)
+		{
+			e.Effect = e.AllowedEffect;
+		}
+
+		// Select the node under the mouse pointer to indicate the 
+		// expected drop location.
+		private void treeViewMain_DragOver(object sender, DragEventArgs e)
+		{
+			// Retrieve the client coordinates of the mouse position.
+			Point targetPoint = treeViewMain.PointToClient(new Point(e.X, e.Y));
+
+			// Select the node at the mouse position.
+			treeViewMain.SelectedNode = treeViewMain.GetNodeAt(targetPoint);
+		}
+
+		private void treeViewMain_DragDrop(object sender, DragEventArgs e)
+		{
+			// Retrieve the client coordinates of the drop location.
+			Point targetPoint = treeViewMain.PointToClient(new Point(e.X, e.Y));
+
+			// Retrieve the node at the drop location.
+			TreeNode targetNode = treeViewMain.GetNodeAt(targetPoint);
+
+			// Retrieve the node that was dragged.
+			TreeNode draggedNode = (TreeNode)e.Data.GetData(typeof(TreeNode));
+
+			// Confirm that the node at the drop location is not 
+			// the dragged node or a descendant of the dragged node.
+			if (targetNode == null)
+			{
+				draggedNode.Remove();
+				treeViewMain.Nodes.Add(draggedNode);
+			}
+			else if (!draggedNode.Equals(targetNode) && !ContainsNode(draggedNode, targetNode))
+			{
+				// If it is a move operation, remove the node from its current 
+				// location and add it to the node at the drop location.
+
+				if (e.Effect == DragDropEffects.Move)
+				{
+					int draggedIndex = draggedNode.Index;
+					int targetIndex = targetNode.Index;
+					draggedNode.Remove();
+
+					if (targetNode.Tag == null) // Add to folder
+					{
+						targetNode.Nodes.Add(draggedNode);
+					}
+					else // Move file aside
+					{
+						if(targetNode.Parent != null)
+						{
+							if (draggedNode.Index < targetNode.Index)
+							{
+								targetNode.Parent.Nodes.Insert(targetIndex - 1, draggedNode);
+							}
+							else
+							{
+								targetNode.Parent.Nodes.Insert(targetIndex, draggedNode);
+							}
+						}
+						else
+						{
+							if (draggedNode.Index < targetNode.Index)
+							{
+								treeViewMain.Nodes.Insert(targetIndex - 1, draggedNode);
+							}
+							else
+							{
+								treeViewMain.Nodes.Insert(targetIndex, draggedNode);
+							}
+						}
+					}
+				}
+
+				// Expand the node at the location 
+				// to show the dropped node.
+				targetNode.Expand();
+			}
+
+			treeViewToMineFiles(treeViewMain);
+		}
+
+		// Determine whether one node is a parent 
+		// or ancestor of a second node.
+		private bool ContainsNode(TreeNode node1, TreeNode node2)
+		{
+			// Check the parent node of the second node.
+			if (node2.Parent == null) return false;
+			if (node2.Parent.Equals(node1)) return true;
+
+			// If the parent node is not null or equal to the first node, 
+			// call the ContainsNode method recursively using the parent of 
+			// the second node.
+			return ContainsNode(node1, node2.Parent);
+		}
+
 		#endregion
 
 		#region Loads all pck metadata into a main metadatabase and opens manageable dialog for it
@@ -1972,7 +2155,7 @@ namespace PckStudio
 			NEW.ImageIndex = 0;
 			NEW.SelectedImageIndex = 0;
 			NEW.Text = "New Folder";
-			if (treeViewMain.SelectedNode.Tag == null)
+			if (treeViewMain.SelectedNode != null && treeViewMain.SelectedNode.Tag == null)
 			{
 				treeViewMain.SelectedNode.Nodes.Add(NEW);
 			}

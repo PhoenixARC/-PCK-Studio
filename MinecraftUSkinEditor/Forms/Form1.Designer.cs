@@ -903,11 +903,16 @@
             resources.ApplyResources(this.treeViewMain, "treeViewMain");
             this.treeViewMain.ForeColor = System.Drawing.Color.White;
             this.treeViewMain.LabelEdit = true;
+            this.treeViewMain.AllowDrop = true;
             this.treeViewMain.Name = "treeViewMain";
             this.myTablePanelPckEdit.SetRowSpan(this.treeViewMain, 6);
             this.treeViewMain.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.selectNode);
             this.treeViewMain.DoubleClick += new System.EventHandler(this.treeView1_DoubleClick);
             this.treeViewMain.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeViewMain_KeyDown);
+            this.treeViewMain.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.treeViewMain_ItemDrag);
+            this.treeViewMain.DragEnter += new System.Windows.Forms.DragEventHandler(this.treeViewMain_DragEnter);
+            this.treeViewMain.DragOver += new System.Windows.Forms.DragEventHandler(this.treeViewMain_DragOver);
+            this.treeViewMain.DragDrop += new System.Windows.Forms.DragEventHandler(this.treeViewMain_DragDrop);
             // 
             // pictureBoxImagePreview
             // 
