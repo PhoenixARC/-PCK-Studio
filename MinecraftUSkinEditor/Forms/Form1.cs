@@ -411,6 +411,11 @@ namespace PckStudio
 					buttonEdit.Text = "EDIT LOC";
 					buttonEdit.Visible = true;
 				}
+				else if (Path.GetExtension(mf.name) == ".col")
+				{
+					buttonEdit.Text = "EDIT COLORS";
+					buttonEdit.Visible = true;
+				}
 				else if (Path.GetFileName(mf.name) == "audio.pck")
 				{
 					buttonEdit.Text = "EDIT AUDIO";
@@ -1021,7 +1026,7 @@ namespace PckStudio
 		#region deciphers what happens when certain pck entries are double clicked
 		private void treeView1_DoubleClick(object sender, EventArgs e)
 		{
-			if (treeViewMain.SelectedNode != null) return;
+			if (treeViewMain.SelectedNode.ImageIndex < 0) return;
 			if (treeViewMain.SelectedNode.Tag != null)
 			{
 				mf = (PCK.MineFile)treeViewMain.SelectedNode.Tag;
@@ -3644,6 +3649,28 @@ namespace PckStudio
 				}
 						(new LOCEditor(l)).ShowDialog();//Opens LOC Editor
 				mf.data = l.Rebuild();//Rebuilds loc file with locdata in grid view after closing dialog
+			}
+
+			//Checks to see if selected minefile is a col file
+			if (Path.GetExtension(mf.name) == ".col")
+			{
+				//MessageBox.Show(".COL Editor Coming Soon!");
+
+				if (treeViewMain.SelectedNode.Tag is PCK.MineFile)
+				{
+					try
+					{
+						PckStudio.Forms.Utilities.COLEditor diag = new PckStudio.Forms.Utilities.COLEditor(mf.data, mf);
+						diag.Show();
+					}
+					catch
+					{
+						MessageBox.Show("No Color data found.", "Error", MessageBoxButtons.OK,
+							MessageBoxIcon.Error);
+						return;
+					}
+					//mf.data = l.Rebuild();//Rebuilds loc file with locdata in grid view after closing dialog
+				}
 			}
 		}
 
