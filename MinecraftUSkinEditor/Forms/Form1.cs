@@ -1622,11 +1622,23 @@ namespace PckStudio
 			{
 				using (WebClient client = new WebClient())
 				{
-					if(isdebug)
-						File.WriteAllText(appData + "pckStudioChangelog.txt", File.ReadAllText("C:\\WEBSITES\\PCKStudio\\studio\\PCK\\api\\" + ChangeURL.Text));
-					else
-						File.WriteAllText(appData + "pckStudioChangelog.txt", client.DownloadString(basurl + ChangeURL.Text));
+					if (Classes.Network.Beta)
+					{
+						if (isdebug)
+							File.WriteAllText(appData + "pckStudioChangelog.txt", File.ReadAllText("C:\\WEBSITES\\PCKStudio\\studio\\PCK\\api\\" + ChangeURL.Text.Replace("ChangeLog", "BetaChangeLog"))) ;
+						else
+							File.WriteAllText(appData + "pckStudioChangelog.txt", client.DownloadString(basurl + ChangeURL.Text.Replace("ChangeLog", "BetaChangeLog")));
 						richTextBoxChangelog.Text = File.ReadAllText(appData + "pckStudioChangelog.txt");
+
+					}
+					else
+					{
+						if (isdebug)
+							File.WriteAllText(appData + "pckStudioChangelog.txt", File.ReadAllText("C:\\WEBSITES\\PCKStudio\\studio\\PCK\\api\\" + ChangeURL.Text));
+						else
+							File.WriteAllText(appData + "pckStudioChangelog.txt", client.DownloadString(basurl + ChangeURL.Text));
+						richTextBoxChangelog.Text = File.ReadAllText(appData + "pckStudioChangelog.txt");
+					}
 				}
 			}
 			catch
