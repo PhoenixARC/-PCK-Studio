@@ -119,19 +119,19 @@
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="addDisplayIDToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>172, 22</value>
   </data>
   <data name="addDisplayIDToolStripMenuItem.Text" xml:space="preserve">
     <value>ディスプレイIDを追加</value>
   </data>
   <data name="deleteDisplayIDToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>172, 22</value>
   </data>
   <data name="deleteDisplayIDToolStripMenuItem.Text" xml:space="preserve">
     <value>表示IDを削除</value>
   </data>
   <data name="contextMenuStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>181, 70</value>
+    <value>173, 48</value>
   </data>
   <data name="buttonReplaceAll.Text" xml:space="preserve">
     <value>すべて置換</value>

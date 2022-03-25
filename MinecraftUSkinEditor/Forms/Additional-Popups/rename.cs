@@ -52,6 +52,7 @@ namespace PckStudio
 		{
 			newName = textBox1.Text;
 			node.Name = textBox1.Text;
+
 			if (node.Tag == null) fixDirectoryNameForFiles(node);
 			else
 			{

@@ -32,6 +32,7 @@
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LOCEditor));
 			this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.addDisplayIDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.renameDisplayIDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.deleteDisplayIDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.locSort = new PckStudio.Forms.MyTablePanel();
 			this.buttonReplaceAll = new System.Windows.Forms.Button();
@@ -45,27 +46,35 @@
 			// 
 			// contextMenuStrip1
 			// 
-			resources.ApplyResources(this.contextMenuStrip1, "contextMenuStrip1");
 			this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addDisplayIDToolStripMenuItem,
+            this.renameDisplayIDToolStripMenuItem,
             this.deleteDisplayIDToolStripMenuItem});
 			this.contextMenuStrip1.Name = "contextMenuStrip1";
+			resources.ApplyResources(this.contextMenuStrip1, "contextMenuStrip1");
 			// 
 			// addDisplayIDToolStripMenuItem
 			// 
-			resources.ApplyResources(this.addDisplayIDToolStripMenuItem, "addDisplayIDToolStripMenuItem");
 			this.addDisplayIDToolStripMenuItem.Name = "addDisplayIDToolStripMenuItem";
+			resources.ApplyResources(this.addDisplayIDToolStripMenuItem, "addDisplayIDToolStripMenuItem");
+			this.addDisplayIDToolStripMenuItem.Click += new System.EventHandler(this.addDisplayIDToolStripMenuItem_Click);
+			// 
+			// renameDisplayIDToolStripMenuItem
+			// 
+			this.renameDisplayIDToolStripMenuItem.Name = "renameDisplayIDToolStripMenuItem";
+			resources.ApplyResources(this.renameDisplayIDToolStripMenuItem, "renameDisplayIDToolStripMenuItem");
+			this.renameDisplayIDToolStripMenuItem.Click += new System.EventHandler(this.renameDisplayIDToolStripMenuItem_Click);
 			// 
 			// deleteDisplayIDToolStripMenuItem
 			// 
-			resources.ApplyResources(this.deleteDisplayIDToolStripMenuItem, "deleteDisplayIDToolStripMenuItem");
 			this.deleteDisplayIDToolStripMenuItem.Name = "deleteDisplayIDToolStripMenuItem";
+			resources.ApplyResources(this.deleteDisplayIDToolStripMenuItem, "deleteDisplayIDToolStripMenuItem");
 			this.deleteDisplayIDToolStripMenuItem.Click += new System.EventHandler(this.deleteDisplayIDToolStripMenuItem_Click);
 			// 
 			// locSort
 			// 
-			resources.ApplyResources(this.locSort, "locSort");
 			this.locSort.AccessibleRole = System.Windows.Forms.AccessibleRole.Table;
+			resources.ApplyResources(this.locSort, "locSort");
 			this.locSort.Controls.Add(this.buttonReplaceAll, 2, 0);
 			this.locSort.Controls.Add(this.dataGridViewLocEntryData, 1, 1);
 			this.locSort.Controls.Add(this.textBoxReplaceAll, 1, 0);
@@ -82,9 +91,9 @@
 			// 
 			// dataGridViewLocEntryData
 			// 
-			resources.ApplyResources(this.dataGridViewLocEntryData, "dataGridViewLocEntryData");
 			this.dataGridViewLocEntryData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.locSort.SetColumnSpan(this.dataGridViewLocEntryData, 2);
+			resources.ApplyResources(this.dataGridViewLocEntryData, "dataGridViewLocEntryData");
 			this.dataGridViewLocEntryData.Name = "dataGridViewLocEntryData";
 			this.dataGridViewLocEntryData.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEndEdit);
 			// 
@@ -95,8 +104,8 @@
 			// 
 			// treeViewLocEntries
 			// 
-			resources.ApplyResources(this.treeViewLocEntries, "treeViewLocEntries");
 			this.treeViewLocEntries.ContextMenuStrip = this.contextMenuStrip1;
+			resources.ApplyResources(this.treeViewLocEntries, "treeViewLocEntries");
 			this.treeViewLocEntries.LabelEdit = true;
 			this.treeViewLocEntries.Name = "treeViewLocEntries";
 			this.locSort.SetRowSpan(this.treeViewLocEntries, 2);
@@ -130,5 +139,6 @@
         private System.Windows.Forms.TextBox textBoxReplaceAll;
         private PckStudio.Forms.MyTablePanel locSort;
         private System.Windows.Forms.Button buttonReplaceAll;
-    }
+		private System.Windows.Forms.ToolStripMenuItem renameDisplayIDToolStripMenuItem;
+	}
 }

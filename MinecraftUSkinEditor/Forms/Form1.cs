@@ -100,6 +100,7 @@ namespace PckStudio
 		{
 			new TabPage();
 			treeViewMain.Nodes.Clear();
+			treeViewMain.LabelEdit = false;
 			PCK pCK = (currentPCK = new PCK(filePath));
 			foreach (PCK.MineFile mineFile in pCK.mineFiles)
 			{
@@ -3665,8 +3666,7 @@ namespace PckStudio
 					}
 					catch
 					{
-						MessageBox.Show("No Color data found.", "Error", MessageBoxButtons.OK,
-							MessageBoxIcon.Error);
+						MessageBox.Show("No Color data found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 						return;
 					}
 					//mf.data = l.Rebuild();//Rebuilds loc file with locdata in grid view after closing dialog

@@ -31,44 +31,44 @@ namespace PckStudio.Forms.Utilities
         {
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(COLEditor));
 			this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
+			this.numericUpDown5 = new System.Windows.Forms.NumericUpDown();
+			this.numericUpDown4 = new System.Windows.Forms.NumericUpDown();
 			this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
 			this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
-			this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+			this.metroLabel6 = new MetroFramework.Controls.MetroLabel();
 			this.metroLabel5 = new MetroFramework.Controls.MetroLabel();
 			this.metroLabel4 = new MetroFramework.Controls.MetroLabel();
 			this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
-			this.metroCheckBox1 = new MetroFramework.Controls.MetroCheckBox();
-			this.metroTextBox2 = new MetroFramework.Controls.MetroTextBox();
-			this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
 			this.metroTextBox1 = new MetroFramework.Controls.MetroTextBox();
 			this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
 			this.pictureBox1 = new System.Windows.Forms.PictureBox();
 			this.menuStrip = new System.Windows.Forms.MenuStrip();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.saveToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-			this.metroPanel2 = new MetroFramework.Controls.MetroPanel();
-			this.treeView1 = new System.Windows.Forms.TreeView();
+			this.tabControl = new MetroFramework.Controls.MetroTabControl();
+			this.colorsTab = new System.Windows.Forms.TabPage();
+			this.waterTab = new System.Windows.Forms.TabPage();
 			this.metroPanel1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.menuStrip.SuspendLayout();
-			this.metroPanel2.SuspendLayout();
+			this.tabControl.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// metroPanel1
 			// 
 			this.metroPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.metroPanel1.Controls.Add(this.numericUpDown5);
+			this.metroPanel1.Controls.Add(this.numericUpDown4);
 			this.metroPanel1.Controls.Add(this.numericUpDown3);
 			this.metroPanel1.Controls.Add(this.numericUpDown2);
-			this.metroPanel1.Controls.Add(this.numericUpDown1);
+			this.metroPanel1.Controls.Add(this.metroLabel6);
 			this.metroPanel1.Controls.Add(this.metroLabel5);
 			this.metroPanel1.Controls.Add(this.metroLabel4);
 			this.metroPanel1.Controls.Add(this.metroLabel3);
-			this.metroPanel1.Controls.Add(this.metroCheckBox1);
-			this.metroPanel1.Controls.Add(this.metroTextBox2);
-			this.metroPanel1.Controls.Add(this.metroLabel2);
 			this.metroPanel1.Controls.Add(this.metroTextBox1);
 			this.metroPanel1.Controls.Add(this.metroLabel1);
 			this.metroPanel1.Controls.Add(this.pictureBox1);
@@ -83,8 +83,36 @@ namespace PckStudio.Forms.Utilities
 			this.metroPanel1.VerticalScrollbarHighlightOnWheel = false;
 			this.metroPanel1.VerticalScrollbarSize = 10;
 			// 
+			// numericUpDown5
+			// 
+			this.numericUpDown5.BackColor = System.Drawing.SystemColors.Desktop;
+			this.numericUpDown5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
+			resources.ApplyResources(this.numericUpDown5, "numericUpDown5");
+			this.numericUpDown5.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+			this.numericUpDown5.Name = "numericUpDown5";
+			this.numericUpDown5.ValueChanged += new System.EventHandler(this.color_ValueChanged);
+			// 
+			// numericUpDown4
+			// 
+			this.numericUpDown4.BackColor = System.Drawing.SystemColors.Desktop;
+			this.numericUpDown4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
+			resources.ApplyResources(this.numericUpDown4, "numericUpDown4");
+			this.numericUpDown4.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+			this.numericUpDown4.Name = "numericUpDown4";
+			this.numericUpDown4.ValueChanged += new System.EventHandler(this.color_ValueChanged);
+			// 
 			// numericUpDown3
 			// 
+			this.numericUpDown3.BackColor = System.Drawing.SystemColors.Desktop;
+			this.numericUpDown3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
 			resources.ApplyResources(this.numericUpDown3, "numericUpDown3");
 			this.numericUpDown3.Maximum = new decimal(new int[] {
             255,
@@ -92,15 +120,12 @@ namespace PckStudio.Forms.Utilities
             0,
             0});
 			this.numericUpDown3.Name = "numericUpDown3";
-			this.numericUpDown3.Value = new decimal(new int[] {
-            13,
-            0,
-            0,
-            0});
-			this.numericUpDown3.ValueChanged += new System.EventHandler(this.numericUpDown3_ValueChanged);
+			this.numericUpDown3.ValueChanged += new System.EventHandler(this.color_ValueChanged);
 			// 
 			// numericUpDown2
 			// 
+			this.numericUpDown2.BackColor = System.Drawing.SystemColors.Desktop;
+			this.numericUpDown2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
 			resources.ApplyResources(this.numericUpDown2, "numericUpDown2");
 			this.numericUpDown2.Maximum = new decimal(new int[] {
             255,
@@ -108,28 +133,13 @@ namespace PckStudio.Forms.Utilities
             0,
             0});
 			this.numericUpDown2.Name = "numericUpDown2";
-			this.numericUpDown2.Value = new decimal(new int[] {
-            75,
-            0,
-            0,
-            0});
-			this.numericUpDown2.ValueChanged += new System.EventHandler(this.numericUpDown2_ValueChanged);
+			this.numericUpDown2.ValueChanged += new System.EventHandler(this.color_ValueChanged);
 			// 
-			// numericUpDown1
+			// metroLabel6
 			// 
-			resources.ApplyResources(this.numericUpDown1, "numericUpDown1");
-			this.numericUpDown1.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-			this.numericUpDown1.Name = "numericUpDown1";
-			this.numericUpDown1.Value = new decimal(new int[] {
-            252,
-            0,
-            0,
-            0});
-			this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
+			resources.ApplyResources(this.metroLabel6, "metroLabel6");
+			this.metroLabel6.Name = "metroLabel6";
+			this.metroLabel6.Theme = MetroFramework.MetroThemeStyle.Dark;
 			// 
 			// metroLabel5
 			// 
@@ -149,66 +159,21 @@ namespace PckStudio.Forms.Utilities
 			this.metroLabel3.Name = "metroLabel3";
 			this.metroLabel3.Theme = MetroFramework.MetroThemeStyle.Dark;
 			// 
-			// metroCheckBox1
-			// 
-			resources.ApplyResources(this.metroCheckBox1, "metroCheckBox1");
-			this.metroCheckBox1.Name = "metroCheckBox1";
-			this.metroCheckBox1.Style = MetroFramework.MetroColorStyle.Silver;
-			this.metroCheckBox1.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.metroCheckBox1.UseSelectable = true;
-			this.metroCheckBox1.CheckedChanged += new System.EventHandler(this.metroCheckBox1_CheckedChanged);
-			// 
-			// metroTextBox2
-			// 
-			// 
-			// 
-			// 
-			this.metroTextBox2.CustomButton.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image")));
-			this.metroTextBox2.CustomButton.ImeMode = ((System.Windows.Forms.ImeMode)(resources.GetObject("resource.ImeMode")));
-			this.metroTextBox2.CustomButton.Location = ((System.Drawing.Point)(resources.GetObject("resource.Location")));
-			this.metroTextBox2.CustomButton.Name = "";
-			this.metroTextBox2.CustomButton.Size = ((System.Drawing.Size)(resources.GetObject("resource.Size")));
-			this.metroTextBox2.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-			this.metroTextBox2.CustomButton.TabIndex = ((int)(resources.GetObject("resource.TabIndex")));
-			this.metroTextBox2.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
-			this.metroTextBox2.CustomButton.UseSelectable = true;
-			this.metroTextBox2.CustomButton.Visible = ((bool)(resources.GetObject("resource.Visible")));
-			this.metroTextBox2.Lines = new string[0];
-			resources.ApplyResources(this.metroTextBox2, "metroTextBox2");
-			this.metroTextBox2.MaxLength = 32767;
-			this.metroTextBox2.Name = "metroTextBox2";
-			this.metroTextBox2.PasswordChar = '\0';
-			this.metroTextBox2.ScrollBars = System.Windows.Forms.ScrollBars.None;
-			this.metroTextBox2.SelectedText = "";
-			this.metroTextBox2.SelectionLength = 0;
-			this.metroTextBox2.SelectionStart = 0;
-			this.metroTextBox2.ShortcutsEnabled = true;
-			this.metroTextBox2.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.metroTextBox2.UseSelectable = true;
-			this.metroTextBox2.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-			this.metroTextBox2.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
-			// 
-			// metroLabel2
-			// 
-			resources.ApplyResources(this.metroLabel2, "metroLabel2");
-			this.metroLabel2.Name = "metroLabel2";
-			this.metroLabel2.Theme = MetroFramework.MetroThemeStyle.Dark;
-			// 
 			// metroTextBox1
 			// 
 			// 
 			// 
 			// 
-			this.metroTextBox1.CustomButton.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image1")));
-			this.metroTextBox1.CustomButton.ImeMode = ((System.Windows.Forms.ImeMode)(resources.GetObject("resource.ImeMode1")));
-			this.metroTextBox1.CustomButton.Location = ((System.Drawing.Point)(resources.GetObject("resource.Location1")));
+			this.metroTextBox1.CustomButton.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image")));
+			this.metroTextBox1.CustomButton.ImeMode = ((System.Windows.Forms.ImeMode)(resources.GetObject("resource.ImeMode")));
+			this.metroTextBox1.CustomButton.Location = ((System.Drawing.Point)(resources.GetObject("resource.Location")));
 			this.metroTextBox1.CustomButton.Name = "";
-			this.metroTextBox1.CustomButton.Size = ((System.Drawing.Size)(resources.GetObject("resource.Size1")));
+			this.metroTextBox1.CustomButton.Size = ((System.Drawing.Size)(resources.GetObject("resource.Size")));
 			this.metroTextBox1.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-			this.metroTextBox1.CustomButton.TabIndex = ((int)(resources.GetObject("resource.TabIndex1")));
+			this.metroTextBox1.CustomButton.TabIndex = ((int)(resources.GetObject("resource.TabIndex")));
 			this.metroTextBox1.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
 			this.metroTextBox1.CustomButton.UseSelectable = true;
-			this.metroTextBox1.CustomButton.Visible = ((bool)(resources.GetObject("resource.Visible1")));
+			this.metroTextBox1.CustomButton.Visible = ((bool)(resources.GetObject("resource.Visible")));
 			this.metroTextBox1.Lines = new string[0];
 			resources.ApplyResources(this.metroTextBox1, "metroTextBox1");
 			this.metroTextBox1.MaxLength = 32767;
@@ -260,47 +225,50 @@ namespace PckStudio.Forms.Utilities
 			this.saveToolStripMenuItem1.Name = "saveToolStripMenuItem1";
 			this.saveToolStripMenuItem1.Click += new System.EventHandler(this.saveToolStripMenuItem1_Click);
 			// 
-			// metroPanel2
+			// tabControl
 			// 
-			this.metroPanel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.metroPanel2.Controls.Add(this.treeView1);
-			resources.ApplyResources(this.metroPanel2, "metroPanel2");
-			this.metroPanel2.HorizontalScrollbarBarColor = true;
-			this.metroPanel2.HorizontalScrollbarHighlightOnWheel = false;
-			this.metroPanel2.HorizontalScrollbarSize = 10;
-			this.metroPanel2.Name = "metroPanel2";
-			this.metroPanel2.VerticalScrollbarBarColor = true;
-			this.metroPanel2.VerticalScrollbarHighlightOnWheel = false;
-			this.metroPanel2.VerticalScrollbarSize = 10;
+			this.tabControl.Controls.Add(this.colorsTab);
+			this.tabControl.Controls.Add(this.waterTab);
+			resources.ApplyResources(this.tabControl, "tabControl");
+			this.tabControl.Name = "tabControl";
+			this.tabControl.SelectedIndex = 0;
+			this.tabControl.Style = MetroFramework.MetroColorStyle.White;
+			this.tabControl.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.tabControl.UseSelectable = true;
 			// 
-			// treeView1
+			// colorsTab
 			// 
-			this.treeView1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-			resources.ApplyResources(this.treeView1, "treeView1");
-			this.treeView1.ForeColor = System.Drawing.Color.White;
-			this.treeView1.LabelEdit = true;
-			this.treeView1.Name = "treeView1";
-			this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
+			this.colorsTab.BackColor = System.Drawing.SystemColors.WindowFrame;
+			resources.ApplyResources(this.colorsTab, "colorsTab");
+			this.colorsTab.Name = "colorsTab";
+			// 
+			// waterTab
+			// 
+			this.waterTab.BackColor = System.Drawing.SystemColors.WindowFrame;
+			resources.ApplyResources(this.waterTab, "waterTab");
+			this.waterTab.Name = "waterTab";
 			// 
 			// COLEditor
 			// 
 			resources.ApplyResources(this, "$this");
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.Controls.Add(this.metroPanel2);
 			this.Controls.Add(this.menuStrip);
+			this.Controls.Add(this.tabControl);
 			this.Controls.Add(this.metroPanel1);
+			this.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.Name = "COLEditor";
 			this.Style = MetroFramework.MetroColorStyle.Silver;
 			this.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.metroPanel1.ResumeLayout(false);
 			this.metroPanel1.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
 			this.menuStrip.ResumeLayout(false);
 			this.menuStrip.PerformLayout();
-			this.metroPanel2.ResumeLayout(false);
+			this.tabControl.ResumeLayout(false);
 			this.ResumeLayout(false);
 
         }
@@ -314,16 +282,16 @@ namespace PckStudio.Forms.Utilities
         private System.Windows.Forms.MenuStrip menuStrip;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem1;
-        private MetroFramework.Controls.MetroPanel metroPanel2;
-        private System.Windows.Forms.TreeView treeView1;
-        private MetroFramework.Controls.MetroTextBox metroTextBox2;
-        private MetroFramework.Controls.MetroLabel metroLabel2;
-        private System.Windows.Forms.NumericUpDown numericUpDown3;
-        private System.Windows.Forms.NumericUpDown numericUpDown2;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
         private MetroFramework.Controls.MetroLabel metroLabel5;
         private MetroFramework.Controls.MetroLabel metroLabel4;
         private MetroFramework.Controls.MetroLabel metroLabel3;
-        private MetroFramework.Controls.MetroCheckBox metroCheckBox1;
-    }
+		private MetroFramework.Controls.MetroLabel metroLabel6;
+		private System.Windows.Forms.NumericUpDown numericUpDown5;
+		private System.Windows.Forms.NumericUpDown numericUpDown4;
+		private System.Windows.Forms.NumericUpDown numericUpDown3;
+		private System.Windows.Forms.NumericUpDown numericUpDown2;
+		private MetroFramework.Controls.MetroTabControl tabControl;
+		private System.Windows.Forms.TabPage colorsTab;
+		private System.Windows.Forms.TabPage waterTab;
+	}
 }

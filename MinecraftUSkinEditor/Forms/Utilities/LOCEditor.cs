@@ -22,8 +22,6 @@ namespace PckStudio
             public string defaultName;
         }
         #endregion
-
-
         public LOCEditor(LOC loc)
         {
             InitializeComponent();
@@ -66,7 +64,31 @@ namespace PckStudio
                 buttonReplaceAll.Enabled = false;
             }
         }
-        
+
+        private void renameDisplayIDToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TreeNode node = treeViewLocEntries.SelectedNode;
+            int index = currentLoc.ids.names.FindIndex(name => name == node.Text);
+            PckStudio.renameLoc diag = new PckStudio.renameLoc(node);
+            diag.ShowDialog(this);
+            diag.Dispose(); //diposes generated metadata adding dialog data
+            currentLoc.ids.names[index] = node.Text;
+        }
+
+        private void addDisplayIDToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int index = treeViewLocEntries.SelectedNode.Index;
+
+            if(index == -1) index = currentLoc.ids.names.Count;
+
+            currentLoc.ids.names.Insert(index, "NewItem");
+
+            foreach (LOC.Language l in currentLoc.langs)
+                l.names.Insert(index, "NewString");
+
+            treeViewLocEntries.Nodes.Insert(index, "NewItem");
+        }
+
         private void deleteDisplayIDToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if(treeViewLocEntries.SelectedNode != null)
@@ -119,5 +141,10 @@ namespace PckStudio
                 currentLoc.langs[i].names[treeViewLocEntries.SelectedNode.Index] = (string)tbl.Rows[i][1];
             }
         }
-    }
+
+		private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
+		{
+
+		}
+	}
 }

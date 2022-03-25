@@ -9,7 +9,6 @@ namespace PckStudio
     public class PCK
     {
 
-
         public class MineFile
         {
             public int filesize;

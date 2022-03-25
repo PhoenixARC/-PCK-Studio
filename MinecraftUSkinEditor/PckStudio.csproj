@@ -366,10 +366,10 @@
     <Compile Include="Forms\Skins-And-Textures\addAnimatedTexture.Designer.cs">
       <DependentUpon>addAnimatedTexture.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Skins-And-Textures\rename.cs">
+    <Compile Include="Forms\Additional-Popups\rename.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Skins-And-Textures\rename.Designer.cs">
+    <Compile Include="Forms\Additional-Popups\rename.Designer.cs">
       <DependentUpon>rename.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Skins-And-Textures\addCategory.cs">
@@ -525,6 +525,12 @@
     <Compile Include="Forms\Additional-Popups\Promo.Designer.cs">
       <DependentUpon>Promo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Utilities\renameLoc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Utilities\renameLoc.Designer.cs">
+      <DependentUpon>renameLoc.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Utilities\TextureConverterUtility.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -586,7 +592,7 @@
     <EmbeddedResource Include="Forms\Skins-And-Textures\addAnimatedTexture.resx">
       <DependentUpon>addAnimatedTexture.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Skins-And-Textures\rename.resx">
+    <EmbeddedResource Include="Forms\Additional-Popups\rename.resx">
       <DependentUpon>rename.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Skins-And-Textures\addCategory.resx">
@@ -725,6 +731,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\Promo.resx">
       <DependentUpon>Promo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Utilities\renameLoc.resx">
+      <DependentUpon>renameLoc.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Utilities\TextureConverterUtility.resx">
       <DependentUpon>TextureConverterUtility.cs</DependentUpon>
