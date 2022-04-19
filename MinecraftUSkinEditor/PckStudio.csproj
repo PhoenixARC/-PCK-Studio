@@ -372,10 +372,16 @@
     <Compile Include="Forms\Additional-Popups\rename.Designer.cs">
       <DependentUpon>rename.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Skins-And-Textures\addCategory.cs">
+    <Compile Include="Forms\Utilities\Animation\SetBulkSpeed.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Skins-And-Textures\addCategory.Designer.cs">
+    <Compile Include="Forms\Utilities\Animation\SetBulkSpeed.Designer.cs">
+      <DependentUpon>SetBulkSpeed.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Utilities\Audio\addCategory.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Utilities\Audio\addCategory.Designer.cs">
       <DependentUpon>addCategory.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Skins-And-Textures\addMeta.cs">
@@ -452,6 +458,18 @@
     </Compile>
     <Compile Include="Forms\Testx-12.Designer.cs">
       <DependentUpon>Testx-12.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Utilities\AnimationEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Utilities\AnimationEditor.Designer.cs">
+      <DependentUpon>AnimationEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Utilities\Animation\FrameEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Utilities\Animation\FrameEditor.Designer.cs">
+      <DependentUpon>FrameEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Utilities\AudioEditor.cs">
       <SubType>Form</SubType>
@@ -595,7 +613,10 @@
     <EmbeddedResource Include="Forms\Additional-Popups\rename.resx">
       <DependentUpon>rename.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Skins-And-Textures\addCategory.resx">
+    <EmbeddedResource Include="Forms\Utilities\Animation\SetBulkSpeed.resx">
+      <DependentUpon>SetBulkSpeed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Utilities\Audio\addCategory.resx">
       <DependentUpon>addCategory.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Skins-And-Textures\addMeta.ja.resx">
@@ -662,6 +683,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Testx-12.resx">
       <DependentUpon>Testx-12.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Utilities\AnimationEditor.resx">
+      <DependentUpon>AnimationEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Utilities\Animation\FrameEditor.resx">
+      <DependentUpon>FrameEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Utilities\AudioEditor.resx">
       <DependentUpon>AudioEditor.cs</DependentUpon>

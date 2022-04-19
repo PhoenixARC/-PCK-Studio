@@ -292,6 +292,17 @@ namespace PckStudio
 					meta.Tag = entry;
 					treeMeta.Nodes.Add(meta);
 
+					//Check for Animated Texture
+					if ((mf.name.StartsWith("res/textures/blocks/") || mf.name.StartsWith("res/textures/items/")) && (!mf.name.EndsWith("clock.png") && (!mf.name.EndsWith("compass.png"))))
+					{
+						buttonEdit.Text = "EDIT TEXTURE ANIMATION";
+						buttonEdit.Visible = true;
+					}
+					else
+					{
+						buttonEdit.Visible = false;
+					}
+
 					//Check for if file contains model data
 					if (entry[0].ToString()=="BOX")
 					{
@@ -344,7 +355,7 @@ namespace PckStudio
 					else
 					{
 						//Sets images to appear at largest relative size to program window size
-						Size maxDisplay = new Size(tabPage1.Size.Width / 2 - 5, tabPage1.Size.Height / 2 - 5);
+						Size maxDisplay = new Size((tabPage1.Size.Width / 2 - 5) / 3, (tabPage1.Size.Height / 2 - 5) / 3);
 						if (skinPicture.Size.Width > maxDisplay.Width)
 						{
 							//calculate aspect ratio
@@ -419,7 +430,7 @@ namespace PckStudio
 				}
 				else if (Path.GetFileName(mf.name) == "audio.pck")
 				{
-					buttonEdit.Text = "EDIT AUDIO";
+					buttonEdit.Text = "EDIT MUSIC CUES";
 					buttonEdit.Visible = true;
 				}
 				else
@@ -1027,7 +1038,6 @@ namespace PckStudio
 		#region deciphers what happens when certain pck entries are double clicked
 		private void treeView1_DoubleClick(object sender, EventArgs e)
 		{
-			if (treeViewMain.SelectedNode.ImageIndex < 0) return;
 			if (treeViewMain.SelectedNode.Tag != null)
 			{
 				mf = (PCK.MineFile)treeViewMain.SelectedNode.Tag;
@@ -1062,6 +1072,7 @@ namespace PckStudio
 						{
 							PckStudio.Forms.Utilities.AudioEditor diag = new PckStudio.Forms.Utilities.AudioEditor(mf.data, mf);
 							diag.ShowDialog(this);
+							diag.Dispose();
 						}
 						catch(Exception ex)
 						{
@@ -1082,7 +1093,8 @@ namespace PckStudio
 						try
 						{
 							PckStudio.Forms.Utilities.COLEditor diag = new PckStudio.Forms.Utilities.COLEditor(mf.data, mf);
-							diag.Show();
+							diag.ShowDialog(this);
+							diag.Dispose();
 						}
 						catch
 						{
@@ -1309,12 +1321,6 @@ namespace PckStudio
 			{
 				DoDragDrop(e.Item, DragDropEffects.Move);
 			}
-
-			// Copy the dragged node when the right mouse button is used.
-			else if (e.Button == MouseButtons.Right)
-			{
-				DoDragDrop(e.Item, DragDropEffects.Copy);
-			}
 		}
 
 		// Set the target drop effect to the effect 
@@ -1370,27 +1376,13 @@ namespace PckStudio
 					}
 					else // Move file aside
 					{
-						if(targetNode.Parent != null)
+						if (targetNode.Parent != null)
 						{
-							if (draggedNode.Index < targetNode.Index)
-							{
-								targetNode.Parent.Nodes.Insert(targetIndex - 1, draggedNode);
-							}
-							else
-							{
-								targetNode.Parent.Nodes.Insert(targetIndex, draggedNode);
-							}
+							targetNode.Parent.Nodes.Insert(targetIndex, draggedNode);
 						}
 						else
 						{
-							if (draggedNode.Index < targetNode.Index)
-							{
-								treeViewMain.Nodes.Insert(targetIndex - 1, draggedNode);
-							}
-							else
-							{
-								treeViewMain.Nodes.Insert(targetIndex, draggedNode);
-							}
+							treeView1.Nodes.Insert(targetIndex, draggedNode);
 						}
 					}
 				}
@@ -3627,24 +3619,56 @@ namespace PckStudio
 					using (var ms = new MemoryStream(mf.data))
 					{
 						SkinPreview frm = new SkinPreview(Image.FromStream(ms));
-						frm.Show();
+						frm.ShowDialog(this);
+						frm.Dispose();
 					}
+				}
+			}
+
+			//Check for Animated Texture
+			if (mf.name.StartsWith("res/textures/blocks/") || mf.name.StartsWith("res/textures/items/"))
+			{
+				try
+				{
+					PckStudio.AnimationEditor diag = new PckStudio.AnimationEditor(mf);
+					diag.ShowDialog(this);
+					diag.Dispose();
+
+					treeMeta.Nodes.Clear();
+					foreach (int type in types.Keys)
+						comboBox1.Items.Add(types[type]);
+
+					//loads all of selected minefiles metadata into metadata treeview
+					foreach (object[] entry in file.entries)
+					{
+						object[] strings = (object[])entry; TreeNode meta = new TreeNode();
+
+						foreach (object[] entryy in file.entries)
+							meta.Text = (string)strings[0];
+						meta.Tag = entry;
+						treeMeta.Nodes.Add(meta);
+					}
+				}
+				catch
+				{
+					MessageBox.Show("Invalid animation data.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					return;
 				}
 			}
 
 			if (Path.GetFileName(mf.name) == "audio.pck")
 			{
-					try
-					{
-						PckStudio.Forms.Utilities.AudioEditor diag = new PckStudio.Forms.Utilities.AudioEditor(mf.data, mf);
-						diag.Show();
-					}
-					catch
-					{
-						MessageBox.Show("Invalid data", "Error", MessageBoxButtons.OK,
-						MessageBoxIcon.Error);
-						return;
-					}
+				try
+				{
+					PckStudio.Forms.Utilities.AudioEditor diag = new PckStudio.Forms.Utilities.AudioEditor(mf.data, mf);
+					diag.ShowDialog(this);
+					diag.Dispose();
+				}
+				catch
+				{
+					MessageBox.Show("Invalid data", "Error", MessageBoxButtons.OK,MessageBoxIcon.Error);
+					return;
+				}
 			}
 
 			if (Path.GetExtension(mf.name) == ".loc")
@@ -3674,7 +3698,8 @@ namespace PckStudio
 					try
 					{
 						PckStudio.Forms.Utilities.COLEditor diag = new PckStudio.Forms.Utilities.COLEditor(mf.data, mf);
-						diag.Show();
+						diag.ShowDialog(this);
+						diag.Dispose();
 					}
 					catch
 					{
