@@ -292,17 +292,6 @@ namespace PckStudio
 					meta.Tag = entry;
 					treeMeta.Nodes.Add(meta);
 
-					//Check for Animated Texture
-					if ((mf.name.StartsWith("res/textures/blocks/") || mf.name.StartsWith("res/textures/items/")) && (!mf.name.EndsWith("clock.png") && (!mf.name.EndsWith("compass.png"))))
-					{
-						buttonEdit.Text = "EDIT TEXTURE ANIMATION";
-						buttonEdit.Visible = true;
-					}
-					else
-					{
-						buttonEdit.Visible = false;
-					}
-
 					//Check for if file contains model data
 					if (entry[0].ToString()=="BOX")
 					{
@@ -328,6 +317,17 @@ namespace PckStudio
 					{
 						buttonEdit.Visible = false;
 					}
+				}
+
+				//Check for Animated Texture
+				if ((mf.name.StartsWith("res/textures/blocks/") || mf.name.StartsWith("res/textures/items/")) && (!mf.name.EndsWith("clock.png") && (!mf.name.EndsWith("compass.png"))))
+				{
+					buttonEdit.Text = "EDIT TEXTURE ANIMATION";
+					buttonEdit.Visible = true;
+				}
+				else
+				{
+					buttonEdit.Visible = false;
 				}
 
 				//If selected item is a image, its displayed with proper dimensions in image box
