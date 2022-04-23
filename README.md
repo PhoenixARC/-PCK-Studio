@@ -28,3 +28,7 @@ Modify .PCK archives as you please!
 * Open `MinecraftUSkinEditor.sln`
 
 * hit run *or* hit **Shift+b**
+
+### A quick note:
+
+* Forms will not load in viewer until the solution is build _at least_ once
