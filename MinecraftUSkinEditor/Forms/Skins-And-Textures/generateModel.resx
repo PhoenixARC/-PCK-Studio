@@ -151,7 +151,7 @@
     <value>tableLayoutPanelMain</value>
   </data>
   <data name="&gt;&gt;buttonImportModel.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="buttonExportModel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -163,10 +163,10 @@
     <value>NoControl</value>
   </data>
   <data name="buttonExportModel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>453, 3</value>
+    <value>483, 3</value>
   </data>
   <data name="buttonExportModel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>119, 21</value>
+    <value>89, 21</value>
   </data>
   <data name="buttonExportModel.TabIndex" type="System.Int32, mscorlib">
     <value>97</value>
@@ -184,7 +184,7 @@
     <value>tableLayoutPanelMain</value>
   </data>
   <data name="&gt;&gt;buttonExportModel.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="checkTextureGenerate.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -193,7 +193,7 @@
     <value>NoControl</value>
   </data>
   <data name="checkTextureGenerate.Location" type="System.Drawing.Point, System.Drawing">
-    <value>242, 601</value>
+    <value>242, 681</value>
   </data>
   <data name="checkTextureGenerate.Size" type="System.Drawing.Size, System.Drawing">
     <value>134, 17</value>
@@ -223,7 +223,7 @@
     <value>NoControl</value>
   </data>
   <data name="checkGuide.Location" type="System.Drawing.Point, System.Drawing">
-    <value>130, 601</value>
+    <value>130, 681</value>
   </data>
   <data name="checkGuide.Size" type="System.Drawing.Size, System.Drawing">
     <value>82, 17</value>
@@ -256,7 +256,7 @@
     <value>NoControl</value>
   </data>
   <data name="labelView.Location" type="System.Drawing.Point, System.Drawing">
-    <value>242, 577</value>
+    <value>242, 657</value>
   </data>
   <data name="labelView.Size" type="System.Drawing.Size, System.Drawing">
     <value>134, 13</value>
@@ -286,7 +286,7 @@
     <value>NoControl</value>
   </data>
   <data name="button2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>130, 572</value>
+    <value>130, 652</value>
   </data>
   <data name="button2.Size" type="System.Drawing.Size, System.Drawing">
     <value>89, 23</value>
@@ -319,7 +319,7 @@
     <value>NoControl</value>
   </data>
   <data name="button1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>483, 572</value>
+    <value>483, 652</value>
   </data>
   <data name="button1.Size" type="System.Drawing.Size, System.Drawing">
     <value>89, 23</value>
@@ -417,13 +417,46 @@
   <data name="&gt;&gt;labelModeParts.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <data name="OpenJSONButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="OpenJSONButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="OpenJSONButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="OpenJSONButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>130, 3</value>
+  </data>
+  <data name="OpenJSONButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>106, 21</value>
+  </data>
+  <data name="OpenJSONButton.TabIndex" type="System.Int32, mscorlib">
+    <value>145</value>
+  </data>
+  <data name="OpenJSONButton.Text" xml:space="preserve">
+    <value>OPEN JSON</value>
+  </data>
+  <data name="&gt;&gt;OpenJSONButton.Name" xml:space="preserve">
+    <value>OpenJSONButton</value>
+  </data>
+  <data name="&gt;&gt;OpenJSONButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;OpenJSONButton.Parent" xml:space="preserve">
+    <value>tableLayoutPanelMain</value>
+  </data>
+  <data name="&gt;&gt;OpenJSONButton.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
   <metadata name="contextMenuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
   <data name="createToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wwAADsMBx2+oZAAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xMkMEa+wAAABSSURBVDhP5c0x
+        wAAADsABataJCQAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xMkMEa+wAAABSSURBVDhP5c0x
         DsAgDENRxt7/wmkNSpRGf0CCCZAegxNMM7MlGMp3dIU6dxhKf/QMNxRogeQC8ivw5Vn7C0heJlFA+kL5
         jWAohxRkde4wnGftBS90axNmphIGAAAAAElFTkSuQmCC
 </value>
@@ -437,7 +470,7 @@
   <data name="cloneToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wgAADsIBFShKgAAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xMkMEa+wAAAHbSURBVDhPYyjZ
+        vwAADr8BOAVTJAAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xMkMEa+wAAAHbSURBVDhPYyjZ
         5F622bt8o1fmYpvMxdY5691T5prlrnJq2BsKFM9Z6Zix1DZruX3yAovAPrX8NS4MJZs98la7de2M/I8E
         khdZJsw3m3IwacL+hIoNPkkLDEpWumYus8tf6cTQuSc6zFZj7slckEIGBhD6/z/WUr1oq0fDvtApB1Mm
         H0uOtFaNmaKbPM8iykaTIcpGPSs3K8JWHVlDpK1q4gLDcFv1rHXOIfbq1UGmIfZqQJWVoVYgaQSAaYCD
@@ -458,7 +491,7 @@
   <data name="deleteToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wwAADsMBx2+oZAAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xMkMEa+wAAACESURBVDhPlY0B
+        wAAADsABataJCQAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xMkMEa+wAAACESURBVDhPlY0B
         DoAgDAP3Dj7r09WTkqGUgJfUxtrOmHFEnL0U76FBqW8PZXmk/9uONEsIb3gsNRzoL/+R5hWC759mGsbQ
         DnzdZbhmiSvhLsM1S1wJdxmuWeJKuMtwzRJXwl2Ga5a4Eu4yXLPElXCX4Zol/WCl6YGdI62n2Zv2cSXV
         byIunLh7mD2ySLcAAAAASUVORK5CYII=
@@ -473,7 +506,7 @@
   <data name="changeColorToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wwAADsMBx2+oZAAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xMkMEa+wAAAFhSURBVFhH7ZY/
+        wAAADsABataJCQAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xMkMEa+wAAAFhSURBVFhH7ZY/
         S8RAEMXHW23zDexFkNSSTyDYijZyYq2V4BWBmPZaK7/B1fZiK1iIrRxod4r/Gq38N+7L7B5LyFllVuF8
         8Mhm55HfZJZAaBq1Zs2yjKx5C+7OiLF223EEYM+CeVaMJlxJXdt1ONZRJuBH/mHo1sPfDY2iwcO39naj
         35CUkibBo4z+H/6n4EcdetSGzwHQ79BLHf5q6EYbvgTAmaFhHQ67zy2TaPvaAdy+5XUTHMexSHTpsq1r
@@ -520,7 +553,7 @@
     <value>tableLayoutPanelMain</value>
   </data>
   <data name="&gt;&gt;listViewBoxes.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="displayBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -532,7 +565,7 @@
     <value>130, 30</value>
   </data>
   <data name="displayBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>442, 536</value>
+    <value>442, 616</value>
   </data>
   <data name="displayBox.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
     <value>StretchImage</value>
@@ -550,40 +583,7 @@
     <value>tableLayoutPanelMain</value>
   </data>
   <data name="&gt;&gt;displayBox.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="labelFullSkinPreview.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left</value>
-  </data>
-  <data name="labelFullSkinPreview.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="labelFullSkinPreview.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="labelFullSkinPreview.Location" type="System.Drawing.Point, System.Drawing">
-    <value>130, 14</value>
-  </data>
-  <data name="labelFullSkinPreview.Size" type="System.Drawing.Size, System.Drawing">
-    <value>88, 13</value>
-  </data>
-  <data name="labelFullSkinPreview.TabIndex" type="System.Int32, mscorlib">
-    <value>141</value>
-  </data>
-  <data name="labelFullSkinPreview.Text" xml:space="preserve">
-    <value>Full Skin Preview</value>
-  </data>
-  <data name="&gt;&gt;labelFullSkinPreview.Name" xml:space="preserve">
-    <value>labelFullSkinPreview</value>
-  </data>
-  <data name="&gt;&gt;labelFullSkinPreview.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;labelFullSkinPreview.Parent" xml:space="preserve">
-    <value>tableLayoutPanelMain</value>
-  </data>
-  <data name="&gt;&gt;labelFullSkinPreview.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>4</value>
   </data>
   <data name="labelTextureMappingPreview.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1303,7 +1303,7 @@
     <value>LEG1</value>
   </data>
   <data name="comboParent.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 572</value>
+    <value>3, 652</value>
   </data>
   <data name="comboParent.Size" type="System.Drawing.Size, System.Drawing">
     <value>114, 21</value>
@@ -1333,7 +1333,7 @@
     <value>NoControl</value>
   </data>
   <data name="label6.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 556</value>
+    <value>3, 636</value>
   </data>
   <data name="label6.Size" type="System.Drawing.Size, System.Drawing">
     <value>38, 13</value>
@@ -1360,7 +1360,7 @@
     <value>NoControl</value>
   </data>
   <data name="buttonTemplate.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 601</value>
+    <value>3, 681</value>
   </data>
   <data name="buttonTemplate.Size" type="System.Drawing.Size, System.Drawing">
     <value>114, 23</value>
@@ -1390,7 +1390,7 @@
     <value>Left</value>
   </data>
   <data name="offsetArms.Location" type="System.Drawing.Point, System.Drawing">
-    <value>59, 81</value>
+    <value>59, 151</value>
   </data>
   <data name="offsetArms.Size" type="System.Drawing.Size, System.Drawing">
     <value>43, 20</value>
@@ -1423,7 +1423,7 @@
     <value>NoControl</value>
   </data>
   <data name="label14.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 84</value>
+    <value>3, 154</value>
   </data>
   <data name="label14.Size" type="System.Drawing.Size, System.Drawing">
     <value>38, 13</value>
@@ -1450,7 +1450,7 @@
     <value>Left</value>
   </data>
   <data name="offsetBody.Location" type="System.Drawing.Point, System.Drawing">
-    <value>59, 29</value>
+    <value>59, 59</value>
   </data>
   <data name="offsetBody.Size" type="System.Drawing.Size, System.Drawing">
     <value>43, 20</value>
@@ -1477,7 +1477,7 @@
     <value>Left</value>
   </data>
   <data name="offsetLegs.Location" type="System.Drawing.Point, System.Drawing">
-    <value>59, 55</value>
+    <value>59, 105</value>
   </data>
   <data name="offsetLegs.Size" type="System.Drawing.Size, System.Drawing">
     <value>43, 20</value>
@@ -1510,7 +1510,7 @@
     <value>NoControl</value>
   </data>
   <data name="label10.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 6</value>
+    <value>3, 16</value>
   </data>
   <data name="label10.Size" type="System.Drawing.Size, System.Drawing">
     <value>37, 13</value>
@@ -1543,7 +1543,7 @@
     <value>NoControl</value>
   </data>
   <data name="label13.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 58</value>
+    <value>3, 108</value>
   </data>
   <data name="label13.Size" type="System.Drawing.Size, System.Drawing">
     <value>35, 13</value>
@@ -1570,7 +1570,7 @@
     <value>Left</value>
   </data>
   <data name="offsetHead.Location" type="System.Drawing.Point, System.Drawing">
-    <value>59, 3</value>
+    <value>59, 13</value>
   </data>
   <data name="offsetHead.Size" type="System.Drawing.Size, System.Drawing">
     <value>43, 20</value>
@@ -1603,7 +1603,7 @@
     <value>NoControl</value>
   </data>
   <data name="label12.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 32</value>
+    <value>3, 62</value>
   </data>
   <data name="label12.Size" type="System.Drawing.Size, System.Drawing">
     <value>37, 13</value>
@@ -1636,7 +1636,7 @@
     <value>4</value>
   </data>
   <data name="myTablePanel2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>112, 104</value>
+    <value>112, 184</value>
   </data>
   <data name="myTablePanel2.TabIndex" type="System.Int32, mscorlib">
     <value>146</value>
@@ -1663,7 +1663,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="tabPage1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>118, 110</value>
+    <value>118, 190</value>
   </data>
   <data name="tabPage1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -2170,7 +2170,7 @@
     <value>3, 16</value>
   </data>
   <data name="tabBody.Size" type="System.Drawing.Size, System.Drawing">
-    <value>126, 136</value>
+    <value>126, 216</value>
   </data>
   <data name="tabBody.TabIndex" type="System.Int32, mscorlib">
     <value>144</value>
@@ -2194,7 +2194,7 @@
     <value>578, 411</value>
   </data>
   <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>132, 155</value>
+    <value>132, 235</value>
   </data>
   <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
     <value>139</value>
@@ -2398,7 +2398,7 @@
     <value>3, 411</value>
   </data>
   <data name="listViewBGs.Size" type="System.Drawing.Size, System.Drawing">
-    <value>121, 142</value>
+    <value>121, 222</value>
   </data>
   <data name="listViewBGs.TabIndex" type="System.Int32, mscorlib">
     <value>145</value>
@@ -2422,7 +2422,7 @@
     <value>NoControl</value>
   </data>
   <data name="checkBoxArmor.Location" type="System.Drawing.Point, System.Drawing">
-    <value>382, 601</value>
+    <value>382, 681</value>
   </data>
   <data name="checkBoxArmor.Size" type="System.Drawing.Size, System.Drawing">
     <value>119, 17</value>
@@ -2452,7 +2452,7 @@
     <value>NoControl</value>
   </data>
   <data name="buttonDone.Location" type="System.Drawing.Point, System.Drawing">
-    <value>645, 601</value>
+    <value>645, 681</value>
   </data>
   <data name="buttonDone.Size" type="System.Drawing.Size, System.Drawing">
     <value>64, 22</value>
@@ -2485,7 +2485,7 @@
     <value>20</value>
   </data>
   <data name="tableLayoutPanelMain.Size" type="System.Drawing.Size, System.Drawing">
-    <value>713, 627</value>
+    <value>713, 707</value>
   </data>
   <data name="tableLayoutPanelMain.TabIndex" type="System.Int32, mscorlib">
     <value>144</value>
@@ -2500,10 +2500,10 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;tableLayoutPanelMain.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>1</value>
   </data>
   <data name="tableLayoutPanelMain.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="labelModeParts" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="listViewBoxes" Row="1" RowSpan="14" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="buttonExportModel" Row="0" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="displayBox" Row="1" RowSpan="17" Column="1" ColumnSpan="3" /&gt;&lt;Control Name="buttonImportModel" Row="0" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="labelFullSkinPreview" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="labelTextureMappingPreview" Row="0" RowSpan="1" Column="5" ColumnSpan="6" /&gt;&lt;Control Name="texturePreview" Row="1" RowSpan="5" Column="5" ColumnSpan="6" /&gt;&lt;Control Name="buttonIMPORT" Row="6" RowSpan="1" Column="5" ColumnSpan="3" /&gt;&lt;Control Name="label7" Row="7" RowSpan="1" Column="5" ColumnSpan="1" /&gt;&lt;Control Name="buttonEXPORT" Row="6" RowSpan="1" Column="8" ColumnSpan="3" /&gt;&lt;Control Name="textTextureY" Row="7" RowSpan="1" Column="6" ColumnSpan="2" /&gt;&lt;Control Name="textTextureX" Row="7" RowSpan="1" Column="8" ColumnSpan="2" /&gt;&lt;Control Name="label3" Row="8" RowSpan="1" Column="5" ColumnSpan="2" /&gt;&lt;Control Name="buttonXfplus" Row="9" RowSpan="1" Column="5" ColumnSpan="2" /&gt;&lt;Control Name="textXf" Row="10" RowSpan="1" Column="5" ColumnSpan="2" /&gt;&lt;Control Name="buttonXfminus" Row="11" RowSpan="1" Column="5" ColumnSpan="2" /&gt;&lt;Control Name="label5" Row="12" RowSpan="1" Column="5" ColumnSpan="3" /&gt;&lt;Control Name="buttonXcplus" Row="13" RowSpan="1" Column="5" ColumnSpan="2" /&gt;&lt;Control Name="textXc" Row="14" RowSpan="1" Column="5" ColumnSpan="2" /&gt;&lt;Control Name="buttonXcminus" Row="15" RowSpan="1" Column="5" ColumnSpan="2" /&gt;&lt;Control Name="buttonYfplus" Row="9" RowSpan="1" Column="7" ColumnSpan="2" /&gt;&lt;Control Name="textYf" Row="10" RowSpan="1" Column="7" ColumnSpan="2" /&gt;&lt;Control Name="buttonYfminus" Row="11" RowSpan="1" Column="7" ColumnSpan="2" /&gt;&lt;Control Name="buttonYcplus" Row="13" RowSpan="1" Column="7" ColumnSpan="2" /&gt;&lt;Control Name="textYc" Row="14" RowSpan="1" Column="7" ColumnSpan="2" /&gt;&lt;Control Name="buttonYcminus" Row="15" RowSpan="1" Column="7" ColumnSpan="2" /&gt;&lt;Control Name="buttonZfplus" Row="9" RowSpan="1" Column="9" ColumnSpan="2" /&gt;&lt;Control Name="textZf" Row="10" RowSpan="1" Column="9" ColumnSpan="2" /&gt;&lt;Control Name="buttonZfminus" Row="11" RowSpan="1" Column="9" ColumnSpan="2" /&gt;&lt;Control Name="buttonZcplus" Row="13" RowSpan="1" Column="9" ColumnSpan="2" /&gt;&lt;Control Name="textZc" Row="14" RowSpan="1" Column="9" ColumnSpan="2" /&gt;&lt;Control Name="buttonZcminus" Row="15" RowSpan="1" Column="9" ColumnSpan="2" /&gt;&lt;Control Name="comboParent" Row="18" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="label6" Row="17" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="buttonTemplate" Row="19" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="groupBox1" Row="16" RowSpan="2" Column="5" ColumnSpan="6" /&gt;&lt;Control Name="labelTheme" Row="15" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="listViewBGs" Row="16" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="button2" Row="18" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="button1" Row="18" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="labelView" Row="18" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="checkGuide" Row="19" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="checkTextureGenerate" Row="19" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="checkBoxArmor" Row="19" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="buttonDone" Row="19" RowSpan="1" Column="8" ColumnSpan="3" /&gt;&lt;/Controls&gt;&lt;Columns Styles="AutoSize,0,Percent,25,Percent,31.25,Percent,43.75,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0" /&gt;&lt;Rows Styles="AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,Percent,100,AutoSize,0,AutoSize,0,AutoSize,0,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="labelModeParts" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="OpenJSONButton" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="listViewBoxes" Row="1" RowSpan="14" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="buttonExportModel" Row="0" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="displayBox" Row="1" RowSpan="17" Column="1" ColumnSpan="3" /&gt;&lt;Control Name="buttonImportModel" Row="0" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="labelTextureMappingPreview" Row="0" RowSpan="1" Column="5" ColumnSpan="6" /&gt;&lt;Control Name="texturePreview" Row="1" RowSpan="5" Column="5" ColumnSpan="6" /&gt;&lt;Control Name="buttonIMPORT" Row="6" RowSpan="1" Column="5" ColumnSpan="3" /&gt;&lt;Control Name="label7" Row="7" RowSpan="1" Column="5" ColumnSpan="1" /&gt;&lt;Control Name="buttonEXPORT" Row="6" RowSpan="1" Column="8" ColumnSpan="3" /&gt;&lt;Control Name="textTextureY" Row="7" RowSpan="1" Column="6" ColumnSpan="2" /&gt;&lt;Control Name="textTextureX" Row="7" RowSpan="1" Column="8" ColumnSpan="2" /&gt;&lt;Control Name="label3" Row="8" RowSpan="1" Column="5" ColumnSpan="2" /&gt;&lt;Control Name="buttonXfplus" Row="9" RowSpan="1" Column="5" ColumnSpan="2" /&gt;&lt;Control Name="textXf" Row="10" RowSpan="1" Column="5" ColumnSpan="2" /&gt;&lt;Control Name="buttonXfminus" Row="11" RowSpan="1" Column="5" ColumnSpan="2" /&gt;&lt;Control Name="label5" Row="12" RowSpan="1" Column="5" ColumnSpan="3" /&gt;&lt;Control Name="buttonXcplus" Row="13" RowSpan="1" Column="5" ColumnSpan="2" /&gt;&lt;Control Name="textXc" Row="14" RowSpan="1" Column="5" ColumnSpan="2" /&gt;&lt;Control Name="buttonXcminus" Row="15" RowSpan="1" Column="5" ColumnSpan="2" /&gt;&lt;Control Name="buttonYfplus" Row="9" RowSpan="1" Column="7" ColumnSpan="2" /&gt;&lt;Control Name="textYf" Row="10" RowSpan="1" Column="7" ColumnSpan="2" /&gt;&lt;Control Name="buttonYfminus" Row="11" RowSpan="1" Column="7" ColumnSpan="2" /&gt;&lt;Control Name="buttonYcplus" Row="13" RowSpan="1" Column="7" ColumnSpan="2" /&gt;&lt;Control Name="textYc" Row="14" RowSpan="1" Column="7" ColumnSpan="2" /&gt;&lt;Control Name="buttonYcminus" Row="15" RowSpan="1" Column="7" ColumnSpan="2" /&gt;&lt;Control Name="buttonZfplus" Row="9" RowSpan="1" Column="9" ColumnSpan="2" /&gt;&lt;Control Name="textZf" Row="10" RowSpan="1" Column="9" ColumnSpan="2" /&gt;&lt;Control Name="buttonZfminus" Row="11" RowSpan="1" Column="9" ColumnSpan="2" /&gt;&lt;Control Name="buttonZcplus" Row="13" RowSpan="1" Column="9" ColumnSpan="2" /&gt;&lt;Control Name="textZc" Row="14" RowSpan="1" Column="9" ColumnSpan="2" /&gt;&lt;Control Name="buttonZcminus" Row="15" RowSpan="1" Column="9" ColumnSpan="2" /&gt;&lt;Control Name="comboParent" Row="18" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="label6" Row="17" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="buttonTemplate" Row="19" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="groupBox1" Row="16" RowSpan="2" Column="5" ColumnSpan="6" /&gt;&lt;Control Name="labelTheme" Row="15" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="listViewBGs" Row="16" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="button2" Row="18" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="button1" Row="18" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="labelView" Row="18" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="checkGuide" Row="19" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="checkTextureGenerate" Row="19" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="checkBoxArmor" Row="19" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="buttonDone" Row="19" RowSpan="1" Column="8" ColumnSpan="3" /&gt;&lt;/Controls&gt;&lt;Columns Styles="AutoSize,0,Percent,25,Percent,31.25,Percent,43.75,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0" /&gt;&lt;Rows Styles="AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,Percent,100,AutoSize,0,AutoSize,0,AutoSize,0,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="textTextureY.Location" type="System.Drawing.Point, System.Drawing">
     <value>609, 191</value>
@@ -2525,42 +2525,6 @@
   </data>
   <data name="&gt;&gt;textTextureY.ZOrder" xml:space="preserve">
     <value>11</value>
-  </data>
-  <data name="button3.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="button3.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="button3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="button3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>378, 33</value>
-  </data>
-  <data name="button3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>119, 21</value>
-  </data>
-  <data name="button3.TabIndex" type="System.Int32, mscorlib">
-    <value>145</value>
-  </data>
-  <data name="button3.Text" xml:space="preserve">
-    <value>RENDER CSM</value>
-  </data>
-  <data name="button3.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;button3.Name" xml:space="preserve">
-    <value>button3</value>
-  </data>
-  <data name="&gt;&gt;button3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;button3.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;button3.ZOrder" xml:space="preserve">
-    <value>1</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -4298,9 +4262,6 @@
         G+hjDW20iAiLRHOFixxnkP0cZJRpF1U/QwpVsgOg8KFHYQQTM7dSnLR5QRAEQRAE+D85YJDPCXlFCwAA
         AABJRU5ErkJggg==
 </value>
-  </data>
-  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="$this.MaximumSize" type="System.Drawing.Size, System.Drawing">
     <value>1114, 1000</value>

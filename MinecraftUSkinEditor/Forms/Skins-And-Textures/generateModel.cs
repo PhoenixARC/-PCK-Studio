@@ -11,6 +11,7 @@ using System.Collections;
 using System.IO;
 using Lidgren.Network;
 using OpenTK.Graphics;
+using Newtonsoft.Json;
 using Brush = System.Drawing.Brush;
 using Color = System.Drawing.Color;
 
@@ -2134,5 +2135,125 @@ namespace PckStudio
             }
             Console.WriteLine(contents);
         }
+
+        private void OpenJSONButton_Click(object sender, EventArgs e)
+        {
+
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "JSON Model File | *.JSON";
+            openFileDialog.Title = "Select JSON Model File";
+            if (MessageBox.Show("Import custom model project file? Your current work will be lost!", "", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1) == DialogResult.Yes && openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                this.listViewBoxes.Items.Clear();
+                string str1 = JSONToCSM(openFileDialog.FileName);
+                int x = 0;
+                foreach (string str2 in str1.Split("\n\r".ToCharArray(), StringSplitOptions.RemoveEmptyEntries))
+                    ++x;
+                int y = x / 11;
+                ListView listView = new ListView();
+                int num3 = 0;
+                do
+                {
+                    listView.Items.Add("BOX");
+                    ++num3;
+                }
+                while (num3 < y);
+                IEnumerator enumerator = listView.Items.GetEnumerator();
+                try
+                {
+                label_33:
+                    if (enumerator.MoveNext())
+                    {
+                        ListViewItem current = (ListViewItem)enumerator.Current;
+                        ListViewItem listViewItem = new ListViewItem();
+                        int num4 = 0;
+                        do
+                        {
+                            foreach (string text in str1.Split("\n\r".ToCharArray(), StringSplitOptions.RemoveEmptyEntries))
+                            {
+                                ++num4;
+                                if (num4 == 1 + 11 * current.Index)
+                                    listViewItem.Text = text;
+                                else if (num4 == 2 + 11 * current.Index)
+                                    listViewItem.Tag = (object)text;
+                                else if (num4 == 4 + 11 * current.Index)
+                                    listViewItem.SubItems.Add(text);
+                                else if (num4 == 5 + 11 * current.Index)
+                                    listViewItem.SubItems.Add(text);
+                                else if (num4 == 6 + 11 * current.Index)
+                                    listViewItem.SubItems.Add(text);
+                                else if (num4 == 7 + 11 * current.Index)
+                                    listViewItem.SubItems.Add(text);
+                                else if (num4 == 8 + 11 * current.Index)
+                                    listViewItem.SubItems.Add(text);
+                                else if (num4 == 9 + 11 * current.Index)
+                                    listViewItem.SubItems.Add(text);
+                                else if (num4 == 10 + 11 * current.Index)
+                                    listViewItem.SubItems.Add(text);
+                                else if (num4 == 11 + 11 * current.Index)
+                                {
+                                    listViewItem.SubItems.Add(text);
+                                    this.listViewBoxes.Items.Add(listViewItem);
+                                }
+                            }
+                        }
+                        while (num4 < x);
+                        goto label_33;
+                    }
+                }
+                finally
+                {
+                    IDisposable disposable = enumerator as IDisposable;
+                    if (disposable != null)
+                        disposable.Dispose();
+                }
+            }
+            render();
+        }
+
+        public string JSONToCSM(string InputFilePath)
+        {
+            dynamic jsonDe = JsonConvert.DeserializeObject<JObject>(File.ReadAllText(InputFilePath));
+            string CSMData = "";
+            foreach (JObjectGroup group in jsonDe.groups)
+            {
+                string PARENT = group.name;
+                foreach (int i in group.children)
+                {
+                    string name = jsonDe.elements[i].name;
+                    float PosX = jsonDe.elements[i].from[0] + group.origin[0];
+                    float PosY = jsonDe.elements[i].from[1] + group.origin[1];
+                    float PosZ = jsonDe.elements[i].from[2] + group.origin[2];
+                    float SizeX = jsonDe.elements[i].to[0] - jsonDe.elements[i].from[0];
+                    float SizeY = jsonDe.elements[i].to[1] - jsonDe.elements[i].from[1];
+                    float SizeZ = jsonDe.elements[i].to[2] - jsonDe.elements[i].from[2];
+                    float UvX = 0;
+                    float UvY = 0;
+
+                    CSMData += name + "\n" + PARENT + "\n" + name + "\n" + PosX + "\n" + PosY + "\n" + PosZ + "\n" + SizeX + "\n" + SizeY + "\n" + SizeZ + "\n" + UvX + "\n" + UvY + "\n";
+                }
+            }
+            return CSMData;
+        }
+    }
+
+    class JObject
+    {
+        public string credit;
+        public int[] texture_size;
+        public JObjectElement[] elements;
+        public JObjectGroup[] groups;
+    }
+    class JObjectElement
+    {
+        public string name;
+        public float[] from;
+        public float[] to;
+    }
+    class JObjectGroup
+    {
+        public string name;
+        public float[] origin;
+        public int[] children;
     }
 }

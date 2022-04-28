@@ -101,7 +101,6 @@
             this.cloneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changeColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.labelFullSkinPreview = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.checkBoxArmor = new System.Windows.Forms.CheckBox();
             this.labelTheme = new System.Windows.Forms.Label();
@@ -109,7 +108,7 @@
             this.tableLayoutPanelMain = new System.Windows.Forms.TableLayoutPanel();
             this.displayBox = new System.Windows.Forms.PictureBox();
             this.texturePreview = new System.Windows.Forms.PictureBox();
-            this.button3 = new System.Windows.Forms.Button();
+            this.OpenJSONButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.tabBody.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -677,12 +676,6 @@
             this.changeColorToolStripMenuItem.Name = "changeColorToolStripMenuItem";
             this.changeColorToolStripMenuItem.Click += new System.EventHandler(this.changeColorToolStripMenuItem_Click);
             // 
-            // labelFullSkinPreview
-            // 
-            resources.ApplyResources(this.labelFullSkinPreview, "labelFullSkinPreview");
-            this.labelFullSkinPreview.ForeColor = System.Drawing.Color.White;
-            this.labelFullSkinPreview.Name = "labelFullSkinPreview";
-            // 
             // label3
             // 
             resources.ApplyResources(this.label3, "label3");
@@ -726,11 +719,11 @@
             // 
             resources.ApplyResources(this.tableLayoutPanelMain, "tableLayoutPanelMain");
             this.tableLayoutPanelMain.Controls.Add(this.labelModeParts, 0, 0);
+            this.tableLayoutPanelMain.Controls.Add(this.OpenJSONButton, 1, 0);
             this.tableLayoutPanelMain.Controls.Add(this.listViewBoxes, 0, 1);
             this.tableLayoutPanelMain.Controls.Add(this.buttonExportModel, 3, 0);
             this.tableLayoutPanelMain.Controls.Add(this.displayBox, 1, 1);
             this.tableLayoutPanelMain.Controls.Add(this.buttonImportModel, 2, 0);
-            this.tableLayoutPanelMain.Controls.Add(this.labelFullSkinPreview, 1, 0);
             this.tableLayoutPanelMain.Controls.Add(this.labelTextureMappingPreview, 5, 0);
             this.tableLayoutPanelMain.Controls.Add(this.texturePreview, 5, 1);
             this.tableLayoutPanelMain.Controls.Add(this.buttonIMPORT, 5, 6);
@@ -792,19 +785,18 @@
             this.tableLayoutPanelMain.SetRowSpan(this.texturePreview, 5);
             this.texturePreview.TabStop = false;
             // 
-            // button3
+            // OpenJSONButton
             // 
-            resources.ApplyResources(this.button3, "button3");
-            this.button3.ForeColor = System.Drawing.Color.White;
-            this.button3.Name = "button3";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click_1);
+            resources.ApplyResources(this.OpenJSONButton, "OpenJSONButton");
+            this.OpenJSONButton.ForeColor = System.Drawing.Color.White;
+            this.OpenJSONButton.Name = "OpenJSONButton";
+            this.OpenJSONButton.UseVisualStyleBackColor = true;
+            this.OpenJSONButton.Click += new System.EventHandler(this.OpenJSONButton_Click);
             // 
             // generateModel
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.button3);
             this.Controls.Add(this.tableLayoutPanelMain);
             this.MaximizeBox = false;
             this.Name = "generateModel";
@@ -883,7 +875,6 @@
         private System.Windows.Forms.ComboBox comboParent;
         private System.Windows.Forms.Label labelModeParts;
         private System.Windows.Forms.ListView listViewBoxes;
-        private System.Windows.Forms.Label labelFullSkinPreview;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem createToolStripMenuItem;
@@ -913,6 +904,6 @@
         private System.Windows.Forms.TextBox offsetShoulder;
         private System.Windows.Forms.TextBox offsetWaist;
         private System.Windows.Forms.TextBox Chest;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button OpenJSONButton;
     }
 }
