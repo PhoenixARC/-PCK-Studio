@@ -1382,7 +1382,7 @@ namespace PckStudio
 						}
 						else
 						{
-							treeView1.Nodes.Insert(targetIndex, draggedNode);
+							treeViewMain.Nodes.Insert(targetIndex, draggedNode);
 						}
 					}
 				}
