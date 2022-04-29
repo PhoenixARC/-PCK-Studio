@@ -1026,9 +1026,34 @@ namespace PckStudio
 
 				if (ofd.ShowDialog() == DialogResult.OK)
 				{
-					PckStudio.addAnimatedTexture add = new PckStudio.addAnimatedTexture(currentPCK, treeViewMain, ofd.FileName, Path.GetFileName(ofd.FileName).Remove(Path.GetFileName(ofd.FileName).Length - 4, 4));//presets texture generator dialog with needed data including selected picture
-					add.ShowDialog();//Shows dialog
-					add.Dispose();//Diposes generated dialog data
+					try
+					{
+						AnimationEditor diag = new AnimationEditor(treeViewMain, ofd.FileName);
+						diag.ShowDialog(this);
+						diag.Dispose();
+
+						treeViewToMineFiles(treeViewMain);
+
+						treeMeta.Nodes.Clear();
+						foreach (int type in types.Keys)
+							comboBox1.Items.Add(types[type]);
+
+						//loads all of selected minefiles metadata into metadata treeview
+						foreach (object[] entry in file.entries)
+						{
+							object[] strings = (object[])entry; TreeNode meta = new TreeNode();
+
+							foreach (object[] entryy in file.entries)
+								meta.Text = (string)strings[0];
+							meta.Tag = entry;
+							treeMeta.Nodes.Add(meta);
+						}
+					}
+					catch
+					{
+						MessageBox.Show("Invalid animation data.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+						return;
+					}
 				}
 			}
 			saved = false;
@@ -1038,7 +1063,7 @@ namespace PckStudio
 		#region deciphers what happens when certain pck entries are double clicked
 		private void treeView1_DoubleClick(object sender, EventArgs e)
 		{
-			if (treeViewMain.SelectedNode.Tag != null)
+			if (treeViewMain.SelectedNode != null && treeViewMain.SelectedNode.Tag != null)
 			{
 				mf = (PCK.MineFile)treeViewMain.SelectedNode.Tag;
 
@@ -1202,23 +1227,25 @@ namespace PckStudio
 		#region moves node up and arranges minefile indexes
 		private void moveUpToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (treeViewMain.SelectedNode != null)//makes sure selected node is a minefile
+			TreeNode move = (TreeNode)treeViewMain.SelectedNode.Clone();
+
+			if (treeViewMain.SelectedNode.Parent == null)
 			{
-				if (treeViewMain.SelectedNode.Tag != null)
-				{
-					if (treeViewMain.SelectedNode.Index - 1 >= 0)//Makes sure selected node isn't already at the top
-					{
-						//rearranges nodes minefile data indexes in minefiles list
-						currentPCK.mineFiles[treeViewMain.SelectedNode.Index - 1] = (PCK.MineFile)treeViewMain.SelectedNode.Tag;
-						currentPCK.mineFiles[treeViewMain.SelectedNode.Index] = (PCK.MineFile)treeViewMain.Nodes[treeViewMain.SelectedNode.Index - 1].Tag;
-						//switches selected node with node above it
-						TreeNode move = (TreeNode)treeViewMain.SelectedNode.Clone();
-						treeViewMain.Nodes.Insert(treeViewMain.SelectedNode.Index - 1, move);
-						//removes node because a clone was inserted into its new index
-						treeViewMain.SelectedNode.Remove();
-					}
-				}
+				if (treeViewMain.SelectedNode.PrevNode == null) return;
+				treeViewMain.Nodes.Insert(treeViewMain.SelectedNode.PrevNode.Index, move);
+				//removes node because a clone was inserted into its new index
+				treeViewMain.SelectedNode.Remove();
 			}
+			else
+			{
+				if (treeViewMain.SelectedNode.PrevNode == null) return;
+				treeViewMain.SelectedNode.Parent.Nodes.Insert(treeViewMain.SelectedNode.PrevNode.Index, move);
+				//removes node because a clone was inserted into its new index
+				treeViewMain.SelectedNode.Remove();
+			}
+
+			treeViewToMineFiles(treeViewMain);
+			
 			saved = false;
 		}
 		#endregion
@@ -1226,23 +1253,25 @@ namespace PckStudio
 		#region moves node down and arranges minefile indexes
 		private void moveDownToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (treeViewMain.SelectedNode != null)//makes sure selected node is a minefile
+			TreeNode move = (TreeNode)treeViewMain.SelectedNode.Clone();
+
+			if (treeViewMain.SelectedNode.Parent == null)
 			{
-				if (treeViewMain.SelectedNode.Tag != null)
-				{
-					if (treeViewMain.Nodes[treeViewMain.SelectedNode.Index + 1] != null)//Makes sure selected node isn't already at the bottom
-					{
-						//rearranges nodes minefile data indexes in minefiles list
-						currentPCK.mineFiles[treeViewMain.SelectedNode.Index + 1] = (PCK.MineFile)treeViewMain.SelectedNode.Tag;
-						currentPCK.mineFiles[treeViewMain.SelectedNode.Index] = (PCK.MineFile)treeViewMain.Nodes[treeViewMain.SelectedNode.Index + 1].Tag;
-						//switches selected node with node below it
-						TreeNode move = (TreeNode)treeViewMain.SelectedNode.Clone();
-						treeViewMain.Nodes.Insert(treeViewMain.SelectedNode.Index + 2, move);
-						//removes node because a clone was inserted into its new index
-						treeViewMain.SelectedNode.Remove();
-					}
-				}
+				if (treeViewMain.SelectedNode.NextNode == null) return;
+				treeViewMain.Nodes.Insert(treeViewMain.SelectedNode.NextNode.Index + 1, move);
+				//removes node because a clone was inserted into its new index
+				treeViewMain.SelectedNode.Remove();
 			}
+			else
+			{
+				if (treeViewMain.SelectedNode.NextNode == null) return;
+				treeViewMain.SelectedNode.Parent.Nodes.Insert(treeViewMain.SelectedNode.NextNode.Index + 1, move);
+				//removes node because a clone was inserted into its new index
+				treeViewMain.SelectedNode.Remove();
+			}
+
+			treeViewToMineFiles(treeViewMain);
+
 			saved = false;
 		}
 		#endregion
@@ -1293,9 +1322,12 @@ namespace PckStudio
 						{
 							PCK.MineFile mf = (PCK.MineFile)child.Tag;
 							mf.name = childPath;
-							newMineFiles.Add((PCK.MineFile)child.Tag);
-							Console.WriteLine("Minefile " + i + ": " + childPath);
-							i++;
+							if (!newMineFiles.Contains(mf))
+							{
+								newMineFiles.Add((PCK.MineFile)child.Tag);
+								//Console.WriteLine("Minefile " + i + ": " + childPath);
+								i++;
+							}
 						}
 					}
 				}
@@ -1303,9 +1335,12 @@ namespace PckStudio
 				{
 					PCK.MineFile mf = (PCK.MineFile)node.Tag;
 					mf.name = nodePath;
-					newMineFiles.Add((PCK.MineFile)node.Tag);
-					Console.WriteLine("Minefile " + i + ": " + nodePath);
-					i++;
+					if (!newMineFiles.Contains(mf))
+					{
+						newMineFiles.Add((PCK.MineFile)node.Tag);
+						//Console.WriteLine("Minefile " + i + ": " + nodePath);
+						i++;
+					}
 				}
 			}
 			currentPCK.mineFiles = newMineFiles;
@@ -3630,9 +3665,15 @@ namespace PckStudio
 			{
 				try
 				{
-					PckStudio.AnimationEditor diag = new PckStudio.AnimationEditor(mf);
+					AnimationEditor diag = new AnimationEditor(treeViewMain);
 					diag.ShowDialog(this);
 					diag.Dispose();
+
+					treeViewToMineFiles(treeViewMain);
+
+					MemoryStream png = new MemoryStream(mf.data); //Gets image data from minefile data
+					Image skinPicture = Image.FromStream(png); //Constructs image data into image
+					pictureBoxImagePreview.Image = skinPicture;
 
 					treeMeta.Nodes.Clear();
 					foreach (int type in types.Keys)

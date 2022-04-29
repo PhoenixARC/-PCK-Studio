@@ -32,7 +32,7 @@ namespace PckStudio
 			FormBorderStyle = FormBorderStyle.None;
 		}
 
-		private void fixDirectoryNameForFiles(TreeNode dirN)
+		public void fixDirectoryNameForFiles(TreeNode dirN)
 		{
 			foreach (TreeNode n in dirN.Nodes)
 			{

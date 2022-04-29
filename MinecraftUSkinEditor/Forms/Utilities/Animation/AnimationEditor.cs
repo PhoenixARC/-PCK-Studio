@@ -1,30 +1,31 @@
-﻿using System;
+﻿using MetroFramework.Forms;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using MetroFramework.Forms;
-using PckStudio;
 
 namespace PckStudio
 {
 	public partial class AnimationEditor : MetroForm
 	{
+		TreeView treeViewMain = new TreeView();
 		PCK.MineFile mf = new PCK.MineFile();
 		List<Image> frames = new List<Image>();
 		Image texture;
 		int frameCount;
+		bool isItem = false;
 		string lastFrameTime = "1";
+		string newTileName = "";
+		bool create = false;
 
 		private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
 		{
-			Tuple< string, string > frameData = e.Node.Tag as Tuple<string, string>;
+			Tuple<string, string> frameData = e.Node.Tag as Tuple<string, string>;
 			Console.WriteLine(frameData.Item1 + " --- " + frameData.Item2);
 			if (metroButton1.Enabled)
 			{
@@ -32,9 +33,33 @@ namespace PckStudio
 			}
 		}
 
-		public AnimationEditor(PCK.MineFile MineFile)
+		public AnimationEditor(TreeView treeViewIn, String createdFileName = "")
 		{
-			mf = MineFile;
+			treeViewMain = treeViewIn;
+			if (String.IsNullOrEmpty(createdFileName))
+			{
+				newTileName = Path.GetFileNameWithoutExtension(treeViewMain.SelectedNode.Text);
+				if (treeViewMain.SelectedNode.Parent.Text.ToLower() == "items".ToLower()) isItem = true;
+				mf = treeViewMain.SelectedNode.Tag as PCK.MineFile;
+			}
+			else
+			{
+				create = true;
+				PCK.MineFile newMf = new PCK.MineFile();
+				object[] animEntry = { "ANIM", "" };
+				newMf.entries.Add(animEntry);
+				newMf.data = File.ReadAllBytes(createdFileName);
+				newMf.filesize = newMf.data.Length;//gets filesize for minefile
+				newMf.type = 2;
+				mf = newMf;
+				Forms.Utilities.AnimationEditor.ChangeTile diag = new Forms.Utilities.AnimationEditor.ChangeTile();
+				diag.ShowDialog(this);
+				Console.WriteLine(diag.SelectedTile);
+				newTileName = diag.SelectedTile;
+				isItem = diag.IsItem;
+				diag.Dispose();
+			}
+
 			List<string> strEntries = new List<string>();
 			List<string> strEntryData = new List<string>();
 
@@ -121,7 +146,7 @@ namespace PckStudio
 			}
 			else
 			{
-				for(int i = 0; i < frameCount; i++)
+				for (int i = 0; i < frameCount; i++)
 				{
 					TreeNode frameNode = new TreeNode();
 					Tuple<string, string> finalFrameData = new Tuple<string, string>(i.ToString(), "1");
@@ -137,6 +162,7 @@ namespace PckStudio
 
 		void createFrameList()
 		{
+			frames.Clear();
 			int width = texture.Width;
 			int height = texture.Height;
 			int totalFrames = height / width;
@@ -167,7 +193,7 @@ namespace PckStudio
 		int animCurrentFrame = 0;
 		int animCurrentFrameTime = 0;
 		int animCurrentTotalFrameTime = -1;
-		Tuple<string, string> currentFrameData = new Tuple<string, string>("","");
+		Tuple<string, string> currentFrameData = new Tuple<string, string>("", "");
 		Image img = null;
 		int nextFrame;
 		int frameCounter = 0; // ported directly from Java Edition code -MattNL
@@ -186,7 +212,7 @@ namespace PckStudio
 				animCurrentTotalFrameTime = Int16.Parse(currentFrameData.Item2);
 				animCurrentFrame++;
 
-				if(metroCheckBox1.Checked)
+				if (metroCheckBox1.Checked)
 				{
 					img = frames[Int16.Parse(currentFrameData.Item1)];
 					nextFrame = animCurrentFrame + 1;
@@ -293,11 +319,96 @@ namespace PckStudio
 			if (e.KeyData == Keys.Delete) treeView1.Nodes.Remove(treeView1.SelectedNode);
 		}
 
+		private TreeNode FindNode(TreeNode treeNode, string name)
+		{
+			foreach (TreeNode node in treeNode.Nodes)
+			{
+				if (node.Text.ToLower() == name.ToLower()) return node;
+				else
+				{
+					TreeNode nodeChild = FindNode(node, name);
+					if (nodeChild != null)
+					{
+						return nodeChild;
+					}
+				}
+			}
+			return (TreeNode)null;
+		}
+
+		private TreeNode FindNode(TreeView treeView, string name)
+		{
+			foreach (TreeNode node in treeView.Nodes)
+			{
+				if (node.Text.ToLower() == name.ToLower()) return node;
+				else
+				{
+					TreeNode nodeChild = FindNode(node, name);
+					if (nodeChild != null) return nodeChild;
+				}
+			}
+			return (TreeNode)null;
+		}
+
+		private void addNodeToAnimationsFolder(TreeNode newNode)
+		{
+			TreeNode parent = FindNode(treeViewMain, isItem ? "items" : "blocks");
+			if (parent != null)
+			{
+				Console.WriteLine("ParentNotNULL");
+				parent.Nodes.Add(newNode);
+			}
+			else
+			{
+				TreeNode texturesParent = FindNode(treeViewMain, "textures");
+				if (texturesParent != null)
+				{
+					Console.WriteLine("TextureNotNULL");
+					TreeNode newFolder = new TreeNode(isItem ? "items" : "blocks");
+					texturesParent.Nodes.Add(newFolder);
+					newFolder.Nodes.Add(newNode);
+				}
+				else
+				{
+					TreeNode resParent = FindNode(treeViewMain, "res");
+					if (resParent != null)
+					{
+						Console.WriteLine("ResNotNULL");
+						TreeNode newFolder = new TreeNode("textures");
+						resParent.Nodes.Add(newFolder);
+						TreeNode newFolderB = new TreeNode(isItem ? "items" : "blocks");
+						newFolder.Nodes.Add(newFolderB);
+						newFolderB.Nodes.Add(newNode);
+					}
+					else
+					{
+						Console.WriteLine("ResNULL");
+						TreeNode newFolder = new TreeNode("res");
+						treeViewMain.Nodes.Add(newFolder);
+						TreeNode newFolderB = new TreeNode("textures");
+						newFolder.Nodes.Add(newFolderB);
+						TreeNode newFolderC = new TreeNode(isItem ? "items" : "blocks");
+						newFolderB.Nodes.Add(newFolderC);
+						newFolderC.Nodes.Add(newNode);
+					}
+				}
+			}
+		}
+
 		private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
+			using (MemoryStream m = new MemoryStream())
+			{
+				texture.Save(m, texture.RawFormat);
+				mf.data = m.ToArray();
+				mf.filesize = mf.data.Length;
+			}
+
+			if (!create && treeViewMain.SelectedNode.Tag != null) treeViewMain.SelectedNode.Text = newTileName + ".png";
+
 			int animIndex = mf.entries.FindIndex(entry => (string)entry[0] == "ANIM");
 			string animationData = "";
-			if(metroCheckBox1.Checked) animationData += "#"; // does the animation interpolate?
+			if (metroCheckBox1.Checked) animationData += "#"; // does the animation interpolate?
 			foreach (TreeNode node in treeView1.Nodes)
 			{
 				Tuple<string, string> frameData = node.Tag as Tuple<string, string>;
@@ -311,6 +422,32 @@ namespace PckStudio
 			};
 			if (animIndex != -1) mf.entries[animIndex] = newEntry;
 			else mf.entries.Add(newEntry);
+
+			if (create)
+			{
+				TreeNode newNode = new TreeNode(newTileName + ".png") { Tag = mf };//creates node for minefile
+				newNode.ImageIndex = 2;
+				newNode.SelectedImageIndex = 2;
+				addNodeToAnimationsFolder(newNode);
+			}
+			else if (isItem && treeViewMain.SelectedNode.Parent.Text == "blocks")
+			{
+				Console.WriteLine("block: " + treeViewMain.SelectedNode.Parent.Text);
+				TreeNode newNode = treeViewMain.SelectedNode;
+				newNode.ImageIndex = 2;
+				newNode.SelectedImageIndex = 2;
+				treeViewMain.SelectedNode.Remove();
+				addNodeToAnimationsFolder(newNode);
+			}
+			else if (treeViewMain.SelectedNode.Parent.Text == "items")
+			{
+				Console.WriteLine("item: " + treeViewMain.SelectedNode.Parent.Text);
+				TreeNode newNode = treeViewMain.SelectedNode;
+				newNode.ImageIndex = 2;
+				newNode.SelectedImageIndex = 2;
+				treeViewMain.SelectedNode.Remove();
+				addNodeToAnimationsFolder(newNode);
+			}
 		}
 
 		// Most of the code below is modified code from this link: https://docs.microsoft.com/en-us/dotnet/api/system.windows.forms.treeview.itemdrag?view=windowsdesktop-6.0
@@ -409,27 +546,27 @@ namespace PckStudio
 			return ContainsNode(node1, node2.Parent);
 		}
 
-		private void addFrameToolStripMenuItem_Click(object sender, EventArgs e)
+		private void treeView1_doubleClick(object sender, EventArgs e)
 		{
-			PckStudio.Forms.Utilities.AnimationEditor.FrameEditor diag = new PckStudio.Forms.Utilities.AnimationEditor.FrameEditor(
-				treeView1,
-				new Tuple<string, string>("",""),
-				frameCount - 1,
-				true,
-				new TreeNode());
+			Forms.Utilities.AnimationEditor.FrameEditor diag = new Forms.Utilities.AnimationEditor.FrameEditor(
+				treeView1, // animation editor tree
+				treeView1.SelectedNode.Tag as Tuple<string, string>, // the current selected frame data
+				frameCount - 1, // frame limit
+				false, // create new frame?
+				treeView1.SelectedNode // the current frame selected
+				);
 			diag.ShowDialog(this);
 			diag.Dispose();
 		}
 
-		private void treeView1_doubleClick(object sender, EventArgs e)
+		private void addFrameToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			PckStudio.Forms.Utilities.AnimationEditor.FrameEditor diag = new PckStudio.Forms.Utilities.AnimationEditor.FrameEditor(
+			Forms.Utilities.AnimationEditor.FrameEditor diag = new Forms.Utilities.AnimationEditor.FrameEditor(
 				treeView1,
-				treeView1.SelectedNode.Tag as Tuple<string, string>,
+				new Tuple<string, string>("", ""),
 				frameCount - 1,
-				false,
-				treeView1.SelectedNode
-				);
+				true,
+				new TreeNode());
 			diag.ShowDialog(this);
 			diag.Dispose();
 		}
@@ -439,12 +576,129 @@ namespace PckStudio
 			treeView1.SelectedNode.Remove();
 		}
 
-		private void metroCheckBox1_CheckedChanged(object sender, EventArgs e) {}
-
 		private void bulkAnimationSpeedToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			PckStudio.Forms.Utilities.AnimationEditor.SetBulkSpeed diag = new PckStudio.Forms.Utilities.AnimationEditor.SetBulkSpeed(treeView1);
+			Forms.Utilities.AnimationEditor.SetBulkSpeed diag = new Forms.Utilities.AnimationEditor.SetBulkSpeed(treeView1);
 			diag.ShowDialog(this);
+			diag.Dispose();
+		}
+
+		private void importJavaAnimationToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			DialogResult query = MessageBox.Show("This feature will replace the existing animation data. It might fail if the selected animation script is invalid. Are you sure that you want to continue?", "Warning", MessageBoxButtons.YesNo);
+			if (query == DialogResult.No) return;
+
+			// In case the import fails, the user won't lose any data - MattNL
+			Image oldImage = texture;
+			int oldFrameCount = frameCount;
+			List<Image> oldFrames = frames;
+			TreeNodeCollection oldAnimData = treeView1.Nodes;
+
+			OpenFileDialog diag = new OpenFileDialog();
+			diag.Multiselect = false;
+			diag.Filter = "Animation Scripts (*.mcmeta)|*.png.mcmeta"; /* It's marked as .png.mcmeta just in case
+																	   some weirdo tries to pass a pack.mcmeta or something
+																	   -MattNL */
+			diag.Title = "Please select a valid Minecaft: Java Edition animation script";
+			diag.ShowDialog(this);
+			diag.Dispose();
+			if (String.IsNullOrEmpty(diag.FileName)) return; // Return if name is null or if the user cancels
+			Console.WriteLine("Selected Animation Script: " + diag.FileName);
+
+			treeView1.Nodes.Clear();
+
+			MemoryStream textureMem = new MemoryStream(File.ReadAllBytes(Path.GetDirectoryName(diag.FileName) + "\\/" + Path.GetFileNameWithoutExtension(diag.FileName)));
+			texture = Image.FromStream(textureMem);
+			frameCount = texture.Height / texture.Width;
+			createFrameList();
+
+			try
+			{
+				Newtonsoft.Json.Linq.JObject mcmeta = Newtonsoft.Json.Linq.JObject.Parse(File.ReadAllText(diag.FileName));
+
+				if (mcmeta["animation"] != null)
+				{
+					int frameTime = 1;
+					// Some if statements to ensure that the animation is valid.
+					if (mcmeta["animation"]["frametime"] != null &&
+						mcmeta["animation"]["frametime"].Type == JTokenType.Integer) frameTime = (int)mcmeta["animation"]["frametime"];
+					if (mcmeta["animation"]["interpolate"] != null &&
+						mcmeta["animation"]["interpolate"].Type == JTokenType.Boolean && (Boolean)mcmeta["animation"]["interpolate"] == true) metroCheckBox1.Checked = true;
+					if (mcmeta["animation"]["frames"] != null &&
+						mcmeta["animation"]["frames"].Type == JTokenType.Array)
+					{
+						foreach (JToken frame in mcmeta["animation"]["frames"].Children())
+						{
+							if (frame.Type == JTokenType.Object)
+							{
+								if (frame["index"] != null && frame["index"].Type == JTokenType.Integer &&
+									frame["time"] != null && frame["time"].Type == JTokenType.Integer)
+								{
+									Console.WriteLine((int)frame["index"] + "*" + (int)frame["time"]);
+
+									TreeNode frameNode = new TreeNode();
+									Tuple<string, string> finalFrameData = new Tuple<string, string>(((int)frame["index"]).ToString(), ((int)frame["time"]).ToString());
+									frameNode.Text = "Frame: " + ((int)frame["index"]).ToString() + ", Frame Time: " + ((int)frame["time"]).ToString();
+									frameNode.Tag = finalFrameData;
+									treeView1.Nodes.Add(frameNode);
+								}
+							}
+							else if (frame.Type == JTokenType.Integer)
+							{
+								Console.WriteLine((int)frame + "*" + frameTime);
+
+								TreeNode frameNode = new TreeNode();
+								Tuple<string, string> finalFrameData = new Tuple<string, string>(((int)frame).ToString(), frameTime.ToString());
+								frameNode.Text = "Frame: " + ((int)frame).ToString() + ", Frame Time: " + frameTime.ToString();
+								frameNode.Tag = finalFrameData;
+								treeView1.Nodes.Add(frameNode);
+							}
+						}
+					}
+					else
+					{
+						for (int i = 0; i < frameCount; i++)
+						{
+							TreeNode frameNode = new TreeNode();
+							Tuple<string, string> finalFrameData = new Tuple<string, string>(i.ToString(), frameTime.ToString());
+							frameNode.Text = "Frame: " + i.ToString() + ", Frame Time: " + frameTime.ToString();
+							frameNode.Tag = finalFrameData;
+							treeView1.Nodes.Add(frameNode);
+						}
+					}
+				}
+			}
+			catch (JsonException j_ex)
+			{
+				MessageBox.Show(j_ex.Message, "Invalid animation");
+				texture = oldImage;
+				frameCount = oldFrameCount;
+				frames = oldFrames;
+				foreach (TreeNode node in oldAnimData)
+				{
+					treeView1.Nodes.Add(node);
+				}
+				return;
+			}
+			pictureBoxWithInterpolationMode1.Image = frames[Int16.Parse((treeView1.Nodes[0].Tag as Tuple<string, string>).Item1)];
+		}
+
+		private void helpToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			MessageBox.Show("Simply drag and drop frames in the tree to rearrange your animation.\n\n" +
+							"The \"Interpolates\" checkbox enables the blending animation seen with some textures in the game, such as Prismarine.\n\n" +
+							"You can preview your animation at any time by simply pressing the \"Play Animation\" button!\n\n" +
+							"You can edit the frame and its speed by double clicking a frame in the tree. If you'd like to change the entire animation's speed, you can do so with the \"Set Bulk Animation Speed\" button in the \"Tools\" tab.\n\n" +
+							"Porting animations from Java packs are made simple with the \"Import Java Animation\" button found in the \"Tools\" tab!", "Help");
+		}
+
+		private void changeTileToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			PckStudio.Forms.Utilities.AnimationEditor.ChangeTile diag = new Forms.Utilities.AnimationEditor.ChangeTile();
+			diag.ShowDialog(this);
+			Console.WriteLine(diag.SelectedTile);
+			newTileName = diag.SelectedTile;
+			isItem = diag.IsItem;
 			diag.Dispose();
 		}
 	}

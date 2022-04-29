@@ -360,17 +360,17 @@
     <Compile Include="Forms\Additional-Popups\FakeProgressBar.Designer.cs">
       <DependentUpon>FakeProgressBar.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Skins-And-Textures\addAnimatedTexture.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Skins-And-Textures\addAnimatedTexture.Designer.cs">
-      <DependentUpon>addAnimatedTexture.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\Additional-Popups\rename.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\Additional-Popups\rename.Designer.cs">
       <DependentUpon>rename.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Utilities\Animation\ChangeTile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Utilities\Animation\ChangeTile.Designer.cs">
+      <DependentUpon>ChangeTile.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Utilities\Animation\SetBulkSpeed.cs">
       <SubType>Form</SubType>
@@ -459,10 +459,10 @@
     <Compile Include="Forms\Testx-12.Designer.cs">
       <DependentUpon>Testx-12.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Utilities\AnimationEditor.cs">
+    <Compile Include="Forms\Utilities\Animation\AnimationEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Utilities\AnimationEditor.Designer.cs">
+    <Compile Include="Forms\Utilities\Animation\AnimationEditor.Designer.cs">
       <DependentUpon>AnimationEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Utilities\Animation\FrameEditor.cs">
@@ -471,10 +471,10 @@
     <Compile Include="Forms\Utilities\Animation\FrameEditor.Designer.cs">
       <DependentUpon>FrameEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Utilities\AudioEditor.cs">
+    <Compile Include="Forms\Utilities\Audio\AudioEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Utilities\AudioEditor.Designer.cs">
+    <Compile Include="Forms\Utilities\Audio\AudioEditor.Designer.cs">
       <DependentUpon>AudioEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Utilities\COLEditor.cs">
@@ -604,14 +604,11 @@
     <EmbeddedResource Include="Forms\Additional-Popups\FakeProgressBar.resx">
       <DependentUpon>FakeProgressBar.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Skins-And-Textures\addAnimatedTexture.ja.resx">
-      <DependentUpon>addAnimatedTexture.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Skins-And-Textures\addAnimatedTexture.resx">
-      <DependentUpon>addAnimatedTexture.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\rename.resx">
       <DependentUpon>rename.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Utilities\Animation\ChangeTile.resx">
+      <DependentUpon>ChangeTile.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Utilities\Animation\SetBulkSpeed.resx">
       <DependentUpon>SetBulkSpeed.cs</DependentUpon>
@@ -636,6 +633,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Skins-And-Textures\addnewskin.resx">
       <DependentUpon>addnewskin.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\AddPCKPassword.resx">
       <DependentUpon>AddPCKPassword.cs</DependentUpon>
@@ -684,13 +682,13 @@
     <EmbeddedResource Include="Forms\Testx-12.resx">
       <DependentUpon>Testx-12.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\AnimationEditor.resx">
+    <EmbeddedResource Include="Forms\Utilities\Animation\AnimationEditor.resx">
       <DependentUpon>AnimationEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Utilities\Animation\FrameEditor.resx">
       <DependentUpon>FrameEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\AudioEditor.resx">
+    <EmbeddedResource Include="Forms\Utilities\Audio\AudioEditor.resx">
       <DependentUpon>AudioEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Utilities\COLEditor.ja.resx">
@@ -785,7 +783,7 @@
       <DependentUpon>programInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
@@ -818,6 +816,7 @@
     <None Include="Resources\apps.zip" />
     <None Include="Resources\binkawin.asi" />
     <None Include="Resources\settings.ini" />
+    <None Include="Resources\tileData.json" />
     <None Include="Resources\UntitledSkinPCK.pck" />
     <None Include="xbox.png" />
     <None Include="youtube_PNG15.png" />
@@ -842,10 +841,15 @@
     <None Include="Resources\discord.png" />
     <None Include="Resources\man.png" />
     <None Include="Resources\external-content.duckduckgo.png" />
+    <None Include="Resources\clock.png" />
+    <None Include="Resources\changeTile.png" />
+    <None Include="Resources\items.png" />
     <Content Include="Resources\mss32.dll" />
     <None Include="Resources\sdDownload.png" />
     <None Include="Resources\Replace.png" />
     <None Include="Resources\pack.png" />
+    <None Include="Resources\TileData.txt" />
+    <None Include="Resources\terrain.png" />
     <Content Include="Sin_titulo991.ico" />
     <Content Include="x64\d3dcompiler_47.dll" />
     <Content Include="x86\d3dcompiler_47.dll" />

@@ -39,6 +39,9 @@
 			this.saveToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.bulkAnimationSpeedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.importJavaAnimationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.changeTileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.metroCheckBox1 = new MetroFramework.Controls.MetroCheckBox();
 			this.metroButton1 = new MetroFramework.Controls.MetroButton();
 			this.pictureBoxWithInterpolationMode1 = new PckStudio.PictureBoxWithInterpolationMode();
@@ -74,13 +77,13 @@
             this.addFrameToolStripMenuItem,
             this.removeFrameToolStripMenuItem});
 			this.contextMenuStrip1.Name = "contextMenuStrip1";
-			this.contextMenuStrip1.Size = new System.Drawing.Size(181, 70);
+			this.contextMenuStrip1.Size = new System.Drawing.Size(154, 48);
 			// 
 			// addFrameToolStripMenuItem
 			// 
 			this.addFrameToolStripMenuItem.Image = global::PckStudio.Properties.Resources.ExportFile;
 			this.addFrameToolStripMenuItem.Name = "addFrameToolStripMenuItem";
-			this.addFrameToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.addFrameToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
 			this.addFrameToolStripMenuItem.Text = "Add Frame";
 			this.addFrameToolStripMenuItem.Click += new System.EventHandler(this.addFrameToolStripMenuItem_Click);
 			// 
@@ -88,7 +91,7 @@
 			// 
 			this.removeFrameToolStripMenuItem.Image = global::PckStudio.Properties.Resources.Del;
 			this.removeFrameToolStripMenuItem.Name = "removeFrameToolStripMenuItem";
-			this.removeFrameToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.removeFrameToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
 			this.removeFrameToolStripMenuItem.Text = "Remove Frame";
 			this.removeFrameToolStripMenuItem.Click += new System.EventHandler(this.removeFrameToolStripMenuItem_Click);
 			// 
@@ -98,7 +101,8 @@
 			this.menuStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
 			this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.editToolStripMenuItem});
+            this.editToolStripMenuItem,
+            this.helpToolStripMenuItem});
 			this.menuStrip.Location = new System.Drawing.Point(20, 60);
 			this.menuStrip.Name = "menuStrip";
 			this.menuStrip.Size = new System.Drawing.Size(360, 24);
@@ -118,38 +122,63 @@
 			// 
 			this.saveToolStripMenuItem1.Image = ((System.Drawing.Image)(resources.GetObject("saveToolStripMenuItem1.Image")));
 			this.saveToolStripMenuItem1.Name = "saveToolStripMenuItem1";
-			this.saveToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+			this.saveToolStripMenuItem1.Size = new System.Drawing.Size(98, 22);
 			this.saveToolStripMenuItem1.Text = "Save";
 			this.saveToolStripMenuItem1.Click += new System.EventHandler(this.saveToolStripMenuItem1_Click);
 			// 
 			// editToolStripMenuItem
 			// 
 			this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.bulkAnimationSpeedToolStripMenuItem});
+            this.bulkAnimationSpeedToolStripMenuItem,
+            this.importJavaAnimationToolStripMenuItem,
+            this.changeTileToolStripMenuItem});
 			this.editToolStripMenuItem.ForeColor = System.Drawing.Color.White;
 			this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-			this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
-			this.editToolStripMenuItem.Text = "Edit";
+			this.editToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
+			this.editToolStripMenuItem.Text = "Tools";
 			// 
 			// bulkAnimationSpeedToolStripMenuItem
 			// 
-			this.bulkAnimationSpeedToolStripMenuItem.Image = global::PckStudio.Properties.Resources.Replace;
+			this.bulkAnimationSpeedToolStripMenuItem.Image = global::PckStudio.Properties.Resources.clock;
 			this.bulkAnimationSpeedToolStripMenuItem.Name = "bulkAnimationSpeedToolStripMenuItem";
 			this.bulkAnimationSpeedToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
 			this.bulkAnimationSpeedToolStripMenuItem.Text = "Set Bulk Animation Speed";
 			this.bulkAnimationSpeedToolStripMenuItem.Click += new System.EventHandler(this.bulkAnimationSpeedToolStripMenuItem_Click);
+			// 
+			// importJavaAnimationToolStripMenuItem
+			// 
+			this.importJavaAnimationToolStripMenuItem.Image = global::PckStudio.Properties.Resources.ExportFile;
+			this.importJavaAnimationToolStripMenuItem.Name = "importJavaAnimationToolStripMenuItem";
+			this.importJavaAnimationToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+			this.importJavaAnimationToolStripMenuItem.Text = "Import Java Animation";
+			this.importJavaAnimationToolStripMenuItem.Click += new System.EventHandler(this.importJavaAnimationToolStripMenuItem_Click);
+			// 
+			// changeTileToolStripMenuItem
+			// 
+			this.changeTileToolStripMenuItem.Image = global::PckStudio.Properties.Resources.changeTile;
+			this.changeTileToolStripMenuItem.Name = "changeTileToolStripMenuItem";
+			this.changeTileToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+			this.changeTileToolStripMenuItem.Text = "Change Tile";
+			this.changeTileToolStripMenuItem.Click += new System.EventHandler(this.changeTileToolStripMenuItem_Click);
+			// 
+			// helpToolStripMenuItem
+			// 
+			this.helpToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+			this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+			this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+			this.helpToolStripMenuItem.Text = "Help";
+			this.helpToolStripMenuItem.Click += new System.EventHandler(this.helpToolStripMenuItem_Click);
 			// 
 			// metroCheckBox1
 			// 
 			this.metroCheckBox1.AutoSize = true;
 			this.metroCheckBox1.Location = new System.Drawing.Point(188, 285);
 			this.metroCheckBox1.Name = "metroCheckBox1";
-			this.metroCheckBox1.Size = new System.Drawing.Size(85, 15);
+			this.metroCheckBox1.Size = new System.Drawing.Size(204, 15);
 			this.metroCheckBox1.TabIndex = 17;
-			this.metroCheckBox1.Text = "Interpolates";
+			this.metroCheckBox1.Text = "Interpolates (not simulated above)";
 			this.metroCheckBox1.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.metroCheckBox1.UseSelectable = true;
-			this.metroCheckBox1.CheckedChanged += new System.EventHandler(this.metroCheckBox1_CheckedChanged);
 			// 
 			// metroButton1
 			// 
@@ -229,5 +258,8 @@
 		private MetroFramework.Controls.MetroButton metroButton2;
 		private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem bulkAnimationSpeedToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem importJavaAnimationToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem changeTileToolStripMenuItem;
 	}
 }
