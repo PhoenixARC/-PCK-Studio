@@ -356,6 +356,7 @@ namespace PckStudio
 			if (parent != null)
 			{
 				Console.WriteLine("ParentNotNULL");
+				TreeNode check = FindNode(treeViewMain, newNode.Text);
 				parent.Nodes.Add(newNode);
 			}
 			else
@@ -425,10 +426,13 @@ namespace PckStudio
 
 			if (create)
 			{
+				mf.name = "res/textures/" + (isItem ? "items" : "blocks");
 				TreeNode newNode = new TreeNode(newTileName + ".png") { Tag = mf };//creates node for minefile
 				newNode.ImageIndex = 2;
 				newNode.SelectedImageIndex = 2;
 				addNodeToAnimationsFolder(newNode);
+				treeViewMain.SelectedNode = newNode;
+				create = false;
 			}
 			else if (isItem && treeViewMain.SelectedNode.Parent.Text == "blocks")
 			{

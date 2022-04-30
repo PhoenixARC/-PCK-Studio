@@ -1245,7 +1245,9 @@ namespace PckStudio
 			}
 
 			treeViewToMineFiles(treeViewMain);
-			
+
+			treeViewMain.SelectedNode = move;
+
 			saved = false;
 		}
 		#endregion
@@ -1271,6 +1273,8 @@ namespace PckStudio
 			}
 
 			treeViewToMineFiles(treeViewMain);
+
+			treeViewMain.SelectedNode = move;
 
 			saved = false;
 		}
