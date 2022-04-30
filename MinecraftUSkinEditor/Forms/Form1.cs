@@ -862,7 +862,7 @@ namespace PckStudio
 			mf.name = Path.GetDirectoryName(mfO.name).Replace("\\", "/") + "/" + Path.GetFileNameWithoutExtension(mfO.name) + "_clone" + mfCO.Extension;//sets minfile name to file name
 			if (treeViewMain.SelectedNode.Parent == null && mf.name.StartsWith("/")) mf.name = mf.name.Remove(0, 1);
 			mf.entries = mfO.entries;
-			mf.type = 0;//sets minefile type to default
+			mf.type = mfO.type;//sets minefile type to default
 			TreeNode add = new TreeNode(Path.GetFileName(mf.name)) { Tag = mf };//creates node for minefile
 
 			//Gets proper file icon for minefile

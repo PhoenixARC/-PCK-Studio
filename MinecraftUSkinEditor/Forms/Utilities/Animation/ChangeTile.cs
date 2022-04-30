@@ -15,6 +15,7 @@ namespace PckStudio.Forms.Utilities.AnimationEditor
 	public partial class ChangeTile : MetroForm
 	{
 		string selectedTile = "";
+		string oldTileName = "";
 		public string SelectedTile
 		{
 			get { return selectedTile; }
@@ -41,8 +42,9 @@ namespace PckStudio.Forms.Utilities.AnimationEditor
 			if (e.Node.TreeView == treeView2) isItem = true;
 		}
 
-		public ChangeTile()
+		public ChangeTile(string oldName = "")
 		{
+			oldTileName = oldName;
 			InitializeComponent();
 
 			ImageList tiles = new ImageList();
@@ -99,7 +101,7 @@ namespace PckStudio.Forms.Utilities.AnimationEditor
 					{
 						foreach (Newtonsoft.Json.Linq.JProperty prop in content.Properties())
 						{
-							if (!prop.Name.Contains("UNUSED") && !prop.Name.Contains("PART"))
+							if (!String.IsNullOrEmpty((string)prop.Value))
 							{
 								TreeNode tileNode = new TreeNode();
 								tileNode.Text = (string)prop.Value;
@@ -120,7 +122,7 @@ namespace PckStudio.Forms.Utilities.AnimationEditor
 					{
 						foreach (Newtonsoft.Json.Linq.JProperty prop in content.Properties())
 						{
-							if (!prop.Name.Contains("UNUSED") && !prop.Name.Contains("PART"))
+							if (!String.IsNullOrEmpty((string)prop.Value))
 							{
 								TreeNode tileNode = new TreeNode();
 								tileNode.Text = (string)prop.Value;
@@ -193,6 +195,7 @@ namespace PckStudio.Forms.Utilities.AnimationEditor
 
 		private void button2_Click(object sender, EventArgs e)
 		{
+			selectedTile = oldTileName;
 			Close();
 		}
 

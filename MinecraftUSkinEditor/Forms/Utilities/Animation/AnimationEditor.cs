@@ -56,6 +56,7 @@ namespace PckStudio
 				diag.ShowDialog(this);
 				Console.WriteLine(diag.SelectedTile);
 				newTileName = diag.SelectedTile;
+				if (newTileName == "") this.Close();
 				isItem = diag.IsItem;
 				diag.Dispose();
 			}
@@ -698,7 +699,7 @@ namespace PckStudio
 
 		private void changeTileToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			PckStudio.Forms.Utilities.AnimationEditor.ChangeTile diag = new Forms.Utilities.AnimationEditor.ChangeTile();
+			PckStudio.Forms.Utilities.AnimationEditor.ChangeTile diag = new Forms.Utilities.AnimationEditor.ChangeTile(newTileName);
 			diag.ShowDialog(this);
 			Console.WriteLine(diag.SelectedTile);
 			newTileName = diag.SelectedTile;
