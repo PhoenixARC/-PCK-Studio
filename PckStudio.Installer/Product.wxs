@@ -3,7 +3,7 @@
   <Product Id="*"
            Name="PCK Studio"
            Language="1033"
-           Version="6.4.0.1"
+           Version="6.4.0.2"
            Manufacturer="PhoenixARC"
            UpgradeCode="0bfb1026-21f2-4552-ad71-ca90aae10a25">
     <Package InstallerVersion="200" Compressed="yes" InstallScope="perUser" />
