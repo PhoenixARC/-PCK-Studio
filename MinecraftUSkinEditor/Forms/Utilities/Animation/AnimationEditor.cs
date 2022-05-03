@@ -16,6 +16,7 @@ namespace PckStudio
 		TreeView treeViewMain = new TreeView();
 		PCK.MineFile mf = new PCK.MineFile();
 		List<Image> frames = new List<Image>();
+		Newtonsoft.Json.Linq.JObject tileData = Newtonsoft.Json.Linq.JObject.Parse(System.Text.Encoding.Default.GetString(Properties.Resources.tileData));
 		Image texture;
 		int frameCount;
 		bool isItem = false;
@@ -35,12 +36,20 @@ namespace PckStudio
 
 		public AnimationEditor(TreeView treeViewIn, String createdFileName = "")
 		{
+			InitializeComponent();
 			treeViewMain = treeViewIn;
 			if (String.IsNullOrEmpty(createdFileName))
 			{
 				newTileName = Path.GetFileNameWithoutExtension(treeViewMain.SelectedNode.Text);
-				if (treeViewMain.SelectedNode.Parent.Text.ToLower() == "items".ToLower()) isItem = true;
+				if (treeViewMain.SelectedNode.Parent.Text.ToLower() == "items") isItem = true;
 				mf = treeViewMain.SelectedNode.Tag as PCK.MineFile;
+				if (newTileName.EndsWith("MipMapLevel2") || newTileName.EndsWith("MipMapLevel3"))
+				{
+					string mipMapLvl = newTileName.Last().ToString();
+					newTileName = newTileName.Substring(0, newTileName.Length - 12);
+					metroCheckBox2.Checked = true;
+					numericUpDown1.Value = Int16.Parse(mipMapLvl);
+				}
 			}
 			else
 			{
@@ -76,10 +85,19 @@ namespace PckStudio
 
 			//if (strEntries.Find(entry => entry == "ANIM") == null) throw new System.Exception("ANIM tag is missing. No animation code is present.");
 
-			InitializeComponent();
 			MemoryStream textureMem = new MemoryStream(mf.data);
 			texture = Image.FromStream(textureMem);
 			createFrameList();
+
+			Console.WriteLine(newTileName);
+
+			foreach (Newtonsoft.Json.Linq.JObject content in tileData[isItem ? "Items" : "Blocks"].Children())
+			{
+				foreach (Newtonsoft.Json.Linq.JProperty prop in content.Properties())
+				{
+					if (prop.Name == newTileName) tileLabel.Text = (string)prop.Value;
+				}
+			}
 
 			string anim = "";
 			if (strEntries.Find(entry => entry == "ANIM") == null) anim = "";
@@ -192,37 +210,32 @@ namespace PckStudio
 		}
 
 		int animCurrentFrame = 0;
-		int animCurrentFrameTime = 0;
-		int animCurrentTotalFrameTime = -1;
 		Tuple<string, string> currentFrameData = new Tuple<string, string>("", "");
 		Image img = null;
 		int nextFrame;
-		int frameCounter = 0; // ported directly from Java Edition code -MattNL
+		//int frameCounter = 0; // ported directly from Java Edition code -MattNL
 		Image imgB = null;
 		void animate(object sender, EventArgs e)
 		{
-			if (animCurrentFrameTime > animCurrentTotalFrameTime)
-			{
-				Console.WriteLine(frameCounter + " $$$ " + frameCount);
-				frameCounter = (frameCounter + 1) % frameCount;
-				animCurrentTotalFrameTime = 0;
-				animCurrentFrameTime = 0;
-				if (animCurrentFrame > (treeView1.Nodes.Count - 1)) animCurrentFrame = 0;
-				currentFrameData = treeView1.Nodes[animCurrentFrame].Tag as Tuple<string, string>;
-				pictureBoxWithInterpolationMode1.Image = frames[Int16.Parse(currentFrameData.Item1)];
-				animCurrentTotalFrameTime = Int16.Parse(currentFrameData.Item2);
-				animCurrentFrame++;
+			//Console.WriteLine(frameCounter + " $$$ " + frameCount);
+			//frameCounter = (frameCounter + 1) % frameCount;
+			if (animCurrentFrame > (treeView1.Nodes.Count - 1)) animCurrentFrame = 0;
+			currentFrameData = treeView1.Nodes[animCurrentFrame].Tag as Tuple<string, string>;
+			pictureBoxWithInterpolationMode1.Image = frames[Int16.Parse(currentFrameData.Item1)];
+			//animCurrentTotalFrameTime = Int16.Parse(currentFrameData.Item2);
+			timer1.Interval = Int16.Parse(currentFrameData.Item2) * 50;
+			animCurrentFrame++;
 
-				if (metroCheckBox1.Checked)
-				{
-					img = frames[Int16.Parse(currentFrameData.Item1)];
-					nextFrame = animCurrentFrame + 1;
-					if (nextFrame > frameCount - 1) nextFrame = 0;
-					Console.WriteLine(nextFrame);
-					imgB = frames[nextFrame];
-				}
+			if (metroCheckBox1.Checked)
+			{
+				img = frames[Int16.Parse(currentFrameData.Item1)];
+				nextFrame = animCurrentFrame + 1;
+				if (nextFrame > frameCount - 1) nextFrame = 0;
+				Console.WriteLine(nextFrame);
+				imgB = frames[nextFrame];
 			}
 
+			#region interpolation code (unoptimized and unused at the moment)
 			// Interpolation Code (Very slow, messy, and resource heavy depending on the resolution!!!)
 
 			/*else if(metroCheckBox1.Checked && (img != null && imgB != null))
@@ -293,16 +306,17 @@ namespace PckStudio
 				}
 			}
 			*/
-			Console.WriteLine(animCurrentFrame + " - " + animCurrentFrameTime + " - " + animCurrentTotalFrameTime + " - " + (treeView1.Nodes.Count - 1));
-			animCurrentFrameTime++;
+			#endregion
+
+			//Console.WriteLine(animCurrentFrame + " - " + animCurrentFrameTime + " - " + animCurrentTotalFrameTime + " - " + (treeView1.Nodes.Count - 1));
 		}
 
 		private void metroButton1_Click(object sender, EventArgs e)
 		{
 			animCurrentFrame = 0;
-			animCurrentFrameTime = 0;
-			animCurrentTotalFrameTime = -1;
-			frameCounter = 0;
+			//animCurrentFrameTime = 0;
+			//animCurrentTotalFrameTime = -1;
+			//frameCounter = 0;
 			metroButton1.Enabled = false;
 			metroButton2.Enabled = true;
 			timer1.Start();
@@ -406,6 +420,11 @@ namespace PckStudio
 				mf.filesize = mf.data.Length;
 			}
 
+			if (metroCheckBox2.Checked)
+			{
+				newTileName += (string)("MipMapLevel" + numericUpDown1.Value.ToString());
+			}
+
 			if (!create && treeViewMain.SelectedNode.Tag != null) treeViewMain.SelectedNode.Text = newTileName + ".png";
 
 			int animIndex = mf.entries.FindIndex(entry => (string)entry[0] == "ANIM");
@@ -453,6 +472,8 @@ namespace PckStudio
 				treeViewMain.SelectedNode.Remove();
 				addNodeToAnimationsFolder(newNode);
 			}
+
+			if(metroCheckBox2.Checked) newTileName = newTileName.Substring(0, newTileName.Length - 12);
 		}
 
 		// Most of the code below is modified code from this link: https://docs.microsoft.com/en-us/dotnet/api/system.windows.forms.treeview.itemdrag?view=windowsdesktop-6.0
@@ -702,9 +723,22 @@ namespace PckStudio
 			PckStudio.Forms.Utilities.AnimationEditor.ChangeTile diag = new Forms.Utilities.AnimationEditor.ChangeTile(newTileName);
 			diag.ShowDialog(this);
 			Console.WriteLine(diag.SelectedTile);
+			if (newTileName != diag.SelectedTile) isItem = diag.IsItem;
 			newTileName = diag.SelectedTile;
-			isItem = diag.IsItem;
 			diag.Dispose();
+			foreach (Newtonsoft.Json.Linq.JObject content in tileData[isItem ? "Items" : "Blocks"].Children())
+			{
+				foreach (Newtonsoft.Json.Linq.JProperty prop in content.Properties())
+				{
+					if (prop.Name == newTileName) tileLabel.Text = (string)prop.Value;
+				}
+			}
+		}
+
+		private void metroCheckBox2_CheckedChanged(object sender, EventArgs e)
+		{
+			metroLabel1.Visible = metroCheckBox2.Checked;
+			numericUpDown1.Visible = metroCheckBox2.Checked;
 		}
 	}
 }

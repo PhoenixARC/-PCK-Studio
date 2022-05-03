@@ -46,6 +46,7 @@ namespace PckStudio.Forms.Utilities
 			this.textBox1 = new System.Windows.Forms.TextBox();
 			this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
 			this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
+			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenuStrip1.SuspendLayout();
 			this.menuStrip.SuspendLayout();
 			this.contextMenuStrip2.SuspendLayout();
@@ -87,7 +88,8 @@ namespace PckStudio.Forms.Utilities
 			resources.ApplyResources(this.menuStrip, "menuStrip");
 			this.menuStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
 			this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem});
+            this.fileToolStripMenuItem,
+            this.helpToolStripMenuItem});
 			this.menuStrip.Name = "menuStrip";
 			// 
 			// fileToolStripMenuItem
@@ -106,12 +108,15 @@ namespace PckStudio.Forms.Utilities
 			// 
 			// treeView2
 			// 
+			this.treeView2.AllowDrop = true;
 			this.treeView2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
 			this.treeView2.ContextMenuStrip = this.contextMenuStrip2;
 			this.treeView2.ForeColor = System.Drawing.Color.White;
 			resources.ApplyResources(this.treeView2, "treeView2");
 			this.treeView2.Name = "treeView2";
 			this.treeView2.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView2_AfterSelect);
+			this.treeView2.DragDrop += new System.Windows.Forms.DragEventHandler(this.Binka_DragDrop);
+			this.treeView2.DragEnter += new System.Windows.Forms.DragEventHandler(this.treeView2_DragEnter);
 			this.treeView2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView2_KeyDown);
 			// 
 			// contextMenuStrip2
@@ -162,6 +167,13 @@ namespace PckStudio.Forms.Utilities
 			this.metroLabel1.Name = "metroLabel1";
 			this.metroLabel1.Theme = MetroFramework.MetroThemeStyle.Dark;
 			// 
+			// helpToolStripMenuItem
+			// 
+			this.helpToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+			this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+			resources.ApplyResources(this.helpToolStripMenuItem, "helpToolStripMenuItem");
+			this.helpToolStripMenuItem.Click += new System.EventHandler(this.helpToolStripMenuItem_Click);
+			// 
 			// AudioEditor
 			// 
 			resources.ApplyResources(this, "$this");
@@ -202,5 +214,6 @@ namespace PckStudio.Forms.Utilities
 		private System.Windows.Forms.ToolStripMenuItem removeEntryMenuItem;
 		private MetroFramework.Controls.MetroLabel metroLabel2;
 		private MetroFramework.Controls.MetroLabel metroLabel1;
+		private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
 	}
 }

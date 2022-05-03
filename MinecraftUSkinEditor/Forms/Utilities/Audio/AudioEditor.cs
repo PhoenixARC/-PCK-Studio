@@ -16,24 +16,35 @@ namespace PckStudio.Forms.Utilities
 {
 	public partial class AudioEditor : MetroForm
 	{
+		public bool saved = false;
 		public string defaultType;
 		public string cat;
 		public List<int> cats = new List<int>();
 		public List<int> totalCats = new List<int>();
+
+		public class NodeSorter : System.Collections.IComparer
+		{
+			public int Compare(object x, object y)
+			{
+				if (x == null || y == null) return -1;
+				return (x as TreeNode).ImageIndex.CompareTo((x as TreeNode).ImageIndex);
+			}
+		}
+
 		public string getCatString(int cat)
 		{
 			switch (cat)
 			{
-				case 0: return "Overworld"; break;
-				case 1: return "Nether"; break;
-				case 2: return "End"; break;
-				case 3: return "Creative"; break;
-				case 4: return "Menu"; break;
-				case 5: return "Battle"; break;
-				case 6: return "Tumble"; break;
-				case 7: return "Glide"; break;
-				case 8: return "Unused"; break; // Unknown what this is used for. Probably the scrapped Mini Game 4 referenced in the code
-				default: return "Not valid"; break;
+				case 0: return "Overworld";
+				case 1: return "Nether";
+				case 2: return "End";
+				case 3: return "Creative";
+				case 4: return "Menu";
+				case 5: return "Battle";
+				case 6: return "Tumble";
+				case 7: return "Glide";
+				case 8: return "Unused"; // Unknown what this is used for. Probably the scrapped Mini Game 4 referenced in the code
+				default: return "Not valid";
 			}
 		}
 
@@ -41,33 +52,51 @@ namespace PckStudio.Forms.Utilities
 		{
 			switch (cat)
 			{
-				case "Overworld": return 0; break;
-				case "Nether": return 1; break;
-				case "End": return 2; break;
-				case "Creative": return 3; break;
-				case "Menu": return 4; break;
-				case "Battle": return 5; break;
-				case "Tumble": return 6; break;
-				case "Glide": return 7; break;
-				case "Unused": return 8; break; // Unknown what this is used for. Probably the scrapped Mini Game 4 referenced in the code
-				default: return -1; break;
+				case "Overworld": return 0;
+				case "Nether": return 1;
+				case "End": return 2;
+				case "Creative": return 3;
+				case "Menu": return 4;
+				case "Battle": return 5;
+				case "Tumble": return 6;
+				case "Glide": return 7;
+				case "Unused": return 8; // Unknown what this is used for. Probably the scrapped Mini Game 4 referenced in the code
+				default: return -1;
 			}
 		}
 
 		PCK audioPCK = new PCK();
+		bool isVita;
 		PCK.MineFile mf;
-		public AudioEditor(byte[] data, PCK.MineFile MineFile)
+		public AudioEditor(PCK.MineFile MineFile, bool littleEndian)
 		{
+			isVita = littleEndian;
+			ImageList catImages = new ImageList();
+			catImages.ColorDepth = ColorDepth.Depth32Bit;
+			catImages.Images.Add(Properties.Resources.audio_0_overworld);
+			catImages.Images.Add(Properties.Resources.audio_1_nether);
+			catImages.Images.Add(Properties.Resources.audio_2_end);
+			catImages.Images.Add(Properties.Resources.audio_3_creative);
+			catImages.Images.Add(Properties.Resources.audio_4_menu);
+			catImages.Images.Add(Properties.Resources.audio_5_mg01);
+			catImages.Images.Add(Properties.Resources.audio_6_mg02);
+			catImages.Images.Add(Properties.Resources.audio_7_mg03);
+
 			InitializeComponent();
-			audioPCK.Read(data);
+
+			treeView1.ImageList = catImages;
+
+			mf = MineFile;
+			if (isVita) audioPCK.ReadVita(mf.data, true);
+			else audioPCK.Read(mf.data, true);
+			defaultType = audioPCK.types[0];
 			int check; // This is needed for the TryGetValue function which is annoying
-			if(!audioPCK.typeCodes.TryGetValue("CUENAME", out check))
+			if (!audioPCK.typeCodes.TryGetValue("CUENAME", out check))
 			{
 				throw new System.Exception("This is not a valid audio.pck file");
 			}
-			mf = MineFile;
 			int index = 0;
-			List<PCK.MineFile> tempMineFiles = audioPCK.mineFiles.ToList();
+			List<PCK.MineFile> tempMineFiles = audioPCK.mineFiles;
 			foreach (PCK.MineFile mineFile in tempMineFiles)
 			{
 				mineFile.name = getCatString(mineFile.type);
@@ -75,7 +104,7 @@ namespace PckStudio.Forms.Utilities
 				if (cats.Contains<int>(mineFile.type))
 				{
 					Console.WriteLine("Duplicate category found, " + getCatString(mineFile.type) + ". Combining...");
-					List<object[]> newEntries = mineFile.entries.ToList();
+					List<object[]> newEntries = mineFile.entries;
 					audioPCK.mineFiles.Remove(mineFile);
 					audioPCK.mineFiles.Find(category => category.name == getCatString(mineFile.type)).entries.AddRange(newEntries);
 				}
@@ -84,13 +113,17 @@ namespace PckStudio.Forms.Utilities
 					TreeNode treeNode = new TreeNode();
 					treeNode.Text = mineFile.name;
 					treeNode.Tag = mineFile;
+					treeNode.ImageIndex = mineFile.type;
+					treeNode.SelectedImageIndex = mineFile.type;
 					treeView1.Nodes.Add(treeNode);
 					cats.Add(mineFile.type);
 				}
 
 				index++;
-				continue;
 			}
+
+			treeView1.TreeViewNodeSorter = new NodeSorter();
+			treeView1.Sort();
 		}
 
 		private void treeView2_AfterSelect(object sender, TreeViewEventArgs e)
@@ -100,7 +133,7 @@ namespace PckStudio.Forms.Utilities
 			string type = audioPCK.types[0];
 			defaultType = type;
 			string value = "";
-			if(strings != null)
+			if (strings != null)
 			{
 				type = (string)strings[0];
 				value = (string)strings[1];
@@ -122,11 +155,11 @@ namespace PckStudio.Forms.Utilities
 				TreeNode meta = new TreeNode();
 
 				foreach (object[] entryy in mineFile.entries)
-				meta.Text = (string)strings[0];
+					meta.Text = (string)strings[0];
 				meta.Tag = entry;
 				treeView2.Nodes.Add(meta);
-				continue;
 			}
+			if (treeView2.Nodes.Count > 0) treeView2.SelectedNode = treeView2.Nodes[0];
 		}
 
 		private void textBox1_TextChanged(object sender, EventArgs e)
@@ -159,7 +192,8 @@ namespace PckStudio.Forms.Utilities
 					PckStudio.addCategory add = new PckStudio.addCategory(this);//sets category adding dialog
 					add.ShowDialog();//displays metadata adding dialog
 					add.Dispose();//diposes generated metadata adding dialog data
-					cats.Add(getCatID(cat));
+					if (!cats.Contains(getCatID(cat))) cats.Add(getCatID(cat));
+					else return;
 					PCK.MineFile mf = new PCK.MineFile();//Creates new minefile template
 
 					var emptyBytes = new List<byte>(); // the category files are empty to not take up space
@@ -170,11 +204,14 @@ namespace PckStudio.Forms.Utilities
 					mf.name = cat;//sets minfile name to file name
 					mf.type = getCatID(cat);//sets minefile type to default
 					TreeNode addNode = new TreeNode(mf.name) { Tag = mf };//creates node for minefile
-					audioPCK.mineFiles.Add(mf);
+					addNode.ImageIndex = mf.type;
+					addNode.SelectedImageIndex = mf.type;
+					//audioPCK.mineFiles.Add(mf);
 					treeView1.Nodes.Add(addNode);
+					treeView1.Sort();
 				}
 			}
-			catch(Exception ex)
+			catch (Exception ex)
 			{
 				MessageBox.Show("All possible categories are used", "There are no more categories that could be added");
 			}
@@ -182,18 +219,20 @@ namespace PckStudio.Forms.Utilities
 
 		private void addEntryMenuItem_Click(object sender, EventArgs e)
 		{
+			if (treeView1.SelectedNode == null) return;
 			object[] obj = { defaultType, "New Entry" };
-			
+
 			TreeNode meta = new TreeNode();
 			meta.Text = "New Entry";
 			meta.Tag = obj;
-			treeView2.Nodes.Insert(treeView2.SelectedNode == null ? 0 : treeView2.SelectedNode.Index + 1, meta);
+			treeView2.Nodes.Add(meta);
 			((PCK.MineFile)treeView1.SelectedNode.Tag).entries.Add(obj);
 		}
 		public void treeView2_KeyDown(object sender, KeyEventArgs e)
 		{
 			if (e.KeyCode == Keys.Delete && treeView2.SelectedNode != null)
 			{
+				if (treeView1.SelectedNode == null) return; // makes sure you don't run this if there is nothing to delete
 				((PCK.MineFile)treeView1.SelectedNode.Tag).entries.Remove((object[])treeView2.SelectedNode.Tag);
 				treeView2.SelectedNode.Remove();
 			}
@@ -201,16 +240,53 @@ namespace PckStudio.Forms.Utilities
 
 		private void removeCategoryStripMenuItem_Click(object sender, EventArgs e)
 		{
+			if (treeView1.SelectedNode == null) return; // makes sure you don't run this if there is nothing to delete
 			cats.Remove(getCatID(treeView1.SelectedNode.Text));
-			audioPCK.mineFiles.Remove((PCK.MineFile)treeView1.SelectedNode.Tag);
+			//audioPCK.mineFiles.Remove((PCK.MineFile)treeView1.SelectedNode.Tag);
 			treeView1.SelectedNode.Remove();
 			treeView2.Nodes.Clear();
+			if(treeView1.SelectedNode != null)
+			{
+				PCK.MineFile mineFile = (PCK.MineFile)treeView1.SelectedNode.Tag;
+				foreach (object[] entry in mineFile.entries) //object = metadata entry(name:value)
+				{
+					object[] strings = (object[])entry;
+					TreeNode meta = new TreeNode();
+
+					foreach (object[] entryy in mineFile.entries)
+						meta.Text = (string)strings[0];
+					meta.Tag = entry;
+					treeView2.Nodes.Add(meta);
+				}
+			}
 		}
 
 		private void removeEntryMenuItem_Click(object sender, EventArgs e)
 		{
 			((PCK.MineFile)treeView1.SelectedNode.Tag).entries.Remove((object[])treeView2.SelectedNode.Tag);
 			treeView2.SelectedNode.Remove();
+		}
+
+		private void Binka_DragDrop(object sender, DragEventArgs e)
+		{
+			if (treeView1.SelectedNode != null)
+			{
+				string[] FileList = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+
+				foreach (string binka in FileList)
+				{
+					if(System.IO.Path.GetExtension(binka) == ".binka")
+					{
+						object[] obj = { "CUENAME", System.IO.Path.GetFileNameWithoutExtension(binka) };
+
+						TreeNode meta = new TreeNode();
+						meta.Text = "CUENAME";
+						meta.Tag = obj;
+						treeView2.Nodes.Add(meta);
+						((PCK.MineFile)treeView1.SelectedNode.Tag).entries.Add(obj);
+					}
+				}
+			}
 		}
 
 		private static byte[] endianReverseUnicode(byte[] str)
@@ -232,21 +308,73 @@ namespace PckStudio.Forms.Utilities
 			f.writeInt(0);
 		}
 
-		private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
+		private static void writeMinecraftStringVita(FileOutput f, string str)
+		{
+			Console.WriteLine("WriteVita -- " + str);
+			byte[] bytes = Encoding.Unicode.GetBytes(str);
+			f.writeIntVita(bytes.Length / 2);
+			f.writeBytes((bytes));
+			f.writeIntVita(0);
+		}
+
+		public static byte[] buildAudioPCKVita(PCK pck)
+		{
+			FileOutput fileOutput = new FileOutput();
+			fileOutput.Endian = Endianness.Big;
+			fileOutput.writeIntVita(1);
+			fileOutput.writeIntVita(pck.types.Count);
+			foreach (int num in pck.types.Keys)
+			{
+				fileOutput.writeIntVita(num);
+				writeMinecraftStringVita(fileOutput, pck.types[num]);
+			}
+			fileOutput.writeIntVita(pck.mineFiles.Count);
+			foreach (PCK.MineFile mineFile in pck.mineFiles)
+			{
+				mineFile.name = "";
+				fileOutput.writeIntVita(mineFile.data.Length);
+				fileOutput.writeIntVita(mineFile.type);
+				writeMinecraftStringVita(fileOutput, mineFile.name);
+			}
+			foreach (PCK.MineFile mineFile2 in pck.mineFiles)
+			{
+				string str = "";
+				try
+				{
+					fileOutput.writeIntVita(mineFile2.entries.Count);
+					foreach (object[] array in mineFile2.entries)
+					{
+						str = array[0].ToString();
+						fileOutput.writeIntVita(pck.typeCodes[(string)array[0]]);
+						writeMinecraftStringVita(fileOutput, (string)array[1]);
+					}
+					fileOutput.writeBytes(mineFile2.data);
+				}
+				catch (Exception)
+				{
+					MessageBox.Show(str + " is not in the main metadatabase");
+					break;
+				}
+			}
+			return fileOutput.getBytes();
+		}
+
+		public static byte[] buildAudioPCK(PCK pck)
 		{
 			FileOutput f = new FileOutput();
-			f.Endian = Endianness.Big;
+			f.Endian = pck.IsLittleEndian ? Endianness.Little : Endianness.Big;
 
 			f.writeInt(1);
-			f.writeInt(audioPCK.types.Count);
-			foreach (int type in audioPCK.types.Keys)
+			f.writeInt(pck.types.Count);
+			foreach (int type in pck.types.Keys)
 			{
 				f.writeInt(type);
-				writeMinecraftString(f, audioPCK.types[type]);
+				writeMinecraftString(f, pck.types[type]);
 			}
 
-			f.writeInt(audioPCK.mineFiles.Count);
-			foreach (PCK.MineFile mf in audioPCK.mineFiles)
+			f.writeInt(pck.mineFiles.Count);
+			Console.WriteLine(pck.mineFiles.Count);
+			foreach (PCK.MineFile mf in pck.mineFiles)
 			{
 				mf.name = "";
 				f.writeInt(mf.data.Length);
@@ -254,7 +382,7 @@ namespace PckStudio.Forms.Utilities
 				writeMinecraftString(f, mf.name);
 			}
 
-			foreach (PCK.MineFile mf in audioPCK.mineFiles)
+			foreach (PCK.MineFile mf in pck.mineFiles)
 			{
 				string missing = "";
 				try
@@ -263,7 +391,7 @@ namespace PckStudio.Forms.Utilities
 					foreach (object[] entry in mf.entries)
 					{
 						missing = entry[0].ToString();
-						f.writeInt(audioPCK.typeCodes[(string)entry[0]]);
+						f.writeInt(pck.typeCodes[(string)entry[0]]);
 						writeMinecraftString(f, (string)entry[1]);
 					}
 
@@ -275,14 +403,50 @@ namespace PckStudio.Forms.Utilities
 					break;
 				}
 			}
+			return f.getBytes();
+		}
 
+		private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
+		{
+			FormMain.treeViewToMineFiles(treeView1, audioPCK);
 
-			mf.data = f.getBytes();
+			if(!cats.Contains(0) || !cats.Contains(1) || !cats.Contains(2))
+			{
+				MessageBox.Show("The game will crash upon loading your pack if the Overworld, Nether and End categories don't all exist.", "Mandatory Categories Missing");
+				return;
+			}
+
+			bool emptyCat = false;
+
+			foreach (PCK.MineFile mf in audioPCK.mineFiles) if (mf.entries.Count == 0) emptyCat = true;
+
+			if (emptyCat)
+			{
+				MessageBox.Show("The game will crash upon loading your pack if a category is empty", "Empty Category");
+				return;
+			}
+
+			mf.data = isVita ? buildAudioPCKVita(audioPCK) : buildAudioPCK(audioPCK);
+			saved = true;
 		}
 
 		private void metroLabel2_Click(object sender, EventArgs e)
 		{
 
+		}
+
+		private void treeView2_DragEnter(object sender, DragEventArgs e)
+		{
+			e.Effect = DragDropEffects.All;
+		}
+
+		private void helpToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			MessageBox.Show("Simply drag and drop BINKA audio files into the right tree to add them to the category selected on the left tree.\n\n" +
+				"The \"Menu\" category will only play once when loading the pack, and never again.\n\n" +
+				"The \"Creative\" category will only play songs listed in that category, and unlike other editions of Minecraft, will NOT play songs from the Overworld category. You can fix this by adding your overworld songs to the Creative category too.\n\n" +
+				"The mini game categories will only play if you have your pack loaded in those mini games.\n\n" +
+				"You can modify and create PSVita and PS4 audio pcks by clicking \"PS4/Vita\" in the \"Create -> Audio.pck\" context menu", "Help");
 		}
 	}
 }

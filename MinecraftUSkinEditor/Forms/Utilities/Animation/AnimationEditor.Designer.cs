@@ -44,11 +44,16 @@
 			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.metroCheckBox1 = new MetroFramework.Controls.MetroCheckBox();
 			this.metroButton1 = new MetroFramework.Controls.MetroButton();
-			this.pictureBoxWithInterpolationMode1 = new PckStudio.PictureBoxWithInterpolationMode();
 			this.timer1 = new System.Windows.Forms.Timer(this.components);
 			this.metroButton2 = new MetroFramework.Controls.MetroButton();
+			this.tileLabel = new MetroFramework.Controls.MetroLabel();
+			this.metroCheckBox2 = new MetroFramework.Controls.MetroCheckBox();
+			this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
+			this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+			this.pictureBoxWithInterpolationMode1 = new PckStudio.PictureBoxWithInterpolationMode();
 			this.contextMenuStrip1.SuspendLayout();
 			this.menuStrip.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxWithInterpolationMode1)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -62,7 +67,7 @@
 			this.treeView1.Margin = new System.Windows.Forms.Padding(0);
 			this.treeView1.MaximumSize = new System.Drawing.Size(205, 350);
 			this.treeView1.Name = "treeView1";
-			this.treeView1.Size = new System.Drawing.Size(165, 264);
+			this.treeView1.Size = new System.Drawing.Size(165, 196);
 			this.treeView1.TabIndex = 15;
 			this.treeView1.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.treeView1_ItemDrag);
 			this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
@@ -172,7 +177,7 @@
 			// metroCheckBox1
 			// 
 			this.metroCheckBox1.AutoSize = true;
-			this.metroCheckBox1.Location = new System.Drawing.Point(188, 285);
+			this.metroCheckBox1.Location = new System.Drawing.Point(182, 312);
 			this.metroCheckBox1.Name = "metroCheckBox1";
 			this.metroCheckBox1.Size = new System.Drawing.Size(204, 15);
 			this.metroCheckBox1.TabIndex = 17;
@@ -182,14 +187,90 @@
 			// 
 			// metroButton1
 			// 
-			this.metroButton1.Location = new System.Drawing.Point(188, 306);
+			this.metroButton1.Location = new System.Drawing.Point(182, 286);
 			this.metroButton1.Name = "metroButton1";
-			this.metroButton1.Size = new System.Drawing.Size(103, 24);
+			this.metroButton1.Size = new System.Drawing.Size(99, 24);
 			this.metroButton1.TabIndex = 18;
 			this.metroButton1.Text = "Play Animation";
 			this.metroButton1.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.metroButton1.UseSelectable = true;
 			this.metroButton1.Click += new System.EventHandler(this.metroButton1_Click);
+			// 
+			// timer1
+			// 
+			this.timer1.Interval = 1;
+			this.timer1.Tick += new System.EventHandler(this.animate);
+			// 
+			// metroButton2
+			// 
+			this.metroButton2.Enabled = false;
+			this.metroButton2.Location = new System.Drawing.Point(287, 286);
+			this.metroButton2.Name = "metroButton2";
+			this.metroButton2.Size = new System.Drawing.Size(99, 24);
+			this.metroButton2.TabIndex = 19;
+			this.metroButton2.Text = "Stop Animation";
+			this.metroButton2.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.metroButton2.UseSelectable = true;
+			this.metroButton2.Click += new System.EventHandler(this.metroButton2_Click);
+			// 
+			// tileLabel
+			// 
+			this.tileLabel.AutoSize = true;
+			this.tileLabel.Location = new System.Drawing.Point(6, 286);
+			this.tileLabel.MinimumSize = new System.Drawing.Size(170, 19);
+			this.tileLabel.Name = "tileLabel";
+			this.tileLabel.Size = new System.Drawing.Size(57, 19);
+			this.tileLabel.TabIndex = 20;
+			this.tileLabel.Text = "tileLabel";
+			this.tileLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
+			// 
+			// metroCheckBox2
+			// 
+			this.metroCheckBox2.AutoSize = true;
+			this.metroCheckBox2.Location = new System.Drawing.Point(6, 308);
+			this.metroCheckBox2.Name = "metroCheckBox2";
+			this.metroCheckBox2.Size = new System.Drawing.Size(128, 15);
+			this.metroCheckBox2.TabIndex = 21;
+			this.metroCheckBox2.Text = "Is Mip Map Texture?";
+			this.metroCheckBox2.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.metroCheckBox2.UseSelectable = true;
+			this.metroCheckBox2.CheckedChanged += new System.EventHandler(this.metroCheckBox2_CheckedChanged);
+			// 
+			// metroLabel1
+			// 
+			this.metroLabel1.AutoSize = true;
+			this.metroLabel1.Location = new System.Drawing.Point(7, 326);
+			this.metroLabel1.Name = "metroLabel1";
+			this.metroLabel1.Size = new System.Drawing.Size(99, 19);
+			this.metroLabel1.TabIndex = 22;
+			this.metroLabel1.Text = "Mip Map Level:";
+			this.metroLabel1.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.metroLabel1.Visible = false;
+			// 
+			// numericUpDown1
+			// 
+			this.numericUpDown1.BackColor = System.Drawing.Color.Black;
+			this.numericUpDown1.ForeColor = System.Drawing.SystemColors.Window;
+			this.numericUpDown1.Location = new System.Drawing.Point(113, 326);
+			this.numericUpDown1.Maximum = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
+			this.numericUpDown1.Minimum = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+			this.numericUpDown1.Name = "numericUpDown1";
+			this.numericUpDown1.Size = new System.Drawing.Size(44, 20);
+			this.numericUpDown1.TabIndex = 23;
+			this.numericUpDown1.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+			this.numericUpDown1.Visible = false;
 			// 
 			// pictureBoxWithInterpolationMode1
 			// 
@@ -201,23 +282,6 @@
 			this.pictureBoxWithInterpolationMode1.TabIndex = 16;
 			this.pictureBoxWithInterpolationMode1.TabStop = false;
 			// 
-			// timer1
-			// 
-			this.timer1.Interval = 25;
-			this.timer1.Tick += new System.EventHandler(this.animate);
-			// 
-			// metroButton2
-			// 
-			this.metroButton2.Enabled = false;
-			this.metroButton2.Location = new System.Drawing.Point(293, 306);
-			this.metroButton2.Name = "metroButton2";
-			this.metroButton2.Size = new System.Drawing.Size(103, 24);
-			this.metroButton2.TabIndex = 19;
-			this.metroButton2.Text = "Stop Animation";
-			this.metroButton2.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.metroButton2.UseSelectable = true;
-			this.metroButton2.Click += new System.EventHandler(this.metroButton2_Click);
-			// 
 			// AnimationEditor
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -225,6 +289,10 @@
 			this.ClientSize = new System.Drawing.Size(400, 356);
 			this.Controls.Add(this.metroButton2);
 			this.Controls.Add(this.metroButton1);
+			this.Controls.Add(this.numericUpDown1);
+			this.Controls.Add(this.metroLabel1);
+			this.Controls.Add(this.metroCheckBox2);
+			this.Controls.Add(this.tileLabel);
 			this.Controls.Add(this.metroCheckBox1);
 			this.Controls.Add(this.pictureBoxWithInterpolationMode1);
 			this.Controls.Add(this.treeView1);
@@ -236,6 +304,7 @@
 			this.contextMenuStrip1.ResumeLayout(false);
 			this.menuStrip.ResumeLayout(false);
 			this.menuStrip.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxWithInterpolationMode1)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
@@ -261,5 +330,9 @@
 		private System.Windows.Forms.ToolStripMenuItem importJavaAnimationToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem changeTileToolStripMenuItem;
+		private MetroFramework.Controls.MetroLabel tileLabel;
+		private MetroFramework.Controls.MetroCheckBox metroCheckBox2;
+		private MetroFramework.Controls.MetroLabel metroLabel1;
+		private System.Windows.Forms.NumericUpDown numericUpDown1;
 	}
 }

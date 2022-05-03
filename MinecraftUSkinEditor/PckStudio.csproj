@@ -844,6 +844,14 @@
     <None Include="Resources\clock.png" />
     <None Include="Resources\changeTile.png" />
     <None Include="Resources\items.png" />
+    <None Include="Resources\iconImageList\AudioEditor\0_overworld.png" />
+    <None Include="Resources\iconImageList\AudioEditor\1_nether.png" />
+    <None Include="Resources\iconImageList\AudioEditor\2_end.png" />
+    <None Include="Resources\iconImageList\AudioEditor\3_menu.png" />
+    <None Include="Resources\iconImageList\AudioEditor\4_creative.png" />
+    <None Include="Resources\iconImageList\AudioEditor\5_mg01.png" />
+    <None Include="Resources\iconImageList\AudioEditor\6_mg02.png" />
+    <None Include="Resources\iconImageList\AudioEditor\7_mg03.png" />
     <Content Include="Resources\mss32.dll" />
     <None Include="Resources\sdDownload.png" />
     <None Include="Resources\Replace.png" />
@@ -867,9 +875,7 @@
     <Content Include="favicon %286%29.ico" />
     <Content Include="Resources\NoImageFound.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\iconImageList\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
       <Visible>False</Visible>

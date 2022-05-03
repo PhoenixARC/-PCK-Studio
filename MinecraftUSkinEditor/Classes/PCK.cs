@@ -6,6 +6,7 @@ using System.Windows.Forms;
 
 namespace PckStudio
 {
+
     public class PCK
     {
 
@@ -62,7 +63,7 @@ namespace PckStudio
             return Encoding.Unicode.GetString(endianReverseUnicode(f.readBytes(length)));
         }
 
-        public bool Read(byte[] data)
+        public bool Read(byte[] data, bool isAudio = false)
         {
             try
             {
@@ -95,7 +96,6 @@ namespace PckStudio
 
                 int itemCount = fileData.readInt();
 
-                Console.WriteLine(itemCount);
                 // no metadata
                 if (entryTypeCount == 0)
                 {
@@ -108,7 +108,13 @@ namespace PckStudio
                     if (pckType == 1)
                     {
                         Console.WriteLine("PckType1");
-                        itemCount = fileData.readInt();
+                        /* Not really sure if this is accurate or not
+                         * but it seems that when there is only one file in the pck,
+                         * the following line causes it to fail. Since I don't want to potentially break PCK loading for this type,
+                         * I simply added this parameter to the read function. Since the parameter is false by default,
+                         * you won't have to worry about setting it. -MattNL
+                         */
+                        if (!isAudio) itemCount = fileData.readInt();
                     }
                     if (pckType == 2)
                         Console.WriteLine("PckType2");
@@ -219,7 +225,7 @@ namespace PckStudio
             return Encoding.Unicode.GetString((f.readBytes(length)));
         }
 
-        public void ReadVita(byte[] data)
+        public void ReadVita(byte[] data, bool isAudio = false)
         {
             pckType = 0;
             types = new Dictionary<int, string>();
@@ -264,8 +270,12 @@ namespace PckStudio
                 pckType = itemCount;
                 if (pckType == 1)
                 {
-                    Console.WriteLine("PckType1");
-                    itemCount = fileData.readIntVita();
+                    /* Not really sure if this is accurate or not
+                     * but it seems that when there is only one file in the pck,
+                     * the following line causes it to fail. Since I don't want to potentially break PCK loading for this type,
+                     * I simply added this defaultly disabled parameter to the read function. -MattNL
+                     */
+                    if (!isAudio) itemCount = fileData.readIntVita();
                 }
                 if (pckType == 2)
                     Console.WriteLine("PckType2");

@@ -51,8 +51,6 @@ namespace PckStudio
 		#region form startup page
 		public FormMain()
 		{
-
-
 			Directory.CreateDirectory(appData + "\\template");
 			if (!File.Exists(appData + "\\template\\UntitledSkinPCK.pck"))
 				File.WriteAllBytes(appData + "\\template\\UntitledSkinPCK.pck", Resources.UntitledSkinPCK);
@@ -844,7 +842,7 @@ namespace PckStudio
 			diag.ShowDialog(this);
 			diag.Dispose();//diposes generated metadata adding dialog data
 			treeViewMain.SelectedNode.Text = Path.GetFileName(node.Name);
-			treeViewToMineFiles(treeViewMain);
+			treeViewToMineFiles(treeViewMain, currentPCK);
 		}
 		#endregion
 
@@ -1016,6 +1014,91 @@ namespace PckStudio
 		}
 		#endregion
 
+		#region adds a new Audio.pck to the project
+		private void audiopckToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		PCK.MineFile makeNewAudioPCK(bool isVita)
+		{
+			PCK audioPck = new PCK();
+			audioPck.IsLittleEndian = isVita;
+			audioPck.pckType = 1;
+			audioPck.types.Add(0, "CUENAME");
+			audioPck.types.Add(1, "CREDIT");
+			audioPck.types.Add(2, "CREDITID");
+			for (int i = 0; i < 3; i++)
+			{
+				PCK.MineFile mf = new PCK.MineFile();
+				mf.name = "";
+				mf.type = i;
+				mf.data = new byte[0];
+				audioPck.mineFiles.Add(mf);
+			}
+			PCK.MineFile audioMF = new PCK.MineFile();
+			audioMF.name = "audio.pck";
+			audioMF.type = 8; // This file will not load otherwise
+			audioMF.data = isVita ? audioPck.RebuildVita() : audioPck.Rebuild();
+			return audioMF;
+		}
+
+		private void vitaPS4AudiopckToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			treeViewToMineFiles(treeViewMain, currentPCK);
+			List<string> filenames = new List<string>();
+			foreach (TreeNode tNode in treeViewMain.Nodes)
+			{
+				filenames.Add(tNode.Text);
+			}
+
+			if (filenames.Contains("audio.pck"))
+			{
+				MessageBox.Show("There is already an audio.pck present in this file!", "Can't create audio.pck");
+				return;
+			}
+			PCK.MineFile audioMF = makeNewAudioPCK(true);
+			TreeNode node = new TreeNode();
+			node.Text = "audio.pck";
+			node.Tag = audioMF;
+			node.ImageIndex = 4;
+			node.SelectedImageIndex = 4;
+			PckStudio.Forms.Utilities.AudioEditor diag = new PckStudio.Forms.Utilities.AudioEditor(node.Tag as PCK.MineFile, true);
+			diag.Text += " (PS4/Vita)";
+			diag.ShowDialog(this);
+			if (diag.saved) treeViewMain.Nodes.Add(node);
+			treeViewToMineFiles(treeViewMain, currentPCK);
+			diag.Dispose();
+		}
+
+		private void normalAudiopckToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			treeViewToMineFiles(treeViewMain, currentPCK);
+			List<string> filenames = new List<string>();
+			foreach (TreeNode tNode in treeViewMain.Nodes)
+			{
+				filenames.Add(tNode.Text);
+			}
+
+			if (filenames.Contains("audio.pck"))
+			{
+				MessageBox.Show("There is already an audio.pck present in this file!", "Can't create audio.pck");
+				return;
+			}
+			PCK.MineFile audioMF = makeNewAudioPCK(false);
+			TreeNode node = new TreeNode();
+			node.Text = "audio.pck";
+			node.Tag = audioMF;
+			node.ImageIndex = 4;
+			node.SelectedImageIndex = 4;
+			PckStudio.Forms.Utilities.AudioEditor diag = new PckStudio.Forms.Utilities.AudioEditor(node.Tag as PCK.MineFile, false);
+			diag.ShowDialog(this);
+			if (diag.saved) treeViewMain.Nodes.Add(node);
+			treeViewToMineFiles(treeViewMain, currentPCK);
+			diag.Dispose();
+		}
+		#endregion
+
 		#region starts up form to create and add a animated texture
 		private void createAnimatedTextureToolStripMenuItem_Click(object sender, EventArgs e)
 		{
@@ -1032,7 +1115,7 @@ namespace PckStudio
 						diag.ShowDialog(this);
 						diag.Dispose();
 
-						treeViewToMineFiles(treeViewMain);
+						treeViewToMineFiles(treeViewMain, currentPCK);
 
 						treeMeta.Nodes.Clear();
 						foreach (int type in types.Keys)
@@ -1095,7 +1178,8 @@ namespace PckStudio
 					{
 						try
 						{
-							PckStudio.Forms.Utilities.AudioEditor diag = new PckStudio.Forms.Utilities.AudioEditor(mf.data, mf);
+							PckStudio.Forms.Utilities.AudioEditor diag = new PckStudio.Forms.Utilities.AudioEditor(mf, mf.data[0] != 0x00);
+							if(mf.data[0] != 0x00) diag.Text += " (PS4/Vita)";
 							diag.ShowDialog(this);
 							diag.Dispose();
 						}
@@ -1244,7 +1328,7 @@ namespace PckStudio
 				treeViewMain.SelectedNode.Remove();
 			}
 
-			treeViewToMineFiles(treeViewMain);
+			treeViewToMineFiles(treeViewMain, currentPCK);
 
 			treeViewMain.SelectedNode = move;
 
@@ -1272,7 +1356,7 @@ namespace PckStudio
 				treeViewMain.SelectedNode.Remove();
 			}
 
-			treeViewToMineFiles(treeViewMain);
+			treeViewToMineFiles(treeViewMain, currentPCK);
 
 			treeViewMain.SelectedNode = move;
 
@@ -1282,7 +1366,7 @@ namespace PckStudio
 
 		#region drag and drop for main tree node
 
-		public void getChildren(List<TreeNode> Nodes, TreeNode Node)
+		public static void getChildren(List<TreeNode> Nodes, TreeNode Node)
 		{
 			foreach (TreeNode thisNode in Node.Nodes)
 			{
@@ -1291,7 +1375,7 @@ namespace PckStudio
 			}
 		}
 
-		public string getFullMineFilePath(TreeNode node)
+		public static string getFullMineFilePath(TreeNode node)
 		{
 			try
 			{
@@ -1306,7 +1390,7 @@ namespace PckStudio
 			}
 		}
 
-		public void treeViewToMineFiles(TreeView tree)
+		public static void treeViewToMineFiles(TreeView tree, PCK pck)
 		{
 			int i = 1;
 			List<TreeNode> children = new List<TreeNode>();
@@ -1347,7 +1431,7 @@ namespace PckStudio
 					}
 				}
 			}
-			currentPCK.mineFiles = newMineFiles;
+			pck.mineFiles = newMineFiles;
 		}
 
 		// Most of the code below is modified code from this link: https://docs.microsoft.com/en-us/dotnet/api/system.windows.forms.treeview.itemdrag?view=windowsdesktop-6.0
@@ -1431,7 +1515,7 @@ namespace PckStudio
 				targetNode.Expand();
 			}
 
-			treeViewToMineFiles(treeViewMain);
+			treeViewToMineFiles(treeViewMain, currentPCK);
 		}
 
 		// Determine whether one node is a parent 
@@ -3673,7 +3757,7 @@ namespace PckStudio
 					diag.ShowDialog(this);
 					diag.Dispose();
 
-					treeViewToMineFiles(treeViewMain);
+					treeViewToMineFiles(treeViewMain, currentPCK);
 
 					MemoryStream png = new MemoryStream(mf.data); //Gets image data from minefile data
 					Image skinPicture = Image.FromStream(png); //Constructs image data into image
@@ -3705,13 +3789,15 @@ namespace PckStudio
 			{
 				try
 				{
-					PckStudio.Forms.Utilities.AudioEditor diag = new PckStudio.Forms.Utilities.AudioEditor(mf.data, mf);
+					PckStudio.Forms.Utilities.AudioEditor diag = new PckStudio.Forms.Utilities.AudioEditor(mf, mf.data[0] != 0x00);
+					if (mf.data[0] != 0x00) diag.Text += " (PS4/Vita)";
 					diag.ShowDialog(this);
 					diag.Dispose();
 				}
-				catch
+				catch (Exception ex)
 				{
-					MessageBox.Show("Invalid data", "Error", MessageBoxButtons.OK,MessageBoxIcon.Error);
+					MessageBox.Show("Error", ex.Message, MessageBoxButtons.OK,
+					MessageBoxIcon.Error);
 					return;
 				}
 			}
@@ -3890,7 +3976,7 @@ namespace PckStudio
 
 		private void forMattNLContributorToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			System.Diagnostics.Process.Start("https://www.paypal.com/donate?business=X7Z3PMXC4L5LY&no_recurring=1&item_name=Consider+this+my+tip+jar.+It%27s+completely+optional+but+is+absolutely+appreciated.+%28%3A&currency_code=USD");
+			System.Diagnostics.Process.Start("https://ko-fi.com/mattnl");
 		}
 	}
 }
