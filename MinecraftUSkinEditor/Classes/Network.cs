@@ -6,8 +6,8 @@ namespace PckStudio.Classes
 {
     class Network
     {
-        public static string Version = "6.41";
-        public static bool Beta = true;
+        public static string Version = "6.5";
+        public static bool Beta = false;
         public static bool Portable = false;
         public static bool NeedsUpdate = false;
         public static string MainURL = "https://www.pckstudio.xyz/";
