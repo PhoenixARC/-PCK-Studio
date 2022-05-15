@@ -321,9 +321,9 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\Bink.cs" />
-    <Compile Include="Classes\COL.cs" />
-    <Compile Include="Classes\CSM.cs" />
+    <Compile Include="Classes\FileTypes\Bink.cs" />
+    <Compile Include="Classes\FileTypes\COL.cs" />
+    <Compile Include="Classes\FileTypes\CSM.cs" />
     <Compile Include="Classes\Models\DefaultModels\CharacterModel.cs" />
     <Compile Include="Classes\Models\DefaultModels\ModelBase.cs" />
     <Compile Include="Classes\Models\DefaultModels\Texture.cs" />
@@ -350,10 +350,11 @@
     <Compile Include="Classes\Models\Texel.cs" />
     <Compile Include="Classes\Models\TexelComparer.cs" />
     <Compile Include="Classes\Models\TexturePlane.cs" />
-    <Compile Include="Classes\Network.cs" />
-    <Compile Include="Classes\PCK.cs" />
-    <Compile Include="Classes\RichPresenceClient.cs" />
-    <Compile Include="Classes\Update.cs" />
+    <Compile Include="Classes\Networking\Network.cs" />
+    <Compile Include="Classes\Networking\PCKCollections.cs" />
+    <Compile Include="Classes\FileTypes\PCK.cs" />
+    <Compile Include="Classes\Misc\RichPresenceClient.cs" />
+    <Compile Include="Classes\Networking\Update.cs" />
     <Compile Include="Forms\Additional-Popups\FakeProgressBar.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -426,9 +427,9 @@
     <Compile Include="Forms\Skins-And-Textures\EntryEditor.Designer.cs">
       <DependentUpon>EntryEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Classes\FileBase.cs" />
-    <Compile Include="Classes\FileData.cs" />
-    <Compile Include="Classes\FileOutput.cs" />
+    <Compile Include="Classes\IO\FileBase.cs" />
+    <Compile Include="Classes\IO\FileData.cs" />
+    <Compile Include="Classes\IO\FileOutput.cs" />
     <Compile Include="Forms\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -519,6 +520,12 @@
     <Compile Include="Forms\Utilities\pckCenter.Designer.cs">
       <DependentUpon>pckCenter.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Utilities\PckCenterBeta.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Utilities\PckCenterBeta.Designer.cs">
+      <DependentUpon>PckCenterBeta.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Utilities\pckCenterOpen.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -561,11 +568,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>generateModelOLD.resx</DependentUpon>
     </Compile>
-    <Compile Include="Classes\InterpolationPictureBox.cs">
+    <Compile Include="Classes\ToolboxItems\InterpolationPictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Classes\KeyValuePair.cs" />
-    <Compile Include="Classes\LOC.cs" />
+    <Compile Include="Classes\Misc\KeyValuePair.cs" />
+    <Compile Include="Classes\FileTypes\LOC.cs" />
     <Compile Include="Forms\Utilities\LOCEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -598,9 +605,9 @@
       <DependentUpon>programInfo.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Classes\RenderBase.cs" />
-    <Compile Include="Classes\TextureCodec.cs" />
-    <Compile Include="Classes\TextureUtils.cs" />
+    <Compile Include="Classes\Misc\RenderBase.cs" />
+    <Compile Include="Classes\Texturing\TextureCodec.cs" />
+    <Compile Include="Classes\Texturing\TextureUtils.cs" />
     <EmbeddedResource Include="Forms\Additional-Popups\FakeProgressBar.resx">
       <DependentUpon>FakeProgressBar.cs</DependentUpon>
     </EmbeddedResource>
@@ -732,6 +739,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Utilities\pckCenter.resx">
       <DependentUpon>pckCenter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Utilities\PckCenterBeta.resx">
+      <DependentUpon>PckCenterBeta.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Utilities\pckCenterOpen.ja.resx">
       <DependentUpon>pckCenterOpen.cs</DependentUpon>

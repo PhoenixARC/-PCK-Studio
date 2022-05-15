@@ -95,7 +95,10 @@ namespace PckStudio.Forms
                             if (File.Exists(cacheDir + mod + ".png") && checkNeeded == true)
                             {
                                 //image cache
-                                HttpWebRequest textureFile = (HttpWebRequest)WebRequest.Create(hosturl + "pcks/" + mod + ".png");
+                                string imgname = hosturl + "pcks/" + mod + ".png";
+                                if (isVita)
+                                    imgname = hosturl + "pcks/vita" + mod + ".png";
+                                HttpWebRequest textureFile = (HttpWebRequest)WebRequest.Create(imgname);
                                 HttpWebResponse textureFileResponse = (HttpWebResponse)textureFile.GetResponse();
 
                                 DateTime localImageModifiedTime = File.GetLastWriteTime(cacheDir + mod + ".png");
@@ -107,7 +110,10 @@ namespace PckStudio.Forms
                                 }
                                 else
                                 {
-                                    client.DownloadFile(hosturl + "pcks/" + mod + ".png", cacheDir + mod + ".png");
+                                    if (isVita)
+                                        client.DownloadFile(hosturl + "pcks/vita/" + mod + ".png", cacheDir + mod + ".png");
+                                    else
+                                        client.DownloadFile(hosturl + "pcks/" + mod + ".png", cacheDir + mod + ".png");
                                 }
                             }
                             else if (mod.Length == 0) { }
@@ -371,7 +377,10 @@ namespace PckStudio.Forms
             loadDirectory = hosturl + "pckCenterList.txt";
 
             if (isVita)
+            {
+                hosturl += "";
                 loadDirectory = hosturl + "pckCenterVitaList.txt";
+            }
             if (!string.IsNullOrWhiteSpace(new WebClient().DownloadString(loadDirectory)))
             {
                 reload(nobleLoaded);
