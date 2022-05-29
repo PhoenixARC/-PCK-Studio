@@ -17,8 +17,6 @@ namespace PckStudio.Forms
             InitializeComponent();
         }
 
-        string BokuNoPico = "https://mega.nz/folder/8d8AkKQA#6sps-PKhtYJvmIJ5ujtshA";
-
         private void buttonDonate_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start("https://cash.app/$PhoenixARC");
