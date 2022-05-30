@@ -3575,8 +3575,13 @@ namespace PckStudio
 
 		private void openToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
-			pckCenter open = new pckCenter();
+			DateTime Begin = DateTime.Now;
+			//pckCenter open = new pckCenter();
+			Forms.Utilities.PckCenterBeta open = new Forms.Utilities.PckCenterBeta();
 			open.Show();
+			TimeSpan duration = new TimeSpan(DateTime.Now.Ticks - Begin.Ticks);
+
+			Console.WriteLine("Completed in: " + duration);
 		}
 
 		private void tutorialsToolStripMenuItem_Click(object sender, EventArgs e)

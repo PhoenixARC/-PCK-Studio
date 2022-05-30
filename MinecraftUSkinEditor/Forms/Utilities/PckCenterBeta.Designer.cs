@@ -31,23 +31,26 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PckCenterBeta));
             this.metroTabControl1 = new MetroFramework.Controls.MetroTabControl();
             this.metroTabPage1 = new MetroFramework.Controls.MetroTabPage();
+            this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
+            this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
             this.VitaCheckBox = new MetroFramework.Controls.MetroCheckBox();
             this.DownloadButton = new System.Windows.Forms.Button();
-            this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.CategoryComboBox = new MetroFramework.Controls.MetroComboBox();
             this.OnlineTreeView = new System.Windows.Forms.TreeView();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.metroTabPage2 = new MetroFramework.Controls.MetroTabPage();
             this.VitaCheckBox2 = new MetroFramework.Controls.MetroCheckBox();
             this.DeleteLocalButton = new System.Windows.Forms.Button();
             this.OpenFolderButton = new System.Windows.Forms.Button();
             this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.CategoryComboBoxLocal = new MetroFramework.Controls.MetroComboBox();
             this.LocalTreeView = new System.Windows.Forms.TreeView();
-            this.metroComboBox1 = new MetroFramework.Controls.MetroComboBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.metroTabControl1.SuspendLayout();
             this.metroTabPage1.SuspendLayout();
+            this.metroPanel1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.metroTabPage2.SuspendLayout();
@@ -70,12 +73,13 @@
             this.metroTabControl1.TabIndex = 0;
             this.metroTabControl1.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.metroTabControl1.UseSelectable = true;
+            this.metroTabControl1.SelectedIndexChanged += new System.EventHandler(this.metroTabControl1_SelectedIndexChanged);
             // 
             // metroTabPage1
             // 
+            this.metroTabPage1.Controls.Add(this.metroPanel1);
             this.metroTabPage1.Controls.Add(this.VitaCheckBox);
             this.metroTabPage1.Controls.Add(this.DownloadButton);
-            this.metroTabPage1.Controls.Add(this.metroLabel1);
             this.metroTabPage1.Controls.Add(this.tableLayoutPanel1);
             this.metroTabPage1.HorizontalScrollbarBarColor = true;
             this.metroTabPage1.HorizontalScrollbarHighlightOnWheel = false;
@@ -89,6 +93,36 @@
             this.metroTabPage1.VerticalScrollbarBarColor = true;
             this.metroTabPage1.VerticalScrollbarHighlightOnWheel = false;
             this.metroTabPage1.VerticalScrollbarSize = 10;
+            // 
+            // metroPanel1
+            // 
+            this.metroPanel1.Controls.Add(this.metroLabel1);
+            this.metroPanel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.metroPanel1.HorizontalScrollbarBarColor = true;
+            this.metroPanel1.HorizontalScrollbarHighlightOnWheel = false;
+            this.metroPanel1.HorizontalScrollbarSize = 10;
+            this.metroPanel1.Location = new System.Drawing.Point(252, 0);
+            this.metroPanel1.Name = "metroPanel1";
+            this.metroPanel1.Size = new System.Drawing.Size(507, 505);
+            this.metroPanel1.TabIndex = 6;
+            this.metroPanel1.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.metroPanel1.VerticalScrollbarBarColor = true;
+            this.metroPanel1.VerticalScrollbarHighlightOnWheel = false;
+            this.metroPanel1.VerticalScrollbarSize = 10;
+            // 
+            // metroLabel1
+            // 
+            this.metroLabel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.metroLabel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.metroLabel1.FontSize = MetroFramework.MetroLabelSize.Tall;
+            this.metroLabel1.FontWeight = MetroFramework.MetroLabelWeight.Bold;
+            this.metroLabel1.Location = new System.Drawing.Point(0, 0);
+            this.metroLabel1.Name = "metroLabel1";
+            this.metroLabel1.Size = new System.Drawing.Size(507, 505);
+            this.metroLabel1.TabIndex = 3;
+            this.metroLabel1.Text = "Pack Name: %n\r\nAuthor: %a\r\nDescription: %d";
+            this.metroLabel1.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.metroLabel1.WrapToLine = true;
             // 
             // VitaCheckBox
             // 
@@ -116,25 +150,14 @@
             this.DownloadButton.Text = "DOWNLOAD TO COLLECTION";
             this.DownloadButton.UseVisualStyleBackColor = false;
             this.DownloadButton.Visible = false;
-            // 
-            // metroLabel1
-            // 
-            this.metroLabel1.AutoSize = true;
-            this.metroLabel1.FontSize = MetroFramework.MetroLabelSize.Tall;
-            this.metroLabel1.FontWeight = MetroFramework.MetroLabelWeight.Bold;
-            this.metroLabel1.Location = new System.Drawing.Point(259, 3);
-            this.metroLabel1.Name = "metroLabel1";
-            this.metroLabel1.Size = new System.Drawing.Size(146, 75);
-            this.metroLabel1.TabIndex = 3;
-            this.metroLabel1.Text = "Pack Name: %n\r\nAuthor: %a\r\nDescription: %d";
-            this.metroLabel1.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.DownloadButton.Click += new System.EventHandler(this.DownloadButton_Click);
             // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.metroComboBox1, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.CategoryComboBox, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.OnlineTreeView, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.pictureBox1, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Left;
@@ -147,26 +170,42 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(252, 578);
             this.tableLayoutPanel1.TabIndex = 2;
             // 
-            // pictureBox1
+            // CategoryComboBox
             // 
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.pictureBox1.Location = new System.Drawing.Point(3, 3);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(246, 111);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 4;
-            this.pictureBox1.TabStop = false;
+            this.CategoryComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.CategoryComboBox.FormattingEnabled = true;
+            this.CategoryComboBox.ItemHeight = 23;
+            this.CategoryComboBox.Location = new System.Drawing.Point(3, 119);
+            this.CategoryComboBox.Name = "CategoryComboBox";
+            this.CategoryComboBox.Size = new System.Drawing.Size(246, 29);
+            this.CategoryComboBox.Style = MetroFramework.MetroColorStyle.Silver;
+            this.CategoryComboBox.TabIndex = 6;
+            this.CategoryComboBox.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.CategoryComboBox.UseSelectable = true;
+            this.CategoryComboBox.SelectedIndexChanged += new System.EventHandler(this.CategoryComboBox_SelectedIndexChanged);
             // 
             // OnlineTreeView
             // 
             this.OnlineTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.OnlineTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.OnlineTreeView.Location = new System.Drawing.Point(3, 156);
+            this.OnlineTreeView.ForeColor = System.Drawing.Color.White;
+            this.OnlineTreeView.Location = new System.Drawing.Point(3, 155);
             this.OnlineTreeView.Name = "OnlineTreeView";
-            this.OnlineTreeView.Size = new System.Drawing.Size(246, 419);
+            this.OnlineTreeView.Size = new System.Drawing.Size(246, 420);
             this.OnlineTreeView.TabIndex = 0;
+            this.OnlineTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.OnlineTreeView_AfterSelect);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.pictureBox1.Image = global::PckStudio.Properties.Resources.pckCenterHeader;
+            this.pictureBox1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.pictureBox1.Location = new System.Drawing.Point(3, 3);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(246, 110);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 4;
+            this.pictureBox1.TabStop = false;
             // 
             // metroTabPage2
             // 
@@ -215,6 +254,7 @@
             this.DeleteLocalButton.Text = "DELETE";
             this.DeleteLocalButton.UseVisualStyleBackColor = false;
             this.DeleteLocalButton.Visible = false;
+            this.DeleteLocalButton.Click += new System.EventHandler(this.DeleteLocalButton_Click);
             // 
             // OpenFolderButton
             // 
@@ -230,34 +270,64 @@
             this.OpenFolderButton.Text = "OPEN FOLDER";
             this.OpenFolderButton.UseVisualStyleBackColor = false;
             this.OpenFolderButton.Visible = false;
+            this.OpenFolderButton.Click += new System.EventHandler(this.OpenFolderButton_Click);
             // 
             // metroLabel2
             // 
-            this.metroLabel2.AutoSize = true;
+            this.metroLabel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.metroLabel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.metroLabel2.FontSize = MetroFramework.MetroLabelSize.Tall;
             this.metroLabel2.FontWeight = MetroFramework.MetroLabelWeight.Bold;
-            this.metroLabel2.Location = new System.Drawing.Point(258, 3);
+            this.metroLabel2.Location = new System.Drawing.Point(252, 0);
             this.metroLabel2.Name = "metroLabel2";
-            this.metroLabel2.Size = new System.Drawing.Size(146, 75);
-            this.metroLabel2.TabIndex = 6;
+            this.metroLabel2.Size = new System.Drawing.Size(507, 578);
+            this.metroLabel2.TabIndex = 3;
             this.metroLabel2.Text = "Pack Name: %n\r\nAuthor: %a\r\nDescription: %d";
             this.metroLabel2.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.metroLabel2.WrapToLine = true;
             // 
             // tableLayoutPanel2
             // 
             this.tableLayoutPanel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.tableLayoutPanel2.ColumnCount = 1;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.Controls.Add(this.CategoryComboBoxLocal, 0, 1);
+            this.tableLayoutPanel2.Controls.Add(this.LocalTreeView, 0, 2);
             this.tableLayoutPanel2.Controls.Add(this.pictureBox2, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.LocalTreeView, 0, 1);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Left;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 2;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 29.26829F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 70.7317F));
+            this.tableLayoutPanel2.RowCount = 3;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.24F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.23F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 73.53F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(252, 578);
             this.tableLayoutPanel2.TabIndex = 5;
+            // 
+            // CategoryComboBoxLocal
+            // 
+            this.CategoryComboBoxLocal.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.CategoryComboBoxLocal.FormattingEnabled = true;
+            this.CategoryComboBoxLocal.ItemHeight = 23;
+            this.CategoryComboBoxLocal.Location = new System.Drawing.Point(3, 119);
+            this.CategoryComboBoxLocal.Name = "CategoryComboBoxLocal";
+            this.CategoryComboBoxLocal.Size = new System.Drawing.Size(246, 29);
+            this.CategoryComboBoxLocal.Style = MetroFramework.MetroColorStyle.Silver;
+            this.CategoryComboBoxLocal.TabIndex = 10;
+            this.CategoryComboBoxLocal.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.CategoryComboBoxLocal.UseSelectable = true;
+            this.CategoryComboBoxLocal.SelectedIndexChanged += new System.EventHandler(this.CategoryComboBoxLocal_SelectedIndexChanged);
+            // 
+            // LocalTreeView
+            // 
+            this.LocalTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.LocalTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.LocalTreeView.ForeColor = System.Drawing.Color.White;
+            this.LocalTreeView.Location = new System.Drawing.Point(3, 155);
+            this.LocalTreeView.Name = "LocalTreeView";
+            this.LocalTreeView.Size = new System.Drawing.Size(246, 420);
+            this.LocalTreeView.TabIndex = 0;
+            this.LocalTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.LocalTreeView_AfterSelect);
             // 
             // pictureBox2
             // 
@@ -266,32 +336,10 @@
             this.pictureBox2.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.pictureBox2.Location = new System.Drawing.Point(3, 3);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(246, 163);
+            this.pictureBox2.Size = new System.Drawing.Size(246, 110);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox2.TabIndex = 4;
             this.pictureBox2.TabStop = false;
-            // 
-            // LocalTreeView
-            // 
-            this.LocalTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.LocalTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.LocalTreeView.Location = new System.Drawing.Point(3, 172);
-            this.LocalTreeView.Name = "LocalTreeView";
-            this.LocalTreeView.Size = new System.Drawing.Size(246, 403);
-            this.LocalTreeView.TabIndex = 0;
-            // 
-            // metroComboBox1
-            // 
-            this.metroComboBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.metroComboBox1.FormattingEnabled = true;
-            this.metroComboBox1.ItemHeight = 23;
-            this.metroComboBox1.Location = new System.Drawing.Point(3, 120);
-            this.metroComboBox1.Name = "metroComboBox1";
-            this.metroComboBox1.Size = new System.Drawing.Size(246, 29);
-            this.metroComboBox1.Style = MetroFramework.MetroColorStyle.Silver;
-            this.metroComboBox1.TabIndex = 6;
-            this.metroComboBox1.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.metroComboBox1.UseSelectable = true;
             // 
             // PckCenterBeta
             // 
@@ -307,6 +355,7 @@
             this.metroTabControl1.ResumeLayout(false);
             this.metroTabPage1.ResumeLayout(false);
             this.metroTabPage1.PerformLayout();
+            this.metroPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.metroTabPage2.ResumeLayout(false);
@@ -335,6 +384,8 @@
         private System.Windows.Forms.TreeView LocalTreeView;
         private MetroFramework.Controls.MetroCheckBox VitaCheckBox;
         private MetroFramework.Controls.MetroCheckBox VitaCheckBox2;
-        private MetroFramework.Controls.MetroComboBox metroComboBox1;
+        private MetroFramework.Controls.MetroComboBox CategoryComboBox;
+        private MetroFramework.Controls.MetroPanel metroPanel1;
+        private MetroFramework.Controls.MetroComboBox CategoryComboBoxLocal;
     }
 }

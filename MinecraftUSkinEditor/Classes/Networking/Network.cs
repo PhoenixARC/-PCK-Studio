@@ -6,11 +6,11 @@ namespace PckStudio.Classes
 {
     class Network
     {
-        public static string Version = "6.5";
-        public static bool Beta = false;
+        public static string Version = "6.51";
+        public static bool Beta = true;
         public static bool Portable = false;
         public static bool NeedsUpdate = false;
-        public static string MainURL = "https://www.pckstudio.xyz/";
+        public static string MainURL = "http://pckstudio.xyz/";
         public static string BackURL = "http://phoenixarc.ddns.net/";
         static string UpdateURL = "studio/PCK/api/updatePCKStudio.txt";
         static string BetaUpdateURL = "studio/PCK/api/updatePCKStudioB.txt";
