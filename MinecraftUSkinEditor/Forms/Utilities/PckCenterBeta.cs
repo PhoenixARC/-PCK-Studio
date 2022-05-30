@@ -124,15 +124,7 @@ namespace PckStudio.Forms.Utilities
 
         public bool IsPackLocal(string PackFile, bool IsVita)
         {
-            switch (IsVita)
-            {
-                case true:
-                    return File.Exists(cache + "packs/files/Vita/" + PackFile + ".pck");
-                    break;
-                case false:
-                    return File.Exists(cache + "packs/files/" + PackFile + ".pck");
-                    break;
-            }
+            return File.Exists(cache + "packs/files/" + (IsVita ? "Vita/" : "") + PackFile + ".pck");
         }
         #endregion
 

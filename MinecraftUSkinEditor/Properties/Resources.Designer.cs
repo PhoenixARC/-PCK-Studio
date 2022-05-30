@@ -293,16 +293,6 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap More2 {
-            get {
-                object obj = ResourceManager.GetObject("More2", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         public static System.Drawing.Bitmap MROE {
             get {
                 object obj = ResourceManager.GetObject("MROE", resourceCulture);
@@ -526,26 +516,6 @@ namespace PckStudio.Properties {
         public static System.Drawing.Bitmap youtube_PNG15 {
             get {
                 object obj = ResourceManager.GetObject("youtube_PNG15", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap youtube_PNG151 {
-            get {
-                object obj = ResourceManager.GetObject("youtube_PNG151", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap youtube_PNG152 {
-            get {
-                object obj = ResourceManager.GetObject("youtube_PNG152", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

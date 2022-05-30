@@ -414,49 +414,49 @@
 			// 
 			// howToMakeABasicSkinPackToolStripMenuItem
 			// 
-			this.howToMakeABasicSkinPackToolStripMenuItem.Image = global::PckStudio.Properties.Resources.youtube_PNG152;
+			this.howToMakeABasicSkinPackToolStripMenuItem.Image = global::PckStudio.Properties.Resources.youtube_PNG15;
 			this.howToMakeABasicSkinPackToolStripMenuItem.Name = "howToMakeABasicSkinPackToolStripMenuItem";
 			resources.ApplyResources(this.howToMakeABasicSkinPackToolStripMenuItem, "howToMakeABasicSkinPackToolStripMenuItem");
 			this.howToMakeABasicSkinPackToolStripMenuItem.Click += new System.EventHandler(this.howToMakeABasicSkinPackToolStripMenuItem_Click);
 			// 
 			// howToMakeACustomSkinModelToolStripMenuItem
 			// 
-			this.howToMakeACustomSkinModelToolStripMenuItem.Image = global::PckStudio.Properties.Resources.youtube_PNG152;
+			this.howToMakeACustomSkinModelToolStripMenuItem.Image = global::PckStudio.Properties.Resources.youtube_PNG15;
 			this.howToMakeACustomSkinModelToolStripMenuItem.Name = "howToMakeACustomSkinModelToolStripMenuItem";
 			resources.ApplyResources(this.howToMakeACustomSkinModelToolStripMenuItem, "howToMakeACustomSkinModelToolStripMenuItem");
 			this.howToMakeACustomSkinModelToolStripMenuItem.Click += new System.EventHandler(this.howToMakeACustomSkinModelToolStripMenuItem_Click);
 			// 
 			// howToMakeCustomSkinModelsbedrockToolStripMenuItem
 			// 
-			this.howToMakeCustomSkinModelsbedrockToolStripMenuItem.Image = global::PckStudio.Properties.Resources.youtube_PNG152;
+			this.howToMakeCustomSkinModelsbedrockToolStripMenuItem.Image = global::PckStudio.Properties.Resources.youtube_PNG15;
 			this.howToMakeCustomSkinModelsbedrockToolStripMenuItem.Name = "howToMakeCustomSkinModelsbedrockToolStripMenuItem";
 			resources.ApplyResources(this.howToMakeCustomSkinModelsbedrockToolStripMenuItem, "howToMakeCustomSkinModelsbedrockToolStripMenuItem");
 			this.howToMakeCustomSkinModelsbedrockToolStripMenuItem.Click += new System.EventHandler(this.howToMakeCustomSkinModelsbedrockToolStripMenuItem_Click);
 			// 
 			// howToMakeCustomMusicToolStripMenuItem
 			// 
-			this.howToMakeCustomMusicToolStripMenuItem.Image = global::PckStudio.Properties.Resources.youtube_PNG152;
+			this.howToMakeCustomMusicToolStripMenuItem.Image = global::PckStudio.Properties.Resources.youtube_PNG15;
 			this.howToMakeCustomMusicToolStripMenuItem.Name = "howToMakeCustomMusicToolStripMenuItem";
 			resources.ApplyResources(this.howToMakeCustomMusicToolStripMenuItem, "howToMakeCustomMusicToolStripMenuItem");
 			this.howToMakeCustomMusicToolStripMenuItem.Click += new System.EventHandler(this.howToMakeCustomMusicToolStripMenuItem_Click);
 			// 
 			// howToInstallPcksDirectlyToWiiUToolStripMenuItem
 			// 
-			this.howToInstallPcksDirectlyToWiiUToolStripMenuItem.Image = global::PckStudio.Properties.Resources.youtube_PNG152;
+			this.howToInstallPcksDirectlyToWiiUToolStripMenuItem.Image = global::PckStudio.Properties.Resources.youtube_PNG15;
 			this.howToInstallPcksDirectlyToWiiUToolStripMenuItem.Name = "howToInstallPcksDirectlyToWiiUToolStripMenuItem";
 			resources.ApplyResources(this.howToInstallPcksDirectlyToWiiUToolStripMenuItem, "howToInstallPcksDirectlyToWiiUToolStripMenuItem");
 			this.howToInstallPcksDirectlyToWiiUToolStripMenuItem.Click += new System.EventHandler(this.howToInstallPcksDirectlyToWiiUToolStripMenuItem_Click);
 			// 
 			// pCKCenterReleaseToolStripMenuItem
 			// 
-			this.pCKCenterReleaseToolStripMenuItem.Image = global::PckStudio.Properties.Resources.youtube_PNG152;
+			this.pCKCenterReleaseToolStripMenuItem.Image = global::PckStudio.Properties.Resources.youtube_PNG15;
 			this.pCKCenterReleaseToolStripMenuItem.Name = "pCKCenterReleaseToolStripMenuItem";
 			resources.ApplyResources(this.pCKCenterReleaseToolStripMenuItem, "pCKCenterReleaseToolStripMenuItem");
 			this.pCKCenterReleaseToolStripMenuItem.Click += new System.EventHandler(this.pCKCenterReleaseToolStripMenuItem_Click);
 			// 
 			// howPCKsWorkToolStripMenuItem
 			// 
-			this.howPCKsWorkToolStripMenuItem.Image = global::PckStudio.Properties.Resources.youtube_PNG152;
+			this.howPCKsWorkToolStripMenuItem.Image = global::PckStudio.Properties.Resources.youtube_PNG15;
 			this.howPCKsWorkToolStripMenuItem.Name = "howPCKsWorkToolStripMenuItem";
 			resources.ApplyResources(this.howPCKsWorkToolStripMenuItem, "howPCKsWorkToolStripMenuItem");
 			this.howPCKsWorkToolStripMenuItem.Click += new System.EventHandler(this.howPCKsWorkToolStripMenuItem_Click);
@@ -490,7 +490,7 @@
 			// 
 			// tutorialsToolStripMenuItem
 			// 
-			this.tutorialsToolStripMenuItem.Image = global::PckStudio.Properties.Resources.youtube_PNG152;
+			this.tutorialsToolStripMenuItem.Image = global::PckStudio.Properties.Resources.youtube_PNG15;
 			this.tutorialsToolStripMenuItem.Name = "tutorialsToolStripMenuItem";
 			resources.ApplyResources(this.tutorialsToolStripMenuItem, "tutorialsToolStripMenuItem");
 			this.tutorialsToolStripMenuItem.Click += new System.EventHandler(this.tutorialsToolStripMenuItem_Click);

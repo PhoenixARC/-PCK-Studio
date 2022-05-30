@@ -31,7 +31,8 @@ namespace RichPresenceClient
 
         public static void CloseRPC()
         {
-            client.Dispose();
+            if (client != null)
+                client.Dispose();
         }
 
     }

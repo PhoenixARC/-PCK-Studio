@@ -9,11 +9,9 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Collections;
 using System.IO;
-using Lidgren.Network;
-using OpenTK.Graphics;
-using Newtonsoft.Json;
 using Brush = System.Drawing.Brush;
 using Color = System.Drawing.Color;
+using Newtonsoft.Json;
 
 
 namespace PckStudio
@@ -1045,7 +1043,7 @@ namespace PckStudio
             this.listViewBoxes.Columns.Add("Zf", 25);
             this.listViewBoxes.Columns.Add("Xo", 25);
             this.listViewBoxes.Columns.Add("Yo", 25);
-            if(System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height < 780 || System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width < 1080)
+            if (System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height < 780 || System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width < 1080)
             {
                 this.Size = new Size(753, 707);
             }
