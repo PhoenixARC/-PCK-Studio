@@ -75,7 +75,7 @@ namespace PckStudio
 
             int unk1 = f.readInt();
             if (unk1 != 2)
-                throw new NotImplementedException("Not localization data");
+                throw new NotImplementedException("Unsupported localization data");
             int langCount = f.readInt();
             f.skip(1);
 

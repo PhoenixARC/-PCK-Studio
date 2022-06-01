@@ -8,16 +8,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MetroFramework.Forms;
+using PckStudio.Classes.FileTypes;
 
 namespace PckStudio.Forms
 {
     public partial class AddPCKPassword : MetroForm
     {
-        PckStudio.PCK currentPCK;
-        PckStudio.PCK.MineFile file;
-        public AddPCKPassword(PckStudio.PCK.MineFile fileIn, PckStudio.PCK currentPCKIn)
+        PCKFile currentPCK;
+        PCKFile.FileData file;
+        public AddPCKPassword(PCKFile.FileData fileIn, PCKFile currentPCKIn)
         {
-
             InitializeComponent();
             file = fileIn;
             currentPCK = currentPCKIn;
@@ -25,9 +25,8 @@ namespace PckStudio.Forms
 
         private void buttonUnlocked_Click(object sender, EventArgs e)
         {
-            object[] obj = { "LOCK", MD5(textBoxPass.Text) };
-            file.entries.Add(obj);
-            this.Close();
+            file.properties.Add("LOCK", MD5(textBoxPass.Text));
+            Close();
         }
 
         public string MD5(string s)

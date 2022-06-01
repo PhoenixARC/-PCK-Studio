@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PckStudio.Classes.FileTypes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,8 +14,8 @@ namespace PckStudio
 {
 	public partial class rename : MetroFramework.Forms.MetroForm
 	{
-		String oldName;
-		String newName;
+		string oldName;
+		string newName;
 		TreeNode node;
 
 		public rename(TreeNode nodeIn)
@@ -41,7 +42,7 @@ namespace PckStudio
 					fixDirectoryNameForFiles(n);
 					continue;
 				}
-				PCK.MineFile mf = (PCK.MineFile)n.Tag;
+				PCKFile.FileData mf = (PCKFile.FileData)n.Tag;
 				string fullNew = mf.name.Replace(oldName + "/", newName + "/");
 				Console.WriteLine("Full old - " + mf.name + " - Old: " + oldName + " - New: " + newName + " - " + fullNew);
 				mf.name = fullNew;
@@ -56,7 +57,7 @@ namespace PckStudio
 			if (node.Tag == null) fixDirectoryNameForFiles(node);
 			else
 			{
-				PCK.MineFile mf = (PCK.MineFile)node.Tag;
+				PCKFile.FileData mf = (PCKFile.FileData)node.Tag;
 				string path = Path.GetDirectoryName(node.FullPath.Replace("\\", "/"));
 				string fullNew = path + "/" + newName;
 				mf.name = fullNew;

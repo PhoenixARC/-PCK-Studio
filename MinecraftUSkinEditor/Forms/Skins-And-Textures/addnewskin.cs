@@ -12,16 +12,17 @@ using System.Drawing.Drawing2D;
 using MySql.Data.MySqlClient;
 using System.Net;
 using PckStudio;
+using PckStudio.Classes.FileTypes;
 
 namespace PckStudio
 {
     public partial class addnewskin : MetroFramework.Forms.MetroForm
     {
-        PCK currentPCK;
+        PCKFile currentPCK;
         DataTable tbl;
         LOC currentLoc;
-        PCK.MineFile mf = new PCK.MineFile();
-        PCK.MineFile mfc = new PCK.MineFile();
+        PCKFile.FileData mf = null;
+        PCKFile.FileData mfc = null;
         TreeView treeView1;
         string skinId = "";
         TreeNode skin = new TreeNode();
@@ -43,10 +44,12 @@ namespace PckStudio
         string skinid;
         List<object[]> generatedModel = new List<object[]>();
 
-        public addnewskin(PCK currentPCKIn, TreeView treeView1In, string tempIDIn, LOC loc)
+        public addnewskin(PCKFile currentPCKIn, TreeView treeView1In, string tempIDIn, LOC loc)
         {
             InitializeComponent();
             
+            mf = new PCKFile.FileData(0);
+            mfc = new PCKFile.FileData(0);
             currentLoc = loc;
             tbl = new DataTable();
             tbl.Columns.Add(new DataColumn("Language") { ReadOnly = true });
@@ -67,7 +70,8 @@ namespace PckStudio
         private void checkImage()
         {
             //Checks image dimensions and sets things accordingly
-            if (Image.FromFile(ofd).Height == 64)//If skins is 64x64
+            var img = Image.FromFile(ofd);
+            if (img.Height == 64) //If skins is 64x64
             {
                 MessageBox.Show("64x64 Skin Detected");
                 pictureBoxTexture.Width = pictureBoxTexture.Height;
@@ -83,7 +87,7 @@ namespace PckStudio
                 }
                 skinType = "64x64";
             }
-            else if (Image.FromFile(ofd).Height == 32)//If skins is 64x32
+            else if (img.Height == 32)//If skins is 64x32
             {
                 MessageBox.Show("64x32 Skin Detected");
                 pictureBoxTexture.Width = pictureBoxTexture.Height * 2;
@@ -99,7 +103,7 @@ namespace PckStudio
                 comboBoxSkinType.Enabled = false;
                 skinType = "64x32";
             }
-            else if (Image.FromFile(ofd).Width == Image.FromFile(ofd).Height / 1)//If skins is 64x64 HD
+            else if (img.Width == img.Height / 1)//If skins is 64x64 HD
             {
                 MessageBox.Show("64x64 HD Skin Detected");
                 pictureBoxTexture.Width = pictureBoxTexture.Height;
@@ -115,7 +119,7 @@ namespace PckStudio
                 }
                 skinType = "64x64";
             }
-            else if (Image.FromFile(ofd).Width == Image.FromFile(ofd).Height / 2)//If skins is 64x32 HD
+            else if (img.Width == img.Height / 2)//If skins is 64x32 HD
             {
                 MessageBox.Show("64x32 HD Skin Detected");
                 pictureBoxTexture.Width = pictureBoxTexture.Height * 2;
@@ -285,10 +289,10 @@ namespace PckStudio
                     ofd1.Filter = "PNG Files | *.png";
                     ofd1.Title = "Select a PNG File";
 
-                    if (Image.FromFile(ofd1.FileName).Width == Image.FromFile(ofd1.FileName).Height * 2)
+                    var img = Image.FromFile(ofd1.FileName);
+                    if (img.Width == img.Height * 2)
                     {
                         useCape = true;
-
                         pictureBoxWithInterpolationMode1.SizeMode = PictureBoxSizeMode.StretchImage;
                         pictureBoxWithInterpolationMode1.InterpolationMode = InterpolationMode.NearestNeighbor;
                         pictureBoxWithInterpolationMode1.Image = Image.FromFile(ofd1.FileName);
@@ -330,12 +334,11 @@ namespace PckStudio
                             capePath.Text = "CAPEPATH";
                             capePath.Tag = "dlccape" + textSkinID.Text + ".png";
 
-                            object[] CAPE = { capePath.Text, capePath.Tag };
-                            mf.entries.Add(CAPE);
+                            mf.properties.Add(capePath.Text, capePath.Tag.ToString());
 
-                            currentPCK.mineFiles.Add(mfc);
+                            currentPCK.file_entries.Add(mfc);
 
-                            mfc.filesize = mf.data.Length; if (mashupStructure == true)
+                            mfc.size = mf.data.Length; if (mashupStructure == true)
                             {
                                 mfc.name = "Skins/" + "dlccape" + textSkinID.Text + ".png";
                             }
@@ -344,7 +347,7 @@ namespace PckStudio
                                 mfc.name = "dlccape" + textSkinID.Text + ".png";
                             }
 
-                            mfc.type = 1;
+                            //mfc.type = 1;
 
                             cape.Text = "dlccape" + textSkinID.Text + ".png";
                             cape.Tag = mfc;
@@ -367,7 +370,7 @@ namespace PckStudio
                         }
                     }
 
-                    currentPCK.mineFiles.Add(mf);
+                    currentPCK.file_entries.Add(mf);
                     free.Text = "FREE";
                     free.Tag = "1";
                     themeName.Text = "THEMENAME";
@@ -378,12 +381,9 @@ namespace PckStudio
                     skinName.Tag = textSkinName.Text;
                     anim.Text = "ANIM";
 
+                    mf.properties.Add(skinName.Text, textSkinName.Text);
 
-                    object[] DISPLAY = { skinName.Text, skinName.Tag };
-                    mf.entries.Add(DISPLAY);
-
-                    object[] DISPLAYID = { displayNameId.Text, displayNameId.Tag };
-                    mf.entries.Add(DISPLAYID);
+                    mf.properties.Add(displayNameId.Text, "IDS_dlcskin" + textSkinID.Text + "_DISPLAYNAME");
 
 
                     if (comboBoxSkinType.Text == "Default (64x32)")
@@ -395,31 +395,20 @@ namespace PckStudio
                         anim.Tag = "0x80000";
 
                         object[] ANIM = { anim.Text, anim.Tag };
-                        mf.entries.Add(ANIM);
+                        mf.properties.Add("ANIM", "0x80000");
                     }
                     else if (comboBoxSkinType.Text == "Steve (64x64)" && skinType != "64x32")
                     {
-                        anim.Tag = "0x40000";
-
-                        object[] ANIM = { anim.Text, anim.Tag };
-                        mf.entries.Add(ANIM);
+                        mf.properties.Add("ANIM", "0x40000");
                     }
                     else if (comboBoxSkinType.Text == "Custom")
                     {
-                        anim.Tag = "0x7ff5fc10";
-
                         //mf.entries.Add(new object[2] { (object)"BOX", new ListViewItem() { Tag = ((object)(listViewItem.Tag.ToString() + " " + listViewItem.SubItems[1].Text + " " + listViewItem.SubItems[2].Text + " " + listViewItem.SubItems[3].Text + " " + listViewItem.SubItems[4].Text + " " + listViewItem.SubItems[5].Text + " " + listViewItem.SubItems[6].Text + " " + listViewItem.SubItems[7].Text + " " + listViewItem.SubItems[8].Text)) }.Tag });
-                        foreach (object[] item in generatedModel)
-                        {
-                            mf.entries.Add((object[])item);
-                        }
-
-                        object[] ANIM = { anim.Text, anim.Tag };
-                        mf.entries.Add(ANIM);
-                    }
-                    else
-                    {
-
+                        //foreach (object[] item in generatedModel)
+                        //{
+                        //    mf.properties.Add((object[])item);
+                        //}
+                        mf.properties.Add("ANIM", "0x7ff5fc10");
                     }
                     if (generatedModel != null)
                     {
@@ -428,17 +417,13 @@ namespace PckStudio
 
                     if (themeName.Tag.ToString() != "")
                     {
-                        object[] THEME = { themeName.Text, themeName.Tag };
-                        mf.entries.Add(THEME);
+                        mf.properties.Add(themeName.Text, themeName.Tag.ToString());
                     }
 
-                    object[] GAMEFLAGS = { "GAME_FLAGS", "0x18" };
-                    mf.entries.Add(GAMEFLAGS);
+                    mf.properties.Add("GAME_FLAGS", "0x18");
+                    mf.properties.Add("FREE", "1");
 
-                    object[] FREE = { free.Text, free.Tag };
-                    mf.entries.Add(FREE);
-
-                    mf.filesize = mf.data.Length;
+                    mf.size = mf.data.Length;
                     if (mashupStructure == true)
                     {
                         mf.name = "Skins/" + "dlcskin" + textSkinID.Text + ".png";
@@ -447,7 +432,7 @@ namespace PckStudio
                     {
                         mf.name = "dlcskin" + textSkinID.Text + ".png";
                     }
-                    mf.type = 0;
+                    //mf.type = 0;
 
                     skin.Text = "dlcskin" + textSkinID.Text + ".png";
                     skin.Tag = mf;
@@ -594,7 +579,6 @@ namespace PckStudio
             {
                 try
                 {
-                    string tempstr = "";
                         Random random = new Random();
                         int num = random.Next(10000000, 99999999);
                         textSkinID.Text = num.ToString();

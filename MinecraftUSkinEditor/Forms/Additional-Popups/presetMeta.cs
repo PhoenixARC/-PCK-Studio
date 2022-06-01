@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PckStudio.Classes.FileTypes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,15 +14,13 @@ namespace PckStudio
 {
     public partial class presetMeta : MetroFramework.Forms.MetroForm
     {
-        PCK currentPCK;
-        PCK.MineFile file;
-        string appData = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/PCK Studio/";
+        PCKFile.FileData file;
+        string appData = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/PCK Studio/";
 
-        public presetMeta(PCK.MineFile fileIn, PCK currentPCKIn)
+        public presetMeta(PCKFile.FileData fileIn)
         {
             InitializeComponent();
             file = fileIn;
-            currentPCK = currentPCKIn;
             FormBorderStyle = FormBorderStyle.None;
         }
 
@@ -90,8 +89,7 @@ namespace PckStudio
                         }
                         else
                         {
-                            object[] ENTRY = { entryName, entryValue };
-                            file.entries.Add(ENTRY);
+                            file.properties.Add(entryName, entryValue);
                             entryName = "";
                             entryValue = "";
                             entryStart = true;

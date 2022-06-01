@@ -137,10 +137,19 @@
   <metadata name="contextMenuSkin.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <data name="contextMenuSkin.Size" type="System.Drawing.Size, System.Drawing">
+    <value>116, 26</value>
+  </data>
+  <data name="&gt;&gt;contextMenuSkin.Name" xml:space="preserve">
+    <value>contextMenuSkin</value>
+  </data>
+  <data name="&gt;&gt;contextMenuSkin.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="replaceToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wwAADsMBx2+oZAAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xMkMEa+wAAAC/SURBVDhPlVHB
+        wgAADsIBFShKgAAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xMkMEa+wAAAC/SURBVDhPlVHB
         DQMhDEOIfwfoOuzFoPxhAd5c6/SMAgq0tRQFmdgXfA5IKUkBMcbHPxyJCxVCkK7rm+EwaK1dQO9dClzO
         WfpOTM7hy1oMGNvY4pucxNY2p6cAWzFw2oZuMmiJweGeHM634UdLg50YwD05vQ2fYoaoDTEMrJyIfw3R
         4qYQWUZgg6OwlDJyMH8LcwF2T8FZ5kYQb4Lde/9Et8S6Dy1z0LUGi7VpWGvl3Lw2V98ZrtwIUYktwwPn
@@ -153,22 +162,22 @@
   <data name="replaceToolStripMenuItem.Text" xml:space="preserve">
     <value>Replace</value>
   </data>
-  <data name="contextMenuSkin.Size" type="System.Drawing.Size, System.Drawing">
-    <value>116, 26</value>
-  </data>
-  <data name="&gt;&gt;contextMenuSkin.Name" xml:space="preserve">
-    <value>contextMenuSkin</value>
-  </data>
-  <data name="&gt;&gt;contextMenuSkin.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <metadata name="contextMenuCape.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>172, 17</value>
   </metadata>
+  <data name="contextMenuCape.Size" type="System.Drawing.Size, System.Drawing">
+    <value>127, 26</value>
+  </data>
+  <data name="&gt;&gt;contextMenuCape.Name" xml:space="preserve">
+    <value>contextMenuCape</value>
+  </data>
+  <data name="&gt;&gt;contextMenuCape.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="replaceToolStripMenuItem1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wQAADsEBuJFr7QAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xOdTWsmQAAAA3SURBVDhPY/j/
+        wAAADsABataJCQAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xOdTWsmQAAAA3SURBVDhPY/j/
         /z9FGKsgGIsCKWSMTQ0QYxUE45FmALpiYvFwMgAbxqIYG8YqCMajBhCJ/zMAAPGwpV/Xje8RAAAAAElF
         TkSuQmCC
 </value>
@@ -178,15 +187,6 @@
   </data>
   <data name="replaceToolStripMenuItem1.Text" xml:space="preserve">
     <value>Add Cape</value>
-  </data>
-  <data name="contextMenuCape.Size" type="System.Drawing.Size, System.Drawing">
-    <value>127, 26</value>
-  </data>
-  <data name="&gt;&gt;contextMenuCape.Name" xml:space="preserve">
-    <value>contextMenuCape</value>
-  </data>
-  <data name="&gt;&gt;contextMenuCape.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="buttonDone.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>

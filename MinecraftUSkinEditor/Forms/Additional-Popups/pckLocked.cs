@@ -15,7 +15,7 @@ namespace PckStudio.Forms
     {
         string pass;
 
-        public pckLocked(string pass, bool correct)
+        public pckLocked(string pass)
         {
             this.pass = pass;
 
@@ -31,12 +31,13 @@ namespace PckStudio.Forms
         {
             if (MD5(textBoxPass.Text) == pass || MD5(textBoxPass.Text) == MD5(pass))
             {
-                FormMain.correct = true;
-                this.Close();
+                DialogResult = DialogResult.OK;
+                Close();
             }
             else
             {
                 MessageBox.Show("Incorrect password!");
+                DialogResult = DialogResult.Abort;
                 textBoxPass.Text = "";
             }
         }

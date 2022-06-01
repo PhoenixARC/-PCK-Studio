@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PckStudio.Classes.FileTypes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,7 +13,7 @@ namespace PckStudio
 {
     public partial class EntryEditor : Form
     {
-        public EntryEditor(Dictionary<int,string> types, PCK.MineFile file)
+        public EntryEditor(Dictionary<int,string> types, PCKFile.FileData file)
         {
             InitializeComponent();
             this.types = types;
@@ -20,8 +21,7 @@ namespace PckStudio
         }
 
         Dictionary<int, string> types;
-        PCK.MineFile file;
-        string entryName = "";
+        PCKFile.FileData file;
 
         private void renameProperly()
         {
@@ -33,13 +33,10 @@ namespace PckStudio
             foreach(int type in types.Keys)
                 comboBox1.Items.Add(types[type]);
 
-            foreach (object[] entry in file.entries)
+            foreach (var entry in file.properties)
             {
-                object[] strings = (object[])entry;
-                TreeNode meta = new TreeNode();
+                TreeNode meta = new TreeNode(entry.Key);
 
-                foreach (object[] entryy in file.entries)
-                    meta.Text = (string)strings[0];
                 meta.Tag = entry;
                 treeView1.Nodes.Add(meta);
             }
@@ -73,9 +70,8 @@ namespace PckStudio
 
         private void addEntryToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            object[] obj = { "Replace me", "Or it won't save" };
-            file.entries.Add(obj);
-            TreeNode t = new TreeNode("temp name") { Tag = obj };
+            file.properties.Add("Replace me", "Or it won't save");
+            TreeNode t = new TreeNode("temp name");
             treeView1.Nodes.Add(t);
             renameProperly();
             treeView1.SelectedNode = t;
@@ -85,8 +81,8 @@ namespace PckStudio
         {
             if (treeView1.SelectedNode != null)
             {
-                object[] temp = (object[])treeView1.SelectedNode.Tag;
-                file.entries.Remove(temp);
+                var temp = (string)treeView1.SelectedNode.Tag;
+                file.properties.Remove(temp);
                 treeView1.Nodes.Remove(treeView1.SelectedNode);
             }
         }

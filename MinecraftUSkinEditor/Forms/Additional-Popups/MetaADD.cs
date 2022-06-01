@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PckStudio.Classes.FileTypes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,10 +13,10 @@ namespace PckStudio
 {
     public partial class MetaADD : Form
     {
-        PCK currentPCK;
+        PCKFile currentPCK;
         TreeView treeView1;
 
-        public MetaADD(PCK currentPCKIn, TreeView treeView1In)
+        public MetaADD(PCKFile currentPCKIn, TreeView treeView1In)
         {
             InitializeComponent();
 
@@ -26,16 +27,13 @@ namespace PckStudio
 
         private void button1_Click(object sender, EventArgs e)
         {
-            try
-            {
-                currentPCK.typeCodes.Add(textBox1.Text, treeView1.Nodes.Count);
-                currentPCK.types.Add(treeView1.Nodes.Count, textBox1.Text);
-            }
-            catch (Exception)
+            if (currentPCK.meta_data.ContainsValue(textBox1.Text))
             {
                 MessageBox.Show("This metatag already exits");
+                return;
             }
-            this.Close();
+            currentPCK.meta_data.Add(currentPCK.meta_data.Count, textBox1.Text);
+            Close();
         }
     }
 }

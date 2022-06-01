@@ -23,12 +23,13 @@ using PckStudio;
 using PckStudio.Forms;
 using System.IO.Packaging;
 using RichPresenceClient;
+using PckStudio.Classes.FileTypes;
 
 namespace PckStudio.Forms.Utilities
 {
     public partial class TextureConverterUtility : MetroForm
     {
-        public TextureConverterUtility(TreeView tv0, PckStudio.PCK pck)
+        public TextureConverterUtility(TreeView tv0, PCKFile pck)
         {
             InitializeComponent();
             TView = tv0;
@@ -43,7 +44,7 @@ namespace PckStudio.Forms.Utilities
 
         bool ToPC = true;
 
-        PckStudio.PCK Pck;
+        PCKFile Pck;
 
         TreeView TView;
 
@@ -329,13 +330,13 @@ namespace PckStudio.Forms.Utilities
                     switch (tn.Text)
                     {
                         case ("terrain.png"):
-                            Terrain = Image.FromStream(new MemoryStream(((PckStudio.PCK.MineFile)(tn.Tag)).data));
+                            Terrain = Image.FromStream(new MemoryStream(((PCKFile.FileData)(tn.Tag)).data));
                             break;
                         case ("items.png"):
-                            Items = Image.FromStream(new MemoryStream(((PckStudio.PCK.MineFile)(tn.Tag)).data));
+                            Items = Image.FromStream(new MemoryStream(((PCKFile.FileData)(tn.Tag)).data));
                             break;
                         case ("art"):
-                            painting = Image.FromStream(new MemoryStream(((PckStudio.PCK.MineFile)(tn.Nodes[0].Tag)).data));
+                            painting = Image.FromStream(new MemoryStream(((PCKFile.FileData)(tn.Nodes[0].Tag)).data));
                             break;
                         case ("mob"):
                             EntityNode = tn;
@@ -448,7 +449,7 @@ namespace PckStudio.Forms.Utilities
                 string Outpath = "assets\\minecraft\\textures\\";
 
 
-                foreach (PckStudio.PCK.MineFile mf in Pck.mineFiles)
+                foreach (PCKFile.FileData mf in Pck.file_entries)
                 {
                     System.IO.FileInfo file = new System.IO.FileInfo(Environment.CurrentDirectory + "\\Temp\\" + @"\" + mf.name);
                     file.Directory.Create(); // If the directory already exists, this method does nothing.
@@ -473,7 +474,7 @@ namespace PckStudio.Forms.Utilities
                 string Outpath = "assets\\minecraft\\textures\\";
 
 
-                foreach (PckStudio.PCK.MineFile mf in Pck.mineFiles)
+                foreach (PCKFile.FileData mf in Pck.file_entries)
                 {
                     System.IO.FileInfo file = new System.IO.FileInfo(Environment.CurrentDirectory + "\\Temp\\" + @"\" + mf.name);
                     file.Directory.Create(); // If the directory already exists, this method does nothing.
@@ -498,7 +499,7 @@ namespace PckStudio.Forms.Utilities
                 string Outpath = "assets\\minecraft\\textures\\";
 
 
-                foreach (PckStudio.PCK.MineFile mf in Pck.mineFiles)
+                foreach (PCKFile.FileData mf in Pck.file_entries)
                 {
                     System.IO.FileInfo file = new System.IO.FileInfo(Environment.CurrentDirectory + "\\Temp\\" + @"\" + mf.name);
                     file.Directory.Create(); // If the directory already exists, this method does nothing.

@@ -1,6 +1,7 @@
 ﻿using MetroFramework.Forms;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using PckStudio.Classes.FileTypes;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -14,7 +15,7 @@ namespace PckStudio
 	public partial class AnimationEditor : MetroForm
 	{
 		TreeView treeViewMain = new TreeView();
-		PCK.MineFile mf = new PCK.MineFile();
+		PCKFile.FileData mf = null;
 		List<Image> frames = new List<Image>();
 		Newtonsoft.Json.Linq.JObject tileData = Newtonsoft.Json.Linq.JObject.Parse(System.Text.Encoding.Default.GetString(Properties.Resources.tileData));
 		Image texture;
@@ -38,11 +39,11 @@ namespace PckStudio
 		{
 			InitializeComponent();
 			treeViewMain = treeViewIn;
-			if (String.IsNullOrEmpty(createdFileName))
+			if (string.IsNullOrEmpty(createdFileName))
 			{
 				newTileName = Path.GetFileNameWithoutExtension(treeViewMain.SelectedNode.Text);
 				if (treeViewMain.SelectedNode.Parent.Text.ToLower() == "items") isItem = true;
-				mf = treeViewMain.SelectedNode.Tag as PCK.MineFile;
+				mf = treeViewMain.SelectedNode.Tag as PCKFile.FileData;
 				if (newTileName.EndsWith("MipMapLevel2") || newTileName.EndsWith("MipMapLevel3"))
 				{
 					string mipMapLvl = newTileName.Last().ToString();
@@ -54,12 +55,10 @@ namespace PckStudio
 			else
 			{
 				create = true;
-				PCK.MineFile newMf = new PCK.MineFile();
-				object[] animEntry = { "ANIM", "" };
-				newMf.entries.Add(animEntry);
+				PCKFile.FileData newMf = new PCKFile.FileData("", 2, 0);
+				newMf.properties.Add("ANIM", "");
 				newMf.data = File.ReadAllBytes(createdFileName);
-				newMf.filesize = newMf.data.Length;//gets filesize for minefile
-				newMf.type = 2;
+				newMf.size = newMf.data.Length;//gets filesize for minefile
 				mf = newMf;
 				Forms.Utilities.AnimationEditor.ChangeTile diag = new Forms.Utilities.AnimationEditor.ChangeTile();
 				diag.ShowDialog(this);
@@ -73,14 +72,11 @@ namespace PckStudio
 			List<string> strEntries = new List<string>();
 			List<string> strEntryData = new List<string>();
 
-			foreach (object[] entry in mf.entries) //object = metadata entry(name:value)
+			foreach (var entry in mf.properties) //object = metadata entry(name:value)
 			{
-				object[] strings = (object[])entry;
 				TreeNode meta = new TreeNode();
-
-				foreach (object[] entryy in mf.entries)
-					strEntries.Add((string)strings[0]);
-				strEntryData.Add((string)strings[1]);
+				strEntries.Add(entry.Value);
+				strEntryData.Add(entry.Value);
 			}
 
 			//if (strEntries.Find(entry => entry == "ANIM") == null) throw new System.Exception("ANIM tag is missing. No animation code is present.");
@@ -417,7 +413,7 @@ namespace PckStudio
 			{
 				texture.Save(m, texture.RawFormat);
 				mf.data = m.ToArray();
-				mf.filesize = mf.data.Length;
+				mf.size = mf.data.Length;
 			}
 
 			if (metroCheckBox2.Checked)
@@ -427,7 +423,6 @@ namespace PckStudio
 
 			if (!create && treeViewMain.SelectedNode.Tag != null) treeViewMain.SelectedNode.Text = newTileName + ".png";
 
-			int animIndex = mf.entries.FindIndex(entry => (string)entry[0] == "ANIM");
 			string animationData = "";
 			if (metroCheckBox1.Checked) animationData += "#"; // does the animation interpolate?
 			foreach (TreeNode node in treeView1.Nodes)
@@ -435,14 +430,9 @@ namespace PckStudio
 				Tuple<string, string> frameData = node.Tag as Tuple<string, string>;
 				animationData += frameData.Item1 + "*" + frameData.Item2 + ",";
 			}
-			animationData.TrimEnd(',');
-			object[] newEntry = new object[]
-			{
-				"ANIM",
-				animationData
-			};
-			if (animIndex != -1) mf.entries[animIndex] = newEntry;
-			else mf.entries.Add(newEntry);
+			animationData.TrimEnd(',');			
+			if (mf.properties.ContainsKey("ANIM")) mf.properties["ANIM"] = animationData;
+			else mf.properties.Add("ANIM", animationData);
 
 			if (create)
 			{

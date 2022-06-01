@@ -252,7 +252,6 @@ namespace PckStudio.Forms
             List<string> pckFiles = Directory.GetFiles(appData + "/PCK Center/myPcks/", "*.*", SearchOption.AllDirectories).Where(file => new string[] { ".pck" }.Contains(Path.GetExtension(file))).ToList();
             foreach (string pck in pckFiles)
             {
-                int line = 0;
                 string pckName = "";
                 string author = "";
                 string desc = "";
@@ -309,7 +308,7 @@ namespace PckStudio.Forms
 
             try
             {
-                RPC.SetRPC("825875166574673940", "Viewing the PCK Center", "Program by PhoenixARC", "pcklogo", "PCK Studio", "pcklogo");
+                RPC.SetRPC("Viewing the PCK Center", "Program by PhoenixARC", "pcklogo", "PCK Studio", "pcklogo");
             }
             catch
             {

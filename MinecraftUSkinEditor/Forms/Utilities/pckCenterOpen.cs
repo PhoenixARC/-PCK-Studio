@@ -16,6 +16,7 @@ using System.IO.Packaging;
 using PckStudio;
 using System.IO.Compression;
 using static PckStudio.FormMain;
+using PckStudio.Classes.FileTypes;
 
 namespace PckStudio.Forms
 {
@@ -132,11 +133,16 @@ namespace PckStudio.Forms
                     //MessageBox.Show(root);//debug thingy to make sure filepath is correct
 
                     //add all skins to a list
-                    List<PCK.MineFile> skinsList = new List<PCK.MineFile>();
-                    List<PCK.MineFile> capesList = new List<PCK.MineFile>();
-                    PCK pck = new PCK(appData + "/PCK Center/myPcks/" + mod + ".pck"); //sets opened pck
-                    PCK currentPCK = pck; //sets opened pck
-                    foreach (PCK.MineFile skin in currentPCK.mineFiles)
+                    List<PCKFile.FileData> skinsList = new List<PCKFile.FileData>();
+                    List<PCKFile.FileData> capesList = new List<PCKFile.FileData>();
+
+                    PCKFile pck = null;
+                    using (var stream = File.OpenRead(appData + "/PCK Center/myPcks/" + mod + ".pck"))
+                    {
+                        pck = new PCKFile(stream); //sets opened pck
+                    }
+                    PCKFile currentPCK = pck; //sets opened pck
+                    foreach (PCKFile.FileData skin in currentPCK.file_entries)
                     {
                         if (skin.name.Count() == 19)
                         {
@@ -170,24 +176,24 @@ namespace PckStudio.Forms
                         writeSkins.WriteLine("  \"skins\": [");
 
                         int skinAmount = 0;
-                        foreach (PCK.MineFile newSkin in skinsList)
+                        foreach (PCKFile.FileData newSkin in skinsList)
                         {
                             skinAmount += 1;
                             string skinName = "skinName";
                             string capePath = "";
                             bool hasCape = false;
 
-                            foreach (Object[] entry in newSkin.entries)
+                            foreach (var entry in newSkin.properties)
                             {
-                                if (entry[0].ToString() == "DISPLAYNAME")
+                                if (entry.Key.ToString() == "DISPLAYNAME")
                                 {
-                                    skinName = entry[1].ToString();
-                                    skinDisplayNames.Add(new Item() { Id = newSkin.name.Remove(15, 4), Name = entry[1].ToString() });
+                                    skinName = entry.Value.ToString();
+                                    skinDisplayNames.Add(new Item() { Id = newSkin.name.Remove(15, 4), Name = entry.Value.ToString() });
                                 }
-                                if (entry[0].ToString() == "CAPEPATH")
+                                if (entry.Key.ToString() == "CAPEPATH")
                                 {
                                     hasCape = true;
-                                    capePath = entry[1].ToString();
+                                    capePath = entry.Value.ToString();
                                 }
                             }
 
@@ -227,7 +233,7 @@ namespace PckStudio.Forms
                     {
                         writeSkins.WriteLine("{");
                         int newSkinCount = 0;
-                        foreach (PCK.MineFile newSkin in skinsList)
+                        foreach (PCKFile.FileData newSkin in skinsList)
                         {
 
                             newSkinCount += 1;
@@ -259,13 +265,13 @@ namespace PckStudio.Forms
                             if (skinPicture.Height == skinPicture.Width)
                             {
                                 //determines skin type based on image dimensions, existence of BOX tags, and the ANIM value
-                                foreach (Object[] entry in newSkin.entries)
+                                foreach (var entry in newSkin.properties)
                                 {
-                                    if (entry[0].ToString() == "BOX")
+                                    if (entry.Key.ToString() == "BOX")
                                     {
                                         string mClass = "";
                                         string mData = "";
-                                        foreach (char dCheck in entry[1].ToString())
+                                        foreach (char dCheck in entry.Value.ToString())
                                         {
                                             if (dCheck.ToString() != " ")
                                             {
@@ -273,7 +279,7 @@ namespace PckStudio.Forms
                                             }
                                             else
                                             {
-                                                mData = entry[1].ToString().Remove(0, mClass.Count() + 1);
+                                                mData = entry.Value.ToString().Remove(0, mClass.Count() + 1);
                                                 break;
                                             }
                                         }
@@ -310,13 +316,13 @@ namespace PckStudio.Forms
                                         }
                                     }
 
-                                    if (entry[0].ToString() == "OFFSET")
+                                    if (entry.Key.ToString() == "OFFSET")
                                     {
                                         string oClass = "";
                                         string oData = "";
-                                        foreach (char oCheck in entry[1].ToString())
+                                        foreach (char oCheck in entry.Value.ToString())
                                         {
-                                            oData = entry[1].ToString();
+                                            oData = entry.Value.ToString();
                                             if (oCheck.ToString() != " ")
                                             {
                                                 oClass += oCheck.ToString();
@@ -345,13 +351,13 @@ namespace PckStudio.Forms
                                         }
                                     }
 
-                                    if (entry[0].ToString() == "ANIM")
+                                    if (entry.Key.ToString() == "ANIM")
                                     {
-                                        if (entry[1].ToString() == "0x40000")
+                                        if (entry.Value.ToString() == "0x40000")
                                         {
 
                                         }
-                                        else if (entry[1].ToString() == "0x80000")
+                                        else if (entry.Value.ToString() == "0x80000")
                                         {
                                             skinType = "alex";
                                         }
@@ -1015,7 +1021,7 @@ namespace PckStudio.Forms
                     }
 
                     //adds skin textures
-                    foreach (PCK.MineFile skinTexture in skinsList)
+                    foreach (PCKFile.FileData skinTexture in skinsList)
                     {
                         var ms = new MemoryStream(skinTexture.data);
                         Bitmap saveSkin = new Bitmap(Image.FromStream(ms));
@@ -1035,7 +1041,7 @@ namespace PckStudio.Forms
                     }
 
                     //adds cape textures
-                    foreach (PCK.MineFile capeTexture in capesList)
+                    foreach (PCKFile.FileData capeTexture in capesList)
                     {
                         File.WriteAllBytes(root + "/" + capeTexture.name, capeTexture.data);
                     }

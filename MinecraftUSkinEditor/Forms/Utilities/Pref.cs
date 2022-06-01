@@ -21,11 +21,13 @@ namespace PckStudio.Forms
 
         private void Pref_Load(object sender, EventArgs e)
         {
-            string host = File.ReadAllText(Environment.CurrentDirectory + "\\settings.ini").Split(new[] { "\r\n", "\n"}, StringSplitOptions.None)[0];
-            metroTextBox1.Text = host;
-            string host1 = File.ReadAllText(Environment.CurrentDirectory + "\\settings.ini").Split(new[] { "\r\n", "\n"}, StringSplitOptions.None)[1];
-            metroTextBox2.Text = host1;
-
+            if (File.Exists(Environment.CurrentDirectory + "\\settings.ini"))
+            {
+                string host = File.ReadAllText(Environment.CurrentDirectory + "\\settings.ini").Split(new[] { "\r\n", "\n" }, StringSplitOptions.None)[0];
+                metroTextBox1.Text = host;
+                string host1 = File.ReadAllText(Environment.CurrentDirectory + "\\settings.ini").Split(new[] { "\r\n", "\n" }, StringSplitOptions.None)[1];
+                metroTextBox2.Text = host1;
+            }
         }
 
         private void buttonDonate_Click(object sender, EventArgs e)

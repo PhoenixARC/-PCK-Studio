@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PckStudio.Classes.FileTypes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,27 +13,19 @@ namespace PckStudio
 {
     public partial class addMeta : MetroFramework.Forms.MetroForm
     {
-        PCK currentPCK;
-        PCK.MineFile file;
+        PCKFile.FileData file;
 
-        public addMeta(PCK.MineFile fileIn, PCK currentPCKIn)
+        public addMeta(PCKFile.FileData fileIn)
         {
             InitializeComponent();
             file = fileIn;
-            currentPCK = currentPCKIn;
             FormBorderStyle = FormBorderStyle.None;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            object[] obj = { textBox1.Text, textBox2.Text };
-            file.entries.Add(obj);
-            this.Close();
-        }
-
-        private void addMeta_Load(object sender, EventArgs e)
-        {
-
+            file.properties.Add(textBox1.Text, textBox2.Text);
+            Close();
         }
     }
 }

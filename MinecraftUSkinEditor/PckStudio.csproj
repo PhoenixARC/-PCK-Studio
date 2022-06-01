@@ -139,6 +139,7 @@
     <Compile Include="Classes\FileTypes\Bink.cs" />
     <Compile Include="Classes\FileTypes\COL.cs" />
     <Compile Include="Classes\FileTypes\CSM.cs" />
+    <Compile Include="Classes\FileTypes\PCKFile.cs" />
     <Compile Include="Classes\IO\PCKCollectionsLocal.cs" />
     <Compile Include="Classes\Models\DefaultModels\CharacterModel.cs" />
     <Compile Include="Classes\Models\DefaultModels\ModelBase.cs" />
@@ -168,7 +169,6 @@
     <Compile Include="Classes\Models\TexturePlane.cs" />
     <Compile Include="Classes\Networking\Network.cs" />
     <Compile Include="Classes\Networking\PCKCollections.cs" />
-    <Compile Include="Classes\FileTypes\PCK.cs" />
     <Compile Include="Classes\Misc\RichPresenceClient.cs" />
     <Compile Include="Classes\Networking\Update.cs" />
     <Compile Include="Forms\Additional-Popups\FakeProgressBar.cs">
@@ -269,12 +269,6 @@
     </Compile>
     <Compile Include="Forms\Skins-And-Textures\SkinPreview.Designer.cs">
       <DependentUpon>SkinPreview.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Testx-12.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Testx-12.Designer.cs">
-      <DependentUpon>Testx-12.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Utilities\Animation\AnimationEditor.cs">
       <SubType>Form</SubType>
@@ -378,7 +372,6 @@
     <Compile Include="Forms\Utilities\TextureConverterUtility.Designer.cs">
       <DependentUpon>TextureConverterUtility.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\ZipArchive.cs" />
     <Compile Include="generateModelOLD.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -387,7 +380,6 @@
     <Compile Include="Classes\ToolboxItems\InterpolationPictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Classes\Misc\KeyValuePair.cs" />
     <Compile Include="Classes\FileTypes\LOC.cs" />
     <Compile Include="Forms\Utilities\LOCEditor.cs">
       <SubType>Form</SubType>
@@ -501,9 +493,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Skins-And-Textures\SkinPreview.resx">
       <DependentUpon>SkinPreview.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Testx-12.resx">
-      <DependentUpon>Testx-12.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Utilities\Animation\AnimationEditor.resx">
       <DependentUpon>AnimationEditor.cs</DependentUpon>
@@ -635,7 +624,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\apps.zip" />
-    <None Include="Resources\binkawin.asi" />
+    <None Include="Resources\binka\binkawin.asi" />
     <None Include="Resources\settings.ini" />
     <None Include="Resources\tileData.json" />
     <None Include="Resources\UntitledSkinPCK.pck" />
@@ -649,7 +638,6 @@
     <None Include="Resources\wii-u-games-tool.png" />
     <None Include="Resources\turn-off %281%291.png" />
     <None Include="Resources\bg2.png" />
-    <Content Include="Resources\binka_encode.exe" />
     <None Include="Resources\discord.png" />
     <None Include="Resources\man.png" />
     <None Include="Resources\external-content.duckduckgo.png" />
@@ -665,13 +653,10 @@
     <None Include="Resources\iconImageList\AudioEditor\6_mg02.png" />
     <None Include="Resources\iconImageList\AudioEditor\7_mg03.png" />
     <None Include="Resources\MROE.png" />
-    <Content Include="Resources\mss32.dll" />
     <None Include="Resources\sdDownload.png" />
     <None Include="Resources\Replace.png" />
     <None Include="Resources\pack.png" />
-    <None Include="Resources\TileData.txt" />
     <None Include="Resources\terrain.png" />
-    <None Include="Resources\xbox.bmp" />
     <None Include="Resources\xbox.png" />
     <None Include="Resources\ps3.png" />
     <None Include="Resources\wiiu.png" />
@@ -679,6 +664,8 @@
     <None Include="Resources\pckOpen.png" />
     <None Include="Resources\pckDrop.png" />
     <None Include="Resources\pckCenterHeader.png" />
+    <None Include="Resources\binka\binka_encode.exe" />
+    <None Include="Resources\binka\mss32.dll" />
     <Content Include="Sin_titulo991.ico" />
     <None Include="Resources\bg1.png" />
     <Content Include="favicon %285%29.ico" />
@@ -713,9 +700,6 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

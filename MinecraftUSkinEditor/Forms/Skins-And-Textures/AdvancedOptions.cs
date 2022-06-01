@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PckStudio.Classes.FileTypes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,10 +14,10 @@ namespace PckStudio
 {
     public partial class AdvancedOptions : MetroFramework.Forms.MetroForm
     {
-        PCK.MineFile mf;
-        PCK currentPCK;
+        PCKFile.FileData mf;
+        PCKFile currentPCK;
 
-        public AdvancedOptions(PCK currentPCKIn)
+        public AdvancedOptions(PCKFile currentPCKIn)
         {
             InitializeComponent();
             currentPCK = currentPCKIn;
@@ -52,19 +53,15 @@ namespace PckStudio
             {
                 if (comboBox1.Text == "All")
                 {
-                    int count = treeMeta.Nodes.Count;
-                    int i = 0;
-                    do
-                    {
-                        foreach (PCK.MineFile mf in currentPCK.mineFiles)
-                        {
-                            object[] obj = { treeMeta.Nodes[i].Text, treeMeta.Nodes[i].Tag };
-                            mf.entries.Add(obj);
-                        }
-                        i += 1;
-                        count -= 1;
-                    } while (count != 0);
-                    MessageBox.Show("Data Added to All Entries");
+                    MessageBox.Show("TODO!!!!");
+                    //foreach (var node in treeMeta.Nodes)
+                    //{
+                    //    foreach (PCKFile.FileData mf in currentPCK.file_entries)
+                    //    {
+                    //        mf.properties.Add(node.Text, node.Tag);
+                    //    }
+                    //}
+                    //MessageBox.Show("Data Added to All Entries");
                 }
                 else if (comboBox1.Text == "64x64")
                 {
@@ -72,15 +69,14 @@ namespace PckStudio
                     int i = 0;
                     do
                     {
-                        foreach (PCK.MineFile mf in currentPCK.mineFiles)
+                        foreach (PCKFile.FileData mf in currentPCK.file_entries)
                         {
                             MemoryStream png = new MemoryStream(mf.data);
                             if (Path.GetExtension(mf.name) == ".png")
                             {
                                 if (Image.FromStream(png).Size.Height == Image.FromStream(png).Size.Width)
                                 {
-                                    object[] obj = { treeMeta.Nodes[i].Text, treeMeta.Nodes[i].Tag };
-                                    mf.entries.Add(obj);
+                                    mf.properties.Add(treeMeta.Nodes[i].Text, treeMeta.Nodes[i].Tag.ToString());
                                 }
                             }
                         }
@@ -96,15 +92,14 @@ namespace PckStudio
 
                     do
                     {
-                        foreach (PCK.MineFile mf in currentPCK.mineFiles)
+                        foreach (PCKFile.FileData mf in currentPCK.file_entries)
                         {
                             MemoryStream png = new MemoryStream(mf.data);
                             if (Path.GetExtension(mf.name) == ".png")
                             {
                                 if (Image.FromStream(png).Size.Height == Image.FromStream(png).Size.Width / 2)
                                 {
-                                    object[] obj = { treeMeta.Nodes[i].Text, treeMeta.Nodes[i].Tag };
-                                    mf.entries.Add(obj);
+                                    mf.properties.Add(treeMeta.Nodes[i].Text, treeMeta.Nodes[i].Tag.ToString());
                                 }
                             }
                         }
@@ -120,12 +115,11 @@ namespace PckStudio
 
                     do
                     {
-                        foreach (PCK.MineFile mf in currentPCK.mineFiles)
+                        foreach (PCKFile.FileData mf in currentPCK.file_entries)
                         {
                             if (Path.GetExtension(mf.name) == ".png")
                             {
-                                object[] obj = { treeMeta.Nodes[i].Text, treeMeta.Nodes[i].Tag };
-                                mf.entries.Add(obj);
+                                mf.properties.Add(treeMeta.Nodes[i].Text, treeMeta.Nodes[i].Tag.ToString());
                             }
                         }
                         i += 1;

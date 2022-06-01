@@ -181,12 +181,32 @@ namespace PckStudio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] binka_encode {
+            get {
+                object obj = ResourceManager.GetObject("binka_encode", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap BINKA_ICON {
             get {
                 object obj = ResourceManager.GetObject("BINKA_ICON", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] binkawin {
+            get {
+                object obj = ResourceManager.GetObject("binkawin", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         
@@ -297,6 +317,16 @@ namespace PckStudio.Properties {
             get {
                 object obj = ResourceManager.GetObject("MROE", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] mss32 {
+            get {
+                object obj = ResourceManager.GetObject("mss32", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         

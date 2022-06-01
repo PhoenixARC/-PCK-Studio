@@ -14,13 +14,8 @@ namespace PckStudio.Classes.IO
         public string[] GetLocalCategories()
         {
             string cat = "";
-            try
-            {
+            if (File.Exists(cache + "PCKCategories.txt"))
                 cat = File.ReadAllText(cache + "PCKCategories.txt");
-            }
-            catch
-            {
-            }
             return cat.Split(new[] { "\n", "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
         }
 

@@ -9,16 +9,17 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MetroFramework.Forms;
 using PckStudio;
+using PckStudio.Classes.FileTypes;
 
 namespace PckStudio.Forms.Utilities
 {
 	public partial class COLEditor : MetroForm
 	{
 		Classes.COL.COLFile cf = new Classes.COL.COLFile();
-		PCK.MineFile mf;
+		PCKFile.FileData mf;
 		TreeView treeView1 = new TreeView(); // Normal Color Table
 		TreeView treeView2 = new TreeView(); // Water Color Table
-		public COLEditor(byte[] data, PCK.MineFile MineFile)
+		public COLEditor(byte[] data, PCKFile.FileData MineFile)
 		{
 			InitializeComponent();
 			metroLabel6.Visible = false;

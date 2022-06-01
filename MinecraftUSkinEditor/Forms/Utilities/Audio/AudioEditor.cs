@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MetroFramework.Forms;
 using PckStudio;
+using PckStudio.Classes.FileTypes;
 
 // Audio Editor by MattNL
 
@@ -65,10 +67,10 @@ namespace PckStudio.Forms.Utilities
 			}
 		}
 
-		PCK audioPCK = new PCK();
+		PCKFile audioPCK;
 		bool isVita;
-		PCK.MineFile mf;
-		public AudioEditor(PCK.MineFile MineFile, bool littleEndian)
+		PCKFile.FileData mf;
+		public AudioEditor(PCKFile.FileData MineFile, bool littleEndian)
 		{
 			isVita = littleEndian;
 			ImageList catImages = new ImageList();
@@ -87,36 +89,37 @@ namespace PckStudio.Forms.Utilities
 			treeView1.ImageList = catImages;
 
 			mf = MineFile;
-			if (isVita) audioPCK.ReadVita(mf.data, true);
-			else audioPCK.Read(mf.data, true);
-			defaultType = audioPCK.types[0];
-			int check; // This is needed for the TryGetValue function which is annoying
-			if (!audioPCK.typeCodes.TryGetValue("CUENAME", out check))
+			using (var stream = new MemoryStream(mf.data))
+            {
+				if (isVita) audioPCK = new PCKFile(stream, true);
+				else audioPCK = new PCKFile(stream);
+            }
+			defaultType = audioPCK.meta_data[0];
+			if (!audioPCK.meta_data.ContainsValue("CUENAME"))
 			{
-				throw new System.Exception("This is not a valid audio.pck file");
+				throw new Exception("This is not a valid audio.pck file");
 			}
 			int index = 0;
-			List<PCK.MineFile> tempMineFiles = audioPCK.mineFiles;
-			foreach (PCK.MineFile mineFile in tempMineFiles)
+			List<PCKFile.FileData> tempMineFiles = audioPCK.file_entries;
+			foreach (PCKFile.FileData mineFile in tempMineFiles)
 			{
 				mineFile.name = getCatString(mineFile.type);
 				Console.WriteLine("Category Found: " + mineFile.name);
-				if (cats.Contains<int>(mineFile.type))
+				if (cats.Contains(mineFile.type))
 				{
 					Console.WriteLine("Duplicate category found, " + getCatString(mineFile.type) + ". Combining...");
-					List<object[]> newEntries = mineFile.entries;
-					audioPCK.mineFiles.Remove(mineFile);
-					audioPCK.mineFiles.Find(category => category.name == getCatString(mineFile.type)).entries.AddRange(newEntries);
+					audioPCK.file_entries.Remove(mineFile);
+					audioPCK.file_entries.Find(category => category.name == getCatString(mineFile.type)).properties = mineFile.properties;
 				}
 				else
 				{
 					TreeNode treeNode = new TreeNode();
 					treeNode.Text = mineFile.name;
 					treeNode.Tag = mineFile;
-					treeNode.ImageIndex = mineFile.type;
-					treeNode.SelectedImageIndex = mineFile.type;
+					//treeNode.ImageIndex = mineFile.type;
+					//treeNode.SelectedImageIndex = mineFile.type;
 					treeView1.Nodes.Add(treeNode);
-					cats.Add(mineFile.type);
+					cats.Add((int)mineFile.type);
 				}
 
 				index++;
@@ -129,18 +132,17 @@ namespace PckStudio.Forms.Utilities
 		private void treeView2_AfterSelect(object sender, TreeViewEventArgs e)
 		{
 			comboBox1.Items.Clear();//Resets metadata combobox of selectable entry names
-			object[] strings = (object[])e.Node.Tag;
-			string type = audioPCK.types[0];
+			if (e.Node.Tag == null) return;
+			var strings = (KeyValuePair<string, string>)e.Node.Tag;
+			string type = audioPCK.meta_data[0];
 			defaultType = type;
 			string value = "";
-			if (strings != null)
-			{
-				type = (string)strings[0];
-				value = (string)strings[1];
-			}
+			type = (string)strings.Key;
+			value = (string)strings.Value;
+			
 
-			foreach (int metaType in audioPCK.types.Keys)
-				comboBox1.Items.Add(audioPCK.types[metaType]);//fills combobox with metadata from the main metadatabase
+			foreach (int metaType in audioPCK.meta_data.Keys)
+				comboBox1.Items.Add(audioPCK.meta_data[metaType]);//fills combobox with metadata from the main metadatabase
 			comboBox1.Text = type;//Sets currently selected metadata type to type selected in selected metadata node
 			textBox1.Text = value;//Sets currently selected metadata value to value selected in selected metadata node
 		}
@@ -148,14 +150,11 @@ namespace PckStudio.Forms.Utilities
 		private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
 		{
 			treeView2.Nodes.Clear();
-			PCK.MineFile mineFile = (PCK.MineFile)e.Node.Tag;
-			foreach (object[] entry in mineFile.entries) //object = metadata entry(name:value)
+			PCKFile.FileData mineFile = (PCKFile.FileData)e.Node.Tag;
+			foreach (var entry in mineFile.properties) //object = metadata entry(name:value)
 			{
-				object[] strings = (object[])entry;
 				TreeNode meta = new TreeNode();
-
-				foreach (object[] entryy in mineFile.entries)
-					meta.Text = (string)strings[0];
+				meta.Text = entry.Key;
 				meta.Tag = entry;
 				treeView2.Nodes.Add(meta);
 			}
@@ -166,8 +165,8 @@ namespace PckStudio.Forms.Utilities
 		{
 			if (treeView2.SelectedNode != null)
 			{
-				object[] strings = (object[])treeView2.SelectedNode.Tag;
-				strings[1] = textBox1.Text;
+				//object[] strings = (object[])treeView2.SelectedNode.Tag;
+				//strings[1] = textBox1.Text;
 			}
 		}
 
@@ -176,9 +175,9 @@ namespace PckStudio.Forms.Utilities
 			if (treeView2.SelectedNode != null)
 			{
 				//Sets metadata type to new chosen one
-				object[] strings = (object[])treeView2.SelectedNode.Tag;
-				treeView2.SelectedNode.Text = comboBox1.Text;
-				strings[0] = comboBox1.Text;
+				//object[] strings = (object[])treeView2.SelectedNode.Tag;
+				//treeView2.SelectedNode.Text = comboBox1.Text;
+				//strings[0] = comboBox1.Text;
 			}
 		}
 
@@ -194,19 +193,13 @@ namespace PckStudio.Forms.Utilities
 					add.Dispose();//diposes generated metadata adding dialog data
 					if (!cats.Contains(getCatID(cat))) cats.Add(getCatID(cat));
 					else return;
-					PCK.MineFile mf = new PCK.MineFile();//Creates new minefile template
+					PCKFile.FileData mf = new PCKFile.FileData(cat, getCatID(cat), 0); //Creates new minefile template
+					mf.data = new byte[0]; //adds file data to minefile
 
-					var emptyBytes = new List<byte>(); // the category files are empty to not take up space
-					byte[] emptyBytesArray = emptyBytes.ToArray();
-
-					mf.data = emptyBytesArray;//adds file data to minefile
-					mf.filesize = mf.data.Length;//gets filesize for minefile
-					mf.name = cat;//sets minfile name to file name
-					mf.type = getCatID(cat);//sets minefile type to default
 					TreeNode addNode = new TreeNode(mf.name) { Tag = mf };//creates node for minefile
-					addNode.ImageIndex = mf.type;
-					addNode.SelectedImageIndex = mf.type;
-					//audioPCK.mineFiles.Add(mf);
+					//addNode.ImageIndex = mf.type;
+					//addNode.SelectedImageIndex = mf.type;
+					//audioPCKFile.FileDatas.Add(mf);
 					treeView1.Nodes.Add(addNode);
 					treeView1.Sort();
 				}
@@ -220,20 +213,18 @@ namespace PckStudio.Forms.Utilities
 		private void addEntryMenuItem_Click(object sender, EventArgs e)
 		{
 			if (treeView1.SelectedNode == null) return;
-			object[] obj = { defaultType, "New Entry" };
 
-			TreeNode meta = new TreeNode();
-			meta.Text = "New Entry";
-			meta.Tag = obj;
+			TreeNode meta = new TreeNode("New Entry");
+			//meta.Tag = obj;
 			treeView2.Nodes.Add(meta);
-			((PCK.MineFile)treeView1.SelectedNode.Tag).entries.Add(obj);
+			((PCKFile.FileData)treeView1.SelectedNode.Tag).properties.Add(defaultType, "New Entry");
 		}
 		public void treeView2_KeyDown(object sender, KeyEventArgs e)
 		{
 			if (e.KeyCode == Keys.Delete && treeView2.SelectedNode != null)
 			{
 				if (treeView1.SelectedNode == null) return; // makes sure you don't run this if there is nothing to delete
-				((PCK.MineFile)treeView1.SelectedNode.Tag).entries.Remove((object[])treeView2.SelectedNode.Tag);
+				((PCKFile.FileData)treeView1.SelectedNode.Tag).properties.Remove((string)treeView2.SelectedNode.Tag);
 				treeView2.SelectedNode.Remove();
 			}
 		}
@@ -242,19 +233,15 @@ namespace PckStudio.Forms.Utilities
 		{
 			if (treeView1.SelectedNode == null) return; // makes sure you don't run this if there is nothing to delete
 			cats.Remove(getCatID(treeView1.SelectedNode.Text));
-			//audioPCK.mineFiles.Remove((PCK.MineFile)treeView1.SelectedNode.Tag);
+			//audioPCKFile.FileDatas.Remove((PCKFile.FileData)treeView1.SelectedNode.Tag);
 			treeView1.SelectedNode.Remove();
 			treeView2.Nodes.Clear();
 			if(treeView1.SelectedNode != null)
 			{
-				PCK.MineFile mineFile = (PCK.MineFile)treeView1.SelectedNode.Tag;
-				foreach (object[] entry in mineFile.entries) //object = metadata entry(name:value)
+				PCKFile.FileData mineFile = (PCKFile.FileData)treeView1.SelectedNode.Tag;
+				foreach (var entry in mineFile.properties)
 				{
-					object[] strings = (object[])entry;
-					TreeNode meta = new TreeNode();
-
-					foreach (object[] entryy in mineFile.entries)
-						meta.Text = (string)strings[0];
+					TreeNode meta = new TreeNode(entry.Key);
 					meta.Tag = entry;
 					treeView2.Nodes.Add(meta);
 				}
@@ -263,7 +250,7 @@ namespace PckStudio.Forms.Utilities
 
 		private void removeEntryMenuItem_Click(object sender, EventArgs e)
 		{
-			((PCK.MineFile)treeView1.SelectedNode.Tag).entries.Remove((object[])treeView2.SelectedNode.Tag);
+			//((PCKFile.FileData)treeView1.SelectedNode.Tag).properties.Remove((object[])treeView2.SelectedNode.Tag);
 			treeView2.SelectedNode.Remove();
 		}
 
@@ -277,34 +264,23 @@ namespace PckStudio.Forms.Utilities
 				{
 					if(System.IO.Path.GetExtension(binka) == ".binka")
 					{
-						object[] obj = { "CUENAME", System.IO.Path.GetFileNameWithoutExtension(binka) };
+						object[] obj = {  };
 
 						TreeNode meta = new TreeNode();
 						meta.Text = "CUENAME";
 						meta.Tag = obj;
 						treeView2.Nodes.Add(meta);
-						((PCK.MineFile)treeView1.SelectedNode.Tag).entries.Add(obj);
+						((PCKFile.FileData)treeView1.SelectedNode.Tag).properties.Add("CUENAME", System.IO.Path.GetFileNameWithoutExtension(binka));
 					}
 				}
 			}
 		}
 
-		private static byte[] endianReverseUnicode(byte[] str)
-		{
-			byte[] newStr = new byte[str.Length];
-			for (int i = 0; i < str.Length; i += 2)
-			{
-				newStr[i] = str[i + 1];
-				newStr[i + 1] = str[i];
-			}
-			return newStr;
-		}
-
 		private static void writeMinecraftString(FileOutput f, string str)
 		{
-			byte[] d = Encoding.Unicode.GetBytes(str);
+			byte[] d = Encoding.BigEndianUnicode.GetBytes(str);
 			f.writeInt(d.Length / 2);
-			f.writeBytes(endianReverseUnicode(d));
+			f.writeBytes(d);
 			f.writeInt(0);
 		}
 
@@ -317,92 +293,92 @@ namespace PckStudio.Forms.Utilities
 			f.writeIntVita(0);
 		}
 
-		public static byte[] buildAudioPCKVita(PCK pck)
+		public static byte[] buildAudioPCKVita(PCKFile pck)
 		{
 			FileOutput fileOutput = new FileOutput();
 			fileOutput.Endian = Endianness.Big;
 			fileOutput.writeIntVita(1);
-			fileOutput.writeIntVita(pck.types.Count);
-			foreach (int num in pck.types.Keys)
+			fileOutput.writeIntVita(pck.meta_data.Count);
+			foreach (int num in pck.meta_data.Keys)
 			{
 				fileOutput.writeIntVita(num);
-				writeMinecraftStringVita(fileOutput, pck.types[num]);
+				writeMinecraftStringVita(fileOutput, pck.meta_data[num]);
 			}
-			fileOutput.writeIntVita(pck.mineFiles.Count);
-			foreach (PCK.MineFile mineFile in pck.mineFiles)
-			{
-				mineFile.name = "";
-				fileOutput.writeIntVita(mineFile.data.Length);
-				fileOutput.writeIntVita(mineFile.type);
-				writeMinecraftStringVita(fileOutput, mineFile.name);
-			}
-			foreach (PCK.MineFile mineFile2 in pck.mineFiles)
-			{
-				string str = "";
-				try
-				{
-					fileOutput.writeIntVita(mineFile2.entries.Count);
-					foreach (object[] array in mineFile2.entries)
-					{
-						str = array[0].ToString();
-						fileOutput.writeIntVita(pck.typeCodes[(string)array[0]]);
-						writeMinecraftStringVita(fileOutput, (string)array[1]);
-					}
-					fileOutput.writeBytes(mineFile2.data);
-				}
-				catch (Exception)
-				{
-					MessageBox.Show(str + " is not in the main metadatabase");
-					break;
-				}
-			}
+			//fileOutput.writeIntVita(PCKFile.FileDatas.Count);
+			//foreach (PCKFile.FileData mineFile in PCKFile.FileDatas)
+			//{
+			//	mineFile.name = "";
+			//	fileOutput.writeIntVita(mineFile.data.Length);
+			//	fileOutput.writeIntVita(mineFile.type);
+			//	writeMinecraftStringVita(fileOutput, mineFile.name);
+			//}
+			//foreach (PCKFile.FileData mineFile2 in PCKFile.FileDatas)
+			//{
+			//	string str = "";
+			//	try
+			//	{
+			//		fileOutput.writeIntVita(mineFile2.properties.Count);
+			//		foreach (var array in mineFile2.properties)
+			//		{
+			//			str = array.Key;
+			//			fileOutput.writeIntVita(pck.typeCodes[array.Key]);
+			//			writeMinecraftStringVita(fileOutput, array.Value);
+			//		}
+			//		fileOutput.writeBytes(mineFile2.data);
+			//	}
+			//	catch (Exception)
+			//	{
+			//		MessageBox.Show(str + " is not in the main metadatabase");
+			//		break;
+			//	}
+			//}
 			return fileOutput.getBytes();
 		}
 
-		public static byte[] buildAudioPCK(PCK pck)
+		public static byte[] buildAudioPCK(PCKFile pck)
 		{
 			FileOutput f = new FileOutput();
-			f.Endian = pck.IsLittleEndian ? Endianness.Little : Endianness.Big;
+			f.Endian = pck.isLittleEndian ? Endianness.Little : Endianness.Big;
 
 			f.writeInt(1);
-			f.writeInt(pck.types.Count);
-			foreach (int type in pck.types.Keys)
+			f.writeInt(pck.meta_data.Count);
+			foreach (int type in pck.meta_data.Keys)
 			{
 				f.writeInt(type);
-				writeMinecraftString(f, pck.types[type]);
+				writeMinecraftString(f, pck.meta_data[type]);
 			}
 
-			f.writeInt(pck.mineFiles.Count);
-			Console.WriteLine(pck.mineFiles.Count);
-			foreach (PCK.MineFile mf in pck.mineFiles)
-			{
-				mf.name = "";
-				f.writeInt(mf.data.Length);
-				f.writeInt(mf.type);
-				writeMinecraftString(f, mf.name);
-			}
+			//f.writeInt(PCKFile.FileDatas.Count);
+			//Console.WriteLine(PCKFile.FileDatas.Count);
+			//foreach (PCKFile.FileData mf in PCKFile.FileDatas)
+			//{
+			//	mf.name = "";
+			//	f.writeInt(mf.data.Length);
+			//	f.writeInt(mf.type);
+			//	writeMinecraftString(f, mf.name);
+			//}
 
-			foreach (PCK.MineFile mf in pck.mineFiles)
-			{
-				string missing = "";
-				try
-				{
-					f.writeInt(mf.entries.Count);
-					foreach (object[] entry in mf.entries)
-					{
-						missing = entry[0].ToString();
-						f.writeInt(pck.typeCodes[(string)entry[0]]);
-						writeMinecraftString(f, (string)entry[1]);
-					}
+			//foreach (PCKFile.FileData mf in PCKFile.FileDatas)
+			//{
+			//	string missing = "";
+			//	try
+			//	{
+			//		f.writeInt(mf.properties.Count);
+			//		foreach (var entry in mf.properties)
+			//		{
+			//			missing = entry.Key;
+			//			f.writeInt(pck.typeCodes[entry.Key]);
+			//			writeMinecraftString(f, entry.Value);
+			//		}
 
-					f.writeBytes(mf.data);
-				}
-				catch (Exception)
-				{
-					MessageBox.Show(missing + " is not in the main metadatabase");
-					break;
-				}
-			}
+			//		f.writeBytes(mf.data);
+			//	}
+			//	catch (Exception)
+			//	{
+			//		MessageBox.Show(missing + " is not in the main metadatabase");
+			//		break;
+			//	}
+			//}
 			return f.getBytes();
 		}
 
@@ -418,7 +394,8 @@ namespace PckStudio.Forms.Utilities
 
 			bool emptyCat = false;
 
-			foreach (PCK.MineFile mf in audioPCK.mineFiles) if (mf.entries.Count == 0) emptyCat = true;
+			foreach (PCKFile.FileData mf in audioPCK.file_entries)
+				emptyCat = mf.properties.Count == 0;
 
 			if (emptyCat)
 			{
@@ -426,7 +403,7 @@ namespace PckStudio.Forms.Utilities
 				return;
 			}
 
-			mf.data = isVita ? buildAudioPCKVita(audioPCK) : buildAudioPCK(audioPCK);
+			//mf.data = isVita ? buildAudioPCKVita(audioPCK) : buildAudioPCK(audioPCK);
 			saved = true;
 		}
 

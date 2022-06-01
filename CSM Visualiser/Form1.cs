@@ -81,7 +81,6 @@ namespace CSM_Visualiser
                         sw.Write("");
                         sw.Close();
                         string data = System.IO.File.ReadAllText(url);
-                        int splitnum = 11;
                         string[] data0 = data.Split('\n');
 
                         foreach (string str in data0)

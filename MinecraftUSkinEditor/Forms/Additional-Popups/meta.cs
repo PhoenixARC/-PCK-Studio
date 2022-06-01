@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PckStudio.Classes.FileTypes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,9 +13,9 @@ namespace PckStudio
 {
     public partial class meta : MetroFramework.Forms.MetroForm
     {
-        PCK currentPCK;
+        PCKFile currentPCK;
 
-        public meta(PCK currentPCKIn)
+        public meta(PCKFile currentPCKIn)
         {
             InitializeComponent();
 
@@ -32,17 +33,17 @@ namespace PckStudio
         {
             try
             {
-
                 treeView1.Nodes.Clear();
-                foreach (string key in currentPCK.typeCodes.Keys)
+                foreach (string key in currentPCK.meta_data.Values)
                 {
                     treeView1.Nodes.Add(key);
                 }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                this.Close();
+                MessageBox.Show(ex.ToString());
+                Close();
             }
         }
 
@@ -65,7 +66,8 @@ namespace PckStudio
         {
             try
             {
-                currentPCK.typeCodes.Remove(treeView1.SelectedNode.Text);
+                MessageBox.Show("TODO");
+                //currentPCK.meta_data.Remove();
                 refresh();
             }catch (Exception)
             {
