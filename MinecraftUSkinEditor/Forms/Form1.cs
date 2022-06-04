@@ -21,7 +21,7 @@ namespace PckStudio
 {
 	public partial class FormMain : MetroFramework.Forms.MetroForm
 	{
-        string saveLocation; //Save location for pck file
+        string saveLocation = String.Empty; //Save location for pck file
         string PCKFilePath = "";
         string PCKFileBCKUP = "x";
 
@@ -38,7 +38,6 @@ namespace PckStudio
 		public FormMain()
 		{
 			InitializeComponent();
-			treeViewMain.PathSeparator = "/";
 			ImageList imageList = new ImageList();
 			imageList.ColorDepth = ColorDepth.Depth32Bit;
 			imageList.ImageSize = new Size(20, 20);
@@ -60,10 +59,11 @@ namespace PckStudio
 			{
 				ofd.CheckFileExists = true;
 				ofd.Filter = "PCK (Minecraft Console Package)|*.pck";
-
 				if (ofd.ShowDialog() == DialogResult.OK)
 				{
+					saveLocation = ofd.FileName;
 					currentPCK = openPck(ofd.FileName);
+					fileEntryCountLabel.Text = "Files:" + currentPCK.file_entries.Count;
 					loadEditor();
 				}
 			}
@@ -114,6 +114,11 @@ namespace PckStudio
 					node.ImageIndex = 3;
 					node.SelectedImageIndex = 3;
 				}
+				//else if (file_entry.type == 11) // Skins.pck
+				//{
+				//	node.ImageIndex = 3;
+				//	node.SelectedImageIndex = 3;
+				//}
 				else if (file_entry.type == 5 || file_entry.type == 11) // Skins.pck / x16info.pck
 				{
 					node.ImageIndex = 4;
@@ -134,13 +139,11 @@ namespace PckStudio
                 dropDownItem2.Enabled = true;
             }
 			fileEntryCountLabel.Text = "Files:" + currentPCK.file_entries.Count.ToString();
-			saved = false;
 			tabControl.SelectTab(1);
 		}
 
 		private void selectNode(object sender, TreeViewEventArgs e)
 		{
-			fileEntryCountLabel.Text = "Files:" + currentPCK.file_entries.Count;
 			treeMeta.Enabled = true;
 			buttonEdit.Visible = false;
 			//Sets preview image to "NO IMAGE" if selected file data isn't image data
@@ -1282,10 +1285,10 @@ namespace PckStudio
 					{
 						foreach (var entry in mf.properties)
 						{
-							if (entry.Item1 == "LOCK" && new pckLocked(entry.Item2).ShowDialog() != DialogResult.OK) // Check for lock on PCK File
-							{
+							// Check for lock on PCK File
+							if (entry.Item1 == "LOCK" &&
+								new pckLocked(entry.Item2).ShowDialog() != DialogResult.OK)
 								return; // cancel extraction if password not provided		
-							}
 						}
 						FileInfo file = new FileInfo(sfd.SelectedPath + @"\" + mf.name);
 						file.Directory.Create(); // If the directory already exists, this method does nothing.
@@ -1303,7 +1306,7 @@ namespace PckStudio
 				}
 			} catch (Exception)
 			{
-				MessageBox.Show("Unsupported PCK");
+				MessageBox.Show("An Error occured while extracting PCK");
 			}
 		}
 
@@ -1702,11 +1705,10 @@ namespace PckStudio
 #region adds folder/directory entry to pck
 		private void folderToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			TreeNode NEW = new TreeNode();
+			TreeNode NEW = new TreeNode("New Folder");
 			NEW.ImageIndex = 0;
 			NEW.SelectedImageIndex = 0;
-			NEW.Text = "New Folder";
-			if (treeViewMain.SelectedNode != null && treeViewMain.SelectedNode.Tag == null)
+			if (treeViewMain.SelectedNode != null && !(treeViewMain.SelectedNode.Tag is PCKFile.FileData))
 			{
 				treeViewMain.SelectedNode.Nodes.Add(NEW);
 			}
@@ -1718,32 +1720,24 @@ namespace PckStudio
 		}
 #endregion
 
-#region opens pck installation page
 		private void installationToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			//System.Diagnostics.Process.Start(hosturl + "pckStudio#install");
 		}
-#endregion
 
-#region opens pck binka tutorial video
 		private void binkaConversionToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			System.Diagnostics.Process.Start("https://www.youtube.com/watch?v=v6EYr4zc7rI");
 		}
-#endregion
 
-#region opens pck donation page
 		private void donateToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 		}
-#endregion
 
-#region opens pck faq page
 		private void fAQToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
 			//System.Diagnostics.Process.Start(hosturl + "pckStudio#faq");
 		}
-#endregion
 
 #region converts and ports all skins in pck to mc bedrock format
 		// items class for use in bedrock skin conversion
@@ -1773,7 +1767,7 @@ namespace PckStudio
 						string rootFinal = Path.GetDirectoryName(convert.FileName) + "\\";
 
 						//creates pack uuid off of the last skin id detected
-						string uuid = "99999999";//default
+						string uuid = "99999999"; //default
 
 						//creates list of skin display names
 						List<Item> skinDisplayNames = new List<Item>();
@@ -3126,8 +3120,7 @@ namespace PckStudio
 		{
 			if (treeViewMain.SelectedNode.Tag == null || !(treeViewMain.SelectedNode.Tag is PCKFile.FileData)) return;
 			PCKFile.FileData file = treeViewMain.SelectedNode.Tag as PCKFile.FileData;
-
-			if (Path.GetExtension(file.name) == ".png")
+			if (file.type == 0 || file.type == 1 || file.type == 2)
 			{
 				if (buttonEdit.Text == "EDIT BOXES")
 					editModel(mf);
@@ -3180,8 +3173,8 @@ namespace PckStudio
 			{
 				try
 				{
-					PckStudio.Forms.Utilities.AudioEditor diag = new PckStudio.Forms.Utilities.AudioEditor(mf, mf.data[0] != 0x00);
-					if (mf.data[0] != 0x00) diag.Text += " (PS4/Vita)";
+					PckStudio.Forms.Utilities.AudioEditor diag = new PckStudio.Forms.Utilities.AudioEditor(file, LittleEndianCheckBox.Checked);
+					if (file.data[0] != 0x00) diag.Text += " (PS4/Vita)";
 					diag.ShowDialog(this);
 					diag.Dispose();
 				}
@@ -3195,19 +3188,10 @@ namespace PckStudio
 
 			if (file.type == 6) // .loc file
 			{
-				LOCFile l;
-				try
+				LOCFile l = null;
+				using (var stream = new MemoryStream(file.data))
 				{
-					using (var stream = new MemoryStream(file.data))
-					{
-						l = LOCFileReader.Read(stream);//sets loc data
-					}
-				}
-				catch
-				{
-					MessageBox.Show("No localization data found.", "Error", MessageBoxButtons.OK,
-						MessageBoxIcon.Error);
-					return;
+					l = LOCFileReader.Read(stream);//sets loc data
 				}
 				var locEditor = new LOCEditor(l); //Opens LOC Editor
 				locEditor.ShowDialog();
@@ -3350,13 +3334,7 @@ namespace PckStudio
 
 		private void FormMain_Deactivate(object sender, EventArgs e)
 		{
-			try
-			{
-				RPC.CloseRPC();
-				timer1.Stop();
-				timer1.Enabled = false;
-			}
-			catch { }
+			RPC.CloseRPC();
 		}
 
 		private void FormMain_Activated(object sender, EventArgs e)
