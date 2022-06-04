@@ -1,4 +1,6 @@
 ﻿
+using System.Windows.Forms;
+
 namespace PckStudio.Forms.Utilities
 {
     partial class COLEditor
@@ -247,6 +249,14 @@ namespace PckStudio.Forms.Utilities
             this.waterTab.BackColor = System.Drawing.SystemColors.WindowFrame;
             resources.ApplyResources(this.waterTab, "waterTab");
             this.waterTab.Name = "waterTab";
+            //this.treeView1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            //this.treeView1.ForeColor = System.Drawing.Color.White;
+            //this.treeView1.LabelEdit = false;
+            //this.treeView1.LineColor = System.Drawing.Color.White;
+            //this.treeView1.Name = "treeView1";
+            //this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViews_AfterSelect);
+            //this.treeView1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeViews_KeyDown);
+            //this.treeView1.Dock = DockStyle.Fill;
             // 
             // COLEditor
             // 

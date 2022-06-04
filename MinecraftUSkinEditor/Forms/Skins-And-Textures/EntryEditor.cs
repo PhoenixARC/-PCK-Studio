@@ -35,7 +35,7 @@ namespace PckStudio
 
             foreach (var entry in file.properties)
             {
-                TreeNode meta = new TreeNode(entry.Key);
+                TreeNode meta = new TreeNode(entry.Item1);
 
                 meta.Tag = entry;
                 treeView1.Nodes.Add(meta);
@@ -70,7 +70,7 @@ namespace PckStudio
 
         private void addEntryToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            file.properties.Add("Replace me", "Or it won't save");
+            file.properties.Add(new Tuple<string, string>("Replace me", "Or it won't save"));
             TreeNode t = new TreeNode("temp name");
             treeView1.Nodes.Add(t);
             renameProperly();
@@ -82,7 +82,7 @@ namespace PckStudio
             if (treeView1.SelectedNode != null)
             {
                 var temp = (string)treeView1.SelectedNode.Tag;
-                file.properties.Remove(temp);
+                //file.properties.Remove(temp);
                 treeView1.Nodes.Remove(treeView1.SelectedNode);
             }
         }

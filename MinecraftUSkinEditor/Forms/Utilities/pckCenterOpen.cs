@@ -17,6 +17,7 @@ using PckStudio;
 using System.IO.Compression;
 using static PckStudio.FormMain;
 using PckStudio.Classes.FileTypes;
+using PckStudio.Classes.IO;
 
 namespace PckStudio.Forms
 {
@@ -139,7 +140,7 @@ namespace PckStudio.Forms
                     PCKFile pck = null;
                     using (var stream = File.OpenRead(appData + "/PCK Center/myPcks/" + mod + ".pck"))
                     {
-                        pck = new PCKFile(stream); //sets opened pck
+                        pck = PCKFileReader.Read(stream, false); //sets opened pck
                     }
                     PCKFile currentPCK = pck; //sets opened pck
                     foreach (PCKFile.FileData skin in currentPCK.file_entries)
@@ -185,15 +186,15 @@ namespace PckStudio.Forms
 
                             foreach (var entry in newSkin.properties)
                             {
-                                if (entry.Key.ToString() == "DISPLAYNAME")
+                                if (entry.Item1 == "DISPLAYNAME")
                                 {
-                                    skinName = entry.Value.ToString();
-                                    skinDisplayNames.Add(new Item() { Id = newSkin.name.Remove(15, 4), Name = entry.Value.ToString() });
+                                    skinName = entry.Item2;
+                                    skinDisplayNames.Add(new Item() { Id = newSkin.name.Remove(15, 4), Name = entry.Item2 });
                                 }
-                                if (entry.Key.ToString() == "CAPEPATH")
+                                if (entry.Item1 == "CAPEPATH")
                                 {
                                     hasCape = true;
-                                    capePath = entry.Value.ToString();
+                                    capePath = entry.Item2;
                                 }
                             }
 
@@ -267,11 +268,11 @@ namespace PckStudio.Forms
                                 //determines skin type based on image dimensions, existence of BOX tags, and the ANIM value
                                 foreach (var entry in newSkin.properties)
                                 {
-                                    if (entry.Key.ToString() == "BOX")
+                                    if (entry.Item1.ToString() == "BOX")
                                     {
                                         string mClass = "";
                                         string mData = "";
-                                        foreach (char dCheck in entry.Value.ToString())
+                                        foreach (char dCheck in entry.Item2)
                                         {
                                             if (dCheck.ToString() != " ")
                                             {
@@ -279,7 +280,7 @@ namespace PckStudio.Forms
                                             }
                                             else
                                             {
-                                                mData = entry.Value.ToString().Remove(0, mClass.Count() + 1);
+                                                mData = entry.Item2.Remove(0, mClass.Count() + 1);
                                                 break;
                                             }
                                         }
@@ -316,13 +317,13 @@ namespace PckStudio.Forms
                                         }
                                     }
 
-                                    if (entry.Key.ToString() == "OFFSET")
+                                    if (entry.Item1 == "OFFSET")
                                     {
                                         string oClass = "";
                                         string oData = "";
-                                        foreach (char oCheck in entry.Value.ToString())
+                                        foreach (char oCheck in entry.Item2)
                                         {
-                                            oData = entry.Value.ToString();
+                                            oData = entry.Item2;
                                             if (oCheck.ToString() != " ")
                                             {
                                                 oClass += oCheck.ToString();
@@ -351,13 +352,13 @@ namespace PckStudio.Forms
                                         }
                                     }
 
-                                    if (entry.Key.ToString() == "ANIM")
+                                    if (entry.Item1 == "ANIM")
                                     {
-                                        if (entry.Value.ToString() == "0x40000")
+                                        if (entry.Item2 == "0x40000")
                                         {
 
                                         }
-                                        else if (entry.Value.ToString() == "0x80000")
+                                        else if (entry.Item2 == "0x80000")
                                         {
                                             skinType = "alex";
                                         }

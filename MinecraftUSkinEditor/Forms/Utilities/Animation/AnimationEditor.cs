@@ -55,10 +55,9 @@ namespace PckStudio
 			else
 			{
 				create = true;
-				PCKFile.FileData newMf = new PCKFile.FileData("", 2, 0);
-				newMf.properties.Add("ANIM", "");
-				newMf.data = File.ReadAllBytes(createdFileName);
-				newMf.size = newMf.data.Length;//gets filesize for minefile
+				PCKFile.FileData newMf = new PCKFile.FileData("", 2);
+				newMf.properties.Add(new Tuple<string, string>("ANIM", ""));
+				newMf.SetData(File.ReadAllBytes(createdFileName));
 				mf = newMf;
 				Forms.Utilities.AnimationEditor.ChangeTile diag = new Forms.Utilities.AnimationEditor.ChangeTile();
 				diag.ShowDialog(this);
@@ -74,9 +73,9 @@ namespace PckStudio
 
 			foreach (var entry in mf.properties) //object = metadata entry(name:value)
 			{
-				TreeNode meta = new TreeNode();
-				strEntries.Add(entry.Value);
-				strEntryData.Add(entry.Value);
+				//TreeNode meta = new TreeNode(entry.Item1);
+                strEntries.Add(entry.Item2);
+                strEntryData.Add(entry.Item2);
 			}
 
 			//if (strEntries.Find(entry => entry == "ANIM") == null) throw new System.Exception("ANIM tag is missing. No animation code is present.");
@@ -412,8 +411,7 @@ namespace PckStudio
 			using (MemoryStream m = new MemoryStream())
 			{
 				texture.Save(m, texture.RawFormat);
-				mf.data = m.ToArray();
-				mf.size = mf.data.Length;
+				mf.SetData(m.ToArray());
 			}
 
 			if (metroCheckBox2.Checked)
@@ -430,9 +428,20 @@ namespace PckStudio
 				Tuple<string, string> frameData = node.Tag as Tuple<string, string>;
 				animationData += frameData.Item1 + "*" + frameData.Item2 + ",";
 			}
-			animationData.TrimEnd(',');			
-			if (mf.properties.ContainsKey("ANIM")) mf.properties["ANIM"] = animationData;
-			else mf.properties.Add("ANIM", animationData);
+			animationData.TrimEnd(',');
+			foreach (var pair in mf.properties)
+			{
+				if (pair.Item1 == "ANIM")
+				{
+					//pair.Item2 = animationData; // TODO
+					break;
+				}
+				else
+				{
+					mf.properties.Add(new Tuple<string, string>("ANIM", animationData));
+					break;
+				}
+			};
 
 			if (create)
 			{

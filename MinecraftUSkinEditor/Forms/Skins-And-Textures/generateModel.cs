@@ -29,9 +29,6 @@ namespace PckStudio
 
         bool autoTexture = true;
 
-        int textureW = 0;
-        int textureH = 0;
-
         Color backgroundColor = Color.Black;
 
         ListViewItem selected;
@@ -40,117 +37,87 @@ namespace PckStudio
         private void checkSelect()
         {
             //Deciphers wether to enable/disable things based on wether an item is selected or not
-            if (listViewBoxes.SelectedItems.Count != 0)
+            if (listViewBoxes.SelectedItems.Count != 0 && listViewBoxes.SelectedItems[0] != null)
             {
-
-                selected = listViewBoxes.SelectedItems[0];
-                if (selected == null)
-                {
-                    this.textXc.Enabled = false;
-                    this.textYc.Enabled = false;
-                    this.textZc.Enabled = false;
-                    this.textXf.Enabled = false;
-                    this.textYf.Enabled = false;
-                    this.textZf.Enabled = false;
-                    this.textTextureX.Enabled = false;
-                    this.textTextureY.Enabled = false;
-                    this.buttonXcminus.Enabled = false;
-                    this.buttonYcminus.Enabled = false;
-                    this.buttonZcminus.Enabled = false;
-                    this.buttonXcplus.Enabled = false;
-                    this.buttonYcplus.Enabled = false;
-                    this.buttonZcplus.Enabled = false;
-                    this.buttonXfminus.Enabled = false;
-                    this.buttonYfminus.Enabled = false;
-                    this.buttonZfminus.Enabled = false;
-                    this.buttonXfplus.Enabled = false;
-                    this.buttonYfplus.Enabled = false;
-                    this.buttonZfplus.Enabled = false;
-                }
-                else
-                {
-                    this.textXc.Enabled = true;
-                    this.textYc.Enabled = true;
-                    this.textZc.Enabled = true;
-                    this.textXf.Enabled = true;
-                    this.textYf.Enabled = true;
-                    this.textZf.Enabled = true;
-                    this.textTextureX.Enabled = true;
-                    this.textTextureY.Enabled = true;
-                    this.buttonXcminus.Enabled = true;
-                    this.buttonYcminus.Enabled = true;
-                    this.buttonZcminus.Enabled = true;
-                    this.buttonXcplus.Enabled = true;
-                    this.buttonYcplus.Enabled = true;
-                    this.buttonZcplus.Enabled = true;
-                    this.buttonXfminus.Enabled = true;
-                    this.buttonYfminus.Enabled = true;
-                    this.buttonZfminus.Enabled = true;
-                    this.buttonXfplus.Enabled = true;
-                    this.buttonYfplus.Enabled = true;
-                    this.buttonZfplus.Enabled = true;
-                    comboParent.Enabled = true;
-                }
+                textXc.Enabled = true;
+                textYc.Enabled = true;
+                textZc.Enabled = true;
+                textXf.Enabled = true;
+                textYf.Enabled = true;
+                textZf.Enabled = true;
+                textTextureX.Enabled = true;
+                textTextureY.Enabled = true;
+                buttonXcminus.Enabled = true;
+                buttonYcminus.Enabled = true;
+                buttonZcminus.Enabled = true;
+                buttonXcplus.Enabled = true;
+                buttonYcplus.Enabled = true;
+                buttonZcplus.Enabled = true;
+                buttonXfminus.Enabled = true;
+                buttonYfminus.Enabled = true;
+                buttonZfminus.Enabled = true;
+                buttonXfplus.Enabled = true;
+                buttonYfplus.Enabled = true;
+                buttonZfplus.Enabled = true;
+                comboParent.Enabled = true;
+                return;
             }
-            else
-            {
-                this.textXc.Enabled = false;
-                this.textYc.Enabled = false;
-                this.textZc.Enabled = false;
-                this.textXf.Enabled = false;
-                this.textYf.Enabled = false;
-                this.textZf.Enabled = false;
-                this.textTextureX.Enabled = false;
-                this.textTextureY.Enabled = false;
-                this.buttonXcminus.Enabled = false;
-                this.buttonYcminus.Enabled = false;
-                this.buttonZcminus.Enabled = false;
-                this.buttonXcplus.Enabled = false;
-                this.buttonYcplus.Enabled = false;
-                this.buttonZcplus.Enabled = false;
-                this.buttonXfminus.Enabled = false;
-                this.buttonYfminus.Enabled = false;
-                this.buttonZfminus.Enabled = false;
-                this.buttonXfplus.Enabled = false;
-                this.buttonYfplus.Enabled = false;
-                this.buttonZfplus.Enabled = false;
-                comboParent.Enabled = false;
-            }
+            textXc.Enabled = false;
+            textYc.Enabled = false;
+            textZc.Enabled = false;
+            textXf.Enabled = false;
+            textYf.Enabled = false;
+            textZf.Enabled = false;
+            textTextureX.Enabled = false;
+            textTextureY.Enabled = false;
+            buttonXcminus.Enabled = false;
+            buttonYcminus.Enabled = false;
+            buttonZcminus.Enabled = false;
+            buttonXcplus.Enabled = false;
+            buttonYcplus.Enabled = false;
+            buttonZcplus.Enabled = false;
+            buttonXfminus.Enabled = false;
+            buttonYfminus.Enabled = false;
+            buttonZfminus.Enabled = false;
+            buttonXfplus.Enabled = false;
+            buttonYfplus.Enabled = false;
+            buttonZfplus.Enabled = false;
+            comboParent.Enabled = false;
         }
 
 
         //Initialization
         public generateModel(List<object[]> boxesIn, PictureBox preview)
         {
-            this.InitializeComponent();
+            InitializeComponent();
             boxes = new List<object[]>();
             boxes = boxesIn;
-            this.skinPreview = preview;
-            this.direction = "front";
-            this.bg = new Bitmap(this.displayBox.Image);
-            this.buttonIMPORT.Enabled = false;
-            this.buttonEXPORT.Enabled = false;
-            this.textXc.Enabled = false;
-            this.textYc.Enabled = false;
-            this.textZc.Enabled = false;
-            this.textXf.Enabled = false;
-            this.textYf.Enabled = false;
-            this.textZf.Enabled = false;
-            this.textTextureX.Enabled = false;
-            this.textTextureY.Enabled = false;
-            this.buttonXcminus.Enabled = false;
-            this.buttonYcminus.Enabled = false;
-            this.buttonZcminus.Enabled = false;
-            this.buttonXcplus.Enabled = false;
-            this.buttonYcplus.Enabled = false;
-            this.buttonZcplus.Enabled = false;
-            this.buttonXfminus.Enabled = false;
-            this.buttonYfminus.Enabled = false;
-            this.buttonZfminus.Enabled = false;
-            this.buttonXfplus.Enabled = false;
-            this.buttonYfplus.Enabled = false;
-            this.buttonZfplus.Enabled = false;
-            this.comboParent.Enabled = false;
+            skinPreview = preview;
+            direction = "front";
+            bg = new Bitmap(this.displayBox.Image);
+            buttonIMPORT.Enabled = false;
+            buttonEXPORT.Enabled = false;
+            textXc.Enabled = false;
+            textYc.Enabled = false;
+            textZc.Enabled = false;
+            textXf.Enabled = false;
+            textYf.Enabled = false;
+            textZf.Enabled = false;
+            textTextureX.Enabled = false;
+            textTextureY.Enabled = false;
+            buttonXcminus.Enabled = false;
+            buttonYcminus.Enabled = false;
+            buttonZcminus.Enabled = false;
+            buttonXcplus.Enabled = false;
+            buttonYcplus.Enabled = false;
+            buttonZcplus.Enabled = false;
+            buttonXfminus.Enabled = false;
+            buttonYfminus.Enabled = false;
+            buttonZfminus.Enabled = false;
+            buttonXfplus.Enabled = false;
+            buttonYfplus.Enabled = false;
+            buttonZfplus.Enabled = false;
+            comboParent.Enabled = false;
 
             loadData();
         }
@@ -246,10 +213,7 @@ namespace PckStudio
         private void render()
         {
             //Disables template option if model parts exist
-            if (this.listViewBoxes.Items.Count == 0)
-                this.buttonTemplate.Enabled = true;
-            else
-                this.buttonTemplate.Enabled = false;
+            buttonTemplate.Enabled = listViewBoxes.Items.Count == 0;
 
             setZ(); //Organizes Z layers
 

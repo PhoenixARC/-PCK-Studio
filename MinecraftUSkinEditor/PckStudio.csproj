@@ -137,10 +137,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\FileTypes\Bink.cs" />
-    <Compile Include="Classes\FileTypes\COL.cs" />
+    <Compile Include="Classes\FileTypes\COLFile.cs" />
     <Compile Include="Classes\FileTypes\CSM.cs" />
+    <Compile Include="Classes\FileTypes\PCKProperties.cs" />
     <Compile Include="Classes\FileTypes\PCKFile.cs" />
+    <Compile Include="Classes\IO\LOC\LOCFileReader.cs" />
+    <Compile Include="Classes\IO\LOC\LOCFileWriter.cs" />
     <Compile Include="Classes\IO\PCKCollectionsLocal.cs" />
+    <Compile Include="Classes\IO\PCK\PCKFileReader.cs" />
+    <Compile Include="Classes\IO\PCK\PCKFileWriter.cs" />
     <Compile Include="Classes\Models\DefaultModels\CharacterModel.cs" />
     <Compile Include="Classes\Models\DefaultModels\ModelBase.cs" />
     <Compile Include="Classes\Models\DefaultModels\Texture.cs" />
@@ -243,9 +248,6 @@
     <Compile Include="Forms\Skins-And-Textures\EntryEditor.Designer.cs">
       <DependentUpon>EntryEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Classes\IO\FileBase.cs" />
-    <Compile Include="Classes\IO\FileData.cs" />
-    <Compile Include="Classes\IO\FileOutput.cs" />
     <Compile Include="Forms\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -380,7 +382,7 @@
     <Compile Include="Classes\ToolboxItems\InterpolationPictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Classes\FileTypes\LOC.cs" />
+    <Compile Include="Classes\FileTypes\LOCFile.cs" />
     <Compile Include="Forms\Utilities\LOCEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -627,7 +629,6 @@
     <None Include="Resources\binka\binkawin.asi" />
     <None Include="Resources\settings.ini" />
     <None Include="Resources\tileData.json" />
-    <None Include="Resources\UntitledSkinPCK.pck" />
     <None Include="Resources\Del.png" />
     <None Include="Resources\ExportFile.png" />
     <None Include="Resources\power3.png" />
@@ -668,8 +669,6 @@
     <None Include="Resources\binka\mss32.dll" />
     <Content Include="Sin_titulo991.ico" />
     <None Include="Resources\bg1.png" />
-    <Content Include="favicon %285%29.ico" />
-    <Content Include="favicon %286%29.ico" />
     <Content Include="Resources\NoImageFound.png" />
   </ItemGroup>
   <ItemGroup>

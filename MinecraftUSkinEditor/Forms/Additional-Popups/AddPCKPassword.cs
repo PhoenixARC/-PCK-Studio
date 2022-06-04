@@ -25,7 +25,7 @@ namespace PckStudio.Forms
 
         private void buttonUnlocked_Click(object sender, EventArgs e)
         {
-            file.properties.Add("LOCK", MD5(textBoxPass.Text));
+            file.properties.Add(new Tuple<string, string>("LOCK", MD5(textBoxPass.Text)));
             Close();
         }
 

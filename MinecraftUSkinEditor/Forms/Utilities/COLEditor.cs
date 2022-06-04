@@ -3,68 +3,47 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MetroFramework.Forms;
-using PckStudio;
 using PckStudio.Classes.FileTypes;
 
 namespace PckStudio.Forms.Utilities
 {
 	public partial class COLEditor : MetroForm
 	{
-		Classes.COL.COLFile cf = new Classes.COL.COLFile();
+		COLFile cf = new COLFile();
 		PCKFile.FileData mf;
 		TreeView treeView1 = new TreeView(); // Normal Color Table
 		TreeView treeView2 = new TreeView(); // Water Color Table
-		public COLEditor(byte[] data, PCKFile.FileData MineFile)
+		public COLEditor(PCKFile.FileData MineFile)
 		{
 			InitializeComponent();
 			metroLabel6.Visible = false;
 			numericUpDown2.Visible = false;
-			cf.Open(data);
 			mf = MineFile;
-
-			#region TreeView Controls Setup
-
-			treeView1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-			treeView1.ForeColor = System.Drawing.Color.White;
-			treeView1.LabelEdit = false;
-			treeView1.LineColor = System.Drawing.Color.White;
-			treeView1.Name = "treeView1";
-			treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViews_AfterSelect);
-			treeView1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeViews_KeyDown);
-			treeView1.Dock = DockStyle.Fill;
-
-			treeView2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-			treeView2.ForeColor = System.Drawing.Color.White;
-			treeView2.LabelEdit = false;
-			treeView2.LineColor = System.Drawing.Color.White;
-			treeView2.Name = "treeView2";
-			treeView2.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViews_AfterSelect);
-			treeView2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeViews_KeyDown);
-			treeView2.Dock = DockStyle.Fill;
-
-			#endregion
+			using (var stream = new MemoryStream(mf.data))
+			{
+				cf.Open(stream);
+			}
 
 			colorsTab.Controls.Add(treeView1);
 			waterTab.Controls.Add(treeView2);
 			tabControl.TabStop = true;
 
-			foreach (object[] obj in cf.entries)
+			foreach (var obj in cf.entries)
 			{
-				TreeNode tn = new TreeNode();
-				tn.Text = obj[0].ToString();
-				tn.Tag = obj[1].ToString();
+				TreeNode tn = new TreeNode(obj.name);
+				tn.Tag = obj.color;
 				treeView1.Nodes.Add(tn);
 			}
-			foreach (object[] obj in cf.waterEntries)
+			foreach (var obj in cf.waterEntries)
 			{
-				TreeNode tn = new TreeNode();
-				tn.Text = obj[0].ToString();
-				tn.Tag = obj[1].ToString();
+				TreeNode tn = new TreeNode(obj.name);
+				tn.Tag = obj.color;
 				treeView2.Nodes.Add(tn);
 			}
 		}
@@ -102,13 +81,17 @@ namespace PckStudio.Forms.Utilities
 			cf.waterEntries.Clear();
 			foreach (TreeNode tn in treeView1.Nodes)
 			{
-				cf.entries.Add(new object[] {tn.Text, tn.Tag.ToString() });
+				cf.entries.Add(new COLFile.COLEntry(){ name = tn.Text, color = (uint)tn.Tag });
 			}
 			foreach (TreeNode tn in treeView2.Nodes)
 			{
-				cf.waterEntries.Add(new object[] { tn.Text, tn.Tag.ToString() });
+				cf.waterEntries.Add(new COLFile.COLEntry() { name = tn.Text, color = (uint)tn.Tag });
 			}
-			mf.data = cf.Save();
+			using (var stream = new MemoryStream())
+			{
+				cf.Save(stream);
+				mf.SetData(stream.ToArray());
+			}
 		}
 
 		static byte[] StringToByteArrayFastest(string hex)

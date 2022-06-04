@@ -27,12 +27,13 @@ namespace PckStudio
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (currentPCK.meta_data.ContainsValue(textBox1.Text))
+            if (currentPCK.meta_data.ContainsKey(textBox1.Text))
             {
                 MessageBox.Show("This metatag already exits");
                 return;
             }
-            currentPCK.meta_data.Add(currentPCK.meta_data.Count, textBox1.Text);
+            if (!currentPCK.meta_data.ContainsValue(currentPCK.meta_data.Count))
+                currentPCK.meta_data.Add(textBox1.Text, currentPCK.meta_data.Count);
             Close();
         }
     }

@@ -15,6 +15,7 @@ using System.Drawing.Imaging;
 using RichPresenceClient;
 using PckStudio.Classes.FileTypes;
 using PckStudio.Classes.IO;
+using PckStudio.Classes.IO.LOC;
 
 namespace PckStudio
 {
@@ -26,18 +27,13 @@ namespace PckStudio
 
         PCKFile.FileData mf;//Template minefile variable
 		PCKFile currentPCK;//currently opened pck
-		LOC l; //Locdata
-		PCKFile.FileData mfLoc; //LOC minefile
-		PCKFile.FileData file; //template for a selected minefile
-		bool needsUpdate = false;
+		LOCFile l; //Locdata
+		PCKFile.FileData mfLoc = new PCKFile.FileData("CURRENTLOCDATA", 6); //LOC minefile
+        PCKFile.FileData file; //template for a selected minefile
+        bool needsUpdate = false;
 		bool saved = true;
+		bool isTemplateFile = false;
 		string appData = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/PCK Studio/";
-
-		public class displayId
-		{
-			public string id;
-			public string defaultName;
-		}
 
 		public FormMain()
 		{
@@ -146,10 +142,15 @@ namespace PckStudio
 		{
 			fileEntryCountLabel.Text = "Files:" + currentPCK.file_entries.Count;
 			treeMeta.Enabled = true;
+			buttonEdit.Visible = false;
+			//Sets preview image to "NO IMAGE" if selected file data isn't image data
+			pictureBoxImagePreview.Image = (Image)Resources.NoImageFound;
 			int pictureBoxMaxHeight = (tabPage1.Height / 2) - (tabPage1.Height / 10);
-			if (treeViewMain.SelectedNode.Tag != null) //"Selects" node if it has data/isn't a folder
+			pictureBoxImagePreview.Size = new Size(pictureBoxMaxHeight, pictureBoxMaxHeight);
+			labelImageSize.Text = "";//Resets image size display if theres no image
+			if (treeViewMain.SelectedNode.Tag != null && treeViewMain.SelectedNode.Tag is PCKFile.FileData) //"Selects" node if it has data/isn't a folder
 			{
-				PCKFile.FileData file = (PCKFile.FileData)e.Node.Tag; //Sets current minefile being read
+				PCKFile.FileData file = e.Node.Tag as PCKFile.FileData;
 
 				treeMeta.Nodes.Clear(); //clears minefile metadata treeview
 
@@ -318,14 +319,6 @@ namespace PckStudio
 					labelImageSize.Text = "";
 				}
 			}
-			else
-			{
-				buttonEdit.Visible = false;
-				//Sets preview image to "NO IMAGE" if selected file data isn't image data
-				pictureBoxImagePreview.Image = (Image)Resources.NoImageFound;
-				pictureBoxImagePreview.Size = new Size(pictureBoxMaxHeight, pictureBoxMaxHeight);
-			}
-			labelImageSize.Text = "";//Resets image size display if theres no image
 		}
 
         #region Parses boxes and opens model generator
@@ -475,193 +468,42 @@ namespace PckStudio
 		}
 		#endregion
 
-		#region saves pck
-		private void save(string saveType)
+		private void save()
 		{
-			TreeView saveStructure = new TreeView();//Temporary new treeview to properly store minefiles in writable form
-			//structures minefile data based on wether it has parent nodes or not and with its proper minefile data
-			foreach (TreeNode item in treeViewMain.Nodes)
+			SaveFileDialog saveFileDialog = new SaveFileDialog();
+			saveFileDialog.Filter = "PCK (Minecraft Console Package)|*.pck";
+			saveFileDialog.DefaultExt = ".pck";
+			if (saveFileDialog.ShowDialog() == DialogResult.OK)
 			{
-				TreeNode add = new TreeNode();
-				if (item.Parent != null)
+				using (var fs = File.OpenWrite(saveFileDialog.FileName))
 				{
-					string itemPath = "";//item path template
-					List<TreeNode> path = new List<TreeNode>();//directory template
-					GetPathToRoot(treeViewMain.SelectedNode, path);//gets all parents nodes
-					//generates minefile directory to properly store in minedata
-					foreach (TreeNode dire in path)
-					{
-						itemPath += dire.Text + "/";
-					}
-					add.Text = itemPath + item.Text;
-				}
-				else
-				{
-					add.Text = item.Text;
-				}
-				add.Tag = item.Tag;
-				saveStructure.Nodes.Add(add);
-				add.Remove();
-			}
-
-			//Reassignes each node with its minefile data to make sure everything is synced
-			foreach (TreeNode item in saveStructure.Nodes)
-			{
-				currentPCK.file_entries[item.Index] = (PCKFile.FileData)item.Tag;
-			}
-
-			//Syncs minefile name with nodes name
-			for (int i = 0; i < saveStructure.Nodes.Count; i++)
-				currentPCK.file_entries[i].name = saveStructure.Nodes[i].Text;
-
-			if (saveLocation == appData + @"\templates\UntitledSkinPCK.pck")
-			{
-				//writes pck data if pck is actually opened
-				using (var ofd = new SaveFileDialog())
-				{
-					ofd.Filter = "PCK (Minecraft Console Package)|*.pck";
-
-					if (ofd.ShowDialog() == DialogResult.OK)
-					{
-						try
-						{
-							MessageBox.Show("TODO!!!!");
-							//Console.WriteLine(currentPCK.isLittleEndian.ToString() + "--");
-							//if (LittleEndianCheckBox.Checked)
-							//{
-							//	byte[] oouput = currentPCK.RebuildVita();
-							//	oouput[0] = 0x03;
-							//	File.WriteAllBytes(ofd.FileName, currentPCK.RebuildVita());
-							//}
-							//else
-							//{
-							//	byte[] oouput = currentPCK.Rebuild();
-							//	File.WriteAllBytes(ofd.FileName, currentPCK.Rebuild());
-							//}
-							//saveLocation = ofd.FileName;
-							//openedPCKS.SelectedTab.Text = Path.GetFileName(ofd.FileName);
-							//saved = true;
-							//MessageBox.Show("PCK Saved!");
-							//PCKFilePath = Path.GetFileName(ofd.FileName);
-						}
-						catch (Exception)
-						{
-							MessageBox.Show("No PCK loaded");
-						}
-					}
+					PCKFileWriter.Write(fs, currentPCK, LittleEndianCheckBox.Checked);
 				}
 			}
-			else if (saveType == "Save As")
-			{
-				//writes pck data if pck is actually opened
-				using (var ofd = new SaveFileDialog())
-				{
-					ofd.Filter = "PCK (Minecraft Console Package)|*.pck";
-
-					if (ofd.ShowDialog() == DialogResult.OK)
-					{
-						try
-						{
-							MessageBox.Show("TODO!!");
-							//Console.WriteLine(currentPCK.isLittleEndian.ToString() + "--");
-							//if (LittleEndianCheckBox.Checked)
-							//{
-							//	byte[] oouput = currentPCK.RebuildVita();
-							//	oouput[0] = 0x03;
-							//	File.WriteAllBytes(ofd.FileName, currentPCK.RebuildVita());
-							//}
-							//else
-							//{
-							//	byte[] oouput = currentPCK.Rebuild();
-							//	File.WriteAllBytes(ofd.FileName, currentPCK.Rebuild());
-							//}
-							//saveLocation = ofd.FileName;
-							//openedPCKS.SelectedTab.Text = Path.GetFileName(ofd.FileName);
-							//saved = true;
-							//MessageBox.Show("PCK Saved!");
-						}
-						catch (Exception)
-						{
-							MessageBox.Show("No PCK loaded");
-						}
-					}
-				}
-			}
-			else
-			{
-				MessageBox.Show("TODO!!!");
-				//if (MessageBox.Show("Are you sure you wanna save?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
-				//{
-				//	try
-				//	{
-				//		Console.WriteLine(currentPCK.isLittleEndian.ToString() + "--");
-				//		if (LittleEndianCheckBox.Checked)
-				//		{
-				//			byte[] oouput = currentPCK.RebuildVita();
-				//			oouput[0] = 0x03;
-				//			File.WriteAllBytes(saveLocation, currentPCK.RebuildVita());
-				//		}
-				//		else
-				//		{
-				//			byte[] oouput = currentPCK.Rebuild();
-				//			File.WriteAllBytes(saveLocation, currentPCK.Rebuild());
-				//		}
-				//	}
-				//	catch (Exception)
-				//	{
-				//		for (int i = 0; i < saveStructure.Nodes.Count; i++)
-				//			currentPCK.file_entries[i].name = saveStructure.Nodes[i].Text;
-
-				//		using (var ofd = new SaveFileDialog())
-				//		{
-				//			ofd.Filter = "PCK (Minecraft Console Package)|*.pck";
-
-				//			if (ofd.ShowDialog() == DialogResult.OK)
-				//			{
-				//				try
-				//				{
-				//					File.WriteAllBytes(ofd.FileName, currentPCK.Rebuild());
-				//					saved = true;
-				//					MessageBox.Show("PCK Saved!");
-				//				}
-				//				catch (Exception)
-				//				{
-				//					MessageBox.Show("No PCK loaded");
-				//				}
-				//			}
-				//		}
-				//	}
-				//}
-			}
-			saveStructure.Dispose();//disposes temporarily made treeview
 		}
-		#endregion
 
-		#region replaces pck entry with selected file
 		private void replaceToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (treeViewMain.SelectedNode.Tag is PCKFile.FileData)//Makes sure file being replaced is an actual minefile or not null
+			if (treeViewMain.SelectedNode.Tag is PCKFile.FileData) //Makes sure file being replaced is an actual minefile or not null
 			{
-				PCKFile.FileData mf = (PCKFile.FileData)treeViewMain.SelectedNode.Tag; //backups minefile data for node
+				PCKFile.FileData mf = treeViewMain.SelectedNode.Tag as PCKFile.FileData; //backups minefile data for node
 				using (var ofd = new OpenFileDialog())
 				{
 					if (ofd.ShowDialog() == DialogResult.OK)
 					{
-						mf.data = File.ReadAllBytes(ofd.FileName);//overwrites minefile data with chosen files data
+						mf.SetData(File.ReadAllBytes(ofd.FileName)); //overwrites minefile data with chosen files data
 					}
 				}
 			}
 			saved = false;
 		}
-		#endregion
 
-		#region deletes pck entry from treeview and PCKFile.FileDatas
 		private void deleteFileToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			//Removes selected from current pcks minefiles list and nodes
 			if (treeViewMain.SelectedNode.Tag is PCKFile.FileData)
 			{
-				PCKFile.FileData mf = (PCKFile.FileData)treeViewMain.SelectedNode.Tag;
+				PCKFile.FileData mf = treeViewMain.SelectedNode.Tag as PCKFile.FileData;
 				treeViewMain.Nodes.Remove(treeViewMain.SelectedNode);
 				currentPCK.file_entries.Remove(mf);
 			}
@@ -690,13 +532,12 @@ namespace PckStudio
 			}
 			saved = false;
 		}
-		#endregion
 
 		#region renames pck entry from treeview and PCKFile.FileDatas
 		private void renameFileToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			TreeNode node = treeViewMain.SelectedNode;
-			PckStudio.rename diag = new PckStudio.rename(node);
+			rename diag = new rename(node);
 			diag.ShowDialog(this);
 			diag.Dispose();//diposes generated metadata adding dialog data
 			treeViewMain.SelectedNode.Text = Path.GetFileName(node.Name);
@@ -759,7 +600,7 @@ namespace PckStudio
 				if (ofd.ShowDialog() == DialogResult.OK)
 				{
 					PCKFile.FileData mf = new PCKFile.FileData(Path.GetFileName(ofd.FileName), 0);//Creates new minefile template
-					mf.data = File.ReadAllBytes(ofd.FileName);
+					mf.SetData(File.ReadAllBytes(ofd.FileName));
 					TreeNode add = new TreeNode(mf.name) { Tag = mf };
 
 					//Gets proper file icon for minefile
@@ -832,7 +673,7 @@ namespace PckStudio
 		private void createSkinToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			int i = treeViewMain.Nodes.Count - 1;//Gets index of last item in treeview
-			int tempIDD;//sets variables for a temporary skin/cape id
+			int tempIDD; //sets variables for a temporary skin/cape id
 
 			try
 			{
@@ -850,7 +691,10 @@ namespace PckStudio
 
 			try
 			{
-				l = new LOC(mf.data);//sets loc data
+				using (var stream = new MemoryStream(mf.data))
+				{
+					l = LOCFileReader.Read(stream);//sets loc data
+				}
 			}
 			catch
 			{
@@ -860,13 +704,16 @@ namespace PckStudio
 			}
 			PckStudio.addnewskin add = new PckStudio.addnewskin(currentPCK, treeViewMain, tempIDD.ToString(), l);//Sets dialog data for skin creator
 			add.ShowDialog();//opens skin creator
-			mf.data = l.Rebuild();//rebuilds loc data
+			using (var stream = new MemoryStream())
+            {
+				LOCFileWriter.Write(stream, l);
+				mf.SetData(stream.ToArray());
+			}
 			add.Dispose();//disposes generated skin creator data
 			saved = false;
 		}
 		#endregion
 
-		#region adds a new Audio.pck to the project
 		private void audiopckToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 
@@ -881,7 +728,6 @@ namespace PckStudio
 			for (int i = 0; i < 3; i++)
 			{
 				PCKFile.FileData mf = new PCKFile.FileData("", i);
-				mf.data = new byte[0];
 				//audioPCKFile.file_entries.Add(mf);
 			}
 			PCKFile.FileData audioMF = new PCKFile.FileData("audio.pck", 8);
@@ -944,7 +790,6 @@ namespace PckStudio
 			treeViewToMineFiles(treeViewMain, currentPCK);
 			diag.Dispose();
 		}
-		#endregion
 
 		#region starts up form to create and add a animated texture
 		private void createAnimatedTextureToolStripMenuItem_Click(object sender, EventArgs e)
@@ -998,10 +843,13 @@ namespace PckStudio
 				mf = treeViewMain.SelectedNode.Tag as PCKFile.FileData;
 				if (mf.type == 6)
 				{
-					LOC l;
+					LOCFile l;
 					try
 					{
-						l = new LOC(mf.data);
+						using (var stream = new MemoryStream(mf.data))
+						{
+							l = LOCFileReader.Read(stream);//sets loc data
+						}
 					}
 					catch
 					{
@@ -1009,8 +857,12 @@ namespace PckStudio
 							MessageBoxIcon.Error);
 						return;
 					}
-					(new LOCEditor(l)).ShowDialog(); //Opens LOC Editor
-					mf.data = l.Rebuild(); //Rebuilds loc file with locdata in grid view after closing dialog
+					(new LOCEditor(l)).ShowDialog();
+					using (var stream = new MemoryStream())
+					{
+						LOCFileWriter.Write(stream, l);
+						mf.SetData(stream.ToArray());
+					}
 				}
 			}
 
@@ -1074,11 +926,11 @@ namespace PckStudio
 		private void treeMeta_AfterSelect(object sender, TreeViewEventArgs e)
 		{
 			comboBox1.Items.Clear(); //Resets metadata combobox of selectable entry names
-			var strings = (KeyValuePair<string, List<string>>)e.Node.Tag;
+			var strings = (Tuple<string,string>)e.Node.Tag;
 			foreach (var type in currentPCK.meta_data.Keys)
 				comboBox1.Items.Add(type);
-			comboBox1.Text = strings.Key;
-			textBox1.Text = strings.Value[0];
+			comboBox1.Text = strings.Item1;
+			textBox1.Text = strings.Item2;
 		}
 		#endregion
 
@@ -1386,13 +1238,11 @@ namespace PckStudio
 			{
 				Console.WriteLine("ERROR WITH RPC");
 			}
-
-			Directory.CreateDirectory(appData + "\\template");
-			if (!File.Exists(appData + "\\template\\UntitledSkinPCK.pck"))
-				File.WriteAllBytes(appData + "\\template\\UntitledSkinPCK.pck", Resources.UntitledSkinPCK);
-			
-			DBGLabel.Visible = Program.IsDev;
-
+#if DEBUG
+			DBGLabel.Visible = true;
+#else
+			DBGLabel.Visible = false;
+#endif
 			//Makes sure appdata exists
 			if (!Directory.Exists(appData))
 			{
@@ -1404,16 +1254,13 @@ namespace PckStudio
 				Directory.CreateDirectory(appData + "\\cache\\mods\\");
 			}
 		}
-		#endregion
-
-		#region deletes pck entires through the del key
-		private void treeViewMain_KeyDown(object sender, KeyEventArgs e)
-		{
-
-        }
         #endregion
 
-        #region extracts a selected pck without opening the pck
+        private void treeViewMain_KeyDown(object sender, KeyEventArgs e)
+		{
+			// TODO
+        }
+
         private void extractToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
 			try
@@ -1424,37 +1271,34 @@ namespace PckStudio
 				ofd.CheckFileExists = true;
 				ofd.Filter = "PCK (Minecraft Wii U Package)|*.pck";
 
-				if (ofd.ShowDialog() == DialogResult.OK)
+				if (ofd.ShowDialog() == DialogResult.OK && sfd.ShowDialog() == DialogResult.OK)
 				{
-					if (sfd.ShowDialog() == DialogResult.OK)
+					PCKFile pckfile = null;
+					using (var fs = File.OpenRead(ofd.FileName))
+                    {
+						pckfile = PCKFileReader.Read(fs, LittleEndianCheckBox.Checked);
+					}
+					foreach (PCKFile.FileData mf in pckfile.file_entries)
 					{
-						PCKFile pckfile = null;
-						using (var fs = File.OpenRead(ofd.FileName))
-                        {
-							pckfile = PCKFileReader.Read(fs, LittleEndianCheckBox.Checked);
-						}
-						foreach (PCKFile.FileData mf in pckfile.file_entries)
+						foreach (var entry in mf.properties)
 						{
-							foreach (var entry in mf.properties)
+							if (entry.Item1 == "LOCK" && new pckLocked(entry.Item2).ShowDialog() != DialogResult.OK) // Check for lock on PCK File
 							{
-								if (entry.Item1 == "LOCK" && new pckLocked(entry.Item2).ShowDialog() != DialogResult.OK) // Check for lock on PCK File
-								{
-									return; // cancel extraction if password not provided		
-								}
+								return; // cancel extraction if password not provided		
 							}
-							FileInfo file = new FileInfo(sfd.SelectedPath + @"\" + mf.name);
-							file.Directory.Create(); // If the directory already exists, this method does nothing.
-							File.WriteAllBytes(sfd.SelectedPath + @"\" + mf.name, mf.data); //writes minefile to file
-																							//attempts to generate reimportable metadata file out of minefiles metadata
-							string metaData = "";
-
-							foreach (var entry in mf.properties)
-							{
-								metaData += entry.Item1 + ":" + entry.Item2 + Environment.NewLine;
-							}
-
-							File.WriteAllText(sfd.SelectedPath + @"\" + mf.name + ".txt", metaData);
 						}
+						FileInfo file = new FileInfo(sfd.SelectedPath + @"\" + mf.name);
+						file.Directory.Create(); // If the directory already exists, this method does nothing.
+						File.WriteAllBytes(sfd.SelectedPath + @"\" + mf.name, mf.data); //writes minefile to file
+																						//attempts to generate reimportable metadata file out of minefiles metadata
+						string metaData = "";
+
+						foreach (var entry in mf.properties)
+						{
+							metaData += $"{entry.Item1}: {entry.Item2}{Environment.NewLine}";
+						}
+
+						File.WriteAllText(sfd.SelectedPath + @"\" + mf.name + ".txt", metaData);
 					}
 				}
 			} catch (Exception)
@@ -1462,37 +1306,33 @@ namespace PckStudio
 				MessageBox.Show("Unsupported PCK");
 			}
 		}
-		#endregion
 
-		#region deletes metadata entries through the del key
+#region deletes metadata entries through the del key
 		private void treeMeta_KeyDown(object sender, KeyEventArgs e)
 		{
-			if (e.KeyData == Keys.Delete)//makes sure pressed key was del
+			if (e.KeyData == Keys.Delete && treeMeta.SelectedNode != null)//makes sure pressed key was del
 			{
-				if (treeMeta.SelectedNode != null)//makes sure selected node is a minefile
+				//removes selected treemeta entry
+				file.properties.Remove((Tuple<string, string>)treeMeta.SelectedNode.Tag);
+				treeMeta.Nodes.Remove(treeMeta.SelectedNode);
+
+				//reloads treemeta data
+				treeMeta.Nodes.Clear();
+				foreach (var type in currentPCK.meta_data.Keys)
+					comboBox1.Items.Add(type);
+
+				foreach (var entry in file.properties)
 				{
-					//removes selected treemeta entry
-					file.properties.Remove((Tuple<string, string>)treeMeta.SelectedNode.Tag);
-					treeMeta.Nodes.Remove(treeMeta.SelectedNode);
-
-					//reloads treemeta data
-					treeMeta.Nodes.Clear();
-					foreach (var type in currentPCK.meta_data.Keys)
-						comboBox1.Items.Add(type);
-
-					foreach (var entry in file.properties)
-					{
-						TreeNode meta = new TreeNode(entry.Item1);
-						meta.Tag = entry;
-						treeMeta.Nodes.Add(meta);
-					}
+					TreeNode meta = new TreeNode(entry.Item1);
+					meta.Tag = entry;
+					treeMeta.Nodes.Add(meta);
 				}
+				saved = false;
 			}
-			saved = false;
 		}
-		#endregion
+#endregion
 
-		#region imports a folder of skins to pck
+#region imports a folder of skins to pck
 		private void importExtractedSkinsFolder(object sender, EventArgs e)
 		{
 			FolderBrowserDialog contents = new FolderBrowserDialog();//Creates folder browser instance
@@ -1535,7 +1375,7 @@ namespace PckStudio
 						type = 1;
 					}
 					PCKFile.FileData mfNew = new PCKFile.FileData("", type); //new minefile template
-					mfNew.data = File.ReadAllBytes(contents.SelectedPath + @"\" + file.Name.Remove(file.Name.Length - 4, 4) + ".png");//sets minefile data to image data of current skin
+					mfNew.SetData(File.ReadAllBytes(contents.SelectedPath + @"\" + file.Name.Remove(file.Name.Length - 4, 4) + ".png"));//sets minefile data to image data of current skin
 
 					TreeNode skin = new TreeNode(); //create template treenode for minefile
 
@@ -1606,11 +1446,14 @@ namespace PckStudio
 							//creates displayname id in loc file
 							if (locNameId != "" && locName != "")
 							{
-								LOC l;
+								LOCFile l;
 
 								try
 								{
-									l = new LOC(mfLoc.data);
+									using (var stream = new MemoryStream(mf.data))
+									{
+										l = LOCFileReader.Read(stream);//sets loc data
+									}
 								}
 								catch
 								{
@@ -1618,15 +1461,13 @@ namespace PckStudio
 									return;
 								}
 
-								displayId dis = new displayId();
-								dis.id = locNameId;
-								dis.defaultName = locName;
+								l.AddEntry(locThemeId, locTheme);
 
-								l.ids.names.Add(dis.id);
-
-								foreach (LOC.Language lo in l.langs)
-									lo.names.Add(dis.defaultName);
-								mfLoc.data = l.Rebuild();
+								using (var stream = new MemoryStream())
+								{
+									LOCFileWriter.Write(stream, l);
+									mfLoc.SetData(stream.ToArray());
+								}
 								locNameId = "";
 								locName = "";
 							}
@@ -1634,11 +1475,14 @@ namespace PckStudio
 							//creates metadata id in loc file
 							if (locThemeId != "" && locTheme != "")
 							{
-								LOC l;
+								LOCFile l;
 
 								try
 								{
-									l = new LOC(mfLoc.data);
+									using (var stream = new MemoryStream(mfLoc.data))
+									{
+										l = LOCFileReader.Read(stream);//sets loc data
+									}
 								}
 								catch
 								{
@@ -1646,16 +1490,12 @@ namespace PckStudio
 									return;
 								}
 
-								displayId b = new displayId();
-								b.id = locThemeId;
-								b.defaultName = locTheme;
-
-								l.ids.names.Add(b.id);
-
-								foreach (LOC.Language lo in l.langs)
-									lo.names.Add(b.defaultName);
-
-								mfLoc.data = l.Rebuild();
+								l.AddEntry(locThemeId, locTheme);
+								using (var stream = new MemoryStream(mf.data))
+								{
+									LOCFileWriter.Write(stream, l);
+									mfLoc.SetData(stream.ToArray());
+								}
 								locThemeId = "";
 								locTheme = "";
 							}
@@ -1681,9 +1521,9 @@ namespace PckStudio
 			contents.Dispose();//disposes temporary data
 			saved = false;
 		}
-		#endregion
+#endregion
 
-		#region imports individual skin to pck
+#region imports individual skin to pck
 		private void importSkin(object sender, EventArgs e)
 		{
 			OpenFileDialog contents = new OpenFileDialog();
@@ -1699,7 +1539,7 @@ namespace PckStudio
 					Import.Text = skinNameImport.Remove(skinNameImport.Length - 4, 4); //gets file name without extension
 					byte[] data = File.ReadAllBytes(contents.FileName.Remove(contents.FileName.Length - 4, 4));
 					PCKFile.FileData mfNew = new PCKFile.FileData("no_name", 0);
-					mfNew.data = data;//sets minefile data to image data of current skin
+					mfNew.SetData(data); //sets minefile data to image data of current skin
 
 					bool mashupStructure = false;//creates variable to indicate wether current pck skin structure is mashup or regular skin
 					int skinsFolder = 0;//temporary index for skins folder for if structure is mashup
@@ -1781,27 +1621,26 @@ namespace PckStudio
 							//creates displayname id in loc file
 							if (locNameId != "" && locName != "")
 							{
-								LOC l;
+								LOCFile l;
 
 								try
 								{
-									l = new LOC(mfLoc.data);
+									using (var stream = new MemoryStream(mf.data))
+									{
+										l = LOCFileReader.Read(stream);//sets loc data
+									}
 								}
 								catch
 								{
 									MessageBox.Show("No localization data found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 									return;
 								}
-
-								displayId dis = new displayId();
-								dis.id = locNameId;
-								dis.defaultName = locName;
-
-								l.ids.names.Add(dis.id);
-
-								foreach (LOC.Language lo in l.langs)
-									lo.names.Add(dis.defaultName);
-								mfLoc.data = l.Rebuild();
+								l.AddEntry(locThemeId, locTheme);
+								using (var stream = new MemoryStream())
+								{
+									LOCFileWriter.Write(stream, l);
+									mfLoc.SetData(stream.ToArray());
+								}
 								locNameId = "";
 								locName = "";
 							}
@@ -1809,28 +1648,27 @@ namespace PckStudio
 							//creates metadata id in loc file
 							if (locThemeId != "" && locTheme != "")
 							{
-								LOC l;
+								LOCFile l;
 
 								try
 								{
-									l = new LOC(mfLoc.data);
+									using (var stream = new MemoryStream(mf.data))
+									{
+										l = LOCFileReader.Read(stream);//sets loc data
+									}
 								}
 								catch
 								{
 									MessageBox.Show("No localization data found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 									return;
 								}
+								l.AddEntry(locThemeId, locTheme);
 
-								displayId b = new displayId();
-								b.id = locThemeId;
-								b.defaultName = locTheme;
-
-								l.ids.names.Add(b.id);
-
-								foreach (LOC.Language lo in l.langs)
-									lo.names.Add(b.defaultName);
-
-								mfLoc.data = l.Rebuild();
+								using (var stream = new MemoryStream())
+								{
+									LOCFileWriter.Write(stream, l);//sets loc data
+									mfLoc.SetData(stream.ToArray());
+								}
 								locThemeId = "";
 								locTheme = "";
 							}
@@ -1859,9 +1697,9 @@ namespace PckStudio
 			contents.Dispose();//disposes temporary data
 			saved = false;
 		}
-		#endregion
+#endregion
 
-		#region adds folder/directory entry to pck
+#region adds folder/directory entry to pck
 		private void folderToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			TreeNode NEW = new TreeNode();
@@ -1878,44 +1716,43 @@ namespace PckStudio
 			}
 			saved = false;
 		}
-		#endregion
+#endregion
 
-		#region opens pck installation page
+#region opens pck installation page
 		private void installationToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			//System.Diagnostics.Process.Start(hosturl + "pckStudio#install");
 		}
-		#endregion
+#endregion
 
-		#region opens pck binka tutorial video
+#region opens pck binka tutorial video
 		private void binkaConversionToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			System.Diagnostics.Process.Start("https://www.youtube.com/watch?v=v6EYr4zc7rI");
 		}
-		#endregion
+#endregion
 
-		#region opens pck donation page
+#region opens pck donation page
 		private void donateToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 		}
-		#endregion
+#endregion
 
-		#region opens pck faq page
+#region opens pck faq page
 		private void fAQToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
 			//System.Diagnostics.Process.Start(hosturl + "pckStudio#faq");
 		}
-		#endregion
+#endregion
 
-		#region items class for use in bedrock skin conversion
+#region converts and ports all skins in pck to mc bedrock format
+		// items class for use in bedrock skin conversion
 		public class Item
 		{
 			public string Id { get; set; }
 			public string Name { get; set; }
 		}
-		#endregion
 
-		#region converts and ports all skins in pck to mc bedrock format
 		private void convertToBedrockToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			if (openedPCKS.Visible == true && MessageBox.Show("Convert " + openedPCKS.SelectedTab.Text + " to a Bedrock Edition format?", "Convert", MessageBoxButtons.YesNo, MessageBoxIcon.None) == DialogResult.Yes)
@@ -2910,9 +2747,9 @@ namespace PckStudio
 
 			return destImage;
 		}
-		#endregion
+#endregion
 
-		#region 3ds feature in testing
+#region 3ds feature in testing
 
 		private struct loadedTexture
 		{
@@ -3148,9 +2985,9 @@ namespace PckStudio
 			}
 		}
 
-		#endregion
+#endregion
 
-		#region Tool/MenuStrips
+#region Tool/MenuStrips
 
 		private void openToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
@@ -3287,7 +3124,8 @@ namespace PckStudio
 
 		private void buttonEditModel_Click(object sender, EventArgs e)
 		{
-			PCKFile.FileData file = (PCKFile.FileData)treeViewMain.SelectedNode.Tag;
+			if (treeViewMain.SelectedNode.Tag == null || !(treeViewMain.SelectedNode.Tag is PCKFile.FileData)) return;
+			PCKFile.FileData file = treeViewMain.SelectedNode.Tag as PCKFile.FileData;
 
 			if (Path.GetExtension(file.name) == ".png")
 			{
@@ -3355,12 +3193,15 @@ namespace PckStudio
 				}
 			}
 
-			if (Path.GetExtension(file.name) == ".loc")
+			if (file.type == 6) // .loc file
 			{
-				LOC l;
+				LOCFile l;
 				try
 				{
-					l = new LOC(file.data);
+					using (var stream = new MemoryStream(file.data))
+					{
+						l = LOCFileReader.Read(stream);//sets loc data
+					}
 				}
 				catch
 				{
@@ -3368,12 +3209,17 @@ namespace PckStudio
 						MessageBoxIcon.Error);
 					return;
 				}
-						(new LOCEditor(l)).ShowDialog();//Opens LOC Editor
-				//mf.data = l.Rebuild();//Rebuilds loc file with locdata in grid view after closing dialog
+				var locEditor = new LOCEditor(l); //Opens LOC Editor
+				locEditor.ShowDialog();
+				using (var stream = new MemoryStream())
+                {
+					LOCFileWriter.Write(stream, l);
+					mf.SetData(stream.ToArray());
+                }
 			}
 
 			//Checks to see if selected minefile is a col file
-			if (Path.GetExtension(file.name) == ".col")
+			if (file.type == 9) // .col file
 			{
 				//MessageBox.Show(".COL Editor Coming Soon!");
 
@@ -3408,26 +3254,26 @@ namespace PckStudio
 
 		private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
 		{
-			if (saved == false)
+			if (!saved)
 			{
 				if (MessageBox.Show("Save PCK?", "Unsaved PCK", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
 				{
-					if (saveLocation == appData + @"\templates\UntitledSkinPCK.pck")
+					if (isTemplateFile)
 					{
-						save("Save As");
+						save();
 					}
 					else
 					{
-						save("Save");
+						save();
 					}
 				}
 			}
 			if (needsUpdate)
 			{
-				Process UPDATE = new Process();//sets up updater
-				UPDATE.StartInfo.FileName = appData + @"\nobleUpdater.exe";//updater program path
-				UPDATE.Start();//starts updater
-				Application.Exit();//closes PCK Studio to let updatear finish the job
+				Process UPDATE = new Process(); //sets up updater
+				UPDATE.StartInfo.FileName = appData + @"\nobleUpdater.exe"; //updater program path
+				UPDATE.Start(); //starts updater
+				Application.Exit(); //closes PCK Studio to let updatear finish the job
 			}
 		}
 
@@ -3462,12 +3308,12 @@ namespace PckStudio
 
 		private void savePCK(object sender, EventArgs e)
 		{
-			save("Save");
+			save();
 		}
 
 		private void saveAsPCK(object sender, EventArgs e)
 		{
-			save("Save As");
+			save();
 		}
 
 		private void timer1_Tick(object sender, EventArgs e)

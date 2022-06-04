@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using MetroFramework.Forms;
 using PckStudio;
 using PckStudio.Classes.FileTypes;
+using PckStudio.Classes.IO;
 
 // Audio Editor by MattNL
 
@@ -19,7 +20,7 @@ namespace PckStudio.Forms.Utilities
 	public partial class AudioEditor : MetroForm
 	{
 		public bool saved = false;
-		public string defaultType;
+		public string defaultType = "yes";
 		public string cat;
 		public List<int> cats = new List<int>();
 		public List<int> totalCats = new List<int>();
@@ -91,14 +92,13 @@ namespace PckStudio.Forms.Utilities
 			mf = MineFile;
 			using (var stream = new MemoryStream(mf.data))
             {
-				if (isVita) audioPCK = new PCKFile(stream, true);
-				else audioPCK = new PCKFile(stream);
+				audioPCK = PCKFileReader.Read(stream, isVita);
             }
-			defaultType = audioPCK.meta_data[0];
-			if (!audioPCK.meta_data.ContainsValue("CUENAME"))
+			if (!audioPCK.meta_data.ContainsKey("CUENAME"))
 			{
 				throw new Exception("This is not a valid audio.pck file");
 			}
+			//defaultType = audioPCK.meta_data["CUENAME"];
 			int index = 0;
 			List<PCKFile.FileData> tempMineFiles = audioPCK.file_entries;
 			foreach (PCKFile.FileData mineFile in tempMineFiles)
@@ -131,19 +131,18 @@ namespace PckStudio.Forms.Utilities
 
 		private void treeView2_AfterSelect(object sender, TreeViewEventArgs e)
 		{
-			comboBox1.Items.Clear();//Resets metadata combobox of selectable entry names
+			comboBox1.Items.Clear(); //Resets metadata combobox of selectable entry names
 			if (e.Node.Tag == null) return;
 			var strings = (KeyValuePair<string, string>)e.Node.Tag;
-			string type = audioPCK.meta_data[0];
-			defaultType = type;
-			string value = "";
-			type = (string)strings.Key;
-			value = (string)strings.Value;
+			//string type = audioPCK.meta_data[0];
+			//defaultType = type;
+			//type = strings.Key;
+			string value = strings.Value;
 			
 
-			foreach (int metaType in audioPCK.meta_data.Keys)
-				comboBox1.Items.Add(audioPCK.meta_data[metaType]);//fills combobox with metadata from the main metadatabase
-			comboBox1.Text = type;//Sets currently selected metadata type to type selected in selected metadata node
+			foreach (var metaType in audioPCK.meta_data)
+				comboBox1.Items.Add(metaType.Key);
+			comboBox1.Text = "TODO";//Sets currently selected metadata type to type selected in selected metadata node
 			textBox1.Text = value;//Sets currently selected metadata value to value selected in selected metadata node
 		}
 
@@ -151,10 +150,10 @@ namespace PckStudio.Forms.Utilities
 		{
 			treeView2.Nodes.Clear();
 			PCKFile.FileData mineFile = (PCKFile.FileData)e.Node.Tag;
-			foreach (var entry in mineFile.properties) //object = metadata entry(name:value)
+			foreach (var entry in mineFile.properties)
 			{
 				TreeNode meta = new TreeNode();
-				meta.Text = entry.Key;
+				meta.Text = entry.Item1;
 				meta.Tag = entry;
 				treeView2.Nodes.Add(meta);
 			}
@@ -193,9 +192,7 @@ namespace PckStudio.Forms.Utilities
 					add.Dispose();//diposes generated metadata adding dialog data
 					if (!cats.Contains(getCatID(cat))) cats.Add(getCatID(cat));
 					else return;
-					PCKFile.FileData mf = new PCKFile.FileData(cat, getCatID(cat), 0); //Creates new minefile template
-					mf.data = new byte[0]; //adds file data to minefile
-
+					PCKFile.FileData mf = new PCKFile.FileData(cat, getCatID(cat)); //Creates new minefile template
 					TreeNode addNode = new TreeNode(mf.name) { Tag = mf };//creates node for minefile
 					//addNode.ImageIndex = mf.type;
 					//addNode.SelectedImageIndex = mf.type;
@@ -217,14 +214,14 @@ namespace PckStudio.Forms.Utilities
 			TreeNode meta = new TreeNode("New Entry");
 			//meta.Tag = obj;
 			treeView2.Nodes.Add(meta);
-			((PCKFile.FileData)treeView1.SelectedNode.Tag).properties.Add(defaultType, "New Entry");
+			//((PCKFile.FileData)treeView1.SelectedNode.Tag).properties.Add(defaultType, new List<string> { "New Entry" });
 		}
 		public void treeView2_KeyDown(object sender, KeyEventArgs e)
 		{
 			if (e.KeyCode == Keys.Delete && treeView2.SelectedNode != null)
 			{
 				if (treeView1.SelectedNode == null) return; // makes sure you don't run this if there is nothing to delete
-				((PCKFile.FileData)treeView1.SelectedNode.Tag).properties.Remove((string)treeView2.SelectedNode.Tag);
+				//((PCKFile.FileData)treeView1.SelectedNode.Tag).properties.Remove((string)treeView2.SelectedNode.Tag);
 				treeView2.SelectedNode.Remove();
 			}
 		}
@@ -241,7 +238,7 @@ namespace PckStudio.Forms.Utilities
 				PCKFile.FileData mineFile = (PCKFile.FileData)treeView1.SelectedNode.Tag;
 				foreach (var entry in mineFile.properties)
 				{
-					TreeNode meta = new TreeNode(entry.Key);
+					TreeNode meta = new TreeNode(entry.Item1);
 					meta.Tag = entry;
 					treeView2.Nodes.Add(meta);
 				}
@@ -270,40 +267,40 @@ namespace PckStudio.Forms.Utilities
 						meta.Text = "CUENAME";
 						meta.Tag = obj;
 						treeView2.Nodes.Add(meta);
-						((PCKFile.FileData)treeView1.SelectedNode.Tag).properties.Add("CUENAME", System.IO.Path.GetFileNameWithoutExtension(binka));
-					}
+                        ((PCKFile.FileData)treeView1.SelectedNode.Tag).properties.Add(new Tuple<string, string>("CUENAME", Path.GetFileNameWithoutExtension(binka)));
+                    }
 				}
 			}
 		}
 
-		private static void writeMinecraftString(FileOutput f, string str)
-		{
-			byte[] d = Encoding.BigEndianUnicode.GetBytes(str);
-			f.writeInt(d.Length / 2);
-			f.writeBytes(d);
-			f.writeInt(0);
-		}
+		//private static void writeMinecraftString(FileOutput f, string str)
+		//{
+		//	byte[] d = Encoding.BigEndianUnicode.GetBytes(str);
+		//	f.writeInt(d.Length / 2);
+		//	f.writeBytes(d);
+		//	f.writeInt(0);
+		//}
 
-		private static void writeMinecraftStringVita(FileOutput f, string str)
-		{
-			Console.WriteLine("WriteVita -- " + str);
-			byte[] bytes = Encoding.Unicode.GetBytes(str);
-			f.writeIntVita(bytes.Length / 2);
-			f.writeBytes((bytes));
-			f.writeIntVita(0);
-		}
+		//private static void writeMinecraftStringVita(FileOutput f, string str)
+		//{
+		//	Console.WriteLine("WriteVita -- " + str);
+		//	byte[] bytes = Encoding.Unicode.GetBytes(str);
+		//	f.writeIntVita(bytes.Length / 2);
+		//	f.writeBytes((bytes));
+		//	f.writeIntVita(0);
+		//}
 
-		public static byte[] buildAudioPCKVita(PCKFile pck)
-		{
-			FileOutput fileOutput = new FileOutput();
-			fileOutput.Endian = Endianness.Big;
-			fileOutput.writeIntVita(1);
-			fileOutput.writeIntVita(pck.meta_data.Count);
-			foreach (int num in pck.meta_data.Keys)
-			{
-				fileOutput.writeIntVita(num);
-				writeMinecraftStringVita(fileOutput, pck.meta_data[num]);
-			}
+		//public static byte[] buildAudioPCKVita(PCKFile pck)
+		//{
+		//	FileOutput fileOutput = new FileOutput();
+		//	fileOutput.Endian = Endianness.Big;
+		//	fileOutput.writeIntVita(1);
+		//	fileOutput.writeIntVita(pck.meta_data.Count);
+			//foreach (int num in pck.meta_data.Keys)
+			//{
+			//	fileOutput.writeIntVita(num);
+			//	writeMinecraftStringVita(fileOutput, pck.meta_data[num]);
+			//}
 			//fileOutput.writeIntVita(PCKFile.FileDatas.Count);
 			//foreach (PCKFile.FileData mineFile in PCKFile.FileDatas)
 			//{
@@ -332,21 +329,21 @@ namespace PckStudio.Forms.Utilities
 			//		break;
 			//	}
 			//}
-			return fileOutput.getBytes();
-		}
+		//	return fileOutput.getBytes();
+		//}
 
 		public static byte[] buildAudioPCK(PCKFile pck)
 		{
-			FileOutput f = new FileOutput();
-			f.Endian = pck.isLittleEndian ? Endianness.Little : Endianness.Big;
+			//FileOutput f = new FileOutput();
+			//f.Endian = pck.isLittleEndian ? Endianness.Little : Endianness.Big;
 
-			f.writeInt(1);
-			f.writeInt(pck.meta_data.Count);
-			foreach (int type in pck.meta_data.Keys)
-			{
-				f.writeInt(type);
-				writeMinecraftString(f, pck.meta_data[type]);
-			}
+			//f.writeInt(1);
+			//f.writeInt(pck.meta_data.Count);
+			//foreach (int type in pck.meta_data.Keys)
+			//{
+			//	f.writeInt(type);
+			//	writeMinecraftString(f, pck.meta_data[type]);
+			//}
 
 			//f.writeInt(PCKFile.FileDatas.Count);
 			//Console.WriteLine(PCKFile.FileDatas.Count);
@@ -379,7 +376,8 @@ namespace PckStudio.Forms.Utilities
 			//		break;
 			//	}
 			//}
-			return f.getBytes();
+			//return f.getBytes();
+			return new byte[0];
 		}
 
 		private void saveToolStripMenuItem1_Click(object sender, EventArgs e)

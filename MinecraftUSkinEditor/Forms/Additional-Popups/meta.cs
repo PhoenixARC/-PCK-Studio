@@ -34,7 +34,7 @@ namespace PckStudio
             try
             {
                 treeView1.Nodes.Clear();
-                foreach (string key in currentPCK.meta_data.Values)
+                foreach (string key in currentPCK.meta_data.Keys)
                 {
                     treeView1.Nodes.Add(key);
                 }

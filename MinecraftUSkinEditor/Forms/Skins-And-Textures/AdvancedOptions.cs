@@ -53,15 +53,14 @@ namespace PckStudio
             {
                 if (comboBox1.Text == "All")
                 {
-                    MessageBox.Show("TODO!!!!");
-                    //foreach (var node in treeMeta.Nodes)
-                    //{
-                    //    foreach (PCKFile.FileData mf in currentPCK.file_entries)
-                    //    {
-                    //        mf.properties.Add(node.Text, node.Tag);
-                    //    }
-                    //}
-                    //MessageBox.Show("Data Added to All Entries");
+                    foreach (TreeNode node in treeMeta.Nodes)
+                    {
+                        foreach (PCKFile.FileData mf in currentPCK.file_entries)
+                        {
+                            mf.properties.Add(new Tuple<string, string>(node.Text, node.Tag.ToString()));
+                        }
+                    }
+                    MessageBox.Show("Data Added to All Entries");
                 }
                 else if (comboBox1.Text == "64x64")
                 {
@@ -76,7 +75,7 @@ namespace PckStudio
                             {
                                 if (Image.FromStream(png).Size.Height == Image.FromStream(png).Size.Width)
                                 {
-                                    mf.properties.Add(treeMeta.Nodes[i].Text, treeMeta.Nodes[i].Tag.ToString());
+                                    mf.properties.Add(new Tuple<string, string>(treeMeta.Nodes[i].Text, treeMeta.Nodes[i].Tag.ToString()));
                                 }
                             }
                         }
@@ -99,7 +98,7 @@ namespace PckStudio
                             {
                                 if (Image.FromStream(png).Size.Height == Image.FromStream(png).Size.Width / 2)
                                 {
-                                    mf.properties.Add(treeMeta.Nodes[i].Text, treeMeta.Nodes[i].Tag.ToString());
+                                    mf.properties.Add(new Tuple<string, string>(treeMeta.Nodes[i].Text, treeMeta.Nodes[i].Tag.ToString() ));
                                 }
                             }
                         }
@@ -119,7 +118,7 @@ namespace PckStudio
                         {
                             if (Path.GetExtension(mf.name) == ".png")
                             {
-                                mf.properties.Add(treeMeta.Nodes[i].Text, treeMeta.Nodes[i].Tag.ToString());
+                                mf.properties.Add(new Tuple<string, string>(treeMeta.Nodes[i].Text, treeMeta.Nodes[i].Tag.ToString() ));
                             }
                         }
                         i += 1;

@@ -24,7 +24,7 @@ namespace PckStudio
 
         private void button1_Click(object sender, EventArgs e)
         {
-            file.properties.Add(textBox1.Text, textBox2.Text);
+            file.properties.Add(new Tuple<string, string>(textBox1.Text, textBox2.Text ));
             Close();
         }
     }

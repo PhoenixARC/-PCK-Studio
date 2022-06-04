@@ -29,7 +29,7 @@ namespace PckStudio
             add.Tag = textBox2.Text;
 
             treeMeta.Nodes.Add(add);
-            this.Close();
+            Close();
         }
 
         private void addMetaAdvanced_Load(object sender, EventArgs e)

@@ -13,27 +13,20 @@ namespace PckStudio
 {
 	public partial class renameLoc : MetroFramework.Forms.MetroForm
 	{
-		TreeNode node;
+		public string NewText = string.Empty;
 
-		public renameLoc(TreeNode nodeIn)
+		public renameLoc(string initialText)
 		{
 			InitializeComponent();
-			node = nodeIn;
-			textBox1.Text = nodeIn.Text;
+			textBox1.Text = initialText;
 			FormBorderStyle = FormBorderStyle.None;
 		}
 
 		private void button1_Click(object sender, EventArgs e)
 		{
-			node.Name = textBox1.Text;
-			node.Text = textBox1.Text;
-			this.Close();
+			NewText = textBox1.Text;
+			DialogResult = DialogResult.OK;
+			Close();
 		}
-
-		private void addCategory_Load(object sender, EventArgs e)
-		{
-
-		}
-
-	}
+    }
 }

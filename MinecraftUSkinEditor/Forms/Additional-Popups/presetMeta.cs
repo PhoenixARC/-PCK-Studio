@@ -89,7 +89,7 @@ namespace PckStudio
                         }
                         else
                         {
-                            file.properties.Add(entryName, entryValue);
+                            file.properties.Add(new Tuple<string, string>(entryName, entryValue ));
                             entryName = "";
                             entryValue = "";
                             entryStart = true;

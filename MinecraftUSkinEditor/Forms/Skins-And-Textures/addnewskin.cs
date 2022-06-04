@@ -20,7 +20,7 @@ namespace PckStudio
     {
         PCKFile currentPCK;
         DataTable tbl;
-        LOC currentLoc;
+        LOCFile currentLoc;
         PCKFile.FileData mf = null;
         PCKFile.FileData mfc = null;
         TreeView treeView1;
@@ -44,12 +44,12 @@ namespace PckStudio
         string skinid;
         List<object[]> generatedModel = new List<object[]>();
 
-        public addnewskin(PCKFile currentPCKIn, TreeView treeView1In, string tempIDIn, LOC loc)
+        public addnewskin(PCKFile currentPCKIn, TreeView treeView1In, string tempIDIn, LOCFile loc)
         {
             InitializeComponent();
             
-            mf = new PCKFile.FileData(0);
-            mfc = new PCKFile.FileData(0);
+            mf = new PCKFile.FileData("", 0);
+            mfc = new PCKFile.FileData("", 0);
             currentLoc = loc;
             tbl = new DataTable();
             tbl.Columns.Add(new DataColumn("Language") { ReadOnly = true });
@@ -149,7 +149,7 @@ namespace PckStudio
             buttonDone.Enabled = true;
             labelSelectTexture.Visible = false;
 
-            mf.data = File.ReadAllBytes(ofd);
+            mf.SetData(File.ReadAllBytes(ofd));
         }
 
         public class displayId
@@ -297,7 +297,7 @@ namespace PckStudio
                         pictureBoxWithInterpolationMode1.InterpolationMode = InterpolationMode.NearestNeighbor;
                         pictureBoxWithInterpolationMode1.Image = Image.FromFile(ofd1.FileName);
 
-                        mfc.data = File.ReadAllBytes(ofd1.FileName);
+                        mfc.SetData(File.ReadAllBytes(ofd1.FileName));
 
                         contextMenuCape.Items[0].Text = "Replace";
                     }
@@ -334,11 +334,11 @@ namespace PckStudio
                             capePath.Text = "CAPEPATH";
                             capePath.Tag = "dlccape" + textSkinID.Text + ".png";
 
-                            mf.properties.Add(capePath.Text, capePath.Tag.ToString());
+                            mf.properties.Add(new Tuple<string, string>(capePath.Text, capePath.Tag.ToString()));
 
                             currentPCK.file_entries.Add(mfc);
 
-                            mfc.size = mf.data.Length; if (mashupStructure == true)
+                            if (mashupStructure == true)
                             {
                                 mfc.name = "Skins/" + "dlccape" + textSkinID.Text + ".png";
                             }
@@ -381,9 +381,9 @@ namespace PckStudio
                     skinName.Tag = textSkinName.Text;
                     anim.Text = "ANIM";
 
-                    mf.properties.Add(skinName.Text, textSkinName.Text);
+                    mf.properties.Add(new Tuple<string, string>(skinName.Text, textSkinName.Text));
 
-                    mf.properties.Add(displayNameId.Text, "IDS_dlcskin" + textSkinID.Text + "_DISPLAYNAME");
+                    mf.properties.Add(new Tuple<string, string>(displayNameId.Text, "IDS_dlcskin" + textSkinID.Text + "_DISPLAYNAME" ));
 
 
                     if (comboBoxSkinType.Text == "Default (64x32)")
@@ -395,11 +395,11 @@ namespace PckStudio
                         anim.Tag = "0x80000";
 
                         object[] ANIM = { anim.Text, anim.Tag };
-                        mf.properties.Add("ANIM", "0x80000");
+                        mf.properties.Add(new Tuple<string, string>("ANIM", "0x80000"));
                     }
                     else if (comboBoxSkinType.Text == "Steve (64x64)" && skinType != "64x32")
                     {
-                        mf.properties.Add("ANIM", "0x40000");
+                        mf.properties.Add(new Tuple<string, string>("ANIM", "0x40000"));
                     }
                     else if (comboBoxSkinType.Text == "Custom")
                     {
@@ -408,7 +408,7 @@ namespace PckStudio
                         //{
                         //    mf.properties.Add((object[])item);
                         //}
-                        mf.properties.Add("ANIM", "0x7ff5fc10");
+                        mf.properties.Add(new Tuple<string, string>("ANIM", "0x7ff5fc10"));
                     }
                     if (generatedModel != null)
                     {
@@ -417,13 +417,12 @@ namespace PckStudio
 
                     if (themeName.Tag.ToString() != "")
                     {
-                        mf.properties.Add(themeName.Text, themeName.Tag.ToString());
+                        mf.properties.Add(new Tuple<string, string>(themeName.Text, themeName.Tag.ToString() ));
                     }
 
-                    mf.properties.Add("GAME_FLAGS", "0x18");
-                    mf.properties.Add("FREE", "1");
+                    mf.properties.Add(new Tuple<string, string>("GAME_FLAGS", "0x18"));
+                    mf.properties.Add(new Tuple<string, string>("FREE", "1"));
 
-                    mf.size = mf.data.Length;
                     if (mashupStructure == true)
                     {
                         mf.name = "Skins/" + "dlcskin" + textSkinID.Text + ".png";
@@ -453,20 +452,20 @@ namespace PckStudio
                     d.id = "IDS_dlcskin" + textSkinID.Text + "_DISPLAYNAME";
                     d.defaultName = textSkinName.Text;
 
-                    currentLoc.ids.names.Add(d.id);
+                    //currentLoc.ids.names.Add(d.id);
 
-                    foreach (LOC.Language l in currentLoc.langs)
-                        l.names.Add(d.defaultName);
+                    //foreach (LOC.Language l in currentLoc.langs)
+                    //    l.names.Add(d.defaultName);
 
                     displayId b = new displayId();
                     b.id = "IDS_dlcskin" + textSkinID.Text + "_THEMENAME";
                     b.defaultName = textThemeName.Text;
 
-                    currentLoc.ids.names.Add(b.id);
+                    //currentLoc.ids.names.Add(b.id);
 
-                    foreach (LOC.Language l in currentLoc.langs)
-                        l.names.Add(b.defaultName);
-                    this.Close();
+                    //foreach (LOC.Language l in currentLoc.langs)
+                    //    l.names.Add(b.defaultName);
+                    Close();
                 }
                 else
                 {
@@ -559,7 +558,7 @@ namespace PckStudio
                         skinType = "64x64";
                     }
 
-                    mf.data = File.ReadAllBytes(ofd);
+                    mf.SetData(File.ReadAllBytes(ofd));
                 }
                 catch (Exception ex)
                 {
