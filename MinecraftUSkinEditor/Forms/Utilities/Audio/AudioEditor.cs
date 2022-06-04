@@ -133,17 +133,13 @@ namespace PckStudio.Forms.Utilities
 		{
 			comboBox1.Items.Clear(); //Resets metadata combobox of selectable entry names
 			if (e.Node.Tag == null) return;
-			var strings = (KeyValuePair<string, string>)e.Node.Tag;
-			//string type = audioPCK.meta_data[0];
-			//defaultType = type;
-			//type = strings.Key;
-			string value = strings.Value;
+			var strings = (Tuple<string, string>)e.Node.Tag;
 			
 
 			foreach (var metaType in audioPCK.meta_data)
 				comboBox1.Items.Add(metaType.Key);
-			comboBox1.Text = "TODO";//Sets currently selected metadata type to type selected in selected metadata node
-			textBox1.Text = value;//Sets currently selected metadata value to value selected in selected metadata node
+			comboBox1.Text = strings.Item1;//Sets currently selected metadata type to type selected in selected metadata node
+			textBox1.Text = strings.Item2;//Sets currently selected metadata value to value selected in selected metadata node
 		}
 
 		private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
