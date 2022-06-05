@@ -9,26 +9,30 @@ namespace PckStudio.Classes.FileTypes
 {
     public class COLFile
     {
-        public struct COLEntry
+        public struct ColorEntry
         {
             public string name;
-            public uint color;
+            public uint rgb;
+        }
+        public struct ExtendedColorEntry
+        {
+            public string name;
+            public uint argb;
+            public uint rgb;
+            public uint unk;
         }
 
-        List<byte> extradata = new List<byte>();
-        public List<COLEntry> entries = new List<COLEntry>();
-        public List<COLEntry> waterEntries = new List<COLEntry>();
+        public List<ColorEntry> entries = new List<ColorEntry>();
+        public List<ExtendedColorEntry> waterEntries = new List<ExtendedColorEntry>();
         public void Open(Stream stream)
         {
-            byte[] buffer = new byte[8];
-            stream.Read(buffer, 0, 8);
-            int has_water_colors = BitConverter.ToInt32(buffer, 0);
-            int color_entries = BitConverter.ToInt32(buffer, 4);
+            int has_water_colors = ReadInt(stream);
+            int color_entries = ReadInt(stream);
             for (int i = 0; i < color_entries; i++)
             {
-                COLEntry entry = new COLEntry();
+                ColorEntry entry = new ColorEntry();
                 entry.name = ReadString(stream);
-                entry.color = ReadUint(stream);
+                entry.rgb = ReadUint(stream);
                 entries.Add(entry);
             }
             if (has_water_colors == 1)
@@ -36,9 +40,11 @@ namespace PckStudio.Classes.FileTypes
                 int water_color_entries = ReadInt(stream);
                 for (int i = 0; i < water_color_entries; i++)
                 {
-                    COLEntry entry = new COLEntry();
+                    ExtendedColorEntry entry = new ExtendedColorEntry();
                     entry.name = ReadString(stream);
-                    entry.color = ReadUint(stream);
+                    entry.argb = ReadUint(stream);
+                    entry.rgb = ReadUint(stream);
+                    entry.unk = ReadUint(stream);
                     waterEntries.Add(entry);
                 }
             }
@@ -51,7 +57,7 @@ namespace PckStudio.Classes.FileTypes
             stream.Read(bytes, 0, 2);
             if (BitConverter.IsLittleEndian)
                 Array.Reverse(bytes);
-            int strlen = BitConverter.ToInt16(bytes, 0);
+            short strlen = BitConverter.ToInt16(bytes, 0);
             byte[] stringBuffer = new byte[strlen];
             stream.Read(stringBuffer, 0, strlen);
             return Encoding.UTF8.GetString(stringBuffer, 0, strlen);
@@ -100,7 +106,7 @@ namespace PckStudio.Classes.FileTypes
             foreach (var colorEntry in entries)
             {
                 WriteString(stream, colorEntry.name);
-                WriteUint(stream, colorEntry.color);
+                WriteUint(stream, colorEntry.rgb);
             }
             if (waterEntries.Count > 0)
             {
@@ -108,7 +114,9 @@ namespace PckStudio.Classes.FileTypes
                 foreach (var colorEntry in waterEntries)
                 {
                     WriteString(stream, colorEntry.name);
-                    WriteUint(stream, colorEntry.color);
+                    WriteUint(stream, colorEntry.rgb);
+                    WriteUint(stream, colorEntry.argb);
+                    WriteUint(stream, colorEntry.unk);
                 }
             }
         }
