@@ -16,81 +16,63 @@ namespace PckStudio.Forms.Utilities
 	public partial class COLEditor : MetroForm
 	{
 		COLFile cf = new COLFile();
-		PCKFile.FileData mf;
-		TreeView treeView1 = new TreeView(); // Normal Color Table
-		TreeView treeView2 = new TreeView(); // Water Color Table
-		public COLEditor(PCKFile.FileData MineFile)
+		public byte[] data { get; private set; } = new byte[0];
+
+		public COLEditor(COLFile colFile)
 		{
 			InitializeComponent();
-			metroLabel6.Visible = false;
-			numericUpDown2.Visible = false;
-			mf = MineFile;
-			using (var stream = new MemoryStream(mf.data))
-			{
-				cf.Open(stream);
-			}
-
-			colorsTab.Controls.Add(treeView1);
-			waterTab.Controls.Add(treeView2);
-			tabControl.TabStop = true;
-
+			cf = colFile;
 			foreach (var obj in cf.entries)
 			{
 				TreeNode tn = new TreeNode(obj.name);
-				tn.Tag = obj.color;
+				tn.Tag = obj;
 				treeView1.Nodes.Add(tn);
 			}
 			foreach (var obj in cf.waterEntries)
 			{
 				TreeNode tn = new TreeNode(obj.name);
-				tn.Tag = obj.color;
+				tn.Tag = obj;
 				treeView2.Nodes.Add(tn);
 			}
 		}
 
-		private void treeViews_AfterSelect(object sender, TreeViewEventArgs e)
+		private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
 		{
-			//metroTextBox2.Text = tv.SelectedNode.Text;
-			TreeView tv = (TreeView)sender;
-			if (tv.SelectedNode.Tag != null && metroTextBox1.Text.Length % 2 == 0)
-			{
-				bool hasAlpha = tabControl.SelectedTab == waterTab;
-				metroTextBox1.Text = tv.SelectedNode.Tag.ToString();
+			if (treeView1.SelectedNode.Tag == null)
+				return;
 
-				if (hasAlpha)
-				{
-					numericUpDown2.Value = StringToByteArrayFastest(tv.SelectedNode.Tag.ToString())[0];
-					numericUpDown3.Value = StringToByteArrayFastest(tv.SelectedNode.Tag.ToString())[1];
-					numericUpDown4.Value = StringToByteArrayFastest(tv.SelectedNode.Tag.ToString())[2];
-					numericUpDown5.Value = StringToByteArrayFastest(tv.SelectedNode.Tag.ToString())[3];
-					pictureBox1.BackColor = Color.FromArgb(StringToByteArrayFastest(tv.SelectedNode.Tag.ToString())[0], StringToByteArrayFastest(tv.SelectedNode.Tag.ToString())[1], StringToByteArrayFastest(tv.SelectedNode.Tag.ToString())[2], StringToByteArrayFastest(tv.SelectedNode.Tag.ToString())[3]);
-				}
-				else
-				{
-					numericUpDown3.Value = StringToByteArrayFastest(tv.SelectedNode.Tag.ToString())[0];
-					numericUpDown4.Value = StringToByteArrayFastest(tv.SelectedNode.Tag.ToString())[1];
-					numericUpDown5.Value = StringToByteArrayFastest(tv.SelectedNode.Tag.ToString())[2];
-					pictureBox1.BackColor = Color.FromArgb(255, StringToByteArrayFastest(tv.SelectedNode.Tag.ToString())[0], StringToByteArrayFastest(tv.SelectedNode.Tag.ToString())[1], StringToByteArrayFastest(tv.SelectedNode.Tag.ToString())[2]);
-				}
-			}
+			var colorEntry = (COLFile.ColorEntry)treeView1.SelectedNode.Tag;
+			alphaUpDown.Visible = false;
+			alphaLabel.Visible = false;
+			var color = colorEntry.color;
+			redUpDown.Value = color >> 16 & 0xff;
+			greenUpDown.Value = color >> 8 & 0xff;
+			blueUpDown.Value = color & 0xff;
+			pictureBox1.BackColor = Color.FromArgb(0xff << 24 | (int)color);
+			
 		}
 
+        private void treeView2_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+			if (treeView2.SelectedNode.Tag == null)
+				return;
+			var colorEntry = (COLFile.ExtendedColorEntry)treeView2.SelectedNode.Tag;
+			int color = (int)colorEntry.color;
+			alphaUpDown.Enabled = true;
+			alphaUpDown.Visible = true;
+			alphaLabel.Visible = true;
+			alphaUpDown.Value = color >> 24 & 0xff;
+			redUpDown.Value = color >> 16 & 0xff;
+			greenUpDown.Value = color >> 8 & 0xff;
+			blueUpDown.Value = color & 0xff;
+			pictureBox1.BackColor = Color.FromArgb(color);
+		}
 		private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
-			cf.entries.Clear();
-			cf.waterEntries.Clear();
-			foreach (TreeNode tn in treeView1.Nodes)
-			{
-				cf.entries.Add(new COLFile.COLEntry(){ name = tn.Text, color = (uint)tn.Tag });
-			}
-			foreach (TreeNode tn in treeView2.Nodes)
-			{
-				cf.waterEntries.Add(new COLFile.COLEntry() { name = tn.Text, color = (uint)tn.Tag });
-			}
 			using (var stream = new MemoryStream())
 			{
 				cf.Save(stream);
-				mf.SetData(stream.ToArray());
+				data = stream.ToArray();
 			}
 		}
 
@@ -115,96 +97,124 @@ namespace PckStudio.Forms.Utilities
 			return val - (val < 58 ? 48 : (val < 97 ? 55 : 87));
 		}
 
-		public void treeViews_KeyDown(object sender, KeyEventArgs e)
+		public void treeView1_KeyDown(object sender, KeyEventArgs e)
 		{
-			TreeView tv = (TreeView)sender;
-			if (e.KeyCode == Keys.Delete)
+			var node = treeView1.SelectedNode;
+			if (e.KeyCode == Keys.Delete && node.Tag is COLFile.ColorEntry)
 			{
-				//removes minefile node
-				//cf.entries.Remove((object[])treeView1.SelectedNode.Tag);
-				//if(treeView1.Nodes.Count > 0) treeView1.Nodes.Remove(treeView1.SelectedNode);
-			}
+                cf.entries.Remove((COLFile.ColorEntry)node.Tag);
+                if (treeView1.Nodes.Count > 0) treeView1.Nodes.Remove(node);
+            }
 		}
 
-		private void metroTextBox1_TextChanged(object sender, EventArgs e)
-		{
-			if (metroTextBox1.Text.Length % 2 != 0) return;
-
-			TreeView tv = (TreeView)tabControl.SelectedTab.Controls[0];
-
-			tv.SelectedNode.Tag = metroTextBox1.Text;
-
-			bool hasAlpha = tabControl.SelectedTab == waterTab;
-
-			if (tv.SelectedNode.Tag != null && (metroTextBox1.Text.Length == (hasAlpha ? 8 : 6)))
+        private void treeView2_KeyDown(object sender, KeyEventArgs e)
+        {
+			var node = treeView2.SelectedNode;
+			if (e.KeyCode == Keys.Delete && node.Tag is COLFile.ExtendedColorEntry)
 			{
-				numericUpDown3.Value = StringToByteArrayFastest(metroTextBox1.Text)[!hasAlpha ? 0 : 1];
-				numericUpDown4.Value = StringToByteArrayFastest(metroTextBox1.Text)[!hasAlpha ? 1 : 2];
-				numericUpDown5.Value = StringToByteArrayFastest(metroTextBox1.Text)[!hasAlpha ? 2 : 3];
-				metroTextBox1.Text = tv.SelectedNode.Tag.ToString();
-				if (hasAlpha)
-				{
-					metroTextBox1.MaxLength = 8;
-					metroLabel6.Visible = true;
-					numericUpDown2.Visible = true;
-					numericUpDown2.Value = StringToByteArrayFastest(metroTextBox1.Text)[0];
-					pictureBox1.BackColor = Color.FromArgb(StringToByteArrayFastest(tv.SelectedNode.Tag.ToString())[0], StringToByteArrayFastest(tv.SelectedNode.Tag.ToString())[1], StringToByteArrayFastest(tv.SelectedNode.Tag.ToString())[2], StringToByteArrayFastest(tv.SelectedNode.Tag.ToString())[3]);
-				}
-				else
-				{
-					metroTextBox1.MaxLength = 6;
-					metroLabel6.Visible = false;
-					numericUpDown2.Visible = false;
-					pictureBox1.BackColor = Color.FromArgb(255, StringToByteArrayFastest(tv.SelectedNode.Tag.ToString())[0], StringToByteArrayFastest(tv.SelectedNode.Tag.ToString())[1], StringToByteArrayFastest(tv.SelectedNode.Tag.ToString())[2]);
-				}
-			}
+                cf.waterEntries.Remove((COLFile.ExtendedColorEntry)node.Tag);
+                if (treeView2.Nodes.Count > 0) treeView2.Nodes.Remove(node);
+            }
+        }
+
+		private void colorBox_TextChanged(object sender, EventArgs e)
+		{
+			//TreeView tv = (TreeView)tabControl.SelectedTab.Controls[0];
+			//if (tv.SelectedNode == null || tv.SelectedNode.Tag == null)
+			//	return;
+			//bool hasAlpha = tabControl.SelectedTab == waterTab;
+			//alphaUpDown.Enabled = hasAlpha;
+			//redUpDown.Value = StringToByteArrayFastest(colorTextbox.Text)[!hasAlpha ? 0 : 1];
+			//greenUpDown.Value = StringToByteArrayFastest(colorTextbox.Text)[!hasAlpha ? 1 : 2];
+			//blueUpDown.Value = StringToByteArrayFastest(colorTextbox.Text)[!hasAlpha ? 2 : 3];
+			//int color = 0; /*colorEntry.color*/;
+   //         int argb = (int)((0xff000000u) | (color >> 24));
+			//colorTextbox.MaxLength = hasAlpha ? 8 : 6;
+			//alphaLabel.Visible = false;
+			//alphaUpDown.Visible = false;
+			//if (hasAlpha)
+			//{
+			//	alphaLabel.Visible = true;
+			//	alphaUpDown.Visible = true;
+			//	alphaUpDown.Value = StringToByteArrayFastest(colorTextbox.Text)[0];
+			//	argb = color >> 24 | color << 8;
+			//}
+			//pictureBox1.BackColor = Color.FromArgb(argb);
 		}
 
 		private void color_ValueChanged(object sender, EventArgs e)
 		{
-			TreeView tv = (TreeView)tabControl.SelectedTab.Controls[0];
-			if (tv.SelectedNode == null) return;
-			byte[] origHex = StringToByteArrayFastest(tv.SelectedNode.Tag.ToString());
-			bool hasAlpha = tabControl.SelectedTab == waterTab;
-			string hex = "";
-			if (((NumericUpDown)sender).Name == "numericUpDown2")
-			{
-				hex += ((int)numericUpDown2.Value).ToString("X2");
-				hex += origHex[1].ToString("X2");
-				hex += origHex[2].ToString("X2");
-				hex += origHex[3].ToString("X2");
-			}
-			else if (((NumericUpDown)sender).Name == "numericUpDown3")
-			{
-				if (hasAlpha) hex += origHex[0].ToString("X2");
-				hex += ((int)numericUpDown3.Value).ToString("X2");
-				hex += origHex[hasAlpha ? 2 : 1].ToString("X2");
-				hex += origHex[hasAlpha ? 3 : 2].ToString("X2");
-			}
-			else if (((NumericUpDown)sender).Name == "numericUpDown4")
-			{
-				if (hasAlpha) hex += origHex[0].ToString("X2");
-				hex += origHex[hasAlpha ? 1 : 0].ToString("X2");
-				hex += ((int)numericUpDown4.Value).ToString("X2");
-				hex += origHex[hasAlpha ? 3 : 2].ToString("X2");
-			}
-			else if (((NumericUpDown)sender).Name == "numericUpDown5")
-			{
-				if (hasAlpha) hex += origHex[0].ToString("X2");
-				hex += origHex[hasAlpha ? 1 : 0].ToString("X2");
-				hex += origHex[hasAlpha ? 2 : 1].ToString("X2");
-				hex += ((int)numericUpDown5.Value).ToString("X2");
-			}
-			else // just in case some weird thing happens i dunno - matt
-			{
-				if (hasAlpha) hex += origHex[0].ToString("X2");
-				hex += origHex[hasAlpha ? 1 : 0].ToString("X2");
-				hex += origHex[hasAlpha ? 2 : 1].ToString("X2");
-				hex += origHex[hasAlpha ? 3 : 2].ToString("X2");
-			}
+			//TreeView tv = (TreeView)tabControl.SelectedTab.Controls[0];
+			//if (tv.SelectedNode == null) return;
+			//byte[] origHex = StringToByteArrayFastest(tv.SelectedNode.Tag.ToString());
+			//bool hasAlpha = tabControl.SelectedTab == waterTab;
+			//string hex = "";
+			//if (((NumericUpDown)sender).Name == "numericUpDown2")
+			//{
+			//	hex += ((int)alphaUpDown.Value).ToString("X2");
+			//	hex += origHex[1].ToString("X2");
+			//	hex += origHex[2].ToString("X2");
+			//	hex += origHex[3].ToString("X2");
+			//}
+			//else if (((NumericUpDown)sender).Name == "numericUpDown3")
+			//{
+			//	if (hasAlpha) hex += origHex[0].ToString("X2");
+			//	hex += ((int)redUpDown.Value).ToString("X2");
+			//	hex += origHex[hasAlpha ? 2 : 1].ToString("X2");
+			//	hex += origHex[hasAlpha ? 3 : 2].ToString("X2");
+			//}
+			//else if (((NumericUpDown)sender).Name == "numericUpDown4")
+			//{
+			//	if (hasAlpha) hex += origHex[0].ToString("X2");
+			//	hex += origHex[hasAlpha ? 1 : 0].ToString("X2");
+			//	hex += ((int)greenUpDown.Value).ToString("X2");
+			//	hex += origHex[hasAlpha ? 3 : 2].ToString("X2");
+			//}
+			//else if (((NumericUpDown)sender).Name == "numericUpDown5")
+			//{
+			//	if (hasAlpha) hex += origHex[0].ToString("X2");
+			//	hex += origHex[hasAlpha ? 1 : 0].ToString("X2");
+			//	hex += origHex[hasAlpha ? 2 : 1].ToString("X2");
+			//	hex += ((int)blueUpDown.Value).ToString("X2");
+			//}
+			//else // just in case some weird thing happens i dunno - matt
+			//{
+			//	if (hasAlpha) hex += origHex[0].ToString("X2");
+			//	hex += origHex[hasAlpha ? 1 : 0].ToString("X2");
+			//	hex += origHex[hasAlpha ? 2 : 1].ToString("X2");
+			//	hex += origHex[hasAlpha ? 3 : 2].ToString("X2");
+			//}
 
-			Console.WriteLine(hex);
-			metroTextBox1.Text = hex;
+			//Console.WriteLine(hex);
+			//colorTextbox.Text = hex;
 		}
-	}
+
+        private void setColorBtn_Click(object sender, EventArgs e)
+        {
+			ColorDialog colorPick = new ColorDialog();
+			colorPick.AllowFullOpen = true;
+			colorPick.AnyColor = true;
+			colorPick.SolidColorOnly = tabControl.SelectedTab == colorsTab;
+			if (colorPick.ShowDialog() != DialogResult.OK) return;
+            pictureBox1.BackColor = colorPick.Color;
+			if (tabControl.SelectedTab == waterTab && treeView2.SelectedNode != null &&
+				treeView2.SelectedNode.Tag != null && treeView2.SelectedNode.Tag is COLFile.ExtendedColorEntry)
+			{
+				var colorEntry = ((COLFile.ExtendedColorEntry)treeView2.SelectedNode.Tag);
+				colorEntry.color = (uint)colorPick.Color.ToArgb();
+			}
+			else if (tabControl.SelectedTab == colorsTab && treeView1.SelectedNode != null &&
+				treeView1.SelectedNode.Tag != null && treeView1.SelectedNode.Tag is COLFile.ColorEntry)
+			{
+				var colorEntry = ((COLFile.ColorEntry)treeView1.SelectedNode.Tag);
+				colorEntry.color = (uint)colorPick.Color.ToArgb() & 0xffffff;
+			}
+			colorPick.Dispose();
+        }
+
+        private void COLEditor_FormClosing(object sender, FormClosingEventArgs e)
+        {
+			DialogResult = DialogResult.OK;
+        }
+    }
 }

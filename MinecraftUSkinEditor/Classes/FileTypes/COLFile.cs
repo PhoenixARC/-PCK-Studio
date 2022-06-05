@@ -9,16 +9,14 @@ namespace PckStudio.Classes.FileTypes
 {
     public class COLFile
     {
-        public struct ColorEntry
+        public class ColorEntry
         {
             public string name;
-            public uint rgb;
+            public uint color;
         }
-        public struct ExtendedColorEntry
+        public class ExtendedColorEntry : ColorEntry
         {
-            public string name;
-            public uint argb;
-            public uint rgb;
+            public uint rgbcolor;
             public uint unk;
         }
 
@@ -32,7 +30,7 @@ namespace PckStudio.Classes.FileTypes
             {
                 ColorEntry entry = new ColorEntry();
                 entry.name = ReadString(stream);
-                entry.rgb = ReadUint(stream);
+                entry.color = ReadUint(stream);
                 entries.Add(entry);
             }
             if (has_water_colors == 1)
@@ -42,8 +40,8 @@ namespace PckStudio.Classes.FileTypes
                 {
                     ExtendedColorEntry entry = new ExtendedColorEntry();
                     entry.name = ReadString(stream);
-                    entry.argb = ReadUint(stream);
-                    entry.rgb = ReadUint(stream);
+                    entry.color = ReadUint(stream);
+                    entry.rgbcolor = ReadUint(stream);
                     entry.unk = ReadUint(stream);
                     waterEntries.Add(entry);
                 }
@@ -106,7 +104,7 @@ namespace PckStudio.Classes.FileTypes
             foreach (var colorEntry in entries)
             {
                 WriteString(stream, colorEntry.name);
-                WriteUint(stream, colorEntry.rgb);
+                WriteUint(stream, colorEntry.color);
             }
             if (waterEntries.Count > 0)
             {
@@ -114,8 +112,8 @@ namespace PckStudio.Classes.FileTypes
                 foreach (var colorEntry in waterEntries)
                 {
                     WriteString(stream, colorEntry.name);
-                    WriteUint(stream, colorEntry.rgb);
-                    WriteUint(stream, colorEntry.argb);
+                    WriteUint(stream, colorEntry.color);
+                    WriteUint(stream, colorEntry.rgbcolor);
                     WriteUint(stream, colorEntry.unk);
                 }
             }
