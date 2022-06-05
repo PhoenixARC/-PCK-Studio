@@ -13,7 +13,7 @@ namespace PckStudio
 
     static class Program
     {
-        public static string baseurl = "https://www.pckstudio.xyz/studio/PCK/api/";
+        public static string baseurl = "http://api.pckstudio.xyz/api/pck";
         public static string backurl = "https://raw.githubusercontent.com/PhoenixARC/pckstudio.tk/main/studio/PCK/api/";
         public static string Appdata = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/PCK Studio/";
         public static bool IsDev = false;

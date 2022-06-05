@@ -321,6 +321,8 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\API\PCKCenter\model\PCKCenterJSON.cs" />
+    <Compile Include="Classes\API\PCKCenter\SaveLocalJSON.cs" />
     <Compile Include="Classes\FileTypes\Bink.cs" />
     <Compile Include="Classes\FileTypes\COL.cs" />
     <Compile Include="Classes\FileTypes\CSM.cs" />

@@ -14,6 +14,8 @@ using MetroFramework.Forms;
 using RichPresenceClient;
 using PckStudio.Classes.Networking;
 using PckStudio.Classes.IO;
+using API.PCKCenter.model;
+using API.PCKCenter;
 
 namespace PckStudio.Forms.Utilities
 {
@@ -37,6 +39,7 @@ namespace PckStudio.Forms.Utilities
 
         public PCKCollections Collections = new PCKCollections();
         public PCKCollectionsLocal LocalCollections = new PCKCollectionsLocal();
+        LocalActions LActions = new LocalActions();
 
         string cache = Program.Appdata + "cache/";
 
@@ -57,7 +60,7 @@ namespace PckStudio.Forms.Utilities
                     }
                     break;
                 case 1:
-                    string[] CatsL = LocalCollections.GetLocalCategories();
+                    string[] CatsL = LocalCollections.GetLocalCategories(VitaCheckBox2.Checked);
                     foreach (string cat in CatsL)
                     {
                         CategoryComboBoxLocal.Items.Add(cat);
@@ -78,59 +81,41 @@ namespace PckStudio.Forms.Utilities
             switch (metroTabControl1.SelectedIndex)
             {
                 case 0:
-                    switch (VitaCheckBox.Checked)
+                    
+                    PCKCenterJSON packs = Collections.GetPackDescs(CategoryComboBox.Text, VitaCheckBox.Checked);
+                    Collections.CenterPacks = packs;
+                    foreach (KeyValuePair<string, EntryInfo> entry in packs.Data)
                     {
-                        case true:
-                            string[] packsVita = Collections.GetPackDescs(CategoryComboBox.Text, true);
-                            foreach (string pack in packsVita)
-                            {
-                                if (!string.IsNullOrWhiteSpace(pack) && !string.IsNullOrEmpty(pack))
-                                    OnlineTreeView.Nodes.Add(Collections.GetPackName(pack, true));
-                            }
-                            break;
-                        case false:
-                            string[] packs = Collections.GetPackDescs(CategoryComboBox.Text, false);
-                            foreach (string pack in packs)
-                            {
-                                if(!string.IsNullOrWhiteSpace(pack) && !string.IsNullOrEmpty(pack))
-                                    OnlineTreeView.Nodes.Add(Collections.GetPackName(pack, false));
-                            }
-                            break;
+                        TreeNode tn = new TreeNode(entry.Value.Name);
+                        tn.Tag = entry.Key;
+                        OnlineTreeView.Nodes.Add(tn);
                     }
+
                     break;
                 case 1:
-                    switch (VitaCheckBox2.Checked)
+
+                    PCKCenterJSON Localpacks = LocalCollections.GetLocalPackDescs(CategoryComboBoxLocal.Text, VitaCheckBox2.Checked);
+                    LocalCollections.CenterPacks = Localpacks;
+                    foreach (KeyValuePair<string, EntryInfo> entry in Localpacks.Data)
                     {
-                        case true:
-                            string[] packsVita = LocalCollections.GetLocalPackDescs(CategoryComboBoxLocal.Text, true);
-                            foreach (string pack in packsVita)
-                            {
-                                if (!string.IsNullOrWhiteSpace(pack) && !string.IsNullOrEmpty(pack))
-                                    LocalTreeView.Nodes.Add(LocalCollections.GetLocalPackName(pack, true));
-                            }
-                            break;
-                        case false:
-                            string[] packs = LocalCollections.GetLocalPackDescs(CategoryComboBoxLocal.Text, false);
-                            foreach (string pack in packs)
-                            {
-                                if (!string.IsNullOrWhiteSpace(pack) && !string.IsNullOrEmpty(pack))
-                                    LocalTreeView.Nodes.Add(LocalCollections.GetLocalPackName(pack, false));
-                            }
-                            break;
+                        TreeNode tn = new TreeNode(entry.Value.Name);
+                        tn.Tag = entry.Key;
+                        LocalTreeView.Nodes.Add(tn);
                     }
+
                     break;
             }
         }
 
-        public bool IsPackLocal(string PackFile, bool IsVita)
+        public bool IsPackLocal(int PackID, bool IsVita)
         {
             switch (IsVita)
             {
                 case true:
-                    return File.Exists(cache + "packs/files/Vita/" + PackFile + ".pck");
+                    return File.Exists(cache + "packs/vita/pcks/" + PackID + ".pck");
                     break;
                 case false:
-                    return File.Exists(cache + "packs/files/" + PackFile + ".pck");
+                    return File.Exists(cache + "packs/normal/pcks/" + PackID + ".pck");
                     break;
             }
         }
@@ -141,20 +126,19 @@ namespace PckStudio.Forms.Utilities
         {
             try
             {
-                string nam = "Pack Name: %n\nAuthor: %a\nDescription: %d";
-                string[] packs = Collections.GetPackDescs(CategoryComboBox.Text, VitaCheckBox.Checked);
-                string[] Data = Collections.GetPackData(packs[OnlineTreeView.SelectedNode.Index], VitaCheckBox.Checked);
+                string nam = "Pack Name: %n\npack ID: %pid\nAuthor: %a\nDescription: %d";
+                EntryInfo EI = Collections.CenterPacks.Data[OnlineTreeView.SelectedNode.Tag.ToString()];
 
-                metroLabel1.Text = nam.Replace("%n", Data[0]).Replace("%a", Data[1]).Replace("%d", Data[2]);
+                metroLabel1.Text = nam.Replace("%n", EI.Name).Replace("%a", EI.Author).Replace("%d", EI.Description).Replace("%pid", OnlineTreeView.SelectedNode.Tag.ToString());
                 metroLabel1.AutoSize = false;
                 metroLabel1.WrapToLine = true;
 
-                pictureBox1.Image = Collections.GetPackImage(packs[OnlineTreeView.SelectedNode.Index], VitaCheckBox.Checked);
+                pictureBox1.Image = Collections.GetPackImage(int.Parse(OnlineTreeView.SelectedNode.Tag.ToString()), VitaCheckBox.Checked);
 
-                if(!IsPackLocal(packs[OnlineTreeView.SelectedNode.Index], VitaCheckBox.Checked))
+                if(!IsPackLocal(int.Parse(OnlineTreeView.SelectedNode.Tag.ToString()), VitaCheckBox.Checked))
                     DownloadButton.Visible = true;
                 else
-                    DownloadButton.Visible = false;
+                    DownloadButton.Visible = false;/**/
             }
             catch
             {
@@ -178,9 +162,8 @@ namespace PckStudio.Forms.Utilities
         {
             try
             {
-                string[] packs = Collections.GetPackDescs(CategoryComboBox.Text, VitaCheckBox.Checked);
-                Collections.TryDownloadPack(packs[OnlineTreeView.SelectedNode.Index], VitaCheckBox.Checked, CategoryComboBox.Text);
-                MessageBox.Show("Download complete");
+                Collections.TryDownloadPack(int.Parse(OnlineTreeView.SelectedNode.Tag.ToString()), VitaCheckBox.Checked, CategoryComboBox.Text);
+                MessageBox.Show("Download complete");/**/
             }
             catch
             {
@@ -197,15 +180,14 @@ namespace PckStudio.Forms.Utilities
 
             try
             {
-                string nam = "Pack Name: %n\nAuthor: %a\nDescription: %d";
-                string[] packs = LocalCollections.GetLocalPackDescs(CategoryComboBoxLocal.Text, VitaCheckBox2.Checked);
-                string[] Data = LocalCollections.GetLocalPackData(packs[LocalTreeView.SelectedNode.Index], VitaCheckBox2.Checked);
+                string nam = "Pack Name: %n\npack ID: %pid\nAuthor: %a\nDescription: %d";
+                EntryInfo EI = LocalCollections.CenterPacks.Data[LocalTreeView.SelectedNode.Tag.ToString()];
 
-                metroLabel2.Text = nam.Replace("%n", Data[0]).Replace("%a", Data[1]).Replace("%d", Data[2]);
+                metroLabel2.Text = nam.Replace("%n", EI.Name).Replace("%a", EI.Author).Replace("%d", EI.Description).Replace("%pid", LocalTreeView.SelectedNode.Tag.ToString());
                 metroLabel2.AutoSize = false;
                 metroLabel2.WrapToLine = true;
 
-                pictureBox2.Image = LocalCollections.GetLocalPackImage(packs[LocalTreeView.SelectedNode.Index], VitaCheckBox2.Checked);
+                pictureBox2.Image = LocalCollections.GetLocalPackImage(int.Parse(LocalTreeView.SelectedNode.Tag.ToString()), VitaCheckBox2.Checked);
                 OpenFolderButton.Visible = true;
                 DeleteLocalButton.Visible = true;
             }
@@ -248,15 +230,16 @@ namespace PckStudio.Forms.Utilities
                 case true:
                     System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo()
                     {
-                        FileName = Program.Appdata + "cache/packs/files/vita",
+                        FileName = cache + "packs/vita/pcks",
                         UseShellExecute = true,
                         Verb = "open"
                     });
                     break;
                 case false:
+                    Console.WriteLine(cache + "packs/normal/pcks/");
                     System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo()
                     {
-                        FileName = Program.Appdata + "cache/packs/files",
+                        FileName = cache + "packs/normal/pcks/",
                         UseShellExecute = true,
                         Verb = "open"
                     });
@@ -266,37 +249,29 @@ namespace PckStudio.Forms.Utilities
 
         private void DeleteLocalButton_Click(object sender, EventArgs e)
         {
-            string[] packs = LocalCollections.GetLocalPackDescs(CategoryComboBoxLocal.Text, VitaCheckBox2.Checked);
-            if (MessageBox.Show("Are you sure you would like to remove '" + packs[LocalTreeView.SelectedNode.Index] + "'?", "Confirmation Dialog", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            EntryInfo EI = LocalCollections.CenterPacks.Data[LocalTreeView.SelectedNode.Tag.ToString()];
+            string PackID = LocalTreeView.SelectedNode.Tag.ToString();
+            LActions.Removepack(LocalCollections.CenterPacks, int.Parse(PackID));
+            metroLabel2.Text = "Pack Name: %n\npack ID: %pid\nAuthor: %a\nDescription: %d";
+            pictureBox2.Image.Dispose();
+            pictureBox2.Image = Properties.Resources.NoImageFound;
+            switch (VitaCheckBox2.Checked)
             {
-                pictureBox2.Image = Properties.Resources.NoImageFound;
-                switch (VitaCheckBox2.Checked)
-                {
-                    case false:
-                        string FileInfo = File.ReadAllText(Program.Appdata + "cache/packs/Category/Category" + CategoryComboBoxLocal.Text + ".txt");
-                        File.Delete(Program.Appdata + "cache/packs/files/" + packs[LocalTreeView.SelectedNode.Index] + ".pck");
-                        File.Delete(Program.Appdata + "cache/packs/descs/" + packs[LocalTreeView.SelectedNode.Index] + ".desc");
-                        try
-                        {
-                            File.Delete(Program.Appdata + "cache/packs/images/" + packs[LocalTreeView.SelectedNode.Index] + ".png");
-                        }
-                        catch { }
-                        File.WriteAllText(Program.Appdata + "cache/packs/Category/Category" + CategoryComboBoxLocal.Text + ".txt", FileInfo.Replace("\n" + packs[LocalTreeView.SelectedNode.Index], ""));
-                        break;
-                    case true:
-                        string FileInfo2 = File.ReadAllText(Program.Appdata + "cache/packs/Category/VitaCategory" + CategoryComboBoxLocal.Text + ".txt");
-                        File.Delete(Program.Appdata + "cache/packs/files/Vita/" + packs[LocalTreeView.SelectedNode.Index] + ".pck");
-                        File.Delete(Program.Appdata + "cache/packs/descs/Vita/" + packs[LocalTreeView.SelectedNode.Index] + ".desc");
-                        try
-                        {
-                            File.Delete(Program.Appdata + "cache/packs/images/Vita/" + packs[LocalTreeView.SelectedNode.Index] + ".png");
-                        }
-                        catch { }
-                        File.WriteAllText(Program.Appdata + "cache/packs/Category/VitaCategory" + CategoryComboBoxLocal.Text + ".txt", FileInfo2.Replace("\n" + packs[LocalTreeView.SelectedNode.Index], ""));
-                        break;
-                }
-                LocalTreeView.SelectedNode.Remove();
-                metroLabel2.Text = "Pack Name: %n\nAuthor: %a\nDescription: %d";
+                case true:
+                    File.Delete(cache + "packs/vita/pcks/" + PackID + ".pck");
+                    File.Delete(cache + "packs/vita/images/" + PackID + ".png");
+                    break;
+                case false:
+                    File.Delete(cache + "packs/normal/pcks/" + PackID + ".pck");
+                    File.Delete(cache + "packs/normal/images/" + PackID + ".png");
+                    break;
+            }
+            LocalTreeView.SelectedNode.Remove();
+            switch (LActions.SaveLocalJSON(LocalCollections.CenterPacks, CategoryComboBoxLocal.Text, VitaCheckBox2.Checked))
+            {
+                case false:
+                    MessageBox.Show("Could not save JSON due to unknown error");
+                    break;
             }
         }
 

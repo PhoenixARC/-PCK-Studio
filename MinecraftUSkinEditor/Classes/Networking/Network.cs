@@ -10,10 +10,10 @@ namespace PckStudio.Classes
         public static bool Beta = true;
         public static bool Portable = false;
         public static bool NeedsUpdate = false;
-        public static string MainURL = "http://pckstudio.xyz/";
+        public static string MainURL = "http://api.pckstudio.xyz/api/pck";
         public static string BackURL = "http://phoenixarc.ddns.net/";
-        static string UpdateURL = "studio/PCK/api/updatePCKStudio.txt";
-        static string BetaUpdateURL = "studio/PCK/api/updatePCKStudioB.txt";
+        static string UpdateURL = "/update/Version";
+        static string BetaUpdateURL = "/update/VersionBeta";
 
         public static void CheckUpdate()
         {

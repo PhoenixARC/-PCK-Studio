@@ -9,8 +9,8 @@ namespace PckStudio.Classes
 {
     class Update
     {
-        static string UpdateURL = "Download/setup/PCKStudio-Setup.msi";
-        static string BetaUpdateURL = "Download/setup/beta/PCKStudioBeta-Setup.msi";
+        static string UpdateURL = "/Update/Download/setup/PCKStudio-Setup.msi";
+        static string BetaUpdateURL = "/Update/Download/setup/beta/PCKStudioBeta-Setup.msi";
 
         public static void UpdateProgram(bool Beta)
         {

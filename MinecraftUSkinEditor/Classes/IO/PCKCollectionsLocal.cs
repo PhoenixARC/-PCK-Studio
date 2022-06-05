@@ -5,45 +5,74 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using Newtonsoft.Json;
+using API.PCKCenter.model;
+using API.PCKCenter;
 
 namespace PckStudio.Classes.IO
 {
     public  class PCKCollectionsLocal
     {
         string cache = Program.Appdata + "cache/packs/";
-        public string[] GetLocalCategories()
+
+        public PCKCenterJSON CenterPacks;
+        public LocalActions LocalAction = new LocalActions();        
+        
+        public string[] GetLocalCategories(bool isVita)
         {
-            string cat = "";
             try
             {
-                cat = File.ReadAllText(cache + "PCKCategories.txt");
+                List<string> Cats = new List<string>();
+                switch (isVita)
+                {
+                    case false:
+                        foreach (string file in Directory.GetFiles(cache + "normal/"))
+                        {
+                            if (Path.GetExtension(file) == ".json")
+                                Cats.Add(Path.GetFileNameWithoutExtension(file));
+                        }
+                        break;
+                    case true:
+                        foreach (string file in Directory.GetFiles(cache + "vita/"))
+                        {
+                            if (Path.GetExtension(file) == ".json")
+                                Cats.Add(Path.GetFileNameWithoutExtension(file));
+                        }
+                        break;
+                }
+                return Cats.ToArray();
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
+                return new string[] { };
             }
-            return cat.Split(new[] { "\n", "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
         }
 
 
-        public string[] GetLocalPackDescs(string Category, bool IsVita)
+        public PCKCenterJSON GetLocalPackDescs(string Category, bool IsVita)
         {
-            string cat = "";
+            string StringData = "";
             try
             {
                 switch (IsVita)
                 {
                     case (true):
-                        cat = File.ReadAllText(cache + "Category/VitaCategory" + Category + ".txt");
+                        StringData = File.ReadAllText(cache + "vita/ " + Category + ".json");
                         break;
                     case (false):
-                        cat = File.ReadAllText(cache + "Category/Category" + Category + ".txt");
+                        StringData = File.ReadAllText(cache + "normal/" + Category + ".json");
                         break;
                 }
             }
-            catch
+            catch (Exception e)
             {
+                Console.WriteLine(e.Message);
+                return new PCKCenterJSON();
             }
-            return cat.Split(new[] { "\n", "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+
+            PCKCenterJSON Data = JsonConvert.DeserializeObject<PCKCenterJSON>(StringData);
+            return Data;
         }
 
 
@@ -92,7 +121,7 @@ namespace PckStudio.Classes.IO
         }
 
 
-        public Image GetLocalPackImage(string Category, bool IsVita)
+        public Image GetLocalPackImage(int packID, bool IsVita)
         {
             Image image = null;
             try
@@ -100,10 +129,10 @@ namespace PckStudio.Classes.IO
                 switch (IsVita)
                 {
                     case (true):
-                        image = Image.FromFile(cache + "images/Vita/" + Category + ".png");
+                        image = Image.FromFile(cache + "vita/images/" + packID + ".png");
                         break;
                     case (false):
-                        image = Image.FromFile(cache + "images/" + Category + ".png");
+                        image = Image.FromFile(cache + "normal/images/" + packID + ".png");
                         break;
                 }
             }
