@@ -24,7 +24,8 @@ namespace PckStudio.Classes.FileTypes
 		        DLCAudioFile,
 		        DLCColourTableFile,
 		        DLCGameRulesHeader,
-		        DLCModelsFile = 12,
+                DLCSkinDataFile, // made up name  -Miku
+		        DLCModelsFile,
 		        DLCBehavioursFile,
 		        DLCMaterialFile,
             }
