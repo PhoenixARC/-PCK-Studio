@@ -11,6 +11,13 @@ namespace PckStudio.Classes.FileTypes
     {
         public Dictionary<string, Dictionary<string, string>> languages { get; set; } = new Dictionary<string, Dictionary<string, string>>();
 
+        public void InitializeDefault()
+        {
+            AddLanguage("en-EN", "no_name");
+        }
+
+
+        // Adds id and name to all languages
         public void AddEntry(string key, string value)
         {
             foreach (var language in languages.Values)
@@ -43,5 +50,13 @@ namespace PckStudio.Classes.FileTypes
                     language.Remove(keyId);
             }
         }
+
+        private void AddLanguage(string language, string tranlatedDisplayName)
+        {
+            var dict = new Dictionary<string, string>();
+            dict.Add("IDS_DISPLAY_NAME", tranlatedDisplayName);
+            languages.Add(language, dict);
+        }
+
     }
 }

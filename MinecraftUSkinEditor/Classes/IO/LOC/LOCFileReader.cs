@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using PckStudio.Classes.FileTypes;
 
@@ -21,7 +20,7 @@ namespace PckStudio.Classes.IO.LOC
             _file = new LOCFile();
         }
 
-        internal LOCFile ReadFile(Stream stream)
+        private LOCFile ReadFile(Stream stream)
         {
             int loc_type = ReadInt(stream);
             int language_count = ReadInt(stream);
@@ -54,7 +53,7 @@ namespace PckStudio.Classes.IO.LOC
             stream.ReadByte(); // unknown
             int keyCount = ReadInt(stream);
             List<string> keys = new List<string>();
-            for (; 0 < keyCount; keyCount--)
+            for (int i = 0; i < keyCount; i++)
             {
                 string key = ReadString(stream);
                 keys.Add(key);
@@ -66,12 +65,16 @@ namespace PckStudio.Classes.IO.LOC
         {
             byte[] bytes = new byte[2];
             stream.Read(bytes, 0, bytes.Length);
+            if (BitConverter.IsLittleEndian)
+                Array.Reverse(bytes);
             return BitConverter.ToInt16(bytes, 0);
         }
         internal int ReadInt(Stream stream)
         {
             byte[] bytes = new byte[4];
             stream.Read(bytes, 0, bytes.Length);
+            if (BitConverter.IsLittleEndian)
+                Array.Reverse(bytes);
             return BitConverter.ToInt32(bytes, 0);
         }
 

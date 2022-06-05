@@ -25,8 +25,8 @@ namespace PckStudio.Classes.IO.LOC
             WriteInt(stream, type);
             WriteInt(stream, _file.languages.Count);
             if (type == 2) WriteKeys(stream);
-
             WriteLanguages(stream);
+            WriteLanguageEntries(stream);
         }
 
 
@@ -48,17 +48,31 @@ namespace PckStudio.Classes.IO.LOC
 
         internal void WriteLanguageEntries(Stream stream)
         {
+            foreach (var language in _file.languages.Keys)
+            {
+                WriteString(stream, language);
+                WriteInt(stream, 0); // padding ???
+                foreach(var entry in _file.languages[language])
+                {
+                    WriteString(stream, entry.Key);
+                    WriteString(stream, entry.Value);
+                }
+            }
 
         }
 
         internal void WriteShort(Stream stream, short value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
+            if (BitConverter.IsLittleEndian)
+                Array.Reverse(bytes);
             stream.Write(bytes, 0, bytes.Length);
         }
         internal void WriteInt(Stream stream, int value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
+            if (BitConverter.IsLittleEndian)
+                Array.Reverse(bytes);
             stream.Write(bytes, 0, bytes.Length);
         }
 
