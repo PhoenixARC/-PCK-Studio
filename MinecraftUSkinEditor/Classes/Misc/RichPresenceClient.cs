@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using DiscordRPC;
+using DiscordRPC.Exceptions;
 
 namespace RichPresenceClient
 {
@@ -12,9 +13,17 @@ namespace RichPresenceClient
         public static void Initialize(string ClientID)
         {
             client = new DiscordRpcClient(ClientID);
-            if (!client.Initialize())
+            try
             {
-                throw new Exception("ERROR initializing Discord RPC");
+                client.Initialize();
+            }
+            catch (UninitializedException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            catch (ObjectDisposedException ex)
+            {
+                Console.WriteLine(ex.Message);
             }
         }
 
