@@ -9,54 +9,142 @@ namespace PckStudio.Classes.FileTypes
 {
     public class LOCFile
     {
-        public Dictionary<string, Dictionary<string, string>> languages { get; set; } = new Dictionary<string, Dictionary<string, string>>();
+        // loc key => language, name
+        public Dictionary<string, Dictionary<string, string>> keys { get; set; } = new Dictionary<string, Dictionary<string, string>>();
 
-        public void InitializeDefault()
+        private List<string> _languages = new List<string>(languages.Length);
+
+        public void InitializeDefault(string PackName)
         {
-            AddLanguage("en-EN", "no_name");
+            AddLanguage("en-EN", PackName);
         }
 
-
-        // Adds id and name to all languages
-        public void AddEntry(string key, string value)
+        public static readonly string[] languages = new string[]
         {
-            foreach (var language in languages.Values)
-            {
-                language.Add(key, value);
-            }
-        }
+            "cs-CS",
+            "cs-CZ",
 
-        public void ChangeEntry(string keyId, string newValue)
-        {
-            foreach (var language in languages.Values)
-            {
-                if (!language.ContainsKey(keyId)) throw new Exception("Key not found");
-                language[keyId] = newValue;
-            }
-        }
+            "da-CH",
+            "da-DA",
+            "da-DK",
 
-        public void ChangeSingleEntry(string language, string keyId, string newValue)
-        {
-            if (!languages.ContainsKey(language)) throw new Exception("Key not found");
-            if (!languages[language].ContainsKey(keyId)) throw new Exception("Key Id not found");
-            languages[language][keyId] = newValue;
-        }
+            "de-AT",
+            "de-DE",
 
-        public void RemoveEntry(string keyId)
-        {
-            foreach (var language in languages.Values)
-            {
-                if (language.ContainsKey(keyId))
-                    language.Remove(keyId);
-            }
-        }
+            "el-EL",
+            "el-GR",
 
-        private void AddLanguage(string language, string tranlatedDisplayName)
+            "en-AU",
+            "en-CA",
+            "en-EN",
+            "en-GB",
+            "en-GR",
+            "en-IE",
+            "en-NZ",
+            "en-US",
+
+            "es-ES",
+            "es-MX",
+
+            "fi-BE",
+            "fi-CH",
+            "fi-FI",
+
+            "fr-FR",
+            "fr-CA",
+
+            "it-IT",
+
+            "ja-JP",
+
+            "ko-KR",
+
+            "no-NO",
+
+            "nb-NO",
+
+            "nl-NL",
+            "nl-BE",
+
+            "pl-PL",
+
+            "pt-BR",
+            "pt-PT",
+
+            "ru-RU",
+
+            "sk-SK",
+
+            "sv-SE",
+
+            "tr-TR",
+
+            "la-LAS",
+
+            "zh-CN",
+            "zh-HK",
+            "zh-SG",
+            "zh-TW",
+            "zh-CHT",
+            "zh-HanS",
+            "zh-HanT",
+        };
+
+        public void AddSingleEntry(string locKey, string language, string value)
         {
+            if (keys.ContainsKey(locKey)) throw new Exception("Loc key already exists");
             var dict = new Dictionary<string, string>();
-            dict.Add("IDS_DISPLAY_NAME", tranlatedDisplayName);
-            languages.Add(language, dict);
+            dict.Add(language, value);
+            keys.Add(locKey, dict);
         }
 
+        public void AddEntry(string locKey, string value)
+        {
+            if (string.IsNullOrEmpty(locKey) || string.IsNullOrEmpty(value))
+                throw new ArgumentNullException("string cant be null");
+            if (keys.ContainsKey(locKey))
+                throw new Exception("loc key already exists");
+            foreach (var langauge in keys[locKey].Keys)
+            {
+                AddSingleEntry(locKey, langauge, value);
+            }
+        }
+        public void ChangeSingleEntry(string locKey, string language, string newValue)
+        {
+            if (!keys.ContainsKey(locKey)) throw new KeyNotFoundException("Loc key not found");
+            if (!keys[locKey].ContainsKey(language)) throw new KeyNotFoundException("Language Entry not found");
+            keys[locKey][language] = newValue;
+        }
+
+        public void ChangeEntry(string locKey, string newValue)
+        {
+            if (string.IsNullOrEmpty(locKey) || string.IsNullOrEmpty(newValue))
+                throw new ArgumentNullException("string cant be null");
+            if (!keys.ContainsKey(locKey))
+                throw new KeyNotFoundException("loc key not found");
+            foreach (var langauge in keys[locKey].Keys)
+            {
+                ChangeSingleEntry(locKey, langauge, newValue);
+            }
+        }
+
+
+        public void RemoveEntry(string locKey)
+        {
+            if (!keys.ContainsKey(locKey)) throw new KeyNotFoundException("Loc key not found");
+            keys.Remove(locKey);
+        }
+
+        private void AddLanguage(string language, string packName)
+        {
+            if (keys.ContainsKey("IDS_DISPLAY_NAME"))
+            {
+                keys["IDS_DISPLAY_NAME"].Add(language, packName);
+                return;
+            }
+            var dict = new Dictionary<string, string>();
+            dict.Add(language, packName);
+            keys.Add("IDS_DISPLAY_NAME", dict);
+        }
     }
 }
