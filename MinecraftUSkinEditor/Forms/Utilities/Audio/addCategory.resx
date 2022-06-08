@@ -151,7 +151,7 @@
     <value>Flat</value>
   </data>
   <data name="button1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>96, 78</value>
+    <value>94, 75</value>
   </data>
   <data name="button1.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
@@ -160,7 +160,7 @@
     <value>4</value>
   </data>
   <data name="button1.Text" xml:space="preserve">
-    <value>Create</value>
+    <value>Add</value>
   </data>
   <data name="&gt;&gt;button1.Name" xml:space="preserve">
     <value>button1</value>

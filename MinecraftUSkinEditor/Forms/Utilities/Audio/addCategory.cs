@@ -14,31 +14,26 @@ namespace PckStudio
 {
 	public partial class addCategory : MetroFramework.Forms.MetroForm
 	{
-		PckStudio.Forms.Utilities.AudioEditor audio;
-		public addCategory(PckStudio.Forms.Utilities.AudioEditor audioIn)
+		public string Category { get; private set; }
+		public addCategory(Forms.Utilities.AudioEditor audioIn)
 		{
 			InitializeComponent();
-			audio = audioIn;
-			if(!audio.cats.Contains(0)) comboBox1.Items.Add("Overworld");
-			if(!audio.cats.Contains(1)) comboBox1.Items.Add("Nether");
-			if(!audio.cats.Contains(2)) comboBox1.Items.Add("End");
-			if(!audio.cats.Contains(3)) comboBox1.Items.Add("Creative");
-			if(!audio.cats.Contains(4)) comboBox1.Items.Add("Menu");
-			if(!audio.cats.Contains(5)) comboBox1.Items.Add("Battle");
-			if(!audio.cats.Contains(6)) comboBox1.Items.Add("Tumble");
-			if(!audio.cats.Contains(7)) comboBox1.Items.Add("Glide");
+			if(!audioIn.cats.Contains(0)) comboBox1.Items.Add("Overworld");
+			if(!audioIn.cats.Contains(1)) comboBox1.Items.Add("Nether");
+			if(!audioIn.cats.Contains(2)) comboBox1.Items.Add("End");
+			if(!audioIn.cats.Contains(3)) comboBox1.Items.Add("Creative");
+			if(!audioIn.cats.Contains(4)) comboBox1.Items.Add("Menu");
+			if(!audioIn.cats.Contains(5)) comboBox1.Items.Add("Battle");
+			if(!audioIn.cats.Contains(6)) comboBox1.Items.Add("Tumble");
+			if(!audioIn.cats.Contains(7)) comboBox1.Items.Add("Glide");
 			FormBorderStyle = FormBorderStyle.None;
 		}
 
 		private void button1_Click(object sender, EventArgs e)
 		{
-			audio.cat = comboBox1.Text;
-			if(comboBox1.SelectedIndex > -1) this.Close();
-		}
-
-		private void addCategory_Load(object sender, EventArgs e)
-		{
-
+			Category = comboBox1.Text;
+			DialogResult = DialogResult.OK;
+			if(comboBox1.SelectedIndex > -1) Close();
 		}
 
 	}

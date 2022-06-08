@@ -166,7 +166,6 @@ namespace PckStudio.Forms.Utilities
             resources.ApplyResources(this.metroLabel2, "metroLabel2");
             this.metroLabel2.Name = "metroLabel2";
             this.metroLabel2.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.metroLabel2.Click += new System.EventHandler(this.metroLabel2_Click);
             // 
             // metroLabel1
             // 
