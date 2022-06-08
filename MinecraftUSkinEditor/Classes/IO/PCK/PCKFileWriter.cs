@@ -36,7 +36,7 @@ namespace PckStudio.Classes.IO
             byte[] buffer = BitConverter.GetBytes(value);
             if (BitConverter.IsLittleEndian && !isLittleEndian)
                 Array.Reverse(buffer);
-            stream.Write(buffer, 0, buffer.Length);
+            stream.Write(buffer, 0, 4);
         }
 
         internal void WriteString(Stream stream, string s)

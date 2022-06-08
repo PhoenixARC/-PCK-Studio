@@ -61,8 +61,6 @@ namespace PckStudio.Classes.IO
             foreach (var file_entry in _file.file_entries)
             {
                 int property_count = ReadInt(stream);
-
-                var properties = new PCKProperties();
                 for (; 0 < property_count; property_count--)
                 {
                     int index = ReadInt(stream);
@@ -70,11 +68,11 @@ namespace PckStudio.Classes.IO
                         throw new Exception("Value not found");
                     string key = GetKeyFromValue(_file.meta_data, index);
                     string value = ReadString(stream);
-                    properties.Add(new Tuple<string, string>(key, value));
+                    file_entry.properties.Add(new ValueTuple<string, string>(key, value));
                     ReadInt(stream); // padding ???
                 }
-                file_entry.properties = properties;
-                stream.Read(file_entry.data, 0, file_entry.size); // file data buffer is only allocated when FileData is constructed with `dataSize`
+                // file data buffer is only allocated when FileData is constructed with `dataSize`
+                stream.Read(file_entry.data, 0, file_entry.size);
             }
         }
         private static T1 GetKeyFromValue<T1, T2>(Dictionary<T1, T2> dict, T2 value)
