@@ -29,20 +29,29 @@ namespace PckStudio.Classes.IO.LOC
             for (int i = 0; i < language_count; i++)
             {
                 string language = ReadString(stream);
-                _file.languages[language] = new Dictionary<string, string>();
+                _file._languages.Add(language);
                 ReadInt(stream); // padding ???
             }
             for (int i = 0; i < language_count; i++)
             {
-                stream.ReadByte(); // unknown
-                ReadInt(stream); // unknown
+                Console.WriteLine(ReadInt(stream).ToString());
+                Console.WriteLine(stream.ReadByte());
                 string language = ReadString(stream);
+                if (!_file._languages.Contains(language))
+                    throw new Exception("language not found");
                 int count = ReadInt(stream);
                 for (int j = 0; j < count; j++)
                 {
                     string key = loc_type == 2 ? keys[j] : ReadString(stream);
                     string value = ReadString(stream);
-                    _file.languages[language].Add(key, value);
+                    if (_file.keys.ContainsKey(key))
+                    {
+                        _file.keys[key].Add(language, value);
+                        continue;
+                    }
+                    var dict = new Dictionary<string, string>();
+                    dict.Add(language, value);
+                    _file.keys.Add(key, dict);
                 }
             }
             return _file;
@@ -52,7 +61,7 @@ namespace PckStudio.Classes.IO.LOC
         {
             stream.ReadByte(); // unknown
             int keyCount = ReadInt(stream);
-            List<string> keys = new List<string>();
+            List<string> keys = new List<string>(keyCount);
             for (int i = 0; i < keyCount; i++)
             {
                 string key = ReadString(stream);
