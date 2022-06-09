@@ -8,10 +8,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MetroFramework.Forms;
 
 namespace PckStudio
 {
-    public partial class MetaADD : Form
+    public partial class MetaADD : MetroForm
     {
         PCKFile currentPCK;
 
