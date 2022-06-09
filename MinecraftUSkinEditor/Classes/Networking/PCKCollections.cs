@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 using System.Drawing.Imaging;
 using System.Drawing.Design;
 using System.Drawing;
+using Newtonsoft.Json;
+using API.PCKCenter.model;
+using API.PCKCenter;
 
 namespace PckStudio.Classes.Networking
 {
@@ -16,35 +19,34 @@ namespace PckStudio.Classes.Networking
         WebClient client = new WebClient();
         public string CurrentPackDl = "";
         string cache = Program.Appdata + "cache/packs/";
+        public PCKCenterJSON CenterPacks;
+        public LocalActions LocalAction = new LocalActions();
         public string[] GetCategories()
         {
             string cat = "";
             try
             {
-                cat = client.DownloadString(PckStudio.Classes.Network.MainURL + "/studio/PCK/api/PCKCategories.txt");
-                client.DownloadFile(PckStudio.Classes.Network.MainURL + "/studio/PCK/api/PCKCategories.txt", cache + "PCKCategories.txt");
+                cat = client.DownloadString(Program.baseurl + "/center/packs/Categiories.json");
             }
             catch
             {
-                cat = client.DownloadString(PckStudio.Classes.Network.BackURL + "/studio/PCK/api/PCKCategories.txt");
-                client.DownloadFile(PckStudio.Classes.Network.BackURL + "/studio/PCK/api/PCKCategories.txt", cache + "PCKCategories.txt");
+                cat = client.DownloadString(Program.baseurl + "/center/packs/VitaCategiories.json");
             }
-            return cat.Split(new[] { "\n", "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+            return JsonConvert.DeserializeObject<string[]>(cat);
         }
 
-        public string[] GetPackDescs(string Category, bool IsVita)
+        public PCKCenterJSON GetPackDescs(string Category, bool IsVita)
         {
             string cat = "";
             try
             {
-                Console.WriteLine(PckStudio.Classes.Network.MainURL + "/studio/PCK/api/Category/Category" + Category + ".txt");
                 switch (IsVita)
                 {
                     case (true):
-                        cat = client.DownloadString(PckStudio.Classes.Network.MainURL + "/studio/PCK/api/Category/VitaCategory" + Category + ".txt");
+                        cat = client.DownloadString(Program.baseurl + "/center/packs/vita/" + Category + ".json");
                         break;
                     case (false):
-                        cat = client.DownloadString(PckStudio.Classes.Network.MainURL + "/studio/PCK/api/Category/Category" + Category + ".txt");
+                        cat = client.DownloadString(Program.baseurl + "/center/packs/normal/" + Category + ".json");
                         break;
                 }
             }
@@ -53,48 +55,17 @@ namespace PckStudio.Classes.Networking
                 switch (IsVita)
                 {
                     case (true):
-                        cat = client.DownloadString(PckStudio.Classes.Network.BackURL + "/studio/PCK/api/Category/VitaCategory" + Category + ".txt");
+                        cat = client.DownloadString(Program.backurl + "/center/packs/vita/" + Category + ".json");
                         break;
                     case (false):
-                        cat = client.DownloadString(PckStudio.Classes.Network.BackURL + "/studio/PCK/api/Category/Category" + Category + ".txt");
+                        cat = client.DownloadString(Program.backurl + "/center/packs/normal/" + Category + ".json");
                         break;
                 }
             }
-            return cat.Split(new[] { "\n", "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
-        }
 
-        public string GetPackName(string Category, bool IsVita)
-        {
-            string cat = "";
-            try
-            {
-                Console.WriteLine(PckStudio.Classes.Network.MainURL + "/studio/PCK/api/pcks/" + Category + ".desc");
-                switch (IsVita)
-                {
-                    case (true):
-                        cat = client.DownloadString(PckStudio.Classes.Network.MainURL + "/studio/PCK/api/pcks/Vita/" + Category + ".desc");
-                        break;
-                    case (false):
-                        cat = client.DownloadString(PckStudio.Classes.Network.MainURL + "/studio/PCK/api/pcks/" + Category + ".desc");
-                        break;
-                }
-            }
-            catch(Exception err)
-            {
-                switch (IsVita)
-                {
-                    case (true):
-                        cat = client.DownloadString(PckStudio.Classes.Network.BackURL + "/studio/PCK/api/pcks/Vita/" + Category + ".desc");
-                        break;
-                    case (false):
-                        cat = client.DownloadString(PckStudio.Classes.Network.BackURL + "/studio/PCK/api/pcks/" + Category + ".desc");
-                        break;
-                }
-            }
-            string[] data = cat.Split(new[] { "\n", "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
-            return data[0];
+            PCKCenterJSON Data = JsonConvert.DeserializeObject<PCKCenterJSON>(cat);
+            return Data;
         }
-
         public string[] GetPackData(string Category, bool IsVita)
         {
             string cat = "";
@@ -125,7 +96,7 @@ namespace PckStudio.Classes.Networking
             return cat.Split(new[] { "\n", "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
         }
 
-        public Image GetPackImage(string Category, bool IsVita)
+        public Image GetPackImage(int packID, bool IsVita)
         {
             byte[] cat = new byte[] { };
             try
@@ -133,10 +104,10 @@ namespace PckStudio.Classes.Networking
                 switch (IsVita)
                 {
                     case (true):
-                        cat = client.DownloadData(PckStudio.Classes.Network.MainURL + "/studio/PCK/api/pcks/Vita/image/" + Category + ".png");
+                        cat = client.DownloadData(Program.baseurl + "/center/packs/vita/images/" + packID + ".png");
                         break;
                     case (false):
-                        cat = client.DownloadData(PckStudio.Classes.Network.MainURL + "/studio/PCK/api/pcks/image/" + Category + ".png");
+                        cat = client.DownloadData(Program.baseurl + "/center/packs/normal/images/" + packID + ".png");
                         break;
                 }
             }
@@ -145,10 +116,10 @@ namespace PckStudio.Classes.Networking
                 switch (IsVita)
                 {
                     case (true):
-                        cat = client.DownloadData(PckStudio.Classes.Network.BackURL + "/studio/PCK/api/pcks/Vita/image/" + Category + ".png");
+                        cat = client.DownloadData(Program.backurl + "/center/packs/vita/images/" + packID + ".png");
                         break;
                     case (false):
-                        cat = client.DownloadData(PckStudio.Classes.Network.BackURL + "/studio/PCK/api/pcks/image/" + Category + ".png");
+                        cat = client.DownloadData(Program.backurl + "/center/packs/normal/images/" + packID + ".png");
                         break;
                 }
             }
@@ -160,37 +131,35 @@ namespace PckStudio.Classes.Networking
             return image;
         }
 
-        public bool TryDownloadPack(string Category, bool IsVita, string PackCat)
+        public bool TryDownloadPack(int packID, bool IsVita, string Category)
         {
             try
             {
-                string[] desc = GetPackData(Category, IsVita);
-                Image image = GetPackImage(Category, IsVita);
-                string DescPath = cache;
-                Directory.CreateDirectory(cache + "descs/Vita/");
-                Directory.CreateDirectory(cache + "images/Vita/");
-                Directory.CreateDirectory(cache + "files/Vita/");
-                Directory.CreateDirectory(cache + "Category/");
 
+                Image image = GetPackImage(packID, IsVita);
+                string DescPath = cache;
+                Directory.CreateDirectory(cache + "normal/");
+                Directory.CreateDirectory(cache + "normal/images");
+                Directory.CreateDirectory(cache + "normal/pcks");
+                Directory.CreateDirectory(cache + "vita/");
+                Directory.CreateDirectory(cache + "vita/images");
+                Directory.CreateDirectory(cache + "vita/pcks");
+                PCKCenterJSON Local = LocalAction.GetLocalJSON(Category, IsVita);
                 switch (IsVita)
                 {
-                    case (true):
-                        DescPath = cache + "descs/Vita/" + Category + ".desc";
-                        image.Save(cache + "images/Vita/" + Category + ".png");
-                        File.WriteAllText(DescPath, desc[0] + "\n" + desc[1] + "\n" + desc[2]);
-                        File.WriteAllText(cache + "Category/VitaCategory" + PackCat + ".txt", "\n"+ Category);
-                        byte[] bytes = client.DownloadData(desc[3]);
-                        File.WriteAllBytes(cache + "files/Vita/" + Category + ".pck", bytes);
-                        break;
                     case (false):
-                        DescPath = cache + "descs/" + Category + ".desc";
-                        image.Save(cache + "images/" + Category + ".png");
-                        File.WriteAllText(DescPath, desc[0] + "\n" + desc[1] + "\n" + desc[2]);
-                        File.WriteAllText(cache + "Category/Category" + PackCat + ".txt", "\n" + Category);
-                        byte[] bytes2 = client.DownloadData(desc[3]);
-                        File.WriteAllBytes(cache + "files/" + Category + ".pck", bytes2);
+                        image.Save(cache + "normal/images/" + packID + ".png"); 
+                        client.DownloadFile(Program.baseurl + "/center/packs/normal/pcks/" + packID + ".pck", cache + "normal/pcks/" + packID + ".pck");
+                        break;
+                    case (true):
+                        image.Save(cache + "vita/images/" + packID + ".png");
+                        client.DownloadFile(Program.baseurl + "/center/packs/vita/pcks/" + packID + ".pck", cache + "vita/pcks/" + packID + ".pck");
                         break;
                 }
+                Local = LocalAction.AddPack(Local, CenterPacks.Data[packID.ToString()], packID);
+                LocalAction.SaveLocalJSON(Local, Category, IsVita);
+                LocalAction.SaveLocalCategories(IsVita);
+                /**/
                 image.Dispose();
                 return true;
             }
@@ -200,6 +169,28 @@ namespace PckStudio.Classes.Networking
             }
         }
 
+        public void TryTestPackInfo(bool IsVita)
+        {
+            try
+            {
+                WebClient wc = new WebClient();
+                string CategoryJSON = wc.DownloadString(Program.baseurl + "/center/packs/Categiories.json");
+                string[] Categories = JsonConvert.DeserializeObject<string[]>(CategoryJSON);
+                PCKCenterJSON Result = pk1(Categories[2]);
+                Console.Write(""); // this is a breakpoint
 
+            }
+            catch
+            {
+                Console.Write(""); // this is a breakpoint
+            }
+        }
+        PCKCenterJSON pk1(string categorie)
+        {
+            WebClient wc = new WebClient();
+            string DataJSON = wc.DownloadString(Program.baseurl + "/center/packs/normal/" + categorie + ".json");
+            PCKCenterJSON Data = JsonConvert.DeserializeObject<PCKCenterJSON>(DataJSON);
+            return Data;
+        }
     }
 }

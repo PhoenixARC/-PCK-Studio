@@ -11,15 +11,18 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Media.Imaging;
 using RichPresenceClient;
+using API.PCKCenter.model;
+using API.PCKCenter;
 
 namespace PckStudio.Forms
 {
     public partial class pckCenter : MetroFramework.Forms.MetroForm
     {
         string[] mods;
-        string hosturl = File.ReadAllText(appData + "\\settings.ini").Split(new[] { "\r\n", "\n" }, StringSplitOptions.None)[1] + "/studio/PCK/api/";
-        string loadDirectory = File.ReadAllText(appData + "\\settings.ini").Split(new[] { "\r\n", "\n" }, StringSplitOptions.None)[1] + "/studio/PCK/api/pckCenterList.txt";
+        string hosturl = "http://pckstudio.xyz/studio/PCK/api/";
+        string loadDirectory = "http://pckstudio.xyz/studio/PCK/api/pckCenterList.txt";
         static string appData = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/PCK Studio/";
+        LocalActions LAct = new LocalActions();
         string cacheDir;
 
         bool nobleLoaded = true;
@@ -88,6 +91,9 @@ namespace PckStudio.Forms
                         control.Dispose();
                     }
 
+                                PCKCenterJSON PJSON = new PCKCenterJSON();
+                                PJSON.Data = new Dictionary<string, EntryInfo>();
+                    int x = 0;
                     foreach (string mod in mods)
                     {
                         try
@@ -167,12 +173,22 @@ namespace PckStudio.Forms
                                 bool IsVita = (parseDesc[5] == "true" || parseDesc[5] == "True");
                                 string Packname = parseDesc[6];
 
+                                EntryInfo EInfo = new EntryInfo();
+                                EInfo.Name = pckName;
+                                EInfo.Author = author;
+                                EInfo.Description = desc;
+                                PJSON.Data.Add((++x).ToString(), EInfo);
+                                File.Copy(cacheDir + mod + ".png", cacheDir + "images/" + ++x + ".png");
+
+
                                 PckPreview pckPreview = new PckPreview(pckName, author, desc, direct, ad, bmp, 0, mod, null, IsVita, Packname);
                                 pckLayout.Controls.Add(pckPreview);
                             }
                         }
-                        catch(Exception err) { Console.WriteLine(err.Message); }
+                        catch (Exception err) { Console.WriteLine(err.Message); }
+                        x++;
                     }
+                    LAct.SaveLocalJSON(PJSON, loadDirectory.Replace(hosturl + "pckCenter", "").Replace(".txt", ""), isVita);
                 }
             }
             catch (Exception err)
