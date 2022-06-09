@@ -1,5 +1,4 @@
-﻿using PckStudio.Classes.IO;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -7,27 +6,28 @@ namespace PckStudio.Classes.FileTypes
 {
     public class PCKFile
     {
-        public int type { get; } = -1;
+        public int type { get; }
         public List<string> meta_data { get; } = new List<string>();
-        public List<FileData> file_entries { get; set; } = new List<FileData>();
+        public List<FileData> file_entries { get; } = new List<FileData>();
 
         public class FileData
         {
+            // only apllys when the PCKFile is type 3
             public enum EDLCType : int
             {
-                DLCSkinFile,
-		        DLCCapeFile,
-		        DLCTextureFile,
-		        DLCUIDataFile,
-		        DLCLocalisationFile = 6,
-		        DLCGameRulesFile,
-		        DLCAudioFile,
-		        DLCColourTableFile,
-		        DLCGameRulesHeader,
-                DLCSkinDataFile, // made up name  -Miku
-		        DLCModelsFile,
-		        DLCBehavioursFile,
-		        DLCMaterialFile,
+                DLCSkinFile         = 0,  // *.png
+		        DLCCapeFile         = 1,  // *.png
+                DLCTextureFile      = 2,  // *.png
+                DLCUIDataFile       = 3,  // *.fui ????
+                DLCLocalisationFile = 6,  // languages.loc/localisation.loc
+                DLCGameRulesFile    = 7,  // *.grf
+                DLCAudioFile        = 8,  // audio.pck
+                DLCColourTableFile  = 9,  // colours.col
+                DLCGameRulesHeader  = 10, // *.grh
+                DLCSkinDataFile     = 11, // *.pck made up name  -Miku
+		        DLCModelsFile       = 12, // models.bin
+                DLCBehavioursFile   = 13, // behaviours.bin
+                DLCMaterialFile     = 14, // entityMaterials.bin
             }
 
             public string name;
@@ -53,6 +53,11 @@ namespace PckStudio.Classes.FileTypes
                 _data = new byte[dataSize];
             }
 
+            public FileData(FileData file) : this(file.name, file.type)
+            {
+                SetData(file.data);
+            }
+
             public void SetData(byte[] data)
             {
                 _data = data;
@@ -65,5 +70,29 @@ namespace PckStudio.Classes.FileTypes
         {
             this.type = type;
         }
+
+
+        public FileData GetFile(string name, int type)
+        {
+            foreach (var file in file_entries)
+            {
+                if (file.name == name && file.type == type)
+                    return file;
+            }
+            return null; // not found
+            //throw new Exception("Could not find file named: " + name);
+        }
+
+        public FileData[] GetFilesOfType(int type)
+        {
+            List<FileData> files = new List<FileData>();
+            foreach (var file in file_entries)
+            {
+                if (file.type == type)
+                    files.Add(file);
+            }
+            return files.ToArray();
+        }
+
     }
 }
