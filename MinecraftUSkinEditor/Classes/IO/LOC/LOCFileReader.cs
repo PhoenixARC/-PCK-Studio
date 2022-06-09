@@ -29,7 +29,7 @@ namespace PckStudio.Classes.IO.LOC
             for (int i = 0; i < language_count; i++)
             {
                 string language = ReadString(stream);
-                _file._languages.Add(language);
+                _file.languages.Add(language);
                 ReadInt(stream); // padding ???
             }
             for (int i = 0; i < language_count; i++)
@@ -37,7 +37,7 @@ namespace PckStudio.Classes.IO.LOC
                 Console.WriteLine(ReadInt(stream).ToString());
                 Console.WriteLine(stream.ReadByte());
                 string language = ReadString(stream);
-                if (!_file._languages.Contains(language))
+                if (!_file.languages.Contains(language))
                     throw new Exception("language not found");
                 int count = ReadInt(stream);
                 for (int j = 0; j < count; j++)

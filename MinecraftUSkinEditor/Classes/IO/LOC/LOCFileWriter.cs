@@ -24,7 +24,7 @@ namespace PckStudio.Classes.IO.LOC
         {
             if (_locfile == null) throw new ArgumentNullException("Loc File is null");
             WriteInt(stream, type);
-            WriteInt(stream, _locfile._languages.Count);
+            WriteInt(stream, _locfile.languages.Count);
             if (type == 2) WriteLocKeys(stream);
             WriteLanguages(stream);
             WriteLanguageEntries(stream, type);
@@ -41,7 +41,7 @@ namespace PckStudio.Classes.IO.LOC
 
         private void WriteLanguages(Stream stream)
         {
-            foreach (var language in _locfile._languages)
+            foreach (var language in _locfile.languages)
             {
                 WriteString(stream, language);
                 WriteInt(stream, 0);
@@ -50,7 +50,7 @@ namespace PckStudio.Classes.IO.LOC
 
         private void WriteLanguageEntries(Stream stream, int type)
         {
-            foreach (var language in _locfile._languages)
+            foreach (var language in _locfile.languages)
             {
                 WriteInt(stream, 0x1337);
                 stream.WriteByte(0);

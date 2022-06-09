@@ -12,15 +12,9 @@ namespace PckStudio.Classes.FileTypes
         // loc key => language, name
         public Dictionary<string, Dictionary<string, string>> keys { get; set; } = new Dictionary<string, Dictionary<string, string>>();
 
-        public List<string> _languages = new List<string>(languages.Length);
+        public List<string> languages = new List<string>(valid_languages.Length);
 
-        public void InitializeDefault(string PackName)
-        {
-            AddLanguage("en-EN");
-            AddLocKey("IDS_DISPLAY_NAME", PackName);
-        }
-
-        public static readonly string[] languages = new string[]
+        public static readonly string[] valid_languages = new string[]
         {
             "cs-CS",
             "cs-CZ",
@@ -60,6 +54,8 @@ namespace PckStudio.Classes.FileTypes
 
             "ko-KR",
 
+            "la-LAS",
+
             "no-NO",
 
             "nb-NO",
@@ -80,8 +76,6 @@ namespace PckStudio.Classes.FileTypes
 
             "tr-TR",
 
-            "la-LAS",
-
             "zh-CN",
             "zh-HK",
             "zh-SG",
@@ -90,10 +84,17 @@ namespace PckStudio.Classes.FileTypes
             "zh-HanS",
             "zh-HanT",
         };
+        public void InitializeDefault(string PackName)
+        {
+            AddLanguage("en-EN");
+            AddLocKey("IDS_DISPLAY_NAME", PackName);
+        }
+
 
         public void AddSingleLocKey(string locKey, string language, string value)
         {
             if (keys.ContainsKey(locKey)) throw new Exception("Loc key already exists");
+            if (!languages.Contains(language)) throw new Exception("Language not found");
             var dict = new Dictionary<string, string>();
             dict.Add(language, value);
             keys.Add(locKey, dict);
@@ -105,7 +106,7 @@ namespace PckStudio.Classes.FileTypes
                 throw new ArgumentNullException("string cant be null");
             if (keys.ContainsKey(locKey))
                 throw new Exception("loc key already exists");
-            foreach (var langauge in _languages)
+            foreach (var langauge in languages)
             {
                 AddSingleLocKey(locKey, langauge, value);
             }
@@ -113,7 +114,7 @@ namespace PckStudio.Classes.FileTypes
         public void ChangeSingleEntry(string locKey, string language, string newValue)
         {
             if (!keys.ContainsKey(locKey)) throw new KeyNotFoundException("Loc key not found");
-            if (!keys[locKey].ContainsKey(language)) throw new KeyNotFoundException("Language Entry not found");
+            if (!keys[locKey].ContainsKey(language) || !languages.Contains(language)) throw new KeyNotFoundException("Language Entry not found");
             keys[locKey][language] = newValue;
         }
 
@@ -123,7 +124,7 @@ namespace PckStudio.Classes.FileTypes
                 throw new ArgumentNullException("string cant be null");
             if (!keys.ContainsKey(locKey))
                 throw new KeyNotFoundException("loc key not found");
-            foreach (var langauge in _languages)
+            foreach (var langauge in languages)
             {
                 ChangeSingleEntry(locKey, langauge, newValue);
             }
@@ -136,9 +137,10 @@ namespace PckStudio.Classes.FileTypes
             keys.Remove(locKey);
         }
 
-        private void AddLanguage(string language)
+        public void AddLanguage(string language)
         {
-            _languages.Add(language);
+            if (!valid_languages.Contains(language)) throw new Exception("Invalid language");
+            languages.Add(language);
         }
     }
 }
