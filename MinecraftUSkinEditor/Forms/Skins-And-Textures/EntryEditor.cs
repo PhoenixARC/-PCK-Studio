@@ -70,7 +70,7 @@ namespace PckStudio
 
         private void addEntryToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            file.properties.Add(new Tuple<string, string>("Replace me", "Or it won't save"));
+            file.properties.Add(new ValueTuple<string, string>("Replace me", "Or it won't save"));
             TreeNode t = new TreeNode("temp name");
             treeView1.Nodes.Add(t);
             renameProperly();

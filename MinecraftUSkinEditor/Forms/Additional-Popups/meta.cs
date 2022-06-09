@@ -34,7 +34,7 @@ namespace PckStudio
             try
             {
                 treeView1.Nodes.Clear();
-                foreach (string key in currentPCK.meta_data.Keys)
+                foreach (string key in currentPCK.meta_data)
                 {
                     treeView1.Nodes.Add(key);
                 }
@@ -47,14 +47,9 @@ namespace PckStudio
             }
         }
 
-        private void treeView1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void addToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            PckStudio.MetaADD add = new PckStudio.MetaADD(currentPCK, treeView1);
+            PckStudio.MetaADD add = new PckStudio.MetaADD(currentPCK);
             add.TopMost = true;
             add.TopLevel = true;
             add.ShowDialog();
@@ -64,20 +59,19 @@ namespace PckStudio
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            try
-            {
-                MessageBox.Show("TODO");
-                //currentPCK.meta_data.Remove();
-                refresh();
-            }catch (Exception)
-            {
-
-            }
+            if (currentPCK.meta_data.Contains(treeView1.SelectedNode.Text))
+                currentPCK.meta_data.Remove(treeView1.SelectedNode.Text);
+            refresh();
         }
 
-        private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
+        private void treeView1_KeyDown(object sender, KeyEventArgs e)
         {
-
+            if (e.KeyCode == Keys.Delete && treeView1.SelectedNode != null &&
+                currentPCK.meta_data.Contains(treeView1.SelectedNode.Text))
+            {
+                currentPCK.meta_data.Remove(treeView1.SelectedNode.Text);
+                refresh();
+            }
         }
     }
 }

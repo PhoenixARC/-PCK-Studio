@@ -93,7 +93,7 @@ namespace PckStudio.Forms.Utilities
             {
 				audioPCK = PCKFileReader.Read(stream, isLittleEndian);
             }
-			if (!audioPCK.meta_data.ContainsKey("CUENAME") || audioPCK.type != 1)
+			if (!audioPCK.meta_data.Contains("CUENAME") || audioPCK.type != 1)
 			{
 				throw new Exception("This is not a valid audio.pck file");
 			}
@@ -132,7 +132,7 @@ namespace PckStudio.Forms.Utilities
 			textBox1.Text = strings.Item2;
 
 			foreach (var metaType in audioPCK.meta_data)
-				comboBox1.Items.Add(metaType.Key);
+				comboBox1.Items.Add(metaType);
 		}
 
 		private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)

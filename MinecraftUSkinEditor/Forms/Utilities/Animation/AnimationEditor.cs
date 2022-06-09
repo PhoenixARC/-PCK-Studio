@@ -56,7 +56,7 @@ namespace PckStudio
 			{
 				create = true;
 				PCKFile.FileData newMf = new PCKFile.FileData("", 2);
-				newMf.properties.Add(new Tuple<string, string>("ANIM", ""));
+				newMf.properties.Add(new ValueTuple<string, string>("ANIM", ""));
 				newMf.SetData(File.ReadAllBytes(createdFileName));
 				mf = newMf;
 				Forms.Utilities.AnimationEditor.ChangeTile diag = new Forms.Utilities.AnimationEditor.ChangeTile();
@@ -71,14 +71,13 @@ namespace PckStudio
 			List<string> strEntries = new List<string>();
 			List<string> strEntryData = new List<string>();
 
-			foreach (var entry in mf.properties) //object = metadata entry(name:value)
+			bool has_anim_tag = false;
+			foreach (var entry in mf.properties)
 			{
-				//TreeNode meta = new TreeNode(entry.Item1);
+				if (entry.Item1 == "ANIM") has_anim_tag = true;
                 strEntries.Add(entry.Item2);
                 strEntryData.Add(entry.Item2);
 			}
-
-			//if (strEntries.Find(entry => entry == "ANIM") == null) throw new System.Exception("ANIM tag is missing. No animation code is present.");
 
 			MemoryStream textureMem = new MemoryStream(mf.data);
 			texture = Image.FromStream(textureMem);
@@ -88,7 +87,7 @@ namespace PckStudio
 
 			foreach (Newtonsoft.Json.Linq.JObject content in tileData[isItem ? "Items" : "Blocks"].Children())
 			{
-				foreach (Newtonsoft.Json.Linq.JProperty prop in content.Properties())
+				foreach (JProperty prop in content.Properties())
 				{
 					if (prop.Name == newTileName) tileLabel.Text = (string)prop.Value;
 				}
@@ -329,49 +328,49 @@ namespace PckStudio
 			if (e.KeyData == Keys.Delete) treeView1.Nodes.Remove(treeView1.SelectedNode);
 		}
 
-		private TreeNode FindNode(TreeNode treeNode, string name)
+		private TreeNode FindNodeByName(TreeNode treeNode, string name)
 		{
 			foreach (TreeNode node in treeNode.Nodes)
 			{
 				if (node.Text.ToLower() == name.ToLower()) return node;
 				else
 				{
-					TreeNode nodeChild = FindNode(node, name);
+					TreeNode nodeChild = FindNodeByName(node, name);
 					if (nodeChild != null)
 					{
 						return nodeChild;
 					}
 				}
 			}
-			return (TreeNode)null;
+			return null;
 		}
 
-		private TreeNode FindNode(TreeView treeView, string name)
+		private TreeNode FindNodeByName(TreeView treeView, string name)
 		{
 			foreach (TreeNode node in treeView.Nodes)
 			{
 				if (node.Text.ToLower() == name.ToLower()) return node;
 				else
 				{
-					TreeNode nodeChild = FindNode(node, name);
+					TreeNode nodeChild = FindNodeByName(node, name);
 					if (nodeChild != null) return nodeChild;
 				}
 			}
-			return (TreeNode)null;
+			return null;
 		}
 
 		private void addNodeToAnimationsFolder(TreeNode newNode)
 		{
-			TreeNode parent = FindNode(treeViewMain, isItem ? "items" : "blocks");
+			TreeNode parent = FindNodeByName(treeViewMain, isItem ? "items" : "blocks");
 			if (parent != null)
 			{
 				Console.WriteLine("ParentNotNULL");
-				TreeNode check = FindNode(treeViewMain, newNode.Text);
+				TreeNode check = FindNodeByName(treeViewMain, newNode.Text);
 				parent.Nodes.Add(newNode);
 			}
 			else
 			{
-				TreeNode texturesParent = FindNode(treeViewMain, "textures");
+				TreeNode texturesParent = FindNodeByName(treeViewMain, "textures");
 				if (texturesParent != null)
 				{
 					Console.WriteLine("TextureNotNULL");
@@ -381,7 +380,7 @@ namespace PckStudio
 				}
 				else
 				{
-					TreeNode resParent = FindNode(treeViewMain, "res");
+					TreeNode resParent = FindNodeByName(treeViewMain, "res");
 					if (resParent != null)
 					{
 						Console.WriteLine("ResNotNULL");
@@ -438,7 +437,7 @@ namespace PckStudio
 				}
 				else
 				{
-					mf.properties.Add(new Tuple<string, string>("ANIM", animationData));
+					mf.properties.Add(new ValueTuple<string, string>("ANIM", animationData));
 					break;
 				}
 			};

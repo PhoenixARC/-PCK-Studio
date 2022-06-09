@@ -14,27 +14,29 @@ namespace PckStudio
     public partial class MetaADD : Form
     {
         PCKFile currentPCK;
-        TreeView treeView1;
 
-        public MetaADD(PCKFile currentPCKIn, TreeView treeView1In)
+        public MetaADD(PCKFile currentPCKIn)
         {
             InitializeComponent();
 
             currentPCK = currentPCKIn;
-            treeView1 = treeView1In;
-
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (currentPCK.meta_data.ContainsKey(textBox1.Text))
+            if (currentPCK.meta_data.Contains(textBox1.Text))
             {
-                MessageBox.Show("This metatag already exits");
+                MessageBox.Show("This meta tag already exits");
                 return;
             }
-            if (!currentPCK.meta_data.ContainsValue(currentPCK.meta_data.Count))
-                currentPCK.meta_data.Add(textBox1.Text, currentPCK.meta_data.Count);
+            currentPCK.meta_data.Add(textBox1.Text);
             Close();
+        }
+
+        private void textBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                button1_Click(sender, e);
         }
     }
 }

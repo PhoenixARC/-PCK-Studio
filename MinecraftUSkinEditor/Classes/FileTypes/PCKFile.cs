@@ -8,7 +8,7 @@ namespace PckStudio.Classes.FileTypes
     public class PCKFile
     {
         public int type { get; } = -1;
-        public Dictionary<string, int> meta_data { get; } = new Dictionary<string, int>();
+        public List<string> meta_data { get; } = new List<string>();
         public List<FileData> file_entries { get; set; } = new List<FileData>();
 
         public class FileData

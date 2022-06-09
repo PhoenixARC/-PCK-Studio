@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -21,15 +22,13 @@ namespace PckStudio
 {
 	public partial class FormMain : MetroFramework.Forms.MetroForm
 	{
-        string saveLocation = String.Empty; //Save location for pck file
+        string saveLocation = string.Empty; //Save location for pck file
         string PCKFilePath = "";
         string PCKFileBCKUP = "x";
 
-        PCKFile.FileData mf;//Template minefile variable
 		PCKFile currentPCK;//currently opened pck
 		LOCFile l; //Locdata
 		PCKFile.FileData mfLoc = new PCKFile.FileData("CURRENTLOCDATA", 6); //LOC minefile
-        PCKFile.FileData file; //template for a selected minefile
         bool needsUpdate = false;
 		bool saved = true;
 		bool isTemplateFile = false;
@@ -74,6 +73,8 @@ namespace PckStudio
 			PCKFile pck = null;
 			using (var fileStream = File.OpenRead(filePath))
 			{
+				isTemplateFile = false;
+				saveLocation = filePath;
 				pck = PCKFileReader.Read(fileStream, LittleEndianCheckBox.Checked);
 			}
 			return pck;
@@ -83,15 +84,17 @@ namespace PckStudio
 		{
 			treeViewMain.Nodes.Clear();
 			treeViewMain.LabelEdit = false;
+			addPasswordToolStripMenuItem.Enabled = true;
 			foreach (var file_entry in currentPCK.file_entries)
 			{
-				if (file_entry.name != "0")
-					continue;
-				foreach(var pair in file_entry.properties)
+				if (file_entry.name != "0") continue;
+				foreach (var pair in file_entry.properties)
+				{
+					addPasswordToolStripMenuItem.Enabled = !(pair.Item1 == "LOCK");
 					if (pair.Item1 == "LOCK" && new pckLocked(pair.Item2).ShowDialog() != DialogResult.OK)
 						return;
+				}
 			}
-			addPasswordToolStripMenuItem.Enabled = true;
 			foreach (var file_entry in currentPCK.file_entries)
 			{
 				Console.WriteLine(file_entry.name);
@@ -99,30 +102,33 @@ namespace PckStudio
 				node.Tag = file_entry;
 				treeViewMain.Nodes.Add(node);
 
-				if (file_entry.type == 8) // audio / binka
-				{
-					node.ImageIndex = 1;
-					node.SelectedImageIndex = 1;
-				}
-				else if (file_entry.type == 0 || file_entry.type == 1 || file_entry.type == 2) // skins, capes, textures
+				if (file_entry.type == 0 || file_entry.type == 1 || file_entry.type == 2) // skins, capes, textures
 				{
 					node.ImageIndex = 2;
 					node.SelectedImageIndex = 2;
+				}
+                else if (file_entry.type == 5 || file_entry.type == 11) // Skins.pck / x16info.pck
+				{
+					node.ImageIndex = 4;
+					node.SelectedImageIndex = 4;
 				}
 				else if (file_entry.type == 6) // .loc 
 				{
 					node.ImageIndex = 3;
 					node.SelectedImageIndex = 3;
 				}
-				//else if (file_entry.type == 11) // Skins.pck
-				//{
-				//	node.ImageIndex = 3;
-				//	node.SelectedImageIndex = 3;
-				//}
-				else if (file_entry.type == 5 || file_entry.type == 11) // Skins.pck / x16info.pck
+				else if (file_entry.type == 8) // audio / binka
 				{
-					node.ImageIndex = 4;
-					node.SelectedImageIndex = 4;
+					node.ImageIndex = 1;
+					node.SelectedImageIndex = 1;
+				}
+                else if (file_entry.type == 11) // Skins.pck
+                {
+					using (var stream = new MemoryStream(file_entry.data))
+					{
+						PCKFile subPCKfile = PCKFileReader.Read(stream, LittleEndianCheckBox.Checked);
+						// TODO: load sub pck into tree and make it editable with ease
+					}
 				}
 				else
 				{
@@ -144,222 +150,189 @@ namespace PckStudio
 
 		private void selectNode(object sender, TreeViewEventArgs e)
 		{
-			treeMeta.Enabled = true;
 			buttonEdit.Visible = false;
-			//Sets preview image to "NO IMAGE" if selected file data isn't image data
+			// Sets preview image to "NO IMAGE" by default
 			pictureBoxImagePreview.Image = (Image)Resources.NoImageFound;
 			int pictureBoxMaxHeight = (tabPage1.Height / 2) - (tabPage1.Height / 10);
 			pictureBoxImagePreview.Size = new Size(pictureBoxMaxHeight, pictureBoxMaxHeight);
-			labelImageSize.Text = "";//Resets image size display if theres no image
-			if (treeViewMain.SelectedNode.Tag != null && treeViewMain.SelectedNode.Tag is PCKFile.FileData) //"Selects" node if it has data/isn't a folder
+			labelImageSize.Text = "";
+			var node = e.Node;
+			if (node.Tag == null || !(node.Tag is PCKFile.FileData)) return;
+			PCKFile.FileData file = node.Tag as PCKFile.FileData;
+			treeMeta.Nodes.Clear();
+			comboBox1.Items.Clear();
+			textBox1.Text = "";
+			foreach (var type in currentPCK.meta_data)
+				comboBox1.Items.Add(type); //Adds available metadata names from metadatabase to the metacombo
+
+			//Retrieves metadata for currently selected mineifile and displays it within metatreeview
+			int boxes = 0;
+			foreach (var entry in file.properties)
 			{
-				PCKFile.FileData file = e.Node.Tag as PCKFile.FileData;
+				TreeNode meta = new TreeNode(entry.Item1);
+				meta.Tag = entry;
+				treeMeta.Nodes.Add(meta);
 
-				treeMeta.Nodes.Clear(); //clears minefile metadata treeview
-
-				comboBox1.Items.Clear(); //clears metacombo(entry name)
-				textBox1.Text = ""; //clears metatextbox(entry value)
-
-				foreach (var type in currentPCK.meta_data.Keys)
-					comboBox1.Items.Add(type); //Adds available metadata names from metadatabase to the metacombo
-
-				//Retrieves metadata for currently selected mineifile and displays it within metatreeview
-				int boxes = 0;
-				foreach (var entry in file.properties) //object = metadata entry(name:value)
+				//Check for if file contains model data
+				if (entry.Item1 == "BOX")
 				{
-					TreeNode meta = new TreeNode(entry.Item1);
-					meta.Tag = entry;
-					treeMeta.Nodes.Add(meta);
-
-					//Check for if file contains model data
-					if (entry.Item1 == "BOX")
+					boxes += 1;
+					buttonEdit.Text = "EDIT BOXES";
+					buttonEdit.Visible = true;
+				}
+				else if (entry.Item1 == "ANIM")
+				{
+					if ((entry.Item2 == "0x40000") || (entry.Item2 == "0x80000"))
 					{
-						boxes += 1;
-						buttonEdit.Text = "EDIT BOXES";
+						buttonEdit.Text = "View Skin";
 						buttonEdit.Visible = true;
 					}
-					else if (entry.Item1 == "ANIM")
-					{
-						Console.WriteLine(entry.Item2);
-						Console.WriteLine((entry.Item2 == "0x80000").ToString() + " - " + entry.Item2);
-						Console.WriteLine((entry.Item2 == "0x40000").ToString() + " - " + entry.Item2);
-
-
-						if ((entry.Item2 == "0x40000") || (entry.Item2 == "0x80000"))
-						{
-							buttonEdit.Text = "View Skin";
-							boxes += 1;
-							buttonEdit.Visible = true;
-						}
-					}
-					else if (boxes == 0)
-					{
-						buttonEdit.Visible = false;
-					}
 				}
+			}
 
-				//Check for Animated Texture
-				if ((file.name.StartsWith("res/textures/blocks/") || file.name.StartsWith("res/textures/items/")) &&
-					(!file.name.EndsWith("clock.png") && (!file.name.EndsWith("compass.png"))))
+			//Check for Animated Texture
+			if ((file.name.StartsWith("res/textures/blocks/") || file.name.StartsWith("res/textures/items/")) &&
+				(!file.name.EndsWith("clock.png") && (!file.name.EndsWith("compass.png"))))
+			{
+				buttonEdit.Text = "EDIT TEXTURE ANIMATION";
+				buttonEdit.Visible = true;
+			}
+
+			//If selected item is a image, its displayed with proper dimensions in image box
+			if (Path.GetExtension(file.name) == ".png" || file.type == 0 || file.type == 1 || file.type == 2)
+			{
+				MemoryStream png = new MemoryStream(file.data); //Gets image data from minefile data
+				Image skinPicture = Image.FromStream(png); //Constructs image data into image
+				pictureBoxImagePreview.Image = skinPicture; //Sets image preview to image
+
+
+				if (skinPicture.Size.Height == skinPicture.Size.Width / 2)
 				{
-					buttonEdit.Text = "EDIT TEXTURE ANIMATION";
-					buttonEdit.Visible = true;
+					pictureBoxImagePreview.Size = new Size(pictureBoxMaxHeight * 2, pictureBoxMaxHeight); //Sets 64x32 ratio images to appear at largest relative size to program window size
+					labelImageSize.Text = skinPicture.Size.Width.ToString() + "x" + skinPicture.Size.Height.ToString();
+					return;
+				}
+				else if (skinPicture.Size.Height == skinPicture.Size.Width)
+				{
+					pictureBoxImagePreview.Size = new Size(pictureBoxMaxHeight, pictureBoxMaxHeight); //SWets 64x64 ratio images to appear at largest relative size to program window size
+					labelImageSize.Text = skinPicture.Size.Width.ToString() + "x" + skinPicture.Size.Height.ToString();
+					return;
 				}
 				else
 				{
-					buttonEdit.Visible = false;
-				}
-
-				//If selected item is a image, its displayed with proper dimensions in image box
-				if (Path.GetExtension(file.name) == ".png")
-				{
-					pictureBoxImagePreview.SizeMode = PictureBoxSizeMode.StretchImage;
-					pictureBoxImagePreview.InterpolationMode = InterpolationMode.NearestNeighbor;
-					MemoryStream png = new MemoryStream(file.data); //Gets image data from minefile data
-					Image skinPicture = Image.FromStream(png); //Constructs image data into image
-					pictureBoxImagePreview.Image = skinPicture; //Sets image preview to image
-
-
-					if (skinPicture.Size.Height == skinPicture.Size.Width / 2)
+					//Sets images to appear at largest relative size to program window size
+					Size maxDisplay = new Size((tabPage1.Size.Width / 2 - 5) / 3, (tabPage1.Size.Height / 2 - 5) / 3);
+					if (skinPicture.Size.Width > maxDisplay.Width)
 					{
-						pictureBoxImagePreview.Size = new Size(pictureBoxMaxHeight * 2, pictureBoxMaxHeight); //Sets 64x32 ratio images to appear at largest relative size to program window size
-						labelImageSize.Text = skinPicture.Size.Width.ToString() + "x" + skinPicture.Size.Height.ToString();
-						return;
+						//calculate aspect ratio
+						float aspect = skinPicture.Width / (float)skinPicture.Height;
+						int newWidth, newHeight;
+
+						//calculate new dimensions based on aspect ratio
+						newWidth = (int)(maxDisplay.Height * aspect);
+						newHeight = (int)(newWidth / aspect);
+
+						//if one of the two dimensions exceed the box dimensions
+						if (newWidth > skinPicture.Width || newHeight > skinPicture.Height)
+						{
+							//depending on which of the two exceeds the box dimensions set it as the box dimension and calculate the other one based on the aspect ratio
+							if (newWidth > newHeight)
+							{
+								newWidth = maxDisplay.Width;
+								newHeight = (int)(newWidth / aspect);
+							}
+							else
+							{
+								newHeight = maxDisplay.Height;
+								newWidth = (int)(newHeight * aspect);
+							}
+						}
+						pictureBoxImagePreview.Size = new Size(newWidth, newHeight);
 					}
-					else if (skinPicture.Size.Height == skinPicture.Size.Width)
+					else if (skinPicture.Size.Height > maxDisplay.Height)
 					{
-						pictureBoxImagePreview.Size = new Size(pictureBoxMaxHeight, pictureBoxMaxHeight); //SWets 64x64 ratio images to appear at largest relative size to program window size
-						labelImageSize.Text = skinPicture.Size.Width.ToString() + "x" + skinPicture.Size.Height.ToString();
-						return;
+						//calculate aspect ratio
+						float aspect = skinPicture.Width / (float)skinPicture.Height;
+						int newWidth, newHeight;
+
+						//calculate new dimensions based on aspect ratio
+						newWidth = (int)(maxDisplay.Width * aspect);
+						newHeight = (int)(newWidth / aspect);
+
+						//if one of the two dimensions exceed the box dimensions
+						if (newWidth > skinPicture.Width || newHeight > skinPicture.Height)
+						{
+							//depending on which of the two exceeds the box dimensions set it as the box dimension and calculate the other one based on the aspect ratio
+							if (newWidth > newHeight)
+							{
+								newWidth = maxDisplay.Width;
+								newHeight = (int)(newWidth / aspect);
+							}
+							else
+							{
+								newHeight = maxDisplay.Height;
+								newWidth = (int)(newHeight * aspect);
+							}
+						}
+						pictureBoxImagePreview.Size = new Size(newWidth, newHeight);
 					}
 					else
 					{
-						//Sets images to appear at largest relative size to program window size
-						Size maxDisplay = new Size((tabPage1.Size.Width / 2 - 5) / 3, (tabPage1.Size.Height / 2 - 5) / 3);
-						if (skinPicture.Size.Width > maxDisplay.Width)
-						{
-							//calculate aspect ratio
-							float aspect = skinPicture.Width / (float)skinPicture.Height;
-							int newWidth, newHeight;
-
-							//calculate new dimensions based on aspect ratio
-							newWidth = (int)(maxDisplay.Height * aspect);
-							newHeight = (int)(newWidth / aspect);
-
-							//if one of the two dimensions exceed the box dimensions
-							if (newWidth > skinPicture.Width || newHeight > skinPicture.Height)
-							{
-								//depending on which of the two exceeds the box dimensions set it as the box dimension and calculate the other one based on the aspect ratio
-								if (newWidth > newHeight)
-								{
-									newWidth = maxDisplay.Width;
-									newHeight = (int)(newWidth / aspect);
-								}
-								else
-								{
-									newHeight = maxDisplay.Height;
-									newWidth = (int)(newHeight * aspect);
-								}
-							}
-							pictureBoxImagePreview.Size = new Size(newWidth, newHeight);
-						}
-						else if (skinPicture.Size.Height > maxDisplay.Height)
-						{
-							//calculate aspect ratio
-							float aspect = skinPicture.Width / (float)skinPicture.Height;
-							int newWidth, newHeight;
-
-							//calculate new dimensions based on aspect ratio
-							newWidth = (int)(maxDisplay.Width * aspect);
-							newHeight = (int)(newWidth / aspect);
-
-							//if one of the two dimensions exceed the box dimensions
-							if (newWidth > skinPicture.Width || newHeight > skinPicture.Height)
-							{
-								//depending on which of the two exceeds the box dimensions set it as the box dimension and calculate the other one based on the aspect ratio
-								if (newWidth > newHeight)
-								{
-									newWidth = maxDisplay.Width;
-									newHeight = (int)(newWidth / aspect);
-								}
-								else
-								{
-									newHeight = maxDisplay.Height;
-									newWidth = (int)(newHeight * aspect);
-								}
-							}
-							pictureBoxImagePreview.Size = new Size(newWidth, newHeight);
-						}
-						else
-						{
-							pictureBoxImagePreview.Size = new Size(skinPicture.Size.Width, skinPicture.Size.Height);
-						}
-						labelImageSize.Text = skinPicture.Size.Width.ToString() + "x" + skinPicture.Size.Height.ToString();
-						return;
+						pictureBoxImagePreview.Size = new Size(skinPicture.Size.Width, skinPicture.Size.Height);
 					}
+					labelImageSize.Text = skinPicture.Size.Width.ToString() + "x" + skinPicture.Size.Height.ToString();
+					return;
 				}
-				else if (Path.GetExtension(file.name) == ".loc")
-				{
-					buttonEdit.Text = "EDIT LOC";
-					buttonEdit.Visible = true;
-				}
-				else if (Path.GetExtension(file.name) == ".col")
-				{
-					buttonEdit.Text = "EDIT COLORS";
-					buttonEdit.Visible = true;
-				}
-				else if (Path.GetFileName(file.name) == "audio.pck")
-				{
-					buttonEdit.Text = "EDIT MUSIC CUES";
-					buttonEdit.Visible = true;
-				}
-				else
-				{
-					buttonEdit.Visible = false;
-					//Sets preview image to "NO IMAGE" if selected file data isn't image data
-					pictureBoxImagePreview.Image = (Image)Resources.NoImageFound;
-					pictureBoxImagePreview.Size = new Size(pictureBoxMaxHeight, pictureBoxMaxHeight);
-					labelImageSize.Text = "";
-				}
+			}
+			else if (file.type == 6) // .loc
+			{
+				buttonEdit.Text = "EDIT LOC";
+				buttonEdit.Visible = true;
+			}
+			else if (Path.GetExtension(file.name) == ".col" || file.type == 9)
+			{
+				buttonEdit.Text = "EDIT COLORS";
+				buttonEdit.Visible = true;
+			}
+			else if (Path.GetFileName(file.name) == "audio.pck")
+			{
+				buttonEdit.Text = "EDIT MUSIC CUES";
+				buttonEdit.Visible = true;
 			}
 		}
 
         #region Parses boxes and opens model generator
         public void editModel(PCKFile.FileData skin)
 		{
-			MessageBox.Show("TODO!!!!");
-			return;
-     //       List<object[]> otherData = new List<object[]>();//Creates list for backup data to be added to
-     //       List<object[]> generatedData = new List<object[]>();//Creates list for model data to be added to
-     //       foreach (var entry in skin.properties) //object = metadata entry(name:value)
-     //       {
-     //           //parses and sorts
-     //           if (entry.Key == "BOX" || entry.Key == "OFFSET")
-     //           {
-     //               generatedData.Add(entry);
-					//continue;
-     //           }
-     //           otherData.Add(entry);
-     //       }
-     //       skin.properties = otherData;
-     //       generateModel generate = new generateModel(generatedData, new PictureBox());
-     //       generate.ShowDialog();//Opens Model Generator Dialog
-     //                             //Adds model data
-     //       foreach (object[] entry in generatedData) //object = metadata entry(name:value)
-     //       {
-     //           skin.properties.Add(entry);
-     //       }
+			PCKProperties otherData = new PCKProperties();
+            PCKProperties generatedData = new PCKProperties();
+            foreach (var entry in skin.properties)
+            {
+                //parses and sorts
+                if (entry.Item1 == "BOX" || entry.Item1 == "OFFSET")
+                {
+                    generatedData.Add(entry);
+                    continue;
+                }
+                otherData.Add(entry);
+            }
+            skin.properties = otherData;
+            generateModel generate = new generateModel(generatedData, new PictureBox());
+            generate.ShowDialog(); //Opens Model Generator Dialog
+            foreach (var entry in generatedData)
+            {
+                skin.properties.Add(entry);
+            }
+            treeMeta.Nodes.Clear();
 
-            treeMeta.Nodes.Clear(); //clears minefile metadata treeview
+			comboBox1.Items.Clear();
+			textBox1.Text = "";
 
-			comboBox1.Items.Clear(); //clears metacombo(entry name)
-			textBox1.Text = ""; //clears metatextbox(entry value)
-
-			foreach (var type in currentPCK.meta_data.Keys)
-				comboBox1.Items.Add(type); //Adds available metadata names from metadatabase to the metacombo
+			foreach (var type in currentPCK.meta_data)
+				comboBox1.Items.Add(type);
 
 			//Retrieves metadata for currently selected mineifile and displays it within metatreeview
-			foreach (var entry in file.properties) //object = metadata entry(name:value)
+			foreach (var entry in skin.properties)
 			{
 				TreeNode meta = new TreeNode(entry.Item1);
 				meta.Tag = entry;
@@ -377,125 +350,89 @@ namespace PckStudio
 				MessageBox.Show("Cannot extract folders!");
 				return;
 			}
-			if (treeViewMain.SelectedNode.Tag is PCKFile.FileData)
+			if (!(treeViewMain.SelectedNode.Tag is PCKFile.FileData)) return;
+			SaveFileDialog exFile = new SaveFileDialog(); //extract location
+			exFile.FileName = treeViewMain.SelectedNode.Text;
+			exFile.Filter = Path.GetExtension(treeViewMain.SelectedNode.Text).Replace(".", "") + " File|*" + Path.GetExtension(treeViewMain.SelectedNode.Text);
+			exFile.ShowDialog();
+			string extractPath = exFile.FileName;
+
+			if (!string.IsNullOrWhiteSpace(Path.GetDirectoryName(extractPath)))//Makes sure chosen directory isn't null or whitespace AKA makes sure its usable
 			{
-				SaveFileDialog exFile = new SaveFileDialog();//extract location
-				exFile.FileName = treeViewMain.SelectedNode.Text;
-				exFile.Filter = Path.GetExtension(treeViewMain.SelectedNode.Text).Replace(".", "") + " File|*" + Path.GetExtension(treeViewMain.SelectedNode.Text);
-				exFile.ShowDialog();
+				File.WriteAllBytes(extractPath, ((PCKFile.FileData)treeViewMain.SelectedNode.Tag).data);//extracts minefile data to directory
 
-				string appPath = exFile.FileName;//Chosen file path
-				string extractPath = exFile.FileName;
-
-				if (!string.IsNullOrWhiteSpace(Path.GetDirectoryName(extractPath)))//Makes sure chosen directory isn't null or whitespace AKA makes sure its usable
+				//Generates metadata file in form of txt file if metadata for the file exists
+				if (treeViewMain.SelectedNode.Tag.ToString() != "")
 				{
-					File.WriteAllBytes(extractPath, ((PCKFile.FileData)treeViewMain.SelectedNode.Tag).data);//extracts minefile data to directory
-
-					//Generates metadata file in form of txt file if metadata for the file exists
-					if (treeViewMain.SelectedNode.Tag.ToString() != "")
+					try
 					{
-						try
+						string metaData = "";
+						PCKFile.FileData file = (PCKFile.FileData)treeViewMain.SelectedNode.Tag;
+
+						var ms = new MemoryStream(File.ReadAllBytes(extractPath).ToArray());
+
+						MemoryStream ico = new MemoryStream();
+						Bitmap bmp = new Bitmap(Image.FromFile(extractPath));
+						bmp.Save(ico, ImageFormat.Png);
+
+						foreach (var entry in file.properties)
 						{
-							string metaData = "";
-							file = (PCKFile.FileData)treeViewMain.SelectedNode.Tag;
-
-							var ms = new MemoryStream(File.ReadAllBytes(extractPath).ToArray());
-
-							MemoryStream ico = new MemoryStream();
-							Bitmap bmp = new Bitmap(Image.FromFile(extractPath));
-							bmp.Save(ico, ImageFormat.Png);
-
-							foreach (var entry in file.properties)
-							{
-								metaData += entry.Item1 + ":" + entry.Item2 + Environment.NewLine;
-							}
-
-							File.WriteAllText(extractPath + ".txt", metaData);
+							metaData += entry.Item1 + ":" + entry.Item2 + Environment.NewLine;
 						}
-						catch (Exception)
-						{
 
-						}
-						MessageBox.Show("File Extracted");//Verification that file extraction path was successful
+						File.WriteAllText(extractPath + ".txt", metaData);
 					}
-				}
-			}
-			else if (treeViewMain.SelectedNode != null)
-			{
-				SaveFileDialog exFile = new SaveFileDialog();//extract location
-				exFile.ShowDialog();
-				string appPath = exFile.FileName;//Chosen file path
-
-				foreach (TreeNode item in treeViewMain.SelectedNode.Nodes)
-				{
-					if (item.Tag is PCKFile.FileData)//Makes sure item being extracted is minefile and not folder or null item
+					catch (Exception ex)
 					{
-						string extractPath = Path.Combine(appPath, ((PCKFile.FileData)item.Tag).name);//combines file path with file path & name of minefile being extracted
-
-						if (!String.IsNullOrWhiteSpace(Path.GetDirectoryName(extractPath)))//Makes sure chosen directory isn't null or whitespace AKA makes sure its usable
-						{
-							Directory.CreateDirectory(Path.GetDirectoryName(extractPath));//Creates directory variable out of generated/chosen extract path
-							File.WriteAllBytes(extractPath, ((PCKFile.FileData)item.Tag).data);//extracts minefile data to directory
-
-							//Generates metadata file in form of txt file if metadata for the file exists
-							if (item.Tag.ToString() != "")
-							{
-								try
-								{
-									string metaData = "";
-									file = mf;
-
-									var ms = new MemoryStream(File.ReadAllBytes(extractPath).ToArray());
-
-									MemoryStream ico = new MemoryStream();
-									Bitmap bmp = new Bitmap(Image.FromFile(extractPath));
-									bmp.Save(ico, ImageFormat.Png);
-
-									foreach (var entry in file.properties)
-									{
-										metaData += entry.Item1 + ":" + entry.Item2 + Environment.NewLine;
-									}
-
-									File.WriteAllText(extractPath + ".txt", metaData);
-								}
-								catch (Exception)
-								{
-
-								}
-								MessageBox.Show("Path Extracted");//Verification that file extraction path was successful
-							}
-						}
+						Console.WriteLine(ex.Message);
 					}
+					MessageBox.Show("File Extracted");//Verification that file extraction path was successful
 				}
 			}
 		}
 		#endregion
 
-		private void save()
+		private void SaveTemplate()
 		{
 			SaveFileDialog saveFileDialog = new SaveFileDialog();
 			saveFileDialog.Filter = "PCK (Minecraft Console Package)|*.pck";
 			saveFileDialog.DefaultExt = ".pck";
 			if (saveFileDialog.ShowDialog() == DialogResult.OK)
 			{
-				using (var fs = File.OpenWrite(saveFileDialog.FileName))
-				{
-					PCKFileWriter.Write(fs, currentPCK, LittleEndianCheckBox.Checked);
-				}
+				Save(saveFileDialog.FileName);
+			}
+		}
+
+		private void Save(string FilePath)
+        {
+			foreach (var file in currentPCK.file_entries)
+            {
+				foreach(var property in file.properties)
+                {
+					// make sure the meta is valid
+					if (!currentPCK.meta_data.Contains(property.Item1))
+						currentPCK.meta_data.Add(property.Item1);
+                }
+            }
+
+			using (var fs = File.OpenWrite(FilePath))
+			{
+				PCKFileWriter.Write(fs, currentPCK, LittleEndianCheckBox.Checked);
 			}
 		}
 
 		private void replaceToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (treeViewMain.SelectedNode.Tag is PCKFile.FileData) //Makes sure file being replaced is an actual minefile or not null
+			if (!(treeViewMain.SelectedNode.Tag is PCKFile.FileData))
 			{
-				PCKFile.FileData mf = treeViewMain.SelectedNode.Tag as PCKFile.FileData; //backups minefile data for node
-				using (var ofd = new OpenFileDialog())
+				MessageBox.Show("Invalid PCK File data"); // should never happen unless its a folder
+			}
+			PCKFile.FileData mf = treeViewMain.SelectedNode.Tag as PCKFile.FileData;
+			using (var ofd = new OpenFileDialog())
+			{
+				if (ofd.ShowDialog() == DialogResult.OK)
 				{
-					if (ofd.ShowDialog() == DialogResult.OK)
-					{
-						mf.SetData(File.ReadAllBytes(ofd.FileName)); //overwrites minefile data with chosen files data
-					}
+					mf.SetData(File.ReadAllBytes(ofd.FileName));
 				}
 			}
 			saved = false;
@@ -516,12 +453,12 @@ namespace PckStudio
 				{
 					foreach (TreeNode item in treeViewMain.SelectedNode.Nodes)
 					{
-						if (item.Tag == null)
+						if (item.Tag == null || item.Nodes.Count > 0)
 						{
 							MessageBox.Show("Can't fully delete directory with subdirectories");
 							return;
 						}
-						if (item.Tag is PCKFile.FileData)//makes sure selected node is a minefile
+						if (item.Tag is PCKFile.FileData) //makes sure selected node is a minefile
 						{
 							//removes minefile from minefile list
 							PCKFile.FileData mf = (PCKFile.FileData)item.Tag;
@@ -536,31 +473,30 @@ namespace PckStudio
 			saved = false;
 		}
 
-		#region renames pck entry from treeview and PCKFile.FileDatas
+		#region renames pck entry from treeview and PCKFile.file_entries
 		private void renameFileToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			TreeNode node = treeViewMain.SelectedNode;
-			rename diag = new rename(node);
-			diag.ShowDialog(this);
-			diag.Dispose();//diposes generated metadata adding dialog data
-			treeViewMain.SelectedNode.Text = Path.GetFileName(node.Name);
-			treeViewToMineFiles(treeViewMain, currentPCK);
+			RenamePrompt diag = new RenamePrompt(node);
+			if (diag.ShowDialog(this) == DialogResult.OK)
+				treeViewMain.SelectedNode.Text = Path.GetFileName(diag.NewText);
+			diag.Dispose();
 		}
 		#endregion
 
 		#region clones pck entry from treeview and PCKFile.FileDatas
 		private void cloneFileToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (treeViewMain.SelectedNode.Tag == null) return;
+			if (treeViewMain.SelectedNode.Tag == null || !(treeViewMain.SelectedNode.Tag is PCKFile.FileData)) return;
 
-			PCKFile.FileData mfO = (PCKFile.FileData)treeViewMain.SelectedNode.Tag;
+			PCKFile.FileData mfO = treeViewMain.SelectedNode.Tag as PCKFile.FileData;
 			FileInfo mfCO = new FileInfo(mfO.name);
 
 			string name = Path.GetDirectoryName(mfO.name).Replace("\\", "/") + "/" + Path.GetFileNameWithoutExtension(mfO.name) + "_clone" + mfCO.Extension;//sets minfile name to file name
 			PCKFile.FileData mf = new PCKFile.FileData(name, mfO.type); //Creates new minefile template
 			if (treeViewMain.SelectedNode.Parent == null && mf.name.StartsWith("/")) mf.name = mf.name.Remove(0, 1);
 			mf.properties = mfO.properties;
-			TreeNode add = new TreeNode(Path.GetFileName(mf.name)) { Tag = mf };//creates node for minefile
+			TreeNode add = new TreeNode(Path.GetFileName(mf.name)) { Tag = mf }; //creates node for minefile
 
 			//Gets proper file icon for minefile
 			if (Path.GetExtension(add.Text) == ".binka")
@@ -684,11 +620,11 @@ namespace PckStudio
 
 				tempID = tempID.Remove(0, 8);//removes text from id
 
-				tempIDD = int.Parse(tempID) + 1;//adds to skin/cape id index to presets the next skin/cape id
+				tempIDD = int.Parse(tempID) + 1; //adds to skin/cape id index to presets the next skin/cape id
 			}
 			catch (Exception)
 			{
-				tempIDD = 00000000;//sets temporary id to 0 if an id can't be generated off the treeviews last item
+				tempIDD = 00000000; //sets temporary id to 0 if an id can't be generated off the treeviews last item
 			}
 			PCKFile.FileData mf = mfLoc;//Sets loc minefile
 
@@ -705,8 +641,11 @@ namespace PckStudio
 				MessageBox.Show("No localization data found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
-			PckStudio.addnewskin add = new PckStudio.addnewskin(currentPCK, treeViewMain, tempIDD.ToString(), l);//Sets dialog data for skin creator
-			add.ShowDialog();//opens skin creator
+			PckStudio.addnewskin add = new PckStudio.addnewskin(l); //Sets dialog data for skin creator
+			add.ShowDialog(); //opens skin creator
+			if (add.useCape)
+				currentPCK.file_entries.Add(add.cape);
+			currentPCK.file_entries.Add(add.skin);
 			using (var stream = new MemoryStream())
             {
 				LOCFileWriter.Write(stream, l);
@@ -714,62 +653,36 @@ namespace PckStudio
 			}
 			add.Dispose();//disposes generated skin creator data
 			saved = false;
+			loadEditor();
 		}
 		#endregion
 
-		private void audiopckToolStripMenuItem_Click(object sender, EventArgs e)
+		PCKFile.FileData makeNewAudioPCK(bool isLittle)
 		{
-
-		}
-
-		PCKFile.FileData makeNewAudioPCK(bool isVita)
-		{
+			// create actual valid pck file structure
 			PCKFile audioPck = new PCKFile(1); // 1 = audio pck
-			audioPck.meta_data.Add("CUENAME",  0);
-			audioPck.meta_data.Add("CREDIT",   1);
-			audioPck.meta_data.Add("CREDITID", 2);
+			audioPck.meta_data.Add("CUENAME");
+			audioPck.meta_data.Add("CREDIT");
+			audioPck.meta_data.Add("CREDITID");
 			for (int i = 0; i < 3; i++)
 			{
 				PCKFile.FileData mf = new PCKFile.FileData("", i);
-				//audioPCKFile.file_entries.Add(mf);
-			}
-			PCKFile.FileData audioMF = new PCKFile.FileData("audio.pck", 8);
-			//TODO!!!!!!!!!!
-			//audioMF.data = isVita ? audioPck.RebuildVita() : audioPck.Rebuild();
-			return audioMF;
+				audioPck.file_entries.Add(mf);
+            }
+
+			// create a file data entry for current open pck file
+			PCKFile.FileData audioFileData = new PCKFile.FileData("audio.pck", 8);
+			using(var stream = new MemoryStream())
+            {
+				PCKFileWriter.Write(stream, audioPck, isLittle);
+				audioFileData.SetData(stream.ToArray());
+            }
+            return audioFileData;
 		}
 
-		private void vitaPS4AudiopckToolStripMenuItem_Click(object sender, EventArgs e)
+		private void audiopckToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			treeViewToMineFiles(treeViewMain, currentPCK);
-			List<string> filenames = new List<string>();
-			foreach (TreeNode tNode in treeViewMain.Nodes)
-			{
-				filenames.Add(tNode.Text);
-			}
-
-			if (filenames.Contains("audio.pck"))
-			{
-				MessageBox.Show("There is already an audio.pck present in this file!", "Can't create audio.pck");
-				return;
-			}
-			PCKFile.FileData audioMF = makeNewAudioPCK(true);
-			TreeNode node = new TreeNode();
-			node.Text = "audio.pck";
-			node.Tag = audioMF;
-			node.ImageIndex = 4;
-			node.SelectedImageIndex = 4;
-			PckStudio.Forms.Utilities.AudioEditor diag = new PckStudio.Forms.Utilities.AudioEditor(node.Tag as PCKFile.FileData, true);
-			diag.Text += " (PS4/Vita)";
-			diag.ShowDialog(this);
-			if (diag.saved) treeViewMain.Nodes.Add(node);
-			treeViewToMineFiles(treeViewMain, currentPCK);
-			diag.Dispose();
-		}
-
-		private void normalAudiopckToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			treeViewToMineFiles(treeViewMain, currentPCK);
+			//treeViewToMineFiles(treeViewMain, currentPCK);
 			List<string> filenames = new List<string>();
 			foreach (TreeNode tNode in treeViewMain.Nodes)
 			{
@@ -782,15 +695,14 @@ namespace PckStudio
 				return;
 			}
 			PCKFile.FileData audioMF = makeNewAudioPCK(false);
-			TreeNode node = new TreeNode();
-			node.Text = "audio.pck";
+			TreeNode node = new TreeNode("audio.pck");
 			node.Tag = audioMF;
 			node.ImageIndex = 4;
 			node.SelectedImageIndex = 4;
-			PckStudio.Forms.Utilities.AudioEditor diag = new PckStudio.Forms.Utilities.AudioEditor(node.Tag as PCKFile.FileData, false);
+			Forms.Utilities.AudioEditor diag = new Forms.Utilities.AudioEditor(audioMF, LittleEndianCheckBox.Checked);
 			diag.ShowDialog(this);
 			if (diag.saved) treeViewMain.Nodes.Add(node);
-			treeViewToMineFiles(treeViewMain, currentPCK);
+			//treeViewToMineFiles(treeViewMain, currentPCK);
 			diag.Dispose();
 		}
 
@@ -810,20 +722,11 @@ namespace PckStudio
 						diag.ShowDialog(this);
 						diag.Dispose();
 
-						treeViewToMineFiles(treeViewMain, currentPCK);
+						//treeViewToMineFiles(treeViewMain, currentPCK);
 
 						treeMeta.Nodes.Clear();
-						foreach (var type in currentPCK.meta_data.Keys)
+						foreach (var type in currentPCK.meta_data)
 							comboBox1.Items.Add(type);
-
-						//loads all of selected minefiles metadata into metadata treeview
-						foreach (var entry in file.properties)
-						{
-							TreeNode meta = new TreeNode(entry.Item1);
-
-							meta.Tag = entry;
-							treeMeta.Nodes.Add(meta);
-						}
 					}
 					catch
 					{
@@ -836,104 +739,90 @@ namespace PckStudio
 		}
 		#endregion
 
-		#region deciphers what happens when certain pck entries are double clicked
 		private void treeViewMain_DoubleClick(object sender, EventArgs e)
 		{
-			if (treeViewMain.SelectedNode == null || treeViewMain.SelectedNode.Tag == null)
+			if (treeViewMain.SelectedNode == null ||
+				treeViewMain.SelectedNode.Tag == null ||
+				!(treeViewMain.SelectedNode.Tag is PCKFile.FileData))
 				return;
-			if (treeViewMain.SelectedNode.Tag is PCKFile.FileData)
-			{ 
-				mf = treeViewMain.SelectedNode.Tag as PCKFile.FileData;
-				if (mf.type == 6)
+			PCKFile.FileData file = treeViewMain.SelectedNode.Tag as PCKFile.FileData;
+			if (file.type == 6) // .loc
+			{
+				LOCFile l = null;
+				using (var stream = new MemoryStream(file.data))
 				{
-					LOCFile l;
-					try
-					{
-						using (var stream = new MemoryStream(mf.data))
-						{
-							l = LOCFileReader.Read(stream);//sets loc data
-						}
-					}
-					catch
-					{
-						MessageBox.Show("No localization data found.", "Error", MessageBoxButtons.OK,
-							MessageBoxIcon.Error);
-						return;
-					}
-					(new LOCEditor(l)).ShowDialog();
+					l = LOCFileReader.Read(stream);
+				}
+				var locedit = new LOCEditor(l);
+				locedit.ShowDialog(this);
+				if (locedit.wasModified)
+				{
 					using (var stream = new MemoryStream())
 					{
 						LOCFileWriter.Write(stream, l);
-						mf.SetData(stream.ToArray());
+						file.SetData(stream.ToArray());
 					}
 				}
 			}
 
-			//Checks to see if selected minefile is an audio file
-			if (Path.GetFileName(mf.name) == "audio.pck")
+			if (Path.GetFileName(file.name) == "audio.pck" || file.type == 8) // audio
 			{
-				if (treeViewMain.SelectedNode.Tag is PCKFile.FileData)
+				try
 				{
-					try
-					{
-						Forms.Utilities.AudioEditor diag = new Forms.Utilities.AudioEditor(mf, mf.data[0] != 0x00);
-						if(mf.data[0] != 0x00) diag.Text += " (PS4/Vita)";
-						diag.ShowDialog(this);
-						diag.Dispose();
-					}
-					catch(Exception ex)
-					{
-						MessageBox.Show("Error", ex.Message, MessageBoxButtons.OK,
-						MessageBoxIcon.Error);
-						return;
-					}
+					Forms.Utilities.AudioEditor diag = new Forms.Utilities.AudioEditor(file, LittleEndianCheckBox.Checked);
+					if (LittleEndianCheckBox.Checked) diag.Text += " (PS4/Vita)";
+					diag.ShowDialog(this);
+					diag.Dispose();
+				}
+				catch(Exception ex)
+				{
+					MessageBox.Show("Error", ex.Message, MessageBoxButtons.OK,
+					MessageBoxIcon.Error);
+					return;
 				}
 			}
 
 			//Checks to see if selected minefile is a col file
-			if (Path.GetExtension(mf.name) == ".col" || mf.type == 9)
+			if (Path.GetExtension(file.name) == ".col" || file.type == 9)
 			{
-				//MessageBox.Show(".COL Editor Coming Soon!");
-
-				if (treeViewMain.SelectedNode.Tag is PCKFile.FileData)
-				{
-					try
-					{
-						Forms.Utilities.COLEditor diag = new Forms.Utilities.COLEditor(mf);
-						diag.ShowDialog(this);
-						diag.Dispose();
-					}
-					catch
-					{
-						MessageBox.Show("No Color data found.", "Error", MessageBoxButtons.OK,
-							MessageBoxIcon.Error);
-						return;
-					}
-					//mf.data = l.Rebuild();//Rebuilds loc file with locdata in grid view after closing dialog
+				if (file.size == 0)
+                {
+					MessageBox.Show("No Color data found.", "Error", MessageBoxButtons.OK,
+						MessageBoxIcon.Error);
+					return;
 				}
-			}
+				COLFile colFile = new COLFile();
+				using (var stream = new MemoryStream(file.data))
+                {
+					colFile.Open(stream);
+                }
+				Forms.Utilities.COLEditor diag = new Forms.Utilities.COLEditor(colFile);
+				if (diag.ShowDialog(this) == DialogResult.OK && diag.data.Length > 0)
+					file.SetData(diag.data);
+				diag.Dispose();
+            }
 
 			//Checks to see if selected minefile is a binka file
 			//System.Threading.ThreadStart starter;
 
 			//System.Threading.Thread binkam;
-			if (Path.GetExtension(mf.name) == ".binka")
+			if (Path.GetExtension(file.name) == ".binka")
 			{
 				MessageBox.Show(".binka Editor Coming Soon!");
 			}
-
 		}
-		#endregion
 
 		#region updates combo and text boxes for metadata when a metadata entry is selected
 		private void treeMeta_AfterSelect(object sender, TreeViewEventArgs e)
 		{
+			var node = e.Node;
+			if (node == null || !(node.Tag is ValueTuple<string, string>)) return;
 			comboBox1.Items.Clear(); //Resets metadata combobox of selectable entry names
-			var strings = (Tuple<string,string>)e.Node.Tag;
-			foreach (var type in currentPCK.meta_data.Keys)
+			var property = (ValueTuple<string, string>)node.Tag;
+			foreach (var type in currentPCK.meta_data)
 				comboBox1.Items.Add(type);
-			comboBox1.Text = strings.Item1;
-			textBox1.Text = strings.Item2;
+			comboBox1.Text = property.Item1;
+			textBox1.Text = property.Item2;
 		}
 		#endregion
 
@@ -944,38 +833,42 @@ namespace PckStudio
 		}
 		#endregion
 
-		#region updates metadata value when text box value changes
 		private void textBox1_TextChanged(object sender, EventArgs e)
 		{
+			if (treeMeta.SelectedNode == null ||
+				treeMeta.SelectedNode.Tag == null ||
+				!(treeMeta.SelectedNode.Tag is ValueTuple<string, string>))
+				return;
+			var valuePair = (ValueTuple<string, string>)treeMeta.SelectedNode.Tag;
+			valuePair.Item2 = textBox1.Text;
 		}
-		#endregion
 
-		#region deletes metadata entry
 		private void deleteEntryToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (treeMeta.SelectedNode != null)//Makes sure selected node is a minefile
+			if (treeMeta.SelectedNode != null && treeMeta.SelectedNode.Tag is ValueTuple<string, string> &&
+				treeViewMain.SelectedNode.Tag is PCKFile.FileData)
 			{
-				file.properties.Remove((Tuple<string, string>)treeMeta.SelectedNode.Tag);//removes minefile from minefile list
-				treeMeta.Nodes.Remove(treeMeta.SelectedNode);//removes minefile node
+				var file = treeViewMain.SelectedNode.Tag as PCKFile.FileData;
+				file.properties.Remove((ValueTuple<string, string>)treeMeta.SelectedNode.Tag);
+				treeMeta.Nodes.Remove(treeMeta.SelectedNode);
 			}
 			saved = false;
 		}
-		#endregion
 
-		#region adds metadata entry
 		private void addEntryToolStripMenuItem_Click_1(object sender, EventArgs e)
 		{
-			mf = (PCKFile.FileData)treeViewMain.SelectedNode.Tag; //Sets minefile to selected node
-			addMeta add = new addMeta(mf);//sets metadata adding dialog
-			add.ShowDialog();//displays metadata adding dialog
-			add.Dispose();//diposes generated metadata adding dialog data
+			if (treeViewMain.SelectedNode.Tag == null ||
+				!(treeViewMain.SelectedNode.Tag is PCKFile.FileData))
+				return;
+			PCKFile.FileData file = (PCKFile.FileData)treeViewMain.SelectedNode.Tag;
+			addMeta add = new addMeta(file);
+			add.ShowDialog();
+			add.Dispose(); 
 
-			//Sets up combobox for metadata entries from main metadatabase
 			treeMeta.Nodes.Clear();
-			foreach (var type in currentPCK.meta_data.Keys)
+			foreach (var type in currentPCK.meta_data)
 				comboBox1.Items.Add(type);
 
-			//loads all of selected minefiles metadata into metadata treeview
 			foreach (var entry in file.properties)
 			{
 				TreeNode meta = new TreeNode(entry.Item1);
@@ -984,7 +877,6 @@ namespace PckStudio
 			}
 			saved = false;
 		}
-		#endregion
 
 		#region moves node up and arranges minefile indexes
 		private void moveUpToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1006,7 +898,7 @@ namespace PckStudio
 				treeViewMain.SelectedNode.Remove();
 			}
 
-			treeViewToMineFiles(treeViewMain, currentPCK);
+			//treeViewToMineFiles(treeViewMain, currentPCK);
 
 			treeViewMain.SelectedNode = move;
 
@@ -1034,7 +926,7 @@ namespace PckStudio
 				treeViewMain.SelectedNode.Remove();
 			}
 
-			treeViewToMineFiles(treeViewMain, currentPCK);
+			//treeViewToMineFiles(treeViewMain.top, currentPCK);
 
 			treeViewMain.SelectedNode = move;
 
@@ -1051,65 +943,6 @@ namespace PckStudio
 				Nodes.Add(thisNode);
 				getChildren(Nodes, thisNode);
 			}
-		}
-
-		public static string getFullMineFilePath(TreeNode node)
-		{
-			try
-			{
-				string path = Path.GetDirectoryName(node.FullPath);
-				string fullNew = path + "/" + Path.GetFileName(node.Text);
-				fullNew = fullNew.Replace("\\", "/");
-				return fullNew.TrimStart('/');
-			}
-			catch (System.ArgumentException e)
-			{
-				return node.Text;
-			}
-		}
-
-		public static void treeViewToMineFiles(TreeView tree, PCKFile pck)
-		{
-			int i = 1;
-			List<TreeNode> children = new List<TreeNode>();
-			List<PCKFile.FileData> newMineFiles = new List<PCKFile.FileData>();
-			foreach (TreeNode node in tree.Nodes)
-			{
-				string nodePath = getFullMineFilePath(node);
-
-				if(node.Tag == null)
-				{
-					getChildren(children, node);
-					foreach (TreeNode child in children)
-					{
-						string childPath = getFullMineFilePath(child);
-
-						if(child.Tag != null)
-						{
-							PCKFile.FileData mf = (PCKFile.FileData)child.Tag;
-							mf.name = childPath;
-							if (!newMineFiles.Contains(mf))
-							{
-								newMineFiles.Add((PCKFile.FileData)child.Tag);
-								//Console.WriteLine("Minefile " + i + ": " + childPath);
-								i++;
-							}
-						}
-					}
-				}
-				else
-				{
-					PCKFile.FileData mf = (PCKFile.FileData)node.Tag;
-					mf.name = nodePath;
-					if (!newMineFiles.Contains(mf))
-					{
-						newMineFiles.Add((PCKFile.FileData)node.Tag);
-						//Console.WriteLine("Minefile " + i + ": " + nodePath);
-						i++;
-					}
-				}
-			}
-			pck.file_entries = newMineFiles;
 		}
 
 		// Most of the code below is modified code from this link: https://docs.microsoft.com/en-us/dotnet/api/system.windows.forms.treeview.itemdrag?view=windowsdesktop-6.0
@@ -1176,14 +1009,14 @@ namespace PckStudio
 		#region opens presets
 		private void addPresetToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
-			mf = (PCKFile.FileData)treeViewMain.SelectedNode.Tag;//Sets selected minefile from node
-			PckStudio.presetMeta add = new PckStudio.presetMeta(mf);//sets data for preset adding dialog
-			add.ShowDialog();//displays preset adding dialog
-			add.Dispose();//disposes generated preset adding data
+			PCKFile.FileData file = (PCKFile.FileData)treeViewMain.SelectedNode.Tag;
+			PckStudio.presetMeta add = new PckStudio.presetMeta(file);
+			add.ShowDialog();
+			add.Dispose();
 
 			//reloads treemeta data
 			treeMeta.Nodes.Clear();
-			foreach (var type in currentPCK.meta_data.Keys)
+			foreach (var type in currentPCK.meta_data)
 				comboBox1.Items.Add(type);
 
 			foreach (var entry in file.properties)
@@ -1197,21 +1030,57 @@ namespace PckStudio
 		#endregion
 
 		#region loads empty pck template
+
+		private void InitializeSkinPack(int packID, int packVersion, string packName)
+        {
+			currentPCK = new PCKFile(3);
+			currentPCK.meta_data.Add("PACKID");
+			currentPCK.meta_data.Add("PACKVERSION");
+			var zeroFile = new PCKFile.FileData("0", 4);
+			zeroFile.properties.Add(("PACKID", packID.ToString()));
+			zeroFile.properties.Add(("PACKVERSION", packVersion.ToString()));
+			var loc = new PCKFile.FileData("localisation.loc", 6);
+			var locFile = new LOCFile();
+			locFile.InitializeDefault(packName);
+			using (var stream = new MemoryStream())
+			{
+				LOCFileWriter.Write(stream, locFile);
+				loc.SetData(stream.ToArray());
+			}
+			currentPCK.file_entries.Add(zeroFile);
+			currentPCK.file_entries.Add(loc);
+		}
+
+		private void InitializeTexturePack()
+        {
+			InitializeSkinPack(0, 0, "no_name");
+			var texturepackInfo = new PCKFile.FileData("x16/x16Info.pck", 5);
+			texturepackInfo.properties.Add(("PACKID", "0"));
+			texturepackInfo.properties.Add(("DATAPATH", "x16Data.pck"));
+			currentPCK.file_entries.Add(texturepackInfo);
+		}
+
 		private void skinPackToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			//Loads skin pack template
-			PCKFilePath = Path.GetFileName(appData + "\\template\\UntitledSkinPCK.pck");
-			openPck(appData + "\\template\\UntitledSkinPCK.pck");
-			saveLocation = "";
-			saved = false;
+			// make skin pack template
+			InitializeSkinPack(new Random().Next(8000, 8000000), 0, "no_name");
+			isTemplateFile = true;
+			loadEditor();
 		}
+		private void texturePackToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+			// make texture pack template
+			InitializeTexturePack();
+			isTemplateFile = true;
+			loadEditor();
+        }
 		#endregion
 
 		#region open advanced metadata bulk editing window
 		private void advancedMetaAddingToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			//opens dialog for bulk minefile editing
-			PckStudio.AdvancedOptions advanced = new PckStudio.AdvancedOptions(currentPCK);
+			AdvancedOptions advanced = new AdvancedOptions(currentPCK);
 			advanced.ShowDialog();
 			advanced.Dispose();
 			saved = false;
@@ -1222,7 +1091,7 @@ namespace PckStudio
 		private void programInfoToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			//open program info dialog
-			PckStudio.programInfo info = new PckStudio.programInfo();
+			programInfo info = new programInfo();
 			info.ShowDialog();
 			info.Dispose();
 		}
@@ -1313,15 +1182,16 @@ namespace PckStudio
 #region deletes metadata entries through the del key
 		private void treeMeta_KeyDown(object sender, KeyEventArgs e)
 		{
-			if (e.KeyData == Keys.Delete && treeMeta.SelectedNode != null)//makes sure pressed key was del
+			if (e.KeyData == Keys.Delete && treeMeta.SelectedNode != null && treeViewMain.SelectedNode.Tag is PCKFile.FileData)
 			{
 				//removes selected treemeta entry
-				file.properties.Remove((Tuple<string, string>)treeMeta.SelectedNode.Tag);
+				var file = treeViewMain.SelectedNode.Tag as PCKFile.FileData;
+				file.properties.Remove((ValueTuple<string, string>)treeMeta.SelectedNode.Tag);
 				treeMeta.Nodes.Remove(treeMeta.SelectedNode);
 
 				//reloads treemeta data
 				treeMeta.Nodes.Clear();
-				foreach (var type in currentPCK.meta_data.Keys)
+				foreach (var type in currentPCK.meta_data)
 					comboBox1.Items.Add(type);
 
 				foreach (var entry in file.properties)
@@ -1424,7 +1294,7 @@ namespace PckStudio
 						else
 						{
 							//adds minefiles metadata and presets loc data for minefile
-							mfNew.properties.Add(new Tuple<string, string>(entryName, entryValue));
+							mfNew.properties.Add(new ValueTuple<string, string>(entryName, entryValue));
 
 							if (entryName == "DISPLAYNAMEID")
 							{
@@ -1453,10 +1323,10 @@ namespace PckStudio
 
 								try
 								{
-									using (var stream = new MemoryStream(mf.data))
-									{
-										l = LOCFileReader.Read(stream);//sets loc data
-									}
+									//using (var stream = new MemoryStream(mf.data))
+									//{
+									//	l = LOCFileReader.Read(stream);//sets loc data
+									//}
 								}
 								catch
 								{
@@ -1464,13 +1334,13 @@ namespace PckStudio
 									return;
 								}
 
-								l.AddEntry(locThemeId, locTheme);
+								//l.AddEntry(locThemeId, locTheme);
 
-								using (var stream = new MemoryStream())
-								{
-									LOCFileWriter.Write(stream, l);
-									mfLoc.SetData(stream.ToArray());
-								}
+								//using (var stream = new MemoryStream())
+								//{
+								//	LOCFileWriter.Write(stream, l);
+								//	mfLoc.SetData(stream.ToArray());
+								//}
 								locNameId = "";
 								locName = "";
 							}
@@ -1493,12 +1363,12 @@ namespace PckStudio
 									return;
 								}
 
-								l.AddEntry(locThemeId, locTheme);
-								using (var stream = new MemoryStream(mf.data))
-								{
-									LOCFileWriter.Write(stream, l);
-									mfLoc.SetData(stream.ToArray());
-								}
+								//l.AddEntry(locThemeId, locTheme);
+								//using (var stream = new MemoryStream(mf.data))
+								//{
+								//	LOCFileWriter.Write(stream, l);
+								//	mfLoc.SetData(stream.ToArray());
+								//}
 								locThemeId = "";
 								locTheme = "";
 							}
@@ -1580,7 +1450,6 @@ namespace PckStudio
 					string locThemeId = "";
 					string locTheme = "";
 					bool entryStart = true;//assistant for parcing through metadata file data to import
-					int i = 0;
 
 					foreach (char entry in File.ReadAllText(contents.FileName).ToList())
 					{
@@ -1599,7 +1468,7 @@ namespace PckStudio
 						}
 						else
 						{
-							mfNew.properties.Add(new Tuple<string, string>(entryName, entryValue));
+							mfNew.properties.Add(new ValueTuple<string, string>(entryName, entryValue));
 
 							if (entryName == "DISPLAYNAMEID")
 							{
@@ -1624,26 +1493,26 @@ namespace PckStudio
 							//creates displayname id in loc file
 							if (locNameId != "" && locName != "")
 							{
-								LOCFile l;
+								//LOCFile l;
 
-								try
-								{
-									using (var stream = new MemoryStream(mf.data))
-									{
-										l = LOCFileReader.Read(stream);//sets loc data
-									}
-								}
-								catch
-								{
-									MessageBox.Show("No localization data found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-									return;
-								}
-								l.AddEntry(locThemeId, locTheme);
-								using (var stream = new MemoryStream())
-								{
-									LOCFileWriter.Write(stream, l);
-									mfLoc.SetData(stream.ToArray());
-								}
+								//try
+								//{
+								//	using (var stream = new MemoryStream(mf.data))
+								//	{
+								//		l = LOCFileReader.Read(stream); //sets loc data
+								//	}
+								//}
+								//catch
+								//{
+								//	MessageBox.Show("No localization data found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+								//	return;
+								//}
+								//l.AddEntry(locThemeId, locTheme);
+								//using (var stream = new MemoryStream())
+								//{
+								//	LOCFileWriter.Write(stream, l);
+								//	mfLoc.SetData(stream.ToArray());
+								//}
 								locNameId = "";
 								locName = "";
 							}
@@ -1651,27 +1520,27 @@ namespace PckStudio
 							//creates metadata id in loc file
 							if (locThemeId != "" && locTheme != "")
 							{
-								LOCFile l;
+								//LOCFile l;
 
-								try
-								{
-									using (var stream = new MemoryStream(mf.data))
-									{
-										l = LOCFileReader.Read(stream);//sets loc data
-									}
-								}
-								catch
-								{
-									MessageBox.Show("No localization data found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-									return;
-								}
-								l.AddEntry(locThemeId, locTheme);
+								//try
+								//{
+								//	using (var stream = new MemoryStream(mf.data))
+								//	{
+								//		l = LOCFileReader.Read(stream);//sets loc data
+								//	}
+								//}
+								//catch
+								//{
+								//	MessageBox.Show("No localization data found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+								//	return;
+								//}
+								//l.AddEntry(locThemeId, locTheme);
 
-								using (var stream = new MemoryStream())
-								{
-									LOCFileWriter.Write(stream, l);//sets loc data
-									mfLoc.SetData(stream.ToArray());
-								}
+								//using (var stream = new MemoryStream())
+								//{
+								//	LOCFileWriter.Write(stream, l);//sets loc data
+								//	mfLoc.SetData(stream.ToArray());
+								//}
 								locThemeId = "";
 								locTheme = "";
 							}
@@ -1730,15 +1599,11 @@ namespace PckStudio
 			System.Diagnostics.Process.Start("https://www.youtube.com/watch?v=v6EYr4zc7rI");
 		}
 
-		private void donateToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-		}
-
 		private void fAQToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
 			//System.Diagnostics.Process.Start(hosturl + "pckStudio#faq");
 		}
-
+// BIG TODO
 #region converts and ports all skins in pck to mc bedrock format
 		// items class for use in bedrock skin conversion
 		public class Item
@@ -3074,8 +2939,8 @@ namespace PckStudio
 		private void addPasswordToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			treeViewMain.SelectedNode = treeViewMain.Nodes[0];
-			mf = (PCKFile.FileData)treeViewMain.Nodes[0].Tag;//Sets minefile to selected node
-				foreach (var entry in mf.properties)
+			PCKFile.FileData file = (PCKFile.FileData)treeViewMain.Nodes[0].Tag;//Sets minefile to selected node
+				foreach (var entry in file.properties)
 				{
 					if (entry.Item1 == "LOCK")
 					{
@@ -3083,13 +2948,13 @@ namespace PckStudio
 						return;
 					}
 				}
-			AddPCKPassword add = new AddPCKPassword(mf, currentPCK);//sets metadata adding dialog
-			add.ShowDialog();//displays metadata adding dialog
-			add.Dispose();//diposes generated metadata adding dialog data
+			AddPCKPassword add = new AddPCKPassword(file, currentPCK); //sets metadata adding dialog
+			add.ShowDialog();
+			add.Dispose();
 
 			//Sets up combobox for metadata entries from main metadatabase
 			treeMeta.Nodes.Clear();
-			foreach (var type in currentPCK.meta_data.Keys)
+			foreach (var type in currentPCK.meta_data)
 				comboBox1.Items.Add(type);
 
 			//loads all of selected minefiles metadata into metadata treeview
@@ -3118,15 +2983,18 @@ namespace PckStudio
 
 		private void buttonEditModel_Click(object sender, EventArgs e)
 		{
-			if (treeViewMain.SelectedNode.Tag == null || !(treeViewMain.SelectedNode.Tag is PCKFile.FileData)) return;
+			if (treeViewMain.SelectedNode == null ||
+				treeViewMain.SelectedNode.Tag == null ||
+				!(treeViewMain.SelectedNode.Tag is PCKFile.FileData))
+				return;
 			PCKFile.FileData file = treeViewMain.SelectedNode.Tag as PCKFile.FileData;
 			if (file.type == 0 || file.type == 1 || file.type == 2)
 			{
 				if (buttonEdit.Text == "EDIT BOXES")
-					editModel(mf);
+					editModel(file);
 				else if (buttonEdit.Text == "View Skin")
 				{
-					using (var ms = new MemoryStream(mf.data))
+					using (var ms = new MemoryStream(file.data))
 					{
 						SkinPreview frm = new SkinPreview(Image.FromStream(ms));
 						frm.ShowDialog(this);
@@ -3144,14 +3012,14 @@ namespace PckStudio
 					diag.ShowDialog(this);
 					diag.Dispose();
 
-					treeViewToMineFiles(treeViewMain, currentPCK);
+					//treeViewToMineFiles(treeViewMain, currentPCK);
 
-					MemoryStream png = new MemoryStream(mf.data); //Gets image data from minefile data
+					MemoryStream png = new MemoryStream(file.data); //Gets image data from minefile data
 					Image skinPicture = Image.FromStream(png); //Constructs image data into image
 					pictureBoxImagePreview.Image = skinPicture;
 
 					treeMeta.Nodes.Clear();
-					foreach (var type in currentPCK.meta_data.Keys)
+					foreach (var type in currentPCK.meta_data)
 						comboBox1.Items.Add(type);
 
 					//loads all of selected minefiles metadata into metadata treeview
@@ -3191,37 +3059,29 @@ namespace PckStudio
 				LOCFile l = null;
 				using (var stream = new MemoryStream(file.data))
 				{
-					l = LOCFileReader.Read(stream);//sets loc data
+					l = LOCFileReader.Read(stream);
 				}
-				var locEditor = new LOCEditor(l); //Opens LOC Editor
+				var locEditor = new LOCEditor(l);
 				locEditor.ShowDialog();
 				using (var stream = new MemoryStream())
                 {
 					LOCFileWriter.Write(stream, l);
-					mf.SetData(stream.ToArray());
+					file.SetData(stream.ToArray());
                 }
 			}
 
 			//Checks to see if selected minefile is a col file
 			if (file.type == 9) // .col file
 			{
-				//MessageBox.Show(".COL Editor Coming Soon!");
-
-				if (treeViewMain.SelectedNode.Tag is PCKFile.FileData)
+				COLFile colFile = new COLFile();
+				using (var stream = new MemoryStream(file.data))
 				{
-					try
-					{
-						Forms.Utilities.COLEditor diag = new Forms.Utilities.COLEditor(mf);
-						diag.ShowDialog(this);
-						diag.Dispose();
-					}
-					catch
-					{
-						MessageBox.Show("No Color data found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-						return;
-					}
-					//mf.data = l.Rebuild();//Rebuilds loc file with locdata in grid view after closing dialog
+					colFile.Open(stream);
 				}
+				Forms.Utilities.COLEditor diag = new Forms.Utilities.COLEditor(colFile);
+				if (diag.ShowDialog(this) == DialogResult.OK && diag.data.Length > 0)
+					file.SetData(diag.data);
+				diag.Dispose();
 			}
 		}
 
@@ -3238,26 +3098,31 @@ namespace PckStudio
 
 		private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
 		{
-			if (!saved)
-			{
-				if (MessageBox.Show("Save PCK?", "Unsaved PCK", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-				{
-					if (isTemplateFile)
-					{
-						save();
-					}
-					else
-					{
-						save();
-					}
-				}
-			}
+			checkSaveState();
 			if (needsUpdate)
 			{
 				Process UPDATE = new Process(); //sets up updater
 				UPDATE.StartInfo.FileName = appData + @"\nobleUpdater.exe"; //updater program path
 				UPDATE.Start(); //starts updater
 				Application.Exit(); //closes PCK Studio to let updatear finish the job
+			}
+		}
+
+		private void checkSaveState()
+        {
+			if (!saved || isTemplateFile)
+			{
+				if (MessageBox.Show("Save PCK?", "Unsaved PCK", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+				{
+					if (isTemplateFile || string.IsNullOrEmpty(saveLocation))
+					{
+						SaveTemplate();
+					}
+					else
+					{
+						Save(saveLocation);
+					}
+				}
 			}
 		}
 
@@ -3292,12 +3157,12 @@ namespace PckStudio
 
 		private void savePCK(object sender, EventArgs e)
 		{
-			save();
+			checkSaveState();
 		}
 
 		private void saveAsPCK(object sender, EventArgs e)
 		{
-			save();
+			SaveTemplate();
 		}
 
 		private void timer1_Tick(object sender, EventArgs e)
@@ -3341,9 +3206,9 @@ namespace PckStudio
 		{
 			try
 			{
-			RPC.SetRPC("Sitting alone", "Program by PhoenixARC", "pcklgo", "PCK Studio", "pcklgo");
-			timer1.Start();
-			timer1.Enabled = true;
+				RPC.SetRPC("Sitting alone", "Program by PhoenixARC", "pcklgo", "PCK Studio", "pcklgo");
+				timer1.Start();
+				timer1.Enabled = true;
 			}
 			catch { }
 		}

@@ -34,12 +34,13 @@ namespace PckStudio.Classes.IO
         {
             int meta_entry_count = ReadInt(stream);
             bool has_xml_tag = false;
+            _file.meta_data.Capacity = meta_entry_count;
             for (; 0 < meta_entry_count; meta_entry_count--)
             {
                 int index = ReadInt(stream);
                 string value = ReadString(stream);
                 if (value.Equals("XMLVERSION")) has_xml_tag = true;
-                _file.meta_data[value] = index;
+                _file.meta_data.Insert(index, value);
                 ReadInt(stream); // padding ????
             }
             if (has_xml_tag)
@@ -64,9 +65,7 @@ namespace PckStudio.Classes.IO
                 for (; 0 < property_count; property_count--)
                 {
                     int index = ReadInt(stream);
-                    if (!_file.meta_data.ContainsValue(index)) // should never happen with valid pck's
-                        throw new Exception("Value not found");
-                    string key = GetKeyFromValue(_file.meta_data, index);
+                    string key = _file.meta_data[index];
                     string value = ReadString(stream);
                     file_entry.properties.Add(new ValueTuple<string, string>(key, value));
                     ReadInt(stream); // padding ???
@@ -74,13 +73,6 @@ namespace PckStudio.Classes.IO
                 // file data buffer is only allocated when FileData is constructed with `dataSize`
                 stream.Read(file_entry.data, 0, file_entry.size);
             }
-        }
-        private static T1 GetKeyFromValue<T1, T2>(Dictionary<T1, T2> dict, T2 value)
-        {
-            foreach (KeyValuePair<T1, T2> pair in dict)
-                if (EqualityComparer<T2>.Default.Equals(pair.Value, value))
-                    return pair.Key;
-            return default(T1); // should never return unless dict.ContainsValue(value) returns false
         }
 
         internal int ReadInt(Stream stream)

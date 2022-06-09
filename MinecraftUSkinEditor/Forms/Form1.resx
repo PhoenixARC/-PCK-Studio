@@ -179,18 +179,6 @@
   <data name="createAnimatedTextureToolStripMenuItem.Text" xml:space="preserve">
     <value>Animated Texture</value>
   </data>
-  <data name="normalAudiopckToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>175, 22</value>
-  </data>
-  <data name="normalAudiopckToolStripMenuItem.Text" xml:space="preserve">
-    <value>Normal Audio.pck</value>
-  </data>
-  <data name="vitaPS4AudiopckToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>175, 22</value>
-  </data>
-  <data name="vitaPS4AudiopckToolStripMenuItem.Text" xml:space="preserve">
-    <value>Vita/PS4 Audio.pck</value>
-  </data>
   <data name="audiopckToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
@@ -410,6 +398,24 @@
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="menuStrip.AutoSize" type="System.Boolean, mscorlib">
     <value>False</value>
+  </data>
+  <data name="skinPackToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>151, 22</value>
+  </data>
+  <data name="skinPackToolStripMenuItem.Text" xml:space="preserve">
+    <value>Skin Pack</value>
+  </data>
+  <data name="texturePackToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>151, 22</value>
+  </data>
+  <data name="texturePackToolStripMenuItem.Text" xml:space="preserve">
+    <value>Texture Pack</value>
+  </data>
+  <data name="mashUpPackToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>151, 22</value>
+  </data>
+  <data name="mashUpPackToolStripMenuItem.Text" xml:space="preserve">
+    <value>Mash-Up Pack</value>
   </data>
   <data name="newToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -29736,6 +29742,9 @@
   <data name="buttonEdit.Text" xml:space="preserve">
     <value>buttonEdit</value>
   </data>
+  <data name="buttonEdit.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
   <data name="&gt;&gt;buttonEdit.Name" xml:space="preserve">
     <value>buttonEdit</value>
   </data>
@@ -29752,7 +29761,7 @@
     <value>True</value>
   </data>
   <data name="labelImageSize.Location" type="System.Drawing.Point, System.Drawing">
-    <value>337, 3</value>
+    <value>691, 178</value>
   </data>
   <data name="labelImageSize.Size" type="System.Drawing.Size, System.Drawing">
     <value>69, 19</value>
@@ -29785,7 +29794,7 @@
     <value>195, 194</value>
   </data>
   <data name="pictureBoxImagePreview.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
-    <value>Zoom</value>
+    <value>StretchImage</value>
   </data>
   <data name="pictureBoxImagePreview.TabIndex" type="System.Int32, mscorlib">
     <value>18</value>
@@ -32713,18 +32722,6 @@
   <data name="&gt;&gt;audiopckToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;normalAudiopckToolStripMenuItem.Name" xml:space="preserve">
-    <value>normalAudiopckToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;normalAudiopckToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;vitaPS4AudiopckToolStripMenuItem.Name" xml:space="preserve">
-    <value>vitaPS4AudiopckToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;vitaPS4AudiopckToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;cloneFileToolStripMenuItem.Name" xml:space="preserve">
     <value>cloneFileToolStripMenuItem</value>
   </data>
@@ -32801,6 +32798,24 @@
     <value>newToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;newToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;skinPackToolStripMenuItem.Name" xml:space="preserve">
+    <value>skinPackToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;skinPackToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;texturePackToolStripMenuItem.Name" xml:space="preserve">
+    <value>texturePackToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;texturePackToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;mashUpPackToolStripMenuItem.Name" xml:space="preserve">
+    <value>mashUpPackToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;mashUpPackToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;openToolStripMenuItem.Name" xml:space="preserve">

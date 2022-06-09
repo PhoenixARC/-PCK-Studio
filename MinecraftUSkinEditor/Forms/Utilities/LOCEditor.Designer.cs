@@ -91,6 +91,8 @@
             // 
             // dataGridViewLocEntryData
             // 
+            this.dataGridViewLocEntryData.AllowUserToAddRows = false;
+            this.dataGridViewLocEntryData.AllowUserToDeleteRows = false;
             this.dataGridViewLocEntryData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.locSort.SetColumnSpan(this.dataGridViewLocEntryData, 2);
             resources.ApplyResources(this.dataGridViewLocEntryData, "dataGridViewLocEntryData");
@@ -121,6 +123,7 @@
             this.Style = MetroFramework.MetroColorStyle.Silver;
             this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.Load += new System.EventHandler(this.LOCEditor_Load);
+            this.Resize += new System.EventHandler(this.LOCEditor_Resize);
             this.contextMenuStrip1.ResumeLayout(false);
             this.locSort.ResumeLayout(false);
             this.locSort.PerformLayout();

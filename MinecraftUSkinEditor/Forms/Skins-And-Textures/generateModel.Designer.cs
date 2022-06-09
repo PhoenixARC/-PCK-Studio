@@ -106,9 +106,9 @@
             this.labelTheme = new System.Windows.Forms.Label();
             this.listViewBGs = new System.Windows.Forms.ListView();
             this.tableLayoutPanelMain = new System.Windows.Forms.TableLayoutPanel();
+            this.OpenJSONButton = new System.Windows.Forms.Button();
             this.displayBox = new System.Windows.Forms.PictureBox();
             this.texturePreview = new System.Windows.Forms.PictureBox();
-            this.OpenJSONButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.tabBody.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -766,6 +766,14 @@
             this.tableLayoutPanelMain.Controls.Add(this.buttonDone, 8, 19);
             this.tableLayoutPanelMain.Name = "tableLayoutPanelMain";
             // 
+            // OpenJSONButton
+            // 
+            resources.ApplyResources(this.OpenJSONButton, "OpenJSONButton");
+            this.OpenJSONButton.ForeColor = System.Drawing.Color.White;
+            this.OpenJSONButton.Name = "OpenJSONButton";
+            this.OpenJSONButton.UseVisualStyleBackColor = true;
+            this.OpenJSONButton.Click += new System.EventHandler(this.OpenJSONButton_Click);
+            // 
             // displayBox
             // 
             this.displayBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -784,14 +792,6 @@
             this.texturePreview.Name = "texturePreview";
             this.tableLayoutPanelMain.SetRowSpan(this.texturePreview, 5);
             this.texturePreview.TabStop = false;
-            // 
-            // OpenJSONButton
-            // 
-            resources.ApplyResources(this.OpenJSONButton, "OpenJSONButton");
-            this.OpenJSONButton.ForeColor = System.Drawing.Color.White;
-            this.OpenJSONButton.Name = "OpenJSONButton";
-            this.OpenJSONButton.UseVisualStyleBackColor = true;
-            this.OpenJSONButton.Click += new System.EventHandler(this.OpenJSONButton_Click);
             // 
             // generateModel
             // 

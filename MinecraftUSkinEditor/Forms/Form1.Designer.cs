@@ -36,8 +36,6 @@
             this.skinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.createAnimatedTextureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.audiopckToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.normalAudiopckToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.vitaPS4AudiopckToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cloneFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importSkinsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importSkinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -52,6 +50,9 @@
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.skinPackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.texturePackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mashUpPackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.extractToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -180,24 +181,9 @@
             // 
             // audiopckToolStripMenuItem
             // 
-            this.audiopckToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.normalAudiopckToolStripMenuItem,
-            this.vitaPS4AudiopckToolStripMenuItem});
             resources.ApplyResources(this.audiopckToolStripMenuItem, "audiopckToolStripMenuItem");
             this.audiopckToolStripMenuItem.Name = "audiopckToolStripMenuItem";
             this.audiopckToolStripMenuItem.Click += new System.EventHandler(this.audiopckToolStripMenuItem_Click);
-            // 
-            // normalAudiopckToolStripMenuItem
-            // 
-            this.normalAudiopckToolStripMenuItem.Name = "normalAudiopckToolStripMenuItem";
-            resources.ApplyResources(this.normalAudiopckToolStripMenuItem, "normalAudiopckToolStripMenuItem");
-            this.normalAudiopckToolStripMenuItem.Click += new System.EventHandler(this.normalAudiopckToolStripMenuItem_Click);
-            // 
-            // vitaPS4AudiopckToolStripMenuItem
-            // 
-            this.vitaPS4AudiopckToolStripMenuItem.Name = "vitaPS4AudiopckToolStripMenuItem";
-            resources.ApplyResources(this.vitaPS4AudiopckToolStripMenuItem, "vitaPS4AudiopckToolStripMenuItem");
-            this.vitaPS4AudiopckToolStripMenuItem.Click += new System.EventHandler(this.vitaPS4AudiopckToolStripMenuItem_Click);
             // 
             // cloneFileToolStripMenuItem
             // 
@@ -296,9 +282,29 @@
             // 
             // newToolStripMenuItem
             // 
+            this.newToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.skinPackToolStripMenuItem,
+            this.texturePackToolStripMenuItem,
+            this.mashUpPackToolStripMenuItem});
             resources.ApplyResources(this.newToolStripMenuItem, "newToolStripMenuItem");
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Click += new System.EventHandler(this.skinPackToolStripMenuItem_Click);
+            // 
+            // skinPackToolStripMenuItem
+            // 
+            this.skinPackToolStripMenuItem.Name = "skinPackToolStripMenuItem";
+            resources.ApplyResources(this.skinPackToolStripMenuItem, "skinPackToolStripMenuItem");
+            this.skinPackToolStripMenuItem.Click += new System.EventHandler(this.skinPackToolStripMenuItem_Click);
+            // 
+            // texturePackToolStripMenuItem
+            // 
+            this.texturePackToolStripMenuItem.Name = "texturePackToolStripMenuItem";
+            resources.ApplyResources(this.texturePackToolStripMenuItem, "texturePackToolStripMenuItem");
+            this.texturePackToolStripMenuItem.Click += new System.EventHandler(this.texturePackToolStripMenuItem_Click);
+            // 
+            // mashUpPackToolStripMenuItem
+            // 
+            this.mashUpPackToolStripMenuItem.Name = "mashUpPackToolStripMenuItem";
+            resources.ApplyResources(this.mashUpPackToolStripMenuItem, "mashUpPackToolStripMenuItem");
             // 
             // openToolStripMenuItem
             // 
@@ -466,7 +472,6 @@
             this.forMattNLContributorToolStripMenuItem});
             this.donateToolStripMenuItem.Name = "donateToolStripMenuItem";
             resources.ApplyResources(this.donateToolStripMenuItem, "donateToolStripMenuItem");
-            this.donateToolStripMenuItem.Click += new System.EventHandler(this.donateToolStripMenuItem_Click);
             // 
             // toNobledezJackToolStripMenuItem
             // 
@@ -625,7 +630,7 @@
             this.tabControl.Controls.Add(this.editorTab);
             resources.ApplyResources(this.tabControl, "tabControl");
             this.tabControl.Name = "tabControl";
-            this.tabControl.SelectedIndex = 0;
+            this.tabControl.SelectedIndex = 1;
             this.tabControl.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControl.Style = MetroFramework.MetroColorStyle.White;
             this.tabControl.TabStop = false;
@@ -760,6 +765,7 @@
             this.textBox1.UseSelectable = true;
             this.textBox1.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.textBox1.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // metroLabel2
             // 
@@ -941,8 +947,6 @@
         private System.Windows.Forms.ToolStripMenuItem convertPCTextrurePackToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem forMattNLContributorToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem audiopckToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem normalAudiopckToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem vitaPS4AudiopckToolStripMenuItem;
         private System.Windows.Forms.TabPage openTab;
         private System.Windows.Forms.ToolStripMenuItem videosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem howToMakeABasicSkinPackToolStripMenuItem;
@@ -968,6 +972,9 @@
         private PictureBoxWithInterpolationMode pictureBoxImagePreview;
         private MetroFramework.Controls.MetroLabel labelImageSize;
         private MetroFramework.Controls.MetroButton buttonEdit;
+        private System.Windows.Forms.ToolStripMenuItem skinPackToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem texturePackToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mashUpPackToolStripMenuItem;
     }
 }
 

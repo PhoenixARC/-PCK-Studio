@@ -23,7 +23,7 @@ namespace PckStudio
 
         string direction;
 
-        List<object[]> boxes;
+        List<ValueTuple<string, string>> boxes;
 
         ListView storeData = new ListView();
 
@@ -87,10 +87,9 @@ namespace PckStudio
 
 
         //Initialization
-        public generateModel(List<object[]> boxesIn, PictureBox preview)
+        public generateModel(List<ValueTuple<string, string>> boxesIn, PictureBox preview)
         {
             InitializeComponent();
-            boxes = new List<object[]>();
             boxes = boxesIn;
             skinPreview = preview;
             direction = "front";
@@ -125,9 +124,9 @@ namespace PckStudio
         //loads data from mode list
         private void loadData()
         {
-            foreach (object[] box in boxes)
+            foreach (var box in boxes)
             {
-                if (box[0].ToString() == "BOX")
+                if (box.Item1 == "BOX")
                 {
                     int space = 0;
                     string modelClass = "";
@@ -140,7 +139,7 @@ namespace PckStudio
                     string xO = "";
                     string yO = "";
 
-                    foreach (char letter in box[1].ToString())
+                    foreach (char letter in box.Item2)
                     {
                         if (letter.ToString() == " ")
                         {
@@ -680,19 +679,19 @@ namespace PckStudio
                             double num = (float)double.Parse(listViewItem.SubItems[6].Text) * 2;
                             double x = (float)double.Parse(listViewItem.SubItems[7].Text) * 2;
                             double y = (float)double.Parse(listViewItem.SubItems[8].Text) * 2;
-                            graphics.FillRectangle((Brush)new SolidBrush(listViewItem.ForeColor), (float)(x + num), (float)y, (float)(width), (float)(num));
-                            graphics.FillRectangle((Brush)new SolidBrush(listViewItem.ForeColor), (float)(x + num + width), (float)y, (float)width, (float)num);
-                            graphics.FillRectangle((Brush)new SolidBrush(listViewItem.ForeColor), (float)(x), (float)(y) + (float)(num), (float)(num), (float)(height));
-                            graphics.FillRectangle((Brush)new SolidBrush(listViewItem.ForeColor), (float)(x) + (float)(num), (float)(y) + (float)(num), (float)(width), (float)(height));
+                            graphics.FillRectangle(new SolidBrush(listViewItem.ForeColor), (float)(x + num), (float)y, (float)(width), (float)(num));
+                            graphics.FillRectangle(new SolidBrush(listViewItem.ForeColor), (float)(x + num + width), (float)y, (float)width, (float)num);
+                            graphics.FillRectangle(new SolidBrush(listViewItem.ForeColor), (float)(x), (float)(y) + (float)(num), (float)(num), (float)(height));
+                            graphics.FillRectangle(new SolidBrush(listViewItem.ForeColor), (float)(x) + (float)(num), (float)(y) + (float)(num), (float)(width), (float)(height));
                             if (listViewItem.Tag.ToString() != "HEAD")
                             {
-                                graphics.FillRectangle((Brush)new SolidBrush(listViewItem.ForeColor), (float)(x) + (float)(num) + (float)(width), (float)(y) + (float)(num), (float)(width), (float)(height));
-                                graphics.FillRectangle((Brush)new SolidBrush(listViewItem.ForeColor), (float)(x) + (float)(num) + (float)(width) + (float)(width), (float)(y) + (float)(num), (float)(num), (float)(height));
+                                graphics.FillRectangle(new SolidBrush(listViewItem.ForeColor), (float)(x) + (float)(num) + (float)(width), (float)(y) + (float)(num), (float)(width), (float)(height));
+                                graphics.FillRectangle(new SolidBrush(listViewItem.ForeColor), (float)(x) + (float)(num) + (float)(width) + (float)(width), (float)(y) + (float)(num), (float)(num), (float)(height));
                             }
                             else
                             {
-                                graphics.FillRectangle((Brush)new SolidBrush(listViewItem.ForeColor), (float)(x) + (float)(num) + (float)(width) + (float)(width), (float)(y) + (float)(num), (float)(num), (float)(height));
-                                graphics.FillRectangle((Brush)new SolidBrush(listViewItem.ForeColor), (float)(x) + (float)(num) + (float)(width), (float)(y) + (float)(num), (float)(width), (float)(height));
+                                graphics.FillRectangle(new SolidBrush(listViewItem.ForeColor), (float)(x) + (float)(num) + (float)(width) + (float)(width), (float)(y) + (float)(num), (float)(num), (float)(height));
+                                graphics.FillRectangle(new SolidBrush(listViewItem.ForeColor), (float)(x) + (float)(num) + (float)(width), (float)(y) + (float)(num), (float)(width), (float)(height));
                             }
                         }
                         catch
@@ -709,14 +708,11 @@ namespace PckStudio
             {
                 try
                 {
-                    if (listViewItem.Tag == null)
-                        this.buttonDone.Enabled = false;
-                    else
-                        this.buttonDone.Enabled = true;
+                    buttonDone.Enabled = !(listViewItem.Tag == null);
                 }
                 catch (Exception ex)
                 {
-
+                    Console.WriteLine(ex.Message);
                 }
             }
         }
@@ -1558,7 +1554,8 @@ namespace PckStudio
             Bitmap bitmap1 = new Bitmap(this.displayBox.Width, this.displayBox.Height);
             foreach (ListViewItem listViewItem in listViewBoxes.Items)
             {
-                boxes.Add(new object[2] { "BOX", listViewItem.Tag.ToString() + " " + listViewItem.SubItems[1].Text + " " + listViewItem.SubItems[2].Text + " " + listViewItem.SubItems[3].Text + " " + listViewItem.SubItems[4].Text + " " + listViewItem.SubItems[5].Text + " " + listViewItem.SubItems[6].Text + " " + listViewItem.SubItems[7].Text + " " + listViewItem.SubItems[8].Text });
+                boxes.Add(new ValueTuple<string, string>("BOX",
+                    listViewItem.Tag.ToString() + " " + listViewItem.SubItems[1].Text + " " + listViewItem.SubItems[2].Text + " " + listViewItem.SubItems[3].Text + " " + listViewItem.SubItems[4].Text + " " + listViewItem.SubItems[5].Text + " " + listViewItem.SubItems[6].Text + " " + listViewItem.SubItems[7].Text + " " + listViewItem.SubItems[8].Text));
 
                 //mf.entries.Add(new object[2] { (object) "BOX", new ListViewItem() { Tag = ((object) (listViewItem.Tag.ToString() + " " + listViewItem.SubItems[1].Text + " " + listViewItem.SubItems[2].Text + " " + listViewItem.SubItems[3].Text + " " + listViewItem.SubItems[4].Text + " " + listViewItem.SubItems[5].Text + " " + listViewItem.SubItems[6].Text + " " + listViewItem.SubItems[7].Text + " " + listViewItem.SubItems[8].Text)) }.Tag });
                 using (Graphics graphics = Graphics.FromImage((Image)bitmap1))
@@ -1607,28 +1604,28 @@ namespace PckStudio
                 }
             }
             //Body Offsets
-            boxes.Add(new object[2] { (object)"OFFSET", new ListViewItem() { Tag = ((object)("HEAD Y " + this.offsetHead.Text)) }.Tag });
-            boxes.Add(new object[2] { (object)"OFFSET", new ListViewItem() { Tag = ((object)("BODY Y " + this.offsetBody.Text)) }.Tag });
-            boxes.Add(new object[2] { (object)"OFFSET", new ListViewItem() { Tag = ((object)("ARM0 Y " + this.offsetArms.Text)) }.Tag });
-            boxes.Add(new object[2] { (object)"OFFSET", new ListViewItem() { Tag = ((object)("ARM1 Y " + this.offsetArms.Text)) }.Tag });
-            boxes.Add(new object[2] { (object)"OFFSET", new ListViewItem() { Tag = ((object)("LEG0 Y " + this.offsetLegs.Text)) }.Tag });
-            boxes.Add(new object[2] { (object)"OFFSET", new ListViewItem() { Tag = ((object)("LEG1 Y " + this.offsetLegs.Text)) }.Tag });
+            boxes.Add(new ValueTuple<string, string>("OFFSET", "HEAD Y " + offsetHead.Text));
+            boxes.Add(new ValueTuple<string, string>("OFFSET", "BODY Y " + offsetBody.Text));
+            boxes.Add(new ValueTuple<string, string>("OFFSET", "ARM0 Y " + offsetArms.Text));
+            boxes.Add(new ValueTuple<string, string>("OFFSET", "ARM1 Y " + offsetArms.Text));
+            boxes.Add(new ValueTuple<string, string>("OFFSET", "LEG0 Y " + offsetLegs.Text));
+            boxes.Add(new ValueTuple<string, string>("OFFSET", "LEG1 Y " + offsetLegs.Text));
             //Armor Offsets
-            boxes.Add(new object[2] { (object)"OFFSET", new ListViewItem() { Tag = ((object)("HELMET Y " + this.offsetHelmet.Text)) }.Tag });
-            boxes.Add(new object[2] { (object)"OFFSET", new ListViewItem() { Tag = ((object)("TOOL0 Y " + this.offsetTool.Text)) }.Tag });
-            boxes.Add(new object[2] { (object)"OFFSET", new ListViewItem() { Tag = ((object)("TOOL1 Y " + this.offsetTool.Text)) }.Tag });
-            boxes.Add(new object[2] { (object)"OFFSET", new ListViewItem() { Tag = ((object)("PANTS0 Y " + this.offsetPants.Text)) }.Tag });
-            boxes.Add(new object[2] { (object)"OFFSET", new ListViewItem() { Tag = ((object)("PANTS1 Y " + this.offsetPants.Text)) }.Tag });
-            boxes.Add(new object[2] { (object)"OFFSET", new ListViewItem() { Tag = ((object)("BOOTS0 Y " + this.offsetBoots.Text)) }.Tag });
-            boxes.Add(new object[2] { (object)"OFFSET", new ListViewItem() { Tag = ((object)("BOOTS1 Y " + this.offsetBoots.Text)) }.Tag });
+            boxes.Add(new ValueTuple<string, string>("OFFSET", "HELMET Y " + offsetHelmet.Text));
+            boxes.Add(new ValueTuple<string, string>("OFFSET", "TOOL0 Y " + offsetTool.Text));
+            boxes.Add(new ValueTuple<string, string>("OFFSET", "TOOL1 Y " + offsetTool.Text));
+            boxes.Add(new ValueTuple<string, string>("OFFSET", "PANTS0 Y " + offsetPants.Text));
+            boxes.Add(new ValueTuple<string, string>("OFFSET", "PANTS1 Y " + offsetPants.Text));
+            boxes.Add(new ValueTuple<string, string>("OFFSET", "BOOTS0 Y " + offsetBoots.Text));
+            boxes.Add(new ValueTuple<string, string>("OFFSET", "BOOTS1 Y " + offsetBoots.Text));
 
             Bitmap bitmap2 = new Bitmap(64, 64);
-            using (Graphics graphics = Graphics.FromImage((Image)bitmap2))
+            using (Graphics graphics = Graphics.FromImage(bitmap2))
             {
                 graphics.DrawImage(texturePreview.Image, 0, 0, 64, 64);
                 graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
             }
-            texturePreview.Image = (Image)bitmap2;
+            texturePreview.Image = bitmap2;
             try
             {
                 using (FileStream stream = new FileStream(Application.StartupPath + "\\temp.png", FileMode.Create, FileAccess.Write))
@@ -1656,10 +1653,7 @@ namespace PckStudio
         //Deciphers wether to auto-generate model texture or not
         private void checkTextureGenerate_CheckedChanged(object sender, EventArgs e)
         {
-            if (this.autoTexture)
-                this.autoTexture = false;
-            else
-                this.autoTexture = true;
+            autoTexture = checkTextureGenerate.Checked;
         }
 
 
@@ -1667,8 +1661,8 @@ namespace PckStudio
         private void listView1_DoubleClick(object sender, EventArgs e)
         {
             ColorDialog colorDialog = new ColorDialog();
-            int num = (int)colorDialog.ShowDialog();
-            this.selected.ForeColor = colorDialog.Color;
+            if (colorDialog.ShowDialog() == DialogResult.OK)
+                selected.ForeColor = colorDialog.Color;
             render();
         }
 

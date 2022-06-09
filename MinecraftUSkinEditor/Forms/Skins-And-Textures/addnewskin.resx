@@ -137,19 +137,10 @@
   <metadata name="contextMenuSkin.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <data name="contextMenuSkin.Size" type="System.Drawing.Size, System.Drawing">
-    <value>116, 26</value>
-  </data>
-  <data name="&gt;&gt;contextMenuSkin.Name" xml:space="preserve">
-    <value>contextMenuSkin</value>
-  </data>
-  <data name="&gt;&gt;contextMenuSkin.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="replaceToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wgAADsIBFShKgAAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xMkMEa+wAAAC/SURBVDhPlVHB
+        vgAADr4B6kKxwAAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xMkMEa+wAAAC/SURBVDhPlVHB
         DQMhDEOIfwfoOuzFoPxhAd5c6/SMAgq0tRQFmdgXfA5IKUkBMcbHPxyJCxVCkK7rm+EwaK1dQO9dClzO
         WfpOTM7hy1oMGNvY4pucxNY2p6cAWzFw2oZuMmiJweGeHM634UdLg50YwD05vQ2fYoaoDTEMrJyIfw3R
         4qYQWUZgg6OwlDJyMH8LcwF2T8FZ5kYQb4Lde/9Et8S6Dy1z0LUGi7VpWGvl3Lw2V98ZrtwIUYktwwPn
@@ -162,22 +153,22 @@
   <data name="replaceToolStripMenuItem.Text" xml:space="preserve">
     <value>Replace</value>
   </data>
+  <data name="contextMenuSkin.Size" type="System.Drawing.Size, System.Drawing">
+    <value>116, 26</value>
+  </data>
+  <data name="&gt;&gt;contextMenuSkin.Name" xml:space="preserve">
+    <value>contextMenuSkin</value>
+  </data>
+  <data name="&gt;&gt;contextMenuSkin.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <metadata name="contextMenuCape.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>172, 17</value>
   </metadata>
-  <data name="contextMenuCape.Size" type="System.Drawing.Size, System.Drawing">
-    <value>127, 26</value>
-  </data>
-  <data name="&gt;&gt;contextMenuCape.Name" xml:space="preserve">
-    <value>contextMenuCape</value>
-  </data>
-  <data name="&gt;&gt;contextMenuCape.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="replaceToolStripMenuItem1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wAAADsABataJCQAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xOdTWsmQAAAA3SURBVDhPY/j/
+        vAAADrwBlbxySQAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xOdTWsmQAAAA3SURBVDhPY/j/
         /z9FGKsgGIsCKWSMTQ0QYxUE45FmALpiYvFwMgAbxqIYG8YqCMajBhCJ/zMAAPGwpV/Xje8RAAAAAElF
         TkSuQmCC
 </value>
@@ -187,6 +178,15 @@
   </data>
   <data name="replaceToolStripMenuItem1.Text" xml:space="preserve">
     <value>Add Cape</value>
+  </data>
+  <data name="contextMenuCape.Size" type="System.Drawing.Size, System.Drawing">
+    <value>127, 26</value>
+  </data>
+  <data name="&gt;&gt;contextMenuCape.Name" xml:space="preserve">
+    <value>contextMenuCape</value>
+  </data>
+  <data name="&gt;&gt;contextMenuCape.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="buttonDone.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
@@ -628,52 +628,52 @@
   <data name="&gt;&gt;radioSERVER.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="pictureBoxWithInterpolationMode1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+  <data name="capePictureBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>None</value>
   </data>
-  <data name="pictureBoxWithInterpolationMode1.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="capePictureBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>387, 152</value>
   </data>
-  <data name="pictureBoxWithInterpolationMode1.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="capePictureBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>208, 88</value>
   </data>
-  <data name="pictureBoxWithInterpolationMode1.TabIndex" type="System.Int32, mscorlib">
+  <data name="capePictureBox.TabIndex" type="System.Int32, mscorlib">
     <value>109</value>
   </data>
-  <data name="&gt;&gt;pictureBoxWithInterpolationMode1.Name" xml:space="preserve">
-    <value>pictureBoxWithInterpolationMode1</value>
+  <data name="&gt;&gt;capePictureBox.Name" xml:space="preserve">
+    <value>capePictureBox</value>
   </data>
-  <data name="&gt;&gt;pictureBoxWithInterpolationMode1.Type" xml:space="preserve">
+  <data name="&gt;&gt;capePictureBox.Type" xml:space="preserve">
     <value>PckStudio.PictureBoxWithInterpolationMode, PCK Studio, Version=5.3.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
-  <data name="&gt;&gt;pictureBoxWithInterpolationMode1.Parent" xml:space="preserve">
+  <data name="&gt;&gt;capePictureBox.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;pictureBoxWithInterpolationMode1.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;capePictureBox.ZOrder" xml:space="preserve">
     <value>11</value>
   </data>
-  <data name="pictureBoxTexture.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+  <data name="skinPictureBoxTexture.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>None</value>
   </data>
-  <data name="pictureBoxTexture.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="skinPictureBoxTexture.Location" type="System.Drawing.Point, System.Drawing">
     <value>217, 152</value>
   </data>
-  <data name="pictureBoxTexture.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="skinPictureBoxTexture.Size" type="System.Drawing.Size, System.Drawing">
     <value>164, 82</value>
   </data>
-  <data name="pictureBoxTexture.TabIndex" type="System.Int32, mscorlib">
+  <data name="skinPictureBoxTexture.TabIndex" type="System.Int32, mscorlib">
     <value>108</value>
   </data>
-  <data name="&gt;&gt;pictureBoxTexture.Name" xml:space="preserve">
-    <value>pictureBoxTexture</value>
+  <data name="&gt;&gt;skinPictureBoxTexture.Name" xml:space="preserve">
+    <value>skinPictureBoxTexture</value>
   </data>
-  <data name="&gt;&gt;pictureBoxTexture.Type" xml:space="preserve">
+  <data name="&gt;&gt;skinPictureBoxTexture.Type" xml:space="preserve">
     <value>PckStudio.PictureBoxWithInterpolationMode, PCK Studio, Version=5.3.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
-  <data name="&gt;&gt;pictureBoxTexture.Parent" xml:space="preserve">
+  <data name="&gt;&gt;skinPictureBoxTexture.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;pictureBoxTexture.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;skinPictureBoxTexture.ZOrder" xml:space="preserve">
     <value>12</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">

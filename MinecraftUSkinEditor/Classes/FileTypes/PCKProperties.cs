@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PckStudio.Classes.FileTypes
 {
-    public class PCKProperties : List<Tuple<string, string>> // class because `using` is file scoped :|
+    public class PCKProperties : List<ValueTuple<string, string>> // class because `using` is file scoped :|
     {
     }
 }

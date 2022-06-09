@@ -52,9 +52,9 @@ namespace PckStudio.Classes.IO
             bool has_xmlverion_tag = false;
             foreach (var metaEntry in _file.meta_data)
             {
-                if (metaEntry.Key == "XMLVERION") has_xmlverion_tag = true;
-                WriteInt(stream, metaEntry.Value);
-                WriteString(stream, metaEntry.Key);
+                if (metaEntry == "XMLVERION") has_xmlverion_tag = true;
+                WriteInt(stream, _file.meta_data.IndexOf(metaEntry));
+                WriteString(stream, metaEntry);
                 WriteInt(stream, 0);
             }
             if (has_xmlverion_tag)
@@ -76,9 +76,9 @@ namespace PckStudio.Classes.IO
                 WriteInt(stream, entry.properties.Count);
                 foreach (var property in entry.properties)
                 {
-                    if (!_file.meta_data.ContainsKey(property.Item1))
-                        throw new Exception("invalid meta type" + property.Item1);
-                    WriteInt(stream, _file.meta_data[property.Item1]);
+                    if (!_file.meta_data.Contains(property.Item1))
+                        throw new Exception("Tag not in Meta: " + property.Item1);
+                    WriteInt(stream, _file.meta_data.IndexOf(property.Item1));
                     WriteString(stream, property.Item2);
                     WriteInt(stream, 0);
                 }

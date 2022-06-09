@@ -182,11 +182,11 @@
     <Compile Include="Forms\Additional-Popups\FakeProgressBar.Designer.cs">
       <DependentUpon>FakeProgressBar.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Additional-Popups\rename.cs">
+    <Compile Include="Forms\Additional-Popups\RenamePrompt.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Additional-Popups\rename.Designer.cs">
-      <DependentUpon>rename.cs</DependentUpon>
+    <Compile Include="Forms\Additional-Popups\RenamePrompt.Designer.cs">
+      <DependentUpon>RenamePrompt.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Utilities\Animation\ChangeTile.cs">
       <SubType>Form</SubType>
@@ -362,12 +362,6 @@
     <Compile Include="Forms\Additional-Popups\Promo.Designer.cs">
       <DependentUpon>Promo.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Utilities\renameLoc.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Utilities\renameLoc.Designer.cs">
-      <DependentUpon>renameLoc.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\Utilities\TextureConverterUtility.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -421,8 +415,8 @@
     <EmbeddedResource Include="Forms\Additional-Popups\FakeProgressBar.resx">
       <DependentUpon>FakeProgressBar.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Additional-Popups\rename.resx">
-      <DependentUpon>rename.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Additional-Popups\RenamePrompt.resx">
+      <DependentUpon>RenamePrompt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Utilities\Animation\ChangeTile.resx">
       <DependentUpon>ChangeTile.cs</DependentUpon>
@@ -574,9 +568,6 @@
     <EmbeddedResource Include="Forms\Additional-Popups\Promo.resx">
       <DependentUpon>Promo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\renameLoc.resx">
-      <DependentUpon>renameLoc.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Utilities\TextureConverterUtility.resx">
       <DependentUpon>TextureConverterUtility.cs</DependentUpon>
     </EmbeddedResource>
@@ -686,6 +677,9 @@
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>12.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="System.ValueTuple">
+      <Version>4.5.0</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

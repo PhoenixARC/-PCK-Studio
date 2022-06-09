@@ -51,20 +51,19 @@
             this.radioLOCAL = new System.Windows.Forms.RadioButton();
             this.labelSelectTexture = new System.Windows.Forms.Label();
             this.radioSERVER = new System.Windows.Forms.RadioButton();
-            this.pictureBoxWithInterpolationMode1 = new PckStudio.PictureBoxWithInterpolationMode();
-            this.pictureBoxTexture = new PckStudio.PictureBoxWithInterpolationMode();
+            this.capePictureBox = new PckStudio.PictureBoxWithInterpolationMode();
+            this.skinPictureBoxTexture = new PckStudio.PictureBoxWithInterpolationMode();
             this.contextMenuSkin.SuspendLayout();
             this.contextMenuCape.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.displayBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxWithInterpolationMode1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTexture)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.capePictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.skinPictureBoxTexture)).BeginInit();
             this.SuspendLayout();
             // 
             // textTheme
             // 
             resources.ApplyResources(this.textTheme, "textTheme");
             this.textTheme.Name = "textTheme";
-            this.textTheme.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // contextMenuSkin
             // 
@@ -98,7 +97,7 @@
             this.buttonDone.ForeColor = System.Drawing.Color.White;
             this.buttonDone.Name = "buttonDone";
             this.buttonDone.UseVisualStyleBackColor = true;
-            this.buttonDone.Click += new System.EventHandler(this.button1_Click_1);
+            this.buttonDone.Click += new System.EventHandler(this.CreateButton_Click);
             // 
             // buttonModelGen
             // 
@@ -106,7 +105,7 @@
             this.buttonModelGen.ForeColor = System.Drawing.Color.White;
             this.buttonModelGen.Name = "buttonModelGen";
             this.buttonModelGen.UseVisualStyleBackColor = true;
-            this.buttonModelGen.Click += new System.EventHandler(this.button2_Click_1);
+            this.buttonModelGen.Click += new System.EventHandler(this.CreateCustomModel_Click);
             // 
             // comboBoxSkinType
             // 
@@ -152,7 +151,6 @@
             resources.ApplyResources(this.textThemeName, "textThemeName");
             this.textThemeName.Name = "textThemeName";
             this.textThemeName.TextChanged += new System.EventHandler(this.textThemeName_TextChanged);
-            this.textThemeName.VisibleChanged += new System.EventHandler(this.textThemeName_VisibleChanged);
             // 
             // label2
             // 
@@ -165,8 +163,6 @@
             this.textSkinName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             resources.ApplyResources(this.textSkinName, "textSkinName");
             this.textSkinName.Name = "textSkinName";
-            this.textSkinName.TextChanged += new System.EventHandler(this.textSkinName_TextChanged);
-            this.textSkinName.VisibleChanged += new System.EventHandler(this.textSkinName_VisibleChanged);
             // 
             // label1
             // 
@@ -204,7 +200,7 @@
             resources.ApplyResources(this.labelSelectTexture, "labelSelectTexture");
             this.labelSelectTexture.ForeColor = System.Drawing.Color.White;
             this.labelSelectTexture.Name = "labelSelectTexture";
-            this.labelSelectTexture.Click += new System.EventHandler(this.label4_Click);
+            this.labelSelectTexture.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // radioSERVER
             // 
@@ -214,27 +210,26 @@
             this.radioSERVER.UseVisualStyleBackColor = true;
             this.radioSERVER.CheckedChanged += new System.EventHandler(this.radioSERVER_CheckedChanged);
             // 
-            // pictureBoxWithInterpolationMode1
+            // capePictureBox
             // 
-            resources.ApplyResources(this.pictureBoxWithInterpolationMode1, "pictureBoxWithInterpolationMode1");
-            this.pictureBoxWithInterpolationMode1.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
-            this.pictureBoxWithInterpolationMode1.Name = "pictureBoxWithInterpolationMode1";
-            this.pictureBoxWithInterpolationMode1.TabStop = false;
+            resources.ApplyResources(this.capePictureBox, "capePictureBox");
+            this.capePictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
+            this.capePictureBox.Name = "capePictureBox";
+            this.capePictureBox.TabStop = false;
             // 
-            // pictureBoxTexture
+            // skinPictureBoxTexture
             // 
-            resources.ApplyResources(this.pictureBoxTexture, "pictureBoxTexture");
-            this.pictureBoxTexture.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBoxTexture.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
-            this.pictureBoxTexture.Name = "pictureBoxTexture";
-            this.pictureBoxTexture.TabStop = false;
-            this.pictureBoxTexture.Click += new System.EventHandler(this.pictureBox1_Click);
+            resources.ApplyResources(this.skinPictureBoxTexture, "skinPictureBoxTexture");
+            this.skinPictureBoxTexture.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.skinPictureBoxTexture.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
+            this.skinPictureBoxTexture.Name = "skinPictureBoxTexture";
+            this.skinPictureBoxTexture.TabStop = false;
+            this.skinPictureBoxTexture.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // addnewskin
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BorderStyle = MetroFramework.Forms.MetroFormBorderStyle.FixedSingle;
             this.Controls.Add(this.radioSERVER);
             this.Controls.Add(this.labelSelectTexture);
             this.Controls.Add(this.radioLOCAL);
@@ -244,8 +239,8 @@
             this.Controls.Add(this.comboBoxSkinType);
             this.Controls.Add(this.buttonCape);
             this.Controls.Add(this.buttonSkin);
-            this.Controls.Add(this.pictureBoxWithInterpolationMode1);
-            this.Controls.Add(this.pictureBoxTexture);
+            this.Controls.Add(this.capePictureBox);
+            this.Controls.Add(this.skinPictureBoxTexture);
             this.Controls.Add(this.displayBox);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.textThemeName);
@@ -263,8 +258,8 @@
             this.contextMenuSkin.ResumeLayout(false);
             this.contextMenuCape.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.displayBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxWithInterpolationMode1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTexture)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.capePictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.skinPictureBoxTexture)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -283,8 +278,8 @@
         private System.Windows.Forms.ComboBox comboBoxSkinType;
         private System.Windows.Forms.Button buttonCape;
         private System.Windows.Forms.Button buttonSkin;
-        private PictureBoxWithInterpolationMode pictureBoxWithInterpolationMode1;
-        private PictureBoxWithInterpolationMode pictureBoxTexture;
+        private PictureBoxWithInterpolationMode capePictureBox;
+        private PictureBoxWithInterpolationMode skinPictureBoxTexture;
         private System.Windows.Forms.PictureBox displayBox;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox textThemeName;

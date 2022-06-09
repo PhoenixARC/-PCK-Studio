@@ -1,6 +1,6 @@
 ﻿namespace PckStudio
 {
-    partial class renameLoc
+    partial class RenamePrompt
     {
         /// <summary>
         /// Required designer variable.
@@ -28,43 +28,43 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(renameLoc));
-            this.label2 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RenamePrompt));
+            this.TextLabel = new System.Windows.Forms.Label();
+            this.OKButton = new System.Windows.Forms.Button();
+            this.InputTextBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
-            // label2
+            // TextLabel
             // 
-            resources.ApplyResources(this.label2, "label2");
-            this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Name = "label2";
+            resources.ApplyResources(this.TextLabel, "TextLabel");
+            this.TextLabel.ForeColor = System.Drawing.Color.White;
+            this.TextLabel.Name = "TextLabel";
             // 
-            // button1
+            // OKButton
             // 
-            resources.ApplyResources(this.button1, "button1");
-            this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Name = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            resources.ApplyResources(this.OKButton, "OKButton");
+            this.OKButton.ForeColor = System.Drawing.Color.White;
+            this.OKButton.Name = "OKButton";
+            this.OKButton.UseVisualStyleBackColor = true;
+            this.OKButton.Click += new System.EventHandler(this.OKBtn_Click);
             // 
-            // textBox1
+            // InputTextBox
             // 
-            resources.ApplyResources(this.textBox1, "textBox1");
-            this.textBox1.Name = "textBox1";
+            resources.ApplyResources(this.InputTextBox, "InputTextBox");
+            this.InputTextBox.Name = "InputTextBox";
             // 
-            // renameLoc
+            // RenamePrompt
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ControlBox = false;
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.InputTextBox);
+            this.Controls.Add(this.OKButton);
+            this.Controls.Add(this.TextLabel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "renameLoc";
+            this.Name = "RenamePrompt";
             this.Resizable = false;
             this.ShadowType = MetroFramework.Forms.MetroFormShadowType.DropShadow;
             this.Style = MetroFramework.MetroColorStyle.Silver;
@@ -75,8 +75,8 @@
         }
 
         #endregion
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button button1;
-		private System.Windows.Forms.TextBox textBox1;
-	}
+        public System.Windows.Forms.Button OKButton;
+        public System.Windows.Forms.Label TextLabel;
+        private System.Windows.Forms.TextBox InputTextBox;
+    }
 }
