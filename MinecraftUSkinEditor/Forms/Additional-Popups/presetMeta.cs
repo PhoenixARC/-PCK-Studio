@@ -72,7 +72,6 @@ namespace PckStudio
                     string entryName = "";
                     string entryValue = "";
                     bool entryStart = true;
-                    int i = 0;
                     foreach (char entry in listView1.SelectedItems[0].Tag.ToString().ToList())
                     {
                         if (entry.ToString() != ":" && entry.ToString() != "\n" && entryStart == true)
@@ -94,7 +93,7 @@ namespace PckStudio
                             entryValue = "";
                             entryStart = true;
                         }
-                        this.Close();
+                        Close();
                     }
                 }catch (Exception)
                 {

@@ -52,6 +52,7 @@
             // 
             resources.ApplyResources(this.InputTextBox, "InputTextBox");
             this.InputTextBox.Name = "InputTextBox";
+            this.InputTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.InputTextBox_KeyDown);
             // 
             // RenamePrompt
             // 

@@ -53,8 +53,8 @@ namespace PckStudio
             add.TopMost = true;
             add.TopLevel = true;
             add.ShowDialog();
-            refresh();
             add.Dispose();
+            refresh();
         }
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)

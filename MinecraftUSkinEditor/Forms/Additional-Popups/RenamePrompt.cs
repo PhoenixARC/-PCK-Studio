@@ -25,5 +25,11 @@ namespace PckStudio
         {
 			DialogResult = DialogResult.OK;
         }
+
+        private void InputTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+			if (e.KeyCode == Keys.Enter)
+				OKBtn_Click(sender, e);
+        }
     }
 }
