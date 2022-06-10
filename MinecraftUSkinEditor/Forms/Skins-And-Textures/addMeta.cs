@@ -13,18 +13,24 @@ namespace PckStudio
 {
     public partial class addMeta : MetroFramework.Forms.MetroForm
     {
-        PCKFile.FileData file;
 
-        public addMeta(PCKFile.FileData fileIn)
+        public string PropertyName => textBox1.Text;
+        public string PropertyValue => textBox2.Text;
+
+        public addMeta(string name, string value)
         {
             InitializeComponent();
-            file = fileIn;
-            FormBorderStyle = FormBorderStyle.None;
+            textBox1.Text = name;
+            textBox2.Text = value;
+        }
+
+        public addMeta()
+        {
+            InitializeComponent();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            file.properties.Add(new ValueTuple<string, string>(textBox1.Text, textBox2.Text ));
             DialogResult = DialogResult.OK;
             Close();
         }
