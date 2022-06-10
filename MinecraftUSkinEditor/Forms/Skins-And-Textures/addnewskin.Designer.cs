@@ -248,7 +248,6 @@
             this.Controls.Add(this.textSkinName);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textSkinID);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MaximizeBox = false;
             this.Name = "addnewskin";
             this.Resizable = false;
@@ -266,8 +265,6 @@
         }
 
         #endregion
-        private System.Windows.Forms.RadioButton radioUpsideDown;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.TextBox textTheme;
         private System.Windows.Forms.ContextMenuStrip contextMenuSkin;
         private System.Windows.Forms.ToolStripMenuItem replaceToolStripMenuItem;

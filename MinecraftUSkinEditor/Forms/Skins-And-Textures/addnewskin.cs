@@ -271,7 +271,7 @@ namespace PckStudio
                     {
                         skin.name = "dlcskin" + textSkinID.Text + ".png";
                     }
-
+                    DialogResult = DialogResult.OK;
                     Close();
                 }
                 else

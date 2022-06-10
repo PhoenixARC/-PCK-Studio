@@ -140,7 +140,7 @@
   <data name="replaceToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vgAADr4B6kKxwAAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xMkMEa+wAAAC/SURBVDhPlVHB
+        vAAADrwBlbxySQAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xMkMEa+wAAAC/SURBVDhPlVHB
         DQMhDEOIfwfoOuzFoPxhAd5c6/SMAgq0tRQFmdgXfA5IKUkBMcbHPxyJCxVCkK7rm+EwaK1dQO9dClzO
         WfpOTM7hy1oMGNvY4pucxNY2p6cAWzFw2oZuMmiJweGeHM634UdLg50YwD05vQ2fYoaoDTEMrJyIfw3R
         4qYQWUZgg6OwlDJyMH8LcwF2T8FZ5kYQb4Lde/9Et8S6Dy1z0LUGi7VpWGvl3Lw2V98ZrtwIUYktwwPn
@@ -195,6 +195,9 @@
   <data name="buttonDone.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
   </data>
+  <data name="buttonDone.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="buttonDone.Location" type="System.Drawing.Point, System.Drawing">
     <value>388, 262</value>
   </data>
@@ -221,6 +224,9 @@
   </data>
   <data name="buttonModelGen.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
+  </data>
+  <data name="buttonModelGen.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="buttonModelGen.Location" type="System.Drawing.Point, System.Drawing">
     <value>14, 259</value>
@@ -290,6 +296,9 @@
         RK5CYII=
 </value>
   </data>
+  <data name="buttonCape.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="buttonCape.Location" type="System.Drawing.Point, System.Drawing">
     <value>443, 212</value>
   </data>
@@ -319,6 +328,9 @@
         RK5CYII=
 </value>
   </data>
+  <data name="buttonSkin.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="buttonSkin.Location" type="System.Drawing.Point, System.Drawing">
     <value>359, 212</value>
   </data>
@@ -339,6 +351,9 @@
   </data>
   <data name="&gt;&gt;buttonSkin.ZOrder" xml:space="preserve">
     <value>10</value>
+  </data>
+  <data name="displayBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="displayBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>14, 61</value>
@@ -363,6 +378,9 @@
   </data>
   <data name="label3.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
+  </data>
+  <data name="label3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
     <value>215, 129</value>
@@ -412,6 +430,9 @@
   <data name="label2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="label2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
     <value>215, 97</value>
   </data>
@@ -459,6 +480,9 @@
   </data>
   <data name="label1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
+  </data>
+  <data name="label1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
     <value>215, 64</value>
@@ -514,6 +538,9 @@
   <data name="radioAUTO.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="radioAUTO.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="radioAUTO.Location" type="System.Drawing.Point, System.Drawing">
     <value>388, 51</value>
   </data>
@@ -540,6 +567,9 @@
   </data>
   <data name="radioLOCAL.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
+  </data>
+  <data name="radioLOCAL.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="radioLOCAL.Location" type="System.Drawing.Point, System.Drawing">
     <value>388, 71</value>
@@ -571,6 +601,9 @@
   <data name="labelSelectTexture.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 8.25pt, style=Underline</value>
   </data>
+  <data name="labelSelectTexture.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="labelSelectTexture.Location" type="System.Drawing.Point, System.Drawing">
     <value>261, 186</value>
   </data>
@@ -600,6 +633,9 @@
   </data>
   <data name="radioSERVER.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
+  </data>
+  <data name="radioSERVER.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="radioSERVER.Location" type="System.Drawing.Point, System.Drawing">
     <value>388, 28</value>
@@ -631,6 +667,9 @@
   <data name="capePictureBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>None</value>
   </data>
+  <data name="capePictureBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="capePictureBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>387, 152</value>
   </data>
@@ -654,6 +693,9 @@
   </data>
   <data name="skinPictureBoxTexture.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>None</value>
+  </data>
+  <data name="skinPictureBoxTexture.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="skinPictureBoxTexture.Location" type="System.Drawing.Point, System.Drawing">
     <value>217, 152</value>
