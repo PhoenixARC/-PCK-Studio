@@ -55,6 +55,7 @@ namespace PckStudio.Classes.FileTypes
 
             public FileData(FileData file) : this(file.name, file.type)
             {
+                properties = file.properties;
                 SetData(file.data);
             }
 
