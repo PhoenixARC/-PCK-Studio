@@ -240,8 +240,11 @@ namespace PckStudio.Forms.Utilities
 
 		private void removeEntryMenuItem_Click(object sender, EventArgs e)
 		{
-			//((PCKFile.FileData)treeView1.SelectedNode.Tag).properties.Remove((object[])treeView2.SelectedNode.Tag);
-			treeView2.SelectedNode.Remove();
+			if (treeView1.SelectedNode.Tag == null || !(treeView1.SelectedNode.Tag is PCKFile.FileData) ||
+				!(treeView2.SelectedNode.Tag is ValueTuple<string, string>)) return;
+			var file = treeView1.SelectedNode.Tag as PCKFile.FileData;
+			file.properties.Remove((ValueTuple<string, string>)treeView2.SelectedNode.Tag);
+            treeView2.SelectedNode.Remove();
 		}
 
 		private void Binka_DragDrop(object sender, DragEventArgs e)
@@ -267,8 +270,6 @@ namespace PckStudio.Forms.Utilities
 
 		private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
-			//FormMain.treeViewToMineFiles(treeView1, audioPCK);
-
 			if(!cats.Contains(0) || !cats.Contains(1) || !cats.Contains(2))
 			{
 				MessageBox.Show("The game will crash upon loading your pack if the Overworld, Nether and End categories don't all exist.", "Mandatory Categories Missing");
@@ -306,5 +307,5 @@ namespace PckStudio.Forms.Utilities
 				"The mini game categories will only play if you have your pack loaded in those mini games.\n\n" +
 				"You can modify and create PSVita and PS4 audio pcks by clicking \"PS4/Vita\" in the \"Create -> Audio.pck\" context menu", "Help");
 		}
-	}
+    }
 }
