@@ -35,7 +35,6 @@
             this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel4 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel5 = new MetroFramework.Controls.MetroLabel();
-            this.mikuSecrect = new MetroFramework.Controls.MetroLabel();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -49,6 +48,7 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            this.pictureBox1.DoubleClick += new System.EventHandler(this.pictureBox1_Click);
             // 
             // metroLabel1
             // 
@@ -59,7 +59,6 @@
             this.metroLabel1.TabIndex = 1;
             this.metroLabel1.Text = "Restored and maintained by PhoenixARC";
             this.metroLabel1.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.metroLabel1.Click += new System.EventHandler(this.metroLabel1_Click);
             // 
             // metroLabel2
             // 
@@ -101,23 +100,12 @@
             this.metroLabel5.Text = "Additional code and utilities by MattNL";
             this.metroLabel5.Theme = MetroFramework.MetroThemeStyle.Dark;
             // 
-            // mikuSecrect
-            // 
-            this.mikuSecrect.AutoSize = true;
-            this.mikuSecrect.Location = new System.Drawing.Point(331, 350);
-            this.mikuSecrect.Name = "mikuSecrect";
-            this.mikuSecrect.Size = new System.Drawing.Size(101, 19);
-            this.mikuSecrect.TabIndex = 6;
-            this.mikuSecrect.Text = "Miku was here...";
-            this.mikuSecrect.Theme = MetroFramework.MetroThemeStyle.Dark;
-            // 
             // programInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BorderStyle = MetroFramework.Forms.MetroFormBorderStyle.FixedSingle;
             this.ClientSize = new System.Drawing.Size(602, 392);
-            this.Controls.Add(this.mikuSecrect);
             this.Controls.Add(this.metroLabel1);
             this.Controls.Add(this.metroLabel5);
             this.Controls.Add(this.metroLabel4);
@@ -134,7 +122,6 @@
             this.Style = MetroFramework.MetroColorStyle.Silver;
             this.Text = "programInfo";
             this.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.Load += new System.EventHandler(this.programInfo_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -150,6 +137,5 @@
         private MetroFramework.Controls.MetroLabel metroLabel3;
         private MetroFramework.Controls.MetroLabel metroLabel4;
 		private MetroFramework.Controls.MetroLabel metroLabel5;
-        private MetroFramework.Controls.MetroLabel mikuSecrect;
     }
 }
