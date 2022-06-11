@@ -42,18 +42,18 @@
             this.importJavaAnimationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changeTileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.metroCheckBox1 = new MetroFramework.Controls.MetroCheckBox();
-            this.metroButton1 = new MetroFramework.Controls.MetroButton();
+            this.InterpolationCheckbox = new MetroFramework.Controls.MetroCheckBox();
+            this.AnimationPlayBtn = new MetroFramework.Controls.MetroButton();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.metroButton2 = new MetroFramework.Controls.MetroButton();
+            this.AnimationStopBtn = new MetroFramework.Controls.MetroButton();
             this.tileLabel = new MetroFramework.Controls.MetroLabel();
-            this.metroCheckBox2 = new MetroFramework.Controls.MetroCheckBox();
+            this.MipMapCheckbox = new MetroFramework.Controls.MetroCheckBox();
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.MipMapNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.pictureBoxWithInterpolationMode1 = new PckStudio.PictureBoxWithInterpolationMode();
             this.contextMenuStrip1.SuspendLayout();
             this.menuStrip.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MipMapNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxWithInterpolationMode1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -176,47 +176,47 @@
             this.helpToolStripMenuItem.Text = "Help";
             this.helpToolStripMenuItem.Click += new System.EventHandler(this.helpToolStripMenuItem_Click);
             // 
-            // metroCheckBox1
+            // InterpolationCheckbox
             // 
-            this.metroCheckBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.metroCheckBox1.AutoSize = true;
-            this.metroCheckBox1.Location = new System.Drawing.Point(188, 317);
-            this.metroCheckBox1.Name = "metroCheckBox1";
-            this.metroCheckBox1.Size = new System.Drawing.Size(204, 15);
-            this.metroCheckBox1.TabIndex = 17;
-            this.metroCheckBox1.Text = "Interpolates (not simulated above)";
-            this.metroCheckBox1.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.metroCheckBox1.UseSelectable = true;
+            this.InterpolationCheckbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.InterpolationCheckbox.AutoSize = true;
+            this.InterpolationCheckbox.Location = new System.Drawing.Point(188, 317);
+            this.InterpolationCheckbox.Name = "InterpolationCheckbox";
+            this.InterpolationCheckbox.Size = new System.Drawing.Size(204, 15);
+            this.InterpolationCheckbox.TabIndex = 17;
+            this.InterpolationCheckbox.Text = "Interpolates (not simulated above)";
+            this.InterpolationCheckbox.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.InterpolationCheckbox.UseSelectable = true;
             // 
-            // metroButton1
+            // AnimationPlayBtn
             // 
-            this.metroButton1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.metroButton1.Location = new System.Drawing.Point(188, 291);
-            this.metroButton1.Name = "metroButton1";
-            this.metroButton1.Size = new System.Drawing.Size(99, 24);
-            this.metroButton1.TabIndex = 18;
-            this.metroButton1.Text = "Play Animation";
-            this.metroButton1.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.metroButton1.UseSelectable = true;
-            this.metroButton1.Click += new System.EventHandler(this.metroButton1_Click);
+            this.AnimationPlayBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.AnimationPlayBtn.Location = new System.Drawing.Point(188, 291);
+            this.AnimationPlayBtn.Name = "AnimationPlayBtn";
+            this.AnimationPlayBtn.Size = new System.Drawing.Size(99, 24);
+            this.AnimationPlayBtn.TabIndex = 18;
+            this.AnimationPlayBtn.Text = "Play Animation";
+            this.AnimationPlayBtn.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.AnimationPlayBtn.UseSelectable = true;
+            this.AnimationPlayBtn.Click += new System.EventHandler(this.metroButton1_Click);
             // 
             // timer1
             // 
             this.timer1.Interval = 1;
             this.timer1.Tick += new System.EventHandler(this.animate);
             // 
-            // metroButton2
+            // AnimationStopBtn
             // 
-            this.metroButton2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.metroButton2.Enabled = false;
-            this.metroButton2.Location = new System.Drawing.Point(293, 291);
-            this.metroButton2.Name = "metroButton2";
-            this.metroButton2.Size = new System.Drawing.Size(99, 24);
-            this.metroButton2.TabIndex = 19;
-            this.metroButton2.Text = "Stop Animation";
-            this.metroButton2.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.metroButton2.UseSelectable = true;
-            this.metroButton2.Click += new System.EventHandler(this.metroButton2_Click);
+            this.AnimationStopBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.AnimationStopBtn.Enabled = false;
+            this.AnimationStopBtn.Location = new System.Drawing.Point(293, 291);
+            this.AnimationStopBtn.Name = "AnimationStopBtn";
+            this.AnimationStopBtn.Size = new System.Drawing.Size(99, 24);
+            this.AnimationStopBtn.TabIndex = 19;
+            this.AnimationStopBtn.Text = "Stop Animation";
+            this.AnimationStopBtn.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.AnimationStopBtn.UseSelectable = true;
+            this.AnimationStopBtn.Click += new System.EventHandler(this.metroButton2_Click);
             // 
             // tileLabel
             // 
@@ -230,18 +230,18 @@
             this.tileLabel.Text = "tileLabel";
             this.tileLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
             // 
-            // metroCheckBox2
+            // MipMapCheckbox
             // 
-            this.metroCheckBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.metroCheckBox2.AutoSize = true;
-            this.metroCheckBox2.Location = new System.Drawing.Point(20, 312);
-            this.metroCheckBox2.Name = "metroCheckBox2";
-            this.metroCheckBox2.Size = new System.Drawing.Size(128, 15);
-            this.metroCheckBox2.TabIndex = 21;
-            this.metroCheckBox2.Text = "Is Mip Map Texture?";
-            this.metroCheckBox2.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.metroCheckBox2.UseSelectable = true;
-            this.metroCheckBox2.CheckedChanged += new System.EventHandler(this.metroCheckBox2_CheckedChanged);
+            this.MipMapCheckbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.MipMapCheckbox.AutoSize = true;
+            this.MipMapCheckbox.Location = new System.Drawing.Point(20, 312);
+            this.MipMapCheckbox.Name = "MipMapCheckbox";
+            this.MipMapCheckbox.Size = new System.Drawing.Size(128, 15);
+            this.MipMapCheckbox.TabIndex = 21;
+            this.MipMapCheckbox.Text = "Is Mip Map Texture?";
+            this.MipMapCheckbox.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.MipMapCheckbox.UseSelectable = true;
+            this.MipMapCheckbox.CheckedChanged += new System.EventHandler(this.metroCheckBox2_CheckedChanged);
             // 
             // metroLabel1
             // 
@@ -255,31 +255,31 @@
             this.metroLabel1.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.metroLabel1.Visible = false;
             // 
-            // numericUpDown1
+            // MipMapNumericUpDown
             // 
-            this.numericUpDown1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.numericUpDown1.BackColor = System.Drawing.Color.Black;
-            this.numericUpDown1.ForeColor = System.Drawing.SystemColors.Window;
-            this.numericUpDown1.Location = new System.Drawing.Point(127, 330);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
+            this.MipMapNumericUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.MipMapNumericUpDown.BackColor = System.Drawing.Color.Black;
+            this.MipMapNumericUpDown.ForeColor = System.Drawing.SystemColors.Window;
+            this.MipMapNumericUpDown.Location = new System.Drawing.Point(127, 330);
+            this.MipMapNumericUpDown.Maximum = new decimal(new int[] {
             3,
             0,
             0,
             0});
-            this.numericUpDown1.Minimum = new decimal(new int[] {
+            this.MipMapNumericUpDown.Minimum = new decimal(new int[] {
             2,
             0,
             0,
             0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(44, 20);
-            this.numericUpDown1.TabIndex = 23;
-            this.numericUpDown1.Value = new decimal(new int[] {
+            this.MipMapNumericUpDown.Name = "MipMapNumericUpDown";
+            this.MipMapNumericUpDown.Size = new System.Drawing.Size(44, 20);
+            this.MipMapNumericUpDown.TabIndex = 23;
+            this.MipMapNumericUpDown.Value = new decimal(new int[] {
             2,
             0,
             0,
             0});
-            this.numericUpDown1.Visible = false;
+            this.MipMapNumericUpDown.Visible = false;
             // 
             // pictureBoxWithInterpolationMode1
             // 
@@ -299,16 +299,17 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(412, 362);
-            this.Controls.Add(this.metroButton2);
-            this.Controls.Add(this.metroButton1);
-            this.Controls.Add(this.numericUpDown1);
+            this.Controls.Add(this.AnimationStopBtn);
+            this.Controls.Add(this.AnimationPlayBtn);
+            this.Controls.Add(this.MipMapNumericUpDown);
             this.Controls.Add(this.metroLabel1);
-            this.Controls.Add(this.metroCheckBox2);
+            this.Controls.Add(this.MipMapCheckbox);
             this.Controls.Add(this.tileLabel);
-            this.Controls.Add(this.metroCheckBox1);
+            this.Controls.Add(this.InterpolationCheckbox);
             this.Controls.Add(this.pictureBoxWithInterpolationMode1);
             this.Controls.Add(this.treeView1);
             this.Controls.Add(this.menuStrip);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "AnimationEditor";
             this.Style = MetroFramework.MetroColorStyle.Silver;
             this.Text = "Animation Editor";
@@ -316,7 +317,7 @@
             this.contextMenuStrip1.ResumeLayout(false);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MipMapNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxWithInterpolationMode1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -330,21 +331,21 @@
 		private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem1;
 		private PictureBoxWithInterpolationMode pictureBoxWithInterpolationMode1;
-		private MetroFramework.Controls.MetroCheckBox metroCheckBox1;
-		private MetroFramework.Controls.MetroButton metroButton1;
+		private MetroFramework.Controls.MetroCheckBox InterpolationCheckbox;
+		private MetroFramework.Controls.MetroButton AnimationPlayBtn;
 		private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
 		private System.Windows.Forms.ToolStripMenuItem addFrameToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem removeFrameToolStripMenuItem;
 		private System.Windows.Forms.Timer timer1;
-		private MetroFramework.Controls.MetroButton metroButton2;
+		private MetroFramework.Controls.MetroButton AnimationStopBtn;
 		private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem bulkAnimationSpeedToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem importJavaAnimationToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem changeTileToolStripMenuItem;
 		private MetroFramework.Controls.MetroLabel tileLabel;
-		private MetroFramework.Controls.MetroCheckBox metroCheckBox2;
+		private MetroFramework.Controls.MetroCheckBox MipMapCheckbox;
 		private MetroFramework.Controls.MetroLabel metroLabel1;
-		private System.Windows.Forms.NumericUpDown numericUpDown1;
+		private System.Windows.Forms.NumericUpDown MipMapNumericUpDown;
 	}
 }
