@@ -44,6 +44,7 @@ namespace PckStudio.Classes.IO
             WriteInt(stream, s.Length);
             byte[] byteString = Encoding.BigEndianUnicode.GetBytes(s);
             stream.Write(byteString, 0, byteString.Length);
+            WriteInt(stream, 0);
         }
 
         internal void WriteMetaEntries(Stream stream)
@@ -55,10 +56,9 @@ namespace PckStudio.Classes.IO
                 if (metaEntry == "XMLVERION") has_xmlverion_tag = true;
                 WriteInt(stream, _file.meta_data.IndexOf(metaEntry));
                 WriteString(stream, metaEntry);
-                WriteInt(stream, 0);
             }
             if (has_xmlverion_tag)
-                WriteInt(stream, 0);
+                WriteInt(stream, 0x1337); // :^)
         }
 
         internal void WriteFileEntries(Stream stream)
@@ -69,7 +69,7 @@ namespace PckStudio.Classes.IO
                 WriteInt(stream, entry.size);
                 WriteInt(stream, entry.type);
                 WriteString(stream, entry.name);
-                WriteInt(stream, 0);
+                
             }
             foreach (var entry in _file.file_entries)
             {
@@ -80,7 +80,6 @@ namespace PckStudio.Classes.IO
                         throw new Exception("Tag not in Meta: " + property.Item1);
                     WriteInt(stream, _file.meta_data.IndexOf(property.Item1));
                     WriteString(stream, property.Item2);
-                    WriteInt(stream, 0);
                 }
                 stream.Write(entry.data, 0, entry.size);
             }

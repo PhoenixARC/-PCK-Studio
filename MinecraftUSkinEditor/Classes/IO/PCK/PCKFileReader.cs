@@ -41,10 +41,9 @@ namespace PckStudio.Classes.IO
                 string value = ReadString(stream);
                 if (value.Equals("XMLVERSION")) has_xml_tag = true;
                 _file.meta_data.Insert(index, value);
-                ReadInt(stream); // padding ????
             }
             if (has_xml_tag)
-                Console.WriteLine(ReadInt(stream).ToString("X08")); // xml version num ??
+                Console.WriteLine(ReadInt(stream)); // xml version num ??
         }
 
         internal void ReadFileEntries(Stream stream)
@@ -57,7 +56,6 @@ namespace PckStudio.Classes.IO
                 string name = ReadString(stream);
                 var entry = new PCKFile.FileData(name, file_type, file_size);
                 _file.file_entries.Add(entry);
-                ReadInt(stream);
             }
             foreach (var file_entry in _file.file_entries)
             {
@@ -68,7 +66,6 @@ namespace PckStudio.Classes.IO
                     string key = _file.meta_data[index];
                     string value = ReadString(stream);
                     file_entry.properties.Add(new ValueTuple<string, string>(key, value));
-                    ReadInt(stream); // padding ???
                 }
                 // file data buffer is only allocated when FileData is constructed with `dataSize`
                 stream.Read(file_entry.data, 0, file_entry.size);
@@ -89,6 +86,7 @@ namespace PckStudio.Classes.IO
             int len = ReadInt(stream);
             byte[] stringBuffer = new byte[len * 2];
             stream.Read(stringBuffer, 0, len * 2);
+            ReadInt(stream);
             return Encoding.BigEndianUnicode.GetString(stringBuffer, 0, len * 2);
         }
     }
