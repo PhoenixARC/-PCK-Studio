@@ -53,7 +53,7 @@ namespace PckStudio.Classes.IO
             bool has_xmlverion_tag = false;
             foreach (var metaEntry in _file.meta_data)
             {
-                if (metaEntry == "XMLVERION") has_xmlverion_tag = true;
+                if (metaEntry == "XMLVERSION") has_xmlverion_tag = true;
                 WriteInt(stream, _file.meta_data.IndexOf(metaEntry));
                 WriteString(stream, metaEntry);
             }
