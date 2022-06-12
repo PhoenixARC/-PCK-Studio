@@ -210,6 +210,7 @@
             // 
             resources.ApplyResources(this.importFileToolStripMenuItem, "importFileToolStripMenuItem");
             this.importFileToolStripMenuItem.Name = "importFileToolStripMenuItem";
+            this.importFileToolStripMenuItem.Click += new System.EventHandler(this.importFileToolStripMenuItem_Click);
             // 
             // extractToolStripMenuItem
             // 
