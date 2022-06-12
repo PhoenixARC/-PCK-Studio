@@ -22,10 +22,10 @@ namespace PckStudio
 {
 	public partial class FormMain : MetroFramework.Forms.MetroForm
 	{
-        string saveLocation = string.Empty; //Save location for pck file
+        string saveLocation = string.Empty;
         string PCKFilePath = "";
         string PCKFileBCKUP = "x";
-		PCKFile currentPCK; //currently opened pck
+		PCKFile currentPCK;
         bool needsUpdate = false;
 		bool saved = true;
 		bool isTemplateFile = false;
@@ -42,6 +42,7 @@ namespace PckStudio
 			pckOpen.AllowDrop = true;
 			tabControl.SelectTab(0);
 			RPC.Initialize("825875166574673940");
+			labelVersion.Text = Application.ProductVersion;
 		}
 
 		private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -70,6 +71,7 @@ namespace PckStudio
 				saveLocation = filePath;
 				pck = PCKFileReader.Read(fileStream, LittleEndianCheckBox.Checked);
 			}
+			if (pck.type < 3) throw new Exception("Can't open pck file of type: " + pck.type.ToString());
 			return pck;
 		}
 
@@ -163,18 +165,15 @@ namespace PckStudio
 			entryTypeTextBox.Text = "";
 			entryDataTextBox.Text = "";
 
-			//Retrieves metadata for currently selected mineifile and displays it within metatreeview
-			int boxes = 0;
+			// Retrieves metadata for currently selected mineifile and displays it within metatreeview
 			foreach (var entry in file.properties)
 			{
 				TreeNode meta = new TreeNode(entry.Item1);
 				meta.Tag = entry;
 				treeMeta.Nodes.Add(meta);
-
 				//Check for if file contains model data
 				if (entry.Item1 == "BOX")
 				{
-					boxes += 1;
 					buttonEdit.Text = "EDIT BOXES";
 					buttonEdit.Visible = true;
 				}
@@ -202,7 +201,6 @@ namespace PckStudio
 				MemoryStream png = new MemoryStream(file.data); //Gets image data from minefile data
 				Image skinPicture = Image.FromStream(png); //Constructs image data into image
 				pictureBoxImagePreview.Image = skinPicture; //Sets image preview to image
-
 
 				if (skinPicture.Size.Height == skinPicture.Size.Width / 2)
 				{
@@ -292,27 +290,25 @@ namespace PckStudio
 				buttonEdit.Text = "EDIT COLORS";
 				buttonEdit.Visible = true;
 			}
-			else if (Path.GetFileName(file.name) == "audio.pck")
+			else if (Path.GetFileName(file.name) == "audio.pck" && file.type == 8)
 			{
 				buttonEdit.Text = "EDIT MUSIC CUES";
 				buttonEdit.Visible = true;
 			}
 		}
 
-        #region Parses boxes and opens model generator
         public void editModel(PCKFile.FileData skin)
 		{
             generateModel generate = new generateModel(skin.properties, new PictureBox());
 			//Opens Model Generator Dialog
 			if (generate.ShowDialog() == DialogResult.OK)
 			{
-				saved = false;
 				reloadMetaTreeView();
+				saved = false;
 			}
 			entryTypeTextBox.Text = "";
 			entryDataTextBox.Text = "";
 		}
-		#endregion
 
 		private void extractToolStripMenuItem_Click(object sender, EventArgs e)
 		{
@@ -1256,7 +1252,6 @@ namespace PckStudio
 
 		private bool TryGetLocFile(out LOCFile locFile)
         {
-			
 			PCKFile.FileData locdata = null;
 			if (currentPCK.HasFile("localisation.loc", 6))
 				locdata = currentPCK.GetFile("localisation.loc", 6);
@@ -2638,8 +2633,6 @@ namespace PckStudio
 
 #endregion
 
-#region Tool/MenuStrips
-
 		private void openToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
 			DateTime Begin = DateTime.Now;
@@ -2758,8 +2751,6 @@ namespace PckStudio
 			tex.ShowDialog();
 		}
 
-#endregion
-
 
 		private void buttonEditModel_Click(object sender, EventArgs e)
 		{
@@ -2791,8 +2782,6 @@ namespace PckStudio
 					AnimationEditor diag = new AnimationEditor(treeViewMain);
 					diag.ShowDialog(this);
 					diag.Dispose();
-
-					//treeViewToMineFiles(treeViewMain, currentPCK);
 
 					MemoryStream png = new MemoryStream(file.data); //Gets image data from minefile data
 					Image skinPicture = Image.FromStream(png); //Constructs image data into image

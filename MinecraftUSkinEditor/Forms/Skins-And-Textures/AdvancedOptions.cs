@@ -14,7 +14,6 @@ namespace PckStudio
 {
     public partial class AdvancedOptions : MetroFramework.Forms.MetroForm
     {
-        PCKFile.FileData mf;
         PCKFile currentPCK;
 
         public AdvancedOptions(PCKFile currentPCKIn)
@@ -32,8 +31,11 @@ namespace PckStudio
 
         private void addEntryToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            addMetaAdvanced add = new addMetaAdvanced(treeMeta);
-            add.ShowDialog();
+            addMeta add = new addMeta();
+            if (add.ShowDialog() == DialogResult.OK)
+            {
+                
+            }
             add.Dispose();
         }
 

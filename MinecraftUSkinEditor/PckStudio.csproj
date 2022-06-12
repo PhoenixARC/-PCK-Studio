@@ -216,12 +216,6 @@
     <Compile Include="Forms\Skins-And-Textures\addMeta.Designer.cs">
       <DependentUpon>addMeta.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Skins-And-Textures\addMetaAdvanced.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Skins-And-Textures\addMetaAdvanced.Designer.cs">
-      <DependentUpon>addMetaAdvanced.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\Skins-And-Textures\addnewskin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -432,12 +426,6 @@
     <EmbeddedResource Include="Forms\Skins-And-Textures\addMeta.resx">
       <DependentUpon>addMeta.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Skins-And-Textures\addMetaAdvanced.ja.resx">
-      <DependentUpon>addMetaAdvanced.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Skins-And-Textures\addMetaAdvanced.resx">
-      <DependentUpon>addMetaAdvanced.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Skins-And-Textures\addnewskin.ja.resx">
       <DependentUpon>addnewskin.cs</DependentUpon>
     </EmbeddedResource>
@@ -630,7 +618,6 @@
     <None Include="Resources\turn-off %281%291.png" />
     <None Include="Resources\bg2.png" />
     <None Include="Resources\discord.png" />
-    <None Include="Resources\man.png" />
     <None Include="Resources\external-content.duckduckgo.png" />
     <None Include="Resources\clock.png" />
     <None Include="Resources\changeTile.png" />
