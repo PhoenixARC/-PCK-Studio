@@ -72,6 +72,15 @@ namespace PckStudio.Classes.FileTypes
             this.type = type;
         }
 
+        public bool HasFile(string name, int type)
+        {
+            foreach (var file in file_entries)
+            {
+                if (file.name == name && file.type == type)
+                    return true;
+            }
+            return false;
+        }
 
         public FileData GetFile(string name, int type)
         {
@@ -80,20 +89,7 @@ namespace PckStudio.Classes.FileTypes
                 if (file.name == name && file.type == type)
                     return file;
             }
-            return null; // not found
-            //throw new Exception("Could not find file named: " + name);
+            return null;
         }
-
-        public FileData[] GetFilesOfType(int type)
-        {
-            List<FileData> files = new List<FileData>();
-            foreach (var file in file_entries)
-            {
-                if (file.type == type)
-                    files.Add(file);
-            }
-            return files.ToArray();
-        }
-
     }
 }
