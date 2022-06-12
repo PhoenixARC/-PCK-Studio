@@ -31,19 +31,10 @@ namespace PckStudio
 
         private void refresh()
         {
-            try
+            treeView1.Nodes.Clear();
+            foreach (string key in currentPCK.meta_data)
             {
-                treeView1.Nodes.Clear();
-                foreach (string key in currentPCK.meta_data)
-                {
-                    treeView1.Nodes.Add(key);
-                }
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-                Close();
+                treeView1.Nodes.Add(key);
             }
         }
 
@@ -66,12 +57,8 @@ namespace PckStudio
 
         private void treeView1_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Delete && treeView1.SelectedNode != null &&
-                currentPCK.meta_data.Contains(treeView1.SelectedNode.Text))
-            {
-                currentPCK.meta_data.Remove(treeView1.SelectedNode.Text);
-                refresh();
-            }
+            if (e.KeyCode == Keys.Delete && treeView1.SelectedNode != null)
+                deleteToolStripMenuItem_Click(sender, e);
         }
     }
 }
