@@ -29,7 +29,6 @@ namespace PckStudio
         bool needsUpdate = false;
 		bool saved = true;
 		bool isTemplateFile = false;
-
 		public FormMain()
 		{
 			InitializeComponent();
@@ -57,7 +56,7 @@ namespace PckStudio
 					currentPCK = openPck(ofd.FileName);
 					fileEntryCountLabel.Text = "Files:" + currentPCK.file_entries.Count;
 					if (checkForPassword())
-						loadEditor();
+						BuildMainTreeView();
 				}
 			}
 		}
@@ -84,33 +83,54 @@ namespace PckStudio
 				foreach (var pair in file_entry.properties)
 				{
 					addPasswordToolStripMenuItem.Enabled = !(pair.Item1 == "LOCK");
-					if (pair.Item1 == "LOCK" && new pckLocked(pair.Item2).ShowDialog() != DialogResult.OK)
-						return false;
+					if (pair.Item1 == "LOCK")
+						return new pckLocked(pair.Item2).ShowDialog() == DialogResult.OK;
 				}
 			}
 			return true;
 		}
 
-		private void loadEditor()
-		{
-			treeViewMain.Nodes.Clear();
-			treeViewMain.LabelEdit = false;
-			closeToolStripMenuItem.Visible = true;
-			foreach (var file_entry in currentPCK.file_entries)
-			{
-				TreeNode node = new TreeNode(file_entry.name);
-				node.Tag = file_entry;
-				treeViewMain.Nodes.Add(node);
+		/// <summary>
+		/// wrapper that allows the use of <paramref name="name"/> in <code>TreeNode.Nodes.Find(name, ...)</code> and <code>TreeNode.Nodes.ContainsKey(name)</code>
+		/// </summary>
+		/// <param name="name"></param>
+		/// <param name="tag"></param>
+		/// <returns>new Created TreeNode</returns>
+		public static TreeNode CreateNode(string name, object tag = null)
+        {
+			TreeNode node = new TreeNode(name);
+			node.Name = name;
+			node.Tag = tag;
+			return node;
+        }
 
+		private TreeNode makeMagicNode(TreeNodeCollection root, char sep, string path)
+		{
+			if (root == null) throw new ArgumentNullException("Root Collection is null");
+			if (!path.Contains(sep))
+			{
+				var finalNode = CreateNode(path);
+				root.Add(finalNode);
+				return finalNode;
+			}
+			string nodeText = path.Substring(0, path.IndexOf(sep));
+			string subPath = path.Substring(path.IndexOf(sep) + 1);
+			bool alreadyExists = root.ContainsKey(nodeText);
+			TreeNode subNode = alreadyExists ? root[nodeText] : CreateNode(nodeText);
+			if (!alreadyExists) root.Add(subNode);
+			return makeMagicNode(subNode.Nodes, sep, subPath);
+		}
+
+		private void BuildTreeView(TreeNodeCollection root, PCKFile pckFile)
+        {
+			foreach (var file_entry in pckFile.file_entries)
+			{
+				TreeNode node = makeMagicNode(root, '/', file_entry.name);
+				node.Tag = file_entry;
 				if (file_entry.type == 0 || file_entry.type == 1 || file_entry.type == 2) // skins, capes, textures
 				{
 					node.ImageIndex = 2;
 					node.SelectedImageIndex = 2;
-				}
-                else if (file_entry.type == 5 || file_entry.type == 11) // Skins.pck / x16info.pck
-				{
-					node.ImageIndex = 4;
-					node.SelectedImageIndex = 4;
 				}
 				else if (file_entry.type == 6) // .loc 
 				{
@@ -122,12 +142,15 @@ namespace PckStudio
 					node.ImageIndex = 1;
 					node.SelectedImageIndex = 1;
 				}
-                else if (file_entry.type == 11) // Skins.pck
-                {
+				else if (file_entry.type == 11 || file_entry.type == 5) // Skins.pck, x16info.pck
+				{
+					node.ImageIndex = 4;
+					node.SelectedImageIndex = 4;
 					using (var stream = new MemoryStream(file_entry.data))
 					{
 						PCKFile subPCKfile = PCKFileReader.Read(stream, LittleEndianCheckBox.Checked);
 						// TODO: load sub pck into tree and make it editable with ease
+						BuildTreeView(node.Nodes, subPCKfile);
 					}
 				}
 				else
@@ -136,6 +159,15 @@ namespace PckStudio
 					node.SelectedImageIndex = 5;
 				}
 			}
+		}
+
+		private void BuildMainTreeView()
+		{
+			treeViewMain.Nodes.Clear();
+			closeToolStripMenuItem.Visible = true;
+			BuildTreeView(treeViewMain.Nodes, currentPCK);
+			foreach (TreeNode node in treeViewMain.Nodes)
+				Console.WriteLine(node.Text);
             foreach (ToolStripMenuItem dropDownItem in fileToolStripMenuItem.DropDownItems)
             {
                 dropDownItem.Enabled = true;
@@ -146,24 +178,26 @@ namespace PckStudio
             }
 			fileEntryCountLabel.Text = "Files:" + currentPCK.file_entries.Count.ToString();
 			treeViewMain.Enabled = true;
+			treeViewMain.Update();
 			treeMeta.Enabled = true;
 			tabControl.SelectTab(1);
 		}
 
 		private void selectNode(object sender, TreeViewEventArgs e)
 		{
+			treeMeta.Nodes.Clear();
+			entryTypeTextBox.Text = "";
+			entryDataTextBox.Text = "";
 			buttonEdit.Visible = false;
 			// Sets preview image to "NO IMAGE" by default
-			pictureBoxImagePreview.Image = (Image)Resources.NoImageFound;
+			pictureBoxImagePreview.Image = Resources.NoImageFound;
+			pictureBoxImagePreview.Show();
 			int pictureBoxMaxHeight = (tabPage1.Height / 2) - (tabPage1.Height / 10);
 			pictureBoxImagePreview.Size = new Size(pictureBoxMaxHeight, pictureBoxMaxHeight);
 			labelImageSize.Text = "";
 			var node = e.Node;
 			if (node.Tag == null || !(node.Tag is PCKFile.FileData)) return;
 			PCKFile.FileData file = node.Tag as PCKFile.FileData;
-			treeMeta.Nodes.Clear();
-			entryTypeTextBox.Text = "";
-			entryDataTextBox.Text = "";
 
 			// Retrieves metadata for currently selected mineifile and displays it within metatreeview
 			foreach (var entry in file.properties)
@@ -559,7 +593,7 @@ namespace PckStudio
 			}
 			add.Dispose();
 			saved = false;
-			loadEditor();
+			BuildMainTreeView();
 		}
 
 		PCKFile.FileData CreateAudioPCK(bool isLittle)
@@ -599,17 +633,17 @@ namespace PckStudio
 				return;
 			}
 			PCKFile.FileData audioMF = CreateAudioPCK(LittleEndianCheckBox.Checked);
-			TreeNode node = new TreeNode("audio.pck");
-			node.Tag = audioMF;
-			node.ImageIndex = 4;
-			node.SelectedImageIndex = 4;
+			//TreeNode node = new TreeNode("audio.pck");
+			//node.Tag = audioMF;
+			//node.ImageIndex = 4;
+			//node.SelectedImageIndex = 4;
 			Forms.Utilities.AudioEditor diag = new Forms.Utilities.AudioEditor(audioMF, LittleEndianCheckBox.Checked);
 			diag.ShowDialog(this);
-			if (diag.saved) treeViewMain.Nodes.Add(node);
+			//if (diag.saved) treeViewMain.Nodes.Add(node);
 			diag.Dispose();
 		}
 
-		#region starts up form to create and add a animated texture
+
 		private void createAnimatedTextureToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			using (var ofd = new OpenFileDialog())
@@ -621,7 +655,8 @@ namespace PckStudio
 				{
 					try
 					{
-						AnimationEditor diag = new AnimationEditor(treeViewMain, ofd.FileName);
+						var animation_file = new PCKFile.FileData("", 2);
+						AnimationEditor diag = new AnimationEditor(animation_file, ofd.FileName);
 						diag.ShowDialog(this);
 						diag.Dispose();
 						treeMeta.Nodes.Clear();
@@ -635,7 +670,6 @@ namespace PckStudio
 				}
 			}
 		}
-		#endregion
 
 		private void treeViewMain_DoubleClick(object sender, EventArgs e)
 		{
@@ -947,7 +981,7 @@ namespace PckStudio
 			{
 				InitializeSkinPack(new Random().Next(8000, int.MaxValue), 0, namePrompt.NewText);
 				isTemplateFile = true;
-				loadEditor();
+				BuildMainTreeView();
 			}
 		}
 		private void texturePackToolStripMenuItem_Click(object sender, EventArgs e)
@@ -955,7 +989,7 @@ namespace PckStudio
 			// make texture pack template
 			InitializeTexturePack();
 			isTemplateFile = true;
-			loadEditor();
+			BuildMainTreeView();
         }
 
 		private void advancedMetaAddingToolStripMenuItem_Click(object sender, EventArgs e)
@@ -971,12 +1005,14 @@ namespace PckStudio
         {
 			if (!saved)
 				SaveTemplate();
+			pictureBoxImagePreview.Hide();
 			treeViewMain.Nodes.Clear();
 			treeMeta.Nodes.Clear();
 			currentPCK = null;
 			treeViewMain.Enabled = false;
 			treeMeta.Enabled = false;
 			closeToolStripMenuItem.Visible = false;
+			tabControl.SelectTab(0);
 		}
 
 		#region open program info/credits window
@@ -2779,13 +2815,9 @@ namespace PckStudio
 			{
 				try
 				{
-					AnimationEditor diag = new AnimationEditor(treeViewMain);
+					AnimationEditor diag = new AnimationEditor(file);
 					diag.ShowDialog(this);
 					diag.Dispose();
-
-					MemoryStream png = new MemoryStream(file.data); //Gets image data from minefile data
-					Image skinPicture = Image.FromStream(png); //Constructs image data into image
-					pictureBoxImagePreview.Image = skinPicture;
 					reloadMetaTreeView();
 				}
 				catch
@@ -2800,7 +2832,6 @@ namespace PckStudio
 				try
 				{
 					Forms.Utilities.AudioEditor diag = new Forms.Utilities.AudioEditor(file, LittleEndianCheckBox.Checked);
-					if (file.data[0] != 0x00) diag.Text += " (PS4/Vita)";
 					diag.ShowDialog(this);
 					diag.Dispose();
 				}
@@ -2812,7 +2843,7 @@ namespace PckStudio
 				}
 			}
 
-			if (file.type == 6) // .loc file
+			if (file.type == 6 && file.name == "languages.loc" || file.name == "localisation.loc")
 			{
 				LOCFile l = null;
 				using (var stream = new MemoryStream(file.data))
@@ -2829,7 +2860,7 @@ namespace PckStudio
 			}
 
 			//Checks to see if selected minefile is a col file
-			if (file.type == 9) // .col file
+			if (file.type == 9 && file.name == "colours.col") // .col file
 			{
 				COLFile colFile = new COLFile();
 				using (var stream = new MemoryStream(file.data))
@@ -2901,7 +2932,7 @@ namespace PckStudio
 			{
 				currentPCK = openPck(pck);
 			}
-			loadEditor();
+			BuildMainTreeView();
 		}
 
 		private void OpenPck_DragLeave(object sender, EventArgs e)
@@ -2960,11 +2991,15 @@ namespace PckStudio
 		{
 			try
 			{
+				RPC.Initialize("825875166574673940");
 				RPC.SetRPC("Sitting alone", "Program by PhoenixARC", "pcklgo", "PCK Studio", "pcklgo");
 				timer1.Start();
 				timer1.Enabled = true;
 			}
-			catch { }
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.Message);
+			}
 		}
 
 		private void forMattNLContributorToolStripMenuItem_Click(object sender, EventArgs e)
