@@ -74,12 +74,7 @@ namespace PckStudio.Classes.FileTypes
 
         public bool HasFile(string name, int type)
         {
-            foreach (var file in file_entries)
-            {
-                if (file.name == name && file.type == type)
-                    return true;
-            }
-            return false;
+            return GetFile(name, type) != null;
         }
 
         public FileData GetFile(string name, int type)
