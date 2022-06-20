@@ -73,8 +73,7 @@ namespace PckStudio.Forms.Utilities
 		public AudioEditor(PCKFile.FileData MineFile, bool isLittleEndian)
 		{
 			_isLittleEndian = isLittleEndian;
-			ImageList catImages = new ImageList();
-			catImages.ColorDepth = ColorDepth.Depth32Bit;
+			if (isLittleEndian) Text += " (PS4/Vita)";
 			catImages.Images.Add(Properties.Resources.audio_0_overworld);
 			catImages.Images.Add(Properties.Resources.audio_1_nether);
 			catImages.Images.Add(Properties.Resources.audio_2_end);
@@ -83,11 +82,7 @@ namespace PckStudio.Forms.Utilities
 			catImages.Images.Add(Properties.Resources.audio_5_mg01);
 			catImages.Images.Add(Properties.Resources.audio_6_mg02);
 			catImages.Images.Add(Properties.Resources.audio_7_mg03);
-
 			InitializeComponent();
-
-			treeView1.ImageList = catImages;
-
 			mf = MineFile;
 			using (var stream = new MemoryStream(mf.data))
             {
@@ -176,7 +171,7 @@ namespace PckStudio.Forms.Utilities
 				int check = Enumerable.Range(0, 8).Except(cats).First(); // Exclude Unused for now
 				if (0 <= check && check <= 8)
 				{
-					addCategory add = new addCategory(this);//sets category adding dialog
+					addCategory add = new addCategory(this); //sets category adding dialog
 					if (add.ShowDialog() == DialogResult.OK)
 
 					add.Dispose();//diposes generated metadata adding dialog data

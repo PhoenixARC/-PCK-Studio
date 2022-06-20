@@ -14,12 +14,11 @@ namespace PckStudio
 {
 	public partial class AnimationEditor : MetroForm
 	{
-		TreeView treeViewMain = new TreeView();
 		PCKFile.FileData mf = null;
 		List<Image> frames = new List<Image>();
+		int frameCount;
 		Newtonsoft.Json.Linq.JObject tileData = Newtonsoft.Json.Linq.JObject.Parse(System.Text.Encoding.Default.GetString(Properties.Resources.tileData));
 		Image texture;
-		int frameCount;
 		bool isItem = false;
 		string lastFrameTime = "1";
 		string newTileName = "";
@@ -35,15 +34,14 @@ namespace PckStudio
 			}
 		}
 
-		public AnimationEditor(TreeView treeViewIn, string createdFileName = "")
+		public AnimationEditor(PCKFile.FileData file_entry, string createdFileName = "")
 		{
 			InitializeComponent();
-			treeViewMain = treeViewIn;
 			if (string.IsNullOrEmpty(createdFileName))
 			{
-				newTileName = Path.GetFileNameWithoutExtension(treeViewMain.SelectedNode.Text);
-				if (treeViewMain.SelectedNode.Parent.Text.ToLower() == "items") isItem = true;
-				mf = treeViewMain.SelectedNode.Tag as PCKFile.FileData;
+				mf = file_entry;
+				newTileName = Path.GetFileNameWithoutExtension(file_entry.name);
+				if (file_entry.name.Split('/').Contains("items")) isItem = true;
 				if (newTileName.EndsWith("MipMapLevel2") || newTileName.EndsWith("MipMapLevel3"))
 				{
 					string mipMapLvl = newTileName.Last().ToString();
@@ -69,14 +67,12 @@ namespace PckStudio
 			}
 
 			List<string> strEntries = new List<string>();
-			List<string> strEntryData = new List<string>();
 
-			string anim_data = string.Empty;
+			string anim = string.Empty;
 			foreach (var entry in mf.properties)
 			{
-				if (entry.Item1 == "ANIM") anim_data = entry.Item2;
+				if (entry.Item1 == "ANIM") anim = entry.Item2;
                 strEntries.Add(entry.Item2);
-                strEntryData.Add(entry.Item2);
 			}
 
 			MemoryStream textureMem = new MemoryStream(mf.data);
@@ -93,9 +89,6 @@ namespace PckStudio
 				}
 			}
 
-			string anim = "";
-			if (strEntries.Find(entry => entry == "ANIM") == null) anim = "";
-			else anim = strEntryData[strEntries.FindIndex(entry => entry == "ANIM")];
 			Console.WriteLine("ANIMATION DATA: " + anim);
 			if (InterpolationCheckbox.Checked = anim.StartsWith("#"))
 			{
@@ -110,7 +103,7 @@ namespace PckStudio
 				if (string.IsNullOrEmpty(animData.Last())) animData = animData.Take(animData.Length - 1).ToArray();
 				foreach (string frame in animData)
 				{
-					string[] frameData = frame.Split(new char[] { '*' });
+					string[] frameData = frame.Split('*');
 					string outFrame = "";
 					int i = 0;
 					string currentFrame = "";
@@ -119,16 +112,15 @@ namespace PckStudio
 					{
 						string label;
 						string outData;
+						outData = data;
 						if (i == 0)
 						{
-							outData = data;
 							if (string.IsNullOrEmpty(data)) throw new Exception("Invalid animation data");
 							label = "Frame: ";
 							currentFrame = outData;
 						}
 						else
 						{
-							outData = data;
 							// Some textures like the Halloween 2015's Lava texture don't have a
 							// frame time parameter for certain frames. This will detect that and place the last frame time in its place.
 							// This is accurate to console edition behavior.
@@ -175,7 +167,6 @@ namespace PckStudio
 			for (int frameI = 0; frameI < totalFrames; frameI++)
 			{
 				Rectangle frameArea = new Rectangle(new Point(0, frameI * width), new Size(width, width));
-
 				Bitmap frameImage = new Bitmap(width, width);
 				using (Graphics gfx = Graphics.FromImage(frameImage))
 				{
@@ -185,10 +176,8 @@ namespace PckStudio
 
 					gfx.DrawImage(texture, new Rectangle(0, 0, frameImage.Width, frameImage.Height), frameArea, GraphicsUnit.Pixel);
 				}
-
 				frames.Add(new Bitmap(frameImage, new Size(width, width)));
 			}
-
 		}
 
 		private int mix(double ratio, int val1, int val2) // Ported from Java Edition code
@@ -343,48 +332,48 @@ namespace PckStudio
 
 		private void addNodeToAnimationsFolder(TreeNode newNode)
 		{
-			TreeNode parent = FindNodeByName(treeViewMain, isItem ? "items" : "blocks");
-			if (parent != null)
-			{
-				Console.WriteLine("ParentNotNULL");
-				TreeNode check = FindNodeByName(treeViewMain, newNode.Text);
-				parent.Nodes.Add(newNode);
-			}
-			else
-			{
-				TreeNode texturesParent = FindNodeByName(treeViewMain, "textures");
-				if (texturesParent != null)
-				{
-					Console.WriteLine("TextureNotNULL");
-					TreeNode newFolder = new TreeNode(isItem ? "items" : "blocks");
-					texturesParent.Nodes.Add(newFolder);
-					newFolder.Nodes.Add(newNode);
-				}
-				else
-				{
-					TreeNode resParent = FindNodeByName(treeViewMain, "res");
-					if (resParent != null)
-					{
-						Console.WriteLine("ResNotNULL");
-						TreeNode newFolder = new TreeNode("textures");
-						resParent.Nodes.Add(newFolder);
-						TreeNode newFolderB = new TreeNode(isItem ? "items" : "blocks");
-						newFolder.Nodes.Add(newFolderB);
-						newFolderB.Nodes.Add(newNode);
-					}
-					else
-					{
-						Console.WriteLine("ResNULL");
-						TreeNode newFolder = new TreeNode("res");
-						treeViewMain.Nodes.Add(newFolder);
-						TreeNode newFolderB = new TreeNode("textures");
-						newFolder.Nodes.Add(newFolderB);
-						TreeNode newFolderC = new TreeNode(isItem ? "items" : "blocks");
-						newFolderB.Nodes.Add(newFolderC);
-						newFolderC.Nodes.Add(newNode);
-					}
-				}
-			}
+			//TreeNode parent = FindNodeByName(treeViewMain, isItem ? "items" : "blocks");
+			//if (parent != null)
+			//{
+			//	Console.WriteLine("ParentNotNULL");
+			//	TreeNode check = FindNodeByName(treeViewMain, newNode.Text);
+			//	parent.Nodes.Add(newNode);
+			//}
+			//else
+			//{
+			//	TreeNode texturesParent = FindNodeByName(treeViewMain, "textures");
+			//	if (texturesParent != null)
+			//	{
+			//		Console.WriteLine("TextureNotNULL");
+			//		TreeNode newFolder = new TreeNode(isItem ? "items" : "blocks");
+			//		texturesParent.Nodes.Add(newFolder);
+			//		newFolder.Nodes.Add(newNode);
+			//	}
+			//	else
+			//	{
+			//		TreeNode resParent = FindNodeByName(treeViewMain, "res");
+			//		if (resParent != null)
+			//		{
+			//			Console.WriteLine("ResNotNULL");
+			//			TreeNode newFolder = new TreeNode("textures");
+			//			resParent.Nodes.Add(newFolder);
+			//			TreeNode newFolderB = new TreeNode(isItem ? "items" : "blocks");
+			//			newFolder.Nodes.Add(newFolderB);
+			//			newFolderB.Nodes.Add(newNode);
+			//		}
+			//		else
+			//		{
+			//			Console.WriteLine("ResNULL");
+			//			TreeNode newFolder = new TreeNode("res");
+			//			treeViewMain.Nodes.Add(newFolder);
+			//			TreeNode newFolderB = new TreeNode("textures");
+			//			newFolder.Nodes.Add(newFolderB);
+			//			TreeNode newFolderC = new TreeNode(isItem ? "items" : "blocks");
+			//			newFolderB.Nodes.Add(newFolderC);
+			//			newFolderC.Nodes.Add(newNode);
+			//		}
+			//	}
+			//}
 		}
 
 		private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -400,7 +389,7 @@ namespace PckStudio
 				newTileName += "MipMapLevel" + MipMapNumericUpDown.Value.ToString();
 			}
 
-			if (!create && treeViewMain.SelectedNode.Tag != null) treeViewMain.SelectedNode.Text = newTileName + ".png";
+			//if (!create && treeViewMain.SelectedNode.Tag != null) treeViewMain.SelectedNode.Text = newTileName + ".png";
 
 			string animationData = "";
 			if (InterpolationCheckbox.Checked) animationData += "#"; // does the animation interpolate?
@@ -424,34 +413,34 @@ namespace PckStudio
 				}
 			};
 
-			if (create)
-			{
-				mf.name = "res/textures/" + (isItem ? "items" : "blocks");
-				TreeNode newNode = new TreeNode(newTileName + ".png") { Tag = mf };//creates node for minefile
-				newNode.ImageIndex = 2;
-				newNode.SelectedImageIndex = 2;
-				addNodeToAnimationsFolder(newNode);
-				treeViewMain.SelectedNode = newNode;
-				create = false;
-			}
-			else if (isItem && treeViewMain.SelectedNode.Parent.Text == "blocks")
-			{
-				Console.WriteLine("block: " + treeViewMain.SelectedNode.Parent.Text);
-				TreeNode newNode = treeViewMain.SelectedNode;
-				newNode.ImageIndex = 2;
-				newNode.SelectedImageIndex = 2;
-				treeViewMain.SelectedNode.Remove();
-				addNodeToAnimationsFolder(newNode);
-			}
-			else if (treeViewMain.SelectedNode.Parent.Text == "items")
-			{
-				Console.WriteLine("item: " + treeViewMain.SelectedNode.Parent.Text);
-				TreeNode newNode = treeViewMain.SelectedNode;
-				newNode.ImageIndex = 2;
-				newNode.SelectedImageIndex = 2;
-				treeViewMain.SelectedNode.Remove();
-				addNodeToAnimationsFolder(newNode);
-			}
+			//if (create)
+			//{
+			//	mf.name = "res/textures/" + (isItem ? "items" : "blocks");
+			//	TreeNode newNode = new TreeNode(newTileName + ".png") { Tag = mf };//creates node for minefile
+			//	newNode.ImageIndex = 2;
+			//	newNode.SelectedImageIndex = 2;
+			//	addNodeToAnimationsFolder(newNode);
+			//	treeViewMain.SelectedNode = newNode;
+			//	create = false;
+			//}
+			//else if (isItem && treeViewMain.SelectedNode.Parent.Text == "blocks")
+			//{
+			//	Console.WriteLine("block: " + treeViewMain.SelectedNode.Parent.Text);
+			//	TreeNode newNode = treeViewMain.SelectedNode;
+			//	newNode.ImageIndex = 2;
+			//	newNode.SelectedImageIndex = 2;
+			//	treeViewMain.SelectedNode.Remove();
+			//	addNodeToAnimationsFolder(newNode);
+			//}
+			//else if (treeViewMain.SelectedNode.Parent.Text == "items")
+			//{
+			//	Console.WriteLine("item: " + treeViewMain.SelectedNode.Parent.Text);
+			//	TreeNode newNode = treeViewMain.SelectedNode;
+			//	newNode.ImageIndex = 2;
+			//	newNode.SelectedImageIndex = 2;
+			//	treeViewMain.SelectedNode.Remove();
+			//	addNodeToAnimationsFolder(newNode);
+			//}
 
 			if(MipMapCheckbox.Checked) newTileName = newTileName.Substring(0, newTileName.Length - 12);
 		}

@@ -47,6 +47,7 @@ namespace PckStudio.Forms.Utilities
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
+            this.catImages = new System.Windows.Forms.ImageList(this.components);
             this.contextMenuStrip1.SuspendLayout();
             this.menuStrip.SuspendLayout();
             this.contextMenuStrip2.SuspendLayout();
@@ -58,6 +59,7 @@ namespace PckStudio.Forms.Utilities
             this.treeView1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.treeView1.ContextMenuStrip = this.contextMenuStrip1;
             this.treeView1.ForeColor = System.Drawing.Color.White;
+            this.treeView1.ImageList = this.catImages;
             this.treeView1.LabelEdit = true;
             this.treeView1.Name = "treeView1";
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
@@ -173,6 +175,12 @@ namespace PckStudio.Forms.Utilities
             this.metroLabel1.Name = "metroLabel1";
             this.metroLabel1.Theme = MetroFramework.MetroThemeStyle.Dark;
             // 
+            // catImages
+            // 
+            this.catImages.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
+            resources.ApplyResources(this.catImages, "catImages");
+            this.catImages.TransparentColor = System.Drawing.Color.Transparent;
+            // 
             // AudioEditor
             // 
             resources.ApplyResources(this, "$this");
@@ -214,5 +222,6 @@ namespace PckStudio.Forms.Utilities
 		private MetroFramework.Controls.MetroLabel metroLabel2;
 		private MetroFramework.Controls.MetroLabel metroLabel1;
 		private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
-	}
+        private System.Windows.Forms.ImageList catImages;
+    }
 }

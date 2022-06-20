@@ -23,10 +23,7 @@ namespace PckStudio.Forms.Utilities.AnimationEditor
 		}
 
 		bool isItem = false;
-		public bool IsItem
-		{
-			get { return isItem; }
-		}
+		public bool IsItem => isItem;
 
 		List<TreeNode> treeView1Cache = new List<TreeNode>();
 		List<TreeNode> treeView2Cache = new List<TreeNode>();
