@@ -11,8 +11,8 @@ namespace PckStudio
     public partial class addnewskin : MetroFramework.Forms.MetroForm
     {
         LOCFile currentLoc;
-        public PCKFile.FileData skin = new PCKFile.FileData("skin", 0);
-        public PCKFile.FileData cape = new PCKFile.FileData("cape", 1);
+        public PCKFile.FileData skin { get; private set; } = new PCKFile.FileData("skin", 0);
+        public PCKFile.FileData cape { get; private set; } = new PCKFile.FileData("cape", 1);
         eSkinType skinType;
         public bool useCape = false;
         string localID = "0";
@@ -32,86 +32,78 @@ namespace PckStudio
         {
             InitializeComponent();
             currentLoc = loc;
-
-            FormBorderStyle = FormBorderStyle.None;
-
-            buttonDone.Enabled = false;
         }
 
         private void checkImage(Image img)
         {
             //Checks image dimensions and sets things accordingly
-            if (img.Height == 64) //If skins is 64x64
+            switch (img.Height) // 64x64
             {
-                MessageBox.Show("64x64 Skin Detected");
-                skinPictureBoxTexture.Width = skinPictureBoxTexture.Height;
-                if (skinType != eSkinType._64x64 && skinType != eSkinType._64x64HD)
-                {
-                    buttonSkin.Location = new Point(buttonSkin.Location.X - skinPictureBoxTexture.Width, buttonSkin.Location.Y);
-                }
-                comboBoxSkinType.Text = "Steve (64x64)";
-                comboBoxSkinType.Enabled = true;
-                if (comboBoxSkinType.Items.Count == 3)
-                {
-                    comboBoxSkinType.Items.RemoveAt(0);
-                }
-                skinType = eSkinType._64x64;
+                case 64:
+                    MessageBox.Show("64x64 Skin Detected");
+                    skinPictureBoxTexture.Width = skinPictureBoxTexture.Height;
+                    if (skinType != eSkinType._64x64 && skinType != eSkinType._64x64HD)
+                    {
+                        buttonSkin.Location = new Point(buttonSkin.Location.X - skinPictureBoxTexture.Width, buttonSkin.Location.Y);
+                    }
+                    comboBoxSkinType.Text = "Steve (64x64)";
+                    skinType = eSkinType._64x64;
+                    break;
+                case 32:
+                    MessageBox.Show("64x32 Skin Detected");
+                    skinPictureBoxTexture.Width = skinPictureBoxTexture.Height * 2;
+                    if (skinType == eSkinType._64x64)
+                    {
+                        buttonSkin.Location = new Point(buttonSkin.Location.X + skinPictureBoxTexture.Width / 2, buttonSkin.Location.Y);
+                    }
+                    if (skinType == eSkinType._64x64HD)
+                    {
+                        buttonSkin.Location = new Point(buttonSkin.Location.X + skinPictureBoxTexture.Width / 2, buttonSkin.Location.Y);
+                    }
+                    comboBoxSkinType.Text = "Default (64x32)";
+                    skinType = eSkinType._64x32;
+                    break;
+                default:
+                    if (img.Width == img.Height) // 64x64 HD
+                    {
+                        MessageBox.Show("64x64 HD Skin Detected");
+                        skinPictureBoxTexture.Width = skinPictureBoxTexture.Height;
+                        if (skinType != eSkinType._64x64 && skinType != eSkinType._64x64HD)
+                        {
+                            buttonSkin.Location = new Point(buttonSkin.Location.X - skinPictureBoxTexture.Width, buttonSkin.Location.Y);
+                        }
+                        comboBoxSkinType.Text = "Steve (64x64)";
+                        skinType = eSkinType._64x64HD;
+                    }
+                    else if (img.Width == img.Height / 2) // 64x32 HD
+                    {
+                        MessageBox.Show("64x32 HD Skin Detected");
+                        skinPictureBoxTexture.Width = skinPictureBoxTexture.Height * 2;
+                        if (skinType == eSkinType._64x64)
+                        {
+                            buttonSkin.Location = new Point(buttonSkin.Location.X + skinPictureBoxTexture.Width / 2, buttonSkin.Location.Y);
+                        }
+                        if (skinType == eSkinType._64x64HD)
+                        {
+                            buttonSkin.Location = new Point(buttonSkin.Location.X + skinPictureBoxTexture.Width / 2, buttonSkin.Location.Y);
+                        }
+                        comboBoxSkinType.Text = "Default (64x32)";
+                        skinType = eSkinType._64x32HD;
+                    }
+                    else //If dimensions don't fit any skin type //Invalid
+                    {
+                        MessageBox.Show("Not a Valid Skin File");
+                        skinType = eSkinType.Invalid;
+                        return;
+                    }
+                    break;
             }
-            else if (img.Height == 32)//If skins is 64x32
+            comboBoxSkinType.Enabled = skinType == eSkinType._64x64 || skinType == eSkinType._64x64HD;
+            if (comboBoxSkinType.Items.Count == 3)
             {
-                MessageBox.Show("64x32 Skin Detected");
-                skinPictureBoxTexture.Width = skinPictureBoxTexture.Height * 2;
-                if (skinType == eSkinType._64x64)
-                {
-                    buttonSkin.Location = new Point(buttonSkin.Location.X + skinPictureBoxTexture.Width / 2, buttonSkin.Location.Y);
-                }
-                if (skinType == eSkinType._64x64HD)
-                {
-                    buttonSkin.Location = new Point(buttonSkin.Location.X + skinPictureBoxTexture.Width / 2, buttonSkin.Location.Y);
-                }
-                comboBoxSkinType.Text = "Default (64x32)";
-                comboBoxSkinType.Enabled = false;
-                skinType = eSkinType._64x32;
+                comboBoxSkinType.Items.RemoveAt(0);
             }
-            else if (img.Width == img.Height / 1)//If skins is 64x64 HD
-            {
-                MessageBox.Show("64x64 HD Skin Detected");
-                skinPictureBoxTexture.Width = skinPictureBoxTexture.Height;
-                if (skinType != eSkinType._64x64 && skinType != eSkinType._64x64HD)
-                {
-                    buttonSkin.Location = new Point(buttonSkin.Location.X - skinPictureBoxTexture.Width, buttonSkin.Location.Y);
-                }
-                comboBoxSkinType.Text = "Steve (64x64)";
-                comboBoxSkinType.Enabled = true;
-                if (comboBoxSkinType.Items.Count == 3)
-                {
-                    comboBoxSkinType.Items.RemoveAt(0);
-                }
-                skinType = eSkinType._64x64HD;
-            }
-            else if (img.Width == img.Height / 2)//If skins is 64x32 HD
-            {
-                MessageBox.Show("64x32 HD Skin Detected");
-                skinPictureBoxTexture.Width = skinPictureBoxTexture.Height * 2;
-                if (skinType == eSkinType._64x64)
-                {
-                    buttonSkin.Location = new Point(buttonSkin.Location.X + skinPictureBoxTexture.Width / 2, buttonSkin.Location.Y);
-                }
-                if (skinType == eSkinType._64x64HD)
-                {
-                    buttonSkin.Location = new Point(buttonSkin.Location.X + skinPictureBoxTexture.Width / 2, buttonSkin.Location.Y);
-                }
-                comboBoxSkinType.Text = "Default (64x32)";
-                comboBoxSkinType.Enabled = false;
-                skinType = eSkinType._64x32HD;
-            }
-            else //If dimensions don't fit any skin type //Invalid
-            {
-                MessageBox.Show("Not a Valid Skin File");
-                skinType = eSkinType.Invalid;
-                return;
-            }
-            
+
             skinPictureBoxTexture.SizeMode = PictureBoxSizeMode.StretchImage;
             skinPictureBoxTexture.InterpolationMode = InterpolationMode.NearestNeighbor;
             skinPictureBoxTexture.Image = img;
@@ -208,7 +200,7 @@ namespace PckStudio
                     {
                         try
                         {
-                            cape.properties.Add(new ValueTuple<string, string>("CAPEPATH", $"dlccape{textSkinID.Text}.png"));
+                            skin.properties.Add(new ValueTuple<string, string>("CAPEPATH", $"dlccape{textSkinID.Text}.png"));
                             if (mashupStructure)
                             {
                                 cape.name = "Skins/" + "dlccape" + textSkinID.Text + ".png";
