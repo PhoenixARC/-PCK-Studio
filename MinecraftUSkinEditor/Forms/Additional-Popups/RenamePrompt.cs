@@ -6,6 +6,9 @@ namespace PckStudio
 {
     public partial class RenamePrompt : MetroForm
 	{
+		/// <summary>
+		/// Text entered <c>only access when DialogResult == DialogResult.OK</c>
+		/// </summary>
 		public string NewText => InputTextBox.Text;
 
 		public RenamePrompt(TreeNode nodeIn)
