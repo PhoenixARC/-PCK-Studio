@@ -54,9 +54,15 @@ namespace PckStudio
 				{
 					saveLocation = ofd.FileName;
 					currentPCK = openPck(ofd.FileName);
-					fileEntryCountLabel.Text = "Files:" + currentPCK.file_entries.Count;
 					if (checkForPassword())
+					{
+						fileEntryCountLabel.Text = "Files:" + currentPCK.file_entries.Count;
 						BuildMainTreeView();
+						treeViewMain.Enabled = true;
+						treeMeta.Enabled = true;
+						closeToolStripMenuItem.Visible = true;
+						tabControl.SelectTab(1);
+					}
 				}
 			}
 		}
@@ -76,7 +82,6 @@ namespace PckStudio
 
 		private bool checkForPassword()
         {
-			addPasswordToolStripMenuItem.Enabled = true;
 			foreach (var file_entry in currentPCK.file_entries)
 			{
 				if (file_entry.name != "0") continue;
@@ -87,6 +92,7 @@ namespace PckStudio
 						return new pckLocked(pair.Item2).ShowDialog() == DialogResult.OK;
 				}
 			}
+			addPasswordToolStripMenuItem.Enabled = true;
 			return true;
 		}
 
@@ -164,23 +170,7 @@ namespace PckStudio
 		private void BuildMainTreeView()
 		{
 			treeViewMain.Nodes.Clear();
-			closeToolStripMenuItem.Visible = true;
 			BuildTreeView(treeViewMain.Nodes, currentPCK);
-			foreach (TreeNode node in treeViewMain.Nodes)
-				Console.WriteLine(node.Text);
-            foreach (ToolStripMenuItem dropDownItem in fileToolStripMenuItem.DropDownItems)
-            {
-                dropDownItem.Enabled = true;
-            }
-            foreach (ToolStripMenuItem dropDownItem2 in editToolStripMenuItem.DropDownItems)
-            {
-                dropDownItem2.Enabled = true;
-            }
-			fileEntryCountLabel.Text = "Files:" + currentPCK.file_entries.Count.ToString();
-			treeViewMain.Enabled = true;
-			treeViewMain.Update();
-			treeMeta.Enabled = true;
-			tabControl.SelectTab(1);
 		}
 
 		private void selectNode(object sender, TreeViewEventArgs e)
@@ -389,19 +379,8 @@ namespace PckStudio
 
 		private void Save(string FilePath)
         {
-            foreach (var file in currentPCK.file_entries)
-            {
-                foreach (var property in file.properties)
-                {
-					if (!currentPCK.meta_data.Contains(property.Item1))
-                    {
-                        MessageBox.Show($"{property.Item1} is not in the Meta\nPlease add it to save the pck", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-                }
-            }
-
-            using (var fs = File.OpenWrite(FilePath))
+			currentPCK.ValidateMeta();
+			using (var fs = File.OpenWrite(FilePath))
 			{
 				PCKFileWriter.Write(fs, currentPCK, LittleEndianCheckBox.Checked);
 			}
@@ -777,7 +756,6 @@ namespace PckStudio
 			if (treeMeta.SelectedNode == null || !(treeMeta.SelectedNode.Tag is ValueTuple<string, string>) ||
 				!(treeViewMain.SelectedNode.Tag is PCKFile.FileData))
 				return;
-			
 			var file = treeViewMain.SelectedNode.Tag as PCKFile.FileData;
 			if (file.properties.Remove((ValueTuple<string, string>)treeMeta.SelectedNode.Tag))
 			{
@@ -836,7 +814,6 @@ namespace PckStudio
 				treeViewMain.SelectedNode.Remove();
 			}
 			treeViewMain.SelectedNode = move;
-
 			saved = false;
 		}
 		#endregion
@@ -1012,18 +989,16 @@ namespace PckStudio
 			treeViewMain.Enabled = false;
 			treeMeta.Enabled = false;
 			closeToolStripMenuItem.Visible = false;
+			fileEntryCountLabel.Text = "";
 			tabControl.SelectTab(0);
 		}
 
-		#region open program info/credits window
 		private void programInfoToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			//open program info dialog
 			programInfo info = new programInfo();
 			info.ShowDialog();
 			info.Dispose();
 		}
-		#endregion
 
 		private void Form1_Load(object sender, EventArgs e)
 		{
