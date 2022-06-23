@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Windows.Forms;
 using MetroFramework.Forms;
+using System.Drawing.Drawing2D;
+using Newtonsoft.Json.Linq;
+using PckStudio.Properties;
 
 namespace PckStudio.Forms.Utilities.AnimationEditor
 {
@@ -16,38 +19,21 @@ namespace PckStudio.Forms.Utilities.AnimationEditor
 	{
 		string selectedTile = "";
 		string oldTileName = "";
-		public string SelectedTile
-		{
-			get { return selectedTile; }
-			set { selectedTile = value; }
-		}
-
 		bool isItem = false;
+		public string SelectedTile => selectedTile;
 		public bool IsItem => isItem;
 
 		List<TreeNode> treeView1Cache = new List<TreeNode>();
 		List<TreeNode> treeView2Cache = new List<TreeNode>();
 
-		private void treeViews_AfterSelect(object sender, TreeViewEventArgs e)
-		{
-			Tuple<string, int> tileData = e.Node.Tag as Tuple<string, int>;
-			Console.WriteLine(tileData.Item1 + " - " + tileData.Item2);
-			selectedTile = tileData.Item1;
-			Console.WriteLine(selectedTile);
-
-			if (e.Node.TreeView == treeView1) isItem = false;
-			if (e.Node.TreeView == treeView2) isItem = true;
-		}
-
 		public ChangeTile(string oldName = "")
 		{
 			oldTileName = oldName;
 			InitializeComponent();
-
 			ImageList tiles = new ImageList();
 			tiles.ColorDepth = ColorDepth.Depth32Bit;
 
-			for(int i = 1; i < 545; i++)
+			for (int i = 1; i < 545; i++)
 			{
 				int row = (i - 1) / 16;
 				int column = (i - 1) % 16;
@@ -57,9 +43,9 @@ namespace PckStudio.Forms.Utilities.AnimationEditor
 				Bitmap tileImage = new Bitmap(16, 16);
 				using (Graphics gfx = Graphics.FromImage(tileImage))
 				{
-					gfx.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None;
-					gfx.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-					gfx.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+					gfx.SmoothingMode = SmoothingMode.None;
+					gfx.InterpolationMode = InterpolationMode.NearestNeighbor;
+					gfx.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
 					gfx.DrawImage(Properties.Resources.terrain_sheet, new Rectangle(0, 0, 16, 16), tileArea, GraphicsUnit.Pixel);
 				}
@@ -76,11 +62,11 @@ namespace PckStudio.Forms.Utilities.AnimationEditor
 				Bitmap tileImage = new Bitmap(16, 16);
 				using (Graphics gfx = Graphics.FromImage(tileImage))
 				{
-					gfx.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None;
-					gfx.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-					gfx.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+					gfx.SmoothingMode = SmoothingMode.None;
+					gfx.InterpolationMode = InterpolationMode.NearestNeighbor;
+					gfx.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
-					gfx.DrawImage(Properties.Resources.items_sheet, new Rectangle(0, 0, 16, 16), tileArea, GraphicsUnit.Pixel);
+					gfx.DrawImage(Resources.items_sheet, new Rectangle(0, 0, 16, 16), tileArea, GraphicsUnit.Pixel);
 				}
 
 				tiles.Images.Add(tileImage);
@@ -88,17 +74,16 @@ namespace PckStudio.Forms.Utilities.AnimationEditor
 
 			try
 			{
-				Newtonsoft.Json.Linq.JObject tileData = Newtonsoft.Json.Linq.JObject.Parse(Encoding.Default.GetString(Properties.Resources.tileData));
-
+                JObject tileData = JObject.Parse(Encoding.Default.GetString(Resources.tileData));
 				int i = 0;
 
 				if (tileData["Blocks"] != null)
 				{
-					foreach (Newtonsoft.Json.Linq.JObject content in tileData["Blocks"].Children())
+					foreach (JObject content in tileData["Blocks"].Children())
 					{
-						foreach (Newtonsoft.Json.Linq.JProperty prop in content.Properties())
+						foreach (JProperty prop in content.Properties())
 						{
-							if (!String.IsNullOrEmpty((string)prop.Value))
+							if (!string.IsNullOrEmpty((string)prop.Value))
 							{
 								TreeNode tileNode = new TreeNode();
 								tileNode.Text = (string)prop.Value;
@@ -115,11 +100,11 @@ namespace PckStudio.Forms.Utilities.AnimationEditor
 				}
 				if (tileData["Items"] != null)
 				{
-					foreach (Newtonsoft.Json.Linq.JObject content in tileData["Items"].Children())
+					foreach (JObject content in tileData["Items"].Children())
 					{
-						foreach (Newtonsoft.Json.Linq.JProperty prop in content.Properties())
+                        foreach (JProperty prop in content.Properties())
 						{
-							if (!String.IsNullOrEmpty((string)prop.Value))
+							if (!string.IsNullOrEmpty((string)prop.Value))
 							{
 								TreeNode tileNode = new TreeNode();
 								tileNode.Text = (string)prop.Value;
@@ -145,6 +130,17 @@ namespace PckStudio.Forms.Utilities.AnimationEditor
 				MessageBox.Show(j_ex.Message, "Error");
 				return;
 			}
+		}
+
+		private void treeViews_AfterSelect(object sender, TreeViewEventArgs e)
+		{
+			Tuple<string, int> tileData = e.Node.Tag as Tuple<string, int>;
+			Console.WriteLine(tileData.Item1 + " - " + tileData.Item2);
+			selectedTile = tileData.Item1;
+			Console.WriteLine(selectedTile);
+
+			if (e.Node.TreeView == treeView1) isItem = false;
+			if (e.Node.TreeView == treeView2) isItem = true;
 		}
 
 		void filter_TextChanged(object sender, EventArgs e)
