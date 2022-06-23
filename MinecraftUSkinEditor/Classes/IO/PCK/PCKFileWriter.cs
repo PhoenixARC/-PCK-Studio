@@ -15,7 +15,7 @@ namespace PckStudio.Classes.IO
 
         public static void Write(Stream stream, PCKFile file, bool isLittleEndian)
         {
-            new PCKFileWriter(file, isLittleEndian).WriteFileToStream(stream);
+            new PCKFileWriter(file, isLittleEndian).WriteToStream(stream);
         }
 
         private PCKFileWriter(PCKFile file, bool isLittleEndian)
@@ -24,7 +24,7 @@ namespace PckStudio.Classes.IO
             this.isLittleEndian = isLittleEndian;
         }
 
-        private void WriteFileToStream(Stream stream)
+        private void WriteToStream(Stream stream)
         {
             WriteInt(stream, _file.type);
             WriteMetaEntries(stream);
@@ -69,7 +69,6 @@ namespace PckStudio.Classes.IO
                 WriteInt(stream, entry.size);
                 WriteInt(stream, entry.type);
                 WriteString(stream, entry.name);
-                
             }
             foreach (var entry in _file.file_entries)
             {
