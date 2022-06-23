@@ -19,6 +19,8 @@ namespace PckStudio.Classes.FileTypes
 		        DLCCapeFile         = 1,  // *.png
                 DLCTextureFile      = 2,  // *.png
                 DLCUIDataFile       = 3,  // *.fui ????
+                // DLCInfoFile         = 4, // "0" file
+                // DLCTexturePackInfoFile = 5, // x16Info.pck
                 DLCLocalisationFile = 6,  // languages.loc/localisation.loc
                 DLCGameRulesFile    = 7,  // *.grf
                 DLCAudioFile        = 8,  // audio.pck
@@ -30,7 +32,7 @@ namespace PckStudio.Classes.FileTypes
                 DLCMaterialFile     = 14, // entityMaterials.bin
             }
 
-            public string name;
+            public string name { get; set; }
             public int type { get; }
             public byte[] data => _data;
             public int size => _size;
@@ -70,6 +72,18 @@ namespace PckStudio.Classes.FileTypes
         public PCKFile(int type)
         {
             this.type = type;
+        }
+
+        public void ValidateMeta()
+        {
+            file_entries.ForEach(file =>
+            {
+                file.properties.ForEach(pair =>
+                {
+                    if (!meta_data.Contains(pair.Item1))
+                        meta_data.Add(pair.Item1);
+                });
+            });
         }
 
         public bool HasFile(string name, int type)
