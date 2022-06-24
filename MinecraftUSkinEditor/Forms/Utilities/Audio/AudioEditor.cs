@@ -20,6 +20,7 @@ namespace PckStudio.Forms.Utilities
 	public partial class AudioEditor : MetroForm
 	{
 		public bool saved = false;
+		public string credits = "";
 		public string defaultType = "yes";
 		public string cat;
 		public List<int> cats = new List<int>();
@@ -33,7 +34,7 @@ namespace PckStudio.Forms.Utilities
 			}
 		}
 
-		public string getCatString(int cat)
+		internal string getCatString(int cat)
 		{
 			switch (cat)
 			{
@@ -50,7 +51,7 @@ namespace PckStudio.Forms.Utilities
 			}
 		}
 
-		public int getCatID(string cat)
+		internal int getCatID(string cat)
 		{
 			switch (cat)
 			{
@@ -74,14 +75,6 @@ namespace PckStudio.Forms.Utilities
 		{
 			_isLittleEndian = isLittleEndian;
 			if (isLittleEndian) Text += " (PS4/Vita)";
-			catImages.Images.Add(Properties.Resources.audio_0_overworld);
-			catImages.Images.Add(Properties.Resources.audio_1_nether);
-			catImages.Images.Add(Properties.Resources.audio_2_end);
-			catImages.Images.Add(Properties.Resources.audio_3_creative);
-			catImages.Images.Add(Properties.Resources.audio_4_menu);
-			catImages.Images.Add(Properties.Resources.audio_5_mg01);
-			catImages.Images.Add(Properties.Resources.audio_6_mg02);
-			catImages.Images.Add(Properties.Resources.audio_7_mg03);
 			InitializeComponent();
 			mf = MineFile;
 			using (var stream = new MemoryStream(mf.data))
@@ -93,10 +86,41 @@ namespace PckStudio.Forms.Utilities
 				throw new Exception("This is not a valid audio.pck file");
 			}
 			List<PCKFile.FileData> tempMineFiles = audioPCK.file_entries;
+			/*
+			 * I need some way to access the current pck but not sure how I should do it
+			PCKFile currentPCK = ?
+			var locFileData = currentPCK.GetFile("localisation.loc", 6);
+			if (locFileData == null)
+				locFileData = currentPCK.GetFile("languages.loc", 6);
+			if (locFileData == null)
+				throw new Exception("Could not find .loc file");
+			LOCFile locFile = null;
+			using (var stream = new MemoryStream(locFileData.data))
+			{
+				locFile = PckStudio.Classes.IO.LOC.LOCFileReader.Read(stream);
+			}
+			*/
 			foreach (PCKFile.FileData mineFile in tempMineFiles)
 			{
 				string CatString = getCatString(mineFile.type);
-				Console.WriteLine("Category Found: " + CatString);
+				Console.WriteLine("Category Found: " + CatString + ". " + mineFile.type);
+				foreach (var entry in mineFile.properties.ToArray())
+				{
+					var property = (ValueTuple<string, string>)entry;
+					if (property.Item1 != "CUENAME")
+					{
+						//if (property.Item1 == "CREDITID") locFile.RemoveEntry(property.Item2);
+						if (property.Item1 == "CREDIT")
+						{
+							credits += property.Item2 + "\n";
+							mineFile.properties.Remove(property);
+						}
+						else if (property.Item1 == "CREDITID")
+						{
+							mineFile.properties.Remove(property);
+						}
+					}
+				}
 				if (cats.Contains(mineFile.type))
 				{
 					Console.WriteLine("Duplicate category found, " + CatString + ". Combining...");
@@ -120,14 +144,13 @@ namespace PckStudio.Forms.Utilities
 
 		private void treeView2_AfterSelect(object sender, TreeViewEventArgs e)
 		{
-			comboBox1.Items.Clear(); //Resets metadata combobox of selectable entry names
-			if (e.Node.Tag == null || !(e.Node.Tag is Tuple<string, string>)) return;
-			var strings = e.Node.Tag as Tuple<string, string>;
-			comboBox1.Text = strings.Item1;
-			textBox1.Text = strings.Item2;
+			if (treeView2.SelectedNode.Tag == null || !(treeView2.SelectedNode.Tag is ValueTuple<string, string>)) return;
+			PCKFile.FileData file = (PCKFile.FileData)treeView1.SelectedNode.Tag;
+			var property = (ValueTuple<string, string>)treeView2.SelectedNode.Tag;
+			int i = file.properties.IndexOf(property);
 
-			foreach (var metaType in audioPCK.meta_data)
-				comboBox1.Items.Add(metaType);
+			//foreach (var metaType in audioPCK.meta_data)
+				//comboBox1.Items.Add(metaType);
 		}
 
 		private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
@@ -136,11 +159,13 @@ namespace PckStudio.Forms.Utilities
 			PCKFile.FileData mineFile = (PCKFile.FileData)e.Node.Tag;
 			foreach (var entry in mineFile.properties)
 			{
+				var property = (ValueTuple<string, string>)entry;
 				TreeNode meta = new TreeNode();
-				meta.Text = entry.Item1;
+				meta.Text = property.Item2;
 				meta.Tag = entry;
 				treeView2.Nodes.Add(meta);
 			}
+			credits = credits.TrimEnd('\n');
 			if (treeView2.Nodes.Count > 0) treeView2.SelectedNode = treeView2.Nodes[0];
 		}
 
@@ -196,10 +221,10 @@ namespace PckStudio.Forms.Utilities
 			if (treeView1.SelectedNode == null && !(treeView1.SelectedNode.Tag is PCKFile.FileData)) return;
 
 			var file = treeView1.SelectedNode.Tag as PCKFile.FileData;
-			TreeNode meta = new TreeNode("New Entry");
+			TreeNode meta = new TreeNode("CUENAME");
             meta.Tag = file;
             treeView2.Nodes.Add(meta);
-            file.properties.Add(new ValueTuple<string, string>(defaultType, "New Entry"));
+            file.properties.Add(new ValueTuple<string, string>(defaultType, "CUENAME"));
         }
 		public void treeView2_KeyDown(object sender, KeyEventArgs e)
 		{
@@ -281,7 +306,18 @@ namespace PckStudio.Forms.Utilities
 				MessageBox.Show("The game will crash upon loading your pack if a category is empty", "Empty Category");
 				return;
 			}
-			using(var stream = new MemoryStream())
+
+			using (StringReader reader = new StringReader(credits))
+			{
+				string line;
+				while ((line = reader.ReadLine()) != null)
+				{
+					ValueTuple<string, string> credit_entry = new ValueTuple<string, string>("CREDIT", line);
+					audioPCK.file_entries[0].properties.Add(credit_entry);
+					//Console.WriteLine(line);
+				}
+			}
+			using (var stream = new MemoryStream())
             {
 				PCKFileWriter.Write(stream, audioPCK, _isLittleEndian);
 				mf.SetData(stream.ToArray());
@@ -300,7 +336,15 @@ namespace PckStudio.Forms.Utilities
 				"The \"Menu\" category will only play once when loading the pack, and never again.\n\n" +
 				"The \"Creative\" category will only play songs listed in that category, and unlike other editions of Minecraft, will NOT play songs from the Overworld category. You can fix this by adding your overworld songs to the Creative category too.\n\n" +
 				"The mini game categories will only play if you have your pack loaded in those mini games.\n\n" +
+				"You can edit the credits for the PCK in the Credits editor! No more managing credit IDs!\n\n" +
 				"You can modify and create PSVita and PS4 audio pcks by clicking \"PS4/Vita\" in the \"Create -> Audio.pck\" context menu", "Help");
 		}
-    }
+
+		private void creditsEditorToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			creditsEditor prompt = new creditsEditor(credits);
+			prompt.ShowDialog();
+			credits = prompt.Credits;
+		}
+	}
 }

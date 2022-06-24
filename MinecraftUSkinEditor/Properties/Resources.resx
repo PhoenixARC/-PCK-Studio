@@ -130,9 +130,6 @@
   <data name="ARROW" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\iconImageList\ARROW.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="audio_2_end" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\iconImageList\AudioEditor\2_end.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="turn-off (1)1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\turn-off (1)1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -151,26 +148,14 @@
   <data name="pack" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\pack.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="audio_1_nether" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\iconImageList\AudioEditor\1_nether.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="Del" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Del.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="audio_7_mg03" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\iconImageList\AudioEditor\7_mg03.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="items_sheet" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\items.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="external-content.duckduckgo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\external-content.duckduckgo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="audio_5_mg01" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\iconImageList\AudioEditor\5_mg01.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="audio_6_mg02" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\iconImageList\AudioEditor\6_mg02.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="NoImageFound" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\NoImageFound.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -190,20 +175,11 @@
   <data name="apps" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\apps.zip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="audio_4_menu" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\iconImageList\AudioEditor\3_menu.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="ZUnknown" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\iconImageList\ZUnknown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="audio_3_creative" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\iconImageList\AudioEditor\4_creative.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="terrain_sheet" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\terrain.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="audio_0_overworld" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\iconImageList\AudioEditor\0_overworld.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="clock" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\clock.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
