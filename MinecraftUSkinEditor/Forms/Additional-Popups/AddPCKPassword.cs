@@ -14,18 +14,15 @@ namespace PckStudio.Forms
 {
     public partial class AddPCKPassword : MetroForm
     {
-        PCKFile currentPCK;
-        PCKFile.FileData file;
-        public AddPCKPassword(PCKFile.FileData fileIn, PCKFile currentPCKIn)
+        public string Password { get; private set; }
+        public AddPCKPassword()
         {
             InitializeComponent();
-            file = fileIn;
-            currentPCK = currentPCKIn;
         }
 
         private void buttonUnlocked_Click(object sender, EventArgs e)
         {
-            file.properties.Add(new ValueTuple<string, string>("LOCK", MD5(textBoxPass.Text)));
+            Password = MD5(textBoxPass.Text);
             Close();
         }
 
@@ -34,10 +31,8 @@ namespace PckStudio.Forms
             using (var provider = System.Security.Cryptography.MD5.Create())
             {
                 StringBuilder builder = new StringBuilder();
-
                 foreach (byte b in provider.ComputeHash(Encoding.UTF8.GetBytes(s)))
                     builder.Append(b.ToString("x2").ToLower());
-
                 return builder.ToString();
             }
         }

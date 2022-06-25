@@ -23,9 +23,8 @@ namespace PckStudio
 	public partial class FormMain : MetroFramework.Forms.MetroForm
 	{
         string saveLocation = string.Empty;
-        string PCKFilePath = "";
-        string PCKFileBCKUP = "x";
-		PCKFile currentPCK;
+        //string PCKFileBCKUP = "x";
+		PCKFile currentPCK = null;
         bool needsUpdate = false;
 		bool saved = true;
 		bool isTemplateFile = false;
@@ -484,42 +483,12 @@ namespace PckStudio
 			{
 				if (ofd.ShowDialog() == DialogResult.OK)
 				{
-					PCKFile.FileData mf = new PCKFile.FileData(Path.GetFileName(ofd.FileName), 0);
-					mf.SetData(File.ReadAllBytes(ofd.FileName));
-					TreeNode add = new TreeNode(mf.name) { Tag = mf };
+					PCKFile.FileData newFile = new PCKFile.FileData(ofd.SafeFileName, 0);
+					newFile.SetData(File.ReadAllBytes(ofd.FileName));
 
-					//Gets proper file icon for minefile
-					if (Path.GetExtension(add.Text) == ".binka")
+					if (treeViewMain.SelectedNode.Tag == null) // Detects if user selected a folder to add file to
 					{
-						add.ImageIndex = 1;
-						add.SelectedImageIndex = 1;
-					}
-					else if (Path.GetExtension(add.Text) == ".png")
-					{
-						add.ImageIndex = 2;
-						add.SelectedImageIndex = 2;
-					}
-					else if (Path.GetExtension(add.Text) == ".loc")
-					{
-						add.ImageIndex = 3;
-						add.SelectedImageIndex = 3;
-					}
-					else if (Path.GetExtension(add.Text) == ".pck")
-					{
-						add.ImageIndex = 4;
-						add.SelectedImageIndex = 4;
-					}
-					else
-					{
-						add.ImageIndex = 5;
-						add.SelectedImageIndex = 5;
-					}
-
-					if (treeViewMain.SelectedNode.Tag == null) //Detects if user selected a folder to add file to
-					{
-						treeViewMain.SelectedNode.Nodes.Add(add);//adds generated minefile node to selected folder
-						currentPCK.file_entries.Insert(treeViewMain.SelectedNode.Nodes.Count - 1, mf);//inserts minefile into proper list index
-
+						currentPCK.file_entries.Insert(treeViewMain.SelectedNode.Nodes.Count - 1, newFile);//inserts minefile into proper list index
 						string itemPath = "";//item path template
 						List<TreeNode> path = new List<TreeNode>();//directory template
 						GetPathToRoot(treeViewMain.SelectedNode, path);//gets all parents nodes
@@ -529,22 +498,22 @@ namespace PckStudio
 							itemPath += dire.Text + "/";
 						}
 
-						currentPCK.file_entries[treeViewMain.SelectedNode.Nodes.Count - 1].name = itemPath + treeViewMain.SelectedNode.Nodes[treeViewMain.SelectedNode.Nodes.Count - 1].Text;//updates minefile name with directory
+						// updates minefile name with directory
+						currentPCK.file_entries[treeViewMain.SelectedNode.Nodes.Count - 1].name = itemPath + treeViewMain.SelectedNode.Nodes[treeViewMain.SelectedNode.Nodes.Count - 1].Text;
 					}
 					else //adds minefile to root of the pck
 					{
-						currentPCK.file_entries.Add(mf);
-						treeViewMain.Nodes.Add(add);
+						currentPCK.file_entries.Add(newFile);
 					}
+					saved = false;
 				}
 			}
-			saved = false;
 		}
 
 
 		private void GetPathToRoot(TreeNode node, List<TreeNode> path)
 		{
-			//gets all parents nodes of a file
+			// gets all parents nodes of a file
 			if (node == null) return; // previous node was the root.
 			else
 			{
@@ -628,7 +597,6 @@ namespace PckStudio
 			{
 				ofd.Filter = "PNG Files | *.png";
 				ofd.Title = "Select a PNG File";
-
 				if (ofd.ShowDialog() == DialogResult.OK)
 				{
 					try
@@ -665,7 +633,7 @@ namespace PckStudio
 				}
 				var locedit = new LOCEditor(l);
 				locedit.ShowDialog(this);
-				if (locedit.wasModified)
+				if (locedit.WasModified)
 				{
 					using (var stream = new MemoryStream())
 					{
@@ -883,7 +851,6 @@ namespace PckStudio
 			// Check the parent node of the second node.
 			if (node2.Parent == null) return false;
 			if (node2.Parent.Equals(node1)) return true;
-
 			// If the parent node is not null or equal to the first node, 
 			// call the ContainsNode method recursively using the parent of 
 			// the second node.
@@ -933,9 +900,9 @@ namespace PckStudio
 			currentPCK.file_entries.Add(loc);
 		}
 
-		private void InitializeTexturePack()
+		private void InitializeTexturePack(int packId, int packVersion, string packName)
         {
-			InitializeSkinPack(0, 0, "no_name");
+			InitializeSkinPack(packId, packVersion, packName);
 			currentPCK.meta_data.Add("DATAPATH");
 			var texturepackInfo = new PCKFile.FileData("x16/x16Info.pck", 5);
 			texturepackInfo.properties.Add(("PACKID", "0"));
@@ -1339,8 +1306,8 @@ namespace PckStudio
 					mfNew.SetData(data);
 					string[] txtProperties = File.ReadAllText(contents.FileName).Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
 					LOCFile locFile = null;
-					if (txtProperties.Contains("DISPLAYNAMEID") && txtProperties.Contains("DISPLAYNAME") ||
-						txtProperties.Contains("THEMENAMEID") && txtProperties.Contains("THEMENAME") &&
+					if ((txtProperties.Contains("DISPLAYNAMEID") && txtProperties.Contains("DISPLAYNAME")) ||
+						(txtProperties.Contains("THEMENAMEID") && txtProperties.Contains("THEMENAME")) &&
 						TryGetLocFile(out locFile))
 					{
 						// do stuff 

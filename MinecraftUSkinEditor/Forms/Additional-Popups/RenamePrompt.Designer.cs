@@ -56,9 +56,9 @@
             // 
             // RenamePrompt
             // 
+            this.AcceptButton = this.OKButton;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ControlBox = false;
             this.Controls.Add(this.InputTextBox);
             this.Controls.Add(this.OKButton);
             this.Controls.Add(this.TextLabel);

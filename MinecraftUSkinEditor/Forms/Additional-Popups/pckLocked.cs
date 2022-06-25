@@ -18,8 +18,6 @@ namespace PckStudio.Forms
         public pckLocked(string pass)
         {
             this.pass = pass;
-
-
             InitializeComponent();
         }
 
