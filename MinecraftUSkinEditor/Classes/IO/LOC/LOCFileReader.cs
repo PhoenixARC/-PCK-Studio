@@ -34,8 +34,8 @@ namespace PckStudio.Classes.IO.LOC
             }
             for (int i = 0; i < language_count; i++)
             {
-                Console.WriteLine(ReadInt(stream).ToString());
-                Console.WriteLine(stream.ReadByte());
+                ReadInt(stream);
+                stream.ReadByte();
                 string language = ReadString(stream);
                 if (!_file.languages.Contains(language))
                     throw new Exception("language not found");
