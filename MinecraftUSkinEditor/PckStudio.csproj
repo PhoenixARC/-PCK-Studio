@@ -143,6 +143,7 @@
     <Compile Include="Classes\FileTypes\Bink.cs" />
     <Compile Include="Classes\FileTypes\COLFile.cs" />
     <Compile Include="Classes\FileTypes\CSM.cs" />
+    <Compile Include="Classes\FileTypes\LCESkin.cs" />
     <Compile Include="Classes\FileTypes\PCKProperties.cs" />
     <Compile Include="Classes\FileTypes\PCKFile.cs" />
     <Compile Include="Classes\IO\LOC\LOCFileReader.cs" />
@@ -203,6 +204,12 @@
     </Compile>
     <Compile Include="Forms\Utilities\Animation\SetBulkSpeed.Designer.cs">
       <DependentUpon>SetBulkSpeed.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Utilities\Audio\creditsEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Utilities\Audio\creditsEditor.Designer.cs">
+      <DependentUpon>creditsEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Utilities\Audio\addCategory.cs">
       <SubType>Form</SubType>
@@ -416,6 +423,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Utilities\Animation\SetBulkSpeed.resx">
       <DependentUpon>SetBulkSpeed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Utilities\Audio\creditsEditor.resx">
+      <DependentUpon>creditsEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Utilities\Audio\addCategory.resx">
       <DependentUpon>addCategory.cs</DependentUpon>
