@@ -1,6 +1,6 @@
 ﻿namespace PckStudio
 {
-    partial class FormMain
+    partial class MainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.contextMenuPCKEntries = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.createToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.folderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -39,7 +39,6 @@
             this.importSkinsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importSkinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importExtractedSkinsFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.importFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.extractToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.renameFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.replaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -88,14 +87,11 @@
             this.PS3PCKInstallerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.VitaPCKInstallerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.joinDevelopmentDiscordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.label1 = new MetroFramework.Controls.MetroLabel();
             this.contextMenuMetaTree = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addPresetToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.addEntryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteEntryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.labelVersion = new MetroFramework.Controls.MetroLabel();
-            this.openedPCKS = new MetroFramework.Controls.MetroTabControl();
-            this.tabPage1 = new MetroFramework.Controls.MetroTabPage();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.DBGLabel = new MetroFramework.Controls.MetroLabel();
             this.tabControl = new MetroFramework.Controls.MetroTabControl();
@@ -124,8 +120,6 @@
             this.contextMenuPCKEntries.SuspendLayout();
             this.menuStrip.SuspendLayout();
             this.contextMenuMetaTree.SuspendLayout();
-            this.openedPCKS.SuspendLayout();
-            this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.tabControl.SuspendLayout();
             this.openTab.SuspendLayout();
@@ -189,8 +183,7 @@
             // 
             this.importSkinsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.importSkinToolStripMenuItem,
-            this.importExtractedSkinsFolderToolStripMenuItem,
-            this.importFileToolStripMenuItem});
+            this.importExtractedSkinsFolderToolStripMenuItem});
             resources.ApplyResources(this.importSkinsToolStripMenuItem, "importSkinsToolStripMenuItem");
             this.importSkinsToolStripMenuItem.Name = "importSkinsToolStripMenuItem";
             // 
@@ -205,11 +198,6 @@
             resources.ApplyResources(this.importExtractedSkinsFolderToolStripMenuItem, "importExtractedSkinsFolderToolStripMenuItem");
             this.importExtractedSkinsFolderToolStripMenuItem.Name = "importExtractedSkinsFolderToolStripMenuItem";
             this.importExtractedSkinsFolderToolStripMenuItem.Click += new System.EventHandler(this.importExtractedSkinsFolder);
-            // 
-            // importFileToolStripMenuItem
-            // 
-            resources.ApplyResources(this.importFileToolStripMenuItem, "importFileToolStripMenuItem");
-            this.importFileToolStripMenuItem.Name = "importFileToolStripMenuItem";
             // 
             // extractToolStripMenuItem
             // 
@@ -545,11 +533,6 @@
             this.joinDevelopmentDiscordToolStripMenuItem.Name = "joinDevelopmentDiscordToolStripMenuItem";
             this.joinDevelopmentDiscordToolStripMenuItem.Click += new System.EventHandler(this.joinDevelopmentDiscordToolStripMenuItem_Click);
             // 
-            // label1
-            // 
-            resources.ApplyResources(this.label1, "label1");
-            this.label1.Name = "label1";
-            // 
             // contextMenuMetaTree
             // 
             this.contextMenuMetaTree.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -583,32 +566,6 @@
             this.labelVersion.ForeColor = System.Drawing.Color.White;
             this.labelVersion.Name = "labelVersion";
             this.labelVersion.Theme = MetroFramework.MetroThemeStyle.Dark;
-            // 
-            // openedPCKS
-            // 
-            this.openedPCKS.Controls.Add(this.tabPage1);
-            resources.ApplyResources(this.openedPCKS, "openedPCKS");
-            this.openedPCKS.Name = "openedPCKS";
-            this.openedPCKS.SelectedIndex = 0;
-            this.openedPCKS.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
-            this.openedPCKS.Style = MetroFramework.MetroColorStyle.White;
-            this.openedPCKS.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.openedPCKS.UseSelectable = true;
-            // 
-            // tabPage1
-            // 
-            this.tabPage1.BackColor = System.Drawing.Color.Transparent;
-            this.tabPage1.Controls.Add(this.label1);
-            this.tabPage1.HorizontalScrollbarBarColor = true;
-            this.tabPage1.HorizontalScrollbarHighlightOnWheel = false;
-            this.tabPage1.HorizontalScrollbarSize = 0;
-            resources.ApplyResources(this.tabPage1, "tabPage1");
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Style = MetroFramework.MetroColorStyle.White;
-            this.tabPage1.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.tabPage1.VerticalScrollbarBarColor = true;
-            this.tabPage1.VerticalScrollbarHighlightOnWheel = false;
-            this.tabPage1.VerticalScrollbarSize = 0;
             // 
             // pictureBox2
             // 
@@ -824,9 +781,9 @@
             // 
             // treeMeta
             // 
-            resources.ApplyResources(this.treeMeta, "treeMeta");
             this.treeMeta.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.treeMeta.ContextMenuStrip = this.contextMenuMetaTree;
+            resources.ApplyResources(this.treeMeta, "treeMeta");
             this.treeMeta.Name = "treeMeta";
             this.treeMeta.PathSeparator = "/";
             this.treeMeta.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeMeta_AfterSelect);
@@ -876,13 +833,12 @@
             this.ApplyImageInvert = true;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.menuStrip);
             this.Controls.Add(this.LittleEndianCheckBox);
             this.Controls.Add(this.tabControl);
             this.Controls.Add(this.DBGLabel);
-            this.Controls.Add(this.openedPCKS);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.labelVersion);
-            this.Controls.Add(this.menuStrip);
             this.MainMenuStrip = this.menuStrip;
             this.Name = "FormMain";
             this.ShadowType = MetroFramework.Forms.MetroFormShadowType.DropShadow;
@@ -897,9 +853,6 @@
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.contextMenuMetaTree.ResumeLayout(false);
-            this.openedPCKS.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.tabControl.ResumeLayout(false);
             this.openTab.ResumeLayout(false);
@@ -944,7 +897,6 @@
         private System.Windows.Forms.ToolStripMenuItem importSkinToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem importExtractedSkinsFolderToolStripMenuItem;
         private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.ToolStripMenuItem importFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem createToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem folderToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem skinToolStripMenuItem;
@@ -956,12 +908,9 @@
         private System.Windows.Forms.ToolStripMenuItem convertToBedrockToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem storeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem1;
-        private MetroFramework.Controls.MetroTabControl openedPCKS;
-        private MetroFramework.Controls.MetroTabPage tabPage1;
         private MetroFramework.Controls.MetroTabControl tabControl;
         private MetroFramework.Controls.MetroTabPage editorTab;
         private MetroFramework.Controls.MetroCheckBox LittleEndianCheckBox;
-        private MetroFramework.Controls.MetroLabel label1;
         private MetroFramework.Controls.MetroLabel labelVersion;
         private MetroFramework.Controls.MetroLabel DBGLabel;
         private MetroFramework.Controls.MetroLabel label11;

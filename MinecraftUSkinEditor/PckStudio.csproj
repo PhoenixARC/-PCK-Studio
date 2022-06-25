@@ -253,11 +253,11 @@
     <Compile Include="Forms\Skins-And-Textures\EntryEditor.Designer.cs">
       <DependentUpon>EntryEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Form1.cs">
+    <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Skins-And-Textures\generateModel.cs">
       <SubType>Form</SubType>
@@ -325,6 +325,7 @@
     <Compile Include="Forms\Additional-Popups\Job.Designer.cs">
       <DependentUpon>Job.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Utilities\ListUtils.cs" />
     <Compile Include="Forms\Utilities\PCK Manager.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -408,6 +409,7 @@
     <Compile Include="Forms\Additional-Popups\programInfo.Designer.cs">
       <DependentUpon>programInfo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Classes\Misc\RenderBase.cs" />
     <Compile Include="Classes\Texturing\TextureCodec.cs" />
@@ -466,12 +468,12 @@
       <DependentUpon>EntryEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Form1.ja.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="MainForm.ja.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Skins-And-Textures\generateModel.ja.resx">
