@@ -16,7 +16,8 @@ namespace PckStudio
     {
 		DataTable tbl;
 		LOCFile currentLoc;
-		public bool wasModified { get; private set; } = true;
+		bool wasModified = false;
+		public bool WasModified => wasModified;
 
 		public LOCEditor(LOCFile loc)
 		{
@@ -59,7 +60,10 @@ namespace PckStudio
 			RenamePrompt diag = new RenamePrompt(node.Text);
 			diag.ShowDialog(this);
 			if (diag.DialogResult == DialogResult.OK)
-                currentLoc.ChangeEntry(node.Text, diag.NewText);
+			{
+				currentLoc.ChangeEntry(node.Text, diag.NewText);
+				wasModified = true;
+			}
 			diag.Dispose();
 		}
 
@@ -75,8 +79,11 @@ namespace PckStudio
 		{
 			if(treeViewLocEntries.SelectedNode != null && currentLoc.keys.ContainsKey(treeViewLocEntries.SelectedNode.Text))
 			{
-                currentLoc.keys.Remove(treeViewLocEntries.SelectedNode.Text);
-				treeViewLocEntries.SelectedNode.Remove();
+				if (currentLoc.keys.Remove(treeViewLocEntries.SelectedNode.Text))
+				{
+					treeViewLocEntries.SelectedNode.Remove();
+					wasModified = true;
+				}
             }
 		}
 
@@ -93,12 +100,8 @@ namespace PckStudio
 
         private void treeView1_KeyDown(object sender, KeyEventArgs e)
 		{
-			if (e.KeyData == Keys.Delete && treeViewLocEntries.SelectedNode != null) //checks to make sure pressed key was del
-			{
-                currentLoc.keys.Remove(treeViewLocEntries.SelectedNode.Text);
-                treeViewLocEntries.SelectedNode.Remove();
-				wasModified = true;
-			}
+			if (e.KeyData == Keys.Delete)
+				deleteDisplayIDToolStripMenuItem_Click(sender, e);
 		}
 
 		private void buttonReplaceAll_Click(object sender, EventArgs e)
