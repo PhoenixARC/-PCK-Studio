@@ -15,7 +15,7 @@ using System.Windows.Media.Imaging;
 using System.IO.Packaging;
 using PckStudio;
 using System.IO.Compression;
-using static PckStudio.FormMain;
+using static PckStudio.MainForm;
 using PckStudio.Classes.FileTypes;
 using PckStudio.Classes.IO;
 

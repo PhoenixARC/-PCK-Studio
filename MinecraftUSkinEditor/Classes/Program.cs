@@ -14,7 +14,7 @@ namespace PckStudio
         [STAThread]
         static void Main(string[] args)
         {
-            Application.Run(new FormMain());
+            Application.Run(new MainForm());
         }
     }
 }
