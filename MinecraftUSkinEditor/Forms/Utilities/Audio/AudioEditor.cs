@@ -34,44 +34,49 @@ namespace PckStudio.Forms.Utilities
 			}
 		}
 
+		internal static readonly List<string> categories = new List<string>
+		{
+			"Overworld",
+			"Nether",
+			"End",
+			"Creative",
+			"Menu",
+			"Battle",
+			"Tumble",
+			"Glide",
+			"Unused",
+		};
+
 		internal string getCatString(int cat)
 		{
-			switch (cat)
-			{
-				case 0: return "Overworld";
-				case 1: return "Nether";
-				case 2: return "End";
-				case 3: return "Creative";
-				case 4: return "Menu";
-				case 5: return "Battle";
-				case 6: return "Tumble";
-				case 7: return "Glide";
-				case 8: return "Unused"; // Unknown what this is used for. Probably the scrapped Mini Game 4 referenced in the code
-				default: return "Not valid";
-			}
+			if (cat > -1 && cat < categories.Count)
+				return categories[cat];
+			return "Not valid";
 		}
 
 		internal int getCatID(string cat)
 		{
-			switch (cat)
-			{
-				case "Overworld": return 0;
-				case "Nether": return 1;
-				case "End": return 2;
-				case "Creative": return 3;
-				case "Menu": return 4;
-				case "Battle": return 5;
-				case "Tumble": return 6;
-				case "Glide": return 7;
-				case "Unused": return 8; // Unknown what this is used for. Probably the scrapped Mini Game 4 referenced in the code
-				default: return -1;
-			}
+			return categories.IndexOf(cat);
+
+			//switch (cat)
+			//{
+			//	case "Overworld": return 0;
+			//	case "Nether": return 1;
+			//	case "End": return 2;
+			//	case "Creative": return 3;
+			//	case "Menu": return 4;
+			//	case "Battle": return 5;
+			//	case "Tumble": return 6;
+			//	case "Glide": return 7;
+			//	case "Unused": return 8; // Unknown what this is used for. Probably the scrapped Mini Game 4 referenced in the code
+			//	default: return -1;
+			//}
 		}
 
 		PCKFile audioPCK;
 		PCKFile.FileData mf;
 		bool _isLittleEndian;
-		public AudioEditor(PCKFile.FileData MineFile, bool isLittleEndian)
+		public AudioEditor(PCKFile.FileData MineFile, LOCFile locFile, bool isLittleEndian)
 		{
 			_isLittleEndian = isLittleEndian;
 			if (isLittleEndian) Text += " (PS4/Vita)";
@@ -85,40 +90,23 @@ namespace PckStudio.Forms.Utilities
 			{
 				throw new Exception("This is not a valid audio.pck file");
 			}
-			List<PCKFile.FileData> tempMineFiles = audioPCK.file_entries;
-			/*
-			 * I need some way to access the current pck but not sure how I should do it
-			PCKFile currentPCK = ?
-			var locFileData = currentPCK.GetFile("localisation.loc", 6);
-			if (locFileData == null)
-				locFileData = currentPCK.GetFile("languages.loc", 6);
-			if (locFileData == null)
-				throw new Exception("Could not find .loc file");
-			LOCFile locFile = null;
-			using (var stream = new MemoryStream(locFileData.data))
-			{
-				locFile = PckStudio.Classes.IO.LOC.LOCFileReader.Read(stream);
-			}
-			*/
-			foreach (PCKFile.FileData mineFile in tempMineFiles)
+			foreach (PCKFile.FileData mineFile in audioPCK.file_entries)
 			{
 				string CatString = getCatString(mineFile.type);
 				Console.WriteLine("Category Found: " + CatString + ". " + mineFile.type);
 				foreach (var entry in mineFile.properties.ToArray())
 				{
 					var property = (ValueTuple<string, string>)entry;
-					if (property.Item1 != "CUENAME")
+                    if (property.Item1 == "CREDITID")
+						locFile.RemoveEntry(property.Item2);
+                    else if (property.Item1 == "CREDIT")
 					{
-						//if (property.Item1 == "CREDITID") locFile.RemoveEntry(property.Item2);
-						if (property.Item1 == "CREDIT")
-						{
-							credits += property.Item2 + "\n";
-							mineFile.properties.Remove(property);
-						}
-						else if (property.Item1 == "CREDITID")
-						{
-							mineFile.properties.Remove(property);
-						}
+						credits += property.Item2 + "\n";
+						mineFile.properties.Remove(property);
+					}
+					else if (property.Item1 == "CREDITID")
+					{
+						mineFile.properties.Remove(property);
 					}
 				}
 				if (cats.Contains(mineFile.type))
@@ -234,8 +222,8 @@ namespace PckStudio.Forms.Utilities
 			{
 				var file = treeView1.SelectedNode.Tag as PCKFile.FileData;
                 var property = (ValueTuple<string, string>)treeView2.SelectedNode.Tag;
-                file.properties.Remove(property);
-                treeView2.SelectedNode.Remove();
+                if (file.properties.Remove(property))
+					treeView2.SelectedNode.Remove();
             }
 		}
 
@@ -243,10 +231,12 @@ namespace PckStudio.Forms.Utilities
 		{
 			if (treeView1.SelectedNode == null) return; // makes sure you don't run this if there is nothing to delete
 			cats.Remove(getCatID(treeView1.SelectedNode.Text));
-			//audioPCKFile.FileDatas.Remove((PCKFile.FileData)treeView1.SelectedNode.Tag);
-			treeView1.SelectedNode.Remove();
-			treeView2.Nodes.Clear();
-			if(treeView1.SelectedNode != null)
+			if (audioPCK.file_entries.Remove((PCKFile.FileData)treeView1.SelectedNode.Tag))
+			{
+				treeView1.SelectedNode.Remove();
+				treeView2.Nodes.Clear();
+			}
+			if(treeView1.SelectedNode != null && treeView1.SelectedNode.Tag is PCKFile.FileData)
 			{
 				PCKFile.FileData mineFile = (PCKFile.FileData)treeView1.SelectedNode.Tag;
 				foreach (var entry in mineFile.properties)
