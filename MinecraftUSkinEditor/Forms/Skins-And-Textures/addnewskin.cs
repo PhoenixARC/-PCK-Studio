@@ -8,7 +8,7 @@ using System.Drawing.Imaging;
 
 namespace PckStudio
 {
-    public partial class addnewskin : MetroFramework.Forms.MetroForm
+    public partial class addNewSkin : MetroFramework.Forms.MetroForm
     {
         LOCFile currentLoc;
         public PCKFile.FileData skin { get; private set; } = new PCKFile.FileData("skin", 0);
@@ -28,7 +28,7 @@ namespace PckStudio
             Custom,
         }
 
-        public addnewskin(LOCFile loc)
+        public addNewSkin(LOCFile loc)
         {
             InitializeComponent();
             currentLoc = loc;
@@ -164,11 +164,10 @@ namespace PckStudio
         {
             using (var ofd1 = new OpenFileDialog())
             {
+                ofd1.Filter = "PNG Files | *.png";
+                ofd1.Title = "Select a PNG File";
                 if (ofd1.ShowDialog() == DialogResult.OK)
                 {
-                    ofd1.Filter = "PNG Files | *.png";
-                    ofd1.Title = "Select a PNG File";
-
                     var img = Image.FromFile(ofd1.FileName);
                     if (img.Width == img.Height * 2)
                     {
@@ -176,9 +175,7 @@ namespace PckStudio
                         capePictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
                         capePictureBox.InterpolationMode = InterpolationMode.NearestNeighbor;
                         capePictureBox.Image = Image.FromFile(ofd1.FileName);
-
                         cape.SetData(File.ReadAllBytes(ofd1.FileName));
-
                         contextMenuCape.Items[0].Text = "Replace";
                     }
                     else
@@ -191,122 +188,72 @@ namespace PckStudio
 
         private void CreateButton_Click(object sender, EventArgs e)
         {
-            try
+            int _skinId = -1;
+            if (!int.TryParse(textSkinID.Text, out _skinId))
+                MessageBox.Show("The Skin ID Must be a Unique 8 Digit Number Thats Not Already in Use", "Invalid Skin ID", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            string skinId = _skinId.ToString("d08");
+            if (useCape)
             {
-                if (textSkinID.Text.Length / 8 == 1)
+                try
                 {
-                    bool mashupStructure = false;
-                    if (useCape)
-                    {
-                        try
-                        {
-                            skin.properties.Add(new ValueTuple<string, string>("CAPEPATH", $"dlccape{textSkinID.Text}.png"));
-                            if (mashupStructure)
-                            {
-                                cape.name = "Skins/" + "dlccape" + textSkinID.Text + ".png";
-                            }
-                            else
-                            {
-                                cape.name = "dlccape" + textSkinID.Text + ".png";
-                            }
-                        }
-                        catch (Exception)
-                        {
-                            MessageBox.Show("Cape Could Not be Added");
-                        }
-                    }
-                    currentLoc.AddLocKey($"IDS_dlcskin{textSkinID.Text}_DISPLAYNAME", textSkinName.Text);
-                    skin.properties.Add(new ValueTuple<string, string>("DISPLAYNAME", textSkinName.Text));
-                    skin.properties.Add(new ValueTuple<string, string>("DISPLAYNAMEID", $"IDS_dlcskin{textSkinID.Text}_DISPLAYNAME"));
-                    using (var stream = new MemoryStream())
-                    {
-                        skinPictureBoxTexture.Image.Save(stream, ImageFormat.Png);
-                        skin.SetData(stream.ToArray());
-                    }
-
-                    if (comboBoxSkinType.Text == "Alex (64x64)" && skinType != eSkinType._64x32)
-                    {
-                        skin.properties.Add(new ValueTuple<string, string>("ANIM", "0x80000"));
-                    }
-                    else if (comboBoxSkinType.Text == "Steve (64x64)" && skinType != eSkinType._64x32)
-                    {
-                        skin.properties.Add(new ValueTuple<string, string>("ANIM", "0x40000"));
-                    }
-                    else if (comboBoxSkinType.Text == "Custom")
-                    {
-                        //skin.properties.Add(new ValueTuple<string, string>( "BOX", listViewItem.Tag.ToString() + " " + listViewItem.SubItems[1].Text + " " + listViewItem.SubItems[2].Text + " " + listViewItem.SubItems[3].Text + " " + listViewItem.SubItems[4].Text + " " + listViewItem.SubItems[5].Text + " " + listViewItem.SubItems[6].Text + " " + listViewItem.SubItems[7].Text + " " + listViewItem.SubItems[8].Text)) }.Tag ));
-                        foreach (var item in generatedModel)
-                        {
-                            skin.properties.Add(item);
-                        }
-                        skin.properties.Add(new ValueTuple<string, string>("ANIM", "0x7ff5fc10"));
-                    }
-                    if (generatedModel != null)
-                    {
-                        generatedModel.Clear();
-                    }
-
-                    if (!string.IsNullOrEmpty(textThemeName.Text))
-                    {
-                        skin.properties.Add(new ValueTuple<string, string>("THEMENAME", textThemeName.Text));
-                        currentLoc.AddLocKey($"IDS_dlcskin{textSkinID.Text}_THEMENAME", textThemeName.Text);
-                    }
-
-                    skin.properties.Add(new ValueTuple<string, string>("GAME_FLAGS", "0x18"));
-                    skin.properties.Add(new ValueTuple<string, string>("FREE", "1"));
-
-                    if (mashupStructure)
-                    {
-                        skin.name = "Skins/" + "dlcskin" + textSkinID.Text + ".png";
-                    }
-                    else
-                    {
-                        skin.name = "dlcskin" + textSkinID.Text + ".png";
-                    }
-                    DialogResult = DialogResult.OK;
-                    Close();
+                    cape.name = $"dlccape{skinId}.png";
+                    skin.properties.Add(new ValueTuple<string, string>("CAPEPATH", cape.name));
                 }
-                else
+                catch (Exception)
                 {
-                    MessageBox.Show("The Skin ID Must be a Unique 8 Digit Number Thats Not Already in Use");
+                    MessageBox.Show("Cape Could Not be Added");
                 }
             }
-            catch (Exception ex)
+            string skinDisplayNameLocKey = $"IDS_dlcskin{skinId}_DISPLAYNAME";
+            currentLoc.AddLocKey(skinDisplayNameLocKey, textSkinName.Text);
+            skin.properties.Add(new ValueTuple<string, string>("DISPLAYNAME", textSkinName.Text));
+            skin.properties.Add(new ValueTuple<string, string>("DISPLAYNAMEID", skinDisplayNameLocKey));
+            using (var stream = new MemoryStream())
             {
-                //MessageBox.Show("The Skin ID Must be a Unique 8 Digit Number Thats Not Already in Use");
-                MessageBox.Show(ex.ToString());
+                skinPictureBoxTexture.Image.Save(stream, ImageFormat.Png);
+                skin.SetData(stream.ToArray());
             }
+            if (comboBoxSkinType.Text == "Alex (64x64)" && skinType != eSkinType._64x32)
+            {
+                skin.properties.Add(new ValueTuple<string, string>("ANIM", "0x80000"));
+            }
+            else if (comboBoxSkinType.Text == "Steve (64x64)" && skinType != eSkinType._64x32)
+            {
+                skin.properties.Add(new ValueTuple<string, string>("ANIM", "0x40000"));
+            }
+            else if (comboBoxSkinType.Text == "Custom")
+            {
+                //skin.properties.Add(new ValueTuple<string, string>( "BOX", listViewItem.Tag.ToString() + " " + listViewItem.SubItems[1].Text + " " + listViewItem.SubItems[2].Text + " " + listViewItem.SubItems[3].Text + " " + listViewItem.SubItems[4].Text + " " + listViewItem.SubItems[5].Text + " " + listViewItem.SubItems[6].Text + " " + listViewItem.SubItems[7].Text + " " + listViewItem.SubItems[8].Text)) }.Tag ));
+                skin.properties.Add(new ValueTuple<string, string>("ANIM", "0x7ff5fc10"));
+                foreach (var item in generatedModel)
+                {
+                    skin.properties.Add(item);
+                }
+            }
+            if (generatedModel != null)
+            {
+                generatedModel.Clear();
+            }
+
+            if (!string.IsNullOrEmpty(textThemeName.Text))
+            {
+                skin.properties.Add(new ValueTuple<string, string>("THEMENAME", textThemeName.Text));
+                currentLoc.AddLocKey($"IDS_dlcskin{skinId}_THEMENAME", textThemeName.Text);
+            }
+
+            skin.properties.Add(new ValueTuple<string, string>("GAME_FLAGS", "0x18"));
+            skin.properties.Add(new ValueTuple<string, string>("FREE", "1"));
+            skin.name = "dlcskin" + skinId + ".png";
+            DialogResult = DialogResult.OK;
+            Close();
         }
 
         private void textSkinID_TextChanged_1(object sender, EventArgs e)
         {
-            bool valid = true;
-            if (textSkinID.Text.Length == 8)
-            {
-                try
-                {
-                    int CHECK = int.Parse(textSkinID.Text);
-                }
-                catch
-                {
-                    valid = false;
-                }
-            }
-            else
-            {
-                valid = false;
-            }
-            if (valid)
-            {
-                textSkinID.ForeColor = Color.Green;
-                return;
-            }
-            textSkinID.ForeColor = Color.Red;
-        }
-
-        private void textThemeName_TextChanged(object sender, EventArgs e)
-        {
-
+            bool validSkinId = int.TryParse(textSkinID.Text, out _);
+            textSkinID.ForeColor = validSkinId ? Color.Green : Color.Red;
+            if (radioLOCAL.Checked && validSkinId)
+                localID = textSkinID.Text;
         }
 
         private void CreateCustomModel_Click(object sender, EventArgs e)
@@ -325,7 +272,7 @@ namespace PckStudio
                 displayBox.Image = preview.Image; //Sets displayBox to created model preview
                 try
                 {
-                    using (FileStream stream = new FileStream(Application.StartupPath + "\\temp.png", FileMode.Open, FileAccess.Read))
+                    using (FileStream stream = File.OpenRead(Application.StartupPath + "\\temp.png"))
                     {
                         skinPictureBoxTexture.SizeMode = PictureBoxSizeMode.StretchImage;
                         skinPictureBoxTexture.InterpolationMode = InterpolationMode.NearestNeighbor;
@@ -351,12 +298,12 @@ namespace PckStudio
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
-            if (radioAUTO.Checked == true)
+            if (radioAUTO.Checked)
             {
                 try
                 {
                     Random random = new Random();
-                    int num = random.Next(10000000, 99999999);
+                    int num = random.Next(100000, 99999999);
                     textSkinID.Text = num.ToString();
                     textSkinID.Enabled = false;
                 }
@@ -369,7 +316,7 @@ namespace PckStudio
 
         private void radioLOCAL_CheckedChanged(object sender, EventArgs e)
         {
-            if (radioLOCAL.Checked == true)
+            if (radioLOCAL.Checked)
             {
                 textSkinID.Text = localID;
                 textSkinID.Enabled = true;

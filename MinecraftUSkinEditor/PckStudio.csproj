@@ -223,11 +223,11 @@
     <Compile Include="Forms\Skins-And-Textures\addMeta.Designer.cs">
       <DependentUpon>addMeta.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Skins-And-Textures\addnewskin.cs">
+    <Compile Include="Forms\Skins-And-Textures\addNewSkin.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Skins-And-Textures\addnewskin.Designer.cs">
-      <DependentUpon>addnewskin.cs</DependentUpon>
+    <Compile Include="Forms\Skins-And-Textures\addNewSkin.Designer.cs">
+      <DependentUpon>addNewSkin.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Additional-Popups\AddPCKPassword.cs">
       <SubType>Form</SubType>
@@ -437,11 +437,11 @@
     <EmbeddedResource Include="Forms\Skins-And-Textures\addMeta.resx">
       <DependentUpon>addMeta.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Skins-And-Textures\addnewskin.ja.resx">
-      <DependentUpon>addnewskin.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Skins-And-Textures\addNewSkin.ja.resx">
+      <DependentUpon>addNewSkin.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Skins-And-Textures\addnewskin.resx">
-      <DependentUpon>addnewskin.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Skins-And-Textures\addNewSkin.resx">
+      <DependentUpon>addNewSkin.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\AddPCKPassword.resx">

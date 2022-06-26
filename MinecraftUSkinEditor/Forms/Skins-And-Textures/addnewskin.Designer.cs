@@ -1,6 +1,6 @@
 ﻿namespace PckStudio
 {
-    partial class addnewskin
+    partial class addNewSkin
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(addnewskin));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(addNewSkin));
             this.textTheme = new System.Windows.Forms.TextBox();
             this.contextMenuSkin = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.replaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -150,7 +150,6 @@
             this.textThemeName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             resources.ApplyResources(this.textThemeName, "textThemeName");
             this.textThemeName.Name = "textThemeName";
-            this.textThemeName.TextChanged += new System.EventHandler(this.textThemeName_TextChanged);
             // 
             // label2
             // 

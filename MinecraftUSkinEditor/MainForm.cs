@@ -403,7 +403,7 @@ namespace PckStudio
 				MessageBox.Show("No .loc file found", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
             }
-			addnewskin add = new addnewskin(locFile);
+			addNewSkin add = new addNewSkin(locFile);
 			if (add.ShowDialog() == DialogResult.OK)
 			{
 				if (add.useCape)
