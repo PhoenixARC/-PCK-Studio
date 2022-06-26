@@ -419,27 +419,6 @@ namespace PckStudio
 			add.Dispose();
 		}
 
-		PCKFile.FileData CreateAudioPCK(bool isLittle)
-		{
-			// create actual valid pck file structure
-			PCKFile audioPck = new PCKFile(1); // 1 = audio.pck
-			audioPck.meta_data.Add("CUENAME");
-			audioPck.meta_data.Add("CREDIT");
-			audioPck.meta_data.Add("CREDITID");
-			audioPck.file_entries.Add(new PCKFile.FileData("", 0));
-			audioPck.file_entries.Add(new PCKFile.FileData("", 1));
-			audioPck.file_entries.Add(new PCKFile.FileData("", 2));
-
-			// create a file data entry for current open pck file
-			PCKFile.FileData audioFileData = new PCKFile.FileData("audio.pck", 8);
-			using(var stream = new MemoryStream())
-            {
-				PCKFileWriter.Write(stream, audioPck, isLittle);
-				audioFileData.SetData(stream.ToArray());
-            }
-            return audioFileData;
-		}
-
 		private void audiopckToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			List<string> filenames = new List<string>();
@@ -453,10 +432,9 @@ namespace PckStudio
 				MessageBox.Show("There is already an audio.pck present in this file!", "Can't create audio.pck");
 				return;
 			}
-			PCKFile.FileData audioMF = CreateAudioPCK(LittleEndianCheckBox.Checked);
 			if (!TryGetLocFile(out LOCFile locFile))
 				throw new Exception("No .loc file found.");
-			AudioEditor diag = new AudioEditor(audioMF, locFile, LittleEndianCheckBox.Checked);
+			AudioEditor diag = new AudioEditor(locFile, LittleEndianCheckBox.Checked);
 			diag.ShowDialog(this);
 			//if (diag.saved) treeViewMain.Nodes.Add(node);
 			diag.Dispose();

@@ -76,6 +76,39 @@ namespace PckStudio.Forms.Utilities
 		PCKFile audioPCK;
 		PCKFile.FileData mf;
 		bool _isLittleEndian;
+
+		public static PCKFile.FileData CreateAudioPck(bool isLittle)
+		{
+			// create actual valid pck file structure
+			PCKFile audioPck = new PCKFile(1); // 1 = audio.pck
+			audioPck.meta_data.Add("CUENAME");
+			audioPck.meta_data.Add("CREDIT");
+			audioPck.meta_data.Add("CREDITID");
+			audioPck.file_entries.Add(new PCKFile.FileData("", 0));
+			audioPck.file_entries.Add(new PCKFile.FileData("", 1));
+			audioPck.file_entries.Add(new PCKFile.FileData("", 2));
+
+			// create a file data entry for current open pck file
+			PCKFile.FileData audioFileData = new PCKFile.FileData("audio.pck", 8);
+			using (var stream = new MemoryStream())
+			{
+				PCKFileWriter.Write(stream, audioPck, isLittle);
+				audioFileData.SetData(stream.ToArray());
+			}
+			return audioFileData;
+		}
+
+		/// <summary>
+		/// Overload that creates a new audio.pck file
+		/// </summary>
+		/// <param name="locFile"></param>
+		/// <param name="isLittleEndian"></param>
+		public AudioEditor(LOCFile locFile, bool isLittleEndian) : this(CreateAudioPck(isLittleEndian), locFile, isLittleEndian)
+        {
+
+        }
+
+
 		public AudioEditor(PCKFile.FileData MineFile, LOCFile locFile, bool isLittleEndian)
 		{
 			_isLittleEndian = isLittleEndian;
