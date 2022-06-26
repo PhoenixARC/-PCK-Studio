@@ -36,6 +36,7 @@ namespace PckStudio
 			imageList.Images.Add(Resources.ZUnknown);
 			pckOpen.AllowDrop = true;
 			tabControl.SelectTab(0);
+			labelVersion.Text = "PCK Studio: " + Application.ProductVersion;
 		}
 
 		private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -335,9 +336,10 @@ namespace PckStudio
 
 		private void deleteFileToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (treeViewMain.SelectedNode.Tag is PCKFile.FileData)
+			var node = treeViewMain.SelectedNode;
+			if (node.Tag is PCKFile.FileData)
 			{
-				PCKFile.FileData file = treeViewMain.SelectedNode.Tag as PCKFile.FileData;
+				PCKFile.FileData file = node.Tag as PCKFile.FileData;
 				// remove loc key if its a skin/cape
 				if (file.type == 0 || file.type == 1)
                 {
@@ -353,13 +355,13 @@ namespace PckStudio
 					}
                 }
 				currentPCK.file_entries.Remove(file);
-				treeViewMain.SelectedNode.Remove();
+				node.Remove();
 				saved = false;
 			}
 			else if (MessageBox.Show("Are you sure want to delete this folder? All contents will be deleted", "Warning",
 				MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
 			{
-				foreach (TreeNode item in treeViewMain.SelectedNode.Nodes)
+				foreach (TreeNode item in node.Nodes)
 				{
 					if (item.Tag == null || item.Nodes.Count > 0)
 					{
@@ -374,7 +376,7 @@ namespace PckStudio
 						item.Remove();
 					}
 				}
-				treeViewMain.SelectedNode.Remove();
+				node.Remove();
 				saved = false;
 			}
 		}
@@ -510,6 +512,7 @@ namespace PckStudio
 						LOCFileWriter.Write(stream, l);
 						file.SetData(stream.ToArray());
 					}
+					saved = false;
 				}
 			}
 
@@ -519,7 +522,7 @@ namespace PckStudio
 				{
 					if (!TryGetLocFile(out LOCFile locFile))
 						throw new Exception("No .loc File found.");
-					Forms.Utilities.AudioEditor diag = new Forms.Utilities.AudioEditor(file, locFile, LittleEndianCheckBox.Checked);
+					AudioEditor diag = new AudioEditor(file, locFile, LittleEndianCheckBox.Checked);
 					if (LittleEndianCheckBox.Checked) diag.Text += " (PS4/Vita)";
 					diag.ShowDialog(this);
 					diag.Dispose();
@@ -546,7 +549,7 @@ namespace PckStudio
                 {
 					colFile.Open(stream);
                 }
-				Forms.Utilities.COLEditor diag = new Forms.Utilities.COLEditor(colFile);
+				COLEditor diag = new COLEditor(colFile);
 				if (diag.ShowDialog(this) == DialogResult.OK && diag.data.Length > 0)
 					file.SetData(diag.data);
 				diag.Dispose();
@@ -638,15 +641,14 @@ namespace PckStudio
 		{
 			if (treeViewMain.SelectedNode == null) return;
 
-			if (treeViewMain.SelectedNode.Tag is PCKFile.FileData)
-			{
-				PCKFile.FileData file = treeViewMain.SelectedNode.Tag as PCKFile.FileData;
-				int file_index = currentPCK.file_entries.IndexOf(file);
-				currentPCK.file_entries.Swap(file_index, file_index - 1);
-				BuildMainTreeView();
-				saved = false;
-			}
-			return;
+			//if (treeViewMain.SelectedNode.Tag is PCKFile.FileData)
+			//{
+			//	PCKFile.FileData file = treeViewMain.SelectedNode.Tag as PCKFile.FileData;
+			//	int file_index = currentPCK.file_entries.IndexOf(file);
+			//	currentPCK.file_entries.Swap(file_index, file_index - 1);
+			//	saved = false;
+			//}
+			//return;
 
 			TreeNode move = (TreeNode)treeViewMain.SelectedNode.Clone();
 
@@ -670,19 +672,17 @@ namespace PckStudio
 		private void moveDownToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			if (treeViewMain.SelectedNode == null) return;
-			
-			if (treeViewMain.SelectedNode.Tag is PCKFile.FileData)
-            {
-				PCKFile.FileData file = treeViewMain.SelectedNode.Tag as PCKFile.FileData;
-				int file_index = currentPCK.file_entries.IndexOf(file);
-				currentPCK.file_entries.Swap(file_index, file_index + 1);
-				BuildMainTreeView();
-				saved = false;
-            }
-			return;
 
+            //if (treeViewMain.SelectedNode.Tag is PCKFile.FileData)
+            //{
+            //    PCKFile.FileData file = treeViewMain.SelectedNode.Tag as PCKFile.FileData;
+            //    int file_index = currentPCK.file_entries.IndexOf(file);
+            //    currentPCK.file_entries.Swap(file_index, file_index + 1);
+            //    saved = false;
+            //}
+            //return;
 
-			TreeNode move = (TreeNode)treeViewMain.SelectedNode.Clone();
+            TreeNode move = (TreeNode)treeViewMain.SelectedNode.Clone();
 			if (treeViewMain.SelectedNode.Parent == null)
 			{
 				if (treeViewMain.SelectedNode.NextNode == null) return;
@@ -893,7 +893,14 @@ namespace PckStudio
 				deleteFileToolStripMenuItem_Click(sender, e);
 		}
 
-        private void extractToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void treeViewMain_BeforeLabelEdit(object sender, NodeLabelEditEventArgs e)
+		{
+			// for now name edits are done through the 'rename' context menu item
+			// TODO: add folder renaming
+			e.CancelEdit = e.Node.Tag is PCKFile.FileData;
+		}
+
+		private void extractToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
 			try
 			{
@@ -1237,9 +1244,12 @@ namespace PckStudio
 				TreeNode folerNode = CreateNode(folderNamePrompt.NewText);
 				folerNode.ImageIndex = 0;
 				folerNode.SelectedImageIndex = 0;
-				TreeNodeCollection nodeCollection = treeViewMain.SelectedNode != null &&
-					!(treeViewMain.SelectedNode.Tag is PCKFile.FileData)
-					? treeViewMain.SelectedNode.Nodes : treeViewMain.Nodes;
+				TreeNode node = treeViewMain.SelectedNode;
+				TreeNodeCollection nodeCollection = node != null &&
+					!(node.Tag is PCKFile.FileData)
+					? node.Nodes : treeViewMain.Nodes;
+				if (node.Tag is PCKFile.FileData && node.Parent != null)
+					nodeCollection = node.Parent.Nodes;
 				nodeCollection.Add(folerNode);
 			}
 		}
@@ -2725,7 +2735,7 @@ namespace PckStudio
 
 		private void checkSaveState()
         {
-			if (!saved || isTemplateFile &&
+			if ((!saved || isTemplateFile) &&
 				MessageBox.Show("Save PCK?", "Unsaved PCK", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
 			{
 				if (isTemplateFile || string.IsNullOrEmpty(saveLocation))

@@ -96,39 +96,38 @@
             this.DBGLabel = new MetroFramework.Controls.MetroLabel();
             this.tabControl = new MetroFramework.Controls.MetroTabControl();
             this.openTab = new System.Windows.Forms.TabPage();
+            this.editorTab = new MetroFramework.Controls.MetroTabPage();
+            this.labelImageSize = new MetroFramework.Controls.MetroLabel();
+            this.fileEntryCountLabel = new MetroFramework.Controls.MetroLabel();
+            this.tabControl1 = new MetroFramework.Controls.MetroTabControl();
+            this.MetaTab = new MetroFramework.Controls.MetroTabPage();
+            this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
+            this.treeMeta = new System.Windows.Forms.TreeView();
+            this.entryTypeTextBox = new MetroFramework.Controls.MetroTextBox();
+            this.entryDataTextBox = new MetroFramework.Controls.MetroTextBox();
+            this.buttonEdit = new MetroFramework.Controls.MetroButton();
+            this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
+            this.label11 = new MetroFramework.Controls.MetroLabel();
+            this.treeViewMain = new System.Windows.Forms.TreeView();
+            this.imageList = new System.Windows.Forms.ImageList(this.components);
+            this.LittleEndianCheckBox = new MetroFramework.Controls.MetroCheckBox();
             this.myTablePanelStartScreen = new PckStudio.Forms.MyTablePanel();
             this.richTextBoxChangelog = new System.Windows.Forms.RichTextBox();
             this.label5 = new MetroFramework.Controls.MetroLabel();
             this.pckOpen = new System.Windows.Forms.PictureBox();
-            this.editorTab = new MetroFramework.Controls.MetroTabPage();
-            this.entryTypeTextBox = new MetroFramework.Controls.MetroTextBox();
-            this.buttonEdit = new MetroFramework.Controls.MetroButton();
-            this.labelImageSize = new MetroFramework.Controls.MetroLabel();
             this.pictureBoxImagePreview = new PckStudio.PictureBoxWithInterpolationMode();
-            this.fileEntryCountLabel = new MetroFramework.Controls.MetroLabel();
-            this.entryDataTextBox = new MetroFramework.Controls.MetroTextBox();
-            this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
-            this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.treeMeta = new System.Windows.Forms.TreeView();
-            this.treeViewMain = new System.Windows.Forms.TreeView();
-            this.imageList = new System.Windows.Forms.ImageList(this.components);
-            this.label11 = new MetroFramework.Controls.MetroLabel();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.LittleEndianCheckBox = new MetroFramework.Controls.MetroCheckBox();
             this.contextMenuPCKEntries.SuspendLayout();
             this.menuStrip.SuspendLayout();
             this.contextMenuMetaTree.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.tabControl.SuspendLayout();
             this.openTab.SuspendLayout();
+            this.editorTab.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.MetaTab.SuspendLayout();
             this.myTablePanelStartScreen.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pckOpen)).BeginInit();
-            this.editorTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImagePreview)).BeginInit();
-            this.tabControl1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // contextMenuPCKEntries
@@ -589,7 +588,7 @@
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 1;
             this.tabControl.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
-            this.tabControl.Style = MetroFramework.MetroColorStyle.White;
+            this.tabControl.Style = MetroFramework.MetroColorStyle.Black;
             this.tabControl.TabStop = false;
             this.tabControl.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.tabControl.UseSelectable = true;
@@ -600,6 +599,193 @@
             this.openTab.Controls.Add(this.myTablePanelStartScreen);
             resources.ApplyResources(this.openTab, "openTab");
             this.openTab.Name = "openTab";
+            // 
+            // editorTab
+            // 
+            this.editorTab.BackColor = System.Drawing.Color.Transparent;
+            resources.ApplyResources(this.editorTab, "editorTab");
+            this.editorTab.Controls.Add(this.labelImageSize);
+            this.editorTab.Controls.Add(this.pictureBoxImagePreview);
+            this.editorTab.Controls.Add(this.fileEntryCountLabel);
+            this.editorTab.Controls.Add(this.tabControl1);
+            this.editorTab.Controls.Add(this.label11);
+            this.editorTab.Controls.Add(this.treeViewMain);
+            this.editorTab.HorizontalScrollbarBarColor = true;
+            this.editorTab.HorizontalScrollbarHighlightOnWheel = false;
+            this.editorTab.HorizontalScrollbarSize = 0;
+            this.editorTab.Name = "editorTab";
+            this.editorTab.Style = MetroFramework.MetroColorStyle.White;
+            this.editorTab.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.editorTab.VerticalScrollbarBarColor = true;
+            this.editorTab.VerticalScrollbarHighlightOnWheel = false;
+            this.editorTab.VerticalScrollbarSize = 0;
+            // 
+            // labelImageSize
+            // 
+            resources.ApplyResources(this.labelImageSize, "labelImageSize");
+            this.labelImageSize.Name = "labelImageSize";
+            this.labelImageSize.Theme = MetroFramework.MetroThemeStyle.Dark;
+            // 
+            // fileEntryCountLabel
+            // 
+            resources.ApplyResources(this.fileEntryCountLabel, "fileEntryCountLabel");
+            this.fileEntryCountLabel.Name = "fileEntryCountLabel";
+            this.fileEntryCountLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
+            // 
+            // tabControl1
+            // 
+            resources.ApplyResources(this.tabControl1, "tabControl1");
+            this.tabControl1.Controls.Add(this.MetaTab);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Style = MetroFramework.MetroColorStyle.Silver;
+            this.tabControl1.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.tabControl1.UseSelectable = true;
+            // 
+            // MetaTab
+            // 
+            this.MetaTab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.MetaTab.Controls.Add(this.metroLabel2);
+            this.MetaTab.Controls.Add(this.treeMeta);
+            this.MetaTab.Controls.Add(this.entryTypeTextBox);
+            this.MetaTab.Controls.Add(this.entryDataTextBox);
+            this.MetaTab.Controls.Add(this.buttonEdit);
+            this.MetaTab.Controls.Add(this.metroLabel1);
+            this.MetaTab.HorizontalScrollbarBarColor = true;
+            this.MetaTab.HorizontalScrollbarHighlightOnWheel = false;
+            this.MetaTab.HorizontalScrollbarSize = 10;
+            resources.ApplyResources(this.MetaTab, "MetaTab");
+            this.MetaTab.Name = "MetaTab";
+            this.MetaTab.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.MetaTab.VerticalScrollbarBarColor = true;
+            this.MetaTab.VerticalScrollbarHighlightOnWheel = false;
+            this.MetaTab.VerticalScrollbarSize = 10;
+            // 
+            // metroLabel2
+            // 
+            resources.ApplyResources(this.metroLabel2, "metroLabel2");
+            this.metroLabel2.Name = "metroLabel2";
+            this.metroLabel2.Theme = MetroFramework.MetroThemeStyle.Dark;
+            // 
+            // treeMeta
+            // 
+            this.treeMeta.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.treeMeta.ContextMenuStrip = this.contextMenuMetaTree;
+            resources.ApplyResources(this.treeMeta, "treeMeta");
+            this.treeMeta.Name = "treeMeta";
+            this.treeMeta.PathSeparator = "/";
+            this.treeMeta.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeMeta_AfterSelect);
+            this.treeMeta.DoubleClick += new System.EventHandler(this.treeMeta_DoubleClick);
+            this.treeMeta.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeMeta_KeyDown);
+            // 
+            // entryTypeTextBox
+            // 
+            resources.ApplyResources(this.entryTypeTextBox, "entryTypeTextBox");
+            // 
+            // 
+            // 
+            this.entryTypeTextBox.CustomButton.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image")));
+            this.entryTypeTextBox.CustomButton.ImeMode = ((System.Windows.Forms.ImeMode)(resources.GetObject("resource.ImeMode")));
+            this.entryTypeTextBox.CustomButton.Location = ((System.Drawing.Point)(resources.GetObject("resource.Location")));
+            this.entryTypeTextBox.CustomButton.Name = "";
+            this.entryTypeTextBox.CustomButton.Size = ((System.Drawing.Size)(resources.GetObject("resource.Size")));
+            this.entryTypeTextBox.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.entryTypeTextBox.CustomButton.TabIndex = ((int)(resources.GetObject("resource.TabIndex")));
+            this.entryTypeTextBox.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.entryTypeTextBox.CustomButton.UseSelectable = true;
+            this.entryTypeTextBox.CustomButton.Visible = ((bool)(resources.GetObject("resource.Visible")));
+            this.entryTypeTextBox.Lines = new string[0];
+            this.entryTypeTextBox.MaxLength = 32767;
+            this.entryTypeTextBox.Name = "entryTypeTextBox";
+            this.entryTypeTextBox.PasswordChar = '\0';
+            this.entryTypeTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.entryTypeTextBox.SelectedText = "";
+            this.entryTypeTextBox.SelectionLength = 0;
+            this.entryTypeTextBox.SelectionStart = 0;
+            this.entryTypeTextBox.ShortcutsEnabled = true;
+            this.entryTypeTextBox.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.entryTypeTextBox.UseSelectable = true;
+            this.entryTypeTextBox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.entryTypeTextBox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            // 
+            // entryDataTextBox
+            // 
+            resources.ApplyResources(this.entryDataTextBox, "entryDataTextBox");
+            // 
+            // 
+            // 
+            this.entryDataTextBox.CustomButton.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image1")));
+            this.entryDataTextBox.CustomButton.ImeMode = ((System.Windows.Forms.ImeMode)(resources.GetObject("resource.ImeMode1")));
+            this.entryDataTextBox.CustomButton.Location = ((System.Drawing.Point)(resources.GetObject("resource.Location1")));
+            this.entryDataTextBox.CustomButton.Name = "";
+            this.entryDataTextBox.CustomButton.Size = ((System.Drawing.Size)(resources.GetObject("resource.Size1")));
+            this.entryDataTextBox.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.entryDataTextBox.CustomButton.TabIndex = ((int)(resources.GetObject("resource.TabIndex1")));
+            this.entryDataTextBox.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.entryDataTextBox.CustomButton.UseSelectable = true;
+            this.entryDataTextBox.CustomButton.Visible = ((bool)(resources.GetObject("resource.Visible1")));
+            this.entryDataTextBox.Lines = new string[0];
+            this.entryDataTextBox.MaxLength = 32767;
+            this.entryDataTextBox.Name = "entryDataTextBox";
+            this.entryDataTextBox.PasswordChar = '\0';
+            this.entryDataTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.entryDataTextBox.SelectedText = "";
+            this.entryDataTextBox.SelectionLength = 0;
+            this.entryDataTextBox.SelectionStart = 0;
+            this.entryDataTextBox.ShortcutsEnabled = true;
+            this.entryDataTextBox.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.entryDataTextBox.UseSelectable = true;
+            this.entryDataTextBox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.entryDataTextBox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            // 
+            // buttonEdit
+            // 
+            resources.ApplyResources(this.buttonEdit, "buttonEdit");
+            this.buttonEdit.Name = "buttonEdit";
+            this.buttonEdit.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.buttonEdit.UseSelectable = true;
+            this.buttonEdit.Click += new System.EventHandler(this.buttonEditModel_Click);
+            // 
+            // metroLabel1
+            // 
+            resources.ApplyResources(this.metroLabel1, "metroLabel1");
+            this.metroLabel1.Name = "metroLabel1";
+            this.metroLabel1.Theme = MetroFramework.MetroThemeStyle.Dark;
+            // 
+            // label11
+            // 
+            resources.ApplyResources(this.label11, "label11");
+            this.label11.Name = "label11";
+            // 
+            // treeViewMain
+            // 
+            this.treeViewMain.AllowDrop = true;
+            resources.ApplyResources(this.treeViewMain, "treeViewMain");
+            this.treeViewMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.treeViewMain.ContextMenuStrip = this.contextMenuPCKEntries;
+            this.treeViewMain.ForeColor = System.Drawing.Color.White;
+            this.treeViewMain.ImageList = this.imageList;
+            this.treeViewMain.LabelEdit = true;
+            this.treeViewMain.Name = "treeViewMain";
+            this.treeViewMain.PathSeparator = "/";
+            this.treeViewMain.BeforeLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.treeViewMain_BeforeLabelEdit);
+            this.treeViewMain.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.selectNode);
+            this.treeViewMain.DoubleClick += new System.EventHandler(this.treeViewMain_DoubleClick);
+            this.treeViewMain.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeViewMain_KeyDown);
+            // 
+            // imageList
+            // 
+            this.imageList.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            resources.ApplyResources(this.imageList, "imageList");
+            this.imageList.TransparentColor = System.Drawing.Color.Transparent;
+            // 
+            // LittleEndianCheckBox
+            // 
+            resources.ApplyResources(this.LittleEndianCheckBox, "LittleEndianCheckBox");
+            this.LittleEndianCheckBox.Name = "LittleEndianCheckBox";
+            this.LittleEndianCheckBox.Style = MetroFramework.MetroColorStyle.White;
+            this.LittleEndianCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.LittleEndianCheckBox.UseSelectable = true;
             // 
             // myTablePanelStartScreen
             // 
@@ -640,75 +826,6 @@
             this.pckOpen.MouseEnter += new System.EventHandler(this.OpenPck_MouseEnter);
             this.pckOpen.MouseLeave += new System.EventHandler(this.OpenPck_MouseLeave);
             // 
-            // editorTab
-            // 
-            this.editorTab.BackColor = System.Drawing.Color.Transparent;
-            resources.ApplyResources(this.editorTab, "editorTab");
-            this.editorTab.Controls.Add(this.entryTypeTextBox);
-            this.editorTab.Controls.Add(this.buttonEdit);
-            this.editorTab.Controls.Add(this.labelImageSize);
-            this.editorTab.Controls.Add(this.pictureBoxImagePreview);
-            this.editorTab.Controls.Add(this.fileEntryCountLabel);
-            this.editorTab.Controls.Add(this.entryDataTextBox);
-            this.editorTab.Controls.Add(this.metroLabel2);
-            this.editorTab.Controls.Add(this.metroLabel1);
-            this.editorTab.Controls.Add(this.tabControl1);
-            this.editorTab.Controls.Add(this.treeViewMain);
-            this.editorTab.Controls.Add(this.label11);
-            this.editorTab.HorizontalScrollbarBarColor = true;
-            this.editorTab.HorizontalScrollbarHighlightOnWheel = false;
-            this.editorTab.HorizontalScrollbarSize = 0;
-            this.editorTab.Name = "editorTab";
-            this.editorTab.Style = MetroFramework.MetroColorStyle.White;
-            this.editorTab.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.editorTab.VerticalScrollbarBarColor = true;
-            this.editorTab.VerticalScrollbarHighlightOnWheel = false;
-            this.editorTab.VerticalScrollbarSize = 0;
-            // 
-            // entryTypeTextBox
-            // 
-            resources.ApplyResources(this.entryTypeTextBox, "entryTypeTextBox");
-            // 
-            // 
-            // 
-            this.entryTypeTextBox.CustomButton.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image")));
-            this.entryTypeTextBox.CustomButton.ImeMode = ((System.Windows.Forms.ImeMode)(resources.GetObject("resource.ImeMode")));
-            this.entryTypeTextBox.CustomButton.Location = ((System.Drawing.Point)(resources.GetObject("resource.Location")));
-            this.entryTypeTextBox.CustomButton.Name = "";
-            this.entryTypeTextBox.CustomButton.Size = ((System.Drawing.Size)(resources.GetObject("resource.Size")));
-            this.entryTypeTextBox.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-            this.entryTypeTextBox.CustomButton.TabIndex = ((int)(resources.GetObject("resource.TabIndex")));
-            this.entryTypeTextBox.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.entryTypeTextBox.CustomButton.UseSelectable = true;
-            this.entryTypeTextBox.CustomButton.Visible = ((bool)(resources.GetObject("resource.Visible")));
-            this.entryTypeTextBox.Lines = new string[0];
-            this.entryTypeTextBox.MaxLength = 32767;
-            this.entryTypeTextBox.Name = "entryTypeTextBox";
-            this.entryTypeTextBox.PasswordChar = '\0';
-            this.entryTypeTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.entryTypeTextBox.SelectedText = "";
-            this.entryTypeTextBox.SelectionLength = 0;
-            this.entryTypeTextBox.SelectionStart = 0;
-            this.entryTypeTextBox.ShortcutsEnabled = true;
-            this.entryTypeTextBox.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.entryTypeTextBox.UseSelectable = true;
-            this.entryTypeTextBox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-            this.entryTypeTextBox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
-            // 
-            // buttonEdit
-            // 
-            resources.ApplyResources(this.buttonEdit, "buttonEdit");
-            this.buttonEdit.Name = "buttonEdit";
-            this.buttonEdit.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.buttonEdit.UseSelectable = true;
-            this.buttonEdit.Click += new System.EventHandler(this.buttonEditModel_Click);
-            // 
-            // labelImageSize
-            // 
-            resources.ApplyResources(this.labelImageSize, "labelImageSize");
-            this.labelImageSize.Name = "labelImageSize";
-            this.labelImageSize.Theme = MetroFramework.MetroThemeStyle.Dark;
-            // 
             // pictureBoxImagePreview
             // 
             resources.ApplyResources(this.pictureBoxImagePreview, "pictureBoxImagePreview");
@@ -717,118 +834,7 @@
             this.pictureBoxImagePreview.Name = "pictureBoxImagePreview";
             this.pictureBoxImagePreview.TabStop = false;
             // 
-            // fileEntryCountLabel
-            // 
-            resources.ApplyResources(this.fileEntryCountLabel, "fileEntryCountLabel");
-            this.fileEntryCountLabel.Name = "fileEntryCountLabel";
-            this.fileEntryCountLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
-            // 
-            // entryDataTextBox
-            // 
-            resources.ApplyResources(this.entryDataTextBox, "entryDataTextBox");
-            // 
-            // 
-            // 
-            this.entryDataTextBox.CustomButton.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image1")));
-            this.entryDataTextBox.CustomButton.ImeMode = ((System.Windows.Forms.ImeMode)(resources.GetObject("resource.ImeMode1")));
-            this.entryDataTextBox.CustomButton.Location = ((System.Drawing.Point)(resources.GetObject("resource.Location1")));
-            this.entryDataTextBox.CustomButton.Name = "";
-            this.entryDataTextBox.CustomButton.Size = ((System.Drawing.Size)(resources.GetObject("resource.Size1")));
-            this.entryDataTextBox.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-            this.entryDataTextBox.CustomButton.TabIndex = ((int)(resources.GetObject("resource.TabIndex1")));
-            this.entryDataTextBox.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.entryDataTextBox.CustomButton.UseSelectable = true;
-            this.entryDataTextBox.CustomButton.Visible = ((bool)(resources.GetObject("resource.Visible1")));
-            this.entryDataTextBox.Lines = new string[0];
-            this.entryDataTextBox.MaxLength = 32767;
-            this.entryDataTextBox.Name = "entryDataTextBox";
-            this.entryDataTextBox.PasswordChar = '\0';
-            this.entryDataTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.entryDataTextBox.SelectedText = "";
-            this.entryDataTextBox.SelectionLength = 0;
-            this.entryDataTextBox.SelectionStart = 0;
-            this.entryDataTextBox.ShortcutsEnabled = true;
-            this.entryDataTextBox.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.entryDataTextBox.UseSelectable = true;
-            this.entryDataTextBox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-            this.entryDataTextBox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
-            // 
-            // metroLabel2
-            // 
-            resources.ApplyResources(this.metroLabel2, "metroLabel2");
-            this.metroLabel2.Name = "metroLabel2";
-            this.metroLabel2.Theme = MetroFramework.MetroThemeStyle.Dark;
-            // 
-            // metroLabel1
-            // 
-            resources.ApplyResources(this.metroLabel1, "metroLabel1");
-            this.metroLabel1.Name = "metroLabel1";
-            this.metroLabel1.Theme = MetroFramework.MetroThemeStyle.Dark;
-            // 
-            // tabControl1
-            // 
-            resources.ApplyResources(this.tabControl1, "tabControl1");
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Controls.Add(this.treeMeta);
-            resources.ApplyResources(this.tabPage2, "tabPage2");
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // treeMeta
-            // 
-            this.treeMeta.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.treeMeta.ContextMenuStrip = this.contextMenuMetaTree;
-            resources.ApplyResources(this.treeMeta, "treeMeta");
-            this.treeMeta.Name = "treeMeta";
-            this.treeMeta.PathSeparator = "/";
-            this.treeMeta.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeMeta_AfterSelect);
-            this.treeMeta.DoubleClick += new System.EventHandler(this.treeMeta_DoubleClick);
-            this.treeMeta.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeMeta_KeyDown);
-            // 
-            // treeViewMain
-            // 
-            this.treeViewMain.AllowDrop = true;
-            resources.ApplyResources(this.treeViewMain, "treeViewMain");
-            this.treeViewMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.treeViewMain.ContextMenuStrip = this.contextMenuPCKEntries;
-            this.treeViewMain.ForeColor = System.Drawing.Color.White;
-            this.treeViewMain.ImageList = this.imageList;
-            this.treeViewMain.LabelEdit = true;
-            this.treeViewMain.Name = "treeViewMain";
-            this.treeViewMain.PathSeparator = "/";
-            this.treeViewMain.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.selectNode);
-            this.treeViewMain.DoubleClick += new System.EventHandler(this.treeViewMain_DoubleClick);
-            this.treeViewMain.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeViewMain_KeyDown);
-            // 
-            // imageList
-            // 
-            this.imageList.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
-            resources.ApplyResources(this.imageList, "imageList");
-            this.imageList.TransparentColor = System.Drawing.Color.Transparent;
-            // 
-            // label11
-            // 
-            resources.ApplyResources(this.label11, "label11");
-            this.label11.Name = "label11";
-            // 
-            // timer1
-            // 
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // LittleEndianCheckBox
-            // 
-            resources.ApplyResources(this.LittleEndianCheckBox, "LittleEndianCheckBox");
-            this.LittleEndianCheckBox.Name = "LittleEndianCheckBox";
-            this.LittleEndianCheckBox.Style = MetroFramework.MetroColorStyle.White;
-            this.LittleEndianCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.LittleEndianCheckBox.UseSelectable = true;
-            // 
-            // FormMain
+            // MainForm
             // 
             this.ApplyImageInvert = true;
             resources.ApplyResources(this, "$this");
@@ -840,7 +846,7 @@
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.labelVersion);
             this.MainMenuStrip = this.menuStrip;
-            this.Name = "FormMain";
+            this.Name = "MainForm";
             this.ShadowType = MetroFramework.Forms.MetroFormShadowType.DropShadow;
             this.Style = MetroFramework.MetroColorStyle.Silver;
             this.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -856,14 +862,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.tabControl.ResumeLayout(false);
             this.openTab.ResumeLayout(false);
+            this.editorTab.ResumeLayout(false);
+            this.editorTab.PerformLayout();
+            this.tabControl1.ResumeLayout(false);
+            this.MetaTab.ResumeLayout(false);
+            this.MetaTab.PerformLayout();
             this.myTablePanelStartScreen.ResumeLayout(false);
             this.myTablePanelStartScreen.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pckOpen)).EndInit();
-            this.editorTab.ResumeLayout(false);
-            this.editorTab.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImagePreview)).EndInit();
-            this.tabControl1.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -923,7 +930,6 @@
         private System.Windows.Forms.ToolStripMenuItem toPhoenixARCDeveloperToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addPasswordToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem joinDevelopmentDiscordToolStripMenuItem;
-        private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.ToolStripMenuItem convertPCTextrurePackToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem forMattNLContributorToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem audiopckToolStripMenuItem;
@@ -941,8 +947,7 @@
         private MetroFramework.Controls.MetroLabel label5;
         private System.Windows.Forms.PictureBox pckOpen;
         private System.Windows.Forms.TreeView treeViewMain;
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage2;
+        private MetroFramework.Controls.MetroTabControl tabControl1;
         private System.Windows.Forms.TreeView treeMeta;
         private MetroFramework.Controls.MetroLabel metroLabel1;
         private MetroFramework.Controls.MetroLabel metroLabel2;
@@ -957,6 +962,7 @@
         private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
         private System.Windows.Forms.ImageList imageList;
         private MetroFramework.Controls.MetroTextBox entryTypeTextBox;
+        private MetroFramework.Controls.MetroTabPage MetaTab;
     }
 }
 
