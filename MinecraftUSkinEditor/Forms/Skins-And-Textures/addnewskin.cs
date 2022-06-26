@@ -11,8 +11,12 @@ namespace PckStudio
     public partial class addNewSkin : MetroFramework.Forms.MetroForm
     {
         LOCFile currentLoc;
-        public PCKFile.FileData skin { get; private set; } = new PCKFile.FileData("skin", 0);
-        public PCKFile.FileData cape { get; private set; } = new PCKFile.FileData("cape", 1);
+        PCKFile.FileData skin = new PCKFile.FileData("dlcskin", 0);
+        PCKFile.FileData cape = new PCKFile.FileData("dlccape", 1);
+
+        public PCKFile.FileData Skin => skin;
+        public PCKFile.FileData Cape => cape;
+
         eSkinType skinType;
         public bool useCape = false;
         string localID = "0";

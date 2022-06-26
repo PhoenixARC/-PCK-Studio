@@ -407,11 +407,10 @@ namespace PckStudio
 			if (add.ShowDialog() == DialogResult.OK)
 			{
 				if (add.useCape)
-					currentPCK.file_entries.Add(add.cape);
+					currentPCK.file_entries.Add(add.Cape);
 				if (!(treeViewMain.SelectedNode.Tag is PCKFile.FileData))
-					add.skin.name = $"{treeViewMain.SelectedNode.FullPath}/{add.skin.name}";
-				currentPCK.file_entries.Add(add.skin);
-
+					add.Skin.name = $"{treeViewMain.SelectedNode.FullPath}/{add.Skin.name}";
+				currentPCK.file_entries.Add(add.Skin);
 				TrySetLocFile(locFile);
 				saved = false;
 				BuildMainTreeView();
@@ -533,10 +532,10 @@ namespace PckStudio
 				diag.Dispose();
             }
 
-			//Checks to see if selected minefile is a binka file
 			//System.Threading.ThreadStart starter;
 
 			//System.Threading.Thread binkam;
+			//Checks to see if selected minefile is a binka file
 			if (Path.GetExtension(file.name) == ".binka")
 			{
 				MessageBox.Show(".binka Editor Coming Soon!");
@@ -547,7 +546,7 @@ namespace PckStudio
 		{
 			var node = e.Node;
 			if (node == null || !(node.Tag is ValueTuple<string, string>)) return;
-			var property = (ValueTuple<string, string>)node.Tag;;
+			var property = (ValueTuple<string, string>)node.Tag;
 			entryTypeTextBox.Text = property.Item1;
 			entryDataTextBox.Text = property.Item2;
 		}
