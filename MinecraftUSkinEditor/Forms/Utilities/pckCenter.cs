@@ -324,7 +324,7 @@ namespace PckStudio.Forms
 
             try
             {
-                RPC.SetRPC("Viewing the PCK Center", "Program by PhoenixARC", "pcklogo", "PCK Studio", "pcklogo");
+                RPC.SetPresence("Viewing the PCK Center", "Program by PhoenixARC");
             }
             catch
             {

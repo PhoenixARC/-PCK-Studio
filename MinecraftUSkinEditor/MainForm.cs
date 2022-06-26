@@ -5,8 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
-using System.IO.Compression;
-using System.Net;
 using System.Diagnostics;
 using PckStudio.Properties;
 using Ohana3DS_Rebirth.Ohana;
@@ -38,8 +36,6 @@ namespace PckStudio
 			imageList.Images.Add(Resources.ZUnknown);
 			pckOpen.AllowDrop = true;
 			tabControl.SelectTab(0);
-			RPC.Initialize("825875166574673940");
-			labelVersion.Text = Application.ProductVersion;
 		}
 
 		private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -872,17 +868,8 @@ namespace PckStudio
 
 		private void Form1_Load(object sender, EventArgs e)
 		{
-			try
-			{
-				RPC.SetRPC("Sitting alone", "Program by PhoenixARC", "pcklgo", "PCK Studio", "pcklgo");
-				timer1.Start();
-				timer1.Enabled = true;
-			}
-			catch(Exception ex)
-			{
-				Console.WriteLine("ERROR WITH RPC");
-				Console.WriteLine(ex.Message);
-			}
+			RPC.Initialize();
+			RPC.SetPresence("Sitting alone", "Program by PhoenixARC");
 #if DEBUG
 			DBGLabel.Visible = true;
 #else
@@ -2787,48 +2774,26 @@ namespace PckStudio
 			SaveTemplate();
 		}
 
-		private void timer1_Tick(object sender, EventArgs e)
-		{
-			//! TODO
-			//try
-			//{
-			//	RPC.SetRPC("Developing " + Path.GetFileName(PCKFilePath), "Program by PhoenixARC", "pcklgo", "PCK Studio", "pcklgo");
-			//}
-			//catch (Exception ex)
-			//{
-			//	Console.WriteLine(ex.Message);
-			//}
-		}
-
 		private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
 		{
 			checkSaveState();
-			RPC.CloseRPC();
+			RPC.Deinitialize();
 		}
 
 		private void FormMain_Deactivate(object sender, EventArgs e)
 		{
-			RPC.CloseRPC();
+			RPC.Deinitialize();
 		}
 
 		private void FormMain_Activated(object sender, EventArgs e)
 		{
-			try
-			{
-				RPC.Initialize("825875166574673940");
-				RPC.SetRPC("Sitting alone", "Program by PhoenixARC", "pcklgo", "PCK Studio", "pcklgo");
-				timer1.Start();
-				timer1.Enabled = true;
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine(ex.Message);
-			}
+			RPC.Initialize();
+			RPC.SetPresence("Sitting alone", "Program by PhoenixARC");
 		}
 
 		private void forMattNLContributorToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			Process.Start("https://ko-fi.com/mattnl");
 		}
-	}
+    }
 }

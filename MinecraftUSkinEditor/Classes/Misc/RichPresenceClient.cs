@@ -5,52 +5,37 @@ using DiscordRPC.Exceptions;
 
 namespace RichPresenceClient
 {
-    public static class RPC
+    // https://github.com/BullyWiiPlaza/Minecraft-Wii-U-Mod-Injector/blob/main/Minecraft%20Wii%20U%20Mod%20Injector/Helpers/DiscordRp.cs
+    class RPC
     {
+        public static DiscordRpcClient Client;
+        public static DateTime StartUpTime = DateTime.UtcNow;
 
-        public static DiscordRpcClient client = null;
-
-        public static void Initialize(string ClientID)
+        public static void Initialize()
         {
-            client = new DiscordRpcClient(ClientID);
-            try
-            {
-                client.Initialize();
-            }
-            catch (UninitializedException ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-            catch (ObjectDisposedException ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+            Client = new DiscordRpcClient("825875166574673940");
+            Client.Initialize();
         }
 
-        public static void SetRPC(string details, string state, string imageLarge, string imageLargeText, string imageSmall)
+        public static void SetPresence(string details, string state)
         {
-            if (client == null) return;
-            client.SetPresence(new RichPresence()
+            Client?.SetPresence(new RichPresence()
             {
                 Details = details,
                 State = state,
+                Timestamps = new Timestamps() { Start = StartUpTime },
                 Assets = new Assets()
                 {
-                    LargeImageKey = imageLarge,
-                    LargeImageText = imageLargeText,
-                    SmallImageKey = imageSmall
+                    LargeImageKey = "pcklgo",
+                    LargeImageText = "PCK Studio",
                 }
             });
         }
 
-        public static void CloseRPC()
+        public static void Deinitialize()
         {
-            if (client != null && client.IsInitialized)
-            {
-                client.Deinitialize();
-            }
-            client.Dispose();
+            Client?.Dispose();
+            Client = null;
         }
-
     }
 }
