@@ -251,7 +251,7 @@ namespace PckStudio
 			{
 				entryTypeTextBox.Text = "";
 				entryDataTextBox.Text = "";
-				reloadMetaTreeView();
+				ReloadMetaTreeView();
 				saved = false;
 			}
 		}
@@ -583,7 +583,7 @@ namespace PckStudio
 			if (add.ShowDialog() == DialogResult.OK && i != -1)
 			{
                 file.properties[i] = new ValueTuple<string, string>(add.PropertyName, add.PropertyValue);
-				reloadMetaTreeView();
+				ReloadMetaTreeView();
 				saved = false;
 			}
 			add.Dispose();
@@ -603,7 +603,7 @@ namespace PckStudio
 			}
 		}
 
-		private void reloadMetaTreeView()
+		private void ReloadMetaTreeView()
         {
 			treeMeta.Nodes.Clear();
 			if (treeViewMain.SelectedNode == null ||
@@ -628,7 +628,7 @@ namespace PckStudio
 			{
 				var property = new ValueTuple<string, string>(add.PropertyName, add.PropertyValue);
 				file.properties.Add(property);
-				reloadMetaTreeView();
+				ReloadMetaTreeView();
 				saved = false;
 			}
 			add.Dispose();
@@ -768,7 +768,7 @@ namespace PckStudio
 			presetMeta add = new presetMeta(file);
 			if (add.ShowDialog() == DialogResult.OK)
             {
-				reloadMetaTreeView();
+				ReloadMetaTreeView();
 				saved = false;
             }
 			add.Dispose();
@@ -2598,7 +2598,7 @@ namespace PckStudio
 				if (add.ShowDialog() == DialogResult.OK)
 					file.properties.Add(("LOCK", add.Password));
 				add.Dispose();
-				reloadMetaTreeView();
+				ReloadMetaTreeView();
 				saved = false;
 			}
 		}
@@ -2645,7 +2645,7 @@ namespace PckStudio
 					AnimationEditor diag = new AnimationEditor(file);
 					diag.ShowDialog(this);
 					diag.Dispose();
-					reloadMetaTreeView();
+					ReloadMetaTreeView();
 				}
 				catch
 				{
