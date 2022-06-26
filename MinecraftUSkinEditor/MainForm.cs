@@ -393,9 +393,9 @@ namespace PckStudio
 			{
 				file.name = diag.NewText;
 				saved = false;
+				BuildMainTreeView();
 			}
 			diag.Dispose();
-			BuildMainTreeView();
 		}
 
 		private void createSkinToolStripMenuItem_Click(object sender, EventArgs e)
