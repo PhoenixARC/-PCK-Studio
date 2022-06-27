@@ -271,7 +271,7 @@ namespace PckStudio
 			}
 			var file = treeViewMain.SelectedNode.Tag as PCKFile.FileData;
 			SaveFileDialog exFile = new SaveFileDialog(); //extract location
-			exFile.FileName = file.name;
+			exFile.FileName = Path.GetFileName(file.name);
 			exFile.Filter = Path.GetExtension(file.name).Replace(".", "") + " File|*" + Path.GetExtension(file.name);
 			if (exFile.ShowDialog() != DialogResult.OK) return;
 			string extractFilePath = exFile.FileName;
@@ -420,13 +420,8 @@ namespace PckStudio
 
 		private void audiopckToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			List<string> filenames = new List<string>();
-			foreach (TreeNode tNode in treeViewMain.Nodes)
-			{
-				filenames.Add(tNode.Text);
-			}
-
-			if (filenames.Contains("audio.pck"))
+			// Should work because all nodes in the main treeview are created with the 'CreateNode' method
+			if (treeViewMain.Nodes.Find("audio.pck", true).Length > 0)
 			{
 				MessageBox.Show("There is already an audio.pck present in this file!", "Can't create audio.pck");
 				return;
