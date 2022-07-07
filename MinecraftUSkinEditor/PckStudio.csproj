@@ -663,6 +663,9 @@
     <PackageReference Include="DiscordRichPresence">
       <Version>1.0.175</Version>
     </PackageReference>
+    <PackageReference Include="MetroFramework">
+      <Version>1.2.0.3</Version>
+    </PackageReference>
     <PackageReference Include="MetroFramework.Design">
       <Version>1.2.0.3</Version>
     </PackageReference>
