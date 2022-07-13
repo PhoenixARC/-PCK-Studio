@@ -198,6 +198,18 @@
     <Compile Include="Forms\Additional-Popups\RenamePrompt.Designer.cs">
       <DependentUpon>RenamePrompt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Editor\COLEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Editor\COLEditor.Designer.cs">
+      <DependentUpon>COLEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Editor\LOCEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Editor\LOCEditor.Designer.cs">
+      <DependentUpon>LOCEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Utilities\Animation\ChangeTile.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -312,12 +324,6 @@
     <Compile Include="Forms\Utilities\Audio\AudioEditor.Designer.cs">
       <DependentUpon>AudioEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Utilities\COLEditor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Utilities\COLEditor.Designer.cs">
-      <DependentUpon>COLEditor.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\Utilities\installPS3.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -395,12 +401,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Classes\FileTypes\LOCFile.cs" />
-    <Compile Include="Forms\Utilities\LOCEditor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Utilities\LOCEditor.Designer.cs">
-      <DependentUpon>LOCEditor.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\Additional-Popups\meta.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -435,6 +435,19 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\RenamePrompt.resx">
       <DependentUpon>RenamePrompt.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Editor\COLEditor.ja.resx">
+      <DependentUpon>COLEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Editor\COLEditor.resx">
+      <DependentUpon>COLEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Editor\LOCEditor.ja.resx">
+      <DependentUpon>LOCEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Editor\LOCEditor.resx">
+      <DependentUpon>LOCEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Utilities\Animation\ChangeTile.resx">
       <DependentUpon>ChangeTile.cs</DependentUpon>
@@ -523,12 +536,6 @@
       <DependentUpon>AudioEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\COLEditor.ja.resx">
-      <DependentUpon>COLEditor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\COLEditor.resx">
-      <DependentUpon>COLEditor.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Utilities\installPS3.resx">
       <DependentUpon>installPS3.cs</DependentUpon>
     </EmbeddedResource>
@@ -543,9 +550,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\Job.resx">
       <DependentUpon>Job.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\LOCEditor.ja.resx">
-      <DependentUpon>LOCEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\meta.ja.resx">
       <DependentUpon>meta.cs</DependentUpon>
@@ -594,9 +598,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Utilities\TextureConverterUtility.resx">
       <DependentUpon>TextureConverterUtility.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\LOCEditor.resx">
-      <DependentUpon>LOCEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\meta.resx">
       <DependentUpon>meta.cs</DependentUpon>
