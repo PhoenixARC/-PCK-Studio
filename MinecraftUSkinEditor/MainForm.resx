@@ -539,7 +539,7 @@
 </value>
   </data>
   <data name="advancedMetaAddingToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>176, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="advancedMetaAddingToolStripMenuItem.Text" xml:space="preserve">
     <value>Advanced Bulk</value>
@@ -565,7 +565,7 @@
 </value>
   </data>
   <data name="convertToBedrockToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>176, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="convertToBedrockToolStripMenuItem.Text" xml:space="preserve">
     <value>Convert to Bedrock</value>
@@ -29858,7 +29858,7 @@
     <value>Bottom, Right</value>
   </data>
   <data name="buttonEdit.Location" type="System.Drawing.Point, System.Drawing">
-    <value>214, 223</value>
+    <value>213, 229</value>
   </data>
   <data name="buttonEdit.Size" type="System.Drawing.Size, System.Drawing">
     <value>324, 60</value>
@@ -32629,9 +32629,6 @@
         AP//AADgBwAA4AcAAMADAADAAwAAwAMAAMADAADAAwAAwAMAAMADAADABwAAwA8AAMAfAADgPwAA4H8A
         AP//AAA=
 </value>
-  </data>
-  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
     <value>843, 658</value>
