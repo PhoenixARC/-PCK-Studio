@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using ICSharpCode.SharpZipLib.Zip.Compression.Streams;
 using PckStudio.Classes.Utils;
 
@@ -19,22 +18,20 @@ namespace PckStudio.Classes.IO.GRF
             return new GRFFileReader().read(stream);
         }
 
-
         private GRFFile read(Stream stream)
         {
             stream = ReadHeader(stream);
-            ReadTagNames(stream);
-            ReadGRFTags(stream);
+            ReadBody(stream);
             return _file;
         }
-
 
         private Stream ReadHeader(Stream stream)
         {
             int x = ReadShort(stream);
             if (((x >> 31) | x) == 0)
             {
-                ReadBytes(stream, 14); // 14 bools ?...
+                // 14 bools ?...
+                ReadBytes(stream, 14);
                 return stream;
             }
 
@@ -47,35 +44,43 @@ namespace PckStudio.Classes.IO.GRF
             if (byte4 > 0)
             {
                 compression_type = (GRFFile.eCompressionType)byte4;
-                // Custom enum
-                compression_type &= GRFFile.eCompressionType.IsWolrdGrf;
             }
-            _file = new GRFFile(compression_type, crc);
+            _file = new GRFFile(compression_type, crc, byte4 > 0);
 
             if (compression_type == GRFFile.eCompressionType.None && byte4 == 0)
                 return stream;
 
             int buf_size = ReadInt(stream);
+            var new_stream = stream;
             if (byte4 != 0)
             {
-                stream = new MemoryStream(ReadBytes(stream, buf_size));
-                buf_size = ReadInt(stream);
+                new_stream = new MemoryStream(ReadBytes(stream, buf_size));
+                buf_size = ReadInt(new_stream);
             }
             else
             {
                 ReadInt(stream); // ignored cuz rest of data is compressed
             }
-            stream = DecompressZLX(stream);
+            var decompressed_stream = DecompressZLX(new_stream);
+            new_stream.Dispose();
             if (compression_type > GRFFile.eCompressionType.Zlib)
             {
-                byte[] data = RLE<byte>.Decode(ReadBytes(stream, buf_size)).ToArray();
-                stream = new MemoryStream(data);
+                byte[] data = ReadBytes(decompressed_stream, buf_size);
+                byte[] decoded_data = RLE<byte>.Decode(data).ToArray();
+                decompressed_stream.Dispose();
+                decompressed_stream = new MemoryStream(decoded_data);
             }
 
             if (byte4 != 0)
-                ReadBytes(stream, 23);
+                ReadBytes(decompressed_stream, 23);
 
-            return stream;
+            return decompressed_stream;
+        }
+
+        private void ReadBody(Stream stream)
+        {
+            ReadTagNames(stream);
+            ReadGRFTags(stream);
         }
 
         private Stream DecompressZLX(Stream compressedStream)
@@ -83,6 +88,7 @@ namespace PckStudio.Classes.IO.GRF
             Stream outputstream = new MemoryStream();
             using (var inputStream = new InflaterInputStream(compressedStream))
             {
+                inputStream.IsStreamOwner = false;
                 inputStream.CopyTo(outputstream);
                 outputstream.Position = 0;
             };
@@ -94,29 +100,33 @@ namespace PckStudio.Classes.IO.GRF
             int name_count = ReadInt(stream);
             TagNames = new List<string>(name_count);
             for (int i = 0; i < name_count; i++)
-                TagNames.Add(ReadString(stream));
+            {
+                string s = ReadString(stream);
+                TagNames.Add(s);
+                //Console.WriteLine(s);
+            }
         }
 
         private void ReadGRFTags(Stream stream)
         {
-            var NameAndCount = GetTagNameAndDetailCount(stream);
+            var NameAndCount = GetRuleNameAndCount(stream);
             _file.RootTag = new GRFFile.GRFTag(NameAndCount.Item1, null);
-            _file.RootTag.Tags = ReadItemList(stream, NameAndCount.Item2, _file.RootTag);
+            _file.RootTag.Tags = ReadTags(stream, NameAndCount.Item2, _file.RootTag);
         }
 
-        internal List<GRFFile.GRFTag> ReadItemList(Stream stream, int count, GRFFile.GRFTag parent)
+        internal List<GRFFile.GRFTag> ReadTags(Stream stream, int count, GRFFile.GRFTag parent)
         {
             List<GRFFile.GRFTag> tags = new List<GRFFile.GRFTag>();
             for (int i = 0; i < count; i++)
             {
-                var valuePair = GetTagNameAndDetailCount(stream);
+                var valuePair = GetRuleNameAndCount(stream);
                 var tag = new GRFFile.GRFTag(valuePair.Item1, parent);
-                for (var j = 0; j < valuePair.Item2; j++)
+                for (int j = 0; j < valuePair.Item2; j++)
                 {
                     var tuple = GetTagNameAndValue(stream);
                     tag.Parameters.Add(tuple.Item1, tuple.Item2);
                 }
-                tag.Tags = ReadItemList(stream, ReadInt(stream), tag);
+                tag.Tags = ReadTags(stream, ReadInt(stream), tag);
                 tags.Add(tag);
             }
             return tags;
@@ -124,7 +134,7 @@ namespace PckStudio.Classes.IO.GRF
 
         internal string GetTagName(Stream stream) => TagNames[ReadInt(stream)];
 
-        internal (string, int) GetTagNameAndDetailCount(Stream stream)
+        internal (string, int) GetRuleNameAndCount(Stream stream)
         {
             return new ValueTuple<string, int>(GetTagName(stream), ReadInt(stream));
         }
@@ -161,7 +171,7 @@ namespace PckStudio.Classes.IO.GRF
         {
             short stringLength = ReadShort(stream);
             byte[] buffer = ReadBytes(stream, stringLength);
-            return Encoding.UTF8.GetString(buffer);
+            return Encoding.ASCII.GetString(buffer);
         }
 
     }

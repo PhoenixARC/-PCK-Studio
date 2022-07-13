@@ -122,18 +122,16 @@ static class RLE<T> where T : struct, IConvertible
         if ((length <= 3 && !value.Equals(rleMarker)) || length <= 1)
         {
             //don't compress this run, it is just too small
-            for (ulong i = 0; i < length; ++i)
+            for (ulong i = 0; i < length; i++)
             {
-                if (value.Equals(rleMarker))
-                    yield return rleMarker;
-                yield return value;
+                yield return value.Equals(rleMarker) ? rleMarker  : value;
             }
         }
         else
         {
             //compressed run
             yield return rleMarker;
-            yield return (T)(dynamic)length;
+            yield return (T)(dynamic)(length-1);
             yield return value;
         }
     }
@@ -141,7 +139,6 @@ static class RLE<T> where T : struct, IConvertible
 
     private static void GetMaxValues()
     {
-        object maxValue = default(T);
         TypeCode typeCode = Type.GetTypeCode(typeof(T));
         switch (typeCode)
         {

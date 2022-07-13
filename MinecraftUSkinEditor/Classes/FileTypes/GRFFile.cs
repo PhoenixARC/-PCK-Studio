@@ -2,36 +2,32 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace PckStudio.Classes.FileTypes
 {
     public class GRFFile
-    {
-
+    {   
         public GRFTag RootTag = null;
         public int Crc => _crc;
+        public bool IsWorld => _isWorld;
         public eCompressionType CompressionType => _compressionType;
 
         private int _crc = 0;
+        private bool _isWorld = false;
         private eCompressionType _compressionType = eCompressionType.None;
 
-        [Flags]
         public enum eCompressionType : byte
         {
             None       = 0,
             Zlib       = 1,
             ZlibRle    = 2,
-            /// <summary>
-            /// custom enum value
-            /// </summary>
-            IsWolrdGrf = 0x80,
+            ZlibRleCrc = 3,
         }
 
         public class GRFTag
         {
             private GRFTag _parent = null;
-            private SortedDictionary<string, string> _parameters = new SortedDictionary<string, string>();
+            private Dictionary<string, string> _parameters = new Dictionary<string, string>();
 
             /// <summary>
             /// Contains all valid Parameter names
@@ -226,9 +222,15 @@ namespace PckStudio.Classes.FileTypes
 
             public string Name { get; set; } = string.Empty;
             public GRFTag Parent => _parent;
-            public SortedDictionary<string, string> Parameters => _parameters;
+            public Dictionary<string, string> Parameters => _parameters;
             public List<GRFTag> Tags { get; set; } = new List<GRFTag>();
 
+            /// <summary>
+            /// Initializes a new GRFTag.
+            /// If parent is null it will be treated as the root tag
+            /// </summary>
+            /// <param name="name"></param>
+            /// <param name="parent"></param>
             public GRFTag(string name, GRFTag parent)
             {
                 Name = name;
@@ -236,10 +238,11 @@ namespace PckStudio.Classes.FileTypes
             }
         }
 
-        public GRFFile(eCompressionType compressionType, int crc)
+        public GRFFile(eCompressionType compressionType, int crc, bool isWolrd)
         {
             _compressionType = compressionType;
             _crc = crc;
+            _isWorld = isWolrd;
         }
 
     }
