@@ -8,76 +8,84 @@ namespace PckStudio.Classes.FileTypes
 {
 	internal class LCESkin
 	{
-		// The effects that can be achieved with an ANIM tag. Each one is set to its respective position in the bitfield
-		public enum ANIM_EFFECTS
+		[Flags]
+		public enum eANIM_EFFECTS : int
 		{
-			// BIT 8
-			STATIC_ARMS = 31, ZOMBIE_ARMS = 30, STATIC_LEGS = 29, BAD_SANTA = 28,
-			// BIT 7
-			SYNCED_ARMS = 26, SYNCED_LEGS = 25, STATUE_OF_LIBERTY = 24,
-			// BIT 6
-			ARMOR_DISABLED = 23, HEAD_BOBBING_DISABLED = 22, HEAD_DISABLED = 21, RIGHT_ARM_DISABLED = 20,
-			// BIT 5
-			LEFT_ARM_DISABLED = 19, BODY_DISABLED = 18, RIGHT_LEG_DISABLED = 17, LEFT_LEG_DISABLED = 16,
-			// BIT 4
-			HEAD_OVERLAY_DISABLED = 15, DO_BACKWARDS_CROUCH = 14, RESOLUTION_64x64 = 13, SLIM_MODEL = 12,
-			// BIT 3
-			LEFT_ARM_OVERLAY_DISABLED = 11, RIGHT_ARM_OVERLAY_DISABLED = 10, LEFT_LEG_OVERLAY_DISABLED = 09, RIGHT_LEG_OVERLAY_DISABLED = 08,
-			// BIT 2
-			BODY_OVERLAY_DISABLED = 07,
-			// BIT 1
-			DINNERBONE = 03
-		};
+			STATIC_ARMS                 = 1 << 0,
+			ZOMBIE_ARMS                 = 1 << 1,
+			STATIC_LEGS                 = 1 << 2,
+			BAD_SANTA                   = 1 << 3,
 
-		// the ANIM value represented as a bitfield
-		BitArray ANIM_FLAGS = new BitArray(32, false);
+			//unk_BIT4                    = 1 << 4,
+			SYNCED_LEGS                 = 1 << 5,
+			SYNCED_ARMS                 = 1 << 6,
+			STATUE_OF_LIBERTY           = 1 << 7,
 
-		// The flags represented by a string
-		public string Bits
-		{
-			get
-			{
-				StringBuilder sb = new StringBuilder();
-				foreach (bool b in ANIM_FLAGS) sb.Append(b ? "1" : "0");
-				return sb.ToString();
-			}
+			ARMOR_DISABLED              = 1 << 8,
+			HEAD_BOBBING_DISABLED       = 1 << 9,
+			HEAD_DISABLED               = 1 << 10,
+			LEFT_ARM_DISABLED           = 1 << 11,
+
+			RIGHT_ARM_DISABLED          = 1 << 12,
+			BODY_DISABLED               = 1 << 13,
+			RIGHT_LEG_DISABLED          = 1 << 14,
+			LEFT_LEG_DISABLED           = 1 << 15,
+
+			DO_BACKWARDS_CROUCH         = 1 << 16,
+			HEAD_OVERLAY_DISABLED       = 1 << 17,
+			RESOLUTION_64x64            = 1 << 18,
+			SLIM_MODEL                  = 1 << 19,
+			
+			LEFT_ARM_OVERLAY_DISABLED   = 1 << 20,
+			RIGHT_ARM_OVERLAY_DISABLED  = 1 << 21,
+			LEFT_LEG_OVERLAY_DISABLED   = 1 << 22,
+			RIGHT_LEG_OVERLAY_DISABLED  = 1 << 23,
+
+			BODY_OVERLAY_DISABLED       = 1 << 24,
+			FORCE_HEAD_ARMOR            = 1 << 25,
+			FORCE_RIGHT_ARM_ARMOR       = 1 << 26,
+			FORCE_LEFT_ARM_ARMOR        = 1 << 27,
+
+			FORCE_BODY_ARMOR            = 1 << 28,
+			FORCE_RIGHT_LEG_ARMOR       = 1 << 29,
+			FORCE_LEFT_LEG_ARMOR        = 1 << 30,
+			DINNERBONE                  = 1 << 31,
 		}
-
-		// The actual ANIM string. For example: "0x40008"
-		public string ANIM
-		{
-			get
-			{
-				return Convert.ToInt32(Bits, 2).ToString("X");
-			}   // get method
-			set
-			{
-				long temp_long = Convert.ToInt64(value, 16);
-				string bits = Convert.ToString(temp_long, 2);
-				int bitIndex = 0;
-				foreach (char bit in bits)
-				{
-					ANIM_FLAGS[bitIndex] = bit == '1' ? true : false;
-					bitIndex++;
-				}
-			}  // set method
-		}
+		eANIM_EFFECTS _ANIM = 0;
 
 		public LCESkin()
 		{
 			// TODO: finish constructor
 		}
-
-		// Sets the desired flag in the bitfield to either true or false
-		public void SetFlag(ANIM_EFFECTS flagToSet, bool value)
+		
+		public LCESkin(eANIM_EFFECTS anim)
 		{
-			ANIM_FLAGS[(int)flagToSet] = value;
+			_ANIM = anim;
 		}
 
-		// Returns the value of the desired flag in the bitfield
-		public bool GetFlag(ANIM_EFFECTS flagToGet)
+		/// <summary>
+		/// Sets the desired flag in the bitfield
+		/// </summary>
+		/// <param name="flag">ANIM Flag to be set</param>
+		/// <param name="state">wether to enable the flag</param>
+		public void SetANIMFlag(eANIM_EFFECTS flag, bool state)
 		{
-			return ANIM_FLAGS[(int)flagToGet];
+			if (!state)
+			{
+				_ANIM &= ~flag;
+				return;
+			}
+			_ANIM |= flag;
+		}
+
+		/// <summary>
+		/// Returns true if the desired flag is set in the bitfield, otherwise false
+		/// </summary>
+		/// <param name="flag">ANIM Flag to check</param>
+		/// <returns>Bool wether its set or not</returns>
+		public bool GetANIMFlag(eANIM_EFFECTS flag)
+		{
+            return (((int)_ANIM >> (int)flag) & 1) == 1;
 		}
 	}
 }
