@@ -31,7 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RenamePrompt));
             this.TextLabel = new System.Windows.Forms.Label();
             this.OKButton = new System.Windows.Forms.Button();
-            this.InputTextBox = new System.Windows.Forms.TextBox();
+            this.InputTextBox = new MetroFramework.Controls.MetroTextBox();
             this.SuspendLayout();
             // 
             // TextLabel
@@ -50,9 +50,33 @@
             // 
             // InputTextBox
             // 
+            // 
+            // 
+            // 
+            this.InputTextBox.CustomButton.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image")));
+            this.InputTextBox.CustomButton.Location = ((System.Drawing.Point)(resources.GetObject("resource.Location")));
+            this.InputTextBox.CustomButton.Name = "";
+            this.InputTextBox.CustomButton.Size = ((System.Drawing.Size)(resources.GetObject("resource.Size")));
+            this.InputTextBox.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.InputTextBox.CustomButton.TabIndex = ((int)(resources.GetObject("resource.TabIndex")));
+            this.InputTextBox.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.InputTextBox.CustomButton.UseSelectable = true;
+            this.InputTextBox.CustomButton.Visible = ((bool)(resources.GetObject("resource.Visible")));
+            this.InputTextBox.Lines = new string[0];
             resources.ApplyResources(this.InputTextBox, "InputTextBox");
+            this.InputTextBox.MaxLength = 255;
             this.InputTextBox.Name = "InputTextBox";
-            this.InputTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.InputTextBox_KeyDown);
+            this.InputTextBox.PasswordChar = '\0';
+            this.InputTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.InputTextBox.SelectedText = "";
+            this.InputTextBox.SelectionLength = 0;
+            this.InputTextBox.SelectionStart = 0;
+            this.InputTextBox.ShortcutsEnabled = true;
+            this.InputTextBox.Style = MetroFramework.MetroColorStyle.White;
+            this.InputTextBox.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.InputTextBox.UseSelectable = true;
+            this.InputTextBox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.InputTextBox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
             // 
             // RenamePrompt
             // 
@@ -78,6 +102,6 @@
         #endregion
         public System.Windows.Forms.Button OKButton;
         public System.Windows.Forms.Label TextLabel;
-        private System.Windows.Forms.TextBox InputTextBox;
+        private MetroFramework.Controls.MetroTextBox InputTextBox;
     }
 }

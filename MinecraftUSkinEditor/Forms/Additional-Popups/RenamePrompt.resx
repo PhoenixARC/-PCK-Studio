@@ -123,7 +123,7 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="TextLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>19, 41</value>
+    <value>19, 46</value>
   </data>
   <data name="TextLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>35, 13</value>
@@ -133,6 +133,9 @@
   </data>
   <data name="TextLabel.Text" xml:space="preserve">
     <value>Name</value>
+  </data>
+  <data name="TextLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
   </data>
   <data name="&gt;&gt;TextLabel.Name" xml:space="preserve">
     <value>TextLabel</value>
@@ -174,20 +177,35 @@
   <data name="&gt;&gt;OKButton.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
+  <data name="resource.Image" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="resource.Location" type="System.Drawing.Point, System.Drawing">
+    <value>143, 1</value>
+  </data>
+  <data name="resource.Size" type="System.Drawing.Size, System.Drawing">
+    <value>21, 21</value>
+  </data>
+  <data name="resource.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="resource.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
   <data name="InputTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>60, 38</value>
+    <value>60, 41</value>
   </data>
   <data name="InputTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>181, 20</value>
+    <value>165, 23</value>
   </data>
   <data name="InputTextBox.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+    <value>5</value>
   </data>
   <data name="&gt;&gt;InputTextBox.Name" xml:space="preserve">
     <value>InputTextBox</value>
   </data>
   <data name="&gt;&gt;InputTextBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>MetroFramework.Controls.MetroTextBox, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
   </data>
   <data name="&gt;&gt;InputTextBox.Parent" xml:space="preserve">
     <value>$this</value>
