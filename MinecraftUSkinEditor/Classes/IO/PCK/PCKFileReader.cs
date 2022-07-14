@@ -32,16 +32,14 @@ namespace PckStudio.Classes.IO
         internal void ReadMetaData(Stream stream)
         {
             int meta_entry_count = ReadInt(stream);
-            bool has_xml_tag = false;
             _file.meta_data.Capacity = meta_entry_count;
             for (; 0 < meta_entry_count; meta_entry_count--)
             {
                 int index = ReadInt(stream);
                 string value = ReadString(stream);
-                if (value.Equals("XMLVERSION")) has_xml_tag = true;
                 _file.meta_data.Insert(index, value);
             }
-            if (has_xml_tag)
+            if (_file.meta_data.Contains("XMLVERSION"))
                 Console.WriteLine(ReadInt(stream)); // xml version num ??
         }
 

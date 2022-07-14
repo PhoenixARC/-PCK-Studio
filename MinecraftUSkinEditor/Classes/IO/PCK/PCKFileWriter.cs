@@ -40,14 +40,12 @@ namespace PckStudio.Classes.IO
         internal void WriteMetaEntries(Stream stream)
         {
             WriteInt(stream, _file.meta_data.Count);
-            bool has_xmlverion_tag = false;
-            foreach (var metaEntry in _file.meta_data)
+            _file.meta_data.ForEach(entry =>
             {
-                if (metaEntry == "XMLVERSION") has_xmlverion_tag = true;
-                WriteInt(stream, _file.meta_data.IndexOf(metaEntry));
-                WriteString(stream, metaEntry);
-            }
-            if (has_xmlverion_tag)
+                WriteInt(stream, _file.meta_data.IndexOf(entry));
+                WriteString(stream, entry);
+            });
+            if (_file.meta_data.Contains("XMLVERSION"))
                 WriteInt(stream, 0x1337); // :^)
         }
 
