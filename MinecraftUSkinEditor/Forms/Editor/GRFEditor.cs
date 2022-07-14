@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace PckStudio.Forms.Utilities
+namespace PckStudio.Forms.Editor
 {
     public partial class GRFEditor : MetroFramework.Forms.MetroForm
     {

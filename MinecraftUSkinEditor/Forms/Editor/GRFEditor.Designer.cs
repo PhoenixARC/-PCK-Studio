@@ -1,4 +1,4 @@
-﻿namespace PckStudio.Forms.Utilities
+﻿namespace PckStudio.Forms.Editor
 {
     partial class GRFEditor
     {

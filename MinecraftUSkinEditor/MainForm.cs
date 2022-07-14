@@ -17,6 +17,7 @@ using PckStudio.Classes.IO.LOC;
 using PckStudio.Forms.Utilities;
 using PckStudio.Classes.IO.GRF;
 using PckStudio.Classes.Utils;
+using PckStudio.Forms.Editor;
 
 namespace PckStudio
 {
@@ -2608,7 +2609,7 @@ namespace PckStudio
 
 		private void convertPCTextrurePackToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			Forms.Utilities.TextureConverterUtility tex = new Forms.Utilities.TextureConverterUtility(treeViewMain, currentPCK);
+			TextureConverterUtility tex = new TextureConverterUtility(treeViewMain, currentPCK);
 			tex.ShowDialog();
 		}
 
@@ -2658,7 +2659,7 @@ namespace PckStudio
 				{
 					if (!TryGetLocFile(out LOCFile locFile))
 						throw new Exception("No .loc File found.");
-					Forms.Utilities.AudioEditor diag = new Forms.Utilities.AudioEditor(file, locFile, LittleEndianCheckBox.Checked);
+					AudioEditor diag = new AudioEditor(file, locFile, LittleEndianCheckBox.Checked);
 					diag.ShowDialog(this);
 					diag.Dispose();
 				}
@@ -2694,10 +2695,9 @@ namespace PckStudio
 				{
 					colFile.Open(stream);
 				}
-				Forms.Utilities.COLEditor diag = new Forms.Utilities.COLEditor(colFile);
-				if (diag.ShowDialog(this) == DialogResult.OK && diag.data.Length > 0)
-					file.SetData(diag.data);
-				diag.Dispose();
+                using (COLEditor diag = new COLEditor(colFile))
+                    if (diag.ShowDialog(this) == DialogResult.OK && diag.data.Length > 0)
+                        file.SetData(diag.data);
 			}
 		}
 
