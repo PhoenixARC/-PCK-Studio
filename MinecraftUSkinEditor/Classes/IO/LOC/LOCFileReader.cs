@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using PckStudio.Classes.FileTypes;
+using PckStudio.Classes.Utils;
 
 namespace PckStudio.Classes.IO.LOC
 {
-    internal class LOCFileReader
+    internal class LOCFileReader : StreamDataReader
     {
         internal LOCFile _file;
 
@@ -15,7 +16,7 @@ namespace PckStudio.Classes.IO.LOC
             return new LOCFileReader().ReadFile(stream);
         }
 
-        private LOCFileReader()
+        private LOCFileReader() : base(false)
         {
             _file = new LOCFile();
         }
@@ -70,29 +71,10 @@ namespace PckStudio.Classes.IO.LOC
             return keys;
         }
 
-        internal short ReadShort(Stream stream)
-        {
-            byte[] bytes = new byte[2];
-            stream.Read(bytes, 0, bytes.Length);
-            if (BitConverter.IsLittleEndian)
-                Array.Reverse(bytes);
-            return BitConverter.ToInt16(bytes, 0);
-        }
-        internal int ReadInt(Stream stream)
-        {
-            byte[] bytes = new byte[4];
-            stream.Read(bytes, 0, bytes.Length);
-            if (BitConverter.IsLittleEndian)
-                Array.Reverse(bytes);
-            return BitConverter.ToInt32(bytes, 0);
-        }
-
         internal string ReadString(Stream stream)
         {
             int length = ReadShort(stream);
-            byte[] buffer = new byte[length];
-            stream.Read(buffer, 0, length);
-            return Encoding.UTF8.GetString(buffer, 0, length);
+            return ReadString(stream, length, Encoding.UTF8);
         }
     }
 }

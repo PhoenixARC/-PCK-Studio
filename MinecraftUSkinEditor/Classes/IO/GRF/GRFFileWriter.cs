@@ -5,12 +5,13 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using ICSharpCode.SharpZipLib.Zip.Compression.Streams;
-using PckStudio.Classes.Utils;
+using PckStudio.Classes;
 using PckStudio.Classes.Utils.grf;
+using PckStudio.Classes.Utils;
 
 namespace PckStudio.Classes.IO.GRF
 {
-    public class GRFFileWriter
+    internal class GRFFileWriter : StreamDataWriter
     {
         internal readonly GRFFile _grfFile;
         internal List<string> LUT;
@@ -20,7 +21,7 @@ namespace PckStudio.Classes.IO.GRF
             instance.write(stream);
         }
 
-        private GRFFileWriter(GRFFile grfFile)
+        private GRFFileWriter(GRFFile grfFile) : base(false)
         {
             if (grfFile.IsWorld)
                 throw new NotImplementedException("World grf saving is currently unsupported");
@@ -73,7 +74,7 @@ namespace PckStudio.Classes.IO.GRF
             return result;
         }
 
-        private byte[] CompressRle(byte[] buffer) => RLE<byte>.Encode(buffer).ToArray();
+        private byte[] CompressRle(byte[] buffer) => Utils.RLE<byte>.Encode(buffer).ToArray();
 
         private void MakeAndWriteCrc(Stream stream, byte[] data)
         {
@@ -151,31 +152,10 @@ namespace PckStudio.Classes.IO.GRF
             WriteInt(stream, i);
         }
 
-        static internal void WriteInt(Stream stream, int value)
-        {
-            byte[] bytes = BitConverter.GetBytes(value);
-            if (BitConverter.IsLittleEndian)
-                Array.Reverse(bytes);
-            WriteBytes(stream, bytes);
-        }
-
-        static internal void WriteShort(Stream stream, short value)
-        {
-            byte[] bytes = BitConverter.GetBytes(value);
-            if (BitConverter.IsLittleEndian)
-                Array.Reverse(bytes);
-            WriteBytes(stream, bytes);
-        }
-
         static internal void WriteString(Stream stream, string s)
         {
             WriteShort(stream, (short)s.Length);
             WriteBytes(stream, Encoding.ASCII.GetBytes(s));
-        }
-
-        static internal void WriteBytes(Stream stream, byte[] bytes)
-        {
-            stream.Write(bytes, 0, bytes.Length);
         }
     }
 }

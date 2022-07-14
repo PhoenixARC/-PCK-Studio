@@ -9,7 +9,7 @@ using PckStudio.Classes.Utils;
 
 namespace PckStudio.Classes.IO.GRF
 {
-    internal class GRFFileReader
+    internal class GRFFileReader : StreamDataReader
     {
         internal List<string> TagNames;
         internal GRFFile _file;
@@ -17,6 +17,9 @@ namespace PckStudio.Classes.IO.GRF
         {
             return new GRFFileReader().read(stream);
         }
+
+        private GRFFileReader() : base(false)
+        { }
 
         private GRFFile read(Stream stream)
         {
@@ -144,35 +147,10 @@ namespace PckStudio.Classes.IO.GRF
             return new ValueTuple<string, string>(GetTagName(stream), ReadString(stream));
         }
 
-        internal byte[] ReadBytes(Stream stream, int count)
-        {
-            byte[] buffer = new byte[count];
-            stream.Read(buffer, 0, count);
-            return buffer;
-        }
-
-        internal int ReadInt(Stream stream)
-        {
-            byte[] buffer = ReadBytes(stream, 4);
-            if (BitConverter.IsLittleEndian)
-                Array.Reverse(buffer);
-            return BitConverter.ToInt32(buffer, 0);
-        }
-        
-        internal short ReadShort(Stream stream)
-        {
-            byte[] buffer = ReadBytes(stream, 2);
-            if (BitConverter.IsLittleEndian)
-                Array.Reverse(buffer);
-            return BitConverter.ToInt16(buffer, 0);
-        }
-
         internal string ReadString(Stream stream)
         {
             short stringLength = ReadShort(stream);
-            byte[] buffer = ReadBytes(stream, stringLength);
-            return Encoding.ASCII.GetString(buffer);
+            return ReadString(stream, stringLength, Encoding.ASCII);
         }
-
     }
 }

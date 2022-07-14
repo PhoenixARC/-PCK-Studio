@@ -1,4 +1,5 @@
 ﻿using PckStudio.Classes.FileTypes;
+using PckStudio.Classes.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,9 +9,8 @@ using System.Threading.Tasks;
 
 namespace PckStudio.Classes.IO
 {
-    internal class PCKFileWriter
+    internal class PCKFileWriter : StreamDataWriter
     {
-        internal bool isLittleEndian = false;
         internal PCKFile _file;
 
         public static void Write(Stream stream, PCKFile file, bool isLittleEndian)
@@ -18,10 +18,9 @@ namespace PckStudio.Classes.IO
             new PCKFileWriter(file, isLittleEndian).WriteToStream(stream);
         }
 
-        private PCKFileWriter(PCKFile file, bool isLittleEndian)
+        private PCKFileWriter(PCKFile file, bool isLittleEndian) : base(isLittleEndian)
         {
             _file = file;
-            this.isLittleEndian = isLittleEndian;
         }
 
         private void WriteToStream(Stream stream)
@@ -31,20 +30,11 @@ namespace PckStudio.Classes.IO
             WriteFileEntries(stream);
         }
 
-        internal void WriteInt(Stream stream, int value)
-        {
-            byte[] buffer = BitConverter.GetBytes(value);
-            if (BitConverter.IsLittleEndian && !isLittleEndian)
-                Array.Reverse(buffer);
-            stream.Write(buffer, 0, 4);
-        }
-
         internal void WriteString(Stream stream, string s)
         {
             WriteInt(stream, s.Length);
-            byte[] byteString = Encoding.BigEndianUnicode.GetBytes(s);
-            stream.Write(byteString, 0, byteString.Length);
-            WriteInt(stream, 0);
+            WriteString(stream, s, Encoding.BigEndianUnicode);
+            WriteInt(stream, 0); // padding
         }
 
         internal void WriteMetaEntries(Stream stream)

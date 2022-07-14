@@ -1,4 +1,5 @@
 ﻿using PckStudio.Classes.FileTypes;
+using PckStudio.Classes.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,26 +8,24 @@ using System.Windows;
 
 namespace PckStudio.Classes.IO
 {
-    internal class PCKFileReader
+    internal class PCKFileReader : StreamDataReader
     {
-        internal bool isLittleEndian = false;
         internal PCKFile _file;
 
-        public static PCKFile Read(Stream s, bool isLittleEndian)
+        public static PCKFile Read(Stream stream, bool isLittleEndian)
         {
-            return new PCKFileReader(isLittleEndian).ReadFileFromStream(s);
+            return new PCKFileReader(isLittleEndian).ReadFileFromStream(stream);
         }
 
-        private PCKFileReader(bool isLittleEndian)
+        private PCKFileReader(bool isLittleEndian) : base(isLittleEndian)
         {
-            this.isLittleEndian = isLittleEndian;
         }
 
-        private PCKFile ReadFileFromStream(Stream s)
+        private PCKFile ReadFileFromStream(Stream stream)
         {
-            _file = new PCKFile(ReadInt(s));
-            ReadMetaData(s);
-            ReadFileEntries(s);
+            _file = new PCKFile(ReadInt(stream));
+            ReadMetaData(stream);
+            ReadFileEntries(stream);
             return _file;
         }
 
@@ -71,23 +70,12 @@ namespace PckStudio.Classes.IO
                 stream.Read(file_entry.data, 0, file_entry.size);
             }
         }
-
-        internal int ReadInt(Stream stream)
-        {
-            byte[] buffer = new byte[4];
-            stream.Read(buffer, 0, 4);
-            if (BitConverter.IsLittleEndian && !isLittleEndian)
-                Array.Reverse(buffer);
-            return BitConverter.ToInt32(buffer, 0);
-        }
-
         internal string ReadString(Stream stream)
         {
             int len = ReadInt(stream);
-            byte[] stringBuffer = new byte[len * 2];
-            stream.Read(stringBuffer, 0, len * 2);
-            ReadInt(stream);
-            return Encoding.BigEndianUnicode.GetString(stringBuffer, 0, len * 2);
+            string s = ReadString(stream, len * 2, Encoding.BigEndianUnicode);
+            ReadInt(stream); // padding
+            return s;
         }
     }
 }

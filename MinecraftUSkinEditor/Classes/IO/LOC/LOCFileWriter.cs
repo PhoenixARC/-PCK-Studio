@@ -1,4 +1,5 @@
 ﻿using PckStudio.Classes.FileTypes;
+using PckStudio.Classes.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace PckStudio.Classes.IO.LOC
 {
-    internal class LOCFileWriter
+    internal class LOCFileWriter : StreamDataWriter
     {
         internal LOCFile _locfile;
         public static void Write(Stream stream, LOCFile file, int type = 2)
@@ -15,7 +16,7 @@ namespace PckStudio.Classes.IO.LOC
             new LOCFileWriter(file).WriteToStream(stream, type);
         }
 
-        private LOCFileWriter(LOCFile file)
+        private LOCFileWriter(LOCFile file) : base(false)
         {
             _locfile = file;
         }
@@ -64,26 +65,10 @@ namespace PckStudio.Classes.IO.LOC
             }
         }
 
-        internal void WriteShort(Stream stream, short value)
-        {
-            byte[] bytes = BitConverter.GetBytes(value);
-            if (BitConverter.IsLittleEndian)
-                Array.Reverse(bytes);
-            stream.Write(bytes, 0, 2);
-        }
-        internal void WriteInt(Stream stream, int value)
-        {
-            byte[] bytes = BitConverter.GetBytes(value);
-            if (BitConverter.IsLittleEndian)
-                Array.Reverse(bytes);
-            stream.Write(bytes, 0, 4);
-        }
-
         internal void WriteString(Stream stream, string s)
         {
             WriteShort(stream, (short)s.Length);
-            byte[] buffer = Encoding.UTF8.GetBytes(s);
-            stream.Write(buffer, 0, s.Length);
+            WriteString(stream, s, Encoding.UTF8);
         }
     }
 }
