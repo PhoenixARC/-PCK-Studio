@@ -25,7 +25,7 @@ namespace PckStudio.Classes.IO.LOC
         {
             if (_locfile == null) throw new ArgumentNullException("Loc File is null");
             WriteInt(stream, type);
-            WriteInt(stream, _locfile.languages.Count);
+            WriteInt(stream, _locfile.Languages.Count);
             if (type == 2) WriteLocKeys(stream);
             WriteLanguages(stream);
             WriteLanguageEntries(stream, type);
@@ -35,14 +35,14 @@ namespace PckStudio.Classes.IO.LOC
         private void WriteLocKeys(Stream stream)
         {
             stream.WriteByte(0);
-            WriteInt(stream, _locfile.keys.Count);
-            foreach (var key in _locfile.keys.Keys)
+            WriteInt(stream, _locfile.LocKeys.Count);
+            foreach (var key in _locfile.LocKeys.Keys)
                 WriteString(stream, key);
         }
 
         private void WriteLanguages(Stream stream)
         {
-            foreach (var language in _locfile.languages)
+            foreach (var language in _locfile.Languages)
             {
                 WriteString(stream, language);
                 WriteInt(stream, 0);
@@ -51,16 +51,16 @@ namespace PckStudio.Classes.IO.LOC
 
         private void WriteLanguageEntries(Stream stream, int type)
         {
-            foreach (var language in _locfile.languages)
+            foreach (var language in _locfile.Languages)
             {
                 WriteInt(stream, 0x1337);
                 stream.WriteByte(0);
                 WriteString(stream, language);
-                WriteInt(stream, _locfile.keys.Keys.Count);
-                foreach(var locKey in _locfile.keys.Keys)
+                WriteInt(stream, _locfile.LocKeys.Keys.Count);
+                foreach(var locKey in _locfile.LocKeys.Keys)
                 {
                     if (type == 0) WriteString(stream, locKey);
-                    WriteString(stream, _locfile.keys[locKey][language]);
+                    WriteString(stream, _locfile.LocKeys[locKey][language]);
                 }
             }
         }

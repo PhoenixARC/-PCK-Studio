@@ -9,12 +9,17 @@ namespace PckStudio.Classes.FileTypes
 {
     public class LOCFile
     {
-        // loc key => language, name
-        public Dictionary<string, Dictionary<string, string>> keys { get; set; } = new Dictionary<string, Dictionary<string, string>>();
+        public class InvalidLanguageException : Exception
+        {
+            private string _language;
+            public string Language => _language;
+            public InvalidLanguageException(string message, string language) : base(message)
+            {
+                _language = language;
+            }
+        }
 
-        public List<string> languages = new List<string>(valid_languages.Length);
-
-        public static readonly string[] valid_languages = new string[]
+        public static readonly string[] ValidLanguages = new string[]
         {
             "cs-CS",
             "cs-CZ",
@@ -84,63 +89,96 @@ namespace PckStudio.Classes.FileTypes
             "zh-HanS",
             "zh-HanT",
         };
-        public void InitializeDefault(string PackName)
+
+        private Dictionary<string, Dictionary<string, string>> _lockeys = new Dictionary<string, Dictionary<string, string>>();
+        private List<string> _languages = new List<string>(ValidLanguages.Length);
+        public Dictionary<string, Dictionary<string, string>> LocKeys => _lockeys;
+        public List<string> Languages => _languages;
+
+        public void InitializeDefault(string packName)
+            => Initialize("en-EN", ("IDS_DISPLAY_NAME", packName));
+        public void Initialize(string language, params (string, string)[] locKeyValuePairs)
         {
-            AddLanguage("en-EN");
-            AddLocKey("IDS_DISPLAY_NAME", PackName);
+            AddLanguage(language);
+            foreach (var locKeyValue in locKeyValuePairs)
+                AddLocKey(locKeyValue.Item1, locKeyValue.Item2);
         }
 
-
-        public void AddSingleLocKey(string locKey, string language, string value)
+        public string GetLocEntry(string locKey, string language)
         {
-            if (keys.ContainsKey(locKey)) throw new Exception("Loc key already exists");
-            if (!languages.Contains(language)) throw new Exception("Language not found");
-            var dict = new Dictionary<string, string>();
-            dict.Add(language, value);
-            keys.Add(locKey, dict);
+            if (!LocKeys.ContainsKey(locKey))
+                throw new KeyNotFoundException("Loc key not found");
+            if (!Languages.Contains(language)) throw new KeyNotFoundException("Language Entry not found");
+            return GetTranslation(locKey)[language]?? string.Empty;
         }
 
-        public void AddLocKey(string locKey, string value)
+        private Dictionary<string, string> GetTranslation(string locKey)
         {
-            if (string.IsNullOrEmpty(locKey) || string.IsNullOrEmpty(value))
-                throw new ArgumentNullException("string cant be null");
-            if (keys.ContainsKey(locKey))
-                throw new Exception("loc key already exists");
-            foreach (var langauge in languages)
-            {
-                AddSingleLocKey(locKey, langauge, value);
-            }
+            if (!LocKeys.ContainsKey(locKey))
+                LocKeys.Add(locKey, new Dictionary<string, string>());
+            return LocKeys[locKey];
         }
-        public void ChangeSingleEntry(string locKey, string language, string newValue)
+
+        public void SetLocEntry(string locKey, string language, string value)
         {
-            if (!keys.ContainsKey(locKey)) throw new KeyNotFoundException("Loc key not found");
-            if (!keys[locKey].ContainsKey(language) || !languages.Contains(language)) throw new KeyNotFoundException("Language Entry not found");
-            keys[locKey][language] = newValue;
+            if (!LocKeys.ContainsKey(locKey))
+                LocKeys.Add(locKey, new Dictionary<string, string>());
+            if (!Languages.Contains(language))
+                throw new KeyNotFoundException(nameof(language));
+            GetTranslation(locKey)[language] = value;
         }
+
+        public bool AddSingleLocEntry(string locKey, string language, string value)
+        {
+            if (string.IsNullOrEmpty(locKey) ||
+                string.IsNullOrEmpty(language) ||
+                string.IsNullOrEmpty(value) ||
+                LocKeys.ContainsKey(locKey))
+                return false;
+            SetLocEntry(locKey, language, value);
+            return true;
+        }
+
+        public bool AddLocKey(string locKey, string value)
+        {
+            if (LocKeys.ContainsKey(locKey))
+                return false;
+            Languages.ForEach( langauge => AddSingleLocEntry(locKey, langauge, value) );
+            return true;
+        }
+        public void ChangeSingleEntry(string locKey, string language, string newValue) 
+            => SetLocEntry(locKey, language, newValue);
 
         public void ChangeEntry(string locKey, string newValue)
-        {
-            if (string.IsNullOrEmpty(locKey) || string.IsNullOrEmpty(newValue))
-                throw new ArgumentNullException("string cant be null");
-            if (!keys.ContainsKey(locKey))
-                throw new KeyNotFoundException("loc key not found");
-            foreach (var langauge in languages)
-            {
-                ChangeSingleEntry(locKey, langauge, newValue);
-            }
-        }
+            => Languages.ForEach(langauge => SetLocEntry(locKey, langauge, newValue));
 
-
-        public void RemoveEntry(string locKey)
+        public void RemoveLocKey(string locKey)
         {
-            if (!keys.ContainsKey(locKey)) throw new KeyNotFoundException("Loc key not found");
-            keys.Remove(locKey);
+            if (!LocKeys.ContainsKey(locKey))
+                throw new KeyNotFoundException(nameof(locKey));
+            LocKeys.Remove(locKey);
         }
 
         public void AddLanguage(string language)
         {
-            if (!valid_languages.Contains(language)) throw new Exception("Invalid language");
-            languages.Add(language);
+            if (!ValidLanguages.Contains(language))
+                throw new InvalidLanguageException("Invalid language", language);
+            if (Languages.Contains(language))
+                throw new InvalidLanguageException("Language already exists", language);
+            Languages.Add(language);
+            foreach(var key in LocKeys.Keys)
+                SetLocEntry(key, language, "");
+        }
+
+        public void RemoveLanguage(string language)
+        {
+            if (!ValidLanguages.Contains(language))
+                throw new InvalidLanguageException("Invalid language", language);
+            if (!Languages.Contains(language))
+                throw new InvalidLanguageException("Language doesn't exist", language);
+            if (Languages.Remove(language))
+                foreach (var translation in LocKeys.Values)
+                    translation.Remove(language);
         }
     }
 }

@@ -353,7 +353,7 @@ namespace PckStudio
                         foreach (var property in file.properties)
                         {
                             if (property.Item1 == "THEMENAMEID" || property.Item1 == "DISPLAYNAMEID")
-                                locFile.RemoveEntry(property.Item2);
+                                locFile.RemoveLocKey(property.Item2);
                         }
                         TrySetLocFile(locFile);
                     }
