@@ -577,6 +577,47 @@ namespace PckStudio
             add.Dispose();
         }
 
+        private void cloneFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TreeNode node = treeViewMain.SelectedNode;
+            PCKFile.FileData mfO = node.Tag as PCKFile.FileData;
+
+            PCKFile.FileData mf = new PCKFile.FileData("", mfO.type);//Creates new minefile template
+            mf.SetData(mfO.data);//adds file data to minefile
+            String dirName = Path.GetDirectoryName(mfO.name).Replace("\\", "/");
+
+            int clone_number = 0;
+            string old_clone_str = "_clone1";
+            String nameWithoutExt = Path.GetFileNameWithoutExtension(mfO.name);
+            String newFileName = mfO.name;
+            do // Checks for existing clones and names it accordingly
+			{
+                clone_number++;
+                string clone_str = "_clone" + clone_number.ToString();
+                bool isClone = nameWithoutExt.Contains("_clone");
+                if(isClone) newFileName = nameWithoutExt.Remove(nameWithoutExt.Length - 7) + clone_str + Path.GetExtension(mfO.name);
+                else newFileName = nameWithoutExt + clone_str + Path.GetExtension(mfO.name);
+                old_clone_str = clone_str;
+            }
+            while (currentPCK.HasFile(dirName + (String.IsNullOrEmpty(dirName) ? "" : "/") + newFileName, mf.type));
+
+            mf.name = dirName + (String.IsNullOrEmpty(dirName) ? "" : "/") + newFileName; //sets minfile name to file name
+            foreach (var entry in mfO.properties)
+            {
+                var property = (ValueTuple<string, string>)entry;
+                mf.properties.Add(property);
+            }
+
+            TreeNode newNode = new TreeNode();
+            newNode.Text = newFileName;
+            newNode.Tag = mf;
+            newNode.ImageIndex = node.ImageIndex;
+            newNode.SelectedImageIndex = node.SelectedImageIndex;
+
+            if (node.Parent == null) treeViewMain.Nodes.Insert(node.Index + 1, newNode); //adds generated minefile node
+            else node.Parent.Nodes.Insert(node.Index + 1, newNode);//adds generated minefile node to selected folder
+            currentPCK.file_entries.Insert(node.Index + 1, newNode.Tag as PCKFile.FileData);
+        }
 
         private void deleteEntryToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -2782,5 +2823,15 @@ namespace PckStudio
 		{
 			Process.Start("https://ko-fi.com/mattnl");
 		}
-    }
+
+		private void setFileType_Click(object sender, EventArgs e, int type)
+		{
+            TreeNode node = treeViewMain.SelectedNode;
+            if (node == null || node.Tag == null || !(node.Tag is PCKFile.FileData)) return;
+            var file = node.Tag as PCKFile.FileData;
+            Console.WriteLine("Old type:" + file.type);
+            Console.WriteLine("New type:" + type);
+            file.type = type;
+        }
+	}
 }
