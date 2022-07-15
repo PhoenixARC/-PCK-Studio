@@ -33,7 +33,7 @@ namespace PckStudio.Classes.FileTypes
             }
 
             public string name { get; set; }
-            public int type { get; }
+            public int type { get; set; }
             public byte[] data => _data;
             public int size => _size;
             public PCKProperties properties { get; set; } = new PCKProperties();
