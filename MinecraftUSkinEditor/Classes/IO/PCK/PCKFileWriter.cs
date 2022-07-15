@@ -11,7 +11,8 @@ namespace PckStudio.Classes.IO
 {
     internal class PCKFileWriter : StreamDataWriter
     {
-        internal PCKFile _file;
+        internal PCKFile _pckfile;
+        internal List<string> LUT = new List<string>();
 
         public static void Write(Stream stream, PCKFile file, bool isLittleEndian)
         {
@@ -20,14 +21,16 @@ namespace PckStudio.Classes.IO
 
         private PCKFileWriter(PCKFile file, bool isLittleEndian) : base(isLittleEndian)
         {
-            _file = file;
+            _pckfile = file;
+            LUT = _pckfile.GatherMetaTags();
         }
 
         private void WriteToStream(Stream stream)
         {
-            WriteInt(stream, _file.type);
-            WriteMetaEntries(stream);
+            WriteInt(stream, _pckfile.type);
+            WriteLookUpTable(stream);
             WriteFileEntries(stream);
+            WriteFileContents(stream);
         }
 
         internal void WriteString(Stream stream, string s)
@@ -37,40 +40,43 @@ namespace PckStudio.Classes.IO
             WriteInt(stream, 0); // padding
         }
 
-        internal void WriteMetaEntries(Stream stream)
+        internal void WriteLookUpTable(Stream stream)
         {
-            WriteInt(stream, _file.meta_data.Count);
-            _file.meta_data.ForEach(entry =>
+            WriteInt(stream, LUT.Count);
+            LUT.ForEach(entry =>
             {
-                WriteInt(stream, _file.meta_data.IndexOf(entry));
+                WriteInt(stream, LUT.IndexOf(entry));
                 WriteString(stream, entry);
             });
-            if (_file.meta_data.Contains("XMLVERSION"))
+            if (LUT.Contains("XMLVERSION"))
                 WriteInt(stream, 0x1337); // :^)
         }
 
         internal void WriteFileEntries(Stream stream)
         {
-            WriteInt(stream, _file.file_entries.Count);
-            foreach (var entry in _file.file_entries)
+            WriteInt(stream, _pckfile.Files.Count);
+            foreach (var file in _pckfile.Files)
             {
-                WriteInt(stream, entry.size);
-                WriteInt(stream, entry.type);
-                WriteString(stream, entry.name);
-            }
-            foreach (var entry in _file.file_entries)
-            {
-                WriteInt(stream, entry.properties.Count);
-                foreach (var property in entry.properties)
-                {
-                    if (!_file.meta_data.Contains(property.Item1))
-                        throw new Exception("Tag not in Meta: " + property.Item1);
-                    WriteInt(stream, _file.meta_data.IndexOf(property.Item1));
-                    WriteString(stream, property.Item2);
-                }
-                stream.Write(entry.data, 0, entry.size);
+                WriteInt(stream, file.size);
+                WriteInt(stream, file.type);
+                WriteString(stream, file.name);
             }
         }
-
+        
+        internal void WriteFileContents(Stream stream)
+        {
+            foreach (var file in _pckfile.Files)
+            {
+                WriteInt(stream, file.properties.Count);
+                foreach (var property in file.properties)
+                {
+                    if (!LUT.Contains(property.Item1))
+                        throw new Exception("Tag not in Look Up Table: " + property.Item1);
+                    WriteInt(stream, LUT.IndexOf(property.Item1));
+                    WriteString(stream, property.Item2);
+                }
+                WriteBytes(stream, file.data, file.size);
+            }
+        }
     }
 }

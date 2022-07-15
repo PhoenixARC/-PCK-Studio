@@ -11,6 +11,7 @@ namespace PckStudio.Classes.IO
     internal class PCKFileReader : StreamDataReader
     {
         internal PCKFile _file;
+        internal List<string> LUT;
 
         public static PCKFile Read(Stream stream, bool isLittleEndian)
         {
@@ -24,22 +25,23 @@ namespace PckStudio.Classes.IO
         private PCKFile ReadFileFromStream(Stream stream)
         {
             _file = new PCKFile(ReadInt(stream));
-            ReadMetaData(stream);
+            ReadLookUpTabel(stream);
             ReadFileEntries(stream);
+            ReadFileContents(stream);
             return _file;
         }
 
-        internal void ReadMetaData(Stream stream)
+        internal void ReadLookUpTabel(Stream stream)
         {
-            int meta_entry_count = ReadInt(stream);
-            _file.meta_data.Capacity = meta_entry_count;
-            for (; 0 < meta_entry_count; meta_entry_count--)
+            int count = ReadInt(stream);
+            LUT = new List<string>(count);
+            for (int i = 0; i < count; i++)
             {
                 int index = ReadInt(stream);
                 string value = ReadString(stream);
-                _file.meta_data.Insert(index, value);
+                LUT.Insert(index, value);
             }
-            if (_file.meta_data.Contains("XMLVERSION"))
+            if (LUT.Contains("XMLVERSION"))
                 Console.WriteLine(ReadInt(stream)); // xml version num ??
         }
 
@@ -52,21 +54,21 @@ namespace PckStudio.Classes.IO
                 int file_type = ReadInt(stream);
                 string name = ReadString(stream);
                 var entry = new PCKFile.FileData(name, file_type, file_size);
-                _file.file_entries.Add(entry);
+                _file.Files.Add(entry);
             }
-            foreach (var file_entry in _file.file_entries)
-            {
+        }
+        internal void ReadFileContents(Stream stream)
+        {
+            _file.Files.ForEach( file => {
                 int property_count = ReadInt(stream);
                 for (; 0 < property_count; property_count--)
                 {
-                    int index = ReadInt(stream);
-                    string key = _file.meta_data[index];
+                    string key = LUT[ReadInt(stream)];
                     string value = ReadString(stream);
-                    file_entry.properties.Add(new ValueTuple<string, string>(key, value));
+                    file.properties.Add((key, value));
                 }
-                // file data buffer is only allocated when FileData is constructed with `dataSize`
-                stream.Read(file_entry.data, 0, file_entry.size);
-            }
+                stream.Read(file.data, 0, file.size);
+            });
         }
         internal string ReadString(Stream stream)
         {

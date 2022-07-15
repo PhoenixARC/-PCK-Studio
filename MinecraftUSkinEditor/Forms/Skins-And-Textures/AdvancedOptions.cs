@@ -20,13 +20,6 @@ namespace PckStudio
         {
             InitializeComponent();
             currentPCK = currentPCKIn;
-
-            FormBorderStyle = FormBorderStyle.None;
-        }
-
-        private void AdvancedOptions_Load(object sender, EventArgs e)
-        {
-
         }
 
         private void addEntryToolStripMenuItem_Click(object sender, EventArgs e)
@@ -52,9 +45,9 @@ namespace PckStudio
                 {
                     foreach (TreeNode node in treeMeta.Nodes)
                     {
-                        foreach (PCKFile.FileData mf in currentPCK.file_entries)
+                        foreach (PCKFile.FileData file in currentPCK.Files)
                         {
-                            mf.properties.Add(new ValueTuple<string, string>(node.Text, node.Tag.ToString()));
+                            file.properties.Add((node.Text, node.Tag.ToString()));
                         }
                     }
                     MessageBox.Show("Data Added to All Entries");
@@ -65,7 +58,7 @@ namespace PckStudio
                     int i = 0;
                     do
                     {
-                        foreach (PCKFile.FileData mf in currentPCK.file_entries)
+                        foreach (PCKFile.FileData mf in currentPCK.Files)
                         {
                             MemoryStream png = new MemoryStream(mf.data);
                             if (Path.GetExtension(mf.name) == ".png")
@@ -88,7 +81,7 @@ namespace PckStudio
 
                     do
                     {
-                        foreach (PCKFile.FileData mf in currentPCK.file_entries)
+                        foreach (PCKFile.FileData mf in currentPCK.Files)
                         {
                             MemoryStream png = new MemoryStream(mf.data);
                             if (Path.GetExtension(mf.name) == ".png")
@@ -111,7 +104,7 @@ namespace PckStudio
 
                     do
                     {
-                        foreach (PCKFile.FileData mf in currentPCK.file_entries)
+                        foreach (PCKFile.FileData mf in currentPCK.Files)
                         {
                             if (Path.GetExtension(mf.name) == ".png")
                             {

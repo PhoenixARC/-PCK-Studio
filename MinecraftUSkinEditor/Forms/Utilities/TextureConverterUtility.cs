@@ -449,7 +449,7 @@ namespace PckStudio.Forms.Utilities
                 string Outpath = "assets\\minecraft\\textures\\";
 
 
-                foreach (PCKFile.FileData mf in Pck.file_entries)
+                foreach (PCKFile.FileData mf in Pck.Files)
                 {
                     System.IO.FileInfo file = new System.IO.FileInfo(Environment.CurrentDirectory + "\\Temp\\" + @"\" + mf.name);
                     file.Directory.Create(); // If the directory already exists, this method does nothing.
@@ -474,7 +474,7 @@ namespace PckStudio.Forms.Utilities
                 string Outpath = "assets\\minecraft\\textures\\";
 
 
-                foreach (PCKFile.FileData mf in Pck.file_entries)
+                foreach (PCKFile.FileData mf in Pck.Files)
                 {
                     System.IO.FileInfo file = new System.IO.FileInfo(Environment.CurrentDirectory + "\\Temp\\" + @"\" + mf.name);
                     file.Directory.Create(); // If the directory already exists, this method does nothing.
@@ -499,9 +499,9 @@ namespace PckStudio.Forms.Utilities
                 string Outpath = "assets\\minecraft\\textures\\";
 
 
-                foreach (PCKFile.FileData mf in Pck.file_entries)
+                foreach (PCKFile.FileData mf in Pck.Files)
                 {
-                    System.IO.FileInfo file = new System.IO.FileInfo(Environment.CurrentDirectory + "\\Temp\\" + @"\" + mf.name);
+                    FileInfo file = new FileInfo(Environment.CurrentDirectory + "\\Temp\\" + @"\" + mf.name);
                     file.Directory.Create(); // If the directory already exists, this method does nothing.
                     File.WriteAllBytes(Environment.CurrentDirectory + "\\Temp\\" + @"\" + mf.name, mf.data); //writes minefile to file
                 }

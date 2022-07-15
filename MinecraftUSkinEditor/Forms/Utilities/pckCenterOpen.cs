@@ -67,12 +67,8 @@ namespace PckStudio.Forms
                     buttonDirect.Font = new Font("Segoe UI", 8, FontStyle.Bold);
                     buttonDirect.ForeColor = Color.White;
                 }
-                buttonBedrock.Visible = false;
-                buttonDelete.Visible = false;
-                buttonExport.Visible = false;
-                buttonInstallPs3.Visible = false;
-                buttonInstallXbox.Visible = false;
-                buttonInstallWiiU.Visible = false;
+                buttonBedrock.Visible = buttonDelete.Visible = buttonExport.Visible = false;
+                buttonInstallPs3.Visible = buttonInstallXbox.Visible = buttonInstallWiiU.Visible = false;
             }
             else if (mode==1)//My Collection Mode
             {
@@ -143,7 +139,7 @@ namespace PckStudio.Forms
                         pck = PCKFileReader.Read(stream, false); //sets opened pck
                     }
                     PCKFile currentPCK = pck; //sets opened pck
-                    foreach (PCKFile.FileData skin in currentPCK.file_entries)
+                    foreach (PCKFile.FileData skin in currentPCK.Files)
                     {
                         if (skin.name.Count() == 19)
                         {

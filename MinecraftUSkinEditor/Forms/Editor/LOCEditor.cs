@@ -35,7 +35,7 @@ namespace PckStudio.Forms.Editor
 		private void LOCEditor_Load(object sender, EventArgs e)
 		{
 			RPC.SetPresence("LOC Editor", "Editing loc File.");
-			foreach(string locKey in currentLoc.keys.Keys)
+			foreach(string locKey in currentLoc.LocKeys.Keys)
 				treeViewLocKeys.Nodes.Add(locKey);
 		}
 
@@ -48,14 +48,14 @@ namespace PckStudio.Forms.Editor
 		{
 			var node = e.Node;
 			if (node == null ||
-				!currentLoc.keys.ContainsKey(node.Text))
+				!currentLoc.LocKeys.ContainsKey(node.Text))
 			{
 				MessageBox.Show("Selected Node does not seem to be in the loc file");
 				return;
 			}
 			tbl.Rows.Clear();
 			buttonReplaceAll.Enabled = true;
-			foreach (var l in currentLoc.keys[node.Text])
+			foreach (var l in currentLoc.LocKeys[node.Text])
 				tbl.Rows.Add(l.Key, l.Value);
 		}
 
@@ -76,7 +76,7 @@ namespace PckStudio.Forms.Editor
 		private void addDisplayIDToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			if (treeViewLocKeys.SelectedNode != null &&
-				!currentLoc.keys.ContainsKey(treeViewLocKeys.SelectedNode.Text))
+				!currentLoc.LocKeys.ContainsKey(treeViewLocKeys.SelectedNode.Text))
 				using (RenamePrompt prompt = new RenamePrompt(""))
 				{
 					prompt.OKButton.Text = "Add";
@@ -91,8 +91,8 @@ namespace PckStudio.Forms.Editor
         private void deleteDisplayIDToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			if(treeViewLocKeys.SelectedNode != null &&
-				currentLoc.keys.ContainsKey(treeViewLocKeys.SelectedNode.Text) &&
-				currentLoc.keys.Remove(treeViewLocKeys.SelectedNode.Text))
+				currentLoc.LocKeys.ContainsKey(treeViewLocKeys.SelectedNode.Text) &&
+				currentLoc.LocKeys.Remove(treeViewLocKeys.SelectedNode.Text))
 			{
 				treeViewLocKeys.SelectedNode.Remove();
 				wasModified = true;

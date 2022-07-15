@@ -7,8 +7,7 @@ namespace PckStudio.Classes.FileTypes
     public class PCKFile
     {
         public int type { get; }
-        public List<string> meta_data { get; } = new List<string>();
-        public List<FileData> file_entries { get; } = new List<FileData>();
+        public List<FileData> Files { get; } = new List<FileData>();
 
         public class FileData
         {
@@ -20,12 +19,12 @@ namespace PckStudio.Classes.FileTypes
                 DLCTextureFile      = 2,  // *.png
                 DLCUIDataFile       = 3,  // *.fui ????
                 // DLCInfoFile         = 4, // "0" file
-                // DLCTexturePackInfoFile = 5, // x16Info.pck
+                // DLCTexturePackInfoFile = 5, // (x16|x32|...)Info.pck
                 DLCLocalisationFile = 6,  // languages.loc/localisation.loc
-                DLCGameRulesFile    = 7,  // *.grf
+                DLCGameRulesFile    = 7,  // GameRiles.grf
                 DLCAudioFile        = 8,  // audio.pck
                 DLCColourTableFile  = 9,  // colours.col
-                DLCGameRulesHeader  = 10, // *.grh
+                DLCGameRulesHeader  = 10, // GameRiles.grh
                 DLCSkinDataFile     = 11, // *.pck made up name  -Miku
 		        DLCModelsFile       = 12, // models.bin
                 DLCBehavioursFile   = 13, // behaviours.bin
@@ -74,16 +73,16 @@ namespace PckStudio.Classes.FileTypes
             this.type = type;
         }
 
-        public void ValidateMeta()
+        public List<string> GatherMetaTags()
         {
-            file_entries.ForEach(file =>
-            {
-                file.properties.ForEach(pair =>
+            var LUT = new List<string>();
+            Files.ForEach(file => file.properties.ForEach(pair =>
                 {
-                    if (!meta_data.Contains(pair.Item1))
-                        meta_data.Add(pair.Item1);
-                });
-            });
+                    if (!LUT.Contains(pair.Item1))
+                        LUT.Add(pair.Item1);
+                })
+            );
+            return LUT;
         }
 
         public bool HasFile(string name, int type)
@@ -93,7 +92,7 @@ namespace PckStudio.Classes.FileTypes
 
         public FileData GetFile(string name, int type)
         {
-            foreach (var file in file_entries)
+            foreach (var file in Files)
             {
                 if (file.name == name && file.type == type)
                     return file;

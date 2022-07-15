@@ -54,7 +54,7 @@ namespace PckStudio
                     currentPCK = openPck(ofd.FileName);
                     if (checkForPassword())
                     {
-                        fileEntryCountLabel.Text = "Files:" + currentPCK.file_entries.Count;
+                        fileEntryCountLabel.Text = "Files:" + currentPCK.Files.Count;
                         treeViewMain.Enabled = true;
                         treeMeta.Enabled = true;
                         closeToolStripMenuItem.Visible = true;
@@ -81,13 +81,13 @@ namespace PckStudio
                 saveLocation = filePath;
                 pck = PCKFileReader.Read(fileStream, LittleEndianCheckBox.Checked);
             }
-            if (pck.type < 3) throw new Exception("Can't open pck file of type: " + pck.type.ToString());
+            //if (pck.type < 3) throw new Exception("Can't open pck file of type: " + pck.type.ToString());
             return pck;
         }
 
         private bool checkForPassword()
         {
-            foreach (var file_entry in currentPCK.file_entries)
+            foreach (var file_entry in currentPCK.Files)
             {
                 if (file_entry.name != "0") continue;
                 foreach (var pair in file_entry.properties)
@@ -134,7 +134,7 @@ namespace PckStudio
 
         private void BuildPckTreeView(TreeNodeCollection root, PCKFile pckFile)
         {
-            foreach (var file_entry in pckFile.file_entries)
+            foreach (var file_entry in pckFile.Files)
             {
                 TreeNode node = BuildNodeTreeBySeperator(root, file_entry.name, '/');
                 node.Tag = file_entry;
@@ -310,7 +310,6 @@ namespace PckStudio
 
         private void Save(string FilePath)
         {
-            currentPCK.ValidateMeta();
             using (var fs = File.OpenWrite(FilePath))
             {
                 PCKFileWriter.Write(fs, currentPCK, LittleEndianCheckBox.Checked);
@@ -358,7 +357,7 @@ namespace PckStudio
                         TrySetLocFile(locFile);
                     }
                 }
-                currentPCK.file_entries.Remove(file);
+                currentPCK.Files.Remove(file);
                 node.Remove();
                 saved = false;
             }
@@ -376,7 +375,7 @@ namespace PckStudio
                     {
                         //removes minefile from minefile list
                         PCKFile.FileData file = (PCKFile.FileData)item.Tag;
-                        currentPCK.file_entries.Remove(file);
+                        currentPCK.Files.Remove(file);
                         item.Remove();
                     }
                 }
@@ -411,10 +410,10 @@ namespace PckStudio
             if (add.ShowDialog() == DialogResult.OK)
             {
                 if (add.useCape)
-                    currentPCK.file_entries.Add(add.Cape);
+                    currentPCK.Files.Add(add.Cape);
                 if (!(treeViewMain.SelectedNode.Tag is PCKFile.FileData))
                     add.Skin.name = $"{treeViewMain.SelectedNode.FullPath}/{add.Skin.name}";
-                currentPCK.file_entries.Add(add.Skin);
+                currentPCK.Files.Add(add.Skin);
                 TrySetLocFile(locFile);
                 saved = false;
                 BuildMainTreeView();
@@ -616,7 +615,7 @@ namespace PckStudio
 
             if (node.Parent == null) treeViewMain.Nodes.Insert(node.Index + 1, newNode); //adds generated minefile node
             else node.Parent.Nodes.Insert(node.Index + 1, newNode);//adds generated minefile node to selected folder
-            currentPCK.file_entries.Insert(node.Index + 1, newNode.Tag as PCKFile.FileData);
+            currentPCK.Files.Insert(node.Index + 1, newNode.Tag as PCKFile.FileData);
         }
 
         private void deleteEntryToolStripMenuItem_Click(object sender, EventArgs e)
@@ -670,8 +669,8 @@ namespace PckStudio
             //if (treeViewMain.SelectedNode.Tag is PCKFile.FileData)
             //{
             //	PCKFile.FileData file = treeViewMain.SelectedNode.Tag as PCKFile.FileData;
-            //	int file_index = currentPCK.file_entries.IndexOf(file);
-            //	currentPCK.file_entries.Swap(file_index, file_index - 1);
+            //	int file_index = currentPCK.Files.IndexOf(file);
+            //	currentPCK.Files.Swap(file_index, file_index - 1);
             //	saved = false;
             //}
             //return;
@@ -702,8 +701,8 @@ namespace PckStudio
             //if (treeViewMain.SelectedNode.Tag is PCKFile.FileData)
             //{
             //    PCKFile.FileData file = treeViewMain.SelectedNode.Tag as PCKFile.FileData;
-            //    int file_index = currentPCK.file_entries.IndexOf(file);
-            //    currentPCK.file_entries.Swap(file_index, file_index + 1);
+            //    int file_index = currentPCK.Files.IndexOf(file);
+            //    currentPCK.Files.Swap(file_index, file_index + 1);
             //    saved = false;
             //}
             //return;
@@ -803,8 +802,6 @@ namespace PckStudio
         private void InitializeSkinPack(int packId, int packVersion, string packName)
         {
             currentPCK = new PCKFile(3);
-            currentPCK.meta_data.Add("PACKID");
-            currentPCK.meta_data.Add("PACKVERSION");
             var zeroFile = new PCKFile.FileData("0", 4);
             zeroFile.properties.Add(("PACKID", packId.ToString()));
             zeroFile.properties.Add(("PACKVERSION", packVersion.ToString()));
@@ -816,18 +813,17 @@ namespace PckStudio
                 LOCFileWriter.Write(stream, locFile);
                 loc.SetData(stream.ToArray());
             }
-            currentPCK.file_entries.Add(zeroFile);
-            currentPCK.file_entries.Add(loc);
+            currentPCK.Files.Add(zeroFile);
+            currentPCK.Files.Add(loc);
         }
 
         private void InitializeTexturePack(int packId, int packVersion, string packName)
         {
             InitializeSkinPack(packId, packVersion, packName);
-            currentPCK.meta_data.Add("DATAPATH");
             var texturepackInfo = new PCKFile.FileData("x16/x16Info.pck", 5);
             texturepackInfo.properties.Add(("PACKID", "0"));
             texturepackInfo.properties.Add(("DATAPATH", "x16Data.pck"));
-            currentPCK.file_entries.Add(texturepackInfo);
+            currentPCK.Files.Add(texturepackInfo);
         }
 
         private void skinPackToolStripMenuItem_Click(object sender, EventArgs e)
@@ -944,7 +940,7 @@ namespace PckStudio
                     {
                         pckfile = PCKFileReader.Read(fs, LittleEndianCheckBox.Checked);
                     }
-                    foreach (PCKFile.FileData mf in pckfile.file_entries)
+                    foreach (PCKFile.FileData mf in pckfile.Files)
                     {
                         foreach (var entry in mf.properties)
                         {
@@ -1034,7 +1030,7 @@ namespace PckStudio
 
                     TreeNode skin = new TreeNode(); //create template treenode for minefile
 
-                    currentPCK.file_entries.Add(mfNew);//adds new minefile to minefile list for skin
+                    currentPCK.Files.Add(mfNew);//adds new minefile to minefile list for skin
 
                     //Sets minefile directory based on pcks structure/type
                     if (mashupStructure == true)
@@ -1337,7 +1333,7 @@ namespace PckStudio
             //			//add all skins to a list
             //			List<PCKFile.FileData> skinsList = new List<PCKFile.FileData>();
             //			List<PCKFile.FileData> capesList = new List<PCKFile.FileData>();
-            //			foreach (PCKFile.FileData skin in currentPCK.file_entries)
+            //			foreach (PCKFile.FileData skin in currentPCK.Files)
             //			{
             //				if (skin.name.Count() == 19)
             //				{
@@ -2829,8 +2825,7 @@ namespace PckStudio
             TreeNode node = treeViewMain.SelectedNode;
             if (node == null || node.Tag == null || !(node.Tag is PCKFile.FileData)) return;
             var file = node.Tag as PCKFile.FileData;
-            Console.WriteLine("Old type:" + file.type);
-            Console.WriteLine("New type:" + type);
+            Console.WriteLine("Setting {file.type} to {type}");
             file.type = type;
         }
 	}
