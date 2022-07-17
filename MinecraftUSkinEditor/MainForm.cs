@@ -81,22 +81,19 @@ namespace PckStudio
                 saveLocation = filePath;
                 pck = PCKFileReader.Read(fileStream, LittleEndianCheckBox.Checked);
             }
-            //if (pck.type < 3) throw new Exception("Can't open pck file of type: " + pck.type.ToString());
+            if (pck.type < 3) throw new Exception("Can't open pck file of type: " + pck.type.ToString());
             return pck;
         }
 
         private bool checkForPassword()
         {
-            foreach (var file_entry in currentPCK.Files)
-            {
-                if (file_entry.name != "0") continue;
-                foreach (var pair in file_entry.properties)
+            if (currentPCK.HasFile("0", 4))
+                foreach (var pair in currentPCK.GetFile("0", 4).properties)
                 {
-                    addPasswordToolStripMenuItem.Enabled = !(pair.Item1 == "LOCK");
+                    addPasswordToolStripMenuItem.Enabled = pair.Item1 != "LOCK";
                     if (pair.Item1 == "LOCK")
                         return new pckLocked(pair.Item2).ShowDialog() == DialogResult.OK;
                 }
-            }
             addPasswordToolStripMenuItem.Enabled = true;
             return true;
         }
@@ -134,43 +131,44 @@ namespace PckStudio
 
         private void BuildPckTreeView(TreeNodeCollection root, PCKFile pckFile)
         {
-            foreach (var file_entry in pckFile.Files)
+            pckFile.Files.ForEach(file =>
             {
-                TreeNode node = BuildNodeTreeBySeperator(root, file_entry.name, '/');
-                node.Tag = file_entry;
-                if (file_entry.type == 0 || file_entry.type == 1 || file_entry.type == 2) // skins, capes, textures
+                TreeNode node = BuildNodeTreeBySeperator(root, file.name, '/');
+                node.Tag = file;
+                switch (file.type)
                 {
-                    node.ImageIndex = 2;
-                    node.SelectedImageIndex = 2;
+                    case 0:
+                    case 1:
+                    case 2:
+                        node.ImageIndex = 2;
+                        node.SelectedImageIndex = 2;
+                        break;
+                    case 6:
+                        node.ImageIndex = 3;
+                        node.SelectedImageIndex = 3;
+                        break;
+                    case 8:
+                        node.ImageIndex = 1;
+                        node.SelectedImageIndex = 1;
+                        break;
+                    case 5:
+                    case 11:
+                        node.ImageIndex = 4;
+                        node.SelectedImageIndex = 4;
+                        // TODO: load sub pck into tree and make it editable with ease
+                        // works but not currently included...
+                        using (var stream = new MemoryStream(file.data))
+                        {
+                            PCKFile subPCKfile = PCKFileReader.Read(stream, LittleEndianCheckBox.Checked);
+                            BuildPckTreeView(node.Nodes, subPCKfile);
+                        }
+                        break;
+                    default:
+                        node.ImageIndex = 5;
+                        node.SelectedImageIndex = 5;
+                        break;
                 }
-                else if (file_entry.type == 6) // .loc 
-                {
-                    node.ImageIndex = 3;
-                    node.SelectedImageIndex = 3;
-                }
-                else if (file_entry.type == 8) // audio / binka
-                {
-                    node.ImageIndex = 1;
-                    node.SelectedImageIndex = 1;
-                }
-                else if (file_entry.type == 11 || file_entry.type == 5) // Skins.pck, x16info.pck
-                {
-                    node.ImageIndex = 4;
-                    node.SelectedImageIndex = 4;
-                    // TODO: load sub pck into tree and make it editable with ease
-                    // works but not currently included...
-                    using (var stream = new MemoryStream(file_entry.data))
-                    {
-                        PCKFile subPCKfile = PCKFileReader.Read(stream, LittleEndianCheckBox.Checked);
-                        BuildPckTreeView(node.Nodes, subPCKfile);
-                    }
-                }
-                else
-                {
-                    node.ImageIndex = 5;
-                    node.SelectedImageIndex = 5;
-                }
-            }
+            });
         }
 
         private void BuildMainTreeView()
