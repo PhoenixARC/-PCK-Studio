@@ -23,7 +23,7 @@ namespace PckStudio
 {
     public partial class MainForm : MetroFramework.Forms.MetroForm
     {
-        string saveLocation = string.Empty;
+        public string saveLocation = string.Empty;
         PCKFile currentPCK = null;
         bool needsUpdate = false;
         bool saved = true;
@@ -31,6 +31,18 @@ namespace PckStudio
         public MainForm()
         {
             InitializeComponent();
+            this.skinToolStripMenuItem1.Click += (sender, EventArgs) => { setFileType_Click(sender, EventArgs, 0); };
+            this.capeToolStripMenuItem.Click += (sender, EventArgs) => { setFileType_Click(sender, EventArgs, 1); };
+            this.textureToolStripMenuItem.Click += (sender, EventArgs) => { setFileType_Click(sender, EventArgs, 2); };
+            this.languagesFileLOCToolStripMenuItem.Click += (sender, EventArgs) => { setFileType_Click(sender, EventArgs, 6); };
+            this.gameRulesFileGRFToolStripMenuItem.Click += (sender, EventArgs) => { setFileType_Click(sender, EventArgs, 7); };
+            this.audioPCKFileToolStripMenuItem.Click += (sender, EventArgs) => { setFileType_Click(sender, EventArgs, 8); };
+            this.coloursCOLFileToolStripMenuItem.Click += (sender, EventArgs) => { setFileType_Click(sender, EventArgs, 9); };
+            this.gameRulesHeaderGRHToolStripMenuItem.Click += (sender, EventArgs) => { setFileType_Click(sender, EventArgs, 10); };
+            this.skinsPCKToolStripMenuItem.Click += (sender, EventArgs) => { setFileType_Click(sender, EventArgs, 11); };
+            this.modelsFileBINToolStripMenuItem.Click += (sender, EventArgs) => { setFileType_Click(sender, EventArgs, 12); };
+            this.behavioursFileBINToolStripMenuItem.Click += (sender, EventArgs) => { setFileType_Click(sender, EventArgs, 13); };
+            this.entityMaterialsFileBINToolStripMenuItem.Click += (sender, EventArgs) => { setFileType_Click(sender, EventArgs, 14); };
             imageList.Images.Add(Resources.ZZFolder);
             imageList.Images.Add(Resources.BINKA_ICON);
             imageList.Images.Add(Resources.IMAGE_ICON);
