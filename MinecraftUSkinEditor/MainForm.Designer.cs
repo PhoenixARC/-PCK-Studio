@@ -878,73 +878,61 @@
 			// 
 			this.skinToolStripMenuItem1.Name = "skinToolStripMenuItem1";
 			resources.ApplyResources(this.skinToolStripMenuItem1, "skinToolStripMenuItem1");
-			this.skinToolStripMenuItem1.Click += (sender, EventArgs) => { setFileType_Click(sender, EventArgs, 0); };
 			// 
 			// capeToolStripMenuItem
 			// 
 			this.capeToolStripMenuItem.Name = "capeToolStripMenuItem";
 			resources.ApplyResources(this.capeToolStripMenuItem, "capeToolStripMenuItem");
-			this.capeToolStripMenuItem.Click += (sender, EventArgs) => { setFileType_Click(sender, EventArgs, 1); };
 			// 
 			// textureToolStripMenuItem
 			// 
 			this.textureToolStripMenuItem.Name = "textureToolStripMenuItem";
 			resources.ApplyResources(this.textureToolStripMenuItem, "textureToolStripMenuItem");
-			this.textureToolStripMenuItem.Click += (sender, EventArgs) => { setFileType_Click(sender, EventArgs, 2); };
 			// 
 			// languagesFileLOCToolStripMenuItem
 			// 
 			this.languagesFileLOCToolStripMenuItem.Name = "languagesFileLOCToolStripMenuItem";
 			resources.ApplyResources(this.languagesFileLOCToolStripMenuItem, "languagesFileLOCToolStripMenuItem");
-			this.languagesFileLOCToolStripMenuItem.Click += (sender, EventArgs) => { setFileType_Click(sender, EventArgs, 6); };
 			// 
 			// gameRulesFileGRFToolStripMenuItem
 			// 
 			this.gameRulesFileGRFToolStripMenuItem.Name = "gameRulesFileGRFToolStripMenuItem";
 			resources.ApplyResources(this.gameRulesFileGRFToolStripMenuItem, "gameRulesFileGRFToolStripMenuItem");
-			this.gameRulesFileGRFToolStripMenuItem.Click += (sender, EventArgs) => { setFileType_Click(sender, EventArgs, 7); };
 			// 
 			// audioPCKFileToolStripMenuItem
 			// 
 			this.audioPCKFileToolStripMenuItem.Name = "audioPCKFileToolStripMenuItem";
 			resources.ApplyResources(this.audioPCKFileToolStripMenuItem, "audioPCKFileToolStripMenuItem");
-			this.audioPCKFileToolStripMenuItem.Click += (sender, EventArgs) => { setFileType_Click(sender, EventArgs, 8); };
 			// 
 			// coloursCOLFileToolStripMenuItem
 			// 
 			this.coloursCOLFileToolStripMenuItem.Name = "coloursCOLFileToolStripMenuItem";
 			resources.ApplyResources(this.coloursCOLFileToolStripMenuItem, "coloursCOLFileToolStripMenuItem");
-			this.coloursCOLFileToolStripMenuItem.Click += (sender, EventArgs) => { setFileType_Click(sender, EventArgs, 9); };
 			// 
 			// gameRulesHeaderGRHToolStripMenuItem
 			// 
 			this.gameRulesHeaderGRHToolStripMenuItem.Name = "gameRulesHeaderGRHToolStripMenuItem";
 			resources.ApplyResources(this.gameRulesHeaderGRHToolStripMenuItem, "gameRulesHeaderGRHToolStripMenuItem");
-			this.gameRulesHeaderGRHToolStripMenuItem.Click += (sender, EventArgs) => { setFileType_Click(sender, EventArgs, 10); };
 			// 
 			// skinsPCKToolStripMenuItem
 			// 
 			this.skinsPCKToolStripMenuItem.Name = "skinsPCKToolStripMenuItem";
 			resources.ApplyResources(this.skinsPCKToolStripMenuItem, "skinsPCKToolStripMenuItem");
-			this.skinsPCKToolStripMenuItem.Click += (sender, EventArgs) => { setFileType_Click(sender, EventArgs, 11); };
 			// 
 			// modelsFileBINToolStripMenuItem
 			// 
 			this.modelsFileBINToolStripMenuItem.Name = "modelsFileBINToolStripMenuItem";
 			resources.ApplyResources(this.modelsFileBINToolStripMenuItem, "modelsFileBINToolStripMenuItem");
-			this.modelsFileBINToolStripMenuItem.Click += (sender, EventArgs) => { setFileType_Click(sender, EventArgs, 12); };
 			// 
 			// behavioursFileBINToolStripMenuItem
 			// 
 			this.behavioursFileBINToolStripMenuItem.Name = "behavioursFileBINToolStripMenuItem";
 			resources.ApplyResources(this.behavioursFileBINToolStripMenuItem, "behavioursFileBINToolStripMenuItem");
-			this.behavioursFileBINToolStripMenuItem.Click += (sender, EventArgs) => { setFileType_Click(sender, EventArgs, 13); };
 			// 
 			// entityMaterialsFileBINToolStripMenuItem
 			// 
 			this.entityMaterialsFileBINToolStripMenuItem.Name = "entityMaterialsFileBINToolStripMenuItem";
 			resources.ApplyResources(this.entityMaterialsFileBINToolStripMenuItem, "entityMaterialsFileBINToolStripMenuItem");
-			this.entityMaterialsFileBINToolStripMenuItem.Click += (sender, EventArgs) => { setFileType_Click(sender, EventArgs, 14); };
 			// 
 			// MainForm
 			// 
