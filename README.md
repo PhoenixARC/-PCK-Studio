@@ -36,7 +36,7 @@ Modify .PCK archives as you please!
 
 ## Contributers:
 *  [PhoenixARC](https://github.com/PhoenixARC)
-*  [MNL]([MNL](https://github.com/MattN-L))
+*  [MNL](https://github.com/MattN-L)
 *  [Miku-666](https://github.com/NessieHax)
 
 *  [Nobledez](https://github.com/Nobledez)
