@@ -35,10 +35,10 @@ Modify .PCK archives as you please!
 
 
 ## Contributers:
-*  [https://github.com/PhoenixARC](PhoenixARC)
-*  [https://github.com/MattN-L](MNL)
-*  [https://github.com/NessieHax](Miku-666)
+*  [PhoenixARC](https://github.com/PhoenixARC)
+*  [MNL]([MNL](https://github.com/MattN-L))
+*  [Miku-666](https://github.com/NessieHax)
 
-*  [https://github.com/Nobledez](NobleDez)
-*  [https://github.com/XxModZxXWiiPlaza](XxModZxXWiiPlaza)
-*  [https://github.com/BullyWiiPlaza](SlothWiiPlaza)
+*  [Nobledez](https://github.com/Nobledez)
+*  [XxModZxXWiiPlaza](https://github.com/XxModZxXWiiPlaza)
+*  [SlothWiiPlaza](https://github.com/BullyWiiPlaza)
