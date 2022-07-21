@@ -41,3 +41,4 @@ Modify .PCK archives as you please!
 *  [Nobledez](https://github.com/Nobledez)
 *  [XxModZxXWiiPlaza](https://github.com/XxModZxXWiiPlaza)
 *  [SlothWiiPlaza](https://github.com/BullyWiiPlaza)
+*  [jam1garner](https://github.com/jam1garner)
