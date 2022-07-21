@@ -32,3 +32,13 @@ Modify .PCK archives as you please!
 ### A quick note:
 
 * Forms will not load in viewer until the solution is build _at least_ once
+
+
+## Contributers:
+*  [PhoenixARC](https://github.com/PhoenixARC)
+*  [MNL](https://github.com/MattN-L)
+*  [Miku-666](https://github.com/NessieHax)<br/><br/>
+*  [Nobledez](https://github.com/Nobledez)
+*  [XxModZxXWiiPlaza](https://github.com/XxModZxXWiiPlaza)
+*  [SlothWiiPlaza](https://github.com/Kashiiera)
+*  [jam1garner](https://github.com/jam1garner)
