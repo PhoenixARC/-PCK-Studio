@@ -32,3 +32,13 @@ Modify .PCK archives as you please!
 ### A quick note:
 
 * Forms will not load in viewer until the solution is build _at least_ once
+
+
+## Contributers:
+*  <a href="(https://github.com/PhoenixARC">PhoenixARC</a>
+*  <a href="(https://github.com/MattN-L">MNL</a>
+*  <a href="(https://github.com/NessieHax">Miku-666</a>
+
+*  <a href="(https://github.com/Nobledez">NobleDez</a>
+*  <a href="(https://github.com/XxModZxXWiiPlaza">XxModZxXWiiPlaza</a>
+*  <a href="(https://github.com/BullyWiiPlaza">SlothWiiPlaza</a>
