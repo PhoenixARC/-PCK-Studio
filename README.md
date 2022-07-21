@@ -38,8 +38,7 @@ Modify .PCK archives as you please!
 *  [PhoenixARC](https://github.com/PhoenixARC)
 *  [MNL](https://github.com/MattN-L)
 *  [Miku-666](https://github.com/NessieHax)
-
-
+\n
 *  [Nobledez](https://github.com/Nobledez)
 *  [XxModZxXWiiPlaza](https://github.com/XxModZxXWiiPlaza)
 *  [SlothWiiPlaza](https://github.com/BullyWiiPlaza)
