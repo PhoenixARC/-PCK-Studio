@@ -13,52 +13,18 @@ namespace PckStudio
 {
     public partial class meta : MetroFramework.Forms.MetroForm
     {
-        PCKFile currentPCK;
+        List<string> metaList;
 
-        public meta(PCKFile currentPCKIn)
+        public meta(List<string> metaTags)
         {
             InitializeComponent();
-
-            currentPCK = currentPCKIn;
-
-            FormBorderStyle = FormBorderStyle.None;
+            metaList = metaTags;
         }
 
         private void meta_Load(object sender, EventArgs e)
         {
-            refresh();
-        }
-
-        private void refresh()
-        {
             treeView1.Nodes.Clear();
-            foreach (string key in currentPCK.meta_data)
-            {
-                treeView1.Nodes.Add(key);
-            }
-        }
-
-        private void addToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            PckStudio.MetaADD add = new PckStudio.MetaADD(currentPCK);
-            add.TopMost = true;
-            add.TopLevel = true;
-            add.ShowDialog();
-            add.Dispose();
-            refresh();
-        }
-
-        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (currentPCK.meta_data.Contains(treeView1.SelectedNode.Text))
-                currentPCK.meta_data.Remove(treeView1.SelectedNode.Text);
-            refresh();
-        }
-
-        private void treeView1_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Delete && treeView1.SelectedNode != null)
-                deleteToolStripMenuItem_Click(sender, e);
+            metaList.ForEach(s => treeView1.Nodes.Add(s));
         }
     }
 }

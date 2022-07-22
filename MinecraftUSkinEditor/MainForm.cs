@@ -790,7 +790,7 @@ namespace PckStudio
 
         private void metaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            meta edit = new meta(currentPCK);
+            meta edit = new meta(currentPCK.GatherMetaTags());
             edit.TopMost = true;
             edit.TopLevel = true;
             edit.Show();
