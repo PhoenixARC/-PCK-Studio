@@ -55,7 +55,7 @@ namespace PckStudio.Forms.Editor
 			}
 			tbl.Rows.Clear();
 			buttonReplaceAll.Enabled = true;
-			foreach (var l in currentLoc.LocKeys[node.Text])
+			foreach (var l in currentLoc.GetLocEntries(node.Text))
 				tbl.Rows.Add(l.Key, l.Value);
 		}
 
@@ -67,7 +67,7 @@ namespace PckStudio.Forms.Editor
 			{
 				if (diag.ShowDialog() == DialogResult.OK)
 				{
-					currentLoc.ChangeEntry(node.Text, diag.NewText);
+					currentLoc.SetLocEntry(node.Text, diag.NewText);
 					wasModified = true;
 				}
 			}
@@ -107,7 +107,7 @@ namespace PckStudio.Forms.Editor
 				MessageBox.Show("something went wrong");
 				return;
             }
-			currentLoc.ChangeSingleEntry(treeViewLocKeys.SelectedNode.Text, tbl.Rows[e.RowIndex][0].ToString(), tbl.Rows[e.RowIndex][1].ToString());
+			currentLoc.SetLocEntry(treeViewLocKeys.SelectedNode.Text, tbl.Rows[e.RowIndex][0].ToString(), tbl.Rows[e.RowIndex][1].ToString());
 			wasModified = true;
         }
 
@@ -123,7 +123,8 @@ namespace PckStudio.Forms.Editor
             {
                 tbl.Rows[i][1] = textBoxReplaceAll.Text;
             }
-			currentLoc.ChangeEntry(treeViewLocKeys.SelectedNode.Text, textBoxReplaceAll.Text);
+
+			currentLoc.SetLocEntry(treeViewLocKeys.SelectedNode.Text, textBoxReplaceAll.Text);
 			wasModified = true;
 		}
 

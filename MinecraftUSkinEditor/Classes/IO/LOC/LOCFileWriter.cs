@@ -23,7 +23,7 @@ namespace PckStudio.Classes.IO.LOC
 
         private void WriteToStream(Stream stream, int type)
         {
-            if (_locfile == null) throw new ArgumentNullException("Loc File is null");
+            if (_locfile == null) throw new ArgumentNullException(nameof(_locfile));
             WriteInt(stream, type);
             WriteInt(stream, _locfile.Languages.Count);
             if (type == 2) WriteLocKeys(stream);
@@ -34,7 +34,7 @@ namespace PckStudio.Classes.IO.LOC
 
         private void WriteLocKeys(Stream stream)
         {
-            stream.WriteByte(0);
+            stream.WriteByte(0); // dont use stringIds(ints)
             WriteInt(stream, _locfile.LocKeys.Count);
             foreach (var key in _locfile.LocKeys.Keys)
                 WriteString(stream, key);
@@ -42,19 +42,20 @@ namespace PckStudio.Classes.IO.LOC
 
         private void WriteLanguages(Stream stream)
         {
-            foreach (var language in _locfile.Languages)
+            _locfile.Languages.ForEach(language =>
             {
                 WriteString(stream, language);
                 WriteInt(stream, 0);
-            }
+            });
         }
 
         private void WriteLanguageEntries(Stream stream, int type)
         {
-            foreach (var language in _locfile.Languages)
+            _locfile.Languages.ForEach(language =>
             {
-                WriteInt(stream, 0x1337);
-                stream.WriteByte(0);
+                WriteInt(stream, 0x6D696B75); // :P
+                stream.WriteByte(0); // <- only write when the previous written int was >0
+
                 WriteString(stream, language);
                 WriteInt(stream, _locfile.LocKeys.Keys.Count);
                 foreach(var locKey in _locfile.LocKeys.Keys)
@@ -62,12 +63,12 @@ namespace PckStudio.Classes.IO.LOC
                     if (type == 0) WriteString(stream, locKey);
                     WriteString(stream, _locfile.LocKeys[locKey][language]);
                 }
-            }
+            });
         }
 
-        internal void WriteString(Stream stream, string s)
+        private void WriteString(Stream stream, string s)
         {
-            WriteShort(stream, (short)s.Length);
+            WriteShort(stream, Convert.ToInt16(Encoding.UTF8.GetByteCount(s)));
             WriteString(stream, s, Encoding.UTF8);
         }
     }

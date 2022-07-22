@@ -92,6 +92,7 @@ namespace PckStudio.Classes.FileTypes
 
         private Dictionary<string, Dictionary<string, string>> _lockeys = new Dictionary<string, Dictionary<string, string>>();
         private List<string> _languages = new List<string>(ValidLanguages.Length);
+
         public Dictionary<string, Dictionary<string, string>> LocKeys => _lockeys;
         public List<string> Languages => _languages;
 
@@ -103,15 +104,6 @@ namespace PckStudio.Classes.FileTypes
             foreach (var locKeyValue in locKeyValuePairs)
                 AddLocKey(locKeyValue.Item1, locKeyValue.Item2);
         }
-
-        public string GetLocEntry(string locKey, string language)
-        {
-            if (!LocKeys.ContainsKey(locKey))
-                throw new KeyNotFoundException("Loc key not found");
-            if (!Languages.Contains(language)) throw new KeyNotFoundException("Language Entry not found");
-            return GetTranslation(locKey)[language]?? string.Empty;
-        }
-
         private Dictionary<string, string> GetTranslation(string locKey)
         {
             if (!LocKeys.ContainsKey(locKey))
@@ -119,44 +111,49 @@ namespace PckStudio.Classes.FileTypes
             return LocKeys[locKey];
         }
 
-        public void SetLocEntry(string locKey, string language, string value)
+        public Dictionary<string, string> GetLocEntries(string locKey)
         {
             if (!LocKeys.ContainsKey(locKey))
-                LocKeys.Add(locKey, new Dictionary<string, string>());
+                throw new KeyNotFoundException("Loc key not found");
+            return LocKeys[locKey];
+        }
+
+        public string GetLocEntry(string locKey, string language)
+        {
+            if (!LocKeys.ContainsKey(locKey))
+                throw new KeyNotFoundException(nameof(locKey));
+            if (!Languages.Contains(language)) throw new KeyNotFoundException("Language Entry not found");
+            return GetTranslation(locKey)[language]?? string.Empty;
+        }
+
+        public void SetLocEntry(string locKey, string value)
+        {
+            foreach (var language in Languages)
+            {
+                GetTranslation(locKey)[language] = value;
+            }
+        }
+
+        public void SetLocEntry(string locKey, string language, string value)
+        {
             if (!Languages.Contains(language))
                 throw new KeyNotFoundException(nameof(language));
             GetTranslation(locKey)[language] = value;
-        }
-
-        public bool AddSingleLocEntry(string locKey, string language, string value)
-        {
-            if (string.IsNullOrEmpty(locKey) ||
-                string.IsNullOrEmpty(language) ||
-                string.IsNullOrEmpty(value) ||
-                LocKeys.ContainsKey(locKey))
-                return false;
-            SetLocEntry(locKey, language, value);
-            return true;
         }
 
         public bool AddLocKey(string locKey, string value)
         {
             if (LocKeys.ContainsKey(locKey))
                 return false;
-            Languages.ForEach( langauge => AddSingleLocEntry(locKey, langauge, value) );
+            Languages.ForEach( langauge => SetLocEntry(locKey, langauge, value) );
             return true;
         }
-        public void ChangeSingleEntry(string locKey, string language, string newValue) 
-            => SetLocEntry(locKey, language, newValue);
 
-        public void ChangeEntry(string locKey, string newValue)
-            => Languages.ForEach(langauge => SetLocEntry(locKey, langauge, newValue));
-
-        public void RemoveLocKey(string locKey)
+        public bool RemoveLocKey(string locKey)
         {
             if (!LocKeys.ContainsKey(locKey))
-                throw new KeyNotFoundException(nameof(locKey));
-            LocKeys.Remove(locKey);
+                return false;
+            return LocKeys.Remove(locKey);
         }
 
         public void AddLanguage(string language)
