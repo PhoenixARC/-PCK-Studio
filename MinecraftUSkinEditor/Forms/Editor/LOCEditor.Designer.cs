@@ -33,7 +33,6 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addDisplayIDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.renameDisplayIDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteDisplayIDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.GridContextMenu = new MetroFramework.Controls.MetroContextMenu(this.components);
             this.addLanguageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -53,7 +52,6 @@
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addDisplayIDToolStripMenuItem,
-            this.renameDisplayIDToolStripMenuItem,
             this.deleteDisplayIDToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             resources.ApplyResources(this.contextMenuStrip1, "contextMenuStrip1");
@@ -63,12 +61,6 @@
             this.addDisplayIDToolStripMenuItem.Name = "addDisplayIDToolStripMenuItem";
             resources.ApplyResources(this.addDisplayIDToolStripMenuItem, "addDisplayIDToolStripMenuItem");
             this.addDisplayIDToolStripMenuItem.Click += new System.EventHandler(this.addDisplayIDToolStripMenuItem_Click);
-            // 
-            // renameDisplayIDToolStripMenuItem
-            // 
-            resources.ApplyResources(this.renameDisplayIDToolStripMenuItem, "renameDisplayIDToolStripMenuItem");
-            this.renameDisplayIDToolStripMenuItem.Name = "renameDisplayIDToolStripMenuItem";
-            this.renameDisplayIDToolStripMenuItem.Click += new System.EventHandler(this.renameDisplayIDToolStripMenuItem_Click);
             // 
             // deleteDisplayIDToolStripMenuItem
             // 
@@ -179,7 +171,6 @@
         private System.Windows.Forms.TextBox textBoxReplaceAll;
         private PckStudio.Forms.MyTablePanel locSort;
         private System.Windows.Forms.Button buttonReplaceAll;
-        private System.Windows.Forms.ToolStripMenuItem renameDisplayIDToolStripMenuItem;
         private MetroFramework.Controls.MetroContextMenu GridContextMenu;
         private System.Windows.Forms.ToolStripMenuItem addLanguageToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem removeLanguageToolStripMenuItem;

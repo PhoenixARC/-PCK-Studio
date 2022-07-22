@@ -122,29 +122,19 @@
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="addDisplayIDToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>172, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="addDisplayIDToolStripMenuItem.Text" xml:space="preserve">
     <value>Add Display ID</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="renameDisplayIDToolStripMenuItem.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="renameDisplayIDToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>172, 22</value>
-  </data>
-  <data name="renameDisplayIDToolStripMenuItem.Text" xml:space="preserve">
-    <value>Rename Display ID</value>
-  </data>
   <data name="deleteDisplayIDToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>172, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="deleteDisplayIDToolStripMenuItem.Text" xml:space="preserve">
     <value>Delete Display ID</value>
   </data>
   <data name="contextMenuStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>173, 70</value>
+    <value>181, 70</value>
   </data>
   <data name="&gt;&gt;contextMenuStrip1.Name" xml:space="preserve">
     <value>contextMenuStrip1</value>
@@ -176,6 +166,7 @@
   <data name="&gt;&gt;GridContextMenu.Type" xml:space="preserve">
     <value>MetroFramework.Controls.MetroContextMenu, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
   </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="locSort.ColumnCount" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
@@ -2059,12 +2050,6 @@
     <value>addDisplayIDToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;addDisplayIDToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;renameDisplayIDToolStripMenuItem.Name" xml:space="preserve">
-    <value>renameDisplayIDToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;renameDisplayIDToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;deleteDisplayIDToolStripMenuItem.Name" xml:space="preserve">

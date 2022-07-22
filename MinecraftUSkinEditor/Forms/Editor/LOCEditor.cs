@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MetroFramework.Forms;
 using RichPresenceClient;
+using PckStudio.Forms.Additional_Popups.Loc;
 
 namespace PckStudio.Forms.Editor
 {
@@ -34,7 +35,7 @@ namespace PckStudio.Forms.Editor
 
 		private void LOCEditor_Load(object sender, EventArgs e)
 		{
-			RPC.SetPresence("LOC Editor", "Editing loc File.");
+			RPC.SetPresence("LOC Editor", "Editing localization File.");
 			foreach(string locKey in currentLoc.LocKeys.Keys)
 				treeViewLocKeys.Nodes.Add(locKey);
 		}
@@ -53,24 +54,7 @@ namespace PckStudio.Forms.Editor
 				MessageBox.Show("Selected Node does not seem to be in the loc file");
 				return;
 			}
-			tbl.Rows.Clear();
-			buttonReplaceAll.Enabled = true;
-			foreach (var l in currentLoc.GetLocEntries(node.Text))
-				tbl.Rows.Add(l.Key, l.Value);
-		}
-
-		private void renameDisplayIDToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			// broken...
-			TreeNode node = treeViewLocKeys.SelectedNode;
-			using (RenamePrompt diag = new RenamePrompt(node.Text))
-			{
-				if (diag.ShowDialog() == DialogResult.OK)
-				{
-					currentLoc.SetLocEntry(node.Text, diag.NewText);
-					wasModified = true;
-				}
-			}
+			ReloadTranslationTable();
 		}
 
 		private void addDisplayIDToolStripMenuItem_Click(object sender, EventArgs e)
@@ -91,8 +75,7 @@ namespace PckStudio.Forms.Editor
         private void deleteDisplayIDToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			if(treeViewLocKeys.SelectedNode != null &&
-				currentLoc.LocKeys.ContainsKey(treeViewLocKeys.SelectedNode.Text) &&
-				currentLoc.LocKeys.Remove(treeViewLocKeys.SelectedNode.Text))
+				currentLoc.RemoveLocKey(treeViewLocKeys.SelectedNode.Text))
 			{
 				treeViewLocKeys.SelectedNode.Remove();
 				wasModified = true;
@@ -131,12 +114,36 @@ namespace PckStudio.Forms.Editor
         private void LOCEditor_Resize(object sender, EventArgs e)
         {
 			DataGridViewColumn column = dataGridViewLocEntryData.Columns[1];
-			column.Width = dataGridViewLocEntryData.Width - dataGridViewLocEntryData.Columns[0].Width - 1;
+			column.Width = dataGridViewLocEntryData.Width - dataGridViewLocEntryData.Columns[0].Width;
 		}
 
-        private void addLanguageToolStripMenuItem_Click(object sender, EventArgs e)
+		private void ReloadTranslationTable()
         {
-            
+			tbl.Rows.Clear();
+			foreach (var l in currentLoc.GetLocEntries(treeViewLocKeys.SelectedNode.Text))
+				tbl.Rows.Add(l.Key, l.Value);
+		}
+
+		private IEnumerable<string> GetAvailableLanguages()
+        {
+			foreach (var lang in LOCFile.ValidLanguages)
+			{
+				if (currentLoc.Languages.Contains(lang)) continue;
+				yield return lang;
+			}
+			yield break;
+		}
+
+		private void addLanguageToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			string[] avalibleLang = GetAvailableLanguages().ToArray();
+			using (var dialog = new AddLanguage(avalibleLang))
+				if (dialog.ShowDialog() == DialogResult.OK)
+				{
+					currentLoc.AddLanguage(dialog.SelectedLanguage);
+					ReloadTranslationTable();
+					wasModified = true;
+				}
 		}
     }
 }
