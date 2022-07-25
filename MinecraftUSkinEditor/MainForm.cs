@@ -374,21 +374,8 @@ namespace PckStudio
             else if (MessageBox.Show("Are you sure want to delete this folder? All contents will be deleted", "Warning",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
-                foreach (TreeNode item in node.Nodes)
-                {
-                    if (item.Tag == null || item.Nodes.Count > 0)
-                    {
-                        MessageBox.Show("Can't fully delete directory with subdirectories");
-                        return;
-                    }
-                    if (item.Tag is PCKFile.FileData) // makes sure selected node is a minefile
-                    {
-                        //removes minefile from minefile list
-                        PCKFile.FileData file = (PCKFile.FileData)item.Tag;
-                        currentPCK.Files.Remove(file);
-                        item.Remove();
-                    }
-                }
+                string pckFolderDir = node.FullPath;
+                currentPCK.Files.RemoveAll(file => file.name.StartsWith(pckFolderDir));
                 node.Remove();
                 saved = false;
             }
@@ -397,16 +384,26 @@ namespace PckStudio
         private void renameFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             TreeNode node = treeViewMain.SelectedNode;
-            if (node == null || node.Tag == null || !(node.Tag is PCKFile.FileData)) return;
-            var file = node.Tag as PCKFile.FileData;
-            RenamePrompt diag = new RenamePrompt(file.name);
-            if (diag.ShowDialog(this) == DialogResult.OK)
-            {
-                file.name = diag.NewText;
-                saved = false;
-                BuildMainTreeView();
-            }
-            diag.Dispose();
+            if (node == null) return;
+            using (RenamePrompt diag = new RenamePrompt(node.FullPath))
+                if (diag.ShowDialog(this) == DialogResult.OK)
+                {
+                    if (node.Tag is PCKFile.FileData)
+                    {
+                        var file = node.Tag as PCKFile.FileData;
+                        file.name = diag.NewText;
+                    }
+                    else // folder
+                    {
+                        currentPCK.Files.ForEach(file =>
+                        {
+                            if (file.name.StartsWith(node.FullPath))
+                                file.name = diag.NewText + file.name.Substring(node.FullPath.Length);
+                        });
+                    }
+                    saved = false;
+                    BuildMainTreeView();
+                }
         }
 
         private void createSkinToolStripMenuItem_Click(object sender, EventArgs e)
