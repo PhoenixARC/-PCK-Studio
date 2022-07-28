@@ -832,9 +832,35 @@ namespace PckStudio
             currentPCK.Files.Add(texturepackInfo);
         }
 
+        private void InitializeMashUpPack(int packId, int packVersion, string packName)
+        {
+            InitializeTexturePack(packId, packVersion, packName);
+            var gameRuleFile = new PCKFile.FileData("GameRules.grf", PCKFile.FileData.EDLCType.DLCGameRulesFile);
+            var grfFile = new GRFFile();
+            grfFile.AddTag("MapOptions",
+                new KeyValuePair<string, string>("seed", "0"),
+                new KeyValuePair<string, string>("baseSaveName", string.Empty),
+                new KeyValuePair<string, string>("flatworld", "false"),
+                new KeyValuePair<string, string>("texturePackId", packId.ToString())
+                );
+            grfFile.AddTag("LevelRules")
+                .AddTag("UpdatePlayer",
+                new KeyValuePair<string, string>("yRot", "0"),
+                new KeyValuePair<string, string>("xRot", "0"),
+                new KeyValuePair<string, string>("spawnX", "0"),
+                new KeyValuePair<string, string>("spawnY", "0"),
+                new KeyValuePair<string, string>("spawnZ", "0")
+                );
+            using (var stream = new MemoryStream())
+            {
+                GRFFileWriter.Write(stream, grfFile, GRFFile.eCompressionType.ZlibRleCrc);
+                gameRuleFile.SetData(stream.ToArray());
+            }
+            currentPCK.Files.Add(gameRuleFile);
+        }
+
         private void skinPackToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // make skin pack template
             RenamePrompt namePrompt = new RenamePrompt("");
             namePrompt.OKButton.Text = "Ok";
             if (namePrompt.ShowDialog() == DialogResult.OK)
@@ -846,14 +872,23 @@ namespace PckStudio
         }
         private void texturePackToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // make texture pack template
             RenamePrompt namePrompt = new RenamePrompt("");
             namePrompt.OKButton.Text = "Ok";
             if (namePrompt.ShowDialog() == DialogResult.OK)
             {
                 InitializeTexturePack(new Random().Next(8000, int.MaxValue), 0, namePrompt.NewText);
                 isTemplateFile = true;
-                BuildMainTreeView();
+            }
+        }
+
+        private void mashUpPackToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RenamePrompt namePrompt = new RenamePrompt("");
+            namePrompt.OKButton.Text = "Ok";
+            if (namePrompt.ShowDialog() == DialogResult.OK)
+            {
+                InitializeMashUpPack(new Random().Next(8000, int.MaxValue), 0, namePrompt.NewText);
+                isTemplateFile = true;
             }
         }
 
