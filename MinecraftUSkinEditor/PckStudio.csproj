@@ -194,6 +194,12 @@
     <Compile Include="Forms\Additional-Popups\FakeProgressBar.Designer.cs">
       <DependentUpon>FakeProgressBar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Additional-Popups\Loc\AddLanguage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\Loc\AddLanguage.Designer.cs">
+      <DependentUpon>AddLanguage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Additional-Popups\RenamePrompt.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -409,12 +415,6 @@
     <Compile Include="Forms\Additional-Popups\meta.Designer.cs">
       <DependentUpon>meta.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Additional-Popups\MetaADD.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Additional-Popups\MetaADD.Designer.cs">
-      <DependentUpon>MetaADD.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\Additional-Popups\presetMeta.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -434,6 +434,9 @@
     <Compile Include="Classes\Texturing\TextureUtils.cs" />
     <EmbeddedResource Include="Forms\Additional-Popups\FakeProgressBar.resx">
       <DependentUpon>FakeProgressBar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Additional-Popups\Loc\AddLanguage.resx">
+      <DependentUpon>AddLanguage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\RenamePrompt.resx">
       <DependentUpon>RenamePrompt.cs</DependentUpon>
@@ -485,6 +488,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Skins-And-Textures\AdvancedOptions.resx">
       <DependentUpon>AdvancedOptions.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\creatorSpotlight.ja.resx">
       <DependentUpon>creatorSpotlight.cs</DependentUpon>
@@ -557,9 +561,6 @@
     <EmbeddedResource Include="Forms\Additional-Popups\meta.ja.resx">
       <DependentUpon>meta.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Additional-Popups\MetaADD.ja.resx">
-      <DependentUpon>MetaADD.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Utilities\PCK Manager.ja.resx">
       <DependentUpon>PCK Manager.cs</DependentUpon>
     </EmbeddedResource>
@@ -604,10 +605,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\meta.resx">
       <DependentUpon>meta.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Additional-Popups\MetaADD.resx">
-      <DependentUpon>MetaADD.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\presetMeta.resx">
       <DependentUpon>presetMeta.cs</DependentUpon>
