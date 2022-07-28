@@ -66,19 +66,7 @@ namespace PckStudio
                     currentPCK = openPck(ofd.FileName);
                     if (checkForPassword())
                     {
-                        fileEntryCountLabel.Text = "Files:" + currentPCK.Files.Count;
-                        treeViewMain.Enabled = true;
-                        treeMeta.Enabled = true;
-                        closeToolStripMenuItem.Visible = true;
-
-                        saveToolStripMenuItem.Enabled = true;
-                        saveToolStripMenuItem1.Enabled = true;
-                        metaToolStripMenuItem.Enabled = true;
-                        advancedMetaAddingToolStripMenuItem.Enabled = true;
-                        convertToBedrockToolStripMenuItem.Enabled = true;
-
-                        BuildMainTreeView();
-                        tabControl.SelectTab(1);
+                        LoadEditorTab();
                     }
                 }
             }
@@ -110,6 +98,40 @@ namespace PckStudio
             return true;
         }
 
+        private void LoadEditorTab()
+        {
+            fileEntryCountLabel.Text = "Files:" + currentPCK.Files.Count;
+            treeViewMain.Enabled = true;
+            treeMeta.Enabled = true;
+            closeToolStripMenuItem.Visible = true;
+            saveToolStripMenuItem.Enabled = true;
+            saveToolStripMenuItem1.Enabled = true;
+            metaToolStripMenuItem.Enabled = true;
+            advancedMetaAddingToolStripMenuItem.Enabled = true;
+            convertToBedrockToolStripMenuItem.Enabled = true;
+            BuildMainTreeView();
+            tabControl.SelectTab(1);
+        }
+
+        private void CloseEditorTab()
+        {
+            pictureBoxImagePreview.Image = Resources.NoImageFound;
+            treeViewMain.Nodes.Clear();
+            treeMeta.Nodes.Clear();
+            currentPCK = null;
+            treeViewMain.Enabled = false;
+            treeMeta.Enabled = false;
+            saveToolStripMenuItem.Enabled = false;
+            saveToolStripMenuItem1.Enabled = false;
+            metaToolStripMenuItem.Enabled = false;
+            addPasswordToolStripMenuItem.Enabled = false;
+            advancedMetaAddingToolStripMenuItem.Enabled = false;
+            convertToBedrockToolStripMenuItem.Enabled = false;
+            closeToolStripMenuItem.Visible = false;
+            fileEntryCountLabel.Text = "Files:0";
+            tabControl.SelectTab(0);
+        }
+
         /// <summary>
         /// wrapper that allows the use of <paramref name="name"/> in <code>TreeNode.Nodes.Find(name, ...)</code> and <code>TreeNode.Nodes.ContainsKey(name)</code>
         /// </summary>
@@ -126,7 +148,7 @@ namespace PckStudio
 
         private TreeNode BuildNodeTreeBySeperator(TreeNodeCollection root, string path, char seperator)
         {
-            if (root == null) throw new ArgumentNullException("Root Collection is null");
+            if (root == null) throw new ArgumentNullException(nameof(root));
             if (!path.Contains(seperator))
             {
                 var finalNode = CreateNode(path);
@@ -192,12 +214,10 @@ namespace PckStudio
         private void selectNode(object sender, TreeViewEventArgs e)
         {
             treeMeta.Nodes.Clear();
-            entryTypeTextBox.Text = "";
-            entryDataTextBox.Text = "";
+            entryTypeTextBox.Text = entryDataTextBox.Text = labelImageSize.Text = "";
             buttonEdit.Visible = false;
             pictureBoxImagePreview.Image = Resources.NoImageFound;
             pictureBoxImagePreview.Show();
-            labelImageSize.Text = "";
             var node = e.Node;
             if (node.Tag == null || !(node.Tag is PCKFile.FileData)) return;
             PCKFile.FileData file = node.Tag as PCKFile.FileData;
@@ -350,6 +370,7 @@ namespace PckStudio
         private void deleteFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var node = treeViewMain.SelectedNode;
+            if (node == null) return;
             if (node.Tag is PCKFile.FileData)
             {
                 PCKFile.FileData file = node.Tag as PCKFile.FileData;
@@ -867,7 +888,7 @@ namespace PckStudio
             {
                 InitializeSkinPack(new Random().Next(8000, int.MaxValue), 0, namePrompt.NewText);
                 isTemplateFile = true;
-                BuildMainTreeView();
+                LoadEditorTab();
             }
         }
         private void texturePackToolStripMenuItem_Click(object sender, EventArgs e)
@@ -878,6 +899,7 @@ namespace PckStudio
             {
                 InitializeTexturePack(new Random().Next(8000, int.MaxValue), 0, namePrompt.NewText);
                 isTemplateFile = true;
+                LoadEditorTab();
             }
         }
 
@@ -889,6 +911,7 @@ namespace PckStudio
             {
                 InitializeMashUpPack(new Random().Next(8000, int.MaxValue), 0, namePrompt.NewText);
                 isTemplateFile = true;
+                LoadEditorTab();
             }
         }
 
@@ -905,28 +928,13 @@ namespace PckStudio
         {
             if (!saved)
                 SaveTemplate();
-            pictureBoxImagePreview.Hide();
-            treeViewMain.Nodes.Clear();
-            treeMeta.Nodes.Clear();
-            currentPCK = null;
-            treeViewMain.Enabled = false;
-            treeMeta.Enabled = false;
-            saveToolStripMenuItem.Enabled = false;
-            saveToolStripMenuItem1.Enabled = false;
-            metaToolStripMenuItem.Enabled = false;
-            addPasswordToolStripMenuItem.Enabled = false;
-            advancedMetaAddingToolStripMenuItem.Enabled = false;
-            convertToBedrockToolStripMenuItem.Enabled = false;
-            closeToolStripMenuItem.Visible = false;
-            fileEntryCountLabel.Text = "";
-            tabControl.SelectTab(0);
+            CloseEditorTab();
         }
 
         private void programInfoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            programInfo info = new programInfo();
+            using programInfo info = new programInfo();
             info.ShowDialog();
-            info.Dispose();
         }
 
         private void Form1_Load(object sender, EventArgs e)
