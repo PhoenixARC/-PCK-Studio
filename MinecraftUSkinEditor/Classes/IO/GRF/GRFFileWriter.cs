@@ -13,16 +13,19 @@ namespace PckStudio.Classes.IO.GRF
 {
     internal class GRFFileWriter : StreamDataWriter
     {
-        internal readonly GRFFile _grfFile;
-        internal List<string> LUT;
-        public static void Write(in Stream stream, GRFFile grfFile)
+        private readonly GRFFile _grfFile;
+        private List<string> LUT;
+
+        private GRFFile.eCompressionType _compressionType;
+
+        public static void Write(in Stream stream, GRFFile grfFile, GRFFile.eCompressionType compressionType)
         {
-            var instance = new GRFFileWriter(grfFile);
-            instance.write(stream);
+            new GRFFileWriter(grfFile, compressionType).write(stream);
         }
 
-        private GRFFileWriter(GRFFile grfFile) : base(false)
+        private GRFFileWriter(GRFFile grfFile, GRFFile.eCompressionType compressionType) : base(false)
         {
+            _compressionType = compressionType;
             if (grfFile.IsWorld)
                 throw new NotImplementedException("World grf saving is currently unsupported");
             _grfFile = grfFile;
@@ -45,15 +48,15 @@ namespace PckStudio.Classes.IO.GRF
             byte[] _buffer = sourceStream.ToArray();
             int _original_length = _buffer.Length;
 
-            if (_grfFile.CompressionType >= GRFFile.eCompressionType.ZlibRle)
+            if (_compressionType >= GRFFile.eCompressionType.ZlibRle)
                 _buffer = CompressRle(_buffer);
-            if (_grfFile.CompressionType >= GRFFile.eCompressionType.Zlib)
+            if (_compressionType >= GRFFile.eCompressionType.Zlib)
             {
                 _buffer = CompressZib(_buffer);
                 WriteInt(destinationStream, _original_length);
                 WriteInt(destinationStream, _buffer.Length);
             }
-            if (_grfFile.CompressionType >= GRFFile.eCompressionType.ZlibRleCrc)
+            if (_compressionType >= GRFFile.eCompressionType.ZlibRleCrc)
                 MakeAndWriteCrc(destinationStream, _buffer);
             WriteBytes(destinationStream, _buffer);
             return;
@@ -90,10 +93,10 @@ namespace PckStudio.Classes.IO.GRF
         private void WriteHeader(Stream stream)
         {
             WriteShort(stream, 1);
-            if (_grfFile.CompressionType < GRFFile.eCompressionType.None ||
-                _grfFile.CompressionType > GRFFile.eCompressionType.ZlibRleCrc)
-                throw new ArgumentException(nameof(_grfFile.CompressionType));
-            stream.WriteByte((byte)_grfFile.CompressionType);
+            if (_compressionType < GRFFile.eCompressionType.None ||
+                _compressionType > GRFFile.eCompressionType.ZlibRleCrc)
+                throw new ArgumentException(nameof(_compressionType));
+            stream.WriteByte((byte)_compressionType);
             WriteInt(stream, _grfFile.Crc);
             stream.WriteByte(0);
             stream.WriteByte(0);
@@ -152,10 +155,10 @@ namespace PckStudio.Classes.IO.GRF
             WriteInt(stream, i);
         }
 
-        static internal void WriteString(Stream stream, string s)
+        private void WriteString(Stream stream, string s)
         {
             WriteShort(stream, (short)s.Length);
-            WriteBytes(stream, Encoding.ASCII.GetBytes(s));
+            WriteString(stream, s, Encoding.ASCII);
         }
     }
 }

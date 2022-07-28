@@ -48,7 +48,7 @@ namespace PckStudio.Classes.IO.GRF
             {
                 compression_type = (GRFFile.eCompressionType)byte4;
             }
-            _file = new GRFFile(compression_type, crc, byte4 > 0);
+            _file = new GRFFile(crc, byte4 > 0);
 
             if (compression_type == GRFFile.eCompressionType.None && byte4 == 0)
                 return stream;
@@ -83,7 +83,7 @@ namespace PckStudio.Classes.IO.GRF
         private void ReadBody(Stream stream)
         {
             ReadTagNames(stream);
-            ReadGRFTags(stream);
+            ReadRootTag(stream);
         }
 
         private Stream DecompressZLX(Stream compressedStream)
@@ -110,44 +110,34 @@ namespace PckStudio.Classes.IO.GRF
             }
         }
 
-        private void ReadGRFTags(Stream stream)
+        private void ReadRootTag(Stream stream)
         {
-            var NameAndCount = GetRuleNameAndCount(stream);
-            _file.RootTag = new GRFFile.GRFTag(NameAndCount.Item1, null);
-            _file.RootTag.Tags = ReadTags(stream, NameAndCount.Item2, _file.RootTag);
+            string Name = GetTagName(stream);
+            Console.WriteLine($"[GRFFileReader] root_name: {Name}");
+            _file.RootTag.Tags = ReadGRFTreeHierarchy(stream, _file.RootTag).ToList();
         }
 
-        internal List<GRFFile.GRFTag> ReadTags(Stream stream, int count, GRFFile.GRFTag parent)
+        private IEnumerable<GRFFile.GRFTag> ReadGRFTreeHierarchy(Stream stream, GRFFile.GRFTag parent)
         {
-            List<GRFFile.GRFTag> tags = new List<GRFFile.GRFTag>();
+            int count = ReadInt(stream);
             for (int i = 0; i < count; i++)
             {
-                var valuePair = GetRuleNameAndCount(stream);
-                var tag = new GRFFile.GRFTag(valuePair.Item1, parent);
-                for (int j = 0; j < valuePair.Item2; j++)
+                string parameterName = GetTagName(stream);
+                int parameterCount = ReadInt(stream);
+                var tag = new GRFFile.GRFTag(parameterName, parent);
+                for (int j = 0; j < parameterCount; j++)
                 {
-                    var tuple = GetTagNameAndValue(stream);
-                    tag.Parameters.Add(tuple.Item1, tuple.Item2);
+                    tag.Parameters.Add(GetTagName(stream), ReadString(stream));
                 }
-                tag.Tags = ReadTags(stream, ReadInt(stream), tag);
-                tags.Add(tag);
+                tag.Tags = ReadGRFTreeHierarchy(stream, tag).ToList();
+                yield return tag;
             }
-            return tags;
+            yield break;
         }
 
-        internal string GetTagName(Stream stream) => TagNames[ReadInt(stream)];
+        private string GetTagName(Stream stream) => TagNames[ReadInt(stream)];
 
-        internal (string, int) GetRuleNameAndCount(Stream stream)
-        {
-            return new ValueTuple<string, int>(GetTagName(stream), ReadInt(stream));
-        }
-
-        internal (string, string) GetTagNameAndValue(Stream stream)
-        {
-            return new ValueTuple<string, string>(GetTagName(stream), ReadString(stream));
-        }
-
-        internal string ReadString(Stream stream)
+        private string ReadString(Stream stream)
         {
             short stringLength = ReadShort(stream);
             return ReadString(stream, stringLength, Encoding.ASCII);

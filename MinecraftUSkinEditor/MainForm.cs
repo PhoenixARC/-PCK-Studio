@@ -520,9 +520,8 @@ namespace PckStudio
             if ((Path.GetExtension(file.name) == ".grf" && file.type == 7) ||
                 (Path.GetExtension(file.name) == ".grh" && file.type == 10))
             {
-                GRFEditor diag = new GRFEditor(file);
+                using GRFEditor diag = new GRFEditor(file);
                 diag.ShowDialog();
-                diag.Dispose();
             }
 
 

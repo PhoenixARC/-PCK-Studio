@@ -7,14 +7,13 @@ namespace PckStudio.Classes.FileTypes
 {
     public class GRFFile
     {   
-        public GRFTag RootTag = null;
+        private GRFTag _root = null;
+        public GRFTag RootTag => _root;
         public int Crc => _crc;
         public bool IsWorld => _isWorld;
-        public eCompressionType CompressionType => _compressionType;
 
         private int _crc = 0;
         private bool _isWorld = false;
-        private eCompressionType _compressionType = eCompressionType.None;
 
         public enum eCompressionType : byte
         {
@@ -225,25 +224,62 @@ namespace PckStudio.Classes.FileTypes
             public Dictionary<string, string> Parameters => _parameters;
             public List<GRFTag> Tags { get; set; } = new List<GRFTag>();
 
-            /// <summary>
-            /// Initializes a new GRFTag.
-            /// If parent is null it will be treated as the root tag
-            /// </summary>
-            /// <param name="name"></param>
-            /// <param name="parent"></param>
             public GRFTag(string name, GRFTag parent)
             {
                 Name = name;
                 _parent = parent;
             }
+
+            public GRFTag AddTag(string gameRuleName) => AddTag(gameRuleName, false);
+
+            /// <summary>
+            /// Adds a new tag to its child tags
+            /// </summary>
+            /// <param name="gameRuleName">Game rule to add</param>
+            /// <param name="validate">Wether to check the given game rule</param>
+            /// <returns>The Added GRFTag</returns>
+            public GRFTag AddTag(string gameRuleName, bool validate)
+            {
+                if (validate && !ValidGameRules.Contains(gameRuleName)) return null;
+                var tag = new GRFTag(gameRuleName, this);
+                Tags.Add(tag);
+                return tag;
+            }
+
+            public GRFTag AddTag(string gameRuleName, params KeyValuePair<string,string>[] parameters)
+            {
+                var tag = AddTag(gameRuleName); // should never return null unless its called with the validate bool set to true
+                foreach(var param in parameters)
+                { 
+                    tag.Parameters[param.Key] = param.Value;
+                }
+                return tag;
+            }
         }
 
-        public GRFFile(eCompressionType compressionType, int crc, bool isWolrd)
+        public GRFTag AddTag(string gameRuleName)
+            => AddTag(gameRuleName, false);
+
+        public GRFTag AddTag(string gameRuleName, bool validate)
+            => _root.AddTag(gameRuleName, validate);
+
+        public GRFTag AddTag(string gameRuleName, params KeyValuePair<string, string>[] parameters)
+            => _root.AddTag(gameRuleName, parameters);
+
+        public GRFFile(int crc, bool isWolrd)
         {
-            _compressionType = compressionType;
+            _root = new GRFTag("__ROOT__", null);
             _crc = crc;
             _isWorld = isWolrd;
         }
+
+        /// <summary>
+        /// Initializes a new GRFFile as a non-world grf file
+        /// </summary>
+        public GRFFile() : this(-1, false)
+        {
+        }
+
 
     }
 }

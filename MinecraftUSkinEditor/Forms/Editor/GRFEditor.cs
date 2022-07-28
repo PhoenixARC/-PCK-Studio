@@ -158,8 +158,7 @@ namespace PckStudio.Forms.Editor
                     prompt.ShowDialog() == DialogResult.OK &&
                     !string.IsNullOrWhiteSpace(prompt.NewText))
                 {
-                    var tag = new GRFFile.GRFTag(prompt.NewText, parentTag);
-                    parentTag.Tags.Add(tag);
+                    var tag = parentTag.AddTag(prompt.NewText);
                     TreeNode node = new TreeNode(tag.Name);
                     node.Tag = tag;
                     GrfTreeView.SelectedNode.Nodes.Add(node);
@@ -199,14 +198,14 @@ namespace PckStudio.Forms.Editor
             {
                 try
                 {
-                    GRFFileWriter.Write(stream, _file);
+                    GRFFileWriter.Write(stream, _file, GRFFile.eCompressionType.ZlibRleCrc);
                     _pckfile?.SetData(stream.ToArray());
                     MessageBox.Show("Saved!");
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
-                    MessageBox.Show("Failed to save grf file", "Save Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"Failed to save grf file\n{ex.Message}", "Save Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
