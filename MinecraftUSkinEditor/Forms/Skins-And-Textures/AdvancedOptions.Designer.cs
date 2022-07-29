@@ -46,18 +46,18 @@
             // 
             // treeMeta
             // 
-            resources.ApplyResources(this.treeMeta, "treeMeta");
             this.treeMeta.ContextMenuStrip = this.contextMenuStrip2;
+            resources.ApplyResources(this.treeMeta, "treeMeta");
             this.treeMeta.Name = "treeMeta";
             this.treeMeta.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeMeta_AfterSelect);
             // 
             // contextMenuStrip2
             // 
-            resources.ApplyResources(this.contextMenuStrip2, "contextMenuStrip2");
             this.contextMenuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addEntryToolStripMenuItem,
             this.deleteEntryToolStripMenuItem});
             this.contextMenuStrip2.Name = "contextMenuStrip1";
+            resources.ApplyResources(this.contextMenuStrip2, "contextMenuStrip2");
             // 
             // addEntryToolStripMenuItem
             // 
@@ -73,13 +73,13 @@
             // 
             // comboBox1
             // 
-            resources.ApplyResources(this.comboBox1, "comboBox1");
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Items.AddRange(new object[] {
             resources.GetString("comboBox1.Items"),
             resources.GetString("comboBox1.Items1"),
             resources.GetString("comboBox1.Items2"),
             resources.GetString("comboBox1.Items3")});
+            resources.ApplyResources(this.comboBox1, "comboBox1");
             this.comboBox1.Name = "comboBox1";
             // 
             // label1
@@ -110,21 +110,20 @@
             // 
             // textBox1
             // 
-            resources.ApplyResources(this.textBox1, "textBox1");
             this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            resources.ApplyResources(this.textBox1, "textBox1");
             this.textBox1.Name = "textBox1";
             // 
             // comboBox2
             // 
-            resources.ApplyResources(this.comboBox2, "comboBox2");
             this.comboBox2.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox2, "comboBox2");
             this.comboBox2.Name = "comboBox2";
             // 
             // AdvancedOptions
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BorderStyle = MetroFramework.Forms.MetroFormBorderStyle.FixedSingle;
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.comboBox2);
@@ -140,7 +139,6 @@
             this.ShadowType = MetroFramework.Forms.MetroFormShadowType.DropShadow;
             this.Style = MetroFramework.MetroColorStyle.Silver;
             this.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.Load += new System.EventHandler(this.AdvancedOptions_Load);
             this.contextMenuStrip2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
