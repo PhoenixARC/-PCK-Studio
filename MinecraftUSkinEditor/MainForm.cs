@@ -133,7 +133,7 @@ namespace PckStudio
         }
 
         /// <summary>
-        /// wrapper that allows the use of <paramref name="name"/> in <code>TreeNode.Nodes.Find(name, ...)</code> and <code>TreeNode.Nodes.ContainsKey(name)</code>
+        /// wrapper that allows the use of <paramref name="name"/> in <code>TreeNode.Nodes.Find(<paramref name="name"/>, ...)</code> and <code>TreeNode.Nodes.ContainsKey(<paramref name="name"/>)</code>
         /// </summary>
         /// <param name="name"></param>
         /// <param name="tag"></param>
@@ -593,14 +593,13 @@ namespace PckStudio
             PCKFile.FileData file = (PCKFile.FileData)treeViewMain.SelectedNode.Tag;
             var property = (ValueTuple<string, string>)treeMeta.SelectedNode.Tag;
             int i = file.properties.IndexOf(property);
-            addMeta add = new addMeta(property.Item1, property.Item2);
+            using addMeta add = new addMeta(property.Item1, property.Item2);
             if (add.ShowDialog() == DialogResult.OK && i != -1)
             {
                 file.properties[i] = new ValueTuple<string, string>(add.PropertyName, add.PropertyValue);
                 ReloadMetaTreeView();
                 saved = false;
             }
-            add.Dispose();
         }
 
         private void cloneFileToolStripMenuItem_Click(object sender, EventArgs e)
@@ -856,7 +855,7 @@ namespace PckStudio
         private void InitializeMashUpPack(int packId, int packVersion, string packName)
         {
             InitializeTexturePack(packId, packVersion, packName);
-            var gameRuleFile = new PCKFile.FileData("GameRules.grf", PCKFile.FileData.EDLCType.DLCGameRulesFile);
+            var gameRuleFile = new PCKFile.FileData("GameRules.grf", 7);
             var grfFile = new GRFFile();
             grfFile.AddTag("MapOptions",
                 new KeyValuePair<string, string>("seed", "0"),
@@ -918,10 +917,9 @@ namespace PckStudio
         private void advancedMetaAddingToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //opens dialog for bulk minefile editing
-            AdvancedOptions advanced = new AdvancedOptions(currentPCK);
+            using AdvancedOptions advanced = new AdvancedOptions(currentPCK);
             if (advanced.ShowDialog() == DialogResult.OK)
                 saved = false;
-            advanced.Dispose();
         }
 
         private void closeToolStripMenuItem_Click(object sender, EventArgs e)
