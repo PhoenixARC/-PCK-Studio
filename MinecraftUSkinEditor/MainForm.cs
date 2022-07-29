@@ -2844,7 +2844,10 @@ namespace PckStudio
 			if (FileList.Length > 1)
 				MessageBox.Show("Only one pck file at a time is currently supported");
 			currentPCK = openPck(FileList[0]);
-			LoadEditorTab();
+            if (checkForPassword())
+            {
+                LoadEditorTab();
+            }
 		}
 
 		private void OpenPck_DragLeave(object sender, EventArgs e)
