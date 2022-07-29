@@ -101,8 +101,7 @@ namespace PckStudio
         private void LoadEditorTab()
         {
             fileEntryCountLabel.Text = "Files:" + currentPCK.Files.Count;
-            treeViewMain.Enabled = true;
-            treeMeta.Enabled = true;
+            treeViewMain.Enabled = treeMeta.Enabled = true;
             closeToolStripMenuItem.Visible = true;
             saveToolStripMenuItem.Enabled = true;
             saveToolStripMenuItem1.Enabled = true;
@@ -2838,7 +2837,7 @@ namespace PckStudio
 			if (FileList.Length > 1)
 				MessageBox.Show("Only one pck file at a time is currently supported");
 			currentPCK = openPck(FileList[0]);
-			BuildMainTreeView();
+			LoadEditorTab();
 		}
 
 		private void OpenPck_DragLeave(object sender, EventArgs e)
@@ -2875,5 +2874,5 @@ namespace PckStudio
             Console.WriteLine("Setting {file.type} to {type}");
             file.type = type;
         }
-	}
+    }
 }
