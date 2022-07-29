@@ -14,25 +14,17 @@ namespace PckStudio
 {
 	public partial class creditsEditor : MetroFramework.Forms.MetroForm
 	{
-		public string Credits { get; private set; }
+		public string Credits => richTextBox1.Text;
 		public creditsEditor(string cred)
 		{
 			InitializeComponent();
-			Credits = cred;
 			richTextBox1.Text = cred;
-			FormBorderStyle = FormBorderStyle.None;
 		}
 
 		private void button1_Click(object sender, EventArgs e)
 		{
 			DialogResult = DialogResult.OK;
-			Credits = richTextBox1.Text;
 			Close();
-		}
-
-		private void metroLabel1_Click(object sender, EventArgs e)
-		{
-
 		}
 	}
 }

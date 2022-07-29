@@ -22,8 +22,10 @@ namespace PckStudio.Forms.Utilities
 		public bool saved = false;
 		public string credits = "";
 		public string defaultType = "yes";
-		public string cat;
-		public List<int> cats = new List<int>();
+		PCKFile audioPCK = null;
+		PCKFile.FileData audioPCKFile;
+		bool _isLittleEndian;
+		public List<string> cats = new List<string>();
 
 		public class NodeSorter : System.Collections.IComparer
 		{
@@ -34,7 +36,7 @@ namespace PckStudio.Forms.Utilities
 			}
 		}
 
-		internal static readonly List<string> categories = new List<string>
+		public static readonly List<string> Categories = new List<string>
 		{
 			"Overworld",
 			"Nether",
@@ -47,46 +49,26 @@ namespace PckStudio.Forms.Utilities
 			"Unused",
 		};
 
-		internal string getCatString(int cat)
+		internal string GetCategoryFromId(int categoryId)
 		{
-			if (cat > -1 && cat < categories.Count)
-				return categories[cat];
-			return "Not valid";
+			return categoryId > -1 && categoryId < Categories.Count ? Categories[categoryId] : "Not valid";
 		}
 
-		internal int getCatID(string cat)
+		internal int GetCategoryId(string category)
 		{
-			return categories.IndexOf(cat);
-
-			//switch (cat)
-			//{
-			//	case "Overworld": return 0;
-			//	case "Nether": return 1;
-			//	case "End": return 2;
-			//	case "Creative": return 3;
-			//	case "Menu": return 4;
-			//	case "Battle": return 5;
-			//	case "Tumble": return 6;
-			//	case "Glide": return 7;
-			//	case "Unused": return 8; // Unknown what this is used for. Probably the scrapped Mini Game 4 referenced in the code
-			//	default: return -1;
-			//}
+			return Categories.IndexOf(category);
 		}
-
-		PCKFile audioPCK;
-		PCKFile.FileData mf;
-		bool _isLittleEndian;
 
 		public static PCKFile.FileData CreateAudioPck(bool isLittle)
 		{
 			// create actual valid pck file structure
 			PCKFile audioPck = new PCKFile(1); // 1 = audio.pck
-			audioPck.meta_data.Add("CUENAME");
-			audioPck.meta_data.Add("CREDIT");
-			audioPck.meta_data.Add("CREDITID");
-			audioPck.file_entries.Add(new PCKFile.FileData("", 0));
-			audioPck.file_entries.Add(new PCKFile.FileData("", 1));
-			audioPck.file_entries.Add(new PCKFile.FileData("", 2));
+			//audioPck.meta_data.Add("CUENAME");
+			//audioPck.meta_data.Add("CREDIT");
+			//audioPck.meta_data.Add("CREDITID");
+			audioPck.Files.Add(new PCKFile.FileData("", 0));
+			audioPck.Files.Add(new PCKFile.FileData("", 1));
+			audioPck.Files.Add(new PCKFile.FileData("", 2));
 
 			// create a file data entry for current open pck file
 			PCKFile.FileData audioFileData = new PCKFile.FileData("audio.pck", 8);
@@ -114,54 +96,58 @@ namespace PckStudio.Forms.Utilities
 			_isLittleEndian = isLittleEndian;
 			if (isLittleEndian) Text += " (PS4/Vita)";
 			InitializeComponent();
-			mf = MineFile;
-			using (var stream = new MemoryStream(mf.data))
+			audioPCKFile = MineFile;
+			using (var stream = new MemoryStream(audioPCKFile.data))
             {
 				audioPCK = PCKFileReader.Read(stream, isLittleEndian);
             }
-			if (!audioPCK.meta_data.Contains("CUENAME") || audioPCK.type != 1)
+			//if (!audioPCK.meta_data.Contains("CUENAME") || audioPCK.type != 1)
+			//{
+			//	throw new Exception("This is not a valid audio.pck file");
+			//}
+			foreach (PCKFile.FileData categoryFile in audioPCK.Files)
 			{
-				throw new Exception("This is not a valid audio.pck file");
-			}
-			foreach (PCKFile.FileData mineFile in audioPCK.file_entries)
-			{
-				string CatString = getCatString(mineFile.type);
-				Console.WriteLine("Category Found: " + CatString + ". " + mineFile.type);
-				foreach (var entry in mineFile.properties.ToArray())
+				string CatString = GetCategoryFromId(categoryFile.type);
+				Console.WriteLine($"Category Found: {CatString} ({categoryFile.type}).");
+				foreach (var property in categoryFile.properties.ToArray())
 				{
-					var property = (ValueTuple<string, string>)entry;
-                    if (property.Item1 == "CREDITID")
-						locFile.RemoveEntry(property.Item2);
-                    else if (property.Item1 == "CREDIT")
+					if (property.Item1 == "CREDITID")
+						locFile.RemoveLocKey(property.Item2);
+					else if (property.Item1 == "CREDIT")
 					{
 						credits += property.Item2 + "\n";
-						mineFile.properties.Remove(property);
+						categoryFile.properties.Remove(property);
 					}
 					else if (property.Item1 == "CREDITID")
 					{
-						mineFile.properties.Remove(property);
+						categoryFile.properties.Remove(property);
 					}
 				}
-				if (cats.Contains(mineFile.type))
+				if (cats.Contains(GetCategoryFromId(categoryFile.type)))
 				{
 					Console.WriteLine("Duplicate category found, " + CatString + ". Combining...");
-					audioPCK.file_entries.Remove(mineFile);
-					audioPCK.file_entries.Find(category => category.name == getCatString(mineFile.type)).properties = mineFile.properties;
+					audioPCK.Files.Remove(categoryFile);
+					audioPCK.Files.Find(category => category.name == GetCategoryFromId(categoryFile.type)).properties = categoryFile.properties;
 				}
 				else
 				{
 					TreeNode treeNode = new TreeNode(CatString);
-					treeNode.Tag = mineFile;
-                    treeNode.ImageIndex = mineFile.type;
-                    treeNode.SelectedImageIndex = mineFile.type;
-                    treeView1.Nodes.Add(treeNode);
-					cats.Add(mineFile.type);
+					treeNode.Tag = categoryFile;
+					treeNode.ImageIndex = categoryFile.type;
+					treeNode.SelectedImageIndex = categoryFile.type;
+					treeView1.Nodes.Add(treeNode);
+					cats.Add(GetCategoryFromId(categoryFile.type));
 				}
 			}
 
 			treeView1.TreeViewNodeSorter = new NodeSorter();
 			treeView1.Sort();
 		}
+
+        private void AudioEditor_Load(object sender, EventArgs e)
+        {
+
+        }
 
 		private void treeView2_AfterSelect(object sender, TreeViewEventArgs e)
 		{
@@ -214,21 +200,19 @@ namespace PckStudio.Forms.Utilities
 		{
 			try
 			{
-				int check = Enumerable.Range(0, 8).Except(cats).First(); // Exclude Unused for now
-				if (0 <= check && check <= 8)
+				string[] avalible = Categories.FindAll(str =>
 				{
-					addCategory add = new addCategory(this); //sets category adding dialog
-					if (add.ShowDialog() == DialogResult.OK)
-
-					add.Dispose();//diposes generated metadata adding dialog data
-					if (!cats.Contains(getCatID(cat))) cats.Add(getCatID(cat));
-					else return;
-					PCKFile.FileData mf = new PCKFile.FileData(cat, getCatID(cat));
-					TreeNode addNode = new TreeNode(mf.name) { Tag = mf };
-                    audioPCK.file_entries.Add(mf);
-                    treeView1.Nodes.Add(addNode);
-					treeView1.Sort();
-				}
+					return !cats.Contains(str);
+				}).ToArray();
+				addCategory add = new addCategory(avalible); //sets category adding dialog
+				if (add.ShowDialog() == DialogResult.OK)
+					cats.Add(add.Category);
+				PCKFile.FileData file = new PCKFile.FileData(add.Category, GetCategoryId(add.Category));
+				TreeNode addNode = new TreeNode(file.name) { Tag = file };
+                audioPCK.Files.Add(file);
+                treeView1.Nodes.Add(addNode);
+				treeView1.Sort();
+				add.Dispose(); // diposes generated metadata adding dialog data
 			}
 			catch (Exception ex)
 			{
@@ -247,24 +231,12 @@ namespace PckStudio.Forms.Utilities
             treeView2.Nodes.Add(meta);
             file.properties.Add(new ValueTuple<string, string>(defaultType, "CUENAME"));
         }
-		public void treeView2_KeyDown(object sender, KeyEventArgs e)
-		{
-			if (e.KeyCode == Keys.Delete && treeView2.SelectedNode != null &&
-				treeView2.SelectedNode.Tag is ValueTuple<string, string> &&
-				treeView1.SelectedNode.Tag is PCKFile.FileData)
-			{
-				var file = treeView1.SelectedNode.Tag as PCKFile.FileData;
-                var property = (ValueTuple<string, string>)treeView2.SelectedNode.Tag;
-                if (file.properties.Remove(property))
-					treeView2.SelectedNode.Remove();
-            }
-		}
 
 		private void removeCategoryStripMenuItem_Click(object sender, EventArgs e)
 		{
 			if (treeView1.SelectedNode == null) return; // makes sure you don't run this if there is nothing to delete
-			cats.Remove(getCatID(treeView1.SelectedNode.Text));
-			if (audioPCK.file_entries.Remove((PCKFile.FileData)treeView1.SelectedNode.Tag))
+			cats.Remove(treeView1.SelectedNode.Text);
+			if (audioPCK.Files.Remove((PCKFile.FileData)treeView1.SelectedNode.Tag))
 			{
 				treeView1.SelectedNode.Remove();
 				treeView2.Nodes.Clear();
@@ -281,13 +253,25 @@ namespace PckStudio.Forms.Utilities
 			}
 		}
 
+		public void treeView2_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Delete)
+				removeEntryMenuItem_Click(sender, e);
+		}
+
 		private void removeEntryMenuItem_Click(object sender, EventArgs e)
 		{
-			if (treeView1.SelectedNode.Tag == null || !(treeView1.SelectedNode.Tag is PCKFile.FileData) ||
-				!(treeView2.SelectedNode.Tag is ValueTuple<string, string>)) return;
-			var file = treeView1.SelectedNode.Tag as PCKFile.FileData;
-			file.properties.Remove((ValueTuple<string, string>)treeView2.SelectedNode.Tag);
-            treeView2.SelectedNode.Remove();
+			var mainNode = treeView1.SelectedNode;
+			var subNode = treeView2.SelectedNode;
+			if (subNode != null &&
+				subNode.Tag is ValueTuple<string, string> &&
+				mainNode.Tag is PCKFile.FileData)
+			{
+				var file = mainNode.Tag as PCKFile.FileData;
+				var property = (ValueTuple<string, string>)subNode.Tag;
+				if (file.properties.Remove(property))
+					subNode.Remove();
+			}
 		}
 
 		private void Binka_DragDrop(object sender, DragEventArgs e)
@@ -313,7 +297,9 @@ namespace PckStudio.Forms.Utilities
 
 		private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
-			if(!cats.Contains(0) || !cats.Contains(1) || !cats.Contains(2))
+			if(!cats.Contains(GetCategoryFromId(0)) ||
+			   !cats.Contains(GetCategoryFromId(1)) ||
+			   !cats.Contains(GetCategoryFromId(2)))
 			{
 				MessageBox.Show("The game will crash upon loading your pack if the Overworld, Nether and End categories don't all exist.", "Mandatory Categories Missing");
 				return;
@@ -321,7 +307,7 @@ namespace PckStudio.Forms.Utilities
 
 			bool emptyCat = false;
 
-			foreach (PCKFile.FileData mf in audioPCK.file_entries)
+			foreach (PCKFile.FileData mf in audioPCK.Files)
 				if(mf.properties.Count == 0) emptyCat = true;
 
 			if (emptyCat)
@@ -336,14 +322,14 @@ namespace PckStudio.Forms.Utilities
 				while ((line = reader.ReadLine()) != null)
 				{
 					ValueTuple<string, string> credit_entry = new ValueTuple<string, string>("CREDIT", line);
-					audioPCK.file_entries[0].properties.Add(credit_entry);
+					audioPCK.Files[0].properties.Add(credit_entry);
 					//Console.WriteLine(line);
 				}
 			}
 			using (var stream = new MemoryStream())
             {
 				PCKFileWriter.Write(stream, audioPCK, _isLittleEndian);
-				mf.SetData(stream.ToArray());
+				audioPCKFile.SetData(stream.ToArray());
             }
 			saved = true;
 		}
@@ -359,8 +345,7 @@ namespace PckStudio.Forms.Utilities
 				"The \"Menu\" category will only play once when loading the pack, and never again.\n\n" +
 				"The \"Creative\" category will only play songs listed in that category, and unlike other editions of Minecraft, will NOT play songs from the Overworld category. You can fix this by adding your overworld songs to the Creative category too.\n\n" +
 				"The mini game categories will only play if you have your pack loaded in those mini games.\n\n" +
-				"You can edit the credits for the PCK in the Credits editor! No more managing credit IDs!\n\n" +
-				"You can modify and create PSVita and PS4 audio pcks by clicking \"PS4/Vita\" in the \"Create -> Audio.pck\" context menu", "Help");
+				"You can edit the credits for the PCK in the Credits editor! No more managing credit IDs!", "Help");
 		}
 
 		private void creditsEditorToolStripMenuItem_Click(object sender, EventArgs e)
@@ -369,5 +354,5 @@ namespace PckStudio.Forms.Utilities
 			prompt.ShowDialog();
 			credits = prompt.Credits;
 		}
-	}
+    }
 }
