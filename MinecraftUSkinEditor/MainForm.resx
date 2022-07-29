@@ -28576,7 +28576,7 @@
     <value>True</value>
   </data>
   <data name="labelVersion.Location" type="System.Drawing.Point, System.Drawing">
-    <value>702, 638</value>
+    <value>23, 638</value>
   </data>
   <data name="labelVersion.Size" type="System.Drawing.Size, System.Drawing">
     <value>116, 19</value>
@@ -28597,7 +28597,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;labelVersion.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>6</value>
   </data>
   <metadata name="pictureBox2.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -29286,39 +29286,6 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;pictureBox2.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="DBGLabel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Right</value>
-  </data>
-  <data name="DBGLabel.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="DBGLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>24, 637</value>
-  </data>
-  <data name="DBGLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>129, 19</value>
-  </data>
-  <data name="DBGLabel.TabIndex" type="System.Int32, mscorlib">
-    <value>17</value>
-  </data>
-  <data name="DBGLabel.Text" xml:space="preserve">
-    <value>DEVELOPER BUILD</value>
-  </data>
-  <data name="DBGLabel.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;DBGLabel.Name" xml:space="preserve">
-    <value>DBGLabel</value>
-  </data>
-  <data name="&gt;&gt;DBGLabel.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;DBGLabel.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;DBGLabel.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
   <metadata name="openTab.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
@@ -29660,7 +29627,7 @@
     <value>myTablePanelStartScreen</value>
   </data>
   <data name="&gt;&gt;myTablePanelStartScreen.Type" xml:space="preserve">
-    <value>PckStudio.Forms.MyTablePanel, PCK Studio, Version=5.3.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>PckStudio.Forms.MyTablePanel, PCK Studio, Version=6.4.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;myTablePanelStartScreen.Parent" xml:space="preserve">
     <value>openTab</value>
@@ -29702,7 +29669,7 @@
     <value>True</value>
   </data>
   <data name="labelImageSize.Location" type="System.Drawing.Point, System.Drawing">
-    <value>716, 178</value>
+    <value>726, 184</value>
   </data>
   <data name="labelImageSize.Size" type="System.Drawing.Size, System.Drawing">
     <value>69, 19</value>
@@ -29750,7 +29717,7 @@
     <value>pictureBoxImagePreview</value>
   </data>
   <data name="&gt;&gt;pictureBoxImagePreview.Type" xml:space="preserve">
-    <value>PckStudio.PictureBoxWithInterpolationMode, PCK Studio, Version=5.3.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>PckStudio.PictureBoxWithInterpolationMode, PCK Studio, Version=6.4.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;pictureBoxImagePreview.Parent" xml:space="preserve">
     <value>editorTab</value>
@@ -32713,6 +32680,9 @@
         AP//AADgBwAA4AcAAMADAADAAwAAwAMAAMADAADAAwAAwAMAAMADAADABwAAwA8AAMAfAADgPwAA4H8A
         AP//AAA=
 </value>
+  </data>
+  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
     <value>843, 658</value>

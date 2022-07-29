@@ -52,6 +52,9 @@ namespace PckStudio
             pckOpen.AllowDrop = true;
             tabControl.SelectTab(0);
             labelVersion.Text = "PCK Studio: " + Application.ProductVersion;
+#if DEBUG
+            labelVersion.Text += " (dev)";
+#endif
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -937,12 +940,8 @@ namespace PckStudio
         private void Form1_Load(object sender, EventArgs e)
         {
             RPC.Initialize();
-            RPC.SetPresence("Sitting alone", "Program by PhoenixARC");
-#if DEBUG
-            DBGLabel.Visible = true;
-#else
-			DBGLabel.Visible = false;
-#endif
+            RPC.SetPresence("An Open Source .PCK File Editor", "Program by PhoenixARC");
+
             // Makes sure appdata exists
             try
             {

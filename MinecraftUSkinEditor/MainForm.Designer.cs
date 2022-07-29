@@ -107,16 +107,10 @@
             this.deleteEntryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.labelVersion = new MetroFramework.Controls.MetroLabel();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.DBGLabel = new MetroFramework.Controls.MetroLabel();
             this.tabControl = new MetroFramework.Controls.MetroTabControl();
             this.openTab = new System.Windows.Forms.TabPage();
-            this.myTablePanelStartScreen = new PckStudio.Forms.MyTablePanel();
-            this.richTextBoxChangelog = new System.Windows.Forms.RichTextBox();
-            this.label5 = new MetroFramework.Controls.MetroLabel();
-            this.pckOpen = new System.Windows.Forms.PictureBox();
             this.editorTab = new MetroFramework.Controls.MetroTabPage();
             this.labelImageSize = new MetroFramework.Controls.MetroLabel();
-            this.pictureBoxImagePreview = new PckStudio.PictureBoxWithInterpolationMode();
             this.fileEntryCountLabel = new MetroFramework.Controls.MetroLabel();
             this.tabControl1 = new MetroFramework.Controls.MetroTabControl();
             this.MetaTab = new MetroFramework.Controls.MetroTabPage();
@@ -130,18 +124,23 @@
             this.treeViewMain = new System.Windows.Forms.TreeView();
             this.imageList = new System.Windows.Forms.ImageList(this.components);
             this.LittleEndianCheckBox = new MetroFramework.Controls.MetroCheckBox();
+            this.myTablePanelStartScreen = new PckStudio.Forms.MyTablePanel();
+            this.richTextBoxChangelog = new System.Windows.Forms.RichTextBox();
+            this.label5 = new MetroFramework.Controls.MetroLabel();
+            this.pckOpen = new System.Windows.Forms.PictureBox();
+            this.pictureBoxImagePreview = new PckStudio.PictureBoxWithInterpolationMode();
             this.contextMenuPCKEntries.SuspendLayout();
             this.menuStrip.SuspendLayout();
             this.contextMenuMetaTree.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.tabControl.SuspendLayout();
             this.openTab.SuspendLayout();
-            this.myTablePanelStartScreen.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pckOpen)).BeginInit();
             this.editorTab.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImagePreview)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.MetaTab.SuspendLayout();
+            this.myTablePanelStartScreen.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pckOpen)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImagePreview)).BeginInit();
             this.SuspendLayout();
             // 
             // contextMenuPCKEntries
@@ -673,14 +672,6 @@
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.TabStop = false;
             // 
-            // DBGLabel
-            // 
-            resources.ApplyResources(this.DBGLabel, "DBGLabel");
-            this.DBGLabel.FontWeight = MetroFramework.MetroLabelWeight.Bold;
-            this.DBGLabel.ForeColor = System.Drawing.Color.Red;
-            this.DBGLabel.Name = "DBGLabel";
-            this.DBGLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
-            // 
             // tabControl
             // 
             this.tabControl.Controls.Add(this.openTab);
@@ -700,45 +691,6 @@
             this.openTab.Controls.Add(this.myTablePanelStartScreen);
             resources.ApplyResources(this.openTab, "openTab");
             this.openTab.Name = "openTab";
-            // 
-            // myTablePanelStartScreen
-            // 
-            this.myTablePanelStartScreen.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            resources.ApplyResources(this.myTablePanelStartScreen, "myTablePanelStartScreen");
-            this.myTablePanelStartScreen.Controls.Add(this.richTextBoxChangelog, 1, 1);
-            this.myTablePanelStartScreen.Controls.Add(this.label5, 1, 0);
-            this.myTablePanelStartScreen.Controls.Add(this.pckOpen, 0, 0);
-            this.myTablePanelStartScreen.Name = "myTablePanelStartScreen";
-            // 
-            // richTextBoxChangelog
-            // 
-            this.richTextBoxChangelog.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
-            this.richTextBoxChangelog.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            resources.ApplyResources(this.richTextBoxChangelog, "richTextBoxChangelog");
-            this.richTextBoxChangelog.ForeColor = System.Drawing.Color.White;
-            this.richTextBoxChangelog.Name = "richTextBoxChangelog";
-            this.richTextBoxChangelog.ReadOnly = true;
-            // 
-            // label5
-            // 
-            resources.ApplyResources(this.label5, "label5");
-            this.label5.ForeColor = System.Drawing.Color.White;
-            this.label5.Name = "label5";
-            this.label5.Theme = MetroFramework.MetroThemeStyle.Dark;
-            // 
-            // pckOpen
-            // 
-            this.pckOpen.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            resources.ApplyResources(this.pckOpen, "pckOpen");
-            this.pckOpen.Name = "pckOpen";
-            this.myTablePanelStartScreen.SetRowSpan(this.pckOpen, 2);
-            this.pckOpen.TabStop = false;
-            this.pckOpen.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
-            this.pckOpen.DragDrop += new System.Windows.Forms.DragEventHandler(this.OpenPck_DragDrop);
-            this.pckOpen.DragEnter += new System.Windows.Forms.DragEventHandler(this.OpenPck_DragEnter);
-            this.pckOpen.DragLeave += new System.EventHandler(this.OpenPck_DragLeave);
-            this.pckOpen.MouseEnter += new System.EventHandler(this.OpenPck_MouseEnter);
-            this.pckOpen.MouseLeave += new System.EventHandler(this.OpenPck_MouseLeave);
             // 
             // editorTab
             // 
@@ -765,14 +717,6 @@
             resources.ApplyResources(this.labelImageSize, "labelImageSize");
             this.labelImageSize.Name = "labelImageSize";
             this.labelImageSize.Theme = MetroFramework.MetroThemeStyle.Dark;
-            // 
-            // pictureBoxImagePreview
-            // 
-            resources.ApplyResources(this.pictureBoxImagePreview, "pictureBoxImagePreview");
-            this.pictureBoxImagePreview.Image = global::PckStudio.Properties.Resources.NoImageFound;
-            this.pictureBoxImagePreview.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-            this.pictureBoxImagePreview.Name = "pictureBoxImagePreview";
-            this.pictureBoxImagePreview.TabStop = false;
             // 
             // fileEntryCountLabel
             // 
@@ -935,6 +879,53 @@
             this.LittleEndianCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.LittleEndianCheckBox.UseSelectable = true;
             // 
+            // myTablePanelStartScreen
+            // 
+            this.myTablePanelStartScreen.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            resources.ApplyResources(this.myTablePanelStartScreen, "myTablePanelStartScreen");
+            this.myTablePanelStartScreen.Controls.Add(this.richTextBoxChangelog, 1, 1);
+            this.myTablePanelStartScreen.Controls.Add(this.label5, 1, 0);
+            this.myTablePanelStartScreen.Controls.Add(this.pckOpen, 0, 0);
+            this.myTablePanelStartScreen.Name = "myTablePanelStartScreen";
+            // 
+            // richTextBoxChangelog
+            // 
+            this.richTextBoxChangelog.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
+            this.richTextBoxChangelog.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            resources.ApplyResources(this.richTextBoxChangelog, "richTextBoxChangelog");
+            this.richTextBoxChangelog.ForeColor = System.Drawing.Color.White;
+            this.richTextBoxChangelog.Name = "richTextBoxChangelog";
+            this.richTextBoxChangelog.ReadOnly = true;
+            // 
+            // label5
+            // 
+            resources.ApplyResources(this.label5, "label5");
+            this.label5.ForeColor = System.Drawing.Color.White;
+            this.label5.Name = "label5";
+            this.label5.Theme = MetroFramework.MetroThemeStyle.Dark;
+            // 
+            // pckOpen
+            // 
+            this.pckOpen.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            resources.ApplyResources(this.pckOpen, "pckOpen");
+            this.pckOpen.Name = "pckOpen";
+            this.myTablePanelStartScreen.SetRowSpan(this.pckOpen, 2);
+            this.pckOpen.TabStop = false;
+            this.pckOpen.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+            this.pckOpen.DragDrop += new System.Windows.Forms.DragEventHandler(this.OpenPck_DragDrop);
+            this.pckOpen.DragEnter += new System.Windows.Forms.DragEventHandler(this.OpenPck_DragEnter);
+            this.pckOpen.DragLeave += new System.EventHandler(this.OpenPck_DragLeave);
+            this.pckOpen.MouseEnter += new System.EventHandler(this.OpenPck_MouseEnter);
+            this.pckOpen.MouseLeave += new System.EventHandler(this.OpenPck_MouseLeave);
+            // 
+            // pictureBoxImagePreview
+            // 
+            resources.ApplyResources(this.pictureBoxImagePreview, "pictureBoxImagePreview");
+            this.pictureBoxImagePreview.Image = global::PckStudio.Properties.Resources.NoImageFound;
+            this.pictureBoxImagePreview.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+            this.pictureBoxImagePreview.Name = "pictureBoxImagePreview";
+            this.pictureBoxImagePreview.TabStop = false;
+            // 
             // MainForm
             // 
             this.ApplyImageInvert = true;
@@ -943,7 +934,6 @@
             this.Controls.Add(this.menuStrip);
             this.Controls.Add(this.LittleEndianCheckBox);
             this.Controls.Add(this.tabControl);
-            this.Controls.Add(this.DBGLabel);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.labelVersion);
             this.MainMenuStrip = this.menuStrip;
@@ -961,15 +951,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.tabControl.ResumeLayout(false);
             this.openTab.ResumeLayout(false);
-            this.myTablePanelStartScreen.ResumeLayout(false);
-            this.myTablePanelStartScreen.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pckOpen)).EndInit();
             this.editorTab.ResumeLayout(false);
             this.editorTab.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImagePreview)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.MetaTab.ResumeLayout(false);
             this.MetaTab.PerformLayout();
+            this.myTablePanelStartScreen.ResumeLayout(false);
+            this.myTablePanelStartScreen.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pckOpen)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImagePreview)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1018,7 +1008,6 @@
         private MetroFramework.Controls.MetroTabPage editorTab;
         private MetroFramework.Controls.MetroCheckBox LittleEndianCheckBox;
         private MetroFramework.Controls.MetroLabel labelVersion;
-        private MetroFramework.Controls.MetroLabel DBGLabel;
         private MetroFramework.Controls.MetroLabel label11;
         private System.Windows.Forms.ToolStripMenuItem wiiUPCKInstallerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem PS3PCKInstallerToolStripMenuItem;
