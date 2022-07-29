@@ -295,37 +295,45 @@ namespace PckStudio
 
         private void extractToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (treeViewMain.SelectedNode.Nodes.Count > 0)
+            var node = treeViewMain.SelectedNode;
+            if (node == null) return;
+            if (node.Tag is PCKFile.FileData)
             {
-                MessageBox.Show("Cannot extract emtpy folder!");
-                return;
-            }
-            if (!(treeViewMain.SelectedNode.Tag is PCKFile.FileData))
-            {
-                // TODO: add folder extract support
-                return;
-            }
-            var file = treeViewMain.SelectedNode.Tag as PCKFile.FileData;
-            SaveFileDialog exFile = new SaveFileDialog(); //extract location
-            exFile.FileName = Path.GetFileName(file.name);
-            exFile.Filter = Path.GetExtension(file.name).Replace(".", "") + " File|*" + Path.GetExtension(file.name);
-            if (exFile.ShowDialog() != DialogResult.OK) return;
-            string extractFilePath = exFile.FileName;
-            // Makes sure chosen directory isn't null or whitespace AKA makes sure its usable
-            if (!string.IsNullOrWhiteSpace(Path.GetDirectoryName(extractFilePath)))
-            {
+                var file = treeViewMain.SelectedNode.Tag as PCKFile.FileData;
+                using SaveFileDialog exFile = new SaveFileDialog();
+                exFile.FileName = Path.GetFileName(file.name);
+                exFile.Filter = Path.GetExtension(file.name).Replace(".", "") + " File|*" + Path.GetExtension(file.name);
+                if (exFile.ShowDialog() != DialogResult.OK ||
+                    // Makes sure chosen directory isn't null or whitespace AKA makes sure its usable
+                    string.IsNullOrWhiteSpace(Path.GetDirectoryName(exFile.FileName))) return;
+                string extractFilePath = exFile.FileName;
+
                 File.WriteAllBytes(extractFilePath, file.data);
                 if (file.properties.Count > 0)
                 {
-                    using (var fs = File.CreateText($"{extractFilePath}.txt"))
-                    {
-                        foreach (var entry in file.properties)
-                        {
-                            fs.WriteLine($"{entry.Item1}: {entry.Item2}");
-                        }
-                    }
+                    using var fs = File.CreateText($"{extractFilePath}.txt");
+                    file.properties.ForEach(property => fs.WriteLine($"{property.Item1}: {property.Item2}"));
                 }
-                MessageBox.Show("File Extracted"); // Verification that file extraction path was successful
+                // Verification that file extraction path was successful
+                MessageBox.Show("File Extracted");
+                return;
+            }
+
+            string selectedFolder = node.FullPath;
+            using (FolderBrowserDialog dialog = new FolderBrowserDialog())
+            {
+                dialog.Description = @"Select destination folder";
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    currentPCK.Files.ForEach(file =>
+                    {
+                        if (file.name.StartsWith(selectedFolder))
+                        {
+                            Directory.CreateDirectory($"{dialog.SelectedPath}/{Path.GetDirectoryName(file.name)}");
+                            File.WriteAllBytes($"{dialog.SelectedPath}/{file.name}", file.data);
+                        }
+                    });
+                }
             }
         }
 
