@@ -263,37 +263,46 @@ namespace PckStudio
                 }
             }
 
-            // Check for Animated Texture
-            if ((file.name.StartsWith("res/textures/blocks/") || file.name.StartsWith("res/textures/items/")) &&
-                (!file.name.EndsWith("clock.png") && (!file.name.EndsWith("compass.png"))))
+            switch (file.type)
             {
-                buttonEdit.Text = "EDIT TEXTURE ANIMATION";
-                buttonEdit.Visible = true;
-            }
+                case 0:
+                case 1:
+                    using (MemoryStream png = new MemoryStream(file.data))
+                    {
+                        Image skinPicture = Image.FromStream(png);
+                        pictureBoxImagePreview.Image = skinPicture;
+                        labelImageSize.Text = $"{skinPicture.Size.Width}x{skinPicture.Size.Height}";
+                    }
+                    break;
+                case 2 when (file.name.StartsWith("res/textures/blocks/") || file.name.StartsWith("res/textures/items/")) &&
+                            !file.name.EndsWith("clock.png") && (!file.name.EndsWith("compass.png")):
+                    buttonEdit.Text = "EDIT TEXTURE ANIMATION";
+                    buttonEdit.Visible = true;
+                    using (MemoryStream png = new MemoryStream(file.data))
+                    {
+                        Image skinPicture = Image.FromStream(png);
+                        pictureBoxImagePreview.Image = skinPicture;
+                        labelImageSize.Text = $"{skinPicture.Size.Width}x{skinPicture.Size.Height}";
+                    }
+                    break;
 
-            // If selected item is a image, its displayed with proper dimensions in image box
-            if (Path.GetExtension(file.name) == ".png" && (file.type == 0 || file.type == 1 || file.type == 2))
-            {
-                MemoryStream png = new MemoryStream(file.data);
-                Image skinPicture = Image.FromStream(png);
-                pictureBoxImagePreview.Image = skinPicture;
-                labelImageSize.Text = skinPicture.Size.Width.ToString() + "x" + skinPicture.Size.Height.ToString();
-                png.Dispose();
-            }
-            else if (file.type == 6) // .loc
-            {
-                buttonEdit.Text = "EDIT LOC";
-                buttonEdit.Visible = true;
-            }
-            else if (file.name == "colours.col" || file.type == 9)
-            {
-                buttonEdit.Text = "EDIT COLORS";
-                buttonEdit.Visible = true;
-            }
-            else if (Path.GetFileName(file.name) == "audio.pck" && file.type == 8)
-            {
-                buttonEdit.Text = "EDIT MUSIC CUES";
-                buttonEdit.Visible = true;
+                case 6:
+                    buttonEdit.Text = "EDIT LOC";
+                    buttonEdit.Visible = true;
+                    break;
+
+                case 8 when file.name == "audio.pck":
+                    buttonEdit.Text = "EDIT MUSIC CUES";
+                    buttonEdit.Visible = true;
+                    break;
+
+                case 9 when file.name == "colours.col":
+                    buttonEdit.Text = "EDIT COLORS";
+                    buttonEdit.Visible = true;
+                    break;
+                default:
+                    buttonEdit.Visible = false;
+                    break;
             }
         }
 
