@@ -57,6 +57,23 @@ namespace PckStudio
 #endif
         }
 
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            RPC.Initialize();
+            RPC.SetPresence("An Open Source .PCK File Editor", "Program by PhoenixARC");
+
+            // Makes sure appdata exists
+            try
+            {
+                Directory.CreateDirectory(Program.Appdata + "\\cache\\mods\\");
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                MessageBox.Show("Could not Create directory due to Unauthorized Access");
+                Console.WriteLine(ex.Message);
+            }
+        }
+
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (var ofd = new OpenFileDialog())
@@ -946,23 +963,6 @@ namespace PckStudio
         {
             using programInfo info = new programInfo();
             info.ShowDialog();
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            RPC.Initialize();
-            RPC.SetPresence("An Open Source .PCK File Editor", "Program by PhoenixARC");
-
-            // Makes sure appdata exists
-            try
-            {
-                Directory.CreateDirectory(Program.Appdata + "\\cache\\mods\\");
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-                MessageBox.Show("Could not Create directory due to Unauthorized Access");
-                Console.WriteLine(ex.Message);
-            }
         }
 
         private void treeViewMain_KeyDown(object sender, KeyEventArgs e)
