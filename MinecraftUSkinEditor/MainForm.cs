@@ -74,6 +74,12 @@ namespace PckStudio
             }
         }
 
+        private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            checkSaveState();
+            RPC.Deinitialize();
+        }
+
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (var ofd = new OpenFileDialog())
@@ -99,7 +105,16 @@ namespace PckStudio
             {
                 isTemplateFile = false;
                 saveLocation = filePath;
-                pck = PCKFileReader.Read(fileStream, LittleEndianCheckBox.Checked);
+                try
+                {
+                    pck = PCKFileReader.Read(fileStream, LittleEndianCheckBox.Checked);
+                }
+                catch (OverflowException ex)
+                {
+                    MessageBox.Show("Error", "Failed to open pck\nTry checking the 'Open/Save as Vita/PS4 pck' check box in the upper right corner.",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Console.WriteLine(ex.Message);
+                }
             }
             if (pck.type < 3) throw new Exception("Can't open pck file of type: " + pck.type.ToString());
             return pck;
@@ -212,8 +227,17 @@ namespace PckStudio
                         // works but not currently included...
                         using (var stream = new MemoryStream(file.data))
                         {
-                            PCKFile subPCKfile = PCKFileReader.Read(stream, LittleEndianCheckBox.Checked);
-                            BuildPckTreeView(node.Nodes, subPCKfile);
+                            try
+                            {
+                                PCKFile subPCKfile = PCKFileReader.Read(stream, LittleEndianCheckBox.Checked);
+                                BuildPckTreeView(node.Nodes, subPCKfile);
+                            }
+                            catch (OverflowException ex)
+                            {
+                                MessageBox.Show("Error", "Failed to open pck\nTry checking the 'Open/Save as Vita/PS4 pck' check box in the upper right corner.",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                Console.WriteLine(ex.Message);
+                            }
                         }
                         break;
                     default:
@@ -2875,12 +2899,6 @@ namespace PckStudio
 		private void saveAsPCK(object sender, EventArgs e)
 		{
 			SaveTemplate();
-		}
-
-		private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
-		{
-			checkSaveState();
-			RPC.Deinitialize();
 		}
 
 		private void forMattNLContributorToolStripMenuItem_Click(object sender, EventArgs e)
