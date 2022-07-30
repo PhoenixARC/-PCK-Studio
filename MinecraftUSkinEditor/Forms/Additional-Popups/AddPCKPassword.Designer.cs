@@ -29,6 +29,7 @@ namespace PckStudio.Forms
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddPCKPassword));
             this.buttonUnlocked = new System.Windows.Forms.Button();
             this.textBoxPass = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
@@ -53,15 +54,17 @@ namespace PckStudio.Forms
             this.textBoxPass.Name = "textBoxPass";
             this.textBoxPass.Size = new System.Drawing.Size(244, 20);
             this.textBoxPass.TabIndex = 2;
-            this.textBoxPass.Text = "Password";
+            this.textBoxPass.UseSystemPasswordChar = true;
             // 
             // AddPCKPassword
             // 
+            this.AcceptButton = this.buttonUnlocked;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(357, 129);
+            this.ClientSize = new System.Drawing.Size(357, 116);
             this.Controls.Add(this.buttonUnlocked);
             this.Controls.Add(this.textBoxPass);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "AddPCKPassword";
             this.Resizable = false;
             this.Style = MetroFramework.MetroColorStyle.Silver;
