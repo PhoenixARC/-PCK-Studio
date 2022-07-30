@@ -333,18 +333,21 @@ namespace PckStudio
                             File.WriteAllBytes($"{dialog.SelectedPath}/{file.name}", file.data);
                         }
                     });
+                    MessageBox.Show("Folder Extracted");
                 }
             }
         }
 
         private void SaveTemplate()
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            using SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "PCK (Minecraft Console Package)|*.pck";
             saveFileDialog.DefaultExt = ".pck";
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 Save(saveFileDialog.FileName);
+                saveLocation = saveFileDialog.FileName;
+                isTemplateFile = false;
             }
         }
 
