@@ -25,14 +25,17 @@ namespace PckStudio.Classes.IO
 
         private PCKFile ReadFileFromStream(Stream stream)
         {
-            _file = new PCKFile(ReadInt(stream));
+            int pck_type = ReadInt(stream);
+            if (pck_type > 0xf00000) // 03 00 00 00 == true
+                throw new OverflowException(nameof(pck_type));
+            _file = new PCKFile(pck_type);
             ReadLookUpTabel(stream);
             ReadFileEntries(stream);
             ReadFileContents(stream);
             return _file;
         }
 
-        internal void ReadLookUpTabel(Stream stream)
+        private void ReadLookUpTabel(Stream stream)
         {
             int count = ReadInt(stream);
             LUT = new List<string>(count);
@@ -46,7 +49,7 @@ namespace PckStudio.Classes.IO
                 Console.WriteLine(ReadInt(stream)); // xml version num ??
         }
 
-        internal void ReadFileEntries(Stream stream)
+        private void ReadFileEntries(Stream stream)
         {
             int file_entry_count = ReadInt(stream);
             for (; 0 < file_entry_count; file_entry_count--)
@@ -58,7 +61,8 @@ namespace PckStudio.Classes.IO
                 _file.Files.Add(entry);
             }
         }
-        internal void ReadFileContents(Stream stream)
+
+        private void ReadFileContents(Stream stream)
         {
             _file.Files.ForEach( file => {
                 int property_count = ReadInt(stream);
@@ -71,7 +75,8 @@ namespace PckStudio.Classes.IO
                 stream.Read(file.data, 0, file.size);
             });
         }
-        internal string ReadString(Stream stream)
+
+        private string ReadString(Stream stream)
         {
             int len = ReadInt(stream);
             string s = ReadString(stream, len, IsUsingLittleEndian ?  Encoding.Unicode : Encoding.BigEndianUnicode);
