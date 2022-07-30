@@ -13,7 +13,6 @@ namespace PckStudio.Classes.IO
     {
         private PCKFile _pckfile;
         private List<string> LUT = new List<string>();
-        private bool _isLittleEndian;
 
         public static void Write(Stream stream, PCKFile file, bool isLittleEndian)
         {
@@ -22,7 +21,6 @@ namespace PckStudio.Classes.IO
 
         private PCKFileWriter(PCKFile file, bool isLittleEndian) : base(isLittleEndian)
         {
-            _isLittleEndian = isLittleEndian;
             _pckfile = file;
             LUT = _pckfile.GatherMetaTags();
         }
@@ -38,7 +36,7 @@ namespace PckStudio.Classes.IO
         internal void WriteString(Stream stream, string s)
         {
             WriteInt(stream, s.Length);
-            WriteString(stream, s, _isLittleEndian ? Encoding.Unicode : Encoding.BigEndianUnicode);
+            WriteString(stream, s, IsUsingLittleEndian ? Encoding.Unicode : Encoding.BigEndianUnicode);
             WriteInt(stream, 0); // padding
         }
 

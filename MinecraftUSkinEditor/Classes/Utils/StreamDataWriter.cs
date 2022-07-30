@@ -10,10 +10,11 @@ namespace PckStudio.Classes.Utils
     internal class StreamDataWriter
     {
         private static bool useLittleEndian;
+        protected static bool IsUsingLittleEndian => useLittleEndian;
 
-        protected StreamDataWriter(bool isLittleEndian)
+        protected StreamDataWriter(bool littleEndian)
         {
-            useLittleEndian = isLittleEndian;
+            useLittleEndian = littleEndian;
         }
 
         protected static void WriteUShort(Stream stream, ushort value) => WriteShort(stream, (short)value);

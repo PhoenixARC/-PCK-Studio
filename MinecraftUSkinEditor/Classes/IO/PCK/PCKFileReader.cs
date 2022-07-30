@@ -12,7 +12,6 @@ namespace PckStudio.Classes.IO
     {
         private PCKFile _file;
         private List<string> LUT;
-        bool _isLittleEndian;
 
 
         public static PCKFile Read(Stream stream, bool isLittleEndian)
@@ -22,7 +21,6 @@ namespace PckStudio.Classes.IO
 
         private PCKFileReader(bool isLittleEndian) : base(isLittleEndian)
         {
-            _isLittleEndian = isLittleEndian;
         }
 
         private PCKFile ReadFileFromStream(Stream stream)
@@ -76,7 +74,7 @@ namespace PckStudio.Classes.IO
         internal string ReadString(Stream stream)
         {
             int len = ReadInt(stream);
-            string s = ReadString(stream, len, _isLittleEndian ?  Encoding.Unicode : Encoding.BigEndianUnicode);
+            string s = ReadString(stream, len, IsUsingLittleEndian ?  Encoding.Unicode : Encoding.BigEndianUnicode);
             ReadInt(stream); // padding
             return s;
         }
