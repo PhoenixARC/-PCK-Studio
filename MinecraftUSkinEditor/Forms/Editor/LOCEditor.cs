@@ -59,14 +59,15 @@ namespace PckStudio.Forms.Editor
 
 		private void addDisplayIDToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (treeViewLocKeys.SelectedNode != null &&
-				!currentLoc.LocKeys.ContainsKey(treeViewLocKeys.SelectedNode.Text))
+			if (treeViewLocKeys.SelectedNode is TreeNode)
 				using (RenamePrompt prompt = new RenamePrompt(""))
 				{
 					prompt.OKButton.Text = "Add";
-					if (prompt.ShowDialog() == DialogResult.OK)
+					if (prompt.ShowDialog() == DialogResult.OK && 
+						!currentLoc.LocKeys.ContainsKey(prompt.NewText) &&
+						currentLoc.AddLocKey(prompt.NewText, ""))
 					{
-						currentLoc.AddLocKey(prompt.NewText, "");
+						treeViewLocKeys.Nodes.Add(prompt.NewText);
 						wasModified = true;
 					}
 				}
@@ -74,8 +75,7 @@ namespace PckStudio.Forms.Editor
 
         private void deleteDisplayIDToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if(treeViewLocKeys.SelectedNode != null &&
-				currentLoc.RemoveLocKey(treeViewLocKeys.SelectedNode.Text))
+			if (treeViewLocKeys.SelectedNode is TreeNode t && currentLoc.RemoveLocKey(t.Text))
 			{
 				treeViewLocKeys.SelectedNode.Remove();
 				wasModified = true;
