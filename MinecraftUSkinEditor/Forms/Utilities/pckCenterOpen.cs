@@ -30,7 +30,6 @@ namespace PckStudio.Forms
         string ad;
         int mode = 0;
         string mod;
-        string appData = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/PCK Studio/";
         MethodInvoker reloader;
         bool IsVita;
         string Pack;
@@ -134,23 +133,23 @@ namespace PckStudio.Forms
                     List<PCKFile.FileData> capesList = new List<PCKFile.FileData>();
 
                     PCKFile pck = null;
-                    using (var stream = File.OpenRead(appData + "/PCK Center/myPcks/" + mod + ".pck"))
+                    using (var stream = File.OpenRead(Program.Appdata + "/PCK-Center/myPcks/" + mod + ".pck"))
                     {
-                        pck = PCKFileReader.Read(stream, false); //sets opened pck
+                        pck = PCKFileReader.Read(stream, false); // sets opened pck
                     }
                     PCKFile currentPCK = pck; //sets opened pck
                     foreach (PCKFile.FileData skin in currentPCK.Files)
                     {
-                        if (skin.name.Count() == 19)
+                        if (skin.filepath.Count() == 19)
                         {
-                            if (skin.name.Remove(7, skin.name.Count() - 7) == "dlcskin")
+                            if (skin.filepath.Remove(7, skin.filepath.Count() - 7) == "dlcskin")
                             {
                                 skinsList.Add(skin);
-                                uuid = skin.name.Remove(12, 7);
+                                uuid = skin.filepath.Remove(12, 7);
                                 uuid = uuid.Remove(0, 7);
                                 uuid = "abcdefa" + uuid;
                             }
-                            if (skin.name.Remove(7, skin.name.Count() - 7) == "dlccape")
+                            if (skin.filepath.Remove(7, skin.filepath.Count() - 7) == "dlccape")
                             {
                                 capesList.Add(skin);
                             }
@@ -185,7 +184,7 @@ namespace PckStudio.Forms
                                 if (entry.Item1 == "DISPLAYNAME")
                                 {
                                     skinName = entry.Item2;
-                                    skinDisplayNames.Add(new Item() { Id = newSkin.name.Remove(15, 4), Name = entry.Item2 });
+                                    skinDisplayNames.Add(new Item() { Id = newSkin.filepath.Remove(15, 4), Name = entry.Item2 });
                                 }
                                 if (entry.Item1 == "CAPEPATH")
                                 {
@@ -195,15 +194,15 @@ namespace PckStudio.Forms
                             }
 
                             writeSkins.WriteLine("    {");
-                            writeSkins.WriteLine("      \"localization_name\": " + "\"" + newSkin.name.Remove(15, 4) + "\",");
+                            writeSkins.WriteLine("      \"localization_name\": " + "\"" + newSkin.filepath.Remove(15, 4) + "\",");
 
                             MemoryStream png = new MemoryStream(newSkin.data); //Gets image data from minefile data
                             Image skinPicture = Image.FromStream(png); //Constructs image data into image
                             if (skinPicture.Height == skinPicture.Width)
                             {
-                                writeSkins.WriteLine("      \"geometry\": \"geometry." + packName + "." + newSkin.name.Remove(15, 4) + "\",");
+                                writeSkins.WriteLine("      \"geometry\": \"geometry." + packName + "." + newSkin.filepath.Remove(15, 4) + "\",");
                             }
-                            writeSkins.WriteLine("      \"texture\": " + "\"" + newSkin.name + "\",");
+                            writeSkins.WriteLine("      \"texture\": " + "\"" + newSkin.filepath + "\",");
                             if (hasCape == true)
                             {
                                 writeSkins.WriteLine("      \"cape\":" + "\"" + capePath + "\",");
@@ -367,7 +366,7 @@ namespace PckStudio.Forms
                                 }
                             }
 
-                            writeSkins.WriteLine("  \"" + "geometry." + packName + "." + newSkin.name.Remove(15, 4) + "\": {");
+                            writeSkins.WriteLine("  \"" + "geometry." + packName + "." + newSkin.filepath.Remove(15, 4) + "\": {");
 
                             //makes skin model depending on what skin type the skin is
                             if (skinType == "custom")
@@ -448,7 +447,7 @@ namespace PckStudio.Forms
                                     }
                                     catch (Exception)
                                     {
-                                        MessageBox.Show("A HEAD BOX tag in " + newSkin.name + " has an invalid value!");
+                                        MessageBox.Show("A HEAD BOX tag in " + newSkin.filepath + " has an invalid value!");
                                     }
                                     if (modelAmount != modelDataHead.Count)
                                     {
@@ -539,7 +538,7 @@ namespace PckStudio.Forms
                                     }
                                     catch (Exception)
                                     {
-                                        MessageBox.Show("A BODY BOX tag in " + newSkin.name + " has an invalid value!");
+                                        MessageBox.Show("A BODY BOX tag in " + newSkin.filepath + " has an invalid value!");
                                     }
                                     if (modelAmount != modelDataBody.Count)
                                     {
@@ -630,7 +629,7 @@ namespace PckStudio.Forms
                                     }
                                     catch (Exception)
                                     {
-                                        MessageBox.Show("A ARM0 BOX tag in " + newSkin.name + " has an invalid value!");
+                                        MessageBox.Show("A ARM0 BOX tag in " + newSkin.filepath + " has an invalid value!");
                                     }
                                     if (modelAmount != modelDataLeftArm.Count)
                                     {
@@ -720,7 +719,7 @@ namespace PckStudio.Forms
                                     }
                                     catch (Exception)
                                     {
-                                        MessageBox.Show("A ARM1 BOX tag in " + newSkin.name + " has an invalid value!");
+                                        MessageBox.Show("A ARM1 BOX tag in " + newSkin.filepath + " has an invalid value!");
                                     }
                                     if (modelAmount != modelDataRightArm.Count)
                                     {
@@ -810,7 +809,7 @@ namespace PckStudio.Forms
                                     }
                                     catch (Exception)
                                     {
-                                        MessageBox.Show("A LEG1 BOX tag in " + newSkin.name + " has an invalid value!");
+                                        MessageBox.Show("A LEG1 BOX tag in " + newSkin.filepath + " has an invalid value!");
                                     }
                                     if (modelAmount != modelDataLeftLeg.Count)
                                     {
@@ -900,7 +899,7 @@ namespace PckStudio.Forms
                                     }
                                     catch (Exception)
                                     {
-                                        MessageBox.Show("A LEG0 BOX tag in " + newSkin.name + " has an invalid value!");
+                                        MessageBox.Show("A LEG0 BOX tag in " + newSkin.filepath + " has an invalid value!");
                                     }
                                     if (modelAmount != modelDataRightLeg.Count)
                                     {
@@ -1034,13 +1033,13 @@ namespace PckStudio.Forms
                         {
                             ResizeImage(saveSkin, 64, 64);
                         }
-                        saveSkin.Save(root + "/" + skinTexture.name, ImageFormat.Png);
+                        saveSkin.Save(root + "/" + skinTexture.filepath, ImageFormat.Png);
                     }
 
                     //adds cape textures
                     foreach (PCKFile.FileData capeTexture in capesList)
                     {
-                        File.WriteAllBytes(root + "/" + capeTexture.name, capeTexture.data);
+                        File.WriteAllBytes(root + "/" + capeTexture.filepath, capeTexture.data);
                     }
 
                     string startPath = root;
@@ -1103,9 +1102,9 @@ namespace PckStudio.Forms
         {
             try
             {
-                File.Delete(appData + "/PCK Center/myPcks/" + mod + ".pck");
-                File.Delete(appData + "/PCK Center/myPcks/" + mod + ".png");
-                File.Delete(appData + "/PCK Center/myPcks/" + mod + ".desc");
+                File.Delete(Program.Appdata + "/PCK-Center/myPcks/" + mod + ".pck");
+                File.Delete(Program.Appdata + "/PCK-Center/myPcks/" + mod + ".png");
+                File.Delete(Program.Appdata + "/PCK-Center/myPcks/" + mod + ".desc");
                 reloader();
             }
             catch (Exception)
@@ -1125,7 +1124,7 @@ namespace PckStudio.Forms
             {
                 try
                 {
-                    File.Copy(appData + "/PCK Center/myPcks/" + mod + ".pck", export.FileName);
+                    File.Copy(Program.Appdata + "/PCK-Center/myPcks/" + mod + ".pck", export.FileName);
                     MessageBox.Show("PCK Received from location!");
                 }catch (Exception)
                 {
@@ -1146,7 +1145,7 @@ namespace PckStudio.Forms
 
         private void buttonInstallWiiU_Click(object sender, EventArgs e)
         {
-            installWiiU install = new installWiiU(appData + "/PCK Center/myPcks/" + mod + ".pck");
+            installWiiU install = new installWiiU(Program.Appdata + "/PCK Center/myPcks/" + mod + ".pck");
             install.ShowDialog();
         }
     }

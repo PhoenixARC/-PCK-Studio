@@ -381,12 +381,26 @@ namespace PckStudio.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
+        ///   Looks up a localized string similar to {
+        ///	&quot;COMMENT_1&quot;: &quot;Tile data research by MattNL&quot;,
+        ///	&quot;COMMENT_2&quot;: &quot;JSON conversion by PhoenixARC&quot;,
+        ///	&quot;Blocks&quot;: [
+        ///		{ &quot;grass_top&quot;: &quot;Grass Block (Top)&quot; },
+        ///		{ &quot;stone&quot;: &quot;Stone&quot; },
+        ///		{ &quot;dirt&quot;: &quot;Dirt&quot; },
+        ///		{ &quot;grass_side&quot;: &quot;Grass Block (Side)&quot; },
+        ///		{ &quot;planks_oak&quot;: &quot;Oak Planks&quot; },
+        ///		{ &quot;stoneslab_side&quot;: &quot;Stone Slab (Side)&quot; },
+        ///		{ &quot;stoneslab_top&quot;: &quot;Stone Slab (Top)&quot; },
+        ///		{ &quot;brick&quot;: &quot;Bricks&quot; },
+        ///		{ &quot;tnt_side&quot;: &quot;TNT (Side)&quot; },
+        ///		{ &quot;tnt_top&quot;: &quot;TNT (Top)&quot; },
+        ///		{ &quot;tnt_bottom&quot;: &quot;TNT (Bottom)&quot; },
+        ///		{ &quot;web&quot;: &quot;Cobw [rest of string was truncated]&quot;;.
         /// </summary>
-        public static byte[] tileData {
+        public static string tileData {
             get {
-                object obj = ResourceManager.GetObject("tileData", resourceCulture);
-                return ((byte[])(obj));
+                return ResourceManager.GetString("tileData", resourceCulture);
             }
         }
         

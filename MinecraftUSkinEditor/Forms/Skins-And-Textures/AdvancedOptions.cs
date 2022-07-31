@@ -61,7 +61,7 @@ namespace PckStudio
                         foreach (PCKFile.FileData mf in currentPCK.Files)
                         {
                             MemoryStream png = new MemoryStream(mf.data);
-                            if (Path.GetExtension(mf.name) == ".png")
+                            if (Path.GetExtension(mf.filepath) == ".png")
                             {
                                 if (Image.FromStream(png).Size.Height == Image.FromStream(png).Size.Width)
                                 {
@@ -84,7 +84,7 @@ namespace PckStudio
                         foreach (PCKFile.FileData mf in currentPCK.Files)
                         {
                             MemoryStream png = new MemoryStream(mf.data);
-                            if (Path.GetExtension(mf.name) == ".png")
+                            if (Path.GetExtension(mf.filepath) == ".png")
                             {
                                 if (Image.FromStream(png).Size.Height == Image.FromStream(png).Size.Width / 2)
                                 {
@@ -106,7 +106,7 @@ namespace PckStudio
                     {
                         foreach (PCKFile.FileData mf in currentPCK.Files)
                         {
-                            if (Path.GetExtension(mf.name) == ".png")
+                            if (Path.GetExtension(mf.filepath) == ".png")
                             {
                                 mf.properties.Add(new ValueTuple<string, string>(treeMeta.Nodes[i].Text, treeMeta.Nodes[i].Tag.ToString() ));
                             }

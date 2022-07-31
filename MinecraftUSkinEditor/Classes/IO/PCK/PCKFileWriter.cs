@@ -22,7 +22,7 @@ namespace PckStudio.Classes.IO
         private PCKFileWriter(PCKFile file, bool isLittleEndian) : base(isLittleEndian)
         {
             _pckfile = file;
-            LUT = _pckfile.GatherMetaTags();
+            LUT = _pckfile.GatherPropertiesList();
         }
 
         private void WriteToStream(Stream stream)
@@ -59,7 +59,7 @@ namespace PckStudio.Classes.IO
             {
                 WriteInt(stream, file.size);
                 WriteInt(stream, file.type);
-                WriteString(stream, file.name);
+                WriteString(stream, file.filepath);
             }
         }
         

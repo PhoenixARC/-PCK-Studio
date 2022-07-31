@@ -79,7 +79,7 @@ namespace PckStudio.Classes.IO
         private string ReadString(Stream stream)
         {
             int len = ReadInt(stream);
-            string s = ReadString(stream, len, IsUsingLittleEndian ?  Encoding.Unicode : Encoding.BigEndianUnicode);
+            string s = ReadString(stream, len, IsUsingLittleEndian ? Encoding.Unicode : Encoding.BigEndianUnicode);
             ReadInt(stream); // padding
             return s;
         }

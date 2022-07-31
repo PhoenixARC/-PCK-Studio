@@ -122,19 +122,19 @@
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="addDisplayIDToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>162, 22</value>
   </data>
   <data name="addDisplayIDToolStripMenuItem.Text" xml:space="preserve">
     <value>Add Display ID</value>
   </data>
   <data name="deleteDisplayIDToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>162, 22</value>
   </data>
   <data name="deleteDisplayIDToolStripMenuItem.Text" xml:space="preserve">
     <value>Delete Display ID</value>
   </data>
   <data name="contextMenuStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>181, 70</value>
+    <value>163, 48</value>
   </data>
   <data name="&gt;&gt;contextMenuStrip1.Name" xml:space="preserve">
     <value>contextMenuStrip1</value>

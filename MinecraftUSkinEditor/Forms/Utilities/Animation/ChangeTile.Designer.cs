@@ -28,8 +28,8 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.acceptBtn = new System.Windows.Forms.Button();
+            this.CancelBtn = new System.Windows.Forms.Button();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.treeView2 = new System.Windows.Forms.TreeView();
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
@@ -43,31 +43,32 @@
             this.Items.SuspendLayout();
             this.SuspendLayout();
             // 
-            // button1
+            // acceptBtn
             // 
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.button1.Location = new System.Drawing.Point(55, 233);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 7;
-            this.button1.Text = "Save";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.acceptBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.acceptBtn.ForeColor = System.Drawing.Color.White;
+            this.acceptBtn.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.acceptBtn.Location = new System.Drawing.Point(55, 233);
+            this.acceptBtn.Name = "acceptBtn";
+            this.acceptBtn.Size = new System.Drawing.Size(75, 23);
+            this.acceptBtn.TabIndex = 7;
+            this.acceptBtn.Text = "Save";
+            this.acceptBtn.UseVisualStyleBackColor = true;
+            this.acceptBtn.Click += new System.EventHandler(this.button1_Click);
             // 
-            // button2
+            // CancelBtn
             // 
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.ForeColor = System.Drawing.Color.White;
-            this.button2.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.button2.Location = new System.Drawing.Point(135, 233);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 13;
-            this.button2.Text = "Cancel";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.CancelBtn.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.CancelBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.CancelBtn.ForeColor = System.Drawing.Color.White;
+            this.CancelBtn.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.CancelBtn.Location = new System.Drawing.Point(135, 233);
+            this.CancelBtn.Name = "CancelBtn";
+            this.CancelBtn.Size = new System.Drawing.Size(75, 23);
+            this.CancelBtn.TabIndex = 13;
+            this.CancelBtn.Text = "Cancel";
+            this.CancelBtn.UseVisualStyleBackColor = true;
+            this.CancelBtn.Click += new System.EventHandler(this.button2_Click);
             // 
             // treeView1
             // 
@@ -177,16 +178,18 @@
             // 
             // ChangeTile
             // 
+            this.AcceptButton = this.acceptBtn;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.CancelBtn;
             this.ClientSize = new System.Drawing.Size(264, 264);
             this.ControlBox = false;
             this.Controls.Add(this.metroTabControl1);
             this.Controls.Add(this.metroTextBox1);
             this.Controls.Add(this.metroLabel2);
             this.Controls.Add(this.metroLabel1);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.CancelBtn);
+            this.Controls.Add(this.acceptBtn);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -208,8 +211,8 @@
 		}
 
 		#endregion
-		private System.Windows.Forms.Button button1;
-		private System.Windows.Forms.Button button2;
+		private System.Windows.Forms.Button acceptBtn;
+		private System.Windows.Forms.Button CancelBtn;
 		private System.Windows.Forms.TreeView treeView1;
 		private System.Windows.Forms.TreeView treeView2;
 		private MetroFramework.Controls.MetroLabel metroLabel1;

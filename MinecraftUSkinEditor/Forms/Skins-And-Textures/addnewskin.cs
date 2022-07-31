@@ -107,9 +107,6 @@ namespace PckStudio
             {
                 comboBoxSkinType.Items.RemoveAt(0);
             }
-
-            skinPictureBoxTexture.SizeMode = PictureBoxSizeMode.StretchImage;
-            skinPictureBoxTexture.InterpolationMode = InterpolationMode.NearestNeighbor;
             skinPictureBoxTexture.Image = img;
 
             buttonDone.Enabled = true;
@@ -200,8 +197,8 @@ namespace PckStudio
             {
                 try
                 {
-                    cape.name = $"dlccape{skinId}.png";
-                    skin.properties.Add(new ValueTuple<string, string>("CAPEPATH", cape.name));
+                    cape.filepath = $"dlccape{skinId}.png";
+                    skin.properties.Add(new ValueTuple<string, string>("CAPEPATH", cape.filepath));
                 }
                 catch (Exception)
                 {
@@ -247,7 +244,7 @@ namespace PckStudio
 
             skin.properties.Add(new ValueTuple<string, string>("GAME_FLAGS", "0x18"));
             skin.properties.Add(new ValueTuple<string, string>("FREE", "1"));
-            skin.name = "dlcskin" + skinId + ".png";
+            skin.filepath = "dlcskin" + skinId + ".png";
             DialogResult = DialogResult.OK;
             Close();
         }

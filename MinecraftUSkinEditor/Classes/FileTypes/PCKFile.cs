@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace PckStudio.Classes.FileTypes
 {
@@ -18,20 +19,54 @@ namespace PckStudio.Classes.FileTypes
 		        DLCCapeFile         = 1,  // *.png
                 DLCTextureFile      = 2,  // *.png
                 DLCUIDataFile       = 3,  // *.fui ????
-                // DLCInfoFile         = 4, // "0" file
-                // DLCTexturePackInfoFile = 5, // (x16|x32|...)Info.pck
-                DLCLocalisationFile = 6,  // languages.loc/localisation.loc
-                DLCGameRulesFile    = 7,  // GameRiles.grf
-                DLCAudioFile        = 8,  // audio.pck
-                DLCColourTableFile  = 9,  // colours.col
-                DLCGameRulesHeader  = 10, // GameRiles.grh
-                DLCSkinDataFile     = 11, // *.pck made up name  -Miku
-		        DLCModelsFile       = 12, // models.bin
-                DLCBehavioursFile   = 13, // behaviours.bin
-                DLCMaterialFile     = 14, // entityMaterials.bin
+                /// <summary>
+                /// "0" file
+                /// </summary>
+                DLCInfoFile         = 4,
+                /// <summary>
+                /// (x16|x32|...)Info.pck
+                /// </summary>
+                DLCTexturePackInfoFile = 5,
+                /// <summary>
+                /// languages.loc/localisation.loc
+                /// </summary>
+                DLCLocalisationFile = 6,
+                /// <summary>
+                /// GameRules.grf
+                /// </summary>
+                DLCGameRulesFile    = 7,
+                /// <summary>
+                /// audio.pck
+                /// </summary>
+                DLCAudioFile        = 8,
+                /// <summary>
+                /// colours.col
+                /// </summary>
+                DLCColourTableFile  = 9,
+                /// <summary>
+                /// GameRules.grh
+                /// </summary>
+                DLCGameRulesHeader  = 10,
+                /// <summary>
+                /// Skins.pck
+                /// made up name  - Miku
+                /// </summary>
+                DLCSkinDataFile     = 11,
+                /// <summary>
+                /// models.bin
+                /// </summary>
+		        DLCModelsFile       = 12,
+                /// <summary>
+                /// behaviours.bin
+                /// </summary>
+                DLCBehavioursFile   = 13,
+                /// <summary>
+                /// entityMaterials.bin
+                /// </summary>
+                DLCMaterialFile     = 14,
             }
 
-            public string name { get; set; }
+            public string filepath { get; set; }
             public int type { get; set; }
             public byte[] data => _data;
             public int size => _size;
@@ -40,21 +75,19 @@ namespace PckStudio.Classes.FileTypes
             private byte[] _data = new byte[0];
             private int _size = 0;
 
-            public FileData(string name, int type)
+            public FileData(string path, int type)
             {
                 this.type = type;
-                this.name = name;
+                filepath = path;
             }
 
-            public FileData(string name, int type, int dataSize)
+            public FileData(string path, int type, int dataSize) : this(path, type)
             {
-                this.type = type;
-                this.name = name;
                 _size = dataSize;
                 _data = new byte[dataSize];
             }
 
-            public FileData(FileData file) : this(file.name, file.type)
+            public FileData(FileData file) : this(file.filepath, file.type)
             {
                 properties = file.properties;
                 SetData(file.data);
@@ -73,7 +106,7 @@ namespace PckStudio.Classes.FileTypes
             this.type = type;
         }
 
-        public List<string> GatherMetaTags()
+        public List<string> GatherPropertiesList()
         {
             var LUT = new List<string>();
             Files.ForEach(file => file.properties.ForEach(pair =>
@@ -85,16 +118,28 @@ namespace PckStudio.Classes.FileTypes
             return LUT;
         }
 
-        public bool HasFile(string name, int type)
+        /// <summary>
+        /// Checks wether a file with <paramref name="filepath"/> and <paramref name="type"/> exists
+        /// </summary>
+        /// <param name="filepath">Path to the file in the pck</param>
+        /// <param name="type">Type of the file to check</param>
+        /// <returns> when file exists, otherwise false </returns>
+        public bool HasFile(string filepath, int type)
         {
-            return GetFile(name, type) != null;
+            return GetFile(filepath, type) != null;
         }
 
-        public FileData GetFile(string name, int type)
+        /// <summary>
+        /// Gets the first file that Equals <paramref name="filepath"/> and <paramref name="type"/>
+        /// </summary>
+        /// <param name="filepath">file path of the file</param>
+        /// <param name="type">Type of the file</param>
+        /// <returns>FileData if found, otherwise null</returns>
+        public FileData GetFile(string filepath, int type)
         {
             foreach (var file in Files)
             {
-                if (file.name == name && file.type == type)
+                if (file.filepath.Equals(filepath) && file.type.Equals(type))
                     return file;
             }
             return null;

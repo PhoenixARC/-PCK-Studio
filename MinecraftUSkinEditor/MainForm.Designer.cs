@@ -543,7 +543,6 @@
             // 
             resources.ApplyResources(this.installationToolStripMenuItem, "installationToolStripMenuItem");
             this.installationToolStripMenuItem.Name = "installationToolStripMenuItem";
-            this.installationToolStripMenuItem.Click += new System.EventHandler(this.installationToolStripMenuItem_Click);
             // 
             // fAQToolStripMenuItem1
             // 

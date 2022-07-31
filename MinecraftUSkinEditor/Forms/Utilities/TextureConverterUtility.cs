@@ -451,9 +451,9 @@ namespace PckStudio.Forms.Utilities
 
                 foreach (PCKFile.FileData mf in Pck.Files)
                 {
-                    System.IO.FileInfo file = new System.IO.FileInfo(Environment.CurrentDirectory + "\\Temp\\" + @"\" + mf.name);
+                    System.IO.FileInfo file = new System.IO.FileInfo(Environment.CurrentDirectory + "\\Temp\\" + @"\" + mf.filepath);
                     file.Directory.Create(); // If the directory already exists, this method does nothing.
-                    File.WriteAllBytes(Environment.CurrentDirectory + "\\Temp\\" + @"\" + mf.name, mf.data); //writes minefile to file
+                    File.WriteAllBytes(Environment.CurrentDirectory + "\\Temp\\" + @"\" + mf.filepath, mf.data); //writes minefile to file
                 }
                 while (i <= ix)
                 {
@@ -476,9 +476,9 @@ namespace PckStudio.Forms.Utilities
 
                 foreach (PCKFile.FileData mf in Pck.Files)
                 {
-                    System.IO.FileInfo file = new System.IO.FileInfo(Environment.CurrentDirectory + "\\Temp\\" + @"\" + mf.name);
+                    System.IO.FileInfo file = new System.IO.FileInfo(Environment.CurrentDirectory + "\\Temp\\" + @"\" + mf.filepath);
                     file.Directory.Create(); // If the directory already exists, this method does nothing.
-                    File.WriteAllBytes(Environment.CurrentDirectory + "\\Temp\\" + @"\" + mf.name, mf.data); //writes minefile to file
+                    File.WriteAllBytes(Environment.CurrentDirectory + "\\Temp\\" + @"\" + mf.filepath, mf.data); //writes minefile to file
                 }
                 while (i <= ix)
                 {
@@ -501,9 +501,9 @@ namespace PckStudio.Forms.Utilities
 
                 foreach (PCKFile.FileData mf in Pck.Files)
                 {
-                    FileInfo file = new FileInfo(Environment.CurrentDirectory + "\\Temp\\" + @"\" + mf.name);
+                    FileInfo file = new FileInfo(Environment.CurrentDirectory + "\\Temp\\" + @"\" + mf.filepath);
                     file.Directory.Create(); // If the directory already exists, this method does nothing.
-                    File.WriteAllBytes(Environment.CurrentDirectory + "\\Temp\\" + @"\" + mf.name, mf.data); //writes minefile to file
+                    File.WriteAllBytes(Environment.CurrentDirectory + "\\Temp\\" + @"\" + mf.filepath, mf.data); //writes minefile to file
                 }
                 while (i <= ix)
                 {

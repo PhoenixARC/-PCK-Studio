@@ -60,8 +60,6 @@
             // treeView1
             // 
             this.treeView1.AllowDrop = true;
-            this.treeView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
             this.treeView1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.treeView1.ContextMenuStrip = this.contextMenuStrip1;
             this.treeView1.ForeColor = System.Drawing.Color.White;
@@ -198,7 +196,7 @@
             this.AnimationPlayBtn.Text = "Play Animation";
             this.AnimationPlayBtn.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.AnimationPlayBtn.UseSelectable = true;
-            this.AnimationPlayBtn.Click += new System.EventHandler(this.metroButton1_Click);
+            this.AnimationPlayBtn.Click += new System.EventHandler(this.StartAnimationBtn_Click);
             // 
             // timer1
             // 
@@ -216,7 +214,7 @@
             this.AnimationStopBtn.Text = "Stop Animation";
             this.AnimationStopBtn.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.AnimationStopBtn.UseSelectable = true;
-            this.AnimationStopBtn.Click += new System.EventHandler(this.metroButton2_Click);
+            this.AnimationStopBtn.Click += new System.EventHandler(this.StopAnimationBtn_Click);
             // 
             // tileLabel
             // 
@@ -310,6 +308,7 @@
             this.Controls.Add(this.treeView1);
             this.Controls.Add(this.menuStrip);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(412, 362);
             this.Name = "AnimationEditor";
             this.Style = MetroFramework.MetroColorStyle.Silver;
             this.Text = "Animation Editor";

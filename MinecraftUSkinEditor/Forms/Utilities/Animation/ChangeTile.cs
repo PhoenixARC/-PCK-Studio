@@ -31,50 +31,56 @@ namespace PckStudio.Forms.Utilities.AnimationEditor
 			oldTileName = oldName;
 			InitializeComponent();
 			ImageList tiles = new ImageList();
+			
 			tiles.ColorDepth = ColorDepth.Depth32Bit;
 
-			for (int i = 1; i < 545; i++)
-			{
-				int row = (i - 1) / 16;
-				int column = (i - 1) % 16;
+			//for (int i = 0; i < 545; i++)
+			//{
+			//	int row = i / 16;
+			//	int column = i % 16;
 
-				Rectangle tileArea = new Rectangle(new Point(column * 16, row * 16), new Size(16, 16));
+			//	Rectangle tileArea = new Rectangle(new Point(column * 16, row * 16), new Size(16, 16));
 
-				Bitmap tileImage = new Bitmap(16, 16);
-				using (Graphics gfx = Graphics.FromImage(tileImage))
-				{
-					gfx.SmoothingMode = SmoothingMode.None;
-					gfx.InterpolationMode = InterpolationMode.NearestNeighbor;
-					gfx.PixelOffsetMode = PixelOffsetMode.HighQuality;
+			//	Bitmap tileImage = new Bitmap(16, 16);
+			//	using (Graphics gfx = Graphics.FromImage(tileImage))
+			//	{
+			//		gfx.SmoothingMode = SmoothingMode.None;
+			//		gfx.InterpolationMode = InterpolationMode.NearestNeighbor;
+			//		gfx.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
-					gfx.DrawImage(Properties.Resources.terrain_sheet, new Rectangle(0, 0, 16, 16), tileArea, GraphicsUnit.Pixel);
-				}
+			//		gfx.DrawImage(Resources.terrain_sheet, new Rectangle(0, 0, 16, 16), tileArea, GraphicsUnit.Pixel);
+			//	}
 
-				tiles.Images.Add(tileImage);
-			}
-			for (int i = 1; i < 273; i++)
-			{
-				int row = (i - 1) / 16;
-				int column = (i - 1) % 16;
+			//	tiles.Images.Add(tileImage);
+			//}
+			//for (int i = 0; i < 273; i++)
+			//{
+			//	int row = i / 16;
+			//	int column = i % 16;
 
-				Rectangle tileArea = new Rectangle(new Point(column * 16, row * 16), new Size(16, 16));
+			//	Rectangle tileArea = new Rectangle(new Point(column * 16, row * 16), new Size(16, 16));
 
-				Bitmap tileImage = new Bitmap(16, 16);
-				using (Graphics gfx = Graphics.FromImage(tileImage))
-				{
-					gfx.SmoothingMode = SmoothingMode.None;
-					gfx.InterpolationMode = InterpolationMode.NearestNeighbor;
-					gfx.PixelOffsetMode = PixelOffsetMode.HighQuality;
+			//	Bitmap tileImage = new Bitmap(16, 16);
+			//	using (Graphics gfx = Graphics.FromImage(tileImage))
+			//	{
+			//		gfx.SmoothingMode = SmoothingMode.None;
+			//		gfx.InterpolationMode = InterpolationMode.NearestNeighbor;
+			//		gfx.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
-					gfx.DrawImage(Resources.items_sheet, new Rectangle(0, 0, 16, 16), tileArea, GraphicsUnit.Pixel);
-				}
+			//		gfx.DrawImage(Resources.items_sheet, new Rectangle(0, 0, 16, 16), tileArea, GraphicsUnit.Pixel);
+			//	}
 
-				tiles.Images.Add(tileImage);
-			}
+			//	tiles.Images.Add(tileImage);
+			//}
+
+			tiles.Images.AddRange(CreateImageList(Resources.terrain_sheet, 16, 16).ToArray());
+			tiles.Images.AddRange(CreateImageList(Resources.items_sheet, 16, 16).ToArray());
+			treeView1.ImageList = tiles;
+			treeView2.ImageList = tiles;
 
 			try
 			{
-                JObject tileData = JObject.Parse(Encoding.Default.GetString(Resources.tileData));
+                JObject tileData = JObject.Parse(Resources.tileData);
 				int i = 0;
 
 				if (tileData["Blocks"] != null)
@@ -120,10 +126,8 @@ namespace PckStudio.Forms.Utilities.AnimationEditor
 					}
 				}
 
-				treeView1.ImageList = tiles;
-				treeView2.ImageList = tiles;
-				Blocks.Controls.Add(treeView1);
-				Items.Controls.Add(treeView2);
+				//Blocks.Controls.Add(treeView1);
+				//Items.Controls.Add(treeView2);
 			}
 			catch (Newtonsoft.Json.JsonException j_ex)
 			{
@@ -132,15 +136,36 @@ namespace PckStudio.Forms.Utilities.AnimationEditor
 			}
 		}
 
+		private IEnumerable<Image> CreateImageList(Image source, int width, int height)
+        {
+            int img_row_count = source.Width / width;
+            int img_column_count = source.Height / height;
+			for (int i = 0; i < img_column_count * img_row_count; i++)
+			{
+                int row = i / width;
+                int column = i % height;
+                Rectangle tileArea = new Rectangle(new Point(column * width, row * height), new Size(16, 16));
+                Bitmap tileImage = new Bitmap(width, height);
+				using (Graphics gfx = Graphics.FromImage(tileImage))
+				{
+					gfx.SmoothingMode = SmoothingMode.None;
+					gfx.InterpolationMode = InterpolationMode.NearestNeighbor;
+					gfx.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+					gfx.DrawImage(source, new Rectangle(0, 0, width, height), tileArea, GraphicsUnit.Pixel);
+				}
+				yield return tileImage;
+			}
+			yield break;
+		}
+
 		private void treeViews_AfterSelect(object sender, TreeViewEventArgs e)
 		{
 			Tuple<string, int> tileData = e.Node.Tag as Tuple<string, int>;
 			Console.WriteLine(tileData.Item1 + " - " + tileData.Item2);
 			selectedTile = tileData.Item1;
 			Console.WriteLine(selectedTile);
-
-			if (e.Node.TreeView == treeView1) isItem = false;
-			if (e.Node.TreeView == treeView2) isItem = true;
+			isItem = e.Node.TreeView == treeView2;
 		}
 
 		void filter_TextChanged(object sender, EventArgs e)
@@ -194,7 +219,8 @@ namespace PckStudio.Forms.Utilities.AnimationEditor
 
 		private void button1_Click(object sender, EventArgs e)
 		{
-			if (String.IsNullOrEmpty(selectedTile)) return;
+			if (string.IsNullOrEmpty(selectedTile)) button2_Click(sender, e);
+			DialogResult = DialogResult.OK;
 			Close();
 		}
 	}

@@ -2,153 +2,115 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using PckStudio.Classes.FileTypes;
+using PckStudio.Forms.Utilities.AnimationEditor;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 
 namespace PckStudio
 {
 	public partial class AnimationEditor : MetroForm
 	{
-		PCKFile.FileData mf = null;
+		PCKFile.FileData animationFile = null;
 		List<Image> frames = new List<Image>();
-		int frameCount;
-		Newtonsoft.Json.Linq.JObject tileData = Newtonsoft.Json.Linq.JObject.Parse(System.Text.Encoding.Default.GetString(Properties.Resources.tileData));
-		Image texture;
+		int frameCount => frames.Count;
+        static JObject tileData = JObject.Parse(Properties.Resources.tileData);
+		Image texture = null;
 		bool isItem = false;
-		string lastFrameTime = "1";
-		string newTileName = "";
-		bool create = false;
+		int minimumFrameTime = 1;
+		string TileName = "";
+		int animCurrentFrame = 0;
+		Tuple<int, int> currentFrameData = new Tuple<int, int>(0, 1);
+		Image img = null;
+		Image imgB = null;
+		int nextFrame;
+		//int frameCounter = 0; // ported directly from Java Edition code -MattNL
 
-		private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
-		{
-			Tuple<string, string> frameData = e.Node.Tag as Tuple<string, string>;
-			Console.WriteLine(frameData.Item1 + " --- " + frameData.Item2);
-			if (AnimationPlayBtn.Enabled)
-			{
-				pictureBoxWithInterpolationMode1.Image = frames[short.Parse(frameData.Item1)];
-			}
+		public AnimationEditor(Image imgage, string tileName, bool isItem)
+        {
+			InitializeComponent();
+			this.isItem = isItem;
+			TileName = tileName;
+			string filePath = $"res/textures/{(isItem ? "items" : "blocks")}/{tileName}.png";
+			animationFile = CreateNewAnimationFile(imgage, filePath);
+			CreateFrameList(imgage);
 		}
 
-		public AnimationEditor(PCKFile.FileData file_entry, string createdFileName = "")
+		public AnimationEditor(PCKFile.FileData file)
 		{
 			InitializeComponent();
-			if (string.IsNullOrEmpty(createdFileName))
+			isItem = file.filepath.Split('/').Contains("items");
+			TileName = Path.GetFileNameWithoutExtension(file.filepath);
+			animationFile = file;
+			if (TileName.EndsWith("MipMapLevel2") || TileName.EndsWith("MipMapLevel3"))
 			{
-				mf = file_entry;
-				newTileName = Path.GetFileNameWithoutExtension(file_entry.name);
-				if (file_entry.name.Split('/').Contains("items")) isItem = true;
-				if (newTileName.EndsWith("MipMapLevel2") || newTileName.EndsWith("MipMapLevel3"))
-				{
-					string mipMapLvl = newTileName.Last().ToString();
-					newTileName = newTileName.Substring(0, newTileName.Length - 12);
-					MipMapCheckbox.Checked = true;
-					MipMapNumericUpDown.Value = short.Parse(mipMapLvl);
-				}
+				string mipMapLvl = TileName.Last().ToString();
+				TileName = TileName.Substring(0, TileName.Length - 12);
+				MipMapCheckbox.Checked = true;
+				MipMapNumericUpDown.Value = short.Parse(mipMapLvl);
 			}
-			else
-			{
-				create = true;
-				PCKFile.FileData newMf = new PCKFile.FileData("", 2);
-				newMf.properties.Add(new ValueTuple<string, string>("ANIM", ""));
-				newMf.SetData(File.ReadAllBytes(createdFileName));
-				mf = newMf;
-				Forms.Utilities.AnimationEditor.ChangeTile diag = new Forms.Utilities.AnimationEditor.ChangeTile();
-				diag.ShowDialog(this);
-				Console.WriteLine(diag.SelectedTile);
-				newTileName = diag.SelectedTile;
-				if (newTileName == "") Close();
-				isItem = diag.IsItem;
-				diag.Dispose();
-			}
-
-			List<string> strEntries = new List<string>();
 
 			string anim = string.Empty;
-			foreach (var entry in mf.properties)
-			{
-				if (entry.Item1 == "ANIM") anim = entry.Item2;
-                strEntries.Add(entry.Item2);
-			}
+			animationFile.properties.FirstOrDefault(x => x.Item1.Equals("ANIM"));
 
-			MemoryStream textureMem = new MemoryStream(mf.data);
-			texture = Image.FromStream(textureMem);
-			createFrameList();
+			MemoryStream textureMem = new MemoryStream(animationFile.data);
+			texture = new Bitmap(textureMem);
+			CreateFrameList(texture);
 
-			Console.WriteLine(newTileName);
+			Console.WriteLine(TileName);
 
-			foreach (Newtonsoft.Json.Linq.JObject content in tileData[isItem ? "Items" : "Blocks"].Children())
+			foreach (JObject content in tileData[isItem ? "Items" : "Blocks"].Children())
 			{
 				foreach (JProperty prop in content.Properties())
 				{
-					if (prop.Name == newTileName) tileLabel.Text = (string)prop.Value;
+					if (prop.Name == TileName) tileLabel.Text = (string)prop.Value;
 				}
 			}
-
-			Console.WriteLine("ANIMATION DATA: " + anim);
-			if (InterpolationCheckbox.Checked = anim.StartsWith("#"))
-			{
-				anim = anim.Remove(0, 1);
-			}
-
-			frameCount = texture.Height / texture.Width;
 
 			if (!string.IsNullOrEmpty(anim))
 			{
 				string[] animData = anim.Split(',');
 				if (string.IsNullOrEmpty(animData.Last())) animData = animData.Take(animData.Length - 1).ToArray();
+				int lastFrameTime = 0;
 				foreach (string frame in animData)
 				{
 					string[] frameData = frame.Split('*');
-					string outFrame = "";
-					int i = 0;
-					string currentFrame = "";
-					string currentFrameTime = "";
-					foreach (string data in frameData)
-					{
-						string label;
-						string outData;
-						outData = data;
-						if (i == 0)
-						{
-							if (string.IsNullOrEmpty(data)) throw new Exception("Invalid animation data");
-							label = "Frame: ";
-							currentFrame = outData;
-						}
-						else
-						{
-							// Some textures like the Halloween 2015's Lava texture don't have a
-							// frame time parameter for certain frames. This will detect that and place the last frame time in its place.
-							// This is accurate to console edition behavior.
-							// - MattNL
-							if (string.IsNullOrEmpty(data)) outData = lastFrameTime;
-							label = ", Frame Time: ";
-							currentFrameTime = outData;
-						}
-						outFrame += label + outData;
-						i++;
-					}
-					Console.WriteLine(outFrame);
+					if (frameData.Length < 2)
+						continue; // shouldn't happen
+					int currentFrame = 0;
+					int currentFrameTime = 1;
 
-					TreeNode frameNode = new TreeNode();
-					Tuple<string, string> finalFrameData = new Tuple<string, string>(currentFrame, currentFrameTime);
-					lastFrameTime = currentFrameTime;
-					frameNode.Text = outFrame;
+					if (string.IsNullOrEmpty(frameData[0])) throw new Exception("Invalid animation data");
+					currentFrame = int.Parse(frameData[0]);
+
+					// Some textures like the Halloween 2015's Lava texture don't have a
+					// frame time parameter for certain frames.
+					// This will detect that and place the last frame time in its place.
+					// This is accurate to console edition behavior.
+					// - MattNL
+					currentFrameTime = string.IsNullOrEmpty(frameData[1]) ? lastFrameTime : int.Parse(frameData[1]);
+					string label = $"Frame: {currentFrame}, Frame Time: {currentFrameTime}";
+					Console.WriteLine(label);
+
+					TreeNode frameNode = new TreeNode(label);
+					var finalFrameData = new Tuple<int, int>(currentFrame, currentFrameTime);
 					frameNode.Tag = finalFrameData;
 					treeView1.Nodes.Add(frameNode);
+					lastFrameTime = currentFrameTime;
 				}
 			}
 			else
 			{
 				for (int i = 0; i < frameCount; i++)
 				{
-					TreeNode frameNode = new TreeNode();
-					Tuple<string, string> finalFrameData = new Tuple<string, string>(i.ToString(), "1");
-					frameNode.Text = "Frame: " + i.ToString() + ", Frame Time: 1";
+					TreeNode frameNode = new TreeNode($"Frame: {i}, Frame Time: {minimumFrameTime}");
+					var finalFrameData = new Tuple<int, int>(i, minimumFrameTime);
 					frameNode.Tag = finalFrameData;
 					treeView1.Nodes.Add(frameNode);
 				}
@@ -157,151 +119,166 @@ namespace PckStudio
 			pictureBoxWithInterpolationMode1.Image = frames[0]; //Sets image preview to the first frame of animation (0 for now)
 			Console.WriteLine("Animation Frame Count: " + frameCount);
 		}
+		
+		private PCKFile.FileData CreateNewAnimationFile(Image imgageFile, string name = "")
+        {
+			PCKFile.FileData file = new PCKFile.FileData(name, 2);
+			file.properties.Add(("ANIM", ""));
+			using (var stream = new MemoryStream())
+			{
+				imgageFile.Save(stream, ImageFormat.Png);
+				file.SetData(stream.ToArray());
+			}
+			return file;
+		}
+		
+		private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
+		{
+			var frameData = e.Node.Tag as Tuple<int, int>;
+			Console.WriteLine(frameData.Item1 + " --- " + frameData.Item2);
+			if (AnimationPlayBtn.Enabled)
+			{
+				pictureBoxWithInterpolationMode1.Image = frames[frameData.Item1];
+			}
+		}
 
-		void createFrameList()
+		void CreateFrameList(Image texture)
 		{
 			frames.Clear();
-			int width = texture.Width;
-			int height = texture.Height;
-			int totalFrames = height / width;
-			for (int frameI = 0; frameI < totalFrames; frameI++)
+			frames.AddRange(SplitImageToFrames(texture));
+		}
+
+		private IEnumerable<Image> SplitImageToFrames(Image source)
+		{
+			for (int i = 0; i < source.Height / source.Width; i++)
 			{
-				Rectangle frameArea = new Rectangle(new Point(0, frameI * width), new Size(width, width));
-				Bitmap frameImage = new Bitmap(width, width);
-				using (Graphics gfx = Graphics.FromImage(frameImage))
+				Rectangle tileArea = new Rectangle(new Point(0, i * source.Width), new Size(source.Width, source.Width));
+				Bitmap tileImage = new Bitmap(source.Width, source.Width);
+				using (Graphics gfx = Graphics.FromImage(tileImage))
 				{
 					gfx.SmoothingMode = SmoothingMode.None;
 					gfx.InterpolationMode = InterpolationMode.NearestNeighbor;
 					gfx.PixelOffsetMode = PixelOffsetMode.HighQuality;
-
-					gfx.DrawImage(texture, new Rectangle(0, 0, frameImage.Width, frameImage.Height), frameArea, GraphicsUnit.Pixel);
+					gfx.DrawImage(source, new Rectangle(0, 0, source.Width, source.Width), tileArea, GraphicsUnit.Pixel);
 				}
-				frames.Add(new Bitmap(frameImage, new Size(width, width)));
+				yield return tileImage;
 			}
+			yield break;
 		}
 
 		private int mix(double ratio, int val1, int val2) // Ported from Java Edition code
 		{
-			return (int)(ratio * (double)val1 + (1.0D - ratio) * (double)val2);
+			return (int)(ratio * val1 + (1.0D - ratio) * val2);
 		}
 
-		int animCurrentFrame = 0;
-		Tuple<string, string> currentFrameData = new Tuple<string, string>("", "");
-		Image img = null;
-		int nextFrame;
-		//int frameCounter = 0; // ported directly from Java Edition code -MattNL
-		Image imgB = null;
 		void animate(object sender, EventArgs e)
 		{
 			//Console.WriteLine(frameCounter + " $$$ " + frameCount);
 			//frameCounter = (frameCounter + 1) % frameCount;
 			if (animCurrentFrame > (treeView1.Nodes.Count - 1)) animCurrentFrame = 0;
-			currentFrameData = treeView1.Nodes[animCurrentFrame].Tag as Tuple<string, string>;
-			pictureBoxWithInterpolationMode1.Image = frames[Int16.Parse(currentFrameData.Item1)];
+			currentFrameData = treeView1.Nodes[animCurrentFrame].Tag as Tuple<int, int>;
+			pictureBoxWithInterpolationMode1.Image = frames[currentFrameData.Item1];
 			//animCurrentTotalFrameTime = Int16.Parse(currentFrameData.Item2);
-			timer1.Interval = Int16.Parse(currentFrameData.Item2) * 50;
+			timer1.Interval = currentFrameData.Item2 * 50;
 			animCurrentFrame++;
 
 			if (InterpolationCheckbox.Checked)
 			{
-				img = frames[short.Parse(currentFrameData.Item1)];
+				img = frames[currentFrameData.Item1];
 				nextFrame = animCurrentFrame + 1;
 				if (nextFrame > frameCount - 1) nextFrame = 0;
 				Console.WriteLine(nextFrame);
 				imgB = frames[nextFrame];
 			}
 
-			#region interpolation code (unoptimized and unused at the moment)
-			// Interpolation Code (Very slow, messy, and resource heavy depending on the resolution!!!)
+            #region interpolation code (unoptimized and unused at the moment)
+            // Interpolation Code (Very slow, messy, and resource heavy depending on the resolution!!!)
 
-			/*else if(metroCheckBox1.Checked && (img != null && imgB != null))
-			{
-				double d0 = 1.0D - animCurrentFrame / animCurrentTotalFrameTime;
-				int i = animCurrentFrame;
-				int j = frameCount;
-				int k = (frameCounter + 1) % j;
+            else if (InterpolationCheckbox.Checked && (img != null && imgB != null))
+            {
+                double d0 = 1.0D - animCurrentFrame / frameCount;
+                int i = animCurrentFrame;
+                int j = frameCount;
+                int k = (frameCount + 1) % j;
 
-				for (int l = 0; l < (frames.Count() - 1); ++l)
-				{
-					int i1 = img.Width;
-					int j1 = img.Width;
+                for (int l = 0; l < (frameCount - 1); ++l)
+                {
+                    int i1 = img.Width;
+                    int j1 = img.Width;
 
-					Bitmap finalInterpolation = new Bitmap(pictureBoxWithInterpolationMode1.Image);
-//					pictureBoxWithInterpolationMode1.Image.Dispose();
-//					pictureBoxWithInterpolationMode1.Image = null;
+                    Bitmap finalInterpolation = new Bitmap(pictureBoxWithInterpolationMode1.Image);
+                    //					pictureBoxWithInterpolationMode1.Image.Dispose();
+                    //					pictureBoxWithInterpolationMode1.Image = null;
 
-					for (int k1 = 0; k1 < j1; ++k1)
-					{
-						for (int l1 = 0; l1 < i1; ++l1)
-						{
-							//Get Both Colours at the pixel point
-							Bitmap imgC = new Bitmap(img);
-							Bitmap imgBC = new Bitmap(imgB);
-							Color col1 = imgC.GetPixel(l1, k1);
-							Color col2 = imgBC.GetPixel(l1, k1);
-							imgC.Dispose();
-							imgC = null;
-							imgBC.Dispose();
-							imgBC = null;
+                    for (int k1 = 0; k1 < j1; ++k1)
+                    {
+                        for (int l1 = 0; l1 < i1; ++l1)
+                        {
+                            //Get Both Colours at the pixel point
+                            Bitmap imgC = new Bitmap(img);
+                            Bitmap imgBC = new Bitmap(imgB);
+                            Color col1 = imgC.GetPixel(l1, k1);
+                            Color col2 = imgBC.GetPixel(l1, k1);
+                            imgC.Dispose();
+                            imgC = null;
+                            imgBC.Dispose();
+                            imgBC = null;
 
-							int i2 = 0;
-							i2 |= col1.A << 24;
-							i2 |= col1.R << 16;
-							i2 |= col1.G << 8;
-							i2 |= col1.B;
+                            int i2 = 0;
+                            i2 |= col1.A << 24;
+                            i2 |= col1.R << 16;
+                            i2 |= col1.G << 8;
+                            i2 |= col1.B;
 
-							int j2 = 0;
-							j2 |= col2.A << 24;
-							j2 |= col2.R << 16;
-							j2 |= col2.G << 8;
-							j2 |= col2.B;
+                            int j2 = 0;
+                            j2 |= col2.A << 24;
+                            j2 |= col2.R << 16;
+                            j2 |= col2.G << 8;
+                            j2 |= col2.B;
 
-							int k2 = this.mix(d0, i2 >> 16 & 255, j2 >> 16 & 255);
-							int l2 = this.mix(d0, i2 >> 8 & 255, j2 >> 8 & 255);
-							int i3 = this.mix(d0, i2 & 255, j2 & 255);
+                            int k2 = this.mix(d0, i2 >> 16 & 255, j2 >> 16 & 255);
+                            int l2 = this.mix(d0, i2 >> 8 & 255, j2 >> 8 & 255);
+                            int i3 = this.mix(d0, i2 & 255, j2 & 255);
 
-							// Create new grayscale RGB colour
-							uint finalColor = (uint)(i2 & -16777216 | k2 << 16 | l2 << 8 | i3);
+                            // Create new grayscale RGB colour
+                            uint finalColor = (uint)(i2 & -16777216 | k2 << 16 | l2 << 8 | i3);
 
-							byte[] values = BitConverter.GetBytes(finalColor);
+                            byte[] values = BitConverter.GetBytes(finalColor);
 
-							int a = values[3];
-							int b = values[0];
-							int g = values[1];
-							int r = values[2];
+                            int a = values[3];
+                            int b = values[0];
+                            int g = values[1];
+                            int r = values[2];
 
-							Color newcol = Color.FromArgb(a, r, g, b);
+                            Color newcol = Color.FromArgb(a, r, g, b);
 
-							finalInterpolation.SetPixel(l1, k1, newcol);
-						}
-					}
+                            finalInterpolation.SetPixel(l1, k1, newcol);
+                        }
+                    }
 
-					pictureBoxWithInterpolationMode1.Image = finalInterpolation;
-					//finalInterpolation.Dispose();
-					finalInterpolation = null;
-				}
-			}
-			*/
-			#endregion
+                    pictureBoxWithInterpolationMode1.Image = finalInterpolation;
+                    //finalInterpolation.Dispose();
+                }
+            }
 
-			//Console.WriteLine(animCurrentFrame + " - " + animCurrentFrameTime + " - " + animCurrentTotalFrameTime + " - " + (treeView1.Nodes.Count - 1));
-		}
+            #endregion
 
-		private void metroButton1_Click(object sender, EventArgs e)
+            //Console.WriteLine(animCurrentFrame + " - " + animCurrentFrameTime + " - " + animCurrentTotalFrameTime + " - " + (treeView1.Nodes.Count - 1));
+        }
+
+        private void StartAnimationBtn_Click(object sender, EventArgs e)
 		{
 			animCurrentFrame = 0;
 			//animCurrentFrameTime = 0;
 			//animCurrentTotalFrameTime = -1;
 			//frameCounter = 0;
-			AnimationPlayBtn.Enabled = false;
-			AnimationStopBtn.Enabled = true;
+			AnimationPlayBtn.Enabled = !(AnimationStopBtn.Enabled = !AnimationStopBtn.Enabled);
 			timer1.Start();
 		}
 
-		private void metroButton2_Click(object sender, EventArgs e)
+		private void StopAnimationBtn_Click(object sender, EventArgs e)
 		{
-			AnimationPlayBtn.Enabled = true;
-			AnimationStopBtn.Enabled = false;
+			AnimationPlayBtn.Enabled = !(AnimationStopBtn.Enabled = !AnimationStopBtn.Enabled);
 			timer1.Stop();
 		}
 
@@ -313,16 +290,6 @@ namespace PckStudio
 		private TreeNode FindNodeByName(TreeNode treeNode, string name)
 		{
 			foreach (TreeNode node in treeNode.Nodes)
-			{
-				if (node.Text.ToLower() == name.ToLower()) return node;
-				return FindNodeByName(node, name);
-			}
-			return null;
-		}
-
-		private TreeNode FindNodeByName(TreeView treeView, string name)
-		{
-			foreach (TreeNode node in treeView.Nodes)
 			{
 				if (node.Text.ToLower() == name.ToLower()) return node;
 				return FindNodeByName(node, name);
@@ -380,35 +347,29 @@ namespace PckStudio
 		{
 			using (var stream = new MemoryStream())
 			{
-				texture.Save(stream, texture.RawFormat);
-				mf.SetData(stream.ToArray());
+				texture.Save(stream, ImageFormat.Png);
+				animationFile.SetData(stream.ToArray());
 			}
 
-			if (MipMapCheckbox.Checked)
-			{
-				newTileName += "MipMapLevel" + MipMapNumericUpDown.Value.ToString();
-			}
+			animationFile.filepath = $"res/textures/{(isItem ? "items" : "blocks")}/{TileName}{(MipMapCheckbox.Checked ? $"MipMapLevel{MipMapNumericUpDown.Value}" : string.Empty)}.png";
 
-			//if (!create && treeViewMain.SelectedNode.Tag != null) treeViewMain.SelectedNode.Text = newTileName + ".png";
-
-			string animationData = "";
-			if (InterpolationCheckbox.Checked) animationData += "#"; // does the animation interpolate?
+			string animationData = InterpolationCheckbox.Checked ? "#" : "";
 			foreach (TreeNode node in treeView1.Nodes)
 			{
-				Tuple<string, string> frameData = node.Tag as Tuple<string, string>;
-				animationData += frameData.Item1 + "*" + frameData.Item2 + ",";
+				var frameData = node.Tag as Tuple<int, int>;
+				animationData += $"{frameData.Item1}*{frameData.Item2},";
 			}
 			animationData.TrimEnd(',');
-			foreach (var pair in mf.properties)
+			foreach (var pair in animationFile.properties)
 			{
 				if (pair.Item1 == "ANIM")
 				{
-					//pair.Item2 = animationData; // TODO
-					break;
+                    animationFile.properties[animationFile.properties.IndexOf(pair)] = ("ANIM", animationData);
+                    break;
 				}
 				else
 				{
-					mf.properties.Add(new ValueTuple<string, string>("ANIM", animationData));
+					animationFile.properties.Add(("ANIM", animationData));
 					break;
 				}
 			};
@@ -442,7 +403,7 @@ namespace PckStudio
 			//	addNodeToAnimationsFolder(newNode);
 			//}
 
-			if(MipMapCheckbox.Checked) newTileName = newTileName.Substring(0, newTileName.Length - 12);
+			if(MipMapCheckbox.Checked) TileName = TileName.Substring(0, TileName.Length - 12);
 		}
 
 		// Most of the code below is modified code from this link: https://docs.microsoft.com/en-us/dotnet/api/system.windows.forms.treeview.itemdrag?view=windowsdesktop-6.0
@@ -543,7 +504,7 @@ namespace PckStudio
 
 		private void treeView1_doubleClick(object sender, EventArgs e)
 		{
-			Forms.Utilities.AnimationEditor.FrameEditor diag = new Forms.Utilities.AnimationEditor.FrameEditor(
+			FrameEditor diag = new FrameEditor(
 				treeView1, // animation editor tree
 				treeView1.SelectedNode.Tag as Tuple<string, string>, // the current selected frame data
 				frameCount - 1, // frame limit
@@ -556,7 +517,7 @@ namespace PckStudio
 
 		private void addFrameToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			Forms.Utilities.AnimationEditor.FrameEditor diag = new Forms.Utilities.AnimationEditor.FrameEditor(
+			FrameEditor diag = new FrameEditor(
 				treeView1,
 				new Tuple<string, string>("", ""),
 				frameCount - 1,
@@ -573,7 +534,7 @@ namespace PckStudio
 
 		private void bulkAnimationSpeedToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			Forms.Utilities.AnimationEditor.SetBulkSpeed diag = new Forms.Utilities.AnimationEditor.SetBulkSpeed(treeView1);
+			SetBulkSpeed diag = new SetBulkSpeed(treeView1);
 			diag.ShowDialog(this);
 			diag.Dispose();
 		}
@@ -604,12 +565,11 @@ namespace PckStudio
 
 			MemoryStream textureMem = new MemoryStream(File.ReadAllBytes(Path.GetDirectoryName(diag.FileName) + "\\/" + Path.GetFileNameWithoutExtension(diag.FileName)));
 			texture = Image.FromStream(textureMem);
-			frameCount = texture.Height / texture.Width;
-			createFrameList();
+			CreateFrameList(texture);
 
 			try
 			{
-				Newtonsoft.Json.Linq.JObject mcmeta = Newtonsoft.Json.Linq.JObject.Parse(File.ReadAllText(diag.FileName));
+				JObject mcmeta = JObject.Parse(File.ReadAllText(diag.FileName));
 
 				if (mcmeta["animation"] != null)
 				{
@@ -632,7 +592,7 @@ namespace PckStudio
 									Console.WriteLine((int)frame["index"] + "*" + (int)frame["time"]);
 
 									TreeNode frameNode = new TreeNode();
-									Tuple<string, string> finalFrameData = new Tuple<string, string>(((int)frame["index"]).ToString(), ((int)frame["time"]).ToString());
+									var finalFrameData = new Tuple<int, int>(((int)frame["index"]), ((int)frame["time"]));
 									frameNode.Text = "Frame: " + ((int)frame["index"]).ToString() + ", Frame Time: " + ((int)frame["time"]).ToString();
 									frameNode.Tag = finalFrameData;
 									treeView1.Nodes.Add(frameNode);
@@ -643,7 +603,7 @@ namespace PckStudio
 								Console.WriteLine((int)frame + "*" + frameTime);
 
 								TreeNode frameNode = new TreeNode();
-								Tuple<string, string> finalFrameData = new Tuple<string, string>(((int)frame).ToString(), frameTime.ToString());
+								var finalFrameData = new Tuple<int, int>(((int)frame), frameTime);
 								frameNode.Text = "Frame: " + ((int)frame).ToString() + ", Frame Time: " + frameTime.ToString();
 								frameNode.Tag = finalFrameData;
 								treeView1.Nodes.Add(frameNode);
@@ -655,7 +615,7 @@ namespace PckStudio
 						for (int i = 0; i < frameCount; i++)
 						{
 							TreeNode frameNode = new TreeNode();
-							Tuple<string, string> finalFrameData = new Tuple<string, string>(i.ToString(), frameTime.ToString());
+							var finalFrameData = new Tuple<int, int>(i, frameTime);
 							frameNode.Text = "Frame: " + i.ToString() + ", Frame Time: " + frameTime.ToString();
 							frameNode.Tag = finalFrameData;
 							treeView1.Nodes.Add(frameNode);
@@ -667,7 +627,6 @@ namespace PckStudio
 			{
 				MessageBox.Show(j_ex.Message, "Invalid animation");
 				texture = oldImage;
-				frameCount = oldFrameCount;
 				frames = oldFrames;
 				foreach (TreeNode node in oldAnimData)
 				{
@@ -675,7 +634,7 @@ namespace PckStudio
 				}
 				return;
 			}
-			pictureBoxWithInterpolationMode1.Image = frames[Int16.Parse((treeView1.Nodes[0].Tag as Tuple<string, string>).Item1)];
+			pictureBoxWithInterpolationMode1.Image = frames[(treeView1.Nodes[0].Tag as Tuple<int, int>).Item1];
 		}
 
 		private void helpToolStripMenuItem_Click(object sender, EventArgs e)
@@ -689,25 +648,25 @@ namespace PckStudio
 
 		private void changeTileToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			PckStudio.Forms.Utilities.AnimationEditor.ChangeTile diag = new Forms.Utilities.AnimationEditor.ChangeTile(newTileName);
-			diag.ShowDialog(this);
-			Console.WriteLine(diag.SelectedTile);
-			if (newTileName != diag.SelectedTile) isItem = diag.IsItem;
-			newTileName = diag.SelectedTile;
-			diag.Dispose();
-			foreach (Newtonsoft.Json.Linq.JObject content in tileData[isItem ? "Items" : "Blocks"].Children())
-			{
-				foreach (Newtonsoft.Json.Linq.JProperty prop in content.Properties())
+			using (ChangeTile diag = new ChangeTile(TileName))
+				if (diag.ShowDialog(this) == DialogResult.OK)
 				{
-					if (prop.Name == newTileName) tileLabel.Text = (string)prop.Value;
+					Console.WriteLine(diag.SelectedTile);
+					if (TileName != diag.SelectedTile) isItem = diag.IsItem;
+					TileName = diag.SelectedTile;
+					foreach (JObject content in tileData[isItem ? "Items" : "Blocks"].Children())
+					{
+						foreach (JProperty prop in content.Properties())
+						{
+							if (prop.Name == TileName) tileLabel.Text = (string)prop.Value;
+						}
+					}
 				}
-			}
 		}
 
 		private void metroCheckBox2_CheckedChanged(object sender, EventArgs e)
 		{
-			metroLabel1.Visible = MipMapCheckbox.Checked;
-			MipMapNumericUpDown.Visible = MipMapCheckbox.Checked;
+			MipMapNumericUpDown.Visible = metroLabel1.Visible = MipMapCheckbox.Checked;
 		}
 	}
 }

@@ -127,7 +127,7 @@ namespace PckStudio.Forms.Utilities
 				{
 					Console.WriteLine("Duplicate category found, " + CatString + ". Combining...");
 					audioPCK.Files.Remove(categoryFile);
-					audioPCK.Files.Find(category => category.name == GetCategoryFromId(categoryFile.type)).properties = categoryFile.properties;
+					audioPCK.Files.Find(category => category.filepath == GetCategoryFromId(categoryFile.type)).properties = categoryFile.properties;
 				}
 				else
 				{
@@ -208,7 +208,7 @@ namespace PckStudio.Forms.Utilities
 				if (add.ShowDialog() == DialogResult.OK)
 					cats.Add(add.Category);
 				PCKFile.FileData file = new PCKFile.FileData(add.Category, GetCategoryId(add.Category));
-				TreeNode addNode = new TreeNode(file.name) { Tag = file };
+				TreeNode addNode = new TreeNode(file.filepath) { Tag = file };
                 audioPCK.Files.Add(file);
                 treeView1.Nodes.Add(addNode);
 				treeView1.Sort();
