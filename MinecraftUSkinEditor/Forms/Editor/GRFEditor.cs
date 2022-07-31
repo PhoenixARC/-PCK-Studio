@@ -84,9 +84,9 @@ namespace PckStudio.Forms.Editor
 
         private void ReloadParameterTreeView()
         {
+            GrfParametersTreeView.Nodes.Clear();
             if (GrfTreeView.SelectedNode == null || !(GrfTreeView.SelectedNode.Tag is GRFFile.GRFTag)) return;
             var grfTag = GrfTreeView.SelectedNode.Tag as GRFFile.GRFTag;
-            GrfParametersTreeView.Nodes.Clear();
             foreach (var Pair in grfTag.Parameters)
             {
                 GrfParametersTreeView.Nodes.Add(new TreeNode($"{Pair.Key}: {Pair.Value}") { Tag = Pair});
@@ -112,16 +112,14 @@ namespace PckStudio.Forms.Editor
 
         private void removeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (GrfTreeView.SelectedNode == null || !(GrfTreeView.SelectedNode.Tag is GRFFile.GRFTag) ||
-                GrfParametersTreeView.SelectedNode == null || !(GrfParametersTreeView.SelectedNode.Tag is KeyValuePair<string, string>))
+            if (GrfTreeView.SelectedNode is TreeNode t && t.Tag is GRFFile.GRFTag grfTag &&
+                GrfParametersTreeView.SelectedNode is TreeNode paramNode && paramNode.Tag is KeyValuePair<string, string> pair &&
+                grfTag.Parameters.ContainsKey(pair.Key) && grfTag.Parameters.Remove(pair.Key))
             {
-                MessageBox.Show("No Rule selected");
+                ReloadParameterTreeView(); 
                 return;
             }
-            var grfTag = GrfTreeView.SelectedNode.Tag as GRFFile.GRFTag;
-            var pair = (KeyValuePair<string, string>)GrfParametersTreeView.SelectedNode.Tag;
-            if (grfTag.Parameters.ContainsKey(pair.Key) && grfTag.Parameters.Remove(pair.Key))
-                ReloadParameterTreeView(); 
+            MessageBox.Show("No Rule selected");
         }
 
         private void GrfDetailsTreeView_KeyDown(object sender, KeyEventArgs e)
@@ -132,24 +130,29 @@ namespace PckStudio.Forms.Editor
 
         private void GrfDetailsTreeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            if (GrfTreeView.SelectedNode == null ||
-                !(GrfTreeView.SelectedNode.Tag is GRFFile.GRFTag) ||
-                GrfParametersTreeView.SelectedNode == null ||
-                !(GrfParametersTreeView.SelectedNode.Tag is KeyValuePair<string, string>)) return;
-            var grfTag = GrfTreeView.SelectedNode.Tag as GRFFile.GRFTag;
-            var param = (KeyValuePair<string, string>)GrfParametersTreeView.SelectedNode.Tag;
-            AddParameter prompt = new AddParameter(param.Key, param.Value, false);
-            if (prompt.ShowDialog() == DialogResult.OK)
+            if (GrfTreeView.SelectedNode is TreeNode t && t.Tag is GRFFile.GRFTag grfTag &&
+                GrfParametersTreeView.SelectedNode is TreeNode paramNode && paramNode.Tag is KeyValuePair<string, string> param)
             {
-                grfTag.Parameters[prompt.ParameterName] = prompt.ParameterValue;
-                ReloadParameterTreeView();
+                AddParameter prompt = new AddParameter(param.Key, param.Value, false);
+                if (prompt.ShowDialog() == DialogResult.OK)
+                {
+                    grfTag.Parameters[prompt.ParameterName] = prompt.ParameterValue;
+                    ReloadParameterTreeView();
+                }
             }
         }
 
         private void addGameRuleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if(GrfTreeView.SelectedNode == null || !(GrfTreeView.SelectedNode.Tag is GRFFile.GRFTag)) return;
-            var parentTag = GrfTreeView.SelectedNode.Tag as GRFFile.GRFTag;
+            bool isValidNode = GrfTreeView.SelectedNode is TreeNode t && t.Tag is GRFFile.GRFTag;
+            GRFFile.GRFTag parentTag = isValidNode
+               ? GrfTreeView.SelectedNode.Tag as GRFFile.GRFTag
+               : _file.RootTag;
+
+            TreeNodeCollection root = isValidNode
+                ? GrfTreeView.SelectedNode.Nodes
+                : GrfTreeView.Nodes;
+
             using (RenamePrompt prompt = new RenamePrompt(""))
             {
                 prompt.OKButton.Text = "Add";
@@ -161,21 +164,20 @@ namespace PckStudio.Forms.Editor
                     var tag = parentTag.AddTag(prompt.NewText);
                     TreeNode node = new TreeNode(tag.Name);
                     node.Tag = tag;
-                    GrfTreeView.SelectedNode.Nodes.Add(node);
+                    root.Add(node);
                 }
             }
         }
 
         private void removeGameRuleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (GrfTreeView.SelectedNode == null || !(GrfTreeView.SelectedNode.Tag is GRFFile.GRFTag)) return;
-            var tag = GrfTreeView.SelectedNode.Tag as GRFFile.GRFTag;
-            if (removeTag(tag))
-                GrfTreeView.SelectedNode.Remove();
+            if (GrfTreeView.SelectedNode is TreeNode t && t.Tag is GRFFile.GRFTag tag && removeTag(tag))
+                t.Remove();
         }
 
         private bool removeTag(GRFFile.GRFTag tag)
         {
+            _ = tag.Parent ?? throw new ArgumentNullException(nameof(tag.Parent));
             foreach (var subTag in tag.Tags.ToList())
                 return removeTag(subTag);
             return tag.Parent.Tags.Remove(tag);
