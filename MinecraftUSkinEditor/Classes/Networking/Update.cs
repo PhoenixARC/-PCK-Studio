@@ -14,11 +14,11 @@ namespace PckStudio.Classes
 
         public static void UpdateProgram(bool Beta)
         {
-            Forms.FakeProgressBar fb = new Forms.FakeProgressBar();
+            //Forms.FakeProgressBar fb = new Forms.FakeProgressBar();
             Thread thr = new Thread(() =>
             {
                 Thread.CurrentThread.IsBackground = true;
-                fb.ShowDialog();
+                //fb.ShowDialog();
             });
             if (Classes.Network.Portable)
             {
