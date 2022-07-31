@@ -321,15 +321,14 @@ namespace PckStudio
 
         public void editModel(PCKFile.FileData skin)
         {
-            generateModel generate = new generateModel(skin.properties, new PictureBox());
-            //Opens Model Generator Dialog
-            if (generate.ShowDialog() == DialogResult.OK)
-            {
-                entryTypeTextBox.Text = "";
-                entryDataTextBox.Text = "";
-                ReloadMetaTreeView();
-                saved = false;
-            }
+            using (generateModel generate = new generateModel(skin.properties, new PictureBox()))
+                if (generate.ShowDialog() == DialogResult.OK)
+                {
+                    entryTypeTextBox.Text = "";
+                    entryDataTextBox.Text = "";
+                    saved = false;
+                    ReloadMetaTreeView();
+                }
         }
 
         private void extractToolStripMenuItem_Click(object sender, EventArgs e)
@@ -686,14 +685,12 @@ namespace PckStudio
                 mf.properties.Add(property);
             }
 
-            TreeNode newNode = new TreeNode();
-            newNode.Text = newFileName;
-            newNode.Tag = mf;
+            TreeNode newNode = CreateNode(newFileName, mf);
             newNode.ImageIndex = node.ImageIndex;
             newNode.SelectedImageIndex = node.SelectedImageIndex;
-
-            if (node.Parent == null) treeViewMain.Nodes.Insert(node.Index + 1, newNode); //adds generated minefile node
-            else node.Parent.Nodes.Insert(node.Index + 1, newNode);//adds generated minefile node to selected folder
+            TreeNodeCollection root = node.Parent == null ? treeViewMain.Nodes : node.Parent.Nodes;
+            // adds generated minefile node
+            root.Insert(node.Index + 1, newNode);
             currentPCK.Files.Insert(node.Index + 1, mf);
         }
 
