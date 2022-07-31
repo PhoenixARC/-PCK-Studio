@@ -644,7 +644,6 @@
             // 
             resources.ApplyResources(this.addPresetToolStripMenuItem1, "addPresetToolStripMenuItem1");
             this.addPresetToolStripMenuItem1.Name = "addPresetToolStripMenuItem1";
-            this.addPresetToolStripMenuItem1.Click += new System.EventHandler(this.addPresetToolStripMenuItem1_Click);
             // 
             // addEntryToolStripMenuItem
             // 

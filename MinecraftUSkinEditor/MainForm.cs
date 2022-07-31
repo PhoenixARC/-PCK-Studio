@@ -179,7 +179,7 @@ namespace PckStudio
 
 		private TreeNode BuildNodeTreeBySeperator(TreeNodeCollection root, string path, char seperator)
 		{
-			if (root == null) throw new ArgumentNullException(nameof(root));
+			_ = root ?? throw new ArgumentNullException(nameof(root));
 			if (!path.Contains(seperator))
 			{
 				var finalNode = CreateNode(path);
@@ -856,18 +856,6 @@ namespace PckStudio
 			edit.TopMost = true;
 			edit.TopLevel = true;
 			edit.Show();
-		}
-
-		private void addPresetToolStripMenuItem1_Click(object sender, EventArgs e)
-		{
-			if (!(treeViewMain.SelectedNode.Tag is PCKFile.FileData)) return;
-			PCKFile.FileData file = treeViewMain.SelectedNode.Tag as PCKFile.FileData;
-			using presetMeta add = new presetMeta(file);
-			if (add.ShowDialog() == DialogResult.OK)
-			{
-				ReloadMetaTreeView();
-				saved = false;
-			}
 		}
 
 		private void InitializeSkinPack(int packId, int packVersion, string packName)
