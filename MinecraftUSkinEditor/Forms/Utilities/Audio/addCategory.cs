@@ -19,6 +19,7 @@ namespace PckStudio
 		public addCategory(string[] avalibleCategories)
 		{
 			InitializeComponent();
+			this.FormBorderStyle = FormBorderStyle.None;
 			comboBox1.Items.AddRange(avalibleCategories);
 		}
 
@@ -29,5 +30,10 @@ namespace PckStudio
 			if(comboBox1.SelectedIndex > -1) Close();
 		}
 
+		private void cancelButton_Click(object sender, EventArgs e)
+		{
+			DialogResult = DialogResult.Cancel;
+			Close();
+		}
 	}
 }
