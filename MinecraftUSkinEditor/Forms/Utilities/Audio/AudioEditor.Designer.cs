@@ -208,6 +208,7 @@ namespace PckStudio.Forms.Utilities
 			this.Name = "AudioEditor";
 			this.Style = MetroFramework.MetroColorStyle.Silver;
 			this.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AudioEditor_FormClosing);
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.AudioEditor_FormClosed);
 			this.Load += new System.EventHandler(this.AudioEditor_Load);
 			this.contextMenuStrip1.ResumeLayout(false);

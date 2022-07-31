@@ -29,7 +29,6 @@ namespace PckStudio.Forms.Utilities
 		PCKFile.FileData audioPCKFile;
 		bool _isLittleEndian;
 		public List<string> cats = new List<string>();
-
 		public class NodeSorter : System.Collections.IComparer
 		{
 			public int Compare(object x, object y)
@@ -444,23 +443,13 @@ namespace PckStudio.Forms.Utilities
 
 			bool emptyCat = false;
 
-			PCKFile.FileData overworldMF = new PCKFile.FileData("", -1);
-			foreach (PCKFile.FileData mf in audioPCK.Files)
+			List <PCKFile.FileData> new_order = audioPCK.Files.OrderBy(fd => fd.type).ToList();
+
+			audioPCK.Files.Clear();
+
+			foreach (PCKFile.FileData mf in new_order)
 			{
-				mf.filepath = "";
-				if (metroCheckBox1.Checked && mf.type == 0) overworldMF = mf;
-				if (metroCheckBox1.Checked && mf.type == 3 && overworldMF.type != -1)
-				{
-					foreach (ValueTuple<string,string> property in overworldMF.properties)
-					{
-						if (property.Item1 == "CUENAME" && !mf.properties.Contains(property))
-						{
-							mf.properties.Add(property);
-							Console.WriteLine(property.Item2);
-						}
-					}
-					mf.filepath = "include_overworld";
-				}
+				audioPCK.Files.Add(mf);
 				if (mf.properties.Count == 0) emptyCat = true;
 			}
 
@@ -515,5 +504,35 @@ namespace PckStudio.Forms.Utilities
 			prompt.ShowDialog();
 			credits = prompt.Credits;
 		}
-    }
+
+		private void AudioEditor_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			if (saved != true) return;
+			PCKFile.FileData overworldMF = new PCKFile.FileData("", -1);
+
+			foreach (PCKFile.FileData mf in audioPCK.Files)
+			{
+				mf.filepath = "";
+				if (metroCheckBox1.Checked && mf.type == 0) overworldMF = mf;
+				if (metroCheckBox1.Checked && mf.type == 3 && overworldMF.type != -1)
+				{
+					foreach (ValueTuple<string, string> property in overworldMF.properties)
+					{
+						if (property.Item1 == "CUENAME" && !mf.properties.Contains(property))
+						{
+							mf.properties.Add(property);
+							Console.WriteLine(property.Item2);
+						}
+					}
+					mf.filepath = "include_overworld";
+				}
+			}
+
+			using (var stream = new MemoryStream())
+			{
+				PCKFileWriter.Write(stream, audioPCK, _isLittleEndian);
+				audioPCKFile.SetData(stream.ToArray());
+			}
+		}
+	}
 }
