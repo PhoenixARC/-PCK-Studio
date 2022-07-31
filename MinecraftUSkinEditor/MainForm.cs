@@ -427,22 +427,19 @@ namespace PckStudio
             {
                 PCKFile.FileData file = node.Tag as PCKFile.FileData;
                 // remove loc key if its a skin/cape
-                if (file.type == 0 || file.type == 1)
+                if ((file.type == 0 || file.type == 1) && TryGetLocFile(out LOCFile locFile))
                 {
-                    LOCFile locFile = null;
-                    if (TryGetLocFile(out locFile))
-                    {
-                        foreach (var property in file.properties)
-                        {
-                            if (property.Item1 == "THEMENAMEID" || property.Item1 == "DISPLAYNAMEID")
-                                locFile.RemoveLocKey(property.Item2);
-                        }
-                        TrySetLocFile(locFile);
-                    }
+                    if (file.properties.HasProperty("THEMENAMEID"))
+                        locFile.RemoveLocKey(file.properties.GetProperty("THEMENAMEID").Item2);
+                    if (file.properties.HasProperty("DISPLAYNAMEID"))
+                        locFile.RemoveLocKey(file.properties.GetProperty("DISPLAYNAMEID").Item2);
+                    TrySetLocFile(locFile);
                 }
-                currentPCK.Files.Remove(file);
-                node.Remove();
-                saved = false;
+                if (currentPCK.Files.Remove(file))
+                {
+                    node.Remove();
+                    saved = false;
+                }
             }
             else if (MessageBox.Show("Are you sure want to delete this folder? All contents will be deleted", "Warning",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
@@ -598,7 +595,7 @@ namespace PckStudio
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("Error", ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
                     break;
