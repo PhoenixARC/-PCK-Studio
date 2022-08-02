@@ -443,14 +443,14 @@ namespace PckStudio.Forms.Utilities
 				int creditCount = 1;
 				while ((line = reader.ReadLine()) != null)
 				{
-					ValueTuple<string, string> credit_entry = new ValueTuple<string, string>("CREDIT", line);
-					audioPCK.Files[0].properties.Add(credit_entry);
-					//string credit_id = "IDS_CREDIT" + (creditCount != 1 ? creditCount.ToString() : "");
-					//ValueTuple<string, string> creditid_entry = new ValueTuple<string, string>("CREDITID", credit_id);
-					//audioPCK.Files[0].properties.Add(creditid_entry);
-					//loc.AddLocKey(credit_id, line);
-					//creditCount++;
-					//Console.WriteLine(line);
+					var credit = ("CREDIT", line);
+					string credit_id = "IDS_CREDIT" + (creditCount > 1 ? creditCount.ToString() : "");
+					var creditid = ("CREDITID", credit_id);
+					audioPCK.Files[0].properties.Add(credit);
+					audioPCK.Files[0].properties.Add(creditid);
+					loc.AddLocKey(credit_id, line);
+					creditCount++;
+					Console.WriteLine(line);
 				}
 			}
 			using (var stream = new MemoryStream())
