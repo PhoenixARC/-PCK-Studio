@@ -511,7 +511,7 @@ namespace PckStudio
 				throw new Exception("No .loc file found.");
 			AudioEditor diag = new AudioEditor(locFile, LittleEndianCheckBox.Checked);
 			diag.ShowDialog(this);
-			if (diag.saved) saved = false;
+			if (diag.saved) TrySetLocFile(locFile);
 			diag.Dispose();
 		}
 
@@ -593,7 +593,8 @@ namespace PckStudio
                             throw new Exception("No .loc File found.");
                         AudioEditor audioEditor = new AudioEditor(file, locFile, LittleEndianCheckBox.Checked);
                         audioEditor.ShowDialog(this);
-                        audioEditor.Dispose();
+						if (audioEditor.saved) TrySetLocFile(locFile);
+						audioEditor.Dispose();
                     }
                     catch (Exception ex)
                     {
@@ -2766,7 +2767,7 @@ namespace PckStudio
 						throw new Exception("No .loc File found.");
 					AudioEditor diag = new AudioEditor(file, locFile, LittleEndianCheckBox.Checked);
 					diag.ShowDialog(this);
-					if (diag.saved) saved = false;
+					if (diag.saved) TrySetLocFile(locFile);
 					diag.Dispose();
 				}
 				catch (Exception ex)
