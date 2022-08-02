@@ -23,22 +23,10 @@ namespace PckStudio.Classes.IO
             try
             {
                 List<string> Cats = new List<string>();
-                switch (isVita)
+                foreach (string file in Directory.GetFiles(cache + (isVita ? "vita/" : "normal/")))
                 {
-                    case false:
-                        foreach (string file in Directory.GetFiles(cache + "normal/"))
-                        {
-                            if (Path.GetExtension(file) == ".json")
-                                Cats.Add(Path.GetFileNameWithoutExtension(file));
-                        }
-                        break;
-                    case true:
-                        foreach (string file in Directory.GetFiles(cache + "vita/"))
-                        {
-                            if (Path.GetExtension(file) == ".json")
-                                Cats.Add(Path.GetFileNameWithoutExtension(file));
-                        }
-                        break;
+                    if (Path.GetExtension(file) == ".json")
+                        Cats.Add(Path.GetFileNameWithoutExtension(file));
                 }
                 return Cats.ToArray();
             }
@@ -52,70 +40,29 @@ namespace PckStudio.Classes.IO
 
         public PCKCenterJSON GetLocalPackDescs(string Category, bool IsVita)
         {
-            string StringData = "";
-            try
+            string filepath = cache + (IsVita ? "vita/" : "normal/") + Category + ".json";
+            if (!File.Exists(filepath))
             {
-                switch (IsVita)
-                {
-                    case (true):
-                        StringData = File.ReadAllText(cache + "vita/ " + Category + ".json");
-                        break;
-                    case (false):
-                        StringData = File.ReadAllText(cache + "normal/" + Category + ".json");
-                        break;
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
                 return new PCKCenterJSON();
             }
-
-            PCKCenterJSON Data = JsonConvert.DeserializeObject<PCKCenterJSON>(StringData);
-            return Data;
+            string StringData = File.ReadAllText(filepath);
+            return JsonConvert.DeserializeObject<PCKCenterJSON>(StringData);
         }
 
 
         public string GetLocalPackName(string Category, bool IsVita)
         {
-            string cat = "";
-            try
-            {
-                switch (IsVita)
-                {
-                    case (true):
-                        cat = File.ReadAllText(cache + "descs/Vita/" + Category + ".desc");
-                        break;
-                    case (false):
-                        cat = File.ReadAllText(cache + "descs/" + Category + ".desc");
-                        break;
-                }
-            }
-            catch (Exception err)
-            {
-            }
-            string[] data = cat.Split(new[] { "\n", "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
-            return data[0];
+            return GetLocalPackData(Category, IsVita)[0];
         }
 
 
         public string[] GetLocalPackData(string Category, bool IsVita)
         {
             string cat = "";
-            try
+            string filepath = cache + (IsVita ? "descs/Vita/" : "descs/") + Category + ".desc";
+            if (File.Exists(filepath))
             {
-                switch (IsVita)
-                {
-                    case (true):
-                        cat = File.ReadAllText(cache + "descs/Vita/" + Category + ".desc");
-                        break;
-                    case (false):
-                        cat = File.ReadAllText(cache + "descs/" + Category + ".desc");
-                        break;
-                }
-            }
-            catch
-            {
+                cat = File.ReadAllText(filepath);
             }
             return cat.Split(new[] { "\n", "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
         }
@@ -123,23 +70,12 @@ namespace PckStudio.Classes.IO
 
         public Image GetLocalPackImage(int packID, bool IsVita)
         {
-            Image image = null;
-            try
+            string filepath = cache + (IsVita ? "vita/images/" : "normal/images/") + packID + ".png";
+            if (File.Exists(filepath))
             {
-                switch (IsVita)
-                {
-                    case (true):
-                        image = Image.FromFile(cache + "vita/images/" + packID + ".png");
-                        break;
-                    case (false):
-                        image = Image.FromFile(cache + "normal/images/" + packID + ".png");
-                        break;
-                }
+                return Image.FromFile(filepath);
             }
-            catch
-            {
-            }
-            return image;
+            return null; // TODO: add default Pack Image ?
         }
     }
 }
