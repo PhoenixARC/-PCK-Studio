@@ -291,6 +291,8 @@ namespace PckStudio
 				case 0:
 				case 1:
 				case 2:
+					// TODO: Add tga support
+					if (Path.GetExtension(file.filepath) == ".tga") break;
 					using (MemoryStream png = new MemoryStream(file.data))
 					{
 						Image skinPicture = Image.FromStream(png);
@@ -428,8 +430,7 @@ namespace PckStudio
                 // remove loc key if its a skin/cape
                 if (file.type == 0 || file.type == 1)
                 {
-                    LOCFile locFile = null;
-                    if (TryGetLocFile(out locFile))
+                    if (TryGetLocFile(out LOCFile locFile))
                     {
                         foreach (var property in file.properties)
                         {
@@ -501,8 +502,7 @@ namespace PckStudio
 
 		private void audiopckToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			// Should work because all nodes in the main treeview are created with the 'CreateNode' method
-			if (treeViewMain.Nodes.Find("audio.pck", true).Length > 0)
+			if (currentPCK.Files.FindIndex(file => file.filepath.Contains("audio.pck")) != -1)
 			{
 				MessageBox.Show("There is already an audio.pck present in this file!", "Can't create audio.pck");
 				return;
