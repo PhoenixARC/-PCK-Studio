@@ -88,25 +88,10 @@ namespace PckStudio.Classes.Utils
 			_ANIM = anim;
 		}
 
-		public string ToString(bool getBits = false)
-		{
-			string bits = "";
-			foreach (eANIM_EFFECTS effect in Enum.GetValues(typeof(eANIM_EFFECTS)))
-			{
-				bits += GetANIMFlag(effect) ? "1" : "0";
-			}
-			char[] bitArray = bits.ToCharArray();
-			Array.Reverse(bitArray);
-			bits = new string(bitArray).PadLeft(32, '0');
-			if(getBits) return bits;
-
-			string new_anim = Convert.ToInt32(bits, 2).ToString("X");
-			return "0x" + new_anim.PadLeft(8, '0').ToLower();
-		}
-
 		public override string ToString()
 		{
-			return ToString(false);
+			// Thanks miku :D - MattNL
+			return "0x" + ((int)_ANIM).ToString("x08");
 		}
 
 		/// <summary>
