@@ -144,7 +144,7 @@
     <Compile Include="Classes\FileTypes\COLFile.cs" />
     <Compile Include="Classes\FileTypes\CSM.cs" />
     <Compile Include="Classes\FileTypes\GRFFile.cs" />
-    <Compile Include="Classes\FileTypes\LCESkin.cs" />
+    <Compile Include="Classes\Utils\SkinANIM.cs" />
     <Compile Include="Classes\FileTypes\PCKProperties.cs" />
     <Compile Include="Classes\FileTypes\PCKFile.cs" />
     <Compile Include="Classes\IO\GRF\GRFFileReader.cs" />
@@ -193,6 +193,12 @@
     </Compile>
     <Compile Include="Forms\Additional-Popups\Loc\AddLanguage.Designer.cs">
       <DependentUpon>AddLanguage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\CreateTexturePack.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\CreateTexturePack.Designer.cs">
+      <DependentUpon>CreateTexturePack.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Additional-Popups\RenamePrompt.cs">
       <SubType>Form</SubType>
@@ -277,6 +283,12 @@
     </Compile>
     <Compile Include="Forms\Utilities\Audio\pleaseWait.Designer.cs">
       <DependentUpon>pleaseWait.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Utilities\Skins\ANIMEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Utilities\Skins\ANIMEditor.Designer.cs">
+      <DependentUpon>ANIMEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -417,6 +429,10 @@
     <EmbeddedResource Include="Forms\Additional-Popups\Loc\AddLanguage.resx">
       <DependentUpon>AddLanguage.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Additional-Popups\CreateTexturePack.resx">
+      <DependentUpon>CreateTexturePack.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\RenamePrompt.resx">
       <DependentUpon>RenamePrompt.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -477,6 +493,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Utilities\Audio\pleaseWait.resx">
       <DependentUpon>pleaseWait.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Utilities\Skins\ANIMEditor.resx">
+      <DependentUpon>ANIMEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.ja.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -632,6 +651,8 @@
     <None Include="Resources\pckCenterHeader.png" />
     <None Include="Resources\binka\binka_encode.exe" />
     <None Include="Resources\binka\mss32.dll" />
+    <None Include="Resources\anim_editor\classic_template.png" />
+    <None Include="Resources\anim_editor\slim_template.png" />
     <Content Include="Resources\PCK-Studio_Logo.ico" />
     <None Include="Resources\bg1.png" />
     <Content Include="Resources\NoImageFound.png" />

@@ -47,7 +47,7 @@ namespace PckStudio.Forms.Utilities
 			this.addEntryMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.removeEntryMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.verifyFileLocationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.metroCheckBox1 = new MetroFramework.Controls.MetroCheckBox();
+			this.playOverworldInCreative = new MetroFramework.Controls.MetroCheckBox();
 			this.contextMenuStrip1.SuspendLayout();
 			this.menuStrip.SuspendLayout();
 			this.contextMenuStrip2.SuspendLayout();
@@ -153,7 +153,6 @@ namespace PckStudio.Forms.Utilities
 			this.treeView2.ContextMenuStrip = this.contextMenuStrip2;
 			this.treeView2.ForeColor = System.Drawing.Color.White;
 			this.treeView2.Name = "treeView2";
-			this.treeView2.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView2_AfterSelect);
 			this.treeView2.DragDrop += new System.Windows.Forms.DragEventHandler(this.Binka_DragDrop);
 			this.treeView2.DragEnter += new System.Windows.Forms.DragEventHandler(this.treeView2_DragEnter);
 			this.treeView2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView2_KeyDown);
@@ -186,22 +185,22 @@ namespace PckStudio.Forms.Utilities
 			resources.ApplyResources(this.verifyFileLocationToolStripMenuItem, "verifyFileLocationToolStripMenuItem");
 			this.verifyFileLocationToolStripMenuItem.Click += new System.EventHandler(this.verifyFileLocationToolStripMenuItem_Click);
 			// 
-			// metroCheckBox1
+			// playOverworldInCreative
 			// 
-			resources.ApplyResources(this.metroCheckBox1, "metroCheckBox1");
-			this.metroCheckBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-			this.metroCheckBox1.ForeColor = System.Drawing.SystemColors.Window;
-			this.metroCheckBox1.Name = "metroCheckBox1";
-			this.metroCheckBox1.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.metroCheckBox1.UseCustomBackColor = true;
-			this.metroCheckBox1.UseCustomForeColor = true;
-			this.metroCheckBox1.UseSelectable = true;
+			resources.ApplyResources(this.playOverworldInCreative, "playOverworldInCreative");
+			this.playOverworldInCreative.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+			this.playOverworldInCreative.ForeColor = System.Drawing.SystemColors.Window;
+			this.playOverworldInCreative.Name = "playOverworldInCreative";
+			this.playOverworldInCreative.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.playOverworldInCreative.UseCustomBackColor = true;
+			this.playOverworldInCreative.UseCustomForeColor = true;
+			this.playOverworldInCreative.UseSelectable = true;
 			// 
 			// AudioEditor
 			// 
 			resources.ApplyResources(this, "$this");
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.Controls.Add(this.metroCheckBox1);
+			this.Controls.Add(this.playOverworldInCreative);
 			this.Controls.Add(this.treeView1);
 			this.Controls.Add(this.treeView2);
 			this.Controls.Add(this.menuStrip);
@@ -210,7 +209,6 @@ namespace PckStudio.Forms.Utilities
 			this.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AudioEditor_FormClosing);
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.AudioEditor_FormClosed);
-			this.Load += new System.EventHandler(this.AudioEditor_Load);
 			this.contextMenuStrip1.ResumeLayout(false);
 			this.menuStrip.ResumeLayout(false);
 			this.menuStrip.PerformLayout();
@@ -238,6 +236,6 @@ namespace PckStudio.Forms.Utilities
 		private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem creditsEditorToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem verifyFileLocationToolStripMenuItem;
-		private MetroFramework.Controls.MetroCheckBox metroCheckBox1;
+		private MetroFramework.Controls.MetroCheckBox playOverworldInCreative;
 	}
 }
