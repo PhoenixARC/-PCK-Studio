@@ -639,6 +639,24 @@ namespace PckStudio
 			PCKFile.FileData file = (PCKFile.FileData)treeViewMain.SelectedNode.Tag;
 			var property = (ValueTuple<string, string>)treeMeta.SelectedNode.Tag;
 			int i = file.properties.IndexOf(property);
+			if (property.Item1 == "ANIM")
+			{
+				Forms.Utilities.Skins.ANIMEditor diag = new Forms.Utilities.Skins.ANIMEditor(property.Item2);
+				try
+				{
+					diag.ShowDialog(this);
+					if (!diag.saved) return;
+					file.properties[i] = new ValueTuple<string, string>("ANIM", diag.outANIM);
+					ReloadMetaTreeView();
+					saved = false;
+					return;
+				}
+				catch (Exception ex)
+				{
+					MessageBox.Show("This is not a valid ANIM value", "Invalid Input");
+					Console.WriteLine("ANIM parsing failed, move to Rename prompt");
+				}
+			}
 			using addMeta add = new addMeta(property.Item1, property.Item2);
 			if (add.ShowDialog() == DialogResult.OK && i != -1)
 			{
@@ -876,19 +894,18 @@ namespace PckStudio
 			currentPCK.Files.Add(loc);
 		}
 
-		private void InitializeTexturePack(int packId, int packVersion, string packName)
+		private void InitializeTexturePack(int packId, int packVersion, string packName, string res)
 		{
 			InitializeSkinPack(packId, packVersion, packName);
-			string res = "x16"; // TODO: add reselotions selection prompt
 			var texturepackInfo = new PCKFile.FileData($"{res}/{res}Info.pck", 5);
 			texturepackInfo.properties.Add(("PACKID", "0"));
 			texturepackInfo.properties.Add(("DATAPATH", $"{res}Data.pck"));
 			currentPCK.Files.Add(texturepackInfo);
 		}
 
-		private void InitializeMashUpPack(int packId, int packVersion, string packName)
+		private void InitializeMashUpPack(int packId, int packVersion, string packName, string res)
 		{
-			InitializeTexturePack(packId, packVersion, packName);
+			InitializeTexturePack(packId, packVersion, packName, res);
 			var gameRuleFile = new PCKFile.FileData("GameRules.grf", 7);
 			var grfFile = new GRFFile();
 			grfFile.AddTag("MapOptions",
@@ -926,11 +943,10 @@ namespace PckStudio
 		}
 		private void texturePackToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			RenamePrompt namePrompt = new RenamePrompt("");
-			namePrompt.OKButton.Text = "Ok";
-			if (namePrompt.ShowDialog() == DialogResult.OK)
+			CreateTexturePack packPrompt = new CreateTexturePack("");
+			if (packPrompt.ShowDialog() == DialogResult.OK)
 			{
-				InitializeTexturePack(new Random().Next(8000, int.MaxValue), 0, namePrompt.NewText);
+				InitializeTexturePack(new Random().Next(8000, int.MaxValue), 0, packPrompt.packName, packPrompt.packRes);
 				isTemplateFile = true;
 				LoadEditorTab();
 			}
@@ -938,11 +954,10 @@ namespace PckStudio
 
 		private void mashUpPackToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			RenamePrompt namePrompt = new RenamePrompt("");
-			namePrompt.OKButton.Text = "Ok";
-			if (namePrompt.ShowDialog() == DialogResult.OK)
+			CreateTexturePack packPrompt = new CreateTexturePack("");
+			if (packPrompt.ShowDialog() == DialogResult.OK)
 			{
-				InitializeMashUpPack(new Random().Next(8000, int.MaxValue), 0, namePrompt.NewText);
+				InitializeMashUpPack(new Random().Next(8000, int.MaxValue), 0, packPrompt.packName, packPrompt.packRes);
 				isTemplateFile = true;
 				LoadEditorTab();
 			}

@@ -216,7 +216,7 @@ namespace PckStudio.Forms.Utilities
 							if (overworldMF.properties.Contains(property)) categoryFile.properties.Remove(property);
 						}
 
-						metroCheckBox1.Checked = true;
+						playOverworldInCreative.Checked = true;
 					}
 
 					TreeNode treeNode = new TreeNode(CatString);
@@ -228,24 +228,10 @@ namespace PckStudio.Forms.Utilities
 				}
 			}
 
+			playOverworldInCreative.Enabled = cats.Contains(GetCategoryFromId(3));
+
 			treeView1.TreeViewNodeSorter = new NodeSorter();
 			treeView1.Sort();
-		}
-
-        private void AudioEditor_Load(object sender, EventArgs e)
-        {
-
-        }
-
-		private void treeView2_AfterSelect(object sender, TreeViewEventArgs e)
-		{
-			if (treeView2.SelectedNode.Tag == null || !(treeView2.SelectedNode.Tag is ValueTuple<string, string>)) return;
-			PCKFile.FileData file = (PCKFile.FileData)treeView1.SelectedNode.Tag;
-			var property = (ValueTuple<string, string>)treeView2.SelectedNode.Tag;
-			int i = file.properties.IndexOf(property);
-
-			//foreach (var metaType in audioPCK.meta_data)
-				//comboBox1.Items.Add(metaType);
 		}
 
 		private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
@@ -283,6 +269,7 @@ namespace PckStudio.Forms.Utilities
 				treeView1.Nodes.Add(addNode);
 				treeView1.Sort();
 				add.Dispose(); // diposes generated metadata adding dialog data
+				playOverworldInCreative.Enabled = cats.Contains(GetCategoryFromId(3));
 			}
 			catch (Exception ex)
 			{
@@ -320,19 +307,10 @@ namespace PckStudio.Forms.Utilities
 			cats.Remove(treeView1.SelectedNode.Text);
 			if (audioPCK.Files.Remove((PCKFile.FileData)treeView1.SelectedNode.Tag))
 			{
-				treeView1.SelectedNode.Remove();
 				treeView2.Nodes.Clear();
+				treeView1.SelectedNode.Remove();
 			}
-			if(treeView1.SelectedNode != null && treeView1.SelectedNode.Tag is PCKFile.FileData)
-			{
-				PCKFile.FileData mineFile = (PCKFile.FileData)treeView1.SelectedNode.Tag;
-				foreach (var entry in mineFile.properties)
-				{
-					TreeNode meta = new TreeNode(entry.Item1);
-					meta.Tag = entry;
-					treeView2.Nodes.Add(meta);
-				}
-			}
+			playOverworldInCreative.Enabled = cats.Contains(GetCategoryFromId(3));
 		}
 
 		public void treeView2_KeyDown(object sender, KeyEventArgs e)
@@ -513,8 +491,8 @@ namespace PckStudio.Forms.Utilities
 			foreach (PCKFile.FileData mf in audioPCK.Files)
 			{
 				mf.filepath = "";
-				if (metroCheckBox1.Checked && mf.type == 0) overworldMF = mf;
-				if (metroCheckBox1.Checked && mf.type == 3 && overworldMF.type != -1)
+				if (playOverworldInCreative.Checked && mf.type == 0) overworldMF = mf;
+				if (playOverworldInCreative.Checked && mf.type == 3 && overworldMF.type != -1)
 				{
 					foreach (ValueTuple<string, string> property in overworldMF.properties)
 					{

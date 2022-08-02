@@ -1,6 +1,6 @@
 ﻿namespace PckStudio
 {
-    partial class RenamePrompt
+    partial class CreateTexturePack
     {
         /// <summary>
         /// Required designer variable.
@@ -28,10 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RenamePrompt));
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CreateTexturePack));
 			this.TextLabel = new System.Windows.Forms.Label();
 			this.OKButton = new System.Windows.Forms.Button();
 			this.InputTextBox = new MetroFramework.Controls.MetroTextBox();
+			this.metroComboBox1 = new MetroFramework.Controls.MetroComboBox();
+			this.label1 = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
 			// TextLabel
@@ -78,18 +80,45 @@
 			this.InputTextBox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
 			this.InputTextBox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
 			// 
-			// RenamePrompt
+			// metroComboBox1
+			// 
+			this.metroComboBox1.FormattingEnabled = true;
+			resources.ApplyResources(this.metroComboBox1, "metroComboBox1");
+			this.metroComboBox1.Items.AddRange(new object[] {
+            resources.GetString("metroComboBox1.Items"),
+            resources.GetString("metroComboBox1.Items1"),
+            resources.GetString("metroComboBox1.Items2"),
+            resources.GetString("metroComboBox1.Items3"),
+            resources.GetString("metroComboBox1.Items4"),
+            resources.GetString("metroComboBox1.Items5"),
+            resources.GetString("metroComboBox1.Items6"),
+            resources.GetString("metroComboBox1.Items7"),
+            resources.GetString("metroComboBox1.Items8")});
+			this.metroComboBox1.Name = "metroComboBox1";
+			this.metroComboBox1.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.metroComboBox1.UseSelectable = true;
+			// 
+			// label1
+			// 
+			resources.ApplyResources(this.label1, "label1");
+			this.label1.BackColor = System.Drawing.Color.Transparent;
+			this.label1.ForeColor = System.Drawing.Color.White;
+			this.label1.Name = "label1";
+			// 
+			// CreateTexturePack
 			// 
 			this.AcceptButton = this.OKButton;
 			resources.ApplyResources(this, "$this");
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.Controls.Add(this.label1);
+			this.Controls.Add(this.metroComboBox1);
 			this.Controls.Add(this.InputTextBox);
 			this.Controls.Add(this.OKButton);
 			this.Controls.Add(this.TextLabel);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
-			this.Name = "RenamePrompt";
+			this.Name = "CreateTexturePack";
 			this.Resizable = false;
 			this.ShadowType = MetroFramework.Forms.MetroFormShadowType.DropShadow;
 			this.Style = MetroFramework.MetroColorStyle.Silver;
@@ -103,5 +132,7 @@
         public System.Windows.Forms.Button OKButton;
         public System.Windows.Forms.Label TextLabel;
         private MetroFramework.Controls.MetroTextBox InputTextBox;
-    }
+		private MetroFramework.Controls.MetroComboBox metroComboBox1;
+		public System.Windows.Forms.Label label1;
+	}
 }

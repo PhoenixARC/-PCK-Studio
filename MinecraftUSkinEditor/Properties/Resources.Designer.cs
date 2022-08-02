@@ -143,6 +143,16 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap classic_template {
+            get {
+                object obj = ResourceManager.GetObject("classic_template", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap clock {
             get {
                 object obj = ResourceManager.GetObject("clock", resourceCulture);
@@ -356,6 +366,16 @@ namespace PckStudio.Properties {
         public static System.Drawing.Bitmap sdDownload {
             get {
                 object obj = ResourceManager.GetObject("sdDownload", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap slim_template {
+            get {
+                object obj = ResourceManager.GetObject("slim_template", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
