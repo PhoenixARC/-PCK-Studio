@@ -138,7 +138,7 @@ namespace PckStudio
             public float Length;
             public int U, V;
 
-            public ModelPart(string @type, float x, float y, float z, float width, float height, float length, int u, int v)
+            public ModelPart(string type, float x, float y, float z, float width, float height, float length, int u, int v)
             {
                 Type = type;
                 X = x;
@@ -212,6 +212,18 @@ namespace PckStudio
                             string name = Format[0];
                             if (ValidModelBoxTypes.Contains(name))
                             {
+                                // %10ls = name
+                                // %f
+                                // %f
+                                // %f
+                                // %f
+                                // %f
+                                // %f
+                                // %f
+                                // %f
+                                // %d
+                                // %d
+                                // %f
                                 try
                                 {
                                     float x = float.Parse(Format[1]);
@@ -928,18 +940,6 @@ namespace PckStudio
                 TextureYUpDown.Enabled = true;
             }
             //render();
-        }
-
-        private void textBoxFailCheck(TextBox textBox)
-        {
-            try
-            {
-                textBox.Text = double.Parse(textBox.Text).ToString();
-            }
-            catch (Exception ex)
-            {
-                textBox.Text = "0";
-            }
         }
 
         private void SizeXUpDown_ValueChanged(object sender, EventArgs e)
