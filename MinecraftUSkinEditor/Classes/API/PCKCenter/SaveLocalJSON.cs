@@ -17,17 +17,7 @@ namespace API.PCKCenter
             try
             {
                 string outputString = JsonConvert.SerializeObject(JSONData, Formatting.Indented);
-
-                switch (isVita)
-                {
-                    case false:
-                        File.WriteAllText(cache + "normal/" + category + ".json", outputString);
-                        break;
-                    case true:
-                        File.WriteAllText(cache + "vita/" + category + ".json", outputString);
-                        break;
-                }
-
+                File.WriteAllText(cache + (isVita ? "vita/" : "normal/") + category + ".json", outputString);
                 return true;
             }
             catch (Exception ex)
@@ -41,16 +31,7 @@ namespace API.PCKCenter
         {
             try
             {
-                string JSONData = "";
-                switch (isVita)
-                {
-                    case false:
-                        JSONData = File.ReadAllText(cache + "normal/" + category + ".json");
-                        break;
-                    case true:
-                        JSONData = File.ReadAllText(cache + "vita/" + category + ".json");
-                        break;
-                }
+                string JSONData = File.ReadAllText(cache + (isVita ? "vita/" : "normal/") + category + ".json");
                 return JsonConvert.DeserializeObject<PCKCenterJSON>(JSONData);
             }
             catch(Exception ex)
@@ -78,27 +59,14 @@ namespace API.PCKCenter
             {
                 List<string> Cats = new List<string>();
                 string StringData = "";
-                switch (isVita)
+                foreach(string file in Directory.GetFiles(cache + (isVita ? "vita/" : "normal/")))
                 {
-                    case false:
-                        foreach(string file in Directory.GetFiles(cache + "normal/"))
-                        {
-                            if (Path.GetExtension(file) == ".json")
-                                Cats.Add(Path.GetFileNameWithoutExtension(file));
-                        }
-                        StringData = JsonConvert.SerializeObject(Cats.ToArray(), Formatting.Indented);
-                        File.WriteAllText(cache + "Categiories.json", StringData);
-                        break;
-                    case true:
-                        foreach (string file in Directory.GetFiles(cache + "vita/"))
-                        {
-                            if (Path.GetExtension(file) == ".json")
-                                Cats.Add(Path.GetFileNameWithoutExtension(file));
-                        }
-                        StringData = JsonConvert.SerializeObject(Cats.ToArray(), Formatting.Indented);
-                        File.WriteAllText(cache + "VitaCategiories.json", StringData);
-                        break;
+                    if (Path.GetExtension(file) == ".json")
+                        Cats.Add(Path.GetFileNameWithoutExtension(file));
                 }
+                StringData = JsonConvert.SerializeObject(Cats.ToArray(), Formatting.Indented);
+                File.WriteAllText(cache + (isVita ? "VitaCategiories.json" : "Categiories.json"), StringData);
+
                 return true;
             }
             catch (Exception ex)
