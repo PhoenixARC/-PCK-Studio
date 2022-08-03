@@ -1354,7 +1354,7 @@ namespace PckStudio
 			{
 				AddPCKPassword add = new AddPCKPassword();
 				if (add.ShowDialog() == DialogResult.OK)
-					file.properties.Add(("LOCK", add.Password));
+					file.properties.SetProperty("LOCK", add.Password);
 				add.Dispose();
 				ReloadMetaTreeView();
 				saved = false;
