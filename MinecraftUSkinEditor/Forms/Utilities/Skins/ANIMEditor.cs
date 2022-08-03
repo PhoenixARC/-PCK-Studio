@@ -64,7 +64,11 @@ namespace PckStudio.Forms.Utilities.Skins
 		public ANIMEditor(string ANIM)
 		{
 			InitializeComponent();
-			if (!SkinANIM.IsValidANIM(ANIM)) Close();
+			if (!SkinANIM.IsValidANIM(ANIM))
+			{
+				DialogResult = DialogResult.Abort;
+				Close();
+			}
 			anim = new SkinANIM(ANIM);
 			
 			bobbingCheckBox.CheckedChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, eANIM_EFFECTS.HEAD_BOBBING_DISABLED); };
