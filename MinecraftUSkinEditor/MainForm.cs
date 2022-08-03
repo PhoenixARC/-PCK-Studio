@@ -735,7 +735,7 @@ namespace PckStudio
 				!(treeViewMain.SelectedNode.Tag is PCKFile.FileData))
 				return;
 			PCKFile.FileData file = (PCKFile.FileData)treeViewMain.SelectedNode.Tag;
-			addMeta add = new addMeta();
+			using addMeta add = new addMeta();
 			if (add.ShowDialog() == DialogResult.OK)
 			{
 				var property = new ValueTuple<string, string>(add.PropertyName, add.PropertyValue);
@@ -743,7 +743,6 @@ namespace PckStudio
 				ReloadMetaTreeView();
 				saved = false;
 			}
-			add.Dispose();
 		}
 
 		private void moveUpToolStripMenuItem_Click(object sender, EventArgs e)
