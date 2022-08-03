@@ -640,22 +640,15 @@ namespace PckStudio
 			PCKFile.FileData file = (PCKFile.FileData)treeViewMain.SelectedNode.Tag;
 			var property = (ValueTuple<string, string>)treeMeta.SelectedNode.Tag;
 			int i = file.properties.IndexOf(property);
-			if (property.Item1 == "ANIM")
+			if (property.Item1 == "ANIM" && i != -1)
 			{
-				Forms.Utilities.Skins.ANIMEditor diag = new Forms.Utilities.Skins.ANIMEditor(property.Item2);
-				try
+				using Forms.Utilities.Skins.ANIMEditor diag = new Forms.Utilities.Skins.ANIMEditor(property.Item2);
+				if (diag.ShowDialog(this) == DialogResult.OK && diag.saved)
 				{
-					diag.ShowDialog(this);
-					if (!diag.saved) return;
 					file.properties[i] = new ValueTuple<string, string>("ANIM", diag.outANIM);
 					ReloadMetaTreeView();
 					saved = false;
 					return;
-				}
-				catch (Exception ex)
-				{
-					MessageBox.Show("This is not a valid ANIM value", "Invalid Input");
-					Console.WriteLine("ANIM parsing failed, move to Rename prompt");
 				}
 			}
 			using addMeta add = new addMeta(property.Item1, property.Item2);
