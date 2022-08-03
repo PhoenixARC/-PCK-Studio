@@ -64,8 +64,8 @@ namespace PckStudio.Forms.Utilities.Skins
 		public ANIMEditor(string ANIM)
 		{
 			InitializeComponent();
+			if (!SkinANIM.IsValidANIM(ANIM)) Close();
 			anim = new SkinANIM(ANIM);
-			if (!anim.isValid) Close();
 			
 			bobbingCheckBox.CheckedChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, eANIM_EFFECTS.HEAD_BOBBING_DISABLED); };
 			bodyCheckBox.CheckedChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, eANIM_EFFECTS.BODY_DISABLED); };
@@ -147,11 +147,10 @@ namespace PckStudio.Forms.Utilities.Skins
 
 		private void importButton_Click(object sender, EventArgs e)
 		{
-			SkinANIM check = new SkinANIM(":3");
 			string new_value = "";
 
 			bool first = true;
-			while (!check.isValid)
+			while (!SkinANIM.IsValidANIM(new_value))
 			{
 				if (!first) MessageBox.Show("The following value \"" + new_value + "\" is not valid. Please try again.");
 				RenamePrompt diag = new RenamePrompt(new_value);
@@ -160,12 +159,11 @@ namespace PckStudio.Forms.Utilities.Skins
 				if (diag.ShowDialog() == DialogResult.OK)
 				{
 					new_value = diag.NewText;
-					check = new SkinANIM(new_value);
 				}
 				else return;
 				first = false;
 			}
-			anim = check;
+			anim = new SkinANIM(new_value);
 			processCheckBoxes();
 		}
 

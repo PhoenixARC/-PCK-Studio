@@ -2,9 +2,7 @@
 using System.Collections;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace PckStudio.Classes.Utils
 {
@@ -52,35 +50,14 @@ namespace PckStudio.Classes.Utils
 		DINNERBONE = 1 << 31,
 	}
 
-	internal class SkinANIM
+	internal struct SkinANIM
 	{
-		eANIM_EFFECTS _ANIM;
-		public bool isValid;
-
-		public SkinANIM()
-		{
-			_ANIM = 0;
-		}
+		eANIM_EFFECTS _ANIM = 0;
+		static readonly Regex animRegex = new Regex(@"^0x[0-9a-f]{1,8}\b", RegexOptions.IgnoreCase);
 
 		public SkinANIM(string anim)
 		{
-			// Port of my ANIM Generator found at https://mattnl.com/lce/anim-generator - MattNL
-			if (anim.StartsWith("0x")) anim = anim.Substring(2);
-			isValid = anim.Length <= 8 && Regex.IsMatch(anim, @"\A\b[0-9a-fA-F]+\b\Z");
-			if (isValid)
-			{
-				anim = anim.PadLeft(8, '0');
-				string bits = String.Join("", anim.Select(
-					b => Convert.ToString(Convert.ToInt32(b.ToString(), 16), 2).PadLeft(4, '0')
-				  )
-				);
-				int current_bit = 31;
-				foreach (char bit in bits)
-				{
-					SetANIMFlag((eANIM_EFFECTS)(1 << current_bit), bit == '1');
-					current_bit--;
-				}
-			}
+			_ANIM = Parse(anim);
 		}
 
 		public SkinANIM(eANIM_EFFECTS anim)
@@ -88,17 +65,23 @@ namespace PckStudio.Classes.Utils
 			_ANIM = anim;
 		}
 
-		public override string ToString()
-		{
-			// Thanks miku :D - MattNL
-			return "0x" + ((int)_ANIM).ToString("x08");
-		}
+		public override string ToString() => "0x" + _ANIM.ToString("x");
+
+		public static bool IsValidANIM(string anim) => animRegex.IsMatch(anim);
+
+		public static eANIM_EFFECTS Parse(string anim)
+			=> IsValidANIM(anim)
+				? (eANIM_EFFECTS)Convert.ToInt32(anim, 16)
+				: 0;
+
+		public void SetANIM(int anim) => SetANIM((eANIM_EFFECTS)anim);
+		public void SetANIM(eANIM_EFFECTS anim) => _ANIM = anim;
 
 		/// <summary>
 		/// Sets the desired flag in the bitfield
 		/// </summary>
-		/// <param name="flag">ANIM Flag to be set</param>
-		/// <param name="state">wether to enable the flag</param>
+		/// <param name="flag">ANIM Flag to set</param>
+		/// <param name="state">Wether to enable the flag</param>
 		public void SetANIMFlag(eANIM_EFFECTS flag, bool state)
 		{
 			if (state) _ANIM |= flag;
@@ -112,7 +95,7 @@ namespace PckStudio.Classes.Utils
 		/// <returns>Bool wether its set or not</returns>
 		public bool GetANIMFlag(eANIM_EFFECTS flag)
 		{
-			return ((int)_ANIM & (int)flag) != 0;
+			return (_ANIM & flag) != 0;
 		}
 	}
 }
