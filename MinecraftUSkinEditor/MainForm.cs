@@ -142,6 +142,8 @@ namespace PckStudio
 			convertToBedrockToolStripMenuItem.Enabled = true;
 			BuildMainTreeView();
 			tabControl.SelectTab(1);
+			if (TryGetLocFile(out LOCFile locfile) && locfile.HasLocEntry("IDS_DISPLAY_NAME"))
+				RPC.SetPresence($"Editing a Pack: {locfile.GetLocEntry("IDS_DISPLAY_NAME", "en-EN")}", "Program by PhoenixARC");
 		}
 
 		private void CloseEditorTab()
@@ -161,6 +163,7 @@ namespace PckStudio
 			closeToolStripMenuItem.Visible = false;
 			fileEntryCountLabel.Text = "Files:0";
 			tabControl.SelectTab(0);
+			RPC.SetPresence("An Open Source .PCK File Editor", "Program by PhoenixARC");
 		}
 
 		/// <summary>

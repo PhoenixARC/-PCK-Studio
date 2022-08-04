@@ -118,6 +118,9 @@ namespace PckStudio.Classes.FileTypes
             return LocKeys[locKey];
         }
 
+        public bool HasLocEntry(string locKey)
+            => LocKeys.ContainsKey(locKey);
+
         public string GetLocEntry(string locKey, string language)
         {
             if (!LocKeys.ContainsKey(locKey))
