@@ -188,14 +188,13 @@ namespace PckStudio.Forms.Utilities
 				foreach (var property in categoryFile.properties.ToArray())
 				{
 					if (property.Item1 == "CREDITID")
+					{
 						loc.RemoveLocKey(property.Item2);
+						categoryFile.properties.Remove(property);
+					}
 					else if (property.Item1 == "CREDIT")
 					{
 						credits += property.Item2 + "\n";
-						categoryFile.properties.Remove(property);
-					}
-					else if (property.Item1 == "CREDITID")
-					{
 						categoryFile.properties.Remove(property);
 					}
 				}
