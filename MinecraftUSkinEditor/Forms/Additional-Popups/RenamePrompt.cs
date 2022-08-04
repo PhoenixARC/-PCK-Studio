@@ -11,16 +11,14 @@ namespace PckStudio
 		/// </summary>
 		public string NewText => InputTextBox.Text;
 
-		public RenamePrompt(TreeNode nodeIn)
-		{
-			InitializeComponent();
-			InputTextBox.Text = nodeIn.Text;
-			FormBorderStyle = FormBorderStyle.None;
-		}
-		public RenamePrompt(string InitialText)
+		public RenamePrompt(string InitialText) : this(InitialText, -1)
+		{ }
+
+		public RenamePrompt(string InitialText, int maxChar)
 		{
 			InitializeComponent();
 			InputTextBox.Text = InitialText;
+			InputTextBox.MaxLength = maxChar < 0 ? short.MaxValue : maxChar;
 			FormBorderStyle = FormBorderStyle.None;
 		}
 
