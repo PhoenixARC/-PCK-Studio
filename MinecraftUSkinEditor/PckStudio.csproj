@@ -140,10 +140,13 @@
   <ItemGroup>
     <Compile Include="Classes\API\PCKCenter\model\PCKCenterJSON.cs" />
     <Compile Include="Classes\API\PCKCenter\SaveLocalJSON.cs" />
+    <Compile Include="Classes\FileTypes\AudioPCKFile.cs" />
     <Compile Include="Classes\FileTypes\Bink.cs" />
     <Compile Include="Classes\FileTypes\COLFile.cs" />
     <Compile Include="Classes\FileTypes\CSM.cs" />
     <Compile Include="Classes\FileTypes\GRFFile.cs" />
+    <Compile Include="Classes\IO\PCK\PCKAudioFileReader.cs" />
+    <Compile Include="Classes\IO\PCK\PCKAudioFileWriter.cs" />
     <Compile Include="Classes\Utils\SkinANIM.cs" />
     <Compile Include="Classes\FileTypes\PCKProperties.cs" />
     <Compile Include="Classes\FileTypes\PCKFile.cs" />
