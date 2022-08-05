@@ -421,10 +421,10 @@ namespace PckStudio.Forms.Utilities
 
 		private void creditsEditorToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			var credits = string.Join("\n", audioFile.GetCredits());
-			using creditsEditor prompt = new creditsEditor(credits);
-			if (prompt.ShowDialog() == DialogResult.OK)
-				audioFile.SetCredits(prompt.Credits.Split('\n'));
+			var credits = audioFile.GetCreditsString();
+			using (creditsEditor prompt = new creditsEditor(credits))
+				if (prompt.ShowDialog() == DialogResult.OK)
+					audioFile.SetCredits(prompt.Credits.Split('\n'));
 		}
 
 		private void AudioEditor_FormClosing(object sender, FormClosingEventArgs e)

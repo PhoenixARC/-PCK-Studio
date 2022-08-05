@@ -59,6 +59,7 @@ namespace PckStudio.Classes.FileTypes
         }
 
 		public string[] GetCredits() => Credits.Values.ToArray();
+		public string GetCreditsString() => string.Join("\n", Credits.Values.ToArray());
 
 		public void AddCredits(params string[] credits)
         {
@@ -101,7 +102,7 @@ namespace PckStudio.Classes.FileTypes
 
 		public void AddCredit(string credit)
 		{
-			Credits.Add($"IDS_CREDIT{(Credits.Count > 1 ? $"_{Credits.Count}" : string.Empty)}", credit);
+			Credits.Add($"IDS_CREDIT{(Credits.Count > 0 ? $"_{Credits.Count+1}" : string.Empty)}", credit);
 		}
 
 		public void AddCreditId(string creditId) => Credits.Add(creditId, string.Empty);
