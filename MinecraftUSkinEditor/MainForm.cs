@@ -8,15 +8,14 @@ using System.Drawing.Drawing2D;
 using System.Diagnostics;
 using PckStudio.Properties;
 using Ohana3DS_Rebirth.Ohana;
-using PckStudio.Forms;
 using System.Drawing.Imaging;
 using RichPresenceClient;
 using PckStudio.Classes.FileTypes;
 using PckStudio.Classes.IO;
 using PckStudio.Classes.IO.LOC;
-using PckStudio.Forms.Utilities;
 using PckStudio.Classes.IO.GRF;
-using PckStudio.Classes.Utils;
+using PckStudio.Forms;
+using PckStudio.Forms.Utilities;
 using PckStudio.Forms.Editor;
 
 namespace PckStudio

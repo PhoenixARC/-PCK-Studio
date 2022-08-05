@@ -1,24 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
 using MetroFramework.Forms;
 using System.Collections;
 using PckStudio.Classes.FileTypes;
-using PckStudio.Classes.IO;
 using PckStudio.Classes.IO.PCK;
-using System.Diagnostics;
+using PckStudio.Forms.Additional_Popups.Audio;
 
 // Audio Editor by MattNL
 // additional work and optimization by Miku-666
 
-namespace PckStudio.Forms.Utilities
+namespace PckStudio.Forms.Editor
 {
 	public partial class AudioEditor : MetroForm
 	{
@@ -56,17 +53,17 @@ namespace PckStudio.Forms.Utilities
 		};
 
         private string GetCategoryFromId(PCKAudioFile.AudioCategory.EAudioType categoryId)
-        {
-            return categoryId >= PCKAudioFile.AudioCategory.EAudioType.Overworld
-				&& categoryId <= PCKAudioFile.AudioCategory.EAudioType.Unused ? Categories[(int)categoryId] : "Not valid";
-        }
+			=> categoryId >= PCKAudioFile.AudioCategory.EAudioType.Overworld &&
+				categoryId <= PCKAudioFile.AudioCategory.EAudioType.Unused
+				? Categories[(int)categoryId]
+				: "Not valid";
 
         private PCKAudioFile.AudioCategory.EAudioType GetCategoryId(string category)
         {
             return (PCKAudioFile.AudioCategory.EAudioType)Categories.IndexOf(category);
         }
 
-        public static PCKFile.FileData CreateAudioPck(bool isLittle)
+		public static PCKFile.FileData CreateAudioPck(bool isLittle)
 		{
 			// create actual valid pck file structure
 			PCKAudioFile audioPck = new PCKAudioFile();
@@ -301,7 +298,7 @@ namespace PckStudio.Forms.Utilities
 					if (Path.GetExtension(file) == ".wav") // Convert Wave to BINKA
 					{
 						Cursor.Current = Cursors.WaitCursor;
-						Audio.pleaseWait waitDiag = new Audio.pleaseWait();
+						pleaseWait waitDiag = new pleaseWait();
 						waitDiag.Show(this);
 
 						int error_code = 0;
