@@ -2890,5 +2890,24 @@ namespace PckStudio
 			Console.WriteLine($"Setting {file.type} to {type}");
 			file.type = type;
 		}
-	}
+
+        private void addTextureToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+			using OpenFileDialog fileDialog = new OpenFileDialog();
+			fileDialog.Filter = "Texture File(*.png)|*.png";
+			if (fileDialog.ShowDialog() == DialogResult.OK)
+            {
+				using RenamePrompt renamePrompt = new RenamePrompt(Path.GetFileName(fileDialog.FileName));
+				renamePrompt.TextLabel.Text = "Path";
+				if (renamePrompt.ShowDialog() == DialogResult.OK && !string.IsNullOrEmpty(renamePrompt.NewText))
+                {
+					var file = new PCKFile.FileData(renamePrompt.NewText, 2);
+					file.SetData(File.ReadAllBytes(fileDialog.FileName));
+					currentPCK.Files.Add(file);
+					BuildMainTreeView();
+					saved = false;
+                }
+			}
+		}
+    }
 }

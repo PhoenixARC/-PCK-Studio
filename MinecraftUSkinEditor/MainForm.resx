@@ -247,6 +247,12 @@
   <data name="importExtractedSkinsFolderToolStripMenuItem.Text" xml:space="preserve">
     <value>Import Extracted Skins Folder</value>
   </data>
+  <data name="addTextureToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>228, 22</value>
+  </data>
+  <data name="addTextureToolStripMenuItem.Text" xml:space="preserve">
+    <value>Add Texture</value>
+  </data>
   <data name="importSkinsToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
@@ -33127,6 +33133,12 @@
   </data>
   <data name="&gt;&gt;imageList.Type" xml:space="preserve">
     <value>System.Windows.Forms.ImageList, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;addTextureToolStripMenuItem.Name" xml:space="preserve">
+    <value>addTextureToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;addTextureToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>MainForm</value>
