@@ -17,7 +17,7 @@ namespace PckStudio.Classes.FileTypes
 		public readonly int type = 1;
 
         public AudioCategory[] Categories => Array.FindAll(_categories, c => c is not null);
-        private AudioCategory[] _categories { get; } = new AudioCategory[8];
+        private AudioCategory[] _categories { get; } = new AudioCategory[9];
 
 		public Dictionary<string, string> Credits { get; } = new Dictionary<string, string>();
 

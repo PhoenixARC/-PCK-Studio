@@ -589,24 +589,16 @@ namespace PckStudio
 					break;
 
                 case 8 when file.filepath == "audio.pck":
-                    try
-                    {
-                        if (!TryGetLocFile(out LOCFile locFile))
-                            throw new Exception("No .loc File found.");
-                        AudioEditor audioEditor = new AudioEditor(file, locFile, LittleEndianCheckBox.Checked);
-                        audioEditor.ShowDialog(this);
-						if (audioEditor.saved) TrySetLocFile(locFile);
-						audioEditor.Dispose();
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Error", ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
+                    if (!TryGetLocFile(out LOCFile locFile))
+                        throw new Exception("No .loc File found.");
+                    AudioEditor audioEditor = new AudioEditor(file, locFile, LittleEndianCheckBox.Checked);
+                    audioEditor.ShowDialog(this);
+					if (audioEditor.saved) TrySetLocFile(locFile);
+					audioEditor.Dispose();
                     break;
 
 				case 9 when file.filepath == "colours.col":
-					if (file.size == 0)
+					if (file.FileSize == 0)
 					{
 						MessageBox.Show("No Color data found.", "Error", MessageBoxButtons.OK,
 							MessageBoxIcon.Error);
