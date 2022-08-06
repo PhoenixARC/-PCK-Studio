@@ -29,7 +29,7 @@ namespace PckStudio.Forms.Editor
 
 		public class CategorySorter : IComparer
 		{
-			public int Compare(object x, object y)
+			public int Compare(object x, object y) // Sorts Tree Nodes by Audio Type
 			{
 				if (x is TreeNode xt && y is TreeNode yt &&
 					xt.Tag is PCKAudioFile.AudioCategory xcategory &&
@@ -102,7 +102,6 @@ namespace PckStudio.Forms.Editor
 				MessageBox.Show("Failed to get Binka conversion files", "Exception thrown");
 				Close();
 			}
-			if (isLittleEndian) Text += " (PS4/Vita)";
 
 			audioPCK = file;
 			using (var stream = new MemoryStream(file.data))
@@ -181,7 +180,7 @@ namespace PckStudio.Forms.Editor
 
 		private void verifyFileLocationToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (treeView1.SelectedNode.Tag == null || !(treeView1.SelectedNode.Tag is PCKFile.FileData) || !(treeView2.SelectedNode.Tag is ValueTuple<string, string>)) return;
+			if (treeView1.SelectedNode.Tag == null || treeView2.SelectedNode.Tag == null) return;
 			var entry = treeView2.SelectedNode;
 
 			MainForm parent = Owner.Owner as MainForm; // Gets the MainForm so we can access the Save Location
