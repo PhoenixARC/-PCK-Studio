@@ -27,18 +27,6 @@ namespace PckStudio.Forms.Editor
 		LOCFile loc;
 		bool _isLittleEndian = false;
 
-		public class CategorySorter : IComparer
-		{
-			public int Compare(object x, object y)
-			{
-				if (x is TreeNode xt && y is TreeNode yt &&
-					xt.Tag is PCKAudioFile.AudioCategory xcategory &&
-					yt.Tag is PCKAudioFile.AudioCategory ycategory)
-					return xcategory.audioType.CompareTo(ycategory.audioType);
-				return -1;
-			}
-		}
-
         public static readonly List<string> Categories = new List<string>
         {
             "Overworld",
@@ -112,10 +100,9 @@ namespace PckStudio.Forms.Editor
 
 			foreach (var category in audioFile.Categories)
 			{
-				if (category is null) continue;
 				if (category.Name == "include_overworld" &&
 					category.audioType == PCKAudioFile.AudioCategory.EAudioType.Creative &&
-					audioFile.Categories[0] is PCKAudioFile.AudioCategory overworldCategory)
+					audioFile.TryGetCategory(PCKAudioFile.AudioCategory.EAudioType.Overworld, out PCKAudioFile.AudioCategory overworldCategory))
 				{
 					foreach(var name in category.SongNames.ToList())
 					{
@@ -125,17 +112,12 @@ namespace PckStudio.Forms.Editor
 					playOverworldInCreative.Checked = true;
 				}
 
-				TreeNode treeNode = new TreeNode(GetCategoryFromId(category.audioType));
+				TreeNode treeNode = new TreeNode(GetCategoryFromId(category.audioType), (int)category.audioType, (int)category.audioType);
 				treeNode.Tag = category;
-				treeNode.ImageIndex = (int)category.audioType;
-				treeNode.SelectedImageIndex = (int)category.audioType;
 				treeView1.Nodes.Add(treeNode);
 			}
 
 			playOverworldInCreative.Enabled = audioFile.HasCategory(PCKAudioFile.AudioCategory.EAudioType.Creative);
-
-			treeView1.TreeViewNodeSorter = new CategorySorter();
-			treeView1.Sort();
 		}
 
 		// https://stackoverflow.com/a/25064568 by Alik Khilazhev -MattNL
@@ -213,7 +195,7 @@ namespace PckStudio.Forms.Editor
 			string[] avalible = Categories.FindAll(str => !audioFile.HasCategory(GetCategoryId(str)) ).ToArray();
 			if (avalible.Length > 0)
 			{ 
-				using addCategory add = new addCategory(avalible); //sets category adding dialog
+				using addCategory add = new addCategory(avalible);
 				if (add.ShowDialog() == DialogResult.OK)
 					audioFile.AddCategory(GetCategoryId(add.Category));
 			}
@@ -369,7 +351,6 @@ namespace PckStudio.Forms.Editor
 			PCKAudioFile.AudioCategory overworldCategory = audioFile.GetCategory(PCKAudioFile.AudioCategory.EAudioType.Overworld);
 			foreach (var category in audioFile.Categories)
 			{
-				if (category is null) continue;
 				category.Name = "";
 				if (playOverworldInCreative.Checked && category.audioType == PCKAudioFile.AudioCategory.EAudioType.Creative)
 				{

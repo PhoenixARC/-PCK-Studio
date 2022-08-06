@@ -16,7 +16,8 @@ namespace PckStudio.Classes.FileTypes
 
 		public readonly int type = 1;
 
-		public AudioCategory[] Categories { get; } = new AudioCategory[8];
+        public AudioCategory[] Categories => Array.FindAll(_categories, c => c is not null);
+        private AudioCategory[] _categories { get; } = new AudioCategory[8];
 
 		public Dictionary<string, string> Credits { get; } = new Dictionary<string, string>();
 
@@ -117,7 +118,7 @@ namespace PckStudio.Classes.FileTypes
 			if (category < AudioCategory.EAudioType.Overworld ||
 				category > AudioCategory.EAudioType.Unused)
 				throw new InvalidCategoryException(nameof(category));
-			return Categories[(int)category];
+			return _categories[(int)category];
 		}
 
 		/// <exception cref="InvalidCategoryException"></exception>
@@ -131,13 +132,6 @@ namespace PckStudio.Classes.FileTypes
 			audioCategory = null;
 			return false;
         }
-		
-		public int GetCategoryCount()
-		{
-			int count = 0;
-			Array.ForEach(Categories, c => { if (c is not null) count++; });
-			return count;
-		}
 
 		/// <returns>True when category was created, otherwise false</returns>
 		/// <exception cref="InvalidCategoryException"></exception>
@@ -147,7 +141,7 @@ namespace PckStudio.Classes.FileTypes
 				category > AudioCategory.EAudioType.Unused)
 				throw new InvalidCategoryException(nameof(category));
 			bool exists = HasCategory(category);
-			if (!exists) Categories[(int)category] = new AudioCategory(parameterType, category);
+			if (!exists) _categories[(int)category] = new AudioCategory(parameterType, category);
 			return !exists;
 		}
 
@@ -161,7 +155,7 @@ namespace PckStudio.Classes.FileTypes
 		public bool RemoveCategory(AudioCategory.EAudioType category)
         {
 			bool exists = HasCategory(category);
-			if (exists) Categories[(int)category] = null;
+			if (exists) _categories[(int)category] = null;
 			return exists;
 		}
 

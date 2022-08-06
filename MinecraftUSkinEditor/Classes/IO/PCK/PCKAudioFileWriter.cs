@@ -57,10 +57,9 @@ namespace PckStudio.Classes.IO.PCK
 
         private void WriteCategories(Stream stream)
         {
-            WriteInt(stream, _file.GetCategoryCount());
+            WriteInt(stream, _file.Categories.Length);
             foreach (var category in _file.Categories)
             {
-                if (category is null) continue;
                 WriteInt(stream, (int)category.parameterType);
                 WriteInt(stream, (int)category.audioType);
                 WriteString(stream, category.Name);
@@ -72,7 +71,6 @@ namespace PckStudio.Classes.IO.PCK
             bool addCredit = true;
             foreach (var category in _file.Categories)
             {
-                if (category is null) continue;
                 WriteInt(stream, category.SongNames.Count + (addCredit ? _file.Credits.Count * 2 : 0));
                 foreach (var name in category.SongNames)
                 {

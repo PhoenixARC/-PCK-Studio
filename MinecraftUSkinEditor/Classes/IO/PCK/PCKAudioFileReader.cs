@@ -75,7 +75,6 @@ namespace PckStudio.Classes.IO.PCK
             List<string> creditIds = new List<string>();
             foreach (var c in _file.Categories)
             {
-                if (c is null) continue;
                 int audioCount = ReadInt(stream);
                 for (; 0 < audioCount; audioCount--)
                 {
