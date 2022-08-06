@@ -197,6 +197,12 @@ namespace PckStudio.Forms.Editor
 				using addCategory add = new addCategory(avalible);
 				if (add.ShowDialog() == DialogResult.OK)
 					audioFile.AddCategory(GetCategoryId(add.Category));
+				else return;
+
+				var category = audioFile.GetCategory(GetCategoryId(add.Category));
+				TreeNode treeNode = new TreeNode(GetCategoryFromId(category.audioType), (int)category.audioType, (int)category.audioType);
+				treeNode.Tag = category;
+				treeView1.Nodes.Add(treeNode);
 			}
 			else
 			{

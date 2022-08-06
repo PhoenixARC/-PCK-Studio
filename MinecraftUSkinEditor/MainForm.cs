@@ -598,7 +598,7 @@ namespace PckStudio
                     break;
 
 				case 9 when file.filepath == "colours.col":
-					if (file.FileSize == 0)
+					if (file.size == 0)
 					{
 						MessageBox.Show("No Color data found.", "Error", MessageBoxButtons.OK,
 							MessageBoxIcon.Error);
