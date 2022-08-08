@@ -33,14 +33,14 @@ namespace PckStudio.Classes.IO
             WriteFileContents(stream);
         }
 
-        internal void WriteString(Stream stream, string s)
+        private void WriteString(Stream stream, string s)
         {
             WriteInt(stream, s.Length);
             WriteString(stream, s, IsUsingLittleEndian ? Encoding.Unicode : Encoding.BigEndianUnicode);
             WriteInt(stream, 0); // padding
         }
 
-        internal void WriteLookUpTable(Stream stream)
+        private void WriteLookUpTable(Stream stream)
         {
             WriteInt(stream, LUT.Count);
             LUT.ForEach(entry =>
@@ -52,7 +52,7 @@ namespace PckStudio.Classes.IO
                 WriteInt(stream, 0x1337); // :^)
         }
 
-        internal void WriteFileEntries(Stream stream)
+        private void WriteFileEntries(Stream stream)
         {
             WriteInt(stream, _pckfile.Files.Count);
             foreach (var file in _pckfile.Files)
@@ -62,8 +62,8 @@ namespace PckStudio.Classes.IO
                 WriteString(stream, file.filepath);
             }
         }
-        
-        internal void WriteFileContents(Stream stream)
+
+        private void WriteFileContents(Stream stream)
         {
             foreach (var file in _pckfile.Files)
             {
