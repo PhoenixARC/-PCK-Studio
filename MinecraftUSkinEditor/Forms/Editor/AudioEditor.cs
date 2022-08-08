@@ -245,6 +245,12 @@ namespace PckStudio.Forms.Editor
 			}
 		}
 
+		private void treeView1_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Delete)
+				removeCategoryStripMenuItem_Click(sender, e);
+		}
+
 		public void treeView2_KeyDown(object sender, KeyEventArgs e)
 		{
 			if (e.KeyCode == Keys.Delete)
@@ -253,13 +259,10 @@ namespace PckStudio.Forms.Editor
 
 		private void removeEntryMenuItem_Click(object sender, EventArgs e)
 		{
-			if (treeView1.SelectedNode is TreeNode main &&
-				treeView2.SelectedNode is TreeNode sub &&
-				sub.Tag is string s &&
-				main.Tag is PCKAudioFile.AudioCategory category)
+			if (treeView2.SelectedNode != null && treeView1.SelectedNode.Tag is PCKAudioFile.AudioCategory category)
 			{
-				if (category.SongNames.Remove(s))
-					sub.Remove();
+				category.SongNames.Remove(treeView2.SelectedNode.Text);
+				treeView2.SelectedNode.Remove();
 			}
 		}
 
@@ -273,11 +276,15 @@ namespace PckStudio.Forms.Editor
 					bool duplicate_song = false; // To handle if a file already in the pack is dropped back in
 					if (File.Exists(new_loc))
 					{
-						duplicate_song = File.ReadAllBytes(file).Length == File.ReadAllBytes(new_loc).Length;
-						if (!duplicate_song)
+						duplicate_song = File.ReadAllBytes(file) == File.ReadAllBytes(new_loc);
+						if (duplicate_song)
 						{
-							DialogResult user_prompt = MessageBox.Show("\"" + Path.GetFileNameWithoutExtension(file) + ".binka\" already exists. Continuing will replace the existing file. Are you sure you want to continue moving the file? By pressing no, you will skip this file. You can also cancel all pending file operations.", "File already exists", MessageBoxButtons.YesNoCancel);
-							if (user_prompt == DialogResult.Cancel) break;
+							DialogResult user_prompt = MessageBox.Show("\"" + Path.GetFileNameWithoutExtension(file) + ".binka\" already exists. Continuing will replace the existing file. Are you sure you want to continue moving the file? By pressing no, the song entry will be added without moving the file. You can also cancel this operation and all files in queue.", "File already exists", MessageBoxButtons.YesNoCancel);
+							while (user_prompt == DialogResult.None) ; // Stops the editor from adding or processing the file until the user had made their choice
+							if (user_prompt == DialogResult.Cancel)
+							{
+								break;
+							}
 							else if (user_prompt == DialogResult.No) continue;
 						}
 					}
@@ -328,9 +335,9 @@ namespace PckStudio.Forms.Editor
 
 		private void Binka_DragDrop(object sender, DragEventArgs e)
 		{
-			if (treeView1.SelectedNode is TreeNode t && t.Tag is PCKFile.FileData &&
-				// Gets the MainForm so we can access the Save Location
-				Owner.Owner is MainForm parent)
+			//MessageBox.Show((Owner.Owner as MainForm).saveLocation);
+			// Gets the MainForm so we can access the Save Location
+			if (treeView1.SelectedNode != null && Owner.Owner is MainForm parent)
 			{
 				string DataDirectory = Path.Combine(Path.GetDirectoryName(parent.saveLocation), "Data");
 				if (!Directory.Exists(DataDirectory))
@@ -349,7 +356,7 @@ namespace PckStudio.Forms.Editor
 			   !audioFile.HasCategory(PCKAudioFile.AudioCategory.EAudioType.Nether) ||
 			   !audioFile.HasCategory(PCKAudioFile.AudioCategory.EAudioType.End))
 			{
-				MessageBox.Show("The game will crash upon loading your pack if the Overworld, Nether and End categories don't all exist.", "Mandatory Categories Missing");
+				MessageBox.Show("Your changes were not saved. The game will crash when loading your pack if the Overworld, Nether and End categories don't all exist with at least one valid song.", "Mandatory Categories Missing");
 				return;
 			}
 
@@ -412,7 +419,7 @@ namespace PckStudio.Forms.Editor
 
 		private void AudioEditor_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			if (saved) return;
+			if (!saved) return;
 			saveToolStripMenuItem1_Click(sender, e);
 		}
 	}
