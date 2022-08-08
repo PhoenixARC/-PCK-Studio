@@ -148,12 +148,7 @@ namespace PckStudio.Classes.FileTypes
         /// <returns>FileData if found, otherwise null</returns>
         public FileData GetFile(string filepath, int type)
         {
-            foreach (var file in Files)
-            {
-                if (file.filepath.Equals(filepath) && file.type.Equals(type))
-                    return file;
-            }
-            return null;
+            return Files.FirstOrDefault(file => file.filepath.Equals(filepath) && file.type.Equals(type));
         }
     }
 }
