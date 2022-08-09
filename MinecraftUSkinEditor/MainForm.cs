@@ -28,21 +28,10 @@ namespace PckStudio
 		bool needsUpdate = false;
 		bool saved = true;
 		bool isTemplateFile = false;
+
 		public MainForm()
 		{
 			InitializeComponent();
-			this.skinToolStripMenuItem1.Click += (sender, EventArgs) => { setFileType_Click(sender, EventArgs, 0); };
-			this.capeToolStripMenuItem.Click += (sender, EventArgs) => { setFileType_Click(sender, EventArgs, 1); };
-			this.textureToolStripMenuItem.Click += (sender, EventArgs) => { setFileType_Click(sender, EventArgs, 2); };
-			this.languagesFileLOCToolStripMenuItem.Click += (sender, EventArgs) => { setFileType_Click(sender, EventArgs, 6); };
-			this.gameRulesFileGRFToolStripMenuItem.Click += (sender, EventArgs) => { setFileType_Click(sender, EventArgs, 7); };
-			this.audioPCKFileToolStripMenuItem.Click += (sender, EventArgs) => { setFileType_Click(sender, EventArgs, 8); };
-			this.coloursCOLFileToolStripMenuItem.Click += (sender, EventArgs) => { setFileType_Click(sender, EventArgs, 9); };
-			this.gameRulesHeaderGRHToolStripMenuItem.Click += (sender, EventArgs) => { setFileType_Click(sender, EventArgs, 10); };
-			this.skinsPCKToolStripMenuItem.Click += (sender, EventArgs) => { setFileType_Click(sender, EventArgs, 11); };
-			this.modelsFileBINToolStripMenuItem.Click += (sender, EventArgs) => { setFileType_Click(sender, EventArgs, 12); };
-			this.behavioursFileBINToolStripMenuItem.Click += (sender, EventArgs) => { setFileType_Click(sender, EventArgs, 13); };
-			this.entityMaterialsFileBINToolStripMenuItem.Click += (sender, EventArgs) => { setFileType_Click(sender, EventArgs, 14); };
 			imageList.Images.Add(Resources.ZZFolder);
 			imageList.Images.Add(Resources.BINKA_ICON);
 			imageList.Images.Add(Resources.IMAGE_ICON);
@@ -52,6 +41,7 @@ namespace PckStudio
 			pckOpen.AllowDrop = true;
 			tabControl.SelectTab(0);
 			labelVersion.Text = "PCK Studio: " + Application.ProductVersion;
+			ChangelogRichTextBox.Text = Resources.CHANGELOG;
 #if DEBUG
 			labelVersion.Text += " (dev)";
 #endif
@@ -62,7 +52,19 @@ namespace PckStudio
 			RPC.Initialize();
 			RPC.SetPresence("An Open Source .PCK File Editor", "Program by PhoenixARC");
 
-			// Makes sure appdata exists
+			skinToolStripMenuItem1.Click                  += (sender, e) => setFileType_Click(sender, e, 0);
+			capeToolStripMenuItem.Click                   += (sender, e) => setFileType_Click(sender, e, 1);
+			textureToolStripMenuItem.Click                += (sender, e) => setFileType_Click(sender, e, 2);
+			languagesFileLOCToolStripMenuItem.Click       += (sender, e) => setFileType_Click(sender, e, 6);
+			gameRulesFileGRFToolStripMenuItem.Click       += (sender, e) => setFileType_Click(sender, e, 7);
+			audioPCKFileToolStripMenuItem.Click	          += (sender, e) => setFileType_Click(sender, e, 8);
+			coloursCOLFileToolStripMenuItem.Click         += (sender, e) => setFileType_Click(sender, e, 9);
+			gameRulesHeaderGRHToolStripMenuItem.Click     += (sender, e) => setFileType_Click(sender, e, 10);
+			skinsPCKToolStripMenuItem.Click	              += (sender, e) => setFileType_Click(sender, e, 11);
+			modelsFileBINToolStripMenuItem.Click	      += (sender, e) => setFileType_Click(sender, e, 12);
+			behavioursFileBINToolStripMenuItem.Click      += (sender, e) => setFileType_Click(sender, e, 13);
+			entityMaterialsFileBINToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, 14);
+
 			try
 			{
 				Directory.CreateDirectory(Program.Appdata + "\\cache\\mods\\");
@@ -89,6 +91,7 @@ namespace PckStudio
 				if (ofd.ShowDialog() == DialogResult.OK)
 				{
 					currentPCK = openPck(ofd.FileName);
+					if (currentPCK == null) return;
 					if (addPasswordToolStripMenuItem.Enabled = checkForPassword())
 					{
 						LoadEditorTab();
@@ -110,12 +113,13 @@ namespace PckStudio
 				}
 				catch (OverflowException ex)
 				{
-					MessageBox.Show("Error", "Failed to open pck\nTry checking the 'Open/Save as Vita/PS4 pck' check box in the upper right corner.",
-						MessageBoxButtons.OK, MessageBoxIcon.Error);
+					MessageBox.Show("Failed to open pck\n" +
+						$"Try {(LittleEndianCheckBox.Checked ? "unchecking" : "checking")} the 'Open/Save as Vita/PS4 pck' check box in the upper right corner.",
+						"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 					Console.WriteLine(ex.Message);
 				}
 			}
-			if (pck.type < 3) throw new Exception("Can't open pck file of type: " + pck.type.ToString());
+			if (pck?.type < 3) throw new Exception("Can't open pck file of type: " + pck.type.ToString());
 			return pck;
 		}
 
@@ -161,7 +165,7 @@ namespace PckStudio
 			advancedMetaAddingToolStripMenuItem.Enabled = false;
 			convertToBedrockToolStripMenuItem.Enabled = false;
 			closeToolStripMenuItem.Visible = false;
-			fileEntryCountLabel.Text = "Files:0";
+			fileEntryCountLabel.Text = string.Empty;
 			tabControl.SelectTab(0);
 			RPC.SetPresence("An Open Source .PCK File Editor", "Program by PhoenixARC");
 		}
@@ -234,8 +238,9 @@ namespace PckStudio
 							}
 							catch (OverflowException ex)
 							{
-								MessageBox.Show("Error", "Failed to open pck\nTry checking the 'Open/Save as Vita/PS4 pck' check box in the upper right corner.",
-									MessageBoxButtons.OK, MessageBoxIcon.Error);
+								MessageBox.Show("Failed to open pck\n" + 
+									"Try checking the 'Open/Save as Vita/PS4 pck' check box in the upper right corner.",
+									"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 								Console.WriteLine(ex.Message);
 							}
 						}
