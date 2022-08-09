@@ -2866,6 +2866,11 @@ namespace PckStudio
 			pckOpen.Image = Resources.pckClosed;
 		}
 
+		private void OpenPck_Click(object sender, EventArgs e)
+		{
+			openToolStripMenuItem_Click(sender, e);
+		}
+
 		private void savePCK(object sender, EventArgs e)
 		{
 			if (!string.IsNullOrEmpty(saveLocation))

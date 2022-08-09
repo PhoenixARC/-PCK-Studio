@@ -42,3 +42,6 @@ Modify .PCK archives as you please!
 *  [XxModZxXWiiPlaza](https://github.com/XxModZxXWiiPlaza)
 *  [SlothWiiPlaza](https://github.com/Kashiiera)
 *  [jam1garner](https://github.com/jam1garner)
+
+### Credits
+*  [yaboiFoxx]() for Improved UI concept
