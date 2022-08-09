@@ -64,8 +64,7 @@ namespace PckStudio.Classes.IO.PCK
                 var parameterType = (PCKAudioFile.AudioCategory.EAudioParameterType)ReadInt(stream);
                 var audioType = (PCKAudioFile.AudioCategory.EAudioType)ReadInt(stream);
                 string name = ReadString(stream);
-                Console.WriteLine(name);
-                _file.AddCategory(parameterType, audioType);
+                _file.AddCategory(parameterType, audioType, name);
             }
         }
 

@@ -47,17 +47,13 @@ namespace PckStudio.Classes.FileTypes
 			public EAudioType audioType { get; }
 			public List<string> SongNames { get;  } = new List<string>();
 
-			public AudioCategory(EAudioParameterType parameterType, EAudioType audioType)
+			public AudioCategory(string name, EAudioParameterType parameterType, EAudioType audioType)
 			{
+				this.Name = name;
 				this.parameterType = parameterType;
 				this.audioType = audioType;
 			}
-
-			public AudioCategory(string name, EAudioParameterType parameterType, EAudioType audioType) : this(parameterType, audioType)
-            {
-				Name = name;
-            }
-        }
+		}
 
 		public string[] GetCredits() => Credits.Values.ToArray();
 		public string GetCreditsString() => string.Join("\n", Credits.Values.ToArray());
@@ -135,13 +131,13 @@ namespace PckStudio.Classes.FileTypes
 
 		/// <returns>True when category was created, otherwise false</returns>
 		/// <exception cref="InvalidCategoryException"></exception>
-		public bool AddCategory(AudioCategory.EAudioParameterType parameterType, AudioCategory.EAudioType category)
+		public bool AddCategory(AudioCategory.EAudioParameterType parameterType, AudioCategory.EAudioType category, string name = "")
 		{
 			if (category < AudioCategory.EAudioType.Overworld ||
 				category > AudioCategory.EAudioType.Unused)
 				throw new InvalidCategoryException(nameof(category));
 			bool exists = HasCategory(category);
-			if (!exists) _categories[(int)category] = new AudioCategory(parameterType, category);
+			if (!exists) _categories[(int)category] = new AudioCategory(name, parameterType, category);
 			return !exists;
 		}
 
