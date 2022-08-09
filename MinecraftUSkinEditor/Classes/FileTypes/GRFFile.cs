@@ -7,8 +7,87 @@ namespace PckStudio.Classes.FileTypes
 {
     public class GRFFile
     {   
-        private GRFTag _root = null;
-        public GRFTag RootTag => _root;
+        public static readonly string[] ValidGameRules = new string[]
+            {
+                "MapOptions",
+                "ApplySchematic",
+                "GenerateStructure",
+                "GenerateBox",
+                "PlaceBlock",
+                "PlaceContainer",
+                "PlaceSpawner",
+                "BiomeOverride",
+                "StartFeature",
+                "AddItem",
+                "AddEnchantment",
+                "WeighedTreasureItem",
+                "RandomItemSet",
+                "DistributeItems",
+                "WorldPosition",
+                "LevelRules",
+                "NamedArea",
+                "ActiveChunkArea",
+                "TargetArea",
+                "ScoreRing",
+                "ThermalArea",
+                "PlayerBoundsVolume",
+                "Killbox",
+                "BlockLayer",
+                "UseBlock",
+                "CollectItem",
+                "CompleteAll",
+                "UpdatePlayer",
+                "OnGameStartSpawnPositions",
+                "OnInitialiseWorld",
+                "SpawnPositionSet",
+                "PopulateContainer",
+                "DegradationSequence",
+                "RandomDissolveDegrade",
+                "DirectionalDegrade",
+                "GrantPermissions",
+                "AllowIn",
+                "LayerGeneration",
+                "LayerAsset",
+                "AnyCombinationOf",
+                "CombinationDefinition",
+                "Variations",
+                "BlockDef",
+                "LayerSize",
+                "UniformSize",
+                "RandomizeSize",
+                "LinearBlendSize",
+                "LayerShape",
+                "BasicShape",
+                "StarShape",
+                "PatchyShape",
+                "RingShape",
+                "SpiralShape",
+                "LayerFill",
+                "BasicLayerFill",
+                "CurvedLayerFill",
+                "WarpedLayerFill",
+                "LayerTheme",
+                "NullTheme",
+                "FilterTheme",
+                "ShaftsTheme",
+                "BasicPatchesTheme",
+                "BlockStackTheme",
+                "RainbowTheme",
+                "TerracottaTheme",
+                "FunctionPatchesTheme",
+                "SimplePatchesTheme",
+                "CarpetTrapTheme",
+                "MushroomBlockTheme",
+                "TextureTheme",
+                "SchematicTheme",
+                "BlockCollisionException",
+                "Powerup",
+                "Checkpoint",
+                "CustomBeacon",
+                "ActiveViewArea",
+            };
+
+        public readonly GameRule Root = null;
         public int Crc => _crc;
         public bool IsWorld => _isWorld;
 
@@ -23,14 +102,22 @@ namespace PckStudio.Classes.FileTypes
             ZlibRleCrc = 3,
         }
 
-        public class GRFTag
-        {
-            private GRFTag _parent = null;
-            private Dictionary<string, string> _parameters = new Dictionary<string, string>();
+        /// <summary>
+        /// Initializes a new GRFFile as a non-world grf file
+        /// </summary>
+        public GRFFile() : this(-1, false)
+        {}
 
-            /// <summary>
-            /// Contains all valid Parameter names
-            /// </summary>
+        public GRFFile(int crc, bool isWolrd)
+        {
+            Root = new GameRule("__ROOT__", null);
+            _crc = crc;
+            _isWorld = isWolrd;
+        }
+
+        public class GameRule
+        {
+            /// <summary> Contains all valid Parameter names </summary>
             public static readonly string[] ValidParameters = new string[]
             {
                 "plus_x",
@@ -139,116 +226,35 @@ namespace PckStudio.Classes.FileTypes
                 "beam_length",
             };
 
-            public static readonly string[] ValidGameRules = new string[]
-            {
-                "MapOptions",
-                "ApplySchematic",
-                "GenerateStructure",
-                "GenerateBox",
-                "PlaceBlock",
-                "PlaceContainer",
-                "PlaceSpawner",
-                "BiomeOverride",
-                "StartFeature",
-                "AddItem",
-                "AddEnchantment",
-                "WeighedTreasureItem",
-                "RandomItemSet",
-                "DistributeItems",
-                "WorldPosition",
-                "LevelRules",
-                "NamedArea",
-                "ActiveChunkArea",
-                "TargetArea",
-                "ScoreRing",
-                "ThermalArea",
-                "PlayerBoundsVolume",
-                "Killbox",
-                "BlockLayer",
-                "UseBlock",
-                "CollectItem",
-                "CompleteAll",
-                "UpdatePlayer",
-                "OnGameStartSpawnPositions",
-                "OnInitialiseWorld",
-                "SpawnPositionSet",
-                "PopulateContainer",
-                "DegradationSequence",
-                "RandomDissolveDegrade",
-                "DirectionalDegrade",
-                "GrantPermissions",
-                "AllowIn",
-                "LayerGeneration",
-                "LayerAsset",
-                "AnyCombinationOf",
-                "CombinationDefinition",
-                "Variations",
-                "BlockDef",
-                "LayerSize",
-                "UniformSize",
-                "RandomizeSize",
-                "LinearBlendSize",
-                "LayerShape",
-                "BasicShape",
-                "StarShape",
-                "PatchyShape",
-                "RingShape",
-                "SpiralShape",
-                "LayerFill",
-                "BasicLayerFill",
-                "CurvedLayerFill",
-                "WarpedLayerFill",
-                "LayerTheme",
-                "NullTheme",
-                "FilterTheme",
-                "ShaftsTheme",
-                "BasicPatchesTheme",
-                "BlockStackTheme",
-                "RainbowTheme",
-                "TerracottaTheme",
-                "FunctionPatchesTheme",
-                "SimplePatchesTheme",
-                "CarpetTrapTheme",
-                "MushroomBlockTheme",
-                "TextureTheme",
-                "SchematicTheme",
-                "BlockCollisionException",
-                "Powerup",
-                "Checkpoint",
-                "CustomBeacon",
-                "ActiveViewArea",
-            };
-
             public string Name { get; set; } = string.Empty;
-            public GRFTag Parent => _parent;
-            public Dictionary<string, string> Parameters => _parameters;
-            public List<GRFTag> Tags { get; set; } = new List<GRFTag>();
 
-            public GRFTag(string name, GRFTag parent)
+            public GameRule Parent { get; } = null;
+            public Dictionary<string, string> Parameters { get; } = new Dictionary<string, string>();
+            public List<GameRule> SubRules { get; } = new List<GameRule>();
+
+            public GameRule(string name, GameRule parent)
             {
                 Name = name;
-                _parent = parent;
+                Parent = parent;
             }
 
-            public GRFTag AddTag(string gameRuleName) => AddTag(gameRuleName, false);
+            public GameRule AddRule(string gameRuleName) => AddRule(gameRuleName, false);
 
-            /// <summary>
-            /// Adds a new tag to its child tags
-            /// </summary>
+            /// <summary>Adds a new gamerule</summary>
             /// <param name="gameRuleName">Game rule to add</param>
             /// <param name="validate">Wether to check the given game rule</param>
             /// <returns>The Added GRFTag</returns>
-            public GRFTag AddTag(string gameRuleName, bool validate)
+            public GameRule AddRule(string gameRuleName, bool validate)
             {
                 if (validate && !ValidGameRules.Contains(gameRuleName)) return null;
-                var tag = new GRFTag(gameRuleName, this);
-                Tags.Add(tag);
+                var tag = new GameRule(gameRuleName, this);
+                SubRules.Add(tag);
                 return tag;
             }
 
-            public GRFTag AddTag(string gameRuleName, params KeyValuePair<string,string>[] parameters)
+            public GameRule AddRule(string gameRuleName, params KeyValuePair<string,string>[] parameters)
             {
-                var tag = AddTag(gameRuleName); // should never return null unless its called with the validate bool set to true
+                var tag = AddRule(gameRuleName); // should never return null unless its called with the validate bool set to true
                 foreach(var param in parameters)
                 { 
                     tag.Parameters[param.Key] = param.Value;
@@ -257,29 +263,15 @@ namespace PckStudio.Classes.FileTypes
             }
         }
 
-        public GRFTag AddTag(string gameRuleName)
-            => AddTag(gameRuleName, false);
+        public void AddGameRules(IEnumerable<GameRule> gameRules) => Root.SubRules.AddRange(gameRules);
+        
+        public GameRule AddRule(string gameRuleName)
+            => AddRule(gameRuleName, false);
 
-        public GRFTag AddTag(string gameRuleName, bool validate)
-            => _root.AddTag(gameRuleName, validate);
+        public GameRule AddRule(string gameRuleName, bool validate)
+            => Root.AddRule(gameRuleName, validate);
 
-        public GRFTag AddTag(string gameRuleName, params KeyValuePair<string, string>[] parameters)
-            => _root.AddTag(gameRuleName, parameters);
-
-        public GRFFile(int crc, bool isWolrd)
-        {
-            _root = new GRFTag("__ROOT__", null);
-            _crc = crc;
-            _isWorld = isWolrd;
-        }
-
-        /// <summary>
-        /// Initializes a new GRFFile as a non-world grf file
-        /// </summary>
-        public GRFFile() : this(-1, false)
-        {
-        }
-
-
+        public GameRule AddRule(string gameRuleName, params KeyValuePair<string, string>[] parameters)
+            => Root.AddRule(gameRuleName, parameters);
     }
 }

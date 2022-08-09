@@ -904,14 +904,14 @@ namespace PckStudio
 			InitializeTexturePack(packId, packVersion, packName, res);
 			var gameRuleFile = new PCKFile.FileData("GameRules.grf", 7);
 			var grfFile = new GRFFile();
-			grfFile.AddTag("MapOptions",
+			grfFile.AddRule("MapOptions",
 				new KeyValuePair<string, string>("seed", "0"),
 				new KeyValuePair<string, string>("baseSaveName", string.Empty),
 				new KeyValuePair<string, string>("flatworld", "false"),
 				new KeyValuePair<string, string>("texturePackId", packId.ToString())
 				);
-			grfFile.AddTag("LevelRules")
-				.AddTag("UpdatePlayer",
+			grfFile.AddRule("LevelRules")
+				.AddRule("UpdatePlayer",
 				new KeyValuePair<string, string>("yRot", "0"),
 				new KeyValuePair<string, string>("xRot", "0"),
 				new KeyValuePair<string, string>("spawnX", "0"),
