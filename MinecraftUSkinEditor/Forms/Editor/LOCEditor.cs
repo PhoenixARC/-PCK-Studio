@@ -42,7 +42,7 @@ namespace PckStudio.Forms.Editor
 
         private void LOCEditor_FormClosing(object sender, FormClosingEventArgs e)
         {
-			RPC.SetPresence("Sitting alone", "Program by PhoenixARC");
+			RPC.SetPresence("An Open Source .PCK File Editor", "Program by PhoenixARC");
         }
 
 		private void treeViewLocKeys_AfterSelect(object sender, TreeViewEventArgs e)
