@@ -419,8 +419,7 @@ namespace PckStudio.Forms.Editor
 
 		private void AudioEditor_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			if (!saved) return;
-			saveToolStripMenuItem1_Click(sender, e);
+			if (saved) saveToolStripMenuItem1_Click(sender, e);
 		}
 	}
 }
