@@ -7,7 +7,7 @@ namespace PckStudio.Classes.FileTypes
 {
     public class PCKFile
     {
-        public int type { get; }
+        public readonly int type;
         public List<FileData> Files { get; } = new List<FileData>();
 
         public class FileData

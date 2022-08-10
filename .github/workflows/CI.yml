@@ -22,8 +22,7 @@ jobs:
         path: |
           ~/.nuget/packages
           !~/.nuget/packages/unwanted
-        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
-        restore-keys: ${{ runner.os }}-nuget-
+        key: ${{ runner.os }}-nuget-${{ hashFiles('~/.nuget/packages/*') }}
       
     - name: Restore NuGet Packages
       if: steps.nugetCache.outputs.cache-hit != 'true'
