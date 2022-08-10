@@ -56,6 +56,7 @@ namespace PckStudio.Classes.IO.PCK
             }
         }
 
+        private List<PCKAudioFile.AudioCategory> original_categories = new List<PCKAudioFile.AudioCategory>();
         private void ReadCategories(Stream stream)
         {
             int categoryEntryCount = ReadInt(stream);
@@ -64,6 +65,9 @@ namespace PckStudio.Classes.IO.PCK
                 var parameterType = (PCKAudioFile.AudioCategory.EAudioParameterType)ReadInt(stream);
                 var audioType = (PCKAudioFile.AudioCategory.EAudioType)ReadInt(stream);
                 string name = ReadString(stream);
+                // AddCategory puts the file's categories out of order and causes some songs to be put in the wrong categories
+                // This is my simple fix for the issue.
+                original_categories.Add(new PCKAudioFile.AudioCategory(name, parameterType, audioType));
                 _file.AddCategory(parameterType, audioType, name);
             }
         }
@@ -72,7 +76,7 @@ namespace PckStudio.Classes.IO.PCK
         {
             List<string> credits = new List<string>();
             List<string> creditIds = new List<string>();
-            foreach (var c in _file.Categories)
+            foreach (var c in original_categories)
             {
                 int audioCount = ReadInt(stream);
                 for (; 0 < audioCount; audioCount--)
@@ -82,7 +86,7 @@ namespace PckStudio.Classes.IO.PCK
                     switch (key)
                     {
                         case "CUENAME":
-                            c.SongNames.Add(value);
+                            _file.GetCategory(c.audioType).SongNames.Add(value);
                             break;
                         case "CREDIT":
                             credits.Add(value);
