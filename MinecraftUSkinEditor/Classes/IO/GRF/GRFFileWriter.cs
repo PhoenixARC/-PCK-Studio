@@ -14,7 +14,7 @@ namespace PckStudio.Classes.IO.GRF
     internal class GRFFileWriter : StreamDataWriter
     {
         private readonly GRFFile _grfFile;
-        private List<string> LUT;
+        private List<string> StringLookUpTable;
 
         private GRFFile.eCompressionType _compressionType;
 
@@ -29,8 +29,8 @@ namespace PckStudio.Classes.IO.GRF
             if (grfFile.IsWorld)
                 throw new NotImplementedException("World grf saving is currently unsupported");
             _grfFile = grfFile;
-            LUT = new List<string>();
-            PrepareLookUpTable(_grfFile.Root, LUT);
+            StringLookUpTable = new List<string>();
+            PrepareLookUpTable(_grfFile.Root, StringLookUpTable);
         }
 
         private void PrepareLookUpTable(GRFFile.GameRule tag, List<string> LUT)
@@ -122,17 +122,20 @@ namespace PckStudio.Classes.IO.GRF
 
         private void WriteTagLookUpTable(Stream stream)
         {
-            WriteInt(stream, LUT.Count);
-            LUT.ForEach( s => WriteString(stream, s) );
+            WriteInt(stream, StringLookUpTable.Count);
+            StringLookUpTable.ForEach( s => WriteString(stream, s) );
         }
 
-        private void WriteGameRuleHierarchy(Stream stream, GRFFile.GameRule rule)
+        private void WriteGameRuleHierarchy(Stream stream, GRFFile.GameRule parent)
         {
-            SetString(stream, rule.Name);
-            WriteInt(stream, rule.Parameters.Count);
-            foreach (var param in rule.Parameters) WriteParameter(stream, param);
-            WriteInt(stream, rule.SubRules.Count);
-            rule.SubRules.ForEach(subrule => WriteGameRuleHierarchy(stream, subrule));
+            foreach (var rule in parent.SubRules)
+            {
+                SetString(stream, rule.Name);
+                WriteInt(stream, rule.Parameters.Count);
+                foreach (var param in rule.Parameters) WriteParameter(stream, param);
+                WriteInt(stream, rule.SubRules.Count);
+                WriteGameRuleHierarchy(stream, rule);
+            }
         }
 
         private void WriteParameter(Stream stream, KeyValuePair<string, string> param)
@@ -143,7 +146,7 @@ namespace PckStudio.Classes.IO.GRF
 
         private void SetString(Stream stream, string s)
         {
-            int i = LUT.IndexOf(s);
+            int i = StringLookUpTable.IndexOf(s);
             if (i == -1) throw new Exception(nameof(s));
             WriteInt(stream, i);
         }
