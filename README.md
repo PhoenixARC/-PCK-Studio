@@ -1,33 +1,40 @@
 # PCK Studio
-_previously MinecraftUSkinEditor_
-A minecraft for Wii U editor
-
 Modify .PCK archives as you please!
 
-### Features:
-* Open and Save .PCK archives
+_`previously known as MinecraftUSkinEditor`_\
+`A minecraft for Wii U editor`
 
-* Edit the entry data for .PCK archives (This means custom names, models, animations, entire custom packs, etc. etc.)
-
-* Replace, Add or Remove files from the archives. (AKA add/remove/replace skins, maps, textures packs and more!)
-
+## Features:
+* Open, Edit and Save .PCK archives (this means models, animations, entire custom packs, etc.)
+* Add / Remove / Replace skins, audios, textures, animations and much more.
 * Edit localization data to make your mods support every language supported by minecraft itself!
-
-* Add/Remove localization objects
-
 * PNG previewing
-
 * And much more!
 
-### To compile:
+### Known Issues
+ - `.resx been flagged by windows(when downloading source.zip)`
 
-* download
+### Setup:
+```shell
+$ git clone https://github.com/PhoenixARC/-PCK-Studio.git
+$ cd "-PCK-Studio"
+```
 
-* run `UnblockAllFiles.ps1`
+## How to Build:
 
-* Open `MinecraftUSkinEditor.sln`
+* Run if windows flags .resx files
+    ```powershell
+    $ dir -Path .\ -Recurse | Unblock-File
+    ```
+- ### Building using [Visual Studio](https://visualstudio.microsoft.com/downloads)
+    * Open [MinecraftUSkinEditor.sln](./MinecraftUSkinEditor.sln) in Visual Studio 2022 or later
+    * Click `Run` or press `Shift + B`
 
-* hit run *or* hit **Shift+b**
+- ### Building using [MSBuild](https://github.com/dotnet/msbuild/releases)
+  * ```shell
+    $ nuget restore MinecraftUSkinEditor.sln
+    $ msbuild MinecraftUSkinEditor.sln -property:Configuration=Release
+    ```
 
 ### A quick note:
 
@@ -37,8 +44,11 @@ Modify .PCK archives as you please!
 ## Contributers:
 *  [PhoenixARC](https://github.com/PhoenixARC)
 *  [MNL](https://github.com/MattN-L)
-*  [Miku-666](https://github.com/NessieHax)<br/><br/>
+*  [Miku-666](https://github.com/NessieHax)
 *  [Nobledez](https://github.com/Nobledez)
 *  [XxModZxXWiiPlaza](https://github.com/XxModZxXWiiPlaza)
 *  [SlothWiiPlaza](https://github.com/Kashiiera)
 *  [jam1garner](https://github.com/jam1garner)
+
+### Credits
+*  [yaboiFoxx]() for Improved UI concept

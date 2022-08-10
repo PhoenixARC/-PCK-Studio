@@ -12,7 +12,6 @@ namespace PckStudio.Classes.FileTypes
 
         public class FileData
         {
-            // only apllys when the PCKFile is type 3
             public enum EDLCType : int
             {
                 DLCSkinFile         = 0,  // *.png
@@ -24,7 +23,7 @@ namespace PckStudio.Classes.FileTypes
                 /// </summary>
                 DLCInfoFile         = 4,
                 /// <summary>
-                /// (x16|x32|...)Info.pck
+                /// (x16|x32|x64)Info.pck
                 /// </summary>
                 DLCTexturePackInfoFile = 5,
                 /// <summary>
@@ -49,7 +48,6 @@ namespace PckStudio.Classes.FileTypes
                 DLCGameRulesHeader  = 10,
                 /// <summary>
                 /// Skins.pck
-                /// made up name  - Miku
                 /// </summary>
                 DLCSkinDataFile     = 11,
                 /// <summary>
@@ -122,27 +120,35 @@ namespace PckStudio.Classes.FileTypes
         /// Checks wether a file with <paramref name="filepath"/> and <paramref name="type"/> exists
         /// </summary>
         /// <param name="filepath">Path to the file in the pck</param>
-        /// <param name="type">Type of the file to check</param>
-        /// <returns> when file exists, otherwise false </returns>
+        /// <param name="type">Type of the file <see cref="FileData.EDLCType"/></param>
+        /// <returns>True when file exists, otherwise false </returns>
         public bool HasFile(string filepath, int type)
         {
-            return GetFile(filepath, type) != null;
+            return GetFile(filepath, type) is FileData;
+        }
+
+        /// <summary>
+        /// Tries to get a file with <paramref name="filepath"/> and <paramref name="type"/>.
+        /// </summary>
+        /// <param name="filepath">Path to the file in the pck</param>
+        /// <param name="type">Type of the file <see cref="FileData.EDLCType"/></param>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        public bool TryGetFile(string filepath, int type, out FileData file)
+        {
+            file = GetFile(filepath, type);
+            return file is FileData;
         }
 
         /// <summary>
         /// Gets the first file that Equals <paramref name="filepath"/> and <paramref name="type"/>
         /// </summary>
-        /// <param name="filepath">file path of the file</param>
-        /// <param name="type">Type of the file</param>
+        /// <param name="filepath">Path to the file in the pck</param>
+        /// <param name="type">Type of the file <see cref="FileData.EDLCType"/></param>
         /// <returns>FileData if found, otherwise null</returns>
         public FileData GetFile(string filepath, int type)
         {
-            foreach (var file in Files)
-            {
-                if (file.filepath.Equals(filepath) && file.type.Equals(type))
-                    return file;
-            }
-            return null;
+            return Files.FirstOrDefault(file => file.filepath.Equals(filepath) && file.type.Equals(type));
         }
     }
 }

@@ -14,13 +14,13 @@ namespace PckStudio.Classes.IO.GRF
     internal class GRFFileWriter : StreamDataWriter
     {
         private readonly GRFFile _grfFile;
-        private List<string> LUT;
+        private List<string> StringLookUpTable;
 
         private GRFFile.eCompressionType _compressionType;
 
         public static void Write(in Stream stream, GRFFile grfFile, GRFFile.eCompressionType compressionType)
         {
-            new GRFFileWriter(grfFile, compressionType).write(stream);
+            new GRFFileWriter(grfFile, compressionType).WriteToStream(stream);
         }
 
         private GRFFileWriter(GRFFile grfFile, GRFFile.eCompressionType compressionType) : base(false)
@@ -29,11 +29,19 @@ namespace PckStudio.Classes.IO.GRF
             if (grfFile.IsWorld)
                 throw new NotImplementedException("World grf saving is currently unsupported");
             _grfFile = grfFile;
-            LUT = new List<string>();
-            PrepareLookUpTable(_grfFile.RootTag, LUT);
+            StringLookUpTable = new List<string>();
+            PrepareLookUpTable(_grfFile.Root, StringLookUpTable);
         }
 
-        private void write(Stream stream)
+        private void PrepareLookUpTable(GRFFile.GameRule tag, List<string> LUT)
+        {
+            if (!LUT.Contains(tag.Name)) LUT.Add(tag.Name);
+            tag.SubRules.ForEach(tag => PrepareLookUpTable(tag, LUT));
+            foreach (var param in tag.Parameters)
+                if (!LUT.Contains(param.Key)) LUT.Add(param.Key);
+        }
+
+        private void WriteToStream(Stream stream)
         {
             WriteHeader(stream);
             using (var uncompressed_stream = new MemoryStream())
@@ -107,51 +115,39 @@ namespace PckStudio.Classes.IO.GRF
         private void WriteBody(Stream stream)
         {
             WriteTagLookUpTable(stream);
-            WriteRuleNameAndCount(stream, _grfFile.RootTag.Name, _grfFile.RootTag.Tags.Count);
-            WriteGameRules(stream, _grfFile.RootTag.Tags);
+            SetString(stream, _grfFile.Root.Name);
+            WriteInt(stream, _grfFile.Root.SubRules.Count);
+            WriteGameRuleHierarchy(stream, _grfFile.Root);
         }
 
         private void WriteTagLookUpTable(Stream stream)
         {
-            WriteInt(stream, LUT.Count);
-            LUT.ForEach( s => WriteString(stream, s) );
+            WriteInt(stream, StringLookUpTable.Count);
+            StringLookUpTable.ForEach( s => WriteString(stream, s) );
         }
 
-        private void PrepareLookUpTable(GRFFile.GRFTag tag, List<string> LUT)
+        private void WriteGameRuleHierarchy(Stream stream, GRFFile.GameRule parent)
         {
-            if (!LUT.Contains(tag.Name)) LUT.Add(tag.Name);
-            tag.Tags.ForEach( tag => PrepareLookUpTable(tag, LUT));
-            foreach (var param in tag.Parameters)
-                if (!LUT.Contains(param.Key)) LUT.Add(param.Key);
-        }
-
-        private void WriteGameRules(Stream stream, List<GRFFile.GRFTag> tags)
-        {
-            foreach(var tag in tags)
+            foreach (var rule in parent.SubRules)
             {
-                WriteRuleNameAndCount(stream, tag.Name, tag.Parameters.Count);
-                foreach (var param in tag.Parameters) WriteParameter(stream, param);
-                WriteInt(stream, tag.Tags.Count);
-                WriteGameRules(stream, tag.Tags);
+                SetString(stream, rule.Name);
+                WriteInt(stream, rule.Parameters.Count);
+                foreach (var param in rule.Parameters) WriteParameter(stream, param);
+                WriteInt(stream, rule.SubRules.Count);
+                WriteGameRuleHierarchy(stream, rule);
             }
-        }
-
-        private void WriteRuleNameAndCount(Stream stream, string name, int count)
-        {
-            WriteRuleName(stream, name);
-            WriteInt(stream, count);
         }
 
         private void WriteParameter(Stream stream, KeyValuePair<string, string> param)
         {
-            WriteRuleName(stream, param.Key);
+            SetString(stream, param.Key);
             WriteString(stream, param.Value);
         }
 
-        private void WriteRuleName(Stream stream, string name)
+        private void SetString(Stream stream, string s)
         {
-            int i = LUT.IndexOf(name);
-            if (i == -1) throw new Exception("No index found for: " + name);
+            int i = StringLookUpTable.IndexOf(s);
+            if (i == -1) throw new Exception(nameof(s));
             WriteInt(stream, i);
         }
 

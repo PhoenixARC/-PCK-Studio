@@ -10,25 +10,33 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MetroFramework.Forms;
 using PckStudio.Classes.FileTypes;
+using PckStudio.Classes.IO.COL;
 
 namespace PckStudio.Forms.Editor
 {
 	public partial class COLEditor : MetroForm
 	{
-		COLFile cf = new COLFile();
-		public byte[] data { get; private set; } = new byte[0];
+		COLFile colurfile;
 
-		public COLEditor(COLFile colFile)
+		private readonly PCKFile.FileData _file;
+
+		public COLEditor(PCKFile.FileData file)
 		{
 			InitializeComponent();
-			cf = colFile;
-			foreach (var obj in cf.entries)
+			_file = file;
+
+			using(var stream = new MemoryStream(file.data))
+			{
+                colurfile = COLFileReader.Read(stream);
+			}
+
+			foreach (var obj in colurfile.entries)
 			{
 				TreeNode tn = new TreeNode(obj.name);
 				tn.Tag = obj;
 				treeView1.Nodes.Add(tn);
 			}
-			foreach (var obj in cf.waterEntries)
+			foreach (var obj in colurfile.waterEntries)
 			{
 				TreeNode tn = new TreeNode(obj.name);
 				tn.Tag = obj;
@@ -71,8 +79,8 @@ namespace PckStudio.Forms.Editor
 		{
 			using (var stream = new MemoryStream())
 			{
-				cf.Save(stream);
-				data = stream.ToArray();
+				COLFileWriter.Write(stream, colurfile);
+				_file.SetData(stream.ToArray());
 			}
 		}
 
@@ -100,9 +108,9 @@ namespace PckStudio.Forms.Editor
 		public void treeView1_KeyDown(object sender, KeyEventArgs e)
 		{
 			var node = treeView1.SelectedNode;
-			if (e.KeyCode == Keys.Delete && node.Tag is COLFile.ColorEntry)
+			if (e.KeyCode == Keys.Delete && node.Tag is COLFile.ColorEntry colorInfo)
 			{
-                cf.entries.Remove((COLFile.ColorEntry)node.Tag);
+                colurfile.entries.Remove(colorInfo);
                 if (treeView1.Nodes.Count > 0) treeView1.Nodes.Remove(node);
             }
 		}
@@ -112,7 +120,7 @@ namespace PckStudio.Forms.Editor
 			var node = treeView2.SelectedNode;
 			if (e.KeyCode == Keys.Delete && node.Tag is COLFile.ExtendedColorEntry)
 			{
-                cf.waterEntries.Remove((COLFile.ExtendedColorEntry)node.Tag);
+                colurfile.waterEntries.Remove((COLFile.ExtendedColorEntry)node.Tag);
                 if (treeView2.Nodes.Count > 0) treeView2.Nodes.Remove(node);
             }
         }

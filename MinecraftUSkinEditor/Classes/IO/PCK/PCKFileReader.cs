@@ -16,14 +16,14 @@ namespace PckStudio.Classes.IO
 
         public static PCKFile Read(Stream stream, bool isLittleEndian)
         {
-            return new PCKFileReader(isLittleEndian).ReadFileFromStream(stream);
+            return new PCKFileReader(isLittleEndian).ReadFromStream(stream);
         }
 
         private PCKFileReader(bool isLittleEndian) : base(isLittleEndian)
         {
         }
 
-        private PCKFile ReadFileFromStream(Stream stream)
+        private PCKFile ReadFromStream(Stream stream)
         {
             int pck_type = ReadInt(stream);
             if (pck_type > 0xf00000) // 03 00 00 00 == true

@@ -131,6 +131,22 @@ namespace PckStudio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 6.5 [RELEASE]
+        /// - Audio Editor has been renamed to the Music Editor
+        /// - Music Editor now works with PSVita and PS4 files!
+        /// - Added a drag and drop feature for Binka files to the Music Editor to allow for efficient playlist building.
+        /// - You can now create a fresh Audio.pck file by using the &quot;Create audio.pck&quot; function, and this also includes PS4 and Vita!
+        /// - The categories in the Music Editor now sort themselves by category ID
+        /// - The categories in the Music Editor now have icons
+        /// - The Animation Editor  [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string CHANGELOG {
+            get {
+                return ResourceManager.GetString("CHANGELOG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap changeTile {

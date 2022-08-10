@@ -27,21 +27,10 @@ namespace PckStudio
 		bool needsUpdate = false;
 		bool saved = true;
 		bool isTemplateFile = false;
+
 		public MainForm()
 		{
 			InitializeComponent();
-			this.skinToolStripMenuItem1.Click += (sender, EventArgs) => { setFileType_Click(sender, EventArgs, 0); };
-			this.capeToolStripMenuItem.Click += (sender, EventArgs) => { setFileType_Click(sender, EventArgs, 1); };
-			this.textureToolStripMenuItem.Click += (sender, EventArgs) => { setFileType_Click(sender, EventArgs, 2); };
-			this.languagesFileLOCToolStripMenuItem.Click += (sender, EventArgs) => { setFileType_Click(sender, EventArgs, 6); };
-			this.gameRulesFileGRFToolStripMenuItem.Click += (sender, EventArgs) => { setFileType_Click(sender, EventArgs, 7); };
-			this.audioPCKFileToolStripMenuItem.Click += (sender, EventArgs) => { setFileType_Click(sender, EventArgs, 8); };
-			this.coloursCOLFileToolStripMenuItem.Click += (sender, EventArgs) => { setFileType_Click(sender, EventArgs, 9); };
-			this.gameRulesHeaderGRHToolStripMenuItem.Click += (sender, EventArgs) => { setFileType_Click(sender, EventArgs, 10); };
-			this.skinsPCKToolStripMenuItem.Click += (sender, EventArgs) => { setFileType_Click(sender, EventArgs, 11); };
-			this.modelsFileBINToolStripMenuItem.Click += (sender, EventArgs) => { setFileType_Click(sender, EventArgs, 12); };
-			this.behavioursFileBINToolStripMenuItem.Click += (sender, EventArgs) => { setFileType_Click(sender, EventArgs, 13); };
-			this.entityMaterialsFileBINToolStripMenuItem.Click += (sender, EventArgs) => { setFileType_Click(sender, EventArgs, 14); };
 			imageList.Images.Add(Resources.ZZFolder);
 			imageList.Images.Add(Resources.BINKA_ICON);
 			imageList.Images.Add(Resources.IMAGE_ICON);
@@ -51,6 +40,7 @@ namespace PckStudio
 			pckOpen.AllowDrop = true;
 			tabControl.SelectTab(0);
 			labelVersion.Text = "PCK Studio: " + Application.ProductVersion;
+			ChangelogRichTextBox.Text = Resources.CHANGELOG;
 #if DEBUG
 			labelVersion.Text += " (dev)";
 #endif
@@ -61,7 +51,19 @@ namespace PckStudio
 			RPC.Initialize();
 			RPC.SetPresence("An Open Source .PCK File Editor", "Program by PhoenixARC");
 
-			// Makes sure appdata exists
+			skinToolStripMenuItem1.Click                  += (sender, e) => setFileType_Click(sender, e, 0);
+			capeToolStripMenuItem.Click                   += (sender, e) => setFileType_Click(sender, e, 1);
+			textureToolStripMenuItem.Click                += (sender, e) => setFileType_Click(sender, e, 2);
+			languagesFileLOCToolStripMenuItem.Click       += (sender, e) => setFileType_Click(sender, e, 6);
+			gameRulesFileGRFToolStripMenuItem.Click       += (sender, e) => setFileType_Click(sender, e, 7);
+			audioPCKFileToolStripMenuItem.Click	          += (sender, e) => setFileType_Click(sender, e, 8);
+			coloursCOLFileToolStripMenuItem.Click         += (sender, e) => setFileType_Click(sender, e, 9);
+			gameRulesHeaderGRHToolStripMenuItem.Click     += (sender, e) => setFileType_Click(sender, e, 10);
+			skinsPCKToolStripMenuItem.Click	              += (sender, e) => setFileType_Click(sender, e, 11);
+			modelsFileBINToolStripMenuItem.Click	      += (sender, e) => setFileType_Click(sender, e, 12);
+			behavioursFileBINToolStripMenuItem.Click      += (sender, e) => setFileType_Click(sender, e, 13);
+			entityMaterialsFileBINToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, 14);
+
 			try
 			{
 				Directory.CreateDirectory(Program.Appdata + "\\cache\\mods\\");
@@ -88,6 +90,7 @@ namespace PckStudio
 				if (ofd.ShowDialog() == DialogResult.OK)
 				{
 					currentPCK = openPck(ofd.FileName);
+					if (currentPCK == null) return;
 					if (addPasswordToolStripMenuItem.Enabled = checkForPassword())
 					{
 						LoadEditorTab();
@@ -109,12 +112,13 @@ namespace PckStudio
 				}
 				catch (OverflowException ex)
 				{
-					MessageBox.Show("Error", "Failed to open pck\nTry checking the 'Open/Save as Vita/PS4 pck' check box in the upper right corner.",
-						MessageBoxButtons.OK, MessageBoxIcon.Error);
+					MessageBox.Show("Failed to open pck\n" +
+						$"Try {(LittleEndianCheckBox.Checked ? "unchecking" : "checking")} the 'Open/Save as Vita/PS4 pck' check box in the upper right corner.",
+						"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 					Console.WriteLine(ex.Message);
 				}
 			}
-			if (pck.type < 3) throw new Exception("Can't open pck file of type: " + pck.type.ToString());
+			if (pck?.type < 3) throw new Exception("Can't open pck file of type: " + pck.type.ToString());
 			return pck;
 		}
 
@@ -160,7 +164,7 @@ namespace PckStudio
 			advancedMetaAddingToolStripMenuItem.Enabled = false;
 			convertToBedrockToolStripMenuItem.Enabled = false;
 			closeToolStripMenuItem.Visible = false;
-			fileEntryCountLabel.Text = "Files:0";
+			fileEntryCountLabel.Text = string.Empty;
 			tabControl.SelectTab(0);
 			RPC.SetPresence("An Open Source .PCK File Editor", "Program by PhoenixARC");
 		}
@@ -233,8 +237,9 @@ namespace PckStudio
 							}
 							catch (OverflowException ex)
 							{
-								MessageBox.Show("Error", "Failed to open pck\nTry checking the 'Open/Save as Vita/PS4 pck' check box in the upper right corner.",
-									MessageBoxButtons.OK, MessageBoxIcon.Error);
+								MessageBox.Show("Failed to open pck\n" + 
+									"Try checking the 'Open/Save as Vita/PS4 pck' check box in the upper right corner.",
+									"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 								Console.WriteLine(ex.Message);
 							}
 						}
@@ -405,19 +410,24 @@ namespace PckStudio
 
 		private void replaceToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (treeViewMain.SelectedNode.Tag is PCKFile.FileData)
+			if (treeViewMain.SelectedNode.Tag is PCKFile.FileData file)
 			{
-				PCKFile.FileData file = treeViewMain.SelectedNode.Tag as PCKFile.FileData;
-				using (var ofd = new OpenFileDialog())
+				using var ofd = new OpenFileDialog();
+				if (ofd.ShowDialog() == DialogResult.OK)
 				{
-					if (ofd.ShowDialog() == DialogResult.OK)
-					{
-						file.SetData(File.ReadAllBytes(ofd.FileName));
-						saved = false;
-					}
+					file.SetData(File.ReadAllBytes(ofd.FileName));
+					saved = false;
 				}
 				return;
 			}
+			//deleteEntryToolStripMenuItem_Click(sender, e);
+			//using FolderBrowserDialog folderDialog = new FolderBrowserDialog();
+			//folderDialog.Description = "Select Folder";
+			//if (folderDialog.ShowDialog() == DialogResult.OK)
+			//{
+			//	string[] FilePaths = Directory.GetFiles(folderDialog.SelectedPath, "*.png");
+			//	Array.ForEach(FilePaths, filePath => currentPCK.Files.Add(new PCKFile.FileData(filePath, 2)));
+			//}
 			// should never happen unless its a folder
 			MessageBox.Show("Can't replace a folder.");
 		}
@@ -604,14 +614,8 @@ namespace PckStudio
 							MessageBoxIcon.Error);
 						return;
 					}
-					COLFile colFile = new COLFile();
-					using (var stream = new MemoryStream(file.data))
-					{
-						colFile.Open(stream);
-					}
-					COLEditor diag = new COLEditor(colFile);
-					if (diag.ShowDialog(this) == DialogResult.OK && diag.data.Length > 0)
-						file.SetData(diag.data);
+					COLEditor diag = new COLEditor(file);
+					diag.ShowDialog(this);
 					diag.Dispose();
 					break;
 			}
@@ -895,14 +899,14 @@ namespace PckStudio
 			InitializeTexturePack(packId, packVersion, packName, res);
 			var gameRuleFile = new PCKFile.FileData("GameRules.grf", 7);
 			var grfFile = new GRFFile();
-			grfFile.AddTag("MapOptions",
+			grfFile.AddRule("MapOptions",
 				new KeyValuePair<string, string>("seed", "0"),
 				new KeyValuePair<string, string>("baseSaveName", string.Empty),
 				new KeyValuePair<string, string>("flatworld", "false"),
 				new KeyValuePair<string, string>("texturePackId", packId.ToString())
 				);
-			grfFile.AddTag("LevelRules")
-				.AddTag("UpdatePlayer",
+			grfFile.AddRule("LevelRules")
+				.AddRule("UpdatePlayer",
 				new KeyValuePair<string, string>("yRot", "0"),
 				new KeyValuePair<string, string>("xRot", "0"),
 				new KeyValuePair<string, string>("spawnX", "0"),
@@ -2783,14 +2787,8 @@ namespace PckStudio
 			// Checks to see if selected minefile is a col file
 			if (file.type == 9 && file.filepath == "colours.col") // .col file
 			{
-				COLFile colFile = new COLFile();
-				using (var stream = new MemoryStream(file.data))
-				{
-					colFile.Open(stream);
-				}
-				using (COLEditor diag = new COLEditor(colFile))
-					if (diag.ShowDialog(this) == DialogResult.OK && diag.data.Length > 0)
-						file.SetData(diag.data);
+				using COLEditor diag = new COLEditor(file);
+				diag.ShowDialog(this);
 			}
 		}
 
@@ -2846,6 +2844,7 @@ namespace PckStudio
 			if (FileList.Length > 1)
 				MessageBox.Show("Only one pck file at a time is currently supported");
 			currentPCK = openPck(FileList[0]);
+			if (currentPCK == null) return;
 			if (addPasswordToolStripMenuItem.Enabled = checkForPassword())
 			{
 				LoadEditorTab();
@@ -2855,6 +2854,11 @@ namespace PckStudio
 		private void OpenPck_DragLeave(object sender, EventArgs e)
 		{
 			pckOpen.Image = Resources.pckClosed;
+		}
+
+		private void OpenPck_Click(object sender, EventArgs e)
+		{
+			openToolStripMenuItem_Click(sender, e);
 		}
 
 		private void savePCK(object sender, EventArgs e)
@@ -2875,11 +2879,30 @@ namespace PckStudio
 
 		private void setFileType_Click(object sender, EventArgs e, int type)
 		{
-			TreeNode node = treeViewMain.SelectedNode;
-			if (node == null || node.Tag == null || !(node.Tag is PCKFile.FileData)) return;
-			var file = node.Tag as PCKFile.FileData;
-			Console.WriteLine($"Setting {file.type} to {type}");
-			file.type = type;
+			if (treeViewMain.SelectedNode is TreeNode t && t.Tag is PCKFile.FileData file)
+            {
+				Console.WriteLine($"Setting {file.type} to {type}");
+				file.type = type;
+            }
 		}
-	}
+
+		private void addTextureToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			using OpenFileDialog fileDialog = new OpenFileDialog();
+			fileDialog.Filter = "Texture File(*.png)|*.png";
+			if (fileDialog.ShowDialog() == DialogResult.OK)
+			{
+				using RenamePrompt renamePrompt = new RenamePrompt(Path.GetFileName(fileDialog.FileName));
+				renamePrompt.TextLabel.Text = "Path";
+				if (renamePrompt.ShowDialog() == DialogResult.OK && !string.IsNullOrEmpty(renamePrompt.NewText))
+				{
+					var file = new PCKFile.FileData(renamePrompt.NewText, 2);
+					file.SetData(File.ReadAllBytes(fileDialog.FileName));
+					currentPCK.Files.Add(file);
+					BuildMainTreeView();
+					saved = false;
+				}
+			}
+		}
+    }
 }

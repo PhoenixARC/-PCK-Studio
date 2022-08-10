@@ -11,17 +11,18 @@ namespace PckStudio.Classes.IO.GRF
 {
     internal class GRFFileReader : StreamDataReader
     {
-        internal List<string> TagNames;
-        internal GRFFile _file;
+        private IList<string> StringLookUpTable;
+        private GRFFile _file;
+
         public static GRFFile Read(Stream stream)
         {
-            return new GRFFileReader().read(stream);
+            return new GRFFileReader().ReadFromStream(stream);
         }
 
         private GRFFileReader() : base(false)
         { }
 
-        private GRFFile read(Stream stream)
+        private GRFFile ReadFromStream(Stream stream)
         {
             stream = ReadHeader(stream);
             ReadBody(stream);
@@ -82,8 +83,10 @@ namespace PckStudio.Classes.IO.GRF
 
         private void ReadBody(Stream stream)
         {
-            ReadTagNames(stream);
-            ReadRootTag(stream);
+            ReadStringLookUpTable(stream);
+            string Name = GetString(stream);
+            Console.WriteLine($"[{nameof(GRFFile)}] Root Name: {Name}");
+            ReadGameRuleHierarchy(stream, _file.Root);
         }
 
         private Stream DecompressZLX(Stream compressedStream)
@@ -98,44 +101,34 @@ namespace PckStudio.Classes.IO.GRF
             return outputstream;
         }
 
-        private void ReadTagNames(Stream stream)
+        private void ReadStringLookUpTable(Stream stream)
         {
             int name_count = ReadInt(stream);
-            TagNames = new List<string>(name_count);
+            StringLookUpTable = new List<string>(name_count);
             for (int i = 0; i < name_count; i++)
             {
                 string s = ReadString(stream);
-                TagNames.Add(s);
-                //Console.WriteLine(s);
+                StringLookUpTable.Add(s);
             }
         }
 
-        private void ReadRootTag(Stream stream)
+        private void ReadGameRuleHierarchy(Stream stream, GRFFile.GameRule parent)
         {
-            string Name = GetTagName(stream);
-            Console.WriteLine($"[GRFFileReader] root_name: {Name}");
-            _file.RootTag.Tags = ReadGRFTreeHierarchy(stream, _file.RootTag).ToList();
-        }
-
-        private IEnumerable<GRFFile.GRFTag> ReadGRFTreeHierarchy(Stream stream, GRFFile.GRFTag parent)
-        {
+            _ = parent ?? throw new ArgumentNullException(nameof(parent));
             int count = ReadInt(stream);
             for (int i = 0; i < count; i++)
             {
-                string parameterName = GetTagName(stream);
-                int parameterCount = ReadInt(stream);
-                var tag = new GRFFile.GRFTag(parameterName, parent);
-                for (int j = 0; j < parameterCount; j++)
+                (string Name, int Count) parameter = (GetString(stream), ReadInt(stream));
+                var rule = parent.AddRule(parameter.Name);
+                for (int j = 0; j < parameter.Count; j++)
                 {
-                    tag.Parameters.Add(GetTagName(stream), ReadString(stream));
+                    rule.Parameters.Add(GetString(stream), ReadString(stream));
                 }
-                tag.Tags = ReadGRFTreeHierarchy(stream, tag).ToList();
-                yield return tag;
+                ReadGameRuleHierarchy(stream, rule);
             }
-            yield break;
         }
 
-        private string GetTagName(Stream stream) => TagNames[ReadInt(stream)];
+        private string GetString(Stream stream) => StringLookUpTable[ReadInt(stream)];
 
         private string ReadString(Stream stream)
         {
