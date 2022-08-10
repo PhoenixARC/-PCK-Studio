@@ -122,7 +122,6 @@ namespace PckStudio.Forms.Editor
 			// 
 			resources.ApplyResources(this.saveToolStripMenuItem1, "saveToolStripMenuItem1");
 			this.saveToolStripMenuItem1.Name = "saveToolStripMenuItem1";
-			this.saveToolStripMenuItem1.Click += new System.EventHandler(this.saveToolStripMenuItem1_Click);
 			// 
 			// toolsToolStripMenuItem
 			// 

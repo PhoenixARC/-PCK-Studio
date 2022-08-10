@@ -77,6 +77,9 @@ namespace PckStudio.Forms.Editor
 		public AudioEditor(PCKFile.FileData file, LOCFile locFile, bool isLittleEndian)
 		{
 			InitializeComponent();
+			// so the Creative songs aren't combined until after the forms are closed.
+			// this will prevent potential problems with editing the categories after merging.
+			this.saveToolStripMenuItem1.Click += (sender, e) => saveToolStripMenuItem1_Click(sender, e, false);
 			loc = locFile;
 			tempDir = Path.Combine(Directory.GetCurrentDirectory(), "temp");
 			_isLittleEndian = isLittleEndian;
@@ -350,7 +353,7 @@ namespace PckStudio.Forms.Editor
 			}
 		}
 
-		private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
+		private void saveToolStripMenuItem1_Click(object sender, EventArgs e, bool combineCreative)
 		{
 			if(!audioFile.HasCategory(PCKAudioFile.AudioCategory.EAudioType.Overworld) ||
 			   !audioFile.HasCategory(PCKAudioFile.AudioCategory.EAudioType.Nether) ||
@@ -364,7 +367,7 @@ namespace PckStudio.Forms.Editor
 			foreach (var category in audioFile.Categories)
 			{
 				category.Name = "";
-				if (playOverworldInCreative.Checked && category.audioType == PCKAudioFile.AudioCategory.EAudioType.Creative)
+				if (combineCreative && category.audioType == PCKAudioFile.AudioCategory.EAudioType.Creative)
 				{
 					foreach (var name in overworldCategory.SongNames)
 					{
@@ -419,7 +422,7 @@ namespace PckStudio.Forms.Editor
 
 		private void AudioEditor_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			if (saved) saveToolStripMenuItem1_Click(sender, e);
+			if (saved) saveToolStripMenuItem1_Click(sender, e, playOverworldInCreative.Checked);
 		}
 	}
 }
