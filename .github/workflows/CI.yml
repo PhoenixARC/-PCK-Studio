@@ -1,9 +1,6 @@
 name: .NET
 
-on:
-  pull_request:
-  push:
-    branches: [ "main" ]
+on: [pull_request, push ]
 
 jobs:
   build:
@@ -16,8 +13,20 @@ jobs:
       uses: microsoft/setup-msbuild@v1.1
     - name: Setup NuGet
       uses: NuGet/setup-nuget@v1.0.6
+
+    
+    - name: Cache NuGet Packages
+      id: nugetCache
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.nuget/packages
+          !~/.nuget/packages/unwanted
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+        restore-keys: ${{ runner.os }}-nuget-
       
     - name: Restore NuGet Packages
+      if: steps.nugetCache.outputs.cache-hit != 'true'
       run: nuget restore MinecraftUSkinEditor.sln
       
     - name: Build Solution
