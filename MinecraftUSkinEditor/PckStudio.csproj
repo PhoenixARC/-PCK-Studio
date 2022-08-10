@@ -144,6 +144,8 @@
     <Compile Include="Classes\FileTypes\COLFile.cs" />
     <Compile Include="Classes\FileTypes\CSM.cs" />
     <Compile Include="Classes\FileTypes\GRFFile.cs" />
+    <Compile Include="Classes\IO\COL\COLFileReader.cs" />
+    <Compile Include="Classes\IO\COL\COLFileWriter.cs" />
     <Compile Include="Classes\Utils\SkinANIM.cs" />
     <Compile Include="Classes\FileTypes\PCKProperties.cs" />
     <Compile Include="Classes\FileTypes\PCKFile.cs" />

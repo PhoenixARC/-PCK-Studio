@@ -623,14 +623,8 @@ namespace PckStudio
 							MessageBoxIcon.Error);
 						return;
 					}
-					COLFile colFile = new COLFile();
-					using (var stream = new MemoryStream(file.data))
-					{
-						colFile.Open(stream);
-					}
-					COLEditor diag = new COLEditor(colFile);
-					if (diag.ShowDialog(this) == DialogResult.OK && diag.data.Length > 0)
-						file.SetData(diag.data);
+					COLEditor diag = new COLEditor(file);
+					diag.ShowDialog(this);
 					diag.Dispose();
 					break;
 			}
@@ -2802,14 +2796,8 @@ namespace PckStudio
 			// Checks to see if selected minefile is a col file
 			if (file.type == 9 && file.filepath == "colours.col") // .col file
 			{
-				COLFile colFile = new COLFile();
-				using (var stream = new MemoryStream(file.data))
-				{
-					colFile.Open(stream);
-				}
-				using (COLEditor diag = new COLEditor(colFile))
-					if (diag.ShowDialog(this) == DialogResult.OK && diag.data.Length > 0)
-						file.SetData(diag.data);
+				using COLEditor diag = new COLEditor(file);
+				diag.ShowDialog(this);
 			}
 		}
 
