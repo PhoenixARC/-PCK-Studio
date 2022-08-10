@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace PckStudio.Forms.Utilities.Grf
+namespace PckStudio.Forms.Additional_Popups.Grf
 {
     public partial class AddParameter : MetroFramework.Forms.MetroForm
     {

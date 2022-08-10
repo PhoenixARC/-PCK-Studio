@@ -1,4 +1,4 @@
-﻿namespace PckStudio.Forms.Utilities.Audio
+﻿namespace PckStudio.Forms.Additional_Popups.Audio
 {
 	partial class pleaseWait
 	{

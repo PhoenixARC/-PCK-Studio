@@ -1,4 +1,4 @@
-﻿namespace PckStudio
+﻿namespace PckStudio.Forms.Additional_Popups.Audio
 {
     partial class addCategory
     {

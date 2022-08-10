@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MetroFramework.Forms;
 
-namespace PckStudio.Forms.Utilities.Audio
+namespace PckStudio.Forms.Additional_Popups.Audio
 {
 	public partial class pleaseWait : MetroForm
 	{

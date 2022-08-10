@@ -140,10 +140,13 @@
   <ItemGroup>
     <Compile Include="Classes\API\PCKCenter\model\PCKCenterJSON.cs" />
     <Compile Include="Classes\API\PCKCenter\SaveLocalJSON.cs" />
+    <Compile Include="Classes\FileTypes\PCKAudioFile.cs" />
     <Compile Include="Classes\FileTypes\Bink.cs" />
     <Compile Include="Classes\FileTypes\COLFile.cs" />
     <Compile Include="Classes\FileTypes\CSM.cs" />
     <Compile Include="Classes\FileTypes\GRFFile.cs" />
+    <Compile Include="Classes\IO\PCK\PCKAudioFileReader.cs" />
+    <Compile Include="Classes\IO\PCK\PCKAudioFileWriter.cs" />
     <Compile Include="Classes\IO\COL\COLFileReader.cs" />
     <Compile Include="Classes\IO\COL\COLFileWriter.cs" />
     <Compile Include="Classes\Utils\SkinANIM.cs" />
@@ -232,16 +235,16 @@
     <Compile Include="Forms\Utilities\Animation\SetBulkSpeed.Designer.cs">
       <DependentUpon>SetBulkSpeed.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Utilities\Audio\creditsEditor.cs">
+    <Compile Include="Forms\Additional-Popups\Audio\creditsEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Utilities\Audio\creditsEditor.Designer.cs">
+    <Compile Include="Forms\Additional-Popups\Audio\creditsEditor.Designer.cs">
       <DependentUpon>creditsEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Utilities\Audio\addCategory.cs">
+    <Compile Include="Forms\Additional-Popups\Audio\addCategory.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Utilities\Audio\addCategory.Designer.cs">
+    <Compile Include="Forms\Additional-Popups\Audio\addCategory.Designer.cs">
       <DependentUpon>addCategory.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Skins-And-Textures\addMeta.cs">
@@ -280,10 +283,10 @@
     <Compile Include="Forms\Additional-Popups\Grf\AddParameter.Designer.cs">
       <DependentUpon>AddParameter.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Utilities\Audio\pleaseWait.cs">
+    <Compile Include="Forms\Additional-Popups\Audio\pleaseWait.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Utilities\Audio\pleaseWait.Designer.cs">
+    <Compile Include="Forms\Additional-Popups\Audio\pleaseWait.Designer.cs">
       <DependentUpon>pleaseWait.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Utilities\Skins\ANIMEditor.cs">
@@ -328,10 +331,10 @@
     <Compile Include="Forms\Utilities\Animation\FrameEditor.Designer.cs">
       <DependentUpon>FrameEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Utilities\Audio\AudioEditor.cs">
+    <Compile Include="Forms\Editor\AudioEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Utilities\Audio\AudioEditor.Designer.cs">
+    <Compile Include="Forms\Editor\AudioEditor.Designer.cs">
       <DependentUpon>AudioEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Utilities\installPS3.cs">
@@ -457,11 +460,11 @@
     <EmbeddedResource Include="Forms\Utilities\Animation\SetBulkSpeed.resx">
       <DependentUpon>SetBulkSpeed.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\Audio\creditsEditor.resx">
+    <EmbeddedResource Include="Forms\Additional-Popups\Audio\creditsEditor.resx">
       <DependentUpon>creditsEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\Audio\addCategory.resx">
+    <EmbeddedResource Include="Forms\Additional-Popups\Audio\addCategory.resx">
       <DependentUpon>addCategory.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Skins-And-Textures\addMeta.ja.resx">
@@ -493,7 +496,7 @@
     <EmbeddedResource Include="Forms\Additional-Popups\Grf\AddParameter.resx">
       <DependentUpon>AddParameter.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\Audio\pleaseWait.resx">
+    <EmbeddedResource Include="Forms\Additional-Popups\Audio\pleaseWait.resx">
       <DependentUpon>pleaseWait.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Utilities\Skins\ANIMEditor.resx">
@@ -528,7 +531,7 @@
     <EmbeddedResource Include="Forms\Utilities\Animation\FrameEditor.resx">
       <DependentUpon>FrameEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\Audio\AudioEditor.resx">
+    <EmbeddedResource Include="Forms\Editor\AudioEditor.resx">
       <DependentUpon>AudioEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
