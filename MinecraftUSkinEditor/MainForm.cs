@@ -411,19 +411,24 @@ namespace PckStudio
 
 		private void replaceToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (treeViewMain.SelectedNode.Tag is PCKFile.FileData)
+			if (treeViewMain.SelectedNode.Tag is PCKFile.FileData file)
 			{
-				PCKFile.FileData file = treeViewMain.SelectedNode.Tag as PCKFile.FileData;
-				using (var ofd = new OpenFileDialog())
+				using var ofd = new OpenFileDialog();
+				if (ofd.ShowDialog() == DialogResult.OK)
 				{
-					if (ofd.ShowDialog() == DialogResult.OK)
-					{
-						file.SetData(File.ReadAllBytes(ofd.FileName));
-						saved = false;
-					}
+					file.SetData(File.ReadAllBytes(ofd.FileName));
+					saved = false;
 				}
 				return;
 			}
+			//deleteEntryToolStripMenuItem_Click(sender, e);
+			//using FolderBrowserDialog folderDialog = new FolderBrowserDialog();
+			//folderDialog.Description = "Select Folder";
+			//if (folderDialog.ShowDialog() == DialogResult.OK)
+			//{
+			//	string[] FilePaths = Directory.GetFiles(folderDialog.SelectedPath, "*.png");
+			//	Array.ForEach(FilePaths, filePath => currentPCK.Files.Add(new PCKFile.FileData(filePath, 2)));
+			//}
 			// should never happen unless its a folder
 			MessageBox.Show("Can't replace a folder.");
 		}
@@ -2860,6 +2865,7 @@ namespace PckStudio
 			if (FileList.Length > 1)
 				MessageBox.Show("Only one pck file at a time is currently supported");
 			currentPCK = openPck(FileList[0]);
+			if (currentPCK == null) return;
 			if (addPasswordToolStripMenuItem.Enabled = checkForPassword())
 			{
 				LoadEditorTab();
@@ -2894,29 +2900,29 @@ namespace PckStudio
 
 		private void setFileType_Click(object sender, EventArgs e, int type)
 		{
-			TreeNode node = treeViewMain.SelectedNode;
-			if (node == null || node.Tag == null || !(node.Tag is PCKFile.FileData)) return;
-			var file = node.Tag as PCKFile.FileData;
-			Console.WriteLine($"Setting {file.type} to {type}");
-			file.type = type;
+			if (treeViewMain.SelectedNode is TreeNode t && t.Tag is PCKFile.FileData file)
+            {
+				Console.WriteLine($"Setting {file.type} to {type}");
+				file.type = type;
+            }
 		}
 
-        private void addTextureToolStripMenuItem_Click(object sender, EventArgs e)
-        {
+		private void addTextureToolStripMenuItem_Click(object sender, EventArgs e)
+		{
 			using OpenFileDialog fileDialog = new OpenFileDialog();
 			fileDialog.Filter = "Texture File(*.png)|*.png";
 			if (fileDialog.ShowDialog() == DialogResult.OK)
-            {
+			{
 				using RenamePrompt renamePrompt = new RenamePrompt(Path.GetFileName(fileDialog.FileName));
 				renamePrompt.TextLabel.Text = "Path";
 				if (renamePrompt.ShowDialog() == DialogResult.OK && !string.IsNullOrEmpty(renamePrompt.NewText))
-                {
+				{
 					var file = new PCKFile.FileData(renamePrompt.NewText, 2);
 					file.SetData(File.ReadAllBytes(fileDialog.FileName));
 					currentPCK.Files.Add(file);
 					BuildMainTreeView();
 					saved = false;
-                }
+				}
 			}
 		}
     }
