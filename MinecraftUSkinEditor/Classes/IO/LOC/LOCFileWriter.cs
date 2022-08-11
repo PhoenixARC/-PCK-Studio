@@ -1,9 +1,6 @@
 ﻿using PckStudio.Classes.FileTypes;
-using PckStudio.Classes.Utils;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 
 namespace PckStudio.Classes.IO.LOC

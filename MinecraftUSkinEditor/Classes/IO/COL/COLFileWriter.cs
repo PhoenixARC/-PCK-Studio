@@ -1,5 +1,4 @@
 ﻿using PckStudio.Classes.FileTypes;
-using PckStudio.Classes.Utils;
 using System;
 using System.IO;
 using System.Text;

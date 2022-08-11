@@ -1,5 +1,4 @@
 ﻿using PckStudio.Classes.FileTypes;
-using PckStudio.Classes.Utils;
 using System.IO;
 using System.Text;
 using static PckStudio.Classes.FileTypes.COLFile;

@@ -1,11 +1,9 @@
 ﻿using PckStudio.Classes.FileTypes;
-using PckStudio.Classes.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace PckStudio.Classes.IO.PCK
 {
@@ -20,6 +18,7 @@ namespace PckStudio.Classes.IO.PCK
     {
         private PCKAudioFile _file;
         private List<string> LUT = new List<string>();
+        private List<PCKAudioFile.AudioCategory.EAudioType> _OriginalAudioTypeOrder = new List<PCKAudioFile.AudioCategory.EAudioType>();
 
 
         public static PCKAudioFile Read(Stream stream, bool isLittleEndian)
@@ -56,7 +55,6 @@ namespace PckStudio.Classes.IO.PCK
             }
         }
 
-        private List<PCKAudioFile.AudioCategory.EAudioType> original_audio_types = new List<PCKAudioFile.AudioCategory.EAudioType>();
         private void ReadCategories(Stream stream)
         {
             int categoryEntryCount = ReadInt(stream);
@@ -67,7 +65,7 @@ namespace PckStudio.Classes.IO.PCK
                 string name = ReadString(stream);
                 // AddCategory puts the file's categories out of order and causes some songs to be put in the wrong categories
                 // This is my simple fix for the issue.
-                original_audio_types.Add(audioType);
+                _OriginalAudioTypeOrder.Add(audioType);
                 _file.AddCategory(parameterType, audioType, name);
             }
         }
@@ -76,7 +74,7 @@ namespace PckStudio.Classes.IO.PCK
         {
             List<string> credits = new List<string>();
             List<string> creditIds = new List<string>();
-            foreach (var c in original_audio_types)
+            foreach (var c in _OriginalAudioTypeOrder)
             {
                 int audioCount = ReadInt(stream);
                 for (; 0 < audioCount; audioCount--)

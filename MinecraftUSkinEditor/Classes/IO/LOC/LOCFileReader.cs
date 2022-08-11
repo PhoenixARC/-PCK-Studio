@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using PckStudio.Classes.FileTypes;
-using PckStudio.Classes.Utils;
 
 namespace PckStudio.Classes.IO.LOC
 {

@@ -1,10 +1,8 @@
 ﻿using PckStudio.Classes.FileTypes;
-using PckStudio.Classes.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using System.Windows;
 
 namespace PckStudio.Classes.IO
 {
