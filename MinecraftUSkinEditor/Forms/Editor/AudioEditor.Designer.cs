@@ -1,5 +1,5 @@
 ﻿
-namespace PckStudio.Forms.Utilities
+namespace PckStudio.Forms.Editor
 {
 	partial class AudioEditor
 	{
@@ -63,6 +63,7 @@ namespace PckStudio.Forms.Utilities
 			this.treeView1.LabelEdit = true;
 			this.treeView1.Name = "treeView1";
 			this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
+			this.treeView1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView1_KeyDown);
 			// 
 			// contextMenuStrip1
 			// 
@@ -121,7 +122,6 @@ namespace PckStudio.Forms.Utilities
 			// 
 			resources.ApplyResources(this.saveToolStripMenuItem1, "saveToolStripMenuItem1");
 			this.saveToolStripMenuItem1.Name = "saveToolStripMenuItem1";
-			this.saveToolStripMenuItem1.Click += new System.EventHandler(this.saveToolStripMenuItem1_Click);
 			// 
 			// toolsToolStripMenuItem
 			// 

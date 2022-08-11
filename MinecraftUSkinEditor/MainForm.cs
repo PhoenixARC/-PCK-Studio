@@ -8,15 +8,14 @@ using System.Drawing.Drawing2D;
 using System.Diagnostics;
 using PckStudio.Properties;
 using Ohana3DS_Rebirth.Ohana;
-using PckStudio.Forms;
 using System.Drawing.Imaging;
 using RichPresenceClient;
 using PckStudio.Classes.FileTypes;
 using PckStudio.Classes.IO;
 using PckStudio.Classes.IO.LOC;
-using PckStudio.Forms.Utilities;
 using PckStudio.Classes.IO.GRF;
-using PckStudio.Classes.Utils;
+using PckStudio.Forms;
+using PckStudio.Forms.Utilities;
 using PckStudio.Forms.Editor;
 
 namespace PckStudio
@@ -600,20 +599,12 @@ namespace PckStudio
 					break;
 
                 case 8 when file.filepath == "audio.pck":
-                    try
-                    {
-                        if (!TryGetLocFile(out LOCFile locFile))
-                            throw new Exception("No .loc File found.");
-                        AudioEditor audioEditor = new AudioEditor(file, locFile, LittleEndianCheckBox.Checked);
-                        audioEditor.ShowDialog(this);
-						if (audioEditor.saved) TrySetLocFile(locFile);
-						audioEditor.Dispose();
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Error", ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
+                    if (!TryGetLocFile(out LOCFile locFile))
+                        throw new Exception("No .loc File found.");
+                    AudioEditor audioEditor = new AudioEditor(file, locFile, LittleEndianCheckBox.Checked);
+                    audioEditor.ShowDialog(this);
+					if (audioEditor.saved) TrySetLocFile(locFile);
+					audioEditor.Dispose();
                     break;
 
 				case 9 when file.filepath == "colours.col":

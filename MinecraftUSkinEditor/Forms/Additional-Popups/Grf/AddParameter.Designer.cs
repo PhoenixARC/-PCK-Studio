@@ -1,4 +1,4 @@
-﻿namespace PckStudio.Forms.Utilities.Grf
+﻿namespace PckStudio.Forms.Additional_Popups.Grf
 {
     partial class AddParameter
     {

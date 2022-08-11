@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 // Audio Editor by MattNL
 
-namespace PckStudio
+namespace PckStudio.Forms.Additional_Popups.Audio
 {
 	public partial class addCategory : MetroFramework.Forms.MetroForm
 	{
