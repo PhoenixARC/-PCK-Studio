@@ -1126,12 +1126,8 @@ namespace PckStudio
 
 		private bool TryGetLocFile(out LOCFile locFile)
 		{
-			PCKFile.FileData locdata = null;
-			if (currentPCK.HasFile("localisation.loc", 6))
-				locdata = currentPCK.GetFile("localisation.loc", 6);
-			else if (currentPCK.HasFile("languages.loc", 6))
-				locdata = currentPCK.GetFile("languages.loc", 6);
-			else
+			if (!currentPCK.TryGetFile("localisation.loc", 6, out PCKFile.FileData locdata) &&
+				!currentPCK.TryGetFile("languages.loc", 6, out locdata))
 			{
 				locFile = null;
 				return false;
@@ -1155,15 +1151,13 @@ namespace PckStudio
 
 		private bool TrySetLocFile(in LOCFile locFile)
 		{
-			PCKFile.FileData locdata = null;
-			if (currentPCK.HasFile("localisation.loc", 6))
-				locdata = currentPCK.GetFile("localisation.loc", 6);
-			else if (currentPCK.HasFile("languages.loc", 6))
-				locdata = currentPCK.GetFile("languages.loc", 6);
-			else
-				return false;
+            if (!currentPCK.TryGetFile("localisation.loc", 6, out PCKFile.FileData locdata) &&
+                !currentPCK.TryGetFile("languages.loc", 6, out locdata))
+            {
+                return false;
+            }
 
-			try
+            try
 			{
 				using (var stream = new MemoryStream())
 				{
@@ -1198,8 +1192,8 @@ namespace PckStudio
 					{
 						string[] txtProperties = File.ReadAllLines(propertyFile);
 						if ((txtProperties.Contains("DISPLAYNAMEID") && txtProperties.Contains("DISPLAYNAME")) ||
-						(txtProperties.Contains("THEMENAMEID") && txtProperties.Contains("THEMENAME")) &&
-						TryGetLocFile(out LOCFile locFile))
+							txtProperties.Contains("THEMENAMEID") && txtProperties.Contains("THEMENAME") &&
+							TryGetLocFile(out LOCFile locFile))
 						{
 							// do stuff 
 							//l.AddLocKey(locThemeId, locTheme);
@@ -1244,12 +1238,9 @@ namespace PckStudio
 				TreeNode folerNode = CreateNode(folderNamePrompt.NewText);
 				folerNode.ImageIndex = 0;
 				folerNode.SelectedImageIndex = 0;
-				TreeNode node = treeViewMain.SelectedNode;
-				TreeNodeCollection nodeCollection = node != null &&
-					!(node.Tag is PCKFile.FileData)
-					? node.Nodes : treeViewMain.Nodes;
-				if (node.Tag is PCKFile.FileData && node.Parent != null)
-					nodeCollection = node.Parent.Nodes;
+				TreeNodeCollection nodeCollection = treeViewMain.SelectedNode is TreeNode node
+					? node.Tag is PCKFile.FileData && node.Parent is TreeNode parentNode ? parentNode.Nodes : node.Nodes
+					: treeViewMain.Nodes;
 				nodeCollection.Add(folerNode);
 			}
 		}
