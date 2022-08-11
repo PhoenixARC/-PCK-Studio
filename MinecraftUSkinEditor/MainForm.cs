@@ -1060,8 +1060,7 @@ namespace PckStudio
 		#region imports a folder of skins to pck
 		private void importExtractedSkinsFolder(object sender, EventArgs e)
 		{
-			FolderBrowserDialog contents = new FolderBrowserDialog();//Creates folder browser instance
-
+			using FolderBrowserDialog contents = new FolderBrowserDialog();
 			if (contents.ShowDialog() == DialogResult.OK)
 			{
 				//checks to make sure selected path exist
@@ -1070,156 +1069,58 @@ namespace PckStudio
 					MessageBox.Show("Directory Lost");
 					return;
 				}
+				// creates variable to indicate wether current pck skin structure is mashup or regular skin
+				bool mashupStructure = false;
 
-				string filepath = contents.SelectedPath;//sets filepath to selected path
-				DirectoryInfo d = new DirectoryInfo(contents.SelectedPath);//sets directory info
-
-				bool mashupStructure = false;//creates variable to indicate wether current pck skin structure is mashup or regular skin
-				int skinsFolder = 0;//temporary index for skins folder for if structure is mashup
-
-				//checks to see if pck contains a skins folder
-				foreach (TreeNode item in treeViewMain.Nodes)
+				foreach (var fullfilename in Directory.GetFiles(contents.SelectedPath, "*.png"))
 				{
-					if (item.Text == "Skins")
-					{
-						mashupStructure = true;//sets mashup structure to true
-						skinsFolder = item.Index;//keeps note of skins folder index
-					}
-				}
+					string filename = Path.GetFileNameWithoutExtension(fullfilename);
+					// sets file type based on wether its a cape or skin
+					int pckfiletype = Convert.ToInt32(filename.ToLower().StartsWith("dlccape"));
+					string pckfilepath = (mashupStructure ? "Skins/" : string.Empty) + filename + ".png";
 
-				//gets all png files in selected path
-				foreach (var file in d.GetFiles("*.png"))
-				{
-					ListViewItem Import = new ListViewItem();//listviewitem to store temporary data
-					Import.Text = file.Name.Remove(file.Name.Length - 4, 4);//gets file name without extension
 
-					//sets minefile type based on wether cape or skin
-					int type = 0;
-					if (Import.Text.Remove(7, Import.Text.Length - 7) == "dlccape" || Import.Text.Remove(7, Import.Text.Length - 7) == "DLCCAPE")
-					{
-						type = 1;
-					}
-					PCKFile.FileData mfNew = new PCKFile.FileData("", type); //new minefile template
-					mfNew.SetData(File.ReadAllBytes(contents.SelectedPath + @"\" + file.Name.Remove(file.Name.Length - 4, 4) + ".png"));//sets minefile data to image data of current skin
+                    PCKFile.FileData newFile = new PCKFile.FileData(pckfilepath, pckfiletype);
+					byte[] filedata = File.ReadAllBytes(fullfilename);
+                    newFile.SetData(filedata);
 
-					TreeNode skin = new TreeNode(); //create template treenode for minefile
-
-					currentPCK.Files.Add(mfNew);//adds new minefile to minefile list for skin
-
-					//Sets minefile directory based on pcks structure/type
-					if (mashupStructure == true)
-					{
-						mfNew.filepath = "Skins/" + Import.Text + ".png";
-					}
-					else
-					{
-						mfNew.filepath = Import.Text + ".png";
-					}
-
-					skin.Text = Import.Text + ".png";//adds file extension to minefile
-					skin.Tag = mfNew;//sets nodes minefile data
-
-					//presest variables for minefile skin data about to be imported
-					string entryName = "";
-					string entryValue = "";
 					string locNameId = "";
 					string locName = "";
 					string locThemeId = "";
 					string locTheme = "";
-					bool entryStart = true;//assistant for parcing through metadata file data to import
-
-					foreach (char entry in File.ReadAllText(contents.SelectedPath + @"\" + Import.Text + ".png.txt").ToList())
+					if (File.Exists(fullfilename + ".txt"))
 					{
-						//imports current skins metadata from metadata file
-						if (entry.ToString() != ":" && entry.ToString() != "\n" && entryStart == true)
+                        string[] properties = File.ReadAllText(fullfilename + ".txt").Split(new string[]{ Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+						foreach (string property in properties)
 						{
-							entryName += entry.ToString();
-						}
-						else if (entry.ToString() != ":" && entry.ToString() != "\n" && entryStart == false)
-						{
-							entryValue += entry.ToString();
-						}
-						else if (entry.ToString() == ":" && entryStart == true)
-						{
-							entryStart = false;
-						}
-						else
-						{
-							//adds minefiles metadata and presets loc data for minefile
-							mfNew.properties.Add(new ValueTuple<string, string>(entryName, entryValue));
+                            string[] param = property.Split(':');
+                            if (param.Length < 2) continue;
+                            newFile.properties.Add((param[0], param[1]));
+                            switch (param[0])
+                            {
+                                case "DISPLAYNAMEID":
+                                    locNameId = param[1];
+                                    continue;
 
-							if (entryName == "DISPLAYNAMEID")
-							{
-								locNameId = entryValue;
-							}
+                                case "DISPLAYNAME":
+                                    locName = param[1];
+                                    continue;
 
-							if (entryName == "DISPLAYNAME")
-							{
-								locName = entryValue;
-							}
+                                case "THEMENAMEID":
+                                    locThemeId = param[1];
+                                    continue;
 
-							if (entryName == "THEMENAMEID")
-							{
-								locThemeId = entryValue;
-							}
-
-							if (entryName == "THEMENAME")
-							{
-								locTheme = entryValue;
-							}
-
-							//creates metadata id in loc file
-							if (locThemeId != "" && locTheme != "")
-							{
-								PCKFile.FileData locfile = currentPCK.GetFile("localisation.loc", 6);
-								if (locfile == null)
-									locfile = currentPCK.GetFile("languages.loc", 6);
-								if (locfile == null)
-									throw new Exception("counld not find .loc file");
-								LOCFile l = null;
-								try
-								{
-									using (var stream = new MemoryStream(locfile.data))
-									{
-										l = LOCFileReader.Read(stream);//sets loc data
-									}
-								}
-								catch
-								{
-									MessageBox.Show("No localization data found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-									return;
-								}
-
-								l.AddLocKey(locThemeId, locTheme);
-								using (var stream = new MemoryStream())
-								{
-									LOCFileWriter.Write(stream, l);
-									locfile.SetData(stream.ToArray());
-								}
-								locThemeId = "";
-								locTheme = "";
-							}
-							entryName = "";
-							entryValue = "";
-							entryStart = true;
-						}
-					}
-					//sets file icon
-					skin.ImageIndex = 2;
-					skin.SelectedImageIndex = 2;
-					//Adds new minefile node to a destination based on pcks skin structure type
-					if (mashupStructure == true)
-					{
-						treeViewMain.Nodes[skinsFolder].Nodes.Add(skin);
-					}
-					else
-					{
-						treeViewMain.Nodes.Add(skin);
-					}
+                                case "THEMENAME":
+                                    locTheme = param[1];
+                                    continue;
+                            }
+                        }
+                    }
+					currentPCK.Files.Add(newFile);
 				}
+				BuildMainTreeView();
+				saved = false;
 			}
-			contents.Dispose(); //disposes temporary data
-			saved = false;
 		}
 		#endregion
 
