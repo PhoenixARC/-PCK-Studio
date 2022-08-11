@@ -124,9 +124,8 @@ namespace PckStudio
 
 		private bool checkForPassword()
 		{
-			if (currentPCK.HasFile("0", 4))
+			if (currentPCK.TryGetFile("0", 4, out PCKFile.FileData file))
 			{
-				var file = currentPCK.GetFile("0", 4);
 				if (file.properties.HasProperty("LOCK"))
 					return new pckLocked(file.properties.GetProperty("LOCK").Item2).ShowDialog() == DialogResult.OK;
 			}
