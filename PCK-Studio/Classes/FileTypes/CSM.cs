@@ -65,9 +65,9 @@ namespace PckStudio.Classes
 
             //RenderBox
             System.Drawing.Image source = Textures[0].Source;
-            Object3D object3D = new Box(source, new System.Drawing.Rectangle(8, 0, 0x10, 8), new System.Drawing.Rectangle(0, 8, 0x20, 8), new Point3D(0f, 0f, 0f), Effects.None);
-            Object3D object3D2 = new Box(source, new System.Drawing.Rectangle(0x28, 0, 0x10, 8), new System.Drawing.Rectangle(0x20, 8, 0x20, 8), new Point3D(0f, 0f, 0f), Effects.None);
-            Object3D object3D3 = new Box(source, new System.Drawing.Rectangle(0x2C, 0x10, 8, 4), new System.Drawing.Rectangle(0x28, 0x14, 0x20, 0xC), new Point3D(0f, 4f, 0f), Effects.FlipHorizontally);
+            Object3D object3D = new Box(source, new Rectangle(8, 0, 0x10, 8), new Rectangle(0, 8, 0x20, 8), new Point3D(0f, 0f, 0f), Effects.None);
+            Object3D object3D2 = new Box(source, new Rectangle(0x28, 0, 0x10, 8), new Rectangle(0x20, 8, 0x20, 8), new Point3D(0f, 0f, 0f), Effects.None);
+            Object3D object3D3 = new Box(source, new Rectangle(0x2C, 0x10, 8, 4), new Rectangle(0x28, 0x14, 0x20, 0xC), new Point3D(0f, 4f, 0f), Effects.FlipHorizontally);
 
 
             //RenderGroup

@@ -11,11 +11,10 @@ namespace PckStudio.Classes.FileTypes
     {
         public class InvalidLanguageException : Exception
         {
-            private string _language;
-            public string Language => _language;
+            public string Language { get; }
             public InvalidLanguageException(string message, string language) : base(message)
             {
-                _language = language;
+                Language = language;
             }
         }
 
@@ -104,6 +103,7 @@ namespace PckStudio.Classes.FileTypes
             foreach (var locKeyValue in locKeyValuePairs)
                 AddLocKey(locKeyValue.Item1, locKeyValue.Item2);
         }
+
         private Dictionary<string, string> GetTranslation(string locKey)
         {
             if (!LocKeys.ContainsKey(locKey))

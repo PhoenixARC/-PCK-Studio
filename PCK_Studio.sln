@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32414.318
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PckStudio", "MinecraftUSkinEditor\PckStudio.csproj", "{0ACAAEDE-93F5-4B5D-B8D7-A0C43359C0D6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PckStudio", "PCK-Studio\PckStudio.csproj", "{0ACAAEDE-93F5-4B5D-B8D7-A0C43359C0D6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

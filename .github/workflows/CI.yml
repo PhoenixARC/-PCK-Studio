@@ -15,7 +15,7 @@ jobs:
       uses: NuGet/setup-nuget@v1.0.6
       
     - name: Restore NuGet Packages
-      run: nuget restore MinecraftUSkinEditor.sln
+      run: nuget restore PCK_Studio.sln
       
     - name: Build Solution
-      run: msbuild MinecraftUSkinEditor.sln
+      run: msbuild PCK_Studio.sln

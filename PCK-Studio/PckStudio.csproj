@@ -161,8 +161,8 @@
     <Compile Include="Classes\IO\PCKCollectionsLocal.cs" />
     <Compile Include="Classes\IO\PCK\PCKFileReader.cs" />
     <Compile Include="Classes\IO\PCK\PCKFileWriter.cs" />
-    <Compile Include="Classes\Utils\StreamDataReader.cs" />
-    <Compile Include="Classes\Utils\StreamDataWriter.cs" />
+    <Compile Include="Classes\IO\StreamDataReader.cs" />
+    <Compile Include="Classes\IO\StreamDataWriter.cs" />
     <Compile Include="Classes\Models\DefaultModels\CharacterModel.cs" />
     <Compile Include="Classes\Models\DefaultModels\ModelBase.cs" />
     <Compile Include="Classes\Models\DefaultModels\Texture.cs" />

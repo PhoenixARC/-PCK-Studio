@@ -68,7 +68,7 @@ namespace PckStudio.Classes.FileTypes
             public int type { get; set; }
             public byte[] data => _data;
             public int size => _size;
-            public PCKProperties properties { get; set; } = new PCKProperties();
+            public PCKProperties properties { get; } = new PCKProperties();
 
             private byte[] _data = new byte[0];
             private int _size = 0;
@@ -109,8 +109,8 @@ namespace PckStudio.Classes.FileTypes
             var LUT = new List<string>();
             Files.ForEach(file => file.properties.ForEach(pair =>
                 {
-                    if (!LUT.Contains(pair.Item1))
-                        LUT.Add(pair.Item1);
+                    if (!LUT.Contains(pair.property))
+                        LUT.Add(pair.property);
                 })
             );
             return LUT;
@@ -128,19 +128,6 @@ namespace PckStudio.Classes.FileTypes
         }
 
         /// <summary>
-        /// Tries to get a file with <paramref name="filepath"/> and <paramref name="type"/>.
-        /// </summary>
-        /// <param name="filepath">Path to the file in the pck</param>
-        /// <param name="type">Type of the file <see cref="FileData.EDLCType"/></param>
-        /// <param name="file"></param>
-        /// <returns></returns>
-        public bool TryGetFile(string filepath, int type, out FileData file)
-        {
-            file = GetFile(filepath, type);
-            return file is FileData;
-        }
-
-        /// <summary>
         /// Gets the first file that Equals <paramref name="filepath"/> and <paramref name="type"/>
         /// </summary>
         /// <param name="filepath">Path to the file in the pck</param>
@@ -149,6 +136,19 @@ namespace PckStudio.Classes.FileTypes
         public FileData GetFile(string filepath, int type)
         {
             return Files.FirstOrDefault(file => file.filepath.Equals(filepath) && file.type.Equals(type));
+        }
+
+        /// <summary>
+        /// Tries to get a file with <paramref name="filepath"/> and <paramref name="type"/>.
+        /// </summary>
+        /// <param name="filepath">Path to the file in the pck</param>
+        /// <param name="type">Type of the file <see cref="FileData.EDLCType"/></param>
+        /// <param name="file">If succeeded <paramref name="file"/> will be non-null, otherwise null</param>
+        /// <returns>True if succeeded, otherwise false</returns>
+        public bool TryGetFile(string filepath, int type, out FileData file)
+        {
+            file = GetFile(filepath, type);
+            return file is FileData;
         }
     }
 }
