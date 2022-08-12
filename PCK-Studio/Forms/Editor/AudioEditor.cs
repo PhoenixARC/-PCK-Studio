@@ -424,6 +424,40 @@ namespace PckStudio.Forms.Editor
 		{
 			if (saved) saveToolStripMenuItem1_Click(sender, e, playOverworldInCreative.Checked);
 		}
+
+		private void deleteUnusedBINKAsToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			DialogResult dr = MessageBox.Show("This will delete all unused BINKA songs in the Data directory. This cannot be undone. Are you sure you want to continue?","Warning", MessageBoxButtons.YesNo);
+			if (dr != DialogResult.Yes) return;
+			var totalSongList = new List<string>();
+			foreach(string song in audioFile.Categories.SelectMany(cat => cat.SongNames))
+			{
+				Console.WriteLine(song);
+				totalSongList.Add(song);
+			}
+
+			if (string.IsNullOrEmpty(DataDirectory)) getDataDirectory();
+			int totalDeleted = 0;
+			foreach (string song in Directory.GetFiles(DataDirectory, "*.binka"))
+			{
+				if (!totalSongList.Contains(Path.GetFileNameWithoutExtension(song)))
+				{
+					Console.WriteLine("Deleted " + song);
+					try
+					{
+						File.Delete(song);
+					}
+					catch (IOException ex)
+					{
+						Console.WriteLine(ex.Message);
+						continue;
+					}
+					totalDeleted++;
+				}
+			}
+			MessageBox.Show("Successfully deleted " + totalDeleted + " files", "Done");
+		}
+
 		// For when the Data Directory variable is null, this sets the variable in the form
 		private void getDataDirectory()
 		{

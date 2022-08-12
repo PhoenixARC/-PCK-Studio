@@ -48,6 +48,7 @@ namespace PckStudio.Forms.Editor
 			this.removeEntryMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.verifyFileLocationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.playOverworldInCreative = new MetroFramework.Controls.MetroCheckBox();
+			this.deleteUnusedBINKAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenuStrip1.SuspendLayout();
 			this.menuStrip.SuspendLayout();
 			this.contextMenuStrip2.SuspendLayout();
@@ -126,7 +127,8 @@ namespace PckStudio.Forms.Editor
 			// toolsToolStripMenuItem
 			// 
 			this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.creditsEditorToolStripMenuItem});
+            this.creditsEditorToolStripMenuItem,
+            this.deleteUnusedBINKAsToolStripMenuItem});
 			this.toolsToolStripMenuItem.ForeColor = System.Drawing.Color.White;
 			this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
 			resources.ApplyResources(this.toolsToolStripMenuItem, "toolsToolStripMenuItem");
@@ -196,6 +198,13 @@ namespace PckStudio.Forms.Editor
 			this.playOverworldInCreative.UseCustomForeColor = true;
 			this.playOverworldInCreative.UseSelectable = true;
 			// 
+			// deleteUnusedBINKAsToolStripMenuItem
+			// 
+			this.deleteUnusedBINKAsToolStripMenuItem.Image = global::PckStudio.Properties.Resources.Del;
+			this.deleteUnusedBINKAsToolStripMenuItem.Name = "deleteUnusedBINKAsToolStripMenuItem";
+			resources.ApplyResources(this.deleteUnusedBINKAsToolStripMenuItem, "deleteUnusedBINKAsToolStripMenuItem");
+			this.deleteUnusedBINKAsToolStripMenuItem.Click += new System.EventHandler(this.deleteUnusedBINKAsToolStripMenuItem_Click);
+			// 
 			// AudioEditor
 			// 
 			resources.ApplyResources(this, "$this");
@@ -237,5 +246,6 @@ namespace PckStudio.Forms.Editor
 		private System.Windows.Forms.ToolStripMenuItem creditsEditorToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem verifyFileLocationToolStripMenuItem;
 		private MetroFramework.Controls.MetroCheckBox playOverworldInCreative;
+		private System.Windows.Forms.ToolStripMenuItem deleteUnusedBINKAsToolStripMenuItem;
 	}
 }
