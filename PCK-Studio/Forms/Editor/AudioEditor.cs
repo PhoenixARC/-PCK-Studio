@@ -21,6 +21,7 @@ namespace PckStudio.Forms.Editor
 	{
 		public bool saved = false;
 		public string defaultType = "yes";
+		private string DataDirectory = "";
 		string tempDir = "";
 		PCKAudioFile audioFile = null;
 		PCKFile.FileData audioPCK;
@@ -168,8 +169,7 @@ namespace PckStudio.Forms.Editor
 			if (treeView1.SelectedNode.Tag == null || treeView2.SelectedNode.Tag == null) return;
 			var entry = treeView2.SelectedNode;
 
-			MainForm parent = Owner.Owner as MainForm; // Gets the MainForm so we can access the Save Location
-			string DataDirectory = Path.Combine(Path.GetDirectoryName(parent.saveLocation), "Data");
+			if(string.IsNullOrEmpty(DataDirectory)) getDataDirectory();
 			string FileName = Path.Combine(DataDirectory, entry.Text + ".binka");
 			Console.WriteLine(FileName);
 			if (!Directory.Exists(DataDirectory))
@@ -219,7 +219,7 @@ namespace PckStudio.Forms.Editor
 				// Gets the MainForm so we can access the Save Location
 				Owner.Owner is MainForm parent)
 			{
-				string DataDirectory = Path.Combine(Path.GetDirectoryName(parent.saveLocation), "Data");
+				if (string.IsNullOrEmpty(DataDirectory)) getDataDirectory();
 				if (!Directory.Exists(DataDirectory))
 				{
 					MessageBox.Show("There is not a \"Data\" folder present in the pack folder", "Folder missing");
@@ -234,7 +234,7 @@ namespace PckStudio.Forms.Editor
 				ofn.Dispose();
 				if (string.IsNullOrEmpty(ofn.FileName)) return; // Return if name is null or if the user cancels
 
-				ProcessEntries(ofn.FileNames, DataDirectory);
+				ProcessEntries(ofn.FileNames);
 			}
 		}
 
@@ -269,7 +269,7 @@ namespace PckStudio.Forms.Editor
 			}
 		}
 
-		async void ProcessEntries(string[] FileList, string DataDirectory)
+		async void ProcessEntries(string[] FileList)
 		{
 			foreach (string file in FileList)
 			{
@@ -342,14 +342,14 @@ namespace PckStudio.Forms.Editor
 			// Gets the MainForm so we can access the Save Location
 			if (treeView1.SelectedNode != null && Owner.Owner is MainForm parent)
 			{
-				string DataDirectory = Path.Combine(Path.GetDirectoryName(parent.saveLocation), "Data");
+				if (string.IsNullOrEmpty(DataDirectory)) getDataDirectory();
 				if (!Directory.Exists(DataDirectory))
 				{
 					MessageBox.Show("There is not a \"Data\" folder present in the pack folder", "Folder missing");
 					return;
 				}
 
-				ProcessEntries((string[])e.Data.GetData(DataFormats.FileDrop, false), DataDirectory);
+				ProcessEntries((string[])e.Data.GetData(DataFormats.FileDrop, false));
 			}
 		}
 
