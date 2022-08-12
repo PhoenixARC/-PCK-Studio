@@ -424,5 +424,11 @@ namespace PckStudio.Forms.Editor
 		{
 			if (saved) saveToolStripMenuItem1_Click(sender, e, playOverworldInCreative.Checked);
 		}
+		// For when the Data Directory variable is null, this sets the variable in the form
+		private void getDataDirectory()
+		{
+			MainForm parent = Owner.Owner as MainForm; // Gets the MainForm so we can access the Save Location
+			DataDirectory = Path.Combine(Path.GetDirectoryName(parent.saveLocation), "Data");
+		}
 	}
 }
