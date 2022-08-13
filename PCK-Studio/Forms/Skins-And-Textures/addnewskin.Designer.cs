@@ -47,11 +47,11 @@
 			this.radioLOCAL = new System.Windows.Forms.RadioButton();
 			this.labelSelectTexture = new System.Windows.Forms.Label();
 			this.radioSERVER = new System.Windows.Forms.RadioButton();
-			this.comboBoxSkinType = new System.Windows.Forms.ComboBox();
 			this.textSkinID = new MetroFramework.Controls.MetroTextBox();
 			this.textSkinName = new MetroFramework.Controls.MetroTextBox();
 			this.textThemeName = new MetroFramework.Controls.MetroTextBox();
 			this.label4 = new System.Windows.Forms.Label();
+			this.buttonAnimGen = new System.Windows.Forms.Button();
 			this.capePictureBox = new PckStudio.PictureBoxWithInterpolationMode();
 			this.skinPictureBoxTexture = new PckStudio.PictureBoxWithInterpolationMode();
 			this.contextMenuSkin.SuspendLayout();
@@ -180,16 +180,6 @@
 			this.radioSERVER.UseVisualStyleBackColor = true;
 			this.radioSERVER.CheckedChanged += new System.EventHandler(this.radioSERVER_CheckedChanged);
 			// 
-			// comboBoxSkinType
-			// 
-			resources.ApplyResources(this.comboBoxSkinType, "comboBoxSkinType");
-			this.comboBoxSkinType.FormattingEnabled = true;
-			this.comboBoxSkinType.Items.AddRange(new object[] {
-            resources.GetString("comboBoxSkinType.Items"),
-            resources.GetString("comboBoxSkinType.Items1"),
-            resources.GetString("comboBoxSkinType.Items2")});
-			this.comboBoxSkinType.Name = "comboBoxSkinType";
-			// 
 			// textSkinID
 			// 
 			// 
@@ -206,8 +196,7 @@
 			this.textSkinID.CustomButton.UseSelectable = true;
 			this.textSkinID.CustomButton.Visible = ((bool)(resources.GetObject("resource.Visible")));
 			this.textSkinID.ForeColor = System.Drawing.Color.White;
-			this.textSkinID.Lines = new string[] {
-        "00000000"};
+			this.textSkinID.Lines = new string[0];
 			resources.ApplyResources(this.textSkinID, "textSkinID");
 			this.textSkinID.MaxLength = 32767;
 			this.textSkinID.Name = "textSkinID";
@@ -289,6 +278,15 @@
 			resources.ApplyResources(this.label4, "label4");
 			this.label4.ForeColor = System.Drawing.Color.White;
 			this.label4.Name = "label4";
+			this.label4.Click += new System.EventHandler(this.replaceToolStripMenuItem1_Click);
+			// 
+			// buttonAnimGen
+			// 
+			resources.ApplyResources(this.buttonAnimGen, "buttonAnimGen");
+			this.buttonAnimGen.ForeColor = System.Drawing.Color.White;
+			this.buttonAnimGen.Name = "buttonAnimGen";
+			this.buttonAnimGen.UseVisualStyleBackColor = true;
+			this.buttonAnimGen.Click += new System.EventHandler(this.buttonAnimGen_Click);
 			// 
 			// capePictureBox
 			// 
@@ -297,6 +295,7 @@
 			this.capePictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
 			this.capePictureBox.Name = "capePictureBox";
 			this.capePictureBox.TabStop = false;
+			this.capePictureBox.Click += new System.EventHandler(this.replaceToolStripMenuItem1_Click);
 			// 
 			// skinPictureBoxTexture
 			// 
@@ -311,6 +310,7 @@
 			// 
 			resources.ApplyResources(this, "$this");
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.Controls.Add(this.buttonAnimGen);
 			this.Controls.Add(this.label4);
 			this.Controls.Add(this.textThemeName);
 			this.Controls.Add(this.textSkinName);
@@ -321,7 +321,6 @@
 			this.Controls.Add(this.radioAUTO);
 			this.Controls.Add(this.buttonDone);
 			this.Controls.Add(this.buttonModelGen);
-			this.Controls.Add(this.comboBoxSkinType);
 			this.Controls.Add(this.buttonCape);
 			this.Controls.Add(this.buttonSkin);
 			this.Controls.Add(this.capePictureBox);
@@ -365,11 +364,11 @@
         private System.Windows.Forms.RadioButton radioLOCAL;
         private System.Windows.Forms.Label labelSelectTexture;
         private System.Windows.Forms.RadioButton radioSERVER;
-		private System.Windows.Forms.ComboBox comboBoxSkinType;
 		private MetroFramework.Controls.MetroTextBox textSkinID;
 		private MetroFramework.Controls.MetroTextBox textSkinName;
 		private MetroFramework.Controls.MetroTextBox textThemeName;
 		private System.Windows.Forms.Label label4;
 		private PictureBoxWithInterpolationMode skinPictureBoxTexture;
+		private System.Windows.Forms.Button buttonAnimGen;
 	}
 }

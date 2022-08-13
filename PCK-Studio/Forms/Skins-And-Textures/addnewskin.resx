@@ -137,6 +137,15 @@
   <metadata name="contextMenuSkin.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <data name="contextMenuSkin.Size" type="System.Drawing.Size, System.Drawing">
+    <value>116, 26</value>
+  </data>
+  <data name="&gt;&gt;contextMenuSkin.Name" xml:space="preserve">
+    <value>contextMenuSkin</value>
+  </data>
+  <data name="&gt;&gt;contextMenuSkin.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="replaceToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
@@ -153,18 +162,18 @@
   <data name="replaceToolStripMenuItem.Text" xml:space="preserve">
     <value>Replace</value>
   </data>
-  <data name="contextMenuSkin.Size" type="System.Drawing.Size, System.Drawing">
-    <value>116, 26</value>
-  </data>
-  <data name="&gt;&gt;contextMenuSkin.Name" xml:space="preserve">
-    <value>contextMenuSkin</value>
-  </data>
-  <data name="&gt;&gt;contextMenuSkin.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <metadata name="contextMenuCape.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>172, 17</value>
   </metadata>
+  <data name="contextMenuCape.Size" type="System.Drawing.Size, System.Drawing">
+    <value>127, 26</value>
+  </data>
+  <data name="&gt;&gt;contextMenuCape.Name" xml:space="preserve">
+    <value>contextMenuCape</value>
+  </data>
+  <data name="&gt;&gt;contextMenuCape.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="replaceToolStripMenuItem1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
@@ -178,15 +187,6 @@
   </data>
   <data name="replaceToolStripMenuItem1.Text" xml:space="preserve">
     <value>Add Cape</value>
-  </data>
-  <data name="contextMenuCape.Size" type="System.Drawing.Size, System.Drawing">
-    <value>127, 26</value>
-  </data>
-  <data name="&gt;&gt;contextMenuCape.Name" xml:space="preserve">
-    <value>contextMenuCape</value>
-  </data>
-  <data name="&gt;&gt;contextMenuCape.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="buttonDone.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
@@ -220,7 +220,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;buttonDone.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>11</value>
   </data>
   <data name="buttonModelGen.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
@@ -232,13 +232,13 @@
     <value>14, 259</value>
   </data>
   <data name="buttonModelGen.Size" type="System.Drawing.Size, System.Drawing">
-    <value>61, 23</value>
+    <value>90, 23</value>
   </data>
   <data name="buttonModelGen.TabIndex" type="System.Int32, mscorlib">
     <value>113</value>
   </data>
   <data name="buttonModelGen.Text" xml:space="preserve">
-    <value>Generate</value>
+    <value>Edit Model</value>
   </data>
   <data name="&gt;&gt;buttonModelGen.Name" xml:space="preserve">
     <value>buttonModelGen</value>
@@ -250,7 +250,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;buttonModelGen.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>12</value>
   </data>
   <data name="buttonCape.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -458,7 +458,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;radioAUTO.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>10</value>
   </data>
   <data name="radioLOCAL.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -488,7 +488,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;radioLOCAL.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>9</value>
   </data>
   <data name="labelSelectTexture.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -521,7 +521,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;labelSelectTexture.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="radioSERVER.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -557,46 +557,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;radioSERVER.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="comboBoxSkinType.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="comboBoxSkinType.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="comboBoxSkinType.Items" xml:space="preserve">
-    <value>Default (64x32)</value>
-  </data>
-  <data name="comboBoxSkinType.Items1" xml:space="preserve">
-    <value>Steve (64x64)</value>
-  </data>
-  <data name="comboBoxSkinType.Items2" xml:space="preserve">
-    <value>Alex (64x64)</value>
-  </data>
-  <data name="comboBoxSkinType.Location" type="System.Drawing.Point, System.Drawing">
-    <value>75, 260</value>
-  </data>
-  <data name="comboBoxSkinType.Size" type="System.Drawing.Size, System.Drawing">
-    <value>122, 21</value>
-  </data>
-  <data name="comboBoxSkinType.TabIndex" type="System.Int32, mscorlib">
-    <value>112</value>
-  </data>
-  <data name="comboBoxSkinType.Text" xml:space="preserve">
-    <value>Select Preset</value>
-  </data>
-  <data name="&gt;&gt;comboBoxSkinType.Name" xml:space="preserve">
-    <value>comboBoxSkinType</value>
-  </data>
-  <data name="&gt;&gt;comboBoxSkinType.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;comboBoxSkinType.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;comboBoxSkinType.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>7</value>
   </data>
   <data name="resource.Image" type="System.Resources.ResXNullRef, System.Windows.Forms">
     <value />
@@ -625,9 +586,6 @@
   <data name="textSkinID.TabIndex" type="System.Int32, mscorlib">
     <value>121</value>
   </data>
-  <data name="textSkinID.Text" xml:space="preserve">
-    <value>00000000</value>
-  </data>
   <data name="&gt;&gt;textSkinID.Name" xml:space="preserve">
     <value>textSkinID</value>
   </data>
@@ -638,7 +596,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;textSkinID.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="resource.Image1" type="System.Resources.ResXNullRef, System.Windows.Forms">
     <value />
@@ -677,7 +635,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;textSkinName.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="resource.Image2" type="System.Resources.ResXNullRef, System.Windows.Forms">
     <value />
@@ -716,7 +674,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;textThemeName.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="label4.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -749,6 +707,36 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="buttonAnimGen.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="buttonAnimGen.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="buttonAnimGen.Location" type="System.Drawing.Point, System.Drawing">
+    <value>108, 259</value>
+  </data>
+  <data name="buttonAnimGen.Size" type="System.Drawing.Size, System.Drawing">
+    <value>90, 23</value>
+  </data>
+  <data name="buttonAnimGen.TabIndex" type="System.Int32, mscorlib">
+    <value>125</value>
+  </data>
+  <data name="buttonAnimGen.Text" xml:space="preserve">
+    <value>Edit Skin Flags</value>
+  </data>
+  <data name="&gt;&gt;buttonAnimGen.Name" xml:space="preserve">
+    <value>buttonAnimGen</value>
+  </data>
+  <data name="&gt;&gt;buttonAnimGen.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;buttonAnimGen.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;buttonAnimGen.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
   <data name="capePictureBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
@@ -2538,9 +2526,6 @@
         G+hjDW20iAiLRHOFixxnkP0cZJRpF1U/QwpVsgOg8KFHYQQTM7dSnLR5QRAEQRAE+D85YJDPCXlFCwAA
         AABJRU5ErkJggg==
 </value>
-  </data>
-  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterParent</value>

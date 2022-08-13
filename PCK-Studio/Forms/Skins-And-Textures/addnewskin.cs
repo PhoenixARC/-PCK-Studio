@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 using PckStudio.Classes.FileTypes;
 using System.Drawing.Imaging;
+using PckStudio.Classes.Utils;
 
 namespace PckStudio
 {
@@ -13,9 +14,11 @@ namespace PckStudio
         LOCFile currentLoc;
         PCKFile.FileData skin = new PCKFile.FileData("dlcskin", 0);
         PCKFile.FileData cape = new PCKFile.FileData("dlccape", 1);
+        SkinANIM anim = new SkinANIM("0");
 
         public PCKFile.FileData Skin => skin;
         public PCKFile.FileData Cape => cape;
+        public string ANIM => anim.ToString();
 
         eSkinType skinType;
         public bool useCape = false;
@@ -45,16 +48,19 @@ namespace PckStudio
             switch (img.Height) // 64x64
             {
                 case 64:
+                    anim.SetANIMFlag(eANIM_EFFECTS.RESOLUTION_64x64, true);
                     MessageBox.Show("64x64 Skin Detected");
                     skinPictureBoxTexture.Width = skinPictureBoxTexture.Height;
                     if (skinType != eSkinType._64x64 && skinType != eSkinType._64x64HD)
                     {
                         buttonSkin.Location = new Point(buttonSkin.Location.X - skinPictureBoxTexture.Width, buttonSkin.Location.Y);
                     }
-                    comboBoxSkinType.Text = "Steve (64x64)";
+                    //comboBoxSkinType.Text = "Steve (64x64)";
                     skinType = eSkinType._64x64;
                     break;
                 case 32:
+                    anim.SetANIMFlag(eANIM_EFFECTS.RESOLUTION_64x64, false);
+                    anim.SetANIMFlag(eANIM_EFFECTS.SLIM_MODEL, false);
                     MessageBox.Show("64x32 Skin Detected");
                     skinPictureBoxTexture.Width = skinPictureBoxTexture.Height * 2;
                     if (skinType == eSkinType._64x64)
@@ -65,23 +71,26 @@ namespace PckStudio
                     {
                         buttonSkin.Location = new Point(buttonSkin.Location.X + skinPictureBoxTexture.Width / 2, buttonSkin.Location.Y);
                     }
-                    comboBoxSkinType.Text = "Default (64x32)";
+                    //comboBoxSkinType.Text = "Default (64x32)";
                     skinType = eSkinType._64x32;
                     break;
                 default:
                     if (img.Width == img.Height) // 64x64 HD
                     {
+                        anim.SetANIMFlag(eANIM_EFFECTS.RESOLUTION_64x64, true);
                         MessageBox.Show("64x64 HD Skin Detected");
                         skinPictureBoxTexture.Width = skinPictureBoxTexture.Height;
                         if (skinType != eSkinType._64x64 && skinType != eSkinType._64x64HD)
                         {
                             buttonSkin.Location = new Point(buttonSkin.Location.X - skinPictureBoxTexture.Width, buttonSkin.Location.Y);
                         }
-                        comboBoxSkinType.Text = "Steve (64x64)";
+                        //comboBoxSkinType.Text = "Steve (64x64)";
                         skinType = eSkinType._64x64HD;
                     }
                     else if (img.Width == img.Height / 2) // 64x32 HD
                     {
+                        anim.SetANIMFlag(eANIM_EFFECTS.RESOLUTION_64x64, false);
+                        anim.SetANIMFlag(eANIM_EFFECTS.SLIM_MODEL, false);
                         MessageBox.Show("64x32 HD Skin Detected");
                         skinPictureBoxTexture.Width = skinPictureBoxTexture.Height * 2;
                         if (skinType == eSkinType._64x64)
@@ -92,7 +101,7 @@ namespace PckStudio
                         {
                             buttonSkin.Location = new Point(buttonSkin.Location.X + skinPictureBoxTexture.Width / 2, buttonSkin.Location.Y);
                         }
-                        comboBoxSkinType.Text = "Default (64x32)";
+                        //comboBoxSkinType.Text = "Default (64x32)";
                         skinType = eSkinType._64x32HD;
                     }
                     else //If dimensions don't fit any skin type //Invalid
@@ -103,11 +112,13 @@ namespace PckStudio
                     }
                     break;
             }
+            /*
             comboBoxSkinType.Enabled = skinType == eSkinType._64x64 || skinType == eSkinType._64x64HD;
             if (comboBoxSkinType.Items.Count == 3)
             {
                 comboBoxSkinType.Items.RemoveAt(0);
             }
+            */
             skinPictureBoxTexture.Image = img;
 
             buttonDone.Enabled = true;
@@ -116,31 +127,54 @@ namespace PckStudio
             //skin.SetData();
         }
 
-        private void addnewskin_Load(object sender, EventArgs e)
-        {
+        private void drawModel()
+		{
             Bitmap bmp = new Bitmap(displayBox.Width, displayBox.Height);
             using (Graphics g = Graphics.FromImage(bmp))
             {
-                //Head
-                g.DrawRectangle(Pens.Black, 70, 15, 40, 40);
-                g.FillRectangle(Brushes.Gray, 71, 16, 39, 39);
-                //Body
-                g.DrawRectangle(Pens.Black, 70, 55, 40, 60);
-                g.FillRectangle(Brushes.Gray, 71, 56, 39, 59);
-                //Arm0
-                g.DrawRectangle(Pens.Black, 50, 55, 20, 60);
-                g.FillRectangle(Brushes.Gray, 51, 56, 19, 59);
-                //Arm1
-                g.DrawRectangle(Pens.Black, 110, 55, 20, 60);
-                g.FillRectangle(Brushes.Gray, 111, 56, 19, 59);
-                //Leg0
-                g.DrawRectangle(Pens.Black, 70, 115, 20, 60);
-                g.FillRectangle(Brushes.Gray, 71, 116, 19, 59);
-                //Leg1
-                g.DrawRectangle(Pens.Black, 90, 115, 20, 60);
-                g.FillRectangle(Brushes.Gray, 91, 116, 19, 59);
+                if(!anim.GetANIMFlag(eANIM_EFFECTS.HEAD_DISABLED))
+				{
+                    //Head
+                    g.DrawRectangle(Pens.Black, 70, 15, 40, 40);
+                    g.FillRectangle(Brushes.Gray, 71, 16, 39, 39);
+                }
+                if (!anim.GetANIMFlag(eANIM_EFFECTS.BODY_DISABLED))
+                {
+                    //Body
+                    g.DrawRectangle(Pens.Black, 70, 55, 40, 60);
+                    g.FillRectangle(Brushes.Gray, 71, 56, 39, 59);
+                }
+                if (!anim.GetANIMFlag(eANIM_EFFECTS.RIGHT_ARM_DISABLED))
+                {
+                    //Arm0
+                    g.DrawRectangle(Pens.Black, anim.GetANIMFlag(eANIM_EFFECTS.SLIM_MODEL) ? 55 : 50, 55, anim.GetANIMFlag(eANIM_EFFECTS.SLIM_MODEL) ? 15 : 20, 60);
+                    g.FillRectangle(Brushes.Gray, anim.GetANIMFlag(eANIM_EFFECTS.SLIM_MODEL) ? 56 : 51, 56, anim.GetANIMFlag(eANIM_EFFECTS.SLIM_MODEL) ? 14 : 19, 59);
+                }
+                if (!anim.GetANIMFlag(eANIM_EFFECTS.LEFT_ARM_DISABLED))
+                {
+                    //Arm1
+                    g.DrawRectangle(Pens.Black, 110, 55, anim.GetANIMFlag(eANIM_EFFECTS.SLIM_MODEL) ? 15 : 20, 60);
+                    g.FillRectangle(Brushes.Gray, 111, 56, anim.GetANIMFlag(eANIM_EFFECTS.SLIM_MODEL) ? 14 : 19, 59);
+                }
+                if (!anim.GetANIMFlag(eANIM_EFFECTS.RIGHT_LEG_DISABLED))
+                {
+                    //Leg0
+                    g.DrawRectangle(Pens.Black, 70, 115, 20, 60);
+                    g.FillRectangle(Brushes.Gray, 71, 116, 19, 59);
+                }
+                if (!anim.GetANIMFlag(eANIM_EFFECTS.LEFT_LEG_DISABLED))
+                {
+                    //Leg1
+                    g.DrawRectangle(Pens.Black, 90, 115, 20, 60);
+                    g.FillRectangle(Brushes.Gray, 91, 116, 19, 59);
+                }
             }
             displayBox.Image = bmp;
+        }
+
+        private void addnewskin_Load(object sender, EventArgs e)
+        {
+            drawModel();
         }
 
         private void buttonSkin_Click(object sender, EventArgs e)
@@ -215,25 +249,15 @@ namespace PckStudio
                 skinPictureBoxTexture.Image.Save(stream, ImageFormat.Png);
                 skin.SetData(stream.ToArray());
             }
-            if (comboBoxSkinType.Text == "Alex (64x64)" && skinType != eSkinType._64x32)
+
+            skin.properties.Add(new ValueTuple<string, string>("ANIM", anim.ToString()));
+            if (generatedModel != null)
             {
-                skin.properties.Add(new ValueTuple<string, string>("ANIM", "0x80000"));
-            }
-            else if (comboBoxSkinType.Text == "Steve (64x64)" && skinType != eSkinType._64x32)
-            {
-                skin.properties.Add(new ValueTuple<string, string>("ANIM", "0x40000"));
-            }
-            else if (comboBoxSkinType.Text == "Custom")
-            {
-                //skin.properties.Add(new ValueTuple<string, string>( "BOX", listViewItem.Tag.ToString() + " " + listViewItem.SubItems[1].Text + " " + listViewItem.SubItems[2].Text + " " + listViewItem.SubItems[3].Text + " " + listViewItem.SubItems[4].Text + " " + listViewItem.SubItems[5].Text + " " + listViewItem.SubItems[6].Text + " " + listViewItem.SubItems[7].Text + " " + listViewItem.SubItems[8].Text)) }.Tag ));
-                skin.properties.Add(new ValueTuple<string, string>("ANIM", "0x7ff5fc10"));
                 foreach (var item in generatedModel)
                 {
                     skin.properties.Add(item);
                 }
-            }
-            if (generatedModel != null)
-            {
+
                 generatedModel.Clear();
             }
 
@@ -269,8 +293,8 @@ namespace PckStudio
 
             if (generate.ShowDialog() == DialogResult.OK) //Opens Model Generator Dialog
             {
-                comboBoxSkinType.Items.Add("Custom"); //Adds skin preset to combobox
-                comboBoxSkinType.Text = "Custom"; //Sets combo to custom preset
+                //comboBoxSkinType.Items.Add("Custom"); //Adds skin preset to combobox
+                //comboBoxSkinType.Text = "Custom"; //Sets combo to custom preset
                 displayBox.Image = preview.Image; //Sets displayBox to created model preview
                 try
                 {
@@ -345,6 +369,16 @@ namespace PckStudio
             {
             }
         }
-    }
+
+		private void buttonAnimGen_Click(object sender, EventArgs e)
+		{
+            using Forms.Utilities.Skins.ANIMEditor diag = new Forms.Utilities.Skins.ANIMEditor(anim.ToString());
+            if (diag.ShowDialog(this) == DialogResult.OK && diag.saved)
+            {
+                anim = new SkinANIM(diag.outANIM);
+                drawModel();
+            }
+        }
+	}
 }
 
