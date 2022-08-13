@@ -35,6 +35,7 @@ namespace PckStudio
         public addNewSkin(LOCFile loc)
         {
             InitializeComponent();
+            textSkinID.Text = localID;
             currentLoc = loc;
         }
 

@@ -28,29 +28,29 @@ namespace PckStudio.Forms.Editor
 		LOCFile loc;
 		bool _isLittleEndian = false;
 
-        public static readonly List<string> Categories = new List<string>
-        {
-            "Overworld",
-			"Nether",	
-			"End",		
-			"Creative",	
+		public static readonly List<string> Categories = new List<string>
+		{
+			"Overworld",
+			"Nether",
+			"End",
+			"Creative",
 			"Menu/Loading",
-			"Battle",	
-			"Tumble",	
-			"Glide",	
-			"Unused?"	
+			"Battle",
+			"Tumble",
+			"Glide",
+			"Unused?"
 		};
 
-        private string GetCategoryFromId(PCKAudioFile.AudioCategory.EAudioType categoryId)
+		private string GetCategoryFromId(PCKAudioFile.AudioCategory.EAudioType categoryId)
 			=> categoryId >= PCKAudioFile.AudioCategory.EAudioType.Overworld &&
 				categoryId <= PCKAudioFile.AudioCategory.EAudioType.Unused
 				? Categories[(int)categoryId]
 				: "Not valid";
 
-        private PCKAudioFile.AudioCategory.EAudioType GetCategoryId(string category)
-        {
-            return (PCKAudioFile.AudioCategory.EAudioType)Categories.IndexOf(category);
-        }
+		private PCKAudioFile.AudioCategory.EAudioType GetCategoryId(string category)
+		{
+			return (PCKAudioFile.AudioCategory.EAudioType)Categories.IndexOf(category);
+		}
 
 		public static PCKFile.FileData CreateAudioPck(bool isLittle)
 		{
@@ -72,8 +72,8 @@ namespace PckStudio.Forms.Editor
 		/// Overload that creates a new audio.pck file
 		/// </summary>
 		public AudioEditor(LOCFile locFile, bool isLittleEndian) : this(CreateAudioPck(isLittleEndian), locFile, isLittleEndian)
-        {
-        }
+		{
+		}
 
 		public AudioEditor(PCKFile.FileData file, LOCFile locFile, bool isLittleEndian)
 		{
@@ -97,9 +97,9 @@ namespace PckStudio.Forms.Editor
 
 			audioPCK = file;
 			using (var stream = new MemoryStream(file.data))
-            {
+			{
 				audioFile = PCKAudioFileReader.Read(stream, isLittleEndian);
-            }
+			}
 
 			foreach (var category in audioFile.Categories)
 			{
@@ -107,7 +107,7 @@ namespace PckStudio.Forms.Editor
 					category.audioType == PCKAudioFile.AudioCategory.EAudioType.Creative &&
 					audioFile.TryGetCategory(PCKAudioFile.AudioCategory.EAudioType.Overworld, out PCKAudioFile.AudioCategory overworldCategory))
 				{
-					foreach(var name in category.SongNames.ToList())
+					foreach (var name in category.SongNames.ToList())
 					{
 						if (overworldCategory.SongNames.Contains(name))
 							category.SongNames.Remove(name);
@@ -169,7 +169,7 @@ namespace PckStudio.Forms.Editor
 			if (treeView1.SelectedNode.Tag == null || treeView2.SelectedNode.Tag == null) return;
 			var entry = treeView2.SelectedNode;
 
-			if(string.IsNullOrEmpty(DataDirectory)) getDataDirectory();
+			if (string.IsNullOrEmpty(DataDirectory)) getDataDirectory();
 			string FileName = Path.Combine(DataDirectory, entry.Text + ".binka");
 			Console.WriteLine(FileName);
 			if (!Directory.Exists(DataDirectory))
@@ -185,18 +185,18 @@ namespace PckStudio.Forms.Editor
 		{
 			treeView2.Nodes.Clear();
 			if (e.Node.Tag is PCKAudioFile.AudioCategory category)
-			foreach (var name in category.SongNames)
-			{
-				treeView2.Nodes.Add(name);
-			}
+				foreach (var name in category.SongNames)
+				{
+					treeView2.Nodes.Add(name);
+				}
 			if (treeView2.Nodes.Count > 0) treeView2.SelectedNode = treeView2.Nodes[0];
 		}
 
 		private void addCategoryStripMenuItem_Click(object sender, EventArgs e)
 		{
-			string[] avalible = Categories.FindAll(str => !audioFile.HasCategory(GetCategoryId(str)) ).ToArray();
+			string[] avalible = Categories.FindAll(str => !audioFile.HasCategory(GetCategoryId(str))).ToArray();
 			if (avalible.Length > 0)
-			{ 
+			{
 				using addCategory add = new addCategory(avalible);
 				if (add.ShowDialog() == DialogResult.OK)
 					audioFile.AddCategory(GetCategoryId(add.Category));
@@ -302,7 +302,7 @@ namespace PckStudio.Forms.Editor
 						await Task.Run(() =>
 						{
 							var process = Process.Start(new ProcessStartInfo
-                            {
+							{
 								FileName = Path.Combine(tempDir, "binka_encode.exe"),
 								Arguments = $"\"{file}\" \"{new_loc}\"",
 								UseShellExecute = true,
@@ -355,7 +355,7 @@ namespace PckStudio.Forms.Editor
 
 		private void saveToolStripMenuItem1_Click(object sender, EventArgs e, bool combineCreative)
 		{
-			if(!audioFile.HasCategory(PCKAudioFile.AudioCategory.EAudioType.Overworld) ||
+			if (!audioFile.HasCategory(PCKAudioFile.AudioCategory.EAudioType.Overworld) ||
 			   !audioFile.HasCategory(PCKAudioFile.AudioCategory.EAudioType.Nether) ||
 			   !audioFile.HasCategory(PCKAudioFile.AudioCategory.EAudioType.End))
 			{
@@ -390,10 +390,10 @@ namespace PckStudio.Forms.Editor
 			}
 
 			using (var stream = new MemoryStream())
-            {
+			{
 				PCKAudioFileWriter.Write(stream, audioFile, _isLittleEndian);
 				audioPCK.SetData(stream.ToArray());
-            }
+			}
 			saved = true;
 		}
 
@@ -427,10 +427,10 @@ namespace PckStudio.Forms.Editor
 
 		private void deleteUnusedBINKAsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			DialogResult dr = MessageBox.Show("This will delete all unused BINKA songs in the Data directory. This cannot be undone. Are you sure you want to continue?","Warning", MessageBoxButtons.YesNo);
+			DialogResult dr = MessageBox.Show("This will delete all unused BINKA songs in the Data directory. This cannot be undone. Are you sure you want to continue?", "Warning", MessageBoxButtons.YesNo);
 			if (dr != DialogResult.Yes) return;
 			var totalSongList = new List<string>();
-			foreach(string song in audioFile.Categories.SelectMany(cat => cat.SongNames))
+			foreach (string song in audioFile.Categories.SelectMany(cat => cat.SongNames))
 			{
 				Console.WriteLine(song);
 				totalSongList.Add(song);
