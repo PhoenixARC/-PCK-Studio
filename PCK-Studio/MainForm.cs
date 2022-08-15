@@ -637,7 +637,7 @@ namespace PckStudio
 			PCKFile.FileData file = (PCKFile.FileData)treeViewMain.SelectedNode.Tag;
 			var property = (ValueTuple<string, string>)treeMeta.SelectedNode.Tag;
 			int i = file.properties.IndexOf(property);
-			if (property.Item1 == "ANIM" && i != -1)
+			if (property.Item1 == "ANIM" && i != -1 && file.type == 0)
 			{
 				using Forms.Utilities.Skins.ANIMEditor diag = new Forms.Utilities.Skins.ANIMEditor(property.Item2);
 				if (diag.ShowDialog(this) == DialogResult.OK && diag.saved)
