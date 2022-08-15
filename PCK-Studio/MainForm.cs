@@ -637,15 +637,23 @@ namespace PckStudio
 			PCKFile.FileData file = (PCKFile.FileData)treeViewMain.SelectedNode.Tag;
 			var property = (ValueTuple<string, string>)treeMeta.SelectedNode.Tag;
 			int i = file.properties.IndexOf(property);
-			if (property.Item1 == "ANIM" && i != -1)
+			if (property.Item1 == "ANIM" && i != -1 && file.type == 0)
 			{
 				using Forms.Utilities.Skins.ANIMEditor diag = new Forms.Utilities.Skins.ANIMEditor(property.Item2);
-				if (diag.ShowDialog(this) == DialogResult.OK && diag.saved)
+				try
 				{
-					file.properties[i] = new ValueTuple<string, string>("ANIM", diag.outANIM);
-					ReloadMetaTreeView();
-					saved = false;
+					if (diag.ShowDialog(this) == DialogResult.OK && diag.saved)
+					{
+						file.properties[i] = new ValueTuple<string, string>("ANIM", diag.outANIM);
+						ReloadMetaTreeView();
+						saved = false;
+					}
 					return;
+				}
+				catch (Exception ex)
+				{
+					Console.WriteLine(ex.Message);
+					MessageBox.Show("Failed to parse ANIM value, aborting to normal functionality. Please make sure the value only includes hexadecimal characters (0-9,A-F) and has no more than 8 characters. It can have an optional prefix of \"0x\".");
 				}
 			}
 			using addMeta add = new addMeta(property.Item1, property.Item2);
