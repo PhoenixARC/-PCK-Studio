@@ -35,6 +35,14 @@ namespace PckStudio.Forms.Utilities.Skins
 
 		void processCheckBoxes(bool set_all = false, bool value = false)
 		{
+			#region processes every single checkbox with the correct ANIM flags
+			helmetCheckBox.Enabled = set_all ? value : anim.GetANIMFlag(eANIM_EFFECTS.HEAD_DISABLED);
+			chestplateCheckBox.Enabled = set_all ? value : anim.GetANIMFlag(eANIM_EFFECTS.BODY_DISABLED);
+			leftArmorCheckBox.Enabled = set_all ? value : anim.GetANIMFlag(eANIM_EFFECTS.LEFT_ARM_DISABLED);
+			rightArmorCheckBox.Enabled = set_all ? value : anim.GetANIMFlag(eANIM_EFFECTS.RIGHT_ARM_DISABLED);
+			leftLeggingCheckBox.Enabled = set_all ? value : anim.GetANIMFlag(eANIM_EFFECTS.LEFT_LEG_DISABLED);
+			rightLeggingCheckBox.Enabled = set_all ? value : anim.GetANIMFlag(eANIM_EFFECTS.RIGHT_LEG_DISABLED);
+
 			bobbingCheckBox.Checked = set_all ? value : anim.GetANIMFlag(eANIM_EFFECTS.HEAD_BOBBING_DISABLED);
 			bodyCheckBox.Checked = set_all ? value : anim.GetANIMFlag(eANIM_EFFECTS.BODY_DISABLED);
 			bodyOCheckBox.Checked = set_all ? value : anim.GetANIMFlag(eANIM_EFFECTS.BODY_OVERLAY_DISABLED);
@@ -74,6 +82,7 @@ namespace PckStudio.Forms.Utilities.Skins
 			syncLegsCheckBox.Checked = set_all ? value : anim.GetANIMFlag(eANIM_EFFECTS.SYNCED_LEGS);
 			unknownCheckBox.Checked = set_all ? value : anim.GetANIMFlag(eANIM_EFFECTS.unk_BIT4);
 			zombieCheckBox.Checked = set_all ? value : anim.GetANIMFlag(eANIM_EFFECTS.ZOMBIE_ARMS);
+			#endregion
 		}
 
 		public ANIMEditor(string ANIM)
@@ -86,7 +95,8 @@ namespace PckStudio.Forms.Utilities.Skins
 			}
 			originalANIM = ANIM;
 			anim = new SkinANIM(ANIM);
-			
+
+			#region Event definitions, since the designer can't parse lambda experessions
 			bobbingCheckBox.CheckedChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, eANIM_EFFECTS.HEAD_BOBBING_DISABLED); };
 			bodyCheckBox.CheckedChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, eANIM_EFFECTS.BODY_DISABLED); };
 			bodyOCheckBox.CheckedChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, eANIM_EFFECTS.BODY_OVERLAY_DISABLED); };
@@ -126,13 +136,7 @@ namespace PckStudio.Forms.Utilities.Skins
 			syncLegsCheckBox.CheckedChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, eANIM_EFFECTS.SYNCED_LEGS); };
 			unknownCheckBox.CheckedChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, eANIM_EFFECTS.unk_BIT4); };
 			zombieCheckBox.CheckedChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, eANIM_EFFECTS.ZOMBIE_ARMS); };
-
-			helmetCheckBox.EnabledChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, eANIM_EFFECTS.FORCE_HEAD_ARMOR); };
-			chestplateCheckBox.EnabledChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, eANIM_EFFECTS.FORCE_BODY_ARMOR); };
-			rightArmorCheckBox.EnabledChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, eANIM_EFFECTS.FORCE_RIGHT_ARM_ARMOR); };
-			leftArmorCheckBox.EnabledChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, eANIM_EFFECTS.FORCE_LEFT_ARM_ARMOR); };
-			rightLeggingCheckBox.EnabledChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, eANIM_EFFECTS.FORCE_RIGHT_LEG_ARMOR); };
-			leftLeggingCheckBox.EnabledChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, eANIM_EFFECTS.FORCE_LEFT_LEG_ARMOR); };
+			#endregion
 
 			processCheckBoxes();
 		}
@@ -186,8 +190,6 @@ namespace PckStudio.Forms.Utilities.Skins
 			}
 			anim = new SkinANIM(new_value);
 			processCheckBoxes();
-			anim = new SkinANIM(new_value); // Runs a second time to ensure the armor flags are set properly
-			processCheckBoxes();
 		}
 
 		private void uncheckButton_Click(object sender, EventArgs e)
@@ -213,6 +215,7 @@ namespace PckStudio.Forms.Utilities.Skins
 
 			Image skin = isSlim ? Properties.Resources.slim_template : Properties.Resources.classic_template;
 
+			#region Image processing code for generating the skin templates based on the input ANIM value
 			Bitmap nb = new Bitmap(64, (!isSlim && !isClassic64) ? 32 : 64);
 			using (Graphics g = Graphics.FromImage(nb))
 			{
@@ -244,6 +247,7 @@ namespace PckStudio.Forms.Utilities.Skins
 				nb.MakeTransparent(Color.Magenta);
 				skin = nb;
 			}
+			#endregion
 
 			skin.Save(saveFileDialog.FileName);
 		}
@@ -251,8 +255,6 @@ namespace PckStudio.Forms.Utilities.Skins
 		private void resetButton_Click(object sender, EventArgs e)
 		{
 			anim = new SkinANIM(originalANIM);
-			processCheckBoxes();
-			anim = new SkinANIM(originalANIM); // Runs a second time to ensure the armor flags are set properly
 			processCheckBoxes();
 		}
 
@@ -307,8 +309,6 @@ namespace PckStudio.Forms.Utilities.Skins
 			SkinANIM backup = anim;
 			processCheckBoxes();
 			anim = backup;
-			// Runs a second time to ensure the armor flags are set properly
-			processCheckBoxes();
 		}
 	}
 }
