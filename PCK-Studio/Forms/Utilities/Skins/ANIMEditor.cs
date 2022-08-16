@@ -19,20 +19,6 @@ namespace PckStudio.Forms.Utilities.Skins
 		public string outANIM => animValue.Text;
 		SkinANIM anim = new SkinANIM();
 
-		string[] animPresets =
-		{
-			"0",	 // Steve (64x32)
-			"40000", // Steve (64x64)
-			"80000", // Alex (64x64)
-			"2",	 // Zombie Skins
-			"60",	 // Cetacean Skins
-			"44",	 // Ski Skins
-			"6",	 // Ghost Skins
-			"20",	 // Medusa (Greek Myth.)
-			"4",	 // Librarian (Halo)
-			"5",	 // Grim Reaper (Halloween)
-		};
-
 		void processCheckBoxes(bool set_all = false, bool value = false)
 		{
 			#region processes every single checkbox with the correct ANIM flags
