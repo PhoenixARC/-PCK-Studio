@@ -186,6 +186,8 @@ namespace PckStudio.Forms.Utilities.Skins
 			}
 			anim = new SkinANIM(new_value);
 			processCheckBoxes();
+			anim = new SkinANIM(new_value); // Runs a second time to ensure the armor flags are set properly
+			processCheckBoxes();
 		}
 
 		private void uncheckButton_Click(object sender, EventArgs e)
@@ -302,6 +304,10 @@ namespace PckStudio.Forms.Utilities.Skins
 					anim.SetANIMFlag(eANIM_EFFECTS.SLIM_MODEL, true);
 				}
 			}
+			SkinANIM backup = anim;
+			processCheckBoxes();
+			anim = backup;
+			// Runs a second time to ensure the armor flags are set properly
 			processCheckBoxes();
 		}
 	}
