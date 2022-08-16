@@ -464,5 +464,36 @@ namespace PckStudio.Forms.Editor
 			MainForm parent = Owner.Owner as MainForm; // Gets the MainForm so we can access the Save Location
 			DataDirectory = Path.Combine(Path.GetDirectoryName(parent.saveLocation), "Data");
 		}
+
+		private void howToAddSongsToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			MessageBox.Show("Right click the right window and press \"Add Entry\" or drag and drop a valid WAV file into the editor's right window. You can also drop other BINKA files, either from the main game or using a tool like BinkMan. The editor will automatically put the song in the Data folder for you.", "How to add a song");
+		}
+
+		private void whatIsEachCategoryToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			MessageBox.Show("Categories are pretty self explanatory. The game controls when each category should play.\n" +
+				"\nGAMEPLAY - Plays in the specified dimensions.\n" +
+				"-Overworld: Plays in survival mode and in Creative if no songs are set\n" +
+				"-Nether: Nothing special to note.\n" +
+				"-End: Prioritizes the final track when the dragon is alive.\n" +
+				"-Creative: Does not play survival tracks unless they're included.\n" +
+				"-Menu: Plays on the title screen and only once when the pack is loading. Perfect for intro songs.\n" +
+				"\nMINI GAMES - Will only play if you change the map grf files to load your pack and set the ThemeID to 0 for Vanilla maps.\n" +
+				"-Battle: Plays in the Battle Mini Game.\n" +
+				"-Tumble: Plays in the Tumble Mini Game.\n" +
+				"-Glide: Plays in the Glide Mini Game.\n", 
+				"What is each category?");
+		}
+
+		private void howToEditCreditsToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			MessageBox.Show("Click Tools -> Credits Editor. This will allow you to edit all the credits easily in the pack easily. Only supports English credits at the moment. ","How to edit credits?");
+		}
+
+		private void optimizeDataFolderToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			MessageBox.Show("Click Tools -> Delete Unused BINKA files. This will clean your folder of any unused songs.", "How to optimize the Data folder");
+		}
 	}
 }

@@ -41,6 +41,7 @@ namespace PckStudio.Forms.Editor
 			this.saveToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.creditsEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.deleteUnusedBINKAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.treeView2 = new System.Windows.Forms.TreeView();
 			this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -48,7 +49,10 @@ namespace PckStudio.Forms.Editor
 			this.removeEntryMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.verifyFileLocationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.playOverworldInCreative = new MetroFramework.Controls.MetroCheckBox();
-			this.deleteUnusedBINKAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.howToAddSongsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.whatIsEachCategoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.howToEditCreditsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.optimizeDataFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenuStrip1.SuspendLayout();
 			this.menuStrip.SuspendLayout();
 			this.contextMenuStrip2.SuspendLayout();
@@ -140,12 +144,23 @@ namespace PckStudio.Forms.Editor
 			resources.ApplyResources(this.creditsEditorToolStripMenuItem, "creditsEditorToolStripMenuItem");
 			this.creditsEditorToolStripMenuItem.Click += new System.EventHandler(this.creditsEditorToolStripMenuItem_Click);
 			// 
+			// deleteUnusedBINKAsToolStripMenuItem
+			// 
+			this.deleteUnusedBINKAsToolStripMenuItem.Image = global::PckStudio.Properties.Resources.Del;
+			this.deleteUnusedBINKAsToolStripMenuItem.Name = "deleteUnusedBINKAsToolStripMenuItem";
+			resources.ApplyResources(this.deleteUnusedBINKAsToolStripMenuItem, "deleteUnusedBINKAsToolStripMenuItem");
+			this.deleteUnusedBINKAsToolStripMenuItem.Click += new System.EventHandler(this.deleteUnusedBINKAsToolStripMenuItem_Click);
+			// 
 			// helpToolStripMenuItem
 			// 
+			this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.howToAddSongsToolStripMenuItem,
+            this.whatIsEachCategoryToolStripMenuItem,
+            this.howToEditCreditsToolStripMenuItem,
+            this.optimizeDataFolderToolStripMenuItem});
 			this.helpToolStripMenuItem.ForeColor = System.Drawing.Color.White;
 			this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
 			resources.ApplyResources(this.helpToolStripMenuItem, "helpToolStripMenuItem");
-			this.helpToolStripMenuItem.Click += new System.EventHandler(this.helpToolStripMenuItem_Click);
 			// 
 			// treeView2
 			// 
@@ -198,12 +213,29 @@ namespace PckStudio.Forms.Editor
 			this.playOverworldInCreative.UseCustomForeColor = true;
 			this.playOverworldInCreative.UseSelectable = true;
 			// 
-			// deleteUnusedBINKAsToolStripMenuItem
+			// howToAddSongsToolStripMenuItem
 			// 
-			this.deleteUnusedBINKAsToolStripMenuItem.Image = global::PckStudio.Properties.Resources.Del;
-			this.deleteUnusedBINKAsToolStripMenuItem.Name = "deleteUnusedBINKAsToolStripMenuItem";
-			resources.ApplyResources(this.deleteUnusedBINKAsToolStripMenuItem, "deleteUnusedBINKAsToolStripMenuItem");
-			this.deleteUnusedBINKAsToolStripMenuItem.Click += new System.EventHandler(this.deleteUnusedBINKAsToolStripMenuItem_Click);
+			this.howToAddSongsToolStripMenuItem.Name = "howToAddSongsToolStripMenuItem";
+			resources.ApplyResources(this.howToAddSongsToolStripMenuItem, "howToAddSongsToolStripMenuItem");
+			this.howToAddSongsToolStripMenuItem.Click += new System.EventHandler(this.howToAddSongsToolStripMenuItem_Click);
+			// 
+			// whatIsEachCategoryToolStripMenuItem
+			// 
+			this.whatIsEachCategoryToolStripMenuItem.Name = "whatIsEachCategoryToolStripMenuItem";
+			resources.ApplyResources(this.whatIsEachCategoryToolStripMenuItem, "whatIsEachCategoryToolStripMenuItem");
+			this.whatIsEachCategoryToolStripMenuItem.Click += new System.EventHandler(this.whatIsEachCategoryToolStripMenuItem_Click);
+			// 
+			// howToEditCreditsToolStripMenuItem
+			// 
+			this.howToEditCreditsToolStripMenuItem.Name = "howToEditCreditsToolStripMenuItem";
+			resources.ApplyResources(this.howToEditCreditsToolStripMenuItem, "howToEditCreditsToolStripMenuItem");
+			this.howToEditCreditsToolStripMenuItem.Click += new System.EventHandler(this.howToEditCreditsToolStripMenuItem_Click);
+			// 
+			// optimizeDataFolderToolStripMenuItem
+			// 
+			this.optimizeDataFolderToolStripMenuItem.Name = "optimizeDataFolderToolStripMenuItem";
+			resources.ApplyResources(this.optimizeDataFolderToolStripMenuItem, "optimizeDataFolderToolStripMenuItem");
+			this.optimizeDataFolderToolStripMenuItem.Click += new System.EventHandler(this.optimizeDataFolderToolStripMenuItem_Click);
 			// 
 			// AudioEditor
 			// 
@@ -247,5 +279,9 @@ namespace PckStudio.Forms.Editor
 		private System.Windows.Forms.ToolStripMenuItem verifyFileLocationToolStripMenuItem;
 		private MetroFramework.Controls.MetroCheckBox playOverworldInCreative;
 		private System.Windows.Forms.ToolStripMenuItem deleteUnusedBINKAsToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem howToAddSongsToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem whatIsEachCategoryToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem howToEditCreditsToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem optimizeDataFolderToolStripMenuItem;
 	}
 }
