@@ -87,9 +87,9 @@
         }
 
         #endregion
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.ComboBox comboBox1;
 		private System.Windows.Forms.Button cancelButton;
+		public System.Windows.Forms.Label label2;
+		public System.Windows.Forms.Button button1;
 	}
 }
