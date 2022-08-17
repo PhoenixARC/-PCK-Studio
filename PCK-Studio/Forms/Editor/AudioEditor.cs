@@ -206,6 +206,7 @@ namespace PckStudio.Forms.Editor
 				TreeNode treeNode = new TreeNode(GetCategoryFromId(category.audioType), (int)category.audioType, (int)category.audioType);
 				treeNode.Tag = category;
 				treeView1.Nodes.Add(treeNode);
+				saved = false;
 			}
 			else
 			{
@@ -235,6 +236,7 @@ namespace PckStudio.Forms.Editor
 				if (string.IsNullOrEmpty(ofn.FileName)) return; // Return if name is null or if the user cancels
 
 				ProcessEntries(ofn.FileNames);
+				saved = false;
 			}
 		}
 
@@ -245,6 +247,7 @@ namespace PckStudio.Forms.Editor
 			{
 				treeView2.Nodes.Clear();
 				main.Remove();
+				saved = false;
 			}
 		}
 
@@ -266,6 +269,7 @@ namespace PckStudio.Forms.Editor
 			{
 				category.SongNames.Remove(treeView2.SelectedNode.Text);
 				treeView2.SelectedNode.Remove();
+				saved = false;
 			}
 		}
 
