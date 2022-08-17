@@ -53,9 +53,13 @@ namespace PckStudio.Forms.Editor
 			this.whatIsEachCategoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.howToEditCreditsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.optimizeDataFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.compressionUpDown = new System.Windows.Forms.NumericUpDown();
+			this.bINKACompressionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
 			this.contextMenuStrip1.SuspendLayout();
 			this.menuStrip.SuspendLayout();
 			this.contextMenuStrip2.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.compressionUpDown)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// treeView1
@@ -157,7 +161,8 @@ namespace PckStudio.Forms.Editor
             this.howToAddSongsToolStripMenuItem,
             this.whatIsEachCategoryToolStripMenuItem,
             this.howToEditCreditsToolStripMenuItem,
-            this.optimizeDataFolderToolStripMenuItem});
+            this.optimizeDataFolderToolStripMenuItem,
+            this.bINKACompressionToolStripMenuItem});
 			this.helpToolStripMenuItem.ForeColor = System.Drawing.Color.White;
 			this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
 			resources.ApplyResources(this.helpToolStripMenuItem, "helpToolStripMenuItem");
@@ -237,10 +242,46 @@ namespace PckStudio.Forms.Editor
 			resources.ApplyResources(this.optimizeDataFolderToolStripMenuItem, "optimizeDataFolderToolStripMenuItem");
 			this.optimizeDataFolderToolStripMenuItem.Click += new System.EventHandler(this.optimizeDataFolderToolStripMenuItem_Click);
 			// 
+			// compressionUpDown
+			// 
+			this.compressionUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+			this.compressionUpDown.ForeColor = System.Drawing.SystemColors.Window;
+			resources.ApplyResources(this.compressionUpDown, "compressionUpDown");
+			this.compressionUpDown.Maximum = new decimal(new int[] {
+            9,
+            0,
+            0,
+            0});
+			this.compressionUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.compressionUpDown.Name = "compressionUpDown";
+			this.compressionUpDown.Value = new decimal(new int[] {
+            4,
+            0,
+            0,
+            0});
+			// 
+			// bINKACompressionToolStripMenuItem
+			// 
+			this.bINKACompressionToolStripMenuItem.Name = "bINKACompressionToolStripMenuItem";
+			resources.ApplyResources(this.bINKACompressionToolStripMenuItem, "bINKACompressionToolStripMenuItem");
+			this.bINKACompressionToolStripMenuItem.Click += new System.EventHandler(this.bINKACompressionToolStripMenuItem_Click);
+			// 
+			// metroLabel1
+			// 
+			resources.ApplyResources(this.metroLabel1, "metroLabel1");
+			this.metroLabel1.Name = "metroLabel1";
+			this.metroLabel1.Theme = MetroFramework.MetroThemeStyle.Dark;
+			// 
 			// AudioEditor
 			// 
 			resources.ApplyResources(this, "$this");
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.Controls.Add(this.metroLabel1);
+			this.Controls.Add(this.compressionUpDown);
 			this.Controls.Add(this.playOverworldInCreative);
 			this.Controls.Add(this.treeView1);
 			this.Controls.Add(this.treeView2);
@@ -254,6 +295,7 @@ namespace PckStudio.Forms.Editor
 			this.menuStrip.ResumeLayout(false);
 			this.menuStrip.PerformLayout();
 			this.contextMenuStrip2.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.compressionUpDown)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -283,5 +325,8 @@ namespace PckStudio.Forms.Editor
 		private System.Windows.Forms.ToolStripMenuItem whatIsEachCategoryToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem howToEditCreditsToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem optimizeDataFolderToolStripMenuItem;
+		private System.Windows.Forms.NumericUpDown compressionUpDown;
+		private System.Windows.Forms.ToolStripMenuItem bINKACompressionToolStripMenuItem;
+		private MetroFramework.Controls.MetroLabel metroLabel1;
 	}
 }
