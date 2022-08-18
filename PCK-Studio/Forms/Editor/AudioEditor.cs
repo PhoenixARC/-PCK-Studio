@@ -495,5 +495,11 @@ namespace PckStudio.Forms.Editor
 		{
 			MessageBox.Show("The numerical up/down control is responsible for the level of compression used when converting WAV files. The default is 4, which was commonly used by 4J for the game's files.","BINKA Compression Level");
 		}
+
+		private void openDataFolderToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (!doesDataFolderExist()) return;
+			Process.Start("explorer.exe", DataDirectory);
+		}
 	}
 }
