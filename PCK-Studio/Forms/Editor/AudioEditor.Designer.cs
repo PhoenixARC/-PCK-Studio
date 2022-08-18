@@ -197,7 +197,7 @@ namespace PckStudio.Forms.Editor
 			// 
 			this.bINKACompressionToolStripMenuItem.Name = "bINKACompressionToolStripMenuItem";
 			resources.ApplyResources(this.bINKACompressionToolStripMenuItem, "bINKACompressionToolStripMenuItem");
-			this.bINKACompressionToolStripMenuItem.Click += new System.EventHandler(this.bINKACompressionToolStripMenuItem_Click);
+			this.bINKACompressionToolStripMenuItem.Click += new System.EventHandler(this.BINKACompressionToolStripMenuItem_Click);
 			// 
 			// treeView2
 			// 

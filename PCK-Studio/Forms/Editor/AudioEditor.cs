@@ -475,7 +475,7 @@ namespace PckStudio.Forms.Editor
 			MessageBox.Show("Click Tools -> Delete Unused BINKA files. This will clean your folder of any unused songs.", "How to optimize the Data folder");
 		}
 
-		private void bINKACompressionToolStripMenuItem_Click(object sender, EventArgs e)
+		private void BINKACompressionToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			MessageBox.Show("The numerical up/down control is responsible for the level of compression used when converting WAV files. The default is 4, which was commonly used by 4J for the game's files.","BINKA Compression Level");
 		}
@@ -488,7 +488,8 @@ namespace PckStudio.Forms.Editor
 
 		private void AudioEditor_Shown(object sender, EventArgs e)
 		{
-			parent = this.Owner.Owner as MainForm;
+			if (Owner.Owner is MainForm) parent = Owner.Owner as MainForm;
+			else Close();
 		}
 	}
 }
