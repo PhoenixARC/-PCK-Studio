@@ -166,7 +166,7 @@ namespace PckStudio.Forms.Editor
 
 		private void verifyFileLocationToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (treeView1.SelectedNode.Tag == null || treeView2.SelectedNode.Tag == null) return;
+			if (treeView1.SelectedNode == null || treeView2.SelectedNode == null) return;
 			var entry = treeView2.SelectedNode;
 
 			if (string.IsNullOrEmpty(DataDirectory)) getDataDirectory();
@@ -178,7 +178,7 @@ namespace PckStudio.Forms.Editor
 				return;
 			}
 			if (File.Exists(FileName)) MessageBox.Show("\"" + entry.Text + ".binka\" exists in the \"Data\" folder", "File found");
-			else MessageBox.Show("\"" + entry.Text + ".binka\" does not exist in the \"Data\" folder", "File missing");
+			else MessageBox.Show("\"" + entry.Text + ".binka\" does not exist in the \"Data\" folder. The game will crash when attempting to load this track.", "File missing");
 		}
 
 		private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
