@@ -27,6 +27,7 @@ namespace PckStudio.Forms.Editor
 		PCKFile.FileData audioPCK;
 		LOCFile loc;
 		bool _isLittleEndian = false;
+		MainForm parent; // Parent Form
 
 		public static readonly List<string> Categories = new List<string>
 		{
@@ -81,6 +82,7 @@ namespace PckStudio.Forms.Editor
 			// so the Creative songs aren't combined until after the forms are closed.
 			// this will prevent potential problems with editing the categories after merging.
 			this.saveToolStripMenuItem1.Click += (sender, e) => saveToolStripMenuItem1_Click(sender, e, false);
+			parent = Owner.Owner as MainForm;
 			loc = locFile;
 			tempDir = Path.Combine(Directory.GetCurrentDirectory(), "temp");
 			_isLittleEndian = isLittleEndian;
@@ -123,21 +125,6 @@ namespace PckStudio.Forms.Editor
 			playOverworldInCreative.Enabled = audioFile.HasCategory(PCKAudioFile.AudioCategory.EAudioType.Creative);
 		}
 
-		bool doesDataFolderExist()
-		{
-			MainForm parent = Owner.Owner as MainForm; // Gets the MainForm so we can access the Save Location
-
-			DataDirectory = Path.Combine(Path.GetDirectoryName(parent.saveLocation), "Data");
-
-			if (!Directory.Exists(DataDirectory))
-			{
-				DialogResult result = MessageBox.Show("There is not a \"Data\" folder present in the pack folder. Would you like to create one?", "Folder missing", MessageBoxButtons.YesNo);
-				if (result == DialogResult.No) return false;
-				else Directory.CreateDirectory(DataDirectory);
-			}
-			return true;
-		}
-
 		// https://stackoverflow.com/a/25064568 by Alik Khilazhev -MattNL
 		private void ExtractResource(string resName, string fName)
 		{
@@ -168,8 +155,8 @@ namespace PckStudio.Forms.Editor
 			{
 				Directory.CreateDirectory(tempDir);
 				ExtractResource("binka_encode", encoderPath);
-				//ExtractResource("mss32", mssPath);
-				//ExtractResource("binkawin", asiPath);
+				ExtractResource("mss32", mssPath);
+				ExtractResource("binkawin", asiPath);
 			}
 		}
 
@@ -184,7 +171,7 @@ namespace PckStudio.Forms.Editor
 			if (treeView1.SelectedNode == null || treeView2.SelectedNode == null) return;
 			var entry = treeView2.SelectedNode;
 
-			if (!doesDataFolderExist()) return;
+			if (!parent.CreateDataFolder()) return;
 			string FileName = Path.Combine(DataDirectory, entry.Text + ".binka");
 
 			if (File.Exists(FileName)) MessageBox.Show("\"" + entry.Text + ".binka\" exists in the \"Data\" folder", "File found");
@@ -228,7 +215,7 @@ namespace PckStudio.Forms.Editor
 		{
 			if (treeView1.SelectedNode is TreeNode t && t.Tag is PCKAudioFile.AudioCategory)
 			{
-				if (!doesDataFolderExist()) return;
+				if (!parent.CreateDataFolder()) return;
 
 				OpenFileDialog ofn = new OpenFileDialog();
 				ofn.Multiselect = true;
@@ -349,7 +336,7 @@ namespace PckStudio.Forms.Editor
 			// Gets the MainForm so we can access the Save Location
 			if (treeView1.SelectedNode != null)
 			{
-				if (!doesDataFolderExist()) return;
+				if (!parent.CreateDataFolder()) return;
 
 				ProcessEntries((string[])e.Data.GetData(DataFormats.FileDrop, false));
 			}
@@ -438,7 +425,7 @@ namespace PckStudio.Forms.Editor
 				totalSongList.Add(song);
 			}
 
-			if (!doesDataFolderExist()) return;
+			if (!parent.CreateDataFolder()) return;
 			int totalDeleted = 0;
 			foreach (string song in Directory.GetFiles(DataDirectory, "*.binka"))
 			{
@@ -498,7 +485,7 @@ namespace PckStudio.Forms.Editor
 
 		private void openDataFolderToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (!doesDataFolderExist()) return;
+			if (!parent.CreateDataFolder()) return;
 			Process.Start("explorer.exe", DataDirectory);
 		}
 	}
