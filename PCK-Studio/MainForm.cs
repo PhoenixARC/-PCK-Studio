@@ -27,7 +27,6 @@ namespace PckStudio
 		bool needsUpdate = false;
 		bool saved = true;
 		bool isTemplateFile = false;
-		string DataDirectory = string.Empty;
 
 		public MainForm()
 		{
@@ -52,17 +51,17 @@ namespace PckStudio
 			RPC.Initialize();
 			RPC.SetPresence("An Open Source .PCK File Editor", "Program by PhoenixARC");
 
-			skinToolStripMenuItem1.Click                  += (sender, e) => setFileType_Click(sender, e, 0);
-			capeToolStripMenuItem.Click                   += (sender, e) => setFileType_Click(sender, e, 1);
-			textureToolStripMenuItem.Click                += (sender, e) => setFileType_Click(sender, e, 2);
-			languagesFileLOCToolStripMenuItem.Click       += (sender, e) => setFileType_Click(sender, e, 6);
-			gameRulesFileGRFToolStripMenuItem.Click       += (sender, e) => setFileType_Click(sender, e, 7);
-			audioPCKFileToolStripMenuItem.Click	          += (sender, e) => setFileType_Click(sender, e, 8);
-			coloursCOLFileToolStripMenuItem.Click         += (sender, e) => setFileType_Click(sender, e, 9);
-			gameRulesHeaderGRHToolStripMenuItem.Click     += (sender, e) => setFileType_Click(sender, e, 10);
-			skinsPCKToolStripMenuItem.Click	              += (sender, e) => setFileType_Click(sender, e, 11);
-			modelsFileBINToolStripMenuItem.Click	      += (sender, e) => setFileType_Click(sender, e, 12);
-			behavioursFileBINToolStripMenuItem.Click      += (sender, e) => setFileType_Click(sender, e, 13);
+			skinToolStripMenuItem1.Click += (sender, e) => setFileType_Click(sender, e, 0);
+			capeToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, 1);
+			textureToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, 2);
+			languagesFileLOCToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, 6);
+			gameRulesFileGRFToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, 7);
+			audioPCKFileToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, 8);
+			coloursCOLFileToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, 9);
+			gameRulesHeaderGRHToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, 10);
+			skinsPCKToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, 11);
+			modelsFileBINToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, 12);
+			behavioursFileBINToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, 13);
 			entityMaterialsFileBINToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, 14);
 
 			try
@@ -237,7 +236,7 @@ namespace PckStudio
 							}
 							catch (OverflowException ex)
 							{
-								MessageBox.Show("Failed to open pck\n" + 
+								MessageBox.Show("Failed to open pck\n" +
 									"Try checking the 'Open/Save as Vita/PS4 pck' check box in the upper right corner.",
 									"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 								Console.WriteLine(ex.Message);
@@ -328,17 +327,17 @@ namespace PckStudio
 			}
 		}
 
-        public void editModel(PCKFile.FileData skin)
-        {
-            using (generateModel generate = new generateModel(skin.properties, new PictureBox()))
-                if (generate.ShowDialog() == DialogResult.OK)
-                {
-                    entryTypeTextBox.Text = "";
-                    entryDataTextBox.Text = "";
-                    saved = false;
-                    ReloadMetaTreeView();
-                }
-        }
+		public void editModel(PCKFile.FileData skin)
+		{
+			using (generateModel generate = new generateModel(skin.properties, new PictureBox()))
+				if (generate.ShowDialog() == DialogResult.OK)
+				{
+					entryTypeTextBox.Text = "";
+					entryDataTextBox.Text = "";
+					saved = false;
+					ReloadMetaTreeView();
+				}
+		}
 
 		private void extractToolStripMenuItem_Click(object sender, EventArgs e)
 		{
@@ -432,39 +431,39 @@ namespace PckStudio
 			MessageBox.Show("Can't replace a folder.");
 		}
 
-        private void deleteFileToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var node = treeViewMain.SelectedNode;
-            if (node == null) return;
-            if (node.Tag is PCKFile.FileData)
-            {
-                PCKFile.FileData file = node.Tag as PCKFile.FileData;
-                // remove loc key if its a skin/cape
-                if (file.type == 0 || file.type == 1)
-                {
-                    if (TryGetLocFile(out LOCFile locFile))
-                    {
-                        foreach (var property in file.properties)
-                        {
-                            if (property.Item1 == "THEMENAMEID" || property.Item1 == "DISPLAYNAMEID")
-                                locFile.RemoveLocKey(property.Item2);
-                        }
-                        TrySetLocFile(locFile);
-                    }
-                }
-                currentPCK.Files.Remove(file);
-                node.Remove();
-                saved = false;
-            }
-            else if (MessageBox.Show("Are you sure want to delete this folder? All contents will be deleted", "Warning",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-            {
-                string pckFolderDir = node.FullPath;
-                currentPCK.Files.RemoveAll(file => file.filepath.StartsWith(pckFolderDir));
-                node.Remove();
-                saved = false;
-            }
-        }
+		private void deleteFileToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			var node = treeViewMain.SelectedNode;
+			if (node == null) return;
+			if (node.Tag is PCKFile.FileData)
+			{
+				PCKFile.FileData file = node.Tag as PCKFile.FileData;
+				// remove loc key if its a skin/cape
+				if (file.type == 0 || file.type == 1)
+				{
+					if (TryGetLocFile(out LOCFile locFile))
+					{
+						foreach (var property in file.properties)
+						{
+							if (property.Item1 == "THEMENAMEID" || property.Item1 == "DISPLAYNAMEID")
+								locFile.RemoveLocKey(property.Item2);
+						}
+						TrySetLocFile(locFile);
+					}
+				}
+				currentPCK.Files.Remove(file);
+				node.Remove();
+				saved = false;
+			}
+			else if (MessageBox.Show("Are you sure want to delete this folder? All contents will be deleted", "Warning",
+				MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+			{
+				string pckFolderDir = node.FullPath;
+				currentPCK.Files.RemoveAll(file => file.filepath.StartsWith(pckFolderDir));
+				node.Remove();
+				saved = false;
+			}
+		}
 
 		private void renameFileToolStripMenuItem_Click(object sender, EventArgs e)
 		{
@@ -598,14 +597,14 @@ namespace PckStudio
 						grfEditor.ShowDialog();
 					break;
 
-                case 8 when file.filepath == "audio.pck":
-                    if (!TryGetLocFile(out LOCFile locFile))
-                        throw new Exception("No .loc File found.");
-                    AudioEditor audioEditor = new AudioEditor(file, locFile, LittleEndianCheckBox.Checked);
-                    audioEditor.ShowDialog(this);
+				case 8 when file.filepath == "audio.pck":
+					if (!TryGetLocFile(out LOCFile locFile))
+						throw new Exception("No .loc File found.");
+					AudioEditor audioEditor = new AudioEditor(file, locFile, LittleEndianCheckBox.Checked);
+					audioEditor.ShowDialog(this);
 					if (audioEditor.saved) TrySetLocFile(locFile);
 					audioEditor.Dispose();
-                    break;
+					break;
 
 				case 9 when file.filepath == "colours.col":
 					if (file.size == 0)
@@ -697,16 +696,16 @@ namespace PckStudio
 				mf.properties.Add(property);
 			}
 
-            TreeNode newNode = new TreeNode();
-            newNode.Text = newFileName;
-            newNode.Tag = mf;
-            newNode.ImageIndex = node.ImageIndex;
-            newNode.SelectedImageIndex = node.SelectedImageIndex;
+			TreeNode newNode = new TreeNode();
+			newNode.Text = newFileName;
+			newNode.Tag = mf;
+			newNode.ImageIndex = node.ImageIndex;
+			newNode.SelectedImageIndex = node.SelectedImageIndex;
 
-            if (node.Parent == null) treeViewMain.Nodes.Insert(node.Index + 1, newNode); //adds generated minefile node
-            else node.Parent.Nodes.Insert(node.Index + 1, newNode);//adds generated minefile node to selected folder
-            currentPCK.Files.Insert(node.Index + 1, mf);
-        }
+			if (node.Parent == null) treeViewMain.Nodes.Insert(node.Index + 1, newNode); //adds generated minefile node
+			else node.Parent.Nodes.Insert(node.Index + 1, newNode);//adds generated minefile node to selected folder
+			currentPCK.Files.Insert(node.Index + 1, mf);
+		}
 
 		private void deleteEntryToolStripMenuItem_Click(object sender, EventArgs e)
 		{
@@ -1032,7 +1031,7 @@ namespace PckStudio
 						FileInfo file = new FileInfo(filepath);
 						file.Directory.Create();
 						File.WriteAllBytes(filepath, mf.data); // writes data to file
-						//attempts to generate reimportable metadata file out of minefiles metadata
+															   //attempts to generate reimportable metadata file out of minefiles metadata
 						string metaData = "";
 
 						foreach (var entry in mf.properties)
@@ -1050,9 +1049,14 @@ namespace PckStudio
 			}
 		}
 
+		public string GetDataPath()
+		{
+			return Path.Combine(Path.GetDirectoryName(saveLocation), $"Data");
+		}
+
 		public bool HasDataFolder()
 		{
-			return Directory.Exists(Path.Combine(Path.GetDirectoryName(saveLocation), "Data"));
+			return Directory.Exists(GetDataPath());
 		}
 
 		public bool CreateDataFolder()
@@ -1061,7 +1065,7 @@ namespace PckStudio
 			{
 				DialogResult result = MessageBox.Show("There is not a \"Data\" folder present in the pack folder. Would you like to create one?", "Folder missing", MessageBoxButtons.YesNo);
 				if (result == DialogResult.No) return false;
-				else Directory.CreateDirectory(DataDirectory);
+				else Directory.CreateDirectory(GetDataPath());
 			}
 			return true;
 		}
