@@ -216,7 +216,7 @@ namespace PckStudio.Forms.Editor
 
 				OpenFileDialog ofn = new OpenFileDialog();
 				ofn.Multiselect = true;
-				ofn.Filter = "BINKA files (*.binka)|*.binka|WAV files (*.wav)|*.wav";
+				ofn.Filter = "Supported audio files (*.binka,*.wav)|*.binka;*.wav";
 				ofn.Title = "Please choose WAV or BINKA files to add to your pack";
 				ofn.ShowDialog();
 				ofn.Dispose();
