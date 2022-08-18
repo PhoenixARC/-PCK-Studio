@@ -123,6 +123,21 @@ namespace PckStudio.Forms.Editor
 			playOverworldInCreative.Enabled = audioFile.HasCategory(PCKAudioFile.AudioCategory.EAudioType.Creative);
 		}
 
+		bool doesDataFolderExist()
+		{
+			MainForm parent = Owner.Owner as MainForm; // Gets the MainForm so we can access the Save Location
+
+			DataDirectory = Path.Combine(Path.GetDirectoryName(parent.saveLocation), "Data");
+
+			if (!Directory.Exists(DataDirectory))
+			{
+				DialogResult result = MessageBox.Show("There is not a \"Data\" folder present in the pack folder. Would you like to create one?", "Folder missing", MessageBoxButtons.YesNo);
+				if (result == DialogResult.No) return false;
+				else Directory.CreateDirectory(DataDirectory);
+			}
+			return true;
+		}
+
 		// https://stackoverflow.com/a/25064568 by Alik Khilazhev -MattNL
 		private void ExtractResource(string resName, string fName)
 		{
@@ -169,14 +184,9 @@ namespace PckStudio.Forms.Editor
 			if (treeView1.SelectedNode == null || treeView2.SelectedNode == null) return;
 			var entry = treeView2.SelectedNode;
 
-			if (string.IsNullOrEmpty(DataDirectory)) getDataDirectory();
+			if (!doesDataFolderExist()) return;
 			string FileName = Path.Combine(DataDirectory, entry.Text + ".binka");
-			Console.WriteLine(FileName);
-			if (!Directory.Exists(DataDirectory))
-			{
-				MessageBox.Show("There is not a \"Data\" folder present in the pack folder", "Folder missing");
-				return;
-			}
+
 			if (File.Exists(FileName)) MessageBox.Show("\"" + entry.Text + ".binka\" exists in the \"Data\" folder", "File found");
 			else MessageBox.Show("\"" + entry.Text + ".binka\" does not exist in the \"Data\" folder. The game will crash when attempting to load this track.", "File missing");
 		}
@@ -216,16 +226,9 @@ namespace PckStudio.Forms.Editor
 
 		private void addEntryMenuItem_Click(object sender, EventArgs e)
 		{
-			if (treeView1.SelectedNode is TreeNode t && t.Tag is PCKAudioFile.AudioCategory &&
-				// Gets the MainForm so we can access the Save Location
-				Owner.Owner is MainForm parent)
+			if (treeView1.SelectedNode is TreeNode t && t.Tag is PCKAudioFile.AudioCategory)
 			{
-				if (string.IsNullOrEmpty(DataDirectory)) getDataDirectory();
-				if (!Directory.Exists(DataDirectory))
-				{
-					MessageBox.Show("There is not a \"Data\" folder present in the pack folder", "Folder missing");
-					return;
-				}
+				if (!doesDataFolderExist()) return;
 
 				OpenFileDialog ofn = new OpenFileDialog();
 				ofn.Multiselect = true;
@@ -344,14 +347,9 @@ namespace PckStudio.Forms.Editor
 		{
 			//MessageBox.Show((Owner.Owner as MainForm).saveLocation);
 			// Gets the MainForm so we can access the Save Location
-			if (treeView1.SelectedNode != null && Owner.Owner is MainForm parent)
+			if (treeView1.SelectedNode != null)
 			{
-				if (string.IsNullOrEmpty(DataDirectory)) getDataDirectory();
-				if (!Directory.Exists(DataDirectory))
-				{
-					MessageBox.Show("There is not a \"Data\" folder present in the pack folder", "Folder missing");
-					return;
-				}
+				if (!doesDataFolderExist()) return;
 
 				ProcessEntries((string[])e.Data.GetData(DataFormats.FileDrop, false));
 			}
@@ -440,7 +438,7 @@ namespace PckStudio.Forms.Editor
 				totalSongList.Add(song);
 			}
 
-			if (string.IsNullOrEmpty(DataDirectory)) getDataDirectory();
+			if (!doesDataFolderExist()) return;
 			int totalDeleted = 0;
 			foreach (string song in Directory.GetFiles(DataDirectory, "*.binka"))
 			{
@@ -460,13 +458,6 @@ namespace PckStudio.Forms.Editor
 				}
 			}
 			MessageBox.Show("Successfully deleted " + totalDeleted + " files", "Done");
-		}
-
-		// For when the Data Directory variable is null, this sets the variable in the form
-		private void getDataDirectory()
-		{
-			MainForm parent = Owner.Owner as MainForm; // Gets the MainForm so we can access the Save Location
-			DataDirectory = Path.Combine(Path.GetDirectoryName(parent.saveLocation), "Data");
 		}
 
 		private void howToAddSongsToolStripMenuItem_Click(object sender, EventArgs e)
