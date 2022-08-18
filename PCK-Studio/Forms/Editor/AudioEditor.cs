@@ -139,13 +139,13 @@ namespace PckStudio.Forms.Editor
 
 		private void handleUtilFiles(bool extractFiles = true)
 		{
-			//string asiPath = Path.Combine(tempDir, "binkawin.asi");
-			//string mssPath = Path.Combine(tempDir, "mss32.dll");
+			string asiPath = Path.Combine(tempDir, "binkawin.asi");
+			string mssPath = Path.Combine(tempDir, "mss32.dll");
 			string encoderPath = Path.Combine(tempDir, "binka_encode.exe");
 
 			// Deletes files so that System.IO exceptions are avoided
-			//if (File.Exists(asiPath)) File.Delete(asiPath);
-			//if (File.Exists(mssPath)) File.Delete(mssPath);
+			if (File.Exists(asiPath)) File.Delete(asiPath);
+			if (File.Exists(mssPath)) File.Delete(mssPath);
 			if (File.Exists(encoderPath)) File.Delete(encoderPath);
 			if (Directory.Exists(tempDir)) Directory.Delete(tempDir);
 
