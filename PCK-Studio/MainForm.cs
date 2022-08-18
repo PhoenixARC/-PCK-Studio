@@ -22,11 +22,12 @@ namespace PckStudio
 {
 	public partial class MainForm : MetroFramework.Forms.MetroForm
 	{
-		public string saveLocation = string.Empty;
+		string saveLocation = string.Empty;
 		PCKFile currentPCK = null;
 		bool needsUpdate = false;
 		bool saved = true;
 		bool isTemplateFile = false;
+		string DataDirectory = string.Empty;
 
 		public MainForm()
 		{
@@ -1047,6 +1048,22 @@ namespace PckStudio
 			{
 				MessageBox.Show("An Error occured while extracting data");
 			}
+		}
+
+		public bool HasDataFolder()
+		{
+			return Directory.Exists(Path.Combine(Path.GetDirectoryName(saveLocation), "Data"));
+		}
+
+		public bool CreateDataFolder()
+		{
+			if (!HasDataFolder())
+			{
+				DialogResult result = MessageBox.Show("There is not a \"Data\" folder present in the pack folder. Would you like to create one?", "Folder missing", MessageBoxButtons.YesNo);
+				if (result == DialogResult.No) return false;
+				else Directory.CreateDirectory(DataDirectory);
+			}
+			return true;
 		}
 
 		private void treeMeta_KeyDown(object sender, KeyEventArgs e)
