@@ -1,7 +1,7 @@
 {
 	"COMMENT_1": "Tile data research by MattNL",
 	"COMMENT_2": "JSON conversion by PhoenixARC",
-	"Blocks": [
+	"blocks": [
 		{ "grass_top": "Grass Block (Top)" },
 		{ "stone": "Stone" },
 		{ "dirt": "Dirt" },
@@ -547,7 +547,7 @@
 		{ "dark_oak_trapdoor": "Dark Oak Trapdoor" },
 		{ "jungle_trapdoor": "Jungle Trapdoor" }
 	],
-	"Items": [
+	"items": [
 		{ "helmetCloth": "Leather Helmet" },
 		{ "helmetChain": "Chain Helmet" },
 		{ "helmetIron": "Iron Helmet" },

@@ -6,10 +6,10 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 using System.Diagnostics;
-using PckStudio.Properties;
-using Ohana3DS_Rebirth.Ohana;
 using System.Drawing.Imaging;
 using RichPresenceClient;
+using Ohana3DS_Rebirth.Ohana;
+using PckStudio.Properties;
 using PckStudio.Classes.FileTypes;
 using PckStudio.Classes.IO;
 using PckStudio.Classes.IO.LOC;
@@ -17,6 +17,7 @@ using PckStudio.Classes.IO.GRF;
 using PckStudio.Forms;
 using PckStudio.Forms.Utilities;
 using PckStudio.Forms.Editor;
+using PckStudio.Forms.Additional_Popups.Animation;
 
 namespace PckStudio
 {
@@ -526,7 +527,6 @@ namespace PckStudio
 			diag.Dispose();
 		}
 
-
 		private void createAnimatedTextureToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			using (var ofd = new OpenFileDialog())
@@ -535,30 +535,22 @@ namespace PckStudio
 				ofd.Title = "Select a PNG File";
 				if (ofd.ShowDialog() == DialogResult.OK)
 				{
-					try
-					{
-						using (Forms.Utilities.AnimationEditor.ChangeTile diag = new Forms.Utilities.AnimationEditor.ChangeTile())
+					using ChangeTile diag = new ChangeTile();
 							if (diag.ShowDialog(this) == DialogResult.OK)
 							{
-								Console.WriteLine(diag.SelectedTile);
-								using (Image img = new Bitmap(ofd.FileName))
-								using (AnimationEditor animationEditor = new AnimationEditor(img, diag.SelectedTile, diag.IsItem))
-								{
+						using Image img = new Bitmap(ofd.FileName);
+						var file = AnimationUtil.CreateNewAnimationFile(img, diag.SelectedTile, diag.IsItem);
+						currentPCK.Files.Add(file);
+						using AnimationEditor animationEditor = new AnimationEditor(file);
 									if (animationEditor.ShowDialog() == DialogResult.OK)
 									{
-										treeMeta.Nodes.Clear();
+							ReloadMetaTreeView();
+							BuildMainTreeView();
 										saved = false;
 									}
 								}
 							}
 					}
-					catch
-					{
-						MessageBox.Show("Invalid animation data.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-						return;
-					}
-				}
-			}
 		}
 
 		private void treeViewMain_DoubleClick(object sender, EventArgs e)
@@ -589,6 +581,15 @@ namespace PckStudio
 						saved = false;
 					}
 					break;
+
+				case 2 when file.filepath.StartsWith("res/textures/blocks/") || file.filepath.StartsWith("res/textures/items/"):
+					using (AnimationEditor animationEditor = new AnimationEditor(file))
+						{
+							if (animationEditor.ShowDialog(this) == DialogResult.OK)
+								ReloadMetaTreeView();
+						}
+					break;
+
 
 				case 7:
 				case 10 when (Path.GetExtension(file.filepath) == ".grf" && file.type == 7) ||
@@ -2626,19 +2627,14 @@ namespace PckStudio
 			//Check for Animated Texture
 			if (file.filepath.StartsWith("res/textures/blocks/") || file.filepath.StartsWith("res/textures/items/"))
 			{
-				try
-				{
-					AnimationEditor diag = new AnimationEditor(file);
-					diag.ShowDialog(this);
-					diag.Dispose();
+				string filename = Path.GetFileNameWithoutExtension(file.filepath);
+                if ((filename.EndsWith("MipMapLevel2") ||filename.EndsWith("MipMapLevel3")) &&
+					currentPCK.TryGetFile(file.filepath.Substring(0, file.filepath.Length - 4 - 12) + ".png", 2, out var baseAnimationFile))
+					file = baseAnimationFile;
+				using AnimationEditor diag = new AnimationEditor(file);
+				if (diag.ShowDialog(this) == DialogResult.OK)
 					ReloadMetaTreeView();
 				}
-				catch
-				{
-					MessageBox.Show("Invalid animation data.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-					return;
-				}
-			}
 
 			if (Path.GetFileName(file.filepath) == "audio.pck")
 			{

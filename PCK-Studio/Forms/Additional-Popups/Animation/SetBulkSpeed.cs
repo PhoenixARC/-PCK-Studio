@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using MetroFramework.Forms;
 using System.Windows.Forms;
 
-namespace PckStudio.Forms.Utilities.AnimationEditor
+namespace PckStudio.Forms.Additional_Popups.Animation
 {
 	public partial class SetBulkSpeed : MetroForm
 	{
@@ -23,16 +23,12 @@ namespace PckStudio.Forms.Utilities.AnimationEditor
 
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
-            {
-                e.Handled = true;
-            }
+			e.Handled = !char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar);
         }
 
 		private void button1_Click(object sender, EventArgs e)
 		{
-			if(metroTextBox2.Text == "") {}
-            else if(Int16.Parse(metroTextBox2.Text) < 0) {}
+			if (metroTextBox2.Text == "" || short.Parse(metroTextBox2.Text) < 0) return;
 			else
 			{
 				int i = 0;
@@ -47,14 +43,13 @@ namespace PckStudio.Forms.Utilities.AnimationEditor
 					tv.Nodes.Insert(i, frameNode);
 					i++;
 				}
-
-				this.Close();
+				Close();
 			}
 		}
 
 		private void button2_Click(object sender, EventArgs e)
 		{
-			this.Close();
+			Close();
 		}
 	}
 }
