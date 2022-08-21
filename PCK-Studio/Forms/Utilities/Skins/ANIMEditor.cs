@@ -15,6 +15,7 @@ namespace PckStudio.Forms.Utilities.Skins
 	public partial class ANIMEditor : MetroFramework.Forms.MetroForm
 	{
 		public bool saved = false;
+		readonly SkinANIM initialANIM;
 		public string outANIM => animValue.Text;
 		SkinANIM anim = new SkinANIM();
 
@@ -69,8 +70,9 @@ namespace PckStudio.Forms.Utilities.Skins
 				DialogResult = DialogResult.Abort;
 				Close();
 			}
-			anim = new SkinANIM(ANIM);
-			
+            initialANIM = anim = new SkinANIM(ANIM);
+
+			#region Event definitions, since the designer can't parse lambda experessions
 			bobbingCheckBox.CheckedChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, eANIM_EFFECTS.HEAD_BOBBING_DISABLED); };
 			bodyCheckBox.CheckedChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, eANIM_EFFECTS.BODY_DISABLED); };
 			bodyOCheckBox.CheckedChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, eANIM_EFFECTS.BODY_OVERLAY_DISABLED); };
@@ -117,8 +119,8 @@ namespace PckStudio.Forms.Utilities.Skins
 			leftArmorCheckBox.EnabledChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, eANIM_EFFECTS.FORCE_LEFT_ARM_ARMOR); };
 			rightLeggingCheckBox.EnabledChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, eANIM_EFFECTS.FORCE_RIGHT_LEG_ARMOR); };
 			leftLeggingCheckBox.EnabledChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, eANIM_EFFECTS.FORCE_LEFT_LEG_ARMOR); };
-
-			processCheckBoxes();
+            #endregion
+            processCheckBoxes();
 		}
 
 		private void closeButton_Click(object sender, EventArgs e)
@@ -227,6 +229,45 @@ namespace PckStudio.Forms.Utilities.Skins
 			}
 
 			skin.Save(saveFileDialog.FileName);
+		}
+
+		private void resetButton_Click(object sender, EventArgs e)
+		{
+			anim = initialANIM;
+			processCheckBoxes();
+		}
+
+		static Dictionary<string, eANIM_EFFECTS> Templates = new Dictionary<string, eANIM_EFFECTS>()
+		{
+				{ "Steve (64x32)",           eANIM_EFFECTS.NONE },
+				{ "Steve (64x64)",           eANIM_EFFECTS.RESOLUTION_64x64 },
+				{ "Alex (64x64)",            eANIM_EFFECTS.SLIM_MODEL },
+				{ "Zombie Skins",            eANIM_EFFECTS.ZOMBIE_ARMS },
+				{ "Cetacean Skins",          eANIM_EFFECTS.SYNCED_ARMS | eANIM_EFFECTS.SYNCED_LEGS },
+				{ "Ski Skins",               eANIM_EFFECTS.SYNCED_ARMS | eANIM_EFFECTS.STATIC_LEGS },
+				{ "Ghost Skins",             eANIM_EFFECTS.STATIC_LEGS | eANIM_EFFECTS.ZOMBIE_ARMS },
+				{ "Medusa (Greek Myth.)",    eANIM_EFFECTS.SYNCED_LEGS },
+				{ "Librarian (Halo)",        eANIM_EFFECTS.STATIC_LEGS },
+				{ "Grim Reaper (Halloween)", eANIM_EFFECTS.STATIC_LEGS | eANIM_EFFECTS.STATIC_ARMS }
+		};
+
+		private void templateButton_Click(object sender, EventArgs e)
+		{
+			// Recycling the AddCategory popup to handle the ANIM templates (:
+			// diag.Category will be the ANIM codes
+			var diag = new Additional_Popups.Audio.addCategory(Templates.Keys.ToArray());
+			diag.label2.Text = "Presets";
+			diag.button1.Text = "Load";
+
+			if (diag.ShowDialog() != DialogResult.OK) return;
+
+			var templateANIM = Templates[diag.Category];
+			DialogResult prompt = MessageBox.Show(this, "Would you like to add this preset's effects to your current ANIM? Otherwise all of your effects will be cleared. Either choice can be undone by pressing \"Restore ANIM\".", "", MessageBoxButtons.YesNo);
+			if (prompt == DialogResult.Yes) anim |= templateANIM;
+			else anim = templateANIM;
+			SkinANIM backup = anim;
+			processCheckBoxes();
+			anim = backup;
 		}
 	}
 }
