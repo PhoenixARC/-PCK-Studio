@@ -19,7 +19,6 @@ namespace PckStudio.Forms.Editor
 {
 	public partial class AudioEditor : MetroForm
 	{
-		public bool saved = false;
 		public string defaultType = "yes";
 		private string DataDirectory = "";
 		string tempDir = "";
@@ -27,8 +26,9 @@ namespace PckStudio.Forms.Editor
 		PCKFile.FileData audioPCK;
 		LOCFile loc;
 		bool _isLittleEndian = false;
+        MainForm parent = null;
 
-		public static readonly List<string> Categories = new List<string>
+        public static readonly List<string> Categories = new List<string>
 		{
 			"Overworld",
 			"Nether",
@@ -52,35 +52,11 @@ namespace PckStudio.Forms.Editor
 			return (PCKAudioFile.AudioCategory.EAudioType)Categories.IndexOf(category);
 		}
 
-		public static PCKFile.FileData CreateAudioPck(bool isLittle)
-		{
-			// create actual valid pck file structure
-			PCKAudioFile audioPck = new PCKAudioFile();
-			audioPck.AddCategory(PCKAudioFile.AudioCategory.EAudioType.Overworld);
-			audioPck.AddCategory(PCKAudioFile.AudioCategory.EAudioType.Nether);
-			audioPck.AddCategory(PCKAudioFile.AudioCategory.EAudioType.End);
-			PCKFile.FileData pckFileData = new PCKFile.FileData("audio.pck", 8);
-			using (var stream = new MemoryStream())
-			{
-				PCKAudioFileWriter.Write(stream, audioPck, isLittle);
-				pckFileData.SetData(stream.ToArray());
-			}
-			return pckFileData;
-		}
-
-		/// <summary>
-		/// Overload that creates a new audio.pck file
-		/// </summary>
-		public AudioEditor(LOCFile locFile, bool isLittleEndian) : this(CreateAudioPck(isLittleEndian), locFile, isLittleEndian)
-		{
-		}
-
 		public AudioEditor(PCKFile.FileData file, LOCFile locFile, bool isLittleEndian)
 		{
 			InitializeComponent();
 			// so the Creative songs aren't combined until after the forms are closed.
 			// this will prevent potential problems with editing the categories after merging.
-			this.saveToolStripMenuItem1.Click += (sender, e) => saveToolStripMenuItem1_Click(sender, e, false);
 			loc = locFile;
 			tempDir = Path.Combine(Directory.GetCurrentDirectory(), "temp");
 			_isLittleEndian = isLittleEndian;
@@ -353,7 +329,7 @@ namespace PckStudio.Forms.Editor
 			}
 		}
 
-		private void saveToolStripMenuItem1_Click(object sender, EventArgs e, bool combineCreative)
+		private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
 			if (!audioFile.HasCategory(PCKAudioFile.AudioCategory.EAudioType.Overworld) ||
 			   !audioFile.HasCategory(PCKAudioFile.AudioCategory.EAudioType.Nether) ||
@@ -367,7 +343,7 @@ namespace PckStudio.Forms.Editor
 			foreach (var category in audioFile.Categories)
 			{
 				category.Name = "";
-				if (combineCreative && category.audioType == PCKAudioFile.AudioCategory.EAudioType.Creative)
+				if (playOverworldInCreative.Checked && category.audioType == PCKAudioFile.AudioCategory.EAudioType.Creative)
 				{
 					foreach (var name in overworldCategory.SongNames)
 					{
@@ -394,7 +370,7 @@ namespace PckStudio.Forms.Editor
 				PCKAudioFileWriter.Write(stream, audioFile, _isLittleEndian);
 				audioPCK.SetData(stream.ToArray());
 			}
-			saved = true;
+			DialogResult = DialogResult.OK;
 		}
 
 		private void treeView2_DragEnter(object sender, DragEventArgs e)
@@ -418,11 +394,6 @@ namespace PckStudio.Forms.Editor
 			using (creditsEditor prompt = new creditsEditor(credits))
 				if (prompt.ShowDialog() == DialogResult.OK)
 					audioFile.SetCredits(prompt.Credits.Split('\n'));
-		}
-
-		private void AudioEditor_FormClosing(object sender, FormClosingEventArgs e)
-		{
-			if (saved) saveToolStripMenuItem1_Click(sender, e, playOverworldInCreative.Checked);
 		}
 
 		private void deleteUnusedBINKAsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -461,8 +432,8 @@ namespace PckStudio.Forms.Editor
 		// For when the Data Directory variable is null, this sets the variable in the form
 		private void getDataDirectory()
 		{
-			MainForm parent = Owner.Owner as MainForm; // Gets the MainForm so we can access the Save Location
-			DataDirectory = Path.Combine(Path.GetDirectoryName(parent.saveLocation), "Data");
+			if (Owner.Owner is MainForm p) parent = p;
+			else Close();
 		}
 	}
 }
