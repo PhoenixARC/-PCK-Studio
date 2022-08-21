@@ -12,9 +12,9 @@ namespace PckStudio
     public partial class addNewSkin : MetroFramework.Forms.MetroForm
     {
         LOCFile currentLoc;
-        PCKFile.FileData skin = new PCKFile.FileData("dlcskin", 0);
-        PCKFile.FileData cape = new PCKFile.FileData("dlccape", 1);
-        SkinANIM anim = new SkinANIM("0");
+        PCKFile.FileData skin = new PCKFile.FileData("dlcskinXYXYXYXY", PCKFile.FileData.FileType.SkinFile);
+        PCKFile.FileData cape = new PCKFile.FileData("dlccapeXYXYXYXY", PCKFile.FileData.FileType.CapeFile);
+        SkinANIM anim = new SkinANIM(eANIM_EFFECTS.NONE);
 
         public PCKFile.FileData Skin => skin;
         public PCKFile.FileData Cape => cape;

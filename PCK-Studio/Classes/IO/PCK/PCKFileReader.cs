@@ -53,7 +53,7 @@ namespace PckStudio.Classes.IO
             for (; 0 < file_entry_count; file_entry_count--)
             {
                 int file_size = ReadInt(stream);
-                int file_type = ReadInt(stream);
+                var file_type = (PCKFile.FileData.FileType)ReadInt(stream);
                 string name = ReadString(stream);
                 var entry = new PCKFile.FileData(name, file_type, file_size);
                 _file.Files.Add(entry);

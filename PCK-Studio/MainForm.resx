@@ -29835,7 +29835,7 @@
     <value>pictureBoxImagePreview</value>
   </data>
   <data name="&gt;&gt;pictureBoxImagePreview.Type" xml:space="preserve">
-    <value>PckStudio.PictureBoxWithInterpolationMode, PCK Studio, Version=6.4.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>PckStudio.PictureBoxWithInterpolationMode, PCK Studio, Version=6.5.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;pictureBoxImagePreview.Parent" xml:space="preserve">
     <value>editorTab</value>
