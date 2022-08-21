@@ -27,13 +27,13 @@ namespace PckStudio.Classes.IO
             if (pck_type > 0xf00000) // 03 00 00 00 == true
                 throw new OverflowException(nameof(pck_type));
             _file = new PCKFile(pck_type);
-            ReadLookUpTabel(stream);
+            ReadLookUpTable(stream);
             ReadFileEntries(stream);
             ReadFileContents(stream);
             return _file;
         }
 
-        private void ReadLookUpTabel(Stream stream)
+        private void ReadLookUpTable(Stream stream)
         {
             int count = ReadInt(stream);
             LUT = new List<string>(count);
