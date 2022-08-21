@@ -20,7 +20,7 @@ namespace PckStudio.Classes.IO.LOC
 
         private void WriteToStream(Stream stream, int type)
         {
-            if (_locfile == null) throw new ArgumentNullException(nameof(_locfile));
+            _ = _locfile ?? throw new ArgumentNullException(nameof(_locfile));
             WriteInt(stream, type);
             WriteInt(stream, _locfile.Languages.Count);
             if (type == 2) WriteLocKeys(stream);

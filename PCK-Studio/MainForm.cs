@@ -23,7 +23,7 @@ namespace PckStudio
 {
 	public partial class MainForm : MetroFramework.Forms.MetroForm
 	{
-		public string saveLocation = string.Empty;
+		string saveLocation = string.Empty;
 		PCKFile currentPCK = null;
 		bool needsUpdate = false;
 		bool saved = true;
@@ -218,7 +218,7 @@ namespace PckStudio
 						node.ImageIndex = 3;
 						node.SelectedImageIndex = 3;
 						break;
-					case 8:
+					case PCKFile.FileData.FileType.AudioFile:
 						node.ImageIndex = 1;
 						node.SelectedImageIndex = 1;
 						break;
@@ -2699,22 +2699,12 @@ namespace PckStudio
 
 			if (Path.GetFileName(file.filepath) == "audio.pck")
 			{
-				try
-				{
 					if (!TryGetLocFile(out LOCFile locFile))
 						throw new Exception("No .loc File found.");
 					AudioEditor diag = new AudioEditor(file, locFile, LittleEndianCheckBox.Checked);
-					diag.ShowDialog(this);
-					if (diag.saved) TrySetLocFile(locFile);
+				if (diag.ShowDialog(this) == DialogResult.OK) TrySetLocFile(locFile);
 					diag.Dispose();
 				}
-				catch (Exception ex)
-				{
-					MessageBox.Show("Error", ex.Message, MessageBoxButtons.OK,
-					MessageBoxIcon.Error);
-					return;
-				}
-			}
 
 			if (file.filetype == PCKFile.FileData.FileType.LocalisationFile &&
 				(file.filepath == "languages.loc" || file.filepath == "localisation.loc"))

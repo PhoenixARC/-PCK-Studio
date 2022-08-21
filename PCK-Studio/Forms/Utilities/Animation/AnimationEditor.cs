@@ -122,7 +122,7 @@ namespace PckStudio
 		
 		private PCKFile.FileData CreateNewAnimationFile(Image imgageFile, string name = "")
         {
-			PCKFile.FileData file = new PCKFile.FileData(name, 2);
+			PCKFile.FileData file = new PCKFile.FileData(name, PCKFile.FileData.FileType.TextureFile);
 			file.properties.Add(("ANIM", ""));
 			using (var stream = new MemoryStream())
 			{
