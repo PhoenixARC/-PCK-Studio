@@ -1,15 +1,23 @@
 # PCK Studio
 Modify .PCK archives as you please!
 
-_`previously known as MinecraftUSkinEditor`_\
-`A minecraft for Wii U editor`
-
 ## Features:
+#### If you'd like to suggested a feature to be added open an [issue](https://github.com/PhoenixARC/-PCK-Studio/issues) on the github.
 * Open, Edit and Save .PCK archives (this means models, animations, entire custom packs, etc.)
 * Add / Remove / Replace skins, audios, textures, animations and much more.
 * Edit localization data to make your mods support every language supported by minecraft itself!
 * PNG previewing
-* And much more!
+* And much more!\
+
+## Supported File format
+
+| Name | file extentions |
+|:-:|:-:|
+| Localization files | **.loc** |
+| Game Rule files | **.grh/.grf** |
+| Audio.pck |**audio.pck** |
+| Colour file | **.col** |
+
 
 ### Known Issues
  - `.resx been flagged by windows(when downloading source.zip)`
@@ -26,14 +34,14 @@ $ cd "-PCK-Studio"
     ```powershell
     $ dir -Path .\ -Recurse | Unblock-File
     ```
-- ### Building using [Visual Studio](https://visualstudio.microsoft.com/downloads)
-    * Open [MinecraftUSkinEditor.sln](./MinecraftUSkinEditor.sln) in Visual Studio 2022 or later
+- ### Building using [Visual Studio 2022 (or later)](https://visualstudio.microsoft.com/downloads)
+    * Open [PCK_Studio.sln](./PCK_Studio.sln) in Visual Studio 2022 or later
     * Click `Run` or press `Shift + B`
 
-- ### Building using [MSBuild](https://github.com/dotnet/msbuild/releases)
+- ### Building using [MSBuild](https://github.com/dotnet/msbuild/releases) and [Nuget](https://www.nuget.org/downloads)
   * ```shell
-    $ nuget restore MinecraftUSkinEditor.sln
-    $ msbuild MinecraftUSkinEditor.sln -property:Configuration=Release
+    $ nuget restore PCK_Studio.sln
+    $ msbuild PCK_Studio.sln -property:Configuration=Release
     ```
 
 ### A quick note:

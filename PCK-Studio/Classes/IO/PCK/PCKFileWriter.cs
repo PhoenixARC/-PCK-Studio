@@ -20,6 +20,7 @@ namespace PckStudio.Classes.IO
         {
             _pckfile = file;
             LUT = _pckfile.GatherPropertiesList();
+            if (!file.HasFile("localisation.loc", 6) && !LUT.Contains("XMLVERSION")) LUT.Insert(0, "XMLVERSION");
         }
 
         private void WriteToStream(Stream stream)

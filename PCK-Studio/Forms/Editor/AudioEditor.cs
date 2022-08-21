@@ -21,12 +21,12 @@ namespace PckStudio.Forms.Editor
 	{
 		public bool saved = false;
 		public string defaultType = "yes";
-		private string DataDirectory = "";
 		string tempDir = "";
 		PCKAudioFile audioFile = null;
 		PCKFile.FileData audioPCK;
 		LOCFile loc;
 		bool _isLittleEndian = false;
+		MainForm parent = null;
 
 		public static readonly List<string> Categories = new List<string>
 		{
@@ -119,7 +119,6 @@ namespace PckStudio.Forms.Editor
 				treeNode.Tag = category;
 				treeView1.Nodes.Add(treeNode);
 			}
-
 			playOverworldInCreative.Enabled = audioFile.HasCategory(PCKAudioFile.AudioCategory.EAudioType.Creative);
 		}
 
@@ -139,13 +138,13 @@ namespace PckStudio.Forms.Editor
 
 		private void handleUtilFiles(bool extractFiles = true)
 		{
-			//string asiPath = Path.Combine(tempDir, "binkawin.asi");
-			//string mssPath = Path.Combine(tempDir, "mss32.dll");
+			string asiPath = Path.Combine(tempDir, "binkawin.asi");
+			string mssPath = Path.Combine(tempDir, "mss32.dll");
 			string encoderPath = Path.Combine(tempDir, "binka_encode.exe");
 
 			// Deletes files so that System.IO exceptions are avoided
-			//if (File.Exists(asiPath)) File.Delete(asiPath);
-			//if (File.Exists(mssPath)) File.Delete(mssPath);
+			if (File.Exists(asiPath)) File.Delete(asiPath);
+			if (File.Exists(mssPath)) File.Delete(mssPath);
 			if (File.Exists(encoderPath)) File.Delete(encoderPath);
 			if (Directory.Exists(tempDir)) Directory.Delete(tempDir);
 
@@ -153,8 +152,8 @@ namespace PckStudio.Forms.Editor
 			{
 				Directory.CreateDirectory(tempDir);
 				ExtractResource("binka_encode", encoderPath);
-				//ExtractResource("mss32", mssPath);
-				//ExtractResource("binkawin", asiPath);
+				ExtractResource("mss32", mssPath);
+				ExtractResource("binkawin", asiPath);
 			}
 		}
 
@@ -166,19 +165,14 @@ namespace PckStudio.Forms.Editor
 
 		private void verifyFileLocationToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (treeView1.SelectedNode.Tag == null || treeView2.SelectedNode.Tag == null) return;
+			if (treeView1.SelectedNode == null || treeView2.SelectedNode == null) return;
 			var entry = treeView2.SelectedNode;
 
-			if (string.IsNullOrEmpty(DataDirectory)) getDataDirectory();
-			string FileName = Path.Combine(DataDirectory, entry.Text + ".binka");
-			Console.WriteLine(FileName);
-			if (!Directory.Exists(DataDirectory))
-			{
-				MessageBox.Show("There is not a \"Data\" folder present in the pack folder", "Folder missing");
-				return;
-			}
+			if (!parent.CreateDataFolder()) return;
+			string FileName = Path.Combine(parent.GetDataPath(), entry.Text + ".binka");
+
 			if (File.Exists(FileName)) MessageBox.Show("\"" + entry.Text + ".binka\" exists in the \"Data\" folder", "File found");
-			else MessageBox.Show("\"" + entry.Text + ".binka\" does not exist in the \"Data\" folder", "File missing");
+			else MessageBox.Show("\"" + entry.Text + ".binka\" does not exist in the \"Data\" folder. The game will crash when attempting to load this track.", "File missing");
 		}
 
 		private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
@@ -206,6 +200,7 @@ namespace PckStudio.Forms.Editor
 				TreeNode treeNode = new TreeNode(GetCategoryFromId(category.audioType), (int)category.audioType, (int)category.audioType);
 				treeNode.Tag = category;
 				treeView1.Nodes.Add(treeNode);
+				saved = false;
 			}
 			else
 			{
@@ -215,26 +210,20 @@ namespace PckStudio.Forms.Editor
 
 		private void addEntryMenuItem_Click(object sender, EventArgs e)
 		{
-			if (treeView1.SelectedNode is TreeNode t && t.Tag is PCKAudioFile.AudioCategory &&
-				// Gets the MainForm so we can access the Save Location
-				Owner.Owner is MainForm parent)
+			if (treeView1.SelectedNode is TreeNode t && t.Tag is PCKAudioFile.AudioCategory)
 			{
-				if (string.IsNullOrEmpty(DataDirectory)) getDataDirectory();
-				if (!Directory.Exists(DataDirectory))
-				{
-					MessageBox.Show("There is not a \"Data\" folder present in the pack folder", "Folder missing");
-					return;
-				}
+				if (!parent.CreateDataFolder()) return;
 
 				OpenFileDialog ofn = new OpenFileDialog();
 				ofn.Multiselect = true;
-				ofn.Filter = "BINKA files (*.binka)|*.binka|WAV files (*.wav)|*.wav";
+				ofn.Filter = "Supported audio files (*.binka,*.wav)|*.binka;*.wav";
 				ofn.Title = "Please choose WAV or BINKA files to add to your pack";
 				ofn.ShowDialog();
 				ofn.Dispose();
 				if (string.IsNullOrEmpty(ofn.FileName)) return; // Return if name is null or if the user cancels
 
 				ProcessEntries(ofn.FileNames);
+				saved = false;
 			}
 		}
 
@@ -245,6 +234,7 @@ namespace PckStudio.Forms.Editor
 			{
 				treeView2.Nodes.Clear();
 				main.Remove();
+				saved = false;
 			}
 		}
 
@@ -266,6 +256,7 @@ namespace PckStudio.Forms.Editor
 			{
 				category.SongNames.Remove(treeView2.SelectedNode.Text);
 				treeView2.SelectedNode.Remove();
+				saved = false;
 			}
 		}
 
@@ -275,7 +266,7 @@ namespace PckStudio.Forms.Editor
 			{
 				if (Path.GetExtension(file) == ".binka" || Path.GetExtension(file) == ".wav")
 				{
-					string new_loc = Path.Combine(DataDirectory, Path.GetFileNameWithoutExtension(file) + ".binka");
+					string new_loc = Path.Combine(parent.GetDataPath(), Path.GetFileNameWithoutExtension(file) + ".binka");
 					bool duplicate_song = false; // To handle if a file already in the pack is dropped back in
 					if (File.Exists(new_loc))
 					{
@@ -304,7 +295,7 @@ namespace PckStudio.Forms.Editor
 							var process = Process.Start(new ProcessStartInfo
 							{
 								FileName = Path.Combine(tempDir, "binka_encode.exe"),
-								Arguments = $"\"{file}\" \"{new_loc}\"",
+								Arguments = $"\"{file}\" \"{new_loc}\" -s -b" + compressionUpDown.Value.ToString(),
 								UseShellExecute = true,
 								CreateNoWindow = true,
 								WindowStyle = ProcessWindowStyle.Hidden
@@ -322,8 +313,8 @@ namespace PckStudio.Forms.Editor
 					else if (!duplicate_song)
 					{
 						Console.WriteLine(Path.GetFileName(file));
-						File.Delete(Path.Combine(DataDirectory, Path.GetFileName(file)));
-						File.Copy(file, Path.Combine(DataDirectory, Path.GetFileName(file)));
+						File.Delete(Path.Combine(parent.GetDataPath(), Path.GetFileName(file)));
+						File.Copy(file, Path.Combine(parent.GetDataPath(), Path.GetFileName(file)));
 					}
 
 					var songName = Path.GetFileNameWithoutExtension(file);
@@ -340,14 +331,9 @@ namespace PckStudio.Forms.Editor
 		{
 			//MessageBox.Show((Owner.Owner as MainForm).saveLocation);
 			// Gets the MainForm so we can access the Save Location
-			if (treeView1.SelectedNode != null && Owner.Owner is MainForm parent)
+			if (treeView1.SelectedNode != null)
 			{
-				if (string.IsNullOrEmpty(DataDirectory)) getDataDirectory();
-				if (!Directory.Exists(DataDirectory))
-				{
-					MessageBox.Show("There is not a \"Data\" folder present in the pack folder", "Folder missing");
-					return;
-				}
+				if (!parent.CreateDataFolder()) return;
 
 				ProcessEntries((string[])e.Data.GetData(DataFormats.FileDrop, false));
 			}
@@ -436,9 +422,9 @@ namespace PckStudio.Forms.Editor
 				totalSongList.Add(song);
 			}
 
-			if (string.IsNullOrEmpty(DataDirectory)) getDataDirectory();
+			if (!parent.CreateDataFolder()) return;
 			int totalDeleted = 0;
-			foreach (string song in Directory.GetFiles(DataDirectory, "*.binka"))
+			foreach (string song in Directory.GetFiles(parent.GetDataPath(), "*.binka"))
 			{
 				if (!totalSongList.Contains(Path.GetFileNameWithoutExtension(song)))
 				{
@@ -458,11 +444,52 @@ namespace PckStudio.Forms.Editor
 			MessageBox.Show("Successfully deleted " + totalDeleted + " files", "Done");
 		}
 
-		// For when the Data Directory variable is null, this sets the variable in the form
-		private void getDataDirectory()
+		private void howToAddSongsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			MainForm parent = Owner.Owner as MainForm; // Gets the MainForm so we can access the Save Location
-			DataDirectory = Path.Combine(Path.GetDirectoryName(parent.saveLocation), "Data");
+			MessageBox.Show("Right click the right window and press \"Add Entry\" or drag and drop a valid WAV file into the editor's right window. You can also drop other BINKA files, either from the main game or using a tool like BinkMan. The editor will automatically put the song in the Data folder for you.", "How to add a song");
+		}
+
+		private void whatIsEachCategoryToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			MessageBox.Show("Categories are pretty self explanatory. The game controls when each category should play.\n" +
+				"\nGAMEPLAY - Plays in the specified dimensions.\n" +
+				"-Overworld: Plays in survival mode and in Creative if no songs are set\n" +
+				"-Nether: Nothing special to note.\n" +
+				"-End: Prioritizes the final track when the dragon is alive.\n" +
+				"-Creative: Does not play survival tracks unless they're included.\n" +
+				"-Menu: Plays on the title screen and only once when the pack is loading. Perfect for intro songs.\n" +
+				"\nMINI GAMES - Will only play if you change the map grf files to load your pack and set the ThemeID to 0 for Vanilla maps.\n" +
+				"-Battle: Plays in the Battle Mini Game.\n" +
+				"-Tumble: Plays in the Tumble Mini Game.\n" +
+				"-Glide: Plays in the Glide Mini Game.\n", 
+				"What is each category?");
+		}
+
+		private void howToEditCreditsToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			MessageBox.Show("Click Tools -> Credits Editor. This will allow you to edit all the credits easily in the pack easily. Only supports English credits at the moment. ","How to edit credits?");
+		}
+
+		private void optimizeDataFolderToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			MessageBox.Show("Click Tools -> Delete Unused BINKA files. This will clean your folder of any unused songs.", "How to optimize the Data folder");
+		}
+
+		private void BINKACompressionToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			MessageBox.Show("The numerical up/down control is responsible for the level of compression used when converting WAV files. The default is 4, which was commonly used by 4J for the game's files.","BINKA Compression Level");
+		}
+
+		private void openDataFolderToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (!parent.CreateDataFolder()) return;
+			Process.Start("explorer.exe", parent.GetDataPath());
+		}
+
+		private void AudioEditor_Shown(object sender, EventArgs e)
+		{
+			if (Owner.Owner is MainForm) parent = Owner.Owner as MainForm;
+			else Close();
 		}
 	}
 }

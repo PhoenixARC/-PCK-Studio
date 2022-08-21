@@ -15,11 +15,20 @@ namespace PckStudio.Forms.Utilities.Skins
 	public partial class ANIMEditor : MetroFramework.Forms.MetroForm
 	{
 		public bool saved = false;
+		string originalANIM = "";
 		public string outANIM => animValue.Text;
 		SkinANIM anim = new SkinANIM();
 
 		void processCheckBoxes(bool set_all = false, bool value = false)
 		{
+			#region processes every single checkbox with the correct ANIM flags
+			helmetCheckBox.Enabled = set_all ? value : anim.GetANIMFlag(eANIM_EFFECTS.HEAD_DISABLED);
+			chestplateCheckBox.Enabled = set_all ? value : anim.GetANIMFlag(eANIM_EFFECTS.BODY_DISABLED);
+			leftArmorCheckBox.Enabled = set_all ? value : anim.GetANIMFlag(eANIM_EFFECTS.LEFT_ARM_DISABLED);
+			rightArmorCheckBox.Enabled = set_all ? value : anim.GetANIMFlag(eANIM_EFFECTS.RIGHT_ARM_DISABLED);
+			leftLeggingCheckBox.Enabled = set_all ? value : anim.GetANIMFlag(eANIM_EFFECTS.LEFT_LEG_DISABLED);
+			rightLeggingCheckBox.Enabled = set_all ? value : anim.GetANIMFlag(eANIM_EFFECTS.RIGHT_LEG_DISABLED);
+
 			bobbingCheckBox.Checked = set_all ? value : anim.GetANIMFlag(eANIM_EFFECTS.HEAD_BOBBING_DISABLED);
 			bodyCheckBox.Checked = set_all ? value : anim.GetANIMFlag(eANIM_EFFECTS.BODY_DISABLED);
 			bodyOCheckBox.Checked = set_all ? value : anim.GetANIMFlag(eANIM_EFFECTS.BODY_OVERLAY_DISABLED);
@@ -59,6 +68,7 @@ namespace PckStudio.Forms.Utilities.Skins
 			syncLegsCheckBox.Checked = set_all ? value : anim.GetANIMFlag(eANIM_EFFECTS.SYNCED_LEGS);
 			unknownCheckBox.Checked = set_all ? value : anim.GetANIMFlag(eANIM_EFFECTS.unk_BIT4);
 			zombieCheckBox.Checked = set_all ? value : anim.GetANIMFlag(eANIM_EFFECTS.ZOMBIE_ARMS);
+			#endregion
 		}
 
 		public ANIMEditor(string ANIM)
@@ -69,8 +79,10 @@ namespace PckStudio.Forms.Utilities.Skins
 				DialogResult = DialogResult.Abort;
 				Close();
 			}
+			originalANIM = ANIM;
 			anim = new SkinANIM(ANIM);
-			
+
+			#region Event definitions, since the designer can't parse lambda experessions
 			bobbingCheckBox.CheckedChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, eANIM_EFFECTS.HEAD_BOBBING_DISABLED); };
 			bodyCheckBox.CheckedChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, eANIM_EFFECTS.BODY_DISABLED); };
 			bodyOCheckBox.CheckedChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, eANIM_EFFECTS.BODY_OVERLAY_DISABLED); };
@@ -110,13 +122,7 @@ namespace PckStudio.Forms.Utilities.Skins
 			syncLegsCheckBox.CheckedChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, eANIM_EFFECTS.SYNCED_LEGS); };
 			unknownCheckBox.CheckedChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, eANIM_EFFECTS.unk_BIT4); };
 			zombieCheckBox.CheckedChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, eANIM_EFFECTS.ZOMBIE_ARMS); };
-
-			helmetCheckBox.EnabledChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, eANIM_EFFECTS.FORCE_HEAD_ARMOR); };
-			chestplateCheckBox.EnabledChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, eANIM_EFFECTS.FORCE_BODY_ARMOR); };
-			rightArmorCheckBox.EnabledChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, eANIM_EFFECTS.FORCE_RIGHT_ARM_ARMOR); };
-			leftArmorCheckBox.EnabledChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, eANIM_EFFECTS.FORCE_LEFT_ARM_ARMOR); };
-			rightLeggingCheckBox.EnabledChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, eANIM_EFFECTS.FORCE_RIGHT_LEG_ARMOR); };
-			leftLeggingCheckBox.EnabledChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, eANIM_EFFECTS.FORCE_LEFT_LEG_ARMOR); };
+			#endregion
 
 			processCheckBoxes();
 		}
@@ -124,6 +130,7 @@ namespace PckStudio.Forms.Utilities.Skins
 		private void closeButton_Click(object sender, EventArgs e)
 		{
 			DialogResult = DialogResult.OK;
+
 			saved = true;
 			Close();
 		}
@@ -194,6 +201,7 @@ namespace PckStudio.Forms.Utilities.Skins
 
 			Image skin = isSlim ? Properties.Resources.slim_template : Properties.Resources.classic_template;
 
+			#region Image processing code for generating the skin templates based on the input ANIM value
 			Bitmap nb = new Bitmap(64, (!isSlim && !isClassic64) ? 32 : 64);
 			using (Graphics g = Graphics.FromImage(nb))
 			{
@@ -225,8 +233,68 @@ namespace PckStudio.Forms.Utilities.Skins
 				nb.MakeTransparent(Color.Magenta);
 				skin = nb;
 			}
+			#endregion
 
 			skin.Save(saveFileDialog.FileName);
+		}
+
+		private void resetButton_Click(object sender, EventArgs e)
+		{
+			anim = new SkinANIM(originalANIM);
+			processCheckBoxes();
+		}
+
+		static ValueTuple<string, string>[] templates =
+		{
+				new ValueTuple<string, string>("Steve (64x32)", "0"),
+				new ValueTuple<string, string>("Steve (64x64)", "40000"),
+				new ValueTuple<string, string>("Alex (64x64)", "80000"),
+				new ValueTuple<string, string>("Zombie Skins", "2"),
+				new ValueTuple<string, string>("Cetacean Skins", "60"),
+				new ValueTuple<string, string>("Ski Skins", "44"),
+				new ValueTuple<string, string>("Ghost Skins", "6"),
+				new ValueTuple<string, string>("Medusa (Greek Myth.)", "20"),
+				new ValueTuple<string, string>("Librarian (Halo)", "4"),
+				new ValueTuple<string, string>("Grim Reaper (Halloween)", "5"),
+		};
+
+		private void templateButton_Click(object sender, EventArgs e)
+		{
+			// Recycling the AddCategory popup to handle the ANIM templates (:
+			// diag.Category will be the ANIM codes
+			var diag = new Forms.Additional_Popups.Audio.addCategory(templates.Select(template => template.Item1).ToArray());
+			diag.label2.Text = "Presets";
+			diag.button1.Text = "Load";
+
+			if (diag.ShowDialog() != DialogResult.OK) return;
+
+			var templateANIM = new SkinANIM("0x" + templates.ToList().Find(template => template.Item1 == diag.Category).Item2);
+			DialogResult prompt = MessageBox.Show(this, "Would you like to add this preset's effects to your current ANIM? Otherwise all of your effects will be cleared. Either choice can be undone by pressing \"Restore ANIM\".", "", MessageBoxButtons.YesNo);
+			if (prompt == DialogResult.No) anim = templateANIM;
+			else
+			{
+				foreach (eANIM_EFFECTS flag in (eANIM_EFFECTS[])Enum.GetValues(typeof(eANIM_EFFECTS)))
+				{
+					if (templateANIM.GetANIMFlag(flag)) anim.SetANIMFlag(flag, true);
+				}
+				if (diag.Category == templates[0].Item1)
+				{
+					anim.SetANIMFlag(eANIM_EFFECTS.RESOLUTION_64x64, false);
+					anim.SetANIMFlag(eANIM_EFFECTS.SLIM_MODEL, false);
+				}
+				else if (diag.Category == templates[1].Item1)
+				{
+					anim.SetANIMFlag(eANIM_EFFECTS.RESOLUTION_64x64, true);
+					anim.SetANIMFlag(eANIM_EFFECTS.SLIM_MODEL, false);
+				}
+				else if (diag.Category == templates[2].Item1)
+				{
+					anim.SetANIMFlag(eANIM_EFFECTS.SLIM_MODEL, true);
+				}
+			}
+			SkinANIM backup = anim;
+			processCheckBoxes();
+			anim = backup;
 		}
 	}
 }
