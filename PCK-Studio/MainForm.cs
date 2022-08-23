@@ -247,7 +247,7 @@ namespace PckStudio
 					default:
 						node.ImageIndex = 5;
 						node.SelectedImageIndex = 5;
-						throw new InvalidDataException(nameof(file.filetype));
+						//throw new InvalidDataException(nameof(file.filetype));
 						break;
 				}
 			});
