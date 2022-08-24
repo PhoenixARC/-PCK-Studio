@@ -77,22 +77,32 @@ namespace PckStudio.Forms.Editor
 				ANIM = (Interpolate = ANIM.StartsWith("#")) ? ANIM.Substring(1) : ANIM;
                 string[] animData = ANIM.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
                 int lastFrameTime = MinimumFrameTime;
-                foreach (string frameInfo in animData)
-                {
-                    string[] frameData = frameInfo.Split('*');
-                    //if (frameData.Length < 2)
-                    //    continue; // shouldn't happen
-                    int currentFrameIndex = int.TryParse(frameData[0], out currentFrameIndex) ? currentFrameIndex : 0;
+				if (animData.Length <= 0)
+				{
+					for(int i = 0; i < FrameTextureCount; i++)
+					{
+						AddFrame(i, 1);
+					}
+				}
+				else
+				{
+					foreach (string frameInfo in animData)
+					{
+						string[] frameData = frameInfo.Split('*');
+						//if (frameData.Length < 2)
+						//    continue; // shouldn't happen
+						int currentFrameIndex = int.TryParse(frameData[0], out currentFrameIndex) ? currentFrameIndex : 0;
 
-                    // Some textures like the Halloween 2015's Lava texture don't have a
-                    // frame time parameter for certain frames.
-                    // This will detect that and place the last frame time in its place.
-                    // This is accurate to console edition behavior.
-                    // - MattNL
-                    int currentFrameTime = string.IsNullOrEmpty(frameData[1]) ? lastFrameTime : int.Parse(frameData[1]);
-					AddFrame(currentFrameIndex, currentFrameTime);
-                    lastFrameTime = currentFrameTime;
-                }
+						// Some textures like the Halloween 2015's Lava texture don't have a
+						// frame time parameter for certain frames.
+						// This will detect that and place the last frame time in its place.
+						// This is accurate to console edition behavior.
+						// - MattNL
+						int currentFrameTime = string.IsNullOrEmpty(frameData[1]) ? lastFrameTime : int.Parse(frameData[1]);
+						AddFrame(currentFrameIndex, currentFrameTime);
+						lastFrameTime = currentFrameTime;
+					}
+				}
             }
 			public Frame AddFrame(int frameTextureIndex) => AddFrame(frameTextureIndex, MinimumFrameTime);
 			public Frame AddFrame(int frameTextureIndex, int frameTime)
