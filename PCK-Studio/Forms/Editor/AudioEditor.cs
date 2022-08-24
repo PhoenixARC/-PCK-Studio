@@ -457,5 +457,64 @@ namespace PckStudio.Forms.Editor
 			if (Owner.Owner is MainForm p) parent = p;
 			else Close();
 		}
+
+		private async void bulkReplaceExistingFilesToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (!parent.CreateDataFolder()) return;
+
+			OpenFileDialog ofn = new OpenFileDialog();
+			ofn.Multiselect = true;
+			ofn.Filter = "Supported audio files (*.binka,*.wav)|*.binka;*.wav";
+			ofn.Title = "Please choose WAV or BINKA files to replace existing track files";
+			ofn.ShowDialog();
+			ofn.Dispose();
+			if (string.IsNullOrEmpty(ofn.FileName)) return; // Return if name is null or if the user cancels
+
+			var totalSongList = new List<string>();
+			foreach (string song in audioFile.Categories.SelectMany(cat => cat.SongNames))
+			{
+				totalSongList.Add(song);
+			}
+
+			foreach (string file in ofn.FileNames)
+			{
+				string song_name = Path.GetFileNameWithoutExtension(file);
+				string file_ext = Path.GetExtension(file).ToLower();
+				string new_loc = Path.Combine(parent.GetDataPath(), Path.GetFileNameWithoutExtension(file) + ".binka");
+				if (!totalSongList.Contains(song_name) || file == new_loc) continue;
+
+				Console.WriteLine(file);
+				File.Delete(new_loc);
+
+				if (file_ext == ".wav") // Convert Wave to BINKA
+				{
+					Cursor.Current = Cursors.WaitCursor;
+					pleaseWait waitDiag = new pleaseWait();
+					waitDiag.Show(this);
+
+					int error_code = 0;
+					await Task.Run(() =>
+					{
+						var process = Process.Start(new ProcessStartInfo
+						{
+							FileName = Path.Combine(tempDir, "binka_encode.exe"),
+							Arguments = $"\"{file}\" \"{new_loc}\" -s -b" + compressionUpDown.Value.ToString(),
+							UseShellExecute = true,
+							CreateNoWindow = true,
+							WindowStyle = ProcessWindowStyle.Hidden
+						});
+						process.Start();
+						process.WaitForExit();
+					});
+
+					waitDiag.Close();
+					waitDiag.Dispose();
+					Cursor.Current = Cursors.Default;
+
+					if (error_code != 0) continue;
+				}
+				else if(file_ext == ".binka") File.Copy(file, Path.Combine(parent.GetDataPath(), Path.GetFileName(file)));
+			}
+		}
 	}
 }
