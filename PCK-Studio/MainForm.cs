@@ -540,10 +540,10 @@ namespace PckStudio
 							{
 						using Image img = new Bitmap(ofd.FileName);
 						var file = AnimationUtil.CreateNewAnimationFile(img, diag.SelectedTile, diag.IsItem);
-						currentPCK.Files.Add(file);
 						using AnimationEditor animationEditor = new AnimationEditor(file);
 									if (animationEditor.ShowDialog() == DialogResult.OK)
 									{
+							currentPCK.Files.Add(file);
 							ReloadMetaTreeView();
 							BuildMainTreeView();
 										saved = false;
