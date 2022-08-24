@@ -536,21 +536,22 @@ namespace PckStudio
 				if (ofd.ShowDialog() == DialogResult.OK)
 				{
 					using ChangeTile diag = new ChangeTile();
-							if (diag.ShowDialog(this) == DialogResult.OK)
-							{
+					if (diag.ShowDialog(this) == DialogResult.OK)
+					{
 						using Image img = new Bitmap(ofd.FileName);
 						var file = AnimationUtil.CreateNewAnimationFile(img, diag.SelectedTile, diag.IsItem);
 						using AnimationEditor animationEditor = new AnimationEditor(file);
-									if (animationEditor.ShowDialog() == DialogResult.OK)
-									{
+						if (animationEditor.ShowDialog() == DialogResult.OK)
+						{
+							file.filepath = animationEditor.TileName;
 							currentPCK.Files.Add(file);
 							ReloadMetaTreeView();
 							BuildMainTreeView();
-										saved = false;
-									}
-								}
-							}
+							saved = false;
+						}
 					}
+				}
+			}
 		}
 
 		private void treeViewMain_DoubleClick(object sender, EventArgs e)
@@ -584,10 +585,15 @@ namespace PckStudio
 
 				case 2 when file.filepath.StartsWith("res/textures/blocks/") || file.filepath.StartsWith("res/textures/items/"):
 					using (AnimationEditor animationEditor = new AnimationEditor(file))
+					{
+						if (animationEditor.ShowDialog(this) == DialogResult.OK)
 						{
-							if (animationEditor.ShowDialog(this) == DialogResult.OK)
-								ReloadMetaTreeView();
+							file.filepath = animationEditor.TileName;
+							ReloadMetaTreeView();
+							BuildMainTreeView();
+							saved = false;
 						}
+					}
 					break;
 
 
@@ -2659,11 +2665,17 @@ namespace PckStudio
 				string filename = Path.GetFileNameWithoutExtension(file.filepath);
                 if ((filename.EndsWith("MipMapLevel2") ||filename.EndsWith("MipMapLevel3")) &&
 					currentPCK.TryGetFile(file.filepath.Substring(0, file.filepath.Length - 4 - 12) + ".png", 2, out var baseAnimationFile))
-					file = baseAnimationFile;
+
+				file = baseAnimationFile;
 				using AnimationEditor diag = new AnimationEditor(file);
 				if (diag.ShowDialog(this) == DialogResult.OK)
+				{
+					file.filepath = diag.TileName;
 					ReloadMetaTreeView();
+					BuildMainTreeView();
+					saved = false;
 				}
+			}
 
 			if (Path.GetFileName(file.filepath) == "audio.pck")
 			{

@@ -27,7 +27,7 @@ namespace PckStudio.Forms.Editor
 		bool isItem = false;
         string animationSection => AnimationUtil.GetAnimationSection(isItem);
 
-		string TileName = string.Empty;
+		public string TileName = string.Empty;
 
 		//int frameCounter = 0; // ported directly from Java Edition code -MattNL
 
@@ -383,6 +383,8 @@ namespace PckStudio.Forms.Editor
 				currentAnimation.BuildTexture().Save(stream, ImageFormat.Png);
 				animationFile.SetData(stream.ToArray());
 			}
+			//Reusing this for the tile path
+			TileName = "res/textures/" + (isItem ? "items/" : "blocks/") + TileName + ".png" ;
 			DialogResult = DialogResult.OK;
 		}
 
