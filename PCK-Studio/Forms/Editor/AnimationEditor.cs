@@ -29,8 +29,6 @@ namespace PckStudio.Forms.Editor
 
 		public string TileName = string.Empty;
 
-		//int frameCounter = 0; // ported directly from Java Edition code -MattNL
-
         sealed class Animation
 		{
 			public const int MinimumFrameTime = 1;
@@ -497,7 +495,16 @@ namespace PckStudio.Forms.Editor
 		private void bulkAnimationSpeedToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			SetBulkSpeed diag = new SetBulkSpeed(frameTreeView);
-			diag.ShowDialog(this);
+			if(diag.ShowDialog(this) == DialogResult.OK)
+			{
+				var list = currentAnimation.GetFrames();
+				for (int i = 0; i < list.Count; i++)
+				{
+					Animation.Frame f = list[i];
+					currentAnimation.SetFrame(f, currentAnimation.GetFrameIndex(f), diag.time);
+				}
+				LoadAnimationTreeView();
+			}
 			diag.Dispose();
 		}
 
