@@ -14,7 +14,10 @@ namespace PckStudio
         [STAThread]
         static void Main(string[] args)
         {
-            Application.Run(new MainForm());
+            var f = new MainForm();
+            if (args.Length > 0 && args[0].EndsWith(".pck"))
+                f.LoadFromPath(args[0]);
+            Application.Run(f);
         }
     }
 }

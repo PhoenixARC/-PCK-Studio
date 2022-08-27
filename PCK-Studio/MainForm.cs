@@ -47,6 +47,17 @@ namespace PckStudio
 #endif
 		}
 
+		public void LoadFromPath(string filepath)
+		{
+            currentPCK = openPck(filepath);
+            if (currentPCK == null) return;
+            if (addPasswordToolStripMenuItem.Enabled = checkForPassword())
+            {
+                LoadEditorTab();
+            }
+        }
+
+
 		private void Form1_Load(object sender, EventArgs e)
 		{
 			RPC.Initialize();
@@ -90,11 +101,7 @@ namespace PckStudio
 				ofd.Filter = "PCK (Minecraft Console Package)|*.pck";
 				if (ofd.ShowDialog() == DialogResult.OK)
 				{
-					currentPCK = openPck(ofd.FileName);
-					if (currentPCK == null) return;
-					if (addPasswordToolStripMenuItem.Enabled = checkForPassword())
-					{
-						LoadEditorTab();
+					LoadFromPath(ofd.FileName);
 					}
 				}
 			}
@@ -2780,15 +2787,10 @@ namespace PckStudio
 
 		private void OpenPck_DragDrop(object sender, DragEventArgs e)
 		{
-			string[] FileList = (string[])e.Data.GetData(DataFormats.FileDrop, false);
-			if (FileList.Length > 1)
+			string[] Filepaths = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+			if (Filepaths.Length > 1)
 				MessageBox.Show("Only one pck file at a time is currently supported");
-			currentPCK = openPck(FileList[0]);
-			if (currentPCK == null) return;
-			if (addPasswordToolStripMenuItem.Enabled = checkForPassword())
-			{
-				LoadEditorTab();
-			}
+			LoadFromPath(Filepaths[0]);
 		}
 
 		private void OpenPck_DragLeave(object sender, EventArgs e)
