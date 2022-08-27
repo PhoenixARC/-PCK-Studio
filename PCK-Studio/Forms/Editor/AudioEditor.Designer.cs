@@ -42,6 +42,7 @@ namespace PckStudio.Forms.Editor
 			this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.creditsEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.deleteUnusedBINKAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.openDataFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.howToAddSongsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.whatIsEachCategoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -56,7 +57,7 @@ namespace PckStudio.Forms.Editor
 			this.playOverworldInCreative = new MetroFramework.Controls.MetroCheckBox();
 			this.compressionUpDown = new System.Windows.Forms.NumericUpDown();
 			this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
-			this.openDataFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.bulkReplaceExistingTracksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenuStrip1.SuspendLayout();
 			this.menuStrip.SuspendLayout();
 			this.contextMenuStrip2.SuspendLayout();
@@ -80,66 +81,67 @@ namespace PckStudio.Forms.Editor
 			this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addCategoryStripMenuItem,
             this.removeCategoryStripMenuItem});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            resources.ApplyResources(this.contextMenuStrip1, "contextMenuStrip1");
-            // 
-            // addCategoryStripMenuItem
-            // 
-            resources.ApplyResources(this.addCategoryStripMenuItem, "addCategoryStripMenuItem");
-            this.addCategoryStripMenuItem.Name = "addCategoryStripMenuItem";
-            this.addCategoryStripMenuItem.Click += new System.EventHandler(this.addCategoryStripMenuItem_Click);
-            // 
-            // removeCategoryStripMenuItem
-            // 
-            this.removeCategoryStripMenuItem.Image = global::PckStudio.Properties.Resources.Del;
-            this.removeCategoryStripMenuItem.Name = "removeCategoryStripMenuItem";
-            resources.ApplyResources(this.removeCategoryStripMenuItem, "removeCategoryStripMenuItem");
-            this.removeCategoryStripMenuItem.Click += new System.EventHandler(this.removeCategoryStripMenuItem_Click);
-            // 
-            // catImages
-            // 
-            this.catImages.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("catImages.ImageStream")));
-            this.catImages.TransparentColor = System.Drawing.Color.Transparent;
-            this.catImages.Images.SetKeyName(0, "0_overworld.png");
-            this.catImages.Images.SetKeyName(1, "1_nether.png");
-            this.catImages.Images.SetKeyName(2, "2_end.png");
-            this.catImages.Images.SetKeyName(3, "4_creative.png");
-            this.catImages.Images.SetKeyName(4, "3_menu.png");
-            this.catImages.Images.SetKeyName(5, "5_mg01.png");
-            this.catImages.Images.SetKeyName(6, "6_mg02.png");
-            this.catImages.Images.SetKeyName(7, "7_mg03.png");
-            this.catImages.Images.SetKeyName(8, "8_unused.png");
-            // 
-            // menuStrip
-            // 
-            resources.ApplyResources(this.menuStrip, "menuStrip");
-            this.menuStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.contextMenuStrip1.Name = "contextMenuStrip1";
+			resources.ApplyResources(this.contextMenuStrip1, "contextMenuStrip1");
+			// 
+			// addCategoryStripMenuItem
+			// 
+			resources.ApplyResources(this.addCategoryStripMenuItem, "addCategoryStripMenuItem");
+			this.addCategoryStripMenuItem.Name = "addCategoryStripMenuItem";
+			this.addCategoryStripMenuItem.Click += new System.EventHandler(this.addCategoryStripMenuItem_Click);
+			// 
+			// removeCategoryStripMenuItem
+			// 
+			this.removeCategoryStripMenuItem.Image = global::PckStudio.Properties.Resources.Del;
+			this.removeCategoryStripMenuItem.Name = "removeCategoryStripMenuItem";
+			resources.ApplyResources(this.removeCategoryStripMenuItem, "removeCategoryStripMenuItem");
+			this.removeCategoryStripMenuItem.Click += new System.EventHandler(this.removeCategoryStripMenuItem_Click);
+			// 
+			// catImages
+			// 
+			this.catImages.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("catImages.ImageStream")));
+			this.catImages.TransparentColor = System.Drawing.Color.Transparent;
+			this.catImages.Images.SetKeyName(0, "0_overworld.png");
+			this.catImages.Images.SetKeyName(1, "1_nether.png");
+			this.catImages.Images.SetKeyName(2, "2_end.png");
+			this.catImages.Images.SetKeyName(3, "4_creative.png");
+			this.catImages.Images.SetKeyName(4, "3_menu.png");
+			this.catImages.Images.SetKeyName(5, "5_mg01.png");
+			this.catImages.Images.SetKeyName(6, "6_mg02.png");
+			this.catImages.Images.SetKeyName(7, "7_mg03.png");
+			this.catImages.Images.SetKeyName(8, "8_unused.png");
+			// 
+			// menuStrip
+			// 
+			resources.ApplyResources(this.menuStrip, "menuStrip");
+			this.menuStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+			this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.toolsToolStripMenuItem,
             this.helpToolStripMenuItem});
-            this.menuStrip.Name = "menuStrip";
-            // 
-            // fileToolStripMenuItem
-            // 
-            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.menuStrip.Name = "menuStrip";
+			// 
+			// fileToolStripMenuItem
+			// 
+			this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.saveToolStripMenuItem1});
-            this.fileToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            resources.ApplyResources(this.fileToolStripMenuItem, "fileToolStripMenuItem");
-            // 
-            // saveToolStripMenuItem1
-            // 
-            resources.ApplyResources(this.saveToolStripMenuItem1, "saveToolStripMenuItem1");
-            this.saveToolStripMenuItem1.Name = "saveToolStripMenuItem1";
-            this.saveToolStripMenuItem1.Click += new System.EventHandler(this.saveToolStripMenuItem1_Click);
-            // 
-            // toolsToolStripMenuItem
-            // 
-            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.fileToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+			this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+			resources.ApplyResources(this.fileToolStripMenuItem, "fileToolStripMenuItem");
+			// 
+			// saveToolStripMenuItem1
+			// 
+			resources.ApplyResources(this.saveToolStripMenuItem1, "saveToolStripMenuItem1");
+			this.saveToolStripMenuItem1.Name = "saveToolStripMenuItem1";
+			this.saveToolStripMenuItem1.Click += new System.EventHandler(this.saveToolStripMenuItem1_Click);
+			// 
+			// toolsToolStripMenuItem
+			// 
+			this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.creditsEditorToolStripMenuItem,
             this.deleteUnusedBINKAsToolStripMenuItem,
-            this.openDataFolderToolStripMenuItem});
+            this.openDataFolderToolStripMenuItem,
+            this.bulkReplaceExistingTracksToolStripMenuItem});
 			this.toolsToolStripMenuItem.ForeColor = System.Drawing.Color.White;
 			this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
 			resources.ApplyResources(this.toolsToolStripMenuItem, "toolsToolStripMenuItem");
@@ -157,6 +159,13 @@ namespace PckStudio.Forms.Editor
 			this.deleteUnusedBINKAsToolStripMenuItem.Name = "deleteUnusedBINKAsToolStripMenuItem";
 			resources.ApplyResources(this.deleteUnusedBINKAsToolStripMenuItem, "deleteUnusedBINKAsToolStripMenuItem");
 			this.deleteUnusedBINKAsToolStripMenuItem.Click += new System.EventHandler(this.deleteUnusedBINKAsToolStripMenuItem_Click);
+			// 
+			// openDataFolderToolStripMenuItem
+			// 
+			this.openDataFolderToolStripMenuItem.Image = global::PckStudio.Properties.Resources.ZZFolder;
+			this.openDataFolderToolStripMenuItem.Name = "openDataFolderToolStripMenuItem";
+			resources.ApplyResources(this.openDataFolderToolStripMenuItem, "openDataFolderToolStripMenuItem");
+			this.openDataFolderToolStripMenuItem.Click += new System.EventHandler(this.openDataFolderToolStripMenuItem_Click);
 			// 
 			// helpToolStripMenuItem
 			// 
@@ -279,12 +288,11 @@ namespace PckStudio.Forms.Editor
 			this.metroLabel1.Name = "metroLabel1";
 			this.metroLabel1.Theme = MetroFramework.MetroThemeStyle.Dark;
 			// 
-			// openDataFolderToolStripMenuItem
+			// bulkReplaceExistingTracksToolStripMenuItem
 			// 
-			this.openDataFolderToolStripMenuItem.Image = global::PckStudio.Properties.Resources.ZZFolder;
-			this.openDataFolderToolStripMenuItem.Name = "openDataFolderToolStripMenuItem";
-			resources.ApplyResources(this.openDataFolderToolStripMenuItem, "openDataFolderToolStripMenuItem");
-			this.openDataFolderToolStripMenuItem.Click += new System.EventHandler(this.openDataFolderToolStripMenuItem_Click);
+			this.bulkReplaceExistingTracksToolStripMenuItem.Name = "bulkReplaceExistingTracksToolStripMenuItem";
+			resources.ApplyResources(this.bulkReplaceExistingTracksToolStripMenuItem, "bulkReplaceExistingTracksToolStripMenuItem");
+			this.bulkReplaceExistingTracksToolStripMenuItem.Click += new System.EventHandler(this.bulkReplaceExistingFilesToolStripMenuItem_Click);
 			// 
 			// AudioEditor
 			// 
@@ -339,5 +347,6 @@ namespace PckStudio.Forms.Editor
 		private System.Windows.Forms.ToolStripMenuItem bINKACompressionToolStripMenuItem;
 		private MetroFramework.Controls.MetroLabel metroLabel1;
 		private System.Windows.Forms.ToolStripMenuItem openDataFolderToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem bulkReplaceExistingTracksToolStripMenuItem;
 	}
 }
