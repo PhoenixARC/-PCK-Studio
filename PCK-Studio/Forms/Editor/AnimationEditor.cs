@@ -225,7 +225,7 @@ namespace PckStudio.Forms.Editor
 
         sealed class AnimationPlayer
         {
-            public const int BaseTickSpeed = 24;
+            public const int BaseTickSpeed = 48;
             public bool IsPlaying { get; private set; } = false;
 
             private int currentAnimationFrameIndex = 0;
