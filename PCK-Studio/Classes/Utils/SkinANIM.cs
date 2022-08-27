@@ -67,7 +67,7 @@ namespace PckStudio.Classes.Utils
 			_ANIM = anim;
 		}
 
-		public override string ToString() => "0x" + _ANIM.ToString("x");
+		public override string ToString() => "0x" + ((int)_ANIM).ToString("x8");
 
 		public static bool IsValidANIM(string anim) => animRegex.IsMatch(anim);
 
