@@ -400,12 +400,6 @@
     <Compile Include="Forms\Utilities\Pref.Designer.cs">
       <DependentUpon>Pref.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Additional-Popups\Promo.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Additional-Popups\Promo.Designer.cs">
-      <DependentUpon>Promo.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\Utilities\TextureConverterUtility.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -587,9 +581,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Utilities\Pref.resx">
       <DependentUpon>Pref.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Additional-Popups\Promo.resx">
-      <DependentUpon>Promo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Utilities\TextureConverterUtility.resx">
       <DependentUpon>TextureConverterUtility.cs</DependentUpon>
