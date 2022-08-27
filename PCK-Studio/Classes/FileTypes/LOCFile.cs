@@ -148,7 +148,7 @@ namespace PckStudio.Classes.FileTypes
         {
             if (LocKeys.ContainsKey(locKey))
                 return false;
-            Languages.ForEach( langauge => SetLocEntry(locKey, langauge, value) );
+            Languages.ForEach( language => SetLocEntry(locKey, language, value) );
             return true;
         }
 
