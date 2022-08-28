@@ -577,5 +577,33 @@ namespace PckStudio.Forms.Editor
 		{
 			MipMapNumericUpDown.Visible = MipMapLabel.Visible = MipMapCheckbox.Checked;
 		}
+
+		private void exportJavaAnimationToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			SaveFileDialog fileDialog = new SaveFileDialog();
+			fileDialog.Title = "Please choose where you want to save your new animation";
+
+			fileDialog.Filter = "Animation Scripts (*.mcmeta)|*.png.mcmeta";
+			fileDialog.CheckPathExists = true;
+			if (fileDialog.ShowDialog(this) != DialogResult.OK) return;
+
+			JObject mcmeta = new JObject();
+			JObject animation = new JObject();
+			JArray frames = new JArray();
+			currentAnimation.GetFrames().ForEach(f => {
+				JObject frame = new JObject();
+				frame["index"] = currentAnimation.GetFrameIndex(f.Texture);
+				frame["time"] = f.Ticks;
+				frames.Add(frame);
+			});
+			animation["interpolation"] = InterpolationCheckbox.Checked;
+			animation["frames"] = frames;
+			mcmeta["comment"] = "Animation converted via PCK Studio";
+			mcmeta["animation"] = animation;
+			File.WriteAllText(fileDialog.FileName, JsonConvert.SerializeObject(mcmeta, Formatting.Indented));
+			string fn = fileDialog.FileName;
+			currentAnimation.BuildTexture().Save(fn.Remove(fn.Length - 7));
+			MessageBox.Show("Your animation was successfully exported at " + fn, "Successful export");
+		}
 	}
 }
