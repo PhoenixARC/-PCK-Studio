@@ -305,7 +305,6 @@ namespace PckStudio.Forms.Editor
 			currentAnimation = animationFile.properties.HasProperty("ANIM")
 				? new Animation(texture, animationFile.properties.GetProperty("ANIM").Item2)
 				: new Animation(texture);
-			InterpolationCheckbox.Checked = currentAnimation.Interpolate;
 			player = new AnimationPlayer(pictureBoxWithInterpolationMode1);
 
 			foreach (JObject content in AnimationUtil.tileData[animationSection].Children())
@@ -322,6 +321,7 @@ namespace PckStudio.Forms.Editor
 		
 		private void LoadAnimationTreeView()
 		{
+			InterpolationCheckbox.Checked = currentAnimation.Interpolate;
 			frameTreeView.Nodes.Clear();
 			// $"Frame: {i}, Frame Time: {Animation.MinimumFrameTime}"
             currentAnimation.GetFrames().ForEach(f => frameTreeView.Nodes.Add($"Frame: {currentAnimation.GetFrameIndex(f.Texture)}, Frame Time: {f.Ticks}"));
