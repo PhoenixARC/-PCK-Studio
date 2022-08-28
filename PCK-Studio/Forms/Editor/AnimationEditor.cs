@@ -181,46 +181,6 @@ namespace PckStudio.Forms.Editor
 				});
 				return img;
 			}
-
-
-			//public static Animation FromJson(string json, Image texture)
-			//{
-			//	_ = json ?? throw new ArgumentNullException(nameof(json));
-			//	_ = texture ?? throw new ArgumentNullException(nameof(texture));
-			//	var _animation = new Animation(texture);
-			//	JObject mcmeta = JObject.Parse(json);
-			//	if (mcmeta["animation"] is JToken animation)
-			//	{
-			//		int frameTime = 1;
-			//		// Some if statements to ensure that the animation is valid.
-			//		if (animation["frametime"] is JToken frametime_token && frametime_token.Type == JTokenType.Integer)
-			//			frameTime = (int)frametime_token;
-			//		if (animation["interpolate"] is JToken interpolate_token && interpolate_token.Type == JTokenType.Boolean)
-			//			_animation.Interpolate = (bool)interpolate_token;
-			//		if (animation["frames"] is JToken frames_token &&
-			//			frames_token.Type == JTokenType.Array)
-			//		{
-			//			foreach (JToken frame in frames_token.Children())
-			//			{
-			//				if (frame.Type == JTokenType.Object)
-			//				{
-			//					if (frame["index"] is JToken frame_index && frame_index.Type == JTokenType.Integer &&
-			//						frame["time"] is JToken frame_time && frame_time.Type == JTokenType.Integer)
-			//					{
-			//						Console.WriteLine("{0}*{1}", (int)frame["index"], (int)frame["time"]);
-			//						_animation.AddFrame((int)frame["index"], (int)frame["time"]);
-			//					}
-			//				}
-			//				else if (frame.Type == JTokenType.Integer)
-			//				{
-			//					Console.WriteLine("{0}*{1}", (int)frame, frameTime);
-			//                  _animation.AddFrame((int)frame, frameTime);
-			//				}
-			//			}
-			//		}
-			//	}
-			//	return _animation;
-			//}
 		}
 
         sealed class AnimationPlayer
@@ -325,7 +285,8 @@ namespace PckStudio.Forms.Editor
 			frameTreeView.Nodes.Clear();
 			// $"Frame: {i}, Frame Time: {Animation.MinimumFrameTime}"
             currentAnimation.GetFrames().ForEach(f => frameTreeView.Nodes.Add($"Frame: {currentAnimation.GetFrameIndex(f.Texture)}, Frame Time: {f.Ticks}"));
-        }
+			player.SelectFrame(currentAnimation, 0);
+		}
 
 		private void frameTreeView_AfterSelect(object sender, TreeViewEventArgs e)
 		{
@@ -508,6 +469,7 @@ namespace PckStudio.Forms.Editor
 			diag.Dispose();
 		}
 
+		// Reworked import tool with new Animation classes by Miku
 		private void importJavaAnimationToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			DialogResult query = MessageBox.Show("This feature will replace the existing animation data. It might fail if the selected animation script is invalid. Are you sure that you want to continue?", "Warning", MessageBoxButtons.YesNo);
@@ -516,6 +478,7 @@ namespace PckStudio.Forms.Editor
 			OpenFileDialog fileDialog = new OpenFileDialog();
 			fileDialog.Multiselect = false;
 			fileDialog.Title = "Please select a valid Minecaft: Java Edition animation script";
+
 			// It's marked as .png.mcmeta just in case
 			// some weirdo tries to pass a pack.mcmeta or something
 			// -MattNL
@@ -544,9 +507,9 @@ namespace PckStudio.Forms.Editor
 					if (animation["frametime"] is JToken frametime_token && frametime_token.Type == JTokenType.Integer)
 						frameTime = (int)frametime_token;
 					if (animation["interpolate"] is JToken interpolate_token && interpolate_token.Type == JTokenType.Boolean)
-                        new_animation.Interpolate = (bool)interpolate_token;
+						new_animation.Interpolate = (bool)interpolate_token;
 					if (animation["frames"] is JToken frames_token &&
-                        frames_token.Type == JTokenType.Array)
+						frames_token.Type == JTokenType.Array)
 					{
 						foreach (JToken frame in frames_token.Children())
 						{
@@ -555,18 +518,26 @@ namespace PckStudio.Forms.Editor
 								if (frame["index"] is JToken frame_index && frame_index.Type == JTokenType.Integer &&
 									frame["time"] is JToken frame_time && frame_time.Type == JTokenType.Integer)
 								{
-									Console.WriteLine((int)frame["index"] + "*" + (int)frame["time"]);
+									Console.WriteLine("{0}*{1}", (int)frame["index"], (int)frame["time"]);
 									new_animation.AddFrame((int)frame["index"], (int)frame["time"]);
 								}
 							}
 							else if (frame.Type == JTokenType.Integer)
 							{
-								Console.WriteLine((int)frame + "*" + frameTime);
-								new_animation.AddFrame((int)frame);
-                            }
+								Console.WriteLine("{0}*{1}", (int)frame, frameTime);
+								new_animation.AddFrame((int)frame, frameTime);
+							}
+						}
+					}
+					else
+					{
+						for (int i = 0; i < new_animation.FrameTextureCount; i++)
+						{
+							new_animation.AddFrame(i, frameTime);
 						}
 					}
 				}
+
 				currentAnimation = new_animation;
 				LoadAnimationTreeView();
 			}
