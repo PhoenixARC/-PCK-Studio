@@ -548,15 +548,6 @@ namespace PckStudio.Forms.Editor
 			}
 		}
 
-		private void helpToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			MessageBox.Show("Simply drag and drop frames in the tree to rearrange your animation.\n\n" +
-							"The \"Interpolates\" checkbox enables the blending animation seen with some textures in the game, such as Prismarine.\n\n" +
-							"You can preview your animation at any time by simply pressing the \"Play Animation\" button!\n\n" +
-							"You can edit the frame and its speed by double clicking a frame in the tree. If you'd like to change the entire animation's speed, you can do so with the \"Set Bulk Animation Speed\" button in the \"Tools\" tab.\n\n" +
-							"Porting animations from Java packs are made simple with the \"Import Java Animation\" button found in the \"Tools\" tab!", "Help");
-		}
-
 		private void changeTileToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			using (ChangeTile diag = new ChangeTile())
@@ -604,6 +595,28 @@ namespace PckStudio.Forms.Editor
 			string fn = fileDialog.FileName;
 			currentAnimation.BuildTexture().Save(fn.Remove(fn.Length - 7));
 			MessageBox.Show("Your animation was successfully exported at " + fn, "Successful export");
+		}
+
+		private void howToInterpolation_Click(object sender, EventArgs e)
+		{
+			MessageBox.Show("The Interpolation effect is when the animtion smoothly translates between the frames instead of simply displaying the next one. This can be seen with some vanilla Minecraft textures such as Magma and Prismarine.\n\nThe \"Interpolates\" checkbox at the bottom controls this.", "Interpolation");
+		}
+
+		private void editorControlsToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			MessageBox.Show("Simply drag and drop frames in the tree to rearrange your animation.\n\n" +
+				"You can also preview your animation at any time by simply pressing the \"Play Animation\" button!", "Editor Controls");
+		}
+
+		private void setBulkSpeedToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			MessageBox.Show("You can edit the frame and its speed by double clicking a frame in the tree. If you'd like to change the entire animation's speed, you can do so with the \"Set Bulk Animation Speed\" button in the \"Tools\" tab", "How to use Bulk Animation tool");
+		}
+
+		private void javaAnimationSupportToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			MessageBox.Show("You can import any valid Java Edition tile animations into your pck by opening an mcmeta.\n\n" +
+				"You can also export your animation as an Java Edition tile animation. It will also export the actual texture in the same spot.", "Java Edition Support");
 		}
 	}
 }
