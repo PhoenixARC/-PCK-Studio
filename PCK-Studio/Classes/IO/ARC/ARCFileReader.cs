@@ -8,68 +8,42 @@ namespace PckStudio.Classes.IO.ARC
 {
     internal class ARCFileReader : StreamDataReader
     {
-
+        public static ConsoleArchive Read(Stream stream)
+        {
+            return new ARCFileReader().ReadFromStream(stream);
+        }
 
         private ARCFileReader() : base(true)
-        { }
-
-        public ConsoleArchive Parse(byte[] data, ConsoleArchive source)
         {
-            return Parse(new MemoryStream(data), source);
-        }
-        public ConsoleArchive Parse(string Filepath, ConsoleArchive source)
-        {
-            return Parse(new MemoryStream(File.ReadAllBytes(Filepath)), source);
         }
 
-        public ConsoleArchive Parse(MemoryStream s, ConsoleArchive archive)
+        private ConsoleArchive ReadFromStream(Stream stream)
         {
-            List<ConsoleArchiveItem> items = new List<ConsoleArchiveItem>();
-            Encoding encoding = Encoding.UTF8;
-            int NumberOfFiles = ReadInt(s);
-
-
+            ConsoleArchive _archive = new ConsoleArchive();
+            int NumberOfFiles = ReadInt(stream);
             for(int i = 0; i < NumberOfFiles; i++)
             {
-                string name = ReadString(s);
-                int pos = ReadInt(s);
-                int size = ReadInt(s);
-
-                ConsoleArchiveItem citem = new ConsoleArchiveItem(name, size, pos);
-                items.Add(citem);
-                
-
+                string name = ReadString(stream);
+                int pos = ReadInt(stream);
+                int size = ReadInt(stream);
+                _archive[name] = ReadBytesFromPosition(stream, size, pos);
             }
-
-            foreach(ConsoleArchiveItem citem in items)
-            {
-                if (!archive.Files.ContainsKey(citem.Name))
-                    archive.Files.Add(citem.Name, ReadBytesFromPosition(s, citem.Size, citem.Position));
-                else
-                {
-                    System.Diagnostics.Debug.WriteLine("Copy of: " + citem.Name + " | size:" + citem.Size + " | position:" + citem.Position);
-                }
-                s.Flush();
-            }
-            items.Clear();
-            s.Close();
-            s.Dispose();
-            
-            return archive;
+            return _archive;
         }
+
         private string ReadString(Stream stream)
         {
-            int length = ReadShort(stream);
+            short length = ReadShort(stream);
             return ReadString(stream, length, Encoding.UTF8);
         }
 
-        private byte[] ReadBytesFromPosition(Stream s, int length, int position)
+        private byte[] ReadBytesFromPosition(Stream stream, int size, int position)
         {
-            long originalPOS = s.Position;
-            s.Position = position;
-            byte[] ByteArray = ReadBytes(s, length);
-            s.Position = originalPOS;
-            return ByteArray;
+            long originalPOS = stream.Position;
+            if (stream.Seek(position, SeekOrigin.Begin) != position) throw new Exception();
+            byte[] bytes = ReadBytes(stream, size);
+            if (stream.Seek(originalPOS, SeekOrigin.Begin) != originalPOS) throw new Exception();
+            return bytes;
         }
 
     }

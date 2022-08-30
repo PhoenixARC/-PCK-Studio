@@ -10,51 +10,36 @@ namespace PckStudio.Classes.IO.ARC
 {
     internal class ARCFileWriter : StreamDataWriter
     {
+        private ConsoleArchive _archive;
 
-        private ARCFileWriter() : base(true)
-        {}
-
-        public byte[] Build(ConsoleArchive ConsoleArc, string Filename)
+        public static void Write(Stream stream, ConsoleArchive archive)
         {
-            MemoryStream f = new MemoryStream();
-            WriteInt(f, ConsoleArc.Files.Count);
-            foreach(ConsoleArchiveItem item in BuildTable(ConsoleArc))
-            {
-                WriteString(f, item.Name);
-                WriteInt(f, item.Position);
-                WriteInt(f, item.Size);
-            }
-            foreach (KeyValuePair<string, byte[]> pair in ConsoleArc.Files)
-            {
-                WriteBytes(f, pair.Value);
-            }
-            f.Close();
-            f.Dispose();
-            return f.ToArray();
+            new ARCFileWriter(archive).WriteToStream(stream);
         }
 
-        private List<ConsoleArchiveItem> BuildTable(ConsoleArchive ConsoleArc)
+        public ARCFileWriter(ConsoleArchive archive) : base(true)
         {
-            List<ConsoleArchiveItem> l = new List<ConsoleArchiveItem>();
-            int HeaderSize = 4;
-            int currentFileOffset = 0;
-            foreach(KeyValuePair<string, byte[]> pair in ConsoleArc.Files)
+            _archive = archive;
+        }
+
+        private void WriteToStream(Stream stream)
+        {
+            WriteInt(stream, _archive.Count);
+            int currentOffset = 4 + _archive.Keys.ToArray().Sum(key => 10 + key.Length);
+            foreach (var pair in _archive)
             {
-                HeaderSize += pair.Key.Length;
-                HeaderSize += 10;
-                string name = pair.Key;
                 int size = pair.Value.Length;
-                int position = currentFileOffset;
-                ConsoleArchiveItem citem = new ConsoleArchiveItem(name, size, position);
-                l.Add(citem);
-                currentFileOffset += size;
+                WriteString(stream, pair.Key);
+                WriteInt(stream, currentOffset);
+                WriteInt(stream, size);
+                currentOffset += size;
             }
-            foreach (ConsoleArchiveItem item in l)
+            foreach (byte[] data in _archive.Values)
             {
-                item.Position += HeaderSize;
+                WriteBytes(stream, data);
             }
-            return l;
         }
+
         private void WriteString(Stream stream, string String)
         {
             WriteShort(stream, (short)String.Length);
