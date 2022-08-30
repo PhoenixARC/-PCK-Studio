@@ -105,7 +105,6 @@ namespace PckStudio
 					}
 				}
 			}
-		}
 
 		private PCKFile openPck(string filePath)
 		{
