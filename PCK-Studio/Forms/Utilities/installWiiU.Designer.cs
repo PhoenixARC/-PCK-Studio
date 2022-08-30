@@ -42,12 +42,12 @@
             this.radioButtonUs = new System.Windows.Forms.RadioButton();
             this.radioButtonJap = new System.Windows.Forms.RadioButton();
             this.listViewPCKS = new System.Windows.Forms.ListView();
+            this.TextBoxPackImage = new MetroFramework.Controls.MetroTextBox();
+            this.PackImageSelection = new System.Windows.Forms.Button();
             this.metroTabControlMain = new MetroFramework.Controls.MetroTabControl();
             this.contextMenuStripCaffiine = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.replaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.replacePCKToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.TextBoxPackImage = new MetroFramework.Controls.MetroTextBox();
-            this.PackImageSelection = new System.Windows.Forms.Button();
             this.metroTabPageMain.SuspendLayout();
             this.myTablePanel1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -226,39 +226,6 @@
             this.listViewPCKS.Click += new System.EventHandler(this.listViewPCKS_Click);
             this.listViewPCKS.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listViewPCKS_MouseDown);
             // 
-            // metroTabControlMain
-            // 
-            this.metroTabControlMain.Controls.Add(this.metroTabPageMain);
-            resources.ApplyResources(this.metroTabControlMain, "metroTabControlMain");
-            this.metroTabControlMain.Name = "metroTabControlMain";
-            this.metroTabControlMain.SelectedIndex = 0;
-            this.metroTabControlMain.Style = MetroFramework.MetroColorStyle.White;
-            this.metroTabControlMain.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.metroTabControlMain.UseSelectable = true;
-            // 
-            // contextMenuStripCaffiine
-            // 
-            this.contextMenuStripCaffiine.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.replaceToolStripMenuItem,
-            this.replacePCKToolStripMenuItem});
-            this.contextMenuStripCaffiine.Name = "contextMenuStripCaffiine";
-            resources.ApplyResources(this.contextMenuStripCaffiine, "contextMenuStripCaffiine");
-            this.contextMenuStripCaffiine.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStripCaffiine_Opening);
-            // 
-            // replaceToolStripMenuItem
-            // 
-            this.replaceToolStripMenuItem.Image = global::PckStudio.Properties.Resources.Replace;
-            this.replaceToolStripMenuItem.Name = "replaceToolStripMenuItem";
-            resources.ApplyResources(this.replaceToolStripMenuItem, "replaceToolStripMenuItem");
-            this.replaceToolStripMenuItem.Click += new System.EventHandler(this.replaceToolStripMenuItem_Click);
-            // 
-            // replacePCKToolStripMenuItem
-            // 
-            this.replacePCKToolStripMenuItem.Image = global::PckStudio.Properties.Resources.Replace;
-            this.replacePCKToolStripMenuItem.Name = "replacePCKToolStripMenuItem";
-            resources.ApplyResources(this.replacePCKToolStripMenuItem, "replacePCKToolStripMenuItem");
-            this.replacePCKToolStripMenuItem.Click += new System.EventHandler(this.replacePCKToolStripMenuItem_Click);
-            // 
             // TextBoxPackImage
             // 
             resources.ApplyResources(this.TextBoxPackImage, "TextBoxPackImage");
@@ -303,6 +270,40 @@
             this.PackImageSelection.ForeColor = System.Drawing.Color.White;
             this.PackImageSelection.Name = "PackImageSelection";
             this.PackImageSelection.UseVisualStyleBackColor = false;
+            this.PackImageSelection.Click += new System.EventHandler(this.PackImageSelection_Click);
+            // 
+            // metroTabControlMain
+            // 
+            this.metroTabControlMain.Controls.Add(this.metroTabPageMain);
+            resources.ApplyResources(this.metroTabControlMain, "metroTabControlMain");
+            this.metroTabControlMain.Name = "metroTabControlMain";
+            this.metroTabControlMain.SelectedIndex = 0;
+            this.metroTabControlMain.Style = MetroFramework.MetroColorStyle.White;
+            this.metroTabControlMain.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.metroTabControlMain.UseSelectable = true;
+            // 
+            // contextMenuStripCaffiine
+            // 
+            this.contextMenuStripCaffiine.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.replaceToolStripMenuItem,
+            this.replacePCKToolStripMenuItem});
+            this.contextMenuStripCaffiine.Name = "contextMenuStripCaffiine";
+            resources.ApplyResources(this.contextMenuStripCaffiine, "contextMenuStripCaffiine");
+            this.contextMenuStripCaffiine.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStripCaffiine_Opening);
+            // 
+            // replaceToolStripMenuItem
+            // 
+            this.replaceToolStripMenuItem.Image = global::PckStudio.Properties.Resources.Replace;
+            this.replaceToolStripMenuItem.Name = "replaceToolStripMenuItem";
+            resources.ApplyResources(this.replaceToolStripMenuItem, "replaceToolStripMenuItem");
+            this.replaceToolStripMenuItem.Click += new System.EventHandler(this.replaceToolStripMenuItem_Click);
+            // 
+            // replacePCKToolStripMenuItem
+            // 
+            this.replacePCKToolStripMenuItem.Image = global::PckStudio.Properties.Resources.Replace;
+            this.replacePCKToolStripMenuItem.Name = "replacePCKToolStripMenuItem";
+            resources.ApplyResources(this.replacePCKToolStripMenuItem, "replacePCKToolStripMenuItem");
+            this.replacePCKToolStripMenuItem.Click += new System.EventHandler(this.replacePCKToolStripMenuItem_Click);
             // 
             // installWiiU
             // 

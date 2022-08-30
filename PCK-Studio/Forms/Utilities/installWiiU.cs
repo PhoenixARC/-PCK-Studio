@@ -464,5 +464,13 @@ namespace PckStudio.Forms
             archive.Clear();
             System.GC.Collect();
         }
+
+        private void PackImageSelection_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "PNG Image|*.png";
+            if(ofd.ShowDialog() == DialogResult.OK)
+                TextBoxPackImage.Text = ofd.FileName;
+        }
     }
 }
