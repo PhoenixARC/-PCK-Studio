@@ -462,6 +462,8 @@ namespace PckStudio.Forms
             File.WriteAllBytes(Program.Appdata + "MediaWiiU.arc", ms.ToArray());
             client.UploadFile(Program.Appdata + "MediaWiiU.arc", dlcPath + "../../Common/Media/MediaWiiU.arc");
             archive.Clear();
+            currentPCK.Files.Clear();
+            currentPCK = null;
             System.GC.Collect();
         }
 
