@@ -29,7 +29,7 @@ namespace PckStudio.Forms
 
         private void goodbye_Load(object sender, EventArgs e)
         {
-            System.IO.File.Create(Program.Appdata + "\\goodbyemark");
+            System.IO.File.Create(Program.AppData + "\\goodbyemark");
         }
     }
 }

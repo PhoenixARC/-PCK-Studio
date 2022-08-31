@@ -21,9 +21,9 @@ namespace PckStudio.Forms
         string[] mods;
         string hosturl = "http://pckstudio.xyz/studio/PCK/api/";
         string loadDirectory = "http://pckstudio.xyz/studio/PCK/api/pckCenterList.txt";
-        static string appData = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/PCK Studio/";
+        static string appData = Program.AppData;
         LocalActions LAct = new LocalActions();
-        string cacheDir;
+        string cacheDir = Program.AppDataCache + "/mods/";
 
         bool nobleLoaded = true;
         bool newLoaded = true;
@@ -37,8 +37,6 @@ namespace PckStudio.Forms
         {
             InitializeComponent();
             //listViewNav.SmallImageList = imgList;
-
-            cacheDir = appData + "\\cache\\mods\\";
 
             if (!Directory.Exists(cacheDir))
             {

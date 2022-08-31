@@ -11,7 +11,7 @@ namespace API.PCKCenter
 {
     public class LocalActions
     {
-        string cache = PckStudio.Program.Appdata + "cache/packs/";
+        string cache = PckStudio.Program.AppDataCache + "/packs/";
         public bool SaveLocalJSON(PCKCenterJSON JSONData, string category, bool isVita)
         {
             try

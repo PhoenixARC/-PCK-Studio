@@ -78,7 +78,7 @@ namespace PckStudio
 
 			try
 			{
-				Directory.CreateDirectory(Program.Appdata + "\\cache\\mods\\");
+				Directory.CreateDirectory(Program.AppDataCache + "\\mods\\");
 			}
 			catch (UnauthorizedAccessException ex)
 			{
@@ -2750,9 +2750,9 @@ namespace PckStudio
 
 		private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
 		{
-			if (needsUpdate && File.Exists(Program.Appdata + @"\nobleUpdater.exe"))
+			if (needsUpdate && File.Exists(Program.AppData + @"\nobleUpdater.exe"))
 			{
-				Process.Start(Program.Appdata + @"\nobleUpdater.exe"); // starts updater
+				Process.Start(Program.AppData + @"\nobleUpdater.exe"); // starts updater
 				Application.Exit(); // closes PCK Studio to let updatear finish the job
 			}
 		}

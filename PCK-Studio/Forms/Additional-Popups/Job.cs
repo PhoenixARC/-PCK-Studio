@@ -26,7 +26,7 @@ namespace PckStudio.Forms
 
         private void Job_Load(object sender, EventArgs e)
         {
-            File.Create(Program.Appdata + "\\discordmark");
+            File.Create(Program.AppData + "\\discordmark");
         }
 
         private void buttonDonate_Click(object sender, EventArgs e)

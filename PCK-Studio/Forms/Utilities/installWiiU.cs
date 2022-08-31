@@ -443,8 +443,8 @@ namespace PckStudio.Forms
         private void GetARCFromConsole()
         {
             FTP client = new FTP("ftp://" + textBoxHost.Text, "", "a3262443");
-            client.DownloadFile(dlcPath + "../../Common/Media/MediaWiiU.arc", Program.Appdata + "MediaWiiU.arc");
-            archive = ARCFileReader.Read(new MemoryStream(File.ReadAllBytes(Program.Appdata + "MediaWiiU.arc")));
+            client.DownloadFile(dlcPath + "../../Common/Media/MediaWiiU.arc", Program.AppData + "MediaWiiU.arc");
+            archive = ARCFileReader.Read(new MemoryStream(File.ReadAllBytes(Program.AppData + "MediaWiiU.arc")));
         }
 
         private void ReplacePackImage(string PackID)
@@ -459,8 +459,8 @@ namespace PckStudio.Forms
             FTP client = new FTP("ftp://" + textBoxHost.Text, "", "a3262443");
             MemoryStream ms = new MemoryStream();
             ARCFileWriter.Write(ms, archive);
-            File.WriteAllBytes(Program.Appdata + "MediaWiiU.arc", ms.ToArray());
-            client.UploadFile(Program.Appdata + "MediaWiiU.arc", dlcPath + "../../Common/Media/MediaWiiU.arc");
+            File.WriteAllBytes(Program.AppData + "MediaWiiU.arc", ms.ToArray());
+            client.UploadFile(Program.AppData + "MediaWiiU.arc", dlcPath + "../../Common/Media/MediaWiiU.arc");
             archive.Clear();
             currentPCK.Files.Clear();
             currentPCK = null;

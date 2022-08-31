@@ -133,7 +133,7 @@ namespace PckStudio.Forms
                     List<PCKFile.FileData> capesList = new List<PCKFile.FileData>();
 
                     PCKFile pck = null;
-                    using (var stream = File.OpenRead(Program.Appdata + "/PCK-Center/myPcks/" + mod + ".pck"))
+                    using (var stream = File.OpenRead(Program.AppData + "/PCK-Center/myPcks/" + mod + ".pck"))
                     {
                         pck = PCKFileReader.Read(stream, false); // sets opened pck
                     }
@@ -1102,9 +1102,10 @@ namespace PckStudio.Forms
         {
             try
             {
-                File.Delete(Program.Appdata + "/PCK-Center/myPcks/" + mod + ".pck");
-                File.Delete(Program.Appdata + "/PCK-Center/myPcks/" + mod + ".png");
-                File.Delete(Program.Appdata + "/PCK-Center/myPcks/" + mod + ".desc");
+                File.Delete(Program.AppData + "/PCK-Center/myPcks/" + mod + ".pck");
+                File.Delete(Program.AppData + "/PCK-Center/myPcks/" + mod + ".pck");
+                File.Delete(Program.AppData + "/PCK-Center/myPcks/" + mod + ".png");
+                File.Delete(Program.AppData + "/PCK-Center/myPcks/" + mod + ".desc");
                 reloader();
             }
             catch (Exception)
@@ -1124,7 +1125,7 @@ namespace PckStudio.Forms
             {
                 try
                 {
-                    File.Copy(Program.Appdata + "/PCK-Center/myPcks/" + mod + ".pck", export.FileName);
+                    File.Copy(Program.AppData + "/PCK-Center/myPcks/" + mod + ".pck", export.FileName);
                     MessageBox.Show("PCK Received from location!");
                 }catch (Exception)
                 {
@@ -1145,7 +1146,7 @@ namespace PckStudio.Forms
 
         private void buttonInstallWiiU_Click(object sender, EventArgs e)
         {
-            installWiiU install = new installWiiU(Program.Appdata + "/PCK Center/myPcks/" + mod + ".pck");
+            installWiiU install = new installWiiU(Program.AppData + "/PCK Center/myPcks/" + mod + ".pck");
             install.ShowDialog();
         }
     }

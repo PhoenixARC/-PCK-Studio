@@ -35,15 +35,10 @@ namespace PckStudio.Forms.Utilities
             }
         }
 
-        #region variables
-
         public PCKCollections Collections = new PCKCollections();
         public PCKCollectionsLocal LocalCollections = new PCKCollectionsLocal();
         LocalActions LActions = new LocalActions();
-
-        string cache = Program.Appdata + "cache/";
-
-        #endregion
+        string cache = Program.AppDataCache;
 
         #region Functions
         public void GetCategories()
@@ -75,8 +70,7 @@ namespace PckStudio.Forms.Utilities
             LocalTreeView.Nodes.Clear();
 
             DownloadButton.Visible = false;
-            pictureBox1.Image = Properties.Resources.pckCenterHeader;
-            pictureBox2.Image = Properties.Resources.pckCenterHeader;
+            pictureBox1.Image = pictureBox2.Image = Properties.Resources.pckCenterHeader;
 
             switch (metroTabControl1.SelectedIndex)
             {
@@ -107,17 +101,9 @@ namespace PckStudio.Forms.Utilities
             }
         }
 
-        public bool IsPackLocal(int PackID, bool IsVita)
+        public bool IsPackLocal(int packID, bool isVita)
         {
-            switch (IsVita)
-            {
-                case true:
-                    return File.Exists(cache + "packs/vita/pcks/" + PackID + ".pck");
-                    break;
-                case false:
-                    return File.Exists(cache + "packs/normal/pcks/" + PackID + ".pck");
-                    break;
-            }
+            return File.Exists(cache + $"packs/{(isVita ? "vita" : "normal")}/pcks/" + packID + ".pck");
         }
         #endregion
 
@@ -126,10 +112,11 @@ namespace PckStudio.Forms.Utilities
         {
             try
             {
-                string nam = "Pack Name: %n\npack ID: %pid\nAuthor: %a\nDescription: %d";
                 EntryInfo EI = Collections.CenterPacks.Data[OnlineTreeView.SelectedNode.Tag.ToString()];
+                string nam = string.Format("Pack Name: {0}\npack ID: {1}\nAuthor: {2}\nDescription: {3}",
+                    EI.Name, OnlineTreeView.SelectedNode.Tag.ToString(), EI.Author, EI.Description);
 
-                metroLabel1.Text = nam.Replace("%n", EI.Name).Replace("%a", EI.Author).Replace("%d", EI.Description).Replace("%pid", OnlineTreeView.SelectedNode.Tag.ToString());
+                metroLabel1.Text = nam;
                 metroLabel1.AutoSize = false;
                 metroLabel1.WrapToLine = true;
 
