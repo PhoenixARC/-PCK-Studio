@@ -618,5 +618,10 @@ namespace PckStudio.Forms.Editor
 			MessageBox.Show("You can import any valid Java Edition tile animations into your pck by opening an mcmeta.\n\n" +
 				"You can also export your animation as an Java Edition tile animation. It will also export the actual texture in the same spot.", "Java Edition Support");
 		}
+
+		private void generateMipMapTexturesToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			
+		}
 	}
 }

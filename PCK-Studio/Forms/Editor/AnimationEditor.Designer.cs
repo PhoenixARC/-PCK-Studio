@@ -46,6 +46,7 @@
 			this.howToInterpolation = new System.Windows.Forms.ToolStripMenuItem();
 			this.editorControlsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.setBulkSpedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.javaAnimationSupportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.InterpolationCheckbox = new MetroFramework.Controls.MetroCheckBox();
 			this.AnimationPlayBtn = new MetroFramework.Controls.MetroButton();
 			this.AnimationStopBtn = new MetroFramework.Controls.MetroButton();
@@ -54,7 +55,7 @@
 			this.MipMapLabel = new MetroFramework.Controls.MetroLabel();
 			this.MipMapNumericUpDown = new System.Windows.Forms.NumericUpDown();
 			this.pictureBoxWithInterpolationMode1 = new PckStudio.PictureBoxWithInterpolationMode();
-			this.javaAnimationSupportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.generateMipMapTexturesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenuStrip1.SuspendLayout();
 			this.menuStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.MipMapNumericUpDown)).BeginInit();
@@ -132,7 +133,7 @@
 			// 
 			this.saveToolStripMenuItem1.Image = ((System.Drawing.Image)(resources.GetObject("saveToolStripMenuItem1.Image")));
 			this.saveToolStripMenuItem1.Name = "saveToolStripMenuItem1";
-			this.saveToolStripMenuItem1.Size = new System.Drawing.Size(98, 22);
+			this.saveToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
 			this.saveToolStripMenuItem1.Text = "Save";
 			this.saveToolStripMenuItem1.Click += new System.EventHandler(this.saveToolStripMenuItem1_Click);
 			// 
@@ -142,7 +143,8 @@
             this.bulkAnimationSpeedToolStripMenuItem,
             this.importJavaAnimationToolStripMenuItem,
             this.exportJavaAnimationToolStripMenuItem,
-            this.changeTileToolStripMenuItem});
+            this.changeTileToolStripMenuItem,
+            this.generateMipMapTexturesToolStripMenuItem});
 			this.editToolStripMenuItem.ForeColor = System.Drawing.Color.White;
 			this.editToolStripMenuItem.Name = "editToolStripMenuItem";
 			this.editToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
@@ -152,7 +154,7 @@
 			// 
 			this.bulkAnimationSpeedToolStripMenuItem.Image = global::PckStudio.Properties.Resources.clock;
 			this.bulkAnimationSpeedToolStripMenuItem.Name = "bulkAnimationSpeedToolStripMenuItem";
-			this.bulkAnimationSpeedToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+			this.bulkAnimationSpeedToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
 			this.bulkAnimationSpeedToolStripMenuItem.Text = "Set Bulk Animation Speed";
 			this.bulkAnimationSpeedToolStripMenuItem.Click += new System.EventHandler(this.bulkAnimationSpeedToolStripMenuItem_Click);
 			// 
@@ -160,7 +162,7 @@
 			// 
 			this.importJavaAnimationToolStripMenuItem.Image = global::PckStudio.Properties.Resources.Replace;
 			this.importJavaAnimationToolStripMenuItem.Name = "importJavaAnimationToolStripMenuItem";
-			this.importJavaAnimationToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+			this.importJavaAnimationToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
 			this.importJavaAnimationToolStripMenuItem.Text = "Import Java Animation";
 			this.importJavaAnimationToolStripMenuItem.Click += new System.EventHandler(this.importJavaAnimationToolStripMenuItem_Click);
 			// 
@@ -168,7 +170,7 @@
 			// 
 			this.exportJavaAnimationToolStripMenuItem.Image = global::PckStudio.Properties.Resources.ExportFile;
 			this.exportJavaAnimationToolStripMenuItem.Name = "exportJavaAnimationToolStripMenuItem";
-			this.exportJavaAnimationToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+			this.exportJavaAnimationToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
 			this.exportJavaAnimationToolStripMenuItem.Text = "Export Java Animation";
 			this.exportJavaAnimationToolStripMenuItem.Click += new System.EventHandler(this.exportJavaAnimationToolStripMenuItem_Click);
 			// 
@@ -176,7 +178,7 @@
 			// 
 			this.changeTileToolStripMenuItem.Image = global::PckStudio.Properties.Resources.changeTile;
 			this.changeTileToolStripMenuItem.Name = "changeTileToolStripMenuItem";
-			this.changeTileToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+			this.changeTileToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
 			this.changeTileToolStripMenuItem.Text = "Change Tile";
 			this.changeTileToolStripMenuItem.Click += new System.EventHandler(this.changeTileToolStripMenuItem_Click);
 			// 
@@ -212,6 +214,13 @@
 			this.setBulkSpedToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
 			this.setBulkSpedToolStripMenuItem.Text = "Set Bulk Speed";
 			this.setBulkSpedToolStripMenuItem.Click += new System.EventHandler(this.setBulkSpeedToolStripMenuItem_Click);
+			// 
+			// javaAnimationSupportToolStripMenuItem
+			// 
+			this.javaAnimationSupportToolStripMenuItem.Name = "javaAnimationSupportToolStripMenuItem";
+			this.javaAnimationSupportToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+			this.javaAnimationSupportToolStripMenuItem.Text = "Java Animation Support";
+			this.javaAnimationSupportToolStripMenuItem.Click += new System.EventHandler(this.javaAnimationSupportToolStripMenuItem_Click);
 			// 
 			// InterpolationCheckbox
 			// 
@@ -326,12 +335,13 @@
 			this.pictureBoxWithInterpolationMode1.TabIndex = 16;
 			this.pictureBoxWithInterpolationMode1.TabStop = false;
 			// 
-			// javaAnimationSupportToolStripMenuItem
+			// generateMipMapTexturesToolStripMenuItem
 			// 
-			this.javaAnimationSupportToolStripMenuItem.Name = "javaAnimationSupportToolStripMenuItem";
-			this.javaAnimationSupportToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
-			this.javaAnimationSupportToolStripMenuItem.Text = "Java Animation Support";
-			this.javaAnimationSupportToolStripMenuItem.Click += new System.EventHandler(this.javaAnimationSupportToolStripMenuItem_Click);
+			this.generateMipMapTexturesToolStripMenuItem.Image = global::PckStudio.Properties.Resources.IMAGE_ICON;
+			this.generateMipMapTexturesToolStripMenuItem.Name = "generateMipMapTexturesToolStripMenuItem";
+			this.generateMipMapTexturesToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
+			this.generateMipMapTexturesToolStripMenuItem.Text = "Generate MipMap Textures";
+			this.generateMipMapTexturesToolStripMenuItem.Click += new System.EventHandler(this.generateMipMapTexturesToolStripMenuItem_Click);
 			// 
 			// AnimationEditor
 			// 
@@ -391,5 +401,6 @@
 		private System.Windows.Forms.ToolStripMenuItem editorControlsToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem setBulkSpedToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem javaAnimationSupportToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem generateMipMapTexturesToolStripMenuItem;
 	}
 }
