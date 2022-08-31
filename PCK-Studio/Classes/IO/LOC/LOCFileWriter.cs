@@ -80,7 +80,7 @@ namespace PckStudio.Classes.IO.LOC
 
         private void WriteString(Stream stream, string s)
         {
-            WriteShort(stream, Convert.ToInt16(Encoding.UTF8.GetByteCount(s)));
+            WriteShort(stream, System.Convert.ToInt16(Encoding.UTF8.GetByteCount(s)));
             WriteString(stream, s, Encoding.UTF8);
         }
     }

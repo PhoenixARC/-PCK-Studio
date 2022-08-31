@@ -52,7 +52,7 @@ namespace PckStudio.Classes.IO.LOC
 
         private List<string> ReadKeys(Stream stream)
         {
-            bool useUniqueIds = Convert.ToBoolean(stream.ReadByte());
+            bool useUniqueIds = System.Convert.ToBoolean(stream.ReadByte());
             int keyCount = ReadInt(stream);
             List<string> keys = new List<string>(keyCount);
             for (int i = 0; i < keyCount; i++)

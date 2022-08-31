@@ -73,7 +73,7 @@ namespace PckStudio.Classes.Utils
 
 		public static eANIM_EFFECTS Parse(string anim)
 			=> IsValidANIM(anim)
-				? (eANIM_EFFECTS)Convert.ToInt32(anim, 16)
+				? (eANIM_EFFECTS)System.Convert.ToInt32(anim, 16)
 				: eANIM_EFFECTS.NONE;
 
 		public void SetANIM(int anim) => SetANIM((eANIM_EFFECTS)anim);

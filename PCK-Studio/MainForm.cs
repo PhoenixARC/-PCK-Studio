@@ -18,6 +18,7 @@ using PckStudio.Forms;
 using PckStudio.Forms.Utilities;
 using PckStudio.Forms.Editor;
 using PckStudio.Classes.IO.PCK;
+using PckStudio.Classes.Convert.FromLCE;
 
 namespace PckStudio
 {
@@ -1327,6 +1328,14 @@ namespace PckStudio
 
 		private void convertToBedrockToolStripMenuItem_Click(object sender, EventArgs e)
 		{
+			SaveFileDialog sfd = new SaveFileDialog();
+			sfd.Filter = "MCPack File|*.mcpack";
+			if(sfd.ShowDialog() == DialogResult.OK)
+            {
+				LCEToBedrock lb = new LCEToBedrock();
+				lb.ConvertSkinPack(currentPCK, sfd.FileName);
+			}
+
 			//if (openedPCKS.Visible == true && MessageBox.Show("Convert " + openedPCKS.SelectedTab.Text + " to a Bedrock Edition format?", "Convert", MessageBoxButtons.YesNo, MessageBoxIcon.None) == DialogResult.Yes)
 			//{
 			//	try

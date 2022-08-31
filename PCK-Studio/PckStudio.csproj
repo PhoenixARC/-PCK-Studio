@@ -136,6 +136,7 @@
   <ItemGroup>
     <Compile Include="Classes\API\PCKCenter\model\PCKCenterJSON.cs" />
     <Compile Include="Classes\API\PCKCenter\SaveLocalJSON.cs" />
+    <Compile Include="Classes\Convert\FromLCE\LCEToBedrock.cs" />
     <Compile Include="Classes\FileTypes\ARCFile.cs" />
     <Compile Include="Classes\FileTypes\PCKAudioFile.cs" />
     <Compile Include="Classes\FileTypes\Bink.cs" />

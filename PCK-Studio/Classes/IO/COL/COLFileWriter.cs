@@ -17,7 +17,7 @@ namespace PckStudio.Classes.IO.COL
 
         private void WriteToStream(Stream stream, COLFile colourFile)
         {
-            WriteInt(stream, Convert.ToInt32(colourFile.waterEntries.Count > 0));
+            WriteInt(stream, System.Convert.ToInt32(colourFile.waterEntries.Count > 0));
             WriteInt(stream, colourFile.entries.Count);
             foreach (var colorEntry in colourFile.entries)
             {
