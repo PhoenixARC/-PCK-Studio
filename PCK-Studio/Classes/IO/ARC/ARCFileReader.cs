@@ -8,12 +8,12 @@ namespace PckStudio.Classes.IO.ARC
 {
     internal class ARCFileReader : StreamDataReader
     {
-        public static ConsoleArchive Read(Stream stream)
+        public static ConsoleArchive Read(Stream stream, bool useLittleEndian = false)
         {
-            return new ARCFileReader().ReadFromStream(stream);
+            return new ARCFileReader(useLittleEndian).ReadFromStream(stream);
         }
 
-        private ARCFileReader() : base(true)
+        private ARCFileReader(bool useLittleEndian) : base(useLittleEndian)
         {
         }
 

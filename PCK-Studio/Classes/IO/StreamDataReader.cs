@@ -11,9 +11,9 @@ namespace PckStudio.Classes.IO
     {
         private static bool useLittleEndian;
         protected static bool IsUsingLittleEndian => useLittleEndian;
-        protected StreamDataReader(bool littleEndian)
+        protected StreamDataReader(bool useLittleEndian)
         {
-            useLittleEndian = littleEndian;
+            StreamDataReader.useLittleEndian = useLittleEndian;
         }
 
         protected static string ReadString(Stream stream, int length, Encoding encoding)

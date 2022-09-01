@@ -12,12 +12,12 @@ namespace PckStudio.Classes.IO.ARC
     {
         private ConsoleArchive _archive;
 
-        public static void Write(Stream stream, ConsoleArchive archive)
+        public static void Write(Stream stream, ConsoleArchive archive, bool useLittleEndian = false)
         {
-            new ARCFileWriter(archive).WriteToStream(stream);
+            new ARCFileWriter(archive, useLittleEndian).WriteToStream(stream);
         }
 
-        public ARCFileWriter(ConsoleArchive archive) : base(true)
+        public ARCFileWriter(ConsoleArchive archive, bool useLittleEndian) : base(useLittleEndian)
         {
             _archive = archive;
         }
