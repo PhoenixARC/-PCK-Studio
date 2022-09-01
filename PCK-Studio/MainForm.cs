@@ -595,20 +595,9 @@ namespace PckStudio
 			switch (file.filetype)
 			{
 				case PCKFile.FileData.FileType.LocalisationFile:
-					LOCFile l = null;
-					using (var stream = new MemoryStream(file.data))
+					var locedit = new LOCEditor(file);
+					if (locedit.ShowDialog(this) == DialogResult.OK)
 					{
-						l = LOCFileReader.Read(stream);
-					}
-					var locedit = new LOCEditor(l);
-					locedit.ShowDialog(this);
-					if (locedit.WasModified)
-					{
-						using (var stream = new MemoryStream())
-						{
-							LOCFileWriter.Write(stream, l);
-							file.SetData(stream.ToArray());
-						}
 						saved = false;
 					}
 					break;
