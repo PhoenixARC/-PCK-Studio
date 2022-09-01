@@ -2715,18 +2715,9 @@ namespace PckStudio
 			if (file.filetype == PCKFile.FileData.FileType.LocalisationFile &&
 				(file.filepath == "languages.loc" || file.filepath == "localisation.loc"))
 			{
-				LOCFile locFile = null;
-				using (var stream = new MemoryStream(file.data))
-				{
-					locFile = LOCFileReader.Read(stream);
-				}
-				var locEditor = new LOCEditor(locFile);
-				locEditor.ShowDialog();
-				using (var stream = new MemoryStream())
-				{
-					LOCFileWriter.Write(stream, locFile);
-					file.SetData(stream.ToArray());
-				}
+				var locEditor = new LOCEditor(file);
+				if (locEditor.ShowDialog() == DialogResult.OK)
+					saved = false;
 			}
 
 			// Checks to see if selected minefile is a col file
