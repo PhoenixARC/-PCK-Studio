@@ -2714,7 +2714,8 @@ namespace PckStudio
 				file.filepath == "colours.col") // .col file
 			{
 				using COLEditor diag = new COLEditor(file);
-				diag.ShowDialog(this);
+				if (diag.ShowDialog(this) == DialogResult.OK)
+					saved = false;
 			}
 		}
 
