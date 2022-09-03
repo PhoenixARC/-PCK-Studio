@@ -18,16 +18,17 @@ namespace PckStudio.Models
 		{
 			_ = Textures[0] ?? throw new NullReferenceException(nameof(Textures));
             Image source = Textures[0].Source;
-			Box head = new Box(source, new Rectangle(8, 0, 16, 8),   new Rectangle(0, 8, 32, 8),    new Point3D(0f, 0f, 0f), Effects.None);
-			Box headOverlay = new Box(source, new Rectangle(40, 0, 16, 8),  new Rectangle(32, 8, 32, 8),   new Point3D(0f, 0f, 0f), Effects.None);
+			Box head        = new Box(source, new Rectangle( 8, 0, 16, 8), new Rectangle( 0, 8, 32, 8), new Point3D(0f, 0f, 0f));
+			Box headOverlay = new Box(source, new Rectangle(40, 0, 16, 8), new Rectangle(32, 8, 32, 8), new Point3D(0f, 0f, 0f));
+			headOverlay.Scale = OverlayScale;
 
-			Box body = new Box(source, new Rectangle(20, 16, 16, 4), new Rectangle(16, 20, 24, 12), new Point3D(0f, 0f, 0f), Effects.None);
+			Box body = new Box(source, new Rectangle(20, 16, 16, 4), new Rectangle(16, 20, 24, 12), new Point3D(0f, 0f, 0f));
 
-			Box leftArm = new Box(source, new Rectangle(44, 16, 8,  4), new Rectangle(40, 20, 32, 12), new Point3D(0f, 4f, 0f), Effects.FlipHorizontally);
-			Box rightArm = new Box(source, new Rectangle(44, 16, 8,  4), new Rectangle(40, 20, 32, 12), new Point3D(0f, 4f, 0f), Effects.None);
+			Box leftArm  = new Box(source, new Rectangle(44, 16, 8,  4), new Rectangle(40, 20, 32, 12), new Point3D(0f, 4f, 0f));
+			Box rightArm = new Box(source, new Rectangle(44, 16, 8,  4), new Rectangle(40, 20, 32, 12), new Point3D(0f, 4f, 0f));
 
-			Box leftLeg = new Box(source, new Rectangle(4,  16, 8,  4), new Rectangle(0,  20, 16, 12), new Point3D(0f, 6f, 0f), Effects.FlipHorizontally);
-			Box rightLeg = new Box(source, new Rectangle(4,  16, 8,  4), new Rectangle(0,  20, 16, 12), new Point3D(0f, 6f, 0f), Effects.None);
+			Box leftLeg  = new Box(source, new Rectangle(4, 16, 8, 4), new Rectangle(0, 20, 16, 12), new Point3D(0f, 6f, 0f));
+			Box rightLeg = new Box(source, new Rectangle(4, 16, 8, 4), new Rectangle(0, 20, 16, 12), new Point3D(0f, 6f, 0f));
 
 			Object3DGroup headGroup = new Object3DGroup();
 			
@@ -38,7 +39,6 @@ namespace PckStudio.Models
 			headGroup.MinDegrees2 = -57f;
 			headGroup.MaxDegrees2 = 57f;
 			
-			headOverlay.Scale = 1.16f;
 			headGroup.Add(head);
 			headGroup.Add(headOverlay);
 			

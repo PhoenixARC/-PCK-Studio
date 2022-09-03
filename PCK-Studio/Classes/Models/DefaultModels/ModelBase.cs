@@ -13,8 +13,9 @@ namespace PckStudio.Models
 		public Texture[] textures;
 
 		public EventHandler OnUpdate;
+        protected const float OverlayScale = 1.16f;
 
-		protected void Initialize()
+        protected void Initialize()
 		{
             foreach (Texture texture in textures)
             {
