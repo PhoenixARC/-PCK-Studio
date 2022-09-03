@@ -17,6 +17,11 @@ namespace PckStudio.Classes.IO
             useLittleEndian = littleEndian;
         }
 
+        protected static void WriteBool(Stream stream, bool state)
+        {
+            stream.WriteByte((byte)(state ? 1 : 0));
+        }
+
         protected static void WriteUShort(Stream stream, ushort value) => WriteShort(stream, (short)value);
 
         protected static void WriteShort(Stream stream, short value)
@@ -54,5 +59,12 @@ namespace PckStudio.Classes.IO
             stream.Write(bytes, 0, count);
         }
 
+        protected static void WriteFloat(Stream stream, float value)
+        {
+            byte[] buffer = BitConverter.GetBytes(value);
+            if (BitConverter.IsLittleEndian && !useLittleEndian)
+                Array.Reverse(buffer);
+            WriteBytes(stream, buffer, 4);
+        }
     }
 }

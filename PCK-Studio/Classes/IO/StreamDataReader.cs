@@ -29,6 +29,11 @@ namespace PckStudio.Classes.IO
             return buffer;
         }
 
+        protected static bool ReadBool(Stream stream)
+        {
+            return stream.ReadByte() != 0;
+        }
+
         protected static ushort ReadUShort(Stream stream) => (ushort)ReadShort(stream);
         protected static short ReadShort(Stream stream)
         {
@@ -54,6 +59,14 @@ namespace PckStudio.Classes.IO
             if (BitConverter.IsLittleEndian && !useLittleEndian)
                 Array.Reverse(buffer);
             return BitConverter.ToInt64(buffer, 0);
+        }
+        
+        protected static float ReadFloat(Stream stream)
+        {
+            byte[] buffer = ReadBytes(stream, 4);
+            if (BitConverter.IsLittleEndian && !useLittleEndian)
+                Array.Reverse(buffer);
+            return BitConverter.ToSingle(buffer, 0);
         }
     }
 }
