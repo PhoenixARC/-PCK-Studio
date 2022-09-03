@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 
 namespace PckStudio.Classes.Convert.FromLCE
 {
@@ -265,7 +266,6 @@ namespace PckStudio.Classes.Convert.FromLCE
         #endregion
 
         #region Skin Packs
-
         public void ConvertSkinPack(PCKFile Source, string ExportFilepath)
         {
             List<skinObject> objects = new List<skinObject>();
@@ -393,8 +393,16 @@ namespace PckStudio.Classes.Convert.FromLCE
                         if (args[0] == part)
                         {
                             BOX box = new BOX(args);
-                            //offset = float.Parse(offsets.Find(o => o.Item2.StartsWith(part)).Item2.Split()[2]);
-                            cubes.Add(new modelCube(new float[] { pivot[0] + box.posX, -1 * (pivot[1] + box.posY + offset + box.sizeY) + 24, pivot[2] + box.posZ }, new float[] { box.sizeX, box.sizeY, box.sizeZ }, new float[] { box.uvX, box.uvY }, box.mirror, box.inflation));
+                            string part_offset = offsets.FirstOrDefault(off => off.Item2.StartsWith(part)).Item2.Split()[2];
+                            if (!string.IsNullOrEmpty(part_offset))
+							{
+                                offset = float.Parse(part_offset);
+                                Console.WriteLine(offset);
+                            }
+                            //-1 * ((mbox.Value.PositionY + mpart.Value.TranslationY - 24) + mbox.Value.Height);
+                            //float y = -1 * ((pivot[1] + box.posY + (offset - 24)) + box.sizeY);
+                            float y = -1 * ((pivot[1] + (box.posY - offset) - 24) + box.sizeY);
+                            cubes.Add(new modelCube(new float[] { pivot[0] + box.posX, y, pivot[2] + box.posZ }, new float[] { box.sizeX, box.sizeY, box.sizeZ }, new float[] { box.uvX, box.uvY }, box.mirror, box.inflation));
                         }
                         break;
                     default:
