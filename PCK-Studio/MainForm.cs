@@ -29,6 +29,8 @@ namespace PckStudio
 		bool saved = true;
 		bool isTemplateFile = false;
 
+		readonly Dictionary<PCKFile.FileData.FileType, Action<PCKFile.FileData>> pckFileTypeHandler;
+
 		public MainForm()
 		{
 			InitializeComponent();
@@ -45,6 +47,25 @@ namespace PckStudio
 #if DEBUG
 			labelVersion.Text += " (Debug build)";
 #endif
+
+			pckFileTypeHandler = new Dictionary<PCKFile.FileData.FileType, Action<PCKFile.FileData>>(15)
+			{
+				[PCKFile.FileData.FileType.SkinFile]            = HandleSkinFile,
+				[PCKFile.FileData.FileType.CapeFile]            = null,
+				[PCKFile.FileData.FileType.TextureFile]         = HandleTextureFile,
+				[PCKFile.FileData.FileType.UIDataFile]          = _ => throw new NotSupportedException("unused in-game"),
+				[PCKFile.FileData.FileType.InfoFile]            = null,
+				[PCKFile.FileData.FileType.TexturePackInfoFile] = null,
+				[PCKFile.FileData.FileType.LocalisationFile]    = HandleLocalisationFile,
+				[PCKFile.FileData.FileType.GameRulesFile]       = HandleGameRuleFile,
+				[PCKFile.FileData.FileType.AudioFile]           = HandleAudioFile,
+				[PCKFile.FileData.FileType.ColourTableFile]     = HandleColourFile,
+				[PCKFile.FileData.FileType.GameRulesHeader]     = HandleGameRuleFile,
+				[PCKFile.FileData.FileType.SkinDataFile]        = null,
+				[PCKFile.FileData.FileType.ModelsFile]          = HandleModelsFile,
+				[PCKFile.FileData.FileType.BehavioursFile]      = null,
+				[PCKFile.FileData.FileType.MaterialFile]        = null,
+			};
 		}
 
 		public void LoadFromPath(string filepath)
@@ -56,7 +77,6 @@ namespace PckStudio
                 LoadEditorTab();
             }
         }
-
 
 		private void Form1_Load(object sender, EventArgs e)
 		{
@@ -265,16 +285,95 @@ namespace PckStudio
 			BuildPckTreeView(treeViewMain.Nodes, currentPCK);
 		}
 
+        private void HandleTextureFile(PCKFile.FileData file)
+        {
+			if (file.filepath.StartsWith("res/textures/blocks/") || file.filepath.StartsWith("res/textures/items/") &&
+				!file.filepath.EndsWith("clock.png") && (!file.filepath.EndsWith("compass.png")))
+			{
+                using (AnimationEditor animationEditor = new AnimationEditor(file))
+                {
+                    if (animationEditor.ShowDialog(this) == DialogResult.OK)
+                        ReloadMetaTreeView();
+                }
+            }
+        }
+
+        private void HandleGameRuleFile(PCKFile.FileData file)
+        {
+			using GRFEditor grfEditor = new GRFEditor(file);
+            grfEditor.ShowDialog();
+        }
+
+		private void HandleAudioFile(PCKFile.FileData file)
+		{
+            if (!TryGetLocFile(out LOCFile locFile))
+                throw new Exception("No .loc File found.");
+            using AudioEditor audioEditor = new AudioEditor(file, locFile, LittleEndianCheckBox.Checked);
+			if (audioEditor.ShowDialog(this) == DialogResult.OK)
+			{
+				saved = false;
+				TrySetLocFile(locFile);
+			}
+        }
+
+		private void HandleLocalisationFile(PCKFile.FileData file)
+		{
+            using LOCEditor locedit = new LOCEditor(file);
+			if (locedit.ShowDialog(this) == DialogResult.OK)
+				saved = false;
+        }
+
+		private void HandleColourFile(PCKFile.FileData file)
+		{
+            if (file.size == 0)
+            {
+                MessageBox.Show("No Color data found.", "Error", MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                return;
+            }
+            using COLEditor diag = new COLEditor(file);
+			if (diag.ShowDialog(this) == DialogResult.OK)
+				saved = false;
+        }
+
+		public void HandleSkinFile(PCKFile.FileData file)
+		{
+			if (file.properties.HasProperty("BOX"))
+			{
+				using (generateModel generate = new generateModel(file.properties, new PictureBox()))
+					if (generate.ShowDialog() == DialogResult.OK)
+					{
+						entryDataTextBox.Text = entryTypeTextBox.Text = string.Empty;
+						saved = false;
+						ReloadMetaTreeView();
+					}
+			}
+			else
+			{
+				using (var ms = new MemoryStream(file.data))
+				{
+					var texture = Image.FromStream(ms);
+					SkinPreview frm = new SkinPreview(texture);
+					frm.ShowDialog(this);
+					frm.Dispose();
+				}
+			}
+        }
+
+		public void HandleModelsFile(PCKFile.FileData file)
+		{
+			throw new NotImplementedException();
+		}
+
 		private void selectNode(object sender, TreeViewEventArgs e)
 		{
 			ReloadMetaTreeView();
-			entryTypeTextBox.Text = entryDataTextBox.Text = labelImageSize.Text = "";
+			entryTypeTextBox.Text = entryDataTextBox.Text = labelImageSize.Text = string.Empty;
 			buttonEdit.Visible = false;
 			pictureBoxImagePreview.Image = Resources.NoImageFound;
 			var node = e.Node;
-			if (node.Tag == null || !(node.Tag is PCKFile.FileData)) return;
-			PCKFile.FileData file = node.Tag as PCKFile.FileData;
-
+			if (node is TreeNode t && t.Tag is PCKFile.FileData file)
+			{
 			if (file.properties.HasProperty("BOX"))
 			{
 				buttonEdit.Text = "EDIT BOXES";
@@ -290,18 +389,6 @@ namespace PckStudio
 
 			switch (file.filetype)
 			{
-				case PCKFile.FileData.FileType.TextureFile when (file.filepath.StartsWith("res/textures/blocks/") || file.filepath.StartsWith("res/textures/items/")) &&
-							!file.filepath.EndsWith("clock.png") && (!file.filepath.EndsWith("compass.png")):
-					buttonEdit.Text = "EDIT TEXTURE ANIMATION";
-					buttonEdit.Visible = true;
-					using (MemoryStream png = new MemoryStream(file.data))
-					{
-						Image skinPicture = Image.FromStream(png);
-						pictureBoxImagePreview.Image = skinPicture;
-						labelImageSize.Text = $"{skinPicture.Size.Width}x{skinPicture.Size.Height}";
-					}
-					break;
-
 				case PCKFile.FileData.FileType.SkinFile:
 				case PCKFile.FileData.FileType.CapeFile:
 				case PCKFile.FileData.FileType.TextureFile:
@@ -313,6 +400,14 @@ namespace PckStudio
 						pictureBoxImagePreview.Image = skinPicture;
 						labelImageSize.Text = $"{skinPicture.Size.Width}x{skinPicture.Size.Height}";
 					}
+
+						if ((file.filepath.StartsWith("res/textures/blocks/") || file.filepath.StartsWith("res/textures/items/")) &&
+							!file.filepath.EndsWith("clock.png") && !file.filepath.EndsWith("compass.png") &&
+							file.filetype == PCKFile.FileData.FileType.TextureFile)
+						{
+							buttonEdit.Text = "EDIT TEXTURE ANIMATION";
+							buttonEdit.Visible = true;
+						}
 					break;
 
 				case PCKFile.FileData.FileType.LocalisationFile:
@@ -334,29 +429,17 @@ namespace PckStudio
 					break;
 			}
 		}
-
-        public void editModel(PCKFile.FileData skin)
-        {
-            using (generateModel generate = new generateModel(skin.properties, new PictureBox()))
-                if (generate.ShowDialog() == DialogResult.OK)
-                {
-                    entryTypeTextBox.Text = "";
-                    entryDataTextBox.Text = "";
-                    saved = false;
-                    ReloadMetaTreeView();
                 }
-        }
 
 		private void extractToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			var node = treeViewMain.SelectedNode;
 			if (node == null) return;
-			if (node.Tag is PCKFile.FileData)
+			if (node.Tag is PCKFile.FileData file)
 			{
-				var file = treeViewMain.SelectedNode.Tag as PCKFile.FileData;
 				using SaveFileDialog exFile = new SaveFileDialog();
 				exFile.FileName = Path.GetFileName(file.filepath);
-				exFile.Filter = Path.GetExtension(file.filepath).Replace(".", "") + " File|*" + Path.GetExtension(file.filepath);
+				exFile.Filter = Path.GetExtension(file.filepath).Replace(".", string.Empty) + " File|*" + Path.GetExtension(file.filepath);
 				if (exFile.ShowDialog() != DialogResult.OK ||
 					// Makes sure chosen directory isn't null or whitespace AKA makes sure its usable
 					string.IsNullOrWhiteSpace(Path.GetDirectoryName(exFile.FileName))) return;
@@ -589,57 +672,9 @@ namespace PckStudio
 
 		private void treeViewMain_DoubleClick(object sender, EventArgs e)
 		{
-			if (treeViewMain.SelectedNode is TreeNode t &&
-				t.Tag is PCKFile.FileData file)
-				//pckFileTypeHandler[(PCKFile.FileData.EDLCType)file.type]?.Invoke(file);
-			switch (file.filetype)
-			{
-				case PCKFile.FileData.FileType.LocalisationFile:
-					var locedit = new LOCEditor(file);
-					if (locedit.ShowDialog(this) == DialogResult.OK)
-					{
-						saved = false;
+			if (treeViewMain.SelectedNode is TreeNode t && t.Tag is PCKFile.FileData file)
+				pckFileTypeHandler[file.filetype]?.Invoke(file);
 					}
-					break;
-
-				case PCKFile.FileData.FileType.TextureFile when file.filepath.StartsWith("res/textures/blocks/") || file.filepath.StartsWith("res/textures/items/"):
-					using (AnimationEditor animationEditor = new AnimationEditor(file))
-						{
-							if (animationEditor.ShowDialog(this) == DialogResult.OK)
-								ReloadMetaTreeView();
-						}
-					break;
-
-
-				case PCKFile.FileData.FileType.GameRulesFile:
-				case PCKFile.FileData.FileType.GameRulesHeader when (Path.GetExtension(file.filepath) == ".grf" ||
-					Path.GetExtension(file.filepath) == ".grh"):
-					using (GRFEditor grfEditor = new GRFEditor(file))
-						grfEditor.ShowDialog();
-					break;
-
-                case PCKFile.FileData.FileType.AudioFile when file.filepath == "audio.pck":
-                    if (!TryGetLocFile(out LOCFile locFile))
-                        throw new Exception("No .loc File found.");
-                    AudioEditor audioEditor = new AudioEditor(file, locFile, LittleEndianCheckBox.Checked);
-                    if (audioEditor.ShowDialog(this) == DialogResult.OK)
-						TrySetLocFile(locFile);
-					audioEditor.Dispose();
-                    break;
-
-				case PCKFile.FileData.FileType.ColourTableFile when file.filepath == "colours.col":
-					if (file.size == 0)
-					{
-						MessageBox.Show("No Color data found.", "Error", MessageBoxButtons.OK,
-							MessageBoxIcon.Error);
-						return;
-					}
-					COLEditor diag = new COLEditor(file);
-					diag.ShowDialog(this);
-					diag.Dispose();
-					break;
-			}
-		}
 
 		private void treeMeta_AfterSelect(object sender, TreeViewEventArgs e)
 		{
@@ -2644,79 +2679,6 @@ namespace PckStudio
 		{
 			TextureConverterUtility tex = new TextureConverterUtility(treeViewMain, currentPCK);
 			tex.ShowDialog();
-		}
-
-
-		private void buttonEditModel_Click(object sender, EventArgs e)
-		{
-			if (treeViewMain.SelectedNode == null ||
-				treeViewMain.SelectedNode.Tag == null ||
-				!(treeViewMain.SelectedNode.Tag is PCKFile.FileData))
-				return;
-			PCKFile.FileData file = treeViewMain.SelectedNode.Tag as PCKFile.FileData;
-			if (file.filetype == PCKFile.FileData.FileType.SkinFile ||
-				file.filetype == PCKFile.FileData.FileType.CapeFile ||
-				file.filetype == PCKFile.FileData.FileType.TextureFile)
-			{
-				if (buttonEdit.Text == "EDIT BOXES")
-					editModel(file);
-				else if (buttonEdit.Text == "View Skin")
-				{
-					using (var ms = new MemoryStream(file.data))
-					{
-						SkinPreview frm = new SkinPreview(Image.FromStream(ms));
-						frm.ShowDialog(this);
-						frm.Dispose();
-					}
-				}
-			}
-
-			//Check for Animated Texture
-			if (file.filepath.StartsWith("res/textures/blocks/") || file.filepath.StartsWith("res/textures/items/"))
-			{
-				string filename = Path.GetFileNameWithoutExtension(file.filepath);
-                if (filename.EndsWith("MipMapLevel2") ||filename.EndsWith("MipMapLevel3"))
-				{
-					string baseAnimationFilePath = file.filepath.Substring(0, file.filepath.Length - 4 - 12) + ".png";
-                    if (currentPCK.TryGetFile(baseAnimationFilePath, PCKFile.FileData.FileType.TextureFile,
-						out var baseAnimationFile))
-						file = baseAnimationFile;
-					else
-				{
-						MessageBox.Show($"Failed to find {baseAnimationFilePath}.", "Error");
-					return;
-				}
-				}
-				using AnimationEditor diag = new AnimationEditor(file);
-				if (diag.ShowDialog(this) == DialogResult.OK)
-					ReloadMetaTreeView();
-			}
-
-			if (Path.GetFileName(file.filepath) == "audio.pck")
-			{
-					if (!TryGetLocFile(out LOCFile locFile))
-						throw new Exception("No .loc File found.");
-					AudioEditor diag = new AudioEditor(file, locFile, LittleEndianCheckBox.Checked);
-				if (diag.ShowDialog(this) == DialogResult.OK) TrySetLocFile(locFile);
-					diag.Dispose();
-				}
-
-			if (file.filetype == PCKFile.FileData.FileType.LocalisationFile &&
-				(file.filepath == "languages.loc" || file.filepath == "localisation.loc"))
-			{
-				var locEditor = new LOCEditor(file);
-				if (locEditor.ShowDialog() == DialogResult.OK)
-					saved = false;
-			}
-
-			// Checks to see if selected minefile is a col file
-			if (file.filetype == PCKFile.FileData.FileType.ColourTableFile &&
-				file.filepath == "colours.col") // .col file
-			{
-				using COLEditor diag = new COLEditor(file);
-				if (diag.ShowDialog(this) == DialogResult.OK)
-					saved = false;
-			}
 		}
 
 		private void OpenPck_MouseEnter(object sender, EventArgs e)

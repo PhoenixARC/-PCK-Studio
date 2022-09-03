@@ -888,7 +888,7 @@
             this.buttonEdit.Name = "buttonEdit";
             this.buttonEdit.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.buttonEdit.UseSelectable = true;
-            this.buttonEdit.Click += new System.EventHandler(this.buttonEditModel_Click);
+            this.buttonEdit.Click += new System.EventHandler(this.treeViewMain_DoubleClick);
             // 
             // metroLabel1
             // 
