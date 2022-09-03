@@ -39,7 +39,7 @@ namespace PckStudio.Models
 			right.LocalTransformation = a * rightLocalTransformation;
 		}
 
-		public Box(Image image, Rectangle srcTopBottom, Rectangle srcSides, Point3D origin, Effects effects)
+		public Box(Image image, Rectangle srcTopBottom, Rectangle srcSides, Point3D origin, Effects effects = Effects.None)
 		{
 			this.effects = effects;
 			Origin = origin;

@@ -29,35 +29,6 @@ namespace PckStudio.Models
 
 		private float PiBy180 = 0.0174532924f;
 
-		[Browsable(true)]
-		public event EventHandler SkinDowloadedx
-		{
-			add
-			{
-				EventHandler eventHandler = SkinDowloaded;
-				EventHandler eventHandler2;
-				do
-				{
-					eventHandler2 = eventHandler;
-					EventHandler value2 = (EventHandler)Delegate.Combine(eventHandler2, value);
-					eventHandler = Interlocked.CompareExchange(ref SkinDowloaded, value2, eventHandler2);
-				}
-				while (eventHandler != eventHandler2);
-			}
-			remove
-			{
-				EventHandler eventHandler = SkinDowloaded;
-				EventHandler eventHandler2;
-				do
-				{
-					eventHandler2 = eventHandler;
-					EventHandler value2 = (EventHandler)Delegate.Remove(eventHandler2, value);
-					eventHandler = Interlocked.CompareExchange(ref SkinDowloaded, value2, eventHandler2);
-				}
-				while (eventHandler != eventHandler2);
-			}
-		}
-
 		protected override void OnBackColorChanged(EventArgs e)
 		{
 			base.OnBackColorChanged(e);
@@ -299,26 +270,6 @@ namespace PckStudio.Models
 				for (int i = 0; i < texelList.Count; i++)
 				{
 					texelList[i].Draw(graphics);
-				}
-			}
-			return bitmap;
-		}
-
-		private System.Drawing.Image RenderText(string text)
-		{
-			int num = 0;
-			using (System.Drawing.Graphics graphics = CreateGraphics())
-			{
-				num = (int)graphics.MeasureString(text, Font).Width;
-			}
-			System.Drawing.Bitmap bitmap = new System.Drawing.Bitmap(num + 2, 0x12);
-			using (System.Drawing.Graphics graphics2 = System.Drawing.Graphics.FromImage(bitmap))
-			{
-				using (System.Drawing.Brush brush = new System.Drawing.SolidBrush(textShadowColor))
-				{
-					graphics2.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit;
-					graphics2.DrawString(text, Font, brush, 2f, 2f);
-					graphics2.DrawString(text, Font, System.Drawing.Brushes.White, 0f, 0f);
 				}
 			}
 			return bitmap;

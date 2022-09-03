@@ -10,7 +10,7 @@ namespace PckStudio.Models
 			set
 			{
 				base.Viewport = value;
-				foreach (Object3D object3D in object3DList)
+				foreach (Object3D object3D in objects)
 				{
 					object3D.Viewport = value;
 				}
@@ -21,7 +21,7 @@ namespace PckStudio.Models
 		{
 			set
 			{
-				foreach (Object3D object3D in object3DList)
+				foreach (Object3D object3D in objects)
 				{
 					object3D.Image = value;
 				}
@@ -31,16 +31,16 @@ namespace PckStudio.Models
 		internal override void Update()
 		{
 			Matrix3D globalTransformation = this.globalTransformation * localTransformation;
-			for (int i = 0; i < object3DList.Count; i++)
+			for (int i = 0; i < objects.Count; i++)
 			{
-				object3DList[i].GlobalTransformation = globalTransformation;
+				objects[i].GlobalTransformation = globalTransformation;
 			}
 		}
 
 		public override float HitTest(System.Drawing.PointF location)
 		{
 			float num = -1000f;
-			foreach (Object3D object3D in object3DList)
+			foreach (Object3D object3D in objects)
 			{
 				float num2 = object3D.HitTest(location);
 				if (num2 > num)
@@ -57,9 +57,9 @@ namespace PckStudio.Models
 			{
 				throw new ArgumentException("Cannot add Object3D into itself.");
 			}
-			object3DList.Add(object3D);
+			objects.Add(object3D);
 		}
 
-		private List<Object3D> object3DList = new List<Object3D>();
+		private List<Object3D> objects = new List<Object3D>();
 	}
 }
