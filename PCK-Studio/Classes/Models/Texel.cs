@@ -4,46 +4,46 @@ namespace PckStudio.Models
 {
 	internal struct Texel
 	{
-		internal Texel(global::PckStudio.Models.TexturePlane texturePlane, int x, int y, global::System.Drawing.Color color)
+		internal Texel(TexturePlane texturePlane, int x, int y, System.Drawing.Color color)
 		{
-			this.TexturePlane = texturePlane;
-			this.X = x;
-			this.Y = y;
+			TexturePlane = texturePlane;
+			X = x;
+			Y = y;
 			this.color = color;
-			this.brush = new global::System.Drawing.SolidBrush(color);
-			this.pen = new global::System.Drawing.Pen(global::System.Drawing.Color.White, 0.01f);
+			brush = new System.Drawing.SolidBrush(color);
+			pen = new System.Drawing.Pen(System.Drawing.Color.White, 0.01f);
 		}
 
 		internal double Z
 		{
 			get
 			{
-				return this.TexturePlane.ZOrder[this.X + 1, this.Y + 1];
+				return TexturePlane.ZOrder[X + 1, Y + 1];
 			}
 		}
 
-		internal void Draw(global::System.Drawing.Graphics g)
+		internal void Draw(System.Drawing.Graphics g)
 		{
-			global::System.Drawing.PointF[] points = new global::System.Drawing.PointF[]
+			System.Drawing.PointF[] points = new System.Drawing.PointF[]
 			{
-				this.TexturePlane.Points[this.X, this.Y],
-				this.TexturePlane.Points[this.X + 1, this.Y],
-				this.TexturePlane.Points[this.X + 1, this.Y + 1],
-				this.TexturePlane.Points[this.X, this.Y + 1]
+				TexturePlane.Points[X, Y],
+				TexturePlane.Points[X + 1, Y],
+				TexturePlane.Points[X + 1, Y + 1],
+				TexturePlane.Points[X, Y + 1]
 			};
-			g.FillPolygon(this.brush, points);
+			g.FillPolygon(brush, points);
 		}
 
-		internal global::PckStudio.Models.TexturePlane TexturePlane;
+		internal TexturePlane TexturePlane;
 
 		internal int X;
 
 		internal int Y;
 
-		private global::System.Drawing.Color color;
+		private System.Drawing.Color color;
 
-		private global::System.Drawing.Brush brush;
+		private System.Drawing.Brush brush;
 
-		private global::System.Drawing.Pen pen;
+		private System.Drawing.Pen pen;
 	}
 }

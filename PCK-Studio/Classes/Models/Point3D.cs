@@ -4,59 +4,28 @@ namespace PckStudio.Models
 {
 	public struct Point3D
 	{
-		public Point3D(float x, float y, float z)
+        public float X;
+        public float Y;
+        public float Z;
+
+        public Point3D(float x, float y, float z)
 		{
-			this.X = x;
-			this.Y = y;
-			this.Z = z;
+			(X, Y, Z) = (x, y, z);
 		}
 
-		public static global::PckStudio.Models.Point3D Zero
+		public static Point3D Zero => default(Point3D);
+
+        public override string ToString()
 		{
-			get
-			{
-				return default(global::PckStudio.Models.Point3D);
-			}
+			return string.Format("({0};{1};{2})", X, Y, Z);
 		}
 
-		public override string ToString()
-		{
-			return string.Concat(new object[]
-			{
-				"(",
-				this.X,
-				";",
-				this.Y,
-				";",
-				this.Z,
-				")"
-			});
-		}
+		public static Point3D operator +(Point3D a, Point3D b) => new Point3D(a.X + b.X, a.Y + b.Y, a.Z + b.Z);
 
-		public static global::PckStudio.Models.Point3D operator +(global::PckStudio.Models.Point3D a, global::PckStudio.Models.Point3D b)
-		{
-			return new global::PckStudio.Models.Point3D(a.X + b.X, a.Y + b.Y, a.Z + b.Z);
-		}
+		public static Point3D operator -(Point3D a, Point3D b) => new Point3D(a.X - b.X, a.Y - b.Y, a.Z - b.Z);
 
-		public static global::PckStudio.Models.Point3D operator -(global::PckStudio.Models.Point3D a, global::PckStudio.Models.Point3D b)
-		{
-			return new global::PckStudio.Models.Point3D(a.X - b.X, a.Y - b.Y, a.Z - b.Z);
-		}
+		public static Point3D operator *(Point3D p, float s) => new Point3D(p.X * s, p.Y * s, p.Z * s);
 
-		public static global::PckStudio.Models.Point3D operator *(global::PckStudio.Models.Point3D p, float s)
-		{
-			return new global::PckStudio.Models.Point3D(p.X * s, p.Y * s, p.Z * s);
-		}
-
-		public static global::PckStudio.Models.Point3D operator /(global::PckStudio.Models.Point3D p, float s)
-		{
-			return new global::PckStudio.Models.Point3D(p.X / s, p.Y / s, p.Z / s);
-		}
-
-		public float X;
-
-		public float Y;
-
-		public float Z;
+		public static Point3D operator /(Point3D p, float s) => new Point3D(p.X / s, p.Y / s, p.Z / s);		
 	}
 }

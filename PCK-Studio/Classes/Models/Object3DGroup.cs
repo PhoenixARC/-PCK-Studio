@@ -3,25 +3,25 @@ using System.Collections.Generic;
 
 namespace PckStudio.Models
 {
-	public class Object3DGroup : global::PckStudio.Models.Object3D
+	public class Object3DGroup : Object3D
 	{
-		internal override global::PckStudio.Models.MinecraftModelView Viewport
+		internal override MinecraftModelView Viewport
 		{
 			set
 			{
 				base.Viewport = value;
-				foreach (global::PckStudio.Models.Object3D object3D in this.object3DList)
+				foreach (Object3D object3D in object3DList)
 				{
 					object3D.Viewport = value;
 				}
 			}
 		}
 
-		public override global::System.Drawing.Image Image
+		public override System.Drawing.Image Image
 		{
 			set
 			{
-				foreach (global::PckStudio.Models.Object3D object3D in this.object3DList)
+				foreach (Object3D object3D in object3DList)
 				{
 					object3D.Image = value;
 				}
@@ -30,17 +30,17 @@ namespace PckStudio.Models
 
 		internal override void Update()
 		{
-			global::PckStudio.Models.Matrix3D globalTransformation = this.globalTransformation * this.localTransformation;
-			for (int i = 0; i < this.object3DList.Count; i++)
+			Matrix3D globalTransformation = this.globalTransformation * localTransformation;
+			for (int i = 0; i < object3DList.Count; i++)
 			{
-				this.object3DList[i].GlobalTransformation = globalTransformation;
+				object3DList[i].GlobalTransformation = globalTransformation;
 			}
 		}
 
-		public override float HitTest(global::System.Drawing.PointF location)
+		public override float HitTest(System.Drawing.PointF location)
 		{
 			float num = -1000f;
-			foreach (global::PckStudio.Models.Object3D object3D in this.object3DList)
+			foreach (Object3D object3D in object3DList)
 			{
 				float num2 = object3D.HitTest(location);
 				if (num2 > num)
@@ -51,19 +51,15 @@ namespace PckStudio.Models
 			return num;
 		}
 
-		public void Add(global::PckStudio.Models.Object3D object3D)
+		public void Add(Object3D object3D)
 		{
 			if (object3D == this)
 			{
-				throw new global::System.ArgumentException("Cannot add Object3D into itself.");
+				throw new ArgumentException("Cannot add Object3D into itself.");
 			}
-			this.object3DList.Add(object3D);
+			object3DList.Add(object3D);
 		}
 
-		public Object3DGroup()
-		{
-		}
-
-		private global::System.Collections.Generic.List<global::PckStudio.Models.Object3D> object3DList = new global::System.Collections.Generic.List<global::PckStudio.Models.Object3D>();
+		private List<Object3D> object3DList = new List<Object3D>();
 	}
 }

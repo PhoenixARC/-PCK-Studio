@@ -1,114 +1,115 @@
 ﻿using System;
+using System.Drawing;
 
 namespace PckStudio.Models
 {
-	public class Box : global::PckStudio.Models.Object3D
+	public class Box : Object3D
 	{
-		public override global::System.Drawing.Image Image
+		public override Image Image
 		{
 			set
 			{
-				this.SetImage(value);
+				SetImage(value);
 			}
 		}
 
-		internal override global::PckStudio.Models.MinecraftModelView Viewport
+		internal override MinecraftModelView Viewport
 		{
 			set
 			{
 				base.Viewport = value;
-				this.top.Viewport = value;
-				this.bottom.Viewport = value;
-				this.front.Viewport = value;
-				this.back.Viewport = value;
-				this.left.Viewport = value;
-				this.right.Viewport = value;
-				this.Update();
+				top.Viewport = value;
+				bottom.Viewport = value;
+				front.Viewport = value;
+				back.Viewport = value;
+				left.Viewport = value;
+				right.Viewport = value;
+				Update();
 			}
 		}
 
 		internal override void Update()
 		{
-			global::PckStudio.Models.Matrix3D a = this.globalTransformation * this.localTransformation;
-			this.top.LocalTransformation = a * this.topLocalTransformation;
-			this.bottom.LocalTransformation = a * this.bottomLocalTransformation;
-			this.front.LocalTransformation = a * this.frontLocalTransformation;
-			this.back.LocalTransformation = a * this.backLocalTransformation;
-			this.left.LocalTransformation = a * this.leftLocalTransformation;
-			this.right.LocalTransformation = a * this.rightLocalTransformation;
+			Matrix3D a = globalTransformation * localTransformation;
+			top.LocalTransformation = a * topLocalTransformation;
+			bottom.LocalTransformation = a * bottomLocalTransformation;
+			front.LocalTransformation = a * frontLocalTransformation;
+			back.LocalTransformation = a * backLocalTransformation;
+			left.LocalTransformation = a * leftLocalTransformation;
+			right.LocalTransformation = a * rightLocalTransformation;
 		}
 
-		public Box(global::System.Drawing.Image image, global::System.Drawing.Rectangle srcTopBottom, global::System.Drawing.Rectangle srcSides, global::PckStudio.Models.Point3D origin, global::PckStudio.Models.Effects effects)
+		public Box(Image image, Rectangle srcTopBottom, Rectangle srcSides, Point3D origin, Effects effects)
 		{
 			this.effects = effects;
-			base.Origin = origin;
-			this.SetImage(image, srcTopBottom, srcSides);
+			Origin = origin;
+			SetImage(image, srcTopBottom, srcSides);
 		}
 
-		private void SetImage(global::System.Drawing.Image image, global::System.Drawing.Rectangle srcTopBottom, global::System.Drawing.Rectangle srcSides)
+		private void SetImage(Image image, Rectangle srcTopBottom, Rectangle srcSides)
 		{
 			int num = srcTopBottom.Width / 2;
 			int height = srcSides.Height;
 			int height2 = srcTopBottom.Height;
-			this.srcTop = new global::System.Drawing.Rectangle(srcTopBottom.Location, new global::System.Drawing.Size(num, height2));
-			this.srcBottom = new global::System.Drawing.Rectangle(srcTopBottom.X + num, srcTopBottom.Y, num, height2);
-			this.srcFront = new global::System.Drawing.Rectangle(srcSides.X + height2, srcSides.Y, num, height);
-			this.srcBack = new global::System.Drawing.Rectangle(srcSides.X + height2 + num + height2, srcSides.Y, num, height);
-			this.srcLeft = new global::System.Drawing.Rectangle(srcSides.Location, new global::System.Drawing.Size(height2, height));
-			this.srcRight = new global::System.Drawing.Rectangle(srcSides.X + height2 + num, srcSides.Y, height2, height);
-			this.SetImage(image);
+			srcTop = new Rectangle(srcTopBottom.Location, new Size(num, height2));
+			srcBottom = new Rectangle(srcTopBottom.X + num, srcTopBottom.Y, num, height2);
+			srcFront = new Rectangle(srcSides.X + height2, srcSides.Y, num, height);
+			srcBack = new Rectangle(srcSides.X + height2 + num + height2, srcSides.Y, num, height);
+			srcLeft = new Rectangle(srcSides.Location, new Size(height2, height));
+			srcRight = new Rectangle(srcSides.X + height2 + num, srcSides.Y, height2, height);
+			SetImage(image);
 		}
 
-		private void SetImage(global::System.Drawing.Image image)
+		private void SetImage(Image image)
 		{
-			bool flag = (byte)(this.effects & global::PckStudio.Models.Effects.FlipHorizontally) == 1;
-			bool flag2 = (byte)(this.effects & global::PckStudio.Models.Effects.FlipVertically) == 2;
-			int width = this.srcFront.Width;
-			int height = this.srcFront.Height;
-			int width2 = this.srcLeft.Width;
-			this.top = new global::PckStudio.Models.TexturePlane(image, flag2 ? this.srcBottom : this.srcTop, new global::PckStudio.Models.Point3D((float)width * 0.5f, (float)width2 * 0.5f, (float)(-(float)height) * 0.5f), new global::PckStudio.Models.Point3D(0f, 1f, 0f), this.effects & global::PckStudio.Models.Effects.FlipHorizontally);
-			this.bottom = new global::PckStudio.Models.TexturePlane(image, flag2 ? this.srcTop : this.srcBottom, new global::PckStudio.Models.Point3D((float)width / 2f, (float)width2 / 2f, (float)height / 2f), new global::PckStudio.Models.Point3D(0f, -1f, 0f), this.effects & global::PckStudio.Models.Effects.FlipHorizontally);
-			this.front = new global::PckStudio.Models.TexturePlane(image, this.srcFront, new global::PckStudio.Models.Point3D((float)width * 0.5f, (float)height * 0.5f, (float)(-(float)width2) * 0.5f), new global::PckStudio.Models.Point3D(0f, 0f, 1f), this.effects);
-			this.back = new global::PckStudio.Models.TexturePlane(image, this.srcBack, new global::PckStudio.Models.Point3D((float)width * 0.5f, (float)height * 0.5f, (float)(-(float)width2) * 0.5f), new global::PckStudio.Models.Point3D(0f, 0f, -1f), this.effects);
-			this.left = new global::PckStudio.Models.TexturePlane(image, flag ? this.srcRight : this.srcLeft, new global::PckStudio.Models.Point3D((float)width2 * 0.5f, (float)height * 0.5f, (float)(-(float)width) * 0.5f), new global::PckStudio.Models.Point3D(-1f, 0f, 0f), this.effects);
-			this.right = new global::PckStudio.Models.TexturePlane(image, flag ? this.srcLeft : this.srcRight, new global::PckStudio.Models.Point3D((float)width2 * 0.5f, (float)height * 0.5f, (float)(-(float)width) * 0.5f), new global::PckStudio.Models.Point3D(1f, 0f, 0f), this.effects);
-			this.top.Viewport = this.viewport;
-			this.bottom.Viewport = this.viewport;
-			this.front.Viewport = this.viewport;
-			this.back.Viewport = this.viewport;
-			this.left.Viewport = this.viewport;
-			this.right.Viewport = this.viewport;
+			bool flag = (byte)(effects & Effects.FlipHorizontally) == 1;
+			bool flag2 = (byte)(effects & Effects.FlipVertically) == 2;
+			int width = srcFront.Width;
+			int height = srcFront.Height;
+			int width2 = srcLeft.Width;
+			top = new TexturePlane(image, flag2 ? srcBottom : srcTop, new Point3D(width * 0.5f, width2 * 0.5f, (float)(-(float)height) * 0.5f), new Point3D(0f, 1f, 0f), effects & Effects.FlipHorizontally);
+			bottom = new TexturePlane(image, flag2 ? srcTop : srcBottom, new Point3D(width / 2f, width2 / 2f, height / 2f), new Point3D(0f, -1f, 0f), effects & Effects.FlipHorizontally);
+			front = new TexturePlane(image, srcFront, new Point3D(width * 0.5f, height * 0.5f, (float)(-(float)width2) * 0.5f), new Point3D(0f, 0f, 1f), effects);
+			back = new TexturePlane(image, srcBack, new Point3D(width * 0.5f, height * 0.5f, (float)(-(float)width2) * 0.5f), new Point3D(0f, 0f, -1f), effects);
+			left = new TexturePlane(image, flag ? srcRight : srcLeft, new Point3D(width2 * 0.5f, height * 0.5f, (float)(-(float)width) * 0.5f), new Point3D(-1f, 0f, 0f), effects);
+			right = new TexturePlane(image, flag ? srcLeft : srcRight, new Point3D(width2 * 0.5f, height * 0.5f, (float)(-(float)width) * 0.5f), new Point3D(1f, 0f, 0f), effects);
+			top.Viewport = viewport;
+			bottom.Viewport = viewport;
+			front.Viewport = viewport;
+			back.Viewport = viewport;
+			left.Viewport = viewport;
+			right.Viewport = viewport;
 		}
 
-		public override float HitTest(global::System.Drawing.PointF location)
+		public override float HitTest(PointF location)
 		{
 			float num = -1000f;
-			float num2 = this.top.HitTest(location);
+			float num2 = top.HitTest(location);
 			if (num2 > num)
 			{
 				num = num2;
 			}
-			num2 = this.bottom.HitTest(location);
+			num2 = bottom.HitTest(location);
 			if (num2 > num)
 			{
 				num = num2;
 			}
-			num2 = this.front.HitTest(location);
+			num2 = front.HitTest(location);
 			if (num2 > num)
 			{
 				num = num2;
 			}
-			num2 = this.back.HitTest(location);
+			num2 = back.HitTest(location);
 			if (num2 > num)
 			{
 				num = num2;
 			}
-			num2 = this.left.HitTest(location);
+			num2 = left.HitTest(location);
 			if (num2 > num)
 			{
 				num = num2;
 			}
-			num2 = this.right.HitTest(location);
+			num2 = right.HitTest(location);
 			if (num2 > num)
 			{
 				num = num2;
@@ -116,42 +117,42 @@ namespace PckStudio.Models
 			return num;
 		}
 
-		private global::PckStudio.Models.TexturePlane top;
+		private TexturePlane top;
 
-		private global::PckStudio.Models.TexturePlane bottom;
+		private TexturePlane bottom;
 
-		private global::PckStudio.Models.TexturePlane front;
+		private TexturePlane front;
 
-		private global::PckStudio.Models.TexturePlane back;
+		private TexturePlane back;
 
-		private global::PckStudio.Models.TexturePlane left;
+		private TexturePlane left;
 
-		private global::PckStudio.Models.TexturePlane right;
+		private TexturePlane right;
 
-		private global::System.Drawing.Rectangle srcTop;
+		private Rectangle srcTop;
 
-		private global::System.Drawing.Rectangle srcBottom;
+		private Rectangle srcBottom;
 
-		private global::System.Drawing.Rectangle srcFront;
+		private Rectangle srcFront;
 
-		private global::System.Drawing.Rectangle srcBack;
+		private Rectangle srcBack;
 
-		private global::System.Drawing.Rectangle srcLeft;
+		private Rectangle srcLeft;
 
-		private global::System.Drawing.Rectangle srcRight;
+		private Rectangle srcRight;
 
-		private global::PckStudio.Models.Matrix3D topLocalTransformation = global::PckStudio.Models.Matrix3D.CreateRotationX(-1.57079637f);
+		private Matrix3D topLocalTransformation = Matrix3D.CreateRotationX(-1.57079637f);
 
-		private global::PckStudio.Models.Matrix3D bottomLocalTransformation = global::PckStudio.Models.Matrix3D.CreateRotationX(-1.57079637f);
+		private Matrix3D bottomLocalTransformation = Matrix3D.CreateRotationX(-1.57079637f);
 
-		private global::PckStudio.Models.Matrix3D frontLocalTransformation = global::PckStudio.Models.Matrix3D.Identity;
+		private Matrix3D frontLocalTransformation = Matrix3D.Identity;
 
-		private global::PckStudio.Models.Matrix3D backLocalTransformation = global::PckStudio.Models.Matrix3D.CreateRotationY(3.14159274f);
+		private Matrix3D backLocalTransformation = Matrix3D.CreateRotationY(3.14159274f);
 
-		private global::PckStudio.Models.Matrix3D leftLocalTransformation = global::PckStudio.Models.Matrix3D.CreateRotationY(-1.57079637f);
+		private Matrix3D leftLocalTransformation = Matrix3D.CreateRotationY(-1.57079637f);
 
-		private global::PckStudio.Models.Matrix3D rightLocalTransformation = global::PckStudio.Models.Matrix3D.CreateRotationY(1.57079637f);
+		private Matrix3D rightLocalTransformation = Matrix3D.CreateRotationY(1.57079637f);
 
-		private global::PckStudio.Models.Effects effects;
+		private Effects effects;
 	}
 }
