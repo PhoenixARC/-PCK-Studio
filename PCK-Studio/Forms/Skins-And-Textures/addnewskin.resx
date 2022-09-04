@@ -137,15 +137,6 @@
   <metadata name="contextMenuSkin.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <data name="contextMenuSkin.Size" type="System.Drawing.Size, System.Drawing">
-    <value>116, 26</value>
-  </data>
-  <data name="&gt;&gt;contextMenuSkin.Name" xml:space="preserve">
-    <value>contextMenuSkin</value>
-  </data>
-  <data name="&gt;&gt;contextMenuSkin.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="replaceToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
@@ -162,18 +153,18 @@
   <data name="replaceToolStripMenuItem.Text" xml:space="preserve">
     <value>Replace</value>
   </data>
+  <data name="contextMenuSkin.Size" type="System.Drawing.Size, System.Drawing">
+    <value>116, 26</value>
+  </data>
+  <data name="&gt;&gt;contextMenuSkin.Name" xml:space="preserve">
+    <value>contextMenuSkin</value>
+  </data>
+  <data name="&gt;&gt;contextMenuSkin.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <metadata name="contextMenuCape.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>172, 17</value>
   </metadata>
-  <data name="contextMenuCape.Size" type="System.Drawing.Size, System.Drawing">
-    <value>127, 26</value>
-  </data>
-  <data name="&gt;&gt;contextMenuCape.Name" xml:space="preserve">
-    <value>contextMenuCape</value>
-  </data>
-  <data name="&gt;&gt;contextMenuCape.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="replaceToolStripMenuItem1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
@@ -187,6 +178,15 @@
   </data>
   <data name="replaceToolStripMenuItem1.Text" xml:space="preserve">
     <value>Add Cape</value>
+  </data>
+  <data name="contextMenuCape.Size" type="System.Drawing.Size, System.Drawing">
+    <value>127, 26</value>
+  </data>
+  <data name="&gt;&gt;contextMenuCape.Name" xml:space="preserve">
+    <value>contextMenuCape</value>
+  </data>
+  <data name="&gt;&gt;contextMenuCape.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="buttonDone.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
@@ -340,6 +340,9 @@
   <data name="&gt;&gt;displayBox.ZOrder" xml:space="preserve">
     <value>17</value>
   </data>
+  <metadata name="label3.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
+  </metadata>
   <data name="label3.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -370,6 +373,9 @@
   <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
     <value>18</value>
   </data>
+  <metadata name="label2.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
+  </metadata>
   <data name="label2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -400,6 +406,9 @@
   <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
     <value>19</value>
   </data>
+  <metadata name="label1.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
+  </metadata>
   <data name="label1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -758,7 +767,7 @@
     <value>capePictureBox</value>
   </data>
   <data name="&gt;&gt;capePictureBox.Type" xml:space="preserve">
-    <value>PckStudio.PictureBoxWithInterpolationMode, PCK Studio, Version=6.5.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>PckStudio.PictureBoxWithInterpolationMode, PCK-Studio, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;capePictureBox.Parent" xml:space="preserve">
     <value>$this</value>
@@ -785,7 +794,7 @@
     <value>skinPictureBoxTexture</value>
   </data>
   <data name="&gt;&gt;skinPictureBoxTexture.Type" xml:space="preserve">
-    <value>PckStudio.PictureBoxWithInterpolationMode, PCK Studio, Version=6.5.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>PckStudio.PictureBoxWithInterpolationMode, PCK-Studio, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;skinPictureBoxTexture.Parent" xml:space="preserve">
     <value>$this</value>
@@ -2526,6 +2535,9 @@
         G+hjDW20iAiLRHOFixxnkP0cZJRpF1U/QwpVsgOg8KFHYQQTM7dSnLR5QRAEQRAE+D85YJDPCXlFCwAA
         AABJRU5ErkJggg==
 </value>
+  </data>
+  <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>483, 296</value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterParent</value>
