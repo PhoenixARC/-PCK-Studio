@@ -34,12 +34,21 @@ namespace PckStudio
 		public MainForm()
 		{
 			InitializeComponent();
-			imageList.Images.Add(Resources.ZZFolder);
-			imageList.Images.Add(Resources.BINKA_ICON);
-			imageList.Images.Add(Resources.IMAGE_ICON);
-			imageList.Images.Add(Resources.LOC_ICON);
-			imageList.Images.Add(Resources.PCK_ICON);
-			imageList.Images.Add(Resources.ZUnknown);
+			imageList.Images.Add(Resources.ZZFolder); // Icon for folders
+			imageList.Images.Add(Resources.BINKA_ICON); // Icon for music cue file (audio.pck)
+			imageList.Images.Add(Resources.IMAGE_ICON); // Icon for images (unused for now)
+			imageList.Images.Add(Resources.LOC_ICON); // Icon for string localization files (languages.loc;localisation.loc)
+			imageList.Images.Add(Resources.PCK_ICON); // Icon for generic PCK files (*.pck)
+			imageList.Images.Add(Resources.ZUnknown); // Icon for Unknown formats
+			imageList.Images.Add(Resources.COL_ICON); // Icon for color palette files (colours.col)
+			imageList.Images.Add(Resources.SKINS_ICON); // Icon for Skin.pck archives (skins.pck)
+			imageList.Images.Add(Resources.MODELS_ICON); // Icon for Model files (models.bin)
+			imageList.Images.Add(Resources.GRF_ICON); // Icon for Game Rule files (*.grf)
+			imageList.Images.Add(Resources.GRH_ICON); // Icon for Game Rule Header files (*.grh)
+			imageList.Images.Add(Resources.INFO_ICON); // Icon for Info files (0)
+			imageList.Images.Add(Resources.SKIN_ICON); // Icon for Skin files (*.png)
+			imageList.Images.Add(Resources.CAPE_ICON); // Icon for Cape files (*.png)
+			imageList.Images.Add(Resources.TEXTURE_ICON); // Icon for Texture files (*.png;*.tga)
 			pckOpen.AllowDrop = true;
 			tabControl.SelectTab(0);
 			labelVersion.Text = "PCK Studio: " + Application.ProductVersion;
@@ -234,24 +243,8 @@ namespace PckStudio
 				node.Tag = file;
 				switch (file.filetype)
 				{
-					case PCKFile.FileData.FileType.SkinFile:
-					case PCKFile.FileData.FileType.CapeFile:
-					case PCKFile.FileData.FileType.TextureFile:
-						node.ImageIndex = 2;
-						node.SelectedImageIndex = 2;
-						break;
-					case PCKFile.FileData.FileType.LocalisationFile:
-						node.ImageIndex = 3;
-						node.SelectedImageIndex = 3;
-						break;
-					case PCKFile.FileData.FileType.AudioFile:
-						node.ImageIndex = 1;
-						node.SelectedImageIndex = 1;
-						break;
-					case PCKFile.FileData.FileType.TexturePackInfoFile:
 					case PCKFile.FileData.FileType.SkinDataFile:
-						node.ImageIndex = 4;
-						node.SelectedImageIndex = 4;
+					case PCKFile.FileData.FileType.TexturePackInfoFile:
 						// TODO: load sub pck into tree and make it editable with ease
 						// works but not currently included...
 						using (var stream = new MemoryStream(file.data))
@@ -263,19 +256,18 @@ namespace PckStudio
 							}
 							catch (OverflowException ex)
 							{
-								MessageBox.Show("Failed to open pck\n" + 
-									"Try checking the 'Open/Save as Vita/PS4 pck' check box in the upper right corner.",
+								MessageBox.Show("Failed to open pck\n" +
+									"Try checking the 'Open/Save as Vita/PS4 pck' checkbox in the upper right corner.",
 									"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 								Console.WriteLine(ex.Message);
 							}
 						}
 						break;
-					default:
-						node.ImageIndex = 5;
-						node.SelectedImageIndex = 5;
+					default: // unknown file format
 						//throw new InvalidDataException(nameof(file.filetype));
 						break;
 				}
+				setFileIcon(node, file.filetype);
 			});
 		}
 
@@ -2761,13 +2753,73 @@ namespace PckStudio
 			Process.Start("https://ko-fi.com/mattnl");
 		}
 
+		private void setFileIcon(TreeNode node, PCKFile.FileData.FileType type)
+		{
+			switch (type)
+			{
+				case PCKFile.FileData.FileType.AudioFile:
+					node.ImageIndex = 1;
+					node.SelectedImageIndex = 1;
+					break;
+				case PCKFile.FileData.FileType.LocalisationFile:
+					node.ImageIndex = 3;
+					node.SelectedImageIndex = 3;
+					break;
+				case PCKFile.FileData.FileType.TexturePackInfoFile:
+					node.ImageIndex = 4;
+					node.SelectedImageIndex = 4;
+					break;
+				case PCKFile.FileData.FileType.ColourTableFile:
+					node.ImageIndex = 6;
+					node.SelectedImageIndex = 6;
+					break;
+				case PCKFile.FileData.FileType.ModelsFile:
+					node.ImageIndex = 8;
+					node.SelectedImageIndex = 8;
+					break;
+				case PCKFile.FileData.FileType.SkinDataFile:
+					node.ImageIndex = 7;
+					node.SelectedImageIndex = 7;
+					break;
+				case PCKFile.FileData.FileType.GameRulesFile:
+					node.ImageIndex = 9;
+					node.SelectedImageIndex = 9;
+					break;
+				case PCKFile.FileData.FileType.GameRulesHeader:
+					node.ImageIndex = 10;
+					node.SelectedImageIndex = 10;
+					break;
+				case PCKFile.FileData.FileType.InfoFile:
+					node.ImageIndex = 11;
+					node.SelectedImageIndex = 11;
+					break;
+				case PCKFile.FileData.FileType.SkinFile:
+					node.ImageIndex = 12;
+					node.SelectedImageIndex = 12;
+					break;
+				case PCKFile.FileData.FileType.CapeFile:
+					node.ImageIndex = 13;
+					node.SelectedImageIndex = 13;
+					break;
+				case PCKFile.FileData.FileType.TextureFile:
+					node.ImageIndex = 14;
+					node.SelectedImageIndex = 14;
+					break;
+				default: // unknown file format
+					node.ImageIndex = 5;
+					node.SelectedImageIndex = 5;
+					break;
+			}
+		}
+
 		private void setFileType_Click(object sender, EventArgs e, PCKFile.FileData.FileType type)
 		{
 			if (treeViewMain.SelectedNode is TreeNode t && t.Tag is PCKFile.FileData file)
             {
 				Console.WriteLine($"Setting {file.filetype} to {type}");
 				file.filetype = type;
-            }
+				setFileIcon(t, type);
+			}
 		}
 
 		private void addTextureToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2788,5 +2840,18 @@ namespace PckStudio
 				}
 			}
 		}
-    }
+
+		private void viewFileInfoToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (treeViewMain.SelectedNode.Tag is PCKFile.FileData file)
+			{
+				MessageBox.Show(
+					"File path: " + file.filepath +
+					"\nAssigned File type: " + (int)file.filetype + " (" + file.filetype + ")" +
+					"\nFile size: " + file.size +
+					"\nProperties count: " + file.properties.Count
+					, Path.GetFileName(file.filepath) + " file info");
+			}
+		}
+	}
 }
