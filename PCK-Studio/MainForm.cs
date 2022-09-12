@@ -354,7 +354,8 @@ namespace PckStudio
 
 		public void HandleModelsFile(PCKFile.FileData file)
 		{
-			throw new NotImplementedException();
+			MessageBox.Show("Models.bin support has not been implemented. You can use the Spark Editor for the time being to edit these files.", "Not implemented yet.");
+			//throw new NotImplementedException();
 		}
 
 		private void selectNode(object sender, TreeViewEventArgs e)
