@@ -1,4 +1,4 @@
-﻿namespace PckStudio.Forms.Utilities.AnimationEditor
+﻿namespace PckStudio.Forms.Additional_Popups.Animation
 {
 	partial class ChangeTile
 	{
@@ -30,8 +30,8 @@
 		{
             this.acceptBtn = new System.Windows.Forms.Button();
             this.CancelBtn = new System.Windows.Forms.Button();
-            this.treeView1 = new System.Windows.Forms.TreeView();
-            this.treeView2 = new System.Windows.Forms.TreeView();
+            this.treeViewBlocks = new System.Windows.Forms.TreeView();
+            this.treeViewItems = new System.Windows.Forms.TreeView();
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
             this.metroTextBox1 = new MetroFramework.Controls.MetroTextBox();
@@ -54,7 +54,7 @@
             this.acceptBtn.TabIndex = 7;
             this.acceptBtn.Text = "Save";
             this.acceptBtn.UseVisualStyleBackColor = true;
-            this.acceptBtn.Click += new System.EventHandler(this.button1_Click);
+            this.acceptBtn.Click += new System.EventHandler(this.AcceptBtn_Click);
             // 
             // CancelBtn
             // 
@@ -68,29 +68,29 @@
             this.CancelBtn.TabIndex = 13;
             this.CancelBtn.Text = "Cancel";
             this.CancelBtn.UseVisualStyleBackColor = true;
-            this.CancelBtn.Click += new System.EventHandler(this.button2_Click);
+            this.CancelBtn.Click += new System.EventHandler(this.CancelBtn_Click);
             // 
             // treeView1
             // 
-            this.treeView1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeView1.ForeColor = System.Drawing.Color.White;
-            this.treeView1.Location = new System.Drawing.Point(0, 0);
-            this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(184, 125);
-            this.treeView1.TabIndex = 14;
-            this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViews_AfterSelect);
+            this.treeViewBlocks.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.treeViewBlocks.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeViewBlocks.ForeColor = System.Drawing.Color.White;
+            this.treeViewBlocks.Location = new System.Drawing.Point(0, 0);
+            this.treeViewBlocks.Name = "treeView1";
+            this.treeViewBlocks.Size = new System.Drawing.Size(184, 125);
+            this.treeViewBlocks.TabIndex = 14;
+            this.treeViewBlocks.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViews_AfterSelect);
             // 
             // treeView2
             // 
-            this.treeView2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.treeView2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeView2.ForeColor = System.Drawing.Color.White;
-            this.treeView2.Location = new System.Drawing.Point(0, 0);
-            this.treeView2.Name = "treeView2";
-            this.treeView2.Size = new System.Drawing.Size(184, 125);
-            this.treeView2.TabIndex = 14;
-            this.treeView2.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViews_AfterSelect);
+            this.treeViewItems.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.treeViewItems.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeViewItems.ForeColor = System.Drawing.Color.White;
+            this.treeViewItems.Location = new System.Drawing.Point(0, 0);
+            this.treeViewItems.Name = "treeView2";
+            this.treeViewItems.Size = new System.Drawing.Size(184, 125);
+            this.treeViewItems.TabIndex = 14;
+            this.treeViewItems.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViews_AfterSelect);
             // 
             // metroLabel1
             // 
@@ -159,7 +159,7 @@
             // Blocks
             // 
             this.Blocks.BackColor = System.Drawing.SystemColors.WindowFrame;
-            this.Blocks.Controls.Add(this.treeView1);
+            this.Blocks.Controls.Add(this.treeViewBlocks);
             this.Blocks.Location = new System.Drawing.Point(4, 38);
             this.Blocks.Name = "Blocks";
             this.Blocks.Size = new System.Drawing.Size(184, 125);
@@ -169,7 +169,7 @@
             // Items
             // 
             this.Items.BackColor = System.Drawing.SystemColors.WindowFrame;
-            this.Items.Controls.Add(this.treeView2);
+            this.Items.Controls.Add(this.treeViewItems);
             this.Items.Location = new System.Drawing.Point(4, 38);
             this.Items.Name = "Items";
             this.Items.Size = new System.Drawing.Size(184, 125);
@@ -213,8 +213,8 @@
 		#endregion
 		private System.Windows.Forms.Button acceptBtn;
 		private System.Windows.Forms.Button CancelBtn;
-		private System.Windows.Forms.TreeView treeView1;
-		private System.Windows.Forms.TreeView treeView2;
+		private System.Windows.Forms.TreeView treeViewBlocks;
+		private System.Windows.Forms.TreeView treeViewItems;
 		private MetroFramework.Controls.MetroLabel metroLabel1;
 		private MetroFramework.Controls.MetroLabel metroLabel2;
 		private MetroFramework.Controls.MetroTextBox metroTextBox1;

@@ -1,4 +1,4 @@
-﻿namespace PckStudio
+﻿namespace PckStudio.Forms.Editor
 {
 	partial class AnimationEditor
 	{
@@ -30,7 +30,7 @@
 		{
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AnimationEditor));
-			this.treeView1 = new System.Windows.Forms.TreeView();
+			this.frameTreeView = new System.Windows.Forms.TreeView();
 			this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.addFrameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.removeFrameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -40,41 +40,42 @@
 			this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.bulkAnimationSpeedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.importJavaAnimationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.exportJavaAnimationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.changeTileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.howToInterpolation = new System.Windows.Forms.ToolStripMenuItem();
+			this.editorControlsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.setBulkSpedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.javaAnimationSupportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.InterpolationCheckbox = new MetroFramework.Controls.MetroCheckBox();
 			this.AnimationPlayBtn = new MetroFramework.Controls.MetroButton();
-			this.timer1 = new System.Windows.Forms.Timer(this.components);
 			this.AnimationStopBtn = new MetroFramework.Controls.MetroButton();
 			this.tileLabel = new MetroFramework.Controls.MetroLabel();
-			this.MipMapCheckbox = new MetroFramework.Controls.MetroCheckBox();
-			this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
-			this.MipMapNumericUpDown = new System.Windows.Forms.NumericUpDown();
 			this.pictureBoxWithInterpolationMode1 = new PckStudio.PictureBoxWithInterpolationMode();
 			this.contextMenuStrip1.SuspendLayout();
 			this.menuStrip.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.MipMapNumericUpDown)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxWithInterpolationMode1)).BeginInit();
 			this.SuspendLayout();
 			// 
-			// treeView1
+			// frameTreeView
 			// 
-			this.treeView1.AllowDrop = true;
-			this.treeView1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-			this.treeView1.ContextMenuStrip = this.contextMenuStrip1;
-			this.treeView1.ForeColor = System.Drawing.Color.White;
-			this.treeView1.Location = new System.Drawing.Point(20, 84);
-			this.treeView1.Margin = new System.Windows.Forms.Padding(0);
-			this.treeView1.MaximumSize = new System.Drawing.Size(205, 350);
-			this.treeView1.Name = "treeView1";
-			this.treeView1.Size = new System.Drawing.Size(165, 202);
-			this.treeView1.TabIndex = 15;
-			this.treeView1.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.treeView1_ItemDrag);
-			this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
-			this.treeView1.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_doubleClick);
-			this.treeView1.DragDrop += new System.Windows.Forms.DragEventHandler(this.treeView1_DragDrop);
-			this.treeView1.DragEnter += new System.Windows.Forms.DragEventHandler(this.treeView1_DragEnter);
-			this.treeView1.DragOver += new System.Windows.Forms.DragEventHandler(this.treeView1_DragOver);
+			this.frameTreeView.AllowDrop = true;
+			this.frameTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+			this.frameTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+			this.frameTreeView.ContextMenuStrip = this.contextMenuStrip1;
+			this.frameTreeView.ForeColor = System.Drawing.Color.White;
+			this.frameTreeView.Location = new System.Drawing.Point(20, 88);
+			this.frameTreeView.Margin = new System.Windows.Forms.Padding(0);
+			this.frameTreeView.Name = "frameTreeView";
+			this.frameTreeView.Size = new System.Drawing.Size(165, 223);
+			this.frameTreeView.TabIndex = 15;
+			this.frameTreeView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.frameTreeView_ItemDrag);
+			this.frameTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.frameTreeView_AfterSelect);
+			this.frameTreeView.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_doubleClick);
+			this.frameTreeView.DragDrop += new System.Windows.Forms.DragEventHandler(this.frameTreeView_DragDrop);
+			this.frameTreeView.DragEnter += new System.Windows.Forms.DragEventHandler(this.frameTreeView_DragEnter);
+			this.frameTreeView.DragOver += new System.Windows.Forms.DragEventHandler(this.frameTreeView_DragOver);
 			// 
 			// contextMenuStrip1
 			// 
@@ -136,6 +137,7 @@
 			this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.bulkAnimationSpeedToolStripMenuItem,
             this.importJavaAnimationToolStripMenuItem,
+            this.exportJavaAnimationToolStripMenuItem,
             this.changeTileToolStripMenuItem});
 			this.editToolStripMenuItem.ForeColor = System.Drawing.Color.White;
 			this.editToolStripMenuItem.Name = "editToolStripMenuItem";
@@ -152,11 +154,19 @@
 			// 
 			// importJavaAnimationToolStripMenuItem
 			// 
-			this.importJavaAnimationToolStripMenuItem.Image = global::PckStudio.Properties.Resources.ExportFile;
+			this.importJavaAnimationToolStripMenuItem.Image = global::PckStudio.Properties.Resources.Replace;
 			this.importJavaAnimationToolStripMenuItem.Name = "importJavaAnimationToolStripMenuItem";
 			this.importJavaAnimationToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
 			this.importJavaAnimationToolStripMenuItem.Text = "Import Java Animation";
 			this.importJavaAnimationToolStripMenuItem.Click += new System.EventHandler(this.importJavaAnimationToolStripMenuItem_Click);
+			// 
+			// exportJavaAnimationToolStripMenuItem
+			// 
+			this.exportJavaAnimationToolStripMenuItem.Image = global::PckStudio.Properties.Resources.ExportFile;
+			this.exportJavaAnimationToolStripMenuItem.Name = "exportJavaAnimationToolStripMenuItem";
+			this.exportJavaAnimationToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+			this.exportJavaAnimationToolStripMenuItem.Text = "Export Java Animation";
+			this.exportJavaAnimationToolStripMenuItem.Click += new System.EventHandler(this.exportJavaAnimationToolStripMenuItem_Click);
 			// 
 			// changeTileToolStripMenuItem
 			// 
@@ -168,17 +178,49 @@
 			// 
 			// helpToolStripMenuItem
 			// 
+			this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.howToInterpolation,
+            this.editorControlsToolStripMenuItem,
+            this.setBulkSpedToolStripMenuItem,
+            this.javaAnimationSupportToolStripMenuItem});
 			this.helpToolStripMenuItem.ForeColor = System.Drawing.Color.White;
 			this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
 			this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
 			this.helpToolStripMenuItem.Text = "Help";
-			this.helpToolStripMenuItem.Click += new System.EventHandler(this.helpToolStripMenuItem_Click);
+			// 
+			// howToInterpolation
+			// 
+			this.howToInterpolation.Name = "howToInterpolation";
+			this.howToInterpolation.Size = new System.Drawing.Size(200, 22);
+			this.howToInterpolation.Text = "Interpolation";
+			this.howToInterpolation.Click += new System.EventHandler(this.howToInterpolation_Click);
+			// 
+			// editorControlsToolStripMenuItem
+			// 
+			this.editorControlsToolStripMenuItem.Name = "editorControlsToolStripMenuItem";
+			this.editorControlsToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+			this.editorControlsToolStripMenuItem.Text = "Editor Controls";
+			this.editorControlsToolStripMenuItem.Click += new System.EventHandler(this.editorControlsToolStripMenuItem_Click);
+			// 
+			// setBulkSpedToolStripMenuItem
+			// 
+			this.setBulkSpedToolStripMenuItem.Name = "setBulkSpedToolStripMenuItem";
+			this.setBulkSpedToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+			this.setBulkSpedToolStripMenuItem.Text = "Set Bulk Speed";
+			this.setBulkSpedToolStripMenuItem.Click += new System.EventHandler(this.setBulkSpeedToolStripMenuItem_Click);
+			// 
+			// javaAnimationSupportToolStripMenuItem
+			// 
+			this.javaAnimationSupportToolStripMenuItem.Name = "javaAnimationSupportToolStripMenuItem";
+			this.javaAnimationSupportToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+			this.javaAnimationSupportToolStripMenuItem.Text = "Java Animation Support";
+			this.javaAnimationSupportToolStripMenuItem.Click += new System.EventHandler(this.javaAnimationSupportToolStripMenuItem_Click);
 			// 
 			// InterpolationCheckbox
 			// 
 			this.InterpolationCheckbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.InterpolationCheckbox.AutoSize = true;
-			this.InterpolationCheckbox.Location = new System.Drawing.Point(188, 317);
+			this.InterpolationCheckbox.Location = new System.Drawing.Point(188, 338);
 			this.InterpolationCheckbox.Name = "InterpolationCheckbox";
 			this.InterpolationCheckbox.Size = new System.Drawing.Size(204, 15);
 			this.InterpolationCheckbox.TabIndex = 17;
@@ -189,7 +231,7 @@
 			// AnimationPlayBtn
 			// 
 			this.AnimationPlayBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.AnimationPlayBtn.Location = new System.Drawing.Point(188, 291);
+			this.AnimationPlayBtn.Location = new System.Drawing.Point(188, 312);
 			this.AnimationPlayBtn.Name = "AnimationPlayBtn";
 			this.AnimationPlayBtn.Size = new System.Drawing.Size(99, 24);
 			this.AnimationPlayBtn.TabIndex = 18;
@@ -198,16 +240,11 @@
 			this.AnimationPlayBtn.UseSelectable = true;
 			this.AnimationPlayBtn.Click += new System.EventHandler(this.StartAnimationBtn_Click);
 			// 
-			// timer1
-			// 
-			this.timer1.Interval = 1;
-			this.timer1.Tick += new System.EventHandler(this.animate);
-			// 
 			// AnimationStopBtn
 			// 
 			this.AnimationStopBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.AnimationStopBtn.Enabled = false;
-			this.AnimationStopBtn.Location = new System.Drawing.Point(293, 291);
+			this.AnimationStopBtn.Location = new System.Drawing.Point(293, 312);
 			this.AnimationStopBtn.Name = "AnimationStopBtn";
 			this.AnimationStopBtn.Size = new System.Drawing.Size(99, 24);
 			this.AnimationStopBtn.TabIndex = 19;
@@ -220,64 +257,13 @@
 			// 
 			this.tileLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.tileLabel.AutoSize = true;
-			this.tileLabel.Location = new System.Drawing.Point(20, 290);
+			this.tileLabel.Location = new System.Drawing.Point(20, 311);
 			this.tileLabel.MinimumSize = new System.Drawing.Size(170, 19);
 			this.tileLabel.Name = "tileLabel";
-			this.tileLabel.Size = new System.Drawing.Size(57, 19);
+			this.tileLabel.Size = new System.Drawing.Size(170, 19);
 			this.tileLabel.TabIndex = 20;
 			this.tileLabel.Text = "tileLabel";
 			this.tileLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
-			// 
-			// MipMapCheckbox
-			// 
-			this.MipMapCheckbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.MipMapCheckbox.AutoSize = true;
-			this.MipMapCheckbox.Location = new System.Drawing.Point(20, 312);
-			this.MipMapCheckbox.Name = "MipMapCheckbox";
-			this.MipMapCheckbox.Size = new System.Drawing.Size(128, 15);
-			this.MipMapCheckbox.TabIndex = 21;
-			this.MipMapCheckbox.Text = "Is Mip Map Texture?";
-			this.MipMapCheckbox.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.MipMapCheckbox.UseSelectable = true;
-			this.MipMapCheckbox.CheckedChanged += new System.EventHandler(this.metroCheckBox2_CheckedChanged);
-			// 
-			// metroLabel1
-			// 
-			this.metroLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.metroLabel1.AutoSize = true;
-			this.metroLabel1.Location = new System.Drawing.Point(21, 330);
-			this.metroLabel1.Name = "metroLabel1";
-			this.metroLabel1.Size = new System.Drawing.Size(99, 19);
-			this.metroLabel1.TabIndex = 22;
-			this.metroLabel1.Text = "Mip Map Level:";
-			this.metroLabel1.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.metroLabel1.Visible = false;
-			// 
-			// MipMapNumericUpDown
-			// 
-			this.MipMapNumericUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.MipMapNumericUpDown.BackColor = System.Drawing.Color.Black;
-			this.MipMapNumericUpDown.ForeColor = System.Drawing.SystemColors.Window;
-			this.MipMapNumericUpDown.Location = new System.Drawing.Point(127, 330);
-			this.MipMapNumericUpDown.Maximum = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
-			this.MipMapNumericUpDown.Minimum = new decimal(new int[] {
-            2,
-            0,
-            0,
-            0});
-			this.MipMapNumericUpDown.Name = "MipMapNumericUpDown";
-			this.MipMapNumericUpDown.Size = new System.Drawing.Size(44, 20);
-			this.MipMapNumericUpDown.TabIndex = 23;
-			this.MipMapNumericUpDown.Value = new decimal(new int[] {
-            2,
-            0,
-            0,
-            0});
-			this.MipMapNumericUpDown.Visible = false;
 			// 
 			// pictureBoxWithInterpolationMode1
 			// 
@@ -287,7 +273,7 @@
 			this.pictureBoxWithInterpolationMode1.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
 			this.pictureBoxWithInterpolationMode1.Location = new System.Drawing.Point(188, 88);
 			this.pictureBoxWithInterpolationMode1.Name = "pictureBoxWithInterpolationMode1";
-			this.pictureBoxWithInterpolationMode1.Size = new System.Drawing.Size(204, 198);
+			this.pictureBoxWithInterpolationMode1.Size = new System.Drawing.Size(204, 223);
 			this.pictureBoxWithInterpolationMode1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
 			this.pictureBoxWithInterpolationMode1.TabIndex = 16;
 			this.pictureBoxWithInterpolationMode1.TabStop = false;
@@ -299,13 +285,10 @@
 			this.ClientSize = new System.Drawing.Size(412, 362);
 			this.Controls.Add(this.AnimationStopBtn);
 			this.Controls.Add(this.AnimationPlayBtn);
-			this.Controls.Add(this.MipMapNumericUpDown);
-			this.Controls.Add(this.metroLabel1);
-			this.Controls.Add(this.MipMapCheckbox);
 			this.Controls.Add(this.tileLabel);
 			this.Controls.Add(this.InterpolationCheckbox);
 			this.Controls.Add(this.pictureBoxWithInterpolationMode1);
-			this.Controls.Add(this.treeView1);
+			this.Controls.Add(this.frameTreeView);
 			this.Controls.Add(this.menuStrip);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MinimumSize = new System.Drawing.Size(412, 362);
@@ -316,7 +299,6 @@
 			this.contextMenuStrip1.ResumeLayout(false);
 			this.menuStrip.ResumeLayout(false);
 			this.menuStrip.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.MipMapNumericUpDown)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxWithInterpolationMode1)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
@@ -325,7 +307,7 @@
 
 		#endregion
 
-		private System.Windows.Forms.TreeView treeView1;
+		private System.Windows.Forms.TreeView frameTreeView;
 		private System.Windows.Forms.MenuStrip menuStrip;
 		private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem1;
@@ -335,7 +317,6 @@
 		private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
 		private System.Windows.Forms.ToolStripMenuItem addFrameToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem removeFrameToolStripMenuItem;
-		private System.Windows.Forms.Timer timer1;
 		private MetroFramework.Controls.MetroButton AnimationStopBtn;
 		private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem bulkAnimationSpeedToolStripMenuItem;
@@ -343,8 +324,10 @@
 		private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem changeTileToolStripMenuItem;
 		private MetroFramework.Controls.MetroLabel tileLabel;
-		private MetroFramework.Controls.MetroCheckBox MipMapCheckbox;
-		private MetroFramework.Controls.MetroLabel metroLabel1;
-		private System.Windows.Forms.NumericUpDown MipMapNumericUpDown;
+		private System.Windows.Forms.ToolStripMenuItem exportJavaAnimationToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem howToInterpolation;
+		private System.Windows.Forms.ToolStripMenuItem editorControlsToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem setBulkSpedToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem javaAnimationSupportToolStripMenuItem;
 	}
 }

@@ -226,16 +226,16 @@
     <Compile Include="Forms\Editor\LOCEditor.Designer.cs">
       <DependentUpon>LOCEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Utilities\Animation\ChangeTile.cs">
+    <Compile Include="Forms\Additional-Popups\Animation\ChangeTile.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Utilities\Animation\ChangeTile.Designer.cs">
+    <Compile Include="Forms\Additional-Popups\Animation\ChangeTile.Designer.cs">
       <DependentUpon>ChangeTile.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Utilities\Animation\SetBulkSpeed.cs">
+    <Compile Include="Forms\Additional-Popups\Animation\SetBulkSpeed.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Utilities\Animation\SetBulkSpeed.Designer.cs">
+    <Compile Include="Forms\Additional-Popups\Animation\SetBulkSpeed.Designer.cs">
       <DependentUpon>SetBulkSpeed.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Additional-Popups\Audio\creditsEditor.cs">
@@ -292,6 +292,7 @@
     <Compile Include="Forms\Additional-Popups\Audio\pleaseWait.Designer.cs">
       <DependentUpon>pleaseWait.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Utilities\AnimationUtil.cs" />
     <Compile Include="Forms\Utilities\Skins\ANIMEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -322,16 +323,16 @@
     <Compile Include="Forms\Skins-And-Textures\SkinPreview.Designer.cs">
       <DependentUpon>SkinPreview.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Utilities\Animation\AnimationEditor.cs">
+    <Compile Include="Forms\Editor\AnimationEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Utilities\Animation\AnimationEditor.Designer.cs">
+    <Compile Include="Forms\Editor\AnimationEditor.Designer.cs">
       <DependentUpon>AnimationEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Utilities\Animation\FrameEditor.cs">
+    <Compile Include="Forms\Additional-Popups\Animation\FrameEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Utilities\Animation\FrameEditor.Designer.cs">
+    <Compile Include="Forms\Additional-Popups\Animation\FrameEditor.Designer.cs">
       <DependentUpon>FrameEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Editor\AudioEditor.cs">
@@ -451,10 +452,10 @@
     <EmbeddedResource Include="Forms\Editor\LOCEditor.resx">
       <DependentUpon>LOCEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\Animation\ChangeTile.resx">
+    <EmbeddedResource Include="Forms\Additional-Popups\Animation\ChangeTile.resx">
       <DependentUpon>ChangeTile.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\Animation\SetBulkSpeed.resx">
+    <EmbeddedResource Include="Forms\Additional-Popups\Animation\SetBulkSpeed.resx">
       <DependentUpon>SetBulkSpeed.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\Audio\creditsEditor.resx">
@@ -522,10 +523,10 @@
     <EmbeddedResource Include="Forms\Skins-And-Textures\SkinPreview.resx">
       <DependentUpon>SkinPreview.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\Animation\AnimationEditor.resx">
+    <EmbeddedResource Include="Forms\Editor\AnimationEditor.resx">
       <DependentUpon>AnimationEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\Animation\FrameEditor.resx">
+    <EmbeddedResource Include="Forms\Additional-Popups\Animation\FrameEditor.resx">
       <DependentUpon>FrameEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Editor\AudioEditor.resx">

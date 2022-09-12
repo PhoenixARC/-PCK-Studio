@@ -6,10 +6,10 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 using System.Diagnostics;
-using PckStudio.Properties;
-using Ohana3DS_Rebirth.Ohana;
 using System.Drawing.Imaging;
 using RichPresenceClient;
+using Ohana3DS_Rebirth.Ohana;
+using PckStudio.Properties;
 using PckStudio.Classes.FileTypes;
 using PckStudio.Classes.IO;
 using PckStudio.Classes.IO.LOC;
@@ -17,6 +17,7 @@ using PckStudio.Classes.IO.GRF;
 using PckStudio.Forms;
 using PckStudio.Forms.Utilities;
 using PckStudio.Forms.Editor;
+using PckStudio.Forms.Additional_Popups.Animation;
 using PckStudio.Classes.IO.PCK;
 
 namespace PckStudio
@@ -628,7 +629,6 @@ namespace PckStudio
 			diag.Dispose();
 		}
 
-
 		private void createAnimatedTextureToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			using (var ofd = new OpenFileDialog())
@@ -637,27 +637,20 @@ namespace PckStudio
 				ofd.Title = "Select a PNG File";
 				if (ofd.ShowDialog() == DialogResult.OK)
 				{
-					try
+					using ChangeTile diag = new ChangeTile();
+					if (diag.ShowDialog(this) == DialogResult.OK)
 					{
-						using (Forms.Utilities.AnimationEditor.ChangeTile diag = new Forms.Utilities.AnimationEditor.ChangeTile())
-							if (diag.ShowDialog(this) == DialogResult.OK)
-							{
-								Console.WriteLine(diag.SelectedTile);
-								using (Image img = new Bitmap(ofd.FileName))
-								using (AnimationEditor animationEditor = new AnimationEditor(img, diag.SelectedTile, diag.IsItem))
-								{
-									if (animationEditor.ShowDialog() == DialogResult.OK)
-									{
-										treeMeta.Nodes.Clear();
-										saved = false;
-									}
-								}
-							}
-					}
-					catch
-					{
-						MessageBox.Show("Invalid animation data.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-						return;
+						using Image img = new Bitmap(ofd.FileName);
+						var file = AnimationUtil.CreateNewAnimationFile(img, diag.SelectedTile, diag.IsItem);
+						using AnimationEditor animationEditor = new AnimationEditor(file);
+						if (animationEditor.ShowDialog() == DialogResult.OK)
+						{
+							file.filepath = animationEditor.TileName;
+							currentPCK.Files.Add(file);
+							ReloadMetaTreeView();
+							BuildMainTreeView();
+							saved = false;
+						}
 					}
 				}
 			}
@@ -667,7 +660,7 @@ namespace PckStudio
 		{
 			if (treeViewMain.SelectedNode is TreeNode t && t.Tag is PCKFile.FileData file)
 				pckFileTypeHandler[file.filetype]?.Invoke(file);
-					}
+		}
 
 		private void treeMeta_AfterSelect(object sender, TreeViewEventArgs e)
 		{
