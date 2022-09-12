@@ -251,15 +251,6 @@ namespace PckStudio.Forms.Editor
 			TileName = Path.GetFileNameWithoutExtension(file.filepath);
 			animationFile = file;
 
-			// sanity check
-			if (TileName.EndsWith("MipMapLevel2") || TileName.EndsWith("MipMapLevel3"))
-			{
-				string mipMapLvl = TileName.Last().ToString();
-				TileName = TileName.Substring(0, TileName.Length - 12);
-				MipMapCheckbox.Checked = true;
-				MipMapNumericUpDown.Value = short.Parse(mipMapLvl);
-			}
-
 			using MemoryStream textureMem = new MemoryStream(animationFile.data);
 			var texture = new Bitmap(textureMem);
 			currentAnimation = animationFile.properties.HasProperty("ANIM")
@@ -564,11 +555,6 @@ namespace PckStudio.Forms.Editor
 				}
 		}
 
-		private void MipMapCheckBox_CheckedChanged(object sender, EventArgs e)
-		{
-			MipMapNumericUpDown.Visible = MipMapLabel.Visible = MipMapCheckbox.Checked;
-		}
-
 		private void exportJavaAnimationToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			SaveFileDialog fileDialog = new SaveFileDialog();
@@ -619,9 +605,5 @@ namespace PckStudio.Forms.Editor
 				"You can also export your animation as an Java Edition tile animation. It will also export the actual texture in the same spot.", "Java Edition Support");
 		}
 
-		private void generateMipMapTexturesToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			
-		}
 	}
 }
