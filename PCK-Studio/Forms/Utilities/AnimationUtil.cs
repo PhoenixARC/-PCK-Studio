@@ -30,7 +30,7 @@ namespace PckStudio.Forms.Utilities
         }
         public static PCKFile.FileData CreateNewAnimationFile(Image source, string tileName, bool isItem)
         {
-            PCKFile.FileData file = new PCKFile.FileData($"res/textures/{GetAnimationSection(isItem)}/{tileName}.png", 2);
+            PCKFile.FileData file = new PCKFile.FileData($"res/textures/{GetAnimationSection(isItem)}/{tileName}.png", PCKFile.FileData.FileType.TextureFile);
             file.properties.Add(("ANIM", string.Empty));
             using (var stream = new MemoryStream())
             {
