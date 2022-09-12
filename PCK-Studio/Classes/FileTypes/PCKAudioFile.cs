@@ -83,10 +83,7 @@ namespace PckStudio.Classes.FileTypes
 		public void SetCredits(params string[] credits)
         {
 			Credits.Clear();
-			foreach (var credit in credits)
-            {
-				AddCredit(credit);
-            }
+			AddCredits(credits);
         }
 
 		public bool SetCredit(string creditId, string s)

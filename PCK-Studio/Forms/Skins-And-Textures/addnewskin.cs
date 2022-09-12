@@ -12,9 +12,9 @@ namespace PckStudio
     public partial class addNewSkin : MetroFramework.Forms.MetroForm
     {
         LOCFile currentLoc;
-        PCKFile.FileData skin = new PCKFile.FileData("dlcskin", 0);
-        PCKFile.FileData cape = new PCKFile.FileData("dlccape", 1);
-        SkinANIM anim = new SkinANIM("0");
+        PCKFile.FileData skin = new PCKFile.FileData("dlcskinXYXYXYXY", PCKFile.FileData.FileType.SkinFile);
+        PCKFile.FileData cape = new PCKFile.FileData("dlccapeXYXYXYXY", PCKFile.FileData.FileType.CapeFile);
+        SkinANIM anim = new SkinANIM(eANIM_EFFECTS.NONE);
 
         public PCKFile.FileData Skin => skin;
         public PCKFile.FileData Cape => cape;
@@ -226,7 +226,10 @@ namespace PckStudio
         {
             int _skinId = -1;
             if (!int.TryParse(textSkinID.Text, out _skinId))
+            {
                 MessageBox.Show("The Skin ID Must be a Unique 8 Digit Number Thats Not Already in Use", "Invalid Skin ID", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             string skinId = _skinId.ToString("d08");
             if (useCape)
             {
@@ -274,7 +277,7 @@ namespace PckStudio
             Close();
         }
 
-        private void textSkinID_TextChanged_1(object sender, EventArgs e)
+        private void textSkinID_TextChanged(object sender, EventArgs e)
         {
             bool validSkinId = int.TryParse(textSkinID.Text, out _);
             textSkinID.ForeColor = validSkinId ? Color.Green : Color.Red;

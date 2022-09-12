@@ -20,7 +20,8 @@ namespace PckStudio.Classes.IO
         {
             _pckfile = file;
             LUT = _pckfile.GatherPropertiesList();
-            if (!file.HasFile("localisation.loc", 6) && !LUT.Contains("XMLVERSION")) LUT.Insert(0, "XMLVERSION");
+            // fix for Skins.pck
+            if (!file.HasFile("localisation.loc", PCKFile.FileData.FileType.LocalisationFile) && !LUT.Contains("XMLVERSION")) LUT.Insert(0, "XMLVERSION");
         }
 
         private void WriteToStream(Stream stream)
@@ -56,7 +57,7 @@ namespace PckStudio.Classes.IO
             foreach (var file in _pckfile.Files)
             {
                 WriteInt(stream, file.size);
-                WriteInt(stream, file.type);
+                WriteInt(stream, (int)file.filetype);
                 WriteString(stream, file.filepath);
             }
         }

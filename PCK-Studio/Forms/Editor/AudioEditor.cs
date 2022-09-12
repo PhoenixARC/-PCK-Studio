@@ -19,16 +19,15 @@ namespace PckStudio.Forms.Editor
 {
 	public partial class AudioEditor : MetroForm
 	{
-		public bool saved = false;
 		public string defaultType = "yes";
 		string tempDir = "";
 		PCKAudioFile audioFile = null;
 		PCKFile.FileData audioPCK;
 		LOCFile loc;
 		bool _isLittleEndian = false;
-		MainForm parent = null;
+        MainForm parent = null;
 
-		public static readonly List<string> Categories = new List<string>
+        public static readonly List<string> Categories = new List<string>
 		{
 			"Overworld",
 			"Nether",
@@ -52,35 +51,11 @@ namespace PckStudio.Forms.Editor
 			return (PCKAudioFile.AudioCategory.EAudioType)Categories.IndexOf(category);
 		}
 
-		public static PCKFile.FileData CreateAudioPck(bool isLittle)
-		{
-			// create actual valid pck file structure
-			PCKAudioFile audioPck = new PCKAudioFile();
-			audioPck.AddCategory(PCKAudioFile.AudioCategory.EAudioType.Overworld);
-			audioPck.AddCategory(PCKAudioFile.AudioCategory.EAudioType.Nether);
-			audioPck.AddCategory(PCKAudioFile.AudioCategory.EAudioType.End);
-			PCKFile.FileData pckFileData = new PCKFile.FileData("audio.pck", 8);
-			using (var stream = new MemoryStream())
-			{
-				PCKAudioFileWriter.Write(stream, audioPck, isLittle);
-				pckFileData.SetData(stream.ToArray());
-			}
-			return pckFileData;
-		}
-
-		/// <summary>
-		/// Overload that creates a new audio.pck file
-		/// </summary>
-		public AudioEditor(LOCFile locFile, bool isLittleEndian) : this(CreateAudioPck(isLittleEndian), locFile, isLittleEndian)
-		{
-		}
-
 		public AudioEditor(PCKFile.FileData file, LOCFile locFile, bool isLittleEndian)
 		{
 			InitializeComponent();
 			// so the Creative songs aren't combined until after the forms are closed.
 			// this will prevent potential problems with editing the categories after merging.
-			this.saveToolStripMenuItem1.Click += (sender, e) => saveToolStripMenuItem1_Click(sender, e, false);
 			loc = locFile;
 			tempDir = Path.Combine(Directory.GetCurrentDirectory(), "temp");
 			_isLittleEndian = isLittleEndian;
@@ -200,7 +175,6 @@ namespace PckStudio.Forms.Editor
 				TreeNode treeNode = new TreeNode(GetCategoryFromId(category.audioType), (int)category.audioType, (int)category.audioType);
 				treeNode.Tag = category;
 				treeView1.Nodes.Add(treeNode);
-				saved = false;
 			}
 			else
 			{
@@ -223,7 +197,6 @@ namespace PckStudio.Forms.Editor
 				if (string.IsNullOrEmpty(ofn.FileName)) return; // Return if name is null or if the user cancels
 
 				ProcessEntries(ofn.FileNames);
-				saved = false;
 			}
 		}
 
@@ -234,7 +207,6 @@ namespace PckStudio.Forms.Editor
 			{
 				treeView2.Nodes.Clear();
 				main.Remove();
-				saved = false;
 			}
 		}
 
@@ -256,7 +228,6 @@ namespace PckStudio.Forms.Editor
 			{
 				category.SongNames.Remove(treeView2.SelectedNode.Text);
 				treeView2.SelectedNode.Remove();
-				saved = false;
 			}
 		}
 
@@ -339,7 +310,7 @@ namespace PckStudio.Forms.Editor
 			}
 		}
 
-		private void saveToolStripMenuItem1_Click(object sender, EventArgs e, bool combineCreative)
+		private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
 			if (!audioFile.HasCategory(PCKAudioFile.AudioCategory.EAudioType.Overworld) ||
 			   !audioFile.HasCategory(PCKAudioFile.AudioCategory.EAudioType.Nether) ||
@@ -353,7 +324,7 @@ namespace PckStudio.Forms.Editor
 			foreach (var category in audioFile.Categories)
 			{
 				category.Name = "";
-				if (combineCreative && category.audioType == PCKAudioFile.AudioCategory.EAudioType.Creative)
+				if (playOverworldInCreative.Checked && category.audioType == PCKAudioFile.AudioCategory.EAudioType.Creative)
 				{
 					foreach (var name in overworldCategory.SongNames)
 					{
@@ -380,7 +351,7 @@ namespace PckStudio.Forms.Editor
 				PCKAudioFileWriter.Write(stream, audioFile, _isLittleEndian);
 				audioPCK.SetData(stream.ToArray());
 			}
-			saved = true;
+			DialogResult = DialogResult.OK;
 		}
 
 		private void treeView2_DragEnter(object sender, DragEventArgs e)
@@ -404,11 +375,6 @@ namespace PckStudio.Forms.Editor
 			using (creditsEditor prompt = new creditsEditor(credits))
 				if (prompt.ShowDialog() == DialogResult.OK)
 					audioFile.SetCredits(prompt.Credits.Split('\n'));
-		}
-
-		private void AudioEditor_FormClosing(object sender, FormClosingEventArgs e)
-		{
-			if (saved) saveToolStripMenuItem1_Click(sender, e, playOverworldInCreative.Checked);
 		}
 
 		private void deleteUnusedBINKAsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -488,8 +454,67 @@ namespace PckStudio.Forms.Editor
 
 		private void AudioEditor_Shown(object sender, EventArgs e)
 		{
-			if (Owner.Owner is MainForm) parent = Owner.Owner as MainForm;
+			if (Owner.Owner is MainForm p) parent = p;
 			else Close();
+		}
+
+		private async void bulkReplaceExistingFilesToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (!parent.CreateDataFolder()) return;
+
+			OpenFileDialog ofn = new OpenFileDialog();
+			ofn.Multiselect = true;
+			ofn.Filter = "Supported audio files (*.binka,*.wav)|*.binka;*.wav";
+			ofn.Title = "Please choose WAV or BINKA files to replace existing track files";
+			ofn.ShowDialog();
+			ofn.Dispose();
+			if (string.IsNullOrEmpty(ofn.FileName)) return; // Return if name is null or if the user cancels
+
+			var totalSongList = new List<string>();
+			foreach (string song in audioFile.Categories.SelectMany(cat => cat.SongNames))
+			{
+				totalSongList.Add(song);
+			}
+
+			foreach (string file in ofn.FileNames)
+			{
+				string song_name = Path.GetFileNameWithoutExtension(file);
+				string file_ext = Path.GetExtension(file).ToLower();
+				string new_loc = Path.Combine(parent.GetDataPath(), Path.GetFileNameWithoutExtension(file) + ".binka");
+				if (!totalSongList.Contains(song_name) || file == new_loc) continue;
+
+				Console.WriteLine(file);
+				File.Delete(new_loc);
+
+				if (file_ext == ".wav") // Convert Wave to BINKA
+				{
+					Cursor.Current = Cursors.WaitCursor;
+					pleaseWait waitDiag = new pleaseWait();
+					waitDiag.Show(this);
+
+					int error_code = 0;
+					await Task.Run(() =>
+					{
+						var process = Process.Start(new ProcessStartInfo
+						{
+							FileName = Path.Combine(tempDir, "binka_encode.exe"),
+							Arguments = $"\"{file}\" \"{new_loc}\" -s -b" + compressionUpDown.Value.ToString(),
+							UseShellExecute = true,
+							CreateNoWindow = true,
+							WindowStyle = ProcessWindowStyle.Hidden
+						});
+						process.Start();
+						process.WaitForExit();
+					});
+
+					waitDiag.Close();
+					waitDiag.Dispose();
+					Cursor.Current = Cursors.Default;
+
+					if (error_code != 0) continue;
+				}
+				else if(file_ext == ".binka") File.Copy(file, Path.Combine(parent.GetDataPath(), Path.GetFileName(file)));
+			}
 		}
 	}
 }

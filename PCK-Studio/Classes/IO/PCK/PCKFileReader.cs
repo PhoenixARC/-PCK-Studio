@@ -27,13 +27,13 @@ namespace PckStudio.Classes.IO
             if (pck_type > 0xf00000) // 03 00 00 00 == true
                 throw new OverflowException(nameof(pck_type));
             _file = new PCKFile(pck_type);
-            ReadLookUpTabel(stream);
+            ReadLookUpTable(stream);
             ReadFileEntries(stream);
             ReadFileContents(stream);
             return _file;
         }
 
-        private void ReadLookUpTabel(Stream stream)
+        private void ReadLookUpTable(Stream stream)
         {
             int count = ReadInt(stream);
             LUT = new List<string>(count);
@@ -53,9 +53,9 @@ namespace PckStudio.Classes.IO
             for (; 0 < file_entry_count; file_entry_count--)
             {
                 int file_size = ReadInt(stream);
-                int file_type = ReadInt(stream);
-                string name = ReadString(stream);
-                var entry = new PCKFile.FileData(name, file_type, file_size);
+                var file_type = (PCKFile.FileData.FileType)ReadInt(stream);
+                string file_path = ReadString(stream).Replace('\\', '/');
+                var entry = new PCKFile.FileData(file_path, file_type, file_size);
                 _file.Files.Add(entry);
             }
         }

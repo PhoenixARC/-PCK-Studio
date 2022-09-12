@@ -11,6 +11,10 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using PckStudio.Classes.FileTypes;
+using PckStudio.Classes.IO;
+using PckStudio.Classes.IO.ARC;
+using PckStudio.Classes.IO.PCK;
 
 namespace PckStudio.Forms
 {
@@ -20,6 +24,7 @@ namespace PckStudio.Forms
         string dlcPath = "";
         string mod = "";
         bool serverOn = false;
+        ConsoleArchive archive = new ConsoleArchive();
 
         public installWiiU(string mod)
         {
@@ -103,6 +108,7 @@ namespace PckStudio.Forms
             }
         }
         List<pckDir> pcks = new List<pckDir>();
+        PCKFile currentPCK = null;
 
         private void updateDatabase()
         {
@@ -341,11 +347,20 @@ namespace PckStudio.Forms
             {
                 buttonMode("loading");
                 OpenFileDialog openPCK = new OpenFileDialog();
+
+                openPCK.Filter = "PCK File|*.pck";
                 
                 if (openPCK.ShowDialog() == DialogResult.OK)
                 {
                     FTP client = new FTP("ftp://" + textBoxHost.Text, "", "a3262443");
                     client.UploadFile(openPCK.FileName, dlcPath + "/" + listViewPCKS.SelectedItems[0].Text + "/" + listViewPCKS.SelectedItems[0].Tag.ToString());
+                    if(TextBoxPackImage.Text != "")
+                    {
+                        string PackID = GetPackID(openPCK.FileName);
+                        GetARCFromConsole();
+                        ReplacePackImage(PackID);
+                        SendARCToConsole();
+                    }
                     MessageBox.Show("PCK Replaced!");
                 }
             }
@@ -404,10 +419,60 @@ namespace PckStudio.Forms
                 buttonMode("loading");
                 FTP client = new FTP("ftp://" + textBoxHost.Text, "", "a3262443");
                 client.UploadFile(mod, dlcPath + "/" + listViewPCKS.SelectedItems[0].Text + "/" + listViewPCKS.SelectedItems[0].Tag.ToString());
+                if (TextBoxPackImage.Text != "")
+                {
+                    string PackID = GetPackID(mod);
+                    GetARCFromConsole();
+                    ReplacePackImage(PackID);
+                    SendARCToConsole();
+                }
                 MessageBox.Show("PCK Replaced!");
             }
             buttonMode("stop");
             loadPcks();
+        }
+
+        private string GetPackID(string filename)
+        {
+            var fs = File.OpenRead(filename);
+            currentPCK = PCKFileReader.Read(fs, false);
+            fs.Close();
+            return currentPCK.GetFile("0", PCKFile.FileData.FileType.InfoFile).properties.GetProperty("PACKID").Item2;
+        }
+
+        private void GetARCFromConsole()
+        {
+            FTP client = new FTP("ftp://" + textBoxHost.Text, "", "a3262443");
+            client.DownloadFile(dlcPath + "../../Common/Media/MediaWiiU.arc", Program.AppData + "MediaWiiU.arc");
+            archive = ARCFileReader.Read(new MemoryStream(File.ReadAllBytes(Program.AppData + "MediaWiiU.arc")));
+        }
+
+        private void ReplacePackImage(string PackID)
+        {
+            if (archive.ContainsKey("Graphics\\PackGraphics\\" + PackID + ".png"))
+                archive["Graphics\\PackGraphics\\" + PackID + ".png"] = File.ReadAllBytes(TextBoxPackImage.Text);
+            else
+                archive.Add("Graphics\\PackGraphics\\" + PackID + ".png", File.ReadAllBytes(TextBoxPackImage.Text));
+        }
+        private void SendARCToConsole()
+        {
+            FTP client = new FTP("ftp://" + textBoxHost.Text, "", "a3262443");
+            MemoryStream ms = new MemoryStream();
+            ARCFileWriter.Write(ms, archive);
+            File.WriteAllBytes(Program.AppData + "MediaWiiU.arc", ms.ToArray());
+            client.UploadFile(Program.AppData + "MediaWiiU.arc", dlcPath + "../../Common/Media/MediaWiiU.arc");
+            archive.Clear();
+            currentPCK.Files.Clear();
+            currentPCK = null;
+            System.GC.Collect();
+        }
+
+        private void PackImageSelection_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "PNG Image|*.png";
+            if(ofd.ShowDialog() == DialogResult.OK)
+                TextBoxPackImage.Text = ofd.FileName;
         }
     }
 }

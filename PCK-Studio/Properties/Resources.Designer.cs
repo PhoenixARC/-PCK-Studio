@@ -131,14 +131,25 @@ namespace PckStudio.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 6.5 [RELEASE]
-        /// - Audio Editor has been renamed to the Music Editor
-        /// - Music Editor now works with PSVita and PS4 files!
-        /// - Added a drag and drop feature for Binka files to the Music Editor to allow for efficient playlist building.
-        /// - You can now create a fresh Audio.pck file by using the &quot;Create audio.pck&quot; function, and this also includes PS4 and Vita!
-        /// - The categories in the Music Editor now sort themselves by category ID
-        /// - The categories in the Music Editor now have icons
-        /// - The Animation Editor  [rest of string was truncated]&quot;;.
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap CAPE_ICON {
+            get {
+                object obj = ResourceManager.GetObject("CAPE_ICON", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 6.5  
+        ///===  
+        ///-Audio.pck Editor is now the Music Editor with plenty of new features  
+        ///-The Animation Editor now plays animations more accurately  
+        ///-Added MipMap support to the Animation Editor  
+        ///-Added some text to display the common name of the animation that you&apos;re working with  
+        ///-Fixed several incorrect internal names for the change tile list  
+        ///-Removed Barrier (Item) from the Change Tile list  
+        ///-Clicking &quot;Cancel&quot; in the Change Tile dialog will no longer overwrite the original tile&apos;s name with noth [rest of string was truncated]&quot;;.
         /// </summary>
         public static string CHANGELOG {
             get {
@@ -172,6 +183,16 @@ namespace PckStudio.Properties {
         public static System.Drawing.Bitmap clock {
             get {
                 object obj = ResourceManager.GetObject("clock", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap COL_ICON {
+            get {
+                object obj = ResourceManager.GetObject("COL_ICON", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -219,9 +240,39 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap GRF_ICON {
+            get {
+                object obj = ResourceManager.GetObject("GRF_ICON", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap GRH_ICON {
+            get {
+                object obj = ResourceManager.GetObject("GRH_ICON", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap IMAGE_ICON {
             get {
                 object obj = ResourceManager.GetObject("IMAGE_ICON", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap INFO_ICON {
+            get {
+                object obj = ResourceManager.GetObject("INFO_ICON", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -242,6 +293,16 @@ namespace PckStudio.Properties {
         public static System.Drawing.Bitmap LOC_ICON {
             get {
                 object obj = ResourceManager.GetObject("LOC_ICON", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap MODELS_ICON {
+            get {
+                object obj = ResourceManager.GetObject("MODELS_ICON", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -389,6 +450,26 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap SKIN_ICON {
+            get {
+                object obj = ResourceManager.GetObject("SKIN_ICON", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap SKINS_ICON {
+            get {
+                object obj = ResourceManager.GetObject("SKINS_ICON", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap slim_template {
             get {
                 object obj = ResourceManager.GetObject("slim_template", resourceCulture);
@@ -412,6 +493,16 @@ namespace PckStudio.Properties {
         public static System.Drawing.Bitmap terrain_sheet {
             get {
                 object obj = ResourceManager.GetObject("terrain_sheet", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap TEXTURE_ICON {
+            get {
+                object obj = ResourceManager.GetObject("TEXTURE_ICON", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

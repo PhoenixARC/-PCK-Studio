@@ -25,7 +25,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>PckStudio</RootNamespace>
-    <AssemblyName>PCK Studio</AssemblyName>
+    <AssemblyName>PCK-Studio</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -107,10 +107,6 @@
     <Reference Include="filetransferprotocollib">
       <HintPath>..\filetransferprotocollib.dll</HintPath>
     </Reference>
-    <Reference Include="MySql.Data, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\MySql.Data.dll</HintPath>
-    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -140,17 +136,22 @@
   <ItemGroup>
     <Compile Include="Classes\API\PCKCenter\model\PCKCenterJSON.cs" />
     <Compile Include="Classes\API\PCKCenter\SaveLocalJSON.cs" />
+    <Compile Include="Classes\FileTypes\ARCFile.cs" />
     <Compile Include="Classes\FileTypes\PCKAudioFile.cs" />
     <Compile Include="Classes\FileTypes\Bink.cs" />
     <Compile Include="Classes\FileTypes\COLFile.cs" />
     <Compile Include="Classes\FileTypes\CSM.cs" />
     <Compile Include="Classes\FileTypes\GRFFile.cs" />
+    <Compile Include="Classes\IO\ARC\ARCFileWriter.cs" />
+    <Compile Include="Classes\IO\ARC\ARCFileReader.cs" />
     <Compile Include="Classes\IO\PCK\PCKAudioFileReader.cs" />
     <Compile Include="Classes\IO\PCK\PCKAudioFileWriter.cs" />
     <Compile Include="Classes\IO\COL\COLFileReader.cs" />
     <Compile Include="Classes\IO\COL\COLFileWriter.cs" />
     <Compile Include="Classes\IO\Sounds\SoundIO.cs" />
     <Compile Include="Classes\IO\Sounds\Sounds.cs" />
+    <Compile Include="Classes\Models\DefaultModels\Steve64x64Model.cs" />
+    <Compile Include="Classes\Utils\ARC\ARCUtil.cs" />
     <Compile Include="Classes\Utils\SkinANIM.cs" />
     <Compile Include="Classes\FileTypes\PCKProperties.cs" />
     <Compile Include="Classes\FileTypes\PCKFile.cs" />
@@ -163,7 +164,7 @@
     <Compile Include="Classes\IO\PCK\PCKFileWriter.cs" />
     <Compile Include="Classes\IO\StreamDataReader.cs" />
     <Compile Include="Classes\IO\StreamDataWriter.cs" />
-    <Compile Include="Classes\Models\DefaultModels\CharacterModel.cs" />
+    <Compile Include="Classes\Models\DefaultModels\Steve64x32Model.cs" />
     <Compile Include="Classes\Models\DefaultModels\ModelBase.cs" />
     <Compile Include="Classes\Models\DefaultModels\Texture.cs" />
     <Compile Include="Classes\Models\DefaultModels\TextureSelector.cs">
@@ -401,12 +402,6 @@
     <Compile Include="Forms\Utilities\Pref.Designer.cs">
       <DependentUpon>Pref.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Additional-Popups\Promo.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Additional-Popups\Promo.Designer.cs">
-      <DependentUpon>Promo.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\Utilities\TextureConverterUtility.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -589,9 +584,6 @@
     <EmbeddedResource Include="Forms\Utilities\Pref.resx">
       <DependentUpon>Pref.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Additional-Popups\Promo.resx">
-      <DependentUpon>Promo.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Utilities\TextureConverterUtility.resx">
       <DependentUpon>TextureConverterUtility.cs</DependentUpon>
     </EmbeddedResource>
@@ -661,6 +653,17 @@
     <None Include="Resources\binka\mss32.dll" />
     <None Include="Resources\anim_editor\classic_template.png" />
     <None Include="Resources\anim_editor\slim_template.png" />
+    <None Include="Resources\iconImageList\COL ICON.png" />
+    <None Include="Resources\iconImageList\SKINS ICON.png" />
+    <None Include="Resources\iconImageList\MODELS ICON.png" />
+    <None Include="Resources\iconImageList\GRF ICON.png" />
+    <None Include="Resources\iconImageList\GRH ICON.png" />
+    <None Include="Resources\iconImageList\ZERO ICON.png" />
+    <None Include="Resources\iconImageList\INFO ICON.png" />
+    <None Include="Resources\iconImageList\CAPE ICON.png" />
+    <None Include="Resources\iconImageList\SKIN ICON.png" />
+    <None Include="Resources\iconImageList\TEXTURE ICON.png" />
+    <None Include="Resources\iconImageList\SKINS ICON_new.png" />
     <Content Include="Resources\PCK-Studio_Logo.ico" />
     <None Include="Resources\bg1.png" />
     <Content Include="Resources\NoImageFound.png" />
@@ -703,9 +706,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\iconImageList\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -247,4 +247,31 @@
   <data name="CHANGELOG" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\CHANGELOG.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="CAPE_ICON" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\iconImageList\CAPE ICON.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="COL_ICON" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\iconImageList\COL ICON.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GRF_ICON" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\iconImageList\GRF ICON.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GRH_ICON" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\iconImageList\GRH ICON.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="INFO_ICON" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\iconImageList\INFO ICON.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MODELS_ICON" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\iconImageList\MODELS ICON.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SKIN_ICON" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\iconImageList\SKIN ICON.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TEXTURE_ICON" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\iconImageList\TEXTURE ICON.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SKINS_ICON" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\iconImageList\SKINS ICON.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

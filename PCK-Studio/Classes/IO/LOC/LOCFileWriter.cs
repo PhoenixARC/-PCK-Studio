@@ -20,11 +20,11 @@ namespace PckStudio.Classes.IO.LOC
 
         private void WriteToStream(Stream stream, int type)
         {
-            if (_locfile == null) throw new ArgumentNullException(nameof(_locfile));
+            _ = _locfile ?? throw new ArgumentNullException(nameof(_locfile));
             WriteInt(stream, type);
             WriteInt(stream, _locfile.Languages.Count);
             if (type == 2) WriteLocKeys(stream);
-            WriteLanguages(stream);
+            WriteLanguages(stream, type);
             WriteLanguageEntries(stream, type);
         }
 
@@ -37,12 +37,27 @@ namespace PckStudio.Classes.IO.LOC
                 WriteString(stream, key);
         }
 
-        private void WriteLanguages(Stream stream)
+        private void WriteLanguages(Stream stream, int type)
         {
             _locfile.Languages.ForEach(language =>
             {
                 WriteString(stream, language);
-                WriteInt(stream, 0);
+                
+                //Calculate the size of the language entry
+
+                int size = 0;
+                size += sizeof(int); // null long
+                size += sizeof(byte); // null byte
+                size += (sizeof(short) + Encoding.UTF8.GetByteCount(language)); // language name string
+                size += sizeof(int); // key count
+
+                foreach (var locKey in _locfile.LocKeys.Keys)
+                {
+                    if (type == 0) size += (2 + Encoding.UTF8.GetByteCount(locKey)); // loc key string
+                    size += (2 + Encoding.UTF8.GetByteCount(_locfile.LocKeys[locKey][language])); // loc key string
+                }
+
+                WriteInt(stream, size);
             });
         }
 

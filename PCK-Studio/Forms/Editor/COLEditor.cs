@@ -82,7 +82,8 @@ namespace PckStudio.Forms.Editor
 				COLFileWriter.Write(stream, colurfile);
 				_file.SetData(stream.ToArray());
 			}
-		}
+            DialogResult = DialogResult.OK;
+        }
 
 		static byte[] StringToByteArrayFastest(string hex)
 		{
@@ -101,7 +102,7 @@ namespace PckStudio.Forms.Editor
 
 		static int GetHexVal(char hex)
 		{
-			int val = (int)hex;
+			int val = hex;
 			return val - (val < 58 ? 48 : (val < 97 ? 55 : 87));
 		}
 
@@ -218,11 +219,6 @@ namespace PckStudio.Forms.Editor
 				colorEntry.color = (uint)colorPick.Color.ToArgb() & 0xffffff;
 			}
 			colorPick.Dispose();
-        }
-
-        private void COLEditor_FormClosing(object sender, FormClosingEventArgs e)
-        {
-			DialogResult = DialogResult.OK;
         }
     }
 }

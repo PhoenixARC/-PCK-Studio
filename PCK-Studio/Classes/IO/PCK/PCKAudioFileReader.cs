@@ -38,13 +38,13 @@ namespace PckStudio.Classes.IO.PCK
             if (pck_type > 1)
                 throw new InvalidAudioPckException(nameof(pck_type));
             _file = new PCKAudioFile();
-            ReadLookUpTabel(stream);
+            ReadLookUpTable(stream);
             ReadCategories(stream);
             ReadCategorySongs(stream);
             return _file;
         }
 
-        private void ReadLookUpTabel(Stream stream)
+        private void ReadLookUpTable(Stream stream)
         {
             int count = ReadInt(stream);
             LUT = new List<string>(count);

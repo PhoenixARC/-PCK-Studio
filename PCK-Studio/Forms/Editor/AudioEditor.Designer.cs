@@ -42,6 +42,7 @@ namespace PckStudio.Forms.Editor
 			this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.creditsEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.deleteUnusedBINKAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.openDataFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.howToAddSongsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.whatIsEachCategoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -56,7 +57,7 @@ namespace PckStudio.Forms.Editor
 			this.playOverworldInCreative = new MetroFramework.Controls.MetroCheckBox();
 			this.compressionUpDown = new System.Windows.Forms.NumericUpDown();
 			this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
-			this.openDataFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.bulkReplaceExistingTracksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenuStrip1.SuspendLayout();
 			this.menuStrip.SuspendLayout();
 			this.contextMenuStrip2.SuspendLayout();
@@ -132,13 +133,15 @@ namespace PckStudio.Forms.Editor
 			// 
 			resources.ApplyResources(this.saveToolStripMenuItem1, "saveToolStripMenuItem1");
 			this.saveToolStripMenuItem1.Name = "saveToolStripMenuItem1";
+			this.saveToolStripMenuItem1.Click += new System.EventHandler(this.saveToolStripMenuItem1_Click);
 			// 
 			// toolsToolStripMenuItem
 			// 
 			this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.creditsEditorToolStripMenuItem,
             this.deleteUnusedBINKAsToolStripMenuItem,
-            this.openDataFolderToolStripMenuItem});
+            this.openDataFolderToolStripMenuItem,
+            this.bulkReplaceExistingTracksToolStripMenuItem});
 			this.toolsToolStripMenuItem.ForeColor = System.Drawing.Color.White;
 			this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
 			resources.ApplyResources(this.toolsToolStripMenuItem, "toolsToolStripMenuItem");
@@ -156,6 +159,13 @@ namespace PckStudio.Forms.Editor
 			this.deleteUnusedBINKAsToolStripMenuItem.Name = "deleteUnusedBINKAsToolStripMenuItem";
 			resources.ApplyResources(this.deleteUnusedBINKAsToolStripMenuItem, "deleteUnusedBINKAsToolStripMenuItem");
 			this.deleteUnusedBINKAsToolStripMenuItem.Click += new System.EventHandler(this.deleteUnusedBINKAsToolStripMenuItem_Click);
+			// 
+			// openDataFolderToolStripMenuItem
+			// 
+			this.openDataFolderToolStripMenuItem.Image = global::PckStudio.Properties.Resources.ZZFolder;
+			this.openDataFolderToolStripMenuItem.Name = "openDataFolderToolStripMenuItem";
+			resources.ApplyResources(this.openDataFolderToolStripMenuItem, "openDataFolderToolStripMenuItem");
+			this.openDataFolderToolStripMenuItem.Click += new System.EventHandler(this.openDataFolderToolStripMenuItem_Click);
 			// 
 			// helpToolStripMenuItem
 			// 
@@ -278,12 +288,11 @@ namespace PckStudio.Forms.Editor
 			this.metroLabel1.Name = "metroLabel1";
 			this.metroLabel1.Theme = MetroFramework.MetroThemeStyle.Dark;
 			// 
-			// openDataFolderToolStripMenuItem
+			// bulkReplaceExistingTracksToolStripMenuItem
 			// 
-			this.openDataFolderToolStripMenuItem.Image = global::PckStudio.Properties.Resources.ZZFolder;
-			this.openDataFolderToolStripMenuItem.Name = "openDataFolderToolStripMenuItem";
-			resources.ApplyResources(this.openDataFolderToolStripMenuItem, "openDataFolderToolStripMenuItem");
-			this.openDataFolderToolStripMenuItem.Click += new System.EventHandler(this.openDataFolderToolStripMenuItem_Click);
+			this.bulkReplaceExistingTracksToolStripMenuItem.Name = "bulkReplaceExistingTracksToolStripMenuItem";
+			resources.ApplyResources(this.bulkReplaceExistingTracksToolStripMenuItem, "bulkReplaceExistingTracksToolStripMenuItem");
+			this.bulkReplaceExistingTracksToolStripMenuItem.Click += new System.EventHandler(this.bulkReplaceExistingFilesToolStripMenuItem_Click);
 			// 
 			// AudioEditor
 			// 
@@ -298,7 +307,6 @@ namespace PckStudio.Forms.Editor
 			this.Name = "AudioEditor";
 			this.Style = MetroFramework.MetroColorStyle.Silver;
 			this.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AudioEditor_FormClosing);
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.AudioEditor_FormClosed);
 			this.Shown += new System.EventHandler(this.AudioEditor_Shown);
 			this.contextMenuStrip1.ResumeLayout(false);
@@ -339,5 +347,6 @@ namespace PckStudio.Forms.Editor
 		private System.Windows.Forms.ToolStripMenuItem bINKACompressionToolStripMenuItem;
 		private MetroFramework.Controls.MetroLabel metroLabel1;
 		private System.Windows.Forms.ToolStripMenuItem openDataFolderToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem bulkReplaceExistingTracksToolStripMenuItem;
 	}
 }

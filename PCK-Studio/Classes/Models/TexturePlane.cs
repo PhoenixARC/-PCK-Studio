@@ -8,11 +8,11 @@ namespace PckStudio.Models
 {
 	public class TexturePlane : Object3D
 	{
-		public override System.Drawing.Image Image
+		public override Image Image
 		{
 			set
 			{
-				this.Bitmap = (System.Drawing.Bitmap)value;
+				Bitmap = (Bitmap)value;
 			}
 		}
 
@@ -21,31 +21,31 @@ namespace PckStudio.Models
 			set
 			{
 				base.Viewport = value;
-				if (this.bitmap != null && value != null)
+				if (bitmap != null && value != null)
 				{
-					this.UpdateBitmap();
+					UpdateBitmap();
 				}
 			}
 		}
 
 		internal override void Update()
 		{
-			if (this.Points == null || this.viewport == null)
+			if (Points == null || viewport == null)
 			{
 				return;
 			}
-			Matrix3D m = this.globalTransformation * this.localTransformation * this.originTranslation;
-			for (int i = 0; i <= this.width; i++)
+			Matrix3D m = globalTransformation * localTransformation * originTranslation;
+			for (int i = 0; i <= width; i++)
 			{
-				for (int j = 0; j <= this.height; j++)
+				for (int j = 0; j <= height; j++)
 				{
-					Point3D point3D = m * new Point3D((float)i, (float)j, 0f);
-					this.Points[i, j] = this.viewport.Point3DTo2D(point3D);
-					double num = (double)this.viewport.GetZOrder(point3D);
-					this.ZOrder[i, j] += num;
-					this.ZOrder[i + 1, j] += num;
-					this.ZOrder[i, j + 1] += num;
-					this.ZOrder[i + 1, j + 1] = num;
+					Point3D point3D = m * new Point3D(i, j, 0f);
+					Points[i, j] = viewport.Point3DTo2D(point3D);
+					double num = (double)viewport.GetZOrder(point3D);
+					ZOrder[i, j] += num;
+					ZOrder[i + 1, j] += num;
+					ZOrder[i, j + 1] += num;
+					ZOrder[i + 1, j + 1] = num;
 				}
 			}
 		}
@@ -54,108 +54,108 @@ namespace PckStudio.Models
 		{
 			set
 			{
-				if (this.viewport == null)
+				if (viewport == null)
 				{
-					this.bitmap = value;
+					bitmap = value;
 					return;
 				}
-				this.texelList.Clear();
-				if (this.bitmap != null)
+				texelList.Clear();
+				if (bitmap != null)
 				{
-					this.viewport.RemoveTexelsOf(this);
-					this.Points = null;
+					viewport.RemoveTexelsOf(this);
+					Points = null;
 				}
-				this.bitmap = value;
-				if (this.bitmap != null)
+				bitmap = value;
+				if (bitmap != null)
 				{
-					this.UpdateBitmap();
-					this.Update();
+					UpdateBitmap();
+					Update();
 				}
 			}
 		}
 
 		private void UpdateBitmap()
 		{
-			this.width = this.bitmap.Width;
-			this.height = this.bitmap.Height;
-			this.visibility = new bool[this.width, this.height];
-			for (int i = 0; i < this.width; i++)
+			width = bitmap.Width;
+			height = bitmap.Height;
+			visibility = new bool[width, height];
+			for (int i = 0; i < width; i++)
 			{
-				for (int j = 0; j < this.height; j++)
+				for (int j = 0; j < height; j++)
 				{
-					System.Drawing.Color pixel = this.bitmap.GetPixel(i, j);
-					int num = this.flipHorizontally ? (this.width - i - 1) : i;
-					int num2 = this.flipVertically ? j : (this.height - j - 1);
+					Color pixel = bitmap.GetPixel(i, j);
+					int num = flipHorizontally ? (width - i - 1) : i;
+					int num2 = flipVertically ? j : (height - j - 1);
 					if (pixel.A == 0)
 					{
-						this.visibility[num, num2] = false;
+						visibility[num, num2] = false;
 					}
 					else
 					{
-						this.visibility[num, num2] = true;
+						visibility[num, num2] = true;
 						Texel texel = new Texel(this, num, num2, pixel);
-						this.viewport.AddTexel(texel);
-						this.texelList.Add(texel);
+						viewport.AddTexel(texel);
+						texelList.Add(texel);
 					}
 				}
 			}
-			this.Points = new System.Drawing.PointF[this.width + 1, this.height + 1];
-			this.ZOrder = new double[this.width + 2, this.height + 2];
+			Points = new PointF[width + 1, height + 1];
+			ZOrder = new double[width + 2, height + 2];
 		}
 
-		public TexturePlane(System.Drawing.Image bitmap, System.Drawing.Rectangle srcRect, Point3D origin, Point3D normal, Effects effects)
+		public TexturePlane(Image bitmap, Rectangle srcRect, Point3D origin, Point3D normal, Effects effects)
 		{
-			base.Origin = origin;
+			Origin = origin;
 			this.normal = normal;
 			if (bitmap == null)
 			{
-				this.Bitmap = null;
+				Bitmap = null;
 				return;
 			}
-			System.Drawing.Bitmap bitmap2 = new System.Drawing.Bitmap(srcRect.Width, srcRect.Height);
-			using (System.Drawing.Graphics graphics = System.Drawing.Graphics.FromImage(bitmap2))
+			Bitmap bitmap2 = new Bitmap(srcRect.Width, srcRect.Height);
+			using (Graphics graphics = Graphics.FromImage(bitmap2))
 			{
-				graphics.DrawImage(bitmap, new System.Drawing.Rectangle(0, 0, bitmap2.Width, bitmap2.Height), srcRect, System.Drawing.GraphicsUnit.Pixel);
+				graphics.DrawImage(bitmap, new Rectangle(0, 0, bitmap2.Width, bitmap2.Height), srcRect, GraphicsUnit.Pixel);
 			}
-			this.flipHorizontally = ((byte)(effects & Effects.FlipHorizontally) == 1);
-			this.flipVertically = ((byte)(effects & Effects.FlipVertically) == 2);
-			this.Bitmap = bitmap2;
+			flipHorizontally = (byte)(effects & Effects.FlipHorizontally) == 1;
+			flipVertically = (byte)(effects & Effects.FlipVertically) == 2;
+			Bitmap = bitmap2;
 		}
 
-		public override float HitTest(System.Drawing.PointF location)
+		public override float HitTest(PointF location)
 		{
-			if (this.Points == null)
+			if (Points == null)
 			{
 				return -1000f;
 			}
-			System.Drawing.Drawing2D.GraphicsPath graphicsPath = new System.Drawing.Drawing2D.GraphicsPath();
-			graphicsPath.AddPolygon(new System.Drawing.PointF[]
+			GraphicsPath graphicsPath = new GraphicsPath();
+			graphicsPath.AddPolygon(new PointF[]
 			{
-				this.Points[0, 0],
-				this.Points[this.Points.GetLength(0) - 1, 0],
-				this.Points[this.Points.GetLength(0) - 1, this.Points.GetLength(1) - 1],
-				this.Points[0, this.Points.GetLength(1) - 1]
+				Points[0, 0],
+				Points[Points.GetLength(0) - 1, 0],
+				Points[Points.GetLength(0) - 1, Points.GetLength(1) - 1],
+				Points[0, Points.GetLength(1) - 1]
 			});
-			System.Drawing.Region region = new System.Drawing.Region(graphicsPath);
+			Region region = new Region(graphicsPath);
 			if (region.IsVisible(location))
 			{
-				for (int i = 0; i < this.Points.GetLength(0) - 1; i++)
+				for (int i = 0; i < Points.GetLength(0) - 1; i++)
 				{
-					for (int j = 0; j < this.Points.GetLength(1) - 1; j++)
+					for (int j = 0; j < Points.GetLength(1) - 1; j++)
 					{
-						if (this.visibility[i, j])
+						if (visibility[i, j])
 						{
 							graphicsPath.Reset();
-							graphicsPath.AddPolygon(new System.Drawing.PointF[]
+							graphicsPath.AddPolygon(new PointF[]
 							{
-								this.Points[i, j],
-								this.Points[i + 1, j],
-								this.Points[i + 1, j + 1],
-								this.Points[i, j + 1]
+								Points[i, j],
+								Points[i + 1, j],
+								Points[i + 1, j + 1],
+								Points[i, j + 1]
 							});
 							if (graphicsPath.IsVisible(location))
 							{
-								return (this.globalTransformation * this.localTransformation * this.originTranslation * new Point3D((float)i, (float)j, 0f)).Z;
+								return (globalTransformation * localTransformation * originTranslation * new Point3D(i, j, 0f)).Z;
 							}
 						}
 					}
@@ -164,9 +164,9 @@ namespace PckStudio.Models
 			return -1000f;
 		}
 
-		private System.Collections.Generic.List<Texel> texelList = new System.Collections.Generic.List<Texel>();
+		private List<Texel> texelList = new List<Texel>();
 
-		internal System.Drawing.PointF[,] Points;
+		internal PointF[,] Points;
 
 		internal double[,] ZOrder;
 
@@ -174,7 +174,7 @@ namespace PckStudio.Models
 
 		private bool[,] visibility;
 
-		private System.Drawing.Bitmap bitmap;
+		private Bitmap bitmap;
 
 		private bool flipHorizontally;
 

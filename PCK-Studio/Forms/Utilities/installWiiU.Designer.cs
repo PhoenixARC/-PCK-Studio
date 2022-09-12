@@ -42,6 +42,8 @@
             this.radioButtonUs = new System.Windows.Forms.RadioButton();
             this.radioButtonJap = new System.Windows.Forms.RadioButton();
             this.listViewPCKS = new System.Windows.Forms.ListView();
+            this.TextBoxPackImage = new MetroFramework.Controls.MetroTextBox();
+            this.PackImageSelection = new System.Windows.Forms.Button();
             this.metroTabControlMain = new MetroFramework.Controls.MetroTabControl();
             this.contextMenuStripCaffiine = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.replaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -55,11 +57,11 @@
             // 
             // metroTabPageMain
             // 
-            resources.ApplyResources(this.metroTabPageMain, "metroTabPageMain");
             this.metroTabPageMain.Controls.Add(this.myTablePanel1);
             this.metroTabPageMain.HorizontalScrollbarBarColor = true;
             this.metroTabPageMain.HorizontalScrollbarHighlightOnWheel = false;
             this.metroTabPageMain.HorizontalScrollbarSize = 10;
+            resources.ApplyResources(this.metroTabPageMain, "metroTabPageMain");
             this.metroTabPageMain.Name = "metroTabPageMain";
             this.metroTabPageMain.Style = MetroFramework.MetroColorStyle.Blue;
             this.metroTabPageMain.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -69,15 +71,17 @@
             // 
             // myTablePanel1
             // 
-            resources.ApplyResources(this.myTablePanel1, "myTablePanel1");
             this.myTablePanel1.BackColor = System.Drawing.Color.Transparent;
+            resources.ApplyResources(this.myTablePanel1, "myTablePanel1");
             this.myTablePanel1.Controls.Add(this.buttonServerToggle, 2, 0);
-            this.myTablePanel1.Controls.Add(this.panel1, 0, 1);
+            this.myTablePanel1.Controls.Add(this.panel1, 0, 2);
             this.myTablePanel1.Controls.Add(this.textBoxHost, 0, 0);
-            this.myTablePanel1.Controls.Add(this.radioButtonEur, 0, 2);
-            this.myTablePanel1.Controls.Add(this.radioButtonUs, 1, 2);
-            this.myTablePanel1.Controls.Add(this.radioButtonJap, 2, 2);
-            this.myTablePanel1.Controls.Add(this.listViewPCKS, 0, 3);
+            this.myTablePanel1.Controls.Add(this.radioButtonEur, 0, 3);
+            this.myTablePanel1.Controls.Add(this.radioButtonUs, 1, 3);
+            this.myTablePanel1.Controls.Add(this.radioButtonJap, 2, 3);
+            this.myTablePanel1.Controls.Add(this.listViewPCKS, 0, 4);
+            this.myTablePanel1.Controls.Add(this.TextBoxPackImage, 0, 1);
+            this.myTablePanel1.Controls.Add(this.PackImageSelection, 2, 1);
             this.myTablePanel1.Name = "myTablePanel1";
             // 
             // buttonServerToggle
@@ -92,11 +96,11 @@
             // 
             // panel1
             // 
-            resources.ApplyResources(this.panel1, "panel1");
             this.myTablePanel1.SetColumnSpan(this.panel1, 3);
             this.panel1.Controls.Add(this.radioButtonSystem);
             this.panel1.Controls.Add(this.buttonSelect);
             this.panel1.Controls.Add(this.radioButtonUSB);
+            resources.ApplyResources(this.panel1, "panel1");
             this.panel1.Name = "panel1";
             // 
             // radioButtonSystem
@@ -114,8 +118,8 @@
             // 
             // buttonSelect
             // 
-            resources.ApplyResources(this.buttonSelect, "buttonSelect");
             this.buttonSelect.BackgroundImage = global::PckStudio.Properties.Resources.sdDownload;
+            resources.ApplyResources(this.buttonSelect, "buttonSelect");
             this.buttonSelect.ForeColor = System.Drawing.Color.White;
             this.buttonSelect.Name = "buttonSelect";
             this.buttonSelect.UseVisualStyleBackColor = true;
@@ -142,30 +146,13 @@
             // 
             // 
             // 
-            this.textBoxHost.CustomButton.AccessibleDescription = resources.GetString("resource.AccessibleDescription");
-            this.textBoxHost.CustomButton.AccessibleName = resources.GetString("resource.AccessibleName");
-            this.textBoxHost.CustomButton.Anchor = ((System.Windows.Forms.AnchorStyles)(resources.GetObject("resource.Anchor")));
-            this.textBoxHost.CustomButton.AutoSize = ((bool)(resources.GetObject("resource.AutoSize")));
-            this.textBoxHost.CustomButton.AutoSizeMode = ((System.Windows.Forms.AutoSizeMode)(resources.GetObject("resource.AutoSizeMode")));
-            this.textBoxHost.CustomButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("resource.BackgroundImage")));
-            this.textBoxHost.CustomButton.BackgroundImageLayout = ((System.Windows.Forms.ImageLayout)(resources.GetObject("resource.BackgroundImageLayout")));
-            this.textBoxHost.CustomButton.Dock = ((System.Windows.Forms.DockStyle)(resources.GetObject("resource.Dock")));
-            this.textBoxHost.CustomButton.FlatStyle = ((System.Windows.Forms.FlatStyle)(resources.GetObject("resource.FlatStyle")));
-            this.textBoxHost.CustomButton.Font = ((System.Drawing.Font)(resources.GetObject("resource.Font")));
             this.textBoxHost.CustomButton.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image")));
-            this.textBoxHost.CustomButton.ImageAlign = ((System.Drawing.ContentAlignment)(resources.GetObject("resource.ImageAlign")));
-            this.textBoxHost.CustomButton.ImageIndex = ((int)(resources.GetObject("resource.ImageIndex")));
-            this.textBoxHost.CustomButton.ImageKey = resources.GetString("resource.ImageKey");
             this.textBoxHost.CustomButton.ImeMode = ((System.Windows.Forms.ImeMode)(resources.GetObject("resource.ImeMode")));
             this.textBoxHost.CustomButton.Location = ((System.Drawing.Point)(resources.GetObject("resource.Location")));
-            this.textBoxHost.CustomButton.MaximumSize = ((System.Drawing.Size)(resources.GetObject("resource.MaximumSize")));
             this.textBoxHost.CustomButton.Name = "";
-            this.textBoxHost.CustomButton.RightToLeft = ((System.Windows.Forms.RightToLeft)(resources.GetObject("resource.RightToLeft")));
             this.textBoxHost.CustomButton.Size = ((System.Drawing.Size)(resources.GetObject("resource.Size")));
             this.textBoxHost.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
             this.textBoxHost.CustomButton.TabIndex = ((int)(resources.GetObject("resource.TabIndex")));
-            this.textBoxHost.CustomButton.TextAlign = ((System.Drawing.ContentAlignment)(resources.GetObject("resource.TextAlign")));
-            this.textBoxHost.CustomButton.TextImageRelation = ((System.Windows.Forms.TextImageRelation)(resources.GetObject("resource.TextImageRelation")));
             this.textBoxHost.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
             this.textBoxHost.CustomButton.UseSelectable = true;
             this.textBoxHost.CustomButton.Visible = ((bool)(resources.GetObject("resource.Visible")));
@@ -228,9 +215,9 @@
             // 
             // listViewPCKS
             // 
-            resources.ApplyResources(this.listViewPCKS, "listViewPCKS");
             this.listViewPCKS.Activation = System.Windows.Forms.ItemActivation.TwoClick;
             this.myTablePanel1.SetColumnSpan(this.listViewPCKS, 3);
+            resources.ApplyResources(this.listViewPCKS, "listViewPCKS");
             this.listViewPCKS.HideSelection = false;
             this.listViewPCKS.Name = "listViewPCKS";
             this.listViewPCKS.UseCompatibleStateImageBehavior = false;
@@ -239,10 +226,56 @@
             this.listViewPCKS.Click += new System.EventHandler(this.listViewPCKS_Click);
             this.listViewPCKS.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listViewPCKS_MouseDown);
             // 
+            // TextBoxPackImage
+            // 
+            resources.ApplyResources(this.TextBoxPackImage, "TextBoxPackImage");
+            this.TextBoxPackImage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.myTablePanel1.SetColumnSpan(this.TextBoxPackImage, 2);
+            // 
+            // 
+            // 
+            this.TextBoxPackImage.CustomButton.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image1")));
+            this.TextBoxPackImage.CustomButton.ImeMode = ((System.Windows.Forms.ImeMode)(resources.GetObject("resource.ImeMode1")));
+            this.TextBoxPackImage.CustomButton.Location = ((System.Drawing.Point)(resources.GetObject("resource.Location1")));
+            this.TextBoxPackImage.CustomButton.Name = "";
+            this.TextBoxPackImage.CustomButton.Size = ((System.Drawing.Size)(resources.GetObject("resource.Size1")));
+            this.TextBoxPackImage.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.TextBoxPackImage.CustomButton.TabIndex = ((int)(resources.GetObject("resource.TabIndex1")));
+            this.TextBoxPackImage.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.TextBoxPackImage.CustomButton.UseSelectable = true;
+            this.TextBoxPackImage.CustomButton.Visible = ((bool)(resources.GetObject("resource.Visible1")));
+            this.TextBoxPackImage.IconRight = true;
+            this.TextBoxPackImage.Lines = new string[0];
+            this.TextBoxPackImage.MaxLength = 32767;
+            this.TextBoxPackImage.Name = "TextBoxPackImage";
+            this.TextBoxPackImage.PasswordChar = '\0';
+            this.TextBoxPackImage.PromptText = "Pack Image";
+            this.TextBoxPackImage.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.TextBoxPackImage.SelectedText = "";
+            this.TextBoxPackImage.SelectionLength = 0;
+            this.TextBoxPackImage.SelectionStart = 0;
+            this.TextBoxPackImage.ShortcutsEnabled = true;
+            this.TextBoxPackImage.Style = MetroFramework.MetroColorStyle.Blue;
+            this.TextBoxPackImage.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.TextBoxPackImage.UseSelectable = true;
+            this.TextBoxPackImage.WaterMark = "Pack Image";
+            this.TextBoxPackImage.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.TextBoxPackImage.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            // 
+            // PackImageSelection
+            // 
+            resources.ApplyResources(this.PackImageSelection, "PackImageSelection");
+            this.PackImageSelection.BackColor = System.Drawing.Color.Sienna;
+            this.PackImageSelection.FlatAppearance.BorderSize = 0;
+            this.PackImageSelection.ForeColor = System.Drawing.Color.White;
+            this.PackImageSelection.Name = "PackImageSelection";
+            this.PackImageSelection.UseVisualStyleBackColor = false;
+            this.PackImageSelection.Click += new System.EventHandler(this.PackImageSelection_Click);
+            // 
             // metroTabControlMain
             // 
-            resources.ApplyResources(this.metroTabControlMain, "metroTabControlMain");
             this.metroTabControlMain.Controls.Add(this.metroTabPageMain);
+            resources.ApplyResources(this.metroTabControlMain, "metroTabControlMain");
             this.metroTabControlMain.Name = "metroTabControlMain";
             this.metroTabControlMain.SelectedIndex = 0;
             this.metroTabControlMain.Style = MetroFramework.MetroColorStyle.White;
@@ -251,25 +284,25 @@
             // 
             // contextMenuStripCaffiine
             // 
-            resources.ApplyResources(this.contextMenuStripCaffiine, "contextMenuStripCaffiine");
             this.contextMenuStripCaffiine.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.replaceToolStripMenuItem,
             this.replacePCKToolStripMenuItem});
             this.contextMenuStripCaffiine.Name = "contextMenuStripCaffiine";
+            resources.ApplyResources(this.contextMenuStripCaffiine, "contextMenuStripCaffiine");
             this.contextMenuStripCaffiine.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStripCaffiine_Opening);
             // 
             // replaceToolStripMenuItem
             // 
-            resources.ApplyResources(this.replaceToolStripMenuItem, "replaceToolStripMenuItem");
             this.replaceToolStripMenuItem.Image = global::PckStudio.Properties.Resources.Replace;
             this.replaceToolStripMenuItem.Name = "replaceToolStripMenuItem";
+            resources.ApplyResources(this.replaceToolStripMenuItem, "replaceToolStripMenuItem");
             this.replaceToolStripMenuItem.Click += new System.EventHandler(this.replaceToolStripMenuItem_Click);
             // 
             // replacePCKToolStripMenuItem
             // 
-            resources.ApplyResources(this.replacePCKToolStripMenuItem, "replacePCKToolStripMenuItem");
             this.replacePCKToolStripMenuItem.Image = global::PckStudio.Properties.Resources.Replace;
             this.replacePCKToolStripMenuItem.Name = "replacePCKToolStripMenuItem";
+            resources.ApplyResources(this.replacePCKToolStripMenuItem, "replacePCKToolStripMenuItem");
             this.replacePCKToolStripMenuItem.Click += new System.EventHandler(this.replacePCKToolStripMenuItem_Click);
             // 
             // installWiiU
@@ -312,5 +345,7 @@
         private System.Windows.Forms.Button buttonServerToggle;
         private MetroFramework.Controls.MetroTextBox textBoxHost;
         private System.Windows.Forms.ToolStripMenuItem replaceToolStripMenuItem;
+        private MetroFramework.Controls.MetroTextBox TextBoxPackImage;
+        private System.Windows.Forms.Button PackImageSelection;
     }
 }

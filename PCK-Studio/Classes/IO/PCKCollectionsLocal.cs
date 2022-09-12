@@ -13,7 +13,7 @@ namespace PckStudio.Classes.IO
 {
     public  class PCKCollectionsLocal
     {
-        string cache = Program.Appdata + "cache/packs/";
+        static string cache = Program.AppDataCache + "/packs/";
 
         public PCKCenterJSON CenterPacks;
         public LocalActions LocalAction = new LocalActions();        

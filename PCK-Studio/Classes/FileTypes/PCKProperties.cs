@@ -8,6 +8,11 @@ namespace PckStudio.Classes.FileTypes
 {
     public class PCKProperties : List<(string property, string value)>
     {
+        public bool Contains(string property)
+        {
+            return HasProperty(property);
+        }
+
         public bool HasProperty(string property)
         {
             return GetProperty(property) != default;
