@@ -680,8 +680,8 @@
 			// 
 			// tabControl
 			// 
-			this.tabControl.Controls.Add(this.editorTab);
 			this.tabControl.Controls.Add(this.openTab);
+			this.tabControl.Controls.Add(this.editorTab);
 			resources.ApplyResources(this.tabControl, "tabControl");
 			this.tabControl.Name = "tabControl";
 			this.tabControl.SelectedIndex = 0;
