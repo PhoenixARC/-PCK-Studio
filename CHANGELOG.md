@@ -1,3 +1,28 @@
+7.0 (BETA)  
+==========  
+Some features may be completely missing or incomplete at this point in time!  
+  
+-Massive codebase overhaul and optimization lead by miku-666 (aka NessieHax)!!!  
+-Some UI redesigned by [get person's name lol]  
+-Improved the changelog!  
+-New icons for each of the file types, with unique image icons for skin, texture, and cape files  
+-Added the ability to create Texture and Mash-Up packs  
+-Added a feature to see stats about any given file, including file type  
+-Added a feature set file types for any given file  
+-Added partial editing support for PCKs within other PCKS (MAJOR WIP)  
+-Improved LCE -> Bedrock Skin Pack conversion  
+-Improved Create Skin function and menu  
+-Added Skin ANIM Editor  
+-Added GRF Editor and overall support for GRF files  
+-Delete tool now works with subfolders  
+-Improved Skin Viewer  
+-Added support to export Java Edition animations from the Animation Editor  
+-Added BINKA and WAV drag and drop support in the Music Editor  
+-Added a feature to verify files in the Music Editor  
+-Added a feature to delete all unused songs in the Music Editor  
+-Added a feature to locate and open the pack's Data folder in the Music Editor  
+-Fixed way too many bugs to list  
+  
 6.5  
 ===  
 -Audio.pck Editor is now the Music Editor with plenty of new features  
