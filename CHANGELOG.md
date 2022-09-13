@@ -3,7 +3,7 @@
 Some features may be completely missing or incomplete at this point in time!  
   
 -Massive codebase overhaul and optimization lead by miku-666 (aka NessieHax)!!!  
--Some UI redesigned by [get person's name lol]  
+-Some UI redesigned by yaboiFoxx  
 -Improved the changelog!  
 -New icons for each of the file types, with unique image icons for skin, texture, and cape files  
 -Added the ability to create Texture and Mash-Up packs  
