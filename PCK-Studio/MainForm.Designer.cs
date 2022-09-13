@@ -130,6 +130,7 @@
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.pictureBoxImagePreview = new PckStudio.PictureBoxWithInterpolationMode();
 			this.LittleEndianCheckBox = new MetroFramework.Controls.MetroCheckBox();
+			this.generateMipMapTextureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenuPCKEntries.SuspendLayout();
 			this.menuStrip.SuspendLayout();
 			this.contextMenuMetaTree.SuspendLayout();
@@ -156,7 +157,8 @@
             this.moveUpToolStripMenuItem,
             this.deleteFileToolStripMenuItem,
             this.moveDownToolStripMenuItem,
-            this.viewFileInfoToolStripMenuItem});
+            this.viewFileInfoToolStripMenuItem,
+            this.generateMipMapTextureToolStripMenuItem});
 			this.contextMenuPCKEntries.Name = "contextMenuStrip1";
 			resources.ApplyResources(this.contextMenuPCKEntries, "contextMenuPCKEntries");
 			// 
@@ -950,6 +952,12 @@
 			this.LittleEndianCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.LittleEndianCheckBox.UseSelectable = true;
 			// 
+			// generateMipMapTextureToolStripMenuItem
+			// 
+			this.generateMipMapTextureToolStripMenuItem.Name = "generateMipMapTextureToolStripMenuItem";
+			resources.ApplyResources(this.generateMipMapTextureToolStripMenuItem, "generateMipMapTextureToolStripMenuItem");
+			this.generateMipMapTextureToolStripMenuItem.Click += new System.EventHandler(this.generateMipMapTextureToolStripMenuItem_Click);
+			// 
 			// MainForm
 			// 
 			this.ApplyImageInvert = true;
@@ -1089,6 +1097,7 @@
 		private MetroFramework.Controls.MetroLabel label5;
 		private MetroFramework.Controls.MetroLabel labelVersion;
 		private System.Windows.Forms.RichTextBox ChangelogRichTextBox;
+		private System.Windows.Forms.ToolStripMenuItem generateMipMapTextureToolStripMenuItem;
 	}
 }
 

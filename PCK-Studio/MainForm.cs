@@ -240,7 +240,7 @@ namespace PckStudio
 		{
 			pckFile.Files.ForEach(file =>
 			{
-				TreeNode node = BuildNodeTreeBySeperator(root, file.filepath, '/');
+				TreeNode node = BuildNodeTreeBySeperator(root, file.filepath.Replace("\\", "/"), '/');
 				node.Tag = file;
 				switch (file.filetype)
 				{
@@ -278,7 +278,15 @@ namespace PckStudio
 			BuildPckTreeView(treeViewMain.Nodes, currentPCK);
 		}
 
-        private void HandleTextureFile(PCKFile.FileData file)
+		bool IsPathMipMapped(string name)
+		{
+			if (!char.IsDigit(name[name.Length - 1])) return false; // fails first check
+			name = name.Remove(name.Length - 1, 1);
+			if (!name.EndsWith("MipMapLevel")) return false;
+			return true;
+		}
+
+		private void HandleTextureFile(PCKFile.FileData file)
         {
 			if (file.filepath.StartsWith("res/textures/blocks/") || file.filepath.StartsWith("res/textures/items/") &&
 				!file.filepath.EndsWith("clock.png") && (!file.filepath.EndsWith("compass.png")))
@@ -397,7 +405,8 @@ namespace PckStudio
 
 						if ((file.filepath.StartsWith("res/textures/blocks/") || file.filepath.StartsWith("res/textures/items/")) &&
 							!file.filepath.EndsWith("clock.png") && !file.filepath.EndsWith("compass.png") &&
-							file.filetype == PCKFile.FileData.FileType.TextureFile)
+							file.filetype == PCKFile.FileData.FileType.TextureFile 
+							&& !IsPathMipMapped(Path.GetFileNameWithoutExtension(file.filepath)))
 						{
 							buttonEdit.Text = "EDIT TEXTURE ANIMATION";
 							buttonEdit.Visible = true;
@@ -2845,6 +2854,56 @@ namespace PckStudio
 					"\nFile size: " + file.size +
 					"\nProperties count: " + file.properties.Count
 					, Path.GetFileName(file.filepath) + " file info");
+			}
+		}
+
+		private void generateMipMapTextureToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (treeViewMain.SelectedNode.Tag is PCKFile.FileData file && file.filetype == PCKFile.FileData.FileType.TextureFile)
+			{
+				string textureDirectory = Path.GetDirectoryName(file.filepath);
+				string textureName = Path.GetFileNameWithoutExtension(file.filepath);
+
+				if (IsPathMipMapped(textureName)) return;
+
+				string textureExtension = Path.GetExtension(file.filepath);
+
+				// TGA is not yet supported
+				if (textureExtension == ".tga") return;
+
+				using MipMapPrompt diag = new MipMapPrompt();
+				if (diag.ShowDialog(this) == DialogResult.OK)
+				{
+					for (int i = 2; i < 2 + diag.Levels; i++)
+					{
+						string mippedPath = textureDirectory + "/" + textureName + "MipMapLevel" + i + textureExtension;
+						Console.WriteLine(mippedPath);
+						if (currentPCK.HasFile(mippedPath, PCKFile.FileData.FileType.TextureFile)) 
+							currentPCK.Files.Remove(currentPCK.GetFile(mippedPath, PCKFile.FileData.FileType.TextureFile));
+						PCKFile.FileData MipMappedFile = new PCKFile.FileData(mippedPath, PCKFile.FileData.FileType.TextureFile);
+
+						Image originalTexture = Bitmap.FromStream(new MemoryStream(file.data));
+						int NewWidth = originalTexture.Width / (int)Math.Pow(2,i - 1);
+						int NewHeight = originalTexture.Height / (int)Math.Pow(2, i - 1);
+						Rectangle tileArea = new Rectangle(0, 0,
+							NewWidth < 1 ? 1 : NewWidth, 
+							NewHeight < 1 ? 1 : NewHeight);
+						Image mippedTexture = new Bitmap(NewWidth, NewHeight);
+						using (Graphics gfx = Graphics.FromImage(mippedTexture))
+						{
+							gfx.SmoothingMode = SmoothingMode.None;
+							gfx.InterpolationMode = InterpolationMode.NearestNeighbor;
+							gfx.PixelOffsetMode = PixelOffsetMode.HighQuality;
+							gfx.DrawImage(originalTexture, tileArea);
+						}
+						MemoryStream texStream = new MemoryStream();
+						mippedTexture.Save(texStream, ImageFormat.Png);
+						MipMappedFile.SetData(texStream.ToArray());
+
+						currentPCK.Files.Add(MipMappedFile);
+						BuildMainTreeView();
+					}
+				}
 			}
 		}
 	}
