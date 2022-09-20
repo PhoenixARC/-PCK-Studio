@@ -204,6 +204,7 @@ namespace PckStudio
 			closeToolStripMenuItem.Visible = false;
 			fileEntryCountLabel.Text = string.Empty;
 			tabControl.SelectTab(0);
+			saved = true;
 			RPC.SetPresence("An Open Source .PCK File Editor", "Program by PhoenixARC");
 		}
 
@@ -291,20 +292,32 @@ namespace PckStudio
 		private void HandleTextureFile(PCKFile.FileData file)
         {
 			if (file.filepath.StartsWith("res/textures/blocks/") || file.filepath.StartsWith("res/textures/items/") &&
-				!file.filepath.EndsWith("clock.png") && (!file.filepath.EndsWith("compass.png")))
+				!file.filepath.EndsWith("clock.png") && !file.filepath.EndsWith("compass.png"))
 			{
+				if (IsPathMipMapped(Path.GetFileNameWithoutExtension(file.filepath)) &&
+					currentPCK.Files.Find(pckfile => 
+						// todo write cleaner ?
+						pckfile.filepath.Equals(file.filepath.Remove(file.filepath.Length - 16) + Path.GetExtension(file.filepath)))
+					is PCKFile.FileData originalAnimationFile)
+			{
+					file = originalAnimationFile;
+				}
                 using (AnimationEditor animationEditor = new AnimationEditor(file))
                 {
                     if (animationEditor.ShowDialog(this) == DialogResult.OK)
+					{
+						saved = false;
                         ReloadMetaTreeView();
                 }
             }
+        }
         }
 
         private void HandleGameRuleFile(PCKFile.FileData file)
         {
 			using GRFEditor grfEditor = new GRFEditor(file);
-            grfEditor.ShowDialog();
+            if (grfEditor.ShowDialog(this) == DialogResult.OK)
+                saved = false;
         }
 
 		private void HandleAudioFile(PCKFile.FileData file)
