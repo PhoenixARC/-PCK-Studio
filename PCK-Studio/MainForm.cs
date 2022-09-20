@@ -284,9 +284,9 @@ namespace PckStudio
 			BuildPckTreeView(treeViewMain.Nodes, currentPCK);
 		}
 
-		bool IsPathMipMapped(string path)
+		bool IsFilePathMipMapped(string filepath)
 		{
-			string name = Path.GetFileNameWithoutExtension(path); // We only want to test the file name itself. ex: "terrainMipMapLevel2"
+			string name = Path.GetFileNameWithoutExtension(filepath); // We only want to test the file name itself. ex: "terrainMipMapLevel2"
 			if (!char.IsDigit(name[name.Length - 1])) return false; // check if last character is a digit (0-9). If not return false
 			// If string does not end with MipMapLevel, then it's not MipMapped
 			if (!name.Remove(name.Length - 1, 1).EndsWith("MipMapLevel")) return false;
@@ -298,10 +298,10 @@ namespace PckStudio
 			if (file.filepath.StartsWith("res/textures/blocks/") || file.filepath.StartsWith("res/textures/items/") &&
 				!file.filepath.EndsWith("clock.png") && !file.filepath.EndsWith("compass.png"))
 			{
-				if (IsPathMipMapped(file.filepath) &&
+				if (IsFilePathMipMapped(file.filepath) &&
 					currentPCK.Files.Find(pckfile => 
 						// todo write cleaner ?
-						pckfile.filepath.Equals(file.filepath.Remove(file.filepath.Length - 16) + Path.GetExtension(file.filepath)))
+						pckfile.filepath.Equals(file.filepath.Remove(file.filepath.Length - 12 - Path.GetExtension(file.filepath).Length) + Path.GetExtension(file.filepath)))
 					is PCKFile.FileData originalAnimationFile)
 			{
 					file = originalAnimationFile;
@@ -427,7 +427,7 @@ namespace PckStudio
 						if ((file.filepath.StartsWith("res/textures/blocks/") || file.filepath.StartsWith("res/textures/items/")) &&
 							!file.filepath.EndsWith("clock.png") && !file.filepath.EndsWith("compass.png") &&
 							file.filetype == PCKFile.FileData.FileType.TextureFile 
-							&& !IsPathMipMapped(file.filepath))
+							&& !IsFilePathMipMapped(file.filepath))
 						{
 							buttonEdit.Text = "EDIT TEXTURE ANIMATION";
 							buttonEdit.Visible = true;
@@ -2885,7 +2885,7 @@ namespace PckStudio
 				string textureDirectory = Path.GetDirectoryName(file.filepath);
 				string textureName = Path.GetFileNameWithoutExtension(file.filepath);
 
-				if (IsPathMipMapped(textureName)) return;
+				if (IsFilePathMipMapped(textureName)) return;
 
 				string textureExtension = Path.GetExtension(file.filepath);
 
