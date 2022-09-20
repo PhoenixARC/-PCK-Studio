@@ -23,6 +23,7 @@ namespace PckStudio.Classes.FileTypes
             return this.FirstOrDefault(p => p.property.Equals(property));
         }
         
+        public string GetPropertyValue(string property)
         public (string, string)[] GetProperties(string property)
         {
             return FindAll(p => p.property == property).ToArray();

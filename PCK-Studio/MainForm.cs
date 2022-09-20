@@ -403,8 +403,8 @@ namespace PckStudio
 				buttonEdit.Visible = true;
 			}
 			else if (file.properties.HasProperty("ANIM") &&
-				(file.properties.GetProperty("ANIM").Item2 == "0x40000" ||
-				 file.properties.GetProperty("ANIM").Item2 == "0x80000"))
+					(file.properties.GetPropertyValue("ANIM") == "0x40000" ||
+					 file.properties.GetPropertyValue("ANIM") == "0x80000"))
 			{
 				buttonEdit.Text = "View Skin";
 				buttonEdit.Visible = true;
