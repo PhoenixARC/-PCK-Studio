@@ -286,7 +286,7 @@ namespace PckStudio
 			if (!char.IsDigit(name[name.Length - 1])) return false; // check if last character is a digit (0-9). If not return false
 			// If string does not end with MipMapLevel, then it's not MipMapped
 			if (!name.Remove(name.Length - 1, 1).EndsWith("MipMapLevel")) return false;
-			else return true;
+			return true;
 		}
 
 		private void HandleTextureFile(PCKFile.FileData file)
