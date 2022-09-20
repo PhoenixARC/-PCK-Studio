@@ -280,12 +280,13 @@ namespace PckStudio
 			BuildPckTreeView(treeViewMain.Nodes, currentPCK);
 		}
 
-		bool IsPathMipMapped(string name)
+		bool IsPathMipMapped(string path)
 		{
-			if (!char.IsDigit(name[name.Length - 1])) return false; // fails first check
-			name = name.Remove(name.Length - 1, 1);
-			if (!name.EndsWith("MipMapLevel")) return false;
-			return true;
+			string name = Path.GetFileNameWithoutExtension(path); // We only want to test the file name itself. ex: "terrainMipMapLevel2"
+			if (!char.IsDigit(name[name.Length - 1])) return false; // check if last character is a digit (0-9). If not return false
+			// If string does not end with MipMapLevel, then it's not MipMapped
+			if (!name.Remove(name.Length - 1, 1).EndsWith("MipMapLevel")) return false;
+			else return true;
 		}
 
 		private void HandleTextureFile(PCKFile.FileData file)
@@ -408,7 +409,7 @@ namespace PckStudio
 						if ((file.filepath.StartsWith("res/textures/blocks/") || file.filepath.StartsWith("res/textures/items/")) &&
 							!file.filepath.EndsWith("clock.png") && !file.filepath.EndsWith("compass.png") &&
 							file.filetype == PCKFile.FileData.FileType.TextureFile 
-							&& !IsPathMipMapped(Path.GetFileNameWithoutExtension(file.filepath)))
+							&& !IsPathMipMapped(file.filepath))
 						{
 							buttonEdit.Text = "EDIT TEXTURE ANIMATION";
 							buttonEdit.Visible = true;
