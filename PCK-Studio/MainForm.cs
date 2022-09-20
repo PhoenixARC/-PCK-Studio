@@ -189,10 +189,14 @@ namespace PckStudio
 
 		private void CloseEditorTab()
 		{
+			tabControl.SelectTab(0);
+			currentPCK = null;
+			saved = true;
+			isTemplateFile = false;
+			saveLocation = string.Empty;
 			pictureBoxImagePreview.Image = Resources.NoImageFound;
 			treeViewMain.Nodes.Clear();
 			treeMeta.Nodes.Clear();
-			currentPCK = null;
 			treeViewMain.Enabled = false;
 			treeMeta.Enabled = false;
 			saveToolStripMenuItem.Enabled = false;
@@ -203,8 +207,6 @@ namespace PckStudio
 			convertToBedrockToolStripMenuItem.Enabled = false;
 			closeToolStripMenuItem.Visible = false;
 			fileEntryCountLabel.Text = string.Empty;
-			tabControl.SelectTab(0);
-			saved = true;
 			RPC.SetPresence("An Open Source .PCK File Editor", "Program by PhoenixARC");
 		}
 
