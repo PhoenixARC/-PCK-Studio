@@ -240,9 +240,9 @@ namespace PckStudio
 
 		private void BuildPckTreeView(TreeNodeCollection root, PCKFile pckFile)
 		{
-			pckFile.Files.ForEach(file =>
+			foreach (var file in pckFile.Files)
 			{
-				TreeNode node = BuildNodeTreeBySeperator(root, file.filepath.Replace("\\", "/"), '/');
+				TreeNode node = BuildNodeTreeBySeperator(root, file.filepath, '/');
 				node.Tag = file;
 				switch (file.filetype)
 				{
@@ -271,7 +271,7 @@ namespace PckStudio
 						break;
 				}
 				setFileIcon(node, file.filetype);
-			});
+			};
 		}
 
 		private void BuildMainTreeView()
