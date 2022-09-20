@@ -296,22 +296,22 @@ namespace PckStudio
 				!file.filepath.EndsWith("clock.png") && !file.filepath.EndsWith("compass.png"))
 			{
 				if (IsPathMipMapped(file.filepath) &&
-					currentPCK.Files.Find(pckfile => 
+					currentPCK.Files.Find(pckfile =>
 						// todo write cleaner ?
 						pckfile.filepath.Equals(file.filepath.Remove(file.filepath.Length - 16) + Path.GetExtension(file.filepath)))
 					is PCKFile.FileData originalAnimationFile)
-			{
+				{
 					file = originalAnimationFile;
 				}
-                using (AnimationEditor animationEditor = new AnimationEditor(file))
-                {
-                    if (animationEditor.ShowDialog(this) == DialogResult.OK)
+				using (AnimationEditor animationEditor = new AnimationEditor(file))
+				{
+					if (animationEditor.ShowDialog(this) == DialogResult.OK)
 					{
-						saved = false;
-                        ReloadMetaTreeView();
-                }
-            }
-        }
+						file.filepath = animationEditor.TileName;
+						BuildMainTreeView();
+					}
+				}
+			}
         }
 
         private void HandleGameRuleFile(PCKFile.FileData file)
