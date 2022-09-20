@@ -390,8 +390,10 @@ namespace PckStudio
 			buttonEdit.Visible = false;
 			pictureBoxImagePreview.Image = Resources.NoImageFound;
 			var node = e.Node;
+			viewFileInfoToolStripMenuItem.Visible = false;
 			if (node is TreeNode t && t.Tag is PCKFile.FileData file)
 			{
+				viewFileInfoToolStripMenuItem.Visible = true;
 			if (file.properties.HasProperty("BOX"))
 			{
 				buttonEdit.Text = "EDIT BOXES";
