@@ -181,7 +181,9 @@ namespace PckStudio
 			convertToBedrockToolStripMenuItem.Enabled = true;
 			BuildMainTreeView();
 			tabControl.SelectTab(1);
-			if (TryGetLocFile(out LOCFile locfile) && locfile.HasLocEntry("IDS_DISPLAY_NAME"))
+			if (TryGetLocFile(out LOCFile locfile) &&
+				locfile.HasLocEntry("IDS_DISPLAY_NAME") &&
+				locfile.Languages.Contains("en-EN"))
 				RPC.SetPresence($"Editing a Pack: {locfile.GetLocEntry("IDS_DISPLAY_NAME", "en-EN")}", "Program by PhoenixARC");
 		}
 
