@@ -17,7 +17,7 @@ namespace PckStudio
         static void Main(string[] args)
         {
             var f = new MainForm();
-            if (args.Length > 0 && args[0].EndsWith(".pck"))
+            if (args.Length > 0 && File.Exists(args[0]) && args[0].EndsWith(".pck"))
                 f.LoadFromPath(args[0]);
             Application.Run(f);
         }
