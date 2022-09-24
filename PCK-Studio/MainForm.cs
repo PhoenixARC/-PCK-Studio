@@ -8,7 +8,6 @@ using System.Drawing.Drawing2D;
 using System.Diagnostics;
 using System.Drawing.Imaging;
 using RichPresenceClient;
-using Ohana3DS_Rebirth.Ohana;
 using PckStudio.Properties;
 using PckStudio.Classes.FileTypes;
 using PckStudio.Classes.IO;
@@ -19,6 +18,7 @@ using PckStudio.Forms.Utilities;
 using PckStudio.Forms.Editor;
 using PckStudio.Forms.Additional_Popups.Animation;
 using PckStudio.Classes.IO.PCK;
+using PckStudio.Classes.Utils;
 
 namespace PckStudio
 {

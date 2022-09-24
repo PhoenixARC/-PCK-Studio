@@ -22,7 +22,6 @@ namespace PckStudio
 
         eSkinType skinType;
         public bool useCape = false;
-        string localID = "0";
         PCKProperties generatedModel = new PCKProperties();
 
         enum eSkinType : int
@@ -38,7 +37,6 @@ namespace PckStudio
         public addNewSkin(LOCFile loc)
         {
             InitializeComponent();
-            textSkinID.Text = localID;
             currentLoc = loc;
         }
 
@@ -281,8 +279,6 @@ namespace PckStudio
         {
             bool validSkinId = int.TryParse(textSkinID.Text, out _);
             textSkinID.ForeColor = validSkinId ? Color.Green : Color.Red;
-            if (radioLOCAL.Checked && validSkinId)
-                localID = textSkinID.Text;
         }
 
         private void CreateCustomModel_Click(object sender, EventArgs e)
@@ -345,21 +341,26 @@ namespace PckStudio
 
         private void radioLOCAL_CheckedChanged(object sender, EventArgs e)
         {
-            if (radioLOCAL.Checked)
-            {
-                textSkinID.Text = localID;
-                textSkinID.Enabled = true;
-            }
+            textSkinID.Enabled = radioLOCAL.Checked;
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
             using (var ofdd = new OpenFileDialog())
             {
-                ofdd.Filter = "PNG Files | *.png";
-                ofdd.Title = "Select a PNG File";
+                ofdd.Filter = "PNG Files | *.png | 3DS Texture|*.3dst";
+                ofdd.Title = "Select a Skin Texture File";
                 if (ofdd.ShowDialog() == DialogResult.OK)
                 {
+                    if (ofdd.FileName.EndsWith(".3dst"))
+                    {
+                        using (var fs = File.OpenRead(ofdd.FileName))
+                        {
+                            checkImage(_3DSUtil.GetImageFrom3DST(fs));
+                            textSkinName.Text = Path.GetFileNameWithoutExtension(ofdd.FileName);
+                        }
+                        return;
+                    }
                     checkImage(Image.FromFile(ofdd.FileName));
                 }
             }
