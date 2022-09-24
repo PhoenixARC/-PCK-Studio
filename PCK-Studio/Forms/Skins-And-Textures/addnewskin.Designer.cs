@@ -199,8 +199,7 @@
             this.textSkinID.CustomButton.UseSelectable = true;
             this.textSkinID.CustomButton.Visible = ((bool)(resources.GetObject("resource.Visible")));
             this.textSkinID.ForeColor = System.Drawing.Color.White;
-            this.textSkinID.Lines = new string[] {
-        "0"};
+            this.textSkinID.Lines = new string[0];
             resources.ApplyResources(this.textSkinID, "textSkinID");
             this.textSkinID.MaxLength = 32767;
             this.textSkinID.Name = "textSkinID";
@@ -306,7 +305,7 @@
             // 
             resources.ApplyResources(this.skinPictureBoxTexture, "skinPictureBoxTexture");
             this.skinPictureBoxTexture.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.skinPictureBoxTexture.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
+            this.skinPictureBoxTexture.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             this.skinPictureBoxTexture.Name = "skinPictureBoxTexture";
             this.skinPictureBoxTexture.TabStop = false;
             this.skinPictureBoxTexture.Click += new System.EventHandler(this.pictureBox1_Click);

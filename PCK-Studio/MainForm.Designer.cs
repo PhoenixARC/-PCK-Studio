@@ -227,6 +227,7 @@
             // 
             // addTextureToolStripMenuItem
             // 
+            this.addTextureToolStripMenuItem.Image = global::PckStudio.Properties.Resources.AddTexture;
             this.addTextureToolStripMenuItem.Name = "addTextureToolStripMenuItem";
             resources.ApplyResources(this.addTextureToolStripMenuItem, "addTextureToolStripMenuItem");
             this.addTextureToolStripMenuItem.Click += new System.EventHandler(this.addTextureToolStripMenuItem_Click);

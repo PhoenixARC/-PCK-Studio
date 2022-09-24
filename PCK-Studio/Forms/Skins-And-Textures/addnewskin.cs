@@ -11,17 +11,17 @@ namespace PckStudio
 {
     public partial class addNewSkin : MetroFramework.Forms.MetroForm
     {
+
+        public PCKFile.FileData SkinFile => skin;
+        public PCKFile.FileData CapeFile => cape;
+        public bool HasCape = false;
+
         LOCFile currentLoc;
         PCKFile.FileData skin = new PCKFile.FileData("dlcskinXYXYXYXY", PCKFile.FileData.FileType.SkinFile);
         PCKFile.FileData cape = new PCKFile.FileData("dlccapeXYXYXYXY", PCKFile.FileData.FileType.CapeFile);
         SkinANIM anim = new SkinANIM(eANIM_EFFECTS.NONE);
 
-        public PCKFile.FileData Skin => skin;
-        public PCKFile.FileData Cape => cape;
-        public string ANIM => anim.ToString();
-
         eSkinType skinType;
-        public bool useCape = false;
         PCKProperties generatedModel = new PCKProperties();
 
         enum eSkinType : int
@@ -40,7 +40,7 @@ namespace PckStudio
             currentLoc = loc;
         }
 
-        private void checkImage(Image img)
+        private void CheckImage(Image img)
         {
             //Checks image dimensions and sets things accordingly
             switch (img.Height) // 64x64
@@ -110,24 +110,16 @@ namespace PckStudio
                     }
                     break;
             }
-            /*
-            comboBoxSkinType.Enabled = skinType == eSkinType._64x64 || skinType == eSkinType._64x64HD;
-            if (comboBoxSkinType.Items.Count == 3)
-            {
-                comboBoxSkinType.Items.RemoveAt(0);
-            }
-            */
-            skinPictureBoxTexture.Image = img;
 
+            skinPictureBoxTexture.Image = img;
             buttonDone.Enabled = true;
             labelSelectTexture.Visible = false;
-
-            //skin.SetData();
         }
 
-        private void drawModel()
+        private void DrawModel()
 		{
             Bitmap bmp = new Bitmap(displayBox.Width, displayBox.Height);
+            bool isSlim = anim.GetANIMFlag(eANIM_EFFECTS.SLIM_MODEL);
             using (Graphics g = Graphics.FromImage(bmp))
             {
                 if(!anim.GetANIMFlag(eANIM_EFFECTS.HEAD_DISABLED))
@@ -145,14 +137,14 @@ namespace PckStudio
                 if (!anim.GetANIMFlag(eANIM_EFFECTS.RIGHT_ARM_DISABLED))
                 {
                     //Arm0
-                    g.DrawRectangle(Pens.Black, anim.GetANIMFlag(eANIM_EFFECTS.SLIM_MODEL) ? 55 : 50, 55, anim.GetANIMFlag(eANIM_EFFECTS.SLIM_MODEL) ? 15 : 20, 60);
-                    g.FillRectangle(Brushes.Gray, anim.GetANIMFlag(eANIM_EFFECTS.SLIM_MODEL) ? 56 : 51, 56, anim.GetANIMFlag(eANIM_EFFECTS.SLIM_MODEL) ? 14 : 19, 59);
+                    g.DrawRectangle(Pens.Black  , isSlim ? 55 : 50, 55, isSlim ? 15 : 20, 60);
+                    g.FillRectangle(Brushes.Gray, isSlim ? 56 : 51, 56, isSlim ? 14 : 19, 59);
                 }
                 if (!anim.GetANIMFlag(eANIM_EFFECTS.LEFT_ARM_DISABLED))
                 {
                     //Arm1
-                    g.DrawRectangle(Pens.Black, 110, 55, anim.GetANIMFlag(eANIM_EFFECTS.SLIM_MODEL) ? 15 : 20, 60);
-                    g.FillRectangle(Brushes.Gray, 111, 56, anim.GetANIMFlag(eANIM_EFFECTS.SLIM_MODEL) ? 14 : 19, 59);
+                    g.DrawRectangle(Pens.Black, 110, 55, isSlim ? 15 : 20, 60);
+                    g.FillRectangle(Brushes.Gray, 111, 56, isSlim ? 14 : 19, 59);
                 }
                 if (!anim.GetANIMFlag(eANIM_EFFECTS.RIGHT_LEG_DISABLED))
                 {
@@ -172,7 +164,7 @@ namespace PckStudio
 
         private void addnewskin_Load(object sender, EventArgs e)
         {
-            drawModel();
+            DrawModel();
         }
 
         private void buttonSkin_Click(object sender, EventArgs e)
@@ -190,7 +182,7 @@ namespace PckStudio
             OpenFileDialog ofd = new OpenFileDialog();
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-                checkImage(Image.FromFile(ofd.FileName));
+                CheckImage(Image.FromFile(ofd.FileName));
             }
         }
 
@@ -205,7 +197,7 @@ namespace PckStudio
                     var img = Image.FromFile(ofd1.FileName);
                     if (img.Width == img.Height * 2)
                     {
-                        useCape = true;
+                        HasCape = true;
                         capePictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
                         capePictureBox.InterpolationMode = InterpolationMode.NearestNeighbor;
                         capePictureBox.Image = Image.FromFile(ofd1.FileName);
@@ -229,48 +221,50 @@ namespace PckStudio
                 return;
             }
             string skinId = _skinId.ToString("d08");
-            if (useCape)
-            {
-                try
-                {
-                    cape.filepath = $"dlccape{skinId}.png";
-                    skin.properties.Add(new ValueTuple<string, string>("CAPEPATH", cape.filepath));
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("Cape Could Not be Added");
-                }
-            }
+            skin.filepath = $"dlcskin{skinId}.png";
             string skinDisplayNameLocKey = $"IDS_dlcskin{skinId}_DISPLAYNAME";
             currentLoc.AddLocKey(skinDisplayNameLocKey, textSkinName.Text);
             skin.properties.Add(new ValueTuple<string, string>("DISPLAYNAME", textSkinName.Text));
             skin.properties.Add(new ValueTuple<string, string>("DISPLAYNAMEID", skinDisplayNameLocKey));
+            if (!string.IsNullOrEmpty(textThemeName.Text))
+            {
+                skin.properties.Add(("THEMENAME", textThemeName.Text));
+                skin.properties.Add(("THEMENAMEID", $"IDS_dlcskin{skinId}_THEMENAME"));
+                currentLoc.AddLocKey($"IDS_dlcskin{skinId}_THEMENAME", textThemeName.Text);
+            }
+            skin.properties.Add(new ValueTuple<string, string>("ANIM", anim.ToString()));
+            skin.properties.Add(("GAME_FLAGS", "0x18"));
+            skin.properties.Add(("FREE", "1"));
+
+            if (HasCape)
+            {
+                try
+                {
+                    cape.filepath = $"dlccape{skinId}.png";
+                    skin.properties.Add(("CAPEPATH", cape.filepath));
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Cape could not be added.");
+                }
+            }
             using (var stream = new MemoryStream())
             {
                 skinPictureBoxTexture.Image.Save(stream, ImageFormat.Png);
                 skin.SetData(stream.ToArray());
             }
 
-            skin.properties.Add(new ValueTuple<string, string>("ANIM", anim.ToString()));
-            if (generatedModel != null)
-            {
-                foreach (var item in generatedModel)
-                {
-                    skin.properties.Add(item);
-                }
+            //if (generatedModel != null)
+            //{
+            //    foreach (var item in generatedModel)
+            //    {
+            //        skin.properties.Add(item);
+            //    }
 
-                generatedModel.Clear();
-            }
+            //    generatedModel.Clear();
+            //}
 
-            if (!string.IsNullOrEmpty(textThemeName.Text))
-            {
-                skin.properties.Add(new ValueTuple<string, string>("THEMENAME", textThemeName.Text));
-                currentLoc.AddLocKey($"IDS_dlcskin{skinId}_THEMENAME", textThemeName.Text);
-            }
 
-            skin.properties.Add(new ValueTuple<string, string>("GAME_FLAGS", "0x18"));
-            skin.properties.Add(new ValueTuple<string, string>("FREE", "1"));
-            skin.filepath = "dlcskin" + skinId + ".png";
             DialogResult = DialogResult.OK;
             Close();
         }
@@ -299,13 +293,8 @@ namespace PckStudio
                 {
                     using (FileStream stream = File.OpenRead(Application.StartupPath + "\\temp.png"))
                     {
-                        skinPictureBoxTexture.SizeMode = PictureBoxSizeMode.StretchImage;
-                        skinPictureBoxTexture.InterpolationMode = InterpolationMode.NearestNeighbor;
                         skinPictureBoxTexture.Image = Image.FromStream(stream);
-                        stream.Close();
-                        stream.Dispose();
                     }
-                    skinPictureBoxTexture.Width = skinPictureBoxTexture.Height;
                     buttonDone.Enabled = true;
                     labelSelectTexture.Visible = false;
                     if (skinType != eSkinType._64x64 && skinType != eSkinType._64x64HD)
@@ -356,12 +345,12 @@ namespace PckStudio
                     {
                         using (var fs = File.OpenRead(ofdd.FileName))
                         {
-                            checkImage(_3DSUtil.GetImageFrom3DST(fs));
+                            CheckImage(_3DSUtil.GetImageFrom3DST(fs));
                             textSkinName.Text = Path.GetFileNameWithoutExtension(ofdd.FileName);
                         }
                         return;
                     }
-                    checkImage(Image.FromFile(ofdd.FileName));
+                    CheckImage(Image.FromFile(ofdd.FileName));
                 }
             }
         }
@@ -380,7 +369,7 @@ namespace PckStudio
             if (diag.ShowDialog(this) == DialogResult.OK && diag.saved)
             {
                 anim = new SkinANIM(diag.outANIM);
-                drawModel();
+                DrawModel();
             }
         }
 	}

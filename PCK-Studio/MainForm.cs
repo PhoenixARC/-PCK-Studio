@@ -81,7 +81,11 @@ namespace PckStudio
 		public void LoadFromPath(string filepath)
 		{
             currentPCK = openPck(filepath);
-            if (currentPCK == null) return;
+			if (currentPCK == null)
+			{
+				MessageBox.Show(string.Format("Failed to load {0}", Path.GetFileName(filepath)), "Error");
+				return;
+			}
             if (addPasswordToolStripMenuItem.Enabled = checkForPassword())
             {
                 LoadEditorTab();
@@ -91,6 +95,7 @@ namespace PckStudio
 		private void Form1_Load(object sender, EventArgs e)
 		{
 			RPC.Initialize();
+			if (currentPCK == null)
 			RPC.SetPresence("An Open Source .PCK File Editor", "Program by PhoenixARC");
 
 			skinToolStripMenuItem1.Click += (sender, e) => setFileType_Click(sender, e, PCKFile.FileData.FileType.SkinFile);
@@ -274,7 +279,7 @@ namespace PckStudio
 						//throw new InvalidDataException(nameof(file.filetype));
 						break;
 				}
-				setFileIcon(node, file.filetype);
+				SetPckFileIcon(node, file.filetype);
 			};
 		}
 
@@ -615,11 +620,11 @@ namespace PckStudio
 			using (addNewSkin add = new addNewSkin(locFile))
 				if (add.ShowDialog() == DialogResult.OK)
 				{
-					if (add.useCape)
-						currentPCK.Files.Add(add.Cape);
+					if (add.HasCape)
+						currentPCK.Files.Add(add.CapeFile);
 					if (!(treeViewMain.SelectedNode.Tag is PCKFile.FileData))
-						add.Skin.filepath = $"{treeViewMain.SelectedNode.FullPath}/{add.Skin.filepath}";
-					currentPCK.Files.Add(add.Skin);
+						add.SkinFile.filepath = $"{treeViewMain.SelectedNode.FullPath}/{add.SkinFile.filepath}";
+					currentPCK.Files.Add(add.SkinFile);
 					TrySetLocFile(locFile);
 					saved = false;
 					BuildMainTreeView();
@@ -1356,6 +1361,7 @@ namespace PckStudio
 		{
 			//System.Diagnostics.Process.Start(hosturl + "pckStudio#faq");
 		}
+
 		// BIG TODO
 		#region converts and ports all skins in pck to mc bedrock format
 		// items class for use in bedrock skin conversion
@@ -2361,244 +2367,6 @@ namespace PckStudio
 		}
 		#endregion
 
-		#region 3ds feature in testing
-
-		private struct loadedTexture
-		{
-			public bool modified;
-			public uint gpuCommandsOffset;
-			public uint gpuCommandsWordCount;
-			public uint offset;
-			public int length;
-			public RenderBase.OTexture texture;
-		}
-
-		private struct loadedMaterial
-		{
-			public string texture0;
-			public string texture1;
-			public string texture2;
-			public uint gpuCommandsOffset;
-			public uint gpuCommandsWordCount;
-		}
-
-		private class loadedBCH
-		{
-			public uint mainHeaderOffset;
-			public uint gpuCommandsOffset;
-			public uint dataOffset;
-			public uint relocationTableOffset;
-			public uint relocationTableLength;
-			public List<loadedTexture> textures;
-			public List<loadedMaterial> materials;
-
-			public loadedBCH()
-			{
-				textures = new List<loadedTexture>();
-				materials = new List<loadedMaterial>();
-			}
-		}
-
-		private byte[] align(byte[] input)
-		{
-			int length = input.Length;
-			while ((length & 0x7f) > 0) length++;
-			byte[] output = new byte[length];
-			Buffer.BlockCopy(input, 0, output, 0, input.Length);
-			return output;
-		}
-
-		private void replaceData(Stream data, uint offset, int length, byte[] newData)
-		{
-			data.Seek(offset + length, SeekOrigin.Begin);
-			byte[] after = new byte[data.Length - data.Position];
-			data.Read(after, 0, after.Length);
-			data.SetLength(offset);
-			data.Seek(offset, SeekOrigin.Begin);
-			data.Write(newData, 0, newData.Length);
-			data.Write(after, 0, after.Length);
-		}
-
-		private void updateTexture(int index, loadedTexture newTex)
-		{
-			bch.textures.RemoveAt(index);
-			bch.textures.Insert(index, newTex);
-		}
-
-		private void replaceCommand(Stream data, BinaryWriter output, uint newVal)
-		{
-			data.Seek(-8, SeekOrigin.Current);
-			output.Write(newVal);
-			data.Seek(4, SeekOrigin.Current);
-		}
-
-		private void updateAddress(Stream data, BinaryReader input, BinaryWriter output, int diff)
-		{
-			uint offset = input.ReadUInt32();
-			offset = (uint)(offset + diff);
-			data.Seek(-4, SeekOrigin.Current);
-			output.Write(offset);
-		}
-
-		loadedBCH bch;
-
-		private void create3dstToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			if (treeViewMain.SelectedNode != null)
-			{
-				loadedTexture tex = new loadedTexture();
-
-				SaveFileDialog exportDs = new SaveFileDialog();
-				exportDs.ShowDialog();
-				string currentFile = exportDs.FileName;
-
-				bch = new loadedBCH();
-
-				using (FileStream data = new FileStream(currentFile, FileMode.Open))
-				{
-					BinaryReader input = new BinaryReader(data);
-					BinaryWriter output = new BinaryWriter(data);
-
-					MemoryStream png = new MemoryStream(((PCKFile.FileData)(treeViewMain.SelectedNode.Tag)).data); //Gets image data from minefile data
-					Image skinPicture = Image.FromStream(png); //Constructs image data into image
-					pictureBoxImagePreview.Image = skinPicture; //Sets image preview to image
-
-					byte[] buffer = new byte[skinPicture.Width * skinPicture.Height * 4];
-					input.Read(buffer, 0, buffer.Length);
-					Bitmap texture = TextureCodec.decode(buffer, skinPicture.Width, skinPicture.Height, RenderBase.OTextureFormat.rgba8);
-					tex.texture = new RenderBase.OTexture(texture, "Texure");
-
-					//tex.texture = treeViewMain.SelectedNode.Tag;
-
-					for (int i = 0; i < bch.textures.Count; i++)
-					{
-						tex = bch.textures[i];
-						tex.modified = true;
-
-						if (tex.modified)
-						{
-							byte[] bufferx = align(TextureCodec.encode(tex.texture.texture, RenderBase.OTextureFormat.rgba8));
-							int diff = bufferx.Length - tex.length;
-
-							replaceData(data, tex.offset, tex.length, bufferx);
-
-							//Update offsets of next textures
-							tex.length = bufferx.Length;
-							tex.modified = false;
-							updateTexture(i, tex);
-							for (int j = i; j < bch.textures.Count; j++)
-							{
-								loadedTexture next = bch.textures[j];
-								next.offset = (uint)(next.offset + diff);
-								updateTexture(j, next);
-							}
-
-							//Update all addresses poiting after the replaced data
-							bch.relocationTableOffset = (uint)(bch.relocationTableOffset + diff);
-							for (int index = 0; index < bch.relocationTableLength; index += 4)
-							{
-								data.Seek(bch.relocationTableOffset + index, SeekOrigin.Begin);
-								uint value = input.ReadUInt32();
-								uint offset = value & 0x1ffffff;
-								byte flags = (byte)(value >> 25);
-
-								if ((flags & 0x20) > 0 || flags == 7 || flags == 0xc)
-								{
-									if ((flags & 0x20) > 0)
-										data.Seek((offset * 4) + bch.gpuCommandsOffset, SeekOrigin.Begin);
-									else
-										data.Seek((offset * 4) + bch.mainHeaderOffset, SeekOrigin.Begin);
-
-									uint address = input.ReadUInt32();
-									if (address + bch.dataOffset > tex.offset)
-									{
-										address = (uint)(address + diff);
-										data.Seek(-4, SeekOrigin.Current);
-										output.Write(address);
-									}
-								}
-							}
-
-							uint newSize = (uint)((tex.texture.texture.Width << 16) | tex.texture.texture.Height);
-
-							//Update texture format
-							data.Seek(tex.gpuCommandsOffset, SeekOrigin.Begin);
-							for (int index = 0; index < tex.gpuCommandsWordCount * 3; index++)
-							{
-								uint command = input.ReadUInt32();
-
-								switch (command)
-								{
-									case 0xf008e:
-									case 0xf0096:
-									case 0xf009e:
-										replaceCommand(data, output, 0); //Set texture format to 0 = RGBA8888
-										break;
-									case 0xf0082:
-									case 0xf0092:
-									case 0xf009a:
-										replaceCommand(data, output, newSize); //Set new texture size
-										break;
-								}
-							}
-
-							//Update material texture format
-							foreach (loadedMaterial mat in bch.materials)
-							{
-								data.Seek(mat.gpuCommandsOffset, SeekOrigin.Begin);
-								for (int index = 0; index < mat.gpuCommandsWordCount; index++)
-								{
-									uint command = input.ReadUInt32();
-
-									switch (command)
-									{
-										case 0xf008e: if (mat.texture0 == tex.texture.name || mat.texture0 == "") replaceCommand(data, output, 0); break;
-										case 0xf0096: if (mat.texture1 == tex.texture.name || mat.texture1 == "") replaceCommand(data, output, 0); break;
-										case 0xf009e: if (mat.texture2 == tex.texture.name || mat.texture2 == "") replaceCommand(data, output, 0); break;
-									}
-								}
-							}
-
-							//Patch up BCH header for new offsets and lengths
-							data.Seek(4, SeekOrigin.Begin);
-							byte backwardCompatibility = input.ReadByte();
-							byte forwardCompatibility = input.ReadByte();
-
-							//Update Data Extended and Relocation Table offsets
-							data.Seek(18, SeekOrigin.Current);
-							if (backwardCompatibility > 0x20) updateAddress(data, input, output, diff);
-							updateAddress(data, input, output, diff);
-
-							//Update data length
-							data.Seek(12, SeekOrigin.Current);
-							updateAddress(data, input, output, diff);
-						}
-					}
-					using (Stream file = File.Create(currentFile + ".tmp"))
-					{
-						CopyStream(output.BaseStream, file);
-					}
-
-				}
-
-				MessageBox.Show("Done!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-			}
-
-		}
-
-
-		public static void CopyStream(Stream input, Stream output)
-		{
-			byte[] buffer = new byte[8 * 1024];
-			int len;
-			while ((len = input.Read(buffer, 0, buffer.Length)) > 0)
-			{
-				output.Write(buffer, 0, len);
-			}
-		}
-
-		#endregion
-
 		private void openToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
 			DateTime Begin = DateTime.Now;
@@ -2777,7 +2545,7 @@ namespace PckStudio
 			Process.Start("https://ko-fi.com/mattnl");
 		}
 
-		private void setFileIcon(TreeNode node, PCKFile.FileData.FileType type)
+		private void SetPckFileIcon(TreeNode node, PCKFile.FileData.FileType type)
 		{
 			switch (type)
 			{
@@ -2842,7 +2610,7 @@ namespace PckStudio
             {
 				Console.WriteLine($"Setting {file.filetype} to {type}");
 				file.filetype = type;
-				setFileIcon(t, type);
+				SetPckFileIcon(t, type);
 			}
 		}
 
