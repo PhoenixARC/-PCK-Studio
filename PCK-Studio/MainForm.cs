@@ -2927,5 +2927,28 @@ namespace PckStudio
 				}
 			}
 		}
+
+		private void importSkinfrom3dstFileToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.DefaultExt = ".3dst";
+            openFileDialog.Filter = "3DS Texture|*.3dst";
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                using (var fs = File.OpenRead(openFileDialog.FileName))
+                {
+                    var img = _3DSUtil.GetImageFrom3DST(fs);
+					PCKFile.FileData file = new PCKFile.FileData("3dst_import.png", PCKFile.FileData.FileType.SkinFile);
+					file.properties.Add(("DISPLAYNAME", Path.GetFileNameWithoutExtension(openFileDialog.FileName)));
+					using (var ms = new MemoryStream())
+					{
+						img.Save(ms, ImageFormat.Png);
+						file.SetData(ms.ToArray());
+					}
+					currentPCK.Files.Add(file);
+					BuildMainTreeView();
+				}
+			}
+		}
 	}
 }

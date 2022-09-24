@@ -54,7 +54,7 @@ namespace Ohana3DS_Rebirth.Ohana
                             {
                                 int x = tileOrder[pixel] % 8;
                                 int y = (tileOrder[pixel] - x) / 8;
-                                long outputOffset = ((tX * 8) + x + (((tY * 8 + y)) * width)) * 4;
+                                long outputOffset = ((tX * 8) + x + ((tY * 8 + y) * width)) * 4;
 
                                 Buffer.BlockCopy(data, (int)dataOffset, output, (int)outputOffset, 3);
                                 output[outputOffset + 3] = 0xff;
@@ -310,7 +310,7 @@ namespace Ohana3DS_Rebirth.Ohana
                     break;
             }
 
-            return TextureUtils.getBitmap(output.ToArray(), width, height);
+            return TextureUtils.ToBitmap(output, width, height);
         }
 
         /// <summary>
@@ -321,7 +321,7 @@ namespace Ohana3DS_Rebirth.Ohana
         /// <returns></returns>
         public static byte[] encode(Bitmap img, RenderBase.OTextureFormat format)
         {
-            byte[] data = TextureUtils.getArray(img);
+            byte[] data = TextureUtils.ToArray(img);
             byte[] output = new byte[data.Length];
 
             uint outputOffset = 0;

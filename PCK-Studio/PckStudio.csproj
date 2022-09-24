@@ -17,7 +17,7 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-	<DisableFody Condition="'$(Configuration)' == 'Debug'">true</DisableFody>
+    <DisableFody Condition="'$(Configuration)' == 'Debug'">true</DisableFody>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -152,6 +152,7 @@
     <Compile Include="Classes\IO\Sounds\SoundIO.cs" />
     <Compile Include="Classes\IO\Sounds\Sounds.cs" />
     <Compile Include="Classes\Models\DefaultModels\Steve64x64Model.cs" />
+    <Compile Include="Classes\Utils\3DS\3DSUtil.cs" />
     <Compile Include="Classes\Utils\ARC\ARCUtil.cs" />
     <Compile Include="Classes\Utils\SkinANIM.cs" />
     <Compile Include="Classes\FileTypes\PCKProperties.cs" />
@@ -682,7 +683,7 @@
   <ItemGroup>
     <PackageReference Include="Costura.Fody">
       <Version>5.8.0-alpha0098</Version>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <IncludeAssets>compile; runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="DiscordRichPresence">
