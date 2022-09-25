@@ -245,8 +245,9 @@ namespace PckStudio
 		{
 			foreach (var file in pckFile.Files)
 			{
-                // Replace backward slashes('\') with forward slashes('/') since some filepath use backward slashes
-                TreeNode node = BuildNodeTreeBySeperator(root, file.filepath.Replace('\\', '/'), '/');
+				// Replace backward slashes('\') with forward slashes('/') since some filepath use backward slashes
+				file.filepath = file.filepath.Replace('\\', '/'); // fix any file paths that may be incorrect
+				TreeNode node = BuildNodeTreeBySeperator(root, file.filepath, '/');
 				node.Tag = file;
 				switch (file.filetype)
 				{
