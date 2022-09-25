@@ -2928,5 +2928,19 @@ namespace PckStudio
 				}
 			}
 		}
+
+		private void colourscolToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			PCKFile.FileData NewColorFile;
+			if (currentPCK.TryGetFile("colours.col", PCKFile.FileData.FileType.ColourTableFile, out NewColorFile))
+			{
+				MessageBox.Show("A color table file already exists in this PCK and a new one cannot be created.", "Operation aborted");
+				return;
+			}
+			NewColorFile = new PCKFile.FileData("colours.col", PCKFile.FileData.FileType.ColourTableFile);
+			NewColorFile.SetData(Resources.colours);
+			currentPCK.Files.Add(NewColorFile);
+			BuildMainTreeView();
+		}
 	}
 }
