@@ -264,25 +264,42 @@ namespace PckStudio.Forms.Editor
 				waterTreeView.SelectedNode.Tag != null && waterTreeView.SelectedNode.Tag is COLFile.ExtendedColorEntry)
 			{
 				var colorEntry = ((COLFile.ExtendedColorEntry)waterTreeView.SelectedNode.Tag);
-				colorEntry.color = (uint)colorPick.Color.ToArgb();
+				// preserves the alpha so the user can handle it since the color picker doesn't support alpha
+				Color fixed_color = Color.FromArgb(Color.FromArgb((int)colorEntry.color).A, colorPick.Color);
+				colorEntry.color = (uint)fixed_color.ToArgb();
+				pictureBox1.BackColor = fixed_color;
+				redUpDown.Value = colorPick.Color.R;
+				greenUpDown.Value = colorPick.Color.G;
+				blueUpDown.Value = colorPick.Color.B;
 			}
 			else if (tabControl.SelectedTab == underwaterTab && underwaterTreeView.SelectedNode != null &&
 				underwaterTreeView.SelectedNode.Tag != null && underwaterTreeView.SelectedNode.Tag is COLFile.ExtendedColorEntry)
 			{
 				var colorEntry = ((COLFile.ExtendedColorEntry)underwaterTreeView.SelectedNode.Tag);
-				colorEntry.color_b = (uint)colorPick.Color.ToArgb();
+				// the game doesn't care about the alpha value for underwater colors
+				colorEntry.color_b = (uint)Color.FromArgb(0, colorPick.Color).ToArgb();
+				redUpDown.Value = colorPick.Color.R;
+				greenUpDown.Value = colorPick.Color.G;
+				blueUpDown.Value = colorPick.Color.B;
 			}
 			else if (tabControl.SelectedTab == fogTab && fogTreeView.SelectedNode != null &&
 				fogTreeView.SelectedNode.Tag != null && fogTreeView.SelectedNode.Tag is COLFile.ExtendedColorEntry)
 			{
 				var colorEntry = ((COLFile.ExtendedColorEntry)fogTreeView.SelectedNode.Tag);
-				colorEntry.color_c = (uint)colorPick.Color.ToArgb();
+				// the game doesn't care about the alpha value for fog colors
+				colorEntry.color_c = (uint)Color.FromArgb(0, colorPick.Color).ToArgb();
+				redUpDown.Value = colorPick.Color.R;
+				greenUpDown.Value = colorPick.Color.G;
+				blueUpDown.Value = colorPick.Color.B;
 			}
 			else if (tabControl.SelectedTab == colorsTab && colorTreeView.SelectedNode != null &&
 				colorTreeView.SelectedNode.Tag != null && colorTreeView.SelectedNode.Tag is COLFile.ColorEntry)
 			{
 				var colorEntry = ((COLFile.ColorEntry)colorTreeView.SelectedNode.Tag);
 				colorEntry.color = (uint)colorPick.Color.ToArgb() & 0xffffff;
+				redUpDown.Value = colorPick.Color.R;
+				greenUpDown.Value = colorPick.Color.G;
+				blueUpDown.Value = colorPick.Color.B;
 			}
 			colorPick.Dispose();
         }
