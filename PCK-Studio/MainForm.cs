@@ -2923,8 +2923,8 @@ namespace PckStudio
 						MipMappedFile.SetData(texStream.ToArray());
 
 						currentPCK.Files.Add(MipMappedFile);
-						BuildMainTreeView();
 					}
+					BuildMainTreeView();
 				}
 			}
 		}
