@@ -293,6 +293,8 @@ namespace PckStudio.Forms.Editor
 
 		private void StartAnimationBtn_Click(object sender, EventArgs e)
 		{
+			// crash fix: when pushing the play button on occasions, the animation will play twice the intended speed and crash PCK Studio after one iteration
+			player.Stop(); // force the player to stop before starting
 			AnimationPlayBtn.Enabled = !(AnimationStopBtn.Enabled = !AnimationStopBtn.Enabled);
 			if (currentAnimation.FrameCount > 1)
 			{
