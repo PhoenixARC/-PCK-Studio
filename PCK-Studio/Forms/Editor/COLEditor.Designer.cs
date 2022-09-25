@@ -49,9 +49,11 @@ namespace PckStudio.Forms.Editor
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.saveToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			this.waterTab = new System.Windows.Forms.TabPage();
-			this.treeView2 = new System.Windows.Forms.TreeView();
+			this.waterTreeView = new System.Windows.Forms.TreeView();
+			this.underwaterTreeView = new System.Windows.Forms.TreeView();
+			this.fogTreeView = new System.Windows.Forms.TreeView();
 			this.colorsTab = new System.Windows.Forms.TabPage();
-			this.treeView1 = new System.Windows.Forms.TreeView();
+			this.colorTreeView = new System.Windows.Forms.TreeView();
 			this.tabControl = new MetroFramework.Controls.MetroTabControl();
 			this.underwaterTab = new System.Windows.Forms.TabPage();
 			this.fogTab = new System.Windows.Forms.TabPage();
@@ -65,6 +67,8 @@ namespace PckStudio.Forms.Editor
 			this.waterTab.SuspendLayout();
 			this.colorsTab.SuspendLayout();
 			this.tabControl.SuspendLayout();
+			this.underwaterTab.SuspendLayout();
+			this.fogTab.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// metroPanel1
@@ -245,30 +249,44 @@ namespace PckStudio.Forms.Editor
 			// waterTab
 			// 
 			this.waterTab.BackColor = System.Drawing.SystemColors.WindowFrame;
-			this.waterTab.Controls.Add(this.treeView2);
+			this.waterTab.Controls.Add(this.waterTreeView);
 			resources.ApplyResources(this.waterTab, "waterTab");
 			this.waterTab.Name = "waterTab";
 			// 
-			// treeView2
+			// waterTreeView
 			// 
-			resources.ApplyResources(this.treeView2, "treeView2");
-			this.treeView2.Name = "treeView2";
-			this.treeView2.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView2_AfterSelect);
-			this.treeView2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView2_KeyDown);
+			resources.ApplyResources(this.waterTreeView, "waterTreeView");
+			this.waterTreeView.Name = "waterTreeView";
+			this.waterTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView2_AfterSelect);
+			this.waterTreeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView2_KeyDown);
+			// 
+			// underwaterTreeView
+			// 
+			resources.ApplyResources(this.underwaterTreeView, "underwaterTreeView");
+			this.underwaterTreeView.Name = "underwaterTreeView";
+			this.underwaterTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView3_AfterSelect);
+			this.underwaterTreeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView3_KeyDown);
+			// 
+			// fogTreeView
+			// 
+			resources.ApplyResources(this.fogTreeView, "fogTreeView");
+			this.fogTreeView.Name = "fogTreeView";
+			this.fogTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView4_AfterSelect);
+			this.fogTreeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView4_KeyDown);
 			// 
 			// colorsTab
 			// 
 			this.colorsTab.BackColor = System.Drawing.SystemColors.WindowFrame;
-			this.colorsTab.Controls.Add(this.treeView1);
+			this.colorsTab.Controls.Add(this.colorTreeView);
 			resources.ApplyResources(this.colorsTab, "colorsTab");
 			this.colorsTab.Name = "colorsTab";
 			// 
-			// treeView1
+			// colorTreeView
 			// 
-			resources.ApplyResources(this.treeView1, "treeView1");
-			this.treeView1.Name = "treeView1";
-			this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
-			this.treeView1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView1_KeyDown);
+			resources.ApplyResources(this.colorTreeView, "colorTreeView");
+			this.colorTreeView.Name = "colorTreeView";
+			this.colorTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
+			this.colorTreeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView1_KeyDown);
 			// 
 			// tabControl
 			// 
@@ -285,11 +303,15 @@ namespace PckStudio.Forms.Editor
 			// 
 			// underwaterTab
 			// 
+			this.underwaterTab.BackColor = System.Drawing.SystemColors.WindowFrame;
+			this.underwaterTab.Controls.Add(this.underwaterTreeView);
 			resources.ApplyResources(this.underwaterTab, "underwaterTab");
 			this.underwaterTab.Name = "underwaterTab";
 			// 
 			// fogTab
 			// 
+			this.fogTab.BackColor = System.Drawing.SystemColors.WindowFrame;
+			this.fogTab.Controls.Add(this.fogTreeView);
 			resources.ApplyResources(this.fogTab, "fogTab");
 			this.fogTab.Name = "fogTab";
 			// 
@@ -316,6 +338,8 @@ namespace PckStudio.Forms.Editor
 			this.waterTab.ResumeLayout(false);
 			this.colorsTab.ResumeLayout(false);
 			this.tabControl.ResumeLayout(false);
+			this.underwaterTab.ResumeLayout(false);
+			this.fogTab.ResumeLayout(false);
 			this.ResumeLayout(false);
 
         }
@@ -324,9 +348,11 @@ namespace PckStudio.Forms.Editor
 
         private MetroFramework.Controls.MetroPanel metroPanel1;
         private MetroFramework.Controls.MetroTextBox colorTextbox;
-        private TreeView treeView1;
-        private TreeView treeView2;
-        private MetroFramework.Controls.MetroLabel metroLabel1;
+        private TreeView colorTreeView;
+        private TreeView waterTreeView;
+		private TreeView fogTreeView;
+		private TreeView underwaterTreeView;
+		private MetroFramework.Controls.MetroLabel metroLabel1;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.MenuStrip menuStrip;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;

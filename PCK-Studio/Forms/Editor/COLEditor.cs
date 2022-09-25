@@ -16,7 +16,7 @@ namespace PckStudio.Forms.Editor
 {
 	public partial class COLEditor : MetroForm
 	{
-		COLFile colurfile;
+		COLFile colourfile;
 
 		private readonly PCKFile.FileData _file;
 
@@ -27,32 +27,37 @@ namespace PckStudio.Forms.Editor
 
 			using(var stream = new MemoryStream(file.data))
 			{
-                colurfile = COLFileReader.Read(stream);
+                colourfile = COLFileReader.Read(stream);
 			}
 
-			foreach (var obj in colurfile.entries)
+			foreach (var obj in colourfile.entries)
 			{
 				TreeNode tn = new TreeNode(obj.name);
 				tn.Tag = obj;
-				treeView1.Nodes.Add(tn);
+				colorTreeView.Nodes.Add(tn);
 			}
-			foreach (var obj in colurfile.waterEntries)
+			foreach (var obj in colourfile.waterEntries)
 			{
 				TreeNode tn = new TreeNode(obj.name);
 				tn.Tag = obj;
-				treeView2.Nodes.Add(tn);
+				waterTreeView.Nodes.Add(tn);
+				TreeNode tnB = new TreeNode(obj.name);
+				tnB.Tag = obj;
+				underwaterTreeView.Nodes.Add(tnB);
+				TreeNode tnC = new TreeNode(obj.name);
+				tnC.Tag = obj;
+				fogTreeView.Nodes.Add(tnC);
 			}
 		}
 
 		private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
 		{
-			if (treeView1.SelectedNode.Tag == null)
+			if (colorTreeView.SelectedNode.Tag == null)
 				return;
-
-			var colorEntry = (COLFile.ColorEntry)treeView1.SelectedNode.Tag;
+			var colorEntry = (COLFile.ColorEntry)colorTreeView.SelectedNode.Tag;
+			var color = colorEntry.color;
 			alphaUpDown.Visible = false;
 			alphaLabel.Visible = false;
-			var color = colorEntry.color;
 			redUpDown.Value = color >> 16 & 0xff;
 			greenUpDown.Value = color >> 8 & 0xff;
 			blueUpDown.Value = color & 0xff;
@@ -62,9 +67,9 @@ namespace PckStudio.Forms.Editor
 
         private void treeView2_AfterSelect(object sender, TreeViewEventArgs e)
         {
-			if (treeView2.SelectedNode.Tag == null)
+			if (waterTreeView.SelectedNode.Tag == null)
 				return;
-			var colorEntry = (COLFile.ExtendedColorEntry)treeView2.SelectedNode.Tag;
+			var colorEntry = (COLFile.ExtendedColorEntry)waterTreeView.SelectedNode.Tag;
 			int color = (int)colorEntry.color;
 			alphaUpDown.Enabled = true;
 			alphaUpDown.Visible = true;
@@ -75,11 +80,40 @@ namespace PckStudio.Forms.Editor
 			blueUpDown.Value = color & 0xff;
 			pictureBox1.BackColor = Color.FromArgb(color);
 		}
+
+		private void treeView3_AfterSelect(object sender, TreeViewEventArgs e)
+		{
+			if (underwaterTreeView.SelectedNode.Tag == null)
+				return;
+			var colorEntry = (COLFile.ExtendedColorEntry)underwaterTreeView.SelectedNode.Tag;
+			int color = (int)colorEntry.color_b;
+			alphaUpDown.Visible = false;
+			alphaLabel.Visible = false;
+			redUpDown.Value = color >> 16 & 0xff;
+			greenUpDown.Value = color >> 8 & 0xff;
+			blueUpDown.Value = color & 0xff;
+			pictureBox1.BackColor = Color.FromArgb(255, Color.FromArgb(0xff << 24 | color));
+		}
+
+		private void treeView4_AfterSelect(object sender, TreeViewEventArgs e)
+		{
+			if (fogTreeView.SelectedNode.Tag == null)
+				return;
+			var colorEntry = (COLFile.ExtendedColorEntry)fogTreeView.SelectedNode.Tag;
+			int color = (int)colorEntry.color_c;
+			alphaUpDown.Visible = false;
+			alphaLabel.Visible = false;
+			redUpDown.Value = color >> 16 & 0xff;
+			greenUpDown.Value = color >> 8 & 0xff;
+			blueUpDown.Value = color & 0xff;
+			pictureBox1.BackColor = Color.FromArgb(255, Color.FromArgb(0xff << 24 | color));
+		}
+
 		private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
 			using (var stream = new MemoryStream())
 			{
-				COLFileWriter.Write(stream, colurfile);
+				COLFileWriter.Write(stream, colourfile);
 				_file.SetData(stream.ToArray());
 			}
             DialogResult = DialogResult.OK;
@@ -108,23 +142,43 @@ namespace PckStudio.Forms.Editor
 
 		public void treeView1_KeyDown(object sender, KeyEventArgs e)
 		{
-			var node = treeView1.SelectedNode;
+			var node = colorTreeView.SelectedNode;
 			if (e.KeyCode == Keys.Delete && node.Tag is COLFile.ColorEntry colorInfo)
 			{
-                colurfile.entries.Remove(colorInfo);
-                if (treeView1.Nodes.Count > 0) treeView1.Nodes.Remove(node);
+                colourfile.entries.Remove(colorInfo);
+                if (colorTreeView.Nodes.Count > 0) colorTreeView.Nodes.Remove(node);
             }
 		}
 
         private void treeView2_KeyDown(object sender, KeyEventArgs e)
         {
-			var node = treeView2.SelectedNode;
+			var node = waterTreeView.SelectedNode;
 			if (e.KeyCode == Keys.Delete && node.Tag is COLFile.ExtendedColorEntry)
 			{
-                colurfile.waterEntries.Remove((COLFile.ExtendedColorEntry)node.Tag);
-                if (treeView2.Nodes.Count > 0) treeView2.Nodes.Remove(node);
+                colourfile.waterEntries.Remove((COLFile.ExtendedColorEntry)node.Tag);
+                if (waterTreeView.Nodes.Count > 0) waterTreeView.Nodes.Remove(node);
             }
         }
+
+		private void treeView3_KeyDown(object sender, KeyEventArgs e)
+		{
+			var node = underwaterTreeView.SelectedNode;
+			if (e.KeyCode == Keys.Delete && node.Tag is COLFile.ExtendedColorEntry)
+			{
+				colourfile.waterEntries.Remove((COLFile.ExtendedColorEntry)node.Tag);
+				if (underwaterTreeView.Nodes.Count > 0) underwaterTreeView.Nodes.Remove(node);
+			}
+		}
+
+		private void treeView4_KeyDown(object sender, KeyEventArgs e)
+		{
+			var node = fogTreeView.SelectedNode;
+			if (e.KeyCode == Keys.Delete && node.Tag is COLFile.ExtendedColorEntry)
+			{
+				colourfile.waterEntries.Remove((COLFile.ExtendedColorEntry)node.Tag);
+				if (fogTreeView.Nodes.Count > 0) fogTreeView.Nodes.Remove(node);
+			}
+		}
 
 		private void colorBox_TextChanged(object sender, EventArgs e)
 		{
@@ -206,16 +260,28 @@ namespace PckStudio.Forms.Editor
 			colorPick.SolidColorOnly = tabControl.SelectedTab == colorsTab;
 			if (colorPick.ShowDialog() != DialogResult.OK) return;
             pictureBox1.BackColor = colorPick.Color;
-			if (tabControl.SelectedTab == waterTab && treeView2.SelectedNode != null &&
-				treeView2.SelectedNode.Tag != null && treeView2.SelectedNode.Tag is COLFile.ExtendedColorEntry)
+			if (tabControl.SelectedTab == waterTab && waterTreeView.SelectedNode != null &&
+				waterTreeView.SelectedNode.Tag != null && waterTreeView.SelectedNode.Tag is COLFile.ExtendedColorEntry)
 			{
-				var colorEntry = ((COLFile.ExtendedColorEntry)treeView2.SelectedNode.Tag);
+				var colorEntry = ((COLFile.ExtendedColorEntry)waterTreeView.SelectedNode.Tag);
 				colorEntry.color = (uint)colorPick.Color.ToArgb();
 			}
-			else if (tabControl.SelectedTab == colorsTab && treeView1.SelectedNode != null &&
-				treeView1.SelectedNode.Tag != null && treeView1.SelectedNode.Tag is COLFile.ColorEntry)
+			else if (tabControl.SelectedTab == underwaterTab && underwaterTreeView.SelectedNode != null &&
+				underwaterTreeView.SelectedNode.Tag != null && underwaterTreeView.SelectedNode.Tag is COLFile.ExtendedColorEntry)
 			{
-				var colorEntry = ((COLFile.ColorEntry)treeView1.SelectedNode.Tag);
+				var colorEntry = ((COLFile.ExtendedColorEntry)underwaterTreeView.SelectedNode.Tag);
+				colorEntry.color_b = (uint)colorPick.Color.ToArgb();
+			}
+			else if (tabControl.SelectedTab == fogTab && fogTreeView.SelectedNode != null &&
+				fogTreeView.SelectedNode.Tag != null && fogTreeView.SelectedNode.Tag is COLFile.ExtendedColorEntry)
+			{
+				var colorEntry = ((COLFile.ExtendedColorEntry)fogTreeView.SelectedNode.Tag);
+				colorEntry.color_c = (uint)colorPick.Color.ToArgb();
+			}
+			else if (tabControl.SelectedTab == colorsTab && colorTreeView.SelectedNode != null &&
+				colorTreeView.SelectedNode.Tag != null && colorTreeView.SelectedNode.Tag is COLFile.ColorEntry)
+			{
+				var colorEntry = ((COLFile.ColorEntry)colorTreeView.SelectedNode.Tag);
 				colorEntry.color = (uint)colorPick.Color.ToArgb() & 0xffffff;
 			}
 			colorPick.Dispose();
