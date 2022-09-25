@@ -2922,7 +2922,7 @@ namespace PckStudio
 						mippedTexture.Save(texStream, ImageFormat.Png);
 						MipMappedFile.SetData(texStream.ToArray());
 
-						currentPCK.Files.Add(MipMappedFile);
+						currentPCK.Files.Insert(currentPCK.Files.IndexOf(file) + i - 1, MipMappedFile);
 					}
 					BuildMainTreeView();
 				}
