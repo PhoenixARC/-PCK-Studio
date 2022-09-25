@@ -607,5 +607,10 @@ namespace PckStudio.Forms.Editor
 				"You can also export your animation as an Java Edition tile animation. It will also export the actual texture in the same spot.", "Java Edition Support");
 		}
 
+		private void InterpolationCheckbox_CheckedChanged(object sender, EventArgs e)
+		{
+			// Interpolation flag wasn't being updated when the check box changed, this fixes the issue
+			currentAnimation.Interpolate = InterpolationCheckbox.Checked;
+		}
 	}
 }
