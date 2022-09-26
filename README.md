@@ -9,7 +9,7 @@ Modify .PCK archives as you please!
 * PNG previewing
 * And much more!\
 
-## Supported File format
+## Supported File formats
 
 | Name | Extention |
 |:-:|:-:|
