@@ -34,16 +34,11 @@ namespace PckStudio.Forms.Editor
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(COLEditor));
 			this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
 			this.setColorBtn = new MetroFramework.Controls.MetroButton();
-			this.blueUpDown = new System.Windows.Forms.NumericUpDown();
-			this.greenUpDown = new System.Windows.Forms.NumericUpDown();
-			this.redUpDown = new System.Windows.Forms.NumericUpDown();
 			this.alphaUpDown = new System.Windows.Forms.NumericUpDown();
 			this.alphaLabel = new MetroFramework.Controls.MetroLabel();
 			this.blueLabel = new MetroFramework.Controls.MetroLabel();
 			this.greenLabel = new MetroFramework.Controls.MetroLabel();
 			this.redLabel = new MetroFramework.Controls.MetroLabel();
-			this.colorTextbox = new MetroFramework.Controls.MetroTextBox();
-			this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
 			this.pictureBox1 = new System.Windows.Forms.PictureBox();
 			this.menuStrip = new System.Windows.Forms.MenuStrip();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -57,10 +52,12 @@ namespace PckStudio.Forms.Editor
 			this.tabControl = new MetroFramework.Controls.MetroTabControl();
 			this.underwaterTab = new System.Windows.Forms.TabPage();
 			this.fogTab = new System.Windows.Forms.TabPage();
+			this.redUpDown = new System.Windows.Forms.NumericUpDown();
+			this.greenUpDown = new System.Windows.Forms.NumericUpDown();
+			this.blueUpDown = new System.Windows.Forms.NumericUpDown();
+			this.colorTextbox = new MetroFramework.Controls.MetroTextBox();
+			this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
 			this.metroPanel1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.blueUpDown)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.greenUpDown)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.redUpDown)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.alphaUpDown)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.menuStrip.SuspendLayout();
@@ -69,6 +66,9 @@ namespace PckStudio.Forms.Editor
 			this.tabControl.SuspendLayout();
 			this.underwaterTab.SuspendLayout();
 			this.fogTab.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.redUpDown)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.greenUpDown)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.blueUpDown)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// metroPanel1
@@ -104,45 +104,6 @@ namespace PckStudio.Forms.Editor
 			this.setColorBtn.UseSelectable = true;
 			this.setColorBtn.Click += new System.EventHandler(this.setColorBtn_Click);
 			// 
-			// blueUpDown
-			// 
-			this.blueUpDown.BackColor = System.Drawing.SystemColors.Desktop;
-			this.blueUpDown.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
-			resources.ApplyResources(this.blueUpDown, "blueUpDown");
-			this.blueUpDown.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-			this.blueUpDown.Name = "blueUpDown";
-			this.blueUpDown.ValueChanged += new System.EventHandler(this.color_ValueChanged);
-			// 
-			// greenUpDown
-			// 
-			this.greenUpDown.BackColor = System.Drawing.SystemColors.Desktop;
-			this.greenUpDown.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
-			resources.ApplyResources(this.greenUpDown, "greenUpDown");
-			this.greenUpDown.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-			this.greenUpDown.Name = "greenUpDown";
-			this.greenUpDown.ValueChanged += new System.EventHandler(this.color_ValueChanged);
-			// 
-			// redUpDown
-			// 
-			this.redUpDown.BackColor = System.Drawing.SystemColors.Desktop;
-			this.redUpDown.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
-			resources.ApplyResources(this.redUpDown, "redUpDown");
-			this.redUpDown.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-			this.redUpDown.Name = "redUpDown";
-			this.redUpDown.ValueChanged += new System.EventHandler(this.color_ValueChanged);
-			// 
 			// alphaUpDown
 			// 
 			this.alphaUpDown.BackColor = System.Drawing.SystemColors.Desktop;
@@ -154,7 +115,7 @@ namespace PckStudio.Forms.Editor
             0,
             0});
 			this.alphaUpDown.Name = "alphaUpDown";
-			this.alphaUpDown.ValueChanged += new System.EventHandler(this.color_ValueChanged);
+			this.alphaUpDown.ValueChanged += new System.EventHandler(this.alpha_ValueChanged);
 			// 
 			// alphaLabel
 			// 
@@ -179,43 +140,6 @@ namespace PckStudio.Forms.Editor
 			resources.ApplyResources(this.redLabel, "redLabel");
 			this.redLabel.Name = "redLabel";
 			this.redLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
-			// 
-			// colorTextbox
-			// 
-			// 
-			// 
-			// 
-			this.colorTextbox.CustomButton.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image")));
-			this.colorTextbox.CustomButton.ImeMode = ((System.Windows.Forms.ImeMode)(resources.GetObject("resource.ImeMode")));
-			this.colorTextbox.CustomButton.Location = ((System.Drawing.Point)(resources.GetObject("resource.Location")));
-			this.colorTextbox.CustomButton.Name = "";
-			this.colorTextbox.CustomButton.Size = ((System.Drawing.Size)(resources.GetObject("resource.Size")));
-			this.colorTextbox.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-			this.colorTextbox.CustomButton.TabIndex = ((int)(resources.GetObject("resource.TabIndex")));
-			this.colorTextbox.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
-			this.colorTextbox.CustomButton.UseSelectable = true;
-			this.colorTextbox.CustomButton.Visible = ((bool)(resources.GetObject("resource.Visible")));
-			this.colorTextbox.Lines = new string[0];
-			resources.ApplyResources(this.colorTextbox, "colorTextbox");
-			this.colorTextbox.MaxLength = 32767;
-			this.colorTextbox.Name = "colorTextbox";
-			this.colorTextbox.PasswordChar = '\0';
-			this.colorTextbox.ScrollBars = System.Windows.Forms.ScrollBars.None;
-			this.colorTextbox.SelectedText = "";
-			this.colorTextbox.SelectionLength = 0;
-			this.colorTextbox.SelectionStart = 0;
-			this.colorTextbox.ShortcutsEnabled = true;
-			this.colorTextbox.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.colorTextbox.UseSelectable = true;
-			this.colorTextbox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-			this.colorTextbox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
-			this.colorTextbox.TextChanged += new System.EventHandler(this.colorBox_TextChanged);
-			// 
-			// metroLabel1
-			// 
-			resources.ApplyResources(this.metroLabel1, "metroLabel1");
-			this.metroLabel1.Name = "metroLabel1";
-			this.metroLabel1.Theme = MetroFramework.MetroThemeStyle.Dark;
 			// 
 			// pictureBox1
 			// 
@@ -315,6 +239,82 @@ namespace PckStudio.Forms.Editor
 			resources.ApplyResources(this.fogTab, "fogTab");
 			this.fogTab.Name = "fogTab";
 			// 
+			// redUpDown
+			// 
+			this.redUpDown.BackColor = System.Drawing.SystemColors.Desktop;
+			this.redUpDown.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
+			resources.ApplyResources(this.redUpDown, "redUpDown");
+			this.redUpDown.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+			this.redUpDown.Name = "redUpDown";
+			this.redUpDown.ValueChanged += new System.EventHandler(this.color_ValueChanged);
+			// 
+			// greenUpDown
+			// 
+			this.greenUpDown.BackColor = System.Drawing.SystemColors.Desktop;
+			this.greenUpDown.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
+			resources.ApplyResources(this.greenUpDown, "greenUpDown");
+			this.greenUpDown.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+			this.greenUpDown.Name = "greenUpDown";
+			this.greenUpDown.ValueChanged += new System.EventHandler(this.color_ValueChanged);
+			// 
+			// blueUpDown
+			// 
+			this.blueUpDown.BackColor = System.Drawing.SystemColors.Desktop;
+			this.blueUpDown.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
+			resources.ApplyResources(this.blueUpDown, "blueUpDown");
+			this.blueUpDown.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+			this.blueUpDown.Name = "blueUpDown";
+			this.blueUpDown.ValueChanged += new System.EventHandler(this.color_ValueChanged);
+			// 
+			// colorTextbox
+			// 
+			// 
+			// 
+			// 
+			this.colorTextbox.CustomButton.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image")));
+			this.colorTextbox.CustomButton.ImeMode = ((System.Windows.Forms.ImeMode)(resources.GetObject("resource.ImeMode")));
+			this.colorTextbox.CustomButton.Location = ((System.Drawing.Point)(resources.GetObject("resource.Location")));
+			this.colorTextbox.CustomButton.Name = "";
+			this.colorTextbox.CustomButton.Size = ((System.Drawing.Size)(resources.GetObject("resource.Size")));
+			this.colorTextbox.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+			this.colorTextbox.CustomButton.TabIndex = ((int)(resources.GetObject("resource.TabIndex")));
+			this.colorTextbox.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+			this.colorTextbox.CustomButton.UseSelectable = true;
+			this.colorTextbox.CustomButton.Visible = ((bool)(resources.GetObject("resource.Visible")));
+			this.colorTextbox.Lines = new string[0];
+			resources.ApplyResources(this.colorTextbox, "colorTextbox");
+			this.colorTextbox.MaxLength = 32767;
+			this.colorTextbox.Name = "colorTextbox";
+			this.colorTextbox.PasswordChar = '\0';
+			this.colorTextbox.ScrollBars = System.Windows.Forms.ScrollBars.None;
+			this.colorTextbox.SelectedText = "";
+			this.colorTextbox.SelectionLength = 0;
+			this.colorTextbox.SelectionStart = 0;
+			this.colorTextbox.ShortcutsEnabled = true;
+			this.colorTextbox.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.colorTextbox.UseSelectable = true;
+			this.colorTextbox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+			this.colorTextbox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+			this.colorTextbox.TextChanged += new System.EventHandler(this.colorBox_TextChanged);
+			// 
+			// metroLabel1
+			// 
+			resources.ApplyResources(this.metroLabel1, "metroLabel1");
+			this.metroLabel1.Name = "metroLabel1";
+			this.metroLabel1.Theme = MetroFramework.MetroThemeStyle.Dark;
+			// 
 			// COLEditor
 			// 
 			resources.ApplyResources(this, "$this");
@@ -328,9 +328,6 @@ namespace PckStudio.Forms.Editor
 			this.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.metroPanel1.ResumeLayout(false);
 			this.metroPanel1.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.blueUpDown)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.greenUpDown)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.redUpDown)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.alphaUpDown)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
 			this.menuStrip.ResumeLayout(false);
@@ -340,6 +337,9 @@ namespace PckStudio.Forms.Editor
 			this.tabControl.ResumeLayout(false);
 			this.underwaterTab.ResumeLayout(false);
 			this.fogTab.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.redUpDown)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.greenUpDown)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.blueUpDown)).EndInit();
 			this.ResumeLayout(false);
 
         }
@@ -347,12 +347,10 @@ namespace PckStudio.Forms.Editor
         #endregion
 
         private MetroFramework.Controls.MetroPanel metroPanel1;
-        private MetroFramework.Controls.MetroTextBox colorTextbox;
         private TreeView colorTreeView;
         private TreeView waterTreeView;
 		private TreeView fogTreeView;
 		private TreeView underwaterTreeView;
-		private MetroFramework.Controls.MetroLabel metroLabel1;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.MenuStrip menuStrip;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
@@ -361,9 +359,6 @@ namespace PckStudio.Forms.Editor
         private MetroFramework.Controls.MetroLabel greenLabel;
         private MetroFramework.Controls.MetroLabel redLabel;
         private MetroFramework.Controls.MetroLabel alphaLabel;
-        private System.Windows.Forms.NumericUpDown blueUpDown;
-        private System.Windows.Forms.NumericUpDown greenUpDown;
-        private System.Windows.Forms.NumericUpDown redUpDown;
         private System.Windows.Forms.NumericUpDown alphaUpDown;
         private TabPage waterTab;
         private TabPage colorsTab;
@@ -371,5 +366,10 @@ namespace PckStudio.Forms.Editor
         private MetroFramework.Controls.MetroButton setColorBtn;
 		private TabPage underwaterTab;
 		private TabPage fogTab;
+		private NumericUpDown blueUpDown;
+		private NumericUpDown greenUpDown;
+		private NumericUpDown redUpDown;
+		private MetroFramework.Controls.MetroTextBox colorTextbox;
+		private MetroFramework.Controls.MetroLabel metroLabel1;
 	}
 }

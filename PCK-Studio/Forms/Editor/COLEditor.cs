@@ -303,5 +303,17 @@ namespace PckStudio.Forms.Editor
 			}
 			colorPick.Dispose();
         }
-    }
+
+		private void alpha_ValueChanged(object sender, EventArgs e)
+		{
+			if (tabControl.SelectedTab == waterTab && waterTreeView.SelectedNode != null &&
+				waterTreeView.SelectedNode.Tag != null && waterTreeView.SelectedNode.Tag is COLFile.ExtendedColorEntry)
+			{
+				var colorEntry = ((COLFile.ExtendedColorEntry)waterTreeView.SelectedNode.Tag);
+				Color fixed_color = Color.FromArgb((int)alphaUpDown.Value, Color.FromArgb((int)colorEntry.color));
+				colorEntry.color = (uint)fixed_color.ToArgb();
+				pictureBox1.BackColor = fixed_color;
+			}
+		}
+	}
 }
