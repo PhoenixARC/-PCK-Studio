@@ -16,6 +16,7 @@ namespace PckStudio.Forms.Editor
 {
 	public partial class COLEditor : MetroForm
 	{
+		COLFile default_colourfile;
 		COLFile colourfile;
 
 		private readonly PCKFile.FileData _file;
@@ -30,22 +31,29 @@ namespace PckStudio.Forms.Editor
                 colourfile = COLFileReader.Read(stream);
 			}
 
-			foreach (var obj in colourfile.entries)
+			using (var stream = new MemoryStream(Properties.Resources.colours))
 			{
+				default_colourfile = COLFileReader.Read(stream);
+			}
+
+			foreach (var obj in default_colourfile.entries)
+			{
+				COLFile.ColorEntry entry = colourfile.entries.Find(color => color.name == obj.name);
 				TreeNode tn = new TreeNode(obj.name);
-				tn.Tag = obj;
+				tn.Tag = entry != null ? entry : obj;
 				colorTreeView.Nodes.Add(tn);
 			}
 			foreach (var obj in colourfile.waterEntries)
 			{
+				COLFile.ExtendedColorEntry entry = colourfile.waterEntries.Find(color => color.name == obj.name);
 				TreeNode tn = new TreeNode(obj.name);
-				tn.Tag = obj;
+				tn.Tag = entry != null ? entry : obj;
 				waterTreeView.Nodes.Add(tn);
 				TreeNode tnB = new TreeNode(obj.name);
-				tnB.Tag = obj;
+				tnB.Tag = entry != null ? entry : obj;
 				underwaterTreeView.Nodes.Add(tnB);
 				TreeNode tnC = new TreeNode(obj.name);
-				tnC.Tag = obj;
+				tnC.Tag = entry != null ? entry : obj;
 				fogTreeView.Nodes.Add(tnC);
 			}
 		}
