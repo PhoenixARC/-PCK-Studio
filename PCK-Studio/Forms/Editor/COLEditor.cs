@@ -153,12 +153,7 @@ namespace PckStudio.Forms.Editor
 			var node = colorTreeView.SelectedNode;
 			if (e.KeyCode == Keys.Delete && node.Tag is COLFile.ColorEntry colorInfo)
 			{
-				COLFile.ColorEntry entry = default_colourfile.entries.Find(color => color.name == node.Text);
-				colorInfo.color = entry.color;
-				redUpDown.Value = entry.color >> 16 & 0xff;
-				greenUpDown.Value = entry.color >> 8 & 0xff;
-				blueUpDown.Value = entry.color & 0xff;
-				pictureBox1.BackColor = Color.FromArgb(0xff << 24 | (int)entry.color);
+				restoreOriginalColorToolStripMenuItem_Click(sender, e);
 			}
 		}
 
@@ -167,13 +162,7 @@ namespace PckStudio.Forms.Editor
 			var node = waterTreeView.SelectedNode;
 			if (e.KeyCode == Keys.Delete && node.Tag is COLFile.ExtendedColorEntry colorInfo)
 			{
-				COLFile.ExtendedColorEntry entry = default_colourfile.waterEntries.Find(color => color.name == node.Text);
-				colorInfo.color = entry.color;
-				alphaUpDown.Value = entry.color >> 24 & 0xff;
-				redUpDown.Value = entry.color >> 16 & 0xff;
-				greenUpDown.Value = entry.color >> 8 & 0xff;
-				blueUpDown.Value = entry.color & 0xff;
-				pictureBox1.BackColor = Color.FromArgb((int)entry.color);
+				restoreOriginalColorToolStripMenuItem_Click(sender, e);
 			}
         }
 
@@ -182,13 +171,7 @@ namespace PckStudio.Forms.Editor
 			var node = underwaterTreeView.SelectedNode;
 			if (e.KeyCode == Keys.Delete && node.Tag is COLFile.ExtendedColorEntry colorInfo)
 			{
-				COLFile.ExtendedColorEntry entry = default_colourfile.waterEntries.Find(color => color.name == node.Text);
-				colorInfo.color_b = entry.color_b;
-				alphaUpDown.Value = entry.color >> 24 & 0xff;
-				redUpDown.Value = entry.color >> 16 & 0xff;
-				greenUpDown.Value = entry.color >> 8 & 0xff;
-				blueUpDown.Value = entry.color & 0xff;
-				pictureBox1.BackColor = Color.FromArgb(0xff << 24 | (int)entry.color);
+				restoreOriginalColorToolStripMenuItem_Click(sender, e);
 			}
 		}
 
@@ -197,13 +180,7 @@ namespace PckStudio.Forms.Editor
 			var node = fogTreeView.SelectedNode;
 			if (e.KeyCode == Keys.Delete && node.Tag is COLFile.ExtendedColorEntry colorInfo)
 			{
-				COLFile.ExtendedColorEntry entry = default_colourfile.waterEntries.Find(color => color.name == node.Text);
-				colorInfo.color_c = entry.color_c;
-				alphaUpDown.Value = entry.color >> 24 & 0xff;
-				redUpDown.Value = entry.color >> 16 & 0xff;
-				greenUpDown.Value = entry.color >> 8 & 0xff;
-				blueUpDown.Value = entry.color & 0xff;
-				pictureBox1.BackColor = Color.FromArgb(0xff << 24 | (int)entry.color);
+				restoreOriginalColorToolStripMenuItem_Click(sender, e);
 			}
 		}
 
@@ -340,6 +317,57 @@ namespace PckStudio.Forms.Editor
 				Color fixed_color = Color.FromArgb((int)alphaUpDown.Value, Color.FromArgb((int)colorEntry.color));
 				colorEntry.color = (uint)fixed_color.ToArgb();
 				pictureBox1.BackColor = fixed_color;
+			}
+		}
+
+		private void restoreOriginalColorToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (tabControl.SelectedTab == colorsTab && colorTreeView.SelectedNode != null &&
+				colorTreeView.SelectedNode.Tag != null && colorTreeView.SelectedNode.Tag is COLFile.ColorEntry colorInfoD)
+			{
+				MessageBox.Show("Color");
+				COLFile.ColorEntry entry = default_colourfile.entries.Find(color => color.name == colorTreeView.SelectedNode.Text);
+				colorInfoD.color = entry.color;
+				redUpDown.Value = colorInfoD.color >> 16 & 0xff;
+				greenUpDown.Value = colorInfoD.color >> 8 & 0xff;
+				blueUpDown.Value = colorInfoD.color & 0xff;
+				pictureBox1.BackColor = Color.FromArgb(0xff << 24 | (int)colorInfoD.color);
+			}
+			else if (tabControl.SelectedTab == waterTab && waterTreeView.SelectedNode != null &&
+			waterTreeView.SelectedNode.Tag != null && waterTreeView.SelectedNode.Tag is COLFile.ExtendedColorEntry colorInfo)
+			{
+				MessageBox.Show("Water");
+				COLFile.ExtendedColorEntry entry = default_colourfile.waterEntries.Find(color => color.name == waterTreeView.SelectedNode.Text);
+				colorInfo.color = entry.color;
+				alphaUpDown.Value = colorInfo.color >> 24 & 0xff;
+				redUpDown.Value = colorInfo.color >> 16 & 0xff;
+				greenUpDown.Value = colorInfo.color >> 8 & 0xff;
+				blueUpDown.Value = colorInfo.color & 0xff;
+				pictureBox1.BackColor = Color.FromArgb((int)colorInfo.color);
+			}
+			else if (tabControl.SelectedTab == underwaterTab && underwaterTreeView.SelectedNode != null &&
+				underwaterTreeView.SelectedNode.Tag != null && underwaterTreeView.SelectedNode.Tag is COLFile.ExtendedColorEntry colorInfoB)
+			{
+				MessageBox.Show("Underwater");
+				COLFile.ExtendedColorEntry entry = default_colourfile.waterEntries.Find(color => color.name == underwaterTreeView.SelectedNode.Text);
+				colorInfoB.color_b = entry.color_b;
+				alphaUpDown.Value = colorInfoB.color_b >> 24 & 0xff;
+				redUpDown.Value = colorInfoB.color_b >> 16 & 0xff;
+				greenUpDown.Value = colorInfoB.color_b >> 8 & 0xff;
+				blueUpDown.Value = colorInfoB.color_b & 0xff;
+				pictureBox1.BackColor = Color.FromArgb(0xff << 24 | (int)colorInfoB.color_b);
+			}
+			else if (tabControl.SelectedTab == fogTab && fogTreeView.SelectedNode != null &&
+				fogTreeView.SelectedNode.Tag != null && fogTreeView.SelectedNode.Tag is COLFile.ExtendedColorEntry colorInfoC)
+			{
+				MessageBox.Show("Fog");
+				COLFile.ExtendedColorEntry entry = default_colourfile.waterEntries.Find(color => color.name == fogTreeView.SelectedNode.Text);
+				colorInfoC.color_c = entry.color_c;
+				alphaUpDown.Value = colorInfoC.color_c >> 24 & 0xff;
+				redUpDown.Value = colorInfoC.color_c >> 16 & 0xff;
+				greenUpDown.Value = colorInfoC.color_c >> 8 & 0xff;
+				blueUpDown.Value = colorInfoC.color_c & 0xff;
+				pictureBox1.BackColor = Color.FromArgb(0xff << 24 | (int)colorInfoC.color_c);
 			}
 		}
 	}
