@@ -96,7 +96,7 @@ namespace PckStudio
 		{
 			RPC.Initialize();
 			if (currentPCK == null)
-			RPC.SetPresence("An Open Source .PCK File Editor", "Program by PhoenixARC");
+				RPC.SetPresence("An Open Source .PCK File Editor", "Program by PhoenixARC");
 
 			skinToolStripMenuItem1.Click += (sender, e) => setFileType_Click(sender, e, PCKFile.FileData.FileType.SkinFile);
 			capeToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PCKFile.FileData.FileType.CapeFile);
@@ -137,9 +137,9 @@ namespace PckStudio
 				if (ofd.ShowDialog() == DialogResult.OK)
 				{
 					LoadFromPath(ofd.FileName);
-					}
 				}
 			}
+		}
 
 		private PCKFile openPck(string filePath)
 		{
@@ -169,7 +169,7 @@ namespace PckStudio
 			if (currentPCK.TryGetFile("0", PCKFile.FileData.FileType.InfoFile, out PCKFile.FileData file))
 			{
 				if (file.properties.Contains("LOCK"))
-					return new pckLocked(file.properties.GetProperty("LOCK").Item2).ShowDialog() == DialogResult.OK;
+					return new pckLocked(file.properties.GetPropertyValue("LOCK")).ShowDialog() == DialogResult.OK;
 			}
 			return true;
 		}
@@ -287,7 +287,7 @@ namespace PckStudio
 		{
 			treeViewMain.Nodes.Clear();
 			BuildPckTreeView(treeViewMain.Nodes, currentPCK);
-		}
+        }
 
 		bool IsFilePathMipMapped(string filepath)
 		{
@@ -1162,24 +1162,22 @@ namespace PckStudio
 					return;
 				}
 				// creates variable to indicate wether current pck skin structure is mashup or regular skin
-				bool mashupStructure = false;
+				bool hasSkinsPck = currentPCK.HasFile("Skins.pck", PCKFile.FileData.FileType.SkinDataFile);
 
 				foreach (var fullfilename in Directory.GetFiles(contents.SelectedPath, "*.png"))
 				{
 					string filename = Path.GetFileNameWithoutExtension(fullfilename);
 					// sets file type based on wether its a cape or skin
-                    PCKFile.FileData.FileType pckfiletype = (PCKFile.FileData.FileType)Convert.ToInt32(filename.ToLower().StartsWith("dlccape"));
-					string pckfilepath = (mashupStructure ? "Skins/" : string.Empty) + filename + ".png";
+                    PCKFile.FileData.FileType pckfiletype = filename.StartsWith("dlccape", StringComparison.OrdinalIgnoreCase)
+						? PCKFile.FileData.FileType.CapeFile
+						: PCKFile.FileData.FileType.SkinFile;
+					string pckfilepath = (hasSkinsPck ? "Skins/" : string.Empty) + filename + ".png";
 
 
                     PCKFile.FileData newFile = new PCKFile.FileData(pckfilepath, pckfiletype);
 					byte[] filedata = File.ReadAllBytes(fullfilename);
                     newFile.SetData(filedata);
 
-					string locNameId = "";
-					string locName = "";
-					string locThemeId = "";
-					string locTheme = "";
 					if (File.Exists(fullfilename + ".txt"))
 					{
                         string[] properties = File.ReadAllText(fullfilename + ".txt").Split(new string[]{ Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
@@ -1188,25 +1186,38 @@ namespace PckStudio
                             string[] param = property.Split(':');
                             if (param.Length < 2) continue;
                             newFile.properties.Add((param[0], param[1]));
-                            switch (param[0])
-                            {
-                                case "DISPLAYNAMEID":
-                                    locNameId = param[1];
-                                    continue;
+                            //switch (param[0])
+                            //{
+                            //    case "DISPLAYNAMEID":
+                            //        locNameId = param[1];
+                            //        continue;
 
-                                case "DISPLAYNAME":
-                                    locName = param[1];
-                                    continue;
+                            //    case "DISPLAYNAME":
+                            //        locName = param[1];
+                            //        continue;
 
-                                case "THEMENAMEID":
-                                    locThemeId = param[1];
-                                    continue;
+                            //    case "THEMENAMEID":
+                            //        locThemeId = param[1];
+                            //        continue;
 
-                                case "THEMENAME":
-                                    locTheme = param[1];
-                                    continue;
-                            }
+                            //    case "THEMENAME":
+                            //        locTheme = param[1];
+                            //        continue;
+                            //}
                         }
+                    }
+					if (hasSkinsPck)
+					{
+						var skinsfile = currentPCK.GetFile("Skins.pck", PCKFile.FileData.FileType.SkinDataFile);
+                        using (var ms = new MemoryStream(skinsfile.data))
+						{
+							var skinspck = PCKFileReader.Read(ms, LittleEndianCheckBox.Checked);
+							skinspck.Files.Add(newFile);
+							ms.Position = 0;
+							PCKFileWriter.Write(ms, skinspck, LittleEndianCheckBox.Checked);
+							skinsfile.SetData(ms.ToArray());
+						}
+						continue;
                     }
 					currentPCK.Files.Add(newFile);
 				}
@@ -1235,7 +1246,7 @@ namespace PckStudio
 			}
 			catch (Exception ex)
 			{
-				Console.WriteLine(ex.Message);
+				Debug.WriteLine(ex.Message);
 			}
 			locFile = null;
 			return false;
@@ -1330,9 +1341,20 @@ namespace PckStudio
 				TreeNode folerNode = CreateNode(folderNamePrompt.NewText);
 				folerNode.ImageIndex = 0;
 				folerNode.SelectedImageIndex = 0;
-				TreeNodeCollection nodeCollection = treeViewMain.SelectedNode is TreeNode node
-					? node.Tag is PCKFile.FileData && node.Parent is TreeNode parentNode ? parentNode.Nodes : node.Nodes
-					: treeViewMain.Nodes;
+
+				TreeNodeCollection nodeCollection = treeViewMain.Nodes;
+				if (treeViewMain.SelectedNode is TreeNode node)
+				{
+                    if (node.Tag is PCKFile.FileData)
+					{
+						if (node.Parent is TreeNode parentNode)
+						{
+							nodeCollection = parentNode.Nodes;
+						}
+					}
+					else
+						nodeCollection = node.Nodes;
+                }
 				nodeCollection.Add(folerNode);
 			}
 		}
@@ -2547,7 +2569,7 @@ namespace PckStudio
 
 		private void SetPckFileIcon(TreeNode node, PCKFile.FileData.FileType type)
 		{
-			switch (type)
+            switch (type)
 			{
 				case PCKFile.FileData.FileType.AudioFile:
 					node.ImageIndex = 1;
@@ -2666,7 +2688,7 @@ namespace PckStudio
 					for (int i = 2; i < 2 + diag.Levels; i++)
 					{
 						string mippedPath = textureDirectory + "/" + textureName + "MipMapLevel" + i + textureExtension;
-						Console.WriteLine(mippedPath);
+						Debug.WriteLine(mippedPath);
 						if (currentPCK.HasFile(mippedPath, PCKFile.FileData.FileType.TextureFile)) 
 							currentPCK.Files.Remove(currentPCK.GetFile(mippedPath, PCKFile.FileData.FileType.TextureFile));
 						PCKFile.FileData MipMappedFile = new PCKFile.FileData(mippedPath, PCKFile.FileData.FileType.TextureFile);
@@ -2696,25 +2718,23 @@ namespace PckStudio
 			}
 		}
 
-		private void importSkinfrom3dstFileToolStripMenuItem_Click(object sender, EventArgs e)
+		private void as3DSTextureFileToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.DefaultExt = ".3dst";
-            openFileDialog.Filter = "3DS Texture|*.3dst";
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                using (var fs = File.OpenRead(openFileDialog.FileName))
-                {
-                    var img = _3DSUtil.GetImageFrom3DST(fs);
-					PCKFile.FileData file = new PCKFile.FileData("3dst_import.png", PCKFile.FileData.FileType.SkinFile);
-					file.properties.Add(("DISPLAYNAME", Path.GetFileNameWithoutExtension(openFileDialog.FileName)));
-					using (var ms = new MemoryStream())
+			if (treeViewMain.SelectedNode is TreeNode node &&
+				node.Tag is PCKFile.FileData file &&
+				file.filetype == PCKFile.FileData.FileType.SkinFile)
+			{
+				SaveFileDialog saveFileDialog = new SaveFileDialog();
+				saveFileDialog.Filter = "3DS Texture | *.3dst";
+				saveFileDialog.DefaultExt = ".3dst";
+				if (saveFileDialog.ShowDialog() == DialogResult.OK)
+				{
+					using (var fs = saveFileDialog.OpenFile())
 					{
-						img.Save(ms, ImageFormat.Png);
-						file.SetData(ms.ToArray());
+						using var ms = new MemoryStream(file.data);
+						Image img = Image.FromStream(ms);
+						_3DSUtil.SetImageTo3DST(fs, img);
 					}
-					currentPCK.Files.Add(file);
-					BuildMainTreeView();
 				}
 			}
 		}

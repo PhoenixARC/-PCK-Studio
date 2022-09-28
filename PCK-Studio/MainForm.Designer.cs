@@ -38,9 +38,10 @@
             this.audiopckToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importSkinsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importSkinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.importSkinfrom3dstFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importExtractedSkinsFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addTextureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.as3DSTextureFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.setFileTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.skinToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.capeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -150,6 +151,7 @@
             this.contextMenuPCKEntries.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.createToolStripMenuItem,
             this.importSkinsToolStripMenuItem,
+            this.exportToolStripMenuItem,
             this.setFileTypeToolStripMenuItem,
             this.extractToolStripMenuItem,
             this.cloneFileToolStripMenuItem,
@@ -201,7 +203,6 @@
             // 
             this.importSkinsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.importSkinToolStripMenuItem,
-            this.importSkinfrom3dstFileToolStripMenuItem,
             this.importExtractedSkinsFolderToolStripMenuItem,
             this.addTextureToolStripMenuItem});
             resources.ApplyResources(this.importSkinsToolStripMenuItem, "importSkinsToolStripMenuItem");
@@ -212,12 +213,6 @@
             resources.ApplyResources(this.importSkinToolStripMenuItem, "importSkinToolStripMenuItem");
             this.importSkinToolStripMenuItem.Name = "importSkinToolStripMenuItem";
             this.importSkinToolStripMenuItem.Click += new System.EventHandler(this.importSkin);
-            // 
-            // importSkinfrom3dstFileToolStripMenuItem
-            // 
-            this.importSkinfrom3dstFileToolStripMenuItem.Name = "importSkinfrom3dstFileToolStripMenuItem";
-            resources.ApplyResources(this.importSkinfrom3dstFileToolStripMenuItem, "importSkinfrom3dstFileToolStripMenuItem");
-            this.importSkinfrom3dstFileToolStripMenuItem.Click += new System.EventHandler(this.importSkinfrom3dstFileToolStripMenuItem_Click);
             // 
             // importExtractedSkinsFolderToolStripMenuItem
             // 
@@ -231,6 +226,19 @@
             this.addTextureToolStripMenuItem.Name = "addTextureToolStripMenuItem";
             resources.ApplyResources(this.addTextureToolStripMenuItem, "addTextureToolStripMenuItem");
             this.addTextureToolStripMenuItem.Click += new System.EventHandler(this.addTextureToolStripMenuItem_Click);
+            // 
+            // exportToolStripMenuItem
+            // 
+            this.exportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.as3DSTextureFileToolStripMenuItem});
+            this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
+            resources.ApplyResources(this.exportToolStripMenuItem, "exportToolStripMenuItem");
+            // 
+            // as3DSTextureFileToolStripMenuItem
+            // 
+            this.as3DSTextureFileToolStripMenuItem.Name = "as3DSTextureFileToolStripMenuItem";
+            resources.ApplyResources(this.as3DSTextureFileToolStripMenuItem, "as3DSTextureFileToolStripMenuItem");
+            this.as3DSTextureFileToolStripMenuItem.Click += new System.EventHandler(this.as3DSTextureFileToolStripMenuItem_Click);
             // 
             // setFileTypeToolStripMenuItem
             // 
@@ -1107,7 +1115,8 @@
 		private MetroFramework.Controls.MetroLabel labelVersion;
 		private System.Windows.Forms.RichTextBox ChangelogRichTextBox;
 		private System.Windows.Forms.ToolStripMenuItem generateMipMapTextureToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem importSkinfrom3dstFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem as3DSTextureFileToolStripMenuItem;
     }
 }
 

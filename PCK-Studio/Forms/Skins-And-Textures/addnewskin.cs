@@ -224,15 +224,15 @@ namespace PckStudio
             skin.filepath = $"dlcskin{skinId}.png";
             string skinDisplayNameLocKey = $"IDS_dlcskin{skinId}_DISPLAYNAME";
             currentLoc.AddLocKey(skinDisplayNameLocKey, textSkinName.Text);
-            skin.properties.Add(new ValueTuple<string, string>("DISPLAYNAME", textSkinName.Text));
-            skin.properties.Add(new ValueTuple<string, string>("DISPLAYNAMEID", skinDisplayNameLocKey));
+            skin.properties.Add(("DISPLAYNAME", textSkinName.Text));
+            skin.properties.Add(("DISPLAYNAMEID", skinDisplayNameLocKey));
             if (!string.IsNullOrEmpty(textThemeName.Text))
             {
                 skin.properties.Add(("THEMENAME", textThemeName.Text));
                 skin.properties.Add(("THEMENAMEID", $"IDS_dlcskin{skinId}_THEMENAME"));
                 currentLoc.AddLocKey($"IDS_dlcskin{skinId}_THEMENAME", textThemeName.Text);
             }
-            skin.properties.Add(new ValueTuple<string, string>("ANIM", anim.ToString()));
+            skin.properties.Add(("ANIM", anim.ToString()));
             skin.properties.Add(("GAME_FLAGS", "0x18"));
             skin.properties.Add(("FREE", "1"));
 
@@ -357,7 +357,6 @@ namespace PckStudio
 
         private void radioSERVER_CheckedChanged(object sender, EventArgs e)
         {
-
             if (radioSERVER.Checked)
             {
             }
@@ -374,4 +373,3 @@ namespace PckStudio
         }
 	}
 }
-
