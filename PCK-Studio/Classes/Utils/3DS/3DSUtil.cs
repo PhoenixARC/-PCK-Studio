@@ -38,7 +38,7 @@ namespace PckStudio.Classes.Utils
         {
             switch (fmt)
             {
-                case RenderBase.OTextureFormat.rgba8:
+                case RenderBase.OTextureFormat.argb8:
                     return w * h * 4;
                 case RenderBase.OTextureFormat.rgb8:
                     return w * h * 3;
@@ -66,11 +66,11 @@ namespace PckStudio.Classes.Utils
         {
             if (ReadString(stream, 4) == "3DST")
             {
-                int offset = 32;
+                const int offset = 32;
                 stream.Seek(8L, SeekOrigin.Begin);
                 RenderBase.OTextureFormat format = ReadInt32(stream) switch
                 {
-                    0 => RenderBase.OTextureFormat.rgba8,
+                    0 => RenderBase.OTextureFormat.argb8,
                     1 => RenderBase.OTextureFormat.rgb8,
                     2 => RenderBase.OTextureFormat.rgba5551,
                     3 => RenderBase.OTextureFormat.rgb8,
@@ -91,7 +91,7 @@ namespace PckStudio.Classes.Utils
             return null;
         }
 
-        public static void SetImageTo3DST(Stream stream, Image source, RenderBase.OTextureFormat format = RenderBase.OTextureFormat.rgba8)
+        public static void SetImageTo3DST(Stream stream, Image source, RenderBase.OTextureFormat format = RenderBase.OTextureFormat.argb8)
         {
             // TODO: fix Encoding
             WriteString(stream, "3DST"); // 0
@@ -102,7 +102,6 @@ namespace PckStudio.Classes.Utils
             WriteInt32(stream, 0); // 20
             WriteInt32(stream, 0); // 24
             WriteInt32(stream, 0); // 28
-            WriteInt32(stream, 0); // 32
             source.RotateFlip(RotateFlipType.RotateNoneFlipY);
             byte[] buffer = TextureCodec.Encode(new Bitmap(source), format);
             stream.Write(buffer, 0, buffer.Length);
