@@ -643,7 +643,6 @@
     <None Include="Resources\pckClosed.bmp" />
     <None Include="Resources\wii-u-games-tool.png" />
     <None Include="Resources\turn-off %281%291.png" />
-    <None Include="Resources\bg2.png" />
     <None Include="Resources\discord.png" />
     <None Include="Resources\external-content.duckduckgo.png" />
     <None Include="Resources\clock.png" />
