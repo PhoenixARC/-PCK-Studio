@@ -245,8 +245,9 @@ namespace PckStudio
 		{
 			foreach (var file in pckFile.Files)
 			{
-                // Replace backward slashes('\') with forward slashes('/') since some filepath use backward slashes
-                TreeNode node = BuildNodeTreeBySeperator(root, file.filepath.Replace('\\', '/'), '/');
+				// Replace backward slashes('\') with forward slashes('/') since some filepath use backward slashes
+				file.filepath = file.filepath.Replace('\\', '/'); // fix any file paths that may be incorrect
+				TreeNode node = BuildNodeTreeBySeperator(root, file.filepath, '/');
 				node.Tag = file;
 				switch (file.filetype)
 				{
@@ -2921,11 +2922,25 @@ namespace PckStudio
 						mippedTexture.Save(texStream, ImageFormat.Png);
 						MipMappedFile.SetData(texStream.ToArray());
 
-						currentPCK.Files.Add(MipMappedFile);
-						BuildMainTreeView();
+						currentPCK.Files.Insert(currentPCK.Files.IndexOf(file) + i - 1, MipMappedFile);
 					}
+					BuildMainTreeView();
 				}
 			}
+		}
+
+		private void colourscolToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			PCKFile.FileData NewColorFile;
+			if (currentPCK.TryGetFile("colours.col", PCKFile.FileData.FileType.ColourTableFile, out NewColorFile))
+			{
+				MessageBox.Show("A color table file already exists in this PCK and a new one cannot be created.", "Operation aborted");
+				return;
+			}
+			NewColorFile = new PCKFile.FileData("colours.col", PCKFile.FileData.FileType.ColourTableFile);
+			NewColorFile.SetData(Resources.colours);
+			currentPCK.Files.Add(NewColorFile);
+			BuildMainTreeView();
 		}
 	}
 }

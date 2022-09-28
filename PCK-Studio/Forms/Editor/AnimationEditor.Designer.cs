@@ -227,6 +227,7 @@
 			this.InterpolationCheckbox.Text = "Interpolates (not simulated above)";
 			this.InterpolationCheckbox.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.InterpolationCheckbox.UseSelectable = true;
+			this.InterpolationCheckbox.CheckedChanged += new System.EventHandler(this.InterpolationCheckbox_CheckedChanged);
 			// 
 			// AnimationPlayBtn
 			// 
@@ -260,7 +261,7 @@
 			this.tileLabel.Location = new System.Drawing.Point(20, 311);
 			this.tileLabel.MinimumSize = new System.Drawing.Size(170, 19);
 			this.tileLabel.Name = "tileLabel";
-			this.tileLabel.Size = new System.Drawing.Size(170, 19);
+			this.tileLabel.Size = new System.Drawing.Size(57, 19);
 			this.tileLabel.TabIndex = 20;
 			this.tileLabel.Text = "tileLabel";
 			this.tileLabel.Theme = MetroFramework.MetroThemeStyle.Dark;

@@ -21,7 +21,7 @@ namespace PckStudio.Classes.IO
             _pckfile = file;
             LUT = _pckfile.GatherPropertiesList();
             // fix for Skins.pck
-            if (!file.HasFile("localisation.loc", PCKFile.FileData.FileType.LocalisationFile) && !LUT.Contains("XMLVERSION")) LUT.Insert(0, "XMLVERSION");
+            //if (!file.HasFile("localisation.loc", PCKFile.FileData.FileType.LocalisationFile) && !LUT.Contains("XMLVERSION")) LUT.Insert(0, "XMLVERSION");
         }
 
         private void WriteToStream(Stream stream)

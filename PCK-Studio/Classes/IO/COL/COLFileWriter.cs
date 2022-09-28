@@ -31,8 +31,8 @@ namespace PckStudio.Classes.IO.COL
                 {
                     WriteString(stream, colorEntry.name);
                     WriteUInt(stream, colorEntry.color);
-                    WriteUInt(stream, colorEntry.rgbcolor);
-                    WriteUInt(stream, colorEntry.unk);
+                    WriteUInt(stream, colorEntry.color_b);
+                    WriteUInt(stream, colorEntry.color_c);
                 }
             }
         }

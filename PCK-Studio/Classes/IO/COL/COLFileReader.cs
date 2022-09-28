@@ -32,10 +32,10 @@ namespace PckStudio.Classes.IO.COL
                 for (int i = 0; i < water_color_entries; i++)
                 {
                     string name = ReadString(stream);
-                    uint color = ReadUInt(stream);
-                    uint rgbcolor = ReadUInt(stream);
-                    uint unk = ReadUInt(stream);
-                    colourFile.waterEntries.Add(new ExtendedColorEntry(name, color, rgbcolor, unk));
+                    uint colorA = ReadUInt(stream);
+                    uint colorB = ReadUInt(stream);
+                    uint colorC = ReadUInt(stream);
+                    colourFile.waterEntries.Add(new ExtendedColorEntry(name, colorA, colorB, colorC));
                 }
             }
             return colourFile;
