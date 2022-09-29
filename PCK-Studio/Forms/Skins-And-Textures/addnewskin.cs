@@ -308,6 +308,7 @@ namespace PckStudio
                         skinPictureBoxTexture.Image = Image.FromStream(stream);
                         stream.Close();
                         stream.Dispose();
+                        File.Delete(Application.StartupPath + "\\temp.png");
                     }
                     skinPictureBoxTexture.Width = skinPictureBoxTexture.Height;
                     buttonDone.Enabled = true;
