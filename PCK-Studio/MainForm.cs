@@ -79,6 +79,7 @@ namespace PckStudio
 
 		public void LoadFromPath(string filepath)
 		{
+			treeViewMain.Nodes.Clear();
             currentPCK = openPck(filepath);
             if (currentPCK == null) return;
             if (addPasswordToolStripMenuItem.Enabled = checkForPassword())
@@ -131,9 +132,9 @@ namespace PckStudio
 				if (ofd.ShowDialog() == DialogResult.OK)
 				{
 					LoadFromPath(ofd.FileName);
-					}
 				}
 			}
+		}
 
 		private PCKFile openPck(string filePath)
 		{
@@ -273,8 +274,16 @@ namespace PckStudio
 
 		private void BuildMainTreeView()
 		{
+			// In case the Rename function was just used and the selected node name no longer matches the file name
+			string filepath = "";
+			if(treeViewMain.SelectedNode != null) filepath = (treeViewMain.SelectedNode.Tag as PCKFile.FileData).filepath;
 			treeViewMain.Nodes.Clear();
 			BuildPckTreeView(treeViewMain.Nodes, currentPCK);
+			if (!String.IsNullOrEmpty(filepath))
+			{
+				// Looks kinda nuts but this line of code is responsible for finding the correct node that was originally selected
+				treeViewMain.SelectedNode = treeViewMain.Nodes.Find(Path.GetFileName(filepath), true).ToList().Find(t  => (t.Tag as PCKFile.FileData).filepath == filepath);
+			}
 		}
 
         private void HandleTextureFile(PCKFile.FileData file)
@@ -663,11 +672,69 @@ namespace PckStudio
 			}
 		}
 
+		List<TreeNode> GetSubPCKFiles(TreeNodeCollection children)
+		{
+			List<TreeNode> new_nodes = new List<TreeNode>();
+
+			foreach(TreeNode node in children)
+			{
+				Console.WriteLine(node.Text);
+				if (node.Nodes.Count > 0)
+				{
+					new_nodes.Concat(GetSubPCKFiles(node.Nodes));
+				}
+				else if(node.Tag is PCKFile.FileData) new_nodes.Add(node);
+			}
+
+			return new_nodes;
+		}
+
+		void RebuildSubPCK(string PCKPath)
+		{
+			// Support for if a file is edited within a PCK File
+			TreeNode parent = treeViewMain.Nodes[treeViewMain.Nodes.IndexOfKey(PCKPath)];
+			if (parent is null || parent.Tag is not PCKFile.FileData) return;
+			PCKFile.FileData parent_file = (PCKFile.FileData)parent.Tag;
+			if ((parent_file.filetype is PCKFile.FileData.FileType.TexturePackInfoFile)
+				|| (parent_file.filetype is PCKFile.FileData.FileType.SkinDataFile))
+			{
+				Console.WriteLine("Rebuilding " + parent_file.filepath);
+				PCKFile newPCKFile = new PCKFile(3);
+
+				foreach (TreeNode node in GetSubPCKFiles(parent.Nodes))
+				{
+					if (node.Tag is PCKFile.FileData)
+					{
+						PCKFile.FileData node_file = (PCKFile.FileData)node.Tag;
+						PCKFile.FileData new_file = new PCKFile.FileData(node_file.filepath, node_file.filetype);
+						foreach (var prop in node_file.properties) new_file.properties.Add(prop);
+						new_file.SetData(node_file.data);
+						newPCKFile.Files.Add(new_file);
+					}
+				}
+
+				MemoryStream ms = new MemoryStream();
+				// Bool to add the XMLVersion property
+				bool isSkinsPCK = parent_file.filetype is PCKFile.FileData.FileType.SkinDataFile;
+				PCKFileWriter.Write(ms, newPCKFile, LittleEndianCheckBox.Checked, isSkinsPCK);
+				parent_file.SetData(ms.ToArray());
+				parent.Tag = parent_file;
+			}
+		}
+
 		private void treeViewMain_DoubleClick(object sender, EventArgs e)
 		{
 			if (treeViewMain.SelectedNode is TreeNode t && t.Tag is PCKFile.FileData file)
+			{
 				pckFileTypeHandler[file.filetype]?.Invoke(file);
-					}
+				if (t.FullPath.Contains(".pck"))
+				{
+					string pathToPCK = t.FullPath.Substring(0, t.FullPath.IndexOf(".pck") + 4);
+					Console.WriteLine(pathToPCK);
+					RebuildSubPCK(pathToPCK);
+				}
+			}
+		}
 
 		private void treeMeta_AfterSelect(object sender, TreeViewEventArgs e)
 		{
@@ -984,6 +1051,7 @@ namespace PckStudio
 				LoadEditorTab();
 			}
 		}
+
 		private void texturePackToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			CreateTexturePack packPrompt = new CreateTexturePack("");
