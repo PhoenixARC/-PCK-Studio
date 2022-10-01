@@ -423,7 +423,11 @@ namespace PckStudio.Forms.Editor
             using FrameEditor diag = new FrameEditor(frame.Ticks, currentAnimation.GetFrameIndex(frame.Texture), currentAnimation.FrameTextureCount-1);
             if (diag.ShowDialog(this) == DialogResult.OK)
             {
-                currentAnimation.SetFrame(frame, diag.FrameTextureIndex, diag.FrameTime);
+				/* Found a bug here. When passing the frame variable, it would replace the first instance of that frame and time
+				 * rather than the actual frame that was clicked. I've just switched to passing the index to fix this for now. -Matt
+				*/
+
+                currentAnimation.SetFrame(frameTreeView.SelectedNode.Index, diag.FrameTextureIndex, diag.FrameTime);
                 LoadAnimationTreeView();
             }
         }
