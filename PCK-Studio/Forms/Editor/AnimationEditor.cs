@@ -275,7 +275,9 @@ namespace PckStudio.Forms.Editor
 			InterpolationCheckbox.Checked = currentAnimation.Interpolate;
 			frameTreeView.Nodes.Clear();
 			// $"Frame: {i}, Frame Time: {Animation.MinimumFrameTime}"
-            currentAnimation.GetFrames().ForEach(f => frameTreeView.Nodes.Add($"Frame: {currentAnimation.GetFrameIndex(f.Texture)}, Frame Time: {f.Ticks}"));
+			TextureIcons.Images.Clear();
+			TextureIcons.Images.AddRange(currentAnimation.GetFrames().Select(f => f.Texture).ToArray());
+			currentAnimation.GetFrames().ForEach(f => frameTreeView.Nodes.Add("", $"for {f.Ticks} frame" + (f.Ticks > 1 ? "s" : "" ), currentAnimation.GetFrameIndex(f.Texture), currentAnimation.GetFrameIndex(f.Texture)));
 			player.SelectFrame(currentAnimation, 0);
 		}
 

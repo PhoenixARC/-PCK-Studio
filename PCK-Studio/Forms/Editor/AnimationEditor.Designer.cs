@@ -52,6 +52,7 @@
 			this.AnimationStopBtn = new MetroFramework.Controls.MetroButton();
 			this.tileLabel = new MetroFramework.Controls.MetroLabel();
 			this.pictureBoxWithInterpolationMode1 = new PckStudio.PictureBoxWithInterpolationMode();
+			this.TextureIcons = new System.Windows.Forms.ImageList(this.components);
 			this.contextMenuStrip1.SuspendLayout();
 			this.menuStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxWithInterpolationMode1)).BeginInit();
@@ -65,9 +66,12 @@
 			this.frameTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
 			this.frameTreeView.ContextMenuStrip = this.contextMenuStrip1;
 			this.frameTreeView.ForeColor = System.Drawing.Color.White;
+			this.frameTreeView.ImageIndex = 0;
+			this.frameTreeView.ImageList = this.TextureIcons;
 			this.frameTreeView.Location = new System.Drawing.Point(20, 88);
 			this.frameTreeView.Margin = new System.Windows.Forms.Padding(0);
 			this.frameTreeView.Name = "frameTreeView";
+			this.frameTreeView.SelectedImageIndex = 0;
 			this.frameTreeView.Size = new System.Drawing.Size(165, 223);
 			this.frameTreeView.TabIndex = 15;
 			this.frameTreeView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.frameTreeView_ItemDrag);
@@ -255,7 +259,7 @@
 			this.tileLabel.Location = new System.Drawing.Point(20, 312);
 			this.tileLabel.MinimumSize = new System.Drawing.Size(170, 19);
 			this.tileLabel.Name = "tileLabel";
-			this.tileLabel.Size = new System.Drawing.Size(170, 19);
+			this.tileLabel.Size = new System.Drawing.Size(57, 19);
 			this.tileLabel.TabIndex = 20;
 			this.tileLabel.Text = "tileLabel";
 			this.tileLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -272,6 +276,12 @@
 			this.pictureBoxWithInterpolationMode1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
 			this.pictureBoxWithInterpolationMode1.TabIndex = 16;
 			this.pictureBoxWithInterpolationMode1.TabStop = false;
+			// 
+			// TextureIcons
+			// 
+			this.TextureIcons.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
+			this.TextureIcons.ImageSize = new System.Drawing.Size(32, 32);
+			this.TextureIcons.TransparentColor = System.Drawing.Color.Transparent;
 			// 
 			// AnimationEditor
 			// 
@@ -324,5 +334,6 @@
 		private System.Windows.Forms.ToolStripMenuItem editorControlsToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem setBulkSpedToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem javaAnimationSupportToolStripMenuItem;
+		private System.Windows.Forms.ImageList TextureIcons;
 	}
 }
