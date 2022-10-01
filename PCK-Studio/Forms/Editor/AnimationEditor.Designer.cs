@@ -87,7 +87,6 @@
 			// 
 			// addFrameToolStripMenuItem
 			// 
-			this.addFrameToolStripMenuItem.Image = global::PckStudio.Properties.Resources.ExportFile;
 			this.addFrameToolStripMenuItem.Name = "addFrameToolStripMenuItem";
 			this.addFrameToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
 			this.addFrameToolStripMenuItem.Text = "Add Frame";
@@ -95,7 +94,6 @@
 			// 
 			// removeFrameToolStripMenuItem
 			// 
-			this.removeFrameToolStripMenuItem.Image = global::PckStudio.Properties.Resources.Del;
 			this.removeFrameToolStripMenuItem.Name = "removeFrameToolStripMenuItem";
 			this.removeFrameToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
 			this.removeFrameToolStripMenuItem.Text = "Remove Frame";
@@ -146,7 +144,6 @@
 			// 
 			// bulkAnimationSpeedToolStripMenuItem
 			// 
-			this.bulkAnimationSpeedToolStripMenuItem.Image = global::PckStudio.Properties.Resources.clock;
 			this.bulkAnimationSpeedToolStripMenuItem.Name = "bulkAnimationSpeedToolStripMenuItem";
 			this.bulkAnimationSpeedToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
 			this.bulkAnimationSpeedToolStripMenuItem.Text = "Set Bulk Animation Speed";
@@ -154,7 +151,6 @@
 			// 
 			// importJavaAnimationToolStripMenuItem
 			// 
-			this.importJavaAnimationToolStripMenuItem.Image = global::PckStudio.Properties.Resources.Replace;
 			this.importJavaAnimationToolStripMenuItem.Name = "importJavaAnimationToolStripMenuItem";
 			this.importJavaAnimationToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
 			this.importJavaAnimationToolStripMenuItem.Text = "Import Java Animation";
@@ -162,7 +158,6 @@
 			// 
 			// exportJavaAnimationToolStripMenuItem
 			// 
-			this.exportJavaAnimationToolStripMenuItem.Image = global::PckStudio.Properties.Resources.ExportFile;
 			this.exportJavaAnimationToolStripMenuItem.Name = "exportJavaAnimationToolStripMenuItem";
 			this.exportJavaAnimationToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
 			this.exportJavaAnimationToolStripMenuItem.Text = "Export Java Animation";
@@ -170,7 +165,6 @@
 			// 
 			// changeTileToolStripMenuItem
 			// 
-			this.changeTileToolStripMenuItem.Image = global::PckStudio.Properties.Resources.changeTile;
 			this.changeTileToolStripMenuItem.Name = "changeTileToolStripMenuItem";
 			this.changeTileToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
 			this.changeTileToolStripMenuItem.Text = "Change Tile";
@@ -258,10 +252,10 @@
 			// 
 			this.tileLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.tileLabel.AutoSize = true;
-			this.tileLabel.Location = new System.Drawing.Point(20, 311);
+			this.tileLabel.Location = new System.Drawing.Point(20, 312);
 			this.tileLabel.MinimumSize = new System.Drawing.Size(170, 19);
 			this.tileLabel.Name = "tileLabel";
-			this.tileLabel.Size = new System.Drawing.Size(57, 19);
+			this.tileLabel.Size = new System.Drawing.Size(170, 19);
 			this.tileLabel.TabIndex = 20;
 			this.tileLabel.Text = "tileLabel";
 			this.tileLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
