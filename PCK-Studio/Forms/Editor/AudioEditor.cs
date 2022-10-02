@@ -418,7 +418,7 @@ namespace PckStudio.Forms.Editor
 		private void whatIsEachCategoryToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			MessageBox.Show("Categories are pretty self explanatory. The game controls when each category should play.\n" +
-				"\nGAMEPLAY - Plays in the specified dimensions.\n" +
+				"\nGAMEPLAY - Plays in the specified dimensions and game modes.\n" +
 				"-Overworld: Plays in survival mode and in Creative if no songs are set\n" +
 				"-Nether: Nothing special to note.\n" +
 				"-End: Prioritizes the final track when the dragon is alive.\n" +
