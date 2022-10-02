@@ -143,6 +143,11 @@ namespace PckStudio.Forms.Editor
 				return frames;
 			}
 
+			public List<Image> GetFrameTextures()
+			{
+				return frameTextures;
+			}
+
 			public int GetFrameIndex(Image frameTexture)
 			{
 				_ = frameTexture ?? throw new ArgumentNullException(nameof(frameTexture));
@@ -276,7 +281,7 @@ namespace PckStudio.Forms.Editor
 			frameTreeView.Nodes.Clear();
 			// $"Frame: {i}, Frame Time: {Animation.MinimumFrameTime}"
 			TextureIcons.Images.Clear();
-			TextureIcons.Images.AddRange(currentAnimation.GetFrames().Select(f => f.Texture).ToArray());
+			TextureIcons.Images.AddRange(currentAnimation.GetFrameTextures().ToArray());
 			currentAnimation.GetFrames().ForEach(f => frameTreeView.Nodes.Add("", $"for {f.Ticks} frame" + (f.Ticks > 1 ? "s" : "" ), currentAnimation.GetFrameIndex(f.Texture), currentAnimation.GetFrameIndex(f.Texture)));
 			player.SelectFrame(currentAnimation, 0);
 		}
@@ -422,8 +427,8 @@ namespace PckStudio.Forms.Editor
 		private void treeView1_doubleClick(object sender, EventArgs e)
 		{
             var frame = currentAnimation.GetFrame(frameTreeView.SelectedNode.Index);
-            using FrameEditor diag = new FrameEditor(frame.Ticks, currentAnimation.GetFrameIndex(frame.Texture), currentAnimation.FrameTextureCount-1);
-            if (diag.ShowDialog(this) == DialogResult.OK)
+            using FrameEditor diag = new FrameEditor(frame.Ticks, currentAnimation.GetFrameIndex(frame.Texture), TextureIcons);
+			if (diag.ShowDialog(this) == DialogResult.OK)
             {
 				/* Found a bug here. When passing the frame variable, it would replace the first instance of that frame and time
 				 * rather than the actual frame that was clicked. I've just switched to passing the index to fix this for now. -Matt
@@ -436,7 +441,8 @@ namespace PckStudio.Forms.Editor
 
 		private void addFrameToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-            using FrameEditor diag = new FrameEditor(currentAnimation.FrameTextureCount-1);
+            using FrameEditor diag = new FrameEditor(TextureIcons);
+			diag.SaveBtn.Text = "Add";
 			if (diag.ShowDialog(this) == DialogResult.OK)
 			{
                 currentAnimation.AddFrame(diag.FrameTextureIndex, diag.FrameTime);
