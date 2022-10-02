@@ -110,7 +110,7 @@ namespace PckStudio.Classes
 				bool flag2 = !(a == ".wav");
 				if (flag2)
 				{
-					throw new Exception("File type not valid. To use MP3 or other audio formats, convert to wav format before using tool");
+					throw new Exception("File type not valid. To use MP3 or other audio formats, convert to wav format before using this tool");
 				}
 				result = "WAV";
 			}
