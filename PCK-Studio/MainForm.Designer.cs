@@ -130,8 +130,8 @@
 			this.label11 = new MetroFramework.Controls.MetroLabel();
 			this.treeViewMain = new System.Windows.Forms.TreeView();
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
-			this.pictureBoxImagePreview = new PckStudio.PictureBoxWithInterpolationMode();
 			this.LittleEndianCheckBox = new MetroFramework.Controls.MetroCheckBox();
+			this.pictureBoxImagePreview = new PckStudio.PictureBoxWithInterpolationMode();
 			this.contextMenuPCKEntries.SuspendLayout();
 			this.menuStrip.SuspendLayout();
 			this.contextMenuMetaTree.SuspendLayout();
@@ -947,14 +947,6 @@
 			resources.ApplyResources(this.imageList, "imageList");
 			this.imageList.TransparentColor = System.Drawing.Color.Transparent;
 			// 
-			// pictureBoxImagePreview
-			// 
-			resources.ApplyResources(this.pictureBoxImagePreview, "pictureBoxImagePreview");
-			this.pictureBoxImagePreview.BackColor = System.Drawing.Color.Transparent;
-			this.pictureBoxImagePreview.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-			this.pictureBoxImagePreview.Name = "pictureBoxImagePreview";
-			this.pictureBoxImagePreview.TabStop = false;
-			// 
 			// LittleEndianCheckBox
 			// 
 			resources.ApplyResources(this.LittleEndianCheckBox, "LittleEndianCheckBox");
@@ -963,6 +955,14 @@
 			this.LittleEndianCheckBox.Style = MetroFramework.MetroColorStyle.White;
 			this.LittleEndianCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.LittleEndianCheckBox.UseSelectable = true;
+			// 
+			// pictureBoxImagePreview
+			// 
+			resources.ApplyResources(this.pictureBoxImagePreview, "pictureBoxImagePreview");
+			this.pictureBoxImagePreview.BackColor = System.Drawing.Color.Transparent;
+			this.pictureBoxImagePreview.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+			this.pictureBoxImagePreview.Name = "pictureBoxImagePreview";
+			this.pictureBoxImagePreview.TabStop = false;
 			// 
 			// MainForm
 			// 
