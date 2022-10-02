@@ -51,6 +51,8 @@ namespace PckStudio.Forms.Editor
 			this.saveToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			this.waterTab = new System.Windows.Forms.TabPage();
 			this.waterTreeView = new System.Windows.Forms.TreeView();
+			this.ColorContextMenu = new MetroFramework.Controls.MetroContextMenu(this.components);
+			this.restoreOriginalColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.underwaterTreeView = new System.Windows.Forms.TreeView();
 			this.fogTreeView = new System.Windows.Forms.TreeView();
 			this.colorsTab = new System.Windows.Forms.TabPage();
@@ -58,8 +60,6 @@ namespace PckStudio.Forms.Editor
 			this.tabControl = new MetroFramework.Controls.MetroTabControl();
 			this.underwaterTab = new System.Windows.Forms.TabPage();
 			this.fogTab = new System.Windows.Forms.TabPage();
-			this.ColorContextMenu = new MetroFramework.Controls.MetroContextMenu(this.components);
-			this.restoreOriginalColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.metroPanel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.blueUpDown)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.greenUpDown)).BeginInit();
@@ -68,11 +68,11 @@ namespace PckStudio.Forms.Editor
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.menuStrip.SuspendLayout();
 			this.waterTab.SuspendLayout();
+			this.ColorContextMenu.SuspendLayout();
 			this.colorsTab.SuspendLayout();
 			this.tabControl.SuspendLayout();
 			this.underwaterTab.SuspendLayout();
 			this.fogTab.SuspendLayout();
-			this.ColorContextMenu.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// metroPanel1
@@ -265,6 +265,19 @@ namespace PckStudio.Forms.Editor
 			this.waterTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView2_AfterSelect);
 			this.waterTreeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView2_KeyDown);
 			// 
+			// ColorContextMenu
+			// 
+			this.ColorContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.restoreOriginalColorToolStripMenuItem});
+			this.ColorContextMenu.Name = "ColorContextMenu";
+			resources.ApplyResources(this.ColorContextMenu, "ColorContextMenu");
+			// 
+			// restoreOriginalColorToolStripMenuItem
+			// 
+			this.restoreOriginalColorToolStripMenuItem.Name = "restoreOriginalColorToolStripMenuItem";
+			resources.ApplyResources(this.restoreOriginalColorToolStripMenuItem, "restoreOriginalColorToolStripMenuItem");
+			this.restoreOriginalColorToolStripMenuItem.Click += new System.EventHandler(this.restoreOriginalColorToolStripMenuItem_Click);
+			// 
 			// underwaterTreeView
 			// 
 			this.underwaterTreeView.ContextMenuStrip = this.ColorContextMenu;
@@ -323,20 +336,6 @@ namespace PckStudio.Forms.Editor
 			resources.ApplyResources(this.fogTab, "fogTab");
 			this.fogTab.Name = "fogTab";
 			// 
-			// ColorContextMenu
-			// 
-			this.ColorContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.restoreOriginalColorToolStripMenuItem});
-			this.ColorContextMenu.Name = "ColorContextMenu";
-			resources.ApplyResources(this.ColorContextMenu, "ColorContextMenu");
-			// 
-			// restoreOriginalColorToolStripMenuItem
-			// 
-			this.restoreOriginalColorToolStripMenuItem.Image = global::PckStudio.Properties.Resources.ExportFile;
-			this.restoreOriginalColorToolStripMenuItem.Name = "restoreOriginalColorToolStripMenuItem";
-			resources.ApplyResources(this.restoreOriginalColorToolStripMenuItem, "restoreOriginalColorToolStripMenuItem");
-			this.restoreOriginalColorToolStripMenuItem.Click += new System.EventHandler(this.restoreOriginalColorToolStripMenuItem_Click);
-			// 
 			// COLEditor
 			// 
 			resources.ApplyResources(this, "$this");
@@ -358,11 +357,11 @@ namespace PckStudio.Forms.Editor
 			this.menuStrip.ResumeLayout(false);
 			this.menuStrip.PerformLayout();
 			this.waterTab.ResumeLayout(false);
+			this.ColorContextMenu.ResumeLayout(false);
 			this.colorsTab.ResumeLayout(false);
 			this.tabControl.ResumeLayout(false);
 			this.underwaterTab.ResumeLayout(false);
 			this.fogTab.ResumeLayout(false);
-			this.ColorContextMenu.ResumeLayout(false);
 			this.ResumeLayout(false);
 
         }
