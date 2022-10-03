@@ -14,86 +14,82 @@ namespace PckStudio.Classes
 		[DllImport("kernel32.dll")]
 		public static extern IntPtr FreeLibrary(IntPtr library);
 
-		public unsafe static string Binka(string infile, string outDir = null, bool last = true, string working = null)
+		public int temp_error_code;
+		string binka_enc_loc;
+		string mss32_loc;
+		string binkawin_loc;
+		public string working = null;
+
+		public async void WavToBinka(string infile, string outDir, int compression)
 		{
-			bool flag = working == null;
-			string text;
-			string text2;
-			string path;
-			if (flag)
+			var process = Process.Start(new ProcessStartInfo
 			{
-				working = Path.GetTempPath() + DateTime.Now.Second.ToString();
-				text = PckStudio.Classes.Bink.ExtractResource("Resources.binka_encode.exe", working, "binka_encode.exe");
-				text2 = PckStudio.Classes.Bink.ExtractResource("Resources.mss32.dll", working, "mss32.dll");
-				path = PckStudio.Classes.Bink.ExtractResource("Resources.binkawin.asi", working, "binkawin.asi");
-				PckStudio.Classes.Bink.library = PckStudio.Classes.Bink.LoadLibrary(text2);
+				FileName = binka_enc_loc,
+				Arguments = $"\"{infile}\" \"{outDir}\" -s -b{compression}",
+				UseShellExecute = true,
+				CreateNoWindow = true,
+				WindowStyle = ProcessWindowStyle.Hidden
+			});
+			process.WaitForExit();
+			temp_error_code = process.ExitCode;
+		}
+
+		public unsafe void BinkaToWav(string infile, string outDir)
+		{
+			string[] array2 = createArg(infile, outDir);
+			byte[] array3 = File.ReadAllBytes(array2[0]);
+			uint num = 0U;
+			AIL_set_redist_directory(".");
+			AIL_startup();
+			IntPtr intPtr;
+			bool flag4 = AIL_decompress_ASI(array3, (uint)array3.Length, ".binka", &intPtr, &num, 0U) == 0;
+			if (flag4)
+			{
+				throw new Exception("AIL ERROR");
+			}
+			byte[] array4 = new byte[num];
+			Marshal.Copy(intPtr, array4, 0, array4.Length);
+			AIL_mem_free_lock(intPtr);
+			AIL_shutdown();
+			File.WriteAllBytes(array2[1], array4);
+		}
+
+		public void SetUpBinka()
+		{
+			if (working == null)
+			{
+				working = (Path.GetTempPath() + "PCKStudio").Replace("\\","/");
+				Directory.CreateDirectory(working);
+				binka_enc_loc = ExtractResource("binka_encode.exe", working);
+				mss32_loc = ExtractResource("mss32.dll", working);
+				binkawin_loc = ExtractResource("binkawin.asi", working);
+				library = LoadLibrary(mss32_loc);
 			}
 			else
 			{
-				text = working + "\\binka_encode.exe";
-				text2 = working + "\\mss32.dll";
-				path = working + "\\binkawin.asi";
+				binka_enc_loc = working + "\\binka_encode.exe";
+				mss32_loc = working + "\\mss32.dll";
+				binkawin_loc = working + "\\binkawin.asi";
 			}
-			bool flag2 = PckStudio.Classes.Bink.getType(infile) == "WAV";
-			if (flag2)
+		}
+
+		public void CleanUpBinka()
+		{
+			FreeLibrary(library);
+			File.Delete(binka_enc_loc);
+			File.Delete(binkawin_loc);
+			while (File.Exists(mss32_loc))
 			{
-				string[] array = PckStudio.Classes.Bink.createArg(infile, outDir);
-				Process process = new Process();
-				process.StartInfo.FileName = text;
-				process.StartInfo.Arguments = string.Concat(new string[]
+				try
 				{
-					" \"",
-					array[0],
-					"\" \"",
-					array[1],
-					"\""
-				});
-				process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-				process.Start();
-				process.WaitForExit();
-			}
-			else
-			{
-				bool flag3 = PckStudio.Classes.Bink.getType(infile) == "BINKA";
-				if (flag3)
+					File.Delete(mss32_loc);
+				}
+				catch
 				{
-					string[] array2 = PckStudio.Classes.Bink.createArg(infile, outDir);
-					byte[] array3 = File.ReadAllBytes(array2[0]);
-					uint num = 0U;
-					PckStudio.Classes.Bink.AIL_set_redist_directory(".");
-					PckStudio.Classes.Bink.AIL_startup();
-					IntPtr intPtr;
-					bool flag4 = PckStudio.Classes.Bink.AIL_decompress_ASI(array3, (uint)array3.Length, ".binka", &intPtr, &num, 0U) == 0;
-					if (flag4)
-					{
-						throw new Exception("AIL ERROR");
-					}
-					byte[] array4 = new byte[num];
-					Marshal.Copy(intPtr, array4, 0, array4.Length);
-					PckStudio.Classes.Bink.AIL_mem_free_lock(intPtr);
-					PckStudio.Classes.Bink.AIL_shutdown();
-					File.WriteAllBytes(array2[1], array4);
+					FreeLibrary(library);
 				}
 			}
-			if (last)
-			{
-				PckStudio.Classes.Bink.FreeLibrary(PckStudio.Classes.Bink.library);
-				PckStudio.Classes.Bink.FreeLibrary(PckStudio.Classes.Bink.library);
-				File.Delete(text);
-				File.Delete(path);
-				while (File.Exists(text2))
-				{
-					try
-					{
-						File.Delete(text2);
-					}
-					catch
-					{
-						PckStudio.Classes.Bink.FreeLibrary(PckStudio.Classes.Bink.library);
-					}
-				}
-			}
-			return working;
+			Directory.Delete(working);
 		}
 
 		private static string getType(string loc)
@@ -122,7 +118,7 @@ namespace PckStudio.Classes
 			string[] array = new string[2];
 			array[0] = inFile;
 			string[] array2 = array;
-			string type = PckStudio.Classes.Bink.getType(inFile);
+			string type = getType(inFile);
 			bool flag = type == "BINKA";
 			if (flag)
 			{
@@ -144,20 +140,18 @@ namespace PckStudio.Classes
 			return array2;
 		}
 
-		internal static string ExtractResource(string resource, string path, string filename)
+		internal static string ExtractResource(string resource, string working)
 		{
-			Stream manifestResourceStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resource);
-			byte[] array = new byte[(int)manifestResourceStream.Length];
-			manifestResourceStream.Read(array, 0, array.Length);
-			manifestResourceStream.Close();
-			bool flag = !Directory.Exists(path);
-			if (flag)
+			object ob = Properties.Resources.ResourceManager.GetObject(Path.GetFileNameWithoutExtension(resource));
+			byte[] myResBytes = (byte[])ob;
+			if(File.Exists(Path.Combine(working, resource))) File.Delete(Path.Combine(working, resource));
+			using (FileStream fsDst = new FileStream(Path.Combine(working, resource), FileMode.CreateNew, FileAccess.Write))
 			{
-				Directory.CreateDirectory(path);
+				fsDst.Write(myResBytes, 0, myResBytes.Length);
+				fsDst.Close();
+				fsDst.Dispose();
 			}
-			path = path + "\\" + filename;
-			File.WriteAllBytes(path, array);
-			return path;
+			return "\"" + working + "/" + resource + "\"";
 		}
 
 		[DllImport("mss32.dll", EntryPoint = "_AIL_decompress_ASI@24")]
