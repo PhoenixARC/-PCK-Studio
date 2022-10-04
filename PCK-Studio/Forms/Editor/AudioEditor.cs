@@ -87,24 +87,10 @@ namespace PckStudio.Forms.Editor
 			playOverworldInCreative.Enabled = audioFile.HasCategory(PCKAudioFile.AudioCategory.EAudioType.Creative);
 		}
 
-		// https://stackoverflow.com/a/25064568 by Alik Khilazhev -MattNL
-		private void ExtractResource(string resName, string fName)
-		{
-			object ob = Properties.Resources.ResourceManager.GetObject(resName);
-			byte[] myResBytes = (byte[])ob;
-			using (FileStream fsDst = new FileStream(fName, FileMode.CreateNew, FileAccess.Write))
-			{
-				byte[] bytes = myResBytes;
-				fsDst.Write(bytes, 0, bytes.Length);
-				fsDst.Close();
-				fsDst.Dispose();
-			}
-		}
-
 		private void AudioEditor_FormClosed(object sender, FormClosedEventArgs e)
 		{
-			//FreeLibrary(library);
-			BINK.CleanUpBinka();
+			// Clean up is throwing an error of some kind? FreeLibrary maybe??
+			//BINK.CleanUpBinka();
 		}
 
 		private void verifyFileLocationToolStripMenuItem_Click(object sender, EventArgs e)

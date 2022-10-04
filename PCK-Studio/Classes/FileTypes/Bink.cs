@@ -74,7 +74,6 @@ namespace PckStudio.Classes
 
 		public void CleanUpBinka()
 		{
-			FreeLibrary(library);
 			File.Delete(binka_enc_loc);
 			File.Delete(binkawin_loc);
 			while (File.Exists(mss32_loc))
