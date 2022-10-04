@@ -58,7 +58,6 @@ namespace PckStudio.Forms.Editor
 			this.playOverworldInCreative = new MetroFramework.Controls.MetroCheckBox();
 			this.compressionUpDown = new System.Windows.Forms.NumericUpDown();
 			this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
-			this.convertToWAVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenuStrip1.SuspendLayout();
 			this.menuStrip.SuspendLayout();
 			this.contextMenuStrip2.SuspendLayout();
@@ -229,8 +228,7 @@ namespace PckStudio.Forms.Editor
 			this.contextMenuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addEntryMenuItem,
             this.removeEntryMenuItem,
-            this.verifyFileLocationToolStripMenuItem,
-            this.convertToWAVToolStripMenuItem});
+            this.verifyFileLocationToolStripMenuItem});
 			this.contextMenuStrip2.Name = "contextMenuStrip1";
 			resources.ApplyResources(this.contextMenuStrip2, "contextMenuStrip2");
 			// 
@@ -291,12 +289,6 @@ namespace PckStudio.Forms.Editor
 			this.metroLabel1.Name = "metroLabel1";
 			this.metroLabel1.Theme = MetroFramework.MetroThemeStyle.Dark;
 			// 
-			// convertToWAVToolStripMenuItem
-			// 
-			this.convertToWAVToolStripMenuItem.Name = "convertToWAVToolStripMenuItem";
-			resources.ApplyResources(this.convertToWAVToolStripMenuItem, "convertToWAVToolStripMenuItem");
-			this.convertToWAVToolStripMenuItem.Click += new System.EventHandler(this.convertToWAVToolStripMenuItem_Click);
-			// 
 			// AudioEditor
 			// 
 			resources.ApplyResources(this, "$this");
@@ -351,6 +343,5 @@ namespace PckStudio.Forms.Editor
 		private MetroFramework.Controls.MetroLabel metroLabel1;
 		private System.Windows.Forms.ToolStripMenuItem openDataFolderToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem bulkReplaceExistingTracksToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem convertToWAVToolStripMenuItem;
 	}
 }
