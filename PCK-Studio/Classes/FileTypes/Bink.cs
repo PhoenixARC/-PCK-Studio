@@ -38,15 +38,14 @@ namespace PckStudio.Classes
 		{
 			string[] array2 = createArg(infile, outFile);
 			byte[] array3 = File.ReadAllBytes(array2[0]);
+			Console.WriteLine(array3.Length);
 			uint num = 0U;
 			AIL_set_redist_directory(".");
 			AIL_startup();
 			IntPtr intPtr;
-			bool flag4 = AIL_decompress_ASI(array3, (uint)array3.Length, ".binka", &intPtr, &num, 0U) == 0;
-			if (flag4)
-			{
+			// crash happens in AIL_decompress_ASI
+			if (AIL_decompress_ASI(array3, (uint)array3.Length, ".binka", &intPtr, &num, 0U) == 0)
 				throw new Exception("AIL ERROR");
-			}
 			byte[] array4 = new byte[num];
 			Marshal.Copy(intPtr, array4, 0, array4.Length);
 			AIL_mem_free_lock(intPtr);
