@@ -70,7 +70,7 @@
 		{ "mob_spawner": "Monster Spawner" },
 		{ "snow": "Snow" },
 		{ "ice": "Ice" },
-		{ "snow_side": "Grass Block (Snow) (Side)" },
+		{ "snow_side": "Grass Block (Snowy) (Side)" },
 		{ "cactus_top": "Cactus (Top)" },
 		{ "cactus_side": "Cactus (Side)" },
 		{ "cactus_bottom": "Cactus (Bottom)" },
