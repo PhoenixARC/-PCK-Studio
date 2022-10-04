@@ -426,7 +426,7 @@
 		{ "observer_side": "Observer (Side)" },
 		{ "observer_back": "Observer (Back)" },
 		{ "observer_back_lit": "Observer (On) (Back)" },
-		{ "observer_top": "Observer (Top)" },
+		{ "observer_top": "Observer (Top and Bottom)" },
 		{ "goldRing": "Gold Score Ring" },
 		{ "emeraldRing": "Emerald Score Ring" },
 		{ "structure_block": "Structure Block" },
