@@ -548,7 +548,7 @@
 		{ "jungle_trapdoor": "Jungle Trapdoor" }
 	],
 	"items": [
-		{ "helmetCloth": "Leather Helmet" },
+		{ "helmetCloth": "Leather Cap" },
 		{ "helmetChain": "Chain Helmet" },
 		{ "helmetIron": "Iron Helmet" },
 		{ "helmetDiamond": "Diamond Helmet" },
@@ -564,7 +564,7 @@
 		{ "sugar": "Sugar" },
 		{ "snowball": "Snowball" },
 		{ "elytra": "Elytra" },
-		{ "chestplateCloth": "Leather Chestplate" },
+		{ "chestplateCloth": "Leather Tunic" },
 		{ "chestplateChain": "Chain Chestplate" },
 		{ "chestplateIron": "Iron Chestplate" },
 		{ "chestplateDiamond": "Diamond Chestplate" },
@@ -580,7 +580,7 @@
 		{ "cake": "Cake" },
 		{ "slimeball": "Slimeball" },
 		{ "broken_elytra": "Elytra (Broken)" },
-		{ "leggingsCloth": "Leather Leggings" },
+		{ "leggingsCloth": "Leather Pants" },
 		{ "leggingsChain": "Chain Leggings" },
 		{ "leggingsIron": "Iron Leggings" },
 		{ "leggingsDiamond": "Diamond Leggings" },
