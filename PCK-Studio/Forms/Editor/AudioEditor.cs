@@ -468,7 +468,10 @@ namespace PckStudio.Forms.Editor
 
 		private void convertToWAVToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-
+			if (treeView2.SelectedNode != null && treeView1.SelectedNode.Tag is PCKAudioFile.AudioCategory)
+			{
+				BINK.BinkaToWav(Path.Combine(parent.GetDataPath(), treeView2.SelectedNode.Text + ".binka"), Path.Combine(parent.GetDataPath()));
+			}
 		}
 	}
 }
