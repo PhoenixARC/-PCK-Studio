@@ -20,12 +20,12 @@ namespace PckStudio.Classes
 		string binkawin_loc;
 		public string working = null;
 
-		public async void WavToBinka(string infile, string outDir, int compression)
+		public async void WavToBinka(string infile, string outFile, int compression)
 		{
 			var process = Process.Start(new ProcessStartInfo
 			{
 				FileName = binka_enc_loc,
-				Arguments = $"\"{infile}\" \"{outDir}\" -s -b{compression}",
+				Arguments = $"\"{infile}\" \"{outFile}\" -s -b{compression}",
 				UseShellExecute = true,
 				CreateNoWindow = true,
 				WindowStyle = ProcessWindowStyle.Hidden
@@ -34,9 +34,9 @@ namespace PckStudio.Classes
 			temp_error_code = process.ExitCode;
 		}
 
-		public unsafe void BinkaToWav(string infile, string outDir)
+		public unsafe void BinkaToWav(string infile, string outFile)
 		{
-			string[] array2 = createArg(infile, outDir);
+			string[] array2 = createArg(infile, outFile);
 			byte[] array3 = File.ReadAllBytes(array2[0]);
 			uint num = 0U;
 			AIL_set_redist_directory(".");
