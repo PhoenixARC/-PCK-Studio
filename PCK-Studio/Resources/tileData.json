@@ -611,7 +611,7 @@
 		{ "map": "Map" },
 		{ "seeds_pumpkin": "Pumpkin Seeds" },
 		{ "seeds_melon": "Melon Seeds" },
-		{ "chorus_fruit_popped": "Chorus Fruit (Popped)" },
+		{ "chorus_fruit_popped": "Popped Chorus Fruit" },
 		{ "swordWood": "Wooden Sword" },
 		{ "swordStone": "Stone Sword" },
 		{ "swordIron": "Iron Sword" },
