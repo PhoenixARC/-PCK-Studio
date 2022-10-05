@@ -325,7 +325,6 @@ namespace PckStudio.Forms.Editor
 			if (tabControl.SelectedTab == colorsTab && colorTreeView.SelectedNode != null &&
 				colorTreeView.SelectedNode.Tag != null && colorTreeView.SelectedNode.Tag is COLFile.ColorEntry colorInfoD)
 			{
-				MessageBox.Show("Color");
 				COLFile.ColorEntry entry = default_colourfile.entries.Find(color => color.name == colorTreeView.SelectedNode.Text);
 				colorInfoD.color = entry.color;
 				redUpDown.Value = colorInfoD.color >> 16 & 0xff;
@@ -336,7 +335,6 @@ namespace PckStudio.Forms.Editor
 			else if (tabControl.SelectedTab == waterTab && waterTreeView.SelectedNode != null &&
 			waterTreeView.SelectedNode.Tag != null && waterTreeView.SelectedNode.Tag is COLFile.ExtendedColorEntry colorInfo)
 			{
-				MessageBox.Show("Water");
 				COLFile.ExtendedColorEntry entry = default_colourfile.waterEntries.Find(color => color.name == waterTreeView.SelectedNode.Text);
 				colorInfo.color = entry.color;
 				alphaUpDown.Value = colorInfo.color >> 24 & 0xff;
@@ -348,7 +346,6 @@ namespace PckStudio.Forms.Editor
 			else if (tabControl.SelectedTab == underwaterTab && underwaterTreeView.SelectedNode != null &&
 				underwaterTreeView.SelectedNode.Tag != null && underwaterTreeView.SelectedNode.Tag is COLFile.ExtendedColorEntry colorInfoB)
 			{
-				MessageBox.Show("Underwater");
 				COLFile.ExtendedColorEntry entry = default_colourfile.waterEntries.Find(color => color.name == underwaterTreeView.SelectedNode.Text);
 				colorInfoB.color_b = entry.color_b;
 				alphaUpDown.Value = colorInfoB.color_b >> 24 & 0xff;
@@ -360,7 +357,6 @@ namespace PckStudio.Forms.Editor
 			else if (tabControl.SelectedTab == fogTab && fogTreeView.SelectedNode != null &&
 				fogTreeView.SelectedNode.Tag != null && fogTreeView.SelectedNode.Tag is COLFile.ExtendedColorEntry colorInfoC)
 			{
-				MessageBox.Show("Fog");
 				COLFile.ExtendedColorEntry entry = default_colourfile.waterEntries.Find(color => color.name == fogTreeView.SelectedNode.Text);
 				colorInfoC.color_c = entry.color_c;
 				alphaUpDown.Value = colorInfoC.color_c >> 24 & 0xff;
