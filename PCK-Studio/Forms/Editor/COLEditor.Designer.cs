@@ -123,7 +123,6 @@ namespace PckStudio.Forms.Editor
             0,
             0});
 			this.blueUpDown.Name = "blueUpDown";
-			this.blueUpDown.ValueChanged += new System.EventHandler(this.color_ValueChanged);
 			// 
 			// greenUpDown
 			// 
@@ -136,7 +135,6 @@ namespace PckStudio.Forms.Editor
             0,
             0});
 			this.greenUpDown.Name = "greenUpDown";
-			this.greenUpDown.ValueChanged += new System.EventHandler(this.color_ValueChanged);
 			// 
 			// redUpDown
 			// 
@@ -149,7 +147,6 @@ namespace PckStudio.Forms.Editor
             0,
             0});
 			this.redUpDown.Name = "redUpDown";
-			this.redUpDown.ValueChanged += new System.EventHandler(this.color_ValueChanged);
 			// 
 			// alphaUpDown
 			// 
