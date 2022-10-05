@@ -21,6 +21,11 @@ namespace PckStudio.Forms.Editor
 
 		private readonly PCKFile.FileData _file;
 
+		List<TreeNode> colorCache = new List<TreeNode>();
+		List<TreeNode> waterCache = new List<TreeNode>();
+		List<TreeNode> underwaterCache = new List<TreeNode>();
+		List<TreeNode> fogCache = new List<TreeNode>();
+
 		public COLEditor(PCKFile.FileData file)
 		{
 			InitializeComponent();
@@ -42,6 +47,7 @@ namespace PckStudio.Forms.Editor
 				TreeNode tn = new TreeNode(obj.name);
 				tn.Tag = entry != null ? entry : obj;
 				colorTreeView.Nodes.Add(tn);
+				colorCache.Add(tn);
 			}
 			foreach (var obj in colourfile.waterEntries)
 			{
@@ -49,12 +55,15 @@ namespace PckStudio.Forms.Editor
 				TreeNode tn = new TreeNode(obj.name);
 				tn.Tag = entry != null ? entry : obj;
 				waterTreeView.Nodes.Add(tn);
+				waterCache.Add(tn);
 				TreeNode tnB = new TreeNode(obj.name);
 				tnB.Tag = entry != null ? entry : obj;
 				underwaterTreeView.Nodes.Add(tnB);
+				underwaterCache.Add(tnB);
 				TreeNode tnC = new TreeNode(obj.name);
 				tnC.Tag = entry != null ? entry : obj;
 				fogTreeView.Nodes.Add(tnC);
+				fogCache.Add(tnC);
 			}
 		}
 
@@ -365,6 +374,77 @@ namespace PckStudio.Forms.Editor
 				blueUpDown.Value = colorInfoC.color_c & 0xff;
 				pictureBox1.BackColor = Color.FromArgb(0xff << 24 | (int)colorInfoC.color_c);
 			}
+		}
+
+		private void metroTextBox1_TextChanged(object sender, EventArgs e)
+		{
+			// Some code in this function is modified code from this StackOverflow answer - MattNL
+			//https://stackoverflow.com/questions/8260322/filter-a-treeview-with-a-textbox-in-a-c-sharp-winforms-app
+
+			//blocks repainting tree until all objects loaded
+			colorTreeView.BeginUpdate();
+			colorTreeView.Nodes.Clear();
+			waterTreeView.BeginUpdate();
+			waterTreeView.Nodes.Clear();
+			underwaterTreeView.BeginUpdate();
+			underwaterTreeView.Nodes.Clear();
+			fogTreeView.BeginUpdate();
+			fogTreeView.Nodes.Clear();
+			if (!string.IsNullOrEmpty(metroTextBox1.Text))
+			{
+				foreach (TreeNode _node in colorCache)
+				{
+					if (_node.Text.ToLower().Contains(metroTextBox1.Text.ToLower()))
+					{
+						colorTreeView.Nodes.Add((TreeNode)_node.Clone());
+					}
+				}
+				foreach (TreeNode _node in waterCache)
+				{
+					if (_node.Text.ToLower().Contains(metroTextBox1.Text.ToLower()))
+					{
+						waterTreeView.Nodes.Add((TreeNode)_node.Clone());
+					}
+				}
+				foreach (TreeNode _node in underwaterCache)
+				{
+					if (_node.Text.ToLower().Contains(metroTextBox1.Text.ToLower()))
+					{
+						underwaterTreeView.Nodes.Add((TreeNode)_node.Clone());
+					}
+				}
+				foreach (TreeNode _node in fogCache)
+				{
+					if (_node.Text.ToLower().Contains(metroTextBox1.Text.ToLower()))
+					{
+						fogTreeView.Nodes.Add((TreeNode)_node.Clone());
+					}
+				}
+			}
+			else
+			{
+				foreach (TreeNode _node in colorCache)
+				{
+					colorTreeView.Nodes.Add((TreeNode)_node.Clone());
+				}
+				foreach (TreeNode _node in waterCache)
+				{
+					waterTreeView.Nodes.Add((TreeNode)_node.Clone());
+				}
+				foreach (TreeNode _node in underwaterCache)
+				{
+					underwaterTreeView.Nodes.Add((TreeNode)_node.Clone());
+				}
+				foreach (TreeNode _node in fogCache)
+				{
+					fogTreeView.Nodes.Add((TreeNode)_node.Clone());
+				}
+			}
+			//enables redrawing tree after all objects have been added
+			colorTreeView.EndUpdate();
+			waterTreeView.EndUpdate();
+			underwaterTreeView.EndUpdate();
+			fogTreeView.EndUpdate();
 		}
 	}
 }
