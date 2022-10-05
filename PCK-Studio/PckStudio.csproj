@@ -318,12 +318,6 @@
     <Compile Include="Forms\Skins-And-Textures\generateModel.Designer.cs">
       <DependentUpon>generateModel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Additional-Popups\goodbye.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Additional-Popups\goodbye.Designer.cs">
-      <DependentUpon>goodbye.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\Skins-And-Textures\SkinPreview.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -365,12 +359,6 @@
     </Compile>
     <Compile Include="Forms\Utilities\installWiiU.Designer.cs">
       <DependentUpon>installWiiU.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Additional-Popups\Job.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Additional-Popups\Job.Designer.cs">
-      <DependentUpon>Job.cs</DependentUpon>
     </Compile>
     <Compile Include="Classes\Utils\ListUtils.cs" />
     <Compile Include="Forms\Utilities\PCK Manager.cs">
@@ -525,12 +513,6 @@
     <EmbeddedResource Include="Forms\Skins-And-Textures\generateModel.resx">
       <DependentUpon>generateModel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Additional-Popups\goodbye.ja.resx">
-      <DependentUpon>goodbye.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Additional-Popups\goodbye.resx">
-      <DependentUpon>goodbye.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Skins-And-Textures\SkinPreview.resx">
       <DependentUpon>SkinPreview.cs</DependentUpon>
     </EmbeddedResource>
@@ -555,9 +537,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Utilities\installWiiU.resx">
       <DependentUpon>installWiiU.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Additional-Popups\Job.resx">
-      <DependentUpon>Job.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\meta.ja.resx">
       <DependentUpon>meta.cs</DependentUpon>
