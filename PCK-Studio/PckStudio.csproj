@@ -138,6 +138,7 @@
     <Compile Include="Classes\API\PCKCenter\model\PCKCenterJSON.cs" />
     <Compile Include="Classes\API\PCKCenter\SaveLocalJSON.cs" />
     <Compile Include="Classes\FileTypes\ARCFile.cs" />
+    <Compile Include="Classes\FileTypes\BehaviourFile.cs" />
     <Compile Include="Classes\FileTypes\CSMBFile.cs" />
     <Compile Include="Classes\FileTypes\ModelFile.cs" />
     <Compile Include="Classes\FileTypes\PCKAudioFile.cs" />
@@ -147,6 +148,7 @@
     <Compile Include="Classes\FileTypes\GRFFile.cs" />
     <Compile Include="Classes\IO\ARC\ARCFileWriter.cs" />
     <Compile Include="Classes\IO\ARC\ARCFileReader.cs" />
+    <Compile Include="Classes\IO\Behaviour\BehavioursReader.cs" />
     <Compile Include="Classes\IO\CSMB\CSMBFileReader.cs" />
     <Compile Include="Classes\IO\CSMB\CSMBFileWriter.cs" />
     <Compile Include="Classes\IO\Model\ModelReader.cs" />
