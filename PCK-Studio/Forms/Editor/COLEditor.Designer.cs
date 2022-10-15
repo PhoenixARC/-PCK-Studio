@@ -51,6 +51,8 @@ namespace PckStudio.Forms.Editor
 			this.saveToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			this.waterTab = new System.Windows.Forms.TabPage();
 			this.waterTreeView = new System.Windows.Forms.TreeView();
+			this.ColorContextMenu = new MetroFramework.Controls.MetroContextMenu(this.components);
+			this.restoreOriginalColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.underwaterTreeView = new System.Windows.Forms.TreeView();
 			this.fogTreeView = new System.Windows.Forms.TreeView();
 			this.colorsTab = new System.Windows.Forms.TabPage();
@@ -58,8 +60,8 @@ namespace PckStudio.Forms.Editor
 			this.tabControl = new MetroFramework.Controls.MetroTabControl();
 			this.underwaterTab = new System.Windows.Forms.TabPage();
 			this.fogTab = new System.Windows.Forms.TabPage();
-			this.ColorContextMenu = new MetroFramework.Controls.MetroContextMenu(this.components);
-			this.restoreOriginalColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.metroTextBox1 = new MetroFramework.Controls.MetroTextBox();
+			this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
 			this.metroPanel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.blueUpDown)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.greenUpDown)).BeginInit();
@@ -68,15 +70,17 @@ namespace PckStudio.Forms.Editor
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.menuStrip.SuspendLayout();
 			this.waterTab.SuspendLayout();
+			this.ColorContextMenu.SuspendLayout();
 			this.colorsTab.SuspendLayout();
 			this.tabControl.SuspendLayout();
 			this.underwaterTab.SuspendLayout();
 			this.fogTab.SuspendLayout();
-			this.ColorContextMenu.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// metroPanel1
 			// 
+			this.metroPanel1.Controls.Add(this.metroTextBox1);
+			this.metroPanel1.Controls.Add(this.metroLabel2);
 			this.metroPanel1.Controls.Add(this.setColorBtn);
 			this.metroPanel1.Controls.Add(this.blueUpDown);
 			this.metroPanel1.Controls.Add(this.greenUpDown);
@@ -119,7 +123,6 @@ namespace PckStudio.Forms.Editor
             0,
             0});
 			this.blueUpDown.Name = "blueUpDown";
-			this.blueUpDown.ValueChanged += new System.EventHandler(this.color_ValueChanged);
 			// 
 			// greenUpDown
 			// 
@@ -132,7 +135,6 @@ namespace PckStudio.Forms.Editor
             0,
             0});
 			this.greenUpDown.Name = "greenUpDown";
-			this.greenUpDown.ValueChanged += new System.EventHandler(this.color_ValueChanged);
 			// 
 			// redUpDown
 			// 
@@ -145,7 +147,6 @@ namespace PckStudio.Forms.Editor
             0,
             0});
 			this.redUpDown.Name = "redUpDown";
-			this.redUpDown.ValueChanged += new System.EventHandler(this.color_ValueChanged);
 			// 
 			// alphaUpDown
 			// 
@@ -189,16 +190,16 @@ namespace PckStudio.Forms.Editor
 			// 
 			// 
 			// 
-			this.colorTextbox.CustomButton.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image")));
+			this.colorTextbox.CustomButton.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image1")));
 			this.colorTextbox.CustomButton.ImeMode = ((System.Windows.Forms.ImeMode)(resources.GetObject("resource.ImeMode")));
-			this.colorTextbox.CustomButton.Location = ((System.Drawing.Point)(resources.GetObject("resource.Location")));
+			this.colorTextbox.CustomButton.Location = ((System.Drawing.Point)(resources.GetObject("resource.Location1")));
 			this.colorTextbox.CustomButton.Name = "";
-			this.colorTextbox.CustomButton.Size = ((System.Drawing.Size)(resources.GetObject("resource.Size")));
+			this.colorTextbox.CustomButton.Size = ((System.Drawing.Size)(resources.GetObject("resource.Size1")));
 			this.colorTextbox.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-			this.colorTextbox.CustomButton.TabIndex = ((int)(resources.GetObject("resource.TabIndex")));
+			this.colorTextbox.CustomButton.TabIndex = ((int)(resources.GetObject("resource.TabIndex1")));
 			this.colorTextbox.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
 			this.colorTextbox.CustomButton.UseSelectable = true;
-			this.colorTextbox.CustomButton.Visible = ((bool)(resources.GetObject("resource.Visible")));
+			this.colorTextbox.CustomButton.Visible = ((bool)(resources.GetObject("resource.Visible1")));
 			this.colorTextbox.Lines = new string[0];
 			resources.ApplyResources(this.colorTextbox, "colorTextbox");
 			this.colorTextbox.MaxLength = 32767;
@@ -265,6 +266,19 @@ namespace PckStudio.Forms.Editor
 			this.waterTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView2_AfterSelect);
 			this.waterTreeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView2_KeyDown);
 			// 
+			// ColorContextMenu
+			// 
+			this.ColorContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.restoreOriginalColorToolStripMenuItem});
+			this.ColorContextMenu.Name = "ColorContextMenu";
+			resources.ApplyResources(this.ColorContextMenu, "ColorContextMenu");
+			// 
+			// restoreOriginalColorToolStripMenuItem
+			// 
+			this.restoreOriginalColorToolStripMenuItem.Name = "restoreOriginalColorToolStripMenuItem";
+			resources.ApplyResources(this.restoreOriginalColorToolStripMenuItem, "restoreOriginalColorToolStripMenuItem");
+			this.restoreOriginalColorToolStripMenuItem.Click += new System.EventHandler(this.restoreOriginalColorToolStripMenuItem_Click);
+			// 
 			// underwaterTreeView
 			// 
 			this.underwaterTreeView.ContextMenuStrip = this.ColorContextMenu;
@@ -323,19 +337,41 @@ namespace PckStudio.Forms.Editor
 			resources.ApplyResources(this.fogTab, "fogTab");
 			this.fogTab.Name = "fogTab";
 			// 
-			// ColorContextMenu
+			// metroTextBox1
 			// 
-			this.ColorContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.restoreOriginalColorToolStripMenuItem});
-			this.ColorContextMenu.Name = "ColorContextMenu";
-			resources.ApplyResources(this.ColorContextMenu, "ColorContextMenu");
 			// 
-			// restoreOriginalColorToolStripMenuItem
 			// 
-			this.restoreOriginalColorToolStripMenuItem.Image = global::PckStudio.Properties.Resources.ExportFile;
-			this.restoreOriginalColorToolStripMenuItem.Name = "restoreOriginalColorToolStripMenuItem";
-			resources.ApplyResources(this.restoreOriginalColorToolStripMenuItem, "restoreOriginalColorToolStripMenuItem");
-			this.restoreOriginalColorToolStripMenuItem.Click += new System.EventHandler(this.restoreOriginalColorToolStripMenuItem_Click);
+			// 
+			this.metroTextBox1.CustomButton.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image")));
+			this.metroTextBox1.CustomButton.Location = ((System.Drawing.Point)(resources.GetObject("resource.Location")));
+			this.metroTextBox1.CustomButton.Name = "";
+			this.metroTextBox1.CustomButton.Size = ((System.Drawing.Size)(resources.GetObject("resource.Size")));
+			this.metroTextBox1.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+			this.metroTextBox1.CustomButton.TabIndex = ((int)(resources.GetObject("resource.TabIndex")));
+			this.metroTextBox1.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+			this.metroTextBox1.CustomButton.UseSelectable = true;
+			this.metroTextBox1.CustomButton.Visible = ((bool)(resources.GetObject("resource.Visible")));
+			this.metroTextBox1.Lines = new string[0];
+			resources.ApplyResources(this.metroTextBox1, "metroTextBox1");
+			this.metroTextBox1.MaxLength = 32767;
+			this.metroTextBox1.Name = "metroTextBox1";
+			this.metroTextBox1.PasswordChar = '\0';
+			this.metroTextBox1.ScrollBars = System.Windows.Forms.ScrollBars.None;
+			this.metroTextBox1.SelectedText = "";
+			this.metroTextBox1.SelectionLength = 0;
+			this.metroTextBox1.SelectionStart = 0;
+			this.metroTextBox1.ShortcutsEnabled = true;
+			this.metroTextBox1.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.metroTextBox1.UseSelectable = true;
+			this.metroTextBox1.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+			this.metroTextBox1.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+			this.metroTextBox1.TextChanged += new System.EventHandler(this.metroTextBox1_TextChanged);
+			// 
+			// metroLabel2
+			// 
+			resources.ApplyResources(this.metroLabel2, "metroLabel2");
+			this.metroLabel2.Name = "metroLabel2";
+			this.metroLabel2.Theme = MetroFramework.MetroThemeStyle.Dark;
 			// 
 			// COLEditor
 			// 
@@ -358,11 +394,11 @@ namespace PckStudio.Forms.Editor
 			this.menuStrip.ResumeLayout(false);
 			this.menuStrip.PerformLayout();
 			this.waterTab.ResumeLayout(false);
+			this.ColorContextMenu.ResumeLayout(false);
 			this.colorsTab.ResumeLayout(false);
 			this.tabControl.ResumeLayout(false);
 			this.underwaterTab.ResumeLayout(false);
 			this.fogTab.ResumeLayout(false);
-			this.ColorContextMenu.ResumeLayout(false);
 			this.ResumeLayout(false);
 
         }
@@ -396,5 +432,7 @@ namespace PckStudio.Forms.Editor
 		private MetroFramework.Controls.MetroLabel metroLabel1;
 		private MetroFramework.Controls.MetroContextMenu ColorContextMenu;
 		private ToolStripMenuItem restoreOriginalColorToolStripMenuItem;
+		private MetroFramework.Controls.MetroTextBox metroTextBox1;
+		private MetroFramework.Controls.MetroLabel metroLabel2;
 	}
 }

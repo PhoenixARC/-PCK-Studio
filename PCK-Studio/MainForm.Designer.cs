@@ -36,6 +36,7 @@
 			this.skinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.createAnimatedTextureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.audiopckToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.colourscolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.importSkinsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.importSkinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.importExtractedSkinsFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -129,9 +130,8 @@
 			this.label11 = new MetroFramework.Controls.MetroLabel();
 			this.treeViewMain = new System.Windows.Forms.TreeView();
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
-			this.pictureBoxImagePreview = new PckStudio.PictureBoxWithInterpolationMode();
 			this.LittleEndianCheckBox = new MetroFramework.Controls.MetroCheckBox();
-			this.colourscolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.pictureBoxImagePreview = new PckStudio.PictureBoxWithInterpolationMode();
 			this.contextMenuPCKEntries.SuspendLayout();
 			this.menuStrip.SuspendLayout();
 			this.contextMenuMetaTree.SuspendLayout();
@@ -197,6 +197,12 @@
 			resources.ApplyResources(this.audiopckToolStripMenuItem, "audiopckToolStripMenuItem");
 			this.audiopckToolStripMenuItem.Name = "audiopckToolStripMenuItem";
 			this.audiopckToolStripMenuItem.Click += new System.EventHandler(this.audiopckToolStripMenuItem_Click);
+			// 
+			// colourscolToolStripMenuItem
+			// 
+			this.colourscolToolStripMenuItem.Name = "colourscolToolStripMenuItem";
+			resources.ApplyResources(this.colourscolToolStripMenuItem, "colourscolToolStripMenuItem");
+			this.colourscolToolStripMenuItem.Click += new System.EventHandler(this.colourscolToolStripMenuItem_Click);
 			// 
 			// importSkinsToolStripMenuItem
 			// 
@@ -724,7 +730,6 @@
 			// 
 			this.pckOpen.BackColor = System.Drawing.Color.Transparent;
 			resources.ApplyResources(this.pckOpen, "pckOpen");
-			this.pckOpen.Image = global::PckStudio.Properties.Resources.pckClosed;
 			this.pckOpen.Name = "pckOpen";
 			this.pckOpen.TabStop = false;
 			this.pckOpen.Click += new System.EventHandler(this.OpenPck_Click);
@@ -942,15 +947,6 @@
 			resources.ApplyResources(this.imageList, "imageList");
 			this.imageList.TransparentColor = System.Drawing.Color.Transparent;
 			// 
-			// pictureBoxImagePreview
-			// 
-			resources.ApplyResources(this.pictureBoxImagePreview, "pictureBoxImagePreview");
-			this.pictureBoxImagePreview.BackColor = System.Drawing.Color.Transparent;
-			this.pictureBoxImagePreview.Image = global::PckStudio.Properties.Resources.NoImageFound;
-			this.pictureBoxImagePreview.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-			this.pictureBoxImagePreview.Name = "pictureBoxImagePreview";
-			this.pictureBoxImagePreview.TabStop = false;
-			// 
 			// LittleEndianCheckBox
 			// 
 			resources.ApplyResources(this.LittleEndianCheckBox, "LittleEndianCheckBox");
@@ -960,12 +956,13 @@
 			this.LittleEndianCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.LittleEndianCheckBox.UseSelectable = true;
 			// 
-			// colourscolToolStripMenuItem
+			// pictureBoxImagePreview
 			// 
-			this.colourscolToolStripMenuItem.Image = global::PckStudio.Properties.Resources.COL_ICON;
-			this.colourscolToolStripMenuItem.Name = "colourscolToolStripMenuItem";
-			resources.ApplyResources(this.colourscolToolStripMenuItem, "colourscolToolStripMenuItem");
-			this.colourscolToolStripMenuItem.Click += new System.EventHandler(this.colourscolToolStripMenuItem_Click);
+			resources.ApplyResources(this.pictureBoxImagePreview, "pictureBoxImagePreview");
+			this.pictureBoxImagePreview.BackColor = System.Drawing.Color.Transparent;
+			this.pictureBoxImagePreview.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+			this.pictureBoxImagePreview.Name = "pictureBoxImagePreview";
+			this.pictureBoxImagePreview.TabStop = false;
 			// 
 			// MainForm
 			// 

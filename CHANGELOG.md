@@ -176,6 +176,10 @@ Some features may be completely missing or incomplete at this point in time!
 -Fixed Model Generator crashing when minimized  
 -Fixed more bugs  
   
+2.9c  
+====  
+-Fixed some minor bugs
+
 2.8b  
 ====  
 -Fixed a few bugs from 2.8  
@@ -204,6 +208,10 @@ Some features may be completely missing or incomplete at this point in time!
 -Model Generator  
 -Few UI Improvements  
   
+2.3(non-feature)
+===  
+-Rebranded Minekampf as PCK Studio
+
 2.3  
 ===  
 -Fully Fixed Cape Adding  

@@ -33,32 +33,32 @@ namespace PckStudio
         [Flags]
         enum eANIMFlags
         {
-            DisableArmSwinging      = 1 << 0,
-            ZombieArms              = 1 << 1,
-            LockFootAnimation       = 1 << 2,
-            unk_BIT3                = 1 << 3,
-            unk_BIT4                = 1 << 4,
-            BothLegsSwingParallel   = 1 << 5,
-            unk_BIT6                = 1 << 6,
-            MainArmUp               = 1 << 7,
-            DisableArmor            = 1 << 8,
-            unk_BIT9                = 1 << 9,
-            DisableHead             = 1 << 10,
-            DisableLeftArm          = 1 << 11,
-            DisableRightArm         = 1 << 12,
-            DiableBody              = 1 << 13,
-            DiableRightLeg          = 1 << 14,
-            DiableLeftLeg           = 1 << 15,
-            R2D2Sneak               = 1 << 16,
-            DisableHeadOverlay      = 1 << 17,
-            Is64x64                 = 1 << 18,
-            HasSlimArms             = 1 << 19,
-            DisableLeftArmOverlay   = 1 << 20,
-            DisableRightArmOverlay  = 1 << 21,
-            DisableLeftLegOverlay   = 1 << 22,
-            DisableRightLegOverlay  = 1 << 23,
-            DisableBodyOverlay      = 1 << 24,
-            RenderUpSideDown        = 1 << 31,
+            DisableArmSwinging = 1 << 0,
+            ZombieArms = 1 << 1,
+            LockFootAnimation = 1 << 2,
+            SitWhileIdle = 1 << 3,
+            unk_BIT4 = 1 << 4,
+            BothLegsSwingParallel = 1 << 5,
+            BothArmsSwingParallel = 1 << 6,
+            MainArmUp = 1 << 7,
+            DisableArmor = 1 << 8,
+            DisableBobbing = 1 << 9,
+            DisableHead = 1 << 10,
+            DisableLeftArm = 1 << 11,
+            DisableRightArm = 1 << 12,
+            DiableBody = 1 << 13,
+            DiableRightLeg = 1 << 14,
+            DiableLeftLeg = 1 << 15,
+            BackwardsSneak = 1 << 16,
+            DisableHeadOverlay = 1 << 17,
+            Is64x64 = 1 << 18,
+            HasSlimArms = 1 << 19,
+            DisableLeftArmOverlay = 1 << 20,
+            DisableRightArmOverlay = 1 << 21,
+            DisableLeftLegOverlay = 1 << 22,
+            DisableRightLegOverlay = 1 << 23,
+            DisableBodyOverlay = 1 << 24,
+            RenderUpSideDown = 1 << 31,
         }
         eANIMFlags ANIM = 0;
 
@@ -74,7 +74,7 @@ namespace PckStudio
 
         ValueTuple<string, string> ToProperty()
         {
-            return new ValueTuple<string, string>("ANIM", "0x"+ANIM.ToString("x8"));
+            return new ValueTuple<string, string>("ANIM", "0x" + ANIM.ToString("x8"));
         }
 
 
@@ -182,8 +182,6 @@ namespace PckStudio
             InitializeComponent();
             boxes = skinProperties;
             skinPreview = preview;
-            buttonIMPORT.Enabled = false;
-            buttonEXPORT.Enabled = false;
             if (texturePreview.Image == null)
                 texturePreview.Image = new Bitmap(64, 64);
             loadData();
@@ -275,7 +273,7 @@ namespace PckStudio
                             {
                                 ANIM = (eANIMFlags)int.Parse(property.Item2, System.Globalization.NumberStyles.HexNumber);
                             }
-                            catch(Exception ex)
+                            catch (Exception ex)
                             {
                                 Console.WriteLine(ex.Message);
                             }
@@ -307,8 +305,8 @@ namespace PckStudio
                 // makes sure it reders/draws the full pixel in top left corner
                 graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
                 int headbodyY = (displayBox.Height / 2) + 25; //  25
-                int armY      = (displayBox.Height / 2) + 35; // -60;
-                int legY      = (displayBox.Height / 2) + 85; // -80;
+                int armY = (displayBox.Height / 2) + 35; // -60;
+                int legY = (displayBox.Height / 2) + 85; // -80;
                 int groundLevel = (displayBox.Height / 2) + 145;
                 graphics.DrawLine(Pens.White, 0, groundLevel, displayBox.Width, groundLevel);
                 // Chooses Render settings based on current direction
@@ -509,11 +507,11 @@ namespace PckStudio
                                 case "ARM1":
                                     y = armY + int.Parse(offsetArms.Text) * 5;
                                     break;
-                                
+
                                 case "LEG0":
                                     y = legY + int.Parse(offsetLegs.Text) * 5;
                                     break;
-                                
+
                                 case "LEG1":
                                     y = legY + int.Parse(offsetLegs.Text) * 5;
                                     break;
@@ -753,76 +751,76 @@ namespace PckStudio
                 } while (checkedItems < listViewBoxes.Items.Count);
             }
             else if (direction == eViewDirection.right)
+            {
+                int checkedItems = 0;
+                do
                 {
-                    int checkedItems = 0;
-                    do
+                    foreach (ListViewItem listViewItem1 in listViewBoxes.Items)
                     {
-                        foreach (ListViewItem listViewItem1 in listViewBoxes.Items)
+                        if (listViewItem1.SubItems[listViewItem1.SubItems.Count - 1].Text == "unchecked")
                         {
-                            if (listViewItem1.SubItems[listViewItem1.SubItems.Count - 1].Text == "unchecked")
+                            int x = 0;
+                            if (listViewItem1.Tag.ToString() == "HEAD")
+                                x = displayBox.Width / 2;
+                            else if (listViewItem1.Tag.ToString() == "BODY")
+                                x = displayBox.Width / 2;
+                            else if (listViewItem1.Tag.ToString() == "ARM0")
+                                x = 178;
+                            else if (listViewItem1.Tag.ToString() == "ARM1")
+                                x = 228;
+                            else if (listViewItem1.Tag.ToString() == "LEG0")
+                                x = 193;
+                            else if (listViewItem1.Tag.ToString() == "LEG1")
+                                x = 213;
+                            bool flag = false;
+                            int index = listViewItem1.Index;
+                            foreach (ListViewItem listViewItem2 in listViewBoxes.Items)
                             {
-                                int x = 0;
-                                if (listViewItem1.Tag.ToString() == "HEAD")
-                                    x = displayBox.Width / 2;
-                                else if (listViewItem1.Tag.ToString() == "BODY")
-                                    x = displayBox.Width / 2;
-                                else if (listViewItem1.Tag.ToString() == "ARM0")
-                                    x = 178;
-                                else if (listViewItem1.Tag.ToString() == "ARM1")
-                                    x = 228;
-                                else if (listViewItem1.Tag.ToString() == "LEG0")
-                                    x = 193;
-                                else if (listViewItem1.Tag.ToString() == "LEG1")
-                                    x = 213;
-                                bool flag = false;
-                                int index = listViewItem1.Index;
-                                foreach (ListViewItem listViewItem2 in listViewBoxes.Items)
+                                if (listViewItem2.SubItems[9].Text == "unchecked")
                                 {
-                                    if (listViewItem2.SubItems[9].Text == "unchecked")
+                                    int y = 0;
+                                    if (listViewItem2.Tag.ToString() == "HEAD")
+                                        y = displayBox.Width / 2;
+                                    else if (listViewItem2.Tag.ToString() == "BODY")
+                                        y = displayBox.Width / 2;
+                                    else if (listViewItem2.Tag.ToString() == "ARM0")
+                                        y = 178;
+                                    else if (listViewItem2.Tag.ToString() == "ARM1")
+                                        y = 228;
+                                    else if (listViewItem2.Tag.ToString() == "LEG0")
+                                        y = 193;
+                                    else if (listViewItem2.Tag.ToString() == "LEG1")
+                                        y = 213;
+                                    if ((int)double.Parse(listViewItem1.SubItems[1].Text) + (int)double.Parse(listViewItem1.SubItems[4].Text) - x > (int)double.Parse(listViewItem2.SubItems[1].Text) + (int)double.Parse(listViewItem2.SubItems[4].Text) + y && listViewItem2.Index + 1 < this.listViewBoxes.Items.Count + 1)
                                     {
-                                        int y = 0;
-                                        if (listViewItem2.Tag.ToString() == "HEAD")
-                                            y = displayBox.Width / 2;
-                                        else if (listViewItem2.Tag.ToString() == "BODY")
-                                            y = displayBox.Width / 2;
-                                        else if (listViewItem2.Tag.ToString() == "ARM0")
-                                            y = 178;
-                                        else if (listViewItem2.Tag.ToString() == "ARM1")
-                                            y = 228;
-                                        else if (listViewItem2.Tag.ToString() == "LEG0")
-                                            y = 193;
-                                        else if (listViewItem2.Tag.ToString() == "LEG1")
-                                            y = 213;
-                                        if ((int)double.Parse(listViewItem1.SubItems[1].Text) + (int)double.Parse(listViewItem1.SubItems[4].Text) - x > (int)double.Parse(listViewItem2.SubItems[1].Text) + (int)double.Parse(listViewItem2.SubItems[4].Text) + y && listViewItem2.Index + 1 < this.listViewBoxes.Items.Count + 1)
-                                        {
-                                            index = listViewItem2.Index + 1;
-                                            flag = true;
-                                        }
+                                        index = listViewItem2.Index + 1;
+                                        flag = true;
                                     }
-                                }
-                                listViewItem1.SubItems[9].Text = "checked";
-                                checkedItems += 1;
-                                if (flag == true)
-                                {
-                                    ListViewItem listViewItem2 = (ListViewItem)listViewItem1.Clone();
-                                    listViewBoxes.Items.Insert(index, listViewItem2);
-                                    if (listViewBoxes.SelectedItems.Count != 0)
-                                    {
-                                        //if (selected.Index == listViewItem1.Index)
-                                        //{
-                                        //    selected = listViewItem2;
-                                        //}
-                                    }
-                                    listViewItem1.Remove();
                                 }
                             }
-                            else
+                            listViewItem1.SubItems[9].Text = "checked";
+                            checkedItems += 1;
+                            if (flag == true)
                             {
-                                checkedItems += 1;
+                                ListViewItem listViewItem2 = (ListViewItem)listViewItem1.Clone();
+                                listViewBoxes.Items.Insert(index, listViewItem2);
+                                if (listViewBoxes.SelectedItems.Count != 0)
+                                {
+                                    //if (selected.Index == listViewItem1.Index)
+                                    //{
+                                    //    selected = listViewItem2;
+                                    //}
+                                }
+                                listViewItem1.Remove();
                             }
                         }
-                    } while (checkedItems < listViewBoxes.Items.Count);
-                }           
+                        else
+                        {
+                            checkedItems += 1;
+                        }
+                    }
+                } while (checkedItems < listViewBoxes.Items.Count);
+            }
         }
 
         private void DrawGuideLines(Graphics g)
@@ -834,14 +832,14 @@ namespace PckStudio
             bool isSide = direction == eViewDirection.left || direction == eViewDirection.right;
             if (!isSide)
             {
-                g.DrawLine(Pens.Red,    0, headbodyY + float.Parse(offsetHead.Text) * 5, displayBox.Width, headbodyY + float.Parse(offsetHead.Text) * 5);
-                g.DrawLine(Pens.Green,  0, headbodyY + float.Parse(offsetBody.Text) * 5, displayBox.Width, headbodyY + float.Parse(offsetBody.Text) * 5);
-                g.DrawLine(Pens.Blue,   0, headbodyY + float.Parse(offsetArms.Text) * 5, displayBox.Width, headbodyY + float.Parse(offsetArms.Text) * 5);
-                g.DrawLine(Pens.Purple, 0, legY      + float.Parse(offsetLegs.Text) * 5, displayBox.Width, legY      + float.Parse(offsetLegs.Text) * 5);
+                g.DrawLine(Pens.Red, 0, headbodyY + float.Parse(offsetHead.Text) * 5, displayBox.Width, headbodyY + float.Parse(offsetHead.Text) * 5);
+                g.DrawLine(Pens.Green, 0, headbodyY + float.Parse(offsetBody.Text) * 5, displayBox.Width, headbodyY + float.Parse(offsetBody.Text) * 5);
+                g.DrawLine(Pens.Blue, 0, headbodyY + float.Parse(offsetArms.Text) * 5, displayBox.Width, headbodyY + float.Parse(offsetArms.Text) * 5);
+                g.DrawLine(Pens.Purple, 0, legY + float.Parse(offsetLegs.Text) * 5, displayBox.Width, legY + float.Parse(offsetLegs.Text) * 5);
             }
-            g.DrawLine(Pens.Red,    centerWidthPoint, 0, centerWidthPoint, displayBox.Height);
-            g.DrawLine(Pens.Blue,   centerWidthPoint + 30, 0, centerWidthPoint + 30, displayBox.Height);
-            g.DrawLine(Pens.Blue,   centerWidthPoint - 30, 0, centerWidthPoint - 30, displayBox.Height);
+            g.DrawLine(Pens.Red, centerWidthPoint, 0, centerWidthPoint, displayBox.Height);
+            g.DrawLine(Pens.Blue, centerWidthPoint + 30, 0, centerWidthPoint + 30, displayBox.Height);
+            g.DrawLine(Pens.Blue, centerWidthPoint - 30, 0, centerWidthPoint - 30, displayBox.Height);
             g.DrawLine(Pens.Purple, centerWidthPoint - 10, 0, centerWidthPoint - 10, displayBox.Height);
             g.DrawLine(Pens.Purple, centerWidthPoint + 10, 0, centerWidthPoint + 10, displayBox.Height);
         }
@@ -880,7 +878,7 @@ namespace PckStudio
         //Loads Columns
         private void generateModel_Load(object sender, EventArgs e)
         {
-            if (Screen.PrimaryScreen.Bounds.Height >= 780 && Screen.PrimaryScreen.Bounds.Width >= 1080){
+            if (Screen.PrimaryScreen.Bounds.Height >= 780 && Screen.PrimaryScreen.Bounds.Width >= 1080) {
                 return;
             }
             render();
@@ -956,7 +954,7 @@ namespace PckStudio
 
         private void SizeYUpDown_ValueChanged(object sender, EventArgs e)
         {
-            if (listViewBoxes.SelectedItems.Count != 0 && 
+            if (listViewBoxes.SelectedItems.Count != 0 &&
                 listViewBoxes.SelectedItems[0].Tag is ModelPart)
             {
                 var part = listViewBoxes.SelectedItems[0].Tag as ModelPart;
@@ -980,7 +978,7 @@ namespace PckStudio
 
         private void PosXUpDown_ValueChanged(object sender, EventArgs e)
         {
-            if (listViewBoxes.SelectedItems.Count != 0 && 
+            if (listViewBoxes.SelectedItems.Count != 0 &&
                 listViewBoxes.SelectedItems[0].Tag is ModelPart)
             {
                 var part = listViewBoxes.SelectedItems[0].Tag as ModelPart;
@@ -993,7 +991,7 @@ namespace PckStudio
 
         private void PosYUpDown_ValueChanged(object sender, EventArgs e)
         {
-            if (listViewBoxes.SelectedItems.Count != 0 && 
+            if (listViewBoxes.SelectedItems.Count != 0 &&
                 listViewBoxes.SelectedItems[0].Tag is ModelPart)
             {
                 var part = listViewBoxes.SelectedItems[0].Tag as ModelPart;
@@ -1124,6 +1122,7 @@ namespace PckStudio
                 graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
             }
             skinPreview.Image = bitmap1;
+            texturePreview.Image.Save(Application.StartupPath + "\\temp.png");
             Close();
         }
 
@@ -1223,70 +1222,35 @@ namespace PckStudio
             {
                 listViewBoxes.Items.Clear();
                 string str1 = File.ReadAllText(openFileDialog.FileName);
-                int x = 0;
-                foreach (string str2 in str1.Split("\n\r".ToCharArray(), StringSplitOptions.RemoveEmptyEntries))
-                    ++x;
-                int y = x / 11;
-                ListView listView = new ListView();
-                int num3 = 0;
-                do
+
+                modelParts.Clear();
+                List<string> lines = str1.Split(new[] { "\n\r", "\n" }, StringSplitOptions.None).ToList();
+                if (string.IsNullOrEmpty(lines[lines.Count - 1]))
+                    lines.RemoveAt(lines.Count - 1);
+                int currentLine = 0;
+                int passedlines = 0;
+                for (int i = 0; i < lines.Count;)
                 {
-                    listView.Items.Add("BOX");
-                    ++num3;
-                }
-                while (num3 < y);
-                IEnumerator enumerator = listView.Items.GetEnumerator();
-                try
-                {
-                label_33:
-                    if (enumerator.MoveNext())
-                    {
-                        ListViewItem current = (ListViewItem)enumerator.Current;
-                        ListViewItem listViewItem = new ListViewItem();
-                        int num4 = 0;
-                        do
-                        {
-                            foreach (string text in str1.Split("\n\r".ToCharArray(), StringSplitOptions.RemoveEmptyEntries))
-                            {
-                                ++num4;
-                                if (num4 == 1 + 11 * current.Index)
-                                    listViewItem.Text = text;
-                                else if (num4 == 2 + 11 * current.Index)
-                                    listViewItem.Tag = text;
-                                else if (num4 == 4 + 11 * current.Index)
-                                    listViewItem.SubItems.Add(text);
-                                else if (num4 == 5 + 11 * current.Index)
-                                    listViewItem.SubItems.Add(text);
-                                else if (num4 == 6 + 11 * current.Index)
-                                    listViewItem.SubItems.Add(text);
-                                else if (num4 == 7 + 11 * current.Index)
-                                    listViewItem.SubItems.Add(text);
-                                else if (num4 == 8 + 11 * current.Index)
-                                    listViewItem.SubItems.Add(text);
-                                else if (num4 == 9 + 11 * current.Index)
-                                    listViewItem.SubItems.Add(text);
-                                else if (num4 == 10 + 11 * current.Index)
-                                    listViewItem.SubItems.Add(text);
-                                else if (num4 == 11 + 11 * current.Index)
-                                {
-                                    listViewItem.SubItems.Add(text);
-                                    listViewBoxes.Items.Add(listViewItem);
-                                }
-                            }
-                        }
-                        while (num4 < x);
-                        goto label_33;
-                    }
-                }
-                finally
-                {
-                    IDisposable disposable = enumerator as IDisposable;
-                    if (disposable != null)
-                        disposable.Dispose();
+                    string name = lines[0 + passedlines];
+                    string parent = lines[1 + passedlines];
+                    float PosX = float.Parse(lines[3 + passedlines]);
+                    float PosY = float.Parse(lines[4 + passedlines]);
+                    float PosZ = float.Parse(lines[5 + passedlines]);
+                    float SizeX = float.Parse(lines[6 + passedlines]);
+                    float SizeY = float.Parse(lines[7 + passedlines]);
+                    float SizeZ = float.Parse(lines[8 + passedlines]);
+                    int UvX = int.Parse(lines[9 + passedlines]);
+                    int UvY = int.Parse(lines[10 + passedlines]);
+                    passedlines += 11;
+                    i += 11;
+                    modelParts.Add(new ModelPart(parent, PosX, PosY, PosZ, SizeX, SizeY, SizeZ, UvX, UvY));
                 }
             }
+            comboParent.Enabled = true;
+            updateListView();
             render();
         }
+
 
         //Clones Item
         private void cloneToolStripMenuItem_Click(object sender, EventArgs e)

@@ -60,4 +60,4 @@ $ cd "-PCK-Studio"
 *  [jam1garner](https://github.com/jam1garner)
 
 ### Other Credits
-*  [yaboiFoxx]() for Improved UI concept
+*  [yaboiFoxx](https://github.com/yaboiFoxx) for Improved UI concept
