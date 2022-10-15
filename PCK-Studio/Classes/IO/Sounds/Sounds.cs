@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PckStudio.Classes.IO.Sounds
 {
-    public class Type
+    public class SoundInfo
     {
         public bool replace { get; set; }
         public List<Sound> sounds = new List<Sound>();
