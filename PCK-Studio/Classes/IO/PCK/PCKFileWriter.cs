@@ -42,11 +42,11 @@ namespace PckStudio.Classes.IO
         private void WriteLookUpTable(Stream stream)
         {
             WriteInt(stream, LUT.Count);
-            LUT.ForEach(entry =>
+            for(int i = 0; i < LUT.Count; i++)
             {
-                WriteInt(stream, LUT.IndexOf(entry));
-                WriteString(stream, entry);
-            });
+                WriteInt(stream, i);
+                WriteString(stream, LUT[i]);
+            };
             if (LUT.Contains("XMLVERSION"))
                 WriteInt(stream, 0x1337); // :^)
         }

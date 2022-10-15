@@ -39,7 +39,7 @@ namespace PckStudio.Classes.IO.LOC
 
         private void WriteLanguages(Stream stream, int type)
         {
-            _locfile.Languages.ForEach(language =>
+            foreach(var language in _locfile.Languages)
             {
                 WriteString(stream, language);
                 
@@ -58,12 +58,12 @@ namespace PckStudio.Classes.IO.LOC
                 }
 
                 WriteInt(stream, size);
-            });
+            };
         }
 
         private void WriteLanguageEntries(Stream stream, int type)
         {
-            _locfile.Languages.ForEach(language =>
+            foreach (var language in _locfile.Languages)
             {
                 WriteInt(stream, 0x6D696B75); // :P
                 stream.WriteByte(0); // <- only write when the previous written int was >0
@@ -75,7 +75,7 @@ namespace PckStudio.Classes.IO.LOC
                     if (type == 0) WriteString(stream, locKey);
                     WriteString(stream, _locfile.LocKeys[locKey][language]);
                 }
-            });
+            };
         }
 
         private void WriteString(Stream stream, string s)

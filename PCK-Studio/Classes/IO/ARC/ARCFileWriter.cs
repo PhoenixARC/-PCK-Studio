@@ -25,7 +25,7 @@ namespace PckStudio.Classes.IO.ARC
         private void WriteToStream(Stream stream)
         {
             WriteInt(stream, _archive.Count);
-            int currentOffset = 4 + _archive.Keys.ToArray().Sum(key => 10 + key.Length);
+            int currentOffset = 4 + _archive.Keys.Sum(key => 10 + key.Length);
             foreach (var pair in _archive)
             {
                 int size = pair.Value.Length;
@@ -40,10 +40,10 @@ namespace PckStudio.Classes.IO.ARC
             }
         }
 
-        private void WriteString(Stream stream, string String)
+        private void WriteString(Stream stream, string s)
         {
-            WriteShort(stream, (short)String.Length);
-            WriteString(stream, String, Encoding.UTF8);
+            WriteShort(stream, (short)s.Length);
+            WriteString(stream, s, Encoding.UTF8);
         }
     }
 }
