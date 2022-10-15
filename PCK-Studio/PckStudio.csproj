@@ -200,7 +200,7 @@
     <Compile Include="Classes\Networking\PCKCollections.cs" />
     <Compile Include="Classes\Misc\RichPresenceClient.cs" />
     <Compile Include="Classes\Networking\Update.cs" />
-    <Compile Include="Classes\Utils\grf\CRC32.cs" />
+    <Compile Include="Classes\Utils\GRF\CRC32.cs" />
     <Compile Include="Classes\Utils\RLE.cs" />
     <Compile Include="Forms\Additional-Popups\Loc\AddLanguage.cs">
       <SubType>Form</SubType>
