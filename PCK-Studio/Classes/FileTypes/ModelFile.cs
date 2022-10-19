@@ -96,6 +96,8 @@ namespace PckStudio.Classes.FileTypes
                 public Part(string name)
                 {
                     this.name = name;
+                    this.position = (0, 0, 0);
+                    this.rotation = (0, 0, 0);
                 }
 
                 public void AddBox((float x, float y, float z) position,
