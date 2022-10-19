@@ -50,6 +50,7 @@ namespace PckStudio
 			imageList.Images.Add(Resources.SKIN_ICON); // Icon for Skin files (*.png)
 			imageList.Images.Add(Resources.CAPE_ICON); // Icon for Cape files (*.png)
 			imageList.Images.Add(Resources.TEXTURE_ICON); // Icon for Texture files (*.png;*.tga)
+			imageList.Images.Add(Resources.BEHAVIOURS_ICON); // Icon for Behaviour files (behaviours.bin)
 			pckOpen.AllowDrop = true;
 			tabControl.SelectTab(0);
 			labelVersion.Text = "PCK Studio: " + Application.ProductVersion;
@@ -2829,6 +2830,10 @@ namespace PckStudio
 				case PCKFile.FileData.FileType.TextureFile:
 					node.ImageIndex = 14;
 					node.SelectedImageIndex = 14;
+					break;
+				case PCKFile.FileData.FileType.BehavioursFile:
+					node.ImageIndex = 15;
+					node.SelectedImageIndex = 15;
 					break;
 				default: // unknown file format
 					node.ImageIndex = 5;

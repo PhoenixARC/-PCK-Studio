@@ -662,6 +662,7 @@
     <None Include="Resources\iconImageList\SKIN ICON.png" />
     <None Include="Resources\iconImageList\TEXTURE ICON.png" />
     <None Include="Resources\iconImageList\SKINS ICON_new.png" />
+    <None Include="Resources\iconImageList\BEHAVIOURS ICON.png" />
     <Content Include="Resources\PCK-Studio_Logo.ico" />
     <None Include="Resources\bg1.png" />
     <Content Include="Resources\NoImageFound.png" />
