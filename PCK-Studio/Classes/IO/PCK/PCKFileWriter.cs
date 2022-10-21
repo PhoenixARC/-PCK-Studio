@@ -11,17 +11,16 @@ namespace PckStudio.Classes.IO
         private PCKFile _pckfile;
         private List<string> LUT = new List<string>();
 
-        public static void Write(Stream stream, PCKFile file, bool isLittleEndian)
+        public static void Write(Stream stream, PCKFile file, bool isLittleEndian, bool isSkinsPCK = false)
         {
-            new PCKFileWriter(file, isLittleEndian).WriteToStream(stream);
+            new PCKFileWriter(file, isLittleEndian, isSkinsPCK).WriteToStream(stream);
         }
 
-        private PCKFileWriter(PCKFile file, bool isLittleEndian) : base(isLittleEndian)
+        private PCKFileWriter(PCKFile file, bool isLittleEndian, bool isSkinsPCK) : base(isLittleEndian)
         {
             _pckfile = file;
             LUT = _pckfile.GatherPropertiesList();
-            // fix for Skins.pck
-            //if (!file.HasFile("localisation.loc", PCKFile.FileData.FileType.LocalisationFile) && !LUT.Contains("XMLVERSION")) LUT.Insert(0, "XMLVERSION");
+            if (!LUT.Contains("XMLVERSION") && isSkinsPCK) LUT.Insert(0, "XMLVERSION");
         }
 
         private void WriteToStream(Stream stream)
@@ -42,11 +41,11 @@ namespace PckStudio.Classes.IO
         private void WriteLookUpTable(Stream stream)
         {
             WriteInt(stream, LUT.Count);
-            for(int i = 0; i < LUT.Count; i++)
+            LUT.ForEach(entry =>
             {
-                WriteInt(stream, i);
-                WriteString(stream, LUT[i]);
-            };
+                WriteInt(stream, LUT.IndexOf(entry));
+                WriteString(stream, entry);
+            });
             if (LUT.Contains("XMLVERSION"))
                 WriteInt(stream, 0x1337); // :^)
         }
