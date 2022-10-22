@@ -516,9 +516,26 @@ namespace PckStudio
 
 		private void Save(string FilePath)
 		{
+			bool isSkinsPCK = false;
+			PCKFile.FileData InfoFile;
+			if (!currentPCK.TryGetFile("0", PCKFile.FileData.FileType.InfoFile, out InfoFile))
+			{
+				switch(MessageBox.Show(this, "Info file, \"0\" was not detected. Would you like to save as a Skins.pck archive?", "Save as Skins archive?", MessageBoxButtons.YesNoCancel))
+				{
+					case DialogResult.Yes:
+						isSkinsPCK = true;
+						break;
+					case DialogResult.No:
+						isSkinsPCK = false;
+						break;
+					case DialogResult.Cancel:
+					default:
+						return; // Cancel operation
+				}
+			}
 			using (var fs = File.OpenWrite(FilePath))
 			{
-				PCKFileWriter.Write(fs, currentPCK, LittleEndianCheckBox.Checked);
+				PCKFileWriter.Write(fs, currentPCK, LittleEndianCheckBox.Checked, isSkinsPCK);
 			}
 			saved = true;
 			MessageBox.Show("Saved Pck file", "File Saved");
