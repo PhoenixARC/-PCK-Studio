@@ -29,6 +29,7 @@ namespace PckStudio
 		bool needsUpdate = false;
 		bool saved = true;
 		bool isTemplateFile = false;
+		bool isSelectingTab = false;
 
 		readonly Dictionary<PCKFile.FileData.FileType, Action<PCKFile.FileData>> pckFileTypeHandler;
 
@@ -181,7 +182,9 @@ namespace PckStudio
 			advancedMetaAddingToolStripMenuItem.Enabled = true;
 			convertToBedrockToolStripMenuItem.Enabled = true;
 			BuildMainTreeView();
+			isSelectingTab = true;
 			tabControl.SelectTab(1);
+			isSelectingTab = false;
 			if (TryGetLocFile(out LOCFile locfile) &&
 				locfile.HasLocEntry("IDS_DISPLAY_NAME") &&
 				locfile.Languages.Contains("en-EN"))
@@ -190,7 +193,9 @@ namespace PckStudio
 
 		private void CloseEditorTab()
 		{
+			isSelectingTab = true;
 			tabControl.SelectTab(0);
+			isSelectingTab = false;
 			currentPCK = null;
 			saved = true;
 			isTemplateFile = false;
@@ -520,7 +525,7 @@ namespace PckStudio
 			PCKFile.FileData InfoFile;
 			if (!currentPCK.TryGetFile("0", PCKFile.FileData.FileType.InfoFile, out InfoFile))
 			{
-				switch(MessageBox.Show(this, "Info file, \"0\" was not detected. Would you like to save as a Skins.pck archive?", "Save as Skins archive?", MessageBoxButtons.YesNoCancel))
+				switch(MessageBox.Show(this, "The info file, \"0\", was not detected. Would you like to save as a Skins.pck archive?", "Save as Skins archive?", MessageBoxButtons.YesNoCancel))
 				{
 					case DialogResult.Yes:
 						isSkinsPCK = true;
@@ -2963,6 +2968,11 @@ namespace PckStudio
 			NewColorFile.SetData(Resources.colours);
 			currentPCK.Files.Add(NewColorFile);
 			BuildMainTreeView();
+		}
+
+		private void tabControl_Selecting(object sender, TabControlCancelEventArgs e)
+		{
+			if (!isSelectingTab) e.Cancel = true;
 		}
 	}
 }

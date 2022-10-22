@@ -705,6 +705,7 @@
 			this.tabControl.TabStop = false;
 			this.tabControl.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.tabControl.UseSelectable = true;
+			this.tabControl.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tabControl_Selecting);
 			// 
 			// openTab
 			// 
