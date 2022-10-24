@@ -403,7 +403,7 @@ namespace PckStudio.Classes.Convert.FromLCE
 
             List<ValueTuple<string, string>> offsets = file.properties.FindAll(p => p.property == "OFFSET");
 
-            float offset = GetPartOffset(offsets, part) * -1;
+            float offset = GetPartOffset(offsets, part);
 
             foreach (ValueTuple<string, string> property in file.properties)
             {
@@ -421,8 +421,8 @@ namespace PckStudio.Classes.Convert.FromLCE
                             //-1 * ((mbox.Value.PositionY + mpart.Value.TranslationY - 24) + mbox.Value.Height);
                             //float y = -1 * ((pivot[1] + box.posY + (offset - 24)) + box.sizeY);
                             //float y = -1 * ((pivot[1] + (box.posY + offset) - 24) + box.sizeY);
-                            float y = -1 * (box.posY + (offset - 24) + box.sizeY);
-                            cubes.Add(new modelCube(new float[] { pivot[0] + box.posX, pivot[1] + box.posY, pivot[2] + box.posZ }, new float[] { box.sizeX, box.sizeY, box.sizeZ }, new float[] { box.uvX, box.uvY }, box.mirror, box.inflation));
+                            float y = -1 * (box.posY + offset + box.sizeY);
+                            cubes.Add(new modelCube(new float[] { pivot[0] + box.posX, pivot[1] + y, pivot[2] + box.posZ }, new float[] { box.sizeX, box.sizeY, box.sizeZ }, new float[] { box.uvX, box.uvY }, box.mirror, box.inflation));
                         }
                         break;
                     default:
@@ -433,45 +433,43 @@ namespace PckStudio.Classes.Convert.FromLCE
             bool slim = anim.GetANIMFlag(Utils.eANIM_EFFECTS.SLIM_MODEL);
             bool classic_res = !(slim && anim.GetANIMFlag(Utils.eANIM_EFFECTS.RESOLUTION_64x64));
 
-            Console.WriteLine(offset);
-
             switch (part)
             {
                 case "HEAD":
-                    if (!anim.GetANIMFlag(Utils.eANIM_EFFECTS.HEAD_DISABLED)) cubes.Add(new modelCube(new float[]{ -4, 24 + offset, -4 }, new float[] { 8, 8, 8 }, new float[] { 0, 0 }));
+                    if (!anim.GetANIMFlag(Utils.eANIM_EFFECTS.HEAD_DISABLED)) cubes.Add(new modelCube(new float[]{ -4, 24 - offset, -4 }, new float[] { 8, 8, 8 }, new float[] { 0, 0 }));
                     break;
                 case "BODY":
-                    if (!anim.GetANIMFlag(Utils.eANIM_EFFECTS.BODY_DISABLED)) cubes.Add(new modelCube(new float[] { -4, 12 + offset, -2 }, new float[] { 8, 12, 4 }, new float[] { 16, 16 }));
+                    if (!anim.GetANIMFlag(Utils.eANIM_EFFECTS.BODY_DISABLED)) cubes.Add(new modelCube(new float[] { -4, 12 - offset, -2 }, new float[] { 8, 12, 4 }, new float[] { 16, 16 }));
                     break;
                 case "ARM0":
-                    if (!anim.GetANIMFlag(Utils.eANIM_EFFECTS.RIGHT_ARM_DISABLED)) cubes.Add(new modelCube(new float[] { slim ? -7 : - 8, 12 + offset, -2 }, new float[] { slim ? 3 : 4, 12, 4 }, new float[] { 40, 16 }));
+                    if (!anim.GetANIMFlag(Utils.eANIM_EFFECTS.RIGHT_ARM_DISABLED)) cubes.Add(new modelCube(new float[] { slim ? -7 : - 8, 12 - offset, -2 }, new float[] { slim ? 3 : 4, 12, 4 }, new float[] { 40, 16 }));
                     break;
                 case "ARM1":
-                    if (!anim.GetANIMFlag(Utils.eANIM_EFFECTS.LEFT_ARM_DISABLED)) cubes.Add(new modelCube(new float[] {4, 12 + offset, -2 }, new float[] { slim ? 3 : 4, 12, 4 }, classic_res ? new float[] { 40, 16 } : new float[] { 32, 48 }, classic_res));
+                    if (!anim.GetANIMFlag(Utils.eANIM_EFFECTS.LEFT_ARM_DISABLED)) cubes.Add(new modelCube(new float[] {4, 12 - offset, -2 }, new float[] { slim ? 3 : 4, 12, 4 }, classic_res ? new float[] { 40, 16 } : new float[] { 32, 48 }, classic_res));
                     break;
                 case "LEG0":
-                    if (!anim.GetANIMFlag(Utils.eANIM_EFFECTS.RIGHT_LEG_DISABLED)) cubes.Add(new modelCube(new float[] { -3.9f, 0 + offset, -2 }, new float[] { 4, 12, 4 }, new float[] { 0, 16 }));
+                    if (!anim.GetANIMFlag(Utils.eANIM_EFFECTS.RIGHT_LEG_DISABLED)) cubes.Add(new modelCube(new float[] { -3.9f, 0 - offset, -2 }, new float[] { 4, 12, 4 }, new float[] { 0, 16 }));
                     break;
                 case "LEG1":
-                    if (!anim.GetANIMFlag(Utils.eANIM_EFFECTS.LEFT_LEG_DISABLED)) cubes.Add(new modelCube(new float[] {0.1f, 0 + offset, -2 }, new float[] { 4, 12, 4 }, classic_res ? new float[] { 0, 16 } : new float[] { 16, 48 }, classic_res));
+                    if (!anim.GetANIMFlag(Utils.eANIM_EFFECTS.LEFT_LEG_DISABLED)) cubes.Add(new modelCube(new float[] {0.1f, 0 - offset, -2 }, new float[] { 4, 12, 4 }, classic_res ? new float[] { 0, 16 } : new float[] { 16, 48 }, classic_res));
                     break;
                 case "HEADWEAR":
-                    if (!anim.GetANIMFlag(Utils.eANIM_EFFECTS.HEAD_OVERLAY_DISABLED)) cubes.Add(new modelCube(new float[] { -4, 24 + offset, -4 }, new float[] { 8, 8, 8 }, new float[] { 32, 0 }, false, 0.5f));
+                    if (!anim.GetANIMFlag(Utils.eANIM_EFFECTS.HEAD_OVERLAY_DISABLED)) cubes.Add(new modelCube(new float[] { -4, 24 - offset, -4 }, new float[] { 8, 8, 8 }, new float[] { 32, 0 }, false, 0.5f));
                     break;
                 case "JACKET":
-                    if (!classic_res && !anim.GetANIMFlag(Utils.eANIM_EFFECTS.BODY_OVERLAY_DISABLED)) cubes.Add(new modelCube(new float[] { 0, 24 + offset, 0 }, new float[] { 8, 12, 4 }, new float[] { 16, 32 }, false, 0.25f));
+                    if (!classic_res && !anim.GetANIMFlag(Utils.eANIM_EFFECTS.BODY_OVERLAY_DISABLED)) cubes.Add(new modelCube(new float[] { 0, 24 - offset, 0 }, new float[] { 8, 12, 4 }, new float[] { 16, 32 }, false, 0.25f));
                     break;
                 case "SLEEVE0":
-                    if (!classic_res && !anim.GetANIMFlag(Utils.eANIM_EFFECTS.RIGHT_ARM_OVERLAY_DISABLED)) cubes.Add(new modelCube(new float[] { slim ? -7 : -8, 12 + offset, -2 }, new float[] { slim ? 3 : 4, 12, 4 }, new float[] { 40, 32 }, false, 0.25f));
+                    if (!classic_res && !anim.GetANIMFlag(Utils.eANIM_EFFECTS.RIGHT_ARM_OVERLAY_DISABLED)) cubes.Add(new modelCube(new float[] { slim ? -7 : -8, 12 - offset, -2 }, new float[] { slim ? 3 : 4, 12, 4 }, new float[] { 40, 32 }, false, 0.25f));
                     break;
                 case "SLEEVE1":
-                    if (!classic_res && !anim.GetANIMFlag(Utils.eANIM_EFFECTS.LEFT_ARM_OVERLAY_DISABLED)) cubes.Add(new modelCube(new float[] { 4, 12 + offset, -2 }, new float[] { slim ? 3 : 4, 12, 4 }, new float[] { 48, 48 }, false, 0.25f));
+                    if (!classic_res && !anim.GetANIMFlag(Utils.eANIM_EFFECTS.LEFT_ARM_OVERLAY_DISABLED)) cubes.Add(new modelCube(new float[] { 4, 12 - offset, -2 }, new float[] { slim ? 3 : 4, 12, 4 }, new float[] { 48, 48 }, false, 0.25f));
                     break;
                 case "PANTS0":
-                    if (!classic_res && !anim.GetANIMFlag(Utils.eANIM_EFFECTS.RIGHT_LEG_OVERLAY_DISABLED)) cubes.Add(new modelCube(new float[] { -3.9f, 0 + offset, -2 }, new float[] { 4, 12, 4 }, new float[] { 0, 32 }, false, 0.25f));
+                    if (!classic_res && !anim.GetANIMFlag(Utils.eANIM_EFFECTS.RIGHT_LEG_OVERLAY_DISABLED)) cubes.Add(new modelCube(new float[] { -3.9f, 0 - offset, -2 }, new float[] { 4, 12, 4 }, new float[] { 0, 32 }, false, 0.25f));
                     break;
                 case "PANTS1":
-                    if (!classic_res && !anim.GetANIMFlag(Utils.eANIM_EFFECTS.LEFT_LEG_OVERLAY_DISABLED)) cubes.Add(new modelCube(new float[] { 0.1f, 0 + offset, -2 }, new float[] { 4, 12, 4 }, new float[] { 0, 48 }, false, 0.25f));
+                    if (!classic_res && !anim.GetANIMFlag(Utils.eANIM_EFFECTS.LEFT_LEG_OVERLAY_DISABLED)) cubes.Add(new modelCube(new float[] { 0.1f, 0 - offset, -2 }, new float[] { 4, 12, 4 }, new float[] { 0, 48 }, false, 0.25f));
                     break;
                 default:
                     break;
