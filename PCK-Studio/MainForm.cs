@@ -404,32 +404,40 @@ namespace PckStudio
 			if (node is TreeNode t && t.Tag is PCKFile.FileData file)
 			{
 				viewFileInfoToolStripMenuItem.Visible = true;
-			if (file.properties.HasProperty("BOX"))
-			{
-				buttonEdit.Text = "EDIT BOXES";
-				buttonEdit.Visible = true;
-			}
-			else if (file.properties.HasProperty("ANIM") &&
-					(file.properties.GetPropertyValue("ANIM") == "0x40000" ||
-					 file.properties.GetPropertyValue("ANIM") == "0x80000"))
-			{
-				buttonEdit.Text = "View Skin";
-				buttonEdit.Visible = true;
-			}
+				if (file.properties.HasProperty("BOX"))
+				{
+					buttonEdit.Text = "EDIT BOXES";
+					buttonEdit.Visible = true;
+				}
+				else if (file.properties.HasProperty("ANIM") &&
+						(file.properties.GetPropertyValue("ANIM") == "0x40000" ||
+						 file.properties.GetPropertyValue("ANIM") == "0x80000"))
+				{
+					buttonEdit.Text = "View Skin";
+					buttonEdit.Visible = true;
+				}
 
-			switch (file.filetype)
-			{
-				case PCKFile.FileData.FileType.SkinFile:
-				case PCKFile.FileData.FileType.CapeFile:
-				case PCKFile.FileData.FileType.TextureFile:
-					// TODO: Add tga support
-					if (Path.GetExtension(file.filepath) == ".tga") break;
-					using (MemoryStream png = new MemoryStream(file.data))
-					{
-						Image skinPicture = Image.FromStream(png);
-						pictureBoxImagePreview.Image = skinPicture;
-						labelImageSize.Text = $"{skinPicture.Size.Width}x{skinPicture.Size.Height}";
-					}
+				switch (file.filetype)
+				{
+					case PCKFile.FileData.FileType.SkinFile:
+					case PCKFile.FileData.FileType.CapeFile:
+					case PCKFile.FileData.FileType.TextureFile:
+						// TODO: Add tga support
+						if (Path.GetExtension(file.filepath) == ".tga") break;
+						using (MemoryStream png = new MemoryStream(file.data))
+						{
+							try
+							{
+								pictureBoxImagePreview.Image = Image.FromStream(png);
+								labelImageSize.Text = $"{pictureBoxImagePreview.Image.Size.Width}x{pictureBoxImagePreview.Image.Size.Height}";
+							}
+							catch (Exception ex)
+							{
+								labelImageSize.Text = "";
+								pictureBoxImagePreview.Image = Resources.NoImageFound;
+								Console.WriteLine("Not a supported image format. Setting back to default");
+							}
+						}
 
 						if ((file.filepath.StartsWith("res/textures/blocks/") || file.filepath.StartsWith("res/textures/items/")) &&
 							!file.filepath.EndsWith("clock.png") && !file.filepath.EndsWith("compass.png") &&
@@ -439,28 +447,28 @@ namespace PckStudio
 							buttonEdit.Text = "EDIT TEXTURE ANIMATION";
 							buttonEdit.Visible = true;
 						}
-					break;
+						break;
 
-				case PCKFile.FileData.FileType.LocalisationFile:
-					buttonEdit.Text = "EDIT LOC";
-					buttonEdit.Visible = true;
-					break;
+					case PCKFile.FileData.FileType.LocalisationFile:
+						buttonEdit.Text = "EDIT LOC";
+						buttonEdit.Visible = true;
+						break;
 
-				case PCKFile.FileData.FileType.AudioFile when file.filepath == "audio.pck":
-					buttonEdit.Text = "EDIT MUSIC CUES";
-					buttonEdit.Visible = true;
-					break;
+					case PCKFile.FileData.FileType.AudioFile when file.filepath == "audio.pck":
+						buttonEdit.Text = "EDIT MUSIC CUES";
+						buttonEdit.Visible = true;
+						break;
 
-				case PCKFile.FileData.FileType.ColourTableFile when file.filepath == "colours.col":
-					buttonEdit.Text = "EDIT COLORS";
-					buttonEdit.Visible = true;
-					break;
-				default:
-					buttonEdit.Visible = false;
-					break;
+					case PCKFile.FileData.FileType.ColourTableFile when file.filepath == "colours.col":
+						buttonEdit.Text = "EDIT COLORS";
+						buttonEdit.Visible = true;
+						break;
+					default:
+						buttonEdit.Visible = false;
+						break;
+				}
 			}
 		}
-                }
 
 		private void extractToolStripMenuItem_Click(object sender, EventArgs e)
 		{
