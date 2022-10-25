@@ -1131,7 +1131,7 @@ namespace PckStudio
 							metaData += $"{entry.Item1}: {entry.Item2}{Environment.NewLine}";
 						}
 
-						File.WriteAllText(sfd.SelectedPath + @"\" + Path.GetFileNameWithoutExtension(file.filepath) + ".txt", metaData);
+						File.WriteAllText(sfd.SelectedPath + @"\" + file.filepath + ".txt", metaData);
 					}
 				}
 			}
