@@ -153,6 +153,30 @@ namespace PckStudio.Forms.Editor
 
 		private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
+			List<string> PS4Biomes = new List<string>();
+			PS4Biomes.Add("bamboo_jungle");
+			PS4Biomes.Add("bamboo_jungle_hills");
+			PS4Biomes.Add("mesa_mutated");
+			PS4Biomes.Add("mega_spruce_taiga_mutated");
+			PS4Biomes.Add("mega_taiga_mutated");
+
+			if (colourfile.waterEntries.Find(e => PS4Biomes.Contains(e.name)) != null)
+			{
+				var result = MessageBox.Show(this, "Biomes exclusive to PS4 Edition v1.91 were found in the colour table and will crash your game if these biomes don't exist. Would you like to remove them?", "Potential unsupported biomes found", MessageBoxButtons.YesNoCancel);
+				switch (result)
+				{
+					case DialogResult.Yes:
+						foreach (var col in colourfile.waterEntries.ToList())
+						{
+							if(PS4Biomes.Contains(col.name)) colourfile.waterEntries.Remove(col);
+						}
+						break;
+					case DialogResult.No:
+						break;
+					default:
+						return;
+				}
+			}
 			using (var stream = new MemoryStream())
 			{
 				COLFileWriter.Write(stream, colourfile);
