@@ -34,6 +34,8 @@ namespace PckStudio.Forms.Editor
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(COLEditor));
 			this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
+			this.metroTextBox1 = new MetroFramework.Controls.MetroTextBox();
+			this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
 			this.setColorBtn = new MetroFramework.Controls.MetroButton();
 			this.blueUpDown = new System.Windows.Forms.NumericUpDown();
 			this.greenUpDown = new System.Windows.Forms.NumericUpDown();
@@ -60,8 +62,6 @@ namespace PckStudio.Forms.Editor
 			this.tabControl = new MetroFramework.Controls.MetroTabControl();
 			this.underwaterTab = new System.Windows.Forms.TabPage();
 			this.fogTab = new System.Windows.Forms.TabPage();
-			this.metroTextBox1 = new MetroFramework.Controls.MetroTextBox();
-			this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
 			this.metroPanel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.blueUpDown)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.greenUpDown)).BeginInit();
@@ -103,6 +103,42 @@ namespace PckStudio.Forms.Editor
 			this.metroPanel1.VerticalScrollbarBarColor = true;
 			this.metroPanel1.VerticalScrollbarHighlightOnWheel = false;
 			this.metroPanel1.VerticalScrollbarSize = 10;
+			// 
+			// metroTextBox1
+			// 
+			// 
+			// 
+			// 
+			this.metroTextBox1.CustomButton.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image")));
+			this.metroTextBox1.CustomButton.Location = ((System.Drawing.Point)(resources.GetObject("resource.Location")));
+			this.metroTextBox1.CustomButton.Name = "";
+			this.metroTextBox1.CustomButton.Size = ((System.Drawing.Size)(resources.GetObject("resource.Size")));
+			this.metroTextBox1.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+			this.metroTextBox1.CustomButton.TabIndex = ((int)(resources.GetObject("resource.TabIndex")));
+			this.metroTextBox1.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+			this.metroTextBox1.CustomButton.UseSelectable = true;
+			this.metroTextBox1.CustomButton.Visible = ((bool)(resources.GetObject("resource.Visible")));
+			this.metroTextBox1.Lines = new string[0];
+			resources.ApplyResources(this.metroTextBox1, "metroTextBox1");
+			this.metroTextBox1.MaxLength = 32767;
+			this.metroTextBox1.Name = "metroTextBox1";
+			this.metroTextBox1.PasswordChar = '\0';
+			this.metroTextBox1.ScrollBars = System.Windows.Forms.ScrollBars.None;
+			this.metroTextBox1.SelectedText = "";
+			this.metroTextBox1.SelectionLength = 0;
+			this.metroTextBox1.SelectionStart = 0;
+			this.metroTextBox1.ShortcutsEnabled = true;
+			this.metroTextBox1.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.metroTextBox1.UseSelectable = true;
+			this.metroTextBox1.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+			this.metroTextBox1.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+			this.metroTextBox1.TextChanged += new System.EventHandler(this.metroTextBox1_TextChanged);
+			// 
+			// metroLabel2
+			// 
+			resources.ApplyResources(this.metroLabel2, "metroLabel2");
+			this.metroLabel2.Name = "metroLabel2";
+			this.metroLabel2.Theme = MetroFramework.MetroThemeStyle.Dark;
 			// 
 			// setColorBtn
 			// 
@@ -318,7 +354,7 @@ namespace PckStudio.Forms.Editor
 			this.tabControl.Controls.Add(this.underwaterTab);
 			this.tabControl.Controls.Add(this.fogTab);
 			this.tabControl.Name = "tabControl";
-			this.tabControl.SelectedIndex = 0;
+			this.tabControl.SelectedIndex = 3;
 			this.tabControl.Style = MetroFramework.MetroColorStyle.White;
 			this.tabControl.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.tabControl.UseSelectable = true;
@@ -336,42 +372,6 @@ namespace PckStudio.Forms.Editor
 			this.fogTab.Controls.Add(this.fogTreeView);
 			resources.ApplyResources(this.fogTab, "fogTab");
 			this.fogTab.Name = "fogTab";
-			// 
-			// metroTextBox1
-			// 
-			// 
-			// 
-			// 
-			this.metroTextBox1.CustomButton.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image")));
-			this.metroTextBox1.CustomButton.Location = ((System.Drawing.Point)(resources.GetObject("resource.Location")));
-			this.metroTextBox1.CustomButton.Name = "";
-			this.metroTextBox1.CustomButton.Size = ((System.Drawing.Size)(resources.GetObject("resource.Size")));
-			this.metroTextBox1.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-			this.metroTextBox1.CustomButton.TabIndex = ((int)(resources.GetObject("resource.TabIndex")));
-			this.metroTextBox1.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
-			this.metroTextBox1.CustomButton.UseSelectable = true;
-			this.metroTextBox1.CustomButton.Visible = ((bool)(resources.GetObject("resource.Visible")));
-			this.metroTextBox1.Lines = new string[0];
-			resources.ApplyResources(this.metroTextBox1, "metroTextBox1");
-			this.metroTextBox1.MaxLength = 32767;
-			this.metroTextBox1.Name = "metroTextBox1";
-			this.metroTextBox1.PasswordChar = '\0';
-			this.metroTextBox1.ScrollBars = System.Windows.Forms.ScrollBars.None;
-			this.metroTextBox1.SelectedText = "";
-			this.metroTextBox1.SelectionLength = 0;
-			this.metroTextBox1.SelectionStart = 0;
-			this.metroTextBox1.ShortcutsEnabled = true;
-			this.metroTextBox1.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.metroTextBox1.UseSelectable = true;
-			this.metroTextBox1.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-			this.metroTextBox1.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
-			this.metroTextBox1.TextChanged += new System.EventHandler(this.metroTextBox1_TextChanged);
-			// 
-			// metroLabel2
-			// 
-			resources.ApplyResources(this.metroLabel2, "metroLabel2");
-			this.metroLabel2.Name = "metroLabel2";
-			this.metroLabel2.Theme = MetroFramework.MetroThemeStyle.Dark;
 			// 
 			// COLEditor
 			// 
