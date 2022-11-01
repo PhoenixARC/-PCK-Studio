@@ -19,6 +19,7 @@ using PckStudio.Forms.Utilities;
 using PckStudio.Forms.Editor;
 using PckStudio.Forms.Additional_Popups.Animation;
 using PckStudio.Classes.IO.PCK;
+using PckStudio.Classes.Utils.TGA;
 
 namespace PckStudio
 {
@@ -416,13 +417,20 @@ namespace PckStudio
 				case PCKFile.FileData.FileType.SkinFile:
 				case PCKFile.FileData.FileType.CapeFile:
 				case PCKFile.FileData.FileType.TextureFile:
+						using (MemoryStream stream = new MemoryStream(file.data))
+						{
 					// TODO: Add tga support
-					if (Path.GetExtension(file.filepath) == ".tga") break;
-					using (MemoryStream png = new MemoryStream(file.data))
-					{
-						Image skinPicture = Image.FromStream(png);
-						pictureBoxImagePreview.Image = skinPicture;
-						labelImageSize.Text = $"{skinPicture.Size.Width}x{skinPicture.Size.Height}";
+							byte[] b = new byte[4];
+							stream.Read(b, 0, 4);
+							stream.Position -= 4;
+                            pictureBoxImagePreview.Image = Path.GetExtension(file.filepath) == ".png" &&
+								b[0] == 0x89 &&
+								b[1] == 0x50 &&
+								b[2] == 0x4E &&
+								b[3] == 0x47
+								? Image.FromStream(stream)
+								: TGA.FromStream(stream);
+							labelImageSize.Text = $"{pictureBoxImagePreview.Image.Size.Width}x{pictureBoxImagePreview.Image.Size.Height}";
 					}
 
 						if ((file.filepath.StartsWith("res/textures/blocks/") || file.filepath.StartsWith("res/textures/items/")) &&

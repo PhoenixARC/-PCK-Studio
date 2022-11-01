@@ -204,6 +204,8 @@
     <Compile Include="Classes\Networking\Update.cs" />
     <Compile Include="Classes\Utils\GRF\CRC32.cs" />
     <Compile Include="Classes\Utils\RLE.cs" />
+    <Compile Include="Classes\Utils\TGA\TGA.cs" />
+    <Compile Include="Classes\Utils\TGA\TGAException.cs" />
     <Compile Include="Forms\Additional-Popups\Loc\AddLanguage.cs">
       <SubType>Form</SubType>
     </Compile>
