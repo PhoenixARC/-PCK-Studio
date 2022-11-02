@@ -9,15 +9,14 @@ Modify .PCK archives as you please!
 * PNG previewing
 * And much more!\
 
-## Supported File format
+## Supported File formats
 
-| Name | file extentions |
+| Name | Extention |
 |:-:|:-:|
 | Localization files | **.loc** |
 | Game Rule files | **.grh/.grf** |
-| Audio.pck |**audio.pck** |
-| Colour file | **.col** |
-
+| Music Cues file |**audio.pck** |
+| Color/Colour Table file | **.col** |
 
 ### Known Issues
  - `.resx been flagged by windows(when downloading source.zip)`
@@ -49,14 +48,16 @@ $ cd "-PCK-Studio"
 * Forms will not load in viewer until the solution is build _at least_ once
 
 
-## Contributers:
+## Active Dev Team:
 *  [PhoenixARC](https://github.com/PhoenixARC)
-*  [MNL](https://github.com/MattN-L)
+*  [MattNL](https://github.com/MattN-L)
 *  [Miku-666](https://github.com/NessieHax)
+
+## Legacy PCK Studio Devs and contributors:
 *  [Nobledez](https://github.com/Nobledez)
 *  [XxModZxXWiiPlaza](https://github.com/XxModZxXWiiPlaza)
 *  [SlothWiiPlaza](https://github.com/Kashiiera)
 *  [jam1garner](https://github.com/jam1garner)
 
-### Credits
-*  [yaboiFoxx]() for Improved UI concept
+### Other Credits
+*  [yaboiFoxx](https://github.com/yaboiFoxx) for Improved UI concept

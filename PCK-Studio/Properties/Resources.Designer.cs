@@ -93,6 +93,16 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap BEHAVIOURS_ICON {
+            get {
+                object obj = ResourceManager.GetObject("BEHAVIOURS_ICON", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap bg1 {
             get {
                 object obj = ResourceManager.GetObject("bg1", resourceCulture);
@@ -196,6 +206,16 @@ namespace PckStudio.Properties {
             get {
                 object obj = ResourceManager.GetObject("COL_ICON", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] colours {
+            get {
+                object obj = ResourceManager.GetObject("colours", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         

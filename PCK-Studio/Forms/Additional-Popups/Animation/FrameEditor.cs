@@ -15,20 +15,30 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 {
 	public partial class FrameEditor : MetroForm
 	{
-		public int FrameTextureIndex => (int)FrameIndexUpDown.Value;
+		public int FrameTextureIndex => FrameList.SelectedNode.Index;
 		public int FrameTime => (int)FrameTimeUpDown.Value;
 
-		public FrameEditor(int indexLimit)
+		public FrameEditor(ImageList texList)
 		{
 			InitializeComponent();
-			label3.Text = "Frame must be within 0 and " + indexLimit + ".";
-            FrameIndexUpDown.Maximum = indexLimit;
-			FrameTimeUpDown.Minimum = 1;
+			label3.Text = "Select a frame and frame time:";
+			FrameList.ImageList = texList;
+
+			int index = 0;
+			foreach (Image frameTex in texList.Images)
+			{
+				TreeNode frame = new TreeNode($"Frame {index}", index, index);
+				FrameList.Nodes.Add(frame);
+				Console.WriteLine(index);
+				index++;
+			}
 		}
-		public FrameEditor(int frameTime, int frameTextureIndex, int indexLimit) : this(indexLimit)
+
+		public FrameEditor(int frameTime, int frameTextureIndex, ImageList texList) : this(texList)
 		{
-            FrameIndexUpDown.Value = frameTextureIndex;
-            FrameTimeUpDown.Value = frameTime;
+			FrameList.SelectedNode = FrameList.Nodes[frameTextureIndex];
+			FrameList.SelectedNode.EnsureVisible();
+			FrameTimeUpDown.Value = frameTime;
 		}
 
 		private void SaveBtn_Click(object sender, EventArgs e)

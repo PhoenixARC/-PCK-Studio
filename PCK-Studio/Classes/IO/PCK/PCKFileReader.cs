@@ -11,7 +11,6 @@ namespace PckStudio.Classes.IO
         private PCKFile _file;
         private List<string> LUT;
 
-
         public static PCKFile Read(Stream stream, bool isLittleEndian)
         {
             return new PCKFileReader(isLittleEndian).ReadFromStream(stream);
@@ -24,7 +23,7 @@ namespace PckStudio.Classes.IO
         private PCKFile ReadFromStream(Stream stream)
         {
             int pck_type = ReadInt(stream);
-            if (pck_type > 0xf00000) // 03 00 00 00 == true
+            if (pck_type > 0xf0_00_00) // 03 00 00 00 == true
                 throw new OverflowException(nameof(pck_type));
             _file = new PCKFile(pck_type);
             ReadLookUpTable(stream);
@@ -62,7 +61,8 @@ namespace PckStudio.Classes.IO
 
         private void ReadFileContents(Stream stream)
         {
-            _file.Files.ForEach( file => {
+            foreach (var file in _file.Files)
+            {
                 int property_count = ReadInt(stream);
                 for (; 0 < property_count; property_count--)
                 {
@@ -71,7 +71,7 @@ namespace PckStudio.Classes.IO
                     file.properties.Add((key, value));
                 }
                 stream.Read(file.data, 0, file.size);
-            });
+            };
         }
 
         private string ReadString(Stream stream)

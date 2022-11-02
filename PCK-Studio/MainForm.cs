@@ -29,6 +29,7 @@ namespace PckStudio
 		bool needsUpdate = false;
 		bool saved = true;
 		bool isTemplateFile = false;
+		bool isSelectingTab = false;
 
 		readonly Dictionary<PCKFile.FileData.FileType, Action<PCKFile.FileData>> pckFileTypeHandler;
 
@@ -50,6 +51,7 @@ namespace PckStudio
 			imageList.Images.Add(Resources.SKIN_ICON); // Icon for Skin files (*.png)
 			imageList.Images.Add(Resources.CAPE_ICON); // Icon for Cape files (*.png)
 			imageList.Images.Add(Resources.TEXTURE_ICON); // Icon for Texture files (*.png;*.tga)
+			imageList.Images.Add(Resources.BEHAVIOURS_ICON); // Icon for Behaviour files (behaviours.bin)
 			pckOpen.AllowDrop = true;
 			tabControl.SelectTab(0);
 			labelVersion.Text = "PCK Studio: " + Application.ProductVersion;
@@ -185,7 +187,9 @@ namespace PckStudio
 			advancedMetaAddingToolStripMenuItem.Enabled = true;
 			convertToBedrockToolStripMenuItem.Enabled = true;
 			BuildMainTreeView();
+			isSelectingTab = true;
 			tabControl.SelectTab(1);
+			isSelectingTab = false;
 			if (TryGetLocFile(out LOCFile locfile) &&
 				locfile.HasLocEntry("IDS_DISPLAY_NAME") &&
 				locfile.Languages.Contains("en-EN"))
@@ -194,7 +198,9 @@ namespace PckStudio
 
 		private void CloseEditorTab()
 		{
+			isSelectingTab = true;
 			tabControl.SelectTab(0);
+			isSelectingTab = false;
 			currentPCK = null;
 			saved = true;
 			isTemplateFile = false;
@@ -250,8 +256,9 @@ namespace PckStudio
 		{
 			foreach (var file in pckFile.Files)
 			{
-                // Replace backward slashes('\') with forward slashes('/') since some filepath use backward slashes
-                TreeNode node = BuildNodeTreeBySeperator(root, file.filepath.Replace('\\', '/'), '/');
+				// Replace backward slashes('\') with forward slashes('/') since some filepath use backward slashes
+				file.filepath = file.filepath.Replace('\\', '/'); // fix any file paths that may be incorrect
+				TreeNode node = BuildNodeTreeBySeperator(root, file.filepath, '/');
 				node.Tag = file;
 				switch (file.filetype)
 				{
@@ -402,32 +409,40 @@ namespace PckStudio
 			if (node is TreeNode t && t.Tag is PCKFile.FileData file)
 			{
 				viewFileInfoToolStripMenuItem.Visible = true;
-			if (file.properties.HasProperty("BOX"))
-			{
-				buttonEdit.Text = "EDIT BOXES";
-				buttonEdit.Visible = true;
-			}
-			else if (file.properties.HasProperty("ANIM") &&
-					(file.properties.GetPropertyValue("ANIM") == "0x40000" ||
-					 file.properties.GetPropertyValue("ANIM") == "0x80000"))
-			{
-				buttonEdit.Text = "View Skin";
-				buttonEdit.Visible = true;
-			}
+				if (file.properties.HasProperty("BOX"))
+				{
+					buttonEdit.Text = "EDIT BOXES";
+					buttonEdit.Visible = true;
+				}
+				else if (file.properties.HasProperty("ANIM") &&
+						(file.properties.GetPropertyValue("ANIM") == "0x40000" ||
+						 file.properties.GetPropertyValue("ANIM") == "0x80000"))
+				{
+					buttonEdit.Text = "View Skin";
+					buttonEdit.Visible = true;
+				}
 
-			switch (file.filetype)
-			{
-				case PCKFile.FileData.FileType.SkinFile:
-				case PCKFile.FileData.FileType.CapeFile:
-				case PCKFile.FileData.FileType.TextureFile:
-					// TODO: Add tga support
-					if (Path.GetExtension(file.filepath) == ".tga") break;
-					using (MemoryStream png = new MemoryStream(file.data))
-					{
-						Image skinPicture = Image.FromStream(png);
-						pictureBoxImagePreview.Image = skinPicture;
-						labelImageSize.Text = $"{skinPicture.Size.Width}x{skinPicture.Size.Height}";
-					}
+				switch (file.filetype)
+				{
+					case PCKFile.FileData.FileType.SkinFile:
+					case PCKFile.FileData.FileType.CapeFile:
+					case PCKFile.FileData.FileType.TextureFile:
+						// TODO: Add tga support
+						if (Path.GetExtension(file.filepath) == ".tga") break;
+						using (MemoryStream png = new MemoryStream(file.data))
+						{
+							try
+							{
+								pictureBoxImagePreview.Image = Image.FromStream(png);
+								labelImageSize.Text = $"{pictureBoxImagePreview.Image.Size.Width}x{pictureBoxImagePreview.Image.Size.Height}";
+							}
+							catch (Exception ex)
+							{
+								labelImageSize.Text = "";
+								pictureBoxImagePreview.Image = Resources.NoImageFound;
+								Console.WriteLine("Not a supported image format. Setting back to default");
+							}
+						}
 
 						if ((file.filepath.StartsWith("res/textures/blocks/") || file.filepath.StartsWith("res/textures/items/")) &&
 							!file.filepath.EndsWith("clock.png") && !file.filepath.EndsWith("compass.png") &&
@@ -437,28 +452,28 @@ namespace PckStudio
 							buttonEdit.Text = "EDIT TEXTURE ANIMATION";
 							buttonEdit.Visible = true;
 						}
-					break;
+						break;
 
-				case PCKFile.FileData.FileType.LocalisationFile:
-					buttonEdit.Text = "EDIT LOC";
-					buttonEdit.Visible = true;
-					break;
+					case PCKFile.FileData.FileType.LocalisationFile:
+						buttonEdit.Text = "EDIT LOC";
+						buttonEdit.Visible = true;
+						break;
 
-				case PCKFile.FileData.FileType.AudioFile when file.filepath == "audio.pck":
-					buttonEdit.Text = "EDIT MUSIC CUES";
-					buttonEdit.Visible = true;
-					break;
+					case PCKFile.FileData.FileType.AudioFile when file.filepath == "audio.pck":
+						buttonEdit.Text = "EDIT MUSIC CUES";
+						buttonEdit.Visible = true;
+						break;
 
-				case PCKFile.FileData.FileType.ColourTableFile when file.filepath == "colours.col":
-					buttonEdit.Text = "EDIT COLORS";
-					buttonEdit.Visible = true;
-					break;
-				default:
-					buttonEdit.Visible = false;
-					break;
+					case PCKFile.FileData.FileType.ColourTableFile when file.filepath == "colours.col":
+						buttonEdit.Text = "EDIT COLORS";
+						buttonEdit.Visible = true;
+						break;
+					default:
+						buttonEdit.Visible = false;
+						break;
+				}
 			}
 		}
-                }
 
 		private void extractToolStripMenuItem_Click(object sender, EventArgs e)
 		{
@@ -519,9 +534,26 @@ namespace PckStudio
 
 		private void Save(string FilePath)
 		{
+			bool isSkinsPCK = false;
+			PCKFile.FileData InfoFile;
+			if (!currentPCK.TryGetFile("0", PCKFile.FileData.FileType.InfoFile, out InfoFile))
+			{
+				switch(MessageBox.Show(this, "The info file, \"0\", was not detected. Would you like to save as a Skins.pck archive?", "Save as Skins archive?", MessageBoxButtons.YesNoCancel))
+				{
+					case DialogResult.Yes:
+						isSkinsPCK = true;
+						break;
+					case DialogResult.No:
+						isSkinsPCK = false;
+						break;
+					case DialogResult.Cancel:
+					default:
+						return; // Cancel operation
+				}
+			}
 			using (var fs = File.OpenWrite(FilePath))
 			{
-				PCKFileWriter.Write(fs, currentPCK, LittleEndianCheckBox.Checked);
+				PCKFileWriter.Write(fs, currentPCK, LittleEndianCheckBox.Checked, isSkinsPCK);
 			}
 			saved = true;
 			MessageBox.Show("Saved Pck file", "File Saved");
@@ -1112,7 +1144,7 @@ namespace PckStudio
 							metaData += $"{entry.Item1}: {entry.Item2}{Environment.NewLine}";
 						}
 
-						File.WriteAllText(sfd.SelectedPath + @"\" + Path.GetFileNameWithoutExtension(file.filepath) + ".txt", metaData);
+						File.WriteAllText(sfd.SelectedPath + @"\" + file.filepath + ".txt", metaData);
 					}
 				}
 			}
@@ -2619,6 +2651,10 @@ namespace PckStudio
 					node.ImageIndex = 14;
 					node.SelectedImageIndex = 14;
 					break;
+				case PCKFile.FileData.FileType.BehavioursFile:
+					node.ImageIndex = 15;
+					node.SelectedImageIndex = 15;
+					break;
 				default: // unknown file format
 					node.ImageIndex = 5;
 					node.SelectedImageIndex = 5;
@@ -2711,11 +2747,30 @@ namespace PckStudio
 						mippedTexture.Save(texStream, ImageFormat.Png);
 						MipMappedFile.SetData(texStream.ToArray());
 
-						currentPCK.Files.Add(MipMappedFile);
-						BuildMainTreeView();
+						currentPCK.Files.Insert(currentPCK.Files.IndexOf(file) + i - 1, MipMappedFile);
 					}
+					BuildMainTreeView();
 				}
 			}
+		}
+
+		private void colourscolToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			PCKFile.FileData NewColorFile;
+			if (currentPCK.TryGetFile("colours.col", PCKFile.FileData.FileType.ColourTableFile, out NewColorFile))
+			{
+				MessageBox.Show("A color table file already exists in this PCK and a new one cannot be created.", "Operation aborted");
+				return;
+			}
+			NewColorFile = new PCKFile.FileData("colours.col", PCKFile.FileData.FileType.ColourTableFile);
+			NewColorFile.SetData(Resources.colours);
+			currentPCK.Files.Add(NewColorFile);
+			BuildMainTreeView();
+		}
+
+		private void tabControl_Selecting(object sender, TabControlCancelEventArgs e)
+		{
+			if (!isSelectingTab) e.Cancel = true;
 		}
 
 		private void as3DSTextureFileToolStripMenuItem_Click(object sender, EventArgs e)

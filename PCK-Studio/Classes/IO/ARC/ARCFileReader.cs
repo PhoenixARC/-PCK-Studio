@@ -20,8 +20,8 @@ namespace PckStudio.Classes.IO.ARC
         private ConsoleArchive ReadFromStream(Stream stream)
         {
             ConsoleArchive _archive = new ConsoleArchive();
-            int NumberOfFiles = ReadInt(stream);
-            for(int i = 0; i < NumberOfFiles; i++)
+            int numberOfFiles = ReadInt(stream);
+            for(int i = 0; i < numberOfFiles; i++)
             {
                 string name = ReadString(stream);
                 int pos = ReadInt(stream);
@@ -41,9 +41,9 @@ namespace PckStudio.Classes.IO.ARC
         {
             long originalPOS = stream.Position;
             if (stream.Seek(position, SeekOrigin.Begin) != position) throw new Exception();
-            byte[] bytes = ReadBytes(stream, size);
+            byte[] data = ReadBytes(stream, size);
             if (stream.Seek(originalPOS, SeekOrigin.Begin) != originalPOS) throw new Exception();
-            return bytes;
+            return data;
         }
 
     }
