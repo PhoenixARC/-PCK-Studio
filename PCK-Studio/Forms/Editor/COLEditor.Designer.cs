@@ -349,12 +349,12 @@ namespace PckStudio.Forms.Editor
 			// tabControl
 			// 
 			resources.ApplyResources(this.tabControl, "tabControl");
+			this.tabControl.Controls.Add(this.fogTab);
 			this.tabControl.Controls.Add(this.colorsTab);
 			this.tabControl.Controls.Add(this.waterTab);
 			this.tabControl.Controls.Add(this.underwaterTab);
-			this.tabControl.Controls.Add(this.fogTab);
 			this.tabControl.Name = "tabControl";
-			this.tabControl.SelectedIndex = 3;
+			this.tabControl.SelectedIndex = 0;
 			this.tabControl.Style = MetroFramework.MetroColorStyle.White;
 			this.tabControl.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.tabControl.UseSelectable = true;
