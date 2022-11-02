@@ -1525,7 +1525,7 @@ namespace Ohana3DS_Rebirth.Ohana
         /// </summary>
         public enum OTextureFormat
         {
-            rgba8 = 0,
+            argb8 = 0,
             rgb8 = 1,
             rgba5551 = 2,
             rgb565 = 3,

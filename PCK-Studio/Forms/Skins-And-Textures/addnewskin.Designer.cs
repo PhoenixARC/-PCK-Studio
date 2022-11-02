@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(addNewSkin));
             System.Windows.Forms.Label label3;
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(addNewSkin));
             System.Windows.Forms.Label label2;
             System.Windows.Forms.Label label1;
             this.textTheme = new System.Windows.Forms.TextBox();
@@ -63,6 +63,24 @@
             ((System.ComponentModel.ISupportInitialize)(this.capePictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.skinPictureBoxTexture)).BeginInit();
             this.SuspendLayout();
+            // 
+            // label3
+            // 
+            resources.ApplyResources(label3, "label3");
+            label3.ForeColor = System.Drawing.Color.White;
+            label3.Name = "label3";
+            // 
+            // label2
+            // 
+            resources.ApplyResources(label2, "label2");
+            label2.ForeColor = System.Drawing.Color.White;
+            label2.Name = "label2";
+            // 
+            // label1
+            // 
+            resources.ApplyResources(label1, "label1");
+            label1.ForeColor = System.Drawing.Color.White;
+            label1.Name = "label1";
             // 
             // textTheme
             // 
@@ -131,24 +149,6 @@
             resources.ApplyResources(this.displayBox, "displayBox");
             this.displayBox.Name = "displayBox";
             this.displayBox.TabStop = false;
-            // 
-            // label3
-            // 
-            resources.ApplyResources(label3, "label3");
-            label3.ForeColor = System.Drawing.Color.White;
-            label3.Name = "label3";
-            // 
-            // label2
-            // 
-            resources.ApplyResources(label2, "label2");
-            label2.ForeColor = System.Drawing.Color.White;
-            label2.Name = "label2";
-            // 
-            // label1
-            // 
-            resources.ApplyResources(label1, "label1");
-            label1.ForeColor = System.Drawing.Color.White;
-            label1.Name = "label1";
             // 
             // radioAUTO
             // 
@@ -305,7 +305,7 @@
             // 
             resources.ApplyResources(this.skinPictureBoxTexture, "skinPictureBoxTexture");
             this.skinPictureBoxTexture.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.skinPictureBoxTexture.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
+            this.skinPictureBoxTexture.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             this.skinPictureBoxTexture.Name = "skinPictureBoxTexture";
             this.skinPictureBoxTexture.TabStop = false;
             this.skinPictureBoxTexture.Click += new System.EventHandler(this.pictureBox1_Click);

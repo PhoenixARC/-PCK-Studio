@@ -274,6 +274,18 @@
   <data name="importSkinsToolStripMenuItem.Text" xml:space="preserve">
     <value>Import</value>
   </data>
+  <data name="as3DSTextureFileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>186, 22</value>
+  </data>
+  <data name="as3DSTextureFileToolStripMenuItem.Text" xml:space="preserve">
+    <value>Export as 3DS Texture</value>
+  </data>
+  <data name="exportToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>210, 22</value>
+  </data>
+  <data name="exportToolStripMenuItem.Text" xml:space="preserve">
+    <value>Export</value>
+  </data>
   <data name="skinToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
     <value>222, 22</value>
   </data>
@@ -460,7 +472,7 @@
     <value>Generate MipMap Texture</value>
   </data>
   <data name="contextMenuPCKEntries.Size" type="System.Drawing.Size, System.Drawing">
-    <value>211, 290</value>
+    <value>211, 312</value>
   </data>
   <data name="&gt;&gt;contextMenuPCKEntries.Name" xml:space="preserve">
     <value>contextMenuPCKEntries</value>
@@ -30486,7 +30498,7 @@
     <value>True</value>
   </data>
   <data name="metroLabel2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>213, 119</value>
+    <value>288, 119</value>
   </data>
   <data name="metroLabel2.Size" type="System.Drawing.Size, System.Drawing">
     <value>0, 0</value>
@@ -30558,7 +30570,7 @@
     <value>False</value>
   </data>
   <data name="entryTypeTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>208, 119</value>
+    <value>283, 119</value>
   </data>
   <data name="entryTypeTextBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>186, 23</value>
@@ -30603,7 +30615,7 @@
     <value>False</value>
   </data>
   <data name="entryDataTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>208, 151</value>
+    <value>283, 151</value>
   </data>
   <data name="entryDataTextBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>186, 23</value>
@@ -30627,7 +30639,7 @@
     <value>Bottom, Right</value>
   </data>
   <data name="buttonEdit.Location" type="System.Drawing.Point, System.Drawing">
-    <value>208, 180</value>
+    <value>283, 180</value>
   </data>
   <data name="buttonEdit.Size" type="System.Drawing.Size, System.Drawing">
     <value>186, 60</value>
@@ -30660,7 +30672,7 @@
     <value>True</value>
   </data>
   <data name="metroLabel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>213, 68</value>
+    <value>288, 68</value>
   </data>
   <data name="metroLabel1.Size" type="System.Drawing.Size, System.Drawing">
     <value>0, 0</value>
@@ -30687,7 +30699,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="MetaTab.Size" type="System.Drawing.Size, System.Drawing">
-    <value>588, 240</value>
+    <value>663, 240</value>
   </data>
   <data name="MetaTab.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -30708,10 +30720,10 @@
     <value>0</value>
   </data>
   <data name="PropertiesTabControl.Location" type="System.Drawing.Point, System.Drawing">
-    <value>413, 277</value>
+    <value>338, 277</value>
   </data>
   <data name="PropertiesTabControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>596, 282</value>
+    <value>671, 282</value>
   </data>
   <data name="PropertiesTabControl.TabIndex" type="System.Int32, mscorlib">
     <value>11</value>
@@ -30780,7 +30792,7 @@
     <value>0</value>
   </data>
   <data name="treeViewMain.Size" type="System.Drawing.Size, System.Drawing">
-    <value>405, 501</value>
+    <value>330, 501</value>
   </data>
   <data name="treeViewMain.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
@@ -30807,7 +30819,7 @@
     <value>NoControl</value>
   </data>
   <data name="pictureBoxImagePreview.Location" type="System.Drawing.Point, System.Drawing">
-    <value>413, 50</value>
+    <value>345, 50</value>
   </data>
   <data name="pictureBoxImagePreview.Size" type="System.Drawing.Size, System.Drawing">
     <value>231, 218</value>
@@ -33499,6 +33511,18 @@
     <value>addTextureToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;addTextureToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;exportToolStripMenuItem.Name" xml:space="preserve">
+    <value>exportToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;exportToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;as3DSTextureFileToolStripMenuItem.Name" xml:space="preserve">
+    <value>as3DSTextureFileToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;as3DSTextureFileToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;setFileTypeToolStripMenuItem.Name" xml:space="preserve">
