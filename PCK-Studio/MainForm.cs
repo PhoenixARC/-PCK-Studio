@@ -2858,7 +2858,7 @@ namespace PckStudio
 		private void addTextureToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			using OpenFileDialog fileDialog = new OpenFileDialog();
-			fileDialog.Filter = "Texture File(*.png)|*.png";
+			fileDialog.Filter = "Texture File(*.png,*.tga)|*.png;*.tga";
 			if (fileDialog.ShowDialog() == DialogResult.OK)
 			{
 				using RenamePrompt renamePrompt = new RenamePrompt(Path.GetFileName(fileDialog.FileName));
@@ -2898,9 +2898,6 @@ namespace PckStudio
 
 				string textureExtension = Path.GetExtension(file.filepath);
 
-				// TGA is not yet supported
-				if (textureExtension == ".tga") return;
-
 				using MipMapPrompt diag = new MipMapPrompt();
 				if (diag.ShowDialog(this) == DialogResult.OK)
 				{
@@ -2912,7 +2909,10 @@ namespace PckStudio
 							currentPCK.Files.Remove(currentPCK.GetFile(mippedPath, PCKFile.FileData.FileType.TextureFile));
 						PCKFile.FileData MipMappedFile = new PCKFile.FileData(mippedPath, PCKFile.FileData.FileType.TextureFile);
 
-						Image originalTexture = Bitmap.FromStream(new MemoryStream(file.data));
+						using var stream = new MemoryStream(file.data);
+                        Image originalTexture = textureExtension == ".tga"
+							? TGA.FromStream(stream)
+							: Image.FromStream(stream);
 						int NewWidth = originalTexture.Width / (int)Math.Pow(2,i - 1);
 						int NewHeight = originalTexture.Height / (int)Math.Pow(2, i - 1);
 						Rectangle tileArea = new Rectangle(0, 0,

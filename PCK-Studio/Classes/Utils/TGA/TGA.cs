@@ -1,21 +1,37 @@
-﻿using PckStudio.Classes.IO;
-using System;
-using System.Diagnostics;
-using System.Drawing;
+﻿using System;
 using System.IO;
+using System.Text;
+using System.Drawing;
+using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
-
+using PckStudio.Classes.IO;
 
 namespace PckStudio.Classes.Utils.TGA
 {
     internal static class TGA
     {
-        private static TGAHeader _header;
-        private static Bitmap _bitmap;
-
         private static TGAWriter _writer = new TGAWriter(true);
         private static TGAReader _reader = new TGAReader(true);
+
+        // http://www.paulbourke.net/dataformats/tga/
+        private ref struct TGAHeader
+        {
+            public byte IdLength;
+            public TGADataTypeCode DataTypeCode;
+            public (byte Type, short Origin/*Offset*/, short Length, byte Depth) Colormap;
+            public (short X, short Y) Origin;
+            public short Width;
+            public short Height;
+            public byte BitsPerPixel;
+            public byte ImageDescriptor;
+        }
+
+        private ref struct TGAFooter
+        {
+            public byte[] extensionData;
+            public byte[] developerAreaData;
+        }
 
         private class TGAReader : StreamDataReader
         {
@@ -31,35 +47,19 @@ namespace PckStudio.Classes.Utils.TGA
                 header.Colormap.Origin = ReadShort(stream);
                 header.Colormap.Length = ReadShort(stream);
                 header.Colormap.Depth = ReadBytes(stream, 1)[0];
-                header.Origin.x = ReadShort(stream);
-                header.Origin.y = ReadShort(stream);
+                header.Origin.X = ReadShort(stream);
+                header.Origin.Y = ReadShort(stream);
                 header.Width = ReadShort(stream);
                 header.Height = ReadShort(stream);
                 header.BitsPerPixel = ReadBytes(stream, 1)[0];
                 header.ImageDescriptor = ReadBytes(stream, 1)[0];
-                DebugLogHeader(header);
                 return header;
             }
 
-            [Conditional("DEBUG")]
-            private void DebugLogHeader(TGAHeader header)
+            public Bitmap LoadImage(Stream stream, TGAHeader header)
             {
-                Debug.WriteLine("ID length:         {0}", header.IdLength);
-                Debug.WriteLine("Colourmap type:    {0}", header.Colormap.Type);
-                Debug.WriteLine("Image type:        {0}", header.DataTypeCode);
-                Debug.WriteLine("Colour map offset: {0}", header.Colormap.Origin);
-                Debug.WriteLine("Colour map length: {0}", header.Colormap.Length);
-                Debug.WriteLine("Colour map depth:  {0}", header.Colormap.Depth);
-                Debug.WriteLine("X origin:          {0}", header.Origin.x);
-                Debug.WriteLine("Y origin:          {0}", header.Origin.y);
-                Debug.WriteLine("Width:             {0}", header.Width);
-                Debug.WriteLine("Height:            {0}", header.Height);
-                Debug.WriteLine("Bits per pixel:    {0}", header.BitsPerPixel);
-                Debug.WriteLine("Descriptor:        {0}", header.ImageDescriptor);
-            }
-
-            public Bitmap ReadImage(Stream stream, TGAHeader header)
-            {
+                string idData = ReadString(stream, header.IdLength, Encoding.ASCII);
+                Debug.WriteLineIf(header.IdLength > 0, $"Image ID: {idData}");
                 Bitmap bitmap = new Bitmap(header.Width, header.Height);
                 BitmapData bitmapData = bitmap.LockBits(
                     new Rectangle(0, 0, header.Width, header.Height),
@@ -121,6 +121,18 @@ namespace PckStudio.Classes.Utils.TGA
                 return bitmap;
             }
 
+            public TGAFooter LoadFooter(Stream stream)
+            {
+                /// <https://en.wikipedia.org/wiki/Truevision_TGA#File_footer_(optional)>
+                TGAFooter footer = new TGAFooter();
+                footer.extensionData = new byte[ReadInt(stream)];
+                footer.developerAreaData = new byte[ReadInt(stream)];
+                string signature = ReadString(stream, 16, Encoding.ASCII);
+                Debug.Assert(signature.Equals("TRUEVISION-XFILE") || ReadShort(stream) == 0x002E,
+                    "Footer end invalid");
+                return footer;
+            }
+
             void WritePixel(IntPtr destination, byte[] data, int formatSize)
             {
                 if (formatSize == 4) // 32-bit
@@ -154,10 +166,38 @@ namespace PckStudio.Classes.Utils.TGA
                 }
             }
         }
+
         private class TGAWriter : StreamDataWriter
         {
             public TGAWriter(bool useLittleEndian) : base(useLittleEndian)
             {
+            }
+
+            public void SaveHeader(Stream stream, TGAHeader header)
+            {
+                WriteBytes(stream, new byte[]
+                {
+                    header.IdLength,
+                    header.Colormap.Type,
+                    (byte)header.DataTypeCode
+                });
+                WriteShort(stream, header.Colormap.Origin);
+                WriteShort(stream, header.Colormap.Length);
+                stream.WriteByte(header.Colormap.Depth);
+                WriteShort(stream, header.Origin.X);
+                WriteShort(stream, header.Origin.Y);
+                WriteShort(stream, header.Width);
+                WriteShort(stream, header.Height);
+                WriteBytes(stream, new byte[]
+                {
+                    header.BitsPerPixel,
+                    header.ImageDescriptor,
+                });
+            }
+
+            public void SaveImage(Stream stream, Bitmap bitmap, TGAHeader header)
+            {
+
             }
         }
 
@@ -201,52 +241,41 @@ namespace PckStudio.Classes.Utils.TGA
             COMPRESSED_RLE_COLORMAPPED_4 = 33,
         }
 
-        public static void Reset()
+        private static TGAHeader LoadHeader(Stream stream)
         {
-            _header = default;
-            _bitmap = null;
+            return _reader.LoadHeader(stream);
         }
 
-        public static void LoadHeader(Stream stream)
+        private static Bitmap LoadData(Stream stream, TGAHeader header)
         {
-            _header = _reader.LoadHeader(stream);
-        }
-
-        public static void LoadData(Stream stream)
-        {
-            if (_header.Equals(TGAHeader.Empty))
-                throw new TGAException("no header loaded.");
-            //string idData = ReadString(stream, _header.IdLength, Encoding.ASCII);
-            //Debug.WriteLine(idData);
-            stream.Read(new byte[_header.IdLength], 0, _header.IdLength);
-            _bitmap = _reader.ReadImage(stream, _header);
-        }
-
-        public static void SaveHeader(Stream stream, Bitmap image, TGADataTypeCode format)
-        {
-
-        }
-
-        private struct TGAHeader
-        {
-            public static readonly TGAHeader Empty = default(TGAHeader);
-
-            public byte IdLength;
-            public TGADataTypeCode DataTypeCode;
-            public (byte Type, short Origin/*Offset*/, short Length, byte Depth) Colormap;
-            public (short x, short y) Origin;
-            public short Width;
-            public short Height;
-            public byte BitsPerPixel;
-            public byte ImageDescriptor;
+            return _reader.LoadImage(stream, header);
         }
 
         public static Bitmap FromStream(Stream stream)
         {
-            LoadHeader(stream);
-            LoadData(stream);
-            return _bitmap;
+            TGAHeader header = LoadHeader(stream);
+            Bitmap bitmap = LoadData(stream, header);
+            _reader.LoadFooter(stream);
+            return bitmap;
         }
 
+        public static void Save(Stream stream, Bitmap bitmap, TGADataTypeCode format)
+        {
+            TGAHeader header = new TGAHeader()
+            {
+                IdLength = 0,
+                DataTypeCode = format,
+                Width = (short)bitmap.Width,
+                Height = (short)bitmap.Height,
+                BitsPerPixel = 32, // TODO !?
+                /// 00 |             00 |               00 00
+                ///    | pixel ordering | alpha_channel_depth
+                ImageDescriptor = 0b0100,
+                Origin = (0, 0),
+                Colormap = (0, 0 ,0 ,0)
+            };
+            _writer.SaveHeader(stream, header);
+            _writer.SaveImage(stream, bitmap, header);
+        }
     }
 }
