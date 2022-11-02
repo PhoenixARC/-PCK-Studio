@@ -162,7 +162,7 @@ namespace PckStudio.Forms.Editor
 
 			if (colourfile.waterEntries.Find(e => PS4Biomes.Contains(e.name)) != null)
 			{
-				var result = MessageBox.Show(this, "Biomes exclusive to PS4 Edition v1.91 were found in the colour table and will crash your game if these biomes don't exist. Would you like to remove them?", "Potential unsupported biomes found", MessageBoxButtons.YesNoCancel);
+				var result = MessageBox.Show(this, "Biomes exclusive to PS4 Edition v1.91 were found in this colour table. This will crash all other editions of the game and PS4 Edition v1.90 and below. Would you like to remove them?", "Potentially unsupported biomes found", MessageBoxButtons.YesNoCancel);
 				switch (result)
 				{
 					case DialogResult.Yes:
