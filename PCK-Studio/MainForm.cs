@@ -1088,8 +1088,15 @@ namespace PckStudio
 
 		private void treeViewMain_KeyDown(object sender, KeyEventArgs e)
 		{
-			if (e.KeyCode == Keys.Delete)
+			switch (e.KeyCode)
+			{
+				case Keys.Delete:
 				deleteFileToolStripMenuItem_Click(sender, e);
+					break;
+				case Keys.F2:
+					renameFileToolStripMenuItem_Click(sender, e);
+					break;
+		}
 		}
 
 		private void treeViewMain_BeforeLabelEdit(object sender, NodeLabelEditEventArgs e)
