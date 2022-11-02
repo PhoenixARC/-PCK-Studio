@@ -50,8 +50,8 @@ namespace PckStudio.Classes.Utils.TGA
 
         private ref struct TGAFooter
         {
-            public byte[] extensionData;
-            public byte[] developerAreaData;
+            public int extensionDataOffset;
+            public int developerAreaDataOffset;
         }
 
         private class TGAReader : StreamDataReader
@@ -144,13 +144,15 @@ namespace PckStudio.Classes.Utils.TGA
 
             public TGAFooter LoadFooter(Stream stream)
             {
-                /// <https://en.wikipedia.org/wiki/Truevision_TGA#File_footer_(optional)>
+                long origin = stream.Position;
+                stream.Seek(-26, SeekOrigin.End);
                 TGAFooter footer = new TGAFooter();
-                footer.extensionData = new byte[ReadInt(stream)];
-                footer.developerAreaData = new byte[ReadInt(stream)];
+                footer.extensionDataOffset = ReadInt(stream);
+                footer.developerAreaDataOffset = ReadInt(stream);
                 string signature = ReadString(stream, 16, Encoding.ASCII);
                 Debug.Assert(signature.Equals("TRUEVISION-XFILE") || ReadShort(stream) == 0x002E,
                     "Footer end invalid");
+                stream.Seek(origin, SeekOrigin.Begin);
                 return footer;
             }
 
@@ -218,6 +220,35 @@ namespace PckStudio.Classes.Utils.TGA
 
             public void SaveImage(Stream stream, Bitmap bitmap, TGAHeader header)
             {
+                Debug.Assert(bitmap.Width == header.Width || bitmap.Height == header.Height,
+                    "Header resolution doesn't match Image resolution");
+
+                bitmap.RotateFlip(RotateFlipType.RotateNoneFlipY);
+                BitmapData bitmapData = bitmap.LockBits(
+                    new Rectangle(0, 0, header.Width, header.Height),
+                    ImageLockMode.ReadOnly,
+                    PixelFormat.Format32bppArgb);
+
+                byte[] pixel = new byte[4];
+                for (int y = 0; y < header.Height; y++)
+                {
+                    for (int x = 0; x < header.Width; x++)
+                    {
+                        IntPtr pixelOffset = bitmapData.Scan0 + 4 * x + bitmapData.Stride * y;
+                        Marshal.Copy(pixelOffset, pixel, 0, 4);
+                        switch(header.DataTypeCode)
+                        {
+                            case TGADataTypeCode.RGB:
+                                if (header.BitsPerPixel == 32)
+                                {
+                                    WriteBytes(stream, pixel);
+                                }
+                                break;
+                            default:
+                                throw new NotImplementedException(nameof(header.DataTypeCode));
+                        }
+                    }
+                }
 
             }
         }
@@ -262,21 +293,11 @@ namespace PckStudio.Classes.Utils.TGA
             COMPRESSED_RLE_COLORMAPPED_4 = 33,
         }
 
-        private static TGAHeader LoadHeader(Stream stream)
-        {
-            return _reader.LoadHeader(stream);
-        }
-
-        private static Bitmap LoadData(Stream stream, TGAHeader header)
-        {
-            return _reader.LoadImage(stream, header);
-        }
-
         public static Bitmap FromStream(Stream stream)
         {
-            TGAHeader header = LoadHeader(stream);
-            Bitmap bitmap = LoadData(stream, header);
-            _reader.LoadFooter(stream);
+            TGAHeader header = _reader.LoadHeader(stream);
+            Bitmap bitmap = _reader.LoadImage(stream, header);
+            TGAFooter footer = _reader.LoadFooter(stream);
             return bitmap;
         }
 
@@ -288,9 +309,9 @@ namespace PckStudio.Classes.Utils.TGA
                 DataTypeCode = format,
                 Width = (short)bitmap.Width,
                 Height = (short)bitmap.Height,
-                BitsPerPixel = 32, // TODO !?
-                /// 00 |             00 |               00 00
-                ///    | pixel ordering | alpha_channel_depth
+                BitsPerPixel = (byte)Image.GetPixelFormatSize(bitmap.PixelFormat), // TODO !?
+                ///    00    |       00       |        00 00
+                /// not used | pixel ordering | alpha_channel_depth
                 ImageDescriptor = 0b0100,
                 Origin = (0, 0),
                 Colormap = (0, 0 ,0 ,0)
