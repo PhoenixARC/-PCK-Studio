@@ -6,10 +6,11 @@ namespace PckStudio.Classes.IO.CSMB
 {
     internal class CSMBFileReader : StreamDataReader
     {
-        public CSMBFile Read(Stream stream)
+        public static CSMBFile Read(Stream stream)
         {
             return new CSMBFileReader().ReadFromStream(stream);
         }
+
         private CSMBFileReader() : base(false)
         { }
 
