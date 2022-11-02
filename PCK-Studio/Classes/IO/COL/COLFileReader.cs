@@ -19,6 +19,7 @@ namespace PckStudio.Classes.IO.COL
         {
             COLFile colourFile = new COLFile();
             int has_water_colors = ReadInt(stream);
+            colourFile.hasWaterTable = has_water_colors > 0;
             int color_entries = ReadInt(stream);
             for (int i = 0; i < color_entries; i++)
             {
