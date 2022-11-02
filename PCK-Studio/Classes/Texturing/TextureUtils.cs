@@ -13,7 +13,7 @@ namespace Ohana3DS_Rebirth.Ohana
         /// <param name="width">Width of the Texture</param>
         /// <param name="height">Height of the Texture</param>
         /// <returns></returns>
-        public static Bitmap getBitmap(byte[] array, int width, int height)
+        public static Bitmap ToBitmap(byte[] array, int width, int height)
         {
             Bitmap img = new Bitmap(width, height, PixelFormat.Format32bppArgb);
             BitmapData imgData = img.LockBits(new Rectangle(0, 0, img.Width, img.Height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
@@ -27,7 +27,7 @@ namespace Ohana3DS_Rebirth.Ohana
         /// </summary>
         /// <param name="img">The Bitmap</param>
         /// <returns></returns>
-        public static byte[] getArray(Bitmap img)
+        public static byte[] ToArray(Bitmap img)
         {
             BitmapData imgData = img.LockBits(new Rectangle(0, 0, img.Width, img.Height), ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
             byte[] array = new byte[imgData.Stride * img.Height];
