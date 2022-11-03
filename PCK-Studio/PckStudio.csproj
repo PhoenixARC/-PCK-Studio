@@ -619,7 +619,19 @@
   <ItemGroup>
     <None Include="Resources\apps.zip" />
     <None Include="Resources\binka\binkawin.asi" />
-    <None Include="Resources\fileTemplates\colours.col" />
+    <None Include="Resources\fileTemplates\1.91_colours.col" />
+    <None Include="Resources\fileTemplates\tu12colours.col" />
+    <None Include="Resources\fileTemplates\tu13colours.col" />
+    <None Include="Resources\fileTemplates\tu14colours.col" />
+    <None Include="Resources\fileTemplates\tu19colours.col" />
+    <None Include="Resources\fileTemplates\tu31colours.col" />
+    <None Include="Resources\fileTemplates\tu32colours.col" />
+    <None Include="Resources\fileTemplates\tu43colours.col" />
+    <None Include="Resources\fileTemplates\tu46colours.col" />
+    <None Include="Resources\fileTemplates\tu51colours.col" />
+    <None Include="Resources\fileTemplates\tu53colours.col" />
+    <None Include="Resources\fileTemplates\tu54colours.col" />
+    <None Include="Resources\fileTemplates\tu69colours.col" />
     <None Include="Resources\tileData.json" />
     <None Include="Resources\Del.png" />
     <None Include="Resources\ExportFile.png" />
@@ -656,12 +668,10 @@
     <None Include="Resources\iconImageList\MODELS ICON.png" />
     <None Include="Resources\iconImageList\GRF ICON.png" />
     <None Include="Resources\iconImageList\GRH ICON.png" />
-    <None Include="Resources\iconImageList\ZERO ICON.png" />
     <None Include="Resources\iconImageList\INFO ICON.png" />
     <None Include="Resources\iconImageList\CAPE ICON.png" />
     <None Include="Resources\iconImageList\SKIN ICON.png" />
     <None Include="Resources\iconImageList\TEXTURE ICON.png" />
-    <None Include="Resources\iconImageList\SKINS ICON_new.png" />
     <None Include="Resources\AddTexture.png" />
     <None Include="Resources\iconImageList\BEHAVIOURS ICON.png" />
     <Content Include="Resources\PCK-Studio_Logo.ico" />
