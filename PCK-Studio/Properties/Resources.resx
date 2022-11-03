@@ -271,13 +271,49 @@
   <data name="SKINS_ICON" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\iconImageList\SKINS ICON.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="colours" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\fileTemplates\colours.col;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="BEHAVIOURS_ICON" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\iconImageList\BEHAVIOURS ICON.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="AddTexture" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\AddTexture.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tu12colours" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\fileTemplates\tu12colours.col;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tu13colours" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\fileTemplates\tu13colours.col;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tu14colours" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\fileTemplates\tu14colours.col;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tu19colours" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\fileTemplates\tu19colours.col;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tu31colours" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\fileTemplates\tu31colours.col;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tu32colours" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\fileTemplates\tu32colours.col;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tu43colours" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\fileTemplates\tu43colours.col;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tu46colours" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\fileTemplates\tu46colours.col;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tu51colours" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\fileTemplates\tu51colours.col;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tu53colours" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\fileTemplates\tu53colours.col;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tu54colours" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\fileTemplates\tu54colours.col;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tu69colours" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\fileTemplates\tu69colours.col;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="_1_91_colours" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\fileTemplates\1.91_colours.col;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

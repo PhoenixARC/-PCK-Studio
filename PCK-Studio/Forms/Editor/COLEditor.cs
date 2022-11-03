@@ -36,17 +36,24 @@ namespace PckStudio.Forms.Editor
                 colourfile = COLFileReader.Read(stream);
 			}
 
-			using (var stream = new MemoryStream(Properties.Resources.colours))
+			using (var stream = new MemoryStream(Properties.Resources.tu69colours))
 			{
 				default_colourfile = COLFileReader.Read(stream);
 			}
 
-			SetUpDefaultTable();
+			SetUpTable(false);
 		}
 
-		void SetUpDefaultTable()
+		void SetUpTable(bool targetVersion)
 		{
-			foreach (var obj in default_colourfile.entries)
+			colorTreeView.Nodes.Clear();
+			waterTreeView.Nodes.Clear();
+			underwaterTreeView.Nodes.Clear();
+			fogTreeView.Nodes.Clear();
+
+			COLFile temp = targetVersion ? default_colourfile : colourfile;
+
+			foreach (var obj in temp.entries)
 			{
 				COLFile.ColorEntry entry = colourfile.entries.Find(color => color.name == obj.name);
 				TreeNode tn = new TreeNode(obj.name);
@@ -54,7 +61,7 @@ namespace PckStudio.Forms.Editor
 				colorTreeView.Nodes.Add(tn);
 				colorCache.Add(tn);
 			}
-			foreach (var obj in default_colourfile.waterEntries)
+			foreach (var obj in temp.waterEntries)
 			{
 				COLFile.ExtendedColorEntry entry = colourfile.waterEntries.Find(color => color.name == obj.name);
 				TreeNode tn = new TreeNode(obj.name);
