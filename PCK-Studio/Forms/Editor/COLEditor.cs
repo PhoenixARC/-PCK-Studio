@@ -88,19 +88,26 @@ namespace PckStudio.Forms.Editor
 
 			COLFile temp = targetVersion ? default_colourfile : colourfile;
 
+			List<string> CurrentEntries = new List<string>();
+
 			foreach (var obj in temp.entries)
 			{
 				COLFile.ColorEntry entry = colourfile.entries.Find(color => color.name == obj.name);
 				TreeNode tn = new TreeNode(obj.name);
 				tn.Tag = entry != null ? entry : obj;
+				if (CurrentEntries.Contains(obj.name)) continue;
+				CurrentEntries.Add(obj.name);
 				colorTreeView.Nodes.Add(tn);
 				colorCache.Add(tn);
 			}
+			CurrentEntries.Clear();
 			foreach (var obj in temp.waterEntries)
 			{
 				COLFile.ExtendedColorEntry entry = colourfile.waterEntries.Find(color => color.name == obj.name);
 				TreeNode tn = new TreeNode(obj.name);
 				tn.Tag = entry != null ? entry : obj;
+				if (CurrentEntries.Contains(obj.name)) continue;
+				CurrentEntries.Add(obj.name);
 				waterTreeView.Nodes.Add(tn);
 				waterCache.Add(tn);
 				TreeNode tnB = new TreeNode(obj.name);
