@@ -3,34 +3,34 @@ using System.Windows.Forms;
 
 namespace PckStudio.Forms.Editor
 {
-    partial class COLEditor
-    {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
+	partial class COLEditor
+	{
+		/// <summary>
+		/// Required designer variable.
+		/// </summary>
+		private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+		/// <summary>
+		/// Clean up any resources being used.
+		/// </summary>
+		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing && (components != null))
+			{
+				components.Dispose();
+			}
+			base.Dispose(disposing);
+		}
 
-        #region Windows Form Designer generated code
+		#region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
-        {
+		/// <summary>
+		/// Required method for Designer support - do not modify
+		/// the contents of this method with the code editor.
+		/// </summary>
+		private void InitializeComponent()
+		{
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(COLEditor));
 			this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
@@ -51,6 +51,20 @@ namespace PckStudio.Forms.Editor
 			this.menuStrip = new System.Windows.Forms.MenuStrip();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.saveToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+			this.targetUpdateToolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.TU12ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.TU13ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.TU14ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.TU19ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.TU31ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.TU32ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.TU43ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.TU46ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.TU51ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.TU53ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.TU54ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.TU69ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this._1_9_1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.waterTab = new System.Windows.Forms.TabPage();
 			this.waterTreeView = new System.Windows.Forms.TreeView();
 			this.ColorContextMenu = new MetroFramework.Controls.MetroContextMenu(this.components);
@@ -270,7 +284,8 @@ namespace PckStudio.Forms.Editor
 			resources.ApplyResources(this.menuStrip, "menuStrip");
 			this.menuStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
 			this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem});
+            this.fileToolStripMenuItem,
+            this.targetUpdateToolToolStripMenuItem});
 			this.menuStrip.Name = "menuStrip";
 			// 
 			// fileToolStripMenuItem
@@ -286,6 +301,91 @@ namespace PckStudio.Forms.Editor
 			resources.ApplyResources(this.saveToolStripMenuItem1, "saveToolStripMenuItem1");
 			this.saveToolStripMenuItem1.Name = "saveToolStripMenuItem1";
 			this.saveToolStripMenuItem1.Click += new System.EventHandler(this.saveToolStripMenuItem1_Click);
+			// 
+			// targetUpdateToolToolStripMenuItem
+			// 
+			this.targetUpdateToolToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.TU12ToolStripMenuItem,
+            this.TU13ToolStripMenuItem,
+            this.TU14ToolStripMenuItem,
+            this.TU19ToolStripMenuItem,
+            this.TU31ToolStripMenuItem,
+            this.TU32ToolStripMenuItem,
+            this.TU43ToolStripMenuItem,
+            this.TU46ToolStripMenuItem,
+            this.TU51ToolStripMenuItem,
+            this.TU53ToolStripMenuItem,
+            this.TU54ToolStripMenuItem,
+            this.TU69ToolStripMenuItem,
+            this._1_9_1ToolStripMenuItem});
+			this.targetUpdateToolToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+			this.targetUpdateToolToolStripMenuItem.Name = "targetUpdateToolToolStripMenuItem";
+			resources.ApplyResources(this.targetUpdateToolToolStripMenuItem, "targetUpdateToolToolStripMenuItem");
+			// 
+			// TU12ToolStripMenuItem
+			// 
+			this.TU12ToolStripMenuItem.Name = "TU12ToolStripMenuItem";
+			resources.ApplyResources(this.TU12ToolStripMenuItem, "TU12ToolStripMenuItem");
+			// 
+			// TU13ToolStripMenuItem
+			// 
+			this.TU13ToolStripMenuItem.Name = "TU13ToolStripMenuItem";
+			resources.ApplyResources(this.TU13ToolStripMenuItem, "TU13ToolStripMenuItem");
+			// 
+			// TU14ToolStripMenuItem
+			// 
+			this.TU14ToolStripMenuItem.Name = "TU14ToolStripMenuItem";
+			resources.ApplyResources(this.TU14ToolStripMenuItem, "TU14ToolStripMenuItem");
+			// 
+			// TU19ToolStripMenuItem
+			// 
+			this.TU19ToolStripMenuItem.Name = "TU19ToolStripMenuItem";
+			resources.ApplyResources(this.TU19ToolStripMenuItem, "TU19ToolStripMenuItem");
+			// 
+			// TU31ToolStripMenuItem
+			// 
+			this.TU31ToolStripMenuItem.Name = "TU31ToolStripMenuItem";
+			resources.ApplyResources(this.TU31ToolStripMenuItem, "TU31ToolStripMenuItem");
+			// 
+			// TU32ToolStripMenuItem
+			// 
+			this.TU32ToolStripMenuItem.Name = "TU32ToolStripMenuItem";
+			resources.ApplyResources(this.TU32ToolStripMenuItem, "TU32ToolStripMenuItem");
+			// 
+			// TU43ToolStripMenuItem
+			// 
+			this.TU43ToolStripMenuItem.Name = "TU43ToolStripMenuItem";
+			resources.ApplyResources(this.TU43ToolStripMenuItem, "TU43ToolStripMenuItem");
+			// 
+			// TU46ToolStripMenuItem
+			// 
+			this.TU46ToolStripMenuItem.Name = "TU46ToolStripMenuItem";
+			resources.ApplyResources(this.TU46ToolStripMenuItem, "TU46ToolStripMenuItem");
+			// 
+			// TU51ToolStripMenuItem
+			// 
+			this.TU51ToolStripMenuItem.Name = "TU51ToolStripMenuItem";
+			resources.ApplyResources(this.TU51ToolStripMenuItem, "TU51ToolStripMenuItem");
+			// 
+			// TU53ToolStripMenuItem
+			// 
+			this.TU53ToolStripMenuItem.Name = "TU53ToolStripMenuItem";
+			resources.ApplyResources(this.TU53ToolStripMenuItem, "TU53ToolStripMenuItem");
+			// 
+			// TU54ToolStripMenuItem
+			// 
+			this.TU54ToolStripMenuItem.Name = "TU54ToolStripMenuItem";
+			resources.ApplyResources(this.TU54ToolStripMenuItem, "TU54ToolStripMenuItem");
+			// 
+			// TU69ToolStripMenuItem
+			// 
+			this.TU69ToolStripMenuItem.Name = "TU69ToolStripMenuItem";
+			resources.ApplyResources(this.TU69ToolStripMenuItem, "TU69ToolStripMenuItem");
+			// 
+			// _1_9_1ToolStripMenuItem
+			// 
+			this._1_9_1ToolStripMenuItem.Name = "_1_9_1ToolStripMenuItem";
+			resources.ApplyResources(this._1_9_1ToolStripMenuItem, "_1_9_1ToolStripMenuItem");
 			// 
 			// waterTab
 			// 
@@ -349,12 +449,12 @@ namespace PckStudio.Forms.Editor
 			// tabControl
 			// 
 			resources.ApplyResources(this.tabControl, "tabControl");
-			this.tabControl.Controls.Add(this.fogTab);
 			this.tabControl.Controls.Add(this.colorsTab);
 			this.tabControl.Controls.Add(this.waterTab);
 			this.tabControl.Controls.Add(this.underwaterTab);
+			this.tabControl.Controls.Add(this.fogTab);
 			this.tabControl.Name = "tabControl";
-			this.tabControl.SelectedIndex = 0;
+			this.tabControl.SelectedIndex = 3;
 			this.tabControl.Style = MetroFramework.MetroColorStyle.White;
 			this.tabControl.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.tabControl.UseSelectable = true;
@@ -401,28 +501,28 @@ namespace PckStudio.Forms.Editor
 			this.fogTab.ResumeLayout(false);
 			this.ResumeLayout(false);
 
-        }
+		}
 
-        #endregion
+		#endregion
 
-        private MetroFramework.Controls.MetroPanel metroPanel1;
-        private TreeView colorTreeView;
-        private TreeView waterTreeView;
+		private MetroFramework.Controls.MetroPanel metroPanel1;
+		private TreeView colorTreeView;
+		private TreeView waterTreeView;
 		private TreeView fogTreeView;
 		private TreeView underwaterTreeView;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.MenuStrip menuStrip;
-        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem1;
-        private MetroFramework.Controls.MetroLabel blueLabel;
-        private MetroFramework.Controls.MetroLabel greenLabel;
-        private MetroFramework.Controls.MetroLabel redLabel;
-        private MetroFramework.Controls.MetroLabel alphaLabel;
-        private System.Windows.Forms.NumericUpDown alphaUpDown;
-        private TabPage waterTab;
-        private TabPage colorsTab;
-        private MetroFramework.Controls.MetroTabControl tabControl;
-        private MetroFramework.Controls.MetroButton setColorBtn;
+		private System.Windows.Forms.PictureBox pictureBox1;
+		private System.Windows.Forms.MenuStrip menuStrip;
+		private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem1;
+		private MetroFramework.Controls.MetroLabel blueLabel;
+		private MetroFramework.Controls.MetroLabel greenLabel;
+		private MetroFramework.Controls.MetroLabel redLabel;
+		private MetroFramework.Controls.MetroLabel alphaLabel;
+		private System.Windows.Forms.NumericUpDown alphaUpDown;
+		private TabPage waterTab;
+		private TabPage colorsTab;
+		private MetroFramework.Controls.MetroTabControl tabControl;
+		private MetroFramework.Controls.MetroButton setColorBtn;
 		private TabPage underwaterTab;
 		private TabPage fogTab;
 		private NumericUpDown blueUpDown;
@@ -434,5 +534,19 @@ namespace PckStudio.Forms.Editor
 		private ToolStripMenuItem restoreOriginalColorToolStripMenuItem;
 		private MetroFramework.Controls.MetroTextBox metroTextBox1;
 		private MetroFramework.Controls.MetroLabel metroLabel2;
+		private ToolStripMenuItem targetUpdateToolToolStripMenuItem;
+		private ToolStripMenuItem TU12ToolStripMenuItem;
+		private ToolStripMenuItem TU13ToolStripMenuItem;
+		private ToolStripMenuItem TU14ToolStripMenuItem;
+		private ToolStripMenuItem TU19ToolStripMenuItem;
+		private ToolStripMenuItem TU31ToolStripMenuItem;
+		private ToolStripMenuItem TU32ToolStripMenuItem;
+		private ToolStripMenuItem TU43ToolStripMenuItem;
+		private ToolStripMenuItem TU46ToolStripMenuItem;
+		private ToolStripMenuItem TU51ToolStripMenuItem;
+		private ToolStripMenuItem TU53ToolStripMenuItem;
+		private ToolStripMenuItem TU54ToolStripMenuItem;
+		private ToolStripMenuItem TU69ToolStripMenuItem;
+		private ToolStripMenuItem _1_9_1ToolStripMenuItem;
 	}
 }

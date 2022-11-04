@@ -2776,7 +2776,7 @@ namespace PckStudio
 				return;
 			}
 			NewColorFile = new PCKFile.FileData("colours.col", PCKFile.FileData.FileType.ColourTableFile);
-			NewColorFile.SetData(Resources.colours);
+			NewColorFile.SetData(Resources.tu69colours);
 			currentPCK.Files.Add(NewColorFile);
 			BuildMainTreeView();
 		}

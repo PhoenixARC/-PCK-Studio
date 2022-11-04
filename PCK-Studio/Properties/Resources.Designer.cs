@@ -61,6 +61,16 @@ namespace PckStudio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] _1_91_colours {
+            get {
+                object obj = ResourceManager.GetObject("_1_91_colours", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap AddTexture {
@@ -206,16 +216,6 @@ namespace PckStudio.Properties {
             get {
                 object obj = ResourceManager.GetObject("COL_ICON", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        public static byte[] colours {
-            get {
-                object obj = ResourceManager.GetObject("colours", resourceCulture);
-                return ((byte[])(obj));
             }
         }
         
@@ -550,6 +550,126 @@ namespace PckStudio.Properties {
         public static string tileData {
             get {
                 return ResourceManager.GetString("tileData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] tu12colours {
+            get {
+                object obj = ResourceManager.GetObject("tu12colours", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] tu13colours {
+            get {
+                object obj = ResourceManager.GetObject("tu13colours", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] tu14colours {
+            get {
+                object obj = ResourceManager.GetObject("tu14colours", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] tu19colours {
+            get {
+                object obj = ResourceManager.GetObject("tu19colours", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] tu31colours {
+            get {
+                object obj = ResourceManager.GetObject("tu31colours", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] tu32colours {
+            get {
+                object obj = ResourceManager.GetObject("tu32colours", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] tu43colours {
+            get {
+                object obj = ResourceManager.GetObject("tu43colours", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] tu46colours {
+            get {
+                object obj = ResourceManager.GetObject("tu46colours", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] tu51colours {
+            get {
+                object obj = ResourceManager.GetObject("tu51colours", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] tu53colours {
+            get {
+                object obj = ResourceManager.GetObject("tu53colours", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] tu54colours {
+            get {
+                object obj = ResourceManager.GetObject("tu54colours", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] tu69colours {
+            get {
+                object obj = ResourceManager.GetObject("tu69colours", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         
