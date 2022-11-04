@@ -19,8 +19,6 @@ namespace PckStudio
         {
 #if DEBUG
             Debug.Listeners.Add(new TextWriterTraceListener(Console.Out));
-#elif RELEASE
-            Debug.Listeners.Add(new TextWriterTraceListener(File.CreateText(Path.Combine(AppData, "pck-studio.debug.log"))));
 #endif
             var f = new MainForm();
             if (args.Length > 0 && File.Exists(args[0]) && args[0].EndsWith(".pck"))
