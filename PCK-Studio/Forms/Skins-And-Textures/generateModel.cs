@@ -176,12 +176,12 @@ namespace PckStudio
                                 // %f
                                 try
                                 {
-                                    float x = float.Parse(Format[1], System.Globalization.CultureInfo.InvariantCulture);
-                                    float y = float.Parse(Format[2], System.Globalization.CultureInfo.InvariantCulture);
-                                    float z = float.Parse(Format[3], System.Globalization.CultureInfo.InvariantCulture);
-                                    float sizeX = float.Parse(Format[4], System.Globalization.CultureInfo.InvariantCulture);
-                                    float sizeY = float.Parse(Format[5], System.Globalization.CultureInfo.InvariantCulture);
-                                    float sizeZ = float.Parse(Format[6], System.Globalization.CultureInfo.InvariantCulture);
+                                    float x = float.Parse(Format[1]);
+                                    float y = float.Parse(Format[2]);
+                                    float z = float.Parse(Format[3]);
+                                    float sizeX = float.Parse(Format[4]);
+                                    float sizeY = float.Parse(Format[5]);
+                                    float sizeZ = float.Parse(Format[6]);
                                     int u = int.Parse(Format[7]);
                                     int v = int.Parse(Format[8]);
                                     modelParts.Add(new ModelPart(name, x, y, z, sizeX, sizeY, sizeZ, u, v));

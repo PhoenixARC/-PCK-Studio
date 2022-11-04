@@ -20,6 +20,9 @@ namespace PckStudio
 #if DEBUG
             Debug.Listeners.Add(new TextWriterTraceListener(Console.Out));
 #endif
+
+            System.Globalization.CultureInfo.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
+
             var f = new MainForm();
             if (args.Length > 0 && File.Exists(args[0]) && args[0].EndsWith(".pck"))
                 f.LoadFromPath(args[0]);
