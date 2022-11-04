@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PckStudio.Classes.IO
 {
-    internal class StreamDataWriter
+    internal abstract class StreamDataWriter
     {
         private static bool useLittleEndian;
         protected static bool IsUsingLittleEndian => useLittleEndian;
@@ -16,6 +16,8 @@ namespace PckStudio.Classes.IO
         {
             useLittleEndian = littleEndian;
         }
+
+        protected abstract void WriteToStream(Stream stream);
 
         protected static void WriteBool(Stream stream, bool state)
         {

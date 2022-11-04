@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Drawing;
+using System.Collections.Generic;
 
 namespace Ohana3DS_Rebirth.Ohana
 {
@@ -17,15 +18,15 @@ namespace Ohana3DS_Rebirth.Ohana
         /// <param name="height">Height of the Texture</param>
         /// <param name="format">Pixel Format of the Texture</param>
         /// <returns></returns>
-        public static Bitmap decode(byte[] data, int width, int height, RenderBase.OTextureFormat format)
+        public static Bitmap Decode(byte[] data, int width, int height, RenderBase.OTextureFormat format)
         {
             byte[] output = new byte[width * height * 4];
-            long dataOffset = 0;
+            int dataOffset = 0;
             bool toggle = false;
 
             switch (format)
             {
-                case RenderBase.OTextureFormat.rgba8:
+                case RenderBase.OTextureFormat.argb8:
                     for (int tY = 0; tY < height / 8; tY++)
                     {
                         for (int tX = 0; tX < width / 8; tX++)
@@ -34,11 +35,10 @@ namespace Ohana3DS_Rebirth.Ohana
                             {
                                 int x = tileOrder[pixel] % 8;
                                 int y = (tileOrder[pixel] - x) / 8;
-                                long outputOffset = ((tX * 8) + x + ((tY * 8 + y) * width)) * 4;
+                                int outputOffset = ((tX * 8 + x) + ((tY * 8 + y) * width)) * 4;
 
-                                Buffer.BlockCopy(data, (int)dataOffset + 1, output, (int)outputOffset, 3);
+                                Buffer.BlockCopy(data, dataOffset + 1, output, outputOffset, 3);
                                 output[outputOffset + 3] = data[dataOffset];
-
                                 dataOffset += 4;
                             }
                         }
@@ -54,9 +54,9 @@ namespace Ohana3DS_Rebirth.Ohana
                             {
                                 int x = tileOrder[pixel] % 8;
                                 int y = (tileOrder[pixel] - x) / 8;
-                                long outputOffset = ((tX * 8) + x + (((tY * 8 + y)) * width)) * 4;
+                                long outputOffset = ((tX * 8) + x + ((tY * 8 + y) * width)) * 4;
 
-                                Buffer.BlockCopy(data, (int)dataOffset, output, (int)outputOffset, 3);
+                                Buffer.BlockCopy(data, dataOffset, output, (int)outputOffset, 3);
                                 output[outputOffset + 3] = 0xff;
 
                                 dataOffset += 3;
@@ -310,7 +310,7 @@ namespace Ohana3DS_Rebirth.Ohana
                     break;
             }
 
-            return TextureUtils.getBitmap(output.ToArray(), width, height);
+            return TextureUtils.ToBitmap(output, width, height);
         }
 
         /// <summary>
@@ -319,15 +319,15 @@ namespace Ohana3DS_Rebirth.Ohana
         /// <param name="img">Input image to be encoded</param>
         /// <param name="format">Pixel Format of the Texture</param>
         /// <returns></returns>
-        public static byte[] encode(Bitmap img, RenderBase.OTextureFormat format)
+        public static byte[] Encode(Bitmap img, RenderBase.OTextureFormat format)
         {
-            byte[] data = TextureUtils.getArray(img);
+            byte[] data = TextureUtils.ToArray(img);
             byte[] output = new byte[data.Length];
 
-            uint outputOffset = 0;
+            int outputOffset = 0;
             switch (format)
             {
-                case RenderBase.OTextureFormat.rgba8:
+                case RenderBase.OTextureFormat.argb8:
                     for (int tY = 0; tY < img.Height / 8; tY++)
                     {
                         for (int tX = 0; tX < img.Width / 8; tX++)
@@ -336,18 +336,17 @@ namespace Ohana3DS_Rebirth.Ohana
                             {
                                 int x = tileOrder[pixel] % 8;
                                 int y = (tileOrder[pixel] - x) / 8;
-                                long dataOffset = ((tX * 8) + x + ((tY * 8 + y) * img.Width)) * 4;
+                                int dataOffset = ((tX * 8) + x + (tY * 8 + y) * img.Width) * 4;
 
-                                Buffer.BlockCopy(data, (int)dataOffset, output, (int)outputOffset + 1, 3);
+                                Buffer.BlockCopy(data, dataOffset, output, outputOffset + 1, 3);
                                 output[outputOffset] = data[dataOffset + 3];
-
                                 outputOffset += 4;
                             }
                         }
                     }
                     break;
 
-                default: throw new NotImplementedException();
+                default: throw new NotImplementedException(nameof(format));
             }
 
             return output;

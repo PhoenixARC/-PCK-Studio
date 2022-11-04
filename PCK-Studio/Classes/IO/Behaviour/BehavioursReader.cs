@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PckStudio.Classes.IO.Behaviour
 {
-    public class BehavioursReader : StreamDataReader
+    public class BehavioursReader : StreamDataReader<BehaviourFile>
     {
         public static BehaviourFile Read(Stream stream, bool useLittleEndian)
         {
@@ -19,7 +19,7 @@ namespace PckStudio.Classes.IO.Behaviour
         {
         }
 
-        private BehaviourFile ReadFromStream(Stream stream)
+        protected override BehaviourFile ReadFromStream(Stream stream)
         {
             BehaviourFile behaviourFile = new BehaviourFile();
             _ = ReadInt(stream);

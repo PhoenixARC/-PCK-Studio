@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PckStudio.Classes.FileTypes;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,13 +8,15 @@ using System.Threading.Tasks;
 
 namespace PckStudio.Classes.IO
 {
-    public class StreamDataReader
+    public abstract class StreamDataReader<T>
     {
         private static bool useLittleEndian;
         protected static bool IsUsingLittleEndian => useLittleEndian;
+        protected abstract T ReadFromStream(Stream stream);
+
         protected StreamDataReader(bool useLittleEndian)
         {
-            StreamDataReader.useLittleEndian = useLittleEndian;
+            StreamDataReader<T>.useLittleEndian = useLittleEndian;
         }
 
         protected static string ReadString(Stream stream, int length, Encoding encoding)

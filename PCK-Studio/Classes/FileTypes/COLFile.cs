@@ -37,6 +37,7 @@ namespace PckStudio.Classes.FileTypes
             }
         }
 
+        public bool hasWaterTable;
         public List<ColorEntry> entries = new List<ColorEntry>();
         public List<ExtendedColorEntry> waterEntries = new List<ExtendedColorEntry>();
     }

@@ -4,16 +4,17 @@ using PckStudio.Classes.FileTypes;
 
 namespace PckStudio.Classes.IO.CSMB
 {
-    internal class CSMBFileReader : StreamDataReader
+    internal class CSMBFileReader : StreamDataReader<CSMBFile>
     {
-        public CSMBFile Read(Stream stream)
+        public static CSMBFile Read(Stream stream)
         {
             return new CSMBFileReader().ReadFromStream(stream);
         }
+
         private CSMBFileReader() : base(false)
         { }
 
-        private CSMBFile ReadFromStream(Stream stream)
+        protected override CSMBFile ReadFromStream(Stream stream)
         {
             CSMBFile BinFile = new CSMBFile();
             ReadInt(stream);

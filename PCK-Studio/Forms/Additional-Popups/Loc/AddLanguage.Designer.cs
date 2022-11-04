@@ -39,13 +39,14 @@
             this.LanguageComboBox.Location = new System.Drawing.Point(23, 63);
             this.LanguageComboBox.Name = "LanguageComboBox";
             this.LanguageComboBox.Size = new System.Drawing.Size(243, 29);
+            this.LanguageComboBox.Style = MetroFramework.MetroColorStyle.Black;
             this.LanguageComboBox.TabIndex = 0;
             this.LanguageComboBox.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.LanguageComboBox.UseSelectable = true;
             // 
             // AddBtn
             // 
-            this.AddBtn.Location = new System.Drawing.Point(87, 98);
+            this.AddBtn.Location = new System.Drawing.Point(91, 98);
             this.AddBtn.Name = "AddBtn";
             this.AddBtn.Size = new System.Drawing.Size(101, 23);
             this.AddBtn.TabIndex = 1;

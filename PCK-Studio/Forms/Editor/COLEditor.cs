@@ -36,24 +36,78 @@ namespace PckStudio.Forms.Editor
                 colourfile = COLFileReader.Read(stream);
 			}
 
-			using (var stream = new MemoryStream(Properties.Resources.colours))
+			TU12ToolStripMenuItem.Click += (sender, e) => SetUpDefaultFile(sender, e, 0);
+			TU13ToolStripMenuItem.Click += (sender, e) => SetUpDefaultFile(sender, e, 1);
+			TU14ToolStripMenuItem.Click += (sender, e) => SetUpDefaultFile(sender, e, 2);
+			TU19ToolStripMenuItem.Click += (sender, e) => SetUpDefaultFile(sender, e, 3);
+			TU31ToolStripMenuItem.Click += (sender, e) => SetUpDefaultFile(sender, e, 4);
+			TU32ToolStripMenuItem.Click += (sender, e) => SetUpDefaultFile(sender, e, 5);
+			TU43ToolStripMenuItem.Click += (sender, e) => SetUpDefaultFile(sender, e, 6);
+			TU46ToolStripMenuItem.Click += (sender, e) => SetUpDefaultFile(sender, e, 7);
+			TU51ToolStripMenuItem.Click += (sender, e) => SetUpDefaultFile(sender, e, 8);
+			TU53ToolStripMenuItem.Click += (sender, e) => SetUpDefaultFile(sender, e, 9);
+			TU54ToolStripMenuItem.Click += (sender, e) => SetUpDefaultFile(sender, e, 10);
+			TU69ToolStripMenuItem.Click += (sender, e) => SetUpDefaultFile(sender, e, 11);
+			_1_9_1ToolStripMenuItem.Click += (sender, e) => SetUpDefaultFile(sender, e, 12);
+
+			SetUpTable(false);
+		}
+
+		private void SetUpDefaultFile(object sender, EventArgs e, int ID)
+		{
+			var result = MessageBox.Show(this, "This function will set up your colour table to match that of the chosen version. You may lose some entries in the table. Are you sure you would like to continue?", "Target update version?", MessageBoxButtons.YesNo);
+			if (result == DialogResult.No) return;
+
+			switch(ID)
 			{
-				default_colourfile = COLFileReader.Read(stream);
+				case 0: using (var stream = new MemoryStream(Properties.Resources.tu12colours)) default_colourfile = COLFileReader.Read(stream); break;
+				case 1: using (var stream = new MemoryStream(Properties.Resources.tu13colours)) default_colourfile = COLFileReader.Read(stream); break;
+				case 2: using (var stream = new MemoryStream(Properties.Resources.tu14colours)) default_colourfile = COLFileReader.Read(stream); break;
+				case 3: using (var stream = new MemoryStream(Properties.Resources.tu19colours)) default_colourfile = COLFileReader.Read(stream); break;
+				case 4: using (var stream = new MemoryStream(Properties.Resources.tu31colours)) default_colourfile = COLFileReader.Read(stream); break;
+				case 5: using (var stream = new MemoryStream(Properties.Resources.tu32colours)) default_colourfile = COLFileReader.Read(stream); break;
+				case 6: using (var stream = new MemoryStream(Properties.Resources.tu43colours)) default_colourfile = COLFileReader.Read(stream); break;
+				case 7: using (var stream = new MemoryStream(Properties.Resources.tu46colours)) default_colourfile = COLFileReader.Read(stream); break;
+				case 8: using (var stream = new MemoryStream(Properties.Resources.tu51colours)) default_colourfile = COLFileReader.Read(stream); break;
+				case 9: using (var stream = new MemoryStream(Properties.Resources.tu53colours)) default_colourfile = COLFileReader.Read(stream); break;
+				case 10: using (var stream = new MemoryStream(Properties.Resources.tu54colours)) default_colourfile = COLFileReader.Read(stream); break;
+				case 11: using (var stream = new MemoryStream(Properties.Resources.tu69colours)) default_colourfile = COLFileReader.Read(stream); break;
+				case 12: using (var stream = new MemoryStream(Properties.Resources._1_91_colours)) default_colourfile = COLFileReader.Read(stream); break;
+				default: return;
 			}
 
-			foreach (var obj in default_colourfile.entries)
+			SetUpTable(true);
+		}
+
+		void SetUpTable(bool targetVersion)
+		{
+			colorTreeView.Nodes.Clear();
+			waterTreeView.Nodes.Clear();
+			underwaterTreeView.Nodes.Clear();
+			fogTreeView.Nodes.Clear();
+
+			COLFile temp = targetVersion ? default_colourfile : colourfile;
+
+			List<string> CurrentEntries = new List<string>();
+
+			foreach (var obj in temp.entries)
 			{
 				COLFile.ColorEntry entry = colourfile.entries.Find(color => color.name == obj.name);
 				TreeNode tn = new TreeNode(obj.name);
 				tn.Tag = entry != null ? entry : obj;
+				if (CurrentEntries.Contains(obj.name)) continue;
+				CurrentEntries.Add(obj.name);
 				colorTreeView.Nodes.Add(tn);
 				colorCache.Add(tn);
 			}
-			foreach (var obj in colourfile.waterEntries)
+			CurrentEntries.Clear();
+			foreach (var obj in temp.waterEntries)
 			{
 				COLFile.ExtendedColorEntry entry = colourfile.waterEntries.Find(color => color.name == obj.name);
 				TreeNode tn = new TreeNode(obj.name);
 				tn.Tag = entry != null ? entry : obj;
+				if (CurrentEntries.Contains(obj.name)) continue;
+				CurrentEntries.Add(obj.name);
 				waterTreeView.Nodes.Add(tn);
 				waterCache.Add(tn);
 				TreeNode tnB = new TreeNode(obj.name);
@@ -153,6 +207,30 @@ namespace PckStudio.Forms.Editor
 
 		private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
+			List<string> PS4Biomes = new List<string>();
+			PS4Biomes.Add("bamboo_jungle");
+			PS4Biomes.Add("bamboo_jungle_hills");
+			PS4Biomes.Add("mesa_mutated");
+			PS4Biomes.Add("mega_spruce_taiga_mutated");
+			PS4Biomes.Add("mega_taiga_mutated");
+
+			if (colourfile.waterEntries.Find(e => PS4Biomes.Contains(e.name)) != null)
+			{
+				var result = MessageBox.Show(this, "Biomes exclusive to PS4 Edition v1.91 were found in the water section of this colour table. This will crash all other editions of the game and PS4 Edition v1.90 and below. Would you like to remove them?", "Potentially unsupported biomes found", MessageBoxButtons.YesNoCancel);
+				switch (result)
+				{
+					case DialogResult.Yes:
+						foreach (var col in colourfile.waterEntries.ToList())
+						{
+							if(PS4Biomes.Contains(col.name)) colourfile.waterEntries.Remove(col);
+						}
+						break;
+					case DialogResult.No:
+						break;
+					default:
+						return;
+				}
+			}
 			using (var stream = new MemoryStream())
 			{
 				COLFileWriter.Write(stream, colourfile);

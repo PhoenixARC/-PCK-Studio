@@ -22,7 +22,7 @@ namespace PckStudio.Classes.IO.ARC
             _archive = archive;
         }
 
-        private void WriteToStream(Stream stream)
+        protected override void WriteToStream(Stream stream)
         {
             WriteInt(stream, _archive.Count);
             int currentOffset = 4 + _archive.Keys.Sum(key => 10 + key.Length);

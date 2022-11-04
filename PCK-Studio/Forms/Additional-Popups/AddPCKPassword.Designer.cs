@@ -30,31 +30,56 @@ namespace PckStudio.Forms
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddPCKPassword));
-            this.buttonUnlocked = new System.Windows.Forms.Button();
-            this.textBoxPass = new System.Windows.Forms.TextBox();
+            this.buttonUnlocked = new MetroFramework.Controls.MetroButton();
+            this.textBoxPass = new MetroFramework.Controls.MetroTextBox();
             this.SuspendLayout();
             // 
             // buttonUnlocked
             // 
             this.buttonUnlocked.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonUnlocked.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonUnlocked.ForeColor = System.Drawing.Color.White;
-            this.buttonUnlocked.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.buttonUnlocked.Location = new System.Drawing.Point(266, 53);
             this.buttonUnlocked.Name = "buttonUnlocked";
             this.buttonUnlocked.Size = new System.Drawing.Size(75, 23);
+            this.buttonUnlocked.Style = MetroFramework.MetroColorStyle.Black;
             this.buttonUnlocked.TabIndex = 3;
             this.buttonUnlocked.Text = "Lock!";
-            this.buttonUnlocked.UseVisualStyleBackColor = true;
+            this.buttonUnlocked.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.buttonUnlocked.UseSelectable = true;
             this.buttonUnlocked.Click += new System.EventHandler(this.buttonUnlocked_Click);
             // 
             // textBoxPass
             // 
+            // 
+            // 
+            // 
+            this.textBoxPass.CustomButton.Image = null;
+            this.textBoxPass.CustomButton.Location = new System.Drawing.Point(226, 2);
+            this.textBoxPass.CustomButton.Name = "";
+            this.textBoxPass.CustomButton.Size = new System.Drawing.Size(15, 15);
+            this.textBoxPass.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.textBoxPass.CustomButton.TabIndex = 1;
+            this.textBoxPass.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.textBoxPass.CustomButton.UseSelectable = true;
+            this.textBoxPass.CustomButton.Visible = false;
+            this.textBoxPass.Lines = new string[0];
             this.textBoxPass.Location = new System.Drawing.Point(16, 55);
+            this.textBoxPass.MaxLength = 32767;
             this.textBoxPass.Name = "textBoxPass";
+            this.textBoxPass.PasswordChar = '●';
+            this.textBoxPass.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.textBoxPass.SelectedText = "";
+            this.textBoxPass.SelectionLength = 0;
+            this.textBoxPass.SelectionStart = 0;
+            this.textBoxPass.ShortcutsEnabled = true;
             this.textBoxPass.Size = new System.Drawing.Size(244, 20);
+            this.textBoxPass.Style = MetroFramework.MetroColorStyle.Silver;
             this.textBoxPass.TabIndex = 2;
+            this.textBoxPass.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.textBoxPass.UseSelectable = true;
             this.textBoxPass.UseSystemPasswordChar = true;
+            this.textBoxPass.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.textBoxPass.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
             // 
             // AddPCKPassword
             // 
@@ -72,13 +97,12 @@ namespace PckStudio.Forms
             this.TextAlign = MetroFramework.Forms.MetroFormTextAlign.Center;
             this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Button buttonUnlocked;
-        private System.Windows.Forms.TextBox textBoxPass;
+        private MetroFramework.Controls.MetroButton buttonUnlocked;
+        private MetroFramework.Controls.MetroTextBox textBoxPass;
     }
 }

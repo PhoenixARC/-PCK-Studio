@@ -41,7 +41,7 @@ namespace PckStudio.Classes.IO.GRF
                 if (!LUT.Contains(param.Key)) LUT.Add(param.Key);
         }
 
-        private void WriteToStream(Stream stream)
+        protected override void WriteToStream(Stream stream)
         {
             WriteHeader(stream);
             using (var uncompressed_stream = new MemoryStream())

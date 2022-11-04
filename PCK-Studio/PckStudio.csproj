@@ -159,6 +159,7 @@
     <Compile Include="Classes\IO\Sounds\SoundIO.cs" />
     <Compile Include="Classes\IO\Sounds\Sounds.cs" />
     <Compile Include="Classes\Models\DefaultModels\Steve64x64Model.cs" />
+    <Compile Include="Classes\Utils\3DS\3DSUtil.cs" />
     <Compile Include="Classes\Utils\ARC\ARCUtil.cs" />
     <Compile Include="Classes\Utils\SkinANIM.cs" />
     <Compile Include="Classes\FileTypes\PCKProperties.cs" />
@@ -229,6 +230,12 @@
     </Compile>
     <Compile Include="Forms\Additional-Popups\RenamePrompt.Designer.cs">
       <DependentUpon>RenamePrompt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\TextPrompt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\TextPrompt.Designer.cs">
+      <DependentUpon>TextPrompt.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Editor\COLEditor.cs">
       <SubType>Form</SubType>
@@ -448,6 +455,9 @@
       <DependentUpon>RenamePrompt.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Additional-Popups\TextPrompt.resx">
+      <DependentUpon>TextPrompt.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Editor\COLEditor.ja.resx">
       <DependentUpon>COLEditor.cs</DependentUpon>
     </EmbeddedResource>
@@ -620,7 +630,19 @@
   <ItemGroup>
     <None Include="Resources\apps.zip" />
     <None Include="Resources\binka\binkawin.asi" />
-    <None Include="Resources\fileTemplates\colours.col" />
+    <None Include="Resources\fileTemplates\1.91_colours.col" />
+    <None Include="Resources\fileTemplates\tu12colours.col" />
+    <None Include="Resources\fileTemplates\tu13colours.col" />
+    <None Include="Resources\fileTemplates\tu14colours.col" />
+    <None Include="Resources\fileTemplates\tu19colours.col" />
+    <None Include="Resources\fileTemplates\tu31colours.col" />
+    <None Include="Resources\fileTemplates\tu32colours.col" />
+    <None Include="Resources\fileTemplates\tu43colours.col" />
+    <None Include="Resources\fileTemplates\tu46colours.col" />
+    <None Include="Resources\fileTemplates\tu51colours.col" />
+    <None Include="Resources\fileTemplates\tu53colours.col" />
+    <None Include="Resources\fileTemplates\tu54colours.col" />
+    <None Include="Resources\fileTemplates\tu69colours.col" />
     <None Include="Resources\tileData.json" />
     <None Include="Resources\Del.png" />
     <None Include="Resources\ExportFile.png" />
@@ -631,7 +653,6 @@
     <None Include="Resources\pckClosed.bmp" />
     <None Include="Resources\wii-u-games-tool.png" />
     <None Include="Resources\turn-off %281%291.png" />
-    <None Include="Resources\bg2.png" />
     <None Include="Resources\discord.png" />
     <None Include="Resources\external-content.duckduckgo.png" />
     <None Include="Resources\clock.png" />
@@ -658,12 +679,12 @@
     <None Include="Resources\iconImageList\MODELS ICON.png" />
     <None Include="Resources\iconImageList\GRF ICON.png" />
     <None Include="Resources\iconImageList\GRH ICON.png" />
-    <None Include="Resources\iconImageList\ZERO ICON.png" />
     <None Include="Resources\iconImageList\INFO ICON.png" />
     <None Include="Resources\iconImageList\CAPE ICON.png" />
     <None Include="Resources\iconImageList\SKIN ICON.png" />
     <None Include="Resources\iconImageList\TEXTURE ICON.png" />
-    <None Include="Resources\iconImageList\SKINS ICON_new.png" />
+    <None Include="Resources\AddTexture.png" />
+    <None Include="Resources\iconImageList\BEHAVIOURS ICON.png" />
     <Content Include="Resources\PCK-Studio_Logo.ico" />
     <None Include="Resources\bg1.png" />
     <Content Include="Resources\NoImageFound.png" />
@@ -671,7 +692,7 @@
   <ItemGroup>
     <PackageReference Include="Costura.Fody">
       <Version>5.8.0-alpha0098</Version>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <IncludeAssets>compile; runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="DiscordRichPresence">

@@ -6,18 +6,22 @@ namespace PckStudio.Classes.IO.CSMB
 {
     internal class CSMBFileWriter : StreamDataWriter
     {
+        CSMBFile _CSMB;
         public static void Write(Stream stream, CSMBFile file)
         {
-            new CSMBFileWriter().WriteToStream(stream, file);
+            new CSMBFileWriter(file).WriteToStream(stream);
         }
-        private CSMBFileWriter() : base(false)
-        { }
 
-        private void WriteToStream(Stream stream, CSMBFile CSMB)
+        public CSMBFileWriter(CSMBFile csmb) : base(false)
+        {
+            _CSMB = csmb;
+        }
+
+        protected override void WriteToStream(Stream stream)
         {
             WriteInt(stream, 0);
-            WriteInt(stream, CSMB.Parts.Count);
-            foreach(CSMBPart part in CSMB.Parts)
+            WriteInt(stream, _CSMB.Parts.Count);
+            foreach(CSMBPart part in _CSMB.Parts)
             {
                 WriteString(stream, part.Name);
                 WriteInt(stream, (int)part.Parent);
@@ -33,8 +37,8 @@ namespace PckStudio.Classes.IO.CSMB
                 WriteBool(stream, part.HideWArmour);
                 WriteFloat(stream, part.Inflation);
             }
-            WriteInt(stream, CSMB.Offsets.Count);
-            foreach (CSMBOffset offset in CSMB.Offsets)
+            WriteInt(stream, _CSMB.Offsets.Count);
+            foreach (CSMBOffset offset in _CSMB.Offsets)
             {
                 WriteInt(stream, (int)offset.offsetPart);
                 WriteFloat(stream, offset.VerticalOffset);

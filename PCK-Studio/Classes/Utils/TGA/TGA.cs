@@ -36,7 +36,7 @@ namespace PckStudio.Classes.Utils.TGA
         private static TGAWriter _writer = new TGAWriter(true);
         private static TGAReader _reader = new TGAReader(true);
 
-        private ref struct TGAHeader
+        private struct TGAHeader
         {
             public byte IdLength;
             public TGADataTypeCode DataTypeCode;
@@ -48,19 +48,38 @@ namespace PckStudio.Classes.Utils.TGA
             public byte ImageDescriptor;
         }
 
-        private ref struct TGAFooter
+        private struct TGAFooter
         {
             public int extensionDataOffset;
             public int developerAreaDataOffset;
         }
 
-        private class TGAReader : StreamDataReader
+        private readonly struct TGAFileData
+        {
+            public TGAFileData(TGAHeader header, Bitmap bitmap, TGAFooter footer)
+            {
+                Header = header;
+                Bitmap = bitmap;
+                Footer = footer;
+            }
+
+            public readonly TGAHeader Header;
+            public readonly Bitmap Bitmap;
+            public readonly TGAFooter Footer;
+        }
+
+        private class TGAReader : StreamDataReader<TGAFileData>
         {
             public TGAReader(bool useLittleEndian) : base(useLittleEndian)
             {
             }
+            
+            public TGAFileData Read(Stream stream)
+            {
+                return ReadFromStream(stream);
+            }
 
-            public TGAHeader LoadHeader(Stream stream)
+            private TGAHeader LoadHeader(Stream stream)
             {
                 var header = new TGAHeader();
                 byte[] bytes = ReadBytes(stream, 3);
@@ -76,8 +95,8 @@ namespace PckStudio.Classes.Utils.TGA
                 header.ImageDescriptor = ReadBytes(stream, 1)[0];
                 return header;
             }
-
-            public Bitmap LoadImage(Stream stream, TGAHeader header)
+            
+            private Bitmap LoadImage(Stream stream, TGAHeader header)
             {
                 string idData = ReadString(stream, header.IdLength, Encoding.ASCII);
                 Debug.WriteLineIf(header.IdLength > 0, $"Image ID: {idData}");
@@ -142,7 +161,7 @@ namespace PckStudio.Classes.Utils.TGA
                 return bitmap;
             }
 
-            public TGAFooter LoadFooter(Stream stream)
+            private TGAFooter LoadFooter(Stream stream)
             {
                 long origin = stream.Position;
                 stream.Seek(-26, SeekOrigin.End);
@@ -150,7 +169,7 @@ namespace PckStudio.Classes.Utils.TGA
                 footer.extensionDataOffset = ReadInt(stream);
                 footer.developerAreaDataOffset = ReadInt(stream);
                 string signature = ReadString(stream, 16, Encoding.ASCII);
-                Debug.Assert(signature.Equals("TRUEVISION-XFILE") || ReadShort(stream) == 0x002E,
+                Debug.WriteLineIf(!signature.Equals("TRUEVISION-XFILE") || ReadShort(stream) != 0x002E,
                     "Footer end invalid");
                 stream.Seek(origin, SeekOrigin.Begin);
                 return footer;
@@ -187,6 +206,12 @@ namespace PckStudio.Classes.Utils.TGA
                     }, 0, destination, 4);
 
                 }
+            }
+
+            protected override TGAFileData ReadFromStream(Stream stream)
+            {
+                TGAHeader header = _reader.LoadHeader(stream);
+                return new TGAFileData(header, _reader.LoadImage(stream, header), _reader.LoadFooter(stream));
             }
         }
 
@@ -251,6 +276,11 @@ namespace PckStudio.Classes.Utils.TGA
                 }
 
             }
+
+            protected override void WriteToStream(Stream stream)
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public enum TGADataTypeCode : byte
@@ -295,10 +325,8 @@ namespace PckStudio.Classes.Utils.TGA
 
         public static Bitmap FromStream(Stream stream)
         {
-            TGAHeader header = _reader.LoadHeader(stream);
-            Bitmap bitmap = _reader.LoadImage(stream, header);
-            TGAFooter footer = _reader.LoadFooter(stream);
-            return bitmap;
+            TGAFileData tgaFile = _reader.Read(stream);
+            return tgaFile.Bitmap;
         }
 
         public static void Save(Stream stream, Bitmap bitmap, TGADataTypeCode format)
