@@ -538,8 +538,7 @@ namespace PckStudio
 		private void Save(string filePath)
 		{
 			bool isSkinsPCK = false;
-			PCKFile.FileData InfoFile;
-			if (!currentPCK.TryGetFile("0", PCKFile.FileData.FileType.InfoFile, out InfoFile))
+			if (!currentPCK.TryGetFile("0", PCKFile.FileData.FileType.InfoFile, out PCKFile.FileData _))
 			{
 				switch(MessageBox.Show(this, "The info file, \"0\", was not detected. Would you like to save as a Skins.pck archive?", "Save as Skins archive?", MessageBoxButtons.YesNoCancel))
 				{
@@ -2799,6 +2798,26 @@ namespace PckStudio
 						using var ms = new MemoryStream(file.data);
 						Image img = Image.FromStream(ms);
 						_3DSUtil.SetImageTo3DST(fs, img);
+					}
+				}
+			}
+		}
+
+		private void addMultipleEntriesToolStripMenuItem1_Click(object sender, EventArgs e)
+		{
+			if (treeViewMain.SelectedNode is TreeNode t &&
+				t.Tag is PCKFile.FileData file)
+			{
+				using (var input = new TextPrompt())
+				{
+					if (input.ShowDialog(this) == DialogResult.OK)
+					{
+						foreach (var line in input.TextOutput)
+						{
+							file.properties.Add((line.Substring(0, line.IndexOf(' ')), line.Substring(line.IndexOf(' ') + 1)));
+							ReloadMetaTreeView();
+							saved = false;
+						}
 					}
 				}
 			}
