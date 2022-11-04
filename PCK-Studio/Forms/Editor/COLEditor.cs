@@ -36,12 +36,47 @@ namespace PckStudio.Forms.Editor
                 colourfile = COLFileReader.Read(stream);
 			}
 
-			using (var stream = new MemoryStream(Properties.Resources.tu69colours))
-			{
-				default_colourfile = COLFileReader.Read(stream);
-			}
+			TU12ToolStripMenuItem.Click += (sender, e) => SetUpDefaultFile(sender, e, 0);
+			TU13ToolStripMenuItem.Click += (sender, e) => SetUpDefaultFile(sender, e, 1);
+			TU14ToolStripMenuItem.Click += (sender, e) => SetUpDefaultFile(sender, e, 2);
+			TU19ToolStripMenuItem.Click += (sender, e) => SetUpDefaultFile(sender, e, 3);
+			TU31ToolStripMenuItem.Click += (sender, e) => SetUpDefaultFile(sender, e, 4);
+			TU32ToolStripMenuItem.Click += (sender, e) => SetUpDefaultFile(sender, e, 5);
+			TU43ToolStripMenuItem.Click += (sender, e) => SetUpDefaultFile(sender, e, 6);
+			TU46ToolStripMenuItem.Click += (sender, e) => SetUpDefaultFile(sender, e, 7);
+			TU51ToolStripMenuItem.Click += (sender, e) => SetUpDefaultFile(sender, e, 8);
+			TU53ToolStripMenuItem.Click += (sender, e) => SetUpDefaultFile(sender, e, 9);
+			TU54ToolStripMenuItem.Click += (sender, e) => SetUpDefaultFile(sender, e, 10);
+			TU69ToolStripMenuItem.Click += (sender, e) => SetUpDefaultFile(sender, e, 11);
+			_1_9_1ToolStripMenuItem.Click += (sender, e) => SetUpDefaultFile(sender, e, 12);
 
 			SetUpTable(false);
+		}
+
+		private void SetUpDefaultFile(object sender, EventArgs e, int ID)
+		{
+			var result = MessageBox.Show(this, "This function will set up your colour table to match that of the chosen version. You may lose some entries in the table. Are you sure you would like to continue?", "Target update version?", MessageBoxButtons.YesNo);
+			if (result == DialogResult.No) return;
+
+			switch(ID)
+			{
+				case 0: using (var stream = new MemoryStream(Properties.Resources.tu12colours)) default_colourfile = COLFileReader.Read(stream); break;
+				case 1: using (var stream = new MemoryStream(Properties.Resources.tu13colours)) default_colourfile = COLFileReader.Read(stream); break;
+				case 2: using (var stream = new MemoryStream(Properties.Resources.tu14colours)) default_colourfile = COLFileReader.Read(stream); break;
+				case 3: using (var stream = new MemoryStream(Properties.Resources.tu19colours)) default_colourfile = COLFileReader.Read(stream); break;
+				case 4: using (var stream = new MemoryStream(Properties.Resources.tu31colours)) default_colourfile = COLFileReader.Read(stream); break;
+				case 5: using (var stream = new MemoryStream(Properties.Resources.tu32colours)) default_colourfile = COLFileReader.Read(stream); break;
+				case 6: using (var stream = new MemoryStream(Properties.Resources.tu43colours)) default_colourfile = COLFileReader.Read(stream); break;
+				case 7: using (var stream = new MemoryStream(Properties.Resources.tu46colours)) default_colourfile = COLFileReader.Read(stream); break;
+				case 8: using (var stream = new MemoryStream(Properties.Resources.tu51colours)) default_colourfile = COLFileReader.Read(stream); break;
+				case 9: using (var stream = new MemoryStream(Properties.Resources.tu53colours)) default_colourfile = COLFileReader.Read(stream); break;
+				case 10: using (var stream = new MemoryStream(Properties.Resources.tu54colours)) default_colourfile = COLFileReader.Read(stream); break;
+				case 11: using (var stream = new MemoryStream(Properties.Resources.tu69colours)) default_colourfile = COLFileReader.Read(stream); break;
+				case 12: using (var stream = new MemoryStream(Properties.Resources._1_91_colours)) default_colourfile = COLFileReader.Read(stream); break;
+				default: return;
+			}
+
+			SetUpTable(true);
 		}
 
 		void SetUpTable(bool targetVersion)
