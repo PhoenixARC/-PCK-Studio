@@ -127,7 +127,7 @@ namespace PckStudio
 			catch (UnauthorizedAccessException ex)
 			{
 				MessageBox.Show("Could not Create directory due to Unauthorized Access");
-				Console.WriteLine(ex.Message);
+				Debug.WriteLine(ex.Message);
 			}
 		}
 
@@ -166,7 +166,7 @@ namespace PckStudio
 					MessageBox.Show("Failed to open pck\n" +
 						$"Try {(LittleEndianCheckBox.Checked ? "unchecking" : "checking")} the 'Open/Save as Vita/PS4 pck' check box in the upper right corner.",
 						"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-					Console.WriteLine(ex.Message);
+					Debug.WriteLine(ex.Message);
 				}
 			}
 			if (pck?.type < 3) throw new Exception("Can't open pck file of type: " + pck.type.ToString());
@@ -285,7 +285,7 @@ namespace PckStudio
 								MessageBox.Show("Failed to open pck\n" +
 									"Try checking the 'Open/Save as Vita/PS4 pck' checkbox in the upper right corner.",
 									"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-								Console.WriteLine(ex.Message);
+								Debug.WriteLine(ex.Message);
 							}
 						}
 						break;
@@ -447,7 +447,7 @@ namespace PckStudio
 							{
 								labelImageSize.Text = "";
 								pictureBoxImagePreview.Image = Resources.NoImageFound;
-								Console.WriteLine("Not a supported image format. Setting back to default");
+								Debug.WriteLine("Not a supported image format. Setting back to default");
 							}
 						}
 
@@ -767,7 +767,7 @@ namespace PckStudio
 				}
 				catch (Exception ex)
 				{
-					Console.WriteLine(ex.Message);
+					Debug.WriteLine(ex.Message);
 					MessageBox.Show("Failed to parse ANIM value, aborting to normal functionality. Please make sure the value only includes hexadecimal characters (0-9,A-F) and has no more than 8 characters. It can have an optional prefix of \"0x\".");
 				}
 			}
@@ -1136,7 +1136,7 @@ namespace PckStudio
 						{
 							MessageBox.Show("Error", "Failed to open pck\nTry checking the 'Open/Save as Vita/PS4 pck' check box in the upper right corner.",
 								MessageBoxButtons.OK, MessageBoxIcon.Error);
-							Console.WriteLine(ex.Message);
+							Debug.WriteLine(ex.Message);
 						}
 					}
 					if (pckfile.HasFile("0", PCKFile.FileData.FileType.InfoFile) &&
@@ -1316,7 +1316,7 @@ namespace PckStudio
 			}
 			catch (Exception ex)
 			{
-				Console.WriteLine(ex.Message);
+				Debug.WriteLine(ex.Message);
 			}
 			return false;
 		}
@@ -2442,7 +2442,7 @@ namespace PckStudio
 			open.Show();
 			TimeSpan duration = new TimeSpan(DateTime.Now.Ticks - Begin.Ticks);
 
-			Console.WriteLine("Completed in: " + duration);
+			Debug.WriteLine("Completed in: " + duration);
 		}
 
 		private void wiiUPCKInstallerToolStripMenuItem_Click(object sender, EventArgs e)
