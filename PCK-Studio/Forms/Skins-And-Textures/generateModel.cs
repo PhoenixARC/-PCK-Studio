@@ -153,7 +153,8 @@ namespace PckStudio
                 {
                     case "BOX":
                         {
-                            string[] Format = ReplaceWhitespace(property.Item2, ",").Split(',');
+                            string temp = Regex.Replace(property.Item2, @"\s+", " ").TrimEnd('\n', '\r', ' ');
+                            string[] Format = ReplaceWhitespace(temp, ",").Split(',');
                             if (Format.Length < 9)
                             {
                                 Console.WriteLine($"'{property.Item1}' property has too few arguments: {property.Item2}");
@@ -189,6 +190,7 @@ namespace PckStudio
                                 catch (FormatException ex)
                                 {
                                     Console.WriteLine(ex.Message);
+                                    Console.WriteLine("\"" + property.Item2 + "\"");
                                     MessageBox.Show("A Format Exception was thrown\nFailed to parse BOX value", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 }
                                 catch (OverflowException ex)
@@ -209,7 +211,8 @@ namespace PckStudio
 
                     case "OFFSET":
                         {
-                            string[] offset = ReplaceWhitespace(property.Item2, ",").Split(',');
+                            string temp = Regex.Replace(property.Item2, @"\s+", " ").TrimEnd('\n', '\r', ' ');
+                            string[] offset = ReplaceWhitespace(temp, ",").Split(',');
                             if (offset.Length < 3) continue;
                             string name = offset[0];
                             string dimension = offset[1]; // "Y"
