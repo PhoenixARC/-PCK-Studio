@@ -2679,7 +2679,7 @@ namespace PckStudio
 		{
 			if (treeViewMain.SelectedNode is TreeNode t && t.Tag is PCKFile.FileData file)
             {
-				Console.WriteLine($"Setting {file.filetype} to {type}");
+				Debug.WriteLine($"Setting {file.filetype} to {type}");
 				file.filetype = type;
 				SetPckFileIcon(t, type);
 			}
