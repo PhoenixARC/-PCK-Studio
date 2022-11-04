@@ -56,7 +56,11 @@ namespace PckStudio
 			imageList.Images.Add(Resources.TEXTURE_ICON); // Icon for Texture files (*.png;*.tga)
 			imageList.Images.Add(Resources.BEHAVIOURS_ICON); // Icon for Behaviour files (behaviours.bin)
 			pckOpen.AllowDrop = true;
+
+            isSelectingTab = true;
 			tabControl.SelectTab(0);
+            isSelectingTab = false;
+
 			labelVersion.Text = "PCK Studio: " + Application.ProductVersion;
 			ChangelogRichTextBox.Text = Resources.CHANGELOG;
 #if DEBUG
