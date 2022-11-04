@@ -7,25 +7,27 @@ namespace PckStudio.Classes.IO.LOC
 {
     internal class LOCFileWriter : StreamDataWriter
     {
-        internal LOCFile _locfile;
+        private LOCFile _locfile;
+        private int _type;
         public static void Write(Stream stream, LOCFile file, int type = 2)
         {
-            new LOCFileWriter(file).WriteToStream(stream, type);
+            new LOCFileWriter(file, type).WriteToStream(stream);
         }
 
-        private LOCFileWriter(LOCFile file) : base(false)
+        private LOCFileWriter(LOCFile file, int type) : base(false)
         {
+            _type = type;
             _locfile = file;
         }
 
-        private void WriteToStream(Stream stream, int type)
+        protected override void WriteToStream(Stream stream)
         {
             _ = _locfile ?? throw new ArgumentNullException(nameof(_locfile));
-            WriteInt(stream, type);
+            WriteInt(stream, _type);
             WriteInt(stream, _locfile.Languages.Count);
-            if (type == 2) WriteLocKeys(stream);
-            WriteLanguages(stream, type);
-            WriteLanguageEntries(stream, type);
+            if (_type == 2) WriteLocKeys(stream);
+            WriteLanguages(stream, _type);
+            WriteLanguageEntries(stream, _type);
         }
 
 

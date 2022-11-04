@@ -5,7 +5,7 @@ using static PckStudio.Classes.FileTypes.COLFile;
 
 namespace PckStudio.Classes.IO.COL
 {
-    internal class COLFileReader : StreamDataReader
+    internal class COLFileReader : StreamDataReader<COLFile>
     {
         public static COLFile Read(Stream stream)
         {
@@ -15,7 +15,7 @@ namespace PckStudio.Classes.IO.COL
         private COLFileReader() : base(false)
         {}
 
-        private COLFile ReadFromStream(Stream stream)
+        protected override COLFile ReadFromStream(Stream stream)
         {
             COLFile colourFile = new COLFile();
             int has_water_colors = ReadInt(stream);

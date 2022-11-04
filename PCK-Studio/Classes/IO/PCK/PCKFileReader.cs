@@ -6,7 +6,7 @@ using System.Text;
 
 namespace PckStudio.Classes.IO
 {
-    internal class PCKFileReader : StreamDataReader
+    internal class PCKFileReader : StreamDataReader<PCKFile>
     {
         private PCKFile _file;
         private List<string> LUT;
@@ -20,7 +20,7 @@ namespace PckStudio.Classes.IO
         {
         }
 
-        private PCKFile ReadFromStream(Stream stream)
+        protected override PCKFile ReadFromStream(Stream stream)
         {
             int pck_type = ReadInt(stream);
             if (pck_type > 0xf0_00_00) // 03 00 00 00 == true

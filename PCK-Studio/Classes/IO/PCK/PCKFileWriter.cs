@@ -23,7 +23,7 @@ namespace PckStudio.Classes.IO
             if (!LUT.Contains("XMLVERSION") && isSkinsPCK) LUT.Insert(0, "XMLVERSION");
         }
 
-        private void WriteToStream(Stream stream)
+        protected override void WriteToStream(Stream stream)
         {
             WriteInt(stream, _pckfile.type);
             WriteLookUpTable(stream);

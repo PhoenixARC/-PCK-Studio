@@ -6,7 +6,7 @@ using PckStudio.Classes.FileTypes;
 
 namespace PckStudio.Classes.IO.ARC
 {
-    internal class ARCFileReader : StreamDataReader
+    internal class ARCFileReader : StreamDataReader<ConsoleArchive>
     {
         public static ConsoleArchive Read(Stream stream, bool useLittleEndian = false)
         {
@@ -17,7 +17,7 @@ namespace PckStudio.Classes.IO.ARC
         {
         }
 
-        private ConsoleArchive ReadFromStream(Stream stream)
+        protected override ConsoleArchive ReadFromStream(Stream stream)
         {
             ConsoleArchive _archive = new ConsoleArchive();
             int numberOfFiles = ReadInt(stream);

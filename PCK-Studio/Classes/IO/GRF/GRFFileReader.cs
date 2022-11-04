@@ -10,7 +10,7 @@ using System.Diagnostics;
 
 namespace PckStudio.Classes.IO.GRF
 {
-    internal class GRFFileReader : StreamDataReader
+    internal class GRFFileReader : StreamDataReader<GRFFile>
     {
         private IList<string> StringLookUpTable;
         private GRFFile _file;
@@ -23,7 +23,7 @@ namespace PckStudio.Classes.IO.GRF
         private GRFFileReader() : base(false)
         { }
 
-        private GRFFile ReadFromStream(Stream stream)
+        protected override GRFFile ReadFromStream(Stream stream)
         {
             stream = ReadHeader(stream);
             ReadBody(stream);

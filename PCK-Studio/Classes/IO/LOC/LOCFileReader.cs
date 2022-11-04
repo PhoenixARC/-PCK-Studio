@@ -6,7 +6,7 @@ using PckStudio.Classes.FileTypes;
 
 namespace PckStudio.Classes.IO.LOC
 {
-    internal class LOCFileReader : StreamDataReader
+    internal class LOCFileReader : StreamDataReader<LOCFile>
     {
         internal LOCFile _file;
 
@@ -20,7 +20,7 @@ namespace PckStudio.Classes.IO.LOC
             _file = new LOCFile();
         }
 
-        private LOCFile ReadFromStream(Stream stream)
+        protected override LOCFile ReadFromStream(Stream stream)
         {
             int loc_type = ReadInt(stream);
             int language_count = ReadInt(stream);

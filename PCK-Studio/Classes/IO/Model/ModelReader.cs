@@ -6,7 +6,7 @@ using System.Text;
 
 namespace PckStudio.Classes.IO.Model
 {
-    public class ModelReader : StreamDataReader
+    public class ModelReader : StreamDataReader<ModelFile>
     {
         public static ModelFile Read(Stream stream, bool useLittleEndian = false)
         {
@@ -17,7 +17,7 @@ namespace PckStudio.Classes.IO.Model
         {
         }
 
-        private ModelFile ReadFromStream(Stream stream)
+        protected override ModelFile ReadFromStream(Stream stream)
         {
             var modelFile = new ModelFile();
             int version = ReadInt(stream);
