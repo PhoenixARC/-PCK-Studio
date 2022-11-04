@@ -106,7 +106,7 @@ namespace PckStudio
             public ValueTuple<string, string> ToProperty()
             {
                 string value = $"{Type} {X} {Y} {Z} {Width} {Height} {Length} {U} {V}";
-                return new ValueTuple<string, string>("BOX", value);
+                return new ValueTuple<string, string>("BOX", value.Replace(',', '.'));
             }
 
         }
@@ -124,7 +124,7 @@ namespace PckStudio
             public ValueTuple<string, string> ToProperty()
             {
                 string value = $"{Name} Y {YOffset}";
-                return new ValueTuple<string, string>("OFFSET", value);
+                return new ValueTuple<string, string>("OFFSET", value.Replace(',','.'));
             }
         }
 
@@ -153,8 +153,7 @@ namespace PckStudio
                 {
                     case "BOX":
                         {
-                            string temp = Regex.Replace(property.Item2, @"\s+", " ").TrimEnd('\n', '\r', ' ');
-                            string[] Format = ReplaceWhitespace(temp, ",").Split(',');
+                            string[] Format = ReplaceWhitespace(property.Item2, ",").TrimEnd('\n', '\r', ' ').Split(',');
                             if (Format.Length < 9)
                             {
                                 Console.WriteLine($"'{property.Item1}' property has too few arguments: {property.Item2}");
@@ -177,12 +176,12 @@ namespace PckStudio
                                 // %f
                                 try
                                 {
-                                    float x = float.Parse(Format[1]);
-                                    float y = float.Parse(Format[2]);
-                                    float z = float.Parse(Format[3]);
-                                    float sizeX = float.Parse(Format[4]);
-                                    float sizeY = float.Parse(Format[5]);
-                                    float sizeZ = float.Parse(Format[6]);
+                                    float x = float.Parse(Format[1], System.Globalization.CultureInfo.InvariantCulture);
+                                    float y = float.Parse(Format[2], System.Globalization.CultureInfo.InvariantCulture);
+                                    float z = float.Parse(Format[3], System.Globalization.CultureInfo.InvariantCulture);
+                                    float sizeX = float.Parse(Format[4], System.Globalization.CultureInfo.InvariantCulture);
+                                    float sizeY = float.Parse(Format[5], System.Globalization.CultureInfo.InvariantCulture);
+                                    float sizeZ = float.Parse(Format[6], System.Globalization.CultureInfo.InvariantCulture);
                                     int u = int.Parse(Format[7]);
                                     int v = int.Parse(Format[8]);
                                     modelParts.Add(new ModelPart(name, x, y, z, sizeX, sizeY, sizeZ, u, v));
@@ -190,7 +189,6 @@ namespace PckStudio
                                 catch (FormatException ex)
                                 {
                                     Console.WriteLine(ex.Message);
-                                    Console.WriteLine("\"" + property.Item2 + "\"");
                                     MessageBox.Show("A Format Exception was thrown\nFailed to parse BOX value", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 }
                                 catch (OverflowException ex)
@@ -211,8 +209,7 @@ namespace PckStudio
 
                     case "OFFSET":
                         {
-                            string temp = Regex.Replace(property.Item2, @"\s+", " ").TrimEnd('\n', '\r', ' ');
-                            string[] offset = ReplaceWhitespace(temp, ",").Split(',');
+                            string[] offset = ReplaceWhitespace(property.Item2, ",").TrimEnd('\n', '\r', ' ').Split(',');
                             if (offset.Length < 3) continue;
                             string name = offset[0];
                             string dimension = offset[1]; // "Y"
