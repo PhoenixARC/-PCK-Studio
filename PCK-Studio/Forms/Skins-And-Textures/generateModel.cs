@@ -30,54 +30,6 @@ namespace PckStudio
             right
         }
 
-        [Flags]
-        enum eANIMFlags
-        {
-            DisableArmSwinging = 1 << 0,
-            ZombieArms = 1 << 1,
-            LockFootAnimation = 1 << 2,
-            SitWhileIdle = 1 << 3,
-            unk_BIT4 = 1 << 4,
-            BothLegsSwingParallel = 1 << 5,
-            BothArmsSwingParallel = 1 << 6,
-            MainArmUp = 1 << 7,
-            DisableArmor = 1 << 8,
-            DisableBobbing = 1 << 9,
-            DisableHead = 1 << 10,
-            DisableLeftArm = 1 << 11,
-            DisableRightArm = 1 << 12,
-            DiableBody = 1 << 13,
-            DiableRightLeg = 1 << 14,
-            DiableLeftLeg = 1 << 15,
-            BackwardsSneak = 1 << 16,
-            DisableHeadOverlay = 1 << 17,
-            Is64x64 = 1 << 18,
-            HasSlimArms = 1 << 19,
-            DisableLeftArmOverlay = 1 << 20,
-            DisableRightArmOverlay = 1 << 21,
-            DisableLeftLegOverlay = 1 << 22,
-            DisableRightLegOverlay = 1 << 23,
-            DisableBodyOverlay = 1 << 24,
-            RenderUpSideDown = 1 << 31,
-        }
-        eANIMFlags ANIM = 0;
-
-        void SetANIMFlag(eANIMFlags flag, bool state)
-        {
-            if (!state)
-            {
-                ANIM &= ~flag;
-                return;
-            }
-            ANIM |= flag;
-        }
-
-        ValueTuple<string, string> ToProperty()
-        {
-            return new ValueTuple<string, string>("ANIM", "0x" + ANIM.ToString("x8"));
-        }
-
-
         PCKProperties boxes;
 
         Color backgroundColor = Color.FromArgb(0xff, 0x50, 0x50, 0x50);
@@ -271,7 +223,7 @@ namespace PckStudio
                         {
                             try
                             {
-                                ANIM = (eANIMFlags)int.Parse(property.Item2, System.Globalization.NumberStyles.HexNumber);
+                                //ANIM = (eANIMFlags)int.Parse(property.Item2, System.Globalization.NumberStyles.HexNumber);
                             }
                             catch (Exception ex)
                             {
