@@ -7,18 +7,21 @@ using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 using System.Diagnostics;
 using System.Drawing.Imaging;
-using RichPresenceClient;
+
 using PckStudio.Properties;
 using PckStudio.Classes.FileTypes;
 using PckStudio.Classes.IO;
 using PckStudio.Classes.IO.LOC;
+using PckStudio.Classes.IO.PCK;
 using PckStudio.Classes.IO.GRF;
+using PckStudio.Classes.Utils;
 using PckStudio.Forms;
 using PckStudio.Forms.Utilities;
 using PckStudio.Forms.Editor;
 using PckStudio.Forms.Additional_Popups.Animation;
-using PckStudio.Classes.IO.PCK;
-using PckStudio.Classes.Utils;
+using PckStudio.Forms.Additional_Popups;
+
+using RichPresenceClient;
 
 namespace PckStudio
 {
