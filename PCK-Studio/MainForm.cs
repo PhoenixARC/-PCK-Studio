@@ -532,7 +532,7 @@ namespace PckStudio
 			}
 		}
 
-		private void Save(string FilePath)
+		private void Save(string filePath)
 		{
 			bool isSkinsPCK = false;
 			PCKFile.FileData InfoFile;
@@ -551,7 +551,7 @@ namespace PckStudio
 						return; // Cancel operation
 				}
 			}
-			using (var fs = File.OpenWrite(FilePath))
+			using (var fs = File.OpenWrite(filePath))
 			{
 				PCKFileWriter.Write(fs, currentPCK, LittleEndianCheckBox.Checked, isSkinsPCK);
 			}
