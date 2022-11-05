@@ -37,9 +37,10 @@ namespace PckStudio.Classes.Utils.TGA
         protected override TGAFileData ReadFromStream(Stream stream)
         {
             TGAHeader header = LoadHeader(stream);
+            Bitmap image = LoadImage(stream, header);
             TGAFooter footer = LoadFooter(stream);
             TGAExtentionData extentionData = LoadExtentionData(stream, footer);
-            return new TGAFileData(header, LoadImage(stream, header), footer, extentionData);
+            return new TGAFileData(header, image, footer, extentionData);
         }
 
         private TGAHeader LoadHeader(Stream stream)
@@ -63,18 +64,7 @@ namespace PckStudio.Classes.Utils.TGA
         {
             string idData = ReadString(stream, header.IdLength, Encoding.ASCII);
             Debug.WriteLineIf(header.IdLength > 0, $"Image ID: {idData}");
-            Debug.WriteLine("ID length:         {0}", header.IdLength);
-            Debug.WriteLine("Colourmap type:    {0}", header.Colormap.Type);
-            Debug.WriteLine("Image type:        {0}", header.DataTypeCode);
-            Debug.WriteLine("Colour map offset: {0}", header.Colormap.Origin);
-            Debug.WriteLine("Colour map length: {0}", header.Colormap.Length);
-            Debug.WriteLine("Colour map depth:  {0}", header.Colormap.Depth);
-            Debug.WriteLine("X origin:          {0}", header.Origin.X);
-            Debug.WriteLine("Y origin:          {0}", header.Origin.Y);
-            Debug.WriteLine("Width:             {0}", header.Width);
-            Debug.WriteLine("Height:            {0}", header.Height);
-            Debug.WriteLine("Bits per pixel:    {0}", header.BitsPerPixel);
-            Debug.WriteLine("Descriptor:        {0}", header.ImageDescriptor);
+            DebugLogHeader(header);
 
             if (header.DataTypeCode == TGADataTypeCode.NO_DATA)
                 return null;
@@ -132,6 +122,7 @@ namespace PckStudio.Classes.Utils.TGA
             bitmap.RotateFlip(RotateFlipType.RotateNoneFlipY);
             return bitmap;
         }
+
 
         private TGAFooter LoadFooter(Stream stream)
         {
@@ -192,29 +183,13 @@ namespace PckStudio.Classes.Utils.TGA
                     extentionData.PostageStampOffset = ReadInt(stream);
                     extentionData.ScanLineOffset = ReadInt(stream);
                     extentionData.AttributesType = (byte)stream.ReadByte();
-
-                    Debug.WriteLine(@"Author Name:             {0}", args: extentionData.AuthorName);
-                    Debug.WriteLine(@"Author Comment:          {0}", args: extentionData.AuthorComment);
-                    Debug.WriteLine(@"Time Stamp:              {0}", args: extentionData.TimeStamp);
-                    Debug.WriteLine(@"Job ID:                  {0}", args: extentionData.JobID);
-                    Debug.WriteLine(@"Job Time:                {0}", args: extentionData.JobTime);
-                    Debug.WriteLine(@"SoftwareID:              {0}", args: extentionData.SoftwareID);
-                    Debug.WriteLine(@"Software Version:        {0}", args: extentionData.SoftwareVersion);
-                    Debug.WriteLine(@"Key Color:               {0}", args: extentionData.KeyColor);
-                    Debug.WriteLine(@"Pixel Aspect Ratio:      {0}", args: extentionData.PixelAspectRatio);
-                    Debug.WriteLine(@"Gamma Value:             {0}", args: extentionData.GammaValue);
-                    Debug.WriteLine(@"Color Correction Offset: {0}", args: extentionData.ColorCorrectionOffset);
-                    Debug.WriteLine(@"Postage Stamp Offset:    {0}", args: extentionData.PostageStampOffset);
-                    Debug.WriteLine(@"Scan Line Offset:        {0}", args: extentionData.ScanLineOffset);
-                    Debug.WriteLine(@"Attributes Type:         {0}", args: extentionData.AttributesType);
+                    DebugLogExtentionData(extentionData);
 
                     return extentionData;
                 }
             }
             return default;
         }
-
-
         void WritePixel(IntPtr destination, byte[] data, int formatSize)
         {
             if (formatSize == 4) // 32-bit
@@ -246,6 +221,46 @@ namespace PckStudio.Classes.Utils.TGA
                     }, 0, destination, 4);
 
             }
+        }
+
+        [Conditional("DEBUG")]
+        [DebuggerHidden]
+        [DebuggerStepThrough]
+        private static void DebugLogExtentionData(TGAExtentionData extentionData)
+        {
+            Debug.WriteLine(string.Format("Author Name:             {0}", args: extentionData.AuthorName), category: nameof(TGAReader));
+            Debug.WriteLine(string.Format("Author Comment:          {0}", args: extentionData.AuthorComment), category: nameof(TGAReader));
+            Debug.WriteLine(string.Format("Time Stamp:              {0}", args: extentionData.TimeStamp), category: nameof(TGAReader));
+            Debug.WriteLine(string.Format("Job ID:                  {0}", args: extentionData.JobID), category: nameof(TGAReader));
+            Debug.WriteLine(string.Format("Job Time:                {0}", args: extentionData.JobTime), category: nameof(TGAReader));
+            Debug.WriteLine(string.Format("SoftwareID:              {0}", args: extentionData.SoftwareID), category: nameof(TGAReader));
+            Debug.WriteLine(string.Format("Software Version:        {0}", args: extentionData.SoftwareVersion), category: nameof(TGAReader));
+            Debug.WriteLine(string.Format("Key Color:               {0}", args: extentionData.KeyColor), category: nameof(TGAReader));
+            Debug.WriteLine(string.Format("Pixel Aspect Ratio:      {0}", args: extentionData.PixelAspectRatio), category: nameof(TGAReader));
+            Debug.WriteLine(string.Format("Gamma Value:             {0}", args: extentionData.GammaValue), category: nameof(TGAReader));
+            Debug.WriteLine(string.Format("Color Correction Offset: {0}", args: extentionData.ColorCorrectionOffset), category: nameof(TGAReader));
+            Debug.WriteLine(string.Format("Postage Stamp Offset:    {0}", args: extentionData.PostageStampOffset), category: nameof(TGAReader));
+            Debug.WriteLine(string.Format("Scan Line Offset:        {0}", args: extentionData.ScanLineOffset), category: nameof(TGAReader));
+            Debug.WriteLine(string.Format("Attributes Type:         {0}", args: extentionData.AttributesType), category: nameof(TGAReader));
+        }
+
+        [Conditional("DEBUG")]
+        [DebuggerHidden]
+        [DebuggerStepThrough]
+        private static void DebugLogHeader(TGAHeader header)
+        {
+            Debug.WriteLine(string.Format("ID length:         {0}", args: header.IdLength), category: nameof(TGAReader));
+            Debug.WriteLine(string.Format("Colourmap type:    {0}", args: header.Colormap.Type), category: nameof(TGAReader));
+            Debug.WriteLine(string.Format("Image type:        {0}", args: header.DataTypeCode), category: nameof(TGAReader));
+            Debug.WriteLine(string.Format("Colour map offset: {0}", args: header.Colormap.Origin), category: nameof(TGAReader));
+            Debug.WriteLine(string.Format("Colour map length: {0}", args: header.Colormap.Length), category: nameof(TGAReader));
+            Debug.WriteLine(string.Format("Colour map depth:  {0}", args: header.Colormap.Depth), category: nameof(TGAReader));
+            Debug.WriteLine(string.Format("X origin:          {0}", args: header.Origin.X), category: nameof(TGAReader));
+            Debug.WriteLine(string.Format("Y origin:          {0}", args: header.Origin.Y), category: nameof(TGAReader));
+            Debug.WriteLine(string.Format("Width:             {0}", args: header.Width), category: nameof(TGAReader));
+            Debug.WriteLine(string.Format("Height:            {0}", args: header.Height), category: nameof(TGAReader));
+            Debug.WriteLine(string.Format("Bits per pixel:    {0}", args: header.BitsPerPixel), category: nameof(TGAReader));
+            Debug.WriteLine(string.Format("Descriptor:        {0}", args: header.ImageDescriptor), category: nameof(TGAReader));
         }
     }
 }
