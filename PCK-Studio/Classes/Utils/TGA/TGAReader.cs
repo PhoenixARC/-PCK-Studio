@@ -23,8 +23,6 @@ using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 using PckStudio.Classes.IO;
-using System.Linq;
-using System.Windows.Documents;
 
 namespace PckStudio.Classes.Utils.TGA
 {
