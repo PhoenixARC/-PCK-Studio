@@ -442,10 +442,7 @@ namespace PckStudio
 							stream.Read(b, 0, 4);
 							stream.Position -= 4;
                             pictureBoxImagePreview.Image = Path.GetExtension(file.filepath) == ".png" &&
-								b[0] == 0x89 &&
-								b[1] == 0x50 &&
-								b[2] == 0x4E &&
-								b[3] == 0x47
+								b[0] == 0x89 && b[1] == 'P' && b[2] == 'N' && b[3] == 'G'
 								? Image.FromStream(stream)
 								: TGA.FromStream(stream);
 							labelImageSize.Text = $"{pictureBoxImagePreview.Image.Size.Width}x{pictureBoxImagePreview.Image.Size.Height}";
