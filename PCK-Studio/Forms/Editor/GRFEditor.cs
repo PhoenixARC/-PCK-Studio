@@ -59,12 +59,6 @@ namespace PckStudio.Forms.Editor
             loadGRFTreeView(GrfTreeView.Nodes, _file.Root);
         }
 
-        private void OnExit(object sender, FormClosingEventArgs e)
-        {
-            RPC.SetPresence("An Open Source .PCK File Editor", "Program by PhoenixARC");
-            Dispose();
-        }
-
         private void loadGRFTreeView(TreeNodeCollection root, GRFFile.GameRule parentRule)
         {
             foreach (var rule in parentRule.SubRules)

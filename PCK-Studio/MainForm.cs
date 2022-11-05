@@ -197,10 +197,7 @@ namespace PckStudio
 			isSelectingTab = true;
 			tabControl.SelectTab(1);
 			isSelectingTab = false;
-			if (TryGetLocFile(out LOCFile locfile) &&
-				locfile.HasLocEntry("IDS_DISPLAY_NAME") &&
-				locfile.Languages.Contains("en-EN"))
-				RPC.SetPresence($"Editing a Pack: {locfile.GetLocEntry("IDS_DISPLAY_NAME", "en-EN")}", "Program by PhoenixARC");
+			UpdateRPC();
 		}
 
 		private void CloseEditorTab()
@@ -225,8 +222,9 @@ namespace PckStudio
 			convertToBedrockToolStripMenuItem.Enabled = false;
 			closeToolStripMenuItem.Visible = false;
 			fileEntryCountLabel.Text = string.Empty;
-			RPC.SetPresence("An Open Source .PCK File Editor", "Program by PhoenixARC");
-		}
+			UpdateRPC();
+
+        }
 
 		/// <summary>
 		/// wrapper that allows the use of <paramref name="name"/> in <code>TreeNode.Nodes.Find(<paramref name="name"/>, ...)</code> and <code>TreeNode.Nodes.ContainsKey(<paramref name="name"/>)</code>
@@ -341,6 +339,26 @@ namespace PckStudio
 			using GRFEditor grfEditor = new GRFEditor(file);
             if (grfEditor.ShowDialog(this) == DialogResult.OK)
                 saved = false;
+			UpdateRPC();
+        }
+
+		private void UpdateRPC()
+		{
+			if (currentPCK == null)
+			{
+				RPC.SetPresence("An Open Source .PCK File Editor", "Program by PhoenixARC");
+				return;
+			};
+
+            if (TryGetLocFile(out LOCFile locfile) &&
+				locfile.HasLocEntry("IDS_DISPLAY_NAME") &&
+				locfile.Languages.Contains("en-EN"))
+			{
+				RPC.SetPresence($"Editing a Pack: {locfile.GetLocEntry("IDS_DISPLAY_NAME", "en-EN")}", "Program by PhoenixARC");
+				return;
+			}
+			// default
+			RPC.SetPresence("An Open Source .PCK File Editor", "Program by PhoenixARC");
         }
 
 		private void HandleAudioFile(PCKFile.FileData file)
@@ -360,6 +378,7 @@ namespace PckStudio
             using LOCEditor locedit = new LOCEditor(file);
 			if (locedit.ShowDialog(this) == DialogResult.OK)
 				saved = false;
+			UpdateRPC();
         }
 
 		private void HandleColourFile(PCKFile.FileData file)

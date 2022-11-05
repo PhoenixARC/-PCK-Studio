@@ -41,11 +41,6 @@ namespace PckStudio.Forms.Editor
 				treeViewLocKeys.Nodes.Add(locKey);
 		}
 
-        private void LOCEditor_FormClosing(object sender, FormClosingEventArgs e)
-        {
-			RPC.SetPresence("An Open Source .PCK File Editor", "Program by PhoenixARC");
-        }
-
 		private void treeViewLocKeys_AfterSelect(object sender, TreeViewEventArgs e)
 		{
 			var node = e.Node;
