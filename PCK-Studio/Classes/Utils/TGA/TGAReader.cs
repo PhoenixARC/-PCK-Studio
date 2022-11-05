@@ -75,6 +75,9 @@ namespace PckStudio.Classes.Utils.TGA
             Debug.WriteLine("Bits per pixel:    {0}", header.BitsPerPixel);
             Debug.WriteLine("Descriptor:        {0}", header.ImageDescriptor);
 
+            if (header.DataTypeCode == TGADataTypeCode.NO_DATA)
+                return null;
+
             Bitmap bitmap = new Bitmap(header.Width, header.Height);
             BitmapData bitmapData = bitmap.LockBits(
                 new Rectangle(0, 0, header.Width, header.Height),
