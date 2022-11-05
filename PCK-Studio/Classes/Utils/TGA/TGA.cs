@@ -45,16 +45,33 @@ namespace PckStudio.Classes.Utils.TGA
         public int developerAreaDataOffset;
     }
 
+    public struct TGATimeSpan
+    {
+        public short Year;
+        public short Month;
+        public short Day;
+        public short Hour;
+        public short Minute;
+        public short Second;
+
+        public override string ToString()
+        {
+            return string.Format("{0}:{1}:{2}({3}/{4}/{5})", Hour, Minute, Second, Day, Month, Year);
+            //DateTime time = new DateTime(Year, Month, Day, Hour, Minute, Second);
+            //return time.ToString();
+        }
+    }
+
     public struct TGAExtentionData
     {
         public const short ExtensionSize = 0x1EF;
         public string AuthorName;
         public string AuthorComment;
-        public TimeSpan TimeStamp;
+        public TGATimeSpan TimeStamp;
         public string JobID;
-        public char[] JobTime; // size:6
+        public TGATimeSpan JobTime;
         public string SoftwareID;
-        public int SoftwareVersion; // 24-bits
+        public int SoftwareVersion;
         public int KeyColor;
         public int PixelAspectRatio;
         public int GammaValue;
@@ -66,20 +83,20 @@ namespace PckStudio.Classes.Utils.TGA
 
     public readonly struct TGAFileData
     {
-        public TGAFileData(TGAHeader header, Bitmap bitmap, TGAFooter footer)
+        public TGAFileData(TGAHeader header, Bitmap bitmap, TGAFooter footer, TGAExtentionData extentionData)
         {
             if (bitmap.Width != header.Width || bitmap.Height != header.Height)
                 throw new InvalidDataException("Header resolution doesn't match Image resolution");
-            Debug.Assert(bitmap.Width == header.Width || bitmap.Height == header.Height,
-                "Header resolution doesn't match Image resolution");
             Header = header;
             Bitmap = bitmap;
             Footer = footer;
+            ExtentionData = extentionData;
         }
 
         public readonly TGAHeader Header;
         public readonly Bitmap Bitmap;
         public readonly TGAFooter Footer;
+        public readonly TGAExtentionData ExtentionData;
     }
 
     public enum TGADataTypeCode : byte

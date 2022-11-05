@@ -24,6 +24,7 @@ using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 using PckStudio.Classes.IO;
 using System.Linq;
+using System.Windows.Documents;
 
 namespace PckStudio.Classes.Utils.TGA
 {
@@ -38,7 +39,9 @@ namespace PckStudio.Classes.Utils.TGA
         protected override TGAFileData ReadFromStream(Stream stream)
         {
             TGAHeader header = LoadHeader(stream);
-            return new TGAFileData(header, LoadImage(stream, header), LoadFooter(stream));
+            TGAFooter footer = LoadFooter(stream);
+            TGAExtentionData extentionData = LoadExtentionData(stream, footer);
+            return new TGAFileData(header, LoadImage(stream, header), footer, extentionData);
         }
 
         private TGAHeader LoadHeader(Stream stream)
@@ -141,17 +144,78 @@ namespace PckStudio.Classes.Utils.TGA
 
             footer.extensionDataOffset = ReadInt(stream); // optional
             footer.developerAreaDataOffset = ReadInt(stream); // optional
+            Debug.WriteLine("Extension Data Offset:         {0:x}", footer.extensionDataOffset);
+            Debug.WriteLine("Developer Area Data Offset:    {0:x}", footer.developerAreaDataOffset);
 
             string signature = ReadString(stream, 16, Encoding.ASCII);
             Debug.WriteLineIf(!signature.Equals("TRUEVISION-XFILE") || ReadShort(stream) != 0x002E,
                 "Footer end invalid");
-            
-            stream.Seek(origin, SeekOrigin.Begin);
 
-            Debug.WriteLine("Extension Data Offset:         {0:x}", footer.extensionDataOffset);
-            Debug.WriteLine("Developer Area Data Offset:    {0:x}", footer.developerAreaDataOffset);
+            stream.Seek(origin, SeekOrigin.Begin);
             return footer;
         }
+
+        private TGAExtentionData LoadExtentionData(Stream stream, TGAFooter footer)
+        {
+            if (footer.extensionDataOffset > 0)
+            {
+                stream.Seek(footer.extensionDataOffset, SeekOrigin.Begin);
+                if (ReadShort(stream) == TGAExtentionData.ExtensionSize)
+                {
+                    TGAExtentionData extentionData = new TGAExtentionData();
+                    extentionData.AuthorName = ReadString(stream, 41, Encoding.ASCII);
+                    extentionData.AuthorComment = ReadString(stream, 324, Encoding.ASCII);
+                    extentionData.TimeStamp = new TGATimeSpan()
+                    {
+                        Month = ReadShort(stream),
+                        Day = ReadShort(stream),
+                        Year = ReadShort(stream),
+                        Hour = ReadShort(stream),
+                        Minute = ReadShort(stream),
+                        Second = ReadShort(stream),
+                    };
+                    extentionData.JobID = ReadString(stream, 41, Encoding.ASCII);
+                    extentionData.JobTime = new TGATimeSpan()
+                    {
+                        Hour = ReadShort(stream),
+                        Minute = ReadShort(stream),
+                        Second = ReadShort(stream),
+                        Month = -1,
+                        Day = -1,
+                        Year = -1,
+                    };
+                    extentionData.SoftwareID = ReadString(stream, 41, Encoding.ASCII);
+                    byte[] version = ReadBytes(stream, 3);
+                    extentionData.SoftwareVersion = version[2] << 16 | version[1] << 8 | version[0];
+                    extentionData.KeyColor = ReadInt(stream);
+                    extentionData.PixelAspectRatio = ReadInt(stream);
+                    extentionData.GammaValue = ReadInt(stream);
+                    extentionData.ColorCorrectionOffset = ReadInt(stream);
+                    extentionData.PostageStampOffset = ReadInt(stream);
+                    extentionData.ScanLineOffset = ReadInt(stream);
+                    extentionData.AttributesType = (byte)stream.ReadByte();
+
+                    Debug.WriteLine(@"Author Name:             {0}", args: extentionData.AuthorName);
+                    Debug.WriteLine(@"Author Comment:          {0}", args: extentionData.AuthorComment);
+                    Debug.WriteLine(@"Time Stamp:              {0}", args: extentionData.TimeStamp);
+                    Debug.WriteLine(@"Job ID:                  {0}", args: extentionData.JobID);
+                    Debug.WriteLine(@"Job Time:                {0}", args: extentionData.JobTime);
+                    Debug.WriteLine(@"SoftwareID:              {0}", args: extentionData.SoftwareID);
+                    Debug.WriteLine(@"Software Version:        {0}", args: extentionData.SoftwareVersion);
+                    Debug.WriteLine(@"Key Color:               {0}", args: extentionData.KeyColor);
+                    Debug.WriteLine(@"Pixel Aspect Ratio:      {0}", args: extentionData.PixelAspectRatio);
+                    Debug.WriteLine(@"Gamma Value:             {0}", args: extentionData.GammaValue);
+                    Debug.WriteLine(@"Color Correction Offset: {0}", args: extentionData.ColorCorrectionOffset);
+                    Debug.WriteLine(@"Postage Stamp Offset:    {0}", args: extentionData.PostageStampOffset);
+                    Debug.WriteLine(@"Scan Line Offset:        {0}", args: extentionData.ScanLineOffset);
+                    Debug.WriteLine(@"Attributes Type:         {0}", args: extentionData.AttributesType);
+
+                    return extentionData;
+                }
+            }
+            return default;
+        }
+
 
         void WritePixel(IntPtr destination, byte[] data, int formatSize)
         {
