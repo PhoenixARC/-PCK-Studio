@@ -1881,5 +1881,18 @@ namespace PckStudio
 				}
 			}
 		}
+
+		private void correctSkinDecimalsToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (treeViewMain.SelectedNode is TreeNode t && t.Tag is PCKFile.FileData file && file.filetype == PCKFile.FileData.FileType.SkinFile)
+			{
+				foreach(var p in file.properties.FindAll(s => s.property == "BOX" || s.property == "OFFSET"))
+				{
+					file.properties[file.properties.IndexOf(p)] = (p.property, p.value.Replace(',','.'));
+				}
+				ReloadMetaTreeView();
+				saved = false;
+			}
+		}
 	}
 }
