@@ -190,7 +190,7 @@ namespace PckStudio
         {
             using (var ofd1 = new OpenFileDialog())
             {
-                ofd1.Filter = "PNG Files | *.png";
+                ofd1.Filter = "PNG Files|*.png";
                 ofd1.Title = "Select a PNG File";
                 if (ofd1.ShowDialog() == DialogResult.OK)
                 {
@@ -337,7 +337,7 @@ namespace PckStudio
         {
             using (var ofdd = new OpenFileDialog())
             {
-                ofdd.Filter = "PNG Files | *.png | 3DS Texture|*.3dst";
+                ofdd.Filter = "PNG Files|*.png|3DS Texture|*.3dst";
                 ofdd.Title = "Select a Skin Texture File";
                 if (ofdd.ShowDialog() == DialogResult.OK)
                 {
