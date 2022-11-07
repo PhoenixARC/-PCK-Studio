@@ -1,9 +1,6 @@
-﻿using System;
-using System.IO;
-using System.Collections.Generic;
+﻿using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using PckStudio.Classes.FileTypes;
 
 namespace PckStudio.Classes.IO.ARC
@@ -24,26 +21,27 @@ namespace PckStudio.Classes.IO.ARC
 
         protected override void WriteToStream(Stream stream)
         {
-            WriteInt(stream, _archive.Count);
-            int currentOffset = 4 + _archive.Keys.Sum(key => 10 + key.Length);
-            foreach (var pair in _archive)
+            var arc = _archive.ToArray();
+            WriteInt(stream, arc.Length);
+            int offset = 4 + arc.Sum(pair => 10 + pair.Key.Length);
+            foreach (var pair in arc)
             {
                 int size = pair.Value.Length;
                 WriteString(stream, pair.Key);
-                WriteInt(stream, currentOffset);
+                WriteInt(stream, offset);
                 WriteInt(stream, size);
-                currentOffset += size;
+                offset += size;
             }
-            foreach (byte[] data in _archive.Values)
+            foreach (var pair in arc)
             {
-                WriteBytes(stream, data);
+                WriteBytes(stream, pair.Value);
             }
         }
 
         private void WriteString(Stream stream, string s)
         {
             WriteShort(stream, (short)s.Length);
-            WriteString(stream, s, Encoding.UTF8);
+            WriteString(stream, s, Encoding.ASCII);
         }
     }
 }

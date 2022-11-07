@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Collections.Generic;
 using System.Text;
 using PckStudio.Classes.FileTypes;
 
@@ -24,9 +23,9 @@ namespace PckStudio.Classes.IO.ARC
             for(int i = 0; i < numberOfFiles; i++)
             {
                 string name = ReadString(stream);
-                int pos = ReadInt(stream);
+                int offset = ReadInt(stream);
                 int size = ReadInt(stream);
-                _archive[name] = ReadBytesFromPosition(stream, size, pos);
+                _archive[name] = ReadBytesFromPosition(stream, offset, size);
             }
             return _archive;
         }
@@ -37,7 +36,7 @@ namespace PckStudio.Classes.IO.ARC
             return ReadString(stream, length, Encoding.UTF8);
         }
 
-        private byte[] ReadBytesFromPosition(Stream stream, int size, int position)
+        private byte[] ReadBytesFromPosition(Stream stream, int position, int size)
         {
             long originalPOS = stream.Position;
             if (stream.Seek(position, SeekOrigin.Begin) != position) throw new Exception();
