@@ -22,6 +22,7 @@ using PckStudio.Forms.Additional_Popups.Animation;
 using PckStudio.Forms.Additional_Popups;
 
 using RichPresenceClient;
+using PckStudio.Classes.Utils.ARC;
 
 namespace PckStudio
 {
@@ -193,7 +194,8 @@ namespace PckStudio
 			metaToolStripMenuItem.Enabled = true;
 			advancedMetaAddingToolStripMenuItem.Enabled = true;
 			convertToBedrockToolStripMenuItem.Enabled = true;
-			BuildMainTreeView();
+			addCustomPackImageToolStripMenuItem.Enabled = true;
+            BuildMainTreeView();
 			isSelectingTab = true;
 			tabControl.SelectTab(1);
 			isSelectingTab = false;
@@ -219,9 +221,10 @@ namespace PckStudio
 			metaToolStripMenuItem.Enabled = false;
 			addPasswordToolStripMenuItem.Enabled = false;
 			advancedMetaAddingToolStripMenuItem.Enabled = false;
-			convertToBedrockToolStripMenuItem.Enabled = false;
 			closeToolStripMenuItem.Visible = false;
-			fileEntryCountLabel.Text = string.Empty;
+			convertToBedrockToolStripMenuItem.Enabled = false;
+            addCustomPackImageToolStripMenuItem.Enabled = false;
+            fileEntryCountLabel.Text = string.Empty;
 			UpdateRPC();
 
         }
@@ -1892,6 +1895,26 @@ namespace PckStudio
 				}
 				ReloadMetaTreeView();
 				saved = false;
+			}
+		}
+
+		private void addCustomPackIconToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			OpenFileDialog dialog = new OpenFileDialog();
+			dialog.Filter = "Minecraft Archive|*.arc";
+			if (dialog.ShowDialog(this) == DialogResult.OK)
+			{
+				string filepath = dialog.FileName;
+                dialog.Filter = "Pack Icon|*.png";
+				if (currentPCK.TryGetFile("0", PCKFile.FileData.FileType.InfoFile, out PCKFile.FileData file) &&
+					dialog.ShowDialog(this) == DialogResult.OK)
+				{
+					ARCUtil.Inject(filepath, (
+						string.Format("Graphics\\PackGraphics\\{0}.png", file.properties.GetPropertyValue("PACKID")),
+						File.ReadAllBytes(dialog.FileName))
+						);
+					MessageBox.Show("Successfully added Pack Icon to Archive!", "Successfully Added", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				}
 			}
 		}
 	}
