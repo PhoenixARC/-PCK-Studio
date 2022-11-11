@@ -15,7 +15,6 @@ using System.Windows.Media.Imaging;
 using System.IO.Packaging;
 using PckStudio;
 using System.IO.Compression;
-using static PckStudio.MainForm;
 using PckStudio.Classes.FileTypes;
 using PckStudio.Classes.IO;
 
@@ -33,6 +32,12 @@ namespace PckStudio.Forms
         MethodInvoker reloader;
         bool IsVita;
         string Pack;
+
+        public class Item
+        {
+            public string Id { get; set; }
+            public string Name { get; set; }
+        }
 
         public pckCenterOpen(string name, string authorIn, string descIn, string directIn, string adIn, Bitmap display, int mode, string mod, MethodInvoker reloader, bool Vita, string PackName)
         {

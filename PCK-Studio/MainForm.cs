@@ -1451,20 +1451,10 @@ namespace PckStudio
 			//System.Diagnostics.Process.Start(hosturl + "pckStudio#faq");
 		}
 
-		// BIG TODO
-		#region converts and ports all skins in pck to mc bedrock format
-		// items class for use in bedrock skin conversion
-		public class Item
-		{
-			public string Id { get; set; }
-			public string Name { get; set; }
-		}
-
 		private void convertToBedrockToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			MessageBox.Show("This feature is currently being reworked.", "Currently unavailable", MessageBoxButtons.OK, MessageBoxIcon.Information);
 		}
-
 
 		public static Bitmap ResizeImage(Image image, int width, int height)
 		{
@@ -1490,7 +1480,6 @@ namespace PckStudio
 
 			return destImage;
 		}
-		#endregion
 
 		private void openToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
