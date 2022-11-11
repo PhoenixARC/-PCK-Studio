@@ -151,7 +151,8 @@
     <Compile Include="Classes\IO\Behaviour\BehavioursReader.cs" />
     <Compile Include="Classes\IO\CSMB\CSMBFileReader.cs" />
     <Compile Include="Classes\IO\CSMB\CSMBFileWriter.cs" />
-    <Compile Include="Classes\IO\Model\ModelReader.cs" />
+    <Compile Include="Classes\IO\Model\ModelFileReader.cs" />
+    <Compile Include="Classes\IO\Model\ModelFileWriter.cs" />
     <Compile Include="Classes\IO\PCK\PCKAudioFileReader.cs" />
     <Compile Include="Classes\IO\PCK\PCKAudioFileWriter.cs" />
     <Compile Include="Classes\IO\COL\COLFileReader.cs" />
