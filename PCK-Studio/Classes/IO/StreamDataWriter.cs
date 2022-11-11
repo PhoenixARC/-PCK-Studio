@@ -24,7 +24,7 @@ using System.Threading.Tasks;
 
 namespace PckStudio.Classes.IO
 {
-    internal abstract class StreamDataWriter
+    public abstract class StreamDataWriter
     {
         private static bool useLittleEndian;
         protected static bool IsUsingLittleEndian => useLittleEndian;
