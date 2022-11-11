@@ -59,18 +59,18 @@ namespace PckStudio.Classes.FileTypes
 
             public struct Part
             {
-                string name;
-                (float x, float y, float z) position;
-                (float yaw, float pitch, float roll) rotation;
-                List<Box> Boxes { get; } = new List<Box>();
+                public string name;
+                public (float x, float y, float z) position;
+                public (float yaw, float pitch, float roll) rotation;
+                public List<Box> Boxes { get; } = new List<Box>();
 
                 public struct Box
                 {
-                    (float x, float y, float z) Position;
-                    (int width, int height, int length) Size;
-                    float U, V;
-                    float Scale;
-                    bool Mirror;
+                    public (float x, float y, float z) Position;
+                    public (int width, int height, int length) Size;
+                    public float U, V;
+                    public float Scale;
+                    public bool Mirror;
 
                     public Box((float x, float y, float z) position,
                                (int width, int height, int length) size,
