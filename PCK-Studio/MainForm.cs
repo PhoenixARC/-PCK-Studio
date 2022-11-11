@@ -1865,14 +1865,17 @@ namespace PckStudio
 					{
 						foreach (var line in input.TextOutput)
 						{
-							file.properties.Add((line.Substring(0, line.IndexOf(' ')), line.Substring(line.IndexOf(' ') + 1)));
+							int idx = line.IndexOf(' ');
+							if (idx == -1 || line.Length - 1 == idx)
+								continue;
+							file.properties.Add((line.Substring(0, idx), line.Substring(idx + 1)));
+						}
 							ReloadMetaTreeView();
 							saved = false;
 						}
 					}
 				}
 			}
-		}
 
 		private void correctSkinDecimalsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
