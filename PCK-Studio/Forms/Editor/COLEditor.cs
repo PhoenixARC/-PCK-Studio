@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using MetroFramework.Forms;
 using PckStudio.Classes.FileTypes;
@@ -75,7 +71,6 @@ namespace PckStudio.Forms.Editor
 				case 12: using (var stream = new MemoryStream(Properties.Resources._1_91_colours)) default_colourfile = COLFileReader.Read(stream); break;
 				default: return;
 			}
-
 			SetUpTable(true);
 		}
 

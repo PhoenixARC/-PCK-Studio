@@ -13,7 +13,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using PckStudio.Classes.FileTypes;
 using PckStudio.Forms.Additional_Popups.Animation;
-using PckStudio.Properties;
 using PckStudio.Forms.Utilities;
 
 namespace PckStudio.Forms.Editor

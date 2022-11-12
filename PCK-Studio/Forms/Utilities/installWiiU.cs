@@ -2,19 +2,15 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using PckStudio.Classes.FileTypes;
 using PckStudio.Classes.IO;
 using PckStudio.Classes.IO.ARC;
-using PckStudio.Classes.IO.PCK;
+using System.Diagnostics;
 
 namespace PckStudio.Forms
 {
@@ -166,7 +162,6 @@ namespace PckStudio.Forms
 
         private void loadPcks()
         {
-
             string region = "";
             if (radioButtonEur.Checked)
             {
@@ -204,7 +199,6 @@ namespace PckStudio.Forms
 
         private void buttonServerToggle_Click(object sender, EventArgs e)
         {
-            string mode = "";
             if (serverOn == false)
             {
                 //Makes sure user typed in their ip
@@ -217,7 +211,7 @@ namespace PckStudio.Forms
                 //Turns Server On
                 try
                 {
-                    buttonMode(mode = "loading");
+                    buttonMode("loading");
 
                     ServicePointManager.Expect100Continue = true;
 
@@ -229,7 +223,7 @@ namespace PckStudio.Forms
                     request.Timeout = 1200000;
 
                     ServicePoint sp = request.ServicePoint;
-                    Console.WriteLine("ServicePoint connections = {0}.", sp.ConnectionLimit);
+                    Debug.WriteLine("ServicePoint connections = {0}.", sp.ConnectionLimit);
                     sp.ConnectionLimit = 1;
 
                     using (var response = (FtpWebResponse)request.GetResponse())
@@ -283,11 +277,11 @@ namespace PckStudio.Forms
                         }
                     }
 
-                    buttonMode(mode = "stop");
+                    buttonMode("stop");
                 }
                 catch (Exception disc)
                 {
-                    buttonMode(mode = "start");
+                    buttonMode("start");
                     MessageBox.Show(disc.ToString());
                 }
             }
@@ -297,7 +291,7 @@ namespace PckStudio.Forms
                 listViewPCKS.Items.Clear();
                 try
                 {
-                    buttonMode(mode = "start");
+                    buttonMode("start");
                 }
                 catch (Exception disc)
                 {
@@ -328,10 +322,10 @@ namespace PckStudio.Forms
 
         private void listViewPCKS_MouseDown(object sender, MouseEventArgs e)
         {
-            ListViewHitTestInfo HI = listViewPCKS.HitTest(e.Location);
+            ListViewHitTestInfo hitTestInfo = listViewPCKS.HitTest(e.Location);
             if (e.Button == MouseButtons.Right)
             {
-                if (HI.Location == ListViewHitTestLocations.None)
+                if (hitTestInfo.Location == ListViewHitTestLocations.None)
                 {
                 }
                 else
@@ -375,7 +369,7 @@ namespace PckStudio.Forms
 
         private void buttonInstall_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Replace with " + Path.GetFileNameWithoutExtension(mod) + "?", "Install Mod",MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if (MessageBox.Show("Replace with " + Path.GetFileNameWithoutExtension(mod) + "?", "Install Mod", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 if (!Directory.Exists(dlcPath + pcks[listViewPCKS.SelectedItems[0].Index].folder + "/"))
                 {
@@ -454,6 +448,7 @@ namespace PckStudio.Forms
             else
                 archive.Add("Graphics\\PackGraphics\\" + PackID + ".png", File.ReadAllBytes(TextBoxPackImage.Text));
         }
+
         private void SendARCToConsole()
         {
             FTP client = new FTP("ftp://" + textBoxHost.Text, "", "a3262443");
@@ -464,7 +459,7 @@ namespace PckStudio.Forms
             archive.Clear();
             currentPCK.Files.Clear();
             currentPCK = null;
-            System.GC.Collect();
+            GC.Collect();
         }
 
         private void PackImageSelection_Click(object sender, EventArgs e)

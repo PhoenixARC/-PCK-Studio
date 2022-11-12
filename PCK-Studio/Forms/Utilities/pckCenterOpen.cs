@@ -60,7 +60,7 @@ namespace PckStudio.Forms
 
         private void pckCenterOpen_Load(object sender, EventArgs e)
         {
-            if (mode==0)//Unowned Mode
+            if (mode == 0) // Unowned Mode
             {
                 buttonDirect.Visible = true;
 
@@ -74,7 +74,7 @@ namespace PckStudio.Forms
                 buttonBedrock.Visible = buttonDelete.Visible = buttonExport.Visible = false;
                 buttonInstallPs3.Visible = buttonInstallXbox.Visible = buttonInstallWiiU.Visible = false;
             }
-            else if (mode==1)//My Collection Mode
+            else if (mode == 1) // My Collection Mode
             {
                 buttonBedrock.Visible = true;
                 buttonInstallPs3.Visible = true;

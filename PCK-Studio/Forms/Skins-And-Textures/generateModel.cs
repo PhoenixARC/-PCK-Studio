@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Threading;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;

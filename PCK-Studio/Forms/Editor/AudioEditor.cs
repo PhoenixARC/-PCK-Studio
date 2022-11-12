@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
 using MetroFramework.Forms;
-using System.Collections;
 using PckStudio.Classes.FileTypes;
 using PckStudio.Classes.IO.PCK;
 using PckStudio.Forms.Additional_Popups.Audio;

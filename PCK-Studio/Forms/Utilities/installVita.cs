@@ -2,14 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
-using System.IO.Compression;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using MetroFramework.Forms;
 
@@ -145,7 +140,6 @@ namespace PckStudio.Forms
 
         private void buttonServerToggle_Click(object sender, EventArgs e)
         {
-            string mode = "";
             if (serverOn == false)
             {
                 //Makes sure user typed in their ip
@@ -158,7 +152,7 @@ namespace PckStudio.Forms
                 //Turns Server On
                 try
                 {
-                    buttonMode(mode = "loading");
+                    buttonMode("loading");
 
                     ServicePointManager.Expect100Continue = true;
 
@@ -231,11 +225,11 @@ namespace PckStudio.Forms
                             listViewPCKS.Items.Add(pck);
                     }
 
-                    buttonMode(mode = "stop");
+                    buttonMode("stop");
                 }
                 catch (Exception disc)
                 {
-                    buttonMode(mode = "start");
+                    buttonMode("start");
                     MessageBox.Show(disc.ToString());
                 }
             }
@@ -245,7 +239,7 @@ namespace PckStudio.Forms
                 listViewPCKS.Items.Clear();
                 try
                 {
-                    buttonMode(mode = "start");
+                    buttonMode("start");
                 }
                 catch (Exception disc)
                 {
