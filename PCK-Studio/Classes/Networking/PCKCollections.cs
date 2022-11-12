@@ -9,8 +9,8 @@ using System.Drawing.Imaging;
 using System.Drawing.Design;
 using System.Drawing;
 using Newtonsoft.Json;
-using API.PCKCenter.model;
-using API.PCKCenter;
+using PckStudio.API.PCKCenter.model;
+using PckStudio.API.PCKCenter;
 
 namespace PckStudio.Classes.Networking
 {

@@ -6,8 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using Newtonsoft.Json;
-using API.PCKCenter.model;
-using API.PCKCenter;
+using PckStudio.API.PCKCenter.model;
+using PckStudio.API.PCKCenter;
 
 namespace PckStudio.Classes.IO
 {
