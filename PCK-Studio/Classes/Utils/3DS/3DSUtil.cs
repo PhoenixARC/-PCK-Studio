@@ -4,8 +4,30 @@ using System.Drawing;
 using System.IO;
 using System.Text;
 
-namespace PckStudio.Classes.Utils
+namespace PckStudio.Classes._3ds.Utils
 {
+    /// <summary>
+    ///     Format of the texture used on the PICA200.
+    /// </summary>
+    public enum _3DSTextureFormat
+    {
+        argb8 = 0,
+        rgb8 = 1,
+        rgba5551 = 2,
+        rgb565 = 3,
+        rgba4 = 4,
+        la8 = 5,
+        hilo8 = 6,
+        l8 = 7,
+        a8 = 8,
+        la4 = 9,
+        l4 = 0xa,
+        a4 = 0xb,
+        etc1 = 0xc,
+        etc1a4 = 0xd,
+        dontCare
+    }
+
     internal class _3DSUtil
     {
         private static string ReadString(Stream stream, int len)
@@ -34,28 +56,28 @@ namespace PckStudio.Classes.Utils
             stream.Write(buffer, 0, 4);
         }
 
-        public static int CalcBufferSize(RenderBase.OTextureFormat fmt, int w, int h)
+        public static int CalcBufferSize(_3DSTextureFormat fmt, int w, int h)
         {
             switch (fmt)
             {
-                case RenderBase.OTextureFormat.argb8:
+                case _3DSTextureFormat.argb8:
                     return w * h * 4;
-                case RenderBase.OTextureFormat.rgb8:
+                case _3DSTextureFormat.rgb8:
                     return w * h * 3;
-                case RenderBase.OTextureFormat.rgba5551:
-                case RenderBase.OTextureFormat.rgb565:
-                case RenderBase.OTextureFormat.rgba4:
-                case RenderBase.OTextureFormat.la8:
-                case RenderBase.OTextureFormat.hilo8:
+                case _3DSTextureFormat.rgba5551:
+                case _3DSTextureFormat.rgb565:
+                case _3DSTextureFormat.rgba4:
+                case _3DSTextureFormat.la8:
+                case _3DSTextureFormat.hilo8:
                     return w * h * 2;
-                case RenderBase.OTextureFormat.l8:
-                case RenderBase.OTextureFormat.a8:
-                case RenderBase.OTextureFormat.la4:
-                case RenderBase.OTextureFormat.etc1a4:
+                case _3DSTextureFormat.l8:
+                case _3DSTextureFormat.a8:
+                case _3DSTextureFormat.la4:
+                case _3DSTextureFormat.etc1a4:
                     return w * h;
-                case RenderBase.OTextureFormat.l4:
-                case RenderBase.OTextureFormat.a4:
-                case RenderBase.OTextureFormat.etc1:
+                case _3DSTextureFormat.l4:
+                case _3DSTextureFormat.a4:
+                case _3DSTextureFormat.etc1:
                     return w * h >> 1;
                 default:
                     throw new InvalidDataException("Invalid texture format on BCH!");
@@ -68,15 +90,15 @@ namespace PckStudio.Classes.Utils
             {
                 const int offset = 32;
                 stream.Seek(8L, SeekOrigin.Begin);
-                RenderBase.OTextureFormat format = ReadInt32(stream) switch
+                _3DSTextureFormat format = ReadInt32(stream) switch
                 {
-                    0 => RenderBase.OTextureFormat.argb8,
-                    1 => RenderBase.OTextureFormat.rgb8,
-                    2 => RenderBase.OTextureFormat.rgba5551,
-                    3 => RenderBase.OTextureFormat.rgb8,
-                    4 => RenderBase.OTextureFormat.rgba4,
-                    9 => RenderBase.OTextureFormat.la4,
-                    _ => RenderBase.OTextureFormat.dontCare,
+                    0 => _3DSTextureFormat.argb8,
+                    1 => _3DSTextureFormat.rgb8,
+                    2 => _3DSTextureFormat.rgba5551,
+                    3 => _3DSTextureFormat.rgb8,
+                    4 => _3DSTextureFormat.rgba4,
+                    9 => _3DSTextureFormat.la4,
+                    _ => _3DSTextureFormat.dontCare,
                 };
                 int width  = ReadInt32(stream);
                 int height = ReadInt32(stream);
@@ -91,7 +113,7 @@ namespace PckStudio.Classes.Utils
             return null;
         }
 
-        public static void SetImageTo3DST(Stream stream, Image source, RenderBase.OTextureFormat format = RenderBase.OTextureFormat.argb8)
+        public static void SetImageTo3DST(Stream stream, Image source, _3DSTextureFormat format = _3DSTextureFormat.argb8)
         {
             // TODO: fix Encoding
             WriteString(stream, "3DST"); // 0

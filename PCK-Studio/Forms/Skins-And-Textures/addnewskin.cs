@@ -6,6 +6,7 @@ using System.Drawing.Drawing2D;
 using PckStudio.Classes.FileTypes;
 using System.Drawing.Imaging;
 using PckStudio.Classes.Utils;
+using PckStudio.Classes._3ds.Utils;
 
 namespace PckStudio
 {

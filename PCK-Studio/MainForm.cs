@@ -14,7 +14,7 @@ using PckStudio.Classes.IO;
 using PckStudio.Classes.IO.LOC;
 using PckStudio.Classes.IO.PCK;
 using PckStudio.Classes.IO.GRF;
-using PckStudio.Classes.Utils;
+using PckStudio.Classes._3ds.Utils;
 using PckStudio.Forms;
 using PckStudio.Forms.Utilities;
 using PckStudio.Forms.Editor;

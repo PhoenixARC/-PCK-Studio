@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Linq;
 using System.Drawing;
-using System.Collections.Generic;
+using PckStudio.Classes._3ds.Utils;
 
 namespace Ohana3DS_Rebirth.Ohana
 {
@@ -18,7 +17,7 @@ namespace Ohana3DS_Rebirth.Ohana
         /// <param name="height">Height of the Texture</param>
         /// <param name="format">Pixel Format of the Texture</param>
         /// <returns></returns>
-        public static Bitmap Decode(byte[] data, int width, int height, RenderBase.OTextureFormat format)
+        public static Bitmap Decode(byte[] data, int width, int height, _3DSTextureFormat format)
         {
             byte[] output = new byte[width * height * 4];
             int dataOffset = 0;
@@ -26,7 +25,7 @@ namespace Ohana3DS_Rebirth.Ohana
 
             switch (format)
             {
-                case RenderBase.OTextureFormat.argb8:
+                case _3DSTextureFormat.argb8:
                     for (int tY = 0; tY < height / 8; tY++)
                     {
                         for (int tX = 0; tX < width / 8; tX++)
@@ -45,7 +44,7 @@ namespace Ohana3DS_Rebirth.Ohana
                     }
                     break;
 
-                case RenderBase.OTextureFormat.rgb8:
+                case _3DSTextureFormat.rgb8:
                     for (int tY = 0; tY < height / 8; tY++)
                     {
                         for (int tX = 0; tX < width / 8; tX++)
@@ -65,7 +64,7 @@ namespace Ohana3DS_Rebirth.Ohana
                     }
                     break;
 
-                case RenderBase.OTextureFormat.rgba5551:
+                case _3DSTextureFormat.rgba5551:
                     for (int tY = 0; tY < height / 8; tY++)
                     {
                         for (int tX = 0; tX < width / 8; tX++)
@@ -94,7 +93,7 @@ namespace Ohana3DS_Rebirth.Ohana
                     }
                     break;
 
-                case RenderBase.OTextureFormat.rgb565:
+                case _3DSTextureFormat.rgb565:
                     for (int tY = 0; tY < height / 8; tY++)
                     {
                         for (int tX = 0; tX < width / 8; tX++)
@@ -122,7 +121,7 @@ namespace Ohana3DS_Rebirth.Ohana
                     }
                     break;
 
-                case RenderBase.OTextureFormat.rgba4:
+                case _3DSTextureFormat.rgba4:
                     for (int tY = 0; tY < height / 8; tY++)
                     {
                         for (int tX = 0; tX < width / 8; tX++)
@@ -151,8 +150,8 @@ namespace Ohana3DS_Rebirth.Ohana
                     }
                     break;
 
-                case RenderBase.OTextureFormat.la8:
-                case RenderBase.OTextureFormat.hilo8:
+                case _3DSTextureFormat.la8:
+                case _3DSTextureFormat.hilo8:
                     for (int tY = 0; tY < height / 8; tY++)
                     {
                         for (int tX = 0; tX < width / 8; tX++)
@@ -174,7 +173,7 @@ namespace Ohana3DS_Rebirth.Ohana
                     }
                     break;
 
-                case RenderBase.OTextureFormat.l8:
+                case _3DSTextureFormat.l8:
                     for (int tY = 0; tY < height / 8; tY++)
                     {
                         for (int tX = 0; tX < width / 8; tX++)
@@ -196,7 +195,7 @@ namespace Ohana3DS_Rebirth.Ohana
                     }
                     break;
 
-                case RenderBase.OTextureFormat.a8:
+                case _3DSTextureFormat.a8:
                     for (int tY = 0; tY < height / 8; tY++)
                     {
                         for (int tX = 0; tX < width / 8; tX++)
@@ -218,7 +217,7 @@ namespace Ohana3DS_Rebirth.Ohana
                     }
                     break;
 
-                case RenderBase.OTextureFormat.la4:
+                case _3DSTextureFormat.la4:
                     for (int tY = 0; tY < height / 8; tY++)
                     {
                         for (int tX = 0; tX < width / 8; tX++)
@@ -240,7 +239,7 @@ namespace Ohana3DS_Rebirth.Ohana
                     }
                     break;
 
-                case RenderBase.OTextureFormat.l4:
+                case _3DSTextureFormat.l4:
                     for (int tY = 0; tY < height / 8; tY++)
                     {
                         for (int tX = 0; tX < width / 8; tX++)
@@ -263,7 +262,7 @@ namespace Ohana3DS_Rebirth.Ohana
                     }
                     break;
 
-                case RenderBase.OTextureFormat.a4:
+                case _3DSTextureFormat.a4:
                     for (int tY = 0; tY < height / 8; tY++)
                     {
                         for (int tX = 0; tX < width / 8; tX++)
@@ -285,9 +284,9 @@ namespace Ohana3DS_Rebirth.Ohana
                     }
                     break;
 
-                case RenderBase.OTextureFormat.etc1:
-                case RenderBase.OTextureFormat.etc1a4:
-                    byte[] decodedData = etc1Decode(data, width, height, format == RenderBase.OTextureFormat.etc1a4);
+                case _3DSTextureFormat.etc1:
+                case _3DSTextureFormat.etc1a4:
+                    byte[] decodedData = etc1Decode(data, width, height, format == _3DSTextureFormat.etc1a4);
                     int[] etc1Order = etc1Scramble(width, height);
 
                     int i = 0;
@@ -319,7 +318,7 @@ namespace Ohana3DS_Rebirth.Ohana
         /// <param name="img">Input image to be encoded</param>
         /// <param name="format">Pixel Format of the Texture</param>
         /// <returns></returns>
-        public static byte[] Encode(Bitmap img, RenderBase.OTextureFormat format)
+        public static byte[] Encode(Bitmap img, _3DSTextureFormat format)
         {
             byte[] data = TextureUtils.ToArray(img);
             byte[] output = new byte[data.Length];
@@ -327,7 +326,7 @@ namespace Ohana3DS_Rebirth.Ohana
             int outputOffset = 0;
             switch (format)
             {
-                case RenderBase.OTextureFormat.argb8:
+                case _3DSTextureFormat.argb8:
                     for (int tY = 0; tY < img.Height / 8; tY++)
                     {
                         for (int tX = 0; tX < img.Width / 8; tX++)
