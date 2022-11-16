@@ -2,7 +2,7 @@
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 
-namespace Ohana3DS_Rebirth.Ohana
+namespace PckStudio.Classes._3ds
 {
     class TextureUtils
     {

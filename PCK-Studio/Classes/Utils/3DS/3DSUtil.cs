@@ -1,5 +1,4 @@
-﻿using Ohana3DS_Rebirth.Ohana;
-using System;
+﻿using System;
 using System.Drawing;
 using System.IO;
 using System.Text;

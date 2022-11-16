@@ -2,7 +2,7 @@
 using System.Drawing;
 using PckStudio.Classes._3ds.Utils;
 
-namespace Ohana3DS_Rebirth.Ohana
+namespace PckStudio.Classes._3ds
 {
     class TextureCodec
     {
