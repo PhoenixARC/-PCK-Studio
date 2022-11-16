@@ -593,6 +593,7 @@ namespace PckStudio
 			if (treeViewMain.SelectedNode.Tag is PCKFile.FileData file)
 			{
 				using var ofd = new OpenFileDialog();
+				ofd.Filter = Path.GetExtension(file.filepath);
 				if (ofd.ShowDialog() == DialogResult.OK)
 				{
 					file.SetData(File.ReadAllBytes(ofd.FileName));
