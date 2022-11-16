@@ -114,5 +114,15 @@ namespace PckStudio.Classes.Utils
 		{
 			return (_ANIM & flag) != 0;
 		}
+
+		public override bool Equals(object obj)
+		{
+			return obj is SkinANIM a && _ANIM == a._ANIM;
+		}
+
+		public override int GetHashCode()
+		{
+			return (int)_ANIM;
+		}
 	}
 }
