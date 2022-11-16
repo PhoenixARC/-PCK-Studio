@@ -18,7 +18,6 @@ namespace PckStudio.Forms.Editor
 	public partial class AudioEditor : MetroForm
 	{
 		public string defaultType = "yes";
-		string tempDir = "";
 		Classes.Bink BINK = new Classes.Bink();
 		PCKAudioFile audioFile = null;
 		PCKFile.FileData audioPCK;
