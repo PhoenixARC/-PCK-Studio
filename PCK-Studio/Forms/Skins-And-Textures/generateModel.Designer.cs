@@ -81,8 +81,8 @@
 			this.X = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.Y = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.Z = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.Width = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.Height = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this._Width = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this._Height = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.Length = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.U = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.V = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -505,11 +505,11 @@
 			// 
 			// Width
 			// 
-			resources.ApplyResources(this.Width, "Width");
+			resources.ApplyResources(this._Width, "Width");
 			// 
 			// Height
 			// 
-			resources.ApplyResources(this.Height, "Height");
+			resources.ApplyResources(this._Height, "Height");
 			// 
 			// Length
 			// 
@@ -531,8 +531,8 @@
             this.X,
             this.Y,
             this.Z,
-            this.Width,
-            this.Height,
+            this._Width,
+            this._Height,
             this.Length,
             this.U,
             this.V});
@@ -666,8 +666,8 @@
         private System.Windows.Forms.ColumnHeader X;
         private System.Windows.Forms.ColumnHeader Y;
         private System.Windows.Forms.ColumnHeader Z;
-        private System.Windows.Forms.ColumnHeader Width;
-        private System.Windows.Forms.ColumnHeader Height;
+        private System.Windows.Forms.ColumnHeader _Width;
+        private System.Windows.Forms.ColumnHeader _Height;
         private System.Windows.Forms.ColumnHeader Length;
         private System.Windows.Forms.ColumnHeader U;
         private System.Windows.Forms.ColumnHeader V;

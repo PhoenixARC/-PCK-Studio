@@ -30,7 +30,7 @@
         {
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MipMapPrompt));
 			this.TextLabel = new System.Windows.Forms.Label();
-			this.CancelButton = new System.Windows.Forms.Button();
+			this.CancelBtn = new System.Windows.Forms.Button();
 			this.button1 = new System.Windows.Forms.Button();
 			this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
@@ -44,11 +44,11 @@
 			// 
 			// CancelButton
 			// 
-			resources.ApplyResources(this.CancelButton, "CancelButton");
-			this.CancelButton.ForeColor = System.Drawing.Color.White;
-			this.CancelButton.Name = "CancelButton";
-			this.CancelButton.UseVisualStyleBackColor = true;
-			this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
+			resources.ApplyResources(this.CancelBtn, "CancelButton");
+			this.CancelBtn.ForeColor = System.Drawing.Color.White;
+			this.CancelBtn.Name = "CancelButton";
+			this.CancelBtn.UseVisualStyleBackColor = true;
+			this.CancelBtn.Click += new System.EventHandler(this.CancelButton_Click);
 			// 
 			// button1
 			// 
@@ -80,12 +80,12 @@
 			// 
 			// MipMapPrompt
 			// 
-			this.AcceptButton = this.CancelButton;
+			this.AcceptButton = this.CancelBtn;
 			resources.ApplyResources(this, "$this");
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.numericUpDown1);
 			this.Controls.Add(this.button1);
-			this.Controls.Add(this.CancelButton);
+			this.Controls.Add(this.CancelBtn);
 			this.Controls.Add(this.TextLabel);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
 			this.MaximizeBox = false;
@@ -102,7 +102,7 @@
         }
 
         #endregion
-        public System.Windows.Forms.Button CancelButton;
+        public System.Windows.Forms.Button CancelBtn;
         public System.Windows.Forms.Label TextLabel;
 		public System.Windows.Forms.Button button1;
 		private System.Windows.Forms.NumericUpDown numericUpDown1;
