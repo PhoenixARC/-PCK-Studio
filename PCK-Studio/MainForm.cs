@@ -23,6 +23,7 @@ using PckStudio.Forms.Additional_Popups;
 
 using RichPresenceClient;
 using PckStudio.Classes.Utils.ARC;
+using PckStudio.Classes.Utils;
 
 namespace PckStudio
 {
@@ -444,8 +445,7 @@ namespace PckStudio
 					buttonEdit.Visible = true;
 				}
 				else if (file.properties.HasProperty("ANIM") &&
-						(file.properties.GetPropertyValue("ANIM") == "0x40000" ||
-						 file.properties.GetPropertyValue("ANIM") == "0x80000"))
+						file.properties.GetPropertyValue("ANIM", s => new SkinANIM(s)) == (eANIM_EFFECTS.RESOLUTION_64x64 | eANIM_EFFECTS.SLIM_MODEL))
 				{
 					buttonEdit.Text = "View Skin";
 					buttonEdit.Visible = true;
@@ -654,9 +654,8 @@ namespace PckStudio
 			using RenamePrompt diag = new RenamePrompt(node.FullPath);
 			if (diag.ShowDialog(this) == DialogResult.OK)
 			{
-				if (node.Tag is PCKFile.FileData)
+				if (node.Tag is PCKFile.FileData file)
 				{
-					var file = node.Tag as PCKFile.FileData;
 					file.filepath = diag.NewText;
 				}
 				else // folder
@@ -1872,12 +1871,12 @@ namespace PckStudio
 								continue;
 							file.properties.Add((line.Substring(0, idx), line.Substring(idx + 1)));
 						}
-							ReloadMetaTreeView();
-							saved = false;
-						}
+						ReloadMetaTreeView();
+						saved = false;
 					}
 				}
 			}
+		}
 
 		private void correctSkinDecimalsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
