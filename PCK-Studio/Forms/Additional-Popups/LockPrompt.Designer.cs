@@ -1,6 +1,6 @@
 ﻿namespace PckStudio.Forms
 {
-    partial class pckLocked
+    partial class LockPrompt
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(pckLocked));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LockPrompt));
             this.textBoxPass = new System.Windows.Forms.TextBox();
             this.buttonUnlocked = new System.Windows.Forms.Button();
             this.SuspendLayout();

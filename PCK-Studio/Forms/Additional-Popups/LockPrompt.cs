@@ -11,11 +11,11 @@ using PckStudio;
 
 namespace PckStudio.Forms
 {
-    public partial class pckLocked : MetroFramework.Forms.MetroForm
+    public partial class LockPrompt : MetroFramework.Forms.MetroForm
     {
         string pass;
 
-        public pckLocked(string pass)
+        public LockPrompt(string pass)
         {
             this.pass = pass;
             InitializeComponent();
@@ -38,6 +38,9 @@ namespace PckStudio.Forms
                 DialogResult = DialogResult.Abort;
                 textBoxPass.Text = "";
             }
+#if DEBUG
+            DialogResult = DialogResult.OK;
+#endif
         }
 
         private void textBoxPass_TextChanged(object sender, EventArgs e)

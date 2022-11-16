@@ -180,7 +180,7 @@ namespace PckStudio
 			if (currentPCK.TryGetFile("0", PCKFile.FileData.FileType.InfoFile, out PCKFile.FileData file))
 			{
 				if (file.properties.Contains("LOCK"))
-					return new pckLocked(file.properties.GetPropertyValue("LOCK")).ShowDialog() == DialogResult.OK;
+					return new LockPrompt(file.properties.GetPropertyValue("LOCK")).ShowDialog() == DialogResult.OK;
 			}
 			return true;
 		}
@@ -1164,7 +1164,7 @@ namespace PckStudio
 					}
 					if (pckfile.HasFile("0", PCKFile.FileData.FileType.InfoFile) &&
 						pckfile.GetFile("0", PCKFile.FileData.FileType.InfoFile).properties.HasProperty("LOCK") &&
-						new pckLocked(pckfile.GetFile("0", PCKFile.FileData.FileType.InfoFile).properties.GetProperty("LOCK").Item2).ShowDialog() != DialogResult.OK)
+						new LockPrompt(pckfile.GetFile("0", PCKFile.FileData.FileType.InfoFile).properties.GetProperty("LOCK").Item2).ShowDialog() != DialogResult.OK)
 						return; // cancel extraction if password not provided
 					foreach (PCKFile.FileData file in pckfile.Files)
 					{
