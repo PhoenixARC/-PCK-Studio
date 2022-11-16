@@ -83,6 +83,17 @@ namespace PckStudio.Classes.Utils
 		public static SkinANIM operator |(SkinANIM a, eANIM_EFFECTS anim) => new SkinANIM(a._ANIM | anim);
 		public static implicit operator SkinANIM(eANIM_EFFECTS anim) => new SkinANIM(anim);
 
+		public static bool operator ==(SkinANIM a, eANIM_EFFECTS b)
+		{
+			return a._ANIM == b;
+		}
+		
+		public static bool operator !=(SkinANIM a, eANIM_EFFECTS b)
+		{
+			return !(a == b);
+		}
+
+
 		/// <summary>
 		/// Sets the desired flag in the bitfield
 		/// </summary>
