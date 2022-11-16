@@ -458,11 +458,11 @@ namespace PckStudio
 					case PCKFile.FileData.FileType.TextureFile:
 						// TODO: Add tga support
 						if (Path.GetExtension(file.filepath) == ".tga") break;
-						using (MemoryStream png = new MemoryStream(file.data))
+						using (MemoryStream stream = new MemoryStream(file.data))
 						{
 							try
 							{
-								pictureBoxImagePreview.Image = Image.FromStream(png);
+								pictureBoxImagePreview.Image = Image.FromStream(stream);
 								labelImageSize.Text = $"{pictureBoxImagePreview.Image.Size.Width}x{pictureBoxImagePreview.Image.Size.Height}";
 							}
 							catch (Exception ex)
@@ -470,6 +470,7 @@ namespace PckStudio
 								labelImageSize.Text = "";
 								pictureBoxImagePreview.Image = Resources.NoImageFound;
 								Debug.WriteLine("Not a supported image format. Setting back to default");
+								Debug.WriteLine(string.Format("An error occured of type: {0} with message: {1}", ex.GetType(), ex.Message), "Exception");
 							}
 						}
 
