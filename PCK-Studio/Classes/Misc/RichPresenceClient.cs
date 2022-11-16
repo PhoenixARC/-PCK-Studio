@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 using DiscordRPC;
-using DiscordRPC.Exceptions;
 
 namespace RichPresenceClient
 {
