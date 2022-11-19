@@ -69,6 +69,8 @@ namespace PckStudio.Forms.Editor
 			this.waterTreeView = new System.Windows.Forms.TreeView();
 			this.ColorContextMenu = new MetroFramework.Controls.MetroContextMenu(this.components);
 			this.restoreOriginalColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.copyColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.pasteColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.underwaterTreeView = new System.Windows.Forms.TreeView();
 			this.fogTreeView = new System.Windows.Forms.TreeView();
 			this.colorsTab = new System.Windows.Forms.TabPage();
@@ -405,7 +407,9 @@ namespace PckStudio.Forms.Editor
 			// ColorContextMenu
 			// 
 			this.ColorContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.restoreOriginalColorToolStripMenuItem});
+            this.restoreOriginalColorToolStripMenuItem,
+            this.copyColorToolStripMenuItem,
+            this.pasteColorToolStripMenuItem});
 			this.ColorContextMenu.Name = "ColorContextMenu";
 			resources.ApplyResources(this.ColorContextMenu, "ColorContextMenu");
 			// 
@@ -414,6 +418,18 @@ namespace PckStudio.Forms.Editor
 			this.restoreOriginalColorToolStripMenuItem.Name = "restoreOriginalColorToolStripMenuItem";
 			resources.ApplyResources(this.restoreOriginalColorToolStripMenuItem, "restoreOriginalColorToolStripMenuItem");
 			this.restoreOriginalColorToolStripMenuItem.Click += new System.EventHandler(this.restoreOriginalColorToolStripMenuItem_Click);
+			// 
+			// copyColorToolStripMenuItem
+			// 
+			this.copyColorToolStripMenuItem.Name = "copyColorToolStripMenuItem";
+			resources.ApplyResources(this.copyColorToolStripMenuItem, "copyColorToolStripMenuItem");
+			this.copyColorToolStripMenuItem.Click += new System.EventHandler(this.copyColorToolStripMenuItem_Click);
+			// 
+			// pasteColorToolStripMenuItem
+			// 
+			this.pasteColorToolStripMenuItem.Name = "pasteColorToolStripMenuItem";
+			resources.ApplyResources(this.pasteColorToolStripMenuItem, "pasteColorToolStripMenuItem");
+			this.pasteColorToolStripMenuItem.Click += new System.EventHandler(this.pasteColorToolStripMenuItem_Click);
 			// 
 			// underwaterTreeView
 			// 
@@ -454,7 +470,7 @@ namespace PckStudio.Forms.Editor
 			this.tabControl.Controls.Add(this.underwaterTab);
 			this.tabControl.Controls.Add(this.fogTab);
 			this.tabControl.Name = "tabControl";
-			this.tabControl.SelectedIndex = 3;
+			this.tabControl.SelectedIndex = 0;
 			this.tabControl.Style = MetroFramework.MetroColorStyle.White;
 			this.tabControl.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.tabControl.UseSelectable = true;
@@ -548,5 +564,7 @@ namespace PckStudio.Forms.Editor
 		private ToolStripMenuItem TU54ToolStripMenuItem;
 		private ToolStripMenuItem TU69ToolStripMenuItem;
 		private ToolStripMenuItem _1_9_1ToolStripMenuItem;
+		private ToolStripMenuItem copyColorToolStripMenuItem;
+		private ToolStripMenuItem pasteColorToolStripMenuItem;
 	}
 }

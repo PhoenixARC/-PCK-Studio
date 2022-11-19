@@ -14,6 +14,7 @@ namespace PckStudio.Forms.Editor
 	{
 		COLFile default_colourfile = COLFileReader.Read(new MemoryStream(Properties.Resources.tu69colours));
 		COLFile colourfile;
+		COLFile.ColorEntry clipboard_color;
 
 		private readonly PCKFile.FileData _file;
 
@@ -258,7 +259,7 @@ namespace PckStudio.Forms.Editor
 		public void treeView1_KeyDown(object sender, KeyEventArgs e)
 		{
 			var node = colorTreeView.SelectedNode;
-			if (e.KeyCode == Keys.Delete && node.Tag is COLFile.ColorEntry colorInfo)
+			if (e.KeyCode == Keys.Delete && node.Tag is COLFile.ColorEntry)
 			{
 				restoreOriginalColorToolStripMenuItem_Click(sender, e);
 			}
@@ -267,7 +268,7 @@ namespace PckStudio.Forms.Editor
         private void treeView2_KeyDown(object sender, KeyEventArgs e)
         {
 			var node = waterTreeView.SelectedNode;
-			if (e.KeyCode == Keys.Delete && node.Tag is COLFile.ExtendedColorEntry colorInfo)
+			if (e.KeyCode == Keys.Delete && node.Tag is COLFile.ExtendedColorEntry)
 			{
 				restoreOriginalColorToolStripMenuItem_Click(sender, e);
 			}
@@ -276,7 +277,7 @@ namespace PckStudio.Forms.Editor
 		private void treeView3_KeyDown(object sender, KeyEventArgs e)
 		{
 			var node = underwaterTreeView.SelectedNode;
-			if (e.KeyCode == Keys.Delete && node.Tag is COLFile.ExtendedColorEntry colorInfo)
+			if (e.KeyCode == Keys.Delete && node.Tag is COLFile.ExtendedColorEntry)
 			{
 				restoreOriginalColorToolStripMenuItem_Click(sender, e);
 			}
@@ -285,7 +286,7 @@ namespace PckStudio.Forms.Editor
 		private void treeView4_KeyDown(object sender, KeyEventArgs e)
 		{
 			var node = fogTreeView.SelectedNode;
-			if (e.KeyCode == Keys.Delete && node.Tag is COLFile.ExtendedColorEntry colorInfo)
+			if (e.KeyCode == Keys.Delete && node.Tag is COLFile.ExtendedColorEntry)
 			{
 				restoreOriginalColorToolStripMenuItem_Click(sender, e);
 			}
@@ -325,7 +326,7 @@ namespace PckStudio.Forms.Editor
 				fixed_color = Color.FromArgb(255, (int)redUpDown.Value, (int)greenUpDown.Value, (int)blueUpDown.Value);
 				colorEntry.color = (uint)(((255 << 24) | (fixed_color.R << 16) | (fixed_color.G << 8) | fixed_color.B) & 0xffffffffL);
 			}
-			else if (tabControl.SelectedTab != null) // just in case
+			else if (tabControl.SelectedTab != null && waterTreeView.SelectedNode != null) // just in case
 			{
 				var colorEntry = (COLFile.ExtendedColorEntry)waterTreeView.SelectedNode.Tag;
 				fixed_color = Color.FromArgb(tabControl.SelectedTab == waterTab ? (int)alphaUpDown.Value : 255, (int)redUpDown.Value, (int)greenUpDown.Value, (int)blueUpDown.Value);
@@ -521,6 +522,66 @@ namespace PckStudio.Forms.Editor
 			waterTreeView.EndUpdate();
 			underwaterTreeView.EndUpdate();
 			fogTreeView.EndUpdate();
+		}
+
+		private void copyColorToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			SetUpValueChanged(false);
+			COLFile.ColorEntry colorToCopy = new COLFile.ColorEntry("", 0);
+			if (tabControl.SelectedTab == colorsTab && colorTreeView.SelectedNode.Tag is COLFile.ColorEntry colorInfoD)
+			{
+				colorToCopy = colorInfoD;
+			}
+			else if (tabControl.SelectedTab == waterTab && waterTreeView.SelectedNode.Tag is COLFile.ExtendedColorEntry colorInfo)
+			{
+				colorToCopy = colorInfo;
+			}
+			else if (tabControl.SelectedTab == underwaterTab && underwaterTreeView.SelectedNode.Tag is COLFile.ExtendedColorEntry colorInfoB)
+			{
+				colorToCopy = colorInfoB;
+			}
+			else if (tabControl.SelectedTab == fogTab && fogTreeView.SelectedNode.Tag is COLFile.ExtendedColorEntry colorInfoC)
+			{
+				colorToCopy = colorInfoC;
+			}
+			clipboard_color = colorToCopy;
+			SetUpValueChanged(true);
+		}
+
+		private void pasteColorToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (clipboard_color == null) return;
+			Color fixed_color = Color.FromArgb(255, Color.FromArgb(0xff << 24 | (int)clipboard_color.color));
+
+			if (tabControl.SelectedTab == waterTab && waterTreeView.SelectedNode != null &&
+				waterTreeView.SelectedNode.Tag != null && waterTreeView.SelectedNode.Tag is COLFile.ExtendedColorEntry)
+			{
+				var colorEntry = ((COLFile.ExtendedColorEntry)waterTreeView.SelectedNode.Tag);
+				colorEntry.color = (uint)fixed_color.ToArgb();
+				pictureBox1.BackColor = fixed_color;
+			}
+			else if (tabControl.SelectedTab == underwaterTab && underwaterTreeView.SelectedNode != null &&
+				underwaterTreeView.SelectedNode.Tag != null && underwaterTreeView.SelectedNode.Tag is COLFile.ExtendedColorEntry)
+			{
+				var colorEntry = ((COLFile.ExtendedColorEntry)underwaterTreeView.SelectedNode.Tag);
+				colorEntry.color_b = (uint)fixed_color.ToArgb();
+			}
+			else if (tabControl.SelectedTab == fogTab && fogTreeView.SelectedNode != null &&
+				fogTreeView.SelectedNode.Tag != null && fogTreeView.SelectedNode.Tag is COLFile.ExtendedColorEntry)
+			{
+				var colorEntry = ((COLFile.ExtendedColorEntry)fogTreeView.SelectedNode.Tag);
+				colorEntry.color_c = (uint)fixed_color.ToArgb();
+			}
+			else if (tabControl.SelectedTab == colorsTab && colorTreeView.SelectedNode != null &&
+				colorTreeView.SelectedNode.Tag != null && colorTreeView.SelectedNode.Tag is COLFile.ColorEntry)
+			{
+				var colorEntry = ((COLFile.ColorEntry)colorTreeView.SelectedNode.Tag);
+				colorEntry.color = (uint)fixed_color.ToArgb() & 0xffffff;
+			}
+
+			redUpDown.Value = clipboard_color.color >> 16 & 0xff;
+			greenUpDown.Value = clipboard_color.color >> 8 & 0xff;
+			blueUpDown.Value = clipboard_color.color & 0xff;
 		}
 	}
 }
