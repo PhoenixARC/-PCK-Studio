@@ -16,7 +16,7 @@ using System.IO.Packaging;
 using PckStudio;
 using System.IO.Compression;
 using PckStudio.Classes.FileTypes;
-using PckStudio.Classes.IO;
+using PckStudio.Classes.IO.PCK;
 
 namespace PckStudio.Forms
 {

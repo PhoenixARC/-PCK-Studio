@@ -8,7 +8,7 @@ using System.IO.Compression;
 using System.Net;
 using System.Windows.Forms;
 using PckStudio.Classes.FileTypes;
-using PckStudio.Classes.IO;
+using PckStudio.Classes.IO.PCK;
 using PckStudio.Classes.IO.ARC;
 using System.Diagnostics;
 

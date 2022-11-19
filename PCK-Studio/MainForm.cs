@@ -10,10 +10,11 @@ using System.Drawing.Imaging;
 
 using PckStudio.Properties;
 using PckStudio.Classes.FileTypes;
-using PckStudio.Classes.IO;
 using PckStudio.Classes.IO.LOC;
 using PckStudio.Classes.IO.PCK;
 using PckStudio.Classes.IO.GRF;
+using PckStudio.Classes.Utils;
+using PckStudio.Classes.Utils.ARC;
 using PckStudio.Classes._3ds.Utils;
 using PckStudio.Forms;
 using PckStudio.Forms.Utilities;
@@ -22,8 +23,6 @@ using PckStudio.Forms.Additional_Popups.Animation;
 using PckStudio.Forms.Additional_Popups;
 
 using RichPresenceClient;
-using PckStudio.Classes.Utils.ARC;
-using PckStudio.Classes.Utils;
 
 namespace PckStudio
 {

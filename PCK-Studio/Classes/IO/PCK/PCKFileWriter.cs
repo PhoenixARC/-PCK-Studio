@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace PckStudio.Classes.IO
+namespace PckStudio.Classes.IO.PCK
 {
     internal class PCKFileWriter : StreamDataWriter
     {
