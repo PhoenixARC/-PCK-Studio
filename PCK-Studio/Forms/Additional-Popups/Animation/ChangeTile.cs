@@ -105,14 +105,16 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 			{
 				foreach (TreeNode _node in treeViewBlockCache)
 				{
-					if (_node.Text.ToLower().Contains(metroTextBox1.Text.ToLower()))
+					if (_node.Text.ToLower().Contains(metroTextBox1.Text.ToLower()) || 
+						(_node.Tag as string).ToLower().Contains(metroTextBox1.Text.ToLower()))
 					{
 						treeViewBlocks.Nodes.Add((TreeNode)_node.Clone());
 					}
 				}
 				foreach (TreeNode _node in treeViewItemCache)
 				{
-					if (_node.Text.ToLower().Contains(metroTextBox1.Text.ToLower()))
+					if (_node.Text.ToLower().Contains(metroTextBox1.Text.ToLower()) ||
+						(_node.Tag as string).ToLower().Contains(metroTextBox1.Text.ToLower()))
 					{
 						treeViewItems.Nodes.Add((TreeNode)_node.Clone());
 					}
