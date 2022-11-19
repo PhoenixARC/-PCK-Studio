@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace PckStudio.Classes.Utils
@@ -69,7 +66,7 @@ namespace PckStudio.Classes.Utils
 
 		public override string ToString() => "0x" + ((int)_ANIM).ToString("x8");
 
-		public static bool IsValidANIM(string anim) => animRegex.IsMatch(anim);
+		public static bool IsValidANIM(string anim) => animRegex.IsMatch(anim ?? string.Empty);
 
 		public static eANIM_EFFECTS Parse(string anim)
 			=> IsValidANIM(anim)
