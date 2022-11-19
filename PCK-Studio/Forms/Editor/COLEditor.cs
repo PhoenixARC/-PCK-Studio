@@ -12,7 +12,7 @@ namespace PckStudio.Forms.Editor
 {
 	public partial class COLEditor : MetroForm
 	{
-		COLFile default_colourfile;
+		COLFile default_colourfile = COLFileReader.Read(new MemoryStream(Properties.Resources.tu69colours));
 		COLFile colourfile;
 
 		private readonly PCKFile.FileData _file;
