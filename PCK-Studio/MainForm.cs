@@ -21,8 +21,7 @@ using PckStudio.Forms.Utilities;
 using PckStudio.Forms.Editor;
 using PckStudio.Forms.Additional_Popups.Animation;
 using PckStudio.Forms.Additional_Popups;
-
-using RichPresenceClient;
+using PckStudio.Classes.Misc;
 
 namespace PckStudio
 {

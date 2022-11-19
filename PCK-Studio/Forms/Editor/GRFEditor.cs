@@ -1,13 +1,13 @@
-﻿using PckStudio.Classes.FileTypes;
-using PckStudio.Classes.IO.GRF;
-using PckStudio.Forms.Additional_Popups.Grf;
-using RichPresenceClient;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using PckStudio.Classes.FileTypes;
+using PckStudio.Classes.IO.GRF;
+using PckStudio.Forms.Additional_Popups.Grf;
+using PckStudio.Classes.Misc;
 
 namespace PckStudio.Forms.Editor
 {

@@ -1,14 +1,14 @@
-﻿using PckStudio.Classes.FileTypes;
-using System;
-using System.Collections.Generic;
+﻿using System;
+using System.IO;
 using System.Data;
 using System.Linq;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using MetroFramework.Forms;
-using RichPresenceClient;
-using PckStudio.Forms.Additional_Popups.Loc;
+using PckStudio.Classes.Misc;
+using PckStudio.Classes.FileTypes;
 using PckStudio.Classes.IO.LOC;
-using System.IO;
+using PckStudio.Forms.Additional_Popups.Loc;
 
 namespace PckStudio.Forms.Editor
 {

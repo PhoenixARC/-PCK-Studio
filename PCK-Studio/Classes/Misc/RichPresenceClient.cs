@@ -1,10 +1,10 @@
 ﻿using System;
 using DiscordRPC;
 
-namespace RichPresenceClient
+namespace PckStudio.Classes.Misc
 {
     // https://github.com/BullyWiiPlaza/Minecraft-Wii-U-Mod-Injector/blob/main/Minecraft%20Wii%20U%20Mod%20Injector/Helpers/DiscordRp.cs
-    class RPC
+    static class RPC
     {
         public static DiscordRpcClient Client;
         public static DateTime StartUpTime = DateTime.UtcNow;

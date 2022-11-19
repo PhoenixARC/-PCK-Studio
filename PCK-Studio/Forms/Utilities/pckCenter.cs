@@ -6,10 +6,10 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Windows.Forms;
-using RichPresenceClient;
+using System.Diagnostics;
+using PckStudio.Classes.Misc;
 using PckStudio.API.PCKCenter.model;
 using PckStudio.API.PCKCenter;
-using System.Diagnostics;
 
 namespace PckStudio.Forms
 {
