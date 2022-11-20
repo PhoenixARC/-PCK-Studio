@@ -591,7 +591,8 @@ namespace PckStudio
 			if (treeViewMain.SelectedNode.Tag is PCKFile.FileData file)
 			{
 				using var ofd = new OpenFileDialog();
-				ofd.Filter = Path.GetExtension(file.filepath);
+				// Suddenly, and randomly, this started throwing an exception because it wasn't formatted correctly? So now it's formatted correctly and now displays the file type name in the dialog.
+				ofd.Filter = file.filetype.ToString() + " (*" + Path.GetExtension(file.filepath) + ")|*" + Path.GetExtension(file.filepath);
 				if (ofd.ShowDialog() == DialogResult.OK)
 				{
 					file.SetData(File.ReadAllBytes(ofd.FileName));
