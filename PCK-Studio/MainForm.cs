@@ -413,7 +413,7 @@ namespace PckStudio
 				using (var ms = new MemoryStream(file.data))
 				{
 					var texture = Image.FromStream(ms);
-					SkinPreview frm = new SkinPreview(texture);
+					SkinPreview frm = new SkinPreview(texture, file.properties.GetPropertyValue("ANIM", s => new SkinANIM(s)));
 					frm.ShowDialog(this);
 					frm.Dispose();
 				}
