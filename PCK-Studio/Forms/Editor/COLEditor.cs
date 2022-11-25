@@ -263,6 +263,14 @@ namespace PckStudio.Forms.Editor
 			{
 				restoreOriginalColorToolStripMenuItem_Click(sender, e);
 			}
+			else if (e.Control && e.KeyCode == Keys.C && node.Tag is COLFile.ColorEntry)
+			{
+				copyColorToolStripMenuItem_Click(sender, e);
+			}
+			else if (e.Control && e.KeyCode == Keys.V && node.Tag is COLFile.ColorEntry)
+			{
+				pasteColorToolStripMenuItem_Click(sender, e);
+			}
 		}
 
         private void treeView2_KeyDown(object sender, KeyEventArgs e)
@@ -272,7 +280,15 @@ namespace PckStudio.Forms.Editor
 			{
 				restoreOriginalColorToolStripMenuItem_Click(sender, e);
 			}
-        }
+			else if (e.Control && e.KeyCode == Keys.C && node.Tag is COLFile.ExtendedColorEntry)
+			{
+				copyColorToolStripMenuItem_Click(sender, e);
+			}
+			else if (e.Control && e.KeyCode == Keys.V && node.Tag is COLFile.ExtendedColorEntry)
+			{
+				pasteColorToolStripMenuItem_Click(sender, e);
+			}
+		}
 
 		private void treeView3_KeyDown(object sender, KeyEventArgs e)
 		{
@@ -280,6 +296,14 @@ namespace PckStudio.Forms.Editor
 			if (e.KeyCode == Keys.Delete && node.Tag is COLFile.ExtendedColorEntry)
 			{
 				restoreOriginalColorToolStripMenuItem_Click(sender, e);
+			}
+			else if (e.Control && e.KeyCode == Keys.C && node.Tag is COLFile.ExtendedColorEntry)
+			{
+				copyColorToolStripMenuItem_Click(sender, e);
+			}
+			else if (e.Control && e.KeyCode == Keys.V && node.Tag is COLFile.ExtendedColorEntry)
+			{
+				pasteColorToolStripMenuItem_Click(sender, e);
 			}
 		}
 
@@ -289,6 +313,14 @@ namespace PckStudio.Forms.Editor
 			if (e.KeyCode == Keys.Delete && node.Tag is COLFile.ExtendedColorEntry)
 			{
 				restoreOriginalColorToolStripMenuItem_Click(sender, e);
+			}
+			else if (e.Control && e.KeyCode == Keys.C && node.Tag is COLFile.ExtendedColorEntry)
+			{
+				copyColorToolStripMenuItem_Click(sender, e);
+			}
+			else if (e.Control && e.KeyCode == Keys.V && node.Tag is COLFile.ExtendedColorEntry)
+			{
+				pasteColorToolStripMenuItem_Click(sender, e);
 			}
 		}
 
@@ -526,7 +558,6 @@ namespace PckStudio.Forms.Editor
 
 		private void copyColorToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			SetUpValueChanged(false);
 			COLFile.ColorEntry colorToCopy = new COLFile.ColorEntry("", 0);
 			if (tabControl.SelectedTab == colorsTab && colorTreeView.SelectedNode.Tag is COLFile.ColorEntry colorInfoD)
 			{
@@ -545,12 +576,12 @@ namespace PckStudio.Forms.Editor
 				colorToCopy = colorInfoC;
 			}
 			clipboard_color = colorToCopy;
-			SetUpValueChanged(true);
 		}
 
 		private void pasteColorToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			if (clipboard_color == null) return;
+			SetUpValueChanged(false);
 			Color fixed_color = Color.FromArgb(255, Color.FromArgb(0xff << 24 | (int)clipboard_color.color));
 
 			if (tabControl.SelectedTab == waterTab && waterTreeView.SelectedNode != null &&
@@ -558,7 +589,6 @@ namespace PckStudio.Forms.Editor
 			{
 				var colorEntry = ((COLFile.ExtendedColorEntry)waterTreeView.SelectedNode.Tag);
 				colorEntry.color = (uint)fixed_color.ToArgb();
-				pictureBox1.BackColor = fixed_color;
 			}
 			else if (tabControl.SelectedTab == underwaterTab && underwaterTreeView.SelectedNode != null &&
 				underwaterTreeView.SelectedNode.Tag != null && underwaterTreeView.SelectedNode.Tag is COLFile.ExtendedColorEntry)
@@ -582,6 +612,8 @@ namespace PckStudio.Forms.Editor
 			redUpDown.Value = clipboard_color.color >> 16 & 0xff;
 			greenUpDown.Value = clipboard_color.color >> 8 & 0xff;
 			blueUpDown.Value = clipboard_color.color & 0xff;
+			pictureBox1.BackColor = fixed_color;
+			SetUpValueChanged(true);
 		}
 	}
 }
