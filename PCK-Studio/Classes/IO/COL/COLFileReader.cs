@@ -1,7 +1,6 @@
 ﻿using PckStudio.Classes.FileTypes;
 using System.IO;
 using System.Text;
-using static PckStudio.Classes.FileTypes.COLFile;
 
 namespace PckStudio.Classes.IO.COL
 {
@@ -25,7 +24,7 @@ namespace PckStudio.Classes.IO.COL
             {
                 string name = ReadString(stream);
                 uint color = ReadUInt(stream);
-                colourFile.entries.Add(new ColorEntry(name, color));
+                colourFile.entries.Add(new COLFile.ColorEntry(name, color));
             }
             if (has_water_colors > 0)
             {
@@ -36,7 +35,7 @@ namespace PckStudio.Classes.IO.COL
                     uint colorA = ReadUInt(stream);
                     uint colorB = ReadUInt(stream);
                     uint colorC = ReadUInt(stream);
-                    colourFile.waterEntries.Add(new ExtendedColorEntry(name, colorA, colorB, colorC));
+                    colourFile.waterEntries.Add(new COLFile.ExtendedColorEntry(name, colorA, colorB, colorC));
                 }
             }
             return colourFile;
