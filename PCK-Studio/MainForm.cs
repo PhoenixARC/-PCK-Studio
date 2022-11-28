@@ -277,7 +277,7 @@ namespace PckStudio
 		{
 			// In case the Rename function was just used and the selected node name no longer matches the file name
 			string filepath = "";
-			if(treeViewMain.SelectedNode != null) filepath = (treeViewMain.SelectedNode.Tag as PCKFile.FileData).filepath;
+			if(treeViewMain.SelectedNode != null && treeViewMain.SelectedNode.Tag is PCKFile.FileData) filepath = (treeViewMain.SelectedNode.Tag as PCKFile.FileData).filepath;
 			treeViewMain.Nodes.Clear();
 			BuildPckTreeView(treeViewMain.Nodes, currentPCK);
 			if (!String.IsNullOrEmpty(filepath))
@@ -509,6 +509,7 @@ namespace PckStudio
 				if (ofd.ShowDialog() == DialogResult.OK)
 				{
 					file.SetData(File.ReadAllBytes(ofd.FileName));
+					if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath)) RebuildSubPCK(treeViewMain.SelectedNode);
 					saved = false;
 				}
 				return;
@@ -560,7 +561,7 @@ namespace PckStudio
                 node.Remove();
                 saved = false;
             }
-			if (IsSubPCKNode(path)) RebuildSubPCK(path);
+			if (IsSubPCKNode(path)) RebuildSubPCK(node);
         }
 
 		private void renameFileToolStripMenuItem_Click(object sender, EventArgs e)
@@ -577,7 +578,7 @@ namespace PckStudio
 				{
 					file.filepath = diag.NewText;
 				}
-				else // folder
+				else if(!IsSubPCKNode(path)) // folder
 				{
 					currentPCK.Files.ForEach(file =>
 					{
@@ -585,8 +586,18 @@ namespace PckStudio
 							file.filepath = diag.NewText + file.filepath.Substring(node.FullPath.Length);
 					});
 				}
+				else
+				{
+					foreach (var n in GetNodes(node.Nodes))
+					{
+						if (n.Tag is PCKFile.FileData f && n.FullPath.StartsWith(node.FullPath))
+						{
+							f.filepath = diag.NewText + n.FullPath.Substring(node.FullPath.Length);
+						}
+					}
+				}
 				saved = false;
-				if (IsSubPCKNode(path)) RebuildSubPCK(path);
+				if (IsSubPCKNode(path)) RebuildSubPCK(node);
 				BuildMainTreeView();
 			}
 		}
@@ -601,14 +612,52 @@ namespace PckStudio
 			using (addNewSkin add = new addNewSkin(locFile))
 				if (add.ShowDialog() == DialogResult.OK)
 				{
+					if (currentPCK.HasFile("Skins.pck", PCKFile.FileData.FileType.SkinDataFile)) // Prioritize Skins.pck
+					{
+						TreeNode subPCK = treeViewMain.Nodes.Find("Skins.pck", false).FirstOrDefault();
+						if (subPCK.Nodes.ContainsKey("Skins")) add.Skin.filepath = add.Skin.filepath.Insert(0, "Skins/");
+						add.Skin.filepath = add.Skin.filepath.Insert(0, "Skins.pck/");
+
+						TreeNode newNode = new TreeNode(Path.GetFileName(add.Skin.filepath));
+						newNode.Tag = add.Skin;
+						setFileIcon(newNode, PCKFile.FileData.FileType.SkinFile);
+
+						subPCK.Nodes.Add(newNode);
+
+						RebuildSubPCK(newNode);
+					}
+					else
+					{
+						if (treeViewMain.Nodes.ContainsKey("Skins")) add.Skin.filepath = add.Skin.filepath.Insert(0, "Skins/"); // Then Skins folder
+						currentPCK.Files.Add(add.Skin);
+					}
+
 					if (add.useCape)
-						currentPCK.Files.Add(add.Cape);
-					if (!(treeViewMain.SelectedNode.Tag is PCKFile.FileData))
-						add.Skin.filepath = $"{treeViewMain.SelectedNode.FullPath}/{add.Skin.filepath}";
-					currentPCK.Files.Add(add.Skin);
+					{
+						if (currentPCK.HasFile("Skins.pck", PCKFile.FileData.FileType.SkinDataFile)) // Prioritize Skins.pck
+						{
+							TreeNode subPCK = treeViewMain.Nodes.Find("Skins.pck", false).FirstOrDefault();
+							if (subPCK.Nodes.ContainsKey("Skins")) add.Cape.filepath = add.Cape.filepath.Insert(0, "Skins/");
+							add.Cape.filepath = add.Cape.filepath.Insert(0, "Skins.pck/");
+
+							TreeNode newNode = new TreeNode(Path.GetFileName(add.Cape.filepath));
+							newNode.Tag = add.Cape;
+							setFileIcon(newNode, PCKFile.FileData.FileType.SkinFile);
+
+							subPCK.Nodes.Add(newNode);
+
+							RebuildSubPCK(newNode);
+						}
+						else
+						{
+							if (treeViewMain.Nodes.ContainsKey("Skins")) add.Cape.filepath = add.Cape.filepath.Insert(0, "Skins/"); // Then Skins folder
+							currentPCK.Files.Add(add.Cape);
+						}
+					}
+
 					TrySetLocFile(locFile);
 					saved = false;
-					BuildMainTreeView();
+					//BuildMainTreeView();
 				}
 		}
 
@@ -696,32 +745,48 @@ namespace PckStudio
 			return isSubFile;
 		}
 
-		List<TreeNode> GetSubPCKNodes(TreeNodeCollection children)
+		List<TreeNode> GetNodes(TreeNodeCollection children)
 		{
 			List<TreeNode> new_nodes = new List<TreeNode>();
 
 			foreach(TreeNode node in children)
 			{
+				new_nodes.Add(node);
 				if (node.Nodes.Count > 0)
 				{
-					// TODO: for some reason, folders aren't included when rebuilding PCKs?
-					new_nodes.Concat(GetSubPCKNodes(node.Nodes));
+					foreach(var n in GetNodes(node.Nodes))
+					{
+						new_nodes.Add(n);
+					}
 				}
-				else if(node.Tag is PCKFile.FileData) new_nodes.Add(node);
 			}
 
 			return new_nodes;
 		}
 
-		void RebuildSubPCK(string PCKPath)
+		TreeNode GetSubPCK(TreeNode child)
+		{
+			TreeNode parent = child;
+
+			bool flag = false;
+
+			while (parent.Parent != null)
+			{
+				parent = parent.Parent;
+				Console.WriteLine(parent.Text);
+				flag = parent.Tag is PCKFile.FileData f && (f.filetype is PCKFile.FileData.FileType.TexturePackInfoFile || f.filetype is PCKFile.FileData.FileType.SkinDataFile);
+				if (flag) break;
+			}
+
+			if (!flag) return null;
+			else return parent;
+		}
+
+		void RebuildSubPCK(TreeNode childNode)
 		{
 			// Support for if a file is edited within a PCK File
 
-			PCKPath = Path.GetDirectoryName(PCKPath).Replace('\\', '/');
-
-			Console.WriteLine(PCKPath);
-
-			TreeNode parent = treeViewMain.Nodes.Find(Path.GetFileName(PCKPath), true).ToList().Find(t => t.Tag != null && (t.Tag as PCKFile.FileData).filepath == PCKPath);
+			TreeNode parent = GetSubPCK(childNode);
 			if (parent == null) return;
 
 			PCKFile.FileData parent_file = parent.Tag as PCKFile.FileData;
@@ -730,11 +795,10 @@ namespace PckStudio
 				Console.WriteLine("Rebuilding " + parent_file.filepath);
 				PCKFile newPCKFile = new PCKFile(3);
 
-				foreach (TreeNode node in GetSubPCKNodes(parent.Nodes))
+				foreach (TreeNode node in GetNodes(parent.Nodes))
 				{
 					if (node.Tag is PCKFile.FileData)
 					{
-						Console.WriteLine(node.FullPath);
 						PCKFile.FileData node_file = (PCKFile.FileData)node.Tag;
 						PCKFile.FileData new_file = new PCKFile.FileData(node_file.filepath, node_file.filetype);
 						foreach (var prop in node_file.properties) new_file.properties.Add(prop);
@@ -759,10 +823,6 @@ namespace PckStudio
 			if (treeViewMain.SelectedNode is TreeNode t && t.Tag is PCKFile.FileData file)
 			{
 				pckFileTypeHandler[file.filetype]?.Invoke(file);
-				if (t.FullPath.Contains(".pck"))
-				{
-					RebuildSubPCK(t.FullPath);
-				}
 			}
 		}
 
@@ -791,7 +851,7 @@ namespace PckStudio
 					if (diag.ShowDialog(this) == DialogResult.OK && diag.saved)
 					{
 						file.properties[i] = new ValueTuple<string, string>("ANIM", diag.outANIM);
-						if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath)) RebuildSubPCK(treeViewMain.SelectedNode.FullPath);
+						if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath)) RebuildSubPCK(treeViewMain.SelectedNode);
 						ReloadMetaTreeView();
 						saved = false;
 					}
@@ -807,7 +867,7 @@ namespace PckStudio
 			if (add.ShowDialog() == DialogResult.OK && i != -1)
 			{
 				file.properties[i] = new ValueTuple<string, string>(add.PropertyName, add.PropertyValue);
-				if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath)) RebuildSubPCK(treeViewMain.SelectedNode.FullPath);
+				if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath)) RebuildSubPCK(treeViewMain.SelectedNode);
 				ReloadMetaTreeView();
 				saved = false;
 			}
@@ -854,7 +914,7 @@ namespace PckStudio
             else node.Parent.Nodes.Insert(node.Index + 1, newNode);//adds generated minefile node to selected folder
 
 			if (!IsSubPCKNode(node.FullPath)) currentPCK.Files.Insert(node.Index + 1, mf);
-			else RebuildSubPCK(node.FullPath);
+			else RebuildSubPCK(node);
         }
 
 		private void deleteEntryToolStripMenuItem_Click(object sender, EventArgs e)
@@ -864,7 +924,7 @@ namespace PckStudio
 				file.properties.Remove(property))
 			{
 				treeMeta.SelectedNode.Remove();
-				if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath)) RebuildSubPCK(treeViewMain.SelectedNode.FullPath);
+				if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath)) RebuildSubPCK(treeViewMain.SelectedNode);
 				saved = false;
 			}
 		}
@@ -891,7 +951,7 @@ namespace PckStudio
 				if (add.ShowDialog() == DialogResult.OK)
 				{
 					file.properties.Add((add.PropertyName, add.PropertyValue));
-					if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath)) RebuildSubPCK(treeViewMain.SelectedNode.FullPath);
+					if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath)) RebuildSubPCK(treeViewMain.SelectedNode);
 					ReloadMetaTreeView();
 					saved = false;
 				}
@@ -927,6 +987,9 @@ namespace PckStudio
 				treeViewMain.SelectedNode.Remove();
 			}
 			treeViewMain.SelectedNode = move;
+
+			if (IsSubPCKNode(move.FullPath)) RebuildSubPCK(move);
+			BuildMainTreeView();
 			saved = false;
 		}
 
@@ -959,6 +1022,10 @@ namespace PckStudio
 				treeViewMain.SelectedNode.Remove();
 			}
 			treeViewMain.SelectedNode = move;
+
+			if (IsSubPCKNode(move.FullPath)) RebuildSubPCK(move);
+			BuildMainTreeView();
+			saved = false;
 		}
 
 		#region drag and drop for main tree node
@@ -2924,6 +2991,7 @@ namespace PckStudio
 				Console.WriteLine($"Setting {file.filetype} to {type}");
 				file.filetype = type;
 				setFileIcon(t, type);
+				if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath)) RebuildSubPCK(treeViewMain.SelectedNode);
 			}
 		}
 
