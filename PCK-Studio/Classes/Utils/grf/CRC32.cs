@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PckStudio.Classes.Utils.grf
+﻿namespace PckStudio.Classes.Utils.grf
 {
     public class CRC32
     {

@@ -7,25 +7,27 @@ namespace PckStudio.Classes.IO.LOC
 {
     internal class LOCFileWriter : StreamDataWriter
     {
-        internal LOCFile _locfile;
+        private LOCFile _locfile;
+        private int _type;
         public static void Write(Stream stream, LOCFile file, int type = 2)
         {
-            new LOCFileWriter(file).WriteToStream(stream, type);
+            new LOCFileWriter(file, type).WriteToStream(stream);
         }
 
-        private LOCFileWriter(LOCFile file) : base(false)
+        private LOCFileWriter(LOCFile file, int type) : base(false)
         {
+            _type = type;
             _locfile = file;
         }
 
-        private void WriteToStream(Stream stream, int type)
+        protected override void WriteToStream(Stream stream)
         {
             _ = _locfile ?? throw new ArgumentNullException(nameof(_locfile));
-            WriteInt(stream, type);
+            WriteInt(stream, _type);
             WriteInt(stream, _locfile.Languages.Count);
-            if (type == 2) WriteLocKeys(stream);
-            WriteLanguages(stream, type);
-            WriteLanguageEntries(stream, type);
+            if (_type == 2) WriteLocKeys(stream);
+            WriteLanguages(stream, _type);
+            WriteLanguageEntries(stream, _type);
         }
 
 
@@ -39,7 +41,7 @@ namespace PckStudio.Classes.IO.LOC
 
         private void WriteLanguages(Stream stream, int type)
         {
-            _locfile.Languages.ForEach(language =>
+            foreach(var language in _locfile.Languages)
             {
                 WriteString(stream, language);
                 
@@ -58,12 +60,12 @@ namespace PckStudio.Classes.IO.LOC
                 }
 
                 WriteInt(stream, size);
-            });
+            };
         }
 
         private void WriteLanguageEntries(Stream stream, int type)
         {
-            _locfile.Languages.ForEach(language =>
+            foreach (var language in _locfile.Languages)
             {
                 WriteInt(stream, 0x6D696B75); // :P
                 stream.WriteByte(0); // <- only write when the previous written int was >0
@@ -75,7 +77,7 @@ namespace PckStudio.Classes.IO.LOC
                     if (type == 0) WriteString(stream, locKey);
                     WriteString(stream, _locfile.LocKeys[locKey][language]);
                 }
-            });
+            };
         }
 
         private void WriteString(Stream stream, string s)

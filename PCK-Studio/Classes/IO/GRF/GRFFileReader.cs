@@ -6,10 +6,11 @@ using System.Linq;
 using System.Text;
 using ICSharpCode.SharpZipLib.Zip.Compression.Streams;
 using PckStudio.Classes.Utils;
+using System.Diagnostics;
 
 namespace PckStudio.Classes.IO.GRF
 {
-    internal class GRFFileReader : StreamDataReader
+    internal class GRFFileReader : StreamDataReader<GRFFile>
     {
         private IList<string> StringLookUpTable;
         private GRFFile _file;
@@ -22,7 +23,7 @@ namespace PckStudio.Classes.IO.GRF
         private GRFFileReader() : base(false)
         { }
 
-        private GRFFile ReadFromStream(Stream stream)
+        protected override GRFFile ReadFromStream(Stream stream)
         {
             stream = ReadHeader(stream);
             ReadBody(stream);
@@ -85,7 +86,7 @@ namespace PckStudio.Classes.IO.GRF
         {
             ReadStringLookUpTable(stream);
             string Name = GetString(stream);
-            Console.WriteLine($"[{nameof(GRFFile)}] Root Name: {Name}");
+            Debug.WriteLine("[{0}] Root Name: {1}", nameof(GRFFile), Name);
             ReadGameRuleHierarchy(stream, _file.Root);
         }
 
@@ -103,9 +104,9 @@ namespace PckStudio.Classes.IO.GRF
 
         private void ReadStringLookUpTable(Stream stream)
         {
-            int name_count = ReadInt(stream);
-            StringLookUpTable = new List<string>(name_count);
-            for (int i = 0; i < name_count; i++)
+            int tableSize = ReadInt(stream);
+            StringLookUpTable = new List<string>(tableSize);
+            for (int i = 0; i < tableSize; i++)
             {
                 string s = ReadString(stream);
                 StringLookUpTable.Add(s);

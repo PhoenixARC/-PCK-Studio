@@ -63,6 +63,26 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        public static byte[] _1_91_colours {
+            get {
+                object obj = ResourceManager.GetObject("_1_91_colours", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap AddTexture {
+            get {
+                object obj = ResourceManager.GetObject("AddTexture", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         public static byte[] apps {
             get {
                 object obj = ResourceManager.GetObject("apps", resourceCulture);
@@ -83,9 +103,9 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap bg1 {
+        public static System.Drawing.Bitmap BEHAVIOURS_ICON {
             get {
-                object obj = ResourceManager.GetObject("bg1", resourceCulture);
+                object obj = ResourceManager.GetObject("BEHAVIOURS_ICON", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -93,9 +113,9 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap bg2 {
+        public static System.Drawing.Bitmap bg1 {
             get {
-                object obj = ResourceManager.GetObject("bg2", resourceCulture);
+                object obj = ResourceManager.GetObject("bg1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -141,15 +161,17 @@ namespace PckStudio.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 6.5  
-        ///===  
-        ///-Audio.pck Editor is now the Music Editor with plenty of new features  
-        ///-The Animation Editor now plays animations more accurately  
-        ///-Added MipMap support to the Animation Editor  
-        ///-Added some text to display the common name of the animation that you&apos;re working with  
-        ///-Fixed several incorrect internal names for the change tile list  
-        ///-Removed Barrier (Item) from the Change Tile list  
-        ///-Clicking &quot;Cancel&quot; in the Change Tile dialog will no longer overwrite the original tile&apos;s name with noth [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to 7.0 (BETA)  
+        ///==========  
+        ///Some features may be completely missing or incomplete at this point in time!  
+        ///  
+        ///-Massive codebase overhaul and optimization lead by miku-666 (aka NessieHax)!!!  
+        ///-Some UI redesigned by yaboiFoxx  
+        ///-Improved the changelog!  
+        ///-New icons for each of the file types, with unique image icons for skin, texture, and cape files  
+        ///-Added the ability to create Texture and Mash-Up packs  
+        ///-Added a feature to see stats about any given file, including file type  
+        ///-Added a feature set [rest of string was truncated]&quot;;.
         /// </summary>
         public static string CHANGELOG {
             get {
@@ -511,7 +533,7 @@ namespace PckStudio.Properties {
         ///   Looks up a localized string similar to {
         ///	&quot;COMMENT_1&quot;: &quot;Tile data research by MattNL&quot;,
         ///	&quot;COMMENT_2&quot;: &quot;JSON conversion by PhoenixARC&quot;,
-        ///	&quot;Blocks&quot;: [
+        ///	&quot;blocks&quot;: [
         ///		{ &quot;grass_top&quot;: &quot;Grass Block (Top)&quot; },
         ///		{ &quot;stone&quot;: &quot;Stone&quot; },
         ///		{ &quot;dirt&quot;: &quot;Dirt&quot; },
@@ -528,6 +550,126 @@ namespace PckStudio.Properties {
         public static string tileData {
             get {
                 return ResourceManager.GetString("tileData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] tu12colours {
+            get {
+                object obj = ResourceManager.GetObject("tu12colours", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] tu13colours {
+            get {
+                object obj = ResourceManager.GetObject("tu13colours", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] tu14colours {
+            get {
+                object obj = ResourceManager.GetObject("tu14colours", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] tu19colours {
+            get {
+                object obj = ResourceManager.GetObject("tu19colours", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] tu31colours {
+            get {
+                object obj = ResourceManager.GetObject("tu31colours", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] tu32colours {
+            get {
+                object obj = ResourceManager.GetObject("tu32colours", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] tu43colours {
+            get {
+                object obj = ResourceManager.GetObject("tu43colours", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] tu46colours {
+            get {
+                object obj = ResourceManager.GetObject("tu46colours", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] tu51colours {
+            get {
+                object obj = ResourceManager.GetObject("tu51colours", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] tu53colours {
+            get {
+                object obj = ResourceManager.GetObject("tu53colours", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] tu54colours {
+            get {
+                object obj = ResourceManager.GetObject("tu54colours", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] tu69colours {
+            get {
+                object obj = ResourceManager.GetObject("tu69colours", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         

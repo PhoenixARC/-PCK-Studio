@@ -26,7 +26,7 @@ namespace PckStudio.Classes.IO.PCK
             _file = file;
         }
 
-        private void WriteToStream(Stream stream)
+        protected override void WriteToStream(Stream stream)
         {
             WriteInt(stream, _file.type);
             WriteLookUpTable(stream);

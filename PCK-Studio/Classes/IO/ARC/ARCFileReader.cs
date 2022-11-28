@@ -1,12 +1,11 @@
 ﻿using System;
 using System.IO;
-using System.Collections.Generic;
 using System.Text;
 using PckStudio.Classes.FileTypes;
 
 namespace PckStudio.Classes.IO.ARC
 {
-    internal class ARCFileReader : StreamDataReader
+    internal class ARCFileReader : StreamDataReader<ConsoleArchive>
     {
         public static ConsoleArchive Read(Stream stream, bool useLittleEndian = false)
         {
@@ -17,16 +16,16 @@ namespace PckStudio.Classes.IO.ARC
         {
         }
 
-        private ConsoleArchive ReadFromStream(Stream stream)
+        protected override ConsoleArchive ReadFromStream(Stream stream)
         {
             ConsoleArchive _archive = new ConsoleArchive();
-            int NumberOfFiles = ReadInt(stream);
-            for(int i = 0; i < NumberOfFiles; i++)
+            int numberOfFiles = ReadInt(stream);
+            for(int i = 0; i < numberOfFiles; i++)
             {
                 string name = ReadString(stream);
-                int pos = ReadInt(stream);
+                int offset = ReadInt(stream);
                 int size = ReadInt(stream);
-                _archive[name] = ReadBytesFromPosition(stream, size, pos);
+                _archive[name] = ReadBytesFromPosition(stream, offset, size);
             }
             return _archive;
         }
@@ -37,13 +36,13 @@ namespace PckStudio.Classes.IO.ARC
             return ReadString(stream, length, Encoding.UTF8);
         }
 
-        private byte[] ReadBytesFromPosition(Stream stream, int size, int position)
+        private byte[] ReadBytesFromPosition(Stream stream, int position, int size)
         {
             long originalPOS = stream.Position;
             if (stream.Seek(position, SeekOrigin.Begin) != position) throw new Exception();
-            byte[] bytes = ReadBytes(stream, size);
+            byte[] data = ReadBytes(stream, size);
             if (stream.Seek(originalPOS, SeekOrigin.Begin) != originalPOS) throw new Exception();
-            return bytes;
+            return data;
         }
 
     }

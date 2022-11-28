@@ -1,14 +1,13 @@
-﻿using PckStudio.Classes.FileTypes;
-using PckStudio.Classes.IO.GRF;
-using PckStudio.Forms.Additional_Popups.Grf;
-using RichPresenceClient;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
+using PckStudio.Classes.FileTypes;
+using PckStudio.Classes.IO.GRF;
+using PckStudio.Forms.Additional_Popups.Grf;
+using PckStudio.Classes.Misc;
 
 namespace PckStudio.Forms.Editor
 {
@@ -57,12 +56,6 @@ namespace PckStudio.Forms.Editor
         {
             RPC.SetPresence("GRF Editor", "Editing a GRF File");
             loadGRFTreeView(GrfTreeView.Nodes, _file.Root);
-        }
-
-        private void OnExit(object sender, FormClosingEventArgs e)
-        {
-            RPC.SetPresence("An Open Source .PCK File Editor", "Program by PhoenixARC");
-            Dispose();
         }
 
         private void loadGRFTreeView(TreeNodeCollection root, GRFFile.GameRule parentRule)

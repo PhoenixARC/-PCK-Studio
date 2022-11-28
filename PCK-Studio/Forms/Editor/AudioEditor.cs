@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
 using MetroFramework.Forms;
-using System.Collections;
 using PckStudio.Classes.FileTypes;
 using PckStudio.Classes.IO.PCK;
 using PckStudio.Forms.Additional_Popups.Audio;
@@ -20,7 +18,7 @@ namespace PckStudio.Forms.Editor
 	public partial class AudioEditor : MetroForm
 	{
 		public string defaultType = "yes";
-		string tempDir = "";
+		Classes.Bink BINK = new Classes.Bink();
 		PCKAudioFile audioFile = null;
 		PCKFile.FileData audioPCK;
 		LOCFile loc;
@@ -54,21 +52,10 @@ namespace PckStudio.Forms.Editor
 		public AudioEditor(PCKFile.FileData file, LOCFile locFile, bool isLittleEndian)
 		{
 			InitializeComponent();
-			// so the Creative songs aren't combined until after the forms are closed.
-			// this will prevent potential problems with editing the categories after merging.
 			loc = locFile;
-			tempDir = Path.Combine(Directory.GetCurrentDirectory(), "temp");
 			_isLittleEndian = isLittleEndian;
-			try
-			{
-				handleUtilFiles();
-				//library = LoadLibrary(Path.Combine(tempDir, "mss32.dll"));
-			}
-			catch (IOException ex)
-			{
-				MessageBox.Show("Failed to get Binka conversion files", "Exception thrown");
-				Close();
-			}
+
+			BINK.SetUpBinka();
 
 			audioPCK = file;
 			using (var stream = new MemoryStream(file.data))
@@ -97,45 +84,10 @@ namespace PckStudio.Forms.Editor
 			playOverworldInCreative.Enabled = audioFile.HasCategory(PCKAudioFile.AudioCategory.EAudioType.Creative);
 		}
 
-		// https://stackoverflow.com/a/25064568 by Alik Khilazhev -MattNL
-		private void ExtractResource(string resName, string fName)
-		{
-			object ob = Properties.Resources.ResourceManager.GetObject(resName);
-			byte[] myResBytes = (byte[])ob;
-			using (FileStream fsDst = new FileStream(fName, FileMode.CreateNew, FileAccess.Write))
-			{
-				byte[] bytes = myResBytes;
-				fsDst.Write(bytes, 0, bytes.Length);
-				fsDst.Close();
-				fsDst.Dispose();
-			}
-		}
-
-		private void handleUtilFiles(bool extractFiles = true)
-		{
-			string asiPath = Path.Combine(tempDir, "binkawin.asi");
-			string mssPath = Path.Combine(tempDir, "mss32.dll");
-			string encoderPath = Path.Combine(tempDir, "binka_encode.exe");
-
-			// Deletes files so that System.IO exceptions are avoided
-			if (File.Exists(asiPath)) File.Delete(asiPath);
-			if (File.Exists(mssPath)) File.Delete(mssPath);
-			if (File.Exists(encoderPath)) File.Delete(encoderPath);
-			if (Directory.Exists(tempDir)) Directory.Delete(tempDir);
-
-			if (extractFiles)
-			{
-				Directory.CreateDirectory(tempDir);
-				ExtractResource("binka_encode", encoderPath);
-				ExtractResource("mss32", mssPath);
-				ExtractResource("binkawin", asiPath);
-			}
-		}
-
 		private void AudioEditor_FormClosed(object sender, FormClosedEventArgs e)
 		{
-			//FreeLibrary(library);
-			handleUtilFiles(false);
+			// Clean up is throwing an error of some kind? FreeLibrary maybe??
+			//BINK.CleanUpBinka();
 		}
 
 		private void verifyFileLocationToolStripMenuItem_Click(object sender, EventArgs e)
@@ -253,33 +205,23 @@ namespace PckStudio.Forms.Editor
 							else if (user_prompt == DialogResult.No) continue;
 						}
 					}
-
+					
 					if (Path.GetExtension(file) == ".wav") // Convert Wave to BINKA
 					{
 						Cursor.Current = Cursors.WaitCursor;
 						pleaseWait waitDiag = new pleaseWait();
 						waitDiag.Show(this);
 
-						int error_code = 0;
 						await Task.Run(() =>
 						{
-							var process = Process.Start(new ProcessStartInfo
-							{
-								FileName = Path.Combine(tempDir, "binka_encode.exe"),
-								Arguments = $"\"{file}\" \"{new_loc}\" -s -b" + compressionUpDown.Value.ToString(),
-								UseShellExecute = true,
-								CreateNoWindow = true,
-								WindowStyle = ProcessWindowStyle.Hidden
-							});
-							process.Start();
-							process.WaitForExit();
+							BINK.WavToBinka(file, new_loc, (int)compressionUpDown.Value);
 						});
 
 						waitDiag.Close();
 						waitDiag.Dispose();
 						Cursor.Current = Cursors.Default;
 
-						if (error_code != 0) continue;
+						if (BINK.temp_error_code != 0) continue;
 					}
 					else if (!duplicate_song)
 					{
@@ -418,7 +360,7 @@ namespace PckStudio.Forms.Editor
 		private void whatIsEachCategoryToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			MessageBox.Show("Categories are pretty self explanatory. The game controls when each category should play.\n" +
-				"\nGAMEPLAY - Plays in the specified dimensions.\n" +
+				"\nGAMEPLAY - Plays in the specified dimensions and game modes.\n" +
 				"-Overworld: Plays in survival mode and in Creative if no songs are set\n" +
 				"-Nether: Nothing special to note.\n" +
 				"-End: Prioritizes the final track when the dragon is alive.\n" +
@@ -492,28 +434,26 @@ namespace PckStudio.Forms.Editor
 					pleaseWait waitDiag = new pleaseWait();
 					waitDiag.Show(this);
 
-					int error_code = 0;
 					await Task.Run(() =>
 					{
-						var process = Process.Start(new ProcessStartInfo
-						{
-							FileName = Path.Combine(tempDir, "binka_encode.exe"),
-							Arguments = $"\"{file}\" \"{new_loc}\" -s -b" + compressionUpDown.Value.ToString(),
-							UseShellExecute = true,
-							CreateNoWindow = true,
-							WindowStyle = ProcessWindowStyle.Hidden
-						});
-						process.Start();
-						process.WaitForExit();
+						BINK.WavToBinka(file, new_loc, (int)compressionUpDown.Value);
 					});
 
 					waitDiag.Close();
 					waitDiag.Dispose();
 					Cursor.Current = Cursors.Default;
 
-					if (error_code != 0) continue;
+					if (BINK.temp_error_code != 0) continue;
 				}
 				else if(file_ext == ".binka") File.Copy(file, Path.Combine(parent.GetDataPath(), Path.GetFileName(file)));
+			}
+		}
+
+		private void convertToWAVToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (treeView2.SelectedNode != null && treeView1.SelectedNode.Tag is PCKAudioFile.AudioCategory)
+			{
+				BINK.BinkaToWav(Path.Combine(parent.GetDataPath(), treeView2.SelectedNode.Text + ".binka"), Path.Combine(parent.GetDataPath()));
 			}
 		}
 	}

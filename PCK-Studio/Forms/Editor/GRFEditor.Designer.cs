@@ -221,7 +221,6 @@
             this.Style = MetroFramework.MetroColorStyle.Silver;
             this.Text = "GRF Editor";
             this.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnExit);
             this.Load += new System.EventHandler(this.OnLoad);
             this.MessageContextMenu.ResumeLayout(false);
             this.DetailContextMenu.ResumeLayout(false);

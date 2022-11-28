@@ -6,18 +6,22 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 using System.Diagnostics;
-using PckStudio.Properties;
-using Ohana3DS_Rebirth.Ohana;
 using System.Drawing.Imaging;
-using RichPresenceClient;
+
+using PckStudio.Properties;
 using PckStudio.Classes.FileTypes;
-using PckStudio.Classes.IO;
 using PckStudio.Classes.IO.LOC;
+using PckStudio.Classes.IO.PCK;
 using PckStudio.Classes.IO.GRF;
+using PckStudio.Classes.Utils;
+using PckStudio.Classes.Utils.ARC;
+using PckStudio.Classes._3ds.Utils;
 using PckStudio.Forms;
 using PckStudio.Forms.Utilities;
 using PckStudio.Forms.Editor;
-using PckStudio.Classes.IO.PCK;
+using PckStudio.Forms.Additional_Popups.Animation;
+using PckStudio.Forms.Additional_Popups;
+using PckStudio.Classes.Misc;
 
 namespace PckStudio
 {
@@ -28,6 +32,7 @@ namespace PckStudio
 		bool needsUpdate = false;
 		bool saved = true;
 		bool isTemplateFile = false;
+		bool isSelectingTab = false;
 
 		readonly Dictionary<PCKFile.FileData.FileType, Action<PCKFile.FileData>> pckFileTypeHandler;
 
@@ -49,8 +54,13 @@ namespace PckStudio
 			imageList.Images.Add(Resources.SKIN_ICON); // Icon for Skin files (*.png)
 			imageList.Images.Add(Resources.CAPE_ICON); // Icon for Cape files (*.png)
 			imageList.Images.Add(Resources.TEXTURE_ICON); // Icon for Texture files (*.png;*.tga)
+			imageList.Images.Add(Resources.BEHAVIOURS_ICON); // Icon for Behaviour files (behaviours.bin)
 			pckOpen.AllowDrop = true;
+
+            isSelectingTab = true;
 			tabControl.SelectTab(0);
+            isSelectingTab = false;
+
 			labelVersion.Text = "PCK Studio: " + Application.ProductVersion;
 			ChangelogRichTextBox.Text = Resources.CHANGELOG;
 #if DEBUG
@@ -81,7 +91,11 @@ namespace PckStudio
 		{
 			treeViewMain.Nodes.Clear();
             currentPCK = openPck(filepath);
-            if (currentPCK == null) return;
+			if (currentPCK == null)
+			{
+				MessageBox.Show(string.Format("Failed to load {0}", Path.GetFileName(filepath)), "Error");
+				return;
+			}
             if (addPasswordToolStripMenuItem.Enabled = checkForPassword())
             {
                 LoadEditorTab();
@@ -91,7 +105,8 @@ namespace PckStudio
 		private void Form1_Load(object sender, EventArgs e)
 		{
 			RPC.Initialize();
-			RPC.SetPresence("An Open Source .PCK File Editor", "Program by PhoenixARC");
+			if (currentPCK == null)
+				RPC.SetPresence("An Open Source .PCK File Editor", "Program by PhoenixARC");
 
 			skinToolStripMenuItem1.Click += (sender, e) => setFileType_Click(sender, e, PCKFile.FileData.FileType.SkinFile);
 			capeToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PCKFile.FileData.FileType.CapeFile);
@@ -113,7 +128,7 @@ namespace PckStudio
 			catch (UnauthorizedAccessException ex)
 			{
 				MessageBox.Show("Could not Create directory due to Unauthorized Access");
-				Console.WriteLine(ex.Message);
+				Debug.WriteLine(ex.Message);
 			}
 		}
 
@@ -152,7 +167,7 @@ namespace PckStudio
 					MessageBox.Show("Failed to open pck\n" +
 						$"Try {(LittleEndianCheckBox.Checked ? "unchecking" : "checking")} the 'Open/Save as Vita/PS4 pck' check box in the upper right corner.",
 						"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-					Console.WriteLine(ex.Message);
+					Debug.WriteLine(ex.Message);
 				}
 			}
 			if (pck?.type < 3) throw new Exception("Can't open pck file of type: " + pck.type.ToString());
@@ -164,7 +179,7 @@ namespace PckStudio
 			if (currentPCK.TryGetFile("0", PCKFile.FileData.FileType.InfoFile, out PCKFile.FileData file))
 			{
 				if (file.properties.Contains("LOCK"))
-					return new pckLocked(file.properties.GetProperty("LOCK").Item2).ShowDialog() == DialogResult.OK;
+					return new LockPrompt(file.properties.GetPropertyValue("LOCK")).ShowDialog() == DialogResult.OK;
 			}
 			return true;
 		}
@@ -179,18 +194,26 @@ namespace PckStudio
 			metaToolStripMenuItem.Enabled = true;
 			advancedMetaAddingToolStripMenuItem.Enabled = true;
 			convertToBedrockToolStripMenuItem.Enabled = true;
-			BuildMainTreeView();
+			addCustomPackImageToolStripMenuItem.Enabled = true;
+            BuildMainTreeView();
+			isSelectingTab = true;
 			tabControl.SelectTab(1);
-			if (TryGetLocFile(out LOCFile locfile) && locfile.HasLocEntry("IDS_DISPLAY_NAME"))
-				RPC.SetPresence($"Editing a Pack: {locfile.GetLocEntry("IDS_DISPLAY_NAME", "en-EN")}", "Program by PhoenixARC");
+			isSelectingTab = false;
+			UpdateRPC();
 		}
 
 		private void CloseEditorTab()
 		{
+			isSelectingTab = true;
+			tabControl.SelectTab(0);
+			isSelectingTab = false;
+			currentPCK = null;
+			saved = true;
+			isTemplateFile = false;
+			saveLocation = string.Empty;
 			pictureBoxImagePreview.Image = Resources.NoImageFound;
 			treeViewMain.Nodes.Clear();
 			treeMeta.Nodes.Clear();
-			currentPCK = null;
 			treeViewMain.Enabled = false;
 			treeMeta.Enabled = false;
 			saveToolStripMenuItem.Enabled = false;
@@ -198,12 +221,13 @@ namespace PckStudio
 			metaToolStripMenuItem.Enabled = false;
 			addPasswordToolStripMenuItem.Enabled = false;
 			advancedMetaAddingToolStripMenuItem.Enabled = false;
-			convertToBedrockToolStripMenuItem.Enabled = false;
 			closeToolStripMenuItem.Visible = false;
-			fileEntryCountLabel.Text = string.Empty;
-			tabControl.SelectTab(0);
-			RPC.SetPresence("An Open Source .PCK File Editor", "Program by PhoenixARC");
-		}
+			convertToBedrockToolStripMenuItem.Enabled = false;
+            addCustomPackImageToolStripMenuItem.Enabled = false;
+            fileEntryCountLabel.Text = string.Empty;
+			UpdateRPC();
+
+        }
 
 		/// <summary>
 		/// wrapper that allows the use of <paramref name="name"/> in <code>TreeNode.Nodes.Find(<paramref name="name"/>, ...)</code> and <code>TreeNode.Nodes.ContainsKey(<paramref name="name"/>)</code>
@@ -238,9 +262,9 @@ namespace PckStudio
 
 		private void BuildPckTreeView(TreeNodeCollection root, PCKFile pckFile, string parentPath = "")
 		{
-			pckFile.Files.ForEach(file =>
+			foreach (var file in pckFile.Files)
 			{
-				if (file.filepath.StartsWith(parentPath)) file.filepath = file.filepath.Remove(0, parentPath.Length);
+				if (file.filepath.StartsWith(parentPath)) file.filepath = file.filepath.Remove(0, parentPath.Length).Replace('\\', '/'); // fix any file paths that may be incorrect
 				TreeNode node = BuildNodeTreeBySeperator(root, file.filepath, '/');
 				node.Tag = file;
 				switch (file.filetype)
@@ -261,7 +285,7 @@ namespace PckStudio
 								MessageBox.Show("Failed to open pck\n" +
 									"Try checking the 'Open/Save as Vita/PS4 pck' checkbox in the upper right corner.",
 									"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-								Console.WriteLine(ex.Message);
+								Debug.WriteLine(ex.Message);
 							}
 						}
 						break;
@@ -269,8 +293,8 @@ namespace PckStudio
 						//throw new InvalidDataException(nameof(file.filetype));
 						break;
 				}
-				setFileIcon(node, file.filetype);
-			});
+				SetPckFileIcon(node, file.filetype);
+			};
 		}
 
 		private void BuildMainTreeView()
@@ -280,30 +304,71 @@ namespace PckStudio
 			if(treeViewMain.SelectedNode != null && treeViewMain.SelectedNode.Tag is PCKFile.FileData) filepath = (treeViewMain.SelectedNode.Tag as PCKFile.FileData).filepath;
 			treeViewMain.Nodes.Clear();
 			BuildPckTreeView(treeViewMain.Nodes, currentPCK);
-			if (!String.IsNullOrEmpty(filepath))
+      
+      if (!String.IsNullOrEmpty(filepath))
 			{
 				// Looks kinda nuts but this line of code is responsible for finding the correct node that was originally selected
 				treeViewMain.SelectedNode = treeViewMain.Nodes.Find(Path.GetFileName(filepath), true).ToList().Find(t  => (t.Tag as PCKFile.FileData).filepath == filepath);
 			}
+    }
+
+		bool IsFilePathMipMapped(string filepath)
+		{
+			string name = Path.GetFileNameWithoutExtension(filepath); // We only want to test the file name itself. ex: "terrainMipMapLevel2"
+			if (!char.IsDigit(name[name.Length - 1])) return false; // check if last character is a digit (0-9). If not return false
+			// If string does not end with MipMapLevel, then it's not MipMapped
+			if (!name.Remove(name.Length - 1, 1).EndsWith("MipMapLevel")) return false;
+			return true;
 		}
 
-        private void HandleTextureFile(PCKFile.FileData file)
-        {
+		private void HandleTextureFile(PCKFile.FileData file)
+    {
 			if (file.filepath.StartsWith("res/textures/blocks/") || file.filepath.StartsWith("res/textures/items/") &&
-				!file.filepath.EndsWith("clock.png") && (!file.filepath.EndsWith("compass.png")))
+				!file.filepath.EndsWith("clock.png") && !file.filepath.EndsWith("compass.png"))
 			{
-                using (AnimationEditor animationEditor = new AnimationEditor(file))
-                {
-                    if (animationEditor.ShowDialog(this) == DialogResult.OK)
-                        ReloadMetaTreeView();
-                }
-            }
-        }
+				if (IsFilePathMipMapped(file.filepath) &&
+					currentPCK.Files.Find(pckfile => 
+						// todo write cleaner ?
+						pckfile.filepath.Equals(file.filepath.Remove(file.filepath.Length - 12 - Path.GetExtension(file.filepath).Length) + Path.GetExtension(file.filepath)))
+					is PCKFile.FileData originalAnimationFile)
+				{
+					file = originalAnimationFile;
+				}
+				using (AnimationEditor animationEditor = new AnimationEditor(file))
+				{
+					if (animationEditor.ShowDialog(this) == DialogResult.OK)
+					{
+						file.filepath = animationEditor.TileName;
+						BuildMainTreeView();
+					}
+				}
+			}
+    }
 
-        private void HandleGameRuleFile(PCKFile.FileData file)
-        {
+    private void HandleGameRuleFile(PCKFile.FileData file)
+    {
 			using GRFEditor grfEditor = new GRFEditor(file);
-            grfEditor.ShowDialog();
+      if (grfEditor.ShowDialog(this) == DialogResult.OK) saved = false;
+			UpdateRPC();
+    }
+
+		private void UpdateRPC()
+		{
+			if (currentPCK == null)
+			{
+				RPC.SetPresence("An Open Source .PCK File Editor", "Program by PhoenixARC");
+				return;
+			};
+
+        if (TryGetLocFile(out LOCFile locfile) &&
+				locfile.HasLocEntry("IDS_DISPLAY_NAME") &&
+				locfile.Languages.Contains("en-EN"))
+			{
+				RPC.SetPresence($"Editing a Pack: {locfile.GetLocEntry("IDS_DISPLAY_NAME", "en-EN")}", "Program by PhoenixARC");
+				return;
+			}
+			// default
+			RPC.SetPresence("An Open Source .PCK File Editor", "Program by PhoenixARC");
         }
 
 		private void HandleAudioFile(PCKFile.FileData file)
@@ -323,6 +388,7 @@ namespace PckStudio
             using LOCEditor locedit = new LOCEditor(file);
 			if (locedit.ShowDialog(this) == DialogResult.OK)
 				saved = false;
+			UpdateRPC();
         }
 
 		private void HandleColourFile(PCKFile.FileData file)
@@ -355,7 +421,7 @@ namespace PckStudio
 				using (var ms = new MemoryStream(file.data))
 				{
 					var texture = Image.FromStream(ms);
-					SkinPreview frm = new SkinPreview(texture);
+					SkinPreview frm = new SkinPreview(texture, file.properties.GetPropertyValue("ANIM", s => new SkinANIM(s)));
 					frm.ShowDialog(this);
 					frm.Dispose();
 				}
@@ -375,64 +441,75 @@ namespace PckStudio
 			buttonEdit.Visible = false;
 			pictureBoxImagePreview.Image = Resources.NoImageFound;
 			var node = e.Node;
+			viewFileInfoToolStripMenuItem.Visible = false;
 			if (node is TreeNode t && t.Tag is PCKFile.FileData file)
 			{
-			if (file.properties.HasProperty("BOX"))
-			{
-				buttonEdit.Text = "EDIT BOXES";
-				buttonEdit.Visible = true;
-			}
-			else if (file.properties.HasProperty("ANIM") &&
-				(file.properties.GetProperty("ANIM").Item2 == "0x40000" ||
-				 file.properties.GetProperty("ANIM").Item2 == "0x80000"))
-			{
-				buttonEdit.Text = "View Skin";
-				buttonEdit.Visible = true;
-			}
+				viewFileInfoToolStripMenuItem.Visible = true;
+				if (file.properties.HasProperty("BOX"))
+				{
+					buttonEdit.Text = "EDIT BOXES";
+					buttonEdit.Visible = true;
+				}
+				else if (file.properties.HasProperty("ANIM") &&
+						file.properties.GetPropertyValue("ANIM", s => new SkinANIM(s)) == (eANIM_EFFECTS.RESOLUTION_64x64 | eANIM_EFFECTS.SLIM_MODEL))
+				{
+					buttonEdit.Text = "View Skin";
+					buttonEdit.Visible = true;
+				}
 
-			switch (file.filetype)
-			{
-				case PCKFile.FileData.FileType.SkinFile:
-				case PCKFile.FileData.FileType.CapeFile:
-				case PCKFile.FileData.FileType.TextureFile:
-					// TODO: Add tga support
-					if (Path.GetExtension(file.filepath) == ".tga") break;
-					using (MemoryStream png = new MemoryStream(file.data))
-					{
-						Image skinPicture = Image.FromStream(png);
-						pictureBoxImagePreview.Image = skinPicture;
-						labelImageSize.Text = $"{skinPicture.Size.Width}x{skinPicture.Size.Height}";
-					}
+				switch (file.filetype)
+				{
+					case PCKFile.FileData.FileType.SkinFile:
+					case PCKFile.FileData.FileType.CapeFile:
+					case PCKFile.FileData.FileType.TextureFile:
+						// TODO: Add tga support
+						if (Path.GetExtension(file.filepath) == ".tga") break;
+						using (MemoryStream stream = new MemoryStream(file.data))
+						{
+							try
+							{
+								pictureBoxImagePreview.Image = Image.FromStream(stream);
+								labelImageSize.Text = $"{pictureBoxImagePreview.Image.Size.Width}x{pictureBoxImagePreview.Image.Size.Height}";
+							}
+							catch (Exception ex)
+							{
+								labelImageSize.Text = "";
+								pictureBoxImagePreview.Image = Resources.NoImageFound;
+								Debug.WriteLine("Not a supported image format. Setting back to default");
+								Debug.WriteLine(string.Format("An error occured of type: {0} with message: {1}", ex.GetType(), ex.Message), "Exception");
+							}
+						}
 
 						if ((file.filepath.StartsWith("res/textures/blocks/") || file.filepath.StartsWith("res/textures/items/")) &&
 							!file.filepath.EndsWith("clock.png") && !file.filepath.EndsWith("compass.png") &&
-							file.filetype == PCKFile.FileData.FileType.TextureFile)
+							file.filetype == PCKFile.FileData.FileType.TextureFile 
+							&& !IsFilePathMipMapped(file.filepath))
 						{
 							buttonEdit.Text = "EDIT TEXTURE ANIMATION";
 							buttonEdit.Visible = true;
 						}
-					break;
+						break;
 
-				case PCKFile.FileData.FileType.LocalisationFile:
-					buttonEdit.Text = "EDIT LOC";
-					buttonEdit.Visible = true;
-					break;
+					case PCKFile.FileData.FileType.LocalisationFile:
+						buttonEdit.Text = "EDIT LOC";
+						buttonEdit.Visible = true;
+						break;
 
-				case PCKFile.FileData.FileType.AudioFile when file.filepath == "audio.pck":
-					buttonEdit.Text = "EDIT MUSIC CUES";
-					buttonEdit.Visible = true;
-					break;
+					case PCKFile.FileData.FileType.AudioFile when file.filepath == "audio.pck":
+						buttonEdit.Text = "EDIT MUSIC CUES";
+						buttonEdit.Visible = true;
+						break;
 
-				case PCKFile.FileData.FileType.ColourTableFile when file.filepath == "colours.col":
-					buttonEdit.Text = "EDIT COLORS";
-					buttonEdit.Visible = true;
-					break;
-				default:
-					buttonEdit.Visible = false;
-					break;
+					case PCKFile.FileData.FileType.ColourTableFile when file.filepath == "colours.col":
+						buttonEdit.Text = "EDIT COLORS";
+						buttonEdit.Visible = true;
+						break;
+					default:
+						buttonEdit.Visible = false;
+						break;
+				}
 			}
 		}
-                }
 
 		private void extractToolStripMenuItem_Click(object sender, EventArgs e)
 		{
@@ -491,11 +568,27 @@ namespace PckStudio
 			}
 		}
 
-		private void Save(string FilePath)
+		private void Save(string filePath)
 		{
-			using (var fs = File.OpenWrite(FilePath))
+			bool isSkinsPCK = false;
+			if (!currentPCK.TryGetFile("0", PCKFile.FileData.FileType.InfoFile, out PCKFile.FileData _))
 			{
-				PCKFileWriter.Write(fs, currentPCK, LittleEndianCheckBox.Checked);
+				switch(MessageBox.Show(this, "The info file, \"0\", was not detected. Would you like to save as a Skins.pck archive?", "Save as Skins archive?", MessageBoxButtons.YesNoCancel))
+				{
+					case DialogResult.Yes:
+						isSkinsPCK = true;
+						break;
+					case DialogResult.No:
+						isSkinsPCK = false;
+						break;
+					case DialogResult.Cancel:
+					default:
+						return; // Cancel operation
+				}
+			}
+			using (var fs = File.OpenWrite(filePath))
+			{
+				PCKFileWriter.Write(fs, currentPCK, LittleEndianCheckBox.Checked, isSkinsPCK);
 			}
 			saved = true;
 			MessageBox.Show("Saved Pck file", "File Saved");
@@ -506,6 +599,8 @@ namespace PckStudio
 			if (treeViewMain.SelectedNode.Tag is PCKFile.FileData file)
 			{
 				using var ofd = new OpenFileDialog();
+				// Suddenly, and randomly, this started throwing an exception because it wasn't formatted correctly? So now it's formatted correctly and now displays the file type name in the dialog.
+				ofd.Filter = file.filetype.ToString() + " (*" + Path.GetExtension(file.filepath) + ")|*" + Path.GetExtension(file.filepath);
 				if (ofd.ShowDialog() == DialogResult.OK)
 				{
 					file.SetData(File.ReadAllBytes(ofd.FileName));
@@ -612,46 +707,40 @@ namespace PckStudio
 			using (addNewSkin add = new addNewSkin(locFile))
 				if (add.ShowDialog() == DialogResult.OK)
 				{
+
 					if (currentPCK.HasFile("Skins.pck", PCKFile.FileData.FileType.SkinDataFile)) // Prioritize Skins.pck
 					{
 						TreeNode subPCK = treeViewMain.Nodes.Find("Skins.pck", false).FirstOrDefault();
-						if (subPCK.Nodes.ContainsKey("Skins")) add.Skin.filepath = add.Skin.filepath.Insert(0, "Skins/");
-						add.Skin.filepath = add.Skin.filepath.Insert(0, "Skins.pck/");
-
-						TreeNode newNode = new TreeNode(Path.GetFileName(add.Skin.filepath));
-						newNode.Tag = add.Skin;
+						if (subPCK.Nodes.ContainsKey("Skins")) add.SkinFile.filepath = add.SkinFile.filepath.Insert(0, "Skins/");
+						add.SkinFile.filepath = add.SkinFile.filepath.Insert(0, "Skins.pck/");
+						TreeNode newNode = new TreeNode(Path.GetFileName(add.SkinFile.filepath));
+						newNode.Tag = add.SkinFile;
 						setFileIcon(newNode, PCKFile.FileData.FileType.SkinFile);
-
 						subPCK.Nodes.Add(newNode);
-
 						RebuildSubPCK(newNode);
 					}
 					else
 					{
-						if (treeViewMain.Nodes.ContainsKey("Skins")) add.Skin.filepath = add.Skin.filepath.Insert(0, "Skins/"); // Then Skins folder
-						currentPCK.Files.Add(add.Skin);
+						if (treeViewMain.Nodes.ContainsKey("Skins")) add.SkinFile.filepath = add.SkinFile.filepath.Insert(0, "Skins/"); // Then Skins folder
+						currentPCK.Files.Add(add.SkinFile);
 					}
-
-					if (add.useCape)
+					if (add.HasCape)
 					{
 						if (currentPCK.HasFile("Skins.pck", PCKFile.FileData.FileType.SkinDataFile)) // Prioritize Skins.pck
 						{
 							TreeNode subPCK = treeViewMain.Nodes.Find("Skins.pck", false).FirstOrDefault();
-							if (subPCK.Nodes.ContainsKey("Skins")) add.Cape.filepath = add.Cape.filepath.Insert(0, "Skins/");
-							add.Cape.filepath = add.Cape.filepath.Insert(0, "Skins.pck/");
-
-							TreeNode newNode = new TreeNode(Path.GetFileName(add.Cape.filepath));
-							newNode.Tag = add.Cape;
+							if (subPCK.Nodes.ContainsKey("Skins")) add.CapeFile.filepath = add.CapeFile.filepath.Insert(0, "Skins/");
+							add.CapeFile.filepath = add.CapeFile.filepath.Insert(0, "Skins.pck/");
+							TreeNode newNode = new TreeNode(Path.GetFileName(add.CapeFile.filepath));
+							newNode.Tag = add.CapeFile;
 							setFileIcon(newNode, PCKFile.FileData.FileType.SkinFile);
-
 							subPCK.Nodes.Add(newNode);
-
 							RebuildSubPCK(newNode);
 						}
 						else
 						{
-							if (treeViewMain.Nodes.ContainsKey("Skins")) add.Cape.filepath = add.Cape.filepath.Insert(0, "Skins/"); // Then Skins folder
-							currentPCK.Files.Add(add.Cape);
+							if (treeViewMain.Nodes.ContainsKey("Skins")) add.CapeFile.filepath = add.CapeFile.filepath.Insert(0, "Skins/"); // Then Skins folder
+							currentPCK.Files.Add(add.CapeFile);
 						}
 					}
 
@@ -694,7 +783,6 @@ namespace PckStudio
 			diag.Dispose();
 		}
 
-
 		private void createAnimatedTextureToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			using (var ofd = new OpenFileDialog())
@@ -703,27 +791,20 @@ namespace PckStudio
 				ofd.Title = "Select a PNG File";
 				if (ofd.ShowDialog() == DialogResult.OK)
 				{
-					try
+					using ChangeTile diag = new ChangeTile();
+					if (diag.ShowDialog(this) == DialogResult.OK)
 					{
-						using (Forms.Utilities.AnimationEditor.ChangeTile diag = new Forms.Utilities.AnimationEditor.ChangeTile())
-							if (diag.ShowDialog(this) == DialogResult.OK)
-							{
-								Console.WriteLine(diag.SelectedTile);
-								using (Image img = new Bitmap(ofd.FileName))
-								using (AnimationEditor animationEditor = new AnimationEditor(img, diag.SelectedTile, diag.IsItem))
-								{
-									if (animationEditor.ShowDialog() == DialogResult.OK)
-									{
-										treeMeta.Nodes.Clear();
-										saved = false;
-									}
-								}
-							}
-					}
-					catch
-					{
-						MessageBox.Show("Invalid animation data.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-						return;
+						using Image img = new Bitmap(ofd.FileName);
+						var file = AnimationUtil.CreateNewAnimationFile(img, diag.SelectedTile, diag.IsItem);
+						using AnimationEditor animationEditor = new AnimationEditor(file);
+						if (animationEditor.ShowDialog() == DialogResult.OK)
+						{
+							file.filepath = animationEditor.TileName;
+							currentPCK.Files.Add(file);
+							ReloadMetaTreeView();
+							BuildMainTreeView();
+							saved = false;
+						}
 					}
 				}
 			}
@@ -859,7 +940,7 @@ namespace PckStudio
 				}
 				catch (Exception ex)
 				{
-					Console.WriteLine(ex.Message);
+					Debug.WriteLine(ex.Message);
 					MessageBox.Show("Failed to parse ANIM value, aborting to normal functionality. Please make sure the value only includes hexadecimal characters (0-9,A-F) and has no more than 8 characters. It can have an optional prefix of \"0x\".");
 				}
 			}
@@ -1199,8 +1280,15 @@ namespace PckStudio
 
 		private void treeViewMain_KeyDown(object sender, KeyEventArgs e)
 		{
-			if (e.KeyCode == Keys.Delete)
+			switch (e.KeyCode)
+			{
+				case Keys.Delete:
 				deleteFileToolStripMenuItem_Click(sender, e);
+					break;
+				case Keys.F2:
+					renameFileToolStripMenuItem_Click(sender, e);
+					break;
+		}
 		}
 
 		private void treeViewMain_BeforeLabelEdit(object sender, NodeLabelEditEventArgs e)
@@ -1234,12 +1322,12 @@ namespace PckStudio
 						{
 							MessageBox.Show("Error", "Failed to open pck\nTry checking the 'Open/Save as Vita/PS4 pck' check box in the upper right corner.",
 								MessageBoxButtons.OK, MessageBoxIcon.Error);
-							Console.WriteLine(ex.Message);
+							Debug.WriteLine(ex.Message);
 						}
 					}
 					if (pckfile.HasFile("0", PCKFile.FileData.FileType.InfoFile) &&
 						pckfile.GetFile("0", PCKFile.FileData.FileType.InfoFile).properties.HasProperty("LOCK") &&
-						new pckLocked(pckfile.GetFile("0", PCKFile.FileData.FileType.InfoFile).properties.GetProperty("LOCK").Item2).ShowDialog() != DialogResult.OK)
+						new LockPrompt(pckfile.GetFile("0", PCKFile.FileData.FileType.InfoFile).properties.GetProperty("LOCK").Item2).ShowDialog() != DialogResult.OK)
 						return; // cancel extraction if password not provided
 					foreach (PCKFile.FileData file in pckfile.Files)
 					{
@@ -1255,7 +1343,7 @@ namespace PckStudio
 							metaData += $"{entry.Item1}: {entry.Item2}{Environment.NewLine}";
 						}
 
-						File.WriteAllText(sfd.SelectedPath + @"\" + Path.GetFileNameWithoutExtension(file.filepath) + ".txt", metaData);
+						File.WriteAllText(sfd.SelectedPath + @"\" + file.filepath + ".txt", metaData);
 					}
 				}
 			}
@@ -1305,24 +1393,22 @@ namespace PckStudio
 					return;
 				}
 				// creates variable to indicate wether current pck skin structure is mashup or regular skin
-				bool mashupStructure = false;
+				bool hasSkinsPck = currentPCK.HasFile("Skins.pck", PCKFile.FileData.FileType.SkinDataFile);
 
 				foreach (var fullfilename in Directory.GetFiles(contents.SelectedPath, "*.png"))
 				{
 					string filename = Path.GetFileNameWithoutExtension(fullfilename);
 					// sets file type based on wether its a cape or skin
-                    PCKFile.FileData.FileType pckfiletype = (PCKFile.FileData.FileType)Convert.ToInt32(filename.ToLower().StartsWith("dlccape"));
-					string pckfilepath = (mashupStructure ? "Skins/" : string.Empty) + filename + ".png";
+                    PCKFile.FileData.FileType pckfiletype = filename.StartsWith("dlccape", StringComparison.OrdinalIgnoreCase)
+						? PCKFile.FileData.FileType.CapeFile
+						: PCKFile.FileData.FileType.SkinFile;
+					string pckfilepath = (hasSkinsPck ? "Skins/" : string.Empty) + filename + ".png";
 
 
                     PCKFile.FileData newFile = new PCKFile.FileData(pckfilepath, pckfiletype);
 					byte[] filedata = File.ReadAllBytes(fullfilename);
                     newFile.SetData(filedata);
 
-					string locNameId = "";
-					string locName = "";
-					string locThemeId = "";
-					string locTheme = "";
 					if (File.Exists(fullfilename + ".txt"))
 					{
                         string[] properties = File.ReadAllText(fullfilename + ".txt").Split(new string[]{ Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
@@ -1331,25 +1417,38 @@ namespace PckStudio
                             string[] param = property.Split(':');
                             if (param.Length < 2) continue;
                             newFile.properties.Add((param[0], param[1]));
-                            switch (param[0])
-                            {
-                                case "DISPLAYNAMEID":
-                                    locNameId = param[1];
-                                    continue;
+                            //switch (param[0])
+                            //{
+                            //    case "DISPLAYNAMEID":
+                            //        locNameId = param[1];
+                            //        continue;
 
-                                case "DISPLAYNAME":
-                                    locName = param[1];
-                                    continue;
+                            //    case "DISPLAYNAME":
+                            //        locName = param[1];
+                            //        continue;
 
-                                case "THEMENAMEID":
-                                    locThemeId = param[1];
-                                    continue;
+                            //    case "THEMENAMEID":
+                            //        locThemeId = param[1];
+                            //        continue;
 
-                                case "THEMENAME":
-                                    locTheme = param[1];
-                                    continue;
-                            }
+                            //    case "THEMENAME":
+                            //        locTheme = param[1];
+                            //        continue;
+                            //}
                         }
+                    }
+					if (hasSkinsPck)
+					{
+						var skinsfile = currentPCK.GetFile("Skins.pck", PCKFile.FileData.FileType.SkinDataFile);
+                        using (var ms = new MemoryStream(skinsfile.data))
+						{
+							var skinspck = PCKFileReader.Read(ms, LittleEndianCheckBox.Checked);
+							skinspck.Files.Add(newFile);
+							ms.Position = 0;
+							PCKFileWriter.Write(ms, skinspck, LittleEndianCheckBox.Checked);
+							skinsfile.SetData(ms.ToArray());
+						}
+						continue;
                     }
 					currentPCK.Files.Add(newFile);
 				}
@@ -1378,7 +1477,7 @@ namespace PckStudio
 			}
 			catch (Exception ex)
 			{
-				Console.WriteLine(ex.Message);
+				Debug.WriteLine(ex.Message);
 			}
 			locFile = null;
 			return false;
@@ -1403,7 +1502,7 @@ namespace PckStudio
 			}
 			catch (Exception ex)
 			{
-				Console.WriteLine(ex.Message);
+				Debug.WriteLine(ex.Message);
 			}
 			return false;
 		}
@@ -1473,9 +1572,20 @@ namespace PckStudio
 				TreeNode folerNode = CreateNode(folderNamePrompt.NewText);
 				folerNode.ImageIndex = 0;
 				folerNode.SelectedImageIndex = 0;
-				TreeNodeCollection nodeCollection = treeViewMain.SelectedNode is TreeNode node
-					? node.Tag is PCKFile.FileData && node.Parent is TreeNode parentNode ? parentNode.Nodes : node.Nodes
-					: treeViewMain.Nodes;
+
+				TreeNodeCollection nodeCollection = treeViewMain.Nodes;
+				if (treeViewMain.SelectedNode is TreeNode node)
+				{
+                    if (node.Tag is PCKFile.FileData)
+					{
+						if (node.Parent is TreeNode parentNode)
+						{
+							nodeCollection = parentNode.Nodes;
+						}
+					}
+					else
+						nodeCollection = node.Nodes;
+                }
 				nodeCollection.Add(folerNode);
 			}
 		}
@@ -1504,984 +1614,11 @@ namespace PckStudio
 		{
 			//System.Diagnostics.Process.Start(hosturl + "pckStudio#faq");
 		}
-		// BIG TODO
-		#region converts and ports all skins in pck to mc bedrock format
-		// items class for use in bedrock skin conversion
-		public class Item
-		{
-			public string Id { get; set; }
-			public string Name { get; set; }
-		}
 
 		private void convertToBedrockToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			//if (openedPCKS.Visible == true && MessageBox.Show("Convert " + openedPCKS.SelectedTab.Text + " to a Bedrock Edition format?", "Convert", MessageBoxButtons.YesNo, MessageBoxIcon.None) == DialogResult.Yes)
-			//{
-			//	try
-			//	{
-			//		string packName = openedPCKS.SelectedTab.Text.Remove(openedPCKS.SelectedTab.Text.Count() - 4, 4);//Determines skin packs name off of pck file name
-
-			//		//Lets user choose were to put generated pack
-			//		SaveFileDialog convert = new SaveFileDialog();
-			//		convert.Filter = "PCK (Minecarft Bedrock DLC)|*.mcpack";
-			//		convert.FileName = packName;
-
-			//		if (convert.ShowDialog() == DialogResult.OK)
-			//		{
-			//			//creates directory for conversion
-			//			string root = Path.GetDirectoryName(convert.FileName) + "\\" + packName;
-			//			string rootFinal = Path.GetDirectoryName(convert.FileName) + "\\";
-
-			//			//creates pack uuid off of the last skin id detected
-			//			string uuid = "99999999"; //default
-
-			//			//creates list of skin display names
-			//			List<Item> skinDisplayNames = new List<Item>();
-
-			//			//MessageBox.Show(root);//debug thingy to make sure filepath is correct
-
-			//			//add all skins to a list
-			//			List<PCKFile.FileData> skinsList = new List<PCKFile.FileData>();
-			//			List<PCKFile.FileData> capesList = new List<PCKFile.FileData>();
-			//			foreach (PCKFile.FileData skin in currentPCK.Files)
-			//			{
-			//				if (skin.name.Count() == 19)
-			//				{
-			//					if (skin.name.Remove(7, skin.name.Count() - 7) == "dlcskin")
-			//					{
-			//						skinsList.Add(skin);
-			//						uuid = skin.name.Remove(12, 7);
-			//						uuid = uuid.Remove(0, 7);
-			//						uuid = "abcdefa" + uuid;
-			//					}
-			//					if (skin.name.Remove(7, skin.name.Count() - 7) == "dlccape")
-			//					{
-			//						capesList.Add(skin);
-			//					}
-			//				}
-			//			}
-
-			//			if (skinsList.Count() == 0)
-			//			{
-			//				MessageBox.Show("No skins were found");
-			//				return;
-			//			}
-
-			//			Directory.CreateDirectory(root);//Creates directory for skin pack
-			//			Directory.CreateDirectory(root + "/texts");//create directory for skin pack text files
-
-			//			//create skins json file
-			//			using (StreamWriter writeSkins = new StreamWriter(root + "/skins.json"))
-			//			{
-			//				writeSkins.WriteLine("{");
-			//				writeSkins.WriteLine("  \"skins\": [");
-
-			//				int skinAmount = 0;
-			//				foreach (PCKFile.FileData newSkin in skinsList)
-			//				{
-			//					skinAmount += 1;
-			//					string skinName = "skinName";
-			//					string capePath = "";
-			//					bool hasCape = false;
-
-			//					foreach (var entry in newSkin.properties)
-			//					{
-			//						if (entry.Item1 == "DISPLAYNAME")
-			//						{
-			//							skinName = entry.Item2;
-			//							skinDisplayNames.Add(new Item() { Id = newSkin.name.Remove(15, 4), Name = skinName });
-			//						}
-			//						if (entry.Item1 == "CAPEPATH")
-			//						{
-			//							hasCape = true;
-			//							capePath = entry.Item2.ToString();
-			//						}
-			//					}
-
-			//					writeSkins.WriteLine("    {");
-			//					writeSkins.WriteLine("      \"localization_name\": " + "\"" + newSkin.name.Remove(15, 4) + "\",");
-
-			//					MemoryStream png = new MemoryStream(newSkin.data); //Gets image data from minefile data
-			//					Image skinPicture = Image.FromStream(png); //Constructs image data into image
-			//					if (skinPicture.Height == skinPicture.Width)
-			//					{
-			//						writeSkins.WriteLine("      \"geometry\": \"geometry." + packName + "." + newSkin.name.Remove(15, 4) + "\",");
-			//					}
-			//					writeSkins.WriteLine("      \"texture\": " + "\"" + newSkin.name + "\",");
-			//					if (hasCape == true)
-			//					{
-			//						writeSkins.WriteLine("      \"cape\":" + "\"" + capePath + "\",");
-			//					}
-			//					writeSkins.WriteLine("      \"type\": \"free\"");
-			//					if (skinAmount != skinsList.Count)
-			//					{
-			//						writeSkins.WriteLine("    },");
-			//					}
-			//					else
-			//					{
-			//						writeSkins.WriteLine("    }");
-			//					}
-			//				}
-
-			//				writeSkins.WriteLine("  ],");
-			//				writeSkins.WriteLine("  \"serialize_name\": \"" + packName + "\",");
-			//				writeSkins.WriteLine("  \"localization_name\": \"" + packName + "\"");
-			//				writeSkins.WriteLine("}");
-			//			}
-
-			//			//Create geometry file
-			//			using (StreamWriter writeSkins = new StreamWriter(root + "/geometry.json"))
-			//			{
-			//				writeSkins.WriteLine("{");
-			//				int newSkinCount = 0;
-			//				foreach (PCKFile.FileData newSkin in skinsList)
-			//				{
-
-			//					newSkinCount += 1;
-			//					string skinType = "steve";
-			//					MemoryStream png = new MemoryStream(newSkin.data); //Gets image data from minefile data
-			//					Image skinPicture = Image.FromStream(png); //Constructs image data into image
-
-			//					if (skinPicture.Height == skinPicture.Width / 2)
-			//					{
-			//						skinType = "64x32";
-			//						continue;
-			//					}
-
-			//					double offsetHead = 0;
-			//					double offsetBody = 0;
-			//					double offsetArms = 0;
-			//					double offsetLegs = 0;
-
-			//					//creates list of skin model data
-			//					List<Item> modelDataHead = new List<Item>();
-			//					List<Item> modelDataBody = new List<Item>();
-			//					List<Item> modelDataLeftArm = new List<Item>();
-			//					List<Item> modelDataRightArm = new List<Item>();
-			//					List<Item> modelDataLeftLeg = new List<Item>();
-			//					List<Item> modelDataRightLeg = new List<Item>();
-			//					List<Item> modelData = new List<Item>();
-
-
-			//					if (skinPicture.Height == skinPicture.Width)
-			//					{
-			//						//determines skin type based on image dimensions, existence of BOX tags, and the ANIM value
-			//						foreach (var entry in newSkin.properties)
-			//						{
-			//							if (entry.Item1 == "BOX")
-			//							{
-			//								string mClass = "";
-			//								string mData = "";
-			//								foreach (char dCheck in entry.Item2)
-			//								{
-			//									if (dCheck.ToString() != " ")
-			//									{
-			//										mClass += dCheck.ToString();
-			//									}
-			//									else
-			//									{
-			//										mData = entry.Item2.Remove(0, mClass.Count() + 1);
-			//										break;
-			//									}
-			//								}
-
-			//								if (mClass == "HEAD")
-			//								{
-			//									mClass = "head";
-			//									modelDataHead.Add(new Item() { Id = mClass, Name = mData });
-			//								}
-			//								else if (mClass == "BODY")
-			//								{
-			//									mClass = "body";
-			//									modelDataBody.Add(new Item() { Id = mClass, Name = mData });
-			//								}
-			//								else if (mClass == "ARM0")
-			//								{
-			//									mClass = "rightArm";
-			//									modelDataRightArm.Add(new Item() { Id = mClass, Name = mData });
-			//								}
-			//								else if (mClass == "ARM1")
-			//								{
-			//									mClass = "leftArm";
-			//									modelDataLeftArm.Add(new Item() { Id = mClass, Name = mData });
-			//								}
-			//								else if (mClass == "LEG0")
-			//								{
-			//									mClass = "leftLeg";
-			//									modelDataLeftLeg.Add(new Item() { Id = mClass, Name = mData });
-			//								}
-			//								else if (mClass == "LEG1")
-			//								{
-			//									mClass = "rightLeg";
-			//									modelDataRightLeg.Add(new Item() { Id = mClass, Name = mData });
-			//								}
-			//							}
-
-			//							if (entry.Item1 == "OFFSET")
-			//							{
-			//								string oClass = "";
-			//								string oData = "";
-			//								foreach (char oCheck in entry.Item2.ToString())
-			//								{
-			//									oData = entry.Item2.ToString();
-			//									if (oCheck.ToString() != " ")
-			//									{
-			//										oClass += oCheck.ToString();
-			//									}
-			//									else
-			//									{
-			//										break;
-			//									}
-
-			//									if (oClass == "HEAD")
-			//									{
-			//										offsetHead += Double.Parse(oData.Remove(0, 7)) * -1;
-			//									}
-			//									else if (oClass == "BODY")
-			//									{
-			//										offsetBody += Double.Parse(oData.Remove(0, 7)) * -1;
-			//									}
-			//									else if (oClass == "ARM0")
-			//									{
-			//										offsetArms += Double.Parse(oData.Remove(0, 7)) * -1;
-			//									}
-			//									else if (oClass == "LEG0")
-			//									{
-			//										offsetLegs += Double.Parse(oData.Remove(0, 7)) * -1;
-			//									}
-			//								}
-			//							}
-
-			//							if (entry.Item1 == "ANIM")
-			//							{
-			//								if (entry.Item2 == "0x40000")
-			//								{
-
-			//								}
-			//								else if (entry.Item2 == "0x80000")
-			//								{
-			//									skinType = "alex";
-			//								}
-			//							}
-			//						}
-
-			//						if (modelDataHead.Count + modelDataBody.Count + modelDataLeftArm.Count + modelDataRightArm.Count + modelDataLeftLeg.Count + modelDataRightLeg.Count > 0)
-			//						{
-			//							skinType = "custom";
-			//						}
-			//					}
-
-			//					writeSkins.WriteLine("  \"" + "geometry." + packName + "." + newSkin.name.Remove(15, 4) + "\": {");
-
-			//					//makes skin model depending on what skin type the skin is
-			//					if (skinType == "custom")
-			//					{
-			//						writeSkins.WriteLine("    \"bones\": [");
-
-			//						//Head Data
-			//						writeSkins.WriteLine("      {");
-			//						writeSkins.WriteLine("        \"pivot\": [ 0, 24, 0 ],");
-			//						writeSkins.WriteLine("         \"rotation\": [ 0, 0, 0 ],");
-			//						writeSkins.WriteLine("          \"cubes\": [ ");
-			//						//Creates bones for each head box
-			//						int modelAmount = 0;
-			//						foreach (Item model in modelDataHead)
-			//						{
-			//							modelAmount += 1;
-
-			//							string xo = "";
-			//							string yo = "";
-			//							string zo = "";
-			//							string xs = "";
-			//							string ys = "";
-			//							string zs = "";
-			//							string xv = "";
-			//							string yv = "";
-
-			//							int spaceCheck = 0;
-
-			//							foreach (char value in model.Name.ToString())
-			//							{
-			//								//0X1Y2Z3X4Y5Z6X7Y
-			//								if (value.ToString() != " " && spaceCheck == 0)
-			//								{
-			//									xo += value.ToString();
-			//								}
-			//								else if (value.ToString() != " " && spaceCheck == 1)
-			//								{
-			//									yo += value.ToString();
-			//								}
-			//								else if (value.ToString() != " " && spaceCheck == 2)
-			//								{
-			//									zo += value.ToString();
-			//								}
-			//								else if (value.ToString() != " " && spaceCheck == 3)
-			//								{
-			//									xs += value.ToString();
-			//								}
-			//								else if (value.ToString() != " " && spaceCheck == 4)
-			//								{
-			//									ys += value.ToString();
-			//								}
-			//								else if (value.ToString() != " " && spaceCheck == 5)
-			//								{
-			//									zs += value.ToString();
-			//								}
-			//								else if (value.ToString() != " " && spaceCheck == 6)
-			//								{
-			//									xv += value.ToString();
-			//								}
-			//								else if (value.ToString() != " " && spaceCheck == 7)
-			//								{
-			//									yv += value.ToString();
-			//								}
-			//								else if (value.ToString() == " ")
-			//								{
-			//									spaceCheck += 1;
-			//								}
-			//							}
-
-			//							writeSkins.WriteLine("           {");
-			//							try
-			//							{
-			//								writeSkins.WriteLine("            \"origin\": [ " + (Double.Parse(xo)) + ", " + ((Double.Parse(yo) + 0) * -1 + offsetHead + 24 - Double.Parse(ys)) + ", " + (Double.Parse(zo)) + " ],");
-			//								writeSkins.WriteLine("            \"size\": [ " + Double.Parse(xs) + ", " + (Double.Parse(ys)) + ", " + Double.Parse(zs) + " ],");
-			//								writeSkins.WriteLine("            \"uv\": [ " + Double.Parse(xv) + ", " + Double.Parse(yv) + " ],");
-			//								writeSkins.WriteLine("            \"inflate\": 0,");
-			//								writeSkins.WriteLine("            \"mirror\": false");
-			//							}
-			//							catch (Exception)
-			//							{
-			//								MessageBox.Show("A HEAD BOX tag in " + newSkin.name + " has an invalid value!");
-			//							}
-			//							if (modelAmount != modelDataHead.Count)
-			//							{
-			//								writeSkins.WriteLine("    },");
-			//							}
-			//							else
-			//							{
-			//								writeSkins.WriteLine("    }");
-			//							}
-			//						}
-			//						writeSkins.WriteLine("        ],");
-			//						writeSkins.WriteLine("        \"META_BoneType\": \"" + "clothing" + "\",");
-			//						writeSkins.WriteLine("        \"name\": \"" + "head" + "\",");
-			//						writeSkins.WriteLine("        \"parent\":" + " null");
-			//						writeSkins.WriteLine("        },");
-
-
-			//						//Body Data
-			//						writeSkins.WriteLine("      {");
-			//						writeSkins.WriteLine("        \"pivot\": [ 0, 12, 0 ],");
-			//						writeSkins.WriteLine("         \"rotation\": [ 0, 0, 0 ],");
-			//						writeSkins.WriteLine("          \"cubes\": [ ");
-			//						//Creates bones for each body box
-			//						modelAmount = 0;
-			//						foreach (Item model in modelDataBody)
-			//						{
-			//							modelAmount += 1;
-
-			//							string xo = "";
-			//							string yo = "";
-			//							string zo = "";
-			//							string xs = "";
-			//							string ys = "";
-			//							string zs = "";
-			//							string xv = "";
-			//							string yv = "";
-
-			//							int spaceCheck = 0;
-
-			//							foreach (char value in model.Name.ToString())
-			//							{
-			//								//0X1Y2Z3X4Y5Z6X7Y
-			//								if (value.ToString() != " " && spaceCheck == 0)
-			//								{
-			//									xo += value.ToString();
-			//								}
-			//								else if (value.ToString() != " " && spaceCheck == 1)
-			//								{
-			//									yo += value.ToString();
-			//								}
-			//								else if (value.ToString() != " " && spaceCheck == 2)
-			//								{
-			//									zo += value.ToString();
-			//								}
-			//								else if (value.ToString() != " " && spaceCheck == 3)
-			//								{
-			//									xs += value.ToString();
-			//								}
-			//								else if (value.ToString() != " " && spaceCheck == 4)
-			//								{
-			//									ys += value.ToString();
-			//								}
-			//								else if (value.ToString() != " " && spaceCheck == 5)
-			//								{
-			//									zs += value.ToString();
-			//								}
-			//								else if (value.ToString() != " " && spaceCheck == 6)
-			//								{
-			//									xv += value.ToString();
-			//								}
-			//								else if (value.ToString() != " " && spaceCheck == 7)
-			//								{
-			//									yv += value.ToString();
-			//								}
-			//								else if (value.ToString() == " ")
-			//								{
-			//									spaceCheck += 1;
-			//								}
-			//							}
-			//							writeSkins.WriteLine("           {");
-			//							try
-			//							{
-			//								writeSkins.WriteLine("            \"origin\": [ " + (Double.Parse(xo)) + ", " + ((Double.Parse(yo) + 0) * -1 + offsetBody + 24 - Double.Parse(ys)) + ", " + (Double.Parse(zo)) + " ],");
-			//								writeSkins.WriteLine("            \"size\": [ " + Double.Parse(xs) + ", " + Double.Parse(ys) + ", " + Double.Parse(zs) + " ],");
-			//								writeSkins.WriteLine("            \"uv\": [ " + Double.Parse(xv) + ", " + Double.Parse(yv) + " ],");
-			//								writeSkins.WriteLine("            \"inflate\": 0,");
-			//								writeSkins.WriteLine("            \"mirror\": false");
-			//							}
-			//							catch (Exception)
-			//							{
-			//								MessageBox.Show("A BODY BOX tag in " + newSkin.name + " has an invalid value!");
-			//							}
-			//							if (modelAmount != modelDataBody.Count)
-			//							{
-			//								writeSkins.WriteLine("    },");
-			//							}
-			//							else
-			//							{
-			//								writeSkins.WriteLine("    }");
-			//							}
-			//						}
-			//						writeSkins.WriteLine("        ],");
-			//						writeSkins.WriteLine("        \"META_BoneType\": \"" + "base" + "\",");
-			//						writeSkins.WriteLine("        \"name\": \"" + "body" + "\",");
-			//						writeSkins.WriteLine("        \"parent\":" + " null");
-			//						writeSkins.WriteLine("        },");
-
-
-			//						//LeftArm Data
-			//						writeSkins.WriteLine("      {");
-			//						writeSkins.WriteLine("        \"pivot\": [ 5, 22, 0 ],");
-			//						writeSkins.WriteLine("         \"rotation\": [ 0, 0, 0 ],");
-			//						writeSkins.WriteLine("          \"cubes\": [ ");
-			//						//Creates bones for each arm1 box
-			//						modelAmount = 0;
-			//						foreach (Item model in modelDataLeftArm)
-			//						{
-			//							modelAmount += 1;
-
-			//							string xo = "";
-			//							string yo = "";
-			//							string zo = "";
-			//							string xs = "";
-			//							string ys = "";
-			//							string zs = "";
-			//							string xv = "";
-			//							string yv = "";
-
-			//							int spaceCheck = 0;
-
-			//							foreach (char value in model.Name.ToString())
-			//							{
-			//								//0X1Y2Z3X4Y5Z6X7Y
-			//								if (value.ToString() != " " && spaceCheck == 0)
-			//								{
-			//									xo += value.ToString();
-			//								}
-			//								else if (value.ToString() != " " && spaceCheck == 1)
-			//								{
-			//									yo += value.ToString();
-			//								}
-			//								else if (value.ToString() != " " && spaceCheck == 2)
-			//								{
-			//									zo += value.ToString();
-			//								}
-			//								else if (value.ToString() != " " && spaceCheck == 3)
-			//								{
-			//									xs += value.ToString();
-			//								}
-			//								else if (value.ToString() != " " && spaceCheck == 4)
-			//								{
-			//									ys += value.ToString();
-			//								}
-			//								else if (value.ToString() != " " && spaceCheck == 5)
-			//								{
-			//									zs += value.ToString();
-			//								}
-			//								else if (value.ToString() != " " && spaceCheck == 6)
-			//								{
-			//									xv += value.ToString();
-			//								}
-			//								else if (value.ToString() != " " && spaceCheck == 7)
-			//								{
-			//									yv += value.ToString();
-			//								}
-			//								else if (value.ToString() == " ")
-			//								{
-			//									spaceCheck += 1;
-			//								}
-			//							}
-			//							writeSkins.WriteLine("           {");
-			//							try
-			//							{
-			//								writeSkins.WriteLine("            \"origin\": [ " + (Double.Parse(xo) + 5) + ", " + ((Double.Parse(yo)) * -1 + offsetArms + 22 - Double.Parse(ys)) + ", " + (Double.Parse(zo)) + " ],");
-			//								writeSkins.WriteLine("            \"size\": [ " + Double.Parse(xs) + ", " + Double.Parse(ys) + ", " + Double.Parse(zs) + " ],");
-			//								writeSkins.WriteLine("            \"uv\": [ " + Double.Parse(xv) + ", " + Double.Parse(yv) + " ],");
-			//								writeSkins.WriteLine("            \"inflate\": 0,");
-			//								writeSkins.WriteLine("            \"mirror\": false");
-			//							}
-			//							catch (Exception)
-			//							{
-			//								MessageBox.Show("A ARM0 BOX tag in " + newSkin.name + " has an invalid value!");
-			//							}
-			//							if (modelAmount != modelDataLeftArm.Count)
-			//							{
-			//								writeSkins.WriteLine("    },");
-			//							}
-			//							else
-			//							{
-			//								writeSkins.WriteLine("    }");
-			//							}
-			//						}
-			//						writeSkins.WriteLine("        ],");
-			//						writeSkins.WriteLine("        \"META_BoneType\": \"" + "base" + "\",");
-			//						writeSkins.WriteLine("        \"name\": \"" + "leftArm" + "\",");
-			//						writeSkins.WriteLine("        \"parent\":" + " null");
-			//						writeSkins.WriteLine("        },");
-
-			//						//RightArm Data
-			//						writeSkins.WriteLine("      {");
-			//						writeSkins.WriteLine("        \"pivot\": [ -5, 22, 0 ],");
-			//						writeSkins.WriteLine("         \"rotation\": [ 0, 0, 0 ],");
-			//						writeSkins.WriteLine("          \"cubes\": [ ");
-			//						//Creates bones for each arm0 box
-			//						modelAmount = 0;
-			//						foreach (Item model in modelDataRightArm)
-			//						{
-			//							modelAmount += 1;
-
-			//							string xo = "";
-			//							string yo = "";
-			//							string zo = "";
-			//							string xs = "";
-			//							string ys = "";
-			//							string zs = "";
-			//							string xv = "";
-			//							string yv = "";
-
-			//							int spaceCheck = 0;
-
-			//							foreach (char value in model.Name.ToString())
-			//							{
-			//								//0X1Y2Z3X4Y5Z6X7Y
-			//								if (value.ToString() != " " && spaceCheck == 0)
-			//								{
-			//									xo += value.ToString();
-			//								}
-			//								else if (value.ToString() != " " && spaceCheck == 1)
-			//								{
-			//									yo += value.ToString();
-			//								}
-			//								else if (value.ToString() != " " && spaceCheck == 2)
-			//								{
-			//									zo += value.ToString();
-			//								}
-			//								else if (value.ToString() != " " && spaceCheck == 3)
-			//								{
-			//									xs += value.ToString();
-			//								}
-			//								else if (value.ToString() != " " && spaceCheck == 4)
-			//								{
-			//									ys += value.ToString();
-			//								}
-			//								else if (value.ToString() != " " && spaceCheck == 5)
-			//								{
-			//									zs += value.ToString();
-			//								}
-			//								else if (value.ToString() != " " && spaceCheck == 6)
-			//								{
-			//									xv += value.ToString();
-			//								}
-			//								else if (value.ToString() != " " && spaceCheck == 7)
-			//								{
-			//									yv += value.ToString();
-			//								}
-			//								else if (value.ToString() == " ")
-			//								{
-			//									spaceCheck += 1;
-			//								}
-			//							}
-			//							writeSkins.WriteLine("           {");
-			//							try
-			//							{
-			//								writeSkins.WriteLine("            \"origin\": [ " + (Double.Parse(xo) - 5) + ", " + ((Double.Parse(yo)) * -1 + offsetArms + 22 - Double.Parse(ys)) + ", " + (Double.Parse(zo)) + " ],");
-			//								writeSkins.WriteLine("            \"size\": [ " + Double.Parse(xs) + ", " + Double.Parse(ys) + ", " + Double.Parse(zs) + " ],");
-			//								writeSkins.WriteLine("            \"uv\": [ " + Double.Parse(xv) + ", " + Double.Parse(yv) + " ],");
-			//								writeSkins.WriteLine("            \"inflate\": 0,");
-			//								writeSkins.WriteLine("            \"mirror\": false");
-			//							}
-			//							catch (Exception)
-			//							{
-			//								MessageBox.Show("A ARM1 BOX tag in " + newSkin.name + " has an invalid value!");
-			//							}
-			//							if (modelAmount != modelDataRightArm.Count)
-			//							{
-			//								writeSkins.WriteLine("    },");
-			//							}
-			//							else
-			//							{
-			//								writeSkins.WriteLine("    }");
-			//							}
-			//						}
-			//						writeSkins.WriteLine("        ],");
-			//						writeSkins.WriteLine("        \"META_BoneType\": \"" + "base" + "\",");
-			//						writeSkins.WriteLine("        \"name\": \"" + "rightArm" + "\",");
-			//						writeSkins.WriteLine("        \"parent\":" + " null");
-			//						writeSkins.WriteLine("        },");
-
-			//						//LeftLeg Data
-			//						writeSkins.WriteLine("      {");
-			//						writeSkins.WriteLine("        \"pivot\": [ 1.9, 12, 0 ],");
-			//						writeSkins.WriteLine("         \"rotation\": [ 0, 0, 0 ],");
-			//						writeSkins.WriteLine("          \"cubes\": [ ");
-			//						//Creates bones for each leg1 box
-			//						modelAmount = 0;
-			//						foreach (Item model in modelDataLeftLeg)
-			//						{
-			//							modelAmount += 1;
-
-			//							string xo = "";
-			//							string yo = "";
-			//							string zo = "";
-			//							string xs = "";
-			//							string ys = "";
-			//							string zs = "";
-			//							string xv = "";
-			//							string yv = "";
-
-			//							int spaceCheck = 0;
-
-			//							foreach (char value in model.Name.ToString())
-			//							{
-			//								//0X1Y2Z3X4Y5Z6X7Y
-			//								if (value.ToString() != " " && spaceCheck == 0)
-			//								{
-			//									xo += value.ToString();
-			//								}
-			//								else if (value.ToString() != " " && spaceCheck == 1)
-			//								{
-			//									yo += value.ToString();
-			//								}
-			//								else if (value.ToString() != " " && spaceCheck == 2)
-			//								{
-			//									zo += value.ToString();
-			//								}
-			//								else if (value.ToString() != " " && spaceCheck == 3)
-			//								{
-			//									xs += value.ToString();
-			//								}
-			//								else if (value.ToString() != " " && spaceCheck == 4)
-			//								{
-			//									ys += value.ToString();
-			//								}
-			//								else if (value.ToString() != " " && spaceCheck == 5)
-			//								{
-			//									zs += value.ToString();
-			//								}
-			//								else if (value.ToString() != " " && spaceCheck == 6)
-			//								{
-			//									xv += value.ToString();
-			//								}
-			//								else if (value.ToString() != " " && spaceCheck == 7)
-			//								{
-			//									yv += value.ToString();
-			//								}
-			//								else if (value.ToString() == " ")
-			//								{
-			//									spaceCheck += 1;
-			//								}
-			//							}
-			//							writeSkins.WriteLine("           {");
-			//							try
-			//							{
-			//								writeSkins.WriteLine("            \"origin\": [ " + (Double.Parse(xo) - 1.9) + ", " + ((Double.Parse(yo)) * -1 + offsetLegs + 12 - Double.Parse(ys)) + ", " + (Double.Parse(zo)) + " ],");
-			//								writeSkins.WriteLine("            \"size\": [ " + Double.Parse(xs) + ", " + Double.Parse(ys) + ", " + Double.Parse(zs) + " ],");
-			//								writeSkins.WriteLine("            \"uv\": [ " + Double.Parse(xv) + ", " + Double.Parse(yv) + " ],");
-			//								writeSkins.WriteLine("            \"inflate\": 0,");
-			//								writeSkins.WriteLine("            \"mirror\": false");
-			//							}
-			//							catch (Exception)
-			//							{
-			//								MessageBox.Show("A LEG1 BOX tag in " + newSkin.name + " has an invalid value!");
-			//							}
-			//							if (modelAmount != modelDataLeftLeg.Count)
-			//							{
-			//								writeSkins.WriteLine("    },");
-			//							}
-			//							else
-			//							{
-			//								writeSkins.WriteLine("    }");
-			//							}
-			//						}
-			//						writeSkins.WriteLine("        ],");
-			//						writeSkins.WriteLine("        \"META_BoneType\": \"" + "base" + "\",");
-			//						writeSkins.WriteLine("        \"name\": \"" + "leftLeg" + "\",");
-			//						writeSkins.WriteLine("        \"parent\":" + " null");
-			//						writeSkins.WriteLine("        },");
-
-			//						//RightLeg Data
-			//						writeSkins.WriteLine("      {");
-			//						writeSkins.WriteLine("        \"pivot\": [ -1.9, 12, 0 ],");
-			//						writeSkins.WriteLine("         \"rotation\": [ 0, 0, 0 ],");
-			//						writeSkins.WriteLine("          \"cubes\": [ ");
-			//						//Creates bones for each leg0 box
-			//						modelAmount = 0;
-			//						foreach (Item model in modelDataRightLeg)
-			//						{
-			//							modelAmount += 1;
-
-			//							string xo = "";
-			//							string yo = "";
-			//							string zo = "";
-			//							string xs = "";
-			//							string ys = "";
-			//							string zs = "";
-			//							string xv = "";
-			//							string yv = "";
-
-			//							int spaceCheck = 0;
-
-			//							foreach (char value in model.Name.ToString())
-			//							{
-			//								//0X1Y2Z3X4Y5Z6X7Y
-			//								if (value.ToString() != " " && spaceCheck == 0)
-			//								{
-			//									xo += value.ToString();
-			//								}
-			//								else if (value.ToString() != " " && spaceCheck == 1)
-			//								{
-			//									yo += value.ToString();
-			//								}
-			//								else if (value.ToString() != " " && spaceCheck == 2)
-			//								{
-			//									zo += value.ToString();
-			//								}
-			//								else if (value.ToString() != " " && spaceCheck == 3)
-			//								{
-			//									xs += value.ToString();
-			//								}
-			//								else if (value.ToString() != " " && spaceCheck == 4)
-			//								{
-			//									ys += value.ToString();
-			//								}
-			//								else if (value.ToString() != " " && spaceCheck == 5)
-			//								{
-			//									zs += value.ToString();
-			//								}
-			//								else if (value.ToString() != " " && spaceCheck == 6)
-			//								{
-			//									xv += value.ToString();
-			//								}
-			//								else if (value.ToString() != " " && spaceCheck == 7)
-			//								{
-			//									yv += value.ToString();
-			//								}
-			//								else if (value.ToString() == " ")
-			//								{
-			//									spaceCheck += 1;
-			//								}
-			//							}
-			//							writeSkins.WriteLine("           {");
-			//							try
-			//							{
-			//								writeSkins.WriteLine("            \"origin\": [ " + (Double.Parse(xo) + 1.9) + ", " + ((Double.Parse(yo)) * -1 + offsetLegs + 12 - Double.Parse(ys)) + ", " + (Double.Parse(zo)) + " ],");
-			//								writeSkins.WriteLine("            \"size\": [ " + Double.Parse(xs) + ", " + Double.Parse(ys) + ", " + Double.Parse(zs) + " ],");
-			//								writeSkins.WriteLine("            \"uv\": [ " + Double.Parse(xv) + ", " + Double.Parse(yv) + " ],");
-			//								writeSkins.WriteLine("            \"inflate\": 0,");
-			//								writeSkins.WriteLine("            \"mirror\": false");
-			//							}
-			//							catch (Exception)
-			//							{
-			//								MessageBox.Show("A LEG0 BOX tag in " + newSkin.name + " has an invalid value!");
-			//							}
-			//							if (modelAmount != modelDataRightLeg.Count)
-			//							{
-			//								writeSkins.WriteLine("    },");
-			//							}
-			//							else
-			//							{
-			//								writeSkins.WriteLine("    }");
-			//							}
-			//						}
-			//						writeSkins.WriteLine("        ],");
-			//						writeSkins.WriteLine("        \"META_BoneType\": \"" + "base" + "\",");
-			//						writeSkins.WriteLine("        \"name\": \"" + "rightLeg" + "\",");
-			//						writeSkins.WriteLine("        \"parent\":" + " null");
-			//						writeSkins.WriteLine("        }");
-			//						writeSkins.WriteLine("    ],");
-			//					}
-			//					else if (skinType == "64x32")
-			//					{
-			//						writeSkins.Write("    \"bones\": [ ],");
-			//					}
-			//					else if (skinType == "steve")
-			//					{
-			//						writeSkins.Write("    \"bones\": [ " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ 0, 24, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [  " + Environment.NewLine + "  " + Environment.NewLine + "            { " + Environment.NewLine + "  " + Environment.NewLine + "             \"origin\": [ -4, 12, -2 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"size\": [ 8, 12, 4 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"uv\": [ 16, 16 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"inflate\": 0, " + Environment.NewLine + "  " + Environment.NewLine + "             \"mirror\": false " + Environment.NewLine + "  " + Environment.NewLine + "           } " + Environment.NewLine + "  " + Environment.NewLine + "         ], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"base\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"body\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": null " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ 0, 24, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [  " + Environment.NewLine + "  " + Environment.NewLine + "            { " + Environment.NewLine + "  " + Environment.NewLine + "             \"origin\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"size\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"uv\": [ 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"inflate\": 0, " + Environment.NewLine + "  " + Environment.NewLine + "             \"mirror\": false " + Environment.NewLine + "  " + Environment.NewLine + "           } " + Environment.NewLine + "  " + Environment.NewLine + "         ], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"armor\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"bodyArmor\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": \"body\" " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ 0, 12, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [  " + Environment.NewLine + "  " + Environment.NewLine + "            { " + Environment.NewLine + "  " + Environment.NewLine + "             \"origin\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"size\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"uv\": [ 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"inflate\": 0, " + Environment.NewLine + "  " + Environment.NewLine + "             \"mirror\": false " + Environment.NewLine + "  " + Environment.NewLine + "           } " + Environment.NewLine + "  " + Environment.NewLine + "         ], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"armor\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"belt\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": \"body\" " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ 0, 24, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [  " + Environment.NewLine + "  " + Environment.NewLine + "            { " + Environment.NewLine + "  " + Environment.NewLine + "             \"origin\": [ -4, 24, -4 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"size\": [ 8, 8, 8 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"uv\": [ 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"inflate\": 0, " + Environment.NewLine + "  " + Environment.NewLine + "             \"mirror\": false " + Environment.NewLine + "  " + Environment.NewLine + "           } " + Environment.NewLine + "  " + Environment.NewLine + "         ], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"base\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"head\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": null " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ 0, 24, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [  " + Environment.NewLine + "  " + Environment.NewLine + "            { " + Environment.NewLine + "  " + Environment.NewLine + "             \"origin\": [ -4, 24, -4 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"size\": [ 8, 8, 8 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"uv\": [ 32, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"inflate\": 0.5, " + Environment.NewLine + "  " + Environment.NewLine + "             \"mirror\": false " + Environment.NewLine + "  " + Environment.NewLine + "           } " + Environment.NewLine + "  " + Environment.NewLine + "         ], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"clothing\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"hat\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": \"head\" " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ 0, 24, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [  " + Environment.NewLine + "  " + Environment.NewLine + "            { " + Environment.NewLine + "  " + Environment.NewLine + "             \"origin\": [ 0, 24, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"size\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"uv\": [ 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"inflate\": 0, " + Environment.NewLine + "  " + Environment.NewLine + "             \"mirror\": false " + Environment.NewLine + "  " + Environment.NewLine + "           } " + Environment.NewLine + "  " + Environment.NewLine + "         ], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"armor\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"helmet\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": \"head\" " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ 5, 22, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [  " + Environment.NewLine + "  " + Environment.NewLine + "            { " + Environment.NewLine + "  " + Environment.NewLine + "             \"origin\": [ 4, 12, -2 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"size\": [ 4, 12, 4 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"uv\": [ 32, 48 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"inflate\": 0, " + Environment.NewLine + "  " + Environment.NewLine + "             \"mirror\": false " + Environment.NewLine + "  " + Environment.NewLine + "           } " + Environment.NewLine + "  " + Environment.NewLine + "         ], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"base\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"leftArm\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": null " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ -5, 22, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [  " + Environment.NewLine + "  " + Environment.NewLine + "            { " + Environment.NewLine + "  " + Environment.NewLine + "             \"origin\": [ -8, 12, -2 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"size\": [ 4, 12, 4 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"uv\": [ 40, 16 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"inflate\": 0, " + Environment.NewLine + "  " + Environment.NewLine + "             \"mirror\": false " + Environment.NewLine + "  " + Environment.NewLine + "           } " + Environment.NewLine + "  " + Environment.NewLine + "         ], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"base\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"rightArm\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": null " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ 5, 22, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [  " + Environment.NewLine + "  " + Environment.NewLine + "            { " + Environment.NewLine + "  " + Environment.NewLine + "             \"origin\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"size\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"uv\": [ 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"inflate\": 0, " + Environment.NewLine + "  " + Environment.NewLine + "             \"mirror\": false " + Environment.NewLine + "  " + Environment.NewLine + "           } " + Environment.NewLine + "  " + Environment.NewLine + "         ], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"armor\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"leftArmArmor\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": \"leftArm\" " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ -5, 22, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [  " + Environment.NewLine + "  " + Environment.NewLine + "            { " + Environment.NewLine + "  " + Environment.NewLine + "             \"origin\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"size\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"uv\": [ 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"inflate\": 0, " + Environment.NewLine + "  " + Environment.NewLine + "             \"mirror\": false " + Environment.NewLine + "  " + Environment.NewLine + "           } " + Environment.NewLine + "  " + Environment.NewLine + "         ], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"armor\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"rightArmArmor\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": \"rightArm\" " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ 5, 22, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [  " + Environment.NewLine + "  " + Environment.NewLine + "            { " + Environment.NewLine + "  " + Environment.NewLine + "             \"origin\": [ 4, 12, -2 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"size\": [ 4, 12, 4 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"uv\": [ 48, 48 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"inflate\": 0.25, " + Environment.NewLine + "  " + Environment.NewLine + "             \"mirror\": false " + Environment.NewLine + "  " + Environment.NewLine + "           } " + Environment.NewLine + "  " + Environment.NewLine + "         ], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"clothing\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"leftSleeve\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": \"leftArm\" " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ -5, 22, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [  " + Environment.NewLine + "  " + Environment.NewLine + "            { " + Environment.NewLine + "  " + Environment.NewLine + "             \"origin\": [ -8, 12, -2 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"size\": [ 4, 12, 4 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"uv\": [ 40, 32 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"inflate\": 0.25, " + Environment.NewLine + "  " + Environment.NewLine + "             \"mirror\": false " + Environment.NewLine + "  " + Environment.NewLine + "           } " + Environment.NewLine + "  " + Environment.NewLine + "         ], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"clothing\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"rightSleeve\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": \"rightArm\" " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ 1.9, 12, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [  " + Environment.NewLine + "  " + Environment.NewLine + "            { " + Environment.NewLine + "  " + Environment.NewLine + "             \"origin\": [ -0.1, 0, -2 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"size\": [ 4, 12, 4 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"uv\": [ 16, 48 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"inflate\": 0, " + Environment.NewLine + "  " + Environment.NewLine + "             \"mirror\": false " + Environment.NewLine + "  " + Environment.NewLine + "           } " + Environment.NewLine + "  " + Environment.NewLine + "         ], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"base\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"leftLeg\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": null " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ -1.9, 12, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [  " + Environment.NewLine + "  " + Environment.NewLine + "            { " + Environment.NewLine + "  " + Environment.NewLine + "             \"origin\": [ -3.9, 0, -2 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"size\": [ 4, 12, 4 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"uv\": [ 0, 16 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"inflate\": 0, " + Environment.NewLine + "  " + Environment.NewLine + "             \"mirror\": false " + Environment.NewLine + "  " + Environment.NewLine + "           } " + Environment.NewLine + "  " + Environment.NewLine + "         ], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"base\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"rightLeg\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": null " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ 1.9, 12, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [  " + Environment.NewLine + "  " + Environment.NewLine + "            { " + Environment.NewLine + "  " + Environment.NewLine + "             \"origin\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"size\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"uv\": [ 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"inflate\": 0, " + Environment.NewLine + "  " + Environment.NewLine + "             \"mirror\": false " + Environment.NewLine + "  " + Environment.NewLine + "           } " + Environment.NewLine + "  " + Environment.NewLine + "         ], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"armor\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"leftLegging\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": \"leftLeg\" " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ -1.9, 12, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [  " + Environment.NewLine + "  " + Environment.NewLine + "            { " + Environment.NewLine + "  " + Environment.NewLine + "             \"origin\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"size\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"uv\": [ 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"inflate\": 0, " + Environment.NewLine + "  " + Environment.NewLine + "             \"mirror\": false " + Environment.NewLine + "  " + Environment.NewLine + "           } " + Environment.NewLine + "  " + Environment.NewLine + "         ], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"armor\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"rightLegging\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": \"rightLeg\" " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ 1.9, 12, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [  " + Environment.NewLine + "  " + Environment.NewLine + "            { " + Environment.NewLine + "  " + Environment.NewLine + "             \"origin\": [ -0.1, 0, -2 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"size\": [ 4, 12, 4 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"uv\": [ 0, 48 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"inflate\": 0.25, " + Environment.NewLine + "  " + Environment.NewLine + "             \"mirror\": false " + Environment.NewLine + "  " + Environment.NewLine + "           } " + Environment.NewLine + "  " + Environment.NewLine + "         ], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"clothing\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"leftPants\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": \"leftLeg\" " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ -1.9, 12, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [  " + Environment.NewLine + "  " + Environment.NewLine + "            { " + Environment.NewLine + "  " + Environment.NewLine + "             \"origin\": [ -3.9, 0, -2 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"size\": [ 4, 12, 4 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"uv\": [ 0, 32 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"inflate\": 0.25, " + Environment.NewLine + "  " + Environment.NewLine + "             \"mirror\": false " + Environment.NewLine + "  " + Environment.NewLine + "           } " + Environment.NewLine + "  " + Environment.NewLine + "         ], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"clothing\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"rightPants\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": \"rightLeg\" " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ 0, 24, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [  " + Environment.NewLine + "  " + Environment.NewLine + "            { " + Environment.NewLine + "  " + Environment.NewLine + "             \"origin\": [ -4, 12, -2 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"size\": [ 8, 12, 4 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"uv\": [ 16, 32 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"inflate\": 0.25, " + Environment.NewLine + "  " + Environment.NewLine + "             \"mirror\": false " + Environment.NewLine + "  " + Environment.NewLine + "           } " + Environment.NewLine + "  " + Environment.NewLine + "         ], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"clothing\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"jacket\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": \"body\" " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ 0, 24, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"armor_offset\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"helmetArmorOffset\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": \"head\" " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ 0, 24, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"armor_offset\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"bodyArmorOffset\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": \"body\" " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ -5, 22, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"armor_offset\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"rightArmArmorOffset\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": \"rightArm\" " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ 5, 22, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"armor_offset\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"leftArmArmorOffset\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": \"leftArm\" " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ 0, 12, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"armor_offset\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"waist\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": \"body\" " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ -1.9, 12, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"armor_offset\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"rightLegArmorOffset\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": \"rightLeg\" " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ 1.9, 12, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"armor_offset\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"leftLegArmorOffset\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": \"leftLeg\" " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ -1.9, 12, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"armor_offset\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"rightBootArmorOffset\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": \"rightLeg\" " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ 1.9, 12, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"armor_offset\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"leftBootArmorOffset\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": \"leftLeg\" " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ -6, 15, 1 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"item\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"rightItem\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": \"rightArm\" " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ 6, 15, 1 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"item\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"leftItem\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": \"leftArm\" " + Environment.NewLine + "  " + Environment.NewLine + "       } " + Environment.NewLine + "  " + Environment.NewLine + "     ],");
-			//					}
-			//					else if (skinType == "alex")
-			//					{
-			//						writeSkins.Write("    \"bones\": [ " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ 0, 24, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [  " + Environment.NewLine + "  " + Environment.NewLine + "            { " + Environment.NewLine + "  " + Environment.NewLine + "             \"origin\": [ -4, 12, -2 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"size\": [ 8, 12, 4 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"uv\": [ 16, 16 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"inflate\": 0, " + Environment.NewLine + "  " + Environment.NewLine + "             \"mirror\": false " + Environment.NewLine + "  " + Environment.NewLine + "           } " + Environment.NewLine + "  " + Environment.NewLine + "         ], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"base\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"body\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": null " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ 0, 24, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [  " + Environment.NewLine + "  " + Environment.NewLine + "            { " + Environment.NewLine + "  " + Environment.NewLine + "             \"origin\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"size\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"uv\": [ 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"inflate\": 0, " + Environment.NewLine + "  " + Environment.NewLine + "             \"mirror\": false " + Environment.NewLine + "  " + Environment.NewLine + "           } " + Environment.NewLine + "  " + Environment.NewLine + "         ], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"armor\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"bodyArmor\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": \"body\" " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ 0, 12, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [  " + Environment.NewLine + "  " + Environment.NewLine + "            { " + Environment.NewLine + "  " + Environment.NewLine + "             \"origin\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"size\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"uv\": [ 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"inflate\": 0, " + Environment.NewLine + "  " + Environment.NewLine + "             \"mirror\": false " + Environment.NewLine + "  " + Environment.NewLine + "           } " + Environment.NewLine + "  " + Environment.NewLine + "         ], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"armor\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"belt\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": \"body\" " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ 0, 24, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [  " + Environment.NewLine + "  " + Environment.NewLine + "            { " + Environment.NewLine + "  " + Environment.NewLine + "             \"origin\": [ -4, 24, -4 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"size\": [ 8, 8, 8 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"uv\": [ 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"inflate\": 0, " + Environment.NewLine + "  " + Environment.NewLine + "             \"mirror\": false " + Environment.NewLine + "  " + Environment.NewLine + "           } " + Environment.NewLine + "  " + Environment.NewLine + "         ], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"base\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"head\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": null " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ 0, 24, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [  " + Environment.NewLine + "  " + Environment.NewLine + "            { " + Environment.NewLine + "  " + Environment.NewLine + "             \"origin\": [ -4, 24, -4 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"size\": [ 8, 8, 8 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"uv\": [ 32, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"inflate\": 0.5, " + Environment.NewLine + "  " + Environment.NewLine + "             \"mirror\": false " + Environment.NewLine + "  " + Environment.NewLine + "           } " + Environment.NewLine + "  " + Environment.NewLine + "         ], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"clothing\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"hat\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": \"head\" " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ 0, 24, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [  " + Environment.NewLine + "  " + Environment.NewLine + "            { " + Environment.NewLine + "  " + Environment.NewLine + "             \"origin\": [ 0, 24, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"size\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"uv\": [ 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"inflate\": 0, " + Environment.NewLine + "  " + Environment.NewLine + "             \"mirror\": false " + Environment.NewLine + "  " + Environment.NewLine + "           } " + Environment.NewLine + "  " + Environment.NewLine + "         ], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"armor\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"helmet\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": \"head\" " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ 5, 21.5, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [  " + Environment.NewLine + "  " + Environment.NewLine + "            { " + Environment.NewLine + "  " + Environment.NewLine + "             \"origin\": [ 4, 11.5, -2 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"size\": [ 3, 12, 4 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"uv\": [ 32, 48 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"inflate\": 0, " + Environment.NewLine + "  " + Environment.NewLine + "             \"mirror\": false " + Environment.NewLine + "  " + Environment.NewLine + "           } " + Environment.NewLine + "  " + Environment.NewLine + "         ], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"base\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"leftArm\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": null " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ -5, 21.5, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [  " + Environment.NewLine + "  " + Environment.NewLine + "            { " + Environment.NewLine + "  " + Environment.NewLine + "             \"origin\": [ -7, 11.5, -2 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"size\": [ 3, 12, 4 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"uv\": [ 40, 16 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"inflate\": 0, " + Environment.NewLine + "  " + Environment.NewLine + "             \"mirror\": false " + Environment.NewLine + "  " + Environment.NewLine + "           } " + Environment.NewLine + "  " + Environment.NewLine + "         ], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"base\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"rightArm\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": null " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ 5, 21.5, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [  " + Environment.NewLine + "  " + Environment.NewLine + "            { " + Environment.NewLine + "  " + Environment.NewLine + "             \"origin\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"size\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"uv\": [ 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"inflate\": 0, " + Environment.NewLine + "  " + Environment.NewLine + "             \"mirror\": false " + Environment.NewLine + "  " + Environment.NewLine + "           } " + Environment.NewLine + "  " + Environment.NewLine + "         ], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"armor\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"leftArmArmor\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": \"leftArm\" " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ -5, 21.5, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [  " + Environment.NewLine + "  " + Environment.NewLine + "            { " + Environment.NewLine + "  " + Environment.NewLine + "             \"origin\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"size\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"uv\": [ 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"inflate\": 0, " + Environment.NewLine + "  " + Environment.NewLine + "             \"mirror\": false " + Environment.NewLine + "  " + Environment.NewLine + "           } " + Environment.NewLine + "  " + Environment.NewLine + "         ], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"armor\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"rightArmArmor\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": \"rightArm\" " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ 5, 21.5, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [  " + Environment.NewLine + "  " + Environment.NewLine + "            { " + Environment.NewLine + "  " + Environment.NewLine + "             \"origin\": [ 4, 11.5, -2 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"size\": [ 3, 12, 4 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"uv\": [ 48, 48 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"inflate\": 0.25, " + Environment.NewLine + "  " + Environment.NewLine + "             \"mirror\": false " + Environment.NewLine + "  " + Environment.NewLine + "           } " + Environment.NewLine + "  " + Environment.NewLine + "         ], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"clothing\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"leftSleeve\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": \"leftArm\" " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ -5, 21.5, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [  " + Environment.NewLine + "  " + Environment.NewLine + "            { " + Environment.NewLine + "  " + Environment.NewLine + "             \"origin\": [ -7, 11.5, -2 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"size\": [ 3, 12, 4 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"uv\": [ 40, 32 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"inflate\": 0.25, " + Environment.NewLine + "  " + Environment.NewLine + "             \"mirror\": false " + Environment.NewLine + "  " + Environment.NewLine + "           } " + Environment.NewLine + "  " + Environment.NewLine + "         ], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"clothing\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"rightSleeve\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": \"rightArm\" " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ 1.9, 12, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [  " + Environment.NewLine + "  " + Environment.NewLine + "            { " + Environment.NewLine + "  " + Environment.NewLine + "             \"origin\": [ -0.1, 0, -2 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"size\": [ 4, 12, 4 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"uv\": [ 16, 48 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"inflate\": 0, " + Environment.NewLine + "  " + Environment.NewLine + "             \"mirror\": false " + Environment.NewLine + "  " + Environment.NewLine + "           } " + Environment.NewLine + "  " + Environment.NewLine + "         ], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"base\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"leftLeg\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": null " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ -1.9, 12, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [  " + Environment.NewLine + "  " + Environment.NewLine + "            { " + Environment.NewLine + "  " + Environment.NewLine + "             \"origin\": [ -3.9, 0, -2 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"size\": [ 4, 12, 4 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"uv\": [ 0, 16 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"inflate\": 0, " + Environment.NewLine + "  " + Environment.NewLine + "             \"mirror\": false " + Environment.NewLine + "  " + Environment.NewLine + "           } " + Environment.NewLine + "  " + Environment.NewLine + "         ], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"base\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"rightLeg\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": null " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ 1.9, 12, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [  " + Environment.NewLine + "  " + Environment.NewLine + "            { " + Environment.NewLine + "  " + Environment.NewLine + "             \"origin\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"size\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"uv\": [ 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"inflate\": 0, " + Environment.NewLine + "  " + Environment.NewLine + "             \"mirror\": false " + Environment.NewLine + "  " + Environment.NewLine + "           } " + Environment.NewLine + "  " + Environment.NewLine + "         ], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"armor\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"leftLegArmor\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": \"leftLeg\" " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ -1.9, 12, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [  " + Environment.NewLine + "  " + Environment.NewLine + "            { " + Environment.NewLine + "  " + Environment.NewLine + "             \"origin\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"size\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"uv\": [ 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"inflate\": 0, " + Environment.NewLine + "  " + Environment.NewLine + "             \"mirror\": false " + Environment.NewLine + "  " + Environment.NewLine + "           } " + Environment.NewLine + "  " + Environment.NewLine + "         ], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"armor\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"rightLegging\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": \"rightLeg\" " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ 1.9, 12, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [  " + Environment.NewLine + "  " + Environment.NewLine + "            { " + Environment.NewLine + "  " + Environment.NewLine + "             \"origin\": [ -0.1, 0, -2 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"size\": [ 4, 12, 4 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"uv\": [ 0, 48 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"inflate\": 0.25, " + Environment.NewLine + "  " + Environment.NewLine + "             \"mirror\": false " + Environment.NewLine + "  " + Environment.NewLine + "           } " + Environment.NewLine + "  " + Environment.NewLine + "         ], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"clothing\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"leftPants\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": \"leftLeg\" " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ -1.9, 12, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [  " + Environment.NewLine + "  " + Environment.NewLine + "            { " + Environment.NewLine + "  " + Environment.NewLine + "             \"origin\": [ -3.9, 0, -2 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"size\": [ 4, 12, 4 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"uv\": [ 0, 32 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"inflate\": 0.25, " + Environment.NewLine + "  " + Environment.NewLine + "             \"mirror\": false " + Environment.NewLine + "  " + Environment.NewLine + "           } " + Environment.NewLine + "  " + Environment.NewLine + "         ], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"clothing\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"rightPants\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": \"rightLeg\" " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ 0, 24, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [  " + Environment.NewLine + "  " + Environment.NewLine + "            { " + Environment.NewLine + "  " + Environment.NewLine + "             \"origin\": [ -4, 12, -2 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"size\": [ 8, 12, 4 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"uv\": [ 16, 32 ], " + Environment.NewLine + "  " + Environment.NewLine + "             \"inflate\": 0.25, " + Environment.NewLine + "  " + Environment.NewLine + "             \"mirror\": false " + Environment.NewLine + "  " + Environment.NewLine + "           } " + Environment.NewLine + "  " + Environment.NewLine + "         ], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"clothing\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"jacket\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": \"body\" " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ 0, 24, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"armor_offset\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"helmetArmorOffset\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": \"head\" " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ 0, 24, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"armor_offset\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"bodyArmorOffset\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": \"body\" " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ -5, 21.5, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"armor_offset\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"rightArmArmorOffset\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": \"rightArm\" " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ 5, 21.5, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"armor_offset\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"leftArmArmorOffset\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": \"leftArm\" " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ 0, 12, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"armor_offset\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"waist\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": \"body\" " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ -1.9, 12, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"armor_offset\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"rightLegArmorOffset\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": \"rightLeg\" " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ 1.9, 12, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"armor_offset\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"leftLegArmorOffset\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": \"leftLeg\" " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ -1.9, 12, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"armor_offset\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"rightBootArmorOffset\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": \"rightLeg\" " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ 1.9, 12, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"armor_offset\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"leftBootArmorOffset\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": \"leftLeg\" " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ -6, 14.5, 1 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"item\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"rightItem\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": \"rightArm\" " + Environment.NewLine + "  " + Environment.NewLine + "       }, " + Environment.NewLine + "  " + Environment.NewLine + "       { " + Environment.NewLine + "  " + Environment.NewLine + "         \"pivot\": [ 6, 14.5, 1 ], " + Environment.NewLine + "  " + Environment.NewLine + "          \"rotation\": [ 0, 0, 0 ], " + Environment.NewLine + "  " + Environment.NewLine + "           \"cubes\": [], " + Environment.NewLine + "  " + Environment.NewLine + "         \"META_BoneType\": \"item\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"name\": \"leftItem\", " + Environment.NewLine + "  " + Environment.NewLine + "         \"parent\": \"leftArm\" " + Environment.NewLine + "  " + Environment.NewLine + "       } " + Environment.NewLine + "  " + Environment.NewLine + "     ],");
-			//					}
-
-
-			//					writeSkins.WriteLine("    \"texturewidth\": 64 , ");
-			//					writeSkins.WriteLine("    \"textureheight\": 64,");
-			//					writeSkins.WriteLine("    \"META_ModelVersion\": \"1.0.6\",");
-			//					writeSkins.WriteLine("    \"rigtype\": \"normal\",");
-			//					writeSkins.WriteLine("    \"animationArmsDown\": false,");
-			//					writeSkins.WriteLine("    \"animationArmsOutFront\": false,");
-			//					writeSkins.WriteLine("    \"animationStatueOfLibertyArms\": false,");
-			//					writeSkins.WriteLine("    \"animationSingleArmAnimation\": false,");
-			//					writeSkins.WriteLine("    \"animationStationaryLegs\": false,");
-			//					writeSkins.WriteLine("    \"animationSingleLegAnimation\": false,");
-			//					writeSkins.WriteLine("    \"animationNoHeadBob\": false,");
-			//					writeSkins.WriteLine("    \"animationDontShowArmor\": false,");
-			//					writeSkins.WriteLine("    \"animationUpsideDown\": false,");
-			//					writeSkins.WriteLine("    \"animationInvertedCrouch\": false");
-			//					if (newSkinCount != skinsList.Count)
-			//					{
-			//						writeSkins.WriteLine("  },");
-			//					}
-			//					else
-			//					{
-			//						writeSkins.WriteLine("  }");
-			//					}
-			//				}
-			//				Console.WriteLine(writeSkins);
-			//			}
-			//			Random rnd = new Random();
-			//			int month = rnd.Next(1, 13); // creates a number between 1 and 12
-			//			int dice = rnd.Next(1, 7);   // creates a number between 1 and 6
-			//			int card = rnd.Next(52);
-
-			//			string randomPlus = month.ToString() + dice.ToString() + card.ToString();
-			//			if (randomPlus.Count() > 12)
-			//			{
-			//				randomPlus.Remove(0, randomPlus.Count() - 12);
-			//			}
-			//			else if (randomPlus.Count() < 12)
-			//			{
-			//				int ii = 12 - randomPlus.Count();
-			//				for (int i = 0; i < ii; i++)
-			//				{
-			//					randomPlus += 0;
-			//				}
-			//			}
-			//			else if (randomPlus.Count() == 12)
-			//			{
-			//			}
-
-			//			//Create Manifest file
-			//			using (StreamWriter writeSkins = new StreamWriter(root + "/manifest.json"))
-			//			{
-			//				writeSkins.WriteLine("{");
-			//				writeSkins.WriteLine("  \"header\": {");
-			//				writeSkins.WriteLine("    \"version\": [");
-			//				writeSkins.WriteLine("      1,");
-			//				writeSkins.WriteLine("      0,");
-			//				writeSkins.WriteLine("      0");
-			//				writeSkins.WriteLine("    ],");
-			//				writeSkins.WriteLine("    \"description\": \"Template by Ultmate_Mario, Conversion by Nobledez\",");
-			//				writeSkins.WriteLine("    \"name\": \"" + packName + "\",");
-			//				writeSkins.WriteLine("    \"uuid\": \"" + uuid.Remove(0, 4) + "-" + uuid.Remove(0, 8) + "-" + uuid.Remove(1, 8) + "-" + uuid.Remove(2, 8) + "-" + randomPlus + "\""); //8-4-4-4-12
-			//				writeSkins.WriteLine("  },");
-			//				writeSkins.WriteLine("  \"modules\": [");
-			//				writeSkins.WriteLine("    {");
-			//				writeSkins.WriteLine("      \"version\": [");
-			//				writeSkins.WriteLine("        1,");
-			//				writeSkins.WriteLine("        0,");
-			//				writeSkins.WriteLine("        0");
-			//				writeSkins.WriteLine("      ],");
-			//				writeSkins.WriteLine("      \"type\": \"skin_pack\",");
-			//				writeSkins.WriteLine("      \"uuid\": \"8dfd1d65-b3ca-4726-b9e0-9b46a40b72a4\"");
-			//				writeSkins.WriteLine("    }");
-			//				writeSkins.WriteLine("  ],");
-			//				writeSkins.WriteLine("  \"format_version\": 1");
-			//				writeSkins.WriteLine("}");
-			//			}
-
-			//			//create lang file
-			//			using (StreamWriter writeSkins = new StreamWriter(root + "/texts/en_US.lang"))
-			//			{
-			//				writeSkins.WriteLine("skinpack." + packName + "=" + Path.GetFileNameWithoutExtension(convert.FileName));
-			//				foreach (Item displayName in skinDisplayNames)
-			//				{
-			//					writeSkins.WriteLine("skin." + packName + "." + displayName.Id + "=" + displayName.Name);
-			//				}
-			//			}
-
-			//			//adds skin textures
-			//			foreach (PCKFile.FileData skinTexture in skinsList)
-			//			{
-			//				var ms = new MemoryStream(skinTexture.data);
-			//				Bitmap saveSkin = new Bitmap(Image.FromStream(ms));
-			//				if (saveSkin.Width == saveSkin.Height)
-			//				{
-			//					ResizeImage(saveSkin, 64, 64);
-			//				}
-			//				else if (saveSkin.Height == saveSkin.Width / 2)
-			//				{
-			//					ResizeImage(saveSkin, 64, 32);
-			//				}
-			//				else
-			//				{
-			//					ResizeImage(saveSkin, 64, 64);
-			//				}
-			//				saveSkin.Save(root + "/" + skinTexture.name, ImageFormat.Png);
-			//			}
-
-			//			//adds cape textures
-			//			foreach (PCKFile.FileData capeTexture in capesList)
-			//			{
-			//				File.WriteAllBytes(root + "/" + capeTexture.name, capeTexture.data);
-			//			}
-
-			//			string startPath = root;
-			//			string zipPath = rootFinal + "content.zipe";
-
-			//			try
-			//			{
-			//				ZipFile.CreateFromDirectory(startPath, zipPath);//Creates contents zipe
-			//			}catch (Exception)
-			//			{
-			//				File.Delete(zipPath);
-			//				ZipFile.CreateFromDirectory(startPath, zipPath);//Creates contents zipe
-			//			}
-
-			//			rootFinal = root + "temp/";
-			//			Directory.CreateDirectory(rootFinal);
-			//			File.Move(zipPath, rootFinal + "content.zipe");
-			//			File.Copy(root + "/manifest.json", rootFinal + "/manifest.json");
-			//			ZipFile.CreateFromDirectory(rootFinal, convert.FileName);//Creates mcpack
-			//			Directory.Delete(root, true);
-			//			Directory.Delete(rootFinal, true);
-
-			//			MessageBox.Show("Conversion Complete");
-			//		}
-			//	}
-			//	catch (Exception convertEr)
-			//	{
-			//		MessageBox.Show(convertEr.ToString());
-			//	}
-			//}
-			//else if (openedPCKS.Visible == false)
-			//{
-			//	MessageBox.Show("Open PCK file first!");
-			//}
+			MessageBox.Show("This feature is currently being reworked.", "Currently unavailable", MessageBoxButtons.OK, MessageBoxIcon.Information);
 		}
-
 
 		public static Bitmap ResizeImage(Image image, int width, int height)
 		{
@@ -2507,245 +1644,6 @@ namespace PckStudio
 
 			return destImage;
 		}
-		#endregion
-
-		#region 3ds feature in testing
-
-		private struct loadedTexture
-		{
-			public bool modified;
-			public uint gpuCommandsOffset;
-			public uint gpuCommandsWordCount;
-			public uint offset;
-			public int length;
-			public RenderBase.OTexture texture;
-		}
-
-		private struct loadedMaterial
-		{
-			public string texture0;
-			public string texture1;
-			public string texture2;
-			public uint gpuCommandsOffset;
-			public uint gpuCommandsWordCount;
-		}
-
-		private class loadedBCH
-		{
-			public uint mainHeaderOffset;
-			public uint gpuCommandsOffset;
-			public uint dataOffset;
-			public uint relocationTableOffset;
-			public uint relocationTableLength;
-			public List<loadedTexture> textures;
-			public List<loadedMaterial> materials;
-
-			public loadedBCH()
-			{
-				textures = new List<loadedTexture>();
-				materials = new List<loadedMaterial>();
-			}
-		}
-
-		private byte[] align(byte[] input)
-		{
-			int length = input.Length;
-			while ((length & 0x7f) > 0) length++;
-			byte[] output = new byte[length];
-			Buffer.BlockCopy(input, 0, output, 0, input.Length);
-			return output;
-		}
-
-		private void replaceData(Stream data, uint offset, int length, byte[] newData)
-		{
-			data.Seek(offset + length, SeekOrigin.Begin);
-			byte[] after = new byte[data.Length - data.Position];
-			data.Read(after, 0, after.Length);
-			data.SetLength(offset);
-			data.Seek(offset, SeekOrigin.Begin);
-			data.Write(newData, 0, newData.Length);
-			data.Write(after, 0, after.Length);
-		}
-
-		private void updateTexture(int index, loadedTexture newTex)
-		{
-			bch.textures.RemoveAt(index);
-			bch.textures.Insert(index, newTex);
-		}
-
-		private void replaceCommand(Stream data, BinaryWriter output, uint newVal)
-		{
-			data.Seek(-8, SeekOrigin.Current);
-			output.Write(newVal);
-			data.Seek(4, SeekOrigin.Current);
-		}
-
-		private void updateAddress(Stream data, BinaryReader input, BinaryWriter output, int diff)
-		{
-			uint offset = input.ReadUInt32();
-			offset = (uint)(offset + diff);
-			data.Seek(-4, SeekOrigin.Current);
-			output.Write(offset);
-		}
-
-		loadedBCH bch;
-
-		private void create3dstToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			if (treeViewMain.SelectedNode != null)
-			{
-				loadedTexture tex = new loadedTexture();
-
-				SaveFileDialog exportDs = new SaveFileDialog();
-				exportDs.ShowDialog();
-				string currentFile = exportDs.FileName;
-
-				bch = new loadedBCH();
-
-				using (FileStream data = new FileStream(currentFile, FileMode.Open))
-				{
-					BinaryReader input = new BinaryReader(data);
-					BinaryWriter output = new BinaryWriter(data);
-
-					MemoryStream png = new MemoryStream(((PCKFile.FileData)(treeViewMain.SelectedNode.Tag)).data); //Gets image data from minefile data
-					Image skinPicture = Image.FromStream(png); //Constructs image data into image
-					pictureBoxImagePreview.Image = skinPicture; //Sets image preview to image
-
-					byte[] buffer = new byte[skinPicture.Width * skinPicture.Height * 4];
-					input.Read(buffer, 0, buffer.Length);
-					Bitmap texture = TextureCodec.decode(buffer, skinPicture.Width, skinPicture.Height, RenderBase.OTextureFormat.rgba8);
-					tex.texture = new RenderBase.OTexture(texture, "Texure");
-
-					//tex.texture = treeViewMain.SelectedNode.Tag;
-
-					for (int i = 0; i < bch.textures.Count; i++)
-					{
-						tex = bch.textures[i];
-						tex.modified = true;
-
-						if (tex.modified)
-						{
-							byte[] bufferx = align(TextureCodec.encode(tex.texture.texture, RenderBase.OTextureFormat.rgba8));
-							int diff = bufferx.Length - tex.length;
-
-							replaceData(data, tex.offset, tex.length, bufferx);
-
-							//Update offsets of next textures
-							tex.length = bufferx.Length;
-							tex.modified = false;
-							updateTexture(i, tex);
-							for (int j = i; j < bch.textures.Count; j++)
-							{
-								loadedTexture next = bch.textures[j];
-								next.offset = (uint)(next.offset + diff);
-								updateTexture(j, next);
-							}
-
-							//Update all addresses poiting after the replaced data
-							bch.relocationTableOffset = (uint)(bch.relocationTableOffset + diff);
-							for (int index = 0; index < bch.relocationTableLength; index += 4)
-							{
-								data.Seek(bch.relocationTableOffset + index, SeekOrigin.Begin);
-								uint value = input.ReadUInt32();
-								uint offset = value & 0x1ffffff;
-								byte flags = (byte)(value >> 25);
-
-								if ((flags & 0x20) > 0 || flags == 7 || flags == 0xc)
-								{
-									if ((flags & 0x20) > 0)
-										data.Seek((offset * 4) + bch.gpuCommandsOffset, SeekOrigin.Begin);
-									else
-										data.Seek((offset * 4) + bch.mainHeaderOffset, SeekOrigin.Begin);
-
-									uint address = input.ReadUInt32();
-									if (address + bch.dataOffset > tex.offset)
-									{
-										address = (uint)(address + diff);
-										data.Seek(-4, SeekOrigin.Current);
-										output.Write(address);
-									}
-								}
-							}
-
-							uint newSize = (uint)((tex.texture.texture.Width << 16) | tex.texture.texture.Height);
-
-							//Update texture format
-							data.Seek(tex.gpuCommandsOffset, SeekOrigin.Begin);
-							for (int index = 0; index < tex.gpuCommandsWordCount * 3; index++)
-							{
-								uint command = input.ReadUInt32();
-
-								switch (command)
-								{
-									case 0xf008e:
-									case 0xf0096:
-									case 0xf009e:
-										replaceCommand(data, output, 0); //Set texture format to 0 = RGBA8888
-										break;
-									case 0xf0082:
-									case 0xf0092:
-									case 0xf009a:
-										replaceCommand(data, output, newSize); //Set new texture size
-										break;
-								}
-							}
-
-							//Update material texture format
-							foreach (loadedMaterial mat in bch.materials)
-							{
-								data.Seek(mat.gpuCommandsOffset, SeekOrigin.Begin);
-								for (int index = 0; index < mat.gpuCommandsWordCount; index++)
-								{
-									uint command = input.ReadUInt32();
-
-									switch (command)
-									{
-										case 0xf008e: if (mat.texture0 == tex.texture.name || mat.texture0 == "") replaceCommand(data, output, 0); break;
-										case 0xf0096: if (mat.texture1 == tex.texture.name || mat.texture1 == "") replaceCommand(data, output, 0); break;
-										case 0xf009e: if (mat.texture2 == tex.texture.name || mat.texture2 == "") replaceCommand(data, output, 0); break;
-									}
-								}
-							}
-
-							//Patch up BCH header for new offsets and lengths
-							data.Seek(4, SeekOrigin.Begin);
-							byte backwardCompatibility = input.ReadByte();
-							byte forwardCompatibility = input.ReadByte();
-
-							//Update Data Extended and Relocation Table offsets
-							data.Seek(18, SeekOrigin.Current);
-							if (backwardCompatibility > 0x20) updateAddress(data, input, output, diff);
-							updateAddress(data, input, output, diff);
-
-							//Update data length
-							data.Seek(12, SeekOrigin.Current);
-							updateAddress(data, input, output, diff);
-						}
-					}
-					using (Stream file = File.Create(currentFile + ".tmp"))
-					{
-						CopyStream(output.BaseStream, file);
-					}
-
-				}
-
-				MessageBox.Show("Done!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-			}
-
-		}
-
-
-		public static void CopyStream(Stream input, Stream output)
-		{
-			byte[] buffer = new byte[8 * 1024];
-			int len;
-			while ((len = input.Read(buffer, 0, buffer.Length)) > 0)
-			{
-				output.Write(buffer, 0, len);
-			}
-		}
-
-		#endregion
 
 		private void openToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
@@ -2755,7 +1653,7 @@ namespace PckStudio
 			open.Show();
 			TimeSpan duration = new TimeSpan(DateTime.Now.Ticks - Begin.Ticks);
 
-			Console.WriteLine("Completed in: " + duration);
+			Debug.WriteLine("Completed in: " + duration);
 		}
 
 		private void wiiUPCKInstallerToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2925,9 +1823,9 @@ namespace PckStudio
 			Process.Start("https://ko-fi.com/mattnl");
 		}
 
-		private void setFileIcon(TreeNode node, PCKFile.FileData.FileType type)
+		private void SetPckFileIcon(TreeNode node, PCKFile.FileData.FileType type)
 		{
-			switch (type)
+            switch (type)
 			{
 				case PCKFile.FileData.FileType.AudioFile:
 					node.ImageIndex = 1;
@@ -2977,6 +1875,10 @@ namespace PckStudio
 					node.ImageIndex = 14;
 					node.SelectedImageIndex = 14;
 					break;
+				case PCKFile.FileData.FileType.BehavioursFile:
+					node.ImageIndex = 15;
+					node.SelectedImageIndex = 15;
+					break;
 				default: // unknown file format
 					node.ImageIndex = 5;
 					node.SelectedImageIndex = 5;
@@ -2987,8 +1889,8 @@ namespace PckStudio
 		private void setFileType_Click(object sender, EventArgs e, PCKFile.FileData.FileType type)
 		{
 			if (treeViewMain.SelectedNode is TreeNode t && t.Tag is PCKFile.FileData file)
-            {
-				Console.WriteLine($"Setting {file.filetype} to {type}");
+      {
+				Debug.WriteLine($"Setting {file.filetype} to {type}");
 				file.filetype = type;
 				setFileIcon(t, type);
 				if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath)) RebuildSubPCK(treeViewMain.SelectedNode);
@@ -3024,6 +1926,152 @@ namespace PckStudio
 					"\nFile size: " + file.size +
 					"\nProperties count: " + file.properties.Count
 					, Path.GetFileName(file.filepath) + " file info");
+			}
+		}
+
+		private void generateMipMapTextureToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (treeViewMain.SelectedNode.Tag is PCKFile.FileData file && file.filetype == PCKFile.FileData.FileType.TextureFile)
+			{
+				string textureDirectory = Path.GetDirectoryName(file.filepath);
+				string textureName = Path.GetFileNameWithoutExtension(file.filepath);
+
+				if (IsFilePathMipMapped(textureName)) return;
+
+				string textureExtension = Path.GetExtension(file.filepath);
+
+				// TGA is not yet supported
+				if (textureExtension == ".tga") return;
+
+				using MipMapPrompt diag = new MipMapPrompt();
+				if (diag.ShowDialog(this) == DialogResult.OK)
+				{
+					for (int i = 2; i < 2 + diag.Levels; i++)
+					{
+						string mippedPath = textureDirectory + "/" + textureName + "MipMapLevel" + i + textureExtension;
+						Debug.WriteLine(mippedPath);
+						if (currentPCK.HasFile(mippedPath, PCKFile.FileData.FileType.TextureFile)) 
+							currentPCK.Files.Remove(currentPCK.GetFile(mippedPath, PCKFile.FileData.FileType.TextureFile));
+						PCKFile.FileData MipMappedFile = new PCKFile.FileData(mippedPath, PCKFile.FileData.FileType.TextureFile);
+
+						Image originalTexture = Bitmap.FromStream(new MemoryStream(file.data));
+						int NewWidth = originalTexture.Width / (int)Math.Pow(2,i - 1);
+						int NewHeight = originalTexture.Height / (int)Math.Pow(2, i - 1);
+						Rectangle tileArea = new Rectangle(0, 0,
+							NewWidth < 1 ? 1 : NewWidth, 
+							NewHeight < 1 ? 1 : NewHeight);
+						Image mippedTexture = new Bitmap(NewWidth, NewHeight);
+						using (Graphics gfx = Graphics.FromImage(mippedTexture))
+						{
+							gfx.SmoothingMode = SmoothingMode.None;
+							gfx.InterpolationMode = InterpolationMode.NearestNeighbor;
+							gfx.PixelOffsetMode = PixelOffsetMode.HighQuality;
+							gfx.DrawImage(originalTexture, tileArea);
+						}
+						MemoryStream texStream = new MemoryStream();
+						mippedTexture.Save(texStream, ImageFormat.Png);
+						MipMappedFile.SetData(texStream.ToArray());
+
+						currentPCK.Files.Insert(currentPCK.Files.IndexOf(file) + i - 1, MipMappedFile);
+					}
+					BuildMainTreeView();
+				}
+			}
+		}
+
+		private void colourscolToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			PCKFile.FileData NewColorFile;
+			if (currentPCK.TryGetFile("colours.col", PCKFile.FileData.FileType.ColourTableFile, out NewColorFile))
+			{
+				MessageBox.Show("A color table file already exists in this PCK and a new one cannot be created.", "Operation aborted");
+				return;
+			}
+			NewColorFile = new PCKFile.FileData("colours.col", PCKFile.FileData.FileType.ColourTableFile);
+			NewColorFile.SetData(Resources.tu69colours);
+			currentPCK.Files.Add(NewColorFile);
+			BuildMainTreeView();
+		}
+
+		private void tabControl_Selecting(object sender, TabControlCancelEventArgs e)
+		{
+			if (!isSelectingTab) e.Cancel = true;
+		}
+
+		private void as3DSTextureFileToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (treeViewMain.SelectedNode is TreeNode node &&
+				node.Tag is PCKFile.FileData file &&
+				file.filetype == PCKFile.FileData.FileType.SkinFile)
+			{
+				SaveFileDialog saveFileDialog = new SaveFileDialog();
+				saveFileDialog.Filter = "3DS Texture | *.3dst";
+				saveFileDialog.DefaultExt = ".3dst";
+				if (saveFileDialog.ShowDialog() == DialogResult.OK)
+				{
+					using (var fs = saveFileDialog.OpenFile())
+					{
+						using var ms = new MemoryStream(file.data);
+						Image img = Image.FromStream(ms);
+						_3DSUtil.SetImageTo3DST(fs, img);
+					}
+				}
+			}
+		}
+
+		private void addMultipleEntriesToolStripMenuItem1_Click(object sender, EventArgs e)
+		{
+			if (treeViewMain.SelectedNode is TreeNode t &&
+				t.Tag is PCKFile.FileData file)
+			{
+				using (var input = new TextPrompt())
+				{
+					if (input.ShowDialog(this) == DialogResult.OK)
+					{
+						foreach (var line in input.TextOutput)
+						{
+							int idx = line.IndexOf(' ');
+							if (idx == -1 || line.Length - 1 == idx)
+								continue;
+							file.properties.Add((line.Substring(0, idx), line.Substring(idx + 1)));
+						}
+						ReloadMetaTreeView();
+						saved = false;
+					}
+				}
+			}
+		}
+
+		private void correctSkinDecimalsToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (treeViewMain.SelectedNode is TreeNode t && t.Tag is PCKFile.FileData file && file.filetype == PCKFile.FileData.FileType.SkinFile)
+			{
+				foreach(var p in file.properties.FindAll(s => s.property == "BOX" || s.property == "OFFSET"))
+				{
+					file.properties[file.properties.IndexOf(p)] = (p.property, p.value.Replace(',','.'));
+				}
+				ReloadMetaTreeView();
+				saved = false;
+			}
+		}
+
+		private void addCustomPackIconToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			OpenFileDialog dialog = new OpenFileDialog();
+			dialog.Filter = "Minecraft Archive|*.arc";
+			if (dialog.ShowDialog(this) == DialogResult.OK)
+			{
+				string filepath = dialog.FileName;
+                dialog.Filter = "Pack Icon|*.png";
+				if (currentPCK.TryGetFile("0", PCKFile.FileData.FileType.InfoFile, out PCKFile.FileData file) &&
+					dialog.ShowDialog(this) == DialogResult.OK)
+				{
+					ARCUtil.Inject(filepath, (
+						string.Format("Graphics\\PackGraphics\\{0}.png", file.properties.GetPropertyValue("PACKID")),
+						File.ReadAllBytes(dialog.FileName))
+						);
+					MessageBox.Show("Successfully added Pack Icon to Archive!", "Successfully Added", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				}
 			}
 		}
 	}

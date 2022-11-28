@@ -1,4 +1,22 @@
-﻿using System;
+﻿/* Copyright (c) 2022-present miku-666
+ * This software is provided 'as-is', without any express or implied
+ * warranty. In no event will the authors be held liable for any damages
+ * arising from the use of this software.
+ * 
+ * Permission is granted to anyone to use this software for any purpose,
+ * including commercial applications, and to alter it and redistribute it
+ * freely, subject to the following restrictions:
+ * 
+ * 1.The origin of this software must not be misrepresented; you must not
+ *    claim that you wrote the original software. If you use this software
+ *    in a product, an acknowledgment in the product documentation would be
+ *    appreciated but is not required.
+ * 2. Altered source versions must be plainly marked as such, and must not be
+ *    misrepresented as being the original software.
+ * 3. This notice may not be removed or altered from any source distribution.
+**/
+using PckStudio.Classes.FileTypes;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,13 +25,15 @@ using System.Threading.Tasks;
 
 namespace PckStudio.Classes.IO
 {
-    public class StreamDataReader
+    public abstract class StreamDataReader<T>
     {
         private static bool useLittleEndian;
         protected static bool IsUsingLittleEndian => useLittleEndian;
+        protected abstract T ReadFromStream(Stream stream);
+
         protected StreamDataReader(bool useLittleEndian)
         {
-            StreamDataReader.useLittleEndian = useLittleEndian;
+            StreamDataReader<T>.useLittleEndian = useLittleEndian;
         }
 
         protected static string ReadString(Stream stream, int length, Encoding encoding)

@@ -1,14 +1,14 @@
-﻿using PckStudio.Classes.FileTypes;
-using System;
-using System.Collections.Generic;
+﻿using System;
+using System.IO;
 using System.Data;
 using System.Linq;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using MetroFramework.Forms;
-using RichPresenceClient;
-using PckStudio.Forms.Additional_Popups.Loc;
+using PckStudio.Classes.Misc;
+using PckStudio.Classes.FileTypes;
 using PckStudio.Classes.IO.LOC;
-using System.IO;
+using PckStudio.Forms.Additional_Popups.Loc;
 
 namespace PckStudio.Forms.Editor
 {
@@ -40,11 +40,6 @@ namespace PckStudio.Forms.Editor
 			foreach(string locKey in currentLoc.LocKeys.Keys)
 				treeViewLocKeys.Nodes.Add(locKey);
 		}
-
-        private void LOCEditor_FormClosing(object sender, FormClosingEventArgs e)
-        {
-			RPC.SetPresence("An Open Source .PCK File Editor", "Program by PhoenixARC");
-        }
 
 		private void treeViewLocKeys_AfterSelect(object sender, TreeViewEventArgs e)
 		{

@@ -1,19 +1,10 @@
-﻿using PckStudio.Classes.FileTypes;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows.Forms;
 
 namespace PckStudio
 {
     public partial class addMeta : MetroFramework.Forms.MetroForm
     {
-
         public string PropertyName => textBox1.Text;
         public string PropertyValue => textBox2.Text;
 

@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using API.PCKCenter.model;
+using PckStudio.API.PCKCenter.model;
 
-namespace API.PCKCenter
+namespace PckStudio.API.PCKCenter
 {
     public class LocalActions
     {
-        string cache = PckStudio.Program.AppDataCache + "/packs/";
+        string cache = Program.AppDataCache + "/packs/";
         public bool SaveLocalJSON(PCKCenterJSON JSONData, string category, bool isVita)
         {
             try

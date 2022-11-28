@@ -1,28 +1,10 @@
 ﻿using System;
-using System.Net;
 using System.IO;
-using System.IO.Compression;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using MetroFramework.Forms;
-using System.Resources;
-using System.Threading;
-using System.Drawing.Drawing2D;
-using System.Diagnostics;
-using System.Linq.Expressions;
 using PckStudio.Properties;
-using Ohana3DS_Rebirth.Ohana;
-using PckStudio;
-using PckStudio.Forms;
-using System.IO.Packaging;
-using RichPresenceClient;
 using PckStudio.Classes.FileTypes;
 
 namespace PckStudio.Forms.Utilities
@@ -36,10 +18,7 @@ namespace PckStudio.Forms.Utilities
             Pck = pck;
         }
 
-        #region Variables
-
         string AppData = "";
-
         string Packname = "";
 
         bool ToPC = true;
@@ -48,7 +27,7 @@ namespace PckStudio.Forms.Utilities
 
         TreeView TView;
 
-        string[,] ItemSheetArray =
+        static string[,] ItemSheetArray =
         {
         {"leather_helmet","chainmail_helmet","iron_helmet","diamond_helmet","golden_helmet","flint_and_steel","flint","coal","string","wheat_seeds","apple","golden_apple","egg","sugar","snowball","elytra" },
         {"leather_chestplate","chainmail_chestplate","iron_chestplate","diamond_chestplate","golden_chestplate","bow","brick","iron_ingot","feather","wheat","painting","sugarcane","bone","cake","slime_ball","broken_elytra" },
@@ -69,7 +48,7 @@ namespace PckStudio.Forms.Utilities
         {"leather_horse_armor","","","","","","","kelp","dried_kelp","sea_pickle","nautilus_shell","heart_of_the_sea","turtle_helmet","scute","trident","phantom_membrane" }
         };
 
-        string[,] BlockSheetArray =
+        static string[,] BlockSheetArray =
         {
             {"grass_block_top","stone","dirt","grass_block_side","oak_planks","smooth_stone_slab_side","smooth_stone","bricks","tnt_side","tnt_top","tnt_bottom","cobweb","poppy","dandelion","blue_concrete","oak_sapling" },
             {"cobblestone","bedrock","sand","gravel","oak_log","oak_log_top","iron_block","gold_block","diamond_block","emerald_block","redstone_block","dropper_front","red_mushroom","brown_mushroom","jungle_sapling","red_concrete" },
@@ -107,7 +86,7 @@ namespace PckStudio.Forms.Utilities
             {"stripped_oak_log","stripped_oak_log_top","stripped_acacia_log","stripped_acacia_log_top","stripped_birch_log","stripped_birch_log_top","stripped_dark_oak_log","stripped_dark_oak_log_top","stripped_jungle_log","stripped_jungle_log_top","stripped_spruce_log","stripped_spruce_log_top","acacia_trapdoor","birch_trapdoor","dark_oak_trapdoor","jungle_trapdoor" }
         };
 
-        string[,] mobs =
+        static string[,] mobs =
         {
             {"\\entity\\alex","\\alex"},
             {"\\entity\\steve","\\char"},
@@ -207,7 +186,7 @@ namespace PckStudio.Forms.Utilities
             {"\\entity\\zombie_villager\\zombie_villager","\\zombie_villager\\zombie_villager"}
         };
 
-        string[,] painting =
+        static string[,] painting =
         {
              {"alban","0","2", "1", "1"},
              {"alban","1","2", "1", "1"},
@@ -257,7 +236,7 @@ namespace PckStudio.Forms.Utilities
              {"back","3","12", "1", "1"}
         };
 
-        string[,] ExData = {
+        static string[,] ExData = {
         { "\\environment\\clouds","\\environment\\clouds"},
         { "\\environment\\rain","\\environment\\rain"},
         { "\\environment\\snow","\\environment\\snow"},
@@ -267,7 +246,7 @@ namespace PckStudio.Forms.Utilities
         { "\\misc\\pumpkinblur","\\misc\\pumpkinblur"}
         };
 
-        string[,] armour =
+        static string[,] armour =
             {
                 { "\\models\\armor\\chainmail_layer_1", "\\armor\\chain_1"},
                 { "\\models\\armor\\chainmail_layer_2", "\\armor\\chain_2"},
@@ -284,13 +263,17 @@ namespace PckStudio.Forms.Utilities
                 { "\\models\\armor\\turtle_layer_1", "\\armor\\turtle_1"}
             };
 
-        #endregion
-
-        #region 
-
         private void TextureConverterUtility_Load(object sender, EventArgs e)
         {
-            AppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\.minecraft\\resourcepacks";
+            AppData = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "\\.minecraft\\resourcepacks");
+            if (!Directory.Exists(AppData))
+            {
+                MessageBox.Show($"Could not find \".minecraft folder\" in {Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}", "Directory not found");
+                DialogResult = DialogResult.Cancel;
+                Close();
+                return;
+            }
+
             if (ToPC)
             {
                 foreach (string folder in Directory.GetDirectories(AppData))
@@ -351,23 +334,20 @@ namespace PckStudio.Forms.Utilities
                 SplitTextures3("kz.png", painting);
                 File.WriteAllText(AppData + "\\" + Packname + "\\pack.mcmeta", "{\n\t\"pack\": {\n\t\t\"pack_format\": 6,\n\t\t\"description\": \"\"\n\t}\n}");
                 Resources.pack.Save(AppData + "\\" + Packname + "\\pack.png");
-                this.Close();
+                Close();
             }
         }
-
-        #endregion
 
         public void SplitTextures(string path, Image Img)
         {
             try
             {
-
                 // Get the inputs.
                 int wid = 16;
                 int hgt = 16;
                 string Outpath = "";
 
-                Bitmap bm = (Bitmap)Img;
+                Bitmap bm = new Bitmap(Img);
 
                 if (Path.GetFileNameWithoutExtension(path) == "items")
                 {
@@ -451,7 +431,7 @@ namespace PckStudio.Forms.Utilities
 
                 foreach (PCKFile.FileData mf in Pck.Files)
                 {
-                    System.IO.FileInfo file = new System.IO.FileInfo(Environment.CurrentDirectory + "\\Temp\\" + @"\" + mf.filepath);
+                    FileInfo file = new FileInfo(Environment.CurrentDirectory + "\\Temp\\" + @"\" + mf.filepath);
                     file.Directory.Create(); // If the directory already exists, this method does nothing.
                     File.WriteAllBytes(Environment.CurrentDirectory + "\\Temp\\" + @"\" + mf.filepath, mf.data); //writes minefile to file
                 }
@@ -476,7 +456,7 @@ namespace PckStudio.Forms.Utilities
 
                 foreach (PCKFile.FileData mf in Pck.Files)
                 {
-                    System.IO.FileInfo file = new System.IO.FileInfo(Environment.CurrentDirectory + "\\Temp\\" + @"\" + mf.filepath);
+                    FileInfo file = new FileInfo(Environment.CurrentDirectory + "\\Temp\\" + @"\" + mf.filepath);
                     file.Directory.Create(); // If the directory already exists, this method does nothing.
                     File.WriteAllBytes(Environment.CurrentDirectory + "\\Temp\\" + @"\" + mf.filepath, mf.data); //writes minefile to file
                 }
@@ -557,9 +537,7 @@ namespace PckStudio.Forms.Utilities
                 }
                 i++;
             }
-            
             bm.Dispose();
-
         }
 
         private void TextureConverterUtility_FormClosing(object sender, FormClosingEventArgs e)

@@ -7,15 +7,19 @@ namespace PckStudio.Classes.IO.COL
 {
     internal class COLFileWriter : StreamDataWriter
     {
+        private COLFile colourFile;
+
         public static void Write(Stream stream, COLFile file)
         {
-            new COLFileWriter().WriteToStream(stream, file);
+            new COLFileWriter(file).WriteToStream(stream);
         }
 
-        private COLFileWriter() : base(false)
-        {}
+        public COLFileWriter(COLFile file) : base(false)
+        {
+            colourFile = file;
+        }
 
-        private void WriteToStream(Stream stream, COLFile colourFile)
+        protected override void WriteToStream(Stream stream)
         {
             WriteInt(stream, Convert.ToInt32(colourFile.waterEntries.Count > 0));
             WriteInt(stream, colourFile.entries.Count);
@@ -31,8 +35,8 @@ namespace PckStudio.Classes.IO.COL
                 {
                     WriteString(stream, colorEntry.name);
                     WriteUInt(stream, colorEntry.color);
-                    WriteUInt(stream, colorEntry.rgbcolor);
-                    WriteUInt(stream, colorEntry.unk);
+                    WriteUInt(stream, colorEntry.color_b);
+                    WriteUInt(stream, colorEntry.color_c);
                 }
             }
         }

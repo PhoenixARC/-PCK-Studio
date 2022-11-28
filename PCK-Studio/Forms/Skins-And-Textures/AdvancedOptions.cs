@@ -1,13 +1,9 @@
 ﻿using PckStudio.Classes.FileTypes;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PckStudio
@@ -20,117 +16,73 @@ namespace PckStudio
         {
             InitializeComponent();
             currentPCK = currentPCKIn;
+            treeMeta.Nodes.Clear();
+            treeMeta.Nodes.AddRange(currentPCK.GatherPropertiesList().Select((s) => new TreeNode(s)).ToArray());
         }
 
-        private void addEntryToolStripMenuItem_Click(object sender, EventArgs e)
+        private void applyButton_Click(object sender, EventArgs e)
         {
-            addMeta add = new addMeta();
-            if (add.ShowDialog() == DialogResult.OK)
+            switch (comboBox1.Text)
             {
-                
-            }
-            add.Dispose();
-        }
-
-        private void deleteEntryToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            treeMeta.SelectedNode.Remove();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (comboBox1.Text == "All")
-                {
-                    foreach (TreeNode node in treeMeta.Nodes)
+                case "All":
                     {
                         foreach (PCKFile.FileData file in currentPCK.Files)
                         {
-                            file.properties.Add((node.Text, node.Tag.ToString()));
+                            file.properties.Add((entryTypeTextBox.Text, entryDataTextBox.Text));
                         }
+                        MessageBox.Show("Data Added to All Entries");
                     }
-                    MessageBox.Show("Data Added to All Entries");
-                }
-                else if (comboBox1.Text == "64x64")
-                {
-                    int count = treeMeta.Nodes.Count;
-                    int i = 0;
-                    do
+                    break;
+                case "64x64":
                     {
-                        foreach (PCKFile.FileData mf in currentPCK.Files)
+                        foreach (PCKFile.FileData file in currentPCK.Files)
                         {
-                            MemoryStream png = new MemoryStream(mf.data);
-                            if (Path.GetExtension(mf.filepath) == ".png")
+                            MemoryStream png = new MemoryStream(file.data);
+                            if (Path.GetExtension(file.filepath) == ".png" &&
+                                Image.FromStream(png).Size.Height == Image.FromStream(png).Size.Width)
                             {
-                                if (Image.FromStream(png).Size.Height == Image.FromStream(png).Size.Width)
-                                {
-                                    mf.properties.Add(new ValueTuple<string, string>(treeMeta.Nodes[i].Text, treeMeta.Nodes[i].Tag.ToString()));
-                                }
+                                file.properties.Add((entryTypeTextBox.Text, entryDataTextBox.Text));
                             }
                         }
-                        i += 1;
-                        count -= 1;
-                    } while (count != 0);
-                    MessageBox.Show("Data Added to 64x64 Image Entries");
-                }
-                else if (comboBox1.Text == "64x32")
-                {
-                    int count = treeMeta.Nodes.Count;
-                    int i = 0;
-
-                    do
+                        MessageBox.Show("Data Added to 64x64 Image Entries");
+                    }
+                    break;
+                case "64x32":
                     {
-                        foreach (PCKFile.FileData mf in currentPCK.Files)
+                        foreach (PCKFile.FileData file in currentPCK.Files)
                         {
-                            MemoryStream png = new MemoryStream(mf.data);
-                            if (Path.GetExtension(mf.filepath) == ".png")
+                            MemoryStream png = new MemoryStream(file.data);
+                            if (Path.GetExtension(file.filepath) == ".png" &&
+                                Image.FromStream(png).Size.Height == Image.FromStream(png).Size.Width / 2)
                             {
-                                if (Image.FromStream(png).Size.Height == Image.FromStream(png).Size.Width / 2)
-                                {
-                                    mf.properties.Add(new ValueTuple<string, string>(treeMeta.Nodes[i].Text, treeMeta.Nodes[i].Tag.ToString() ));
-                                }
+                                file.properties.Add((entryTypeTextBox.Text, entryDataTextBox.Text));
                             }
                         }
-                        i += 1;
-                        count -= 1;
-                    } while (count != 0);
-                    MessageBox.Show("Data Added to  64x32 Image Entries");
-                }
-                else if (comboBox1.Text == "PNG Files")
-                {
-                    int count = treeMeta.Nodes.Count;
-                    int i = 0;
-
-                    do
+                        MessageBox.Show("Data Added to 64x32 Image Entries");
+                    }
+                    break;
+                case "PNG Files":
                     {
-                        foreach (PCKFile.FileData mf in currentPCK.Files)
+                        foreach (PCKFile.FileData file in currentPCK.Files)
                         {
-                            if (Path.GetExtension(mf.filepath) == ".png")
+                            MemoryStream png = new MemoryStream(file.data);
+                            if (Path.GetExtension(file.filepath) == ".png")
                             {
-                                mf.properties.Add(new ValueTuple<string, string>(treeMeta.Nodes[i].Text, treeMeta.Nodes[i].Tag.ToString() ));
+                                file.properties.Add((entryTypeTextBox.Text, entryDataTextBox.Text));
                             }
                         }
-                        i += 1;
-                        count -= 1;
-                    } while (count != 0);
-                    MessageBox.Show("Data Added to All PNG Image Entries");
-                }
-                else
-                {
+                        MessageBox.Show("Data Added to All PNG Image Entries");
+                    }
+                    break;
+                default:
                     MessageBox.Show("Please Select an Application Argument");
-                }
-            }catch (Exception)
-            {
-                MessageBox.Show("A Probelm Occured..");
+                    break;
             }
         }
 
         private void treeMeta_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            comboBox2.Items.Clear();
-            comboBox2.Text = treeMeta.SelectedNode.Text;
-            textBox1.Text = treeMeta.SelectedNode.Tag.ToString();
+            entryTypeTextBox.Text = treeMeta.SelectedNode.Text;
         }
     }
 }

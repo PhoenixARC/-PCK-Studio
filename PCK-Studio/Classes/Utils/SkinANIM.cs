@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace PckStudio.Classes.Utils
@@ -69,11 +66,11 @@ namespace PckStudio.Classes.Utils
 
 		public override string ToString() => "0x" + ((int)_ANIM).ToString("x8");
 
-		public static bool IsValidANIM(string anim) => animRegex.IsMatch(anim);
+		public static bool IsValidANIM(string anim) => animRegex.IsMatch(anim ?? string.Empty);
 
 		public static eANIM_EFFECTS Parse(string anim)
 			=> IsValidANIM(anim)
-				? (eANIM_EFFECTS)Convert.ToInt32(anim, 16)
+				? (eANIM_EFFECTS)Convert.ToInt32(anim.TrimEnd(' ', '\n', '\r'), 16)
 				: eANIM_EFFECTS.NONE;
 
 		public void SetANIM(int anim) => SetANIM((eANIM_EFFECTS)anim);
@@ -82,6 +79,17 @@ namespace PckStudio.Classes.Utils
 		public static SkinANIM operator |(SkinANIM a, SkinANIM b) => new SkinANIM(a._ANIM | b._ANIM);
 		public static SkinANIM operator |(SkinANIM a, eANIM_EFFECTS anim) => new SkinANIM(a._ANIM | anim);
 		public static implicit operator SkinANIM(eANIM_EFFECTS anim) => new SkinANIM(anim);
+
+		public static bool operator ==(SkinANIM a, eANIM_EFFECTS b)
+		{
+			return a._ANIM == b;
+		}
+		
+		public static bool operator !=(SkinANIM a, eANIM_EFFECTS b)
+		{
+			return !(a == b);
+		}
+
 
 		/// <summary>
 		/// Sets the desired flag in the bitfield
@@ -102,6 +110,16 @@ namespace PckStudio.Classes.Utils
 		public bool GetANIMFlag(eANIM_EFFECTS flag)
 		{
 			return (_ANIM & flag) != 0;
+		}
+
+		public override bool Equals(object obj)
+		{
+			return obj is SkinANIM a && _ANIM == a._ANIM;
+		}
+
+		public override int GetHashCode()
+		{
+			return (int)_ANIM;
 		}
 	}
 }

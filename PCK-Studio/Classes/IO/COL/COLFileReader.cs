@@ -1,11 +1,10 @@
 ﻿using PckStudio.Classes.FileTypes;
 using System.IO;
 using System.Text;
-using static PckStudio.Classes.FileTypes.COLFile;
 
 namespace PckStudio.Classes.IO.COL
 {
-    internal class COLFileReader : StreamDataReader
+    internal class COLFileReader : StreamDataReader<COLFile>
     {
         public static COLFile Read(Stream stream)
         {
@@ -15,16 +14,17 @@ namespace PckStudio.Classes.IO.COL
         private COLFileReader() : base(false)
         {}
 
-        private COLFile ReadFromStream(Stream stream)
+        protected override COLFile ReadFromStream(Stream stream)
         {
             COLFile colourFile = new COLFile();
             int has_water_colors = ReadInt(stream);
+            colourFile.hasWaterTable = has_water_colors > 0;
             int color_entries = ReadInt(stream);
             for (int i = 0; i < color_entries; i++)
             {
                 string name = ReadString(stream);
                 uint color = ReadUInt(stream);
-                colourFile.entries.Add(new ColorEntry(name, color));
+                colourFile.entries.Add(new COLFile.ColorEntry(name, color));
             }
             if (has_water_colors > 0)
             {
@@ -32,10 +32,10 @@ namespace PckStudio.Classes.IO.COL
                 for (int i = 0; i < water_color_entries; i++)
                 {
                     string name = ReadString(stream);
-                    uint color = ReadUInt(stream);
-                    uint rgbcolor = ReadUInt(stream);
-                    uint unk = ReadUInt(stream);
-                    colourFile.waterEntries.Add(new ExtendedColorEntry(name, color, rgbcolor, unk));
+                    uint colorA = ReadUInt(stream);
+                    uint colorB = ReadUInt(stream);
+                    uint colorC = ReadUInt(stream);
+                    colourFile.waterEntries.Add(new COLFile.ExtendedColorEntry(name, colorA, colorB, colorC));
                 }
             }
             return colourFile;

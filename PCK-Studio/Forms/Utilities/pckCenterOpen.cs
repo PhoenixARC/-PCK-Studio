@@ -15,9 +15,8 @@ using System.Windows.Media.Imaging;
 using System.IO.Packaging;
 using PckStudio;
 using System.IO.Compression;
-using static PckStudio.MainForm;
 using PckStudio.Classes.FileTypes;
-using PckStudio.Classes.IO;
+using PckStudio.Classes.IO.PCK;
 
 namespace PckStudio.Forms
 {
@@ -33,6 +32,12 @@ namespace PckStudio.Forms
         MethodInvoker reloader;
         bool IsVita;
         string Pack;
+
+        public class Item
+        {
+            public string Id { get; set; }
+            public string Name { get; set; }
+        }
 
         public pckCenterOpen(string name, string authorIn, string descIn, string directIn, string adIn, Bitmap display, int mode, string mod, MethodInvoker reloader, bool Vita, string PackName)
         {
@@ -55,7 +60,7 @@ namespace PckStudio.Forms
 
         private void pckCenterOpen_Load(object sender, EventArgs e)
         {
-            if (mode==0)//Unowned Mode
+            if (mode == 0) // Unowned Mode
             {
                 buttonDirect.Visible = true;
 
@@ -69,7 +74,7 @@ namespace PckStudio.Forms
                 buttonBedrock.Visible = buttonDelete.Visible = buttonExport.Visible = false;
                 buttonInstallPs3.Visible = buttonInstallXbox.Visible = buttonInstallWiiU.Visible = false;
             }
-            else if (mode==1)//My Collection Mode
+            else if (mode == 1) // My Collection Mode
             {
                 buttonBedrock.Visible = true;
                 buttonInstallPs3.Visible = true;

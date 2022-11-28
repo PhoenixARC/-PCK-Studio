@@ -610,7 +610,7 @@
     <value>myTablePanel2</value>
   </data>
   <data name="&gt;&gt;myTablePanel2.Type" xml:space="preserve">
-    <value>PckStudio.Forms.MyTablePanel, PCK Studio, Version=5.3.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>PckStudio.Forms.MyTablePanel, PCK-Studio, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;myTablePanel2.Parent" xml:space="preserve">
     <value>tabPage1</value>
@@ -825,9 +825,6 @@
   <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
     <value>30</value>
   </data>
-  <data name="buttonEXPORT.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
   <data name="buttonEXPORT.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
   </data>
@@ -887,9 +884,6 @@
   </data>
   <data name="&gt;&gt;label7.ZOrder" xml:space="preserve">
     <value>25</value>
-  </data>
-  <data name="buttonIMPORT.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
   </data>
   <data name="buttonIMPORT.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
@@ -1399,7 +1393,7 @@
     <value>Center</value>
   </data>
   <data name="X.Width" type="System.Int32, mscorlib">
-    <value>25</value>
+    <value>30</value>
   </data>
   <data name="Y.Text" xml:space="preserve">
     <value>Y</value>
@@ -1408,7 +1402,7 @@
     <value>Center</value>
   </data>
   <data name="Y.Width" type="System.Int32, mscorlib">
-    <value>25</value>
+    <value>30</value>
   </data>
   <data name="Z.Text" xml:space="preserve">
     <value>Z</value>
@@ -1417,7 +1411,7 @@
     <value>Center</value>
   </data>
   <data name="Z.Width" type="System.Int32, mscorlib">
-    <value>25</value>
+    <value>30</value>
   </data>
   <data name="Width.Text" xml:space="preserve">
     <value>Width</value>
