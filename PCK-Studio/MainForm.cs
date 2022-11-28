@@ -715,7 +715,7 @@ namespace PckStudio
 						add.SkinFile.filepath = add.SkinFile.filepath.Insert(0, "Skins.pck/");
 						TreeNode newNode = new TreeNode(Path.GetFileName(add.SkinFile.filepath));
 						newNode.Tag = add.SkinFile;
-						setFileIcon(newNode, PCKFile.FileData.FileType.SkinFile);
+						SetPckFileIcon(newNode, PCKFile.FileData.FileType.SkinFile);
 						subPCK.Nodes.Add(newNode);
 						RebuildSubPCK(newNode);
 					}
@@ -733,7 +733,7 @@ namespace PckStudio
 							add.CapeFile.filepath = add.CapeFile.filepath.Insert(0, "Skins.pck/");
 							TreeNode newNode = new TreeNode(Path.GetFileName(add.CapeFile.filepath));
 							newNode.Tag = add.CapeFile;
-							setFileIcon(newNode, PCKFile.FileData.FileType.SkinFile);
+							SetPckFileIcon(newNode, PCKFile.FileData.FileType.SkinFile);
 							subPCK.Nodes.Add(newNode);
 							RebuildSubPCK(newNode);
 						}
@@ -1892,7 +1892,7 @@ namespace PckStudio
       {
 				Debug.WriteLine($"Setting {file.filetype} to {type}");
 				file.filetype = type;
-				setFileIcon(t, type);
+				SetPckFileIcon(t, type);
 				if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath)) RebuildSubPCK(treeViewMain.SelectedNode);
 			}
 		}
