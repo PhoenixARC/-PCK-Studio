@@ -953,6 +953,26 @@ namespace PckStudio
 					MessageBox.Show("Failed to parse ANIM value, aborting to normal functionality. Please make sure the value only includes hexadecimal characters (0-9,A-F) and has no more than 8 characters. It can have an optional prefix of \"0x\".");
 				}
 			}
+			else if (property.Item1 == "BOX" && i != -1 && file.filetype == PCKFile.FileData.FileType.SkinFile)
+			{
+				try
+				{
+					using Forms.Utilities.Skins.BoxEditor diag = new Forms.Utilities.Skins.BoxEditor(property.Item2, IsSubPCKNode(treeViewMain.SelectedNode.FullPath));
+					if (diag.ShowDialog(this) == DialogResult.OK && diag.saved)
+					{
+						file.properties[i] = new ValueTuple<string, string>("BOX", diag.out_box);
+						if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath)) RebuildSubPCK(treeViewMain.SelectedNode);
+						ReloadMetaTreeView();
+						saved = false;
+					}
+					return;
+				}
+				catch (Exception ex)
+				{
+					Debug.WriteLine(ex.Message);
+					MessageBox.Show("Failed to parse BOX value, aborting to normal functionality.");
+				}
+			}
 			using addMeta add = new addMeta(property.Item1, property.Item2);
 			if (add.ShowDialog() == DialogResult.OK && i != -1)
 			{

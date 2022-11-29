@@ -315,6 +315,12 @@
       <DependentUpon>pleaseWait.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Utilities\AnimationUtil.cs" />
+    <Compile Include="Forms\Utilities\Skins\BoxEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Utilities\Skins\BoxEditor.Designer.cs">
+      <DependentUpon>BoxEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Utilities\Skins\ANIMEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -512,6 +518,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\Audio\pleaseWait.resx">
       <DependentUpon>pleaseWait.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Utilities\Skins\BoxEditor.resx">
+      <DependentUpon>BoxEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Utilities\Skins\ANIMEditor.resx">
       <DependentUpon>ANIMEditor.cs</DependentUpon>
