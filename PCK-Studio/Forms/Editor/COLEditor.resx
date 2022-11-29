@@ -533,7 +533,7 @@
 </value>
   </data>
   <data name="saveToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>98, 22</value>
   </data>
   <data name="saveToolStripMenuItem1.Text" xml:space="preserve">
     <value>Save</value>
@@ -674,7 +674,7 @@
     <value>Paste Color</value>
   </data>
   <data name="ColorContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>187, 92</value>
+    <value>187, 70</value>
   </data>
   <data name="&gt;&gt;ColorContextMenu.Name" xml:space="preserve">
     <value>ColorContextMenu</value>

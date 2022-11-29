@@ -166,7 +166,7 @@ namespace PckStudio.Forms.Editor
 			// 
 			// blueUpDown
 			// 
-			this.blueUpDown.BackColor = System.Drawing.SystemColors.Desktop;
+			this.blueUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
 			this.blueUpDown.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
 			resources.ApplyResources(this.blueUpDown, "blueUpDown");
 			this.blueUpDown.Maximum = new decimal(new int[] {
@@ -178,7 +178,7 @@ namespace PckStudio.Forms.Editor
 			// 
 			// greenUpDown
 			// 
-			this.greenUpDown.BackColor = System.Drawing.SystemColors.Desktop;
+			this.greenUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
 			this.greenUpDown.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
 			resources.ApplyResources(this.greenUpDown, "greenUpDown");
 			this.greenUpDown.Maximum = new decimal(new int[] {
@@ -190,7 +190,7 @@ namespace PckStudio.Forms.Editor
 			// 
 			// redUpDown
 			// 
-			this.redUpDown.BackColor = System.Drawing.SystemColors.Desktop;
+			this.redUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
 			this.redUpDown.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
 			resources.ApplyResources(this.redUpDown, "redUpDown");
 			this.redUpDown.Maximum = new decimal(new int[] {
@@ -202,7 +202,7 @@ namespace PckStudio.Forms.Editor
 			// 
 			// alphaUpDown
 			// 
-			this.alphaUpDown.BackColor = System.Drawing.SystemColors.Desktop;
+			this.alphaUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
 			this.alphaUpDown.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
 			resources.ApplyResources(this.alphaUpDown, "alphaUpDown");
 			this.alphaUpDown.Maximum = new decimal(new int[] {
