@@ -2092,14 +2092,21 @@ namespace PckStudio
 
 		private void addCustomPackIconToolStripMenuItem_Click(object sender, EventArgs e)
 		{
+			PCKFile.FileData file = null;
+
+			if (!currentPCK.TryGetFile("0", PCKFile.FileData.FileType.InfoFile, out file) || String.IsNullOrEmpty(file.properties.GetPropertyValue("PACKID")))
+			{
+				MessageBox.Show("No PackID is present in this pack. To avoid error, please open a PCK with a PackID before trying again.", "Operation Aborted", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+
 			OpenFileDialog dialog = new OpenFileDialog();
 			dialog.Filter = "Minecraft Archive|*.arc";
 			if (dialog.ShowDialog(this) == DialogResult.OK)
 			{
 				string filepath = dialog.FileName;
                 dialog.Filter = "Pack Icon|*.png";
-				if (currentPCK.TryGetFile("0", PCKFile.FileData.FileType.InfoFile, out PCKFile.FileData file) &&
-					dialog.ShowDialog(this) == DialogResult.OK)
+				if (dialog.ShowDialog(this) == DialogResult.OK)
 				{
 					ARCUtil.Inject(filepath, (
 						string.Format("Graphics\\PackGraphics\\{0}.png", file.properties.GetPropertyValue("PACKID")),
