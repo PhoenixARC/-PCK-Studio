@@ -399,9 +399,9 @@
 			this.inflationLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
 			this.inflationLabel.Location = new System.Drawing.Point(33, 149);
 			this.inflationLabel.Name = "inflationLabel";
-			this.inflationLabel.Size = new System.Drawing.Size(77, 25);
+			this.inflationLabel.Size = new System.Drawing.Size(55, 25);
 			this.inflationLabel.TabIndex = 31;
-			this.inflationLabel.Text = "Inflation:";
+			this.inflationLabel.Text = "Scale:";
 			this.inflationLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
 			// 
 			// BoxEditor
