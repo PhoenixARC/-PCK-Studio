@@ -37,6 +37,7 @@
 			this.createAnimatedTextureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.audiopckToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.colourscolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.CreateSkinsPCKToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			this.importSkinsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.importSkinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.importExtractedSkinsFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -138,7 +139,6 @@
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.pictureBoxImagePreview = new PckStudio.PictureBoxWithInterpolationMode();
 			this.LittleEndianCheckBox = new MetroFramework.Controls.MetroCheckBox();
-			this.skinspckToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenuPCKEntries.SuspendLayout();
 			this.menuStrip.SuspendLayout();
 			this.contextMenuMetaTree.SuspendLayout();
@@ -178,7 +178,7 @@
             this.createAnimatedTextureToolStripMenuItem,
             this.audiopckToolStripMenuItem,
             this.colourscolToolStripMenuItem,
-            this.skinspckToolStripMenuItem1});
+            this.CreateSkinsPCKToolStripMenuItem1});
 			resources.ApplyResources(this.createToolStripMenuItem, "createToolStripMenuItem");
 			this.createToolStripMenuItem.Name = "createToolStripMenuItem";
 			// 
@@ -211,6 +211,12 @@
 			this.colourscolToolStripMenuItem.Name = "colourscolToolStripMenuItem";
 			resources.ApplyResources(this.colourscolToolStripMenuItem, "colourscolToolStripMenuItem");
 			this.colourscolToolStripMenuItem.Click += new System.EventHandler(this.colourscolToolStripMenuItem_Click);
+			// 
+			// CreateSkinsPCKToolStripMenuItem1
+			// 
+			this.CreateSkinsPCKToolStripMenuItem1.Name = "CreateSkinsPCKToolStripMenuItem1";
+			resources.ApplyResources(this.CreateSkinsPCKToolStripMenuItem1, "CreateSkinsPCKToolStripMenuItem1");
+			this.CreateSkinsPCKToolStripMenuItem1.Click += new System.EventHandler(this.CreateSkinsPCKToolStripMenuItem1_Click);
 			// 
 			// importSkinsToolStripMenuItem
 			// 
@@ -1018,12 +1024,6 @@
 			this.LittleEndianCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.LittleEndianCheckBox.UseSelectable = true;
 			// 
-			// skinspckToolStripMenuItem1
-			// 
-			this.skinspckToolStripMenuItem1.Name = "skinspckToolStripMenuItem1";
-			resources.ApplyResources(this.skinspckToolStripMenuItem1, "skinspckToolStripMenuItem1");
-			this.skinspckToolStripMenuItem1.Click += new System.EventHandler(this.skinspckToolStripMenuItem1_Click);
-			// 
 			// MainForm
 			// 
 			this.ApplyImageInvert = true;
@@ -1171,7 +1171,7 @@
 		private System.Windows.Forms.ToolStripMenuItem correctSkinDecimalsToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem miscToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addCustomPackImageToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem skinspckToolStripMenuItem1;
+		private System.Windows.Forms.ToolStripMenuItem CreateSkinsPCKToolStripMenuItem1;
 	}
 }
 

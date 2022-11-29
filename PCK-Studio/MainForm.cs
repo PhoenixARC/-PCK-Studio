@@ -2075,7 +2075,7 @@ namespace PckStudio
 			}
 		}
 
-		private void skinspckToolStripMenuItem1_Click(object sender, EventArgs e)
+		private void CreateSkinsPCKToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
 			PCKFile.FileData NewSkinsPCKFile;
 			if (currentPCK.TryGetFile("Skins.pck", PCKFile.FileData.FileType.SkinDataFile, out NewSkinsPCKFile))
