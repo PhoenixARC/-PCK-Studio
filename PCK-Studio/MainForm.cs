@@ -310,7 +310,7 @@ namespace PckStudio
 				// Looks kinda nuts but this line of code is responsible for finding the correct node that was originally selected
 				treeViewMain.SelectedNode = treeViewMain.Nodes.Find(Path.GetFileName(filepath), true).ToList().Find(t  => (t.Tag as PCKFile.FileData).filepath == filepath);
 			}
-    }
+	    }
 
 		bool IsFilePathMipMapped(string filepath)
 		{
@@ -1170,7 +1170,7 @@ namespace PckStudio
 			edit.Show();
 		}
 
-		private void InitializeSkinPack(int packId, int packVersion, string packName)
+		private void InitializeBasePack(int packId, int packVersion, string packName, bool createSkinsPCK)
 		{
 			currentPCK = new PCKFile(3);
 			var zeroFile = new PCKFile.FileData("0", PCKFile.FileData.FileType.InfoFile);
@@ -1186,11 +1186,12 @@ namespace PckStudio
 			}
 			currentPCK.Files.Add(zeroFile);
 			currentPCK.Files.Add(loc);
+			if(createSkinsPCK) CreateSkinsPCKToolStripMenuItem1_Click(null, null);
 		}
 
-		private void InitializeTexturePack(int packId, int packVersion, string packName, string res)
+		private void InitializeTexturePack(int packId, int packVersion, string packName, string res, bool createSkinsPCK = false)
 		{
-			InitializeSkinPack(packId, packVersion, packName);
+			InitializeBasePack(packId, packVersion, packName, createSkinsPCK);
 			var texturepackInfo = new PCKFile.FileData($"{res}/{res}Info.pck", PCKFile.FileData.FileType.TexturePackInfoFile);
 			texturepackInfo.properties.Add(("PACKID", "0"));
 			texturepackInfo.properties.Add(("DATAPATH", $"{res}Data.pck"));
@@ -1199,7 +1200,7 @@ namespace PckStudio
 
 		private void InitializeMashUpPack(int packId, int packVersion, string packName, string res)
 		{
-			InitializeTexturePack(packId, packVersion, packName, res);
+			InitializeTexturePack(packId, packVersion, packName, res, true);
 			var gameRuleFile = new PCKFile.FileData("GameRules.grf", PCKFile.FileData.FileType.GameRulesFile);
 			var grfFile = new GRFFile();
 			grfFile.AddRule("MapOptions",
@@ -1230,7 +1231,7 @@ namespace PckStudio
 			namePrompt.OKButton.Text = "Ok";
 			if (namePrompt.ShowDialog() == DialogResult.OK)
 			{
-				InitializeSkinPack(new Random().Next(8000, int.MaxValue), 0, namePrompt.NewText);
+				InitializeBasePack(new Random().Next(8000, int.MaxValue), 0, namePrompt.NewText, true);
 				isTemplateFile = true;
 				LoadEditorTab();
 			}
