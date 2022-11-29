@@ -2071,6 +2071,7 @@ namespace PckStudio
 							file.properties.Add((line.Substring(0, idx), line.Substring(idx + 1)));
 						}
 						ReloadMetaTreeView();
+						if (IsSubPCKNode(t.FullPath)) RebuildSubPCK(t);
 						saved = false;
 					}
 				}
