@@ -1224,6 +1224,11 @@ namespace PckStudio
 
 			PCKFileWriter.Write(ms3, infoPCK, LittleEndianCheckBox.Checked);
 			texturepackInfo.SetData(ms3.ToArray());
+
+			ms.Dispose();
+			ms2.Dispose();
+			ms3.Dispose();
+
 			currentPCK.Files.Add(texturepackInfo);
 		}
 
