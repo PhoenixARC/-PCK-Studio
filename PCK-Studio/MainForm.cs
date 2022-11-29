@@ -2087,6 +2087,7 @@ namespace PckStudio
 					file.properties[file.properties.IndexOf(p)] = (p.property, p.value.Replace(',','.'));
 				}
 				ReloadMetaTreeView();
+				if (IsSubPCKNode(t.FullPath)) RebuildSubPCK(t);
 				saved = false;
 			}
 		}
