@@ -222,6 +222,16 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap Comparison {
+            get {
+                object obj = ResourceManager.GetObject("Comparison", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap Del {
             get {
                 object obj = ResourceManager.GetObject("Del", resourceCulture);
@@ -525,6 +535,16 @@ namespace PckStudio.Properties {
         public static System.Drawing.Bitmap TEXTURE_ICON {
             get {
                 object obj = ResourceManager.GetObject("TEXTURE_ICON", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap TexturePackIcon {
+            get {
+                object obj = ResourceManager.GetObject("TexturePackIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
