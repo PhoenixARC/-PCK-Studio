@@ -2074,5 +2074,32 @@ namespace PckStudio
 				}
 			}
 		}
+
+		private void skinspckToolStripMenuItem1_Click(object sender, EventArgs e)
+		{
+			PCKFile.FileData NewSkinsPCKFile;
+			if (currentPCK.TryGetFile("Skins.pck", PCKFile.FileData.FileType.SkinDataFile, out NewSkinsPCKFile))
+			{
+				MessageBox.Show("A Skins.pck file already exists in this PCK and a new one cannot be created.", "Operation aborted");
+				return;
+			}
+			NewSkinsPCKFile = new PCKFile.FileData("Skins.pck", PCKFile.FileData.FileType.SkinDataFile);
+
+			using (var stream = new MemoryStream())
+			{
+				PCKFileWriter.Write(stream, new PCKFile(3), LittleEndianCheckBox.Checked, true);
+				NewSkinsPCKFile.SetData(stream.ToArray());
+			}
+
+			currentPCK.Files.Add(NewSkinsPCKFile);
+
+			BuildMainTreeView();
+
+			TreeNode skinsNode = treeViewMain.Nodes.Find("Skins.pck", false).FirstOrDefault();
+			TreeNode folderNode = CreateNode("Skins");
+			folderNode.ImageIndex = 0;
+			folderNode.SelectedImageIndex = 0;
+			skinsNode.Nodes.Add(folderNode);
+		}
 	}
 }
