@@ -304,8 +304,17 @@ namespace PckStudio
 			if(treeViewMain.SelectedNode != null && treeViewMain.SelectedNode.Tag is PCKFile.FileData) filepath = (treeViewMain.SelectedNode.Tag as PCKFile.FileData).filepath;
 			treeViewMain.Nodes.Clear();
 			BuildPckTreeView(treeViewMain.Nodes, currentPCK);
-      
-      if (!String.IsNullOrEmpty(filepath))
+
+			if (isTemplateFile && currentPCK.HasFile("Skins.pck", PCKFile.FileData.FileType.SkinDataFile))
+			{
+				TreeNode skinsNode = treeViewMain.Nodes.Find("Skins.pck", false).FirstOrDefault();
+				TreeNode folderNode = CreateNode("Skins");
+				folderNode.ImageIndex = 0;
+				folderNode.SelectedImageIndex = 0;
+				if (!skinsNode.Nodes.ContainsKey("Skins")) skinsNode.Nodes.Add(folderNode);
+			}
+
+			if (!String.IsNullOrEmpty(filepath))
 			{
 				// Looks kinda nuts but this line of code is responsible for finding the correct node that was originally selected
 				treeViewMain.SelectedNode = treeViewMain.Nodes.Find(Path.GetFileName(filepath), true).ToList().Find(t  => (t.Tag as PCKFile.FileData).filepath == filepath);
