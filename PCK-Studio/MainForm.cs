@@ -17,6 +17,7 @@ using PckStudio.Classes.Utils;
 using PckStudio.Classes.Utils.ARC;
 using PckStudio.Classes._3ds.Utils;
 using PckStudio.Forms;
+using PckStudio.Forms.Utilities.Skins;
 using PckStudio.Forms.Utilities;
 using PckStudio.Forms.Editor;
 using PckStudio.Forms.Additional_Popups.Animation;
@@ -264,21 +265,22 @@ namespace PckStudio
 		{
 			foreach (var file in pckFile.Files)
 			{
-				if (file.filepath.StartsWith(parentPath)) file.filepath = file.filepath.Remove(0, parentPath.Length).Replace('\\', '/'); // fix any file paths that may be incorrect
+				// fix any file paths that may be incorrect
+				if (file.filepath.StartsWith(parentPath))
+					file.filepath = file.filepath.Remove(0, parentPath.Length).Replace('\\', '/');
 				TreeNode node = BuildNodeTreeBySeperator(root, file.filepath, '/');
 				node.Tag = file;
 				switch (file.filetype)
 				{
 					case PCKFile.FileData.FileType.SkinDataFile:
 					case PCKFile.FileData.FileType.TexturePackInfoFile:
-						// TODO: load sub pck into tree and make it editable with ease
-						// works but not currently included...
 						using (var stream = new MemoryStream(file.data))
 						{
 							try
 							{
 								PCKFile subPCKfile = PCKFileReader.Read(stream, LittleEndianCheckBox.Checked);
-								BuildPckTreeView(node.Nodes, subPCKfile, file.filepath + "/"); // passes parent path to remove from sub pck filepaths
+								// passes parent path to remove from sub pck filepaths
+								BuildPckTreeView(node.Nodes, subPCKfile, file.filepath + "/");
 							}
 							catch (OverflowException ex)
 							{
@@ -301,7 +303,8 @@ namespace PckStudio
 		{
 			// In case the Rename function was just used and the selected node name no longer matches the file name
 			string filepath = "";
-			if(treeViewMain.SelectedNode != null && treeViewMain.SelectedNode.Tag is PCKFile.FileData) filepath = (treeViewMain.SelectedNode.Tag as PCKFile.FileData).filepath;
+			if(treeViewMain.SelectedNode is TreeNode node && node.Tag is PCKFile.FileData file)
+				filepath = file.filepath;
 			treeViewMain.Nodes.Clear();
 			BuildPckTreeView(treeViewMain.Nodes, currentPCK);
 
@@ -311,13 +314,16 @@ namespace PckStudio
 				TreeNode folderNode = CreateNode("Skins");
 				folderNode.ImageIndex = 0;
 				folderNode.SelectedImageIndex = 0;
-				if (!skinsNode.Nodes.ContainsKey("Skins")) skinsNode.Nodes.Add(folderNode);
+				if (!skinsNode.Nodes.ContainsKey("Skins"))
+					skinsNode.Nodes.Add(folderNode);
 			}
 
-			if (!String.IsNullOrEmpty(filepath))
+			if (!string.IsNullOrEmpty(filepath))
 			{
 				// Looks kinda nuts but this line of code is responsible for finding the correct node that was originally selected
-				treeViewMain.SelectedNode = treeViewMain.Nodes.Find(Path.GetFileName(filepath), true).ToList().Find(t  => (t.Tag as PCKFile.FileData).filepath == filepath);
+				treeViewMain.SelectedNode =
+					treeViewMain.Nodes.Find(Path.GetFileName(filepath), true).ToList()
+					.Find(t  => (t.Tag as PCKFile.FileData).filepath == filepath);
 			}
 	    }
 
@@ -331,14 +337,16 @@ namespace PckStudio
 		}
 
 		private void HandleTextureFile(PCKFile.FileData file)
-    {
+		{
 			if (file.filepath.StartsWith("res/textures/blocks/") || file.filepath.StartsWith("res/textures/items/") &&
 				!file.filepath.EndsWith("clock.png") && !file.filepath.EndsWith("compass.png"))
 			{
 				if (IsFilePathMipMapped(file.filepath) &&
-					currentPCK.Files.Find(pckfile => 
+					currentPCK.Files.Find(pckfile =>
 						// todo write cleaner ?
-						pckfile.filepath.Equals(file.filepath.Remove(file.filepath.Length - 12 - Path.GetExtension(file.filepath).Length) + Path.GetExtension(file.filepath)))
+						pckfile.filepath.Equals(
+							file.filepath.Remove(file.filepath.Length - 12 - Path.GetExtension(file.filepath).Length)
+							+ Path.GetExtension(file.filepath)))
 					is PCKFile.FileData originalAnimationFile)
 				{
 					file = originalAnimationFile;
@@ -352,14 +360,15 @@ namespace PckStudio
 					}
 				}
 			}
-    }
+		}
 
-    private void HandleGameRuleFile(PCKFile.FileData file)
-    {
+		private void HandleGameRuleFile(PCKFile.FileData file)
+		{
 			using GRFEditor grfEditor = new GRFEditor(file);
-      if (grfEditor.ShowDialog(this) == DialogResult.OK) saved = false;
+			if (grfEditor.ShowDialog(this) == DialogResult.OK)
+				saved = false;
 			UpdateRPC();
-    }
+		}
 
 		private void UpdateRPC()
 		{
@@ -369,16 +378,16 @@ namespace PckStudio
 				return;
 			};
 
-        if (TryGetLocFile(out LOCFile locfile) &&
-				locfile.HasLocEntry("IDS_DISPLAY_NAME") &&
-				locfile.Languages.Contains("en-EN"))
+			if (TryGetLocFile(out LOCFile locfile) &&
+					locfile.HasLocEntry("IDS_DISPLAY_NAME") &&
+					locfile.Languages.Contains("en-EN"))
 			{
 				RPC.SetPresence($"Editing a Pack: {locfile.GetLocEntry("IDS_DISPLAY_NAME", "en-EN")}", "Program by PhoenixARC");
 				return;
 			}
 			// default
 			RPC.SetPresence("An Open Source .PCK File Editor", "Program by PhoenixARC");
-        }
+		}
 
 		private void HandleAudioFile(PCKFile.FileData file)
 		{
@@ -935,7 +944,7 @@ namespace PckStudio
 			int i = file.properties.IndexOf(property);
 			if (property.Item1 == "ANIM" && i != -1 && file.filetype == PCKFile.FileData.FileType.SkinFile)
 			{
-				using Forms.Utilities.Skins.ANIMEditor diag = new Forms.Utilities.Skins.ANIMEditor(property.Item2);
+				using ANIMEditor diag = new ANIMEditor(property.Item2);
 				try
 				{
 					if (diag.ShowDialog(this) == DialogResult.OK && diag.saved)
@@ -957,11 +966,12 @@ namespace PckStudio
 			{
 				try
 				{
-					using Forms.Utilities.Skins.BoxEditor diag = new Forms.Utilities.Skins.BoxEditor(property.Item2, IsSubPCKNode(treeViewMain.SelectedNode.FullPath));
-					if (diag.ShowDialog(this) == DialogResult.OK && diag.saved)
+					using BoxEditor diag = new BoxEditor(property.Item2, IsSubPCKNode(treeViewMain.SelectedNode.FullPath));
+					if (diag.ShowDialog(this) == DialogResult.OK)
 					{
 						file.properties[i] = new ValueTuple<string, string>("BOX", diag.out_box);
-						if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath)) RebuildSubPCK(treeViewMain.SelectedNode);
+						if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath))
+							RebuildSubPCK(treeViewMain.SelectedNode);
 						ReloadMetaTreeView();
 						saved = false;
 					}
@@ -977,7 +987,8 @@ namespace PckStudio
 			if (add.ShowDialog() == DialogResult.OK && i != -1)
 			{
 				file.properties[i] = new ValueTuple<string, string>(add.PropertyName, add.PropertyValue);
-				if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath)) RebuildSubPCK(treeViewMain.SelectedNode);
+				if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath))
+					RebuildSubPCK(treeViewMain.SelectedNode);
 				ReloadMetaTreeView();
 				saved = false;
 			}
@@ -1703,8 +1714,8 @@ namespace PckStudio
 		private void openToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
 			DateTime Begin = DateTime.Now;
-			//pckCenter open = new pckCenter();
-			Forms.Utilities.PckCenterBeta open = new Forms.Utilities.PckCenterBeta();
+            //pckCenter open = new pckCenter();
+            PckCenterBeta open = new PckCenterBeta();
 			open.Show();
 			TimeSpan duration = new TimeSpan(DateTime.Now.Ticks - Begin.Ticks);
 
