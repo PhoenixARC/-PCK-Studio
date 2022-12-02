@@ -7,7 +7,7 @@ namespace PckStudio.Classes.Misc
     static class RPC
     {
         public static DiscordRpcClient Client;
-        public static DateTime StartUpTime = DateTime.UtcNow;
+        public static readonly DateTime StartUpTime = DateTime.UtcNow;
 
         public static void Initialize()
         {
@@ -25,7 +25,7 @@ namespace PckStudio.Classes.Misc
                 Assets = new Assets()
                 {
                     LargeImageKey = "pcklgo",
-                    LargeImageText = "PCK Studio",
+                    LargeImageText = "PCK-Studio",
                 }
             });
         }
