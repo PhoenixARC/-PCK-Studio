@@ -969,7 +969,7 @@ namespace PckStudio
 					using BoxEditor diag = new BoxEditor(property.Item2, IsSubPCKNode(treeViewMain.SelectedNode.FullPath));
 					if (diag.ShowDialog(this) == DialogResult.OK)
 					{
-						file.properties[i] = new ValueTuple<string, string>("BOX", diag.out_box);
+						file.properties[i] = new ValueTuple<string, string>("BOX", diag.Result);
 						if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath))
 							RebuildSubPCK(treeViewMain.SelectedNode);
 						ReloadMetaTreeView();

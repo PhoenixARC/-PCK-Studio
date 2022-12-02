@@ -67,7 +67,7 @@
 			this.closeButton.Text = "Save";
 			this.closeButton.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.closeButton.UseSelectable = true;
-			this.closeButton.Click += new System.EventHandler(this.closeButton_Click);
+			this.closeButton.Click += new System.EventHandler(this.saveButton_Click);
 			// 
 			// toolTip
 			// 
