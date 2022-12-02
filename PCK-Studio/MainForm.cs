@@ -1204,7 +1204,7 @@ namespace PckStudio
 
 		private void metaToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			meta edit = new meta(currentPCK.GatherPropertiesList());
+			MetaList edit = new MetaList(currentPCK.GatherPropertiesList());
 			edit.TopMost = true;
 			edit.TopLevel = true;
 			edit.Show();

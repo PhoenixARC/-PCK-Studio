@@ -1,6 +1,6 @@
 ﻿namespace PckStudio
 {
-    partial class meta
+    partial class MetaList
     {
         /// <summary>
         /// Required designer variable.
@@ -28,20 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(meta));
-            this.treeView1 = new System.Windows.Forms.TreeView();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MetaList));
+            this.MetaTreeView = new System.Windows.Forms.TreeView();
             this.SuspendLayout();
             // 
             // treeView1
             // 
-            resources.ApplyResources(this.treeView1, "treeView1");
-            this.treeView1.Name = "treeView1";
+            resources.ApplyResources(this.MetaTreeView, "treeView1");
+            this.MetaTreeView.Name = "treeView1";
             // 
             // meta
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.treeView1);
+            this.Controls.Add(this.MetaTreeView);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MaximizeBox = false;
             this.Name = "meta";
@@ -50,13 +50,12 @@
             this.Style = MetroFramework.MetroColorStyle.Silver;
             this.TextAlign = MetroFramework.Forms.MetroFormTextAlign.Center;
             this.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.Load += new System.EventHandler(this.meta_Load);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.TreeView treeView1;
+        private System.Windows.Forms.TreeView MetaTreeView;
     }
 }

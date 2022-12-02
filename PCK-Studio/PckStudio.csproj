@@ -428,11 +428,11 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Classes\FileTypes\LOCFile.cs" />
-    <Compile Include="Forms\Additional-Popups\meta.cs">
+    <Compile Include="Forms\Additional-Popups\MetaList.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Additional-Popups\meta.Designer.cs">
-      <DependentUpon>meta.cs</DependentUpon>
+    <Compile Include="Forms\Additional-Popups\MetaList.Designer.cs">
+      <DependentUpon>MetaList.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Forms\Additional-Popups\programInfo.cs">
@@ -564,8 +564,8 @@
     <EmbeddedResource Include="Forms\Utilities\installWiiU.resx">
       <DependentUpon>installWiiU.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Additional-Popups\meta.ja.resx">
-      <DependentUpon>meta.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Additional-Popups\MetaList.ja.resx">
+      <DependentUpon>MetaList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Utilities\PCK Manager.ja.resx">
       <DependentUpon>PCK Manager.cs</DependentUpon>
@@ -603,8 +603,8 @@
     <EmbeddedResource Include="Forms\Utilities\TextureConverterUtility.resx">
       <DependentUpon>TextureConverterUtility.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Additional-Popups\meta.resx">
-      <DependentUpon>meta.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Additional-Popups\MetaList.resx">
+      <DependentUpon>MetaList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\programInfo.resx">
       <DependentUpon>programInfo.cs</DependentUpon>
