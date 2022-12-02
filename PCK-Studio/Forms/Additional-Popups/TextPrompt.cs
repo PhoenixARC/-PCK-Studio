@@ -17,7 +17,7 @@ namespace PckStudio.Forms.Additional_Popups
             DialogResult = DialogResult.OK;
         }
 
-        private void metroButton1_Click(object sender, EventArgs e)
+        private void cancelBtn_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
         }

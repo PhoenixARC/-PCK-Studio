@@ -30,7 +30,7 @@
         {
             this.PromptTextBox = new MetroFramework.Controls.MetroTextBox();
             this.okBtn = new MetroFramework.Controls.MetroButton();
-            this.metroButton1 = new MetroFramework.Controls.MetroButton();
+            this.cancelBtn = new MetroFramework.Controls.MetroButton();
             this.SuspendLayout();
             // 
             // PromptTextBox
@@ -82,24 +82,24 @@
             this.okBtn.UseSelectable = true;
             this.okBtn.Click += new System.EventHandler(this.okBtn_Click);
             // 
-            // metroButton1
+            // cancelBtn
             // 
-            this.metroButton1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.metroButton1.Location = new System.Drawing.Point(183, 351);
-            this.metroButton1.Name = "metroButton1";
-            this.metroButton1.Size = new System.Drawing.Size(75, 23);
-            this.metroButton1.TabIndex = 2;
-            this.metroButton1.Text = "Cancel";
-            this.metroButton1.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.metroButton1.UseSelectable = true;
-            this.metroButton1.Click += new System.EventHandler(this.metroButton1_Click);
+            this.cancelBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.cancelBtn.Location = new System.Drawing.Point(183, 351);
+            this.cancelBtn.Name = "cancelBtn";
+            this.cancelBtn.Size = new System.Drawing.Size(75, 23);
+            this.cancelBtn.TabIndex = 2;
+            this.cancelBtn.Text = "Cancel";
+            this.cancelBtn.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.cancelBtn.UseSelectable = true;
+            this.cancelBtn.Click += new System.EventHandler(this.cancelBtn_Click);
             // 
             // TextPrompt
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(358, 385);
-            this.Controls.Add(this.metroButton1);
+            this.Controls.Add(this.cancelBtn);
             this.Controls.Add(this.okBtn);
             this.Controls.Add(this.PromptTextBox);
             this.MinimizeBox = false;
@@ -116,6 +116,6 @@
 
         private MetroFramework.Controls.MetroTextBox PromptTextBox;
         private MetroFramework.Controls.MetroButton okBtn;
-        private MetroFramework.Controls.MetroButton metroButton1;
+        private MetroFramework.Controls.MetroButton cancelBtn;
     }
 }
