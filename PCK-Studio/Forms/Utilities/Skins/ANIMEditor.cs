@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 using System.Windows.Forms;
 using PckStudio.Classes.Utils;
@@ -121,7 +117,6 @@ namespace PckStudio.Forms.Utilities.Skins
 			syncLegsCheckBox.CheckedChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, eANIM_EFFECTS.SYNCED_LEGS); };
 			unknownCheckBox.CheckedChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, eANIM_EFFECTS.unk_BIT4); };
 			zombieCheckBox.CheckedChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, eANIM_EFFECTS.ZOMBIE_ARMS); };
-			#endregion
 
 			helmetCheckBox.EnabledChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, eANIM_EFFECTS.FORCE_HEAD_ARMOR); };
 			chestplateCheckBox.EnabledChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, eANIM_EFFECTS.FORCE_BODY_ARMOR); };
@@ -129,6 +124,7 @@ namespace PckStudio.Forms.Utilities.Skins
 			leftArmorCheckBox.EnabledChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, eANIM_EFFECTS.FORCE_LEFT_ARM_ARMOR); };
 			rightLeggingCheckBox.EnabledChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, eANIM_EFFECTS.FORCE_RIGHT_LEG_ARMOR); };
 			leftLeggingCheckBox.EnabledChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, eANIM_EFFECTS.FORCE_LEFT_LEG_ARMOR); };
+			#endregion
             processCheckBoxes();
 		}
 
@@ -168,7 +164,7 @@ namespace PckStudio.Forms.Utilities.Skins
 			bool first = true;
 			while (!SkinANIM.IsValidANIM(new_value))
 			{
-				if (!first) MessageBox.Show("The following value \"" + new_value + "\" is not valid. Please try again.");
+				if (!first) MessageBox.Show($"The following value \"{new_value}\" is not valid. Please try again.");
 				RenamePrompt diag = new RenamePrompt(new_value);
 				diag.TextLabel.Text = "ANIM";
 				diag.OKButton.Text = "Ok";
@@ -249,7 +245,7 @@ namespace PckStudio.Forms.Utilities.Skins
 			processCheckBoxes();
 		}
 
-		static Dictionary<string, eANIM_EFFECTS> Templates = new Dictionary<string, eANIM_EFFECTS>()
+		static readonly Dictionary<string, eANIM_EFFECTS> Templates = new Dictionary<string, eANIM_EFFECTS>()
 		{
 				{ "Steve (64x32)",           eANIM_EFFECTS.NONE },
 				{ "Steve (64x64)",           eANIM_EFFECTS.RESOLUTION_64x64 },
