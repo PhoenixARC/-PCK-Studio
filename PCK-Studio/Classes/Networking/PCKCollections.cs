@@ -1,12 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Net;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Drawing.Imaging;
-using System.Drawing.Design;
 using System.Drawing;
 using Newtonsoft.Json;
 using PckStudio.API.PCKCenter.model;
@@ -74,10 +68,10 @@ namespace PckStudio.Classes.Networking
                 switch (IsVita)
                 {
                     case (true):
-                        cat = client.DownloadString(PckStudio.Classes.Network.MainURL + "/studio/PCK/api/pcks/Vita/" + Category + ".desc");
+                        cat = client.DownloadString(Network.MainURL + "/studio/PCK/api/pcks/Vita/" + Category + ".desc");
                         break;
                     case (false):
-                        cat = client.DownloadString(PckStudio.Classes.Network.MainURL + "/studio/PCK/api/pcks/" + Category + ".desc");
+                        cat = client.DownloadString(Network.MainURL + "/studio/PCK/api/pcks/" + Category + ".desc");
                         break;
                 }
             }
@@ -86,10 +80,10 @@ namespace PckStudio.Classes.Networking
                 switch (IsVita)
                 {
                     case (true):
-                        cat = client.DownloadString(PckStudio.Classes.Network.BackURL + "/studio/PCK/api/pcks/Vita/" + Category + ".desc");
+                        cat = client.DownloadString(Network.BackUpURL + "/studio/PCK/api/pcks/Vita/" + Category + ".desc");
                         break;
                     case (false):
-                        cat = client.DownloadString(PckStudio.Classes.Network.BackURL + "/studio/PCK/api/pcks/" + Category + ".desc");
+                        cat = client.DownloadString(Network.BackUpURL + "/studio/PCK/api/pcks/" + Category + ".desc");
                         break;
                 }
             }
