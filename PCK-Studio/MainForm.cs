@@ -2176,5 +2176,32 @@ namespace PckStudio
 			folderNode.SelectedImageIndex = 0;
 			skinsNode.Nodes.Add(folderNode);
 		}
+
+		private void editAllEntriesToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (treeViewMain.SelectedNode is TreeNode t &&
+				t.Tag is PCKFile.FileData file)
+			{
+				List<string> props = new List<string>();
+				file.properties.ForEach(l => props.Add(l.property + " " + l.value));
+				using (var input = new TextPrompt(props.ToArray()))
+				{
+					if (input.ShowDialog(this) == DialogResult.OK)
+					{
+						file.properties.Clear();
+						foreach (var line in input.TextOutput)
+						{
+							int idx = line.IndexOf(' ');
+							if (idx == -1 || line.Length - 1 == idx)
+								continue;
+							file.properties.Add((line.Substring(0, idx), line.Substring(idx + 1)));
+						}
+						ReloadMetaTreeView();
+						if (IsSubPCKNode(t.FullPath)) RebuildSubPCK(t);
+						saved = false;
+					}
+				}
+			}
+		}
 	}
 }

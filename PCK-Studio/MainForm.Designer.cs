@@ -139,6 +139,7 @@
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.pictureBoxImagePreview = new PckStudio.PictureBoxWithInterpolationMode();
 			this.LittleEndianCheckBox = new MetroFramework.Controls.MetroCheckBox();
+			this.editAllEntriesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenuPCKEntries.SuspendLayout();
 			this.menuStrip.SuspendLayout();
 			this.contextMenuMetaTree.SuspendLayout();
@@ -725,7 +726,8 @@
 			this.contextMenuMetaTree.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addEntryToolStripMenuItem,
             this.addMultipleEntriesToolStripMenuItem1,
-            this.deleteEntryToolStripMenuItem});
+            this.deleteEntryToolStripMenuItem,
+            this.editAllEntriesToolStripMenuItem});
 			this.contextMenuMetaTree.Name = "contextMenuStrip1";
 			resources.ApplyResources(this.contextMenuMetaTree, "contextMenuMetaTree");
 			// 
@@ -1024,6 +1026,12 @@
 			this.LittleEndianCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.LittleEndianCheckBox.UseSelectable = true;
 			// 
+			// editAllEntriesToolStripMenuItem
+			// 
+			this.editAllEntriesToolStripMenuItem.Name = "editAllEntriesToolStripMenuItem";
+			resources.ApplyResources(this.editAllEntriesToolStripMenuItem, "editAllEntriesToolStripMenuItem");
+			this.editAllEntriesToolStripMenuItem.Click += new System.EventHandler(this.editAllEntriesToolStripMenuItem_Click);
+			// 
 			// MainForm
 			// 
 			this.ApplyImageInvert = true;
@@ -1172,6 +1180,7 @@
 		private System.Windows.Forms.ToolStripMenuItem miscToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addCustomPackImageToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem CreateSkinsPCKToolStripMenuItem1;
+		private System.Windows.Forms.ToolStripMenuItem editAllEntriesToolStripMenuItem;
 	}
 }
 

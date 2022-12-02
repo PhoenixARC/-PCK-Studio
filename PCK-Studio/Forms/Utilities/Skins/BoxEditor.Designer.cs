@@ -124,7 +124,6 @@
 			this.parentComboBox.Location = new System.Drawing.Point(417, 72);
 			this.parentComboBox.Name = "parentComboBox";
 			this.parentComboBox.Size = new System.Drawing.Size(163, 29);
-			this.parentComboBox.Style = MetroFramework.MetroColorStyle.White;
 			this.parentComboBox.TabIndex = 3;
 			this.parentComboBox.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.parentComboBox.UseSelectable = true;
