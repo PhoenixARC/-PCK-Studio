@@ -934,21 +934,23 @@ namespace PckStudio
 
 		private void treeMeta_DoubleClick(object sender, EventArgs e)
 		{
-			if (treeMeta.SelectedNode == null || !(treeMeta.SelectedNode.Tag is ValueTuple<string, string>) ||
-				treeViewMain.SelectedNode == null || !(treeViewMain.SelectedNode.Tag is PCKFile.FileData))
-				return;
-			PCKFile.FileData file = (PCKFile.FileData)treeViewMain.SelectedNode.Tag;
-			var property = (ValueTuple<string, string>)treeMeta.SelectedNode.Tag;
-			int i = file.properties.IndexOf(property);
-			if (property.Item1 == "ANIM" && i != -1 && file.filetype == PCKFile.FileData.FileType.SkinFile)
+			if (treeMeta.SelectedNode is TreeNode subnode && subnode.Tag is ValueTuple<string, string> property &&
+				treeViewMain.SelectedNode is TreeNode node && node.Tag is PCKFile.FileData file)
 			{
-				using ANIMEditor diag = new ANIMEditor(property.Item2);
+			int i = file.properties.IndexOf(property);
+				if (i != -1)
+			{
+					switch (property.Item1)
+					{
+						case "ANIM" when file.filetype == PCKFile.FileData.FileType.SkinFile:
 				try
 				{
+								using ANIMEditor diag = new ANIMEditor(property.Item2);
 					if (diag.ShowDialog(this) == DialogResult.OK && diag.saved)
 					{
-						file.properties[i] = new ValueTuple<string, string>("ANIM", diag.outANIM);
-						if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath)) RebuildSubPCK(treeViewMain.SelectedNode);
+									file.properties[i] = ("ANIM", diag.outANIM);
+									if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath))
+										RebuildSubPCK(treeViewMain.SelectedNode);
 						ReloadMetaTreeView();
 						saved = false;
 					}
@@ -959,15 +961,15 @@ namespace PckStudio
 					Debug.WriteLine(ex.Message);
 					MessageBox.Show("Failed to parse ANIM value, aborting to normal functionality. Please make sure the value only includes hexadecimal characters (0-9,A-F) and has no more than 8 characters. It can have an optional prefix of \"0x\".");
 				}
-			}
-			else if (property.Item1 == "BOX" && i != -1 && file.filetype == PCKFile.FileData.FileType.SkinFile)
-			{
+							break;
+
+						case "BOX" when file.filetype == PCKFile.FileData.FileType.SkinFile:
 				try
 				{
 					using BoxEditor diag = new BoxEditor(property.Item2, IsSubPCKNode(treeViewMain.SelectedNode.FullPath));
 					if (diag.ShowDialog(this) == DialogResult.OK)
 					{
-						file.properties[i] = new ValueTuple<string, string>("BOX", diag.Result);
+									file.properties[i] = ("BOX", diag.Result);
 						if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath))
 							RebuildSubPCK(treeViewMain.SelectedNode);
 						ReloadMetaTreeView();
@@ -980,15 +982,25 @@ namespace PckStudio
 					Debug.WriteLine(ex.Message);
 					MessageBox.Show("Failed to parse BOX value, aborting to normal functionality.");
 				}
+							break;
+
+						default:
+							break;
+
 			}
-			using addMeta add = new addMeta(property.Item1, property.Item2);
-			if (add.ShowDialog() == DialogResult.OK && i != -1)
+
+					using (addMeta addDialog = new addMeta(property.Item1, property.Item2))
 			{
-				file.properties[i] = new ValueTuple<string, string>(add.PropertyName, add.PropertyValue);
+						if (addDialog.ShowDialog() == DialogResult.OK)
+						{
+							file.properties[i] = (addDialog.PropertyName, addDialog.PropertyValue);
 				if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath))
 					RebuildSubPCK(treeViewMain.SelectedNode);
 				ReloadMetaTreeView();
 				saved = false;
+			}
+		}
+				}
 			}
 		}
 
