@@ -302,7 +302,7 @@ namespace PckStudio
 		private void BuildMainTreeView()
 		{
 			// In case the Rename function was just used and the selected node name no longer matches the file name
-			string filepath = "";
+			string filepath = string.Empty;
 			if(treeViewMain.SelectedNode is TreeNode node && node.Tag is PCKFile.FileData file)
 				filepath = file.filepath;
 			treeViewMain.Nodes.Clear();
@@ -1009,7 +1009,8 @@ namespace PckStudio
 			TreeNode node = treeViewMain.SelectedNode;
 			PCKFile.FileData mfO = node.Tag as PCKFile.FileData;
 
-			PCKFile.FileData mf = new PCKFile.FileData("", mfO.filetype); // Creates new minefile template
+			// Creates new empty file entry
+			PCKFile.FileData mf = new PCKFile.FileData(string.Empty, mfO.filetype);
 			mf.SetData(mfO.data); // adds file data to minefile
 			string dirName = Path.GetDirectoryName(mfO.filepath).Replace("\\", "/");
 
@@ -1063,14 +1064,14 @@ namespace PckStudio
 		private void ReloadMetaTreeView()
 		{
 			treeMeta.Nodes.Clear();
-			if (treeViewMain.SelectedNode is TreeNode t &&
-				t.Tag is PCKFile.FileData file)
-				file.properties.ForEach(p =>
+			if (treeViewMain.SelectedNode is TreeNode node &&
+				node.Tag is PCKFile.FileData file)
 			{
-					TreeNode node = new TreeNode(p.Item1);
-					node.Tag = p;
-				treeMeta.Nodes.Add(node);
-				});
+				foreach (var property in file.properties)
+				{
+					treeMeta.Nodes.Add(CreateNode(property.Item1, property));
+		}
+			}
 		}
 
 		private void addEntryToolStripMenuItem_Click_1(object sender, EventArgs e)
@@ -1236,7 +1237,7 @@ namespace PckStudio
 			}
 			currentPCK.Files.Add(zeroFile);
 			currentPCK.Files.Add(loc);
-			if(createSkinsPCK) CreateSkinsPCKToolStripMenuItem1_Click(null, null);
+			if(createSkinsPCK) CreateSkinsPCKToolStripMenuItem1_Click(null, EventArgs.Empty);
 		}
 
 		private void InitializeTexturePack(int packId, int packVersion, string packName, string res, bool createSkinsPCK = false)
@@ -2162,21 +2163,20 @@ namespace PckStudio
 
 		private void CreateSkinsPCKToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
-			PCKFile.FileData NewSkinsPCKFile;
-			if (currentPCK.TryGetFile("Skins.pck", PCKFile.FileData.FileType.SkinDataFile, out NewSkinsPCKFile))
+			if (currentPCK.TryGetFile("Skins.pck", PCKFile.FileData.FileType.SkinDataFile, out _))
 			{
 				MessageBox.Show("A Skins.pck file already exists in this PCK and a new one cannot be created.", "Operation aborted");
 				return;
 			}
-			NewSkinsPCKFile = new PCKFile.FileData("Skins.pck", PCKFile.FileData.FileType.SkinDataFile);
+			PCKFile.FileData newSkinsPCKFile = new PCKFile.FileData("Skins.pck", PCKFile.FileData.FileType.SkinDataFile);
 
 			using (var stream = new MemoryStream())
 			{
 				PCKFileWriter.Write(stream, new PCKFile(3), LittleEndianCheckBox.Checked, true);
-				NewSkinsPCKFile.SetData(stream.ToArray());
+				newSkinsPCKFile.SetData(stream.ToArray());
 			}
 
-			currentPCK.Files.Add(NewSkinsPCKFile);
+			currentPCK.Files.Add(newSkinsPCKFile);
 
 			BuildMainTreeView();
 
@@ -2192,8 +2192,7 @@ namespace PckStudio
 			if (treeViewMain.SelectedNode is TreeNode t &&
 				t.Tag is PCKFile.FileData file)
 			{
-				List<string> props = new List<string>();
-				file.properties.ForEach(l => props.Add(l.property + " " + l.value));
+				var props = file.properties.Select(l => l.property + " " + l.value);
 				using (var input = new TextPrompt(props.ToArray()))
 				{
 					if (input.ShowDialog(this) == DialogResult.OK)
