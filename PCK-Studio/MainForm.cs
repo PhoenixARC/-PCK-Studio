@@ -828,18 +828,17 @@ namespace PckStudio
 			}
 		}
 
-		bool IsSubPCKNode(string nodePath)
+		bool IsSubPCKNode(string nodePath, string extention = ".pck")
 		{
 			// written by miku, implemented and modified by me - MNL
+			if (nodePath.EndsWith(extention)) return false;
+
 			string[] subpaths = nodePath.Split('/');
-			string[] conditions = subpaths.Select(s => Path.GetExtension(s) switch {
-				".pck" => "yes",
-				_ => "no",
-			}).ToArray();
+			var conditions = subpaths.Select(s => Path.GetExtension(s).Equals(extention));
 
-			bool isSubFile = conditions.Contains("yes") && !nodePath.EndsWith(".pck");
+			bool isSubFile = conditions.Contains(true);
 
-			Console.WriteLine(nodePath + " is " + (isSubFile ? "" : "not ") + "a Sub-PCK File");
+			Console.WriteLine($"{nodePath} is{(isSubFile ? "" : " not")} a Sub-PCK File");
 
 			return isSubFile;
 		}
