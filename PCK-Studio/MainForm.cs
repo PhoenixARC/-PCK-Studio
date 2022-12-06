@@ -866,19 +866,16 @@ namespace PckStudio
 		TreeNode GetSubPCK(TreeNode child)
 		{
 			TreeNode parent = child;
-
-			bool flag = false;
-
 			while (parent.Parent != null)
 			{
 				parent = parent.Parent;
 				Console.WriteLine(parent.Text);
-				flag = parent.Tag is PCKFile.FileData f && (f.filetype is PCKFile.FileData.FileType.TexturePackInfoFile || f.filetype is PCKFile.FileData.FileType.SkinDataFile);
-				if (flag) break;
+                if (parent.Tag is PCKFile.FileData f &&
+                    (f.filetype is PCKFile.FileData.FileType.TexturePackInfoFile ||
+					 f.filetype is PCKFile.FileData.FileType.SkinDataFile))
+					return parent;
 			}
-
-			if (!flag) return null;
-			else return parent;
+			return null;
 		}
 
 		void RebuildSubPCK(TreeNode childNode)
