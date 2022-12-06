@@ -1249,27 +1249,27 @@ namespace PckStudio
 
 			PCKFile infoPCK = new PCKFile(3);
 
-			var ms = new MemoryStream();
-			var ms2 = new MemoryStream();
-			var ms3 = new MemoryStream();
+			using (var ms = new MemoryStream())
+			{
+				var icon = new PCKFile.FileData("icon.png", PCKFile.FileData.FileType.TextureFile);
+				Resources.TexturePackIcon.Save(ms, ImageFormat.Png);
+				icon.SetData(ms.ToArray());
+				infoPCK.Files.Add(icon);
+			}
 
+			using (var ms = new MemoryStream())
+			{
 			var comparison = new PCKFile.FileData("comparison.png", PCKFile.FileData.FileType.TextureFile);
 			Resources.Comparison.Save(ms, ImageFormat.Png);
 			comparison.SetData(ms.ToArray());
-
-			var icon = new PCKFile.FileData("icon.png", PCKFile.FileData.FileType.TextureFile);
-			Resources.TexturePackIcon.Save(ms2, ImageFormat.Png);
-			icon.SetData(ms2.ToArray());
-
-			infoPCK.Files.Add(icon);
 			infoPCK.Files.Add(comparison);
+			}
 
-			PCKFileWriter.Write(ms3, infoPCK, LittleEndianCheckBox.Checked);
-			texturepackInfo.SetData(ms3.ToArray());
-
-			ms.Dispose();
-			ms2.Dispose();
-			ms3.Dispose();
+			using (var ms = new MemoryStream())
+			{
+				PCKFileWriter.Write(ms, infoPCK, LittleEndianCheckBox.Checked);
+				texturepackInfo.SetData(ms.ToArray());
+			}
 
 			currentPCK.Files.Add(texturepackInfo);
 		}
