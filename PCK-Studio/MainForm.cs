@@ -892,9 +892,8 @@ namespace PckStudio
 
 				foreach (TreeNode node in GetNodes(parent.Nodes))
 				{
-					if (node.Tag is PCKFile.FileData)
+					if (node.Tag is PCKFile.FileData node_file)
 					{
-						PCKFile.FileData node_file = (PCKFile.FileData)node.Tag;
 						PCKFile.FileData new_file = new PCKFile.FileData(node_file.filepath, node_file.filetype);
 						foreach (var prop in node_file.properties) new_file.properties.Add(prop);
 						new_file.SetData(node_file.data);
@@ -902,12 +901,15 @@ namespace PckStudio
 					}
 				}
 
-				MemoryStream ms = new MemoryStream();
 				// Bool to add the XMLVersion property
 				bool isSkinsPCK = parent_file.filetype is PCKFile.FileData.FileType.SkinDataFile;
+
+				using (MemoryStream ms = new MemoryStream())
+				{
 				PCKFileWriter.Write(ms, newPCKFile, LittleEndianCheckBox.Checked, isSkinsPCK);
 				parent_file.SetData(ms.ToArray());
 				parent.Tag = parent_file;
+				}
 
 				BuildMainTreeView();
 			}
