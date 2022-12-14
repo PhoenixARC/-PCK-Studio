@@ -1,0 +1,1180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <LangVersion>preview</LangVersion>
+    <DisableFody Condition="'$(Configuration)' == 'Debug'">true</DisableFody>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0ACAAEDE-93F5-4B5D-B8D7-A0C43359C0D6}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PckStudio</RootNamespace>
+    <AssemblyName>PCK-Studio</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\PCK-Studio_Logo.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>false</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup>
+    <StartupObject>PckStudio.Program</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup>
+    <DelaySign>false</DelaySign>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>1A350BCC742C98A4A39065C40B7D81A6F94CE8C1</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>
+    </ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleasePortable|AnyCPU'">
+    <OutputPath>bin\ReleasePortable\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>preview</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="filetransferprotocollib">
+      <HintPath>..\filetransferprotocollib.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Classes\API\PCKCenter\model\PCKCenterJSON.cs" />
+    <Compile Include="Classes\API\PCKCenter\SaveLocalJSON.cs" />
+    <Compile Include="Classes\FileTypes\ARCFile.cs" />
+    <Compile Include="Classes\FileTypes\BehaviourFile.cs" />
+    <Compile Include="Classes\FileTypes\CSMBFile.cs" />
+    <Compile Include="Classes\FileTypes\ModelFile.cs" />
+    <Compile Include="Classes\FileTypes\PCKAudioFile.cs" />
+    <Compile Include="Classes\FileTypes\Bink.cs" />
+    <Compile Include="Classes\FileTypes\COLFile.cs" />
+    <Compile Include="Classes\FileTypes\CSM.cs" />
+    <Compile Include="Classes\FileTypes\GRFFile.cs" />
+    <Compile Include="Classes\FileTypses\COL\ColorBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Classes\FileTypses\COL\ColorBox.designer.cs">
+      <DependentUpon>ColorBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\FileTypses\COL\ColorUtil.cs" />
+    <Compile Include="Classes\FileTypses\COL\DrawStyles.cs" />
+    <Compile Include="Classes\FileTypses\COL\NumericTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\FileTypses\COL\TwoColorPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Classes\FileTypses\COL\TwoColorPanel.designer.cs">
+      <DependentUpon>TwoColorPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\FileTypses\COL\VerticalColorSlider.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Classes\FileTypses\COL\VerticalColorSlider.designer.cs">
+      <DependentUpon>VerticalColorSlider.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\IO\ARC\ARCFileWriter.cs" />
+    <Compile Include="Classes\IO\ARC\ARCFileReader.cs" />
+    <Compile Include="Classes\IO\Behaviour\BehavioursReader.cs" />
+    <Compile Include="Classes\IO\CSMB\CSMBFileReader.cs" />
+    <Compile Include="Classes\IO\CSMB\CSMBFileWriter.cs" />
+    <Compile Include="Classes\IO\Model\ModelFileReader.cs" />
+    <Compile Include="Classes\IO\Model\ModelFileWriter.cs" />
+    <Compile Include="Classes\IO\PCK\PCKAudioFileReader.cs" />
+    <Compile Include="Classes\IO\PCK\PCKAudioFileWriter.cs" />
+    <Compile Include="Classes\IO\COL\COLFileReader.cs" />
+    <Compile Include="Classes\IO\COL\COLFileWriter.cs" />
+    <Compile Include="Classes\IO\Sounds\SoundIO.cs" />
+    <Compile Include="Classes\IO\Sounds\Sounds.cs" />
+    <Compile Include="Classes\Models\DefaultModels\Steve64x64Model.cs" />
+    <Compile Include="Classes\Theme\Controls\Badge\CrEaTiiOn_Badge.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Banner\CrEaTiiOn_Banner.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Bubble\CrEaTiiOn_ChatBubbleLeft.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Bubble\CrEaTiiOn_ChatBubbleRight.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Button\CrEaTiiOn_Button.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Button\CrEaTiiOn_DescriptiveButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Button\CrEaTiiOn_FlatButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Button\CrEaTiiOn_LightButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Button\CrEaTiiOn_ModernButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Button\CrEaTiiOn_PillButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Card\CrEaTiiOn_GradientCard.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\CheckBox\CrEaTiiOn_CheckBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\CheckBox\CrEaTiiOn_CustomCheckBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\CheckBox\CrEaTiiOn_FlatCheckBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\CheckBox\CrEaTiiOn_LightCheckBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\CheckBox\CrEaTiiOn_MetroCheckBox5.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\CheckBox\CrEaTiiOn_ModernCheckBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\CheckBox\CrEaTiiOn_RoundCheckBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Combobox\CrEaTiiOn_ComboBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\ControlBox\CrEaTiiOn_ControlBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\ControlBox\CrEaTiiOn_FlatControlBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\ControlBox\CrEaTiiOn_ModernControlBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Controller\CrEaTiiOn_DragControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Controller\CrEaTiiOn_VolumeController.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\DatePicker\CrEaTiiOn_DatePicker.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\DropDown\CrEaTiiOn_ClasicDropdownMenu.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\DropDown\CrEaTiiOn_DropdownMenu.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Ellipse\CrEaTiiOn_Ellipse.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Ellipse\CrEaTiiOn_ObjectEllipse.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Gauge\CrEaTiiOn_Gauge.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\GroupBox\CrEaTiiOn_FlatGroupBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\GroupBox\CrEaTiiOn_ModernGroupBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Handle\CrEaTiiOn_FormHandle.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Icon\CrEaTiiOn_InfoIcon.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Icon\CrEaTiiOn_TickIcon.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\LabelEdit\CrEaTiiOn_LabelEdit.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Label\CrEaTiiOn_AirLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Label\CrEaTiiOn_BigLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Label\CrEaTiiOn_ClasicHeaderLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Label\CrEaTiiOn_ClasicLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Label\CrEaTiiOn_FancyLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Label\CrEaTiiOn_FlatLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Label\CrEaTiiOn_HeaderLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Label\CrEaTiiOn_Label.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Label\CrEaTiiOn_MetroLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Label\CrEaTiiOn_ModernHeaderLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Label\CrEaTiiOn_ModernLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Label\CrEaTiiOn_SmallLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\LinkLabelEdit\CrEaTiiOn_LinkLabelEdit.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\LinkLabel\CrEaTiiOn_LinkLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\ListBox\CrEaTiiOn_ListBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Menu\CrEaTiiOn_MenuColorTable.cs" />
+    <Compile Include="Classes\Theme\Controls\Menu\CrEaTiiOn_MenuRenderer.cs" />
+    <Compile Include="Classes\Theme\Controls\Menu\Support\MenuColorTable.cs" />
+    <Compile Include="Classes\Theme\Controls\Menu\Support\MenuRenderer.cs" />
+    <Compile Include="Classes\Theme\Controls\Message\CrEaTiiOn_Message.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Notify\CrEaTiiOn_NotificationBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Numeric\CrEaTiiOn_Numeric.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Palette\CrEaTiiOn_ColorPalette.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Panel\CrEaTiiOn_FlatPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Panel\CrEaTiiOn_ModernPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Panel\CrEaTiiOn_Panel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Panel\CrEaTiiOn_WidgetPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Picker\CrEaTiiOn_ColorPicker.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Picker\CrEaTiiOn_ColorPicker.Designer.cs">
+      <DependentUpon>CrEaTiiOn_ColorPicker.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\PictureBox\CrEaTiiOn_CircularPictureBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\PictureBox\CrEaTiiOn_ModernPictureBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\PictureBox\CrEaTiiOn_PictureBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Progress\CrEaTiiOn_CircleProgressBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Progress\CrEaTiiOn_FancyProgressBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Progress\CrEaTiiOn_FlatProgressBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Progress\CrEaTiiOn_FlatRoundProgressBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Progress\CrEaTiiOn_ModernProgressBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Progress\CrEaTiiOn_ProcessingControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Progress\CrEaTiiOn_ProgressBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Progress\CrEaTiiOn_SpinningCircles.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\RadioButton\CrEaTiiOn_AirRadioButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\RadioButton\CrEaTiiOn_ClasicRadioButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\RadioButton\CrEaTiiOn_MetroRadioButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\RadioButton\CrEaTiiOn_ModernRadioButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\RadioButton\CrEaTiiOn_RadioButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\RichTextBoxEdit\CrEaTiiOn_RichTextBoxEdit.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\RichTextBox\CrEaTiiOn_RichTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Segment\CrEaTiiOn_Segment.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Separator\CrEaTiiOn_LightSeperator.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Separator\CrEaTiiOn_ModernSeperator.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Separator\CrEaTiiOn_Separator.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Sleeper\CrEaTiiOn_Sleeper.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Slider\CrEaTiiOn_FlatSliderBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Slider\CrEaTiiOn_ModernSlider.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\StatusBar\CrEaTiiOn_FlatStatusBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Stick\CrEaTiiOn_JoyStick.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Strip\CrEaTiiOn_ContextMenuStrip.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Strip\CrEaTiiOn_FlatContextMenuStrip.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Strip\Support\StripRenderer.cs" />
+    <Compile Include="Classes\Theme\Controls\TabControl\CrEaTiiOn_BarTabControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\TabControl\CrEaTiiOn_FlatTabControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\TabControl\CrEaTiiOn_MetroTabControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\TabControl\CrEaTiiOn_ModernTabControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\TabPage\CrEaTiiOn_ModernTabPage.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\TabPage\CrEaTiiOn_TabPage.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\TextBoxEdit\CrEaTiiOn_TextPosition.cs" />
+    <Compile Include="Classes\Theme\Controls\TextBox\CrEaTiiOn_AirTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\TextBox\CrEaTiiOn_ModernTextBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\TextBox\CrEaTiiOn_ModernTextBox.Designer.cs">
+      <DependentUpon>CrEaTiiOn_ModernTextBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Toggle\CrEaTiiOn_ModernToggleButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Toggle\CrEaTiiOn_ToggleButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\TrackBar\CrEaTiiOn_TrackBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Controls\Watcher\CrEaTiiOn_ExtendedFileSystemWatcher.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Helpers\Helpers.cs" />
+    <Compile Include="Classes\Theme\Helpers\Main\Helper\Theme.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\Helpers\Main\Helper\ThemeContainer.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\ThemeBase\Shadow Controls\CrEaTiiOn_Shadow_Controls.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\ThemeBase\Ultimate Controls\CrEaTiiOn_Ultimate_FancyButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\ThemeBase\Ultimate Controls\CrEaTiiOn_Ultimate_FancyComboBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\ThemeBase\Ultimate Controls\CrEaTiiOn_Ultimate_GradientButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\ThemeBase\Ultimate Controls\CrEaTiiOn_Ultimate_GradientLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\ThemeBase\Ultimate Controls\CrEaTiiOn_Ultimate_GradientNumericUpDown.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\ThemeBase\Ultimate Controls\CrEaTiiOn_Ultimate_GradientPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\ThemeBase\Ultimate Controls\CrEaTiiOn_Ultimate_GradientTextBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\ThemeBase\Ultimate Controls\CrEaTiiOn_Ultimate_GradientTextBox.Designer.cs">
+      <DependentUpon>CrEaTiiOn_Ultimate_GradientTextBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\Theme\ThemeBase\Ultimate Controls\CrEaTiiOn_Ultimate_GradientToggleButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\ThemeBase\Ultimate Controls\CrEaTiiOn_Ultimate_GroupBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\ThemeBase\Ultimate Controls\CrEaTiiOn_Ultimate_NumericUpDown.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\ThemeBase\Ultimate Controls\CrEaTiiOn_Ultimate_PictureBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\ThemeBase\Ultimate Controls\CrEaTiiOn_Ultimate_RadioButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Theme\ThemeBase\Ultimate Controls\CrEaTiiOn_Ultimate_ToggleButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Utils\3DS\3DSUtil.cs" />
+    <Compile Include="Classes\Utils\ARC\ARCUtil.cs" />
+    <Compile Include="Classes\Utils\SkinANIM.cs" />
+    <Compile Include="Classes\FileTypes\PCKProperties.cs" />
+    <Compile Include="Classes\FileTypes\PCKFile.cs" />
+    <Compile Include="Classes\IO\GRF\GRFFileReader.cs" />
+    <Compile Include="Classes\IO\GRF\GRFFileWriter.cs" />
+    <Compile Include="Classes\IO\LOC\LOCFileReader.cs" />
+    <Compile Include="Classes\IO\LOC\LOCFileWriter.cs" />
+    <Compile Include="Classes\IO\PCKCollectionsLocal.cs" />
+    <Compile Include="Classes\IO\PCK\PCKFileReader.cs" />
+    <Compile Include="Classes\IO\PCK\PCKFileWriter.cs" />
+    <Compile Include="Classes\IO\StreamDataReader.cs" />
+    <Compile Include="Classes\IO\StreamDataWriter.cs" />
+    <Compile Include="Classes\Models\DefaultModels\Steve64x32Model.cs" />
+    <Compile Include="Classes\Models\DefaultModels\ModelBase.cs" />
+    <Compile Include="Classes\Models\DefaultModels\Texture.cs" />
+    <Compile Include="Classes\Models\DefaultModels\TextureSelector.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Classes\Models\Backgrounds.cs" />
+    <Compile Include="Classes\Models\BackgroundTypes.cs" />
+    <Compile Include="Classes\Models\Box.cs" />
+    <Compile Include="Classes\Models\Effects.cs" />
+    <Compile Include="Classes\Models\Matrix3D.cs" />
+    <Compile Include="Classes\Models\ModelView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Models\ModelView.Designer.cs">
+      <DependentUpon>ModelView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\Models\Object3D.cs" />
+    <Compile Include="Classes\Models\Object3DGroup.cs" />
+    <Compile Include="Classes\Models\Point3D.cs" />
+    <Compile Include="Classes\Models\Positions.cs" />
+    <Compile Include="Classes\Models\ProjectionTypes.cs" />
+    <Compile Include="Classes\Models\RotationOrders.cs" />
+    <Compile Include="Classes\Models\Texel.cs" />
+    <Compile Include="Classes\Models\TexelComparer.cs" />
+    <Compile Include="Classes\Models\TexturePlane.cs" />
+    <Compile Include="Classes\Networking\Network.cs" />
+    <Compile Include="Classes\Networking\PCKCollections.cs" />
+    <Compile Include="Classes\Misc\RichPresenceClient.cs" />
+    <Compile Include="Classes\Networking\Update.cs" />
+    <Compile Include="Classes\Utils\GRF\CRC32.cs" />
+    <Compile Include="Classes\Utils\RLE.cs" />
+    <Compile Include="Forms\Additional-Popups\ChangeLogForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\ChangeLogForm.Designer.cs">
+      <DependentUpon>ChangeLogForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\LOC\AddLanguage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\LOC\AddLanguage.Designer.cs">
+      <DependentUpon>AddLanguage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\CreateTexturePack.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\CreateTexturePack.Designer.cs">
+      <DependentUpon>CreateTexturePack.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\MipMapPrompt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\MipMapPrompt.Designer.cs">
+      <DependentUpon>MipMapPrompt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\RenamePrompt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\RenamePrompt.Designer.cs">
+      <DependentUpon>RenamePrompt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\TextPrompt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\TextPrompt.Designer.cs">
+      <DependentUpon>TextPrompt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Editor\COLEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Editor\COLEditor.Designer.cs">
+      <DependentUpon>COLEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Editor\LOCEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Editor\LOCEditor.Designer.cs">
+      <DependentUpon>LOCEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\Animation\ChangeTile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\Animation\ChangeTile.Designer.cs">
+      <DependentUpon>ChangeTile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\Animation\SetBulkSpeed.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\Animation\SetBulkSpeed.Designer.cs">
+      <DependentUpon>SetBulkSpeed.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\Audio\CreditsEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\Audio\CreditsEditor.Designer.cs">
+      <DependentUpon>CreditsEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\Audio\AddCategory.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\Audio\AddCategory.Designer.cs">
+      <DependentUpon>AddCategory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Skins-And-Textures\AddMeta.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Skins-And-Textures\AddMeta.Designer.cs">
+      <DependentUpon>AddMeta.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Skins-And-Textures\AddNewSkin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Skins-And-Textures\AddNewSkin.Designer.cs">
+      <DependentUpon>AddNewSkin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\AddPCKPassword.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\AddPCKPassword.Designer.cs">
+      <DependentUpon>AddPCKPassword.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Skins-And-Textures\AdvancedOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Skins-And-Textures\AdvancedOptions.Designer.cs">
+      <DependentUpon>AdvancedOptions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Editor\GRFEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Editor\GRFEditor.Designer.cs">
+      <DependentUpon>GRFEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\GRF\AddParameter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\GRF\AddParameter.Designer.cs">
+      <DependentUpon>AddParameter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\Audio\PleaseWait.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\Audio\PleaseWait.Designer.cs">
+      <DependentUpon>PleaseWait.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Utilities\AnimationUtil.cs" />
+    <Compile Include="Forms\Utilities\Skins\BoxEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Utilities\Skins\BoxEditor.Designer.cs">
+      <DependentUpon>BoxEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Utilities\Skins\ANIMEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Utilities\Skins\ANIMEditor.Designer.cs">
+      <DependentUpon>ANIMEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Skins-And-Textures\GenerateModel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Skins-And-Textures\GenerateModel.Designer.cs">
+      <DependentUpon>GenerateModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Skins-And-Textures\SkinPreview.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Skins-And-Textures\SkinPreview.Designer.cs">
+      <DependentUpon>SkinPreview.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Editor\AnimationEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Editor\AnimationEditor.Designer.cs">
+      <DependentUpon>AnimationEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\Animation\FrameEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\Animation\FrameEditor.Designer.cs">
+      <DependentUpon>FrameEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Editor\AudioEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Editor\AudioEditor.Designer.cs">
+      <DependentUpon>AudioEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Utilities\InstallPS3.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Utilities\InstallPS3.Designer.cs">
+      <DependentUpon>InstallPS3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Utilities\InstallVita.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Utilities\InstallVita.Designer.cs">
+      <DependentUpon>InstallVita.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Utilities\InstallWiiU.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Utilities\InstallWiiU.Designer.cs">
+      <DependentUpon>InstallWiiU.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\Utils\ListUtils.cs" />
+    <Compile Include="Forms\Utilities\PCK Manager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Utilities\PCK Manager.Designer.cs">
+      <DependentUpon>PCK Manager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Utilities\PCKCenter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Utilities\PCKCenter.Designer.cs">
+      <DependentUpon>PCKCenter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Utilities\PCKCenterBeta.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Utilities\PCKCenterBeta.Designer.cs">
+      <DependentUpon>PCKCenterBeta.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Utilities\PCKCenterOpen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Utilities\PCKCenterOpen.Designer.cs">
+      <DependentUpon>PCKCenterOpen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\LockPrompt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\LockPrompt.Designer.cs">
+      <DependentUpon>LockPrompt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Utilities\Preferences.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Utilities\Preferences.Designer.cs">
+      <DependentUpon>Preferences.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Utilities\TextureConverterUtility.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Utilities\TextureConverterUtility.Designer.cs">
+      <DependentUpon>TextureConverterUtility.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\ToolboxItems\InterpolationPictureBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\FileTypes\LOCFile.cs" />
+    <Compile Include="Forms\Additional-Popups\MetaList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\MetaList.Designer.cs">
+      <DependentUpon>MetaList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Forms\Additional-Popups\AboutThisProgram.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\AboutThisProgram.Designer.cs">
+      <DependentUpon>AboutThisProgram.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Classes\Utils\3DS\TextureCodec.cs" />
+    <Compile Include="Classes\Utils\3DS\TextureUtils.cs" />
+    <EmbeddedResource Include="Classes\FileTypses\COL\ColorBox.resx">
+      <DependentUpon>ColorBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Classes\FileTypses\COL\VerticalColorSlider.resx">
+      <DependentUpon>VerticalColorSlider.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Classes\Theme\Controls\Combobox\CrEaTiiOn_ComboBox.resx">
+      <DependentUpon>CrEaTiiOn_ComboBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Classes\Theme\Controls\Picker\CrEaTiiOn_ColorPicker.resx">
+      <DependentUpon>CrEaTiiOn_ColorPicker.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Classes\Theme\Controls\TextBox\CrEaTiiOn_ModernTextBox.resx">
+      <DependentUpon>CrEaTiiOn_ModernTextBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Classes\Theme\ThemeBase\Ultimate Controls\CrEaTiiOn_Ultimate_FancyComboBox.resx">
+      <DependentUpon>CrEaTiiOn_Ultimate_FancyComboBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Classes\Theme\ThemeBase\Ultimate Controls\CrEaTiiOn_Ultimate_FancyTextBox.resx" />
+    <EmbeddedResource Include="Classes\Theme\ThemeBase\Ultimate Controls\CrEaTiiOn_Ultimate_GradientTextBox.resx">
+      <DependentUpon>CrEaTiiOn_Ultimate_GradientTextBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Additional-Popups\ChangeLogForm.resx">
+      <DependentUpon>ChangeLogForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Additional-Popups\LOC\AddLanguage.resx">
+      <DependentUpon>AddLanguage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Additional-Popups\CreateTexturePack.resx">
+      <DependentUpon>CreateTexturePack.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Additional-Popups\MipMapPrompt.resx">
+      <DependentUpon>MipMapPrompt.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Additional-Popups\RenamePrompt.resx">
+      <DependentUpon>RenamePrompt.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Additional-Popups\TextPrompt.resx">
+      <DependentUpon>TextPrompt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Editor\COLEditor.ja.resx">
+      <DependentUpon>COLEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Editor\COLEditor.resx">
+      <DependentUpon>COLEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Editor\LOCEditor.ja.resx">
+      <DependentUpon>LOCEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Editor\LOCEditor.resx">
+      <DependentUpon>LOCEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Additional-Popups\Animation\ChangeTile.resx">
+      <DependentUpon>ChangeTile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Additional-Popups\Animation\SetBulkSpeed.resx">
+      <DependentUpon>SetBulkSpeed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Additional-Popups\Audio\CreditsEditor.resx">
+      <DependentUpon>CreditsEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Additional-Popups\Audio\AddCategory.resx">
+      <DependentUpon>AddCategory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Skins-And-Textures\AddMeta.ja.resx">
+      <DependentUpon>AddMeta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Skins-And-Textures\AddMeta.resx">
+      <DependentUpon>AddMeta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Skins-And-Textures\AddNewSkin.ja.resx">
+      <DependentUpon>AddNewSkin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Skins-And-Textures\AddNewSkin.resx">
+      <DependentUpon>AddNewSkin.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Additional-Popups\AddPCKPassword.resx">
+      <DependentUpon>AddPCKPassword.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Skins-And-Textures\AdvancedOptions.ja.resx">
+      <DependentUpon>AdvancedOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Skins-And-Textures\AdvancedOptions.resx">
+      <DependentUpon>AdvancedOptions.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Editor\GRFEditor.resx">
+      <DependentUpon>GRFEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Additional-Popups\GRF\AddParameter.resx">
+      <DependentUpon>AddParameter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Additional-Popups\Audio\PleaseWait.resx">
+      <DependentUpon>PleaseWait.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Utilities\Skins\BoxEditor.resx">
+      <DependentUpon>BoxEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Utilities\Skins\ANIMEditor.resx">
+      <DependentUpon>ANIMEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Skins-And-Textures\GenerateModel.ja.resx">
+      <DependentUpon>GenerateModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Skins-And-Textures\GenerateModel.resx">
+      <DependentUpon>GenerateModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Skins-And-Textures\SkinPreview.resx">
+      <DependentUpon>SkinPreview.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Editor\AnimationEditor.resx">
+      <DependentUpon>AnimationEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Additional-Popups\Animation\FrameEditor.resx">
+      <DependentUpon>FrameEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Editor\AudioEditor.resx">
+      <DependentUpon>AudioEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Utilities\InstallPS3.resx">
+      <DependentUpon>InstallPS3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Utilities\InstallVita.resx">
+      <DependentUpon>InstallVita.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Utilities\InstallWiiU.ja.resx">
+      <DependentUpon>InstallWiiU.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Utilities\InstallWiiU.resx">
+      <DependentUpon>InstallWiiU.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Additional-Popups\MetaList.ja.resx">
+      <DependentUpon>MetaList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Utilities\PCK Manager.ja.resx">
+      <DependentUpon>PCK Manager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Utilities\PCK Manager.resx">
+      <DependentUpon>PCK Manager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Utilities\PCKCenter.ja.resx">
+      <DependentUpon>PCKCenter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Utilities\PCKCenter.resx">
+      <DependentUpon>PCKCenter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Utilities\PCKCenterBeta.resx">
+      <DependentUpon>PCKCenterBeta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Utilities\PCKCenterOpen.ja.resx">
+      <DependentUpon>PCKCenterOpen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Utilities\PCKCenterOpen.resx">
+      <DependentUpon>PCKCenterOpen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Additional-Popups\LockPrompt.ja.resx">
+      <DependentUpon>LockPrompt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Additional-Popups\LockPrompt.resx">
+      <DependentUpon>LockPrompt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Utilities\Preferences.ja.resx">
+      <DependentUpon>Preferences.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Utilities\Preferences.resx">
+      <DependentUpon>Preferences.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Utilities\TextureConverterUtility.resx">
+      <DependentUpon>TextureConverterUtility.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Additional-Popups\MetaList.resx">
+      <DependentUpon>MetaList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Additional-Popups\AboutThisProgram.resx">
+      <DependentUpon>AboutThisProgram.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.ja.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="CommunityKey.snk" />
+    <None Include="Properties\app.manifest" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pckClosed.png" />
+    <None Include="Resources\pckOpen.png" />
+    <None Include="Resources\pckDrop.png" />
+    <None Include="Resources\TexturePackIcon.png" />
+    <None Include="Resources\apps.zip" />
+    <None Include="Resources\binka\binkawin.asi" />
+    <None Include="Resources\fileTemplates\1.91_colours.col" />
+    <None Include="Resources\fileTemplates\tu12colours.col" />
+    <None Include="Resources\fileTemplates\tu13colours.col" />
+    <None Include="Resources\fileTemplates\tu14colours.col" />
+    <None Include="Resources\fileTemplates\tu19colours.col" />
+    <None Include="Resources\fileTemplates\tu31colours.col" />
+    <None Include="Resources\fileTemplates\tu32colours.col" />
+    <None Include="Resources\fileTemplates\tu43colours.col" />
+    <None Include="Resources\fileTemplates\tu46colours.col" />
+    <None Include="Resources\fileTemplates\tu51colours.col" />
+    <None Include="Resources\fileTemplates\tu53colours.col" />
+    <None Include="Resources\fileTemplates\tu54colours.col" />
+    <None Include="Resources\fileTemplates\tu69colours.col" />
+    <None Include="Resources\tileData.json" />
+    <None Include="Resources\Del.png" />
+    <None Include="Resources\ExportFile.png" />
+    <None Include="Resources\power3.png" />
+    <None Include="Resources\power.png" />
+    <None Include="Resources\youtube_PNG15.png" />
+    <None Include="Resources\pckClosed.bmp" />
+    <None Include="Resources\wii-u-games-tool.png" />
+    <None Include="Resources\turn-off %281%291.png" />
+    <None Include="Resources\discord.png" />
+    <None Include="Resources\external-content.duckduckgo.png" />
+    <None Include="Resources\clock.png" />
+    <None Include="Resources\changeTile.png" />
+    <None Include="Resources\items.png" />
+    <None Include="Resources\MROE.png" />
+    <None Include="Resources\sdDownload.png" />
+    <None Include="Resources\Replace.png" />
+    <None Include="Resources\pack.png" />
+    <None Include="Resources\terrain.png" />
+    <None Include="Resources\xbox.png" />
+    <None Include="Resources\ps3.png" />
+    <None Include="Resources\wiiu.png" />
+    <None Include="Resources\Splash.png" />
+    <None Include="Resources\pckCenterHeader.png" />
+    <None Include="Resources\binka\binka_encode.exe" />
+    <None Include="Resources\binka\mss32.dll" />
+    <None Include="Resources\anim_editor\classic_template.png" />
+    <None Include="Resources\anim_editor\slim_template.png" />
+    <None Include="Resources\iconImageList\COL ICON.png" />
+    <None Include="Resources\iconImageList\SKINS ICON.png" />
+    <None Include="Resources\iconImageList\MODELS ICON.png" />
+    <None Include="Resources\iconImageList\GRF ICON.png" />
+    <None Include="Resources\iconImageList\GRH ICON.png" />
+    <None Include="Resources\iconImageList\INFO ICON.png" />
+    <None Include="Resources\iconImageList\CAPE ICON.png" />
+    <None Include="Resources\iconImageList\SKIN ICON.png" />
+    <None Include="Resources\iconImageList\TEXTURE ICON.png" />
+    <None Include="Resources\AddTexture.png" />
+    <None Include="Resources\iconImageList\BEHAVIOURS ICON.png" />
+    <None Include="Resources\Comparison.png" />
+    <None Include="Resources\OpenDrop.png" />
+    <Content Include="Resources\PCK-Studio_Logo.ico" />
+    <None Include="Resources\bg1.png" />
+    <Content Include="Resources\NoImageFound.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Costura.Fody">
+      <Version>5.8.0-alpha0098</Version>
+      <IncludeAssets>compile; runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="DarkNet">
+      <Version>2.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="DiscordRichPresence">
+      <Version>1.0.175</Version>
+    </PackageReference>
+    <PackageReference Include="MetroFramework">
+      <Version>1.2.0.3</Version>
+    </PackageReference>
+    <PackageReference Include="MetroFramework.Design">
+      <Version>1.2.0.3</Version>
+    </PackageReference>
+    <PackageReference Include="MetroFramework.RunTime">
+      <Version>1.2.0.3</Version>
+    </PackageReference>
+    <PackageReference Include="MetroModernUI">
+      <Version>1.4.0</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>13.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="SharpZipLib">
+      <Version>1.3.3</Version>
+    </PackageReference>
+    <PackageReference Include="System.ValueTuple">
+      <Version>4.5.0</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.6.1 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Classes\Theme\Controls\ScrollBar\" />
+    <Folder Include="Classes\Theme\Controls\Shape\" />
+    <Folder Include="Classes\Theme\Controls\VisualStyleManagers\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
