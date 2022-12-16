@@ -330,6 +330,7 @@
 			this.EternalModzGitHubButton.Text = "GitHub Profile";
 			this.EternalModzGitHubButton.TextColor = System.Drawing.Color.White;
 			this.EternalModzGitHubButton.UseVisualStyleBackColor = false;
+			this.EternalModzGitHubButton.Click += new System.EventHandler(this.EternalModzGitHubButton_Click);
 			// 
 			// label5
 			// 
@@ -418,6 +419,7 @@
 			this.MikuGitHubButton.Text = "GitHub Profile";
 			this.MikuGitHubButton.TextColor = System.Drawing.Color.White;
 			this.MikuGitHubButton.UseVisualStyleBackColor = false;
+			this.MikuGitHubButton.Click += new System.EventHandler(this.MikuGitHubButton_Click);
 			// 
 			// label4
 			// 
@@ -506,6 +508,7 @@
 			this.MNLGitHubButton.Text = "GitHub Profile";
 			this.MNLGitHubButton.TextColor = System.Drawing.Color.White;
 			this.MNLGitHubButton.UseVisualStyleBackColor = false;
+			this.MNLGitHubButton.Click += new System.EventHandler(this.MNLGitHubButton_Click);
 			// 
 			// label2
 			// 

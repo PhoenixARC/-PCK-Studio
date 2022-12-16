@@ -38,5 +38,25 @@ namespace PckStudio
             //Launch browser to the Discord Server...
             System.Diagnostics.Process.Start("https://discord.gg/dAepk3Bhud");
         }
-    }
+
+		private void PhoenixARCGitHubButton_Click(object sender, EventArgs e)
+		{
+            System.Diagnostics.Process.Start("https://github.com/PhoenixARC");
+        }
+
+		private void MNLGitHubButton_Click(object sender, EventArgs e)
+		{
+            System.Diagnostics.Process.Start("https://github.com/MattN-L");
+        }
+
+		private void MikuGitHubButton_Click(object sender, EventArgs e)
+		{
+            System.Diagnostics.Process.Start("https://github.com/NessieHax");
+        }
+
+		private void EternalModzGitHubButton_Click(object sender, EventArgs e)
+		{
+            System.Diagnostics.Process.Start("https://github.com/EternalModz");
+        }
+	}
 }
