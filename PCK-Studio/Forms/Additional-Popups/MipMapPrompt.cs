@@ -4,7 +4,7 @@ using MetroFramework.Forms;
 
 namespace PckStudio
 {
-    public partial class MipMapPrompt : MetroForm
+    public partial class MipMapPrompt : Form
 	{
 		/// <summary>
 		/// Text entered <c>only access when DialogResult == DialogResult.OK</c>
@@ -19,7 +19,7 @@ namespace PckStudio
 
         private void OKBtn_Click(object sender, EventArgs e)
         {
-			DialogResult = DialogResult.OK;
+
         }
 
         private void InputTextBox_KeyDown(object sender, KeyEventArgs e)
@@ -28,14 +28,14 @@ namespace PckStudio
 				OKBtn_Click(sender, e);
         }
 
-		private void CancelButton_Click(object sender, EventArgs e)
-		{
-			DialogResult = DialogResult.Cancel;
-		}
+        private void GenerateOkButton(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.OK;
+        }
 
-		private void button1_Click(object sender, EventArgs e)
-		{
-
-		}
-	}
+        private void CancelButton_Click_1(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
+        }
+    }
 }

@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace PckStudio.Forms.Additional_Popups.Animation
 {
-	public partial class FrameEditor : MetroForm
+	public partial class FrameEditor : Form
 	{
 		public int FrameTextureIndex => FrameList.SelectedNode.Index;
 		public int FrameTime => (int)FrameTimeUpDown.Value;
@@ -43,5 +43,10 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 		{
 			Close();
 		}
-	}
+
+        private void FrameEditor_Load(object sender, EventArgs e)
+        {
+
+        }
+    }
 }

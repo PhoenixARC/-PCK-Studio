@@ -1,21 +1,16 @@
 ﻿using System;
 using System.Text;
+using System.Windows.Forms;
 using MetroFramework.Forms;
 
 namespace PckStudio.Forms
 {
-    public partial class AddPCKPassword : MetroForm
+    public partial class AddPCKPassword : Form
     {
         public string Password { get; private set; }
         public AddPCKPassword()
         {
             InitializeComponent();
-        }
-
-        private void buttonUnlocked_Click(object sender, EventArgs e)
-        {
-            Password = MD5(textBoxPass.Text);
-            Close();
         }
 
         public string MD5(string s)
@@ -27,6 +22,17 @@ namespace PckStudio.Forms
                     builder.Append(b.ToString("x2").ToLower());
                 return builder.ToString();
             }
+        }
+
+        private void AddPCKPassword_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void LockPCKButton_Click(object sender, EventArgs e)
+        {
+            Password = MD5(textBoxPass.Text);
+            Close();
         }
     }
 }

@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace PckStudio
 {
-    public partial class MetaList : MetroFramework.Forms.MetroForm
+    public partial class MetaList : Form
     {
         public MetaList(List<string> metaTags)
         {

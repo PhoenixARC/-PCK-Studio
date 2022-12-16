@@ -1,6 +1,6 @@
 ﻿namespace PckStudio.Forms.Additional_Popups.Audio
 {
-	partial class creditsEditor
+	partial class CreditsEditor
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -28,10 +28,9 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(creditsEditor));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CreditsEditor));
             this.button1 = new System.Windows.Forms.Button();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
-            this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
             this.SuspendLayout();
             // 
             // button1
@@ -45,37 +44,29 @@
             // richTextBox1
             // 
             resources.ApplyResources(this.richTextBox1, "richTextBox1");
-            this.richTextBox1.BackColor = System.Drawing.SystemColors.WindowFrame;
-            this.richTextBox1.ForeColor = System.Drawing.SystemColors.Window;
+            this.richTextBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.richTextBox1.ForeColor = System.Drawing.Color.White;
             this.richTextBox1.Name = "richTextBox1";
             // 
-            // metroLabel1
-            // 
-            resources.ApplyResources(this.metroLabel1, "metroLabel1");
-            this.metroLabel1.Name = "metroLabel1";
-            this.metroLabel1.Theme = MetroFramework.MetroThemeStyle.Dark;
-            // 
-            // creditsEditor
+            // CreditsEditor
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.metroLabel1);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.button1);
+            this.ForeColor = System.Drawing.Color.White;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "creditsEditor";
-            this.ShadowType = MetroFramework.Forms.MetroFormShadowType.DropShadow;
-            this.Style = MetroFramework.MetroColorStyle.Silver;
-            this.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.Name = "CreditsEditor";
+            this.Load += new System.EventHandler(this.creditsEditor_Load);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
 		}
 
 		#endregion
 		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.RichTextBox richTextBox1;
-        private MetroFramework.Controls.MetroLabel metroLabel1;
     }
 }

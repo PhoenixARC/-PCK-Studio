@@ -10,7 +10,7 @@ using MetroFramework.Forms;
 
 namespace PckStudio.Forms
 {
-    public partial class installPS3 : MetroForm
+    public partial class InstallPS3 : Form
     {
         string loca = "";
         string dlcPath = "";
@@ -18,7 +18,7 @@ namespace PckStudio.Forms
         bool serverOn = false;
         string currentpath = "";
 
-        public installPS3(string mod)
+        public InstallPS3(string mod)
         {
             InitializeComponent();
 

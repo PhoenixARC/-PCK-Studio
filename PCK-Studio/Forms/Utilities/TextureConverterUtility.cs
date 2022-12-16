@@ -9,7 +9,7 @@ using PckStudio.Classes.FileTypes;
 
 namespace PckStudio.Forms.Utilities
 {
-    public partial class TextureConverterUtility : MetroForm
+    public partial class TextureConverterUtility : Form
     {
         public TextureConverterUtility(TreeView tv0, PCKFile pck)
         {

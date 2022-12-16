@@ -5,7 +5,7 @@ using MetroFramework.Forms;
 
 namespace PckStudio.Forms
 {
-    public partial class PCK_Manager : MetroForm
+    public partial class PCK_Manager : Form
     {
         public PCK_Manager()
         {

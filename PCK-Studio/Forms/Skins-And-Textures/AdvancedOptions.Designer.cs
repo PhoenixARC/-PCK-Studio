@@ -152,6 +152,7 @@
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.Controls.Add(this.entryTypeTextBox);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label3);
@@ -160,13 +161,10 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.treeMeta);
+            this.ForeColor = System.Drawing.Color.White;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "AdvancedOptions";
-            this.Resizable = false;
-            this.ShadowType = MetroFramework.Forms.MetroFormShadowType.DropShadow;
-            this.Style = MetroFramework.MetroColorStyle.Silver;
-            this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.TopMost = true;
             this.ResumeLayout(false);
             this.PerformLayout();

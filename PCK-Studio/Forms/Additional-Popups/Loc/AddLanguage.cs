@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace PckStudio.Forms.Additional_Popups.Loc
 {
-    public partial class AddLanguage : MetroFramework.Forms.MetroForm
+    public partial class AddLanguage : Form
     {
         public string SelectedLanguage => LanguageComboBox.Text;
         public AddLanguage(string[] avalibleLanguages)
@@ -16,6 +16,11 @@ namespace PckStudio.Forms.Additional_Popups.Loc
         {
             DialogResult = DialogResult.OK;
             Close();
+        }
+
+        private void AddLanguage_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

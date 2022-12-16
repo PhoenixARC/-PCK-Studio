@@ -1,6 +1,6 @@
 ﻿namespace PckStudio
 {
-    partial class addNewSkin
+    partial class AddNewSkin
     {
         /// <summary>
         /// Required designer variable.
@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.Label label3;
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(addNewSkin));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddNewSkin));
             System.Windows.Forms.Label label2;
             System.Windows.Forms.Label label1;
             this.textTheme = new System.Windows.Forms.TextBox();
@@ -314,6 +314,7 @@
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.Controls.Add(this.buttonAnimGen);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.textThemeName);
@@ -333,11 +334,9 @@
             this.Controls.Add(label3);
             this.Controls.Add(label2);
             this.Controls.Add(label1);
+            this.ForeColor = System.Drawing.Color.White;
             this.MaximizeBox = false;
             this.Name = "addNewSkin";
-            this.Resizable = false;
-            this.Style = MetroFramework.MetroColorStyle.Silver;
-            this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.Load += new System.EventHandler(this.addnewskin_Load);
             this.contextMenuSkin.ResumeLayout(false);
             this.contextMenuCape.ResumeLayout(false);

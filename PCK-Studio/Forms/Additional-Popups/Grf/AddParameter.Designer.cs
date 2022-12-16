@@ -152,6 +152,7 @@
             this.AcceptButton = this.ConfirmBtn;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.ClientSize = new System.Drawing.Size(257, 126);
             this.Controls.Add(this.ConfirmBtn);
             this.Controls.Add(this.CancelBtn);
@@ -159,13 +160,14 @@
             this.Controls.Add(this.NameTextBox);
             this.Controls.Add(metroLabel2);
             this.Controls.Add(metroLabel1);
+            this.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.ForeColor = System.Drawing.Color.White;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "AddParameter";
-            this.Resizable = false;
-            this.Style = MetroFramework.MetroColorStyle.Silver;
-            this.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Add A Parameter";
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
+using Dark.Net;
 
 namespace PckStudio
 {
@@ -15,18 +16,20 @@ namespace PckStudio
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main(string[] args)
+        private static void Main()
         {
-#if DEBUG
+            #if DEBUG
             Debug.Listeners.Add(new TextWriterTraceListener(Console.Out));
-#endif
+            #endif
 
-            System.Globalization.CultureInfo.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            DarkNet.Instance.SetCurrentProcessTheme(Theme.Auto);
 
-            var f = new MainForm();
-            if (args.Length > 0 && File.Exists(args[0]) && args[0].EndsWith(".pck"))
-                f.LoadFromPath(args[0]);
-            Application.Run(f);
+            Form mainForm = new MainForm();
+            DarkNet.Instance.SetWindowThemeForms(mainForm, Theme.Auto);
+
+            Application.Run(mainForm);
         }
     }
 }

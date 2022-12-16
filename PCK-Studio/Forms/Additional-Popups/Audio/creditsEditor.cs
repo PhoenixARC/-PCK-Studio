@@ -5,10 +5,10 @@ using System.Windows.Forms;
 
 namespace PckStudio.Forms.Additional_Popups.Audio
 {
-	public partial class creditsEditor : MetroFramework.Forms.MetroForm
+	public partial class CreditsEditor : Form
 	{
 		public string Credits => richTextBox1.Text;
-		public creditsEditor(string cred)
+		public CreditsEditor(string cred)
 		{
 			InitializeComponent();
 			richTextBox1.Text = cred;
@@ -19,5 +19,10 @@ namespace PckStudio.Forms.Additional_Popups.Audio
 			DialogResult = DialogResult.OK;
 			Close();
 		}
-	}
+
+        private void creditsEditor_Load(object sender, EventArgs e)
+        {
+
+        }
+    }
 }

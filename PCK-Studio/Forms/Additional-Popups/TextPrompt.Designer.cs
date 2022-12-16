@@ -98,16 +98,17 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.ClientSize = new System.Drawing.Size(358, 385);
             this.Controls.Add(this.cancelBtn);
             this.Controls.Add(this.okBtn);
             this.Controls.Add(this.PromptTextBox);
+            this.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.ForeColor = System.Drawing.Color.White;
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(270, 335);
             this.Name = "TextPrompt";
             this.Padding = new System.Windows.Forms.Padding(20, 60, 20, 40);
-            this.Style = MetroFramework.MetroColorStyle.Black;
-            this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.ResumeLayout(false);
 
         }

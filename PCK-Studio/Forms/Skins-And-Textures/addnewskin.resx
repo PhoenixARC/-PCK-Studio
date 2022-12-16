@@ -133,7 +133,7 @@
     <value>215, 129</value>
   </data>
   <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>71, 13</value>
+    <value>73, 13</value>
   </data>
   <data name="label3.TabIndex" type="System.Int32, mscorlib">
     <value>106</value>
@@ -166,7 +166,7 @@
     <value>215, 97</value>
   </data>
   <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>59, 13</value>
+    <value>61, 13</value>
   </data>
   <data name="label2.TabIndex" type="System.Int32, mscorlib">
     <value>104</value>
@@ -199,7 +199,7 @@
     <value>215, 64</value>
   </data>
   <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>42, 13</value>
+    <value>43, 13</value>
   </data>
   <data name="label1.TabIndex" type="System.Int32, mscorlib">
     <value>102</value>
@@ -449,7 +449,7 @@
     <value>388, 51</value>
   </data>
   <data name="radioAUTO.Size" type="System.Drawing.Size, System.Drawing">
-    <value>81, 17</value>
+    <value>80, 17</value>
   </data>
   <data name="radioAUTO.TabIndex" type="System.Int32, mscorlib">
     <value>117</value>
@@ -479,7 +479,7 @@
     <value>388, 71</value>
   </data>
   <data name="radioLOCAL.Size" type="System.Drawing.Size, System.Drawing">
-    <value>59, 17</value>
+    <value>58, 17</value>
   </data>
   <data name="radioLOCAL.TabIndex" type="System.Int32, mscorlib">
     <value>118</value>
@@ -545,7 +545,7 @@
     <value>388, 28</value>
   </data>
   <data name="radioSERVER.Size" type="System.Drawing.Size, System.Drawing">
-    <value>69, 17</value>
+    <value>64, 17</value>
   </data>
   <data name="radioSERVER.TabIndex" type="System.Int32, mscorlib">
     <value>120</value>
@@ -813,6 +813,9 @@
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>483, 296</value>
+  </data>
+  <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 8.25pt</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -2564,6 +2567,6 @@
     <value>addNewSkin</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>MetroFramework.Forms.MetroForm, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

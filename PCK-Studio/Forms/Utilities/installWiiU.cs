@@ -14,7 +14,7 @@ using System.Diagnostics;
 
 namespace PckStudio.Forms
 {
-    public partial class installWiiU : MetroFramework.Forms.MetroForm
+    public partial class InstallWiiU : Form
     {
         string loca = "";
         string dlcPath = "";
@@ -22,7 +22,7 @@ namespace PckStudio.Forms
         bool serverOn = false;
         ConsoleArchive archive = new ConsoleArchive();
 
-        public installWiiU(string mod)
+        public InstallWiiU(string mod)
         {
             InitializeComponent();
             

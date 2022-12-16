@@ -10,7 +10,7 @@ using PckStudio.Classes._3ds.Utils;
 
 namespace PckStudio
 {
-    public partial class addNewSkin : MetroFramework.Forms.MetroForm
+    public partial class AddNewSkin : Form
     {
 
         public PCKFile.FileData SkinFile => skin;
@@ -35,7 +35,7 @@ namespace PckStudio
             Custom,
         }
 
-        public addNewSkin(LOCFile loc)
+        public AddNewSkin(LOCFile loc)
         {
             InitializeComponent();
             currentLoc = loc;
@@ -283,7 +283,7 @@ namespace PckStudio
                 return;
             
             PictureBox preview = new PictureBox(); //Creates new picture for generated model preview
-            generateModel generate = new generateModel(generatedModel, preview);
+            GenerateModel generate = new GenerateModel(generatedModel, preview);
 
             if (generate.ShowDialog() == DialogResult.OK) //Opens Model Generator Dialog
             {

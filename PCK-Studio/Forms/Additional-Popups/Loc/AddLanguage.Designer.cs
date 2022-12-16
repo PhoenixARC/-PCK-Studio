@@ -60,18 +60,19 @@
             this.AcceptButton = this.AddBtn;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.ClientSize = new System.Drawing.Size(289, 140);
             this.Controls.Add(this.AddBtn);
             this.Controls.Add(this.LanguageComboBox);
+            this.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.ForeColor = System.Drawing.Color.White;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(289, 140);
             this.Name = "AddLanguage";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Style = MetroFramework.MetroColorStyle.Silver;
             this.Text = "Add Language";
-            this.TextAlign = MetroFramework.Forms.MetroFormTextAlign.Center;
-            this.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.Load += new System.EventHandler(this.AddLanguage_Load);
             this.ResumeLayout(false);
 
         }

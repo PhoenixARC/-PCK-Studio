@@ -139,7 +139,7 @@
     <value>NoControl</value>
   </data>
   <data name="buttonServerToggle.Location" type="System.Drawing.Point, System.Drawing">
-    <value>287, 3</value>
+    <value>313, 3</value>
   </data>
   <data name="buttonServerToggle.Size" type="System.Drawing.Size, System.Drawing">
     <value>137, 27</value>
@@ -280,7 +280,7 @@
     <value>0, 0, 0, 0</value>
   </data>
   <data name="panel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>427, 36</value>
+    <value>467, 36</value>
   </data>
   <data name="panel1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -364,7 +364,7 @@
     <value>3, 105</value>
   </data>
   <data name="radioButtonEur.Size" type="System.Drawing.Size, System.Drawing">
-    <value>136, 30</value>
+    <value>149, 30</value>
   </data>
   <data name="radioButtonEur.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -409,10 +409,10 @@
     <value>NoControl</value>
   </data>
   <data name="radioButtonUs.Location" type="System.Drawing.Point, System.Drawing">
-    <value>145, 105</value>
+    <value>158, 105</value>
   </data>
   <data name="radioButtonUs.Size" type="System.Drawing.Size, System.Drawing">
-    <value>136, 30</value>
+    <value>149, 30</value>
   </data>
   <data name="radioButtonUs.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -457,10 +457,10 @@
     <value>NoControl</value>
   </data>
   <data name="radioButtonJap.Location" type="System.Drawing.Point, System.Drawing">
-    <value>287, 105</value>
+    <value>313, 105</value>
   </data>
   <data name="radioButtonJap.Size" type="System.Drawing.Size, System.Drawing">
-    <value>137, 30</value>
+    <value>151, 30</value>
   </data>
   <data name="radioButtonJap.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -493,7 +493,7 @@
     <value>3, 141</value>
   </data>
   <data name="listViewPCKS.Size" type="System.Drawing.Size, System.Drawing">
-    <value>421, 494</value>
+    <value>461, 574</value>
   </data>
   <data name="listViewPCKS.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -568,7 +568,7 @@
     <value>NoControl</value>
   </data>
   <data name="PackImageSelection.Location" type="System.Drawing.Point, System.Drawing">
-    <value>287, 36</value>
+    <value>313, 36</value>
   </data>
   <data name="PackImageSelection.Size" type="System.Drawing.Size, System.Drawing">
     <value>137, 27</value>
@@ -604,7 +604,7 @@
     <value>8</value>
   </data>
   <data name="myTablePanel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>427, 638</value>
+    <value>467, 718</value>
   </data>
   <data name="myTablePanel1.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -613,7 +613,7 @@
     <value>myTablePanel1</value>
   </data>
   <data name="&gt;&gt;myTablePanel1.Type" xml:space="preserve">
-    <value>PckStudio.Forms.MyTablePanel, PCK Studio, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>PckStudio.Forms.MyTablePanel, PCK-Studio, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;myTablePanel1.Parent" xml:space="preserve">
     <value>metroTabPageMain</value>
@@ -628,7 +628,7 @@
     <value>4, 38</value>
   </data>
   <data name="metroTabPageMain.Size" type="System.Drawing.Size, System.Drawing">
-    <value>427, 638</value>
+    <value>467, 718</value>
   </data>
   <data name="metroTabPageMain.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -652,10 +652,10 @@
     <value>Fill</value>
   </data>
   <data name="metroTabControlMain.Location" type="System.Drawing.Point, System.Drawing">
-    <value>20, 60</value>
+    <value>0, 0</value>
   </data>
   <data name="metroTabControlMain.Size" type="System.Drawing.Size, System.Drawing">
-    <value>435, 680</value>
+    <value>475, 760</value>
   </data>
   <data name="metroTabControlMain.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -707,6 +707,9 @@
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>475, 760</value>
+  </data>
+  <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 8.25pt</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -2452,6 +2455,6 @@
     <value>installWiiU</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>MetroFramework.Forms.MetroForm, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

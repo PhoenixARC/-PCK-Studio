@@ -56,8 +56,10 @@ namespace PckStudio.Forms
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.ClientSize = new System.Drawing.Size(418, 568);
             this.Controls.Add(this.ModelView);
+            this.ForeColor = System.Drawing.Color.White;
             this.Name = "SkinPreview";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "SkinPreview";

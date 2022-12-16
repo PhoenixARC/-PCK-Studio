@@ -206,11 +206,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.ClientSize = new System.Drawing.Size(500, 450);
             this.Controls.Add(this.metroPanel1);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.metroLabel2);
             this.Controls.Add(this.metroLabel1);
+            this.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.ForeColor = System.Drawing.Color.White;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
@@ -218,9 +221,7 @@
             this.MinimumSize = new System.Drawing.Size(500, 450);
             this.Name = "GRFEditor";
             this.Padding = new System.Windows.Forms.Padding(25, 60, 25, 25);
-            this.Style = MetroFramework.MetroColorStyle.Silver;
             this.Text = "GRF Editor";
-            this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.Load += new System.EventHandler(this.OnLoad);
             this.MessageContextMenu.ResumeLayout(false);
             this.DetailContextMenu.ResumeLayout(false);

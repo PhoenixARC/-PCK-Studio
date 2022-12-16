@@ -1,7 +1,7 @@
 ﻿
 namespace PckStudio.Forms
 {
-    partial class installVita
+    partial class InstallVita
     {
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace PckStudio.Forms
             this.metroTabPageMain.HorizontalScrollbarSize = 10;
             this.metroTabPageMain.Location = new System.Drawing.Point(4, 38);
             this.metroTabPageMain.Name = "metroTabPageMain";
-            this.metroTabPageMain.Size = new System.Drawing.Size(427, 537);
+            this.metroTabPageMain.Size = new System.Drawing.Size(467, 617);
             this.metroTabPageMain.Style = MetroFramework.MetroColorStyle.Blue;
             this.metroTabPageMain.TabIndex = 0;
             this.metroTabPageMain.Text = "Installer";
@@ -95,7 +95,7 @@ namespace PckStudio.Forms
             this.myTablePanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.myTablePanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.myTablePanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.myTablePanel1.Size = new System.Drawing.Size(427, 537);
+            this.myTablePanel1.Size = new System.Drawing.Size(467, 617);
             this.myTablePanel1.TabIndex = 2;
             // 
             // EurDig
@@ -110,7 +110,7 @@ namespace PckStudio.Forms
             this.EurDig.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.EurDig.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.EurDig.ForeColor = System.Drawing.Color.White;
-            this.EurDig.Location = new System.Drawing.Point(145, 36);
+            this.EurDig.Location = new System.Drawing.Point(158, 36);
             this.EurDig.Name = "EurDig";
             this.EurDig.Size = new System.Drawing.Size(100, 30);
             this.EurDig.TabIndex = 11;
@@ -131,7 +131,7 @@ namespace PckStudio.Forms
             this.USDig.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.USDig.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.USDig.ForeColor = System.Drawing.Color.White;
-            this.USDig.Location = new System.Drawing.Point(287, 36);
+            this.USDig.Location = new System.Drawing.Point(313, 36);
             this.USDig.Name = "USDig";
             this.USDig.Size = new System.Drawing.Size(91, 30);
             this.USDig.TabIndex = 12;
@@ -148,7 +148,7 @@ namespace PckStudio.Forms
             this.buttonServerToggle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonServerToggle.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonServerToggle.ForeColor = System.Drawing.Color.White;
-            this.buttonServerToggle.Location = new System.Drawing.Point(287, 3);
+            this.buttonServerToggle.Location = new System.Drawing.Point(313, 3);
             this.buttonServerToggle.Name = "buttonServerToggle";
             this.buttonServerToggle.Size = new System.Drawing.Size(137, 27);
             this.buttonServerToggle.TabIndex = 9;
@@ -206,7 +206,7 @@ namespace PckStudio.Forms
             this.EurDisc.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.EurDisc.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.EurDisc.ForeColor = System.Drawing.Color.White;
-            this.EurDisc.Location = new System.Drawing.Point(145, 72);
+            this.EurDisc.Location = new System.Drawing.Point(158, 72);
             this.EurDisc.Name = "EurDisc";
             this.EurDisc.Size = new System.Drawing.Size(84, 30);
             this.EurDisc.TabIndex = 0;
@@ -227,7 +227,7 @@ namespace PckStudio.Forms
             this.USDisc.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.USDisc.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.USDisc.ForeColor = System.Drawing.Color.White;
-            this.USDisc.Location = new System.Drawing.Point(287, 72);
+            this.USDisc.Location = new System.Drawing.Point(313, 72);
             this.USDisc.Name = "USDisc";
             this.USDisc.Size = new System.Drawing.Size(75, 30);
             this.USDisc.TabIndex = 2;
@@ -245,7 +245,7 @@ namespace PckStudio.Forms
             this.listViewPCKS.HideSelection = false;
             this.listViewPCKS.Location = new System.Drawing.Point(3, 108);
             this.listViewPCKS.Name = "listViewPCKS";
-            this.listViewPCKS.Size = new System.Drawing.Size(421, 426);
+            this.listViewPCKS.Size = new System.Drawing.Size(461, 506);
             this.listViewPCKS.TabIndex = 3;
             this.listViewPCKS.UseCompatibleStateImageBehavior = false;
             this.listViewPCKS.View = System.Windows.Forms.View.Details;
@@ -279,10 +279,10 @@ namespace PckStudio.Forms
             // 
             this.metroTabControlMain.Controls.Add(this.metroTabPageMain);
             this.metroTabControlMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.metroTabControlMain.Location = new System.Drawing.Point(20, 60);
+            this.metroTabControlMain.Location = new System.Drawing.Point(0, 0);
             this.metroTabControlMain.Name = "metroTabControlMain";
             this.metroTabControlMain.SelectedIndex = 0;
-            this.metroTabControlMain.Size = new System.Drawing.Size(435, 579);
+            this.metroTabControlMain.Size = new System.Drawing.Size(475, 659);
             this.metroTabControlMain.Style = MetroFramework.MetroColorStyle.White;
             this.metroTabControlMain.TabIndex = 0;
             this.metroTabControlMain.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -318,16 +318,14 @@ namespace PckStudio.Forms
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BorderStyle = MetroFramework.Forms.MetroFormBorderStyle.FixedSingle;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.ClientSize = new System.Drawing.Size(475, 659);
             this.Controls.Add(this.metroTabControlMain);
+            this.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.ForeColor = System.Drawing.Color.White;
             this.MaximizeBox = false;
             this.Name = "installVita";
-            this.Resizable = false;
-            this.ShadowType = MetroFramework.Forms.MetroFormShadowType.SystemShadow;
-            this.Style = MetroFramework.MetroColorStyle.White;
             this.Text = "Install to Playstation®Vita";
-            this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.Load += new System.EventHandler(this.installVita_Load);
             this.metroTabPageMain.ResumeLayout(false);
             this.myTablePanel1.ResumeLayout(false);

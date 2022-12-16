@@ -1,10 +1,11 @@
 ﻿using MetroFramework.Forms;
+using System.Windows.Forms;
 
 namespace PckStudio.Forms.Additional_Popups.Audio
 {
-	public partial class pleaseWait : MetroForm
+	public partial class PleaseWait : Form
 	{
-		public pleaseWait()
+		public PleaseWait()
 		{
 			InitializeComponent();
 		}

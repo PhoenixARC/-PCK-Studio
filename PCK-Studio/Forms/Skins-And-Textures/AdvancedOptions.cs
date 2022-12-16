@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace PckStudio
 {
-    public partial class AdvancedOptions : MetroFramework.Forms.MetroForm
+    public partial class AdvancedOptions : Form
     {
         PCKFile currentPCK;
 

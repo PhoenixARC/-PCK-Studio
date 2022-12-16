@@ -8,7 +8,7 @@ using PckStudio.Classes.Utils;
 
 namespace PckStudio.Forms.Utilities.Skins
 {
-	public partial class ANIMEditor : MetroFramework.Forms.MetroForm
+	public partial class ANIMEditor : Form
 	{
 		public bool saved = false;
 		readonly SkinANIM initialANIM;
@@ -263,7 +263,7 @@ namespace PckStudio.Forms.Utilities.Skins
 		{
 			// Recycling the AddCategory popup to handle the ANIM templates (:
 			// diag.Category will be the ANIM codes
-			var diag = new Additional_Popups.Audio.addCategory(Templates.Keys.ToArray());
+			var diag = new Additional_Popups.Audio.AddCategory(Templates.Keys.ToArray());
 			diag.label2.Text = "Presets";
 			diag.button1.Text = "Load";
 

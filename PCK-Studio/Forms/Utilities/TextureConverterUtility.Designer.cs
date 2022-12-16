@@ -112,17 +112,17 @@ namespace PckStudio.Forms.Utilities
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.ClientSize = new System.Drawing.Size(356, 577);
             this.Controls.Add(this.metroLabel1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.metroTextBox1);
             this.Controls.Add(this.listBox1);
+            this.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.ForeColor = System.Drawing.Color.White;
             this.Name = "TextureConverterUtility";
-            this.Resizable = false;
-            this.Style = MetroFramework.MetroColorStyle.Silver;
             this.Text = "Texture Converter";
-            this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TextureConverterUtility_FormClosing);
             this.Load += new System.EventHandler(this.TextureConverterUtility_Load);
             this.ResumeLayout(false);

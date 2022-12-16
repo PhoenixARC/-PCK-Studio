@@ -1,6 +1,6 @@
 ﻿namespace PckStudio
 {
-    partial class addMeta
+    partial class AddMeta
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(addMeta));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddMeta));
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -76,18 +76,16 @@
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.textBox1);
+            this.ForeColor = System.Drawing.Color.White;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "addMeta";
-            this.Resizable = false;
-            this.ShadowType = MetroFramework.Forms.MetroFormShadowType.DropShadow;
-            this.Style = MetroFramework.MetroColorStyle.Black;
-            this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -252,6 +252,9 @@
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>264, 105</value>
   </data>
+  <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 8.25pt</value>
+  </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAYAEBAAAAEAIABoBAAAZgAAACAgAAABACAAqBAAAM4EAAAwMAAAAQAgAKglAAB2FQAAQEAAAAEA
@@ -2472,9 +2475,6 @@
         vbLH9tge22N7bI/tsT22x/bYHttjC+3/B71iqRn22EDpAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
     <value>264, 105</value>
   </data>
@@ -2485,6 +2485,6 @@
     <value>addMeta</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>MetroFramework.Forms.MetroForm, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

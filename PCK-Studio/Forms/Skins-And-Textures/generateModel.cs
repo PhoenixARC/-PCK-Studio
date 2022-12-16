@@ -14,7 +14,7 @@ using System.Text.RegularExpressions;
 
 namespace PckStudio
 {
-    public partial class generateModel : MetroForm
+    public partial class GenerateModel : Form
     {
         PictureBox skinPreview;
 
@@ -127,7 +127,7 @@ namespace PckStudio
         }
 
 
-        public generateModel(PCKProperties skinProperties, PictureBox preview)
+        public GenerateModel(PCKProperties skinProperties, PictureBox preview)
         {
             InitializeComponent();
             boxes = skinProperties;

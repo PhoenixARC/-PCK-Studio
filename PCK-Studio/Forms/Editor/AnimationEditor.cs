@@ -17,7 +17,7 @@ using PckStudio.Forms.Utilities;
 
 namespace PckStudio.Forms.Editor
 {
-	public partial class AnimationEditor : MetroForm
+	public partial class AnimationEditor : Form
 	{
 		PCKFile.FileData animationFile;
 		Animation currentAnimation;

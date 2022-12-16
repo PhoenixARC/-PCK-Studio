@@ -241,7 +241,7 @@
     <value>289, 647</value>
   </data>
   <data name="labelView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>33, 13</value>
+    <value>35, 13</value>
   </data>
   <data name="labelView.TabIndex" type="System.Int32, mscorlib">
     <value>102</value>
@@ -328,7 +328,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="tabArmor.Size" type="System.Drawing.Size, System.Drawing">
-    <value>116, 132</value>
+    <value>116, 130</value>
   </data>
   <data name="tabArmor.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -355,10 +355,10 @@
     <value>Left</value>
   </data>
   <data name="offsetArms.Location" type="System.Drawing.Point, System.Drawing">
-    <value>58, 99</value>
+    <value>58, 98</value>
   </data>
   <data name="offsetArms.Size" type="System.Drawing.Size, System.Drawing">
-    <value>43, 20</value>
+    <value>43, 22</value>
   </data>
   <data name="offsetArms.TabIndex" type="System.Int32, mscorlib">
     <value>85</value>
@@ -391,7 +391,7 @@
     <value>3, 103</value>
   </data>
   <data name="label14.Size" type="System.Drawing.Size, System.Drawing">
-    <value>38, 13</value>
+    <value>37, 13</value>
   </data>
   <data name="label14.TabIndex" type="System.Int32, mscorlib">
     <value>90</value>
@@ -415,10 +415,10 @@
     <value>Left</value>
   </data>
   <data name="offsetBody.Location" type="System.Drawing.Point, System.Drawing">
-    <value>58, 36</value>
+    <value>58, 35</value>
   </data>
   <data name="offsetBody.Size" type="System.Drawing.Size, System.Drawing">
-    <value>43, 20</value>
+    <value>43, 22</value>
   </data>
   <data name="offsetBody.TabIndex" type="System.Int32, mscorlib">
     <value>83</value>
@@ -442,10 +442,10 @@
     <value>Left</value>
   </data>
   <data name="offsetLegs.Location" type="System.Drawing.Point, System.Drawing">
-    <value>58, 67</value>
+    <value>58, 66</value>
   </data>
   <data name="offsetLegs.Size" type="System.Drawing.Size, System.Drawing">
-    <value>43, 20</value>
+    <value>43, 22</value>
   </data>
   <data name="offsetLegs.TabIndex" type="System.Int32, mscorlib">
     <value>84</value>
@@ -478,7 +478,7 @@
     <value>3, 9</value>
   </data>
   <data name="label10.Size" type="System.Drawing.Size, System.Drawing">
-    <value>37, 13</value>
+    <value>36, 13</value>
   </data>
   <data name="label10.TabIndex" type="System.Int32, mscorlib">
     <value>87</value>
@@ -511,7 +511,7 @@
     <value>3, 71</value>
   </data>
   <data name="label13.Size" type="System.Drawing.Size, System.Drawing">
-    <value>35, 13</value>
+    <value>32, 13</value>
   </data>
   <data name="label13.TabIndex" type="System.Int32, mscorlib">
     <value>89</value>
@@ -535,10 +535,10 @@
     <value>Left</value>
   </data>
   <data name="offsetHead.Location" type="System.Drawing.Point, System.Drawing">
-    <value>58, 5</value>
+    <value>58, 4</value>
   </data>
   <data name="offsetHead.Size" type="System.Drawing.Size, System.Drawing">
-    <value>43, 20</value>
+    <value>43, 22</value>
   </data>
   <data name="offsetHead.TabIndex" type="System.Int32, mscorlib">
     <value>86</value>
@@ -571,7 +571,7 @@
     <value>3, 40</value>
   </data>
   <data name="label12.Size" type="System.Drawing.Size, System.Drawing">
-    <value>37, 13</value>
+    <value>35, 13</value>
   </data>
   <data name="label12.TabIndex" type="System.Int32, mscorlib">
     <value>88</value>
@@ -652,10 +652,10 @@
     <value>Fill</value>
   </data>
   <data name="tabBody.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 16</value>
+    <value>3, 18</value>
   </data>
   <data name="tabBody.Size" type="System.Drawing.Size, System.Drawing">
-    <value>124, 158</value>
+    <value>124, 156</value>
   </data>
   <data name="tabBody.TabIndex" type="System.Int32, mscorlib">
     <value>144</value>
@@ -706,7 +706,7 @@
     <value>23, 459</value>
   </data>
   <data name="label6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>38, 13</value>
+    <value>40, 13</value>
   </data>
   <data name="label6.TabIndex" type="System.Int32, mscorlib">
     <value>137</value>
@@ -775,7 +775,7 @@
     <value>691, 357</value>
   </data>
   <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>44, 13</value>
+    <value>49, 13</value>
   </data>
   <data name="label5.TabIndex" type="System.Int32, mscorlib">
     <value>127</value>
@@ -952,7 +952,7 @@
     <value>655, 56</value>
   </data>
   <data name="labelTextureMappingPreview.Size" type="System.Drawing.Size, System.Drawing">
-    <value>128, 13</value>
+    <value>136, 13</value>
   </data>
   <data name="labelTextureMappingPreview.TabIndex" type="System.Int32, mscorlib">
     <value>113</value>
@@ -1198,7 +1198,7 @@
     <value>658, 275</value>
   </data>
   <data name="SizeXUpDown.Size" type="System.Drawing.Size, System.Drawing">
-    <value>119, 20</value>
+    <value>119, 22</value>
   </data>
   <data name="SizeXUpDown.TabIndex" type="System.Int32, mscorlib">
     <value>150</value>
@@ -1222,7 +1222,7 @@
     <value>658, 301</value>
   </data>
   <data name="SizeYUpDown.Size" type="System.Drawing.Size, System.Drawing">
-    <value>119, 20</value>
+    <value>119, 22</value>
   </data>
   <data name="SizeYUpDown.TabIndex" type="System.Int32, mscorlib">
     <value>151</value>
@@ -1246,7 +1246,7 @@
     <value>658, 327</value>
   </data>
   <data name="SizeZUpDown.Size" type="System.Drawing.Size, System.Drawing">
-    <value>119, 20</value>
+    <value>119, 22</value>
   </data>
   <data name="SizeZUpDown.TabIndex" type="System.Int32, mscorlib">
     <value>152</value>
@@ -1270,7 +1270,7 @@
     <value>682, 233</value>
   </data>
   <data name="TextureXUpDown.Size" type="System.Drawing.Size, System.Drawing">
-    <value>43, 20</value>
+    <value>43, 22</value>
   </data>
   <data name="TextureXUpDown.TabIndex" type="System.Int32, mscorlib">
     <value>156</value>
@@ -1291,7 +1291,7 @@
     <value>731, 234</value>
   </data>
   <data name="TextureYUpDown.Size" type="System.Drawing.Size, System.Drawing">
-    <value>43, 20</value>
+    <value>43, 22</value>
   </data>
   <data name="TextureYUpDown.TabIndex" type="System.Int32, mscorlib">
     <value>157</value>
@@ -1312,7 +1312,7 @@
     <value>657, 425</value>
   </data>
   <data name="PosZUpDown.Size" type="System.Drawing.Size, System.Drawing">
-    <value>120, 20</value>
+    <value>120, 22</value>
   </data>
   <data name="PosZUpDown.TabIndex" type="System.Int32, mscorlib">
     <value>160</value>
@@ -1336,7 +1336,7 @@
     <value>658, 399</value>
   </data>
   <data name="PosYUpDown.Size" type="System.Drawing.Size, System.Drawing">
-    <value>119, 20</value>
+    <value>119, 22</value>
   </data>
   <data name="PosYUpDown.TabIndex" type="System.Int32, mscorlib">
     <value>159</value>
@@ -1360,7 +1360,7 @@
     <value>658, 373</value>
   </data>
   <data name="PosXUpDown.Size" type="System.Drawing.Size, System.Drawing">
-    <value>119, 20</value>
+    <value>119, 22</value>
   </data>
   <data name="PosXUpDown.TabIndex" type="System.Int32, mscorlib">
     <value>158</value>
@@ -1413,16 +1413,16 @@
   <data name="Z.Width" type="System.Int32, mscorlib">
     <value>30</value>
   </data>
-  <data name="Width.Text" xml:space="preserve">
+  <data name="_Width.Text" xml:space="preserve">
     <value>Width</value>
   </data>
-  <data name="Width.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+  <data name="_Width.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
     <value>Center</value>
   </data>
-  <data name="Height.Text" xml:space="preserve">
+  <data name="_Height.Text" xml:space="preserve">
     <value>Height</value>
   </data>
-  <data name="Height.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+  <data name="_Height.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
     <value>Center</value>
   </data>
   <data name="Length.Text" xml:space="preserve">
@@ -1481,6 +1481,9 @@
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>806, 721</value>
+  </data>
+  <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 8.25pt</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -3267,16 +3270,16 @@
   <data name="&gt;&gt;Z.Type" xml:space="preserve">
     <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;Width.Name" xml:space="preserve">
-    <value>Width</value>
+  <data name="&gt;&gt;_Width.Name" xml:space="preserve">
+    <value>_Width</value>
   </data>
-  <data name="&gt;&gt;Width.Type" xml:space="preserve">
+  <data name="&gt;&gt;_Width.Type" xml:space="preserve">
     <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;Height.Name" xml:space="preserve">
-    <value>Height</value>
+  <data name="&gt;&gt;_Height.Name" xml:space="preserve">
+    <value>_Height</value>
   </data>
-  <data name="&gt;&gt;Height.Type" xml:space="preserve">
+  <data name="&gt;&gt;_Height.Type" xml:space="preserve">
     <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;Length.Name" xml:space="preserve">
@@ -3301,6 +3304,6 @@
     <value>generateModel</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>MetroFramework.Forms.MetroForm, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

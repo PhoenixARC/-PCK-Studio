@@ -309,7 +309,7 @@
   <data name="pictureBox1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAA+gAAAPoCAYAAABNo9TkAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wQAADsEBuJFr7QAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4yMfEgaZUAAP+NSURBVHhe7P0H
+        wAAADsABataJCQAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4yMfEgaZUAAP+NSURBVHhe7P0H
         mGRV2T1ufwxZgmSQoIBKEFFUUBReJCgKoiAqGAGzJEUJghjAgIjpFQMvggIiGREFDKioKGZFBXPCCCbC
         MDl0ffuuf+3+HYqaUF3dM909a13XukSYqTpnn33qnPWsJ/z/giAIgiAIgiAIgiAIgiAIgiAIgiAIgiAI
         giAIgiAIgiAIgiAIgiAIgiAIgiAIgiAIgiAIgiAIgiAIgiAIgiAIgiAIgiAIgiAIgiAIgiAIgiAIgiAI
@@ -2247,7 +2247,7 @@
     <value>8</value>
   </data>
   <data name="tableLayoutPanel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>194, 549</value>
+    <value>194, 629</value>
   </data>
   <data name="tableLayoutPanel1.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -2283,7 +2283,7 @@
     <value>0, 0</value>
   </data>
   <data name="pckLayout.Size" type="System.Drawing.Size, System.Drawing">
-    <value>604, 549</value>
+    <value>644, 629</value>
   </data>
   <data name="pckLayout.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -2307,7 +2307,7 @@
     <value>203, 3</value>
   </data>
   <data name="panel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>604, 549</value>
+    <value>644, 629</value>
   </data>
   <data name="panel1.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -2328,13 +2328,13 @@
     <value>Fill</value>
   </data>
   <data name="tableLayoutPanel2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>20, 60</value>
+    <value>0, 0</value>
   </data>
   <data name="tableLayoutPanel2.RowCount" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
   <data name="tableLayoutPanel2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>810, 555</value>
+    <value>850, 635</value>
   </data>
   <data name="tableLayoutPanel2.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -2352,7 +2352,7 @@
     <value>2</value>
   </data>
   <data name="tableLayoutPanel2.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="tableLayoutPanel1" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="panel1" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,200,Absolute,610" /&gt;&lt;Rows Styles="Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="tableLayoutPanel1" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="panel1" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,200,Absolute,650" /&gt;&lt;Rows Styles="Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <metadata name="contextMenuStripPCK.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>154, 17</value>
@@ -2420,6 +2420,9 @@
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>850, 635</value>
   </data>
+  <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 8.25pt</value>
+  </data>
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
     <value>850, 588</value>
   </data>
@@ -2448,6 +2451,6 @@
     <value>pckCenter</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>MetroFramework.Forms.MetroForm, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

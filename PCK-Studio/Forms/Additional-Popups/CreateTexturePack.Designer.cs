@@ -30,10 +30,10 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CreateTexturePack));
             this.TextLabel = new System.Windows.Forms.Label();
-            this.OKButton = new System.Windows.Forms.Button();
             this.InputTextBox = new MetroFramework.Controls.MetroTextBox();
             this.metroComboBox1 = new MetroFramework.Controls.MetroComboBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.OkButton = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
             this.SuspendLayout();
             // 
             // TextLabel
@@ -42,16 +42,9 @@
             this.TextLabel.ForeColor = System.Drawing.Color.White;
             this.TextLabel.Name = "TextLabel";
             // 
-            // OKButton
-            // 
-            resources.ApplyResources(this.OKButton, "OKButton");
-            this.OKButton.ForeColor = System.Drawing.Color.White;
-            this.OKButton.Name = "OKButton";
-            this.OKButton.UseVisualStyleBackColor = true;
-            this.OKButton.Click += new System.EventHandler(this.OKBtn_Click);
-            // 
             // InputTextBox
             // 
+            this.InputTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             // 
             // 
             // 
@@ -64,6 +57,7 @@
             this.InputTextBox.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
             this.InputTextBox.CustomButton.UseSelectable = true;
             this.InputTextBox.CustomButton.Visible = ((bool)(resources.GetObject("resource.Visible")));
+            this.InputTextBox.ForeColor = System.Drawing.Color.White;
             this.InputTextBox.Lines = new string[0];
             resources.ApplyResources(this.InputTextBox, "InputTextBox");
             this.InputTextBox.MaxLength = 255;
@@ -76,12 +70,16 @@
             this.InputTextBox.ShortcutsEnabled = true;
             this.InputTextBox.Style = MetroFramework.MetroColorStyle.White;
             this.InputTextBox.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.InputTextBox.UseCustomBackColor = true;
+            this.InputTextBox.UseCustomForeColor = true;
             this.InputTextBox.UseSelectable = true;
             this.InputTextBox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.InputTextBox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
             // 
             // metroComboBox1
             // 
+            this.metroComboBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.metroComboBox1.ForeColor = System.Drawing.Color.White;
             this.metroComboBox1.FormattingEnabled = true;
             resources.ApplyResources(this.metroComboBox1, "metroComboBox1");
             this.metroComboBox1.Items.AddRange(new object[] {
@@ -97,6 +95,8 @@
             this.metroComboBox1.Name = "metroComboBox1";
             this.metroComboBox1.Style = MetroFramework.MetroColorStyle.Silver;
             this.metroComboBox1.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.metroComboBox1.UseCustomBackColor = true;
+            this.metroComboBox1.UseCustomForeColor = true;
             this.metroComboBox1.UseSelectable = true;
             // 
             // label1
@@ -106,34 +106,51 @@
             this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Name = "label1";
             // 
+            // OkButton
+            // 
+            this.OkButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.OkButton.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.OkButton.BorderRadius = 10;
+            this.OkButton.BorderSize = 1;
+            this.OkButton.ClickedColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.OkButton.FlatAppearance.BorderSize = 0;
+            this.OkButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.OkButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            resources.ApplyResources(this.OkButton, "OkButton");
+            this.OkButton.ForeColor = System.Drawing.Color.White;
+            this.OkButton.GradientColorPrimary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.OkButton.GradientColorSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.OkButton.HoverOverColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.OkButton.Name = "OkButton";
+            this.OkButton.TextColor = System.Drawing.Color.White;
+            this.OkButton.UseVisualStyleBackColor = false;
+            this.OkButton.Click += new System.EventHandler(this.LockPCKButton_Click);
+            // 
             // CreateTexturePack
             // 
-            this.AcceptButton = this.OKButton;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.Controls.Add(this.OkButton);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.metroComboBox1);
             this.Controls.Add(this.InputTextBox);
-            this.Controls.Add(this.OKButton);
             this.Controls.Add(this.TextLabel);
+            this.ForeColor = System.Drawing.Color.White;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "CreateTexturePack";
-            this.Resizable = false;
-            this.ShadowType = MetroFramework.Forms.MetroFormShadowType.DropShadow;
-            this.Style = MetroFramework.MetroColorStyle.Silver;
-            this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        public System.Windows.Forms.Button OKButton;
         public System.Windows.Forms.Label TextLabel;
         private MetroFramework.Controls.MetroTextBox InputTextBox;
 		private MetroFramework.Controls.MetroComboBox metroComboBox1;
 		public System.Windows.Forms.Label label1;
-	}
+        private CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton OkButton;
+    }
 }

@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace PckStudio.Forms.Additional_Popups.Grf
 {
-    public partial class AddParameter : MetroFramework.Forms.MetroForm
+    public partial class AddParameter : Form
     {
         public string ParameterName => NameTextBox.Text;
         public string ParameterValue => ValueTextBox.Text;

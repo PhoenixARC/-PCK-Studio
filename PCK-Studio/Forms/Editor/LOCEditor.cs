@@ -12,7 +12,7 @@ using PckStudio.Forms.Additional_Popups.Loc;
 
 namespace PckStudio.Forms.Editor
 {
-	public partial class LOCEditor : MetroForm
+	public partial class LOCEditor : Form
     {
 		DataTable tbl;
 		LOCFile currentLoc;

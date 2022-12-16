@@ -5,11 +5,11 @@ using System.Windows.Forms;
 
 namespace PckStudio.Forms.Additional_Popups.Audio
 {
-	public partial class addCategory : MetroFramework.Forms.MetroForm
+	public partial class AddCategory : Form
 	{
 		private string _category = string.Empty;
 		public string Category => _category;
-		public addCategory(string[] avalibleCategories)
+		public AddCategory(string[] avalibleCategories)
 		{
 			InitializeComponent();
 			this.FormBorderStyle = FormBorderStyle.None;
@@ -28,5 +28,10 @@ namespace PckStudio.Forms.Additional_Popups.Audio
 			DialogResult = DialogResult.Cancel;
 			Close();
 		}
-	}
+
+        private void addCategory_Load(object sender, EventArgs e)
+        {
+
+        }
+    }
 }

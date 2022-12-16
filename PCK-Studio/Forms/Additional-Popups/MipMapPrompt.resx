@@ -123,10 +123,10 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="TextLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>22, 26</value>
+    <value>13, 11</value>
   </data>
   <data name="TextLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>220, 13</value>
+    <value>239, 13</value>
   </data>
   <data name="TextLabel.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -149,69 +149,11 @@
   <data name="&gt;&gt;TextLabel.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="CancelButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="CancelButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>135, 74</value>
-  </data>
-  <data name="CancelButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
-  </data>
-  <data name="CancelButton.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="CancelButton.Text" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="&gt;&gt;CancelButton.Name" xml:space="preserve">
-    <value>CancelButton</value>
-  </data>
-  <data name="&gt;&gt;CancelButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;CancelButton.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;CancelButton.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="button1.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="button1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="button1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>54, 74</value>
-  </data>
-  <data name="button1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
-  </data>
-  <data name="button1.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="button1.Text" xml:space="preserve">
-    <value>Generate</value>
-  </data>
-  <data name="&gt;&gt;button1.Name" xml:space="preserve">
-    <value>button1</value>
-  </data>
-  <data name="&gt;&gt;button1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;button1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;button1.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
   <data name="numericUpDown1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>72, 47</value>
+    <value>72, 27</value>
   </data>
   <data name="numericUpDown1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>120, 20</value>
+    <value>120, 22</value>
   </data>
   <data name="numericUpDown1.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -226,6 +168,109 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;numericUpDown1.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="GenerateButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="GenerateButton.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="GenerateButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAFLSURBVEhL7ZS7SkNBFEWvD4I2MeZboja2/oC1YGVnL6SytFJQtLHy9QH+gp1gKRY+G2vBSgVx
+        XPuytZkkMxPBKgsWN2fOOTMkuXOqEcWEENp4iLf4iSlUo1r1zHqb3lDQwid8wyPs4kZC1RzjOz5iy9vF
+        kNx34ZyXsqFnAT9wz0sxJO/xxGEx9J7hncMYkl+46bAY9WoPhzEkxV8PCA5jlIT/O4DP57iC414aiHox
+        7wCeTbypV0K4xmUcqwv7QL74G0zgKur9FlfYcTqC3HD/AWsN1IXSW9b1coR6sewA4mnUjX1REtadiiBX
+        9B9M4ho+axEucaku7AP55AG/F43nFL7iBS7WBQnUiwMv2gOeOlTcwaxXVFCbHBUHqIE1zLCbd++ul2JI
+        alzrldRE1QjeyvRnXGtYzni73qgAd1A/Vy7aeBub3mZELlX1DZ/fVNOubcbBAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="GenerateButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="GenerateButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 80</value>
+  </data>
+  <data name="GenerateButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>120, 40</value>
+  </data>
+  <data name="GenerateButton.TabIndex" type="System.Int32, mscorlib">
+    <value>17</value>
+  </data>
+  <data name="GenerateButton.Text" xml:space="preserve">
+    <value>Generate!</value>
+  </data>
+  <data name="GenerateButton.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="GenerateButton.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
+    <value>ImageBeforeText</value>
+  </data>
+  <data name="&gt;&gt;GenerateButton.Name" xml:space="preserve">
+    <value>GenerateButton</value>
+  </data>
+  <data name="&gt;&gt;GenerateButton.Type" xml:space="preserve">
+    <value>CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton, PCK-Studio, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;GenerateButton.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;GenerateButton.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="CancelButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="CancelButton.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="CancelButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAGSSURBVEhL3ZVbKwRhGMen3WU/mkMppY3i07AuHNZatyguRMIXoRByyOFSKBcod16//8zz7uww
+        Y6Jxwa9+Nc//fd45vHMK/jfOuSqO4TZe4aOp7S0cxaq1fw8m1vAGxT3qIE1zBx9QXOOQTcuH5gq2NBP2
+        sRdLNtyGrIx9eIhCBy7bcDY0LYTtzs1hxeJM1IPzmgAzFqdDw0jUl9OYAnN0Qm84YFESBnRDtea7mH+p
+        H9Ac1JJeYJfFMYT+7HssCqHWhCkr25BN47mVIdT9KGoWxRBu4C0mbii1X9+GRcoaUeSaFoVQ6yrucM2i
+        GEKd6bqVCcjrKBZxKdp0dRtOQL6Jp1bGED5j5s1lbBI9qTsXjM3ik5UxhC+YegDyEvozF7qST++GIM88
+        QOoSaUe4jGIcJ6LN8IBpL6CW6MzKGMJfv8lZj+kxZj2mR1aGUH/5mHbjJe5h8S+aYGAQRfGfCg8Nfn2L
+        /9gJmnSp/nN9gMV+rj00d/5w9HMp5ofTCRP1hdXTtYon+GpqewWH8We/zD9CELwDdAO9TWyI9FEAAAAA
+        SUVORK5CYII=
+</value>
+  </data>
+  <data name="CancelButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="CancelButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>135, 80</value>
+  </data>
+  <data name="CancelButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>120, 40</value>
+  </data>
+  <data name="CancelButton.TabIndex" type="System.Int32, mscorlib">
+    <value>18</value>
+  </data>
+  <data name="CancelButton.Text" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="CancelButton.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="CancelButton.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
+    <value>ImageBeforeText</value>
+  </data>
+  <data name="&gt;&gt;CancelButton.Name" xml:space="preserve">
+    <value>CancelButton</value>
+  </data>
+  <data name="&gt;&gt;CancelButton.Type" xml:space="preserve">
+    <value>CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton, PCK-Studio, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;CancelButton.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;CancelButton.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
@@ -235,7 +280,10 @@
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>264, 105</value>
+    <value>264, 130</value>
+  </data>
+  <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 8.25pt</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -2458,12 +2506,12 @@
 </value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
-    <value>CenterParent</value>
+    <value>CenterScreen</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>MipMapPrompt</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>MetroFramework.Forms.MetroForm, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

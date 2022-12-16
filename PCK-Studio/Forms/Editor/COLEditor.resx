@@ -117,74 +117,395 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="resource.Image" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="resource.Location" type="System.Drawing.Point, System.Drawing">
-    <value>113, 1</value>
+  <data name="verticalColorSlider1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>275, 8</value>
   </data>
-  <data name="resource.Size" type="System.Drawing.Size, System.Drawing">
-    <value>21, 21</value>
+  <data name="verticalColorSlider1.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>39, 265</value>
+  </data>
+  <data name="verticalColorSlider1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>42, 265</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="resource.TabIndex" type="System.Int32, mscorlib">
+  <data name="verticalColorSlider1.TabIndex" type="System.Int32, mscorlib">
+    <value>62</value>
+  </data>
+  <data name="&gt;&gt;verticalColorSlider1.Name" xml:space="preserve">
+    <value>verticalColorSlider1</value>
+  </data>
+  <data name="&gt;&gt;verticalColorSlider1.Type" xml:space="preserve">
+    <value>ColorPicker.VerticalColorSlider, PCK-Studio, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;verticalColorSlider1.Parent" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;verticalColorSlider1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="resource.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
+  <data name="cBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 8</value>
   </data>
-  <data name="metroTextBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>101, 27</value>
+  <data name="cBox.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>265, 265</value>
   </data>
-  <data name="metroTextBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>135, 23</value>
+  <data name="cBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>265, 265</value>
   </data>
-  <data name="metroTextBox1.TabIndex" type="System.Int32, mscorlib">
-    <value>24</value>
+  <data name="cBox.TabIndex" type="System.Int32, mscorlib">
+    <value>45</value>
   </data>
-  <data name="&gt;&gt;metroTextBox1.Name" xml:space="preserve">
-    <value>metroTextBox1</value>
+  <data name="&gt;&gt;cBox.Name" xml:space="preserve">
+    <value>cBox</value>
   </data>
-  <data name="&gt;&gt;metroTextBox1.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroTextBox, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  <data name="&gt;&gt;cBox.Type" xml:space="preserve">
+    <value>ColorPicker.ColorBox, PCK-Studio, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
-  <data name="&gt;&gt;metroTextBox1.Parent" xml:space="preserve">
-    <value>metroPanel1</value>
+  <data name="&gt;&gt;cBox.Parent" xml:space="preserve">
+    <value>panel1</value>
   </data>
-  <data name="&gt;&gt;metroTextBox1.ZOrder" xml:space="preserve">
-    <value>2</value>
+  <data name="&gt;&gt;cBox.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
-  <data name="metroLabel2.AutoSize" type="System.Boolean, mscorlib">
+  <data name="metroLabel6.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="metroLabel2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>62, 27</value>
+  <data name="metroLabel6.Location" type="System.Drawing.Point, System.Drawing">
+    <value>69, 188</value>
   </data>
-  <data name="metroLabel2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>46, 19</value>
+  <data name="metroLabel6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>36, 19</value>
   </data>
-  <data name="metroLabel2.TabIndex" type="System.Int32, mscorlib">
-    <value>23</value>
+  <data name="metroLabel6.TabIndex" type="System.Int32, mscorlib">
+    <value>61</value>
   </data>
-  <data name="metroLabel2.Text" xml:space="preserve">
-    <value>Filter: </value>
+  <data name="metroLabel6.Text" xml:space="preserve">
+    <value>HEX:</value>
   </data>
-  <data name="&gt;&gt;metroLabel2.Name" xml:space="preserve">
-    <value>metroLabel2</value>
+  <data name="&gt;&gt;metroLabel6.Name" xml:space="preserve">
+    <value>metroLabel6</value>
   </data>
-  <data name="&gt;&gt;metroLabel2.Type" xml:space="preserve">
+  <data name="&gt;&gt;metroLabel6.Type" xml:space="preserve">
     <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
   </data>
-  <data name="&gt;&gt;metroLabel2.Parent" xml:space="preserve">
-    <value>metroPanel1</value>
+  <data name="&gt;&gt;metroLabel6.Parent" xml:space="preserve">
+    <value>panel3</value>
   </data>
-  <data name="&gt;&gt;metroLabel2.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;metroLabel6.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="metroLabel5.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="metroLabel5.Location" type="System.Drawing.Point, System.Drawing">
+    <value>78, 76</value>
+  </data>
+  <data name="metroLabel5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>46, 19</value>
+  </data>
+  <data name="metroLabel5.TabIndex" type="System.Int32, mscorlib">
+    <value>60</value>
+  </data>
+  <data name="metroLabel5.Text" xml:space="preserve">
+    <value>Alpha:</value>
+  </data>
+  <data name="&gt;&gt;metroLabel5.Name" xml:space="preserve">
+    <value>metroLabel5</value>
+  </data>
+  <data name="&gt;&gt;metroLabel5.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;metroLabel5.Parent" xml:space="preserve">
+    <value>panel3</value>
+  </data>
+  <data name="&gt;&gt;metroLabel5.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="txRed.Location" type="System.Drawing.Point, System.Drawing">
+    <value>124, 101</value>
+  </data>
+  <data name="txRed.Size" type="System.Drawing.Size, System.Drawing">
+    <value>51, 22</value>
+  </data>
+  <data name="txRed.TabIndex" type="System.Int32, mscorlib">
+    <value>32</value>
+  </data>
+  <data name="txRed.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="txRed.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Right</value>
+  </data>
+  <data name="&gt;&gt;txRed.Name" xml:space="preserve">
+    <value>txRed</value>
+  </data>
+  <data name="&gt;&gt;txRed.Type" xml:space="preserve">
+    <value>ColorPicker.NumericTextBox, PCK-Studio, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;txRed.Parent" xml:space="preserve">
+    <value>panel3</value>
+  </data>
+  <data name="&gt;&gt;txRed.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="metroLabel4.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="metroLabel4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>87, 160</value>
+  </data>
+  <data name="metroLabel4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>37, 19</value>
+  </data>
+  <data name="metroLabel4.TabIndex" type="System.Int32, mscorlib">
+    <value>59</value>
+  </data>
+  <data name="metroLabel4.Text" xml:space="preserve">
+    <value>Blue:</value>
+  </data>
+  <data name="&gt;&gt;metroLabel4.Name" xml:space="preserve">
+    <value>metroLabel4</value>
+  </data>
+  <data name="&gt;&gt;metroLabel4.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;metroLabel4.Parent" xml:space="preserve">
+    <value>panel3</value>
+  </data>
+  <data name="&gt;&gt;metroLabel4.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
+  <data name="txGreen.Location" type="System.Drawing.Point, System.Drawing">
+    <value>124, 129</value>
+  </data>
+  <data name="txGreen.Size" type="System.Drawing.Size, System.Drawing">
+    <value>51, 22</value>
+  </data>
+  <data name="txGreen.TabIndex" type="System.Int32, mscorlib">
+    <value>33</value>
+  </data>
+  <data name="txGreen.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="txGreen.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Right</value>
+  </data>
+  <data name="&gt;&gt;txGreen.Name" xml:space="preserve">
+    <value>txGreen</value>
+  </data>
+  <data name="&gt;&gt;txGreen.Type" xml:space="preserve">
+    <value>ColorPicker.NumericTextBox, PCK-Studio, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;txGreen.Parent" xml:space="preserve">
+    <value>panel3</value>
+  </data>
+  <data name="&gt;&gt;txGreen.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="metroLabel3.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="metroLabel3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>77, 132</value>
+  </data>
+  <data name="metroLabel3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>47, 19</value>
+  </data>
+  <data name="metroLabel3.TabIndex" type="System.Int32, mscorlib">
+    <value>58</value>
+  </data>
+  <data name="metroLabel3.Text" xml:space="preserve">
+    <value>Green:</value>
+  </data>
+  <data name="&gt;&gt;metroLabel3.Name" xml:space="preserve">
+    <value>metroLabel3</value>
+  </data>
+  <data name="&gt;&gt;metroLabel3.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;metroLabel3.Parent" xml:space="preserve">
+    <value>panel3</value>
+  </data>
+  <data name="&gt;&gt;metroLabel3.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="txBlue.Location" type="System.Drawing.Point, System.Drawing">
+    <value>124, 157</value>
+  </data>
+  <data name="txBlue.Size" type="System.Drawing.Size, System.Drawing">
+    <value>51, 22</value>
+  </data>
+  <data name="txBlue.TabIndex" type="System.Int32, mscorlib">
+    <value>34</value>
+  </data>
+  <data name="txBlue.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="txBlue.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Right</value>
+  </data>
+  <data name="&gt;&gt;txBlue.Name" xml:space="preserve">
+    <value>txBlue</value>
+  </data>
+  <data name="&gt;&gt;txBlue.Type" xml:space="preserve">
+    <value>ColorPicker.NumericTextBox, PCK-Studio, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;txBlue.Parent" xml:space="preserve">
+    <value>panel3</value>
+  </data>
+  <data name="&gt;&gt;txBlue.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="metroLabel1.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="metroLabel1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>89, 104</value>
+  </data>
+  <data name="metroLabel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>35, 19</value>
+  </data>
+  <data name="metroLabel1.TabIndex" type="System.Int32, mscorlib">
+    <value>57</value>
+  </data>
+  <data name="metroLabel1.Text" xml:space="preserve">
+    <value>Red:</value>
+  </data>
+  <data name="&gt;&gt;metroLabel1.Name" xml:space="preserve">
+    <value>metroLabel1</value>
+  </data>
+  <data name="&gt;&gt;metroLabel1.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;metroLabel1.Parent" xml:space="preserve">
+    <value>panel3</value>
+  </data>
+  <data name="&gt;&gt;metroLabel1.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="txHex.Location" type="System.Drawing.Point, System.Drawing">
+    <value>107, 185</value>
+  </data>
+  <data name="txHex.Size" type="System.Drawing.Size, System.Drawing">
+    <value>68, 22</value>
+  </data>
+  <data name="txHex.TabIndex" type="System.Int32, mscorlib">
+    <value>43</value>
+  </data>
+  <data name="&gt;&gt;txHex.Name" xml:space="preserve">
+    <value>txHex</value>
+  </data>
+  <data name="&gt;&gt;txHex.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txHex.Parent" xml:space="preserve">
+    <value>panel3</value>
+  </data>
+  <data name="&gt;&gt;txHex.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="txTransp.Location" type="System.Drawing.Point, System.Drawing">
+    <value>124, 73</value>
+  </data>
+  <data name="txTransp.Size" type="System.Drawing.Size, System.Drawing">
+    <value>51, 22</value>
+  </data>
+  <data name="txTransp.TabIndex" type="System.Int32, mscorlib">
+    <value>38</value>
+  </data>
+  <data name="txTransp.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="txTransp.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Right</value>
+  </data>
+  <data name="&gt;&gt;txTransp.Name" xml:space="preserve">
+    <value>txTransp</value>
+  </data>
+  <data name="&gt;&gt;txTransp.Type" xml:space="preserve">
+    <value>ColorPicker.NumericTextBox, PCK-Studio, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;txTransp.Parent" xml:space="preserve">
+    <value>panel3</value>
+  </data>
+  <data name="&gt;&gt;txTransp.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="panel3.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Right</value>
+  </data>
+  <data name="panel3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>323, 0</value>
+  </data>
+  <data name="panel3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>245, 280</value>
+  </data>
+  <data name="panel3.TabIndex" type="System.Int32, mscorlib">
+    <value>61</value>
+  </data>
+  <data name="&gt;&gt;panel3.Name" xml:space="preserve">
+    <value>panel3</value>
+  </data>
+  <data name="&gt;&gt;panel3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;panel3.Parent" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;panel3.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="panel1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Bottom</value>
+  </data>
+  <data name="panel1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 294</value>
+  </data>
+  <data name="panel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>568, 280</value>
+  </data>
+  <data name="panel1.TabIndex" type="System.Int32, mscorlib">
+    <value>25</value>
+  </data>
+  <data name="&gt;&gt;panel1.Name" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;panel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;panel1.Parent" xml:space="preserve">
+    <value>panel2</value>
+  </data>
+  <data name="&gt;&gt;panel1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="pictureBox1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="pictureBox1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>169, 4</value>
+  </data>
+  <data name="pictureBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>230, 230</value>
+  </data>
+  <data name="pictureBox1.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;pictureBox1.Name" xml:space="preserve">
+    <value>pictureBox1</value>
+  </data>
+  <data name="&gt;&gt;pictureBox1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;pictureBox1.Parent" xml:space="preserve">
+    <value>panel2</value>
+  </data>
+  <data name="&gt;&gt;pictureBox1.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
   <data name="setColorBtn.Location" type="System.Drawing.Point, System.Drawing">
-    <value>400, 290</value>
+    <value>222, 258</value>
   </data>
   <data name="setColorBtn.Size" type="System.Drawing.Size, System.Drawing">
     <value>125, 23</value>
@@ -202,304 +523,283 @@
     <value>MetroFramework.Controls.MetroButton, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
   </data>
   <data name="&gt;&gt;setColorBtn.Parent" xml:space="preserve">
-    <value>metroPanel1</value>
+    <value>panel2</value>
   </data>
   <data name="&gt;&gt;setColorBtn.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="blueUpDown.Location" type="System.Drawing.Point, System.Drawing">
-    <value>400, 397</value>
-  </data>
-  <data name="blueUpDown.Size" type="System.Drawing.Size, System.Drawing">
-    <value>125, 20</value>
-  </data>
-  <data name="blueUpDown.TabIndex" type="System.Int32, mscorlib">
-    <value>21</value>
-  </data>
-  <data name="&gt;&gt;blueUpDown.Name" xml:space="preserve">
-    <value>blueUpDown</value>
-  </data>
-  <data name="&gt;&gt;blueUpDown.Type" xml:space="preserve">
-    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;blueUpDown.Parent" xml:space="preserve">
-    <value>metroPanel1</value>
-  </data>
-  <data name="&gt;&gt;blueUpDown.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="greenUpDown.Location" type="System.Drawing.Point, System.Drawing">
-    <value>400, 371</value>
-  </data>
-  <data name="greenUpDown.Size" type="System.Drawing.Size, System.Drawing">
-    <value>125, 20</value>
-  </data>
-  <data name="greenUpDown.TabIndex" type="System.Int32, mscorlib">
-    <value>20</value>
-  </data>
-  <data name="&gt;&gt;greenUpDown.Name" xml:space="preserve">
-    <value>greenUpDown</value>
-  </data>
-  <data name="&gt;&gt;greenUpDown.Type" xml:space="preserve">
-    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;greenUpDown.Parent" xml:space="preserve">
-    <value>metroPanel1</value>
-  </data>
-  <data name="&gt;&gt;greenUpDown.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="redUpDown.Location" type="System.Drawing.Point, System.Drawing">
-    <value>400, 345</value>
-  </data>
-  <data name="redUpDown.Size" type="System.Drawing.Size, System.Drawing">
-    <value>125, 20</value>
-  </data>
-  <data name="redUpDown.TabIndex" type="System.Int32, mscorlib">
-    <value>19</value>
-  </data>
-  <data name="&gt;&gt;redUpDown.Name" xml:space="preserve">
-    <value>redUpDown</value>
-  </data>
-  <data name="&gt;&gt;redUpDown.Type" xml:space="preserve">
-    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;redUpDown.Parent" xml:space="preserve">
-    <value>metroPanel1</value>
-  </data>
-  <data name="&gt;&gt;redUpDown.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="alphaUpDown.Location" type="System.Drawing.Point, System.Drawing">
-    <value>400, 319</value>
-  </data>
-  <data name="alphaUpDown.Size" type="System.Drawing.Size, System.Drawing">
-    <value>125, 20</value>
-  </data>
-  <data name="alphaUpDown.TabIndex" type="System.Int32, mscorlib">
-    <value>18</value>
-  </data>
-  <data name="alphaUpDown.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;alphaUpDown.Name" xml:space="preserve">
-    <value>alphaUpDown</value>
-  </data>
-  <data name="&gt;&gt;alphaUpDown.Type" xml:space="preserve">
-    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;alphaUpDown.Parent" xml:space="preserve">
-    <value>metroPanel1</value>
-  </data>
-  <data name="&gt;&gt;alphaUpDown.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="alphaLabel.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="alphaLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>367, 320</value>
-  </data>
-  <data name="alphaLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>21, 19</value>
-  </data>
-  <data name="alphaLabel.TabIndex" type="System.Int32, mscorlib">
-    <value>16</value>
-  </data>
-  <data name="alphaLabel.Text" xml:space="preserve">
-    <value>A:</value>
-  </data>
-  <data name="alphaLabel.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;alphaLabel.Name" xml:space="preserve">
-    <value>alphaLabel</value>
-  </data>
-  <data name="&gt;&gt;alphaLabel.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;alphaLabel.Parent" xml:space="preserve">
-    <value>metroPanel1</value>
-  </data>
-  <data name="&gt;&gt;alphaLabel.ZOrder" xml:space="preserve">
-    <value>9</value>
-  </data>
-  <data name="blueLabel.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="blueLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>368, 395</value>
-  </data>
-  <data name="blueLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>20, 19</value>
-  </data>
-  <data name="blueLabel.TabIndex" type="System.Int32, mscorlib">
-    <value>12</value>
-  </data>
-  <data name="blueLabel.Text" xml:space="preserve">
-    <value>B:</value>
-  </data>
-  <data name="&gt;&gt;blueLabel.Name" xml:space="preserve">
-    <value>blueLabel</value>
-  </data>
-  <data name="&gt;&gt;blueLabel.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;blueLabel.Parent" xml:space="preserve">
-    <value>metroPanel1</value>
-  </data>
-  <data name="&gt;&gt;blueLabel.ZOrder" xml:space="preserve">
-    <value>10</value>
-  </data>
-  <data name="greenLabel.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="greenLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>367, 371</value>
-  </data>
-  <data name="greenLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>21, 19</value>
-  </data>
-  <data name="greenLabel.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
-  </data>
-  <data name="greenLabel.Text" xml:space="preserve">
-    <value>G:</value>
-  </data>
-  <data name="&gt;&gt;greenLabel.Name" xml:space="preserve">
-    <value>greenLabel</value>
-  </data>
-  <data name="&gt;&gt;greenLabel.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;greenLabel.Parent" xml:space="preserve">
-    <value>metroPanel1</value>
-  </data>
-  <data name="&gt;&gt;greenLabel.ZOrder" xml:space="preserve">
-    <value>11</value>
-  </data>
-  <data name="redLabel.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="redLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>368, 345</value>
-  </data>
-  <data name="redLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>20, 19</value>
-  </data>
-  <data name="redLabel.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
-  </data>
-  <data name="redLabel.Text" xml:space="preserve">
-    <value>R:</value>
-  </data>
-  <data name="&gt;&gt;redLabel.Name" xml:space="preserve">
-    <value>redLabel</value>
-  </data>
-  <data name="&gt;&gt;redLabel.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;redLabel.Parent" xml:space="preserve">
-    <value>metroPanel1</value>
-  </data>
-  <data name="&gt;&gt;redLabel.ZOrder" xml:space="preserve">
-    <value>12</value>
-  </data>
-  <data name="resource.Image1" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="resource.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="resource.Location1" type="System.Drawing.Point, System.Drawing">
-    <value>103, 1</value>
-  </data>
-  <data name="resource.Size1" type="System.Drawing.Size, System.Drawing">
-    <value>21, 21</value>
-  </data>
-  <data name="resource.TabIndex1" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="resource.Visible1" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="colorTextbox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>400, 423</value>
-  </data>
-  <data name="colorTextbox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>125, 23</value>
-  </data>
-  <data name="colorTextbox.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;colorTextbox.Name" xml:space="preserve">
-    <value>colorTextbox</value>
-  </data>
-  <data name="&gt;&gt;colorTextbox.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroTextBox, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;colorTextbox.Parent" xml:space="preserve">
-    <value>metroPanel1</value>
-  </data>
-  <data name="&gt;&gt;colorTextbox.ZOrder" xml:space="preserve">
-    <value>13</value>
-  </data>
-  <data name="metroLabel1.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="metroLabel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>342, 423</value>
-  </data>
-  <data name="metroLabel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>46, 19</value>
-  </data>
-  <data name="metroLabel1.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="metroLabel1.Text" xml:space="preserve">
-    <value>Color:</value>
-  </data>
-  <data name="&gt;&gt;metroLabel1.Name" xml:space="preserve">
-    <value>metroLabel1</value>
-  </data>
-  <data name="&gt;&gt;metroLabel1.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;metroLabel1.Parent" xml:space="preserve">
-    <value>metroPanel1</value>
-  </data>
-  <data name="&gt;&gt;metroLabel1.ZOrder" xml:space="preserve">
-    <value>14</value>
-  </data>
-  <data name="pictureBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>378, 92</value>
-  </data>
-  <data name="pictureBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>173, 173</value>
-  </data>
-  <data name="pictureBox1.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <data name="&gt;&gt;pictureBox1.Name" xml:space="preserve">
-    <value>pictureBox1</value>
+  <data name="panel2.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Right</value>
   </data>
-  <data name="&gt;&gt;pictureBox1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="panel2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>330, 0</value>
   </data>
-  <data name="&gt;&gt;pictureBox1.Parent" xml:space="preserve">
+  <data name="panel2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>568, 574</value>
+  </data>
+  <data name="panel2.TabIndex" type="System.Int32, mscorlib">
+    <value>26</value>
+  </data>
+  <data name="&gt;&gt;panel2.Name" xml:space="preserve">
+    <value>panel2</value>
+  </data>
+  <data name="&gt;&gt;panel2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;panel2.Parent" xml:space="preserve">
     <value>metroPanel1</value>
   </data>
-  <data name="&gt;&gt;pictureBox1.ZOrder" xml:space="preserve">
-    <value>15</value>
+  <data name="&gt;&gt;panel2.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <metadata name="ColorContextMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>125, 17</value>
+  </metadata>
+  <data name="restoreOriginalColorToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>186, 22</value>
+  </data>
+  <data name="restoreOriginalColorToolStripMenuItem.Text" xml:space="preserve">
+    <value>Restore original color</value>
+  </data>
+  <data name="copyColorToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>186, 22</value>
+  </data>
+  <data name="copyColorToolStripMenuItem.Text" xml:space="preserve">
+    <value>Copy Color</value>
+  </data>
+  <data name="pasteColorToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>186, 22</value>
+  </data>
+  <data name="pasteColorToolStripMenuItem.Text" xml:space="preserve">
+    <value>Paste Color</value>
+  </data>
+  <data name="ColorContextMenu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>187, 70</value>
+  </data>
+  <data name="&gt;&gt;ColorContextMenu.Name" xml:space="preserve">
+    <value>ColorContextMenu</value>
+  </data>
+  <data name="&gt;&gt;ColorContextMenu.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroContextMenu, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="colorTreeView.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="colorTreeView.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="colorTreeView.Size" type="System.Drawing.Size, System.Drawing">
+    <value>320, 533</value>
+  </data>
+  <data name="colorTreeView.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;colorTreeView.Name" xml:space="preserve">
+    <value>colorTreeView</value>
+  </data>
+  <data name="&gt;&gt;colorTreeView.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TreeView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;colorTreeView.Parent" xml:space="preserve">
+    <value>colorsTab</value>
+  </data>
+  <data name="&gt;&gt;colorTreeView.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="colorsTab.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 38</value>
+  </data>
+  <data name="colorsTab.Size" type="System.Drawing.Size, System.Drawing">
+    <value>320, 533</value>
+  </data>
+  <data name="colorsTab.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="colorsTab.Text" xml:space="preserve">
+    <value>Everything</value>
+  </data>
+  <data name="&gt;&gt;colorsTab.Name" xml:space="preserve">
+    <value>colorsTab</value>
+  </data>
+  <data name="&gt;&gt;colorsTab.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;colorsTab.Parent" xml:space="preserve">
+    <value>tabControl</value>
+  </data>
+  <data name="&gt;&gt;colorsTab.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="waterTreeView.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="waterTreeView.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="waterTreeView.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
+    <value>No</value>
+  </data>
+  <data name="waterTreeView.Size" type="System.Drawing.Size, System.Drawing">
+    <value>320, 533</value>
+  </data>
+  <data name="waterTreeView.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;waterTreeView.Name" xml:space="preserve">
+    <value>waterTreeView</value>
+  </data>
+  <data name="&gt;&gt;waterTreeView.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TreeView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;waterTreeView.Parent" xml:space="preserve">
+    <value>waterTab</value>
+  </data>
+  <data name="&gt;&gt;waterTreeView.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="waterTab.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 38</value>
+  </data>
+  <data name="waterTab.Size" type="System.Drawing.Size, System.Drawing">
+    <value>320, 533</value>
+  </data>
+  <data name="waterTab.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="waterTab.Text" xml:space="preserve">
+    <value>Water</value>
+  </data>
+  <data name="&gt;&gt;waterTab.Name" xml:space="preserve">
+    <value>waterTab</value>
+  </data>
+  <data name="&gt;&gt;waterTab.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;waterTab.Parent" xml:space="preserve">
+    <value>tabControl</value>
+  </data>
+  <data name="&gt;&gt;waterTab.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="underwaterTreeView.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="underwaterTreeView.Size" type="System.Drawing.Size, System.Drawing">
+    <value>320, 424</value>
+  </data>
+  <data name="underwaterTreeView.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;underwaterTreeView.Name" xml:space="preserve">
+    <value>underwaterTreeView</value>
+  </data>
+  <data name="&gt;&gt;underwaterTreeView.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TreeView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;underwaterTreeView.Parent" xml:space="preserve">
+    <value>underwaterTab</value>
+  </data>
+  <data name="&gt;&gt;underwaterTreeView.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="underwaterTab.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 38</value>
+  </data>
+  <data name="underwaterTab.Size" type="System.Drawing.Size, System.Drawing">
+    <value>320, 533</value>
+  </data>
+  <data name="underwaterTab.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="underwaterTab.Text" xml:space="preserve">
+    <value>Underwater</value>
+  </data>
+  <data name="&gt;&gt;underwaterTab.Name" xml:space="preserve">
+    <value>underwaterTab</value>
+  </data>
+  <data name="&gt;&gt;underwaterTab.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;underwaterTab.Parent" xml:space="preserve">
+    <value>tabControl</value>
+  </data>
+  <data name="&gt;&gt;underwaterTab.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="fogTreeView.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="fogTreeView.Size" type="System.Drawing.Size, System.Drawing">
+    <value>320, 424</value>
+  </data>
+  <data name="fogTreeView.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;fogTreeView.Name" xml:space="preserve">
+    <value>fogTreeView</value>
+  </data>
+  <data name="&gt;&gt;fogTreeView.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TreeView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;fogTreeView.Parent" xml:space="preserve">
+    <value>fogTab</value>
+  </data>
+  <data name="&gt;&gt;fogTreeView.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="fogTab.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 38</value>
+  </data>
+  <data name="fogTab.Size" type="System.Drawing.Size, System.Drawing">
+    <value>320, 533</value>
+  </data>
+  <data name="fogTab.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="fogTab.Text" xml:space="preserve">
+    <value>Underwater Fog</value>
+  </data>
+  <data name="&gt;&gt;fogTab.Name" xml:space="preserve">
+    <value>fogTab</value>
+  </data>
+  <data name="&gt;&gt;fogTab.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;fogTab.Parent" xml:space="preserve">
+    <value>tabControl</value>
+  </data>
+  <data name="&gt;&gt;fogTab.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="tabControl.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 4</value>
+  </data>
+  <data name="tabControl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>328, 575</value>
+  </data>
+  <data name="tabControl.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="&gt;&gt;tabControl.Name" xml:space="preserve">
+    <value>tabControl</value>
+  </data>
+  <data name="&gt;&gt;tabControl.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroTabControl, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;tabControl.Parent" xml:space="preserve">
+    <value>metroPanel1</value>
+  </data>
+  <data name="&gt;&gt;tabControl.ZOrder" xml:space="preserve">
+    <value>3</value>
   </data>
   <data name="metroPanel1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
   <data name="metroPanel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>20, 60</value>
+    <value>0, 29</value>
   </data>
   <data name="metroPanel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>612, 523</value>
+    <value>898, 574</value>
   </data>
   <data name="metroPanel1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -514,6 +814,72 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;metroPanel1.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="resource.Image" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="resource.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="resource.Location" type="System.Drawing.Point, System.Drawing">
+    <value>113, 1</value>
+  </data>
+  <data name="resource.Size" type="System.Drawing.Size, System.Drawing">
+    <value>21, 21</value>
+  </data>
+  <data name="resource.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="resource.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="metroTextBox1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>761, 3</value>
+  </data>
+  <data name="metroTextBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>135, 23</value>
+  </data>
+  <data name="metroTextBox1.TabIndex" type="System.Int32, mscorlib">
+    <value>24</value>
+  </data>
+  <data name="&gt;&gt;metroTextBox1.Name" xml:space="preserve">
+    <value>metroTextBox1</value>
+  </data>
+  <data name="&gt;&gt;metroTextBox1.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroTextBox, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;metroTextBox1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;metroTextBox1.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="metroLabel2.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="metroLabel2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>721, 4</value>
+  </data>
+  <data name="metroLabel2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>46, 19</value>
+  </data>
+  <data name="metroLabel2.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="metroLabel2.Text" xml:space="preserve">
+    <value>Filter: </value>
+  </data>
+  <data name="&gt;&gt;metroLabel2.Name" xml:space="preserve">
+    <value>metroLabel2</value>
+  </data>
+  <data name="&gt;&gt;metroLabel2.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;metroLabel2.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;metroLabel2.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
   <metadata name="menuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
@@ -539,7 +905,7 @@
     <value>Save</value>
   </data>
   <data name="fileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>37, 20</value>
+    <value>37, 25</value>
   </data>
   <data name="fileToolStripMenuItem.Text" xml:space="preserve">
     <value>File</value>
@@ -623,16 +989,16 @@
     <value>1.91 (PS4)</value>
   </data>
   <data name="targetUpdateToolToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>117, 20</value>
+    <value>117, 25</value>
   </data>
   <data name="targetUpdateToolToolStripMenuItem.Text" xml:space="preserve">
     <value>Target Update Tool</value>
   </data>
   <data name="menuStrip.Location" type="System.Drawing.Point, System.Drawing">
-    <value>20, 60</value>
+    <value>0, 0</value>
   </data>
   <data name="menuStrip.Size" type="System.Drawing.Size, System.Drawing">
-    <value>612, 24</value>
+    <value>898, 29</value>
   </data>
   <data name="menuStrip.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -650,250 +1016,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;menuStrip.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <metadata name="ColorContextMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>125, 17</value>
-  </metadata>
-  <data name="restoreOriginalColorToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>186, 22</value>
-  </data>
-  <data name="restoreOriginalColorToolStripMenuItem.Text" xml:space="preserve">
-    <value>Restore original color</value>
-  </data>
-  <data name="copyColorToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>186, 22</value>
-  </data>
-  <data name="copyColorToolStripMenuItem.Text" xml:space="preserve">
-    <value>Copy Color</value>
-  </data>
-  <data name="pasteColorToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>186, 22</value>
-  </data>
-  <data name="pasteColorToolStripMenuItem.Text" xml:space="preserve">
-    <value>Paste Color</value>
-  </data>
-  <data name="ColorContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>187, 70</value>
-  </data>
-  <data name="&gt;&gt;ColorContextMenu.Name" xml:space="preserve">
-    <value>ColorContextMenu</value>
-  </data>
-  <data name="&gt;&gt;ColorContextMenu.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroContextMenu, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="waterTreeView.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="waterTreeView.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="waterTreeView.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
-    <value>No</value>
-  </data>
-  <data name="waterTreeView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>320, 424</value>
-  </data>
-  <data name="waterTreeView.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;waterTreeView.Name" xml:space="preserve">
-    <value>waterTreeView</value>
-  </data>
-  <data name="&gt;&gt;waterTreeView.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TreeView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;waterTreeView.Parent" xml:space="preserve">
-    <value>waterTab</value>
-  </data>
-  <data name="&gt;&gt;waterTreeView.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="waterTab.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 38</value>
-  </data>
-  <data name="waterTab.Size" type="System.Drawing.Size, System.Drawing">
-    <value>320, 424</value>
-  </data>
-  <data name="waterTab.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="waterTab.Text" xml:space="preserve">
-    <value>Water</value>
-  </data>
-  <data name="&gt;&gt;waterTab.Name" xml:space="preserve">
-    <value>waterTab</value>
-  </data>
-  <data name="&gt;&gt;waterTab.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;waterTab.Parent" xml:space="preserve">
-    <value>tabControl</value>
-  </data>
-  <data name="&gt;&gt;waterTab.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="underwaterTreeView.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="underwaterTreeView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>320, 424</value>
-  </data>
-  <data name="underwaterTreeView.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;underwaterTreeView.Name" xml:space="preserve">
-    <value>underwaterTreeView</value>
-  </data>
-  <data name="&gt;&gt;underwaterTreeView.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TreeView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;underwaterTreeView.Parent" xml:space="preserve">
-    <value>underwaterTab</value>
-  </data>
-  <data name="&gt;&gt;underwaterTreeView.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="fogTreeView.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="fogTreeView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>320, 424</value>
-  </data>
-  <data name="fogTreeView.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;fogTreeView.Name" xml:space="preserve">
-    <value>fogTreeView</value>
-  </data>
-  <data name="&gt;&gt;fogTreeView.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TreeView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;fogTreeView.Parent" xml:space="preserve">
-    <value>fogTab</value>
-  </data>
-  <data name="&gt;&gt;fogTreeView.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="colorTreeView.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="colorTreeView.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="colorTreeView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>320, 424</value>
-  </data>
-  <data name="colorTreeView.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;colorTreeView.Name" xml:space="preserve">
-    <value>colorTreeView</value>
-  </data>
-  <data name="&gt;&gt;colorTreeView.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TreeView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;colorTreeView.Parent" xml:space="preserve">
-    <value>colorsTab</value>
-  </data>
-  <data name="&gt;&gt;colorTreeView.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="colorsTab.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 38</value>
-  </data>
-  <data name="colorsTab.Size" type="System.Drawing.Size, System.Drawing">
-    <value>320, 424</value>
-  </data>
-  <data name="colorsTab.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="colorsTab.Text" xml:space="preserve">
-    <value>Everything</value>
-  </data>
-  <data name="&gt;&gt;colorsTab.Name" xml:space="preserve">
-    <value>colorsTab</value>
-  </data>
-  <data name="&gt;&gt;colorsTab.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;colorsTab.Parent" xml:space="preserve">
-    <value>tabControl</value>
-  </data>
-  <data name="&gt;&gt;colorsTab.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="tabControl.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left</value>
-  </data>
-  <data name="underwaterTab.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 38</value>
-  </data>
-  <data name="underwaterTab.Size" type="System.Drawing.Size, System.Drawing">
-    <value>320, 424</value>
-  </data>
-  <data name="underwaterTab.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="underwaterTab.Text" xml:space="preserve">
-    <value>Underwater</value>
-  </data>
-  <data name="&gt;&gt;underwaterTab.Name" xml:space="preserve">
-    <value>underwaterTab</value>
-  </data>
-  <data name="&gt;&gt;underwaterTab.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;underwaterTab.Parent" xml:space="preserve">
-    <value>tabControl</value>
-  </data>
-  <data name="&gt;&gt;underwaterTab.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="fogTab.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 38</value>
-  </data>
-  <data name="fogTab.Size" type="System.Drawing.Size, System.Drawing">
-    <value>320, 424</value>
-  </data>
-  <data name="fogTab.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="fogTab.Text" xml:space="preserve">
-    <value>Underwater Fog</value>
-  </data>
-  <data name="&gt;&gt;fogTab.Name" xml:space="preserve">
-    <value>fogTab</value>
-  </data>
-  <data name="&gt;&gt;fogTab.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;fogTab.Parent" xml:space="preserve">
-    <value>tabControl</value>
-  </data>
-  <data name="&gt;&gt;fogTab.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="tabControl.Location" type="System.Drawing.Point, System.Drawing">
-    <value>23, 114</value>
-  </data>
-  <data name="tabControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>328, 466</value>
-  </data>
-  <data name="tabControl.TabIndex" type="System.Int32, mscorlib">
-    <value>22</value>
-  </data>
-  <data name="&gt;&gt;tabControl.Name" xml:space="preserve">
-    <value>tabControl</value>
-  </data>
-  <data name="&gt;&gt;tabControl.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroTabControl, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;tabControl.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;tabControl.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>4</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -902,7 +1025,10 @@
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>652, 603</value>
+    <value>898, 603</value>
+  </data>
+  <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 8.25pt</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -3410,6 +3536,9 @@
         AP//AAA=
 </value>
   </data>
+  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
     <value>652, 603</value>
   </data>
@@ -3537,6 +3666,6 @@
     <value>COLEditor</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>MetroFramework.Forms.MetroForm, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

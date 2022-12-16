@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace PckStudio.Forms
 {
-    public partial class LockPrompt : MetroFramework.Forms.MetroForm
+    public partial class LockPrompt : Form
     {
         string pass;
 
@@ -16,24 +16,6 @@ namespace PckStudio.Forms
 
         private void textBoxPass_Click(object sender, EventArgs e)
         {
-        }
-
-        private void buttonUnlocked_Click(object sender, EventArgs e)
-        {
-            if (MD5(textBoxPass.Text) == pass || MD5(textBoxPass.Text) == MD5(pass))
-            {
-                DialogResult = DialogResult.OK;
-                Close();
-            }
-            else
-            {
-                MessageBox.Show("Incorrect password!");
-                DialogResult = DialogResult.Abort;
-                textBoxPass.Text = "";
-            }
-#if DEBUG
-            DialogResult = DialogResult.OK;
-#endif
         }
 
         private void textBoxPass_TextChanged(object sender, EventArgs e)
@@ -57,6 +39,22 @@ namespace PckStudio.Forms
             }
         }
 
-
+        private void UnlockPCKButton_Click(object sender, EventArgs e)
+        {
+            if (MD5(textBoxPass.Text) == pass || MD5(textBoxPass.Text) == MD5(pass))
+            {
+                DialogResult = DialogResult.OK;
+                Close();
+            }
+            else
+            {
+                MessageBox.Show("Incorrect password!");
+                DialogResult = DialogResult.Abort;
+                textBoxPass.Text = "";
+            }
+            #if DEBUG
+            DialogResult = DialogResult.OK;
+            #endif
+        }
     }
 }

@@ -7,7 +7,7 @@ using PckStudio.Forms.Utilities;
 
 namespace PckStudio.Forms.Additional_Popups.Animation
 {
-	public partial class ChangeTile : MetroForm
+	public partial class ChangeTile : Form
 	{
         string selectedTile = "";
 
@@ -148,5 +148,10 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 			DialogResult = DialogResult.OK;
 			Close();
 		}
-	}
+
+        private void ChangeTile_Load(object sender, EventArgs e)
+        {
+
+        }
+    }
 }

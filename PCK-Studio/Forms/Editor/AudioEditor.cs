@@ -15,7 +15,7 @@ using PckStudio.Forms.Additional_Popups.Audio;
 
 namespace PckStudio.Forms.Editor
 {
-	public partial class AudioEditor : MetroForm
+	public partial class AudioEditor : Form
 	{
 		public string defaultType = "yes";
 		Classes.Bink BINK = new Classes.Bink();
@@ -118,7 +118,7 @@ namespace PckStudio.Forms.Editor
 			string[] avalible = Categories.FindAll(str => !audioFile.HasCategory(GetCategoryId(str))).ToArray();
 			if (avalible.Length > 0)
 			{
-				using addCategory add = new addCategory(avalible);
+				using AddCategory add = new AddCategory(avalible);
 				if (add.ShowDialog() == DialogResult.OK)
 					audioFile.AddCategory(GetCategoryId(add.Category));
 				else return;
@@ -209,7 +209,7 @@ namespace PckStudio.Forms.Editor
 					if (Path.GetExtension(file) == ".wav") // Convert Wave to BINKA
 					{
 						Cursor.Current = Cursors.WaitCursor;
-						pleaseWait waitDiag = new pleaseWait();
+						PleaseWait waitDiag = new PleaseWait();
 						waitDiag.Show(this);
 
 						await Task.Run(() =>
@@ -314,7 +314,7 @@ namespace PckStudio.Forms.Editor
 		private void creditsEditorToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			var credits = audioFile.GetCreditsString();
-			using (creditsEditor prompt = new creditsEditor(credits))
+			using (CreditsEditor prompt = new CreditsEditor(credits))
 				if (prompt.ShowDialog() == DialogResult.OK)
 					audioFile.SetCredits(prompt.Credits.Split('\n'));
 		}
@@ -431,7 +431,7 @@ namespace PckStudio.Forms.Editor
 				if (file_ext == ".wav") // Convert Wave to BINKA
 				{
 					Cursor.Current = Cursors.WaitCursor;
-					pleaseWait waitDiag = new pleaseWait();
+					PleaseWait waitDiag = new PleaseWait();
 					waitDiag.Show(this);
 
 					await Task.Run(() =>

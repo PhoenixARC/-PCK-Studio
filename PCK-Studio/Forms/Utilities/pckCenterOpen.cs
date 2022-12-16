@@ -20,7 +20,7 @@ using PckStudio.Classes.IO.PCK;
 
 namespace PckStudio.Forms
 {
-    public partial class pckCenterOpen : MetroFramework.Forms.MetroForm
+    public partial class PCKCenterOpen : Form
     {
         string name;
         string author;
@@ -39,7 +39,7 @@ namespace PckStudio.Forms
             public string Name { get; set; }
         }
 
-        public pckCenterOpen(string name, string authorIn, string descIn, string directIn, string adIn, Bitmap display, int mode, string mod, MethodInvoker reloader, bool Vita, string PackName)
+        public PCKCenterOpen(string name, string authorIn, string descIn, string directIn, string adIn, Bitmap display, int mode, string mod, MethodInvoker reloader, bool Vita, string PackName)
         {
             InitializeComponent();
             pictureBoxDisplay.Image = display;
@@ -1151,7 +1151,7 @@ namespace PckStudio.Forms
 
         private void buttonInstallWiiU_Click(object sender, EventArgs e)
         {
-            installWiiU install = new installWiiU(Program.AppData + "/PCK Center/myPcks/" + mod + ".pck");
+            InstallWiiU install = new InstallWiiU(Program.AppData + "/PCK Center/myPcks/" + mod + ".pck");
             install.ShowDialog();
         }
     }

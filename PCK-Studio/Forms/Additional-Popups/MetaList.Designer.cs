@@ -32,24 +32,24 @@
             this.MetaTreeView = new System.Windows.Forms.TreeView();
             this.SuspendLayout();
             // 
-            // treeView1
+            // MetaTreeView
             // 
-            resources.ApplyResources(this.MetaTreeView, "treeView1");
-            this.MetaTreeView.Name = "treeView1";
+            this.MetaTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.MetaTreeView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            resources.ApplyResources(this.MetaTreeView, "MetaTreeView");
+            this.MetaTreeView.ForeColor = System.Drawing.Color.White;
+            this.MetaTreeView.Name = "MetaTreeView";
             // 
-            // meta
+            // MetaList
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.Controls.Add(this.MetaTreeView);
+            this.ForeColor = System.Drawing.Color.White;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MaximizeBox = false;
-            this.Name = "meta";
-            this.Resizable = false;
-            this.ShadowType = MetroFramework.Forms.MetroFormShadowType.DropShadow;
-            this.Style = MetroFramework.MetroColorStyle.Silver;
-            this.TextAlign = MetroFramework.Forms.MetroFormTextAlign.Center;
-            this.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.Name = "MetaList";
             this.ResumeLayout(false);
 
         }

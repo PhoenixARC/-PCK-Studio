@@ -7,7 +7,6 @@ using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 using System.Diagnostics;
 using System.Drawing.Imaging;
-
 using PckStudio.Properties;
 using PckStudio.Classes.FileTypes;
 using PckStudio.Classes.IO.LOC;
@@ -26,7 +25,7 @@ using PckStudio.Classes.Misc;
 
 namespace PckStudio
 {
-	public partial class MainForm : MetroFramework.Forms.MetroForm
+	public partial class MainForm : Form
 	{
 		string saveLocation = string.Empty;
 		PCKFile currentPCK = null;
@@ -63,10 +62,9 @@ namespace PckStudio
             isSelectingTab = false;
 
 			labelVersion.Text = "PCK Studio: " + Application.ProductVersion;
-			ChangelogRichTextBox.Text = Resources.CHANGELOG;
-#if DEBUG
+			#if DEBUG
 			labelVersion.Text += " (Debug build)";
-#endif
+			#endif
 
 			pckFileTypeHandler = new Dictionary<PCKFile.FileData.FileType, Action<PCKFile.FileData>>(15)
 			{
@@ -426,7 +424,7 @@ namespace PckStudio
 		{
 			if (file.properties.HasProperty("BOX"))
 			{
-				using (generateModel generate = new generateModel(file.properties, new PictureBox()))
+				using (GenerateModel generate = new GenerateModel(file.properties, new PictureBox()))
 					if (generate.ShowDialog() == DialogResult.OK)
 					{
 						entryDataTextBox.Text = entryTypeTextBox.Text = string.Empty;
@@ -722,7 +720,7 @@ namespace PckStudio
 				MessageBox.Show("No .loc file found", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
-			using (addNewSkin add = new addNewSkin(locFile))
+			using (AddNewSkin add = new AddNewSkin(locFile))
 				if (add.ShowDialog() == DialogResult.OK)
 				{
 
@@ -983,7 +981,7 @@ namespace PckStudio
 					MessageBox.Show("Failed to parse BOX value, aborting to normal functionality.");
 				}
 			}
-			using addMeta add = new addMeta(property.Item1, property.Item2);
+			using AddMeta add = new AddMeta(property.Item1, property.Item2);
 			if (add.ShowDialog() == DialogResult.OK && i != -1)
 			{
 				file.properties[i] = new ValueTuple<string, string>(add.PropertyName, add.PropertyValue);
@@ -1068,7 +1066,7 @@ namespace PckStudio
 			if (treeViewMain.SelectedNode is TreeNode t &&
 				t.Tag is PCKFile.FileData file)
 			{
-				using addMeta add = new addMeta();
+				using AddMeta add = new AddMeta();
 				if (add.ShowDialog() == DialogResult.OK)
 				{
 					file.properties.Add((add.PropertyName, add.PropertyValue));
@@ -1340,7 +1338,7 @@ namespace PckStudio
 
 		private void programInfoToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			using programInfo info = new programInfo();
+			using AboutThisProgram info = new AboutThisProgram();
 			info.ShowDialog();
 		}
 
@@ -1715,7 +1713,7 @@ namespace PckStudio
 		{
 			DateTime Begin = DateTime.Now;
             //pckCenter open = new pckCenter();
-            PckCenterBeta open = new PckCenterBeta();
+            PCKCenterBeta open = new PCKCenterBeta();
 			open.Show();
 			TimeSpan duration = new TimeSpan(DateTime.Now.Ticks - Begin.Ticks);
 
@@ -1724,7 +1722,7 @@ namespace PckStudio
 
 		private void wiiUPCKInstallerToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			installWiiU install = new installWiiU(null);
+			InstallWiiU install = new InstallWiiU(null);
 			install.ShowDialog();
 		}
 
@@ -1765,13 +1763,13 @@ namespace PckStudio
 
 		private void PS3PCKInstallerToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			installPS3 install = new installPS3(null);
+			InstallPS3 install = new InstallPS3(null);
 			install.ShowDialog();
 		}
 
 		private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			Pref setting = new Pref();
+			Preferences setting = new Preferences();
 			setting.Show();
 		}
 
@@ -1784,7 +1782,7 @@ namespace PckStudio
 		private void VitaPCKInstallerToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 
-			installVita install = new installVita(null);
+			InstallVita install = new InstallVita(null);
 			install.ShowDialog();
 		}
 
@@ -1812,12 +1810,12 @@ namespace PckStudio
 		private void OpenPck_MouseEnter(object sender, EventArgs e)
 		{
 			pckOpen.Image = Resources.pckOpen;
-		}
+        }
 
-		private void OpenPck_MouseLeave(object sender, EventArgs e)
+        private void OpenPck_MouseLeave(object sender, EventArgs e)
 		{
 			pckOpen.Image = Resources.pckClosed;
-		}
+        }
 
 		private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
 		{
@@ -1844,7 +1842,6 @@ namespace PckStudio
 
 		private void OpenPck_DragEnter(object sender, DragEventArgs e)
 		{
-			pckOpen.Image = Resources.pckDrop;
 			string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
 			foreach (var file in files)
 			{
@@ -2203,5 +2200,28 @@ namespace PckStudio
 				}
 			}
 		}
-	}
+
+        private void crEaTiiOn_Ultimate_GradientButton3_Click(object sender, EventArgs e)
+        {
+            DateTime Begin = DateTime.Now;
+            //pckCenter open = new pckCenter();
+            PCKCenterBeta open = new PCKCenterBeta();
+            open.Show();
+            TimeSpan duration = new TimeSpan(DateTime.Now.Ticks - Begin.Ticks);
+
+            Debug.WriteLine("Completed in: " + duration);
+        }
+
+        private void crEaTiiOn_Ultimate_GradientButton1_Click(object sender, EventArgs e)
+        {
+            using ChangeLogForm info = new ChangeLogForm();
+            info.ShowDialog();
+        }
+
+        private void crEaTiiOn_Ultimate_GradientButton2_Click(object sender, EventArgs e)
+        {
+            using AboutThisProgram info = new AboutThisProgram();
+            info.ShowDialog();
+        }
+    }
 }

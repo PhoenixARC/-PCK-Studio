@@ -10,9 +10,9 @@ using MetroFramework.Forms;
 
 namespace PckStudio.Forms
 {
-    public partial class installVita : MetroForm
+    public partial class InstallVita : Form
     {
-        public installVita(string mod)
+        public InstallVita(string mod)
         {
             InitializeComponent();
 

@@ -170,7 +170,7 @@
     <value>321, 17</value>
   </metadata>
   <data name="saveToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>98, 22</value>
   </data>
   <data name="saveToolStripMenuItem.Text" xml:space="preserve">
     <value>Save</value>
@@ -182,10 +182,10 @@
     <value>File</value>
   </data>
   <data name="menuStrip.Location" type="System.Drawing.Point, System.Drawing">
-    <value>20, 60</value>
+    <value>0, 0</value>
   </data>
   <data name="menuStrip.Size" type="System.Drawing.Size, System.Drawing">
-    <value>860, 24</value>
+    <value>900, 24</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="menuStrip.TabIndex" type="System.Int32, mscorlib">
@@ -268,7 +268,7 @@
     <value>303, 3</value>
   </data>
   <data name="textBoxReplaceAll.Size" type="System.Drawing.Size, System.Drawing">
-    <value>474, 20</value>
+    <value>474, 22</value>
   </data>
   <data name="textBoxReplaceAll.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -325,7 +325,7 @@
     <value>locSort</value>
   </data>
   <data name="&gt;&gt;locSort.Type" xml:space="preserve">
-    <value>PckStudio.Forms.MyTablePanel, PCK Studio, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>PckStudio.Forms.MyTablePanel, PCK-Studio, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;locSort.Parent" xml:space="preserve">
     <value>$this</value>
@@ -344,6 +344,9 @@
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>900, 667</value>
+  </data>
+  <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 8.25pt</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -2070,9 +2073,6 @@
         AABJRU5ErkJggg==
 </value>
   </data>
-  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
     <value>900, 667</value>
   </data>
@@ -2122,6 +2122,6 @@
     <value>LOCEditor</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>MetroFramework.Forms.MetroForm, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

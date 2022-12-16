@@ -13,7 +13,7 @@ using PckStudio.API.PCKCenter;
 
 namespace PckStudio.Forms
 {
-    public partial class pckCenter : MetroFramework.Forms.MetroForm
+    public partial class PCKCenter : Form
     {
         string[] mods;
         static string hosturl = Program.BaseAPIUrl;
@@ -30,7 +30,7 @@ namespace PckStudio.Forms
         bool isVita = false;
         
 
-        public pckCenter()
+        public PCKCenter()
         {
             InitializeComponent();
             //listViewNav.SmallImageList = imgList;
@@ -469,7 +469,7 @@ namespace PckStudio.Forms
 
             layout.BackColor = Color.Gray;
             layout.Refresh();
-            pckCenterOpen openPck = new pckCenterOpen(name, author, desc, direct, ad, icon, mode, mod, reloader, IsVita, Pack);
+            PCKCenterOpen openPck = new PCKCenterOpen(name, author, desc, direct, ad, icon, mode, mod, reloader, IsVita, Pack);
             openPck.ShowDialog();
         }
 

@@ -1,6 +1,6 @@
 ﻿namespace PckStudio.Forms.Utilities
 {
-    partial class PckCenterBeta
+    partial class PCKCenterBeta
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PckCenterBeta));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PCKCenterBeta));
             this.metroTabControl1 = new MetroFramework.Controls.MetroTabControl();
             this.metroTabPage1 = new MetroFramework.Controls.MetroTabPage();
             this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
@@ -341,17 +341,17 @@
             this.pictureBox2.TabIndex = 4;
             this.pictureBox2.TabStop = false;
             // 
-            // PckCenterBeta
+            // PCKCenterBeta
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.ClientSize = new System.Drawing.Size(814, 707);
             this.Controls.Add(this.metroTabControl1);
-            this.Name = "PckCenterBeta";
-            this.Resizable = false;
-            this.Style = MetroFramework.MetroColorStyle.Silver;
+            this.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.ForeColor = System.Drawing.Color.White;
+            this.Name = "PCKCenterBeta";
             this.Text = "Pck Center";
-            this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.metroTabControl1.ResumeLayout(false);
             this.metroTabPage1.ResumeLayout(false);
             this.metroTabPage1.PerformLayout();

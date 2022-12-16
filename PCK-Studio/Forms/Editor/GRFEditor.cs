@@ -11,7 +11,7 @@ using PckStudio.Classes.Misc;
 
 namespace PckStudio.Forms.Editor
 {
-    public partial class GRFEditor : MetroFramework.Forms.MetroForm
+    public partial class GRFEditor : Form
     {
         private PCKFile.FileData _pckfile;
         private GRFFile _file;

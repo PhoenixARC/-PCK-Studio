@@ -1,6 +1,6 @@
 ﻿namespace PckStudio.Forms
 {
-    partial class installWiiU
+    partial class InstallWiiU
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(installWiiU));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InstallWiiU));
             this.metroTabPageMain = new MetroFramework.Controls.MetroTabPage();
             this.myTablePanel1 = new PckStudio.Forms.MyTablePanel();
             this.buttonServerToggle = new System.Windows.Forms.Button();
@@ -309,14 +309,11 @@
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BorderStyle = MetroFramework.Forms.MetroFormBorderStyle.FixedSingle;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.Controls.Add(this.metroTabControlMain);
+            this.ForeColor = System.Drawing.Color.White;
             this.MaximizeBox = false;
             this.Name = "installWiiU";
-            this.Resizable = false;
-            this.ShadowType = MetroFramework.Forms.MetroFormShadowType.SystemShadow;
-            this.Style = MetroFramework.MetroColorStyle.White;
-            this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.metroTabPageMain.ResumeLayout(false);
             this.myTablePanel1.ResumeLayout(false);
             this.myTablePanel1.PerformLayout();

@@ -19,9 +19,9 @@ using PckStudio.API.PCKCenter;
 
 namespace PckStudio.Forms.Utilities
 {
-    public partial class PckCenterBeta : MetroForm
+    public partial class PCKCenterBeta : Form
     {
-        public PckCenterBeta()
+        public PCKCenterBeta()
         {
             InitializeComponent();
             try

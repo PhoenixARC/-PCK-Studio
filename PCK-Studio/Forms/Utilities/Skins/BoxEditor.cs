@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace PckStudio.Forms.Utilities.Skins
 {
-	public partial class BoxEditor : MetroFramework.Forms.MetroForm
+	public partial class BoxEditor : Form
 	{
 		public string Result;
 

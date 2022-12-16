@@ -1,6 +1,6 @@
 ﻿namespace PckStudio.Forms
 {
-    partial class pckCenter
+    partial class PCKCenter
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(pckCenter));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PCKCenter));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.radioButtonMine = new System.Windows.Forms.RadioButton();
             this.radioButtonDevPicks = new System.Windows.Forms.RadioButton();
@@ -219,13 +219,11 @@
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BorderStyle = MetroFramework.Forms.MetroFormBorderStyle.FixedSingle;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.Controls.Add(this.PSVitaPCKCheckbox);
             this.Controls.Add(this.tableLayoutPanel2);
+            this.ForeColor = System.Drawing.Color.White;
             this.Name = "pckCenter";
-            this.ShadowType = MetroFramework.Forms.MetroFormShadowType.DropShadow;
-            this.Style = MetroFramework.MetroColorStyle.White;
-            this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.Load += new System.EventHandler(this.pckCenter_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

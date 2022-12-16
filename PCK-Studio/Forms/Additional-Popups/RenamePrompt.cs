@@ -4,7 +4,7 @@ using MetroFramework.Forms;
 
 namespace PckStudio
 {
-    public partial class RenamePrompt : MetroForm
+    public partial class RenamePrompt : Form
 	{
 		/// <summary>
 		/// Text entered <c>only access when DialogResult == DialogResult.OK</c>

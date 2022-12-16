@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace PckStudio.Forms.Additional_Popups
 {
-    public partial class TextPrompt : MetroFramework.Forms.MetroForm
+    public partial class TextPrompt : Form
     {
         public string[] TextOutput => DialogResult == DialogResult.OK ? PromptTextBox.Lines : null;
         public TextPrompt(string[] list = null)
