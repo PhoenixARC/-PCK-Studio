@@ -22,10 +22,11 @@ using PckStudio.Forms.Editor;
 using PckStudio.Forms.Additional_Popups.Animation;
 using PckStudio.Forms.Additional_Popups;
 using PckStudio.Classes.Misc;
+using PckStudio.Classes.ToolboxItems;
 
 namespace PckStudio
 {
-	public partial class MainForm : Form
+	public partial class MainForm : ThemeForm
 	{
 		string saveLocation = string.Empty;
 		PCKFile currentPCK = null;
@@ -370,15 +371,10 @@ namespace PckStudio
 
 		private void UpdateRPC()
 		{
-			if (currentPCK == null)
-			{
-				RPC.SetPresence("An Open Source .PCK File Editor", "Program by PhoenixARC");
-				return;
-			};
-
-			if (TryGetLocFile(out LOCFile locfile) &&
-					locfile.HasLocEntry("IDS_DISPLAY_NAME") &&
-					locfile.Languages.Contains("en-EN"))
+			if (currentPCK is not null &&
+				TryGetLocFile(out LOCFile locfile) &&
+                locfile.HasLocEntry("IDS_DISPLAY_NAME") &&
+                locfile.Languages.Contains("en-EN"))
 			{
 				RPC.SetPresence($"Editing a Pack: {locfile.GetLocEntry("IDS_DISPLAY_NAME", "en-EN")}", "Program by PhoenixARC");
 				return;
