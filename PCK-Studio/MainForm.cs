@@ -931,67 +931,66 @@ namespace PckStudio
 			if (treeMeta.SelectedNode is TreeNode subnode && subnode.Tag is ValueTuple<string, string> property &&
 				treeViewMain.SelectedNode is TreeNode node && node.Tag is PCKFile.FileData file)
 			{
-			int i = file.properties.IndexOf(property);
+				int i = file.properties.IndexOf(property);
 				if (i != -1)
-			{
+				{
 					switch (property.Item1)
 					{
 						case "ANIM" when file.filetype == PCKFile.FileData.FileType.SkinFile:
-				try
-				{
+							try
+							{
 								using ANIMEditor diag = new ANIMEditor(property.Item2);
-					if (diag.ShowDialog(this) == DialogResult.OK && diag.saved)
-					{
+								if (diag.ShowDialog(this) == DialogResult.OK && diag.saved)
+								{
 									file.properties[i] = ("ANIM", diag.outANIM);
 									if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath))
 										RebuildSubPCK(treeViewMain.SelectedNode);
-						ReloadMetaTreeView();
-						saved = false;
-					}
-					return;
-				}
-				catch (Exception ex)
-				{
-					Debug.WriteLine(ex.Message);
-					MessageBox.Show("Failed to parse ANIM value, aborting to normal functionality. Please make sure the value only includes hexadecimal characters (0-9,A-F) and has no more than 8 characters. It can have an optional prefix of \"0x\".");
-				}
+									ReloadMetaTreeView();
+									saved = false;
+								}
+								return;
+							}
+							catch (Exception ex)
+							{
+								Debug.WriteLine(ex.Message);
+								MessageBox.Show("Failed to parse ANIM value, aborting to normal functionality. Please make sure the value only includes hexadecimal characters (0-9,A-F) and has no more than 8 characters. It can have an optional prefix of \"0x\".");
+							}
 							break;
 
 						case "BOX" when file.filetype == PCKFile.FileData.FileType.SkinFile:
-				try
-				{
-					using BoxEditor diag = new BoxEditor(property.Item2, IsSubPCKNode(treeViewMain.SelectedNode.FullPath));
-					if (diag.ShowDialog(this) == DialogResult.OK)
-					{
+							try
+							{
+								using BoxEditor diag = new BoxEditor(property.Item2, IsSubPCKNode(treeViewMain.SelectedNode.FullPath));
+								if (diag.ShowDialog(this) == DialogResult.OK)
+								{
 									file.properties[i] = ("BOX", diag.Result);
-						if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath))
-							RebuildSubPCK(treeViewMain.SelectedNode);
-						ReloadMetaTreeView();
-						saved = false;
-					}
-					return;
-				}
-				catch (Exception ex)
-				{
-					Debug.WriteLine(ex.Message);
-					MessageBox.Show("Failed to parse BOX value, aborting to normal functionality.");
-				}
+									if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath))
+										RebuildSubPCK(treeViewMain.SelectedNode);
+									ReloadMetaTreeView();
+									saved = false;
+								}
+								return;
+							}
+							catch (Exception ex)
+							{
+								Debug.WriteLine(ex.Message);
+								MessageBox.Show("Failed to parse BOX value, aborting to normal functionality.");
+							}
 							break;
 
 						default:
 							break;
 
-			}
-			using AddMeta add = new AddMeta(property.Item1, property.Item2);
-			if (add.ShowDialog() == DialogResult.OK && i != -1)
-			{
-				file.properties[i] = new ValueTuple<string, string>(add.PropertyName, add.PropertyValue);
-				if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath))
-					RebuildSubPCK(treeViewMain.SelectedNode);
-				ReloadMetaTreeView();
-				saved = false;
-			}
-		}
+					}
+					using AddMeta add = new AddMeta(property.Item1, property.Item2);
+					if (add.ShowDialog() == DialogResult.OK && i != -1)
+					{
+						file.properties[i] = new ValueTuple<string, string>(add.PropertyName, add.PropertyValue);
+						if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath))
+							RebuildSubPCK(treeViewMain.SelectedNode);
+						ReloadMetaTreeView();
+						saved = false;
+					}
 				}
 			}
 		}
