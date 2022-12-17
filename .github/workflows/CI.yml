@@ -9,8 +9,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    
+    - name: Checkout submodules
+      uses: textbook/git-checkout-submodule-action@2.1.1
+    
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v1.1
+
     - name: Setup NuGet
       uses: NuGet/setup-nuget@v1.0.6
       
