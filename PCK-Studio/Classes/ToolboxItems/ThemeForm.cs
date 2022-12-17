@@ -10,6 +10,7 @@ namespace PckStudio.Classes.ToolboxItems
             : base()
         {
             DarkNet.Instance.SetWindowThemeForms(this, Theme.Auto);
+            Invalidate();
         }
 
         public ThemeForm(IContainer container)
