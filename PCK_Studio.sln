@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PCKStudio", "PCK-Studio\PCK
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Submodules", "Submodules", "{CA7092AE-BF12-4D57-AE25-85E7E6149BE0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CBH-Ultimate-Theme-Library-NET-Framework", "CrEaTiiOn-Brotherhood-Official-C-Theme\CBH-Ultimate-Theme-Library-NET-Framework\CBH-Ultimate-Theme-Library-NET-Framework.csproj", "{C3D7B16C-C047-4BAA-884F-7A2308619C33}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net Framework v4.8", "CrEaTiiOn-Brotherhood-Official-C-Theme\Net_Framework_v4.8\Net Framework v4.8.csproj", "{C3D7B16C-C047-4BAA-884F-7A2308619C33}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
