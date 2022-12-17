@@ -22,10 +22,11 @@ using PckStudio.Forms.Editor;
 using PckStudio.Forms.Additional_Popups.Animation;
 using PckStudio.Forms.Additional_Popups;
 using PckStudio.Classes.Misc;
+using PckStudio.Classes.ToolboxItems;
 
 namespace PckStudio
 {
-	public partial class MainForm : Form
+	public partial class MainForm : ThemeForm
 	{
 		string saveLocation = string.Empty;
 		PCKFile currentPCK = null;
@@ -300,7 +301,7 @@ namespace PckStudio
 		private void BuildMainTreeView()
 		{
 			// In case the Rename function was just used and the selected node name no longer matches the file name
-			string filepath = "";
+			string filepath = string.Empty;
 			if(treeViewMain.SelectedNode is TreeNode node && node.Tag is PCKFile.FileData file)
 				filepath = file.filepath;
 			treeViewMain.Nodes.Clear();
@@ -370,15 +371,10 @@ namespace PckStudio
 
 		private void UpdateRPC()
 		{
-			if (currentPCK == null)
-			{
-				RPC.SetPresence("An Open Source .PCK File Editor", "Program by PhoenixARC");
-				return;
-			};
-
-			if (TryGetLocFile(out LOCFile locfile) &&
-					locfile.HasLocEntry("IDS_DISPLAY_NAME") &&
-					locfile.Languages.Contains("en-EN"))
+			if (currentPCK is not null &&
+				TryGetLocFile(out LOCFile locfile) &&
+                locfile.HasLocEntry("IDS_DISPLAY_NAME") &&
+                locfile.Languages.Contains("en-EN"))
 			{
 				RPC.SetPresence($"Editing a Pack: {locfile.GetLocEntry("IDS_DISPLAY_NAME", "en-EN")}", "Program by PhoenixARC");
 				return;
@@ -826,18 +822,17 @@ namespace PckStudio
 			}
 		}
 
-		bool IsSubPCKNode(string nodePath)
+		bool IsSubPCKNode(string nodePath, string extention = ".pck")
 		{
 			// written by miku, implemented and modified by me - MNL
+			if (nodePath.EndsWith(extention)) return false;
+
 			string[] subpaths = nodePath.Split('/');
-			string[] conditions = subpaths.Select(s => Path.GetExtension(s) switch {
-				".pck" => "yes",
-				_ => "no",
-			}).ToArray();
+			var conditions = subpaths.Select(s => Path.GetExtension(s).Equals(extention));
 
-			bool isSubFile = conditions.Contains("yes") && !nodePath.EndsWith(".pck");
+			bool isSubFile = conditions.Contains(true);
 
-			Console.WriteLine(nodePath + " is " + (isSubFile ? "" : "not ") + "a Sub-PCK File");
+			Console.WriteLine($"{nodePath} is{(isSubFile ? "" : " not")} a Sub-PCK File");
 
 			return isSubFile;
 		}
@@ -864,19 +859,16 @@ namespace PckStudio
 		TreeNode GetSubPCK(TreeNode child)
 		{
 			TreeNode parent = child;
-
-			bool flag = false;
-
 			while (parent.Parent != null)
 			{
 				parent = parent.Parent;
 				Console.WriteLine(parent.Text);
-				flag = parent.Tag is PCKFile.FileData f && (f.filetype is PCKFile.FileData.FileType.TexturePackInfoFile || f.filetype is PCKFile.FileData.FileType.SkinDataFile);
-				if (flag) break;
+                if (parent.Tag is PCKFile.FileData f &&
+                    (f.filetype is PCKFile.FileData.FileType.TexturePackInfoFile ||
+					 f.filetype is PCKFile.FileData.FileType.SkinDataFile))
+					return parent;
 			}
-
-			if (!flag) return null;
-			else return parent;
+			return null;
 		}
 
 		void RebuildSubPCK(TreeNode childNode)
@@ -894,9 +886,8 @@ namespace PckStudio
 
 				foreach (TreeNode node in GetNodes(parent.Nodes))
 				{
-					if (node.Tag is PCKFile.FileData)
+					if (node.Tag is PCKFile.FileData node_file)
 					{
-						PCKFile.FileData node_file = (PCKFile.FileData)node.Tag;
 						PCKFile.FileData new_file = new PCKFile.FileData(node_file.filepath, node_file.filetype);
 						foreach (var prop in node_file.properties) new_file.properties.Add(prop);
 						new_file.SetData(node_file.data);
@@ -904,12 +895,15 @@ namespace PckStudio
 					}
 				}
 
-				MemoryStream ms = new MemoryStream();
 				// Bool to add the XMLVersion property
 				bool isSkinsPCK = parent_file.filetype is PCKFile.FileData.FileType.SkinDataFile;
+
+				using (MemoryStream ms = new MemoryStream())
+				{
 				PCKFileWriter.Write(ms, newPCKFile, LittleEndianCheckBox.Checked, isSkinsPCK);
 				parent_file.SetData(ms.ToArray());
 				parent.Tag = parent_file;
+				}
 
 				BuildMainTreeView();
 			}
@@ -934,61 +928,70 @@ namespace PckStudio
 
 		private void treeMeta_DoubleClick(object sender, EventArgs e)
 		{
-			if (treeMeta.SelectedNode == null || !(treeMeta.SelectedNode.Tag is ValueTuple<string, string>) ||
-				treeViewMain.SelectedNode == null || !(treeViewMain.SelectedNode.Tag is PCKFile.FileData))
-				return;
-			PCKFile.FileData file = (PCKFile.FileData)treeViewMain.SelectedNode.Tag;
-			var property = (ValueTuple<string, string>)treeMeta.SelectedNode.Tag;
-			int i = file.properties.IndexOf(property);
-			if (property.Item1 == "ANIM" && i != -1 && file.filetype == PCKFile.FileData.FileType.SkinFile)
+			if (treeMeta.SelectedNode is TreeNode subnode && subnode.Tag is ValueTuple<string, string> property &&
+				treeViewMain.SelectedNode is TreeNode node && node.Tag is PCKFile.FileData file)
 			{
-				using ANIMEditor diag = new ANIMEditor(property.Item2);
-				try
+				int i = file.properties.IndexOf(property);
+				if (i != -1)
 				{
-					if (diag.ShowDialog(this) == DialogResult.OK && diag.saved)
+					switch (property.Item1)
 					{
-						file.properties[i] = new ValueTuple<string, string>("ANIM", diag.outANIM);
-						if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath)) RebuildSubPCK(treeViewMain.SelectedNode);
-						ReloadMetaTreeView();
-						saved = false;
+						case "ANIM" when file.filetype == PCKFile.FileData.FileType.SkinFile:
+							try
+							{
+								using ANIMEditor diag = new ANIMEditor(property.Item2);
+								if (diag.ShowDialog(this) == DialogResult.OK && diag.saved)
+								{
+									file.properties[i] = ("ANIM", diag.outANIM);
+									if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath))
+										RebuildSubPCK(treeViewMain.SelectedNode);
+									ReloadMetaTreeView();
+									saved = false;
+								}
+								return;
+							}
+							catch (Exception ex)
+							{
+								Debug.WriteLine(ex.Message);
+								MessageBox.Show("Failed to parse ANIM value, aborting to normal functionality. Please make sure the value only includes hexadecimal characters (0-9,A-F) and has no more than 8 characters. It can have an optional prefix of \"0x\".");
+							}
+							break;
+
+						case "BOX" when file.filetype == PCKFile.FileData.FileType.SkinFile:
+							try
+							{
+								using BoxEditor diag = new BoxEditor(property.Item2, IsSubPCKNode(treeViewMain.SelectedNode.FullPath));
+								if (diag.ShowDialog(this) == DialogResult.OK)
+								{
+									file.properties[i] = ("BOX", diag.Result);
+									if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath))
+										RebuildSubPCK(treeViewMain.SelectedNode);
+									ReloadMetaTreeView();
+									saved = false;
+								}
+								return;
+							}
+							catch (Exception ex)
+							{
+								Debug.WriteLine(ex.Message);
+								MessageBox.Show("Failed to parse BOX value, aborting to normal functionality.");
+							}
+							break;
+
+						default:
+							break;
+
 					}
-					return;
-				}
-				catch (Exception ex)
-				{
-					Debug.WriteLine(ex.Message);
-					MessageBox.Show("Failed to parse ANIM value, aborting to normal functionality. Please make sure the value only includes hexadecimal characters (0-9,A-F) and has no more than 8 characters. It can have an optional prefix of \"0x\".");
-				}
-			}
-			else if (property.Item1 == "BOX" && i != -1 && file.filetype == PCKFile.FileData.FileType.SkinFile)
-			{
-				try
-				{
-					using BoxEditor diag = new BoxEditor(property.Item2, IsSubPCKNode(treeViewMain.SelectedNode.FullPath));
-					if (diag.ShowDialog(this) == DialogResult.OK)
+					using AddMeta add = new AddMeta(property.Item1, property.Item2);
+					if (add.ShowDialog() == DialogResult.OK && i != -1)
 					{
-						file.properties[i] = new ValueTuple<string, string>("BOX", diag.Result);
+						file.properties[i] = new ValueTuple<string, string>(add.PropertyName, add.PropertyValue);
 						if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath))
 							RebuildSubPCK(treeViewMain.SelectedNode);
 						ReloadMetaTreeView();
 						saved = false;
 					}
-					return;
 				}
-				catch (Exception ex)
-				{
-					Debug.WriteLine(ex.Message);
-					MessageBox.Show("Failed to parse BOX value, aborting to normal functionality.");
-				}
-			}
-			using AddMeta add = new AddMeta(property.Item1, property.Item2);
-			if (add.ShowDialog() == DialogResult.OK && i != -1)
-			{
-				file.properties[i] = new ValueTuple<string, string>(add.PropertyName, add.PropertyValue);
-				if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath))
-					RebuildSubPCK(treeViewMain.SelectedNode);
-				ReloadMetaTreeView();
-				saved = false;
 			}
 		}
 
@@ -997,7 +1000,8 @@ namespace PckStudio
 			TreeNode node = treeViewMain.SelectedNode;
 			PCKFile.FileData mfO = node.Tag as PCKFile.FileData;
 
-			PCKFile.FileData mf = new PCKFile.FileData("", mfO.filetype); // Creates new minefile template
+			// Creates new empty file entry
+			PCKFile.FileData mf = new PCKFile.FileData(string.Empty, mfO.filetype);
 			mf.SetData(mfO.data); // adds file data to minefile
 			string dirName = Path.GetDirectoryName(mfO.filepath).Replace("\\", "/");
 
@@ -1051,14 +1055,14 @@ namespace PckStudio
 		private void ReloadMetaTreeView()
 		{
 			treeMeta.Nodes.Clear();
-			if (treeViewMain.SelectedNode is TreeNode t &&
-				t.Tag is PCKFile.FileData file)
-				file.properties.ForEach(p =>
+			if (treeViewMain.SelectedNode is TreeNode node &&
+				node.Tag is PCKFile.FileData file)
 			{
-					TreeNode node = new TreeNode(p.Item1);
-					node.Tag = p;
-				treeMeta.Nodes.Add(node);
-				});
+				foreach (var property in file.properties)
+				{
+					treeMeta.Nodes.Add(CreateNode(property.Item1, property));
+		}
+			}
 		}
 
 		private void addEntryToolStripMenuItem_Click_1(object sender, EventArgs e)
@@ -1224,7 +1228,7 @@ namespace PckStudio
 			}
 			currentPCK.Files.Add(zeroFile);
 			currentPCK.Files.Add(loc);
-			if(createSkinsPCK) CreateSkinsPCKToolStripMenuItem1_Click(null, null);
+			if(createSkinsPCK) CreateSkinsPCKToolStripMenuItem1_Click(null, EventArgs.Empty);
 		}
 
 		private void InitializeTexturePack(int packId, int packVersion, string packName, string res, bool createSkinsPCK = false)
@@ -1236,27 +1240,27 @@ namespace PckStudio
 
 			PCKFile infoPCK = new PCKFile(3);
 
-			var ms = new MemoryStream();
-			var ms2 = new MemoryStream();
-			var ms3 = new MemoryStream();
+			using (var ms = new MemoryStream())
+			{
+				var icon = new PCKFile.FileData("icon.png", PCKFile.FileData.FileType.TextureFile);
+				Resources.TexturePackIcon.Save(ms, ImageFormat.Png);
+				icon.SetData(ms.ToArray());
+				infoPCK.Files.Add(icon);
+			}
 
+			using (var ms = new MemoryStream())
+			{
 			var comparison = new PCKFile.FileData("comparison.png", PCKFile.FileData.FileType.TextureFile);
 			Resources.Comparison.Save(ms, ImageFormat.Png);
 			comparison.SetData(ms.ToArray());
-
-			var icon = new PCKFile.FileData("icon.png", PCKFile.FileData.FileType.TextureFile);
-			Resources.TexturePackIcon.Save(ms2, ImageFormat.Png);
-			icon.SetData(ms2.ToArray());
-
-			infoPCK.Files.Add(icon);
 			infoPCK.Files.Add(comparison);
+			}
 
-			PCKFileWriter.Write(ms3, infoPCK, LittleEndianCheckBox.Checked);
-			texturepackInfo.SetData(ms3.ToArray());
-
-			ms.Dispose();
-			ms2.Dispose();
-			ms3.Dispose();
+			using (var ms = new MemoryStream())
+			{
+				PCKFileWriter.Write(ms, infoPCK, LittleEndianCheckBox.Checked);
+				texturepackInfo.SetData(ms.ToArray());
+			}
 
 			currentPCK.Files.Add(texturepackInfo);
 		}
@@ -2149,21 +2153,20 @@ namespace PckStudio
 
 		private void CreateSkinsPCKToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
-			PCKFile.FileData NewSkinsPCKFile;
-			if (currentPCK.TryGetFile("Skins.pck", PCKFile.FileData.FileType.SkinDataFile, out NewSkinsPCKFile))
+			if (currentPCK.TryGetFile("Skins.pck", PCKFile.FileData.FileType.SkinDataFile, out _))
 			{
 				MessageBox.Show("A Skins.pck file already exists in this PCK and a new one cannot be created.", "Operation aborted");
 				return;
 			}
-			NewSkinsPCKFile = new PCKFile.FileData("Skins.pck", PCKFile.FileData.FileType.SkinDataFile);
+			PCKFile.FileData newSkinsPCKFile = new PCKFile.FileData("Skins.pck", PCKFile.FileData.FileType.SkinDataFile);
 
 			using (var stream = new MemoryStream())
 			{
 				PCKFileWriter.Write(stream, new PCKFile(3), LittleEndianCheckBox.Checked, true);
-				NewSkinsPCKFile.SetData(stream.ToArray());
+				newSkinsPCKFile.SetData(stream.ToArray());
 			}
 
-			currentPCK.Files.Add(NewSkinsPCKFile);
+			currentPCK.Files.Add(newSkinsPCKFile);
 
 			BuildMainTreeView();
 
@@ -2179,8 +2182,7 @@ namespace PckStudio
 			if (treeViewMain.SelectedNode is TreeNode t &&
 				t.Tag is PCKFile.FileData file)
 			{
-				List<string> props = new List<string>();
-				file.properties.ForEach(l => props.Add(l.property + " " + l.value));
+				var props = file.properties.Select(l => l.property + " " + l.value);
 				using (var input = new TextPrompt(props.ToArray()))
 				{
 					if (input.ShowDialog(this) == DialogResult.OK)

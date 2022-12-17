@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32414.318
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PCKStudio", "PCK-Studio\PCKStudio.csproj", "{0ACAAEDE-93F5-4B5D-B8D7-A0C43359C0D6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PckStudio", "PCK-Studio\PckStudio.csproj", "{0ACAAEDE-93F5-4B5D-B8D7-A0C43359C0D6}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Submodules", "Submodules", "{CA7092AE-BF12-4D57-AE25-85E7E6149BE0}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CrEaTiiOn-Brotherhood-Official-C-Theme", "CrEaTiiOn-Brotherhood-Official-C-Theme", "{7DB3F605-FB30-45C8-9D21-AE2FF3A0344D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net Framework v4.8", "CrEaTiiOn-Brotherhood-Official-C-Theme\Net_Framework_v4.8\Net Framework v4.8.csproj", "{C3D7B16C-C047-4BAA-884F-7A2308619C33}"
 EndProject
@@ -17,6 +17,9 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
+		ReleasePortable|Any CPU = ReleasePortable|Any CPU
+		ReleasePortable|x64 = ReleasePortable|x64
+		ReleasePortable|x86 = ReleasePortable|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{0ACAAEDE-93F5-4B5D-B8D7-A0C43359C0D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -31,6 +34,12 @@ Global
 		{0ACAAEDE-93F5-4B5D-B8D7-A0C43359C0D6}.Release|x64.Build.0 = Release|Any CPU
 		{0ACAAEDE-93F5-4B5D-B8D7-A0C43359C0D6}.Release|x86.ActiveCfg = Release|Any CPU
 		{0ACAAEDE-93F5-4B5D-B8D7-A0C43359C0D6}.Release|x86.Build.0 = Release|Any CPU
+		{0ACAAEDE-93F5-4B5D-B8D7-A0C43359C0D6}.ReleasePortable|Any CPU.ActiveCfg = ReleasePortable|Any CPU
+		{0ACAAEDE-93F5-4B5D-B8D7-A0C43359C0D6}.ReleasePortable|Any CPU.Build.0 = ReleasePortable|Any CPU
+		{0ACAAEDE-93F5-4B5D-B8D7-A0C43359C0D6}.ReleasePortable|x64.ActiveCfg = ReleasePortable|Any CPU
+		{0ACAAEDE-93F5-4B5D-B8D7-A0C43359C0D6}.ReleasePortable|x64.Build.0 = ReleasePortable|Any CPU
+		{0ACAAEDE-93F5-4B5D-B8D7-A0C43359C0D6}.ReleasePortable|x86.ActiveCfg = ReleasePortable|Any CPU
+		{0ACAAEDE-93F5-4B5D-B8D7-A0C43359C0D6}.ReleasePortable|x86.Build.0 = ReleasePortable|Any CPU
 		{C3D7B16C-C047-4BAA-884F-7A2308619C33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C3D7B16C-C047-4BAA-884F-7A2308619C33}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C3D7B16C-C047-4BAA-884F-7A2308619C33}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -43,12 +52,18 @@ Global
 		{C3D7B16C-C047-4BAA-884F-7A2308619C33}.Release|x64.Build.0 = Release|Any CPU
 		{C3D7B16C-C047-4BAA-884F-7A2308619C33}.Release|x86.ActiveCfg = Release|Any CPU
 		{C3D7B16C-C047-4BAA-884F-7A2308619C33}.Release|x86.Build.0 = Release|Any CPU
+		{C3D7B16C-C047-4BAA-884F-7A2308619C33}.ReleasePortable|Any CPU.ActiveCfg = Release|Any CPU
+		{C3D7B16C-C047-4BAA-884F-7A2308619C33}.ReleasePortable|Any CPU.Build.0 = Release|Any CPU
+		{C3D7B16C-C047-4BAA-884F-7A2308619C33}.ReleasePortable|x64.ActiveCfg = Release|Any CPU
+		{C3D7B16C-C047-4BAA-884F-7A2308619C33}.ReleasePortable|x64.Build.0 = Release|Any CPU
+		{C3D7B16C-C047-4BAA-884F-7A2308619C33}.ReleasePortable|x86.ActiveCfg = Release|Any CPU
+		{C3D7B16C-C047-4BAA-884F-7A2308619C33}.ReleasePortable|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{C3D7B16C-C047-4BAA-884F-7A2308619C33} = {CA7092AE-BF12-4D57-AE25-85E7E6149BE0}
+		{C3D7B16C-C047-4BAA-884F-7A2308619C33} = {7DB3F605-FB30-45C8-9D21-AE2FF3A0344D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9A3BF1FB-950F-401E-9F58-EA7BBADCE6F2}

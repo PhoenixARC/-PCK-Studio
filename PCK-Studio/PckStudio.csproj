@@ -146,29 +146,6 @@
     <Compile Include="Classes\FileTypes\COLFile.cs" />
     <Compile Include="Classes\FileTypes\CSM.cs" />
     <Compile Include="Classes\FileTypes\GRFFile.cs" />
-    <Compile Include="Classes\FileTypses\COL\ColorBox.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Classes\FileTypses\COL\ColorBox.designer.cs">
-      <DependentUpon>ColorBox.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Classes\FileTypses\COL\ColorUtil.cs" />
-    <Compile Include="Classes\FileTypses\COL\DrawStyles.cs" />
-    <Compile Include="Classes\FileTypses\COL\NumericTextBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Classes\FileTypses\COL\TwoColorPanel.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Classes\FileTypses\COL\TwoColorPanel.designer.cs">
-      <DependentUpon>TwoColorPanel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Classes\FileTypses\COL\VerticalColorSlider.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Classes\FileTypses\COL\VerticalColorSlider.designer.cs">
-      <DependentUpon>VerticalColorSlider.cs</DependentUpon>
-    </Compile>
     <Compile Include="Classes\IO\ARC\ARCFileWriter.cs" />
     <Compile Include="Classes\IO\ARC\ARCFileReader.cs" />
     <Compile Include="Classes\IO\Behaviour\BehavioursReader.cs" />
@@ -183,6 +160,9 @@
     <Compile Include="Classes\IO\Sounds\SoundIO.cs" />
     <Compile Include="Classes\IO\Sounds\Sounds.cs" />
     <Compile Include="Classes\Models\DefaultModels\Steve64x64Model.cs" />
+    <Compile Include="Classes\ToolboxItems\ThemeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Classes\Utils\3DS\3DSUtil.cs" />
     <Compile Include="Classes\Utils\ARC\ARCUtil.cs" />
     <Compile Include="Classes\Utils\SkinANIM.cs" />
@@ -229,16 +209,45 @@
     <Compile Include="Classes\Networking\Update.cs" />
     <Compile Include="Classes\Utils\GRF\CRC32.cs" />
     <Compile Include="Classes\Utils\RLE.cs" />
+    <Compile Include="Forms\Additional-Popups\AboutThisProgram.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\AboutThisProgram.Designer.cs">
+      <DependentUpon>AboutThisProgram.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Additional-Popups\ChangeLogForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\Additional-Popups\ChangeLogForm.Designer.cs">
       <DependentUpon>ChangeLogForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Additional-Popups\LOC\AddLanguage.cs">
+    <Compile Include="Forms\Additional-Popups\Col\ColorBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\Col\ColorBox.designer.cs">
+      <DependentUpon>ColorBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\Col\ColorUtil.cs" />
+    <Compile Include="Forms\Additional-Popups\Col\DrawStyles.cs" />
+    <Compile Include="Forms\Additional-Popups\Col\NumericTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\Col\TwoColorPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\Col\TwoColorPanel.designer.cs">
+      <DependentUpon>TwoColorPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\Col\VerticalColorSlider.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\Col\VerticalColorSlider.designer.cs">
+      <DependentUpon>VerticalColorSlider.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\Loc\AddLanguage.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Additional-Popups\LOC\AddLanguage.Designer.cs">
+    <Compile Include="Forms\Additional-Popups\Loc\AddLanguage.Designer.cs">
       <DependentUpon>AddLanguage.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Additional-Popups\CreateTexturePack.cs">
@@ -289,29 +298,29 @@
     <Compile Include="Forms\Additional-Popups\Animation\SetBulkSpeed.Designer.cs">
       <DependentUpon>SetBulkSpeed.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Additional-Popups\Audio\CreditsEditor.cs">
+    <Compile Include="Forms\Additional-Popups\Audio\creditsEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Additional-Popups\Audio\CreditsEditor.Designer.cs">
-      <DependentUpon>CreditsEditor.cs</DependentUpon>
+    <Compile Include="Forms\Additional-Popups\Audio\creditsEditor.Designer.cs">
+      <DependentUpon>creditsEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Additional-Popups\Audio\AddCategory.cs">
+    <Compile Include="Forms\Additional-Popups\Audio\addCategory.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Additional-Popups\Audio\AddCategory.Designer.cs">
-      <DependentUpon>AddCategory.cs</DependentUpon>
+    <Compile Include="Forms\Additional-Popups\Audio\addCategory.Designer.cs">
+      <DependentUpon>addCategory.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Skins-And-Textures\AddMeta.cs">
+    <Compile Include="Forms\Skins-And-Textures\addMeta.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Skins-And-Textures\AddMeta.Designer.cs">
-      <DependentUpon>AddMeta.cs</DependentUpon>
+    <Compile Include="Forms\Skins-And-Textures\addMeta.Designer.cs">
+      <DependentUpon>addMeta.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Skins-And-Textures\AddNewSkin.cs">
+    <Compile Include="Forms\Skins-And-Textures\addNewSkin.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Skins-And-Textures\AddNewSkin.Designer.cs">
-      <DependentUpon>AddNewSkin.cs</DependentUpon>
+    <Compile Include="Forms\Skins-And-Textures\addNewSkin.Designer.cs">
+      <DependentUpon>addNewSkin.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Additional-Popups\AddPCKPassword.cs">
       <SubType>Form</SubType>
@@ -331,19 +340,25 @@
     <Compile Include="Forms\Editor\GRFEditor.Designer.cs">
       <DependentUpon>GRFEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Additional-Popups\GRF\AddParameter.cs">
+    <Compile Include="Forms\Additional-Popups\Grf\AddParameter.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Additional-Popups\GRF\AddParameter.Designer.cs">
+    <Compile Include="Forms\Additional-Popups\Grf\AddParameter.Designer.cs">
       <DependentUpon>AddParameter.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Additional-Popups\Audio\PleaseWait.cs">
+    <Compile Include="Forms\Additional-Popups\Audio\pleaseWait.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Additional-Popups\Audio\PleaseWait.Designer.cs">
-      <DependentUpon>PleaseWait.cs</DependentUpon>
+    <Compile Include="Forms\Additional-Popups\Audio\pleaseWait.Designer.cs">
+      <DependentUpon>pleaseWait.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Utilities\AnimationUtil.cs" />
+    <Compile Include="Forms\Utilities\Preferences.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Utilities\Preferences.Designer.cs">
+      <DependentUpon>Preferences.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Utilities\Skins\BoxEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -356,11 +371,17 @@
     <Compile Include="Forms\Utilities\Skins\ANIMEditor.Designer.cs">
       <DependentUpon>ANIMEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Skins-And-Textures\GenerateModel.cs">
+    <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Skins-And-Textures\GenerateModel.Designer.cs">
-      <DependentUpon>GenerateModel.cs</DependentUpon>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Skins-And-Textures\generateModel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Skins-And-Textures\generateModel.Designer.cs">
+      <DependentUpon>generateModel.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Skins-And-Textures\SkinPreview.cs">
       <SubType>Form</SubType>
@@ -386,23 +407,23 @@
     <Compile Include="Forms\Editor\AudioEditor.Designer.cs">
       <DependentUpon>AudioEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Utilities\InstallPS3.cs">
+    <Compile Include="Forms\Utilities\installPS3.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Utilities\InstallPS3.Designer.cs">
-      <DependentUpon>InstallPS3.cs</DependentUpon>
+    <Compile Include="Forms\Utilities\installPS3.Designer.cs">
+      <DependentUpon>installPS3.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Utilities\InstallVita.cs">
+    <Compile Include="Forms\Utilities\installVita.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Utilities\InstallVita.Designer.cs">
-      <DependentUpon>InstallVita.cs</DependentUpon>
+    <Compile Include="Forms\Utilities\installVita.Designer.cs">
+      <DependentUpon>installVita.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Utilities\InstallWiiU.cs">
+    <Compile Include="Forms\Utilities\installWiiU.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Utilities\InstallWiiU.Designer.cs">
-      <DependentUpon>InstallWiiU.cs</DependentUpon>
+    <Compile Include="Forms\Utilities\installWiiU.Designer.cs">
+      <DependentUpon>installWiiU.cs</DependentUpon>
     </Compile>
     <Compile Include="Classes\Utils\ListUtils.cs" />
     <Compile Include="Forms\Utilities\PCK Manager.cs">
@@ -411,35 +432,29 @@
     <Compile Include="Forms\Utilities\PCK Manager.Designer.cs">
       <DependentUpon>PCK Manager.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Utilities\PCKCenter.cs">
+    <Compile Include="Forms\Utilities\pckCenter.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Utilities\PCKCenter.Designer.cs">
-      <DependentUpon>PCKCenter.cs</DependentUpon>
+    <Compile Include="Forms\Utilities\pckCenter.Designer.cs">
+      <DependentUpon>pckCenter.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Utilities\PCKCenterBeta.cs">
+    <Compile Include="Forms\Utilities\PckCenterBeta.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Utilities\PCKCenterBeta.Designer.cs">
-      <DependentUpon>PCKCenterBeta.cs</DependentUpon>
+    <Compile Include="Forms\Utilities\PckCenterBeta.Designer.cs">
+      <DependentUpon>PckCenterBeta.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Utilities\PCKCenterOpen.cs">
+    <Compile Include="Forms\Utilities\pckCenterOpen.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Utilities\PCKCenterOpen.Designer.cs">
-      <DependentUpon>PCKCenterOpen.cs</DependentUpon>
+    <Compile Include="Forms\Utilities\pckCenterOpen.Designer.cs">
+      <DependentUpon>pckCenterOpen.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Additional-Popups\LockPrompt.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\Additional-Popups\LockPrompt.Designer.cs">
       <DependentUpon>LockPrompt.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Utilities\Preferences.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Utilities\Preferences.Designer.cs">
-      <DependentUpon>Preferences.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Utilities\TextureConverterUtility.cs">
       <SubType>Form</SubType>
@@ -457,32 +472,23 @@
     <Compile Include="Forms\Additional-Popups\MetaList.Designer.cs">
       <DependentUpon>MetaList.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MainForm.designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
-    <Compile Include="Forms\Additional-Popups\AboutThisProgram.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Additional-Popups\AboutThisProgram.Designer.cs">
-      <DependentUpon>AboutThisProgram.cs</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Classes\Utils\3DS\TextureCodec.cs" />
     <Compile Include="Classes\Utils\3DS\TextureUtils.cs" />
-    <EmbeddedResource Include="Classes\FileTypses\COL\ColorBox.resx">
-      <DependentUpon>ColorBox.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Classes\FileTypses\COL\VerticalColorSlider.resx">
-      <DependentUpon>VerticalColorSlider.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Additional-Popups\AboutThisProgram.resx">
+      <DependentUpon>AboutThisProgram.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\ChangeLogForm.resx">
       <DependentUpon>ChangeLogForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Additional-Popups\LOC\AddLanguage.resx">
+    <EmbeddedResource Include="Forms\Additional-Popups\Col\ColorBox.resx">
+      <DependentUpon>ColorBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Additional-Popups\Col\VerticalColorSlider.resx">
+      <DependentUpon>VerticalColorSlider.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Additional-Popups\Loc\AddLanguage.resx">
       <DependentUpon>AddLanguage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\CreateTexturePack.resx">
@@ -518,24 +524,24 @@
     <EmbeddedResource Include="Forms\Additional-Popups\Animation\SetBulkSpeed.resx">
       <DependentUpon>SetBulkSpeed.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Additional-Popups\Audio\CreditsEditor.resx">
-      <DependentUpon>CreditsEditor.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Additional-Popups\Audio\creditsEditor.resx">
+      <DependentUpon>creditsEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Additional-Popups\Audio\AddCategory.resx">
-      <DependentUpon>AddCategory.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Additional-Popups\Audio\addCategory.resx">
+      <DependentUpon>addCategory.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Skins-And-Textures\AddMeta.ja.resx">
-      <DependentUpon>AddMeta.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Skins-And-Textures\addMeta.ja.resx">
+      <DependentUpon>addMeta.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Skins-And-Textures\AddMeta.resx">
-      <DependentUpon>AddMeta.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Skins-And-Textures\addMeta.resx">
+      <DependentUpon>addMeta.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Skins-And-Textures\AddNewSkin.ja.resx">
-      <DependentUpon>AddNewSkin.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Skins-And-Textures\addNewSkin.ja.resx">
+      <DependentUpon>addNewSkin.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Skins-And-Textures\AddNewSkin.resx">
-      <DependentUpon>AddNewSkin.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Skins-And-Textures\addNewSkin.resx">
+      <DependentUpon>addNewSkin.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\AddPCKPassword.resx">
@@ -551,11 +557,17 @@
     <EmbeddedResource Include="Forms\Editor\GRFEditor.resx">
       <DependentUpon>GRFEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Additional-Popups\GRF\AddParameter.resx">
+    <EmbeddedResource Include="Forms\Additional-Popups\Grf\AddParameter.resx">
       <DependentUpon>AddParameter.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Additional-Popups\Audio\PleaseWait.resx">
-      <DependentUpon>PleaseWait.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Additional-Popups\Audio\pleaseWait.resx">
+      <DependentUpon>pleaseWait.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Utilities\Preferences.ja.resx">
+      <DependentUpon>Preferences.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Utilities\Preferences.resx">
+      <DependentUpon>Preferences.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Utilities\Skins\BoxEditor.resx">
       <DependentUpon>BoxEditor.cs</DependentUpon>
@@ -563,11 +575,19 @@
     <EmbeddedResource Include="Forms\Utilities\Skins\ANIMEditor.resx">
       <DependentUpon>ANIMEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Skins-And-Textures\GenerateModel.ja.resx">
-      <DependentUpon>GenerateModel.cs</DependentUpon>
+    <EmbeddedResource Include="MainForm.ja.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Skins-And-Textures\GenerateModel.resx">
-      <DependentUpon>GenerateModel.cs</DependentUpon>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Skins-And-Textures\generateModel.ja.resx">
+      <DependentUpon>generateModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Skins-And-Textures\generateModel.resx">
+      <DependentUpon>generateModel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Skins-And-Textures\SkinPreview.resx">
       <DependentUpon>SkinPreview.cs</DependentUpon>
@@ -582,17 +602,17 @@
       <DependentUpon>AudioEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\InstallPS3.resx">
-      <DependentUpon>InstallPS3.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Utilities\installPS3.resx">
+      <DependentUpon>installPS3.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\InstallVita.resx">
-      <DependentUpon>InstallVita.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Utilities\installVita.resx">
+      <DependentUpon>installVita.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\InstallWiiU.ja.resx">
-      <DependentUpon>InstallWiiU.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Utilities\installWiiU.ja.resx">
+      <DependentUpon>installWiiU.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\InstallWiiU.resx">
-      <DependentUpon>InstallWiiU.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Utilities\installWiiU.resx">
+      <DependentUpon>installWiiU.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\MetaList.ja.resx">
       <DependentUpon>MetaList.cs</DependentUpon>
@@ -603,20 +623,20 @@
     <EmbeddedResource Include="Forms\Utilities\PCK Manager.resx">
       <DependentUpon>PCK Manager.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\PCKCenter.ja.resx">
-      <DependentUpon>PCKCenter.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Utilities\pckCenter.ja.resx">
+      <DependentUpon>pckCenter.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\PCKCenter.resx">
-      <DependentUpon>PCKCenter.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Utilities\pckCenter.resx">
+      <DependentUpon>pckCenter.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\PCKCenterBeta.resx">
-      <DependentUpon>PCKCenterBeta.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Utilities\PckCenterBeta.resx">
+      <DependentUpon>PckCenterBeta.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\PCKCenterOpen.ja.resx">
-      <DependentUpon>PCKCenterOpen.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Utilities\pckCenterOpen.ja.resx">
+      <DependentUpon>pckCenterOpen.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\PCKCenterOpen.resx">
-      <DependentUpon>PCKCenterOpen.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Utilities\pckCenterOpen.resx">
+      <DependentUpon>pckCenterOpen.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\LockPrompt.ja.resx">
       <DependentUpon>LockPrompt.cs</DependentUpon>
@@ -624,26 +644,11 @@
     <EmbeddedResource Include="Forms\Additional-Popups\LockPrompt.resx">
       <DependentUpon>LockPrompt.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\Preferences.ja.resx">
-      <DependentUpon>Preferences.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\Preferences.resx">
-      <DependentUpon>Preferences.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Utilities\TextureConverterUtility.resx">
       <DependentUpon>TextureConverterUtility.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\MetaList.resx">
       <DependentUpon>MetaList.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Additional-Popups\AboutThisProgram.resx">
-      <DependentUpon>AboutThisProgram.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.ja.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -671,9 +676,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\pckClosed.png" />
-    <None Include="Resources\pckOpen.png" />
-    <None Include="Resources\pckDrop.png" />
     <None Include="Resources\TexturePackIcon.png" />
     <None Include="Resources\apps.zip" />
     <None Include="Resources\binka\binkawin.asi" />
@@ -696,6 +698,7 @@
     <None Include="Resources\power3.png" />
     <None Include="Resources\power.png" />
     <None Include="Resources\youtube_PNG15.png" />
+    <None Include="Resources\pckClosed.png" />
     <None Include="Resources\pckClosed.bmp" />
     <None Include="Resources\wii-u-games-tool.png" />
     <None Include="Resources\turn-off %281%291.png" />
@@ -713,6 +716,8 @@
     <None Include="Resources\ps3.png" />
     <None Include="Resources\wiiu.png" />
     <None Include="Resources\Splash.png" />
+    <None Include="Resources\pckOpen.png" />
+    <None Include="Resources\pckDrop.png" />
     <None Include="Resources\pckCenterHeader.png" />
     <None Include="Resources\binka\binka_encode.exe" />
     <None Include="Resources\binka\mss32.dll" />
@@ -730,7 +735,6 @@
     <None Include="Resources\AddTexture.png" />
     <None Include="Resources\iconImageList\BEHAVIOURS ICON.png" />
     <None Include="Resources\Comparison.png" />
-    <None Include="Resources\OpenDrop.png" />
     <Content Include="Resources\PCK-Studio_Logo.ico" />
     <None Include="Resources\bg1.png" />
     <Content Include="Resources\NoImageFound.png" />
@@ -740,9 +744,6 @@
       <Version>5.8.0-alpha0098</Version>
       <IncludeAssets>compile; runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="DarkNet">
-      <Version>2.0.1</Version>
     </PackageReference>
     <PackageReference Include="DiscordRichPresence">
       <Version>1.0.175</Version>
@@ -767,6 +768,9 @@
     </PackageReference>
     <PackageReference Include="System.ValueTuple">
       <Version>4.5.0</Version>
+    </PackageReference>
+    <PackageReference Include="DarkNet">
+      <Version>2.0.1</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
