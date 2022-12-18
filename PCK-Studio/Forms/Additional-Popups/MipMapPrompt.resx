@@ -179,13 +179,13 @@
   </data>
   <data name="GenerateButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAFLSURBVEhL7ZS7SkNBFEWvD4I2MeZboja2/oC1YGVnL6SytFJQtLHy9QH+gp1gKRY+G2vBSgVx
-        XPuytZkkMxPBKgsWN2fOOTMkuXOqEcWEENp4iLf4iSlUo1r1zHqb3lDQwid8wyPs4kZC1RzjOz5iy9vF
-        kNx34ZyXsqFnAT9wz0sxJO/xxGEx9J7hncMYkl+46bAY9WoPhzEkxV8PCA5jlIT/O4DP57iC414aiHox
-        7wCeTbypV0K4xmUcqwv7QL74G0zgKur9FlfYcTqC3HD/AWsN1IXSW9b1coR6sewA4mnUjX1REtadiiBX
-        9B9M4ho+axEucaku7AP55AG/F43nFL7iBS7WBQnUiwMv2gOeOlTcwaxXVFCbHBUHqIE1zLCbd++ul2JI
-        alzrldRE1QjeyvRnXGtYzni73qgAd1A/Vy7aeBub3mZELlX1DZ/fVNOubcbBAAAAAElFTkSuQmCC
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAUtJREFUSEvt
+        lLtKQ0EURa8PgjYx5luiNrb+gLVgZWcvpLK0UlC0sfL1Af6CnWApFj4ba8FKBXFc+7K1mSQzE8EqCxY3
+        Z845MyS5c6oRxYQQ2niIt/iJKVSjWvXMepveUNDCJ3zDI+ziRkLVHOM7PmLL28WQ3HfhnJeyoWcBP3DP
+        SzEk7/HEYTH0nuGdwxiSX7jpsBj1ag+HMSTFXw8IDmOUhP87gM/nuILjXhqIejHvAJ5NvKlXQrjGZRyr
+        C/tAvvgbTOAq6v0WV9hxOoLccP8Baw3UhdJb1vVyhHqx7ADiadSNfVES1p2KIFf0H0ziGj5rES5xqS7s
+        A/nkAb8XjecUvuIFLtYFCdSLAy/aA546VNzBrFdUUJscFQeogTXMsJt3766XYkhqXOuV1ETVCN7K9Gdc
+        a1jOeLveqAB3UD9XLtp4G5veZkQuVfUNn99U065txsEAAAAASUVORK5CYII=
 </value>
   </data>
   <data name="GenerateButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
@@ -213,7 +213,7 @@
     <value>GenerateButton</value>
   </data>
   <data name="&gt;&gt;GenerateButton.Type" xml:space="preserve">
-    <value>CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton, PCK-Studio, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton, CBH-Ultimate-Theme-Library-NET-Framework, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;GenerateButton.Parent" xml:space="preserve">
     <value>$this</value>
@@ -229,15 +229,14 @@
   </data>
   <data name="CancelButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAGSSURBVEhL3ZVbKwRhGMen3WU/mkMppY3i07AuHNZatyguRMIXoRByyOFSKBcod16//8zz7uww
-        Y6Jxwa9+Nc//fd45vHMK/jfOuSqO4TZe4aOp7S0cxaq1fw8m1vAGxT3qIE1zBx9QXOOQTcuH5gq2NBP2
-        sRdLNtyGrIx9eIhCBy7bcDY0LYTtzs1hxeJM1IPzmgAzFqdDw0jUl9OYAnN0Qm84YFESBnRDtea7mH+p
-        H9Ac1JJeYJfFMYT+7HssCqHWhCkr25BN47mVIdT9KGoWxRBu4C0mbii1X9+GRcoaUeSaFoVQ6yrucM2i
-        GEKd6bqVCcjrKBZxKdp0dRtOQL6Jp1bGED5j5s1lbBI9qTsXjM3ik5UxhC+YegDyEvozF7qST++GIM88
-        QOoSaUe4jGIcJ6LN8IBpL6CW6MzKGMJfv8lZj+kxZj2mR1aGUH/5mHbjJe5h8S+aYGAQRfGfCg8Nfn2L
-        /9gJmnSp/nN9gMV+rj00d/5w9HMp5ofTCRP1hdXTtYon+GpqewWH8We/zD9CELwDdAO9TWyI9FEAAAAA
-        SUVORK5CYII=
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAZJJREFUSEvd
+        lVsrBGEYx6fdZT+aQymljeLTsC4c1lq3KC5EwhehEHLI4VIoFyh3Xr//zPPu7DBjonHBr341z/993jm8
+        cwr+N865Ko7hNl7ho6ntLRzFqrV/DybW8AbFPeogTXMHH1Bc45BNy4fmCrY0E/axF0s23IasjH14iEIH
+        LttwNjQthO3OzWHF4kzUg/OaADMWp0PDSNSX05gCc3RCbzhgURIGdEO15ruYf6kf0BzUkl5gl8UxhP7s
+        eywKodaEKSvbkE3juZUh1P0oahbFEG7gLSZuKLVf34ZFyhpR5JoWhVDrKu5wzaIYQp3pupUJyOsoFnEp
+        2nR1G05AvomnVsYQPmPmzWVsEj2pOxeMzeKTlTGEL5h6APIS+jMXupJP74YgzzxA6hJpR7iMYhwnos3w
+        gGkvoJbozMoYwl+/yVmP6TFmPaZHVoZQf/mYduMl7mHxL5pgYBBF8Z8KDw1+fYv/2AmadKn+c32AxX6u
+        PTR3/nD0cynmh9MJE/WF1dO1iif4amp7BYfxZ7/MP0IQvAN0A71NbIj0UQAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="CancelButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
@@ -265,7 +264,7 @@
     <value>CancelButton</value>
   </data>
   <data name="&gt;&gt;CancelButton.Type" xml:space="preserve">
-    <value>CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton, PCK-Studio, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton, CBH-Ultimate-Theme-Library-NET-Framework, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;CancelButton.Parent" xml:space="preserve">
     <value>$this</value>
@@ -2505,13 +2504,16 @@
         vbLH9tge22N7bI/tsT22x/bYHttjC+3/B71iqRn22EDpAAAAAElFTkSuQmCC
 </value>
   </data>
+  <data name="$this.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
-    <value>CenterScreen</value>
+    <value>CenterParent</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>MipMapPrompt</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>PckStudio.Classes.ToolboxItems.ThemeForm, PCK-Studio, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
 </root>

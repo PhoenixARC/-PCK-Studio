@@ -105,10 +105,12 @@
             this.Controls.Add(this.PromptTextBox);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.ForeColor = System.Drawing.Color.White;
+            this.Location = new System.Drawing.Point(0, 0);
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(270, 335);
             this.Name = "TextPrompt";
             this.Padding = new System.Windows.Forms.Padding(20, 60, 20, 40);
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.ResumeLayout(false);
 
         }
