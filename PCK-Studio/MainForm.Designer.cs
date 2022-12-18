@@ -107,7 +107,6 @@
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.administrativeToolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.storeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.wiiUPCKInstallerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.PS3PCKInstallerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.VitaPCKInstallerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -122,10 +121,14 @@
             this.openTab = new MetroFramework.Controls.MetroTabPage();
             this.labelVersion = new MetroFramework.Controls.MetroLabel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.crEaTiiOn_Ultimate_GradientButton2 = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
+            this.crEaTiiOn_Ultimate_GradientButton1 = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.crEaTiiOn_Ultimate_GradientButton3 = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
             this.pckOpen = new System.Windows.Forms.PictureBox();
             this.editorTab = new MetroFramework.Controls.MetroTabPage();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.pictureBoxImagePreview = new PckStudio.PictureBoxWithInterpolationMode();
             this.fileEntryCountLabel = new MetroFramework.Controls.MetroLabel();
             this.labelImageSize = new MetroFramework.Controls.MetroLabel();
             this.PropertiesTabControl = new MetroFramework.Controls.MetroTabControl();
@@ -140,10 +143,6 @@
             this.treeViewMain = new System.Windows.Forms.TreeView();
             this.imageList = new System.Windows.Forms.ImageList(this.components);
             this.LittleEndianCheckBox = new MetroFramework.Controls.MetroCheckBox();
-            this.crEaTiiOn_Ultimate_GradientButton2 = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
-            this.crEaTiiOn_Ultimate_GradientButton1 = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
-            this.crEaTiiOn_Ultimate_GradientButton3 = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
-            this.pictureBoxImagePreview = new PckStudio.PictureBoxWithInterpolationMode();
             this.contextMenuPCKEntries.SuspendLayout();
             this.menuStrip.SuspendLayout();
             this.contextMenuMetaTree.SuspendLayout();
@@ -155,9 +154,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.pckOpen)).BeginInit();
             this.editorTab.SuspendLayout();
             this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImagePreview)).BeginInit();
             this.PropertiesTabControl.SuspendLayout();
             this.MetaTab.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImagePreview)).BeginInit();
             this.SuspendLayout();
             // 
             // contextMenuPCKEntries
@@ -689,7 +688,6 @@
             // storeToolStripMenuItem
             // 
             this.storeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openToolStripMenuItem1,
             this.wiiUPCKInstallerToolStripMenuItem,
             this.PS3PCKInstallerToolStripMenuItem,
             this.VitaPCKInstallerToolStripMenuItem,
@@ -697,12 +695,6 @@
             this.storeToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             resources.ApplyResources(this.storeToolStripMenuItem, "storeToolStripMenuItem");
             this.storeToolStripMenuItem.Name = "storeToolStripMenuItem";
-            // 
-            // openToolStripMenuItem1
-            // 
-            resources.ApplyResources(this.openToolStripMenuItem1, "openToolStripMenuItem1");
-            this.openToolStripMenuItem1.Name = "openToolStripMenuItem1";
-            this.openToolStripMenuItem1.Click += new System.EventHandler(this.openToolStripMenuItem1_Click);
             // 
             // wiiUPCKInstallerToolStripMenuItem
             // 
@@ -821,11 +813,71 @@
             resources.ApplyResources(this.panel1, "panel1");
             this.panel1.Name = "panel1";
             // 
+            // crEaTiiOn_Ultimate_GradientButton2
+            // 
+            this.crEaTiiOn_Ultimate_GradientButton2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.crEaTiiOn_Ultimate_GradientButton2.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.crEaTiiOn_Ultimate_GradientButton2.BorderRadius = 10;
+            this.crEaTiiOn_Ultimate_GradientButton2.BorderSize = 1;
+            this.crEaTiiOn_Ultimate_GradientButton2.ClickedColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.crEaTiiOn_Ultimate_GradientButton2.FlatAppearance.BorderSize = 0;
+            this.crEaTiiOn_Ultimate_GradientButton2.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.crEaTiiOn_Ultimate_GradientButton2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            resources.ApplyResources(this.crEaTiiOn_Ultimate_GradientButton2, "crEaTiiOn_Ultimate_GradientButton2");
+            this.crEaTiiOn_Ultimate_GradientButton2.ForeColor = System.Drawing.Color.White;
+            this.crEaTiiOn_Ultimate_GradientButton2.GradientColorPrimary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.crEaTiiOn_Ultimate_GradientButton2.GradientColorSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.crEaTiiOn_Ultimate_GradientButton2.HoverOverColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.crEaTiiOn_Ultimate_GradientButton2.Name = "crEaTiiOn_Ultimate_GradientButton2";
+            this.crEaTiiOn_Ultimate_GradientButton2.TextColor = System.Drawing.Color.White;
+            this.crEaTiiOn_Ultimate_GradientButton2.UseVisualStyleBackColor = false;
+            this.crEaTiiOn_Ultimate_GradientButton2.Click += new System.EventHandler(this.crEaTiiOn_Ultimate_GradientButton2_Click);
+            // 
+            // crEaTiiOn_Ultimate_GradientButton1
+            // 
+            this.crEaTiiOn_Ultimate_GradientButton1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.crEaTiiOn_Ultimate_GradientButton1.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.crEaTiiOn_Ultimate_GradientButton1.BorderRadius = 10;
+            this.crEaTiiOn_Ultimate_GradientButton1.BorderSize = 1;
+            this.crEaTiiOn_Ultimate_GradientButton1.ClickedColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.crEaTiiOn_Ultimate_GradientButton1.FlatAppearance.BorderSize = 0;
+            this.crEaTiiOn_Ultimate_GradientButton1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.crEaTiiOn_Ultimate_GradientButton1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            resources.ApplyResources(this.crEaTiiOn_Ultimate_GradientButton1, "crEaTiiOn_Ultimate_GradientButton1");
+            this.crEaTiiOn_Ultimate_GradientButton1.ForeColor = System.Drawing.Color.White;
+            this.crEaTiiOn_Ultimate_GradientButton1.GradientColorPrimary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.crEaTiiOn_Ultimate_GradientButton1.GradientColorSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.crEaTiiOn_Ultimate_GradientButton1.HoverOverColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.crEaTiiOn_Ultimate_GradientButton1.Name = "crEaTiiOn_Ultimate_GradientButton1";
+            this.crEaTiiOn_Ultimate_GradientButton1.TextColor = System.Drawing.Color.White;
+            this.crEaTiiOn_Ultimate_GradientButton1.UseVisualStyleBackColor = false;
+            this.crEaTiiOn_Ultimate_GradientButton1.Click += new System.EventHandler(this.crEaTiiOn_Ultimate_GradientButton1_Click);
+            // 
             // pictureBox1
             // 
             resources.ApplyResources(this.pictureBox1, "pictureBox1");
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.TabStop = false;
+            // 
+            // crEaTiiOn_Ultimate_GradientButton3
+            // 
+            this.crEaTiiOn_Ultimate_GradientButton3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.crEaTiiOn_Ultimate_GradientButton3.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.crEaTiiOn_Ultimate_GradientButton3.BorderRadius = 10;
+            this.crEaTiiOn_Ultimate_GradientButton3.BorderSize = 1;
+            this.crEaTiiOn_Ultimate_GradientButton3.ClickedColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.crEaTiiOn_Ultimate_GradientButton3.FlatAppearance.BorderSize = 0;
+            this.crEaTiiOn_Ultimate_GradientButton3.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.crEaTiiOn_Ultimate_GradientButton3.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            resources.ApplyResources(this.crEaTiiOn_Ultimate_GradientButton3, "crEaTiiOn_Ultimate_GradientButton3");
+            this.crEaTiiOn_Ultimate_GradientButton3.ForeColor = System.Drawing.Color.White;
+            this.crEaTiiOn_Ultimate_GradientButton3.GradientColorPrimary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.crEaTiiOn_Ultimate_GradientButton3.GradientColorSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.crEaTiiOn_Ultimate_GradientButton3.HoverOverColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.crEaTiiOn_Ultimate_GradientButton3.Name = "crEaTiiOn_Ultimate_GradientButton3";
+            this.crEaTiiOn_Ultimate_GradientButton3.TextColor = System.Drawing.Color.White;
+            this.crEaTiiOn_Ultimate_GradientButton3.UseVisualStyleBackColor = false;
+            this.crEaTiiOn_Ultimate_GradientButton3.Click += new System.EventHandler(this.crEaTiiOn_Ultimate_GradientButton3_Click);
             // 
             // pckOpen
             // 
@@ -869,6 +921,14 @@
             this.panel2.Controls.Add(this.labelImageSize);
             resources.ApplyResources(this.panel2, "panel2");
             this.panel2.Name = "panel2";
+            // 
+            // pictureBoxImagePreview
+            // 
+            this.pictureBoxImagePreview.BackColor = System.Drawing.Color.Transparent;
+            resources.ApplyResources(this.pictureBoxImagePreview, "pictureBoxImagePreview");
+            this.pictureBoxImagePreview.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+            this.pictureBoxImagePreview.Name = "pictureBoxImagePreview";
+            this.pictureBoxImagePreview.TabStop = false;
             // 
             // fileEntryCountLabel
             // 
@@ -1061,74 +1121,6 @@
             this.LittleEndianCheckBox.UseCustomForeColor = true;
             this.LittleEndianCheckBox.UseSelectable = true;
             // 
-            // crEaTiiOn_Ultimate_GradientButton2
-            // 
-            this.crEaTiiOn_Ultimate_GradientButton2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.crEaTiiOn_Ultimate_GradientButton2.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.crEaTiiOn_Ultimate_GradientButton2.BorderRadius = 10;
-            this.crEaTiiOn_Ultimate_GradientButton2.BorderSize = 1;
-            this.crEaTiiOn_Ultimate_GradientButton2.ClickedColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.crEaTiiOn_Ultimate_GradientButton2.FlatAppearance.BorderSize = 0;
-            this.crEaTiiOn_Ultimate_GradientButton2.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.crEaTiiOn_Ultimate_GradientButton2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            resources.ApplyResources(this.crEaTiiOn_Ultimate_GradientButton2, "crEaTiiOn_Ultimate_GradientButton2");
-            this.crEaTiiOn_Ultimate_GradientButton2.ForeColor = System.Drawing.Color.White;
-            this.crEaTiiOn_Ultimate_GradientButton2.GradientColorPrimary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
-            this.crEaTiiOn_Ultimate_GradientButton2.GradientColorSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
-            this.crEaTiiOn_Ultimate_GradientButton2.HoverOverColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.crEaTiiOn_Ultimate_GradientButton2.Name = "crEaTiiOn_Ultimate_GradientButton2";
-            this.crEaTiiOn_Ultimate_GradientButton2.TextColor = System.Drawing.Color.White;
-            this.crEaTiiOn_Ultimate_GradientButton2.UseVisualStyleBackColor = false;
-            this.crEaTiiOn_Ultimate_GradientButton2.Click += new System.EventHandler(this.crEaTiiOn_Ultimate_GradientButton2_Click);
-            // 
-            // crEaTiiOn_Ultimate_GradientButton1
-            // 
-            this.crEaTiiOn_Ultimate_GradientButton1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.crEaTiiOn_Ultimate_GradientButton1.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.crEaTiiOn_Ultimate_GradientButton1.BorderRadius = 10;
-            this.crEaTiiOn_Ultimate_GradientButton1.BorderSize = 1;
-            this.crEaTiiOn_Ultimate_GradientButton1.ClickedColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.crEaTiiOn_Ultimate_GradientButton1.FlatAppearance.BorderSize = 0;
-            this.crEaTiiOn_Ultimate_GradientButton1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.crEaTiiOn_Ultimate_GradientButton1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            resources.ApplyResources(this.crEaTiiOn_Ultimate_GradientButton1, "crEaTiiOn_Ultimate_GradientButton1");
-            this.crEaTiiOn_Ultimate_GradientButton1.ForeColor = System.Drawing.Color.White;
-            this.crEaTiiOn_Ultimate_GradientButton1.GradientColorPrimary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
-            this.crEaTiiOn_Ultimate_GradientButton1.GradientColorSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
-            this.crEaTiiOn_Ultimate_GradientButton1.HoverOverColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.crEaTiiOn_Ultimate_GradientButton1.Name = "crEaTiiOn_Ultimate_GradientButton1";
-            this.crEaTiiOn_Ultimate_GradientButton1.TextColor = System.Drawing.Color.White;
-            this.crEaTiiOn_Ultimate_GradientButton1.UseVisualStyleBackColor = false;
-            this.crEaTiiOn_Ultimate_GradientButton1.Click += new System.EventHandler(this.crEaTiiOn_Ultimate_GradientButton1_Click);
-            // 
-            // crEaTiiOn_Ultimate_GradientButton3
-            // 
-            this.crEaTiiOn_Ultimate_GradientButton3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.crEaTiiOn_Ultimate_GradientButton3.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.crEaTiiOn_Ultimate_GradientButton3.BorderRadius = 10;
-            this.crEaTiiOn_Ultimate_GradientButton3.BorderSize = 1;
-            this.crEaTiiOn_Ultimate_GradientButton3.ClickedColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.crEaTiiOn_Ultimate_GradientButton3.FlatAppearance.BorderSize = 0;
-            this.crEaTiiOn_Ultimate_GradientButton3.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.crEaTiiOn_Ultimate_GradientButton3.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            resources.ApplyResources(this.crEaTiiOn_Ultimate_GradientButton3, "crEaTiiOn_Ultimate_GradientButton3");
-            this.crEaTiiOn_Ultimate_GradientButton3.ForeColor = System.Drawing.Color.White;
-            this.crEaTiiOn_Ultimate_GradientButton3.GradientColorPrimary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
-            this.crEaTiiOn_Ultimate_GradientButton3.GradientColorSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
-            this.crEaTiiOn_Ultimate_GradientButton3.HoverOverColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.crEaTiiOn_Ultimate_GradientButton3.Name = "crEaTiiOn_Ultimate_GradientButton3";
-            this.crEaTiiOn_Ultimate_GradientButton3.TextColor = System.Drawing.Color.White;
-            this.crEaTiiOn_Ultimate_GradientButton3.UseVisualStyleBackColor = false;
-            this.crEaTiiOn_Ultimate_GradientButton3.Click += new System.EventHandler(this.crEaTiiOn_Ultimate_GradientButton3_Click);
-            // 
-            // pictureBoxImagePreview
-            // 
-            this.pictureBoxImagePreview.BackColor = System.Drawing.Color.Transparent;
-            resources.ApplyResources(this.pictureBoxImagePreview, "pictureBoxImagePreview");
-            this.pictureBoxImagePreview.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-            this.pictureBoxImagePreview.Name = "pictureBoxImagePreview";
-            this.pictureBoxImagePreview.TabStop = false;
-            // 
             // MainForm
             // 
             resources.ApplyResources(this, "$this");
@@ -1158,10 +1150,10 @@
             this.editorTab.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImagePreview)).EndInit();
             this.PropertiesTabControl.ResumeLayout(false);
             this.MetaTab.ResumeLayout(false);
             this.MetaTab.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImagePreview)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1206,7 +1198,6 @@
         private System.Windows.Forms.ToolStripMenuItem donateToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem convertToBedrockToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem storeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem1;
         private MetroFramework.Controls.MetroTabControl tabControl;
         private MetroFramework.Controls.MetroTabPage editorTab;
         private MetroFramework.Controls.MetroCheckBox LittleEndianCheckBox;
