@@ -1,9 +1,10 @@
-﻿using System;
+﻿using PckStudio.Classes.ToolboxItems;
+using System;
 using System.Windows.Forms;
 
 namespace PckStudio.Forms.Additional_Popups.Loc
 {
-    public partial class AddLanguage : Form
+    public partial class AddLanguage : ThemeForm
     {
         public string SelectedLanguage => LanguageComboBox.Text;
         public AddLanguage(string[] avalibleLanguages)

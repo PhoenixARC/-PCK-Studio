@@ -17,10 +17,11 @@ using PckStudio;
 using System.IO.Compression;
 using PckStudio.Classes.FileTypes;
 using PckStudio.Classes.IO.PCK;
+using PckStudio.Classes.ToolboxItems;
 
 namespace PckStudio.Forms
 {
-    public partial class PCKCenterOpen : Form
+    public partial class PCKCenterOpen : ThemeForm
     {
         string name;
         string author;

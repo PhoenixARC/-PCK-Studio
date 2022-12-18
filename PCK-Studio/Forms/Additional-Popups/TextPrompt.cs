@@ -1,9 +1,10 @@
-﻿using System;
+﻿using PckStudio.Classes.ToolboxItems;
+using System;
 using System.Windows.Forms;
 
 namespace PckStudio.Forms.Additional_Popups
 {
-    public partial class TextPrompt : Form
+    public partial class TextPrompt : ThemeForm
     {
         public string[] TextOutput => DialogResult == DialogResult.OK ? PromptTextBox.Lines : null;
         public TextPrompt(string[] list = null)

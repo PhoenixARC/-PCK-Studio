@@ -5,10 +5,11 @@ using System.Linq;
 using System.IO;
 using System.Windows.Forms;
 using PckStudio.Classes.Utils;
+using PckStudio.Classes.ToolboxItems;
 
 namespace PckStudio.Forms.Utilities.Skins
 {
-	public partial class ANIMEditor : Form
+	public partial class ANIMEditor : ThemeForm
 	{
 		public bool saved = false;
 		readonly SkinANIM initialANIM;

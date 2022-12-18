@@ -1,18 +1,18 @@
-﻿using System;
+﻿using PckStudio.Classes.ToolboxItems;
+using System;
 using System.Windows.Forms;
 
 // Audio Editor by MattNL
 
 namespace PckStudio.Forms.Additional_Popups.Audio
 {
-	public partial class AddCategory : Form
+	public partial class AddCategory : ThemeForm
 	{
 		private string _category = string.Empty;
 		public string Category => _category;
 		public AddCategory(string[] avalibleCategories)
 		{
 			InitializeComponent();
-			this.FormBorderStyle = FormBorderStyle.None;
 			comboBox1.Items.AddRange(avalibleCategories);
 		}
 

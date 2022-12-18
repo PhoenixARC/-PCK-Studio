@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
+using PckStudio.Classes.ToolboxItems;
 using PckStudio.Properties;
 
 namespace PckStudio.Forms.Additional_Popups
 {
-    public partial class ChangeLogForm : Form
+    public partial class ChangeLogForm : ThemeForm
     {
         public ChangeLogForm()
         {

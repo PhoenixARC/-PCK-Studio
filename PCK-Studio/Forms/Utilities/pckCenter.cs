@@ -10,10 +10,11 @@ using System.Diagnostics;
 using PckStudio.Classes.Misc;
 using PckStudio.API.PCKCenter.model;
 using PckStudio.API.PCKCenter;
+using PckStudio.Classes.ToolboxItems;
 
 namespace PckStudio.Forms
 {
-    public partial class PCKCenter : Form
+    public partial class PCKCenter : ThemeForm
     {
         string[] mods;
         static string hosturl = Program.BaseAPIUrl;

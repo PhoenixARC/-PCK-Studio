@@ -4,7 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using MetroFramework.Forms;
+using PckStudio.Classes.ToolboxItems;
 using PckStudio.Classes.Misc;
 using PckStudio.Classes.FileTypes;
 using PckStudio.Classes.IO.LOC;
@@ -12,7 +12,7 @@ using PckStudio.Forms.Additional_Popups.Loc;
 
 namespace PckStudio.Forms.Editor
 {
-	public partial class LOCEditor : Form
+	public partial class LOCEditor : ThemeForm
     {
 		DataTable tbl;
 		LOCFile currentLoc;

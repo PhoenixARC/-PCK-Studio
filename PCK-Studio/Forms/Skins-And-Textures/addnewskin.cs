@@ -7,10 +7,11 @@ using PckStudio.Classes.FileTypes;
 using System.Drawing.Imaging;
 using PckStudio.Classes.Utils;
 using PckStudio.Classes._3ds.Utils;
+using PckStudio.Classes.ToolboxItems;
 
 namespace PckStudio
 {
-    public partial class AddNewSkin : Form
+    public partial class AddNewSkin : ThemeForm
     {
 
         public PCKFile.FileData SkinFile => skin;

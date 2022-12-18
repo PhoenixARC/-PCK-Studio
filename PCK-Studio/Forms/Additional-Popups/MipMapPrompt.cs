@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Windows.Forms;
-using MetroFramework.Forms;
+using PckStudio.Classes.ToolboxItems;
 
 namespace PckStudio
 {
-    public partial class MipMapPrompt : Form
+    public partial class MipMapPrompt : ThemeForm
 	{
 		/// <summary>
 		/// Text entered <c>only access when DialogResult == DialogResult.OK</c>

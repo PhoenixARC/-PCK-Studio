@@ -1,17 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Media.Imaging;
-using MetroFramework.Forms;
-using PckStudio.Classes.Misc;
+using PckStudio.Classes.ToolboxItems;
 using PckStudio.Classes.Networking;
 using PckStudio.Classes.IO;
 using PckStudio.API.PCKCenter.model;
@@ -19,7 +10,7 @@ using PckStudio.API.PCKCenter;
 
 namespace PckStudio.Forms.Utilities
 {
-    public partial class PCKCenterBeta : Form
+    public partial class PCKCenterBeta : ThemeForm
     {
         public PCKCenterBeta()
         {

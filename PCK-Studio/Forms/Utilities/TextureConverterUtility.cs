@@ -3,13 +3,13 @@ using System.IO;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
-using MetroFramework.Forms;
+using PckStudio.Classes.ToolboxItems;
 using PckStudio.Properties;
 using PckStudio.Classes.FileTypes;
 
 namespace PckStudio.Forms.Utilities
 {
-    public partial class TextureConverterUtility : Form
+    public partial class TextureConverterUtility : ThemeForm
     {
         public TextureConverterUtility(TreeView tv0, PCKFile pck)
         {

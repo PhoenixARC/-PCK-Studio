@@ -1,10 +1,11 @@
-﻿using System;
+﻿using PckStudio.Classes.ToolboxItems;
+using System;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace PckStudio.Forms.Utilities.Skins
 {
-	public partial class BoxEditor : Form
+	public partial class BoxEditor : ThemeForm
 	{
 		public string Result;
 

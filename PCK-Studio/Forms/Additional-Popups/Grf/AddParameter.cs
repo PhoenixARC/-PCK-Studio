@@ -1,9 +1,10 @@
-﻿using System;
+﻿using PckStudio.Classes.ToolboxItems;
+using System;
 using System.Windows.Forms;
 
 namespace PckStudio.Forms.Additional_Popups.Grf
 {
-    public partial class AddParameter : Form
+    public partial class AddParameter : ThemeForm
     {
         public string ParameterName => NameTextBox.Text;
         public string ParameterValue => ValueTextBox.Text;

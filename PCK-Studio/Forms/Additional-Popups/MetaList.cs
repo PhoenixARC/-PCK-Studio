@@ -1,10 +1,9 @@
-﻿using System;
+﻿using PckStudio.Classes.ToolboxItems;
 using System.Collections.Generic;
-using System.Windows.Forms;
 
 namespace PckStudio
 {
-    public partial class MetaList : Form
+    public partial class MetaList : ThemeForm
     {
         public MetaList(List<string> metaTags)
         {

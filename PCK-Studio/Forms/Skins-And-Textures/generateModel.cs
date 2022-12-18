@@ -8,13 +8,13 @@ using System.Windows.Forms;
 using System.Collections;
 using System.IO;
 using Newtonsoft.Json;
-using MetroFramework.Forms;
 using PckStudio.Classes.FileTypes;
 using System.Text.RegularExpressions;
+using PckStudio.Classes.ToolboxItems;
 
 namespace PckStudio
 {
-    public partial class GenerateModel : Form
+    public partial class GenerateModel : ThemeForm
     {
         PictureBox skinPreview;
 

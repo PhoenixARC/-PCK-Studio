@@ -11,10 +11,11 @@ using PckStudio.Classes.FileTypes;
 using PckStudio.Classes.IO.PCK;
 using PckStudio.Classes.IO.ARC;
 using System.Diagnostics;
+using PckStudio.Classes.ToolboxItems;
 
 namespace PckStudio.Forms
 {
-    public partial class InstallWiiU : Form
+    public partial class InstallWiiU : ThemeForm
     {
         string loca = "";
         string dlcPath = "";

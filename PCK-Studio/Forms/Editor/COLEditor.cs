@@ -4,13 +4,13 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using MetroFramework.Forms;
+using PckStudio.Classes.ToolboxItems;
 using PckStudio.Classes.FileTypes;
 using PckStudio.Classes.IO.COL;
 
 namespace PckStudio.Forms.Editor
 {
-	public partial class COLEditor : Form
+	public partial class COLEditor : ThemeForm
 	{
 		COLFile default_colourfile = COLFileReader.Read(new MemoryStream(Properties.Resources.tu69colours));
 		COLFile colourfile;

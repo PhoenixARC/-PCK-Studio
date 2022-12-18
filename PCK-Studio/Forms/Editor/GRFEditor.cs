@@ -8,10 +8,11 @@ using PckStudio.Classes.FileTypes;
 using PckStudio.Classes.IO.GRF;
 using PckStudio.Forms.Additional_Popups.Grf;
 using PckStudio.Classes.Misc;
+using PckStudio.Classes.ToolboxItems;
 
 namespace PckStudio.Forms.Editor
 {
-    public partial class GRFEditor : Form
+    public partial class GRFEditor : ThemeForm
     {
         private PCKFile.FileData _pckfile;
         private GRFFile _file;

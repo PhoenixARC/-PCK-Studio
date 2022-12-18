@@ -1,11 +1,12 @@
-﻿using System;
+﻿using PckStudio.Classes.ToolboxItems;
+using System;
 using System.Windows.Forms;
 
 // Audio Editor by MattNL
 
 namespace PckStudio.Forms.Additional_Popups.Audio
 {
-	public partial class CreditsEditor : Form
+	public partial class CreditsEditor : ThemeForm
 	{
 		public string Credits => richTextBox1.Text;
 		public CreditsEditor(string cred)

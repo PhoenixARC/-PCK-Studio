@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Windows.Forms;
 using MetroFramework.Forms;
+using PckStudio.Classes.ToolboxItems;
 
 namespace PckStudio
 {
-    public partial class AboutThisProgram : Form
+    public partial class AboutThisProgram : ThemeForm
     {
         int count = 0;
         public AboutThisProgram()

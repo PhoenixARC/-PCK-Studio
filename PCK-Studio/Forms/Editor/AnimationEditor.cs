@@ -1,4 +1,4 @@
-﻿using MetroFramework.Forms;
+﻿using PckStudio.Classes.ToolboxItems;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -17,7 +17,7 @@ using PckStudio.Forms.Utilities;
 
 namespace PckStudio.Forms.Editor
 {
-	public partial class AnimationEditor : Form
+	public partial class AnimationEditor : ThemeForm
 	{
 		PCKFile.FileData animationFile;
 		Animation currentAnimation;

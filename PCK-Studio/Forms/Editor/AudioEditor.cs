@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
-using MetroFramework.Forms;
+using PckStudio.Classes.ToolboxItems;
 using PckStudio.Classes.FileTypes;
 using PckStudio.Classes.IO.PCK;
 using PckStudio.Forms.Additional_Popups.Audio;
@@ -15,7 +15,7 @@ using PckStudio.Forms.Additional_Popups.Audio;
 
 namespace PckStudio.Forms.Editor
 {
-	public partial class AudioEditor : Form
+	public partial class AudioEditor : ThemeForm
 	{
 		public string defaultType = "yes";
 		Classes.Bink BINK = new Classes.Bink();

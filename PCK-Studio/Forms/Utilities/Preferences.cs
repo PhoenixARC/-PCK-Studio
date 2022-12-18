@@ -1,11 +1,11 @@
 ﻿using System;
 using System.IO;
 using System.Windows.Forms;
-using MetroFramework.Forms;
+using PckStudio.Classes.ToolboxItems;
 
 namespace PckStudio.Forms
 {
-    public partial class Preferences : Form
+    public partial class Preferences : ThemeForm
     {
         public Preferences()
         {

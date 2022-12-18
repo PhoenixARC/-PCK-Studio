@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Drawing;
-using System.Windows.Forms;
 using PckStudio.Classes.Models.DefaultModels;
+using PckStudio.Classes.ToolboxItems;
 using PckStudio.Classes.Utils;
 using PckStudio.Models;
 
 namespace PckStudio.Forms
 {
-    public partial class SkinPreview : Form
+    public partial class SkinPreview : ThemeForm
     {
         Image Texture;
         ModelBase Model;

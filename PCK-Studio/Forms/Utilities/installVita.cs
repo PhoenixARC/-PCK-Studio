@@ -6,11 +6,11 @@ using System.Drawing;
 using System.IO;
 using System.Net;
 using System.Windows.Forms;
-using MetroFramework.Forms;
+using PckStudio.Classes.ToolboxItems;
 
 namespace PckStudio.Forms
 {
-    public partial class InstallVita : Form
+    public partial class InstallVita : ThemeForm
     {
         public InstallVita(string mod)
         {

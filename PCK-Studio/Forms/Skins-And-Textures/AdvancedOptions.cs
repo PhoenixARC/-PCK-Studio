@@ -1,4 +1,5 @@
 ﻿using PckStudio.Classes.FileTypes;
+using PckStudio.Classes.ToolboxItems;
 using System;
 using System.Data;
 using System.Drawing;
@@ -8,7 +9,7 @@ using System.Windows.Forms;
 
 namespace PckStudio
 {
-    public partial class AdvancedOptions : Form
+    public partial class AdvancedOptions : ThemeForm
     {
         PCKFile currentPCK;
 

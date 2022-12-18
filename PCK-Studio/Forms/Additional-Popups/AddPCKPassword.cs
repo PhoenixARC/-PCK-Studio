@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Text;
-using System.Windows.Forms;
-using MetroFramework.Forms;
+using PckStudio.Classes.ToolboxItems;
 
 namespace PckStudio.Forms
 {
-    public partial class AddPCKPassword : Form
+    public partial class AddPCKPassword : ThemeForm
     {
         public string Password { get; private set; }
         public AddPCKPassword()

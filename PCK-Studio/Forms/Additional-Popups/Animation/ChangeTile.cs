@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using MetroFramework.Forms;
 using Newtonsoft.Json.Linq;
+using PckStudio.Classes.ToolboxItems;
 using PckStudio.Forms.Utilities;
 
 namespace PckStudio.Forms.Additional_Popups.Animation
 {
-	public partial class ChangeTile : Form
+	public partial class ChangeTile : ThemeForm
 	{
         string selectedTile = "";
 

@@ -1,10 +1,11 @@
 ﻿using System;
 using MetroFramework.Forms;
 using System.Windows.Forms;
+using PckStudio.Classes.ToolboxItems;
 
 namespace PckStudio.Forms.Additional_Popups.Animation
 {
-	public partial class SetBulkSpeed : Form
+	public partial class SetBulkSpeed : ThemeForm
 	{
 		public int time => (int)TimeUpDown.Value;
 		public SetBulkSpeed(TreeView treeView)

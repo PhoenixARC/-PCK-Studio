@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Drawing;
-using MetroFramework.Forms;
 using System.Windows.Forms;
+using PckStudio.Classes.ToolboxItems;
 
 namespace PckStudio.Forms.Additional_Popups.Animation
 {
-	public partial class FrameEditor : Form
+	public partial class FrameEditor : ThemeForm
 	{
 		public int FrameTextureIndex => FrameList.SelectedNode.Index;
 		public int FrameTime => (int)FrameTimeUpDown.Value;

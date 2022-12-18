@@ -1,10 +1,11 @@
-﻿using System;
+﻿using PckStudio.Classes.ToolboxItems;
+using System;
 using System.Text;
 using System.Windows.Forms;
 
 namespace PckStudio.Forms
 {
-    public partial class LockPrompt : Form
+    public partial class LockPrompt : ThemeForm
     {
         string pass;
 

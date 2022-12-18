@@ -1,9 +1,10 @@
-﻿using System;
+﻿using PckStudio.Classes.ToolboxItems;
+using System;
 using System.Windows.Forms;
 
 namespace PckStudio
 {
-    public partial class AddMeta : Form
+    public partial class AddMeta : ThemeForm
     {
         public string PropertyName => textBox1.Text;
         public string PropertyValue => textBox2.Text;
