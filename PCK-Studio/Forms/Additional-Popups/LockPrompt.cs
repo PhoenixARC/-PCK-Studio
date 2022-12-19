@@ -1,4 +1,4 @@
-﻿using PckStudio.Classes.ToolboxItems;
+﻿using PckStudio.ToolboxItems;
 using System;
 using System.Text;
 using System.Windows.Forms;

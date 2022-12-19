@@ -8,7 +8,7 @@ using PckStudio.Classes.FileTypes;
 using PckStudio.Classes.IO.GRF;
 using PckStudio.Forms.Additional_Popups.Grf;
 using PckStudio.Classes.Misc;
-using PckStudio.Classes.ToolboxItems;
+using PckStudio.ToolboxItems;
 
 namespace PckStudio.Forms.Editor
 {

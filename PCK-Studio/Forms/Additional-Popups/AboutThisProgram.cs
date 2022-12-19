@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using MetroFramework.Forms;
-using PckStudio.Classes.ToolboxItems;
+using PckStudio.ToolboxItems;
 
 namespace PckStudio
 {

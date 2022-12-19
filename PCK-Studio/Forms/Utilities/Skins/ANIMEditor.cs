@@ -5,7 +5,7 @@ using System.Linq;
 using System.IO;
 using System.Windows.Forms;
 using PckStudio.Classes.Utils;
-using PckStudio.Classes.ToolboxItems;
+using PckStudio.ToolboxItems;
 
 namespace PckStudio.Forms.Utilities.Skins
 {

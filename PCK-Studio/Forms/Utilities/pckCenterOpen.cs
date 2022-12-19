@@ -17,7 +17,7 @@ using PckStudio;
 using System.IO.Compression;
 using PckStudio.Classes.FileTypes;
 using PckStudio.Classes.IO.PCK;
-using PckStudio.Classes.ToolboxItems;
+using PckStudio.ToolboxItems;
 
 namespace PckStudio.Forms
 {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using PckStudio.Classes.Models.DefaultModels;
-using PckStudio.Classes.ToolboxItems;
+using PckStudio.ToolboxItems;
 using PckStudio.Classes.Utils;
 using PckStudio.Models;
 

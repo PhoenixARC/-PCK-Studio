@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Text;
-using PckStudio.Classes.ToolboxItems;
+using PckStudio.ToolboxItems;
 
 namespace PckStudio.Forms
 {

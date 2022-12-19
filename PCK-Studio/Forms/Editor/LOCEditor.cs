@@ -4,7 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using PckStudio.Classes.ToolboxItems;
+using PckStudio.ToolboxItems;
 using PckStudio.Classes.Misc;
 using PckStudio.Classes.FileTypes;
 using PckStudio.Classes.IO.LOC;

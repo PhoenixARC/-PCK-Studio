@@ -52,8 +52,8 @@
             this.textThemeName = new MetroFramework.Controls.MetroTextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.buttonAnimGen = new System.Windows.Forms.Button();
-            this.capePictureBox = new PckStudio.PictureBoxWithInterpolationMode();
-            this.skinPictureBoxTexture = new PckStudio.PictureBoxWithInterpolationMode();
+            this.capePictureBox = new PckStudio.ToolboxItems.PictureBoxWithInterpolationMode();
+            this.skinPictureBoxTexture = new PckStudio.ToolboxItems.PictureBoxWithInterpolationMode();
             label3 = new System.Windows.Forms.Label();
             label2 = new System.Windows.Forms.Label();
             label1 = new System.Windows.Forms.Label();
@@ -358,7 +358,7 @@
         private System.Windows.Forms.Button buttonModelGen;
         private System.Windows.Forms.Button buttonCape;
         private System.Windows.Forms.Button buttonSkin;
-        private PictureBoxWithInterpolationMode capePictureBox;
+        private PckStudio.ToolboxItems.PictureBoxWithInterpolationMode capePictureBox;
         private System.Windows.Forms.PictureBox displayBox;
         private System.Windows.Forms.RadioButton radioAUTO;
         private System.Windows.Forms.RadioButton radioLOCAL;
@@ -368,7 +368,7 @@
 		private MetroFramework.Controls.MetroTextBox textSkinName;
 		private MetroFramework.Controls.MetroTextBox textThemeName;
 		private System.Windows.Forms.Label label4;
-		private PictureBoxWithInterpolationMode skinPictureBoxTexture;
+		private PckStudio.ToolboxItems.PictureBoxWithInterpolationMode skinPictureBoxTexture;
 		private System.Windows.Forms.Button buttonAnimGen;
 	}
 }

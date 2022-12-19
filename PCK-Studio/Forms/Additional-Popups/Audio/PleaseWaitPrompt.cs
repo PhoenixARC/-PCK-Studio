@@ -1,5 +1,5 @@
 ﻿using MetroFramework.Forms;
-using PckStudio.Classes.ToolboxItems;
+using PckStudio.ToolboxItems;
 using System.Windows.Forms;
 
 namespace PckStudio.Forms.Additional_Popups.Audio

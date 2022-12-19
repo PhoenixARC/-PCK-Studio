@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
-using PckStudio.Classes.ToolboxItems;
+using PckStudio.ToolboxItems;
 using PckStudio.Classes.Networking;
 using PckStudio.Classes.IO;
 using PckStudio.API.PCKCenter.model;

@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using Dark.Net;
 
-namespace PckStudio.Classes.ToolboxItems
+namespace PckStudio.ToolboxItems
 {
     public partial class ThemeForm : Form
     {

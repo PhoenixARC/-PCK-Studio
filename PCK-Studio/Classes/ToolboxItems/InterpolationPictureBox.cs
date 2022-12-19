@@ -1,7 +1,7 @@
 ﻿using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
-namespace PckStudio
+namespace PckStudio.ToolboxItems
 {
     /// <summary>
     /// Inherits from PictureBox; adds Interpolation Mode Setting

@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using MetroFramework.Forms;
 using Newtonsoft.Json.Linq;
-using PckStudio.Classes.ToolboxItems;
+using PckStudio.ToolboxItems;
 using PckStudio.Forms.Utilities;
 
 namespace PckStudio.Forms.Additional_Popups.Animation

@@ -10,7 +10,7 @@ using System.IO;
 using Newtonsoft.Json;
 using PckStudio.Classes.FileTypes;
 using System.Text.RegularExpressions;
-using PckStudio.Classes.ToolboxItems;
+using PckStudio.ToolboxItems;
 
 namespace PckStudio
 {

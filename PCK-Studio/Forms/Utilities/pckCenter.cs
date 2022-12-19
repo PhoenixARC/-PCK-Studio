@@ -10,7 +10,7 @@ using System.Diagnostics;
 using PckStudio.Classes.Misc;
 using PckStudio.API.PCKCenter.model;
 using PckStudio.API.PCKCenter;
-using PckStudio.Classes.ToolboxItems;
+using PckStudio.ToolboxItems;
 
 namespace PckStudio.Forms
 {

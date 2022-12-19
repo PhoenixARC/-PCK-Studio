@@ -1,5 +1,5 @@
 ﻿using PckStudio.Classes.FileTypes;
-using PckStudio.Classes.ToolboxItems;
+using PckStudio.ToolboxItems;
 using System;
 using System.Data;
 using System.Drawing;
