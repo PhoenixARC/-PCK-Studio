@@ -7,7 +7,7 @@ namespace PckStudio.Classes.Networking
 {
     class Network
     {
-        public static string Version = "6.51";
+        public static string Version = Application.ProductVersion;
         public static bool IsBeta = true;
         public static bool Portable = false;
         public static bool NeedsUpdate = false;
@@ -21,6 +21,8 @@ namespace PckStudio.Classes.Networking
             using WebClient wc = new WebClient();
             try
             {
+                Update.CheckForUpdate(null); // TODO
+
                 Uri versionUri = new Uri(MainURL, IsBeta ? BetaUpdatePath : UpdatePath);
                 Console.WriteLine(versionUri);
                 string serverVersion = wc.DownloadString(versionUri);

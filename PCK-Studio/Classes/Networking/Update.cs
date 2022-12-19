@@ -7,6 +7,18 @@ using System.Windows.Forms;
 
 namespace PckStudio.Classes.Networking
 {
+    public enum UpdateResult
+    {
+        // Base Failure value
+        Failure = -1,
+        // Base Success value
+        Success,
+
+        UpdateAvailable,
+
+        UpdateFailure,
+    }
+
     class UpdateOptions
     {
         public bool IsBeta { get; set; }
@@ -35,6 +47,12 @@ namespace PckStudio.Classes.Networking
 
     static class Update
     {
+        public static UpdateResult CheckForUpdate(UpdateOptions options)
+        {
+            // TODO: implement this
+            return UpdateResult.Failure;
+        }
+
         public static void UpdateProgram(UpdateOptions options)
         {
             string updateURL = options.Domain;
