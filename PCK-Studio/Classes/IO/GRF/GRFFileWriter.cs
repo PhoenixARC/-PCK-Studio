@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using ICSharpCode.SharpZipLib.Zip.Compression.Streams;
-using PckStudio.Classes;
 using PckStudio.Classes.Utils.grf;
 using PckStudio.Classes.Utils;
 
@@ -33,11 +32,11 @@ namespace PckStudio.Classes.IO.GRF
             PrepareLookUpTable(_grfFile.Root, StringLookUpTable);
         }
 
-        private void PrepareLookUpTable(GRFFile.GameRule tag, List<string> LUT)
+        private void PrepareLookUpTable(GRFFile.GameRule rule, List<string> LUT)
         {
-            if (!LUT.Contains(tag.Name)) LUT.Add(tag.Name);
-            tag.SubRules.ForEach(tag => PrepareLookUpTable(tag, LUT));
-            foreach (var param in tag.Parameters)
+            if (!LUT.Contains(rule.Name)) LUT.Add(rule.Name);
+            rule.SubRules.ForEach(subRule => PrepareLookUpTable(subRule, LUT));
+            foreach (var param in rule.Parameters)
                 if (!LUT.Contains(param.Key)) LUT.Add(param.Key);
         }
 
@@ -85,7 +84,7 @@ namespace PckStudio.Classes.IO.GRF
             return result;
         }
 
-        private byte[] CompressRle(byte[] buffer) => Utils.RLE<byte>.Encode(buffer).ToArray();
+        private byte[] CompressRle(byte[] buffer) => RLE<byte>.Encode(buffer).ToArray();
 
         private void MakeAndWriteCrc(Stream stream, byte[] data)
         {
@@ -93,7 +92,7 @@ namespace PckStudio.Classes.IO.GRF
             if (crc != _grfFile.Crc) // no writting needed if there is no change
             {
                 stream.Position = 3;
-                WriteInt(stream, (int)crc);
+                WriteUInt(stream, crc);
                 stream.Seek(0, SeekOrigin.End); // reset to the end of the stream
             }
         }
@@ -126,15 +125,15 @@ namespace PckStudio.Classes.IO.GRF
             StringLookUpTable.ForEach( s => WriteString(stream, s) );
         }
 
-        private void WriteGameRuleHierarchy(Stream stream, GRFFile.GameRule parent)
+        private void WriteGameRuleHierarchy(Stream stream, GRFFile.GameRule rule)
         {
-            foreach (var rule in parent.SubRules)
+            foreach (var subRule in rule.SubRules)
             {
-                SetString(stream, rule.Name);
-                WriteInt(stream, rule.Parameters.Count);
-                foreach (var param in rule.Parameters) WriteParameter(stream, param);
-                WriteInt(stream, rule.SubRules.Count);
-                WriteGameRuleHierarchy(stream, rule);
+                SetString(stream, subRule.Name);
+                WriteInt(stream, subRule.Parameters.Count);
+                foreach (var param in subRule.Parameters) WriteParameter(stream, param);
+                WriteInt(stream, subRule.SubRules.Count);
+                WriteGameRuleHierarchy(stream, subRule);
             }
         }
 

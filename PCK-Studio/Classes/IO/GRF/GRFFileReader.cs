@@ -86,7 +86,7 @@ namespace PckStudio.Classes.IO.GRF
         {
             ReadStringLookUpTable(stream);
             string Name = GetString(stream);
-            Debug.WriteLine("[{0}] Root Name: {1}", nameof(GRFFile), Name);
+            Debug.WriteLine(string.Format("Root Name: {0}", Name), category: nameof(GRFFile));
             ReadGameRuleHierarchy(stream, _file.Root);
         }
 
@@ -113,14 +113,14 @@ namespace PckStudio.Classes.IO.GRF
             }
         }
 
-        private void ReadGameRuleHierarchy(Stream stream, GRFFile.GameRule parent)
+        private void ReadGameRuleHierarchy(Stream stream, GRFFile.GameRule parentRule)
         {
-            _ = parent ?? throw new ArgumentNullException(nameof(parent));
+            _ = parentRule ?? throw new ArgumentNullException(nameof(parentRule));
             int count = ReadInt(stream);
             for (int i = 0; i < count; i++)
             {
                 (string Name, int Count) parameter = (GetString(stream), ReadInt(stream));
-                var rule = parent.AddRule(parameter.Name);
+                var rule = parentRule.AddRule(parameter.Name);
                 for (int j = 0; j < parameter.Count; j++)
                 {
                     rule.Parameters.Add(GetString(stream), ReadString(stream));

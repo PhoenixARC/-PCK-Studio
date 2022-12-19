@@ -55,29 +55,29 @@ namespace PckStudio.Classes._3ds.Utils
             stream.Write(buffer, 0, 4);
         }
 
-        public static int CalcBufferSize(_3DSTextureFormat fmt, int w, int h)
+        public static int CalcBufferSize(_3DSTextureFormat textureFormat, int width, int height)
         {
-            switch (fmt)
+            switch (textureFormat)
             {
                 case _3DSTextureFormat.argb8:
-                    return w * h * 4;
+                    return width * height * 4;
                 case _3DSTextureFormat.rgb8:
-                    return w * h * 3;
+                    return width * height * 3;
                 case _3DSTextureFormat.rgba5551:
                 case _3DSTextureFormat.rgb565:
                 case _3DSTextureFormat.rgba4:
                 case _3DSTextureFormat.la8:
                 case _3DSTextureFormat.hilo8:
-                    return w * h * 2;
+                    return width * height * 2;
                 case _3DSTextureFormat.l8:
                 case _3DSTextureFormat.a8:
                 case _3DSTextureFormat.la4:
                 case _3DSTextureFormat.etc1a4:
-                    return w * h;
+                    return width * height;
                 case _3DSTextureFormat.l4:
                 case _3DSTextureFormat.a4:
                 case _3DSTextureFormat.etc1:
-                    return w * h >> 1;
+                    return width * height >> 1;
                 default:
                     throw new InvalidDataException("Invalid texture format on BCH!");
             }
