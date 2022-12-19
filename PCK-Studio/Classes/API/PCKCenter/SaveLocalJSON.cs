@@ -42,7 +42,7 @@ namespace PckStudio.API.PCKCenter
                 return JSONData;
             }
         }
-        public PCKCenterJSON AddPack(PCKCenterJSON JSONData,EntryInfo EInfo, int PackID)
+        public PCKCenterJSON AddPack(PCKCenterJSON JSONData, EntryInfo EInfo, int PackID)
         {
             JSONData.Data.Add(PackID.ToString(), EInfo);
             return JSONData;

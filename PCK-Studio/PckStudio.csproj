@@ -136,6 +136,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\API\PCKCenter\model\PCKCenterJSON.cs" />
+    <Compile Include="Classes\API\PCKCenter\PCKCollections.cs" />
+    <Compile Include="Classes\API\PCKCenter\PCKCollectionsLocal.cs" />
     <Compile Include="Classes\API\PCKCenter\SaveLocalJSON.cs" />
     <Compile Include="Classes\FileTypes\ARCFile.cs" />
     <Compile Include="Classes\FileTypes\BehaviourFile.cs" />
@@ -169,7 +171,6 @@
     <Compile Include="Classes\IO\GRF\GRFFileWriter.cs" />
     <Compile Include="Classes\IO\LOC\LOCFileReader.cs" />
     <Compile Include="Classes\IO\LOC\LOCFileWriter.cs" />
-    <Compile Include="Classes\IO\PCKCollectionsLocal.cs" />
     <Compile Include="Classes\IO\PCK\PCKFileReader.cs" />
     <Compile Include="Classes\IO\PCK\PCKFileWriter.cs" />
     <Compile Include="Classes\IO\StreamDataReader.cs" />
@@ -201,7 +202,6 @@
     <Compile Include="Classes\Models\TexelComparer.cs" />
     <Compile Include="Classes\Models\TexturePlane.cs" />
     <Compile Include="Classes\Networking\Network.cs" />
-    <Compile Include="Classes\Networking\PCKCollections.cs" />
     <Compile Include="Classes\Misc\RichPresenceClient.cs" />
     <Compile Include="Classes\Networking\Update.cs" />
     <Compile Include="Classes\Utils\GRF\CRC32.cs" />

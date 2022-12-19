@@ -149,7 +149,7 @@ namespace PckStudio.Forms.Utilities
         {
             try
             {
-                Collections.TryDownloadPack(int.Parse(OnlineTreeView.SelectedNode.Tag.ToString()), VitaCheckBox.Checked, CategoryComboBox.Text);
+                Collections.TryDownloadPack(CategoryComboBox.Text, int.Parse(OnlineTreeView.SelectedNode.Tag.ToString()), VitaCheckBox.Checked);
                 MessageBox.Show("Download complete");/**/
             }
             catch
