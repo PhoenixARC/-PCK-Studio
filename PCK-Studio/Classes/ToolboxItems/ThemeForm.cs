@@ -6,11 +6,16 @@ namespace PckStudio.ToolboxItems
 {
     public partial class ThemeForm : Form
     {
-        public ThemeForm()
+        public ThemeForm(Theme theme)
             : base()
         {
-            DarkNet.Instance.SetWindowThemeForms(this, Theme.Auto);
+            DarkNet.Instance.SetWindowThemeForms(this, theme);
             Invalidate();
+        }
+
+        public ThemeForm()
+            : this(Theme.Auto)
+        {
         }
 
         public ThemeForm(IContainer container)
