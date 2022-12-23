@@ -717,10 +717,12 @@
             this.Controls.Add(this.closeButton);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.ForeColor = System.Drawing.Color.White;
+            this.Location = new System.Drawing.Point(0, 0);
             this.MaximumSize = new System.Drawing.Size(630, 554);
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(630, 554);
             this.Name = "ANIMEditor";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "ANIM Editor";
             this.effectsGroup.ResumeLayout(false);
             this.effectsGroup.PerformLayout();

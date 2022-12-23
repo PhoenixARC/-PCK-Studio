@@ -75,6 +75,7 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label2);
             this.ForeColor = System.Drawing.Color.White;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "AddCategory";
