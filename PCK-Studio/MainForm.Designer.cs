@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            System.Windows.Forms.PictureBox pictureBox2;
             this.contextMenuPCKEntries = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.createToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.folderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -116,7 +117,6 @@
             this.addMultipleEntriesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteEntryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editAllEntriesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.tabControl = new MetroFramework.Controls.MetroTabControl();
             this.openTab = new MetroFramework.Controls.MetroTabPage();
             this.labelVersion = new MetroFramework.Controls.MetroLabel();
@@ -143,10 +143,11 @@
             this.treeViewMain = new System.Windows.Forms.TreeView();
             this.imageList = new System.Windows.Forms.ImageList(this.components);
             this.LittleEndianCheckBox = new MetroFramework.Controls.MetroCheckBox();
+            pictureBox2 = new System.Windows.Forms.PictureBox();
             this.contextMenuPCKEntries.SuspendLayout();
             this.menuStrip.SuspendLayout();
             this.contextMenuMetaTree.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(pictureBox2)).BeginInit();
             this.tabControl.SuspendLayout();
             this.openTab.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -756,9 +757,9 @@
             // 
             // pictureBox2
             // 
-            resources.ApplyResources(this.pictureBox2, "pictureBox2");
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.TabStop = false;
+            resources.ApplyResources(pictureBox2, "pictureBox2");
+            pictureBox2.Name = "pictureBox2";
+            pictureBox2.TabStop = false;
             // 
             // tabControl
             // 
@@ -766,7 +767,7 @@
             this.tabControl.Controls.Add(this.editorTab);
             resources.ApplyResources(this.tabControl, "tabControl");
             this.tabControl.Name = "tabControl";
-            this.tabControl.SelectedIndex = 0;
+            this.tabControl.SelectedIndex = 1;
             this.tabControl.Style = MetroFramework.MetroColorStyle.Silver;
             this.tabControl.TabStop = false;
             this.tabControl.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -805,12 +806,12 @@
             // 
             // panel1
             // 
+            resources.ApplyResources(this.panel1, "panel1");
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.panel1.Controls.Add(this.crEaTiiOn_Ultimate_GradientButton2);
             this.panel1.Controls.Add(this.crEaTiiOn_Ultimate_GradientButton1);
             this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Controls.Add(this.crEaTiiOn_Ultimate_GradientButton3);
-            resources.ApplyResources(this.panel1, "panel1");
             this.panel1.Name = "panel1";
             // 
             // crEaTiiOn_Ultimate_GradientButton2
@@ -900,7 +901,7 @@
             this.editorTab.Controls.Add(this.PropertiesTabControl);
             this.editorTab.Controls.Add(this.label11);
             this.editorTab.Controls.Add(this.treeViewMain);
-            this.editorTab.Controls.Add(this.pictureBox2);
+            this.editorTab.Controls.Add(pictureBox2);
             this.editorTab.ForeColor = System.Drawing.Color.White;
             this.editorTab.HorizontalScrollbarBarColor = true;
             this.editorTab.HorizontalScrollbarHighlightOnWheel = false;
@@ -1139,7 +1140,7 @@
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.contextMenuMetaTree.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(pictureBox2)).EndInit();
             this.tabControl.ResumeLayout(false);
             this.openTab.ResumeLayout(false);
             this.openTab.PerformLayout();
@@ -1187,7 +1188,6 @@
         private System.Windows.Forms.ToolStripMenuItem importSkinToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem importExtractedSkinsFolderToolStripMenuItem;
-        private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.ToolStripMenuItem createToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem folderToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem skinToolStripMenuItem;
