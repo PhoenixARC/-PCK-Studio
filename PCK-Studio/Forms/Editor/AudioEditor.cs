@@ -396,8 +396,10 @@ namespace PckStudio.Forms.Editor
 
 		private void AudioEditor_Shown(object sender, EventArgs e)
 		{
-			if (Owner.Owner is MainForm p) parent = p;
-			else Close();
+			if (Owner is MainForm p)
+				parent = p;
+			else
+				Close();
 		}
 
 		private async void bulkReplaceExistingFilesToolStripMenuItem_Click(object sender, EventArgs e)
