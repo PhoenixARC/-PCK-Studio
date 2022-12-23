@@ -21,7 +21,7 @@ using Dark.Net;
 
 namespace PckStudio.ToolboxItems
 {
-    public partial class ThemeForm : Form
+    public class ThemeForm : Form
     {
         public ThemeForm(Theme theme)
             : base()
