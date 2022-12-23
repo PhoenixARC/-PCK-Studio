@@ -124,13 +124,10 @@ namespace PckStudio.Forms.Editor
 
 		private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
 		{
-			if (colorTreeView.SelectedNode.Tag == null)
-				return;
-			var colorEntry = (COLFile.ColorEntry)colorTreeView.SelectedNode.Tag;
-			var color = colorEntry.color;
-			SetUpValueChanged(false);
-			pictureBox1.BackColor = Color.FromArgb(0xff << 24 | (int)color);
-			SetUpValueChanged(true);
+			if (colorTreeView.SelectedNode.Tag is COLFile.ColorEntry colorEntry)
+			{
+				pictureBox1.BackColor = Color.FromArgb(0xff << 24 | (int)colorEntry.color);
+			}
 		}
 
         private void treeView2_AfterSelect(object sender, TreeViewEventArgs e)
@@ -168,20 +165,22 @@ namespace PckStudio.Forms.Editor
 
 		private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
-			List<string> PS4Biomes = new List<string>();
-			PS4Biomes.Add("bamboo_jungle");
-			PS4Biomes.Add("bamboo_jungle_hills");
-			PS4Biomes.Add("mesa_mutated");
-			PS4Biomes.Add("mega_spruce_taiga_mutated");
-			PS4Biomes.Add("mega_taiga_mutated");
+            List<string> PS4Biomes = new List<string>
+            {
+                "bamboo_jungle",
+                "bamboo_jungle_hills",
+                "mesa_mutated",
+                "mega_spruce_taiga_mutated",
+                "mega_taiga_mutated"
+            };
 
-			if (colourfile.waterEntries.Find(e => PS4Biomes.Contains(e.name)) != null)
+            if (colourfile.waterEntries.Find(e => PS4Biomes.Contains(e.name)) != null)
 			{
 				var result = MessageBox.Show(this, "Biomes exclusive to PS4 Edition v1.91 were found in the water section of this colour table. This will crash all other editions of the game and PS4 Edition v1.90 and below. Would you like to remove them?", "Potentially unsupported biomes found", MessageBoxButtons.YesNoCancel);
 				switch (result)
 				{
 					case DialogResult.Yes:
-						foreach (var col in colourfile.waterEntries.ToList())
+						foreach (var col in colourfile.waterEntries)
 						{
 							if(PS4Biomes.Contains(col.name)) colourfile.waterEntries.Remove(col);
 						}
@@ -337,42 +336,49 @@ namespace PckStudio.Forms.Editor
 
 		private void setColorBtn_Click(object sender, EventArgs e)
         {
-			ColorDialog colorPick = new ColorDialog();
-			colorPick.AllowFullOpen = true;
-			colorPick.AnyColor = true;
-			colorPick.SolidColorOnly = tabControl.SelectedTab == colorsTab;
-			if (colorPick.ShowDialog() != DialogResult.OK) return;
-            pictureBox1.BackColor = colorPick.Color;
-			if (tabControl.SelectedTab == waterTab && waterTreeView.SelectedNode != null &&
-				waterTreeView.SelectedNode.Tag != null && waterTreeView.SelectedNode.Tag is COLFile.ExtendedColorEntry)
+			//pictureBox1.BackColor = Color.FromArgb(0xff << 24 | cBox.RGB);
+			//return;
+			//ColorDialog colorPick = new ColorDialog();
+			//colorPick.AllowFullOpen = true;
+			//colorPick.AnyColor = true;
+			//colorPick.SolidColorOnly = tabControl.SelectedTab == colorsTab;
+			//if (colorPick.ShowDialog() != DialogResult.OK) return;
+            pictureBox1.BackColor = Color.FromArgb(0xff, cBox.Color);
+			
+
+			// TODO: make pretty :^)
+			if (tabControl.SelectedTab == waterTab &&
+				waterTreeView.SelectedNode is TreeNode t &&
+				t.Tag is COLFile.ExtendedColorEntry wcolorEntry)
 			{
-				var colorEntry = ((COLFile.ExtendedColorEntry)waterTreeView.SelectedNode.Tag);
 				// preserves the alpha so the user can handle it since the color picker doesn't support alpha
-				Color fixed_color = Color.FromArgb(Color.FromArgb((int)colorEntry.color).A, colorPick.Color);
-				colorEntry.color = (uint)fixed_color.ToArgb();
+				Color fixed_color = Color.FromArgb((int)((wcolorEntry.color >> 24) & 0xff), cBox.Color);
+				wcolorEntry.color = (uint)fixed_color.ToArgb();
 				pictureBox1.BackColor = fixed_color;
 			}
-			else if (tabControl.SelectedTab == underwaterTab && underwaterTreeView.SelectedNode != null &&
-				underwaterTreeView.SelectedNode.Tag != null && underwaterTreeView.SelectedNode.Tag is COLFile.ExtendedColorEntry)
+			
+			if (tabControl.SelectedTab == underwaterTab &&
+				underwaterTreeView.SelectedNode is TreeNode uNode &&
+                uNode.Tag is COLFile.ExtendedColorEntry ucolorEntry)
 			{
-				var colorEntry = ((COLFile.ExtendedColorEntry)underwaterTreeView.SelectedNode.Tag);
-				// the game doesn't care about the alpha value for underwater colors
-				colorEntry.color_b = (uint)Color.FromArgb(0, colorPick.Color).ToArgb();
+                // the game doesn't care about the alpha value for underwater colors
+                ucolorEntry.color_b = (uint)Color.FromArgb(0, cBox.Color).ToArgb();
 			}
-			else if (tabControl.SelectedTab == fogTab && fogTreeView.SelectedNode != null &&
-				fogTreeView.SelectedNode.Tag != null && fogTreeView.SelectedNode.Tag is COLFile.ExtendedColorEntry)
+
+			if (tabControl.SelectedTab == fogTab &&
+				fogTreeView.SelectedNode is TreeNode fNode &&
+                fNode.Tag is COLFile.ExtendedColorEntry fcolorEntry)
 			{
-				var colorEntry = ((COLFile.ExtendedColorEntry)fogTreeView.SelectedNode.Tag);
 				// the game doesn't care about the alpha value for fog colors
-				colorEntry.color_c = (uint)Color.FromArgb(0, colorPick.Color).ToArgb();
+				fcolorEntry.color_c = (uint)Color.FromArgb(0, cBox.Color).ToArgb();
 			}
-			else if (tabControl.SelectedTab == colorsTab && colorTreeView.SelectedNode != null &&
-				colorTreeView.SelectedNode.Tag != null && colorTreeView.SelectedNode.Tag is COLFile.ColorEntry)
+			
+			if (tabControl.SelectedTab == colorsTab &&
+				colorTreeView.SelectedNode is TreeNode cNode &&
+                cNode.Tag is COLFile.ColorEntry colorEntry)
 			{
-				var colorEntry = ((COLFile.ColorEntry)colorTreeView.SelectedNode.Tag);
-				colorEntry.color = (uint)colorPick.Color.ToArgb() & 0xffffff;
+				colorEntry.color = (uint)cBox.Color.ToArgb() & 0xffffff;
 			}
-			colorPick.Dispose();
         }
 
 		private void alpha_ValueChanged(object sender, EventArgs e)
@@ -544,5 +550,5 @@ namespace PckStudio.Forms.Editor
 			pictureBox1.BackColor = fixed_color;
 			SetUpValueChanged(true);
 		}
-	}
+    }
 }

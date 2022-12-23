@@ -34,10 +34,38 @@ namespace PckStudio.Forms.Editor
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(COLEditor));
             this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.verticalColorSlider1 = new ColorPicker.VerticalColorSlider();
+            this.cBox = new ColorPicker.ColorBox();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.metroLabel6 = new MetroFramework.Controls.MetroLabel();
+            this.metroLabel5 = new MetroFramework.Controls.MetroLabel();
+            this.txRed = new ColorPicker.NumericTextBox();
+            this.metroLabel4 = new MetroFramework.Controls.MetroLabel();
+            this.txGreen = new ColorPicker.NumericTextBox();
+            this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
+            this.txBlue = new ColorPicker.NumericTextBox();
+            this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
+            this.txHex = new System.Windows.Forms.TextBox();
+            this.txTransp = new ColorPicker.NumericTextBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.setColorBtn = new MetroFramework.Controls.MetroButton();
+            this.tabControl = new MetroFramework.Controls.MetroTabControl();
+            this.colorsTab = new System.Windows.Forms.TabPage();
+            this.colorTreeView = new System.Windows.Forms.TreeView();
+            this.ColorContextMenu = new MetroFramework.Controls.MetroContextMenu(this.components);
+            this.restoreOriginalColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pasteColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.waterTab = new System.Windows.Forms.TabPage();
+            this.waterTreeView = new System.Windows.Forms.TreeView();
+            this.underwaterTab = new System.Windows.Forms.TabPage();
+            this.underwaterTreeView = new System.Windows.Forms.TreeView();
+            this.fogTab = new System.Windows.Forms.TabPage();
+            this.fogTreeView = new System.Windows.Forms.TreeView();
             this.metroTextBox1 = new MetroFramework.Controls.MetroTextBox();
             this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
-            this.setColorBtn = new MetroFramework.Controls.MetroButton();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -55,46 +83,18 @@ namespace PckStudio.Forms.Editor
             this.TU54ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TU69ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this._1_9_1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.waterTab = new System.Windows.Forms.TabPage();
-            this.waterTreeView = new System.Windows.Forms.TreeView();
-            this.ColorContextMenu = new MetroFramework.Controls.MetroContextMenu(this.components);
-            this.restoreOriginalColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.copyColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pasteColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.underwaterTreeView = new System.Windows.Forms.TreeView();
-            this.fogTreeView = new System.Windows.Forms.TreeView();
-            this.colorsTab = new System.Windows.Forms.TabPage();
-            this.colorTreeView = new System.Windows.Forms.TreeView();
-            this.tabControl = new MetroFramework.Controls.MetroTabControl();
-            this.underwaterTab = new System.Windows.Forms.TabPage();
-            this.fogTab = new System.Windows.Forms.TabPage();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.txHex = new System.Windows.Forms.TextBox();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
-            this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
-            this.metroLabel4 = new MetroFramework.Controls.MetroLabel();
-            this.metroLabel5 = new MetroFramework.Controls.MetroLabel();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.metroLabel6 = new MetroFramework.Controls.MetroLabel();
-            this.txRed = new ColorPicker.NumericTextBox();
-            this.txGreen = new ColorPicker.NumericTextBox();
-            this.txBlue = new ColorPicker.NumericTextBox();
-            this.txTransp = new ColorPicker.NumericTextBox();
-            this.cBox = new ColorPicker.ColorBox();
-            this.verticalColorSlider1 = new ColorPicker.VerticalColorSlider();
             this.metroPanel1.SuspendLayout();
+            this.panel2.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.menuStrip.SuspendLayout();
-            this.waterTab.SuspendLayout();
-            this.ColorContextMenu.SuspendLayout();
-            this.colorsTab.SuspendLayout();
             this.tabControl.SuspendLayout();
+            this.colorsTab.SuspendLayout();
+            this.ColorContextMenu.SuspendLayout();
+            this.waterTab.SuspendLayout();
             this.underwaterTab.SuspendLayout();
             this.fogTab.SuspendLayout();
-            this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
-            this.panel3.SuspendLayout();
+            this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // metroPanel1
@@ -111,6 +111,294 @@ namespace PckStudio.Forms.Editor
             this.metroPanel1.VerticalScrollbarBarColor = true;
             this.metroPanel1.VerticalScrollbarHighlightOnWheel = false;
             this.metroPanel1.VerticalScrollbarSize = 10;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.panel1);
+            this.panel2.Controls.Add(this.pictureBox1);
+            this.panel2.Controls.Add(this.setColorBtn);
+            resources.ApplyResources(this.panel2, "panel2");
+            this.panel2.Name = "panel2";
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.verticalColorSlider1);
+            this.panel1.Controls.Add(this.cBox);
+            this.panel1.Controls.Add(this.panel3);
+            resources.ApplyResources(this.panel1, "panel1");
+            this.panel1.Name = "panel1";
+            // 
+            // verticalColorSlider1
+            // 
+            this.verticalColorSlider1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.verticalColorSlider1.DrawStyle = ColorPicker.DrawStyles.Hue;
+            resources.ApplyResources(this.verticalColorSlider1, "verticalColorSlider1");
+            this.verticalColorSlider1.Name = "verticalColorSlider1";
+            this.verticalColorSlider1.RGB = 16711680;
+            // 
+            // cBox
+            // 
+            this.cBox.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.cBox.DrawStyle = ColorPicker.DrawStyles.Hue;
+            resources.ApplyResources(this.cBox, "cBox");
+            this.cBox.Name = "cBox";
+            this.cBox.RGB = 16711680;
+            // 
+            // panel3
+            // 
+            this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.panel3.Controls.Add(this.metroLabel6);
+            this.panel3.Controls.Add(this.metroLabel5);
+            this.panel3.Controls.Add(this.txRed);
+            this.panel3.Controls.Add(this.metroLabel4);
+            this.panel3.Controls.Add(this.txGreen);
+            this.panel3.Controls.Add(this.metroLabel3);
+            this.panel3.Controls.Add(this.txBlue);
+            this.panel3.Controls.Add(this.metroLabel1);
+            this.panel3.Controls.Add(this.txHex);
+            this.panel3.Controls.Add(this.txTransp);
+            resources.ApplyResources(this.panel3, "panel3");
+            this.panel3.Name = "panel3";
+            // 
+            // metroLabel6
+            // 
+            resources.ApplyResources(this.metroLabel6, "metroLabel6");
+            this.metroLabel6.Name = "metroLabel6";
+            this.metroLabel6.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.metroLabel6.UseCustomBackColor = true;
+            this.metroLabel6.UseCustomForeColor = true;
+            // 
+            // metroLabel5
+            // 
+            resources.ApplyResources(this.metroLabel5, "metroLabel5");
+            this.metroLabel5.Name = "metroLabel5";
+            this.metroLabel5.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.metroLabel5.UseCustomBackColor = true;
+            this.metroLabel5.UseCustomForeColor = true;
+            // 
+            // txRed
+            // 
+            this.txRed.AllowDecimal = false;
+            this.txRed.AllowNull = false;
+            this.txRed.AllowSign = false;
+            this.txRed.DecimalValue = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.txRed.DoubleValue = 0D;
+            this.txRed.Format = "";
+            this.txRed.Int32Value = 0;
+            resources.ApplyResources(this.txRed, "txRed");
+            this.txRed.Name = "txRed";
+            this.txRed.UInt32Value = ((uint)(0u));
+            // 
+            // metroLabel4
+            // 
+            resources.ApplyResources(this.metroLabel4, "metroLabel4");
+            this.metroLabel4.Name = "metroLabel4";
+            this.metroLabel4.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.metroLabel4.UseCustomBackColor = true;
+            this.metroLabel4.UseCustomForeColor = true;
+            // 
+            // txGreen
+            // 
+            this.txGreen.AllowDecimal = false;
+            this.txGreen.AllowNull = false;
+            this.txGreen.AllowSign = false;
+            this.txGreen.DecimalValue = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.txGreen.DoubleValue = 0D;
+            this.txGreen.Format = "";
+            this.txGreen.Int32Value = 0;
+            resources.ApplyResources(this.txGreen, "txGreen");
+            this.txGreen.Name = "txGreen";
+            this.txGreen.UInt32Value = ((uint)(0u));
+            // 
+            // metroLabel3
+            // 
+            resources.ApplyResources(this.metroLabel3, "metroLabel3");
+            this.metroLabel3.Name = "metroLabel3";
+            this.metroLabel3.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.metroLabel3.UseCustomBackColor = true;
+            this.metroLabel3.UseCustomForeColor = true;
+            // 
+            // txBlue
+            // 
+            this.txBlue.AllowDecimal = false;
+            this.txBlue.AllowNull = false;
+            this.txBlue.AllowSign = false;
+            this.txBlue.DecimalValue = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.txBlue.DoubleValue = 0D;
+            this.txBlue.Format = "";
+            this.txBlue.Int32Value = 0;
+            resources.ApplyResources(this.txBlue, "txBlue");
+            this.txBlue.Name = "txBlue";
+            this.txBlue.UInt32Value = ((uint)(0u));
+            // 
+            // metroLabel1
+            // 
+            resources.ApplyResources(this.metroLabel1, "metroLabel1");
+            this.metroLabel1.Name = "metroLabel1";
+            this.metroLabel1.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.metroLabel1.UseCustomBackColor = true;
+            this.metroLabel1.UseCustomForeColor = true;
+            // 
+            // txHex
+            // 
+            resources.ApplyResources(this.txHex, "txHex");
+            this.txHex.Name = "txHex";
+            // 
+            // txTransp
+            // 
+            this.txTransp.AllowDecimal = false;
+            this.txTransp.AllowNull = false;
+            this.txTransp.AllowSign = false;
+            this.txTransp.DecimalValue = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.txTransp.DoubleValue = 0D;
+            this.txTransp.Format = "";
+            this.txTransp.Int32Value = 0;
+            resources.ApplyResources(this.txTransp, "txTransp");
+            this.txTransp.Name = "txTransp";
+            this.txTransp.UInt32Value = ((uint)(0u));
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.Gray;
+            resources.ApplyResources(this.pictureBox1, "pictureBox1");
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.TabStop = false;
+            // 
+            // setColorBtn
+            // 
+            resources.ApplyResources(this.setColorBtn, "setColorBtn");
+            this.setColorBtn.Name = "setColorBtn";
+            this.setColorBtn.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.setColorBtn.UseSelectable = true;
+            this.setColorBtn.Click += new System.EventHandler(this.setColorBtn_Click);
+            // 
+            // tabControl
+            // 
+            this.tabControl.Controls.Add(this.colorsTab);
+            this.tabControl.Controls.Add(this.waterTab);
+            this.tabControl.Controls.Add(this.underwaterTab);
+            this.tabControl.Controls.Add(this.fogTab);
+            resources.ApplyResources(this.tabControl, "tabControl");
+            this.tabControl.Name = "tabControl";
+            this.tabControl.SelectedIndex = 0;
+            this.tabControl.Style = MetroFramework.MetroColorStyle.White;
+            this.tabControl.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.tabControl.UseSelectable = true;
+            // 
+            // colorsTab
+            // 
+            this.colorsTab.BackColor = System.Drawing.SystemColors.WindowFrame;
+            this.colorsTab.Controls.Add(this.colorTreeView);
+            resources.ApplyResources(this.colorsTab, "colorsTab");
+            this.colorsTab.Name = "colorsTab";
+            // 
+            // colorTreeView
+            // 
+            this.colorTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.colorTreeView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.colorTreeView.ContextMenuStrip = this.ColorContextMenu;
+            resources.ApplyResources(this.colorTreeView, "colorTreeView");
+            this.colorTreeView.ForeColor = System.Drawing.Color.White;
+            this.colorTreeView.Name = "colorTreeView";
+            this.colorTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
+            this.colorTreeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView1_KeyDown);
+            // 
+            // ColorContextMenu
+            // 
+            this.ColorContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.restoreOriginalColorToolStripMenuItem,
+            this.copyColorToolStripMenuItem,
+            this.pasteColorToolStripMenuItem});
+            this.ColorContextMenu.Name = "ColorContextMenu";
+            resources.ApplyResources(this.ColorContextMenu, "ColorContextMenu");
+            // 
+            // restoreOriginalColorToolStripMenuItem
+            // 
+            this.restoreOriginalColorToolStripMenuItem.Name = "restoreOriginalColorToolStripMenuItem";
+            resources.ApplyResources(this.restoreOriginalColorToolStripMenuItem, "restoreOriginalColorToolStripMenuItem");
+            this.restoreOriginalColorToolStripMenuItem.Click += new System.EventHandler(this.restoreOriginalColorToolStripMenuItem_Click);
+            // 
+            // copyColorToolStripMenuItem
+            // 
+            this.copyColorToolStripMenuItem.Name = "copyColorToolStripMenuItem";
+            resources.ApplyResources(this.copyColorToolStripMenuItem, "copyColorToolStripMenuItem");
+            this.copyColorToolStripMenuItem.Click += new System.EventHandler(this.copyColorToolStripMenuItem_Click);
+            // 
+            // pasteColorToolStripMenuItem
+            // 
+            this.pasteColorToolStripMenuItem.Name = "pasteColorToolStripMenuItem";
+            resources.ApplyResources(this.pasteColorToolStripMenuItem, "pasteColorToolStripMenuItem");
+            this.pasteColorToolStripMenuItem.Click += new System.EventHandler(this.pasteColorToolStripMenuItem_Click);
+            // 
+            // waterTab
+            // 
+            this.waterTab.BackColor = System.Drawing.SystemColors.WindowFrame;
+            this.waterTab.Controls.Add(this.waterTreeView);
+            resources.ApplyResources(this.waterTab, "waterTab");
+            this.waterTab.Name = "waterTab";
+            // 
+            // waterTreeView
+            // 
+            this.waterTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.waterTreeView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.waterTreeView.ContextMenuStrip = this.ColorContextMenu;
+            resources.ApplyResources(this.waterTreeView, "waterTreeView");
+            this.waterTreeView.ForeColor = System.Drawing.Color.White;
+            this.waterTreeView.Name = "waterTreeView";
+            this.waterTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView2_AfterSelect);
+            this.waterTreeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView2_KeyDown);
+            // 
+            // underwaterTab
+            // 
+            this.underwaterTab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.underwaterTab.Controls.Add(this.underwaterTreeView);
+            resources.ApplyResources(this.underwaterTab, "underwaterTab");
+            this.underwaterTab.Name = "underwaterTab";
+            // 
+            // underwaterTreeView
+            // 
+            this.underwaterTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.underwaterTreeView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.underwaterTreeView.ContextMenuStrip = this.ColorContextMenu;
+            this.underwaterTreeView.ForeColor = System.Drawing.Color.White;
+            resources.ApplyResources(this.underwaterTreeView, "underwaterTreeView");
+            this.underwaterTreeView.Name = "underwaterTreeView";
+            this.underwaterTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView3_AfterSelect);
+            this.underwaterTreeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView3_KeyDown);
+            // 
+            // fogTab
+            // 
+            this.fogTab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.fogTab.Controls.Add(this.fogTreeView);
+            resources.ApplyResources(this.fogTab, "fogTab");
+            this.fogTab.Name = "fogTab";
+            // 
+            // fogTreeView
+            // 
+            this.fogTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.fogTreeView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.fogTreeView.ContextMenuStrip = this.ColorContextMenu;
+            this.fogTreeView.ForeColor = System.Drawing.Color.White;
+            resources.ApplyResources(this.fogTreeView, "fogTreeView");
+            this.fogTreeView.Name = "fogTreeView";
+            this.fogTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView4_AfterSelect);
+            this.fogTreeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView4_KeyDown);
             // 
             // metroTextBox1
             // 
@@ -148,21 +436,6 @@ namespace PckStudio.Forms.Editor
             resources.ApplyResources(this.metroLabel2, "metroLabel2");
             this.metroLabel2.Name = "metroLabel2";
             this.metroLabel2.Theme = MetroFramework.MetroThemeStyle.Dark;
-            // 
-            // setColorBtn
-            // 
-            resources.ApplyResources(this.setColorBtn, "setColorBtn");
-            this.setColorBtn.Name = "setColorBtn";
-            this.setColorBtn.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.setColorBtn.UseSelectable = true;
-            this.setColorBtn.Click += new System.EventHandler(this.setColorBtn_Click);
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackColor = System.Drawing.Color.Gray;
-            resources.ApplyResources(this.pictureBox1, "pictureBox1");
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.TabStop = false;
             // 
             // menuStrip
             // 
@@ -272,279 +545,6 @@ namespace PckStudio.Forms.Editor
             this._1_9_1ToolStripMenuItem.Name = "_1_9_1ToolStripMenuItem";
             resources.ApplyResources(this._1_9_1ToolStripMenuItem, "_1_9_1ToolStripMenuItem");
             // 
-            // waterTab
-            // 
-            this.waterTab.BackColor = System.Drawing.SystemColors.WindowFrame;
-            this.waterTab.Controls.Add(this.waterTreeView);
-            resources.ApplyResources(this.waterTab, "waterTab");
-            this.waterTab.Name = "waterTab";
-            // 
-            // waterTreeView
-            // 
-            this.waterTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.waterTreeView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.waterTreeView.ContextMenuStrip = this.ColorContextMenu;
-            resources.ApplyResources(this.waterTreeView, "waterTreeView");
-            this.waterTreeView.ForeColor = System.Drawing.Color.White;
-            this.waterTreeView.Name = "waterTreeView";
-            this.waterTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView2_AfterSelect);
-            this.waterTreeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView2_KeyDown);
-            // 
-            // ColorContextMenu
-            // 
-            this.ColorContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.restoreOriginalColorToolStripMenuItem,
-            this.copyColorToolStripMenuItem,
-            this.pasteColorToolStripMenuItem});
-            this.ColorContextMenu.Name = "ColorContextMenu";
-            resources.ApplyResources(this.ColorContextMenu, "ColorContextMenu");
-            // 
-            // restoreOriginalColorToolStripMenuItem
-            // 
-            this.restoreOriginalColorToolStripMenuItem.Name = "restoreOriginalColorToolStripMenuItem";
-            resources.ApplyResources(this.restoreOriginalColorToolStripMenuItem, "restoreOriginalColorToolStripMenuItem");
-            this.restoreOriginalColorToolStripMenuItem.Click += new System.EventHandler(this.restoreOriginalColorToolStripMenuItem_Click);
-            // 
-            // copyColorToolStripMenuItem
-            // 
-            this.copyColorToolStripMenuItem.Name = "copyColorToolStripMenuItem";
-            resources.ApplyResources(this.copyColorToolStripMenuItem, "copyColorToolStripMenuItem");
-            this.copyColorToolStripMenuItem.Click += new System.EventHandler(this.copyColorToolStripMenuItem_Click);
-            // 
-            // pasteColorToolStripMenuItem
-            // 
-            this.pasteColorToolStripMenuItem.Name = "pasteColorToolStripMenuItem";
-            resources.ApplyResources(this.pasteColorToolStripMenuItem, "pasteColorToolStripMenuItem");
-            this.pasteColorToolStripMenuItem.Click += new System.EventHandler(this.pasteColorToolStripMenuItem_Click);
-            // 
-            // underwaterTreeView
-            // 
-            this.underwaterTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.underwaterTreeView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.underwaterTreeView.ContextMenuStrip = this.ColorContextMenu;
-            this.underwaterTreeView.ForeColor = System.Drawing.Color.White;
-            resources.ApplyResources(this.underwaterTreeView, "underwaterTreeView");
-            this.underwaterTreeView.Name = "underwaterTreeView";
-            this.underwaterTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView3_AfterSelect);
-            this.underwaterTreeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView3_KeyDown);
-            // 
-            // fogTreeView
-            // 
-            this.fogTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.fogTreeView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.fogTreeView.ContextMenuStrip = this.ColorContextMenu;
-            this.fogTreeView.ForeColor = System.Drawing.Color.White;
-            resources.ApplyResources(this.fogTreeView, "fogTreeView");
-            this.fogTreeView.Name = "fogTreeView";
-            this.fogTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView4_AfterSelect);
-            this.fogTreeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView4_KeyDown);
-            // 
-            // colorsTab
-            // 
-            this.colorsTab.BackColor = System.Drawing.SystemColors.WindowFrame;
-            this.colorsTab.Controls.Add(this.colorTreeView);
-            resources.ApplyResources(this.colorsTab, "colorsTab");
-            this.colorsTab.Name = "colorsTab";
-            // 
-            // colorTreeView
-            // 
-            this.colorTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.colorTreeView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.colorTreeView.ContextMenuStrip = this.ColorContextMenu;
-            resources.ApplyResources(this.colorTreeView, "colorTreeView");
-            this.colorTreeView.ForeColor = System.Drawing.Color.White;
-            this.colorTreeView.Name = "colorTreeView";
-            this.colorTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
-            this.colorTreeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView1_KeyDown);
-            // 
-            // tabControl
-            // 
-            this.tabControl.Controls.Add(this.colorsTab);
-            this.tabControl.Controls.Add(this.waterTab);
-            this.tabControl.Controls.Add(this.underwaterTab);
-            this.tabControl.Controls.Add(this.fogTab);
-            resources.ApplyResources(this.tabControl, "tabControl");
-            this.tabControl.Name = "tabControl";
-            this.tabControl.SelectedIndex = 0;
-            this.tabControl.Style = MetroFramework.MetroColorStyle.White;
-            this.tabControl.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.tabControl.UseSelectable = true;
-            // 
-            // underwaterTab
-            // 
-            this.underwaterTab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.underwaterTab.Controls.Add(this.underwaterTreeView);
-            resources.ApplyResources(this.underwaterTab, "underwaterTab");
-            this.underwaterTab.Name = "underwaterTab";
-            // 
-            // fogTab
-            // 
-            this.fogTab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.fogTab.Controls.Add(this.fogTreeView);
-            resources.ApplyResources(this.fogTab, "fogTab");
-            this.fogTab.Name = "fogTab";
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.verticalColorSlider1);
-            this.panel1.Controls.Add(this.cBox);
-            this.panel1.Controls.Add(this.panel3);
-            resources.ApplyResources(this.panel1, "panel1");
-            this.panel1.Name = "panel1";
-            // 
-            // txHex
-            // 
-            resources.ApplyResources(this.txHex, "txHex");
-            this.txHex.Name = "txHex";
-            // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.panel1);
-            this.panel2.Controls.Add(this.pictureBox1);
-            this.panel2.Controls.Add(this.setColorBtn);
-            resources.ApplyResources(this.panel2, "panel2");
-            this.panel2.Name = "panel2";
-            // 
-            // metroLabel1
-            // 
-            resources.ApplyResources(this.metroLabel1, "metroLabel1");
-            this.metroLabel1.Name = "metroLabel1";
-            this.metroLabel1.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.metroLabel1.UseCustomBackColor = true;
-            this.metroLabel1.UseCustomForeColor = true;
-            // 
-            // metroLabel3
-            // 
-            resources.ApplyResources(this.metroLabel3, "metroLabel3");
-            this.metroLabel3.Name = "metroLabel3";
-            this.metroLabel3.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.metroLabel3.UseCustomBackColor = true;
-            this.metroLabel3.UseCustomForeColor = true;
-            // 
-            // metroLabel4
-            // 
-            resources.ApplyResources(this.metroLabel4, "metroLabel4");
-            this.metroLabel4.Name = "metroLabel4";
-            this.metroLabel4.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.metroLabel4.UseCustomBackColor = true;
-            this.metroLabel4.UseCustomForeColor = true;
-            // 
-            // metroLabel5
-            // 
-            resources.ApplyResources(this.metroLabel5, "metroLabel5");
-            this.metroLabel5.Name = "metroLabel5";
-            this.metroLabel5.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.metroLabel5.UseCustomBackColor = true;
-            this.metroLabel5.UseCustomForeColor = true;
-            // 
-            // panel3
-            // 
-            this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.panel3.Controls.Add(this.metroLabel6);
-            this.panel3.Controls.Add(this.metroLabel5);
-            this.panel3.Controls.Add(this.txRed);
-            this.panel3.Controls.Add(this.metroLabel4);
-            this.panel3.Controls.Add(this.txGreen);
-            this.panel3.Controls.Add(this.metroLabel3);
-            this.panel3.Controls.Add(this.txBlue);
-            this.panel3.Controls.Add(this.metroLabel1);
-            this.panel3.Controls.Add(this.txHex);
-            this.panel3.Controls.Add(this.txTransp);
-            resources.ApplyResources(this.panel3, "panel3");
-            this.panel3.Name = "panel3";
-            // 
-            // metroLabel6
-            // 
-            resources.ApplyResources(this.metroLabel6, "metroLabel6");
-            this.metroLabel6.Name = "metroLabel6";
-            this.metroLabel6.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.metroLabel6.UseCustomBackColor = true;
-            this.metroLabel6.UseCustomForeColor = true;
-            // 
-            // txRed
-            // 
-            this.txRed.AllowDecimal = false;
-            this.txRed.AllowNull = false;
-            this.txRed.AllowSign = false;
-            this.txRed.DecimalValue = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.txRed.DoubleValue = 0D;
-            this.txRed.Format = "";
-            this.txRed.Int32Value = 0;
-            resources.ApplyResources(this.txRed, "txRed");
-            this.txRed.Name = "txRed";
-            this.txRed.UInt32Value = ((uint)(0u));
-            // 
-            // txGreen
-            // 
-            this.txGreen.AllowDecimal = false;
-            this.txGreen.AllowNull = false;
-            this.txGreen.AllowSign = false;
-            this.txGreen.DecimalValue = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.txGreen.DoubleValue = 0D;
-            this.txGreen.Format = "";
-            this.txGreen.Int32Value = 0;
-            resources.ApplyResources(this.txGreen, "txGreen");
-            this.txGreen.Name = "txGreen";
-            this.txGreen.UInt32Value = ((uint)(0u));
-            // 
-            // txBlue
-            // 
-            this.txBlue.AllowDecimal = false;
-            this.txBlue.AllowNull = false;
-            this.txBlue.AllowSign = false;
-            this.txBlue.DecimalValue = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.txBlue.DoubleValue = 0D;
-            this.txBlue.Format = "";
-            this.txBlue.Int32Value = 0;
-            resources.ApplyResources(this.txBlue, "txBlue");
-            this.txBlue.Name = "txBlue";
-            this.txBlue.UInt32Value = ((uint)(0u));
-            // 
-            // txTransp
-            // 
-            this.txTransp.AllowDecimal = false;
-            this.txTransp.AllowNull = false;
-            this.txTransp.AllowSign = false;
-            this.txTransp.DecimalValue = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.txTransp.DoubleValue = 0D;
-            this.txTransp.Format = "";
-            this.txTransp.Int32Value = 0;
-            resources.ApplyResources(this.txTransp, "txTransp");
-            this.txTransp.Name = "txTransp";
-            this.txTransp.UInt32Value = ((uint)(0u));
-            // 
-            // cBox
-            // 
-            this.cBox.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.cBox.DrawStyle = ColorPicker.DrawStyles.Hue;
-            resources.ApplyResources(this.cBox, "cBox");
-            this.cBox.Name = "cBox";
-            this.cBox.RGB = 16711680;
-            // 
-            // verticalColorSlider1
-            // 
-            this.verticalColorSlider1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.verticalColorSlider1.DrawStyle = ColorPicker.DrawStyles.Hue;
-            resources.ApplyResources(this.verticalColorSlider1, "verticalColorSlider1");
-            this.verticalColorSlider1.Name = "verticalColorSlider1";
-            this.verticalColorSlider1.RGB = 16711680;
-            // 
             // COLEditor
             // 
             resources.ApplyResources(this, "$this");
@@ -557,19 +557,19 @@ namespace PckStudio.Forms.Editor
             this.ForeColor = System.Drawing.Color.White;
             this.Name = "COLEditor";
             this.metroPanel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.menuStrip.ResumeLayout(false);
-            this.menuStrip.PerformLayout();
-            this.waterTab.ResumeLayout(false);
-            this.ColorContextMenu.ResumeLayout(false);
-            this.colorsTab.ResumeLayout(false);
-            this.tabControl.ResumeLayout(false);
-            this.underwaterTab.ResumeLayout(false);
-            this.fogTab.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.tabControl.ResumeLayout(false);
+            this.colorsTab.ResumeLayout(false);
+            this.ColorContextMenu.ResumeLayout(false);
+            this.waterTab.ResumeLayout(false);
+            this.underwaterTab.ResumeLayout(false);
+            this.fogTab.ResumeLayout(false);
+            this.menuStrip.ResumeLayout(false);
+            this.menuStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
