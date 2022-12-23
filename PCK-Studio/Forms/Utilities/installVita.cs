@@ -292,8 +292,8 @@ namespace PckStudio.Forms
 
                 if (openPCK.ShowDialog() == DialogResult.OK)
                 {
-                    FTPClient client = new FTPClient("ftp://" + textBoxHost.Text, "", "");
-                    client.UploadFile(openPCK.FileName, dlcPath + "/" + listViewPCKS.SelectedItems[0].Text + "/" + listViewPCKS.SelectedItems[0].Tag.ToString());
+                    using (FTPClient client = new FTPClient("ftp://" + textBoxHost.Text, "", ""))
+                        client.UploadFile(openPCK.FileName, dlcPath + "/" + listViewPCKS.SelectedItems[0].Text + "/" + listViewPCKS.SelectedItems[0].Tag.ToString());
                     MessageBox.Show("PCK Replaced!");
                 }
             }
@@ -341,8 +341,8 @@ namespace PckStudio.Forms
             if (listViewPCKS.SelectedItems.Count != 0)
             {
                 buttonMode("loading");
-                FTPClient client = new FTPClient("ftp://" + textBoxHost.Text, "", "");
-                client.UploadFile(mod, dlcPath + "/" + listViewPCKS.SelectedItems[0].Text + "/" + listViewPCKS.SelectedItems[0].Tag.ToString());
+                using (FTPClient client = new FTPClient("ftp://" + textBoxHost.Text, "", ""))
+                    client.UploadFile(mod, dlcPath + "/" + listViewPCKS.SelectedItems[0].Text + "/" + listViewPCKS.SelectedItems[0].Tag.ToString());
                 MessageBox.Show("PCK Replaced!");
             }
             buttonMode("stop");

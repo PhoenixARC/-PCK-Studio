@@ -15,9 +15,8 @@ namespace PckStudio.Classes.Misc
         private FtpWebResponse response = null;
         private Stream _stream = null;
 
-
         public FTPClient(string host, string username)
-            : this(new Uri(host), username)
+            : this(new Uri(host), username, string.Empty)
         {
         }
 
@@ -52,7 +51,8 @@ namespace PckStudio.Classes.Misc
             return request;
         }
 
-        public void DownloadFile(string remoteFilepath, string localFile)
+        // TODO: let it accept a destination Stream ?
+        public void DownloadFile(string remoteFilepath, string localFilepath)
         {
             try
             {
@@ -67,23 +67,25 @@ namespace PckStudio.Classes.Misc
 
                 response = (FtpWebResponse)request.GetResponse();
                 _stream = response.GetResponseStream();
-                FileStream fileStream = new FileStream(localFile, FileMode.OpenOrCreate);
                 byte[] buffer = new byte[Convert.ToInt32(GetFileSize(remoteFilepath))];
                 int num = _stream.Read(buffer, 0, Convert.ToInt32(GetFileSize(remoteFilepath)));
-                try
+
+                using (FileStream fileStream = new FileStream(localFilepath, FileMode.OpenOrCreate))
                 {
-                    while (num > 0)
+                    try
                     {
-                        fileStream.Write(buffer, 0, num);
-                        num = _stream.Read(buffer, 0, Convert.ToInt32(GetFileSize(remoteFilepath)));
+                        while (num > 0)
+                        {
+                            fileStream.Write(buffer, 0, num);
+                            num = _stream.Read(buffer, 0, Convert.ToInt32(GetFileSize(remoteFilepath)));
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.ToString());
                     }
                 }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.ToString());
-                }
 
-                fileStream.Close();
                 _stream.Close();
                 response.Close();
                 request = null;

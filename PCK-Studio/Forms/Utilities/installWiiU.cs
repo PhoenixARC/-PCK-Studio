@@ -347,8 +347,8 @@ namespace PckStudio.Forms
                 
                 if (openPCK.ShowDialog() == DialogResult.OK)
                 {
-                    FTPClient client = new FTPClient("ftp://" + textBoxHost.Text, "", "a3262443");
-                    client.UploadFile(openPCK.FileName, dlcPath + "/" + listViewPCKS.SelectedItems[0].Text + "/" + listViewPCKS.SelectedItems[0].Tag.ToString());
+                    using (FTPClient client = new FTPClient("ftp://" + textBoxHost.Text, "", "a3262443"))
+                        client.UploadFile(openPCK.FileName, dlcPath + "/" + listViewPCKS.SelectedItems[0].Text + "/" + listViewPCKS.SelectedItems[0].Tag.ToString());
                     if(TextBoxPackImage.Text != "")
                     {
                         string PackID = GetPackID(openPCK.FileName);
@@ -412,8 +412,8 @@ namespace PckStudio.Forms
             if (listViewPCKS.SelectedItems.Count != 0)
             {
                 buttonMode("loading");
-                FTPClient client = new FTPClient("ftp://" + textBoxHost.Text, "", "a3262443");
-                client.UploadFile(mod, dlcPath + "/" + listViewPCKS.SelectedItems[0].Text + "/" + listViewPCKS.SelectedItems[0].Tag.ToString());
+                using (FTPClient client = new FTPClient("ftp://" + textBoxHost.Text, "", "a3262443"))
+                    client.UploadFile(mod, dlcPath + "/" + listViewPCKS.SelectedItems[0].Text + "/" + listViewPCKS.SelectedItems[0].Tag.ToString());
                 if (TextBoxPackImage.Text != "")
                 {
                     string PackID = GetPackID(mod);
@@ -437,8 +437,8 @@ namespace PckStudio.Forms
 
         private void GetARCFromConsole()
         {
-            FTPClient client = new FTPClient("ftp://" + textBoxHost.Text, "", "a3262443");
-            client.DownloadFile(dlcPath + "../../Common/Media/MediaWiiU.arc", Program.AppData + "MediaWiiU.arc");
+            using (FTPClient client = new FTPClient("ftp://" + textBoxHost.Text, "", "a3262443"))
+                client.DownloadFile(dlcPath + "../../Common/Media/MediaWiiU.arc", Program.AppData + "MediaWiiU.arc");
             archive = ARCFileReader.Read(new MemoryStream(File.ReadAllBytes(Program.AppData + "MediaWiiU.arc")));
         }
 
@@ -452,14 +452,17 @@ namespace PckStudio.Forms
 
         private void SendARCToConsole()
         {
-            FTPClient client = new FTPClient("ftp://" + textBoxHost.Text, "", "a3262443");
-            MemoryStream ms = new MemoryStream();
-            ARCFileWriter.Write(ms, archive);
-            File.WriteAllBytes(Program.AppData + "MediaWiiU.arc", ms.ToArray());
-            client.UploadFile(Program.AppData + "MediaWiiU.arc", dlcPath + "../../Common/Media/MediaWiiU.arc");
-            archive.Clear();
-            currentPCK.Files.Clear();
-            currentPCK = null;
+            using (FTPClient client = new FTPClient("ftp://" + textBoxHost.Text, "", "a3262443"))
+            {
+                MemoryStream ms = new MemoryStream();
+                ARCFileWriter.Write(ms, archive);
+                File.WriteAllBytes(Program.AppData + "MediaWiiU.arc", ms.ToArray());
+                client.UploadFile(Program.AppData + "MediaWiiU.arc", dlcPath + "../../Common/Media/MediaWiiU.arc");
+                archive.Clear();
+                currentPCK.Files.Clear();
+                currentPCK = null;
+                ms.Dispose();
+            }
             GC.Collect();
         }
 
