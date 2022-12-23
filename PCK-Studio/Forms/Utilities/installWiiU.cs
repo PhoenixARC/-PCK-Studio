@@ -1,5 +1,4 @@
-﻿using FileTransferProtocolLib;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -7,10 +6,12 @@ using System.IO;
 using System.IO.Compression;
 using System.Net;
 using System.Windows.Forms;
+using System.Diagnostics;
+
 using PckStudio.Classes.FileTypes;
 using PckStudio.Classes.IO.PCK;
 using PckStudio.Classes.IO.ARC;
-using System.Diagnostics;
+using PckStudio.Classes.Misc;
 
 namespace PckStudio.Forms
 {
@@ -346,7 +347,7 @@ namespace PckStudio.Forms
                 
                 if (openPCK.ShowDialog() == DialogResult.OK)
                 {
-                    FTP client = new FTP("ftp://" + textBoxHost.Text, "", "a3262443");
+                    FTPClient client = new FTPClient("ftp://" + textBoxHost.Text, "", "a3262443");
                     client.UploadFile(openPCK.FileName, dlcPath + "/" + listViewPCKS.SelectedItems[0].Text + "/" + listViewPCKS.SelectedItems[0].Tag.ToString());
                     if(TextBoxPackImage.Text != "")
                     {
@@ -411,7 +412,7 @@ namespace PckStudio.Forms
             if (listViewPCKS.SelectedItems.Count != 0)
             {
                 buttonMode("loading");
-                FTP client = new FTP("ftp://" + textBoxHost.Text, "", "a3262443");
+                FTPClient client = new FTPClient("ftp://" + textBoxHost.Text, "", "a3262443");
                 client.UploadFile(mod, dlcPath + "/" + listViewPCKS.SelectedItems[0].Text + "/" + listViewPCKS.SelectedItems[0].Tag.ToString());
                 if (TextBoxPackImage.Text != "")
                 {
@@ -436,7 +437,7 @@ namespace PckStudio.Forms
 
         private void GetARCFromConsole()
         {
-            FTP client = new FTP("ftp://" + textBoxHost.Text, "", "a3262443");
+            FTPClient client = new FTPClient("ftp://" + textBoxHost.Text, "", "a3262443");
             client.DownloadFile(dlcPath + "../../Common/Media/MediaWiiU.arc", Program.AppData + "MediaWiiU.arc");
             archive = ARCFileReader.Read(new MemoryStream(File.ReadAllBytes(Program.AppData + "MediaWiiU.arc")));
         }
@@ -451,7 +452,7 @@ namespace PckStudio.Forms
 
         private void SendARCToConsole()
         {
-            FTP client = new FTP("ftp://" + textBoxHost.Text, "", "a3262443");
+            FTPClient client = new FTPClient("ftp://" + textBoxHost.Text, "", "a3262443");
             MemoryStream ms = new MemoryStream();
             ARCFileWriter.Write(ms, archive);
             File.WriteAllBytes(Program.AppData + "MediaWiiU.arc", ms.ToArray());
