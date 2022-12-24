@@ -312,7 +312,7 @@
             this.replacePCKToolStripMenuItem.Text = "Replace with external PCK";
             this.replacePCKToolStripMenuItem.Click += new System.EventHandler(this.replacePCKToolStripMenuItem_Click);
             // 
-            // installPS3
+            // InstallPS3
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -321,8 +321,10 @@
             this.Controls.Add(this.metroTabControlMain);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.ForeColor = System.Drawing.Color.White;
+            this.Location = new System.Drawing.Point(0, 0);
             this.MaximizeBox = false;
-            this.Name = "installPS3";
+            this.Name = "InstallPS3";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Install to Playstation®3";
             this.Load += new System.EventHandler(this.installPS3_Load);
             this.metroTabPageMain.ResumeLayout(false);

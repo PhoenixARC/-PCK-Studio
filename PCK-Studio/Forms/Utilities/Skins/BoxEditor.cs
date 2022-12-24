@@ -51,7 +51,7 @@ namespace PckStudio.Forms.Utilities.Skins
 
 		}
 
-		public BoxEditor(string inBOX, bool hasInflation)
+        public BoxEditor(string inBOX, bool hasInflation)
 		{
 			InitializeComponent();
 

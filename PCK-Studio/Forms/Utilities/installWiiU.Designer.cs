@@ -305,7 +305,7 @@
             resources.ApplyResources(this.replacePCKToolStripMenuItem, "replacePCKToolStripMenuItem");
             this.replacePCKToolStripMenuItem.Click += new System.EventHandler(this.replacePCKToolStripMenuItem_Click);
             // 
-            // installWiiU
+            // InstallWiiU
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -313,7 +313,7 @@
             this.Controls.Add(this.metroTabControlMain);
             this.ForeColor = System.Drawing.Color.White;
             this.MaximizeBox = false;
-            this.Name = "installWiiU";
+            this.Name = "InstallWiiU";
             this.metroTabPageMain.ResumeLayout(false);
             this.myTablePanel1.ResumeLayout(false);
             this.myTablePanel1.PerformLayout();

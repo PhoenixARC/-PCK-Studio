@@ -314,7 +314,7 @@ namespace PckStudio.Forms
             this.replacePCKToolStripMenuItem.Text = "Replace with external PCK";
             this.replacePCKToolStripMenuItem.Click += new System.EventHandler(this.replacePCKToolStripMenuItem_Click);
             // 
-            // installVita
+            // InstallVita
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -323,8 +323,10 @@ namespace PckStudio.Forms
             this.Controls.Add(this.metroTabControlMain);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.ForeColor = System.Drawing.Color.White;
+            this.Location = new System.Drawing.Point(0, 0);
             this.MaximizeBox = false;
-            this.Name = "installVita";
+            this.Name = "InstallVita";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Install to Playstation®Vita";
             this.Load += new System.EventHandler(this.installVita_Load);
             this.metroTabPageMain.ResumeLayout(false);

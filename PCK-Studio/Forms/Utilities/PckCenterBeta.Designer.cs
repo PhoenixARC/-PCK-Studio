@@ -350,7 +350,9 @@
             this.Controls.Add(this.metroTabControl1);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.ForeColor = System.Drawing.Color.White;
+            this.Location = new System.Drawing.Point(0, 0);
             this.Name = "PCKCenterBeta";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Pck Center";
             this.metroTabControl1.ResumeLayout(false);
             this.metroTabPage1.ResumeLayout(false);

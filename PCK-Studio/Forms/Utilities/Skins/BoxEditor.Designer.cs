@@ -63,6 +63,61 @@
             ((System.ComponentModel.ISupportInitialize)(this.inflationUpDown)).BeginInit();
             this.SuspendLayout();
             // 
+            // parentLabel
+            // 
+            parentLabel.AutoSize = true;
+            parentLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
+            parentLabel.Location = new System.Drawing.Point(357, 72);
+            parentLabel.Name = "parentLabel";
+            parentLabel.Size = new System.Drawing.Size(64, 25);
+            parentLabel.TabIndex = 2;
+            parentLabel.Text = "Parent:";
+            parentLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
+            // 
+            // positionLabel
+            // 
+            positionLabel.AutoSize = true;
+            positionLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
+            positionLabel.Location = new System.Drawing.Point(33, 72);
+            positionLabel.Name = "positionLabel";
+            positionLabel.Size = new System.Drawing.Size(75, 25);
+            positionLabel.TabIndex = 4;
+            positionLabel.Text = "Position:";
+            positionLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
+            // 
+            // sizeLabel
+            // 
+            sizeLabel.AutoSize = true;
+            sizeLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
+            sizeLabel.Location = new System.Drawing.Point(33, 97);
+            sizeLabel.Name = "sizeLabel";
+            sizeLabel.Size = new System.Drawing.Size(46, 25);
+            sizeLabel.TabIndex = 22;
+            sizeLabel.Text = "Size:";
+            sizeLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
+            // 
+            // uvLabel
+            // 
+            uvLabel.AutoSize = true;
+            uvLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
+            uvLabel.Location = new System.Drawing.Point(33, 123);
+            uvLabel.Name = "uvLabel";
+            uvLabel.Size = new System.Drawing.Size(39, 25);
+            uvLabel.TabIndex = 26;
+            uvLabel.Text = "UV:";
+            uvLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
+            // 
+            // inflationLabel
+            // 
+            inflationLabel.AutoSize = true;
+            inflationLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
+            inflationLabel.Location = new System.Drawing.Point(33, 149);
+            inflationLabel.Name = "inflationLabel";
+            inflationLabel.Size = new System.Drawing.Size(55, 25);
+            inflationLabel.TabIndex = 31;
+            inflationLabel.Text = "Scale:";
+            inflationLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
+            // 
             // closeButton
             // 
             this.closeButton.Location = new System.Drawing.Point(252, 187);
@@ -80,17 +135,6 @@
             this.toolTip.Style = MetroFramework.MetroColorStyle.Blue;
             this.toolTip.StyleManager = null;
             this.toolTip.Theme = MetroFramework.MetroThemeStyle.Dark;
-            // 
-            // parentLabel
-            // 
-            parentLabel.AutoSize = true;
-            parentLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
-            parentLabel.Location = new System.Drawing.Point(357, 72);
-            parentLabel.Name = "parentLabel";
-            parentLabel.Size = new System.Drawing.Size(64, 25);
-            parentLabel.TabIndex = 2;
-            parentLabel.Text = "Parent:";
-            parentLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
             // 
             // parentComboBox
             // 
@@ -132,17 +176,6 @@
             this.parentComboBox.TabIndex = 3;
             this.parentComboBox.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.parentComboBox.UseSelectable = true;
-            // 
-            // positionLabel
-            // 
-            positionLabel.AutoSize = true;
-            positionLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
-            positionLabel.Location = new System.Drawing.Point(33, 72);
-            positionLabel.Name = "positionLabel";
-            positionLabel.Size = new System.Drawing.Size(75, 25);
-            positionLabel.TabIndex = 4;
-            positionLabel.Text = "Position:";
-            positionLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
             // 
             // PosXUpDown
             // 
@@ -279,17 +312,6 @@
             this.SizeXUpDown.Size = new System.Drawing.Size(73, 22);
             this.SizeXUpDown.TabIndex = 23;
             // 
-            // sizeLabel
-            // 
-            sizeLabel.AutoSize = true;
-            sizeLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
-            sizeLabel.Location = new System.Drawing.Point(33, 97);
-            sizeLabel.Name = "sizeLabel";
-            sizeLabel.Size = new System.Drawing.Size(46, 25);
-            sizeLabel.TabIndex = 22;
-            sizeLabel.Text = "Size:";
-            sizeLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
-            // 
             // uvYUpDown
             // 
             this.uvYUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
@@ -340,17 +362,6 @@
             this.uvXUpDown.Size = new System.Drawing.Size(73, 22);
             this.uvXUpDown.TabIndex = 27;
             // 
-            // uvLabel
-            // 
-            uvLabel.AutoSize = true;
-            uvLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
-            uvLabel.Location = new System.Drawing.Point(33, 123);
-            uvLabel.Name = "uvLabel";
-            uvLabel.Size = new System.Drawing.Size(39, 25);
-            uvLabel.TabIndex = 26;
-            uvLabel.Text = "UV:";
-            uvLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
-            // 
             // armorCheckBox
             // 
             this.armorCheckBox.AutoSize = true;
@@ -399,17 +410,6 @@
             this.inflationUpDown.Size = new System.Drawing.Size(73, 22);
             this.inflationUpDown.TabIndex = 32;
             // 
-            // inflationLabel
-            // 
-            inflationLabel.AutoSize = true;
-            inflationLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
-            inflationLabel.Location = new System.Drawing.Point(33, 149);
-            inflationLabel.Name = "inflationLabel";
-            inflationLabel.Size = new System.Drawing.Size(55, 25);
-            inflationLabel.TabIndex = 31;
-            inflationLabel.Text = "Scale:";
-            inflationLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
-            // 
             // BoxEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -436,10 +436,12 @@
             this.Controls.Add(this.closeButton);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.ForeColor = System.Drawing.Color.White;
+            this.Location = new System.Drawing.Point(0, 0);
             this.MaximumSize = new System.Drawing.Size(630, 554);
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(630, 220);
             this.Name = "BoxEditor";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "BOX Editor";
             ((System.ComponentModel.ISupportInitialize)(this.PosXUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PosYUpDown)).EndInit();

@@ -121,7 +121,9 @@ namespace PckStudio.Forms.Utilities
             this.Controls.Add(this.listBox1);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.ForeColor = System.Drawing.Color.White;
+            this.Location = new System.Drawing.Point(0, 0);
             this.Name = "TextureConverterUtility";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Texture Converter";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TextureConverterUtility_FormClosing);
             this.Load += new System.EventHandler(this.TextureConverterUtility_Load);
