@@ -21,11 +21,13 @@ namespace PckStudio
             #if DEBUG
             Debug.Listeners.Add(new TextWriterTraceListener(Console.Out));
             #endif
+            DarkNet.Instance.SetCurrentProcessTheme(Theme.Auto);
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            DarkNet.Instance.SetCurrentProcessTheme(Theme.Auto);
+
             MainForm mainForm = new MainForm();
+            DarkNet.Instance.SetWindowThemeForms(mainForm, Theme.Auto);
 
             Application.Run(mainForm);
         }

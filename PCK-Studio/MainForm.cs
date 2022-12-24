@@ -26,7 +26,7 @@ using PckStudio.ToolboxItems;
 
 namespace PckStudio
 {
-	public partial class MainForm : ThemeForm
+	public partial class MainForm : Form
 	{
 		string saveLocation = string.Empty;
 		PCKFile currentPCK = null;
