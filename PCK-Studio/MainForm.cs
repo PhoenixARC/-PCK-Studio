@@ -2136,11 +2136,11 @@ namespace PckStudio
 
 		private void addCustomPackIconToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			PCKFile.FileData file = null;
-
-			if (!currentPCK.TryGetFile("0", PCKFile.FileData.FileType.InfoFile, out file) || String.IsNullOrEmpty(file.properties.GetPropertyValue("PACKID")))
+            if (!currentPCK.TryGetFile("0", PCKFile.FileData.FileType.InfoFile, out PCKFile.FileData file) ||
+				string.IsNullOrEmpty(file.properties.GetPropertyValue("PACKID"))
+				)
 			{
-				MessageBox.Show("No PackID is present in this pack. To avoid error, please open a PCK with a PackID before trying again.", "Operation Aborted", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show("No PackID is present in this pack. To avoid this error, please open a PCK with a PackID before trying again.", "Operation Aborted", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
 
@@ -2152,11 +2152,14 @@ namespace PckStudio
                 dialog.Filter = "Pack Icon|*.png";
 				if (dialog.ShowDialog(this) == DialogResult.OK)
 				{
-					ARCUtil.Inject(filepath, (
-						string.Format("Graphics\\PackGraphics\\{0}.png", file.properties.GetPropertyValue("PACKID")),
-						File.ReadAllBytes(dialog.FileName))
-						);
-					MessageBox.Show("Successfully added Pack Icon to Archive!", "Successfully Added", MessageBoxButtons.OK, MessageBoxIcon.Information);
+					using (var fs = File.OpenRead(filepath))
+					{
+						ARCUtil.Inject(fs, (
+							string.Format("Graphics\\PackGraphics\\{0}.png", file.properties.GetPropertyValue("PACKID")),
+							File.ReadAllBytes(dialog.FileName))
+							);
+						MessageBox.Show("Successfully added Pack Icon to Archive!", "Successfully Added", MessageBoxButtons.OK, MessageBoxIcon.Information);
+					}
 				}
 			}
 		}
