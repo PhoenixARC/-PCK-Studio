@@ -47,9 +47,9 @@ namespace PckStudio.Classes.Utils.TGA
 
     public struct TGATimeSpan
     {
-        public short Year;
-        public short Month;
-        public short Day;
+        public short? Year;
+        public short? Month;
+        public short? Day;
         public short Hour;
         public short Minute;
         public short Second;
@@ -71,7 +71,7 @@ namespace PckStudio.Classes.Utils.TGA
         public string JobID;
         public TGATimeSpan JobTime;
         public string SoftwareID;
-        public int SoftwareVersion;
+        public byte[] SoftwareVersion;
         public int KeyColor;
         public int PixelAspectRatio;
         public int GammaValue;

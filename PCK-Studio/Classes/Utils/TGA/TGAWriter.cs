@@ -22,18 +22,24 @@ using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 using PckStudio.Classes.IO;
+using System.Text;
 
 namespace PckStudio.Classes.Utils.TGA
 {
     internal class TGAWriter : StreamDataWriter
     {
+        private Bitmap _bitmap;
+        private TGADataTypeCode _format;
+
         public TGAWriter(bool useLittleEndian) : base(useLittleEndian)
         {
         }
 
         public void Write(Stream stream, Bitmap bitmap, TGADataTypeCode format)
         {
-
+            _format = format;
+            _bitmap = bitmap;
+            WriteToStream(stream);
         }
 
         public void SaveHeader(Stream stream, TGAHeader header)
@@ -84,12 +90,93 @@ namespace PckStudio.Classes.Utils.TGA
                                 WriteBytes(stream, pixel);
                             }
                             break;
+                        case TGADataTypeCode.RLE_RGB:
+                            //if (header.BitsPerPixel == 32)
+                            //{
+                            //    // Write RLE Encoded Pixels
+
+                            //    const int maxPacketLength = 128;
+                            //    int iPacketStart = 0;
+                            //    int iPacketEnd = 0;
+
+                            //    Color[] arPixels = default;
+
+                            //    while (iPacketStart < arPixels.Length)
+                            //    {
+                            //        Color c32PreviousPixel = arPixels[iPacketStart];
+
+                            //        // Get current Packet Type
+                            //        RLEPacketType packetType = EncodeToTGAExtension.PacketType(arPixels, iPacketStart);
+
+                            //        // Find Packet End
+                            //        int iReadEnd = Mathf.Min(iPacketStart + maxPacketLength, arPixels.Length);
+                            //        for (iPacketEnd = iPacketStart + 1; iPacketEnd < iReadEnd; ++iPacketEnd)
+                            //        {
+                            //            bool bPreviousEqualsCurrent = EncodeToTGAExtension.Equals(arPixels[iPacketEnd - 1], arPixels[iPacketEnd]);
+
+                            //            // Packet End if change in Packet Type or if max Packet-Size reached
+                            //            if (packetType == RLEPacketType.RAW && bPreviousEqualsCurrent ||
+                            //                packetType == RLEPacketType.RLE && !bPreviousEqualsCurrent)
+                            //            {
+                            //                break;
+                            //            }
+                            //        }
+
+                            //        // Write Packet
+
+                            //        int iPacketLength = iPacketEnd - iPacketStart;
+
+                            //        switch (packetType)
+                            //        {
+                            //            case RLEPacketType.RLE:
+
+                            //                // Add RLE-Bit to PacketLength
+                            //                binaryWriter.Write((byte)((iPacketLength - 1) | (1 << 7)));
+
+                            //                binaryWriter.Write(c32PreviousPixel.B);
+                            //                binaryWriter.Write(c32PreviousPixel.G);
+                            //                binaryWriter.Write(c32PreviousPixel.R);
+
+                            //                if (iBytesPerPixel == iBytesPerPixelARGB32)
+                            //                    binaryWriter.Write(c32PreviousPixel.A);
+
+                            //                break;
+                            //            case RLEPacketType.RAW:
+
+                            //                WriteBytes((byte)(iPacketLength - 1));
+
+                            //                for (int iPacketPosition = iPacketStart; iPacketPosition < iPacketEnd; ++iPacketPosition)
+                            //                {
+                            //                    Color c32Pixel = arPixels[iPacketPosition];
+                            //                    binaryWriter.Write(c32Pixel.B);
+                            //                    binaryWriter.Write(c32Pixel.G);
+                            //                    binaryWriter.Write(c32Pixel.R);
+
+                            //                    if (iBytesPerPixel == iBytesPerPixelARGB32)
+                            //                        binaryWriter.Write(c32Pixel.A);
+                            //                }
+
+                            //                break;
+                            //        }
+
+                            //        iPacketStart = iPacketEnd;
+                            //    }
+                            //}
+                            break;
                         default:
                             throw new NotImplementedException(nameof(header.DataTypeCode));
                     }
                 }
             }
 
+        }
+
+        private void SaveFooter(Stream stream)
+        {
+            WriteInt(stream, 0); // extensionDataOffset
+            WriteInt(stream, 0); // developerAreaDataOffset
+            WriteString(stream, "TRUEVISION-XFILE", Encoding.ASCII);
+            WriteShort(stream, 0x002E);
         }
 
         protected override void WriteToStream(Stream stream)
