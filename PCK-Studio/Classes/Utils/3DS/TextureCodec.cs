@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.Runtime.InteropServices;
 using PckStudio.Classes._3ds.Utils;
 
 namespace PckStudio.Classes._3ds
@@ -8,6 +10,39 @@ namespace PckStudio.Classes._3ds
     {
         private static int[] tileOrder = { 0, 1, 8, 9, 2, 3, 10, 11, 16, 17, 24, 25, 18, 19, 26, 27, 4, 5, 12, 13, 6, 7, 14, 15, 20, 21, 28, 29, 22, 23, 30, 31, 32, 33, 40, 41, 34, 35, 42, 43, 48, 49, 56, 57, 50, 51, 58, 59, 36, 37, 44, 45, 38, 39, 46, 47, 52, 53, 60, 61, 54, 55, 62, 63 };
         private static int[,] etc1LUT = { { 2, 8, -2, -8 }, { 5, 17, -5, -17 }, { 9, 29, -9, -29 }, { 13, 42, -13, -42 }, { 18, 60, -18, -60 }, { 24, 80, -24, -80 }, { 33, 106, -33, -106 }, { 47, 183, -47, -183 } };
+
+        private static class TextureConverter
+        {
+            /// <summary>
+            ///     Gets a Bitmap from a RGBA8 Texture buffer.
+            /// </summary>
+            /// <param name="array">The Buffer</param>
+            /// <param name="width">Width of the Texture</param>
+            /// <param name="height">Height of the Texture</param>
+            /// <returns></returns>
+            public static Bitmap ToBitmap(byte[] array, int width, int height)
+            {
+                Bitmap img = new Bitmap(width, height, PixelFormat.Format32bppArgb);
+                BitmapData imgData = img.LockBits(new Rectangle(0, 0, img.Width, img.Height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+                Marshal.Copy(array, 0, imgData.Scan0, array.Length);
+                img.UnlockBits(imgData);
+                return img;
+            }
+
+            /// <summary>
+            ///     Gets a RGBA8 Texture Buffer from a Bitmap.
+            /// </summary>
+            /// <param name="img">The Bitmap</param>
+            /// <returns></returns>
+            public static byte[] ToArray(Bitmap img)
+            {
+                BitmapData imgData = img.LockBits(new Rectangle(0, 0, img.Width, img.Height), ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+                byte[] array = new byte[imgData.Stride * img.Height];
+                Marshal.Copy(imgData.Scan0, array, 0, array.Length);
+                img.UnlockBits(imgData);
+                return array;
+            }
+        }
 
         /// <summary>
         ///     Decodes a PICA200 Texture.
@@ -309,7 +344,7 @@ namespace PckStudio.Classes._3ds
                     break;
             }
 
-            return TextureUtils.ToBitmap(output, width, height);
+            return TextureConverter.ToBitmap(output, width, height);
         }
 
         /// <summary>
@@ -320,7 +355,7 @@ namespace PckStudio.Classes._3ds
         /// <returns></returns>
         public static byte[] Encode(Bitmap img, _3DSTextureFormat format)
         {
-            byte[] data = TextureUtils.ToArray(img);
+            byte[] data = TextureConverter.ToArray(img);
             byte[] output = new byte[data.Length];
 
             int outputOffset = 0;
