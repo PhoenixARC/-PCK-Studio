@@ -271,7 +271,6 @@ namespace PckStudio.Classes.Convert.FromLCE
             List<SkinObject> objects = new List<SkinObject>();
             List<string> localisables = new List<string>();
 
-            GJSON.Add("format_version", "1.8.0"); // 1.8.0 is a string in geometry files
             SkinJSON SJSON = new SkinJSON(); // Skins.json
 
             string ExportPath = Path.GetDirectoryName(ExportFilepath);
@@ -367,32 +366,81 @@ namespace PckStudio.Classes.Convert.FromLCE
                 }
             }
 
-            string JSON = JsonConvert.SerializeObject(languages.ToArray(), Formatting.Indented);
+            string JSON = JsonConvert.SerializeObject(languages.ToArray(), Formatting.Indented,
+                            new JsonSerializerSettings
+                            {
+                                NullValueHandling = NullValueHandling.Ignore
+                            });
             File.WriteAllText(ExportPath + "\\languages.json", JSON);
         }
 
-        float GetPartOffset(List<ValueTuple<string, string>> offsets, string part)
-		{
-            string part_offset;
-            float offset = 0;
+        List<ValueTuple<string, string>> offsets = null;
 
-            try
+        List<ValueTuple<string, string>> GetSkinOffsets(PCKProperties SkinProps)
+        {
+            List<ValueTuple<string, string>> skinOffsets = new List<ValueTuple<string, string>>();
+
+            List<string> OffsetNames = new List<string>
             {
-                part_offset = offsets.FirstOrDefault(off => off.Item2.StartsWith(part)).Item2.Split()[2];
-            }
-            catch (Exception ex)
+                "HEAD", "HELMET",
+                "BODY", "CHEST", "BELT",
+                "ARM0", "ARMARMOR0", "SHOULDER0", "TOOL0",
+                "ARM1", "ARMARMOR1", "SHOULDER1", "TOOL1",
+                "LEG0", "LEGGING0", "BOOT0",
+                "LEG1", "LEGGING1", "BOOT1"
+            };
+
+            string part_offset = "";
+
+            foreach (string p in OffsetNames)
             {
-                //Console.WriteLine(ex);
-                part_offset = "";
+                try
+                {
+                    var v = SkinProps.Find(prop => prop.property == "OFFSET" && prop.value.StartsWith(p)).value;
+                    if (v != null && v.Length >= 2) part_offset = v.Split(' ')[2];
+                    else part_offset = "0";
+                }
+                catch (Exception ex)
+                {
+                    //Console.WriteLine(ex);
+                    part_offset = "0";
+                }
+
+                switch(p)
+				{
+                    case "HEAD":
+                        skinOffsets.Add(new ValueTuple<string, string>("HEADWEAR", part_offset));
+                        break;
+                    case "BODY":
+                        skinOffsets.Add(new ValueTuple<string, string>("JACKET", part_offset));
+                        skinOffsets.Add(new ValueTuple<string, string>("BODYARMOR", part_offset));
+                        break;
+                    case "CHEST":
+                        skinOffsets.Add(new ValueTuple<string, string>("BELT", part_offset));
+                        skinOffsets.Add(new ValueTuple<string, string>("WAIST", part_offset));
+                        break;
+                    case "ARM0":
+                        skinOffsets.Add(new ValueTuple<string, string>("SLEEVE0", part_offset));
+                        skinOffsets.Add(new ValueTuple<string, string>("SHOULDER0", part_offset));
+                        break;
+                    case "ARM1":
+                        skinOffsets.Add(new ValueTuple<string, string>("SLEEVE1", part_offset));
+                        skinOffsets.Add(new ValueTuple<string, string>("SHOULDER1", part_offset));
+                        break;
+                    case "LEG0":
+                        skinOffsets.Add(new ValueTuple<string, string>("PANTS0", part_offset));
+                        skinOffsets.Add(new ValueTuple<string, string>("SOCK0", part_offset));
+                        break;
+                    case "LEG1":
+                        skinOffsets.Add(new ValueTuple<string, string>("PANTS1", part_offset));
+                        skinOffsets.Add(new ValueTuple<string, string>("SOCK1", part_offset));
+                        break;
+                }
+                
+                if(skinOffsets.Find(o => o.Item1 == p).ToTuple() != null) skinOffsets.Add(new ValueTuple<string, string>(p, part_offset));
             }
 
-            if (!string.IsNullOrEmpty(part_offset))
-            {
-                offset = float.Parse(part_offset);
-                //Console.WriteLine(offset);
-            }
-
-            return offset;
+            return skinOffsets;
         }
 
         modelCube[] ConvertBoxes(string part, PCKFile.FileData file, float[] pivot)
@@ -401,9 +449,8 @@ namespace PckStudio.Classes.Convert.FromLCE
 
             Utils.SkinANIM anim = new Utils.SkinANIM("0");
 
-            List<ValueTuple<string, string>> offsets = file.properties.FindAll(p => p.property == "OFFSET");
-
-            float offset = GetPartOffset(offsets, part);
+            Console.WriteLine(part);
+            float offset = float.Parse(offsets.Find(o => o.Item1 == part).Item2);
 
             foreach (ValueTuple<string, string> property in file.properties)
             {
@@ -418,9 +465,6 @@ namespace PckStudio.Classes.Convert.FromLCE
                         if (args[0] == part)
                         {
                             BOX box = new BOX(args);
-                            //-1 * ((mbox.Value.PositionY + mpart.Value.TranslationY - 24) + mbox.Value.Height);
-                            //float y = -1 * ((pivot[1] + box.posY + (offset - 24)) + box.sizeY);
-                            //float y = -1 * ((pivot[1] + (box.posY + offset) - 24) + box.sizeY);
                             float y = -1 * (box.posY + offset + box.sizeY);
                             cubes.Add(new modelCube(new float[] { pivot[0] + box.posX, pivot[1] + y, pivot[2] + box.posZ }, new float[] { box.sizeX, box.sizeY, box.sizeZ }, new float[] { box.uvX, box.uvY }, box.mirror, box.inflation));
                         }
@@ -496,19 +540,48 @@ namespace PckStudio.Classes.Convert.FromLCE
             float[] right_leg_pivot = new float[] { -1.9f, 12, 0 };
             float[] left_leg_pivot = new float[] { 1.9f, 12, 0 };
 
+            offsets = GetSkinOffsets(file.properties);
+
             List<modelBone> bones = new List<modelBone>();
+
             bones.Add(new modelBone("head", "", head_and_body_pivot, ConvertBoxes("HEAD", file, head_and_body_pivot)));
             bones.Add(new modelBone("body", "", head_and_body_pivot, ConvertBoxes("BODY", file, head_and_body_pivot)));
             bones.Add(new modelBone("rightArm", "", right_arm_pivot, ConvertBoxes("ARM0", file, right_arm_pivot)));
             bones.Add(new modelBone("leftArm", "", left_arm_pivot, ConvertBoxes("ARM1", file, left_arm_pivot)));
             bones.Add(new modelBone("rightLeg", "", right_leg_pivot, ConvertBoxes("LEG0", file, right_leg_pivot)));
             bones.Add(new modelBone("leftLeg", "", left_leg_pivot, ConvertBoxes("LEG1", file, left_leg_pivot)));
+
             bones.Add(new modelBone("hat", "head", head_and_body_pivot, ConvertBoxes("HEADWEAR", file, head_and_body_pivot)));
             bones.Add(new modelBone("jacket", "body", head_and_body_pivot, ConvertBoxes("JACKET", file, head_and_body_pivot)));
             bones.Add(new modelBone("rightSleeve", "rightArm", right_arm_pivot, ConvertBoxes("SLEEVE0", file, right_arm_pivot)));
             bones.Add(new modelBone("leftSleeve", "leftArm", left_arm_pivot, ConvertBoxes("SLEEVE1", file, left_arm_pivot)));
             bones.Add(new modelBone("rightPants", "rightLeg", right_leg_pivot, ConvertBoxes("PANTS0", file, right_leg_pivot)));
             bones.Add(new modelBone("leftPants", "leftLeg", left_leg_pivot, ConvertBoxes("PANTS1", file, left_leg_pivot)));
+            bones.Add(new modelBone("rightSock", "rightLeg", right_leg_pivot, ConvertBoxes("SOCK0", file, right_leg_pivot)));
+            bones.Add(new modelBone("leftSock", "leftLeg", left_leg_pivot, ConvertBoxes("SOCK1", file, left_leg_pivot)));
+
+            bones.Add(new modelBone("helmet", "head", head_and_body_pivot, ConvertBoxes("HELMET", file, head_and_body_pivot)));
+            bones.Add(new modelBone("bodyArmor", "body", head_and_body_pivot, ConvertBoxes("BODYARMOR", file, head_and_body_pivot)));
+            bones.Add(new modelBone("belt", "body", head_and_body_pivot, ConvertBoxes("BELT", file, head_and_body_pivot)));
+            bones.Add(new modelBone("rightArmArmor", "rightArm", right_arm_pivot, ConvertBoxes("ARMARMOR0", file, right_arm_pivot)));
+            bones.Add(new modelBone("leftArmArmor", "leftArm", left_arm_pivot, ConvertBoxes("ARMARMOR1", file, left_arm_pivot)));
+            bones.Add(new modelBone("rightLegArmor", "rightLeg", right_leg_pivot, ConvertBoxes("LEGGING0", file, right_leg_pivot)));
+            bones.Add(new modelBone("leftLegArmor", "leftLeg", left_leg_pivot, ConvertBoxes("LEGGING1", file, left_leg_pivot)));
+            bones.Add(new modelBone("rightBoot", "rightLeg", right_leg_pivot, ConvertBoxes("BOOT0", file, right_leg_pivot)));
+            bones.Add(new modelBone("leftBoot", "leftLeg", left_leg_pivot, ConvertBoxes("BOOT1", file, left_leg_pivot)));
+
+            // calculates armor and item offsets
+            modelCube[] emptyList = { };
+
+            bones.Add(new modelBone("rightItem", "rightArm", new float[]{ -6f, 15f - float.Parse(offsets.Find(o => o.Item1 == "TOOL0").Item2), 1f }, emptyList));
+            bones.Add(new modelBone("leftItem", "leftArm", new float[]{ 6f, 15f - float.Parse(offsets.Find(o => o.Item1 == "TOOL1").Item2), 1f }, emptyList));
+
+            bones.Add(new modelBone("helmetArmorOffset", "", new float[] { 0f, 24f - float.Parse(offsets.Find(o => o.Item1 == "HELMET").Item2), 0f }, emptyList));
+            bones.Add(new modelBone("bodyArmorOffset", "", new float[] { -4f, 12f - float.Parse(offsets.Find(o => o.Item1 == "BODY").Item2), -2f }, emptyList));
+            bones.Add(new modelBone("rightArmArmorOffset", "", new float[] { 4f, 12f - float.Parse(offsets.Find(o => o.Item1 == "ARM0").Item2), -2f }, emptyList));
+            bones.Add(new modelBone("leftArmArmorOffset", "", new float[] { -8f, 12f - float.Parse(offsets.Find(o => o.Item1 == "ARM1").Item2), -2f }, emptyList));
+            bones.Add(new modelBone("rightLegArmorOffset", "", new float[] { -0.1f, float.Parse(offsets.Find(o => o.Item1 == "LEG0").Item2), -2f }, emptyList));
+            bones.Add(new modelBone("leftLegArmorOffset", "", new float[] { -4.1f, float.Parse(offsets.Find(o => o.Item1 == "LEG1").Item2), -2f }, emptyList));
 
             GJSON.Add(So.geometry, JToken.FromObject(new skinModel(bones.ToArray())));
 
