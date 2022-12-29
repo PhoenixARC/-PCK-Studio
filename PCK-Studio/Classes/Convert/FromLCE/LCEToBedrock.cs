@@ -524,7 +524,8 @@ namespace PckStudio.Classes.Convert.FromLCE
 
         void ExportSkin(PCKFile.FileData file, string ExportPath, List<SkinObject> src)
         {
-            //Console.WriteLine("============");
+            if (file.filetype != PCKFile.FileData.FileType.SkinFile) return;
+
             SkinObject So = new SkinObject();
             string skinID = file.filepath.Replace("dlcskin", "").Replace(".png", "").Replace("Skins/", "");
             So.localization_name = skinID;
