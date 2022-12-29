@@ -52,6 +52,7 @@ $ cd "-PCK-Studio"
 *  [PhoenixARC](https://github.com/PhoenixARC)
 *  [MattNL](https://github.com/MattN-L)
 *  [Miku-666](https://github.com/NessieHax)
+*  [EternalModz](https://github.com/EternalModz)
 
 ## Legacy PCK Studio Devs and contributors:
 *  [Nobledez](https://github.com/Nobledez)
