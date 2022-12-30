@@ -11,37 +11,35 @@ namespace PckStudio.Classes.Misc
         private const int bufferSize = 2048;
 
         private Uri hostUri;
-        private NetworkCredential credentials;
+        private ICredentials clientCredentials;
 
         private FtpWebRequest request = null;
         private FtpWebResponse response = null;
         private Stream _stream = null;
 
         public FTPClient(string host, string username)
-            : this(new Uri(host), username, string.Empty)
-        {
-        }
+            : this(new Uri(host), username, string.Empty) { }
 
         public FTPClient(Uri uri, string username)
-            : this(uri, username, string.Empty)
-        {
-        }
+            : this(uri, username, string.Empty) { }
 
         public FTPClient(string host, string username, string password)
-            : this(new Uri(host), username, password)
-        {
-        }
+            : this(new Uri(host), username, password) { }
 
         public FTPClient(Uri uri, string username, string password)
-        {
-            hostUri = uri;
-            credentials = new NetworkCredential(username, password);
+            : this(uri, new NetworkCredential(username, password)) { }
 
-            if (hostUri.Scheme != Uri.UriSchemeFtp)
+        public FTPClient(string host, ICredentials credentials)
+            : this(new Uri(host), credentials) { }
+        
+        public FTPClient(Uri uri, ICredentials credentials)
+            {
+            if (uri.Scheme != Uri.UriSchemeFtp)
             {
                 throw new InvalidOperationException("Not a valid FTP Scheme");
             }
-
+            hostUri = uri;
+            clientCredentials = credentials;
         }
 
         /// <summary>
