@@ -204,6 +204,42 @@
     <Compile Include="Classes\Networking\Update.cs" />
     <Compile Include="Classes\Utils\GRF\CRC32.cs" />
     <Compile Include="Classes\Utils\RLE.cs" />
+    <Compile Include="Forms\Additional-Features\CemuInstallPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Additional-Features\CemuInstallPanel.Designer.cs">
+      <DependentUpon>CemuInstallPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Additional-Features\installPS3.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Additional-Features\installPS3.Designer.cs">
+      <DependentUpon>installPS3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Additional-Features\installVita.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Additional-Features\installVita.Designer.cs">
+      <DependentUpon>installVita.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Additional-Features\installWiiU.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Additional-Features\installWiiU.Designer.cs">
+      <DependentUpon>installWiiU.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Additional-Features\PS3InstallPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Additional-Features\PS3InstallPanel.Designer.cs">
+      <DependentUpon>PS3InstallPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Additional-Features\WiiUInstallPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Additional-Features\WiiUInstallPanel.Designer.cs">
+      <DependentUpon>WiiUInstallPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Additional-Popups\Loc\AddLanguage.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -367,24 +403,6 @@
     <Compile Include="Forms\Editor\AudioEditor.Designer.cs">
       <DependentUpon>AudioEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Utilities\installPS3.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Utilities\installPS3.Designer.cs">
-      <DependentUpon>installPS3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Utilities\installVita.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Utilities\installVita.Designer.cs">
-      <DependentUpon>installVita.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Utilities\installWiiU.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Utilities\installWiiU.Designer.cs">
-      <DependentUpon>installWiiU.cs</DependentUpon>
-    </Compile>
     <Compile Include="Classes\Utils\ListUtils.cs" />
     <Compile Include="Forms\Utilities\PCK Manager.cs">
       <SubType>Form</SubType>
@@ -447,6 +465,27 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Classes\Utils\3DS\TextureCodec.cs" />
+    <EmbeddedResource Include="Forms\Additional-Features\CemuInstallPanel.resx">
+      <DependentUpon>CemuInstallPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Additional-Features\installPS3.resx">
+      <DependentUpon>installPS3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Additional-Features\InstallVita.resx">
+      <DependentUpon>installVita.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Additional-Features\InstallWiiU.ja.resx">
+      <DependentUpon>installWiiU.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Additional-Features\installWiiU.resx">
+      <DependentUpon>installWiiU.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Additional-Features\PS3InstallPanel.resx">
+      <DependentUpon>PS3InstallPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Additional-Features\WiiUInstallPanel.resx">
+      <DependentUpon>WiiUInstallPanel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\Loc\AddLanguage.resx">
       <DependentUpon>AddLanguage.cs</DependentUpon>
     </EmbeddedResource>
@@ -557,18 +596,6 @@
     <EmbeddedResource Include="Forms\Editor\AudioEditor.resx">
       <DependentUpon>AudioEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\installPS3.resx">
-      <DependentUpon>installPS3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\installVita.resx">
-      <DependentUpon>installVita.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\installWiiU.ja.resx">
-      <DependentUpon>installWiiU.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\installWiiU.resx">
-      <DependentUpon>installWiiU.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\MetaList.ja.resx">
       <DependentUpon>MetaList.cs</DependentUpon>
