@@ -853,10 +853,10 @@ namespace PckStudio
 				if (node.Nodes.Count > 0)
 				{
 					childNodes.AddRange(GetAllChildNodes(node.Nodes));
-					}
 				}
-			return childNodes;
 			}
+			return childNodes;
+		}
 
 		TreeNode GetSubPCK(TreeNode child)
 		{
@@ -1217,9 +1217,9 @@ namespace PckStudio
 			edit.Show();
 		}
 
-		private void InitializeBasePack(int packId, int packVersion, string packName, bool createSkinsPCK)
+		private PCKFile InitializePack(int packId, int packVersion, string packName, bool createSkinsPCK)
 		{
-			currentPCK = new PCKFile(3);
+			var newPck = new PCKFile(3);
 			var zeroFile = new PCKFile.FileData("0", PCKFile.FileData.FileType.InfoFile);
 			zeroFile.properties.Add(("PACKID", packId.ToString()));
 			zeroFile.properties.Add(("PACKVERSION", packVersion.ToString()));
@@ -1231,14 +1231,25 @@ namespace PckStudio
 				LOCFileWriter.Write(stream, locFile);
 				loc.SetData(stream.ToArray());
 			}
-			currentPCK.Files.Add(zeroFile);
-			currentPCK.Files.Add(loc);
-			if(createSkinsPCK) CreateSkinsPCKToolStripMenuItem1_Click(null, EventArgs.Empty);
+			newPck.Files.Add(zeroFile);
+			newPck.Files.Add(loc);
+
+			if (createSkinsPCK)
+			{
+                PCKFile.FileData skinsPCKFile = new PCKFile.FileData("Skins.pck", PCKFile.FileData.FileType.SkinDataFile);
+                using (var stream = new MemoryStream())
+                {
+                    PCKFileWriter.Write(stream, new PCKFile(3), LittleEndianCheckBox.Checked, true);
+                    skinsPCKFile.SetData(stream.ToArray());
+                }
+                newPck.Files.Add(skinsPCKFile);
+            }
+			return newPck;
 		}
 
-		private void InitializeTexturePack(int packId, int packVersion, string packName, string res, bool createSkinsPCK = false)
+		private PCKFile InitializeTexturePack(int packId, int packVersion, string packName, string res, bool createSkinsPCK = false)
 		{
-			InitializeBasePack(packId, packVersion, packName, createSkinsPCK);
+            var newPck = InitializePack(packId, packVersion, packName, createSkinsPCK);
 			var texturepackInfo = new PCKFile.FileData($"{res}/{res}Info.pck", PCKFile.FileData.FileType.TexturePackInfoFile);
 			texturepackInfo.properties.Add(("PACKID", "0"));
 			texturepackInfo.properties.Add(("DATAPATH", $"{res}Data.pck"));
@@ -1267,12 +1278,13 @@ namespace PckStudio
 				texturepackInfo.SetData(ms.ToArray());
 			}
 
-			currentPCK.Files.Add(texturepackInfo);
+			newPck.Files.Add(texturepackInfo);
+			return newPck;
 		}
 
-		private void InitializeMashUpPack(int packId, int packVersion, string packName, string res)
+		private PCKFile InitializeMashUpPack(int packId, int packVersion, string packName, string res)
 		{
-			InitializeTexturePack(packId, packVersion, packName, res, true);
+            var newPck = InitializeTexturePack(packId, packVersion, packName, res, true);
 			var gameRuleFile = new PCKFile.FileData("GameRules.grf", PCKFile.FileData.FileType.GameRulesFile);
 			var grfFile = new GRFFile();
 			grfFile.AddRule("MapOptions",
@@ -1294,39 +1306,46 @@ namespace PckStudio
 				GRFFileWriter.Write(stream, grfFile, GRFFile.eCompressionType.ZlibRleCrc);
 				gameRuleFile.SetData(stream.ToArray());
 			}
-			currentPCK.Files.Add(gameRuleFile);
+			newPck.Files.Add(gameRuleFile);
+			return newPck;
 		}
 
 		private void skinPackToolStripMenuItem_Click(object sender, EventArgs e)
 		{
+			checkSaveState();
 			RenamePrompt namePrompt = new RenamePrompt("");
 			namePrompt.OKButton.Text = "Ok";
 			if (namePrompt.ShowDialog() == DialogResult.OK)
 			{
-				InitializeBasePack(new Random().Next(8000, int.MaxValue), 0, namePrompt.NewText, true);
+				currentPCK = InitializePack(new Random().Next(8000, int.MaxValue), 0, namePrompt.NewText, true);
 				isTemplateFile = true;
-				LoadEditorTab();
+                saved = false;
+                LoadEditorTab();
 			}
 		}
 
 		private void texturePackToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			CreateTexturePack packPrompt = new CreateTexturePack("");
+            checkSaveState();
+            CreateTexturePack packPrompt = new CreateTexturePack("");
 			if (packPrompt.ShowDialog() == DialogResult.OK)
 			{
-				InitializeTexturePack(new Random().Next(8000, int.MaxValue), 0, packPrompt.packName, packPrompt.packRes);
+                currentPCK = InitializeTexturePack(new Random().Next(8000, int.MaxValue), 0, packPrompt.packName, packPrompt.packRes);
 				isTemplateFile = true;
-				LoadEditorTab();
+                saved = false;
+                LoadEditorTab();
 			}
 		}
 
 		private void mashUpPackToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			CreateTexturePack packPrompt = new CreateTexturePack("");
+            checkSaveState();
+            CreateTexturePack packPrompt = new CreateTexturePack("");
 			if (packPrompt.ShowDialog() == DialogResult.OK)
 			{
-				InitializeMashUpPack(new Random().Next(8000, int.MaxValue), 0, packPrompt.packName, packPrompt.packRes);
+                currentPCK = InitializeMashUpPack(new Random().Next(8000, int.MaxValue), 0, packPrompt.packName, packPrompt.packRes);
 				isTemplateFile = true;
+				saved = false;
 				LoadEditorTab();
 			}
 		}
@@ -1837,7 +1856,8 @@ namespace PckStudio
 
 		private void checkSaveState()
 		{
-			if ((!saved || isTemplateFile) &&
+			if (currentPCK is not null &&
+				!saved &&
 				MessageBox.Show("Save PCK?", "Unsaved PCK", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
 			{
 				if (isTemplateFile || string.IsNullOrEmpty(saveLocation))
