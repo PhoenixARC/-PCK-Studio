@@ -45,31 +45,14 @@ namespace PckStudio.Classes.Utils.TGA
         public int developerAreaDataOffset;
     }
 
-    public struct TGATimeSpan
-    {
-        public short? Year;
-        public short? Month;
-        public short? Day;
-        public short Hour;
-        public short Minute;
-        public short Second;
-
-        public override string ToString()
-        {
-            return string.Format("{0}:{1}:{2}({3}/{4}/{5})", Hour, Minute, Second, Day, Month, Year);
-            //DateTime time = new DateTime(Year, Month, Day, Hour, Minute, Second);
-            //return time.ToString();
-        }
-    }
-
     public struct TGAExtentionData
     {
         public const short ExtensionSize = 0x1EF;
         public string AuthorName;
         public string AuthorComment;
-        public TGATimeSpan TimeStamp;
+        public DateTime TimeStamp;
         public string JobID;
-        public TGATimeSpan JobTime;
+        public TimeSpan JobTime;
         public string SoftwareID;
         public byte[] SoftwareVersion;
         public int KeyColor;

@@ -169,22 +169,19 @@ namespace PckStudio.Classes.Utils.TGA
                     TGAExtentionData extentionData = new TGAExtentionData();
                     extentionData.AuthorName = ReadString(stream, 41, Encoding.ASCII);
                     extentionData.AuthorComment = ReadString(stream, 324, Encoding.ASCII);
-                    extentionData.TimeStamp = new TGATimeSpan()
-                    {
-                        Month = ReadShort(stream),
-                        Day = ReadShort(stream),
-                        Year = ReadShort(stream),
-                        Hour = ReadShort(stream),
-                        Minute = ReadShort(stream),
-                        Second = ReadShort(stream),
-                    };
+                    short month = ReadShort(stream);
+                    short day = ReadShort(stream);
+                    short year = ReadShort(stream);
+                    short hour = ReadShort(stream);
+                    short minute = ReadShort(stream);
+                    short second = ReadShort(stream);
+                    extentionData.TimeStamp = new DateTime(year, month, day, hour, minute, second);
                     extentionData.JobID = ReadString(stream, 41, Encoding.ASCII);
-                    extentionData.JobTime = new TGATimeSpan()
-                    {
-                        Hour = ReadShort(stream),
-                        Minute = ReadShort(stream),
-                        Second = ReadShort(stream),
-                    };
+                    extentionData.JobTime = new TimeSpan(
+                        hours: ReadShort(stream),
+                        minutes: ReadShort(stream),
+                        seconds: ReadShort(stream)
+                    );
                     extentionData.SoftwareID = ReadString(stream, 41, Encoding.ASCII);
                     byte[] version = ReadBytes(stream, 3);
                     extentionData.SoftwareVersion = version;
