@@ -124,8 +124,8 @@ namespace PckStudio.Classes.Utils.TGA
 
     public static class TGA
     {
-        private static TGAWriter _writer = new TGAWriter(true);
-        private static TGAReader _reader = new TGAReader(true);
+        private static TGAWriter _writer = new TGAWriter();
+        private static TGAReader _reader = new TGAReader();
 
         public static Bitmap FromStream(Stream stream)
         {

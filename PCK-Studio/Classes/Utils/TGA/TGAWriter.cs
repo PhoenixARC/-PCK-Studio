@@ -31,7 +31,7 @@ namespace PckStudio.Classes.Utils.TGA
         private Bitmap _bitmap;
         private TGADataTypeCode _format;
 
-        public TGAWriter(bool useLittleEndian) : base(useLittleEndian)
+        public TGAWriter() : base(littleEndian: true)
         {
         }
 

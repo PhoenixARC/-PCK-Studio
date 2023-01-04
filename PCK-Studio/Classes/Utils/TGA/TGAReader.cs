@@ -30,7 +30,7 @@ namespace PckStudio.Classes.Utils.TGA
 {
     internal class TGAReader : StreamDataReader<TGAFileData>
     {
-        public TGAReader(bool useLittleEndian) : base(useLittleEndian)
+        public TGAReader() : base(useLittleEndian: true)
         {
         }
 
