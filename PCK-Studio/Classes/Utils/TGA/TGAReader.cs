@@ -59,32 +59,41 @@ namespace PckStudio.Classes.Utils.TGA
 
             byte[] data = ReadBytes(stream, header.Height * header.Width * bytesPerPixel);
             Marshal.Copy(data, 0, bitmapData.Scan0, data.Length);
-                }
+        }
 
-        private static void TGA_HandleRLE_RGB(Stream stream, TGAHeader header, BitmapData bitmapData)
+        private static void TGA_HandleRLERGB(Stream stream, TGAHeader header, BitmapData bitmapData)
         {
-            int formatSize = header.BitsPerPixel / 8;
+            int bytesPerPixel = header.BitsPerPixel / 8;
+
+            bitmapData.PixelFormat = bytesPerPixel switch
+            {
+                2 => PixelFormat.Format16bppArgb1555,
+                3 => PixelFormat.Format24bppRgb,
+                4 => PixelFormat.Format32bppArgb,
+                _ => throw new NotSupportedException(nameof(bytesPerPixel))
+            };
 
             int pixelOffset = 0;
-            while (pixelOffset < header.Width * header.Height)
+            while (header.Width * header.Height > pixelOffset)
             {
-                byte[] b = ReadBytes(stream, 1);
-                bool isRleChunk = (b[0] & 0x80) != 0;
-                int count = b[0] & 0x7f;
-                byte[] rleColor = isRleChunk ? ReadBytes(stream, formatSize) : null;
+                byte packetInfo = ReadBytes(stream, 1)[0];
+                bool isRleChunk = (packetInfo & 0x80) != 0;
+                int count = packetInfo & 0x7f;
+                if (!isRleChunk)
+                {
+                    byte[] data = ReadBytes(stream, bytesPerPixel * count);
+                    Marshal.Copy(data, 0, bitmapData.Scan0 + pixelOffset * bytesPerPixel, data.Length);
+                    pixelOffset += count;
+                    continue;
+                }
+                byte[] rleColor = ReadBytes(stream, bytesPerPixel);
                 for (int i = 0; i < count; i++)
                 {
-                    if (pixelOffset > header.Width * header.Height)
-                        throw new Exception($"Invalid pixel offset: {pixelOffset}");
-                    WritePixel(bitmapData.Scan0 + pixelOffset + i * 4,
-                        isRleChunk
-                            ? rleColor
-                            : ReadBytes(stream, formatSize),
-                        formatSize);
+                    byte[] data = rleColor;
+                    Marshal.Copy(data, 0, bitmapData.Scan0 + pixelOffset * bytesPerPixel +i, data.Length);
                 }
-                pixelOffset += count * 4;
+                pixelOffset += count; 
             }
-
         }
 
         private static void TGA_HandleNoData(Stream stream, TGAHeader header, BitmapData bitmapData)
@@ -98,7 +107,7 @@ namespace PckStudio.Classes.Utils.TGA
         private static readonly Dictionary<TGADataTypeCode, Action<Stream, TGAHeader, BitmapData>> TGADataTypeHandler = new()
         {
             [TGADataTypeCode.RGB] = TGA_HandleRGB,
-            [TGADataTypeCode.RLE_RGB] = TGA_HandleRLE_RGB,
+            [TGADataTypeCode.RLE_RGB] = TGA_HandleRLERGB,
             [TGADataTypeCode.NO_DATA] = TGA_HandleNoData,
         };
         
@@ -132,13 +141,13 @@ namespace PckStudio.Classes.Utils.TGA
             BitmapData bitmapData = bitmap.LockBits(
                 new Rectangle(0, 0, header.Width, header.Height),
                 ImageLockMode.WriteOnly,
-                PixelFormat.Format32bppArgb);
+                PixelFormat.Undefined);
 
-            if (TGADataTypeHandler.TryGetValue(header.DataTypeCode, out var func))
-                func?.Invoke(stream, header, bitmapData);
-
+            if (!TGADataTypeHandler.TryGetValue(header.DataTypeCode, out var handleFunction))
+                throw new NotSupportedException(nameof(header.DataTypeCode));
+            handleFunction?.Invoke(stream, header, bitmapData);
             bitmap.UnlockBits(bitmapData);
-            //bitmap.RotateFlip(RotateFlipType.RotateNoneFlipY);
+            bitmap.RotateFlip(RotateFlipType.RotateNoneFlipY);
             return bitmap;
         }
 
@@ -201,39 +210,6 @@ namespace PckStudio.Classes.Utils.TGA
                 }
             }
             return default;
-        }
-
-        private static void WritePixel(IntPtr destination, byte[] data, int colorChannelCount)
-        {
-            if (colorChannelCount == 4) // 32-bit
-            {
-                Marshal.Copy(new byte[4]{
-                        data[0],
-                        data[1],
-                        data[2],
-                        data[3],
-                    }, 0, destination, 4);
-            }
-            else if (colorChannelCount == 3) // 24-bit
-            {
-                Marshal.Copy(new byte[4]{
-                        data[0],
-                        data[1],
-                        data[2],
-                        byte.MaxValue,
-                    }, 0, destination, 4);
-            }
-            else if (colorChannelCount == 2) // 16-bit
-            {
-                // warning: could be incorrect
-                Marshal.Copy(new byte[4]{
-                        (byte)((data[1] & 0x7c) << 1),
-                        (byte)(((data[1] & 0x03) << 6) | ((data[0] & 0xe0) >> 2)),
-                        (byte)((data[0] & 0x1f) << 3),
-                        ((byte)(data[1] & 0x80)),
-                    }, 0, destination, 4);
-
-            }
         }
 
         [Conditional("DEBUG")]
