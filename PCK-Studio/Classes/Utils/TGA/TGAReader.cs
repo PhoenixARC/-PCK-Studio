@@ -47,16 +47,19 @@ namespace PckStudio.Classes.Utils.TGA
 
         private static void TGA_HandleRGB(Stream stream, TGAHeader header, BitmapData bitmapData)
         {
-            int formatSize = header.BitsPerPixel / 8;
-            for (int y = 0; y < header.Height; y++)
+            int bytesPerPixel = header.BitsPerPixel / 8;
+
+            bitmapData.PixelFormat = bytesPerPixel switch
             {
-                for (int x = 0; x < header.Width; x++)
-                {
-                    IntPtr pixelOffset = bitmapData.Scan0 + 4 * x + bitmapData.Stride * y;
-                    WritePixel(pixelOffset, ReadBytes(stream, formatSize), formatSize);
+                2 => PixelFormat.Format16bppArgb1555,
+                3 => PixelFormat.Format24bppRgb,
+                4 => PixelFormat.Format32bppArgb,
+                _ => throw new NotSupportedException(nameof(bytesPerPixel))
+            };
+
+            byte[] data = ReadBytes(stream, header.Height * header.Width * bytesPerPixel);
+            Marshal.Copy(data, 0, bitmapData.Scan0, data.Length);
                 }
-            }
-        }
 
         private static void TGA_HandleRLE_RGB(Stream stream, TGAHeader header, BitmapData bitmapData)
         {
