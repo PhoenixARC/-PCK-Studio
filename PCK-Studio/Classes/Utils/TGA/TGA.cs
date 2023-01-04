@@ -29,7 +29,7 @@ namespace PckStudio.Classes.Utils.TGA
     /// </summary>
     public struct TGAHeader
     {
-        public byte IdLength;
+        public byte[] Id;
         public TGADataTypeCode DataTypeCode;
         public (byte Type, short Origin/*Offset*/, short Length, byte Depth) Colormap;
         public (short X, short Y) Origin;
@@ -137,7 +137,7 @@ namespace PckStudio.Classes.Utils.TGA
         {
             TGAHeader header = new TGAHeader()
             {
-                IdLength = 0,
+                Id = Array.Empty<byte>(),
                 DataTypeCode = format,
                 Width = (short)bitmap.Width,
                 Height = (short)bitmap.Height,

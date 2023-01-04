@@ -103,7 +103,7 @@ namespace PckStudio.Classes.Utils.TGA
         {
             var header = new TGAHeader();
             byte[] bytes = ReadBytes(stream, 3);
-            (header.IdLength, header.Colormap.Type, header.DataTypeCode) = (bytes[0], bytes[1], (TGADataTypeCode)bytes[2]);
+            (var headerIdLength, header.Colormap.Type, header.DataTypeCode) = (bytes[0], bytes[1], (TGADataTypeCode)bytes[2]);
             header.Colormap.Origin = ReadShort(stream);
             header.Colormap.Length = ReadShort(stream);
             header.Colormap.Depth = ReadBytes(stream, 1)[0];
@@ -113,13 +113,13 @@ namespace PckStudio.Classes.Utils.TGA
             header.Height = ReadShort(stream);
             header.BitsPerPixel = ReadBytes(stream, 1)[0];
             header.ImageDescriptor = ReadBytes(stream, 1)[0];
+            header.Id = ReadBytes(stream, headerIdLength);
+            Debug.WriteLineIf(headerIdLength > 0, $"Image ID: {header.Id}");
             return header;
         }
 
         private static Bitmap LoadImage(Stream stream, TGAHeader header)
         {
-            string idData = ReadString(stream, header.IdLength, Encoding.ASCII);
-            Debug.WriteLineIf(header.IdLength > 0, $"Image ID: {idData}");
             DebugLogHeader(header);
 
             //if (header.DataTypeCode == TGADataTypeCode.NO_DATA)
@@ -262,7 +262,7 @@ namespace PckStudio.Classes.Utils.TGA
         private static void DebugLogHeader(TGAHeader header)
         {
             Debug.WriteLine("------Header Data------", category: nameof(TGAReader));
-            Debug.WriteLine(string.Format("ID length:         {0}", args: header.IdLength), category: nameof(TGAReader));
+            Debug.WriteLine(string.Format("ID length:         {0}", args: header.Id.Length), category: nameof(TGAReader));
             Debug.WriteLine(string.Format("Colourmap type:    {0}", args: header.Colormap.Type), category: nameof(TGAReader));
             Debug.WriteLine(string.Format("Image type:        {0}", args: header.DataTypeCode), category: nameof(TGAReader));
             Debug.WriteLine(string.Format("Colour map offset: {0}", args: header.Colormap.Origin), category: nameof(TGAReader));

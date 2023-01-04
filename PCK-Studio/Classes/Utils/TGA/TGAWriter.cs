@@ -44,9 +44,10 @@ namespace PckStudio.Classes.Utils.TGA
 
         public void SaveHeader(Stream stream, TGAHeader header)
         {
+
+            WriteBytes(stream, header.Id);
             WriteBytes(stream, new byte[]
             {
-                    header.IdLength,
                     header.Colormap.Type,
                     (byte)header.DataTypeCode
             });
