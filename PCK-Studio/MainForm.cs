@@ -340,9 +340,7 @@ namespace PckStudio
 
 		private void HandleTextureFile(PCKFile.FileData file)
 		{
-			if (file.filepath.StartsWith("res/textures/blocks/") || file.filepath.StartsWith("res/textures/items/") &&
-				!file.filepath.EndsWith("clock.png") && !file.filepath.EndsWith("compass.png"))
-			{
+
 				if (IsFilePathMipMapped(file.filepath) &&
 					currentPCK.Files.Find(pckfile =>
 						// todo write cleaner ?
@@ -353,6 +351,7 @@ namespace PckStudio
 				{
 					file = originalAnimationFile;
 				}
+
 				using (AnimationEditor animationEditor = new AnimationEditor(file))
 				{
 					if (animationEditor.ShowDialog(this) == DialogResult.OK)
@@ -362,7 +361,6 @@ namespace PckStudio
 					}
 				}
 			}
-		}
 
 		private void HandleGameRuleFile(PCKFile.FileData file)
 		{

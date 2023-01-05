@@ -251,14 +251,15 @@ namespace PckStudio.Forms.Editor
 		public AnimationEditor(PCKFile.FileData file)
 		{
 			InitializeComponent();
-			isItem = file.filepath.Split('/').Contains("items");
+
+            isItem = file.filepath.Split('/').Contains("items");
 			TileName = Path.GetFileNameWithoutExtension(file.filepath);
 			animationFile = file;
 
 			using MemoryStream textureMem = new MemoryStream(animationFile.data);
 			var texture = new Bitmap(textureMem);
 			currentAnimation = animationFile.properties.HasProperty("ANIM")
-				? new Animation(texture, animationFile.properties.GetProperty("ANIM").Item2)
+				? new Animation(texture, animationFile.properties.GetPropertyValue("ANIM"))
 				: new Animation(texture);
 			player = new AnimationPlayer(pictureBoxWithInterpolationMode1);
 
@@ -281,7 +282,7 @@ namespace PckStudio.Forms.Editor
 			// $"Frame: {i}, Frame Time: {Animation.MinimumFrameTime}"
 			TextureIcons.Images.Clear();
 			TextureIcons.Images.AddRange(currentAnimation.GetFrameTextures().ToArray());
-			currentAnimation.GetFrames().ForEach(f => frameTreeView.Nodes.Add("", $"for {f.Ticks} frame" + (f.Ticks > 1 ? "s" : "" ), currentAnimation.GetFrameIndex(f.Texture), currentAnimation.GetFrameIndex(f.Texture)));
+			currentAnimation.GetFrames().ForEach(f => frameTreeView.Nodes.Add("", $"for {f.Ticks} frames", currentAnimation.GetFrameIndex(f.Texture), currentAnimation.GetFrameIndex(f.Texture)));
 			player.SelectFrame(currentAnimation, 0);
 		}
 
