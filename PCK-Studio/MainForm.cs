@@ -329,8 +329,10 @@ namespace PckStudio
 
 		bool IsFilePathMipMapped(string filepath)
 		{
-			string name = Path.GetFileNameWithoutExtension(filepath); // We only want to test the file name itself. ex: "terrainMipMapLevel2"
-			if (!char.IsDigit(name[name.Length - 1])) return false; // check if last character is a digit (0-9). If not return false
+			// We only want to test the file name itself. ex: "terrainMipMapLevel2"
+			string name = Path.GetFileNameWithoutExtension(filepath);
+			// check if last character is a digit (0-9). If not return false
+			if (!char.IsDigit(name[name.Length - 1])) return false;
 			// If string does not end with MipMapLevel, then it's not MipMapped
 			if (!name.Remove(name.Length - 1, 1).EndsWith("MipMapLevel")) return false;
 			return true;
