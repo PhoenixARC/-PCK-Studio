@@ -10,6 +10,8 @@ namespace PckStudio.Classes.FileTypes
         public int type { get; }
         public List<FileData> Files { get; } = new List<FileData>();
 
+        public const string XMLVersionString = "XMLVERSION";
+
         public class FileData
         {
             public enum FileType : int
@@ -104,7 +106,7 @@ namespace PckStudio.Classes.FileTypes
             this.type = type;
         }
 
-        public List<string> GatherPropertiesList()
+        public List<string> GetPropertyList()
         {
             var LUT = new List<string>();
             Files.ForEach(file => file.properties.ForEach(pair =>

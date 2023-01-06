@@ -9,7 +9,7 @@ namespace PckStudio.Classes.IO.PCK
     internal class PCKFileWriter : StreamDataWriter
     {
         private PCKFile _pckfile;
-        private List<string> LUT = new List<string>();
+        private IList<string> _propertyList;
 
         public static void Write(Stream stream, PCKFile file, bool isLittleEndian, bool isSkinsPCK = false)
         {
@@ -19,8 +19,9 @@ namespace PckStudio.Classes.IO.PCK
         private PCKFileWriter(PCKFile file, bool isLittleEndian, bool isSkinsPCK) : base(isLittleEndian)
         {
             _pckfile = file;
-            LUT = _pckfile.GatherPropertiesList();
-            if (!LUT.Contains("XMLVERSION") && isSkinsPCK) LUT.Insert(0, "XMLVERSION");
+            _propertyList = _pckfile.GetPropertyList();
+            if (!_propertyList.Contains(PCKFile.XMLVersionString) && isSkinsPCK)
+                _propertyList.Insert(0, PCKFile.XMLVersionString);
         }
 
         protected override void WriteToStream(Stream stream)
@@ -40,13 +41,13 @@ namespace PckStudio.Classes.IO.PCK
 
         private void WriteLookUpTable(Stream stream)
         {
-            WriteInt(stream, LUT.Count);
-            LUT.ForEach(entry =>
+            WriteInt(stream, _propertyList.Count);
+            foreach (var entry in _propertyList)
             {
-                WriteInt(stream, LUT.IndexOf(entry));
+                WriteInt(stream, _propertyList.IndexOf(entry));
                 WriteString(stream, entry);
-            });
-            if (LUT.Contains("XMLVERSION"))
+            };
+            if (_propertyList.Contains(PCKFile.XMLVersionString))
                 WriteInt(stream, 0x1337); // :^)
         }
 
@@ -68,9 +69,9 @@ namespace PckStudio.Classes.IO.PCK
                 WriteInt(stream, file.properties.Count);
                 foreach (var property in file.properties)
                 {
-                    if (!LUT.Contains(property.Item1))
+                    if (!_propertyList.Contains(property.Item1))
                         throw new Exception("Tag not in Look Up Table: " + property.Item1);
-                    WriteInt(stream, LUT.IndexOf(property.Item1));
+                    WriteInt(stream, _propertyList.IndexOf(property.Item1));
                     WriteString(stream, property.Item2);
                 }
                 WriteBytes(stream, file.data, file.size);

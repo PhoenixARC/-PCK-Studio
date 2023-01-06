@@ -17,7 +17,7 @@ namespace PckStudio
             InitializeComponent();
             currentPCK = currentPCKIn;
             treeMeta.Nodes.Clear();
-            treeMeta.Nodes.AddRange(currentPCK.GatherPropertiesList().Select((s) => new TreeNode(s)).ToArray());
+            treeMeta.Nodes.AddRange(currentPCK.GetPropertyList().Select((s) => new TreeNode(s)).ToArray());
         }
 
         private void applyButton_Click(object sender, EventArgs e)

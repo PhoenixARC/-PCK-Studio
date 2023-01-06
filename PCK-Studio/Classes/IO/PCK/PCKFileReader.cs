@@ -9,7 +9,7 @@ namespace PckStudio.Classes.IO.PCK
     internal class PCKFileReader : StreamDataReader<PCKFile>
     {
         private PCKFile _file;
-        private List<string> LUT;
+        private IList<string> _propertyList;
 
         public static PCKFile Read(Stream stream, bool isLittleEndian)
         {
@@ -35,14 +35,14 @@ namespace PckStudio.Classes.IO.PCK
         private void ReadLookUpTable(Stream stream)
         {
             int count = ReadInt(stream);
-            LUT = new List<string>(count);
+            _propertyList = new List<string>(count);
             for (int i = 0; i < count; i++)
             {
                 int index = ReadInt(stream);
                 string value = ReadString(stream);
-                LUT.Insert(index, value);
+                _propertyList.Insert(index, value);
             }
-            if (LUT.Contains("XMLVERSION"))
+            if (_propertyList.Contains(PCKFile.XMLVersionString))
                 Console.WriteLine(ReadInt(stream)); // xml version num ??
         }
 
@@ -66,7 +66,7 @@ namespace PckStudio.Classes.IO.PCK
                 int property_count = ReadInt(stream);
                 for (; 0 < property_count; property_count--)
                 {
-                    string key = LUT[ReadInt(stream)];
+                    string key = _propertyList[ReadInt(stream)];
                     string value = ReadString(stream);
                     file.properties.Add((key, value));
                 }
