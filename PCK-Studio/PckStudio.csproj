@@ -141,7 +141,7 @@
     <Compile Include="Classes\FileTypes\CSMBFile.cs" />
     <Compile Include="Classes\FileTypes\ModelFile.cs" />
     <Compile Include="Classes\FileTypes\PCKAudioFile.cs" />
-    <Compile Include="Classes\FileTypes\Bink.cs" />
+    <Compile Include="Classes\FileTypes\Binka.cs" />
     <Compile Include="Classes\FileTypes\COLFile.cs" />
     <Compile Include="Classes\FileTypes\CSM.cs" />
     <Compile Include="Classes\FileTypes\GRFFile.cs" />

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
 using MetroFramework.Forms;
+using PckStudio.Classes;
 using PckStudio.Classes.FileTypes;
 using PckStudio.Classes.IO.PCK;
 using PckStudio.Forms.Additional_Popups.Audio;
@@ -18,7 +19,6 @@ namespace PckStudio.Forms.Editor
 	public partial class AudioEditor : MetroForm
 	{
 		public string defaultType = "yes";
-		Classes.Bink BINK = new Classes.Bink();
 		PCKAudioFile audioFile = null;
 		PCKFile.FileData audioPCK;
 		LOCFile loc;
@@ -54,8 +54,6 @@ namespace PckStudio.Forms.Editor
 			InitializeComponent();
 			loc = locFile;
 			_isLittleEndian = isLittleEndian;
-
-			BINK.SetUpBinka();
 
 			audioPCK = file;
 			using (var stream = new MemoryStream(file.data))
@@ -185,7 +183,8 @@ namespace PckStudio.Forms.Editor
 
 		async void ProcessEntries(string[] FileList)
 		{
-			foreach (string file in FileList)
+			int exitCode = 0;
+            foreach (string file in FileList)
 			{
 				if (Path.GetExtension(file) == ".binka" || Path.GetExtension(file) == ".wav")
 				{
@@ -214,14 +213,14 @@ namespace PckStudio.Forms.Editor
 
 						await Task.Run(() =>
 						{
-							BINK.WavToBinka(file, new_loc, (int)compressionUpDown.Value);
+                            exitCode = Binka.FromWav(file, new_loc, (int)compressionUpDown.Value);
 						});
 
 						waitDiag.Close();
 						waitDiag.Dispose();
 						Cursor.Current = Cursors.Default;
 
-						if (BINK.temp_error_code != 0) continue;
+						if (exitCode != 0) continue;
 					}
 					else if (!duplicate_song)
 					{
@@ -404,7 +403,10 @@ namespace PckStudio.Forms.Editor
 		{
 			if (!parent.CreateDataFolder()) return;
 
-			OpenFileDialog ofn = new OpenFileDialog();
+			int exitCode = 0;
+
+
+            OpenFileDialog ofn = new OpenFileDialog();
 			ofn.Multiselect = true;
 			ofn.Filter = "Supported audio files (*.binka,*.wav)|*.binka;*.wav";
 			ofn.Title = "Please choose WAV or BINKA files to replace existing track files";
@@ -436,16 +438,16 @@ namespace PckStudio.Forms.Editor
 
 					await Task.Run(() =>
 					{
-						BINK.WavToBinka(file, new_loc, (int)compressionUpDown.Value);
+                        exitCode = Binka.FromWav(file, new_loc, (int)compressionUpDown.Value);
 					});
 
 					waitDiag.Close();
 					waitDiag.Dispose();
 					Cursor.Current = Cursors.Default;
 
-					if (BINK.temp_error_code != 0) continue;
+					if (exitCode != 0) continue;
 				}
-				else if(file_ext == ".binka") File.Copy(file, Path.Combine(parent.GetDataPath(), Path.GetFileName(file)));
+                else if(file_ext == ".binka") File.Copy(file, Path.Combine(parent.GetDataPath(), Path.GetFileName(file)));
 			}
 		}
 
@@ -453,7 +455,7 @@ namespace PckStudio.Forms.Editor
 		{
 			if (treeView2.SelectedNode != null && treeView1.SelectedNode.Tag is PCKAudioFile.AudioCategory)
 			{
-				BINK.BinkaToWav(Path.Combine(parent.GetDataPath(), treeView2.SelectedNode.Text + ".binka"), Path.Combine(parent.GetDataPath()));
+				Binka.ToWav(Path.Combine(parent.GetDataPath(), treeView2.SelectedNode.Text + ".binka"), Path.Combine(parent.GetDataPath()));
 			}
 		}
 	}
