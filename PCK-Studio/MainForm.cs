@@ -839,7 +839,7 @@ namespace PckStudio
 
 			bool isSubFile = conditions.Contains(true);
 
-			Console.WriteLine($"{nodePath} is{(isSubFile ? "" : " not")} a Sub-PCK File");
+			if(isSubFile) Console.WriteLine($"{nodePath} is a Sub-PCK File");
 
 			return isSubFile;
 		}
