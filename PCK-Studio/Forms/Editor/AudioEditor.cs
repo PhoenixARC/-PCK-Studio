@@ -262,8 +262,15 @@ namespace PckStudio.Forms.Editor
 			}
 
 			PCKAudioFile.AudioCategory overworldCategory = audioFile.GetCategory(PCKAudioFile.AudioCategory.EAudioType.Overworld);
+
 			foreach (var category in audioFile.Categories)
 			{
+				if (category.SongNames.Count < 1)
+				{
+					MessageBox.Show("The game will crash upon loading your pack if any of the categories are empty. Please remove or occupy the category.", "Empty Category");
+					return;
+				}
+
 				category.Name = "";
 				if (playOverworldInCreative.Checked && category.audioType == PCKAudioFile.AudioCategory.EAudioType.Creative)
 				{
@@ -277,14 +284,6 @@ namespace PckStudio.Forms.Editor
 					}
 					category.Name = "include_overworld";
 				}
-			}
-
-			bool emptyCat = false;
-
-			if (emptyCat)
-			{
-				MessageBox.Show("The game will crash upon loading your pack if a category is empty", "Empty Category");
-				return;
 			}
 
 			using (var stream = new MemoryStream())
