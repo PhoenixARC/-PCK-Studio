@@ -61,6 +61,13 @@ namespace PckStudio.Forms.Editor
 				audioFile = PCKAudioFileReader.Read(stream, isLittleEndian);
 			}
 
+			SetUpTree();
+		}
+
+		public void SetUpTree()
+		{
+			treeView1.BeginUpdate();
+			treeView1.Nodes.Clear();
 			foreach (var category in audioFile.Categories)
 			{
 				if (category.Name == "include_overworld" &&
@@ -80,6 +87,7 @@ namespace PckStudio.Forms.Editor
 				treeView1.Nodes.Add(treeNode);
 			}
 			playOverworldInCreative.Enabled = audioFile.HasCategory(PCKAudioFile.AudioCategory.EAudioType.Creative);
+			treeView1.EndUpdate();
 		}
 
 		private void AudioEditor_FormClosed(object sender, FormClosedEventArgs e)
@@ -113,10 +121,10 @@ namespace PckStudio.Forms.Editor
 
 		private void addCategoryStripMenuItem_Click(object sender, EventArgs e)
 		{
-			string[] avalible = Categories.FindAll(str => !audioFile.HasCategory(GetCategoryId(str))).ToArray();
-			if (avalible.Length > 0)
+			string[] available = Categories.FindAll(str => !audioFile.HasCategory(GetCategoryId(str))).ToArray();
+			if (available.Length > 0)
 			{
-				using addCategory add = new addCategory(avalible);
+				using addCategory add = new addCategory(available);
 				if (add.ShowDialog() == DialogResult.OK)
 					audioFile.AddCategory(GetCategoryId(add.Category));
 				else return;
@@ -125,10 +133,12 @@ namespace PckStudio.Forms.Editor
 				TreeNode treeNode = new TreeNode(GetCategoryFromId(category.audioType), (int)category.audioType, (int)category.audioType);
 				treeNode.Tag = category;
 				treeView1.Nodes.Add(treeNode);
+
+				SetUpTree();
 			}
 			else
 			{
-				MessageBox.Show("All possible categories are used", "There are no more categories that could be added");
+				MessageBox.Show("There are no more categories that could be added", "All possible categories are used");
 			}
 		}
 
@@ -455,6 +465,33 @@ namespace PckStudio.Forms.Editor
 			if (treeView2.SelectedNode != null && treeView1.SelectedNode.Tag is PCKAudioFile.AudioCategory)
 			{
 				Binka.ToWav(Path.Combine(parent.GetDataPath(), treeView2.SelectedNode.Text + ".binka"), Path.Combine(parent.GetDataPath()));
+			}
+		}
+
+		private void setCategoryToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (!(treeView1.SelectedNode is TreeNode t && t.Tag is PCKAudioFile.AudioCategory category)) return;
+
+			string[] available = Categories.FindAll(str => !audioFile.HasCategory(GetCategoryId(str))).ToArray();
+			if (available.Length > 0)
+			{
+				using addCategory add = new addCategory(available);
+				add.button1.Text = "Save";
+				if (add.ShowDialog() != DialogResult.OK) return;
+
+				audioFile.RemoveCategory(category.audioType);
+
+				audioFile.AddCategory(category.parameterType, GetCategoryId(add.Category), category.audioType == PCKAudioFile.AudioCategory.EAudioType.Overworld && playOverworldInCreative.Checked ? "include_overworld" : "");
+
+				var newCategory = audioFile.GetCategory(GetCategoryId(add.Category));
+
+				category.SongNames.ForEach(c => newCategory.SongNames.Add(c));
+
+				SetUpTree();
+			}
+			else
+			{
+				MessageBox.Show("There are no categories that aren't already used", "All possible categories are used");
 			}
 		}
 	}

@@ -35,6 +35,7 @@ namespace PckStudio.Forms.Editor
 			this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.addCategoryStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.removeCategoryStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.changeCategoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.catImages = new System.Windows.Forms.ImageList(this.components);
 			this.menuStrip = new System.Windows.Forms.MenuStrip();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -80,7 +81,8 @@ namespace PckStudio.Forms.Editor
 			// 
 			this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addCategoryStripMenuItem,
-            this.removeCategoryStripMenuItem});
+            this.removeCategoryStripMenuItem,
+            this.changeCategoryToolStripMenuItem});
 			this.contextMenuStrip1.Name = "contextMenuStrip1";
 			resources.ApplyResources(this.contextMenuStrip1, "contextMenuStrip1");
 			// 
@@ -95,6 +97,12 @@ namespace PckStudio.Forms.Editor
 			this.removeCategoryStripMenuItem.Name = "removeCategoryStripMenuItem";
 			resources.ApplyResources(this.removeCategoryStripMenuItem, "removeCategoryStripMenuItem");
 			this.removeCategoryStripMenuItem.Click += new System.EventHandler(this.removeCategoryStripMenuItem_Click);
+			// 
+			// changeCategoryToolStripMenuItem
+			// 
+			this.changeCategoryToolStripMenuItem.Name = "changeCategoryToolStripMenuItem";
+			resources.ApplyResources(this.changeCategoryToolStripMenuItem, "changeCategoryToolStripMenuItem");
+			this.changeCategoryToolStripMenuItem.Click += new System.EventHandler(this.setCategoryToolStripMenuItem_Click);
 			// 
 			// catImages
 			// 
@@ -343,5 +351,6 @@ namespace PckStudio.Forms.Editor
 		private MetroFramework.Controls.MetroLabel metroLabel1;
 		private System.Windows.Forms.ToolStripMenuItem openDataFolderToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem bulkReplaceExistingTracksToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem changeCategoryToolStripMenuItem;
 	}
 }
