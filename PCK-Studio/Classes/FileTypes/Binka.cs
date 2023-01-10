@@ -57,10 +57,7 @@ namespace PckStudio.Classes
 			switch (ext)
 			{
 				case ".binka":
-                    inputFilename = inputFilename.Replace(".binka", ".wav");
-					break;
 				case ".wav":
-                    inputFilename = inputFilename.Replace(".wav", ".binka");
 					break;
 				default:
 					throw new NotSupportedException(nameof(ext)+":"+ext);
