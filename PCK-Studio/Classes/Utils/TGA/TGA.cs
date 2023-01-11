@@ -80,46 +80,21 @@ namespace PckStudio.Classes.Utils.TGA
         public readonly Bitmap Bitmap;
         public readonly TGAFooter Footer;
         public readonly TGAExtentionData ExtentionData;
-    }
 
-    public enum TGADataTypeCode : byte
-    {
-        /// <summary>
-        /// No image data included.
-        /// </summary>
-        NO_DATA = 0,
-        /// <summary>
-        /// Uncompressed, color-mapped images.
-        /// </summary>
-        COLORMAPPED = 1,
-        /// <summary>
-        /// Uncompressed, RGB images.
-        /// </summary>
-        RGB = 2,
-        /// <summary>
-        /// Uncompressed, black and white images.
-        /// </summary>
-        BLACK_WHITE = 3,
-        /// <summary>
-        /// Runlength encoded color-mapped images.
-        /// </summary>
-        RLE_COLORMAPPED = 9,
-        /// <summary>
-        /// Runlength encoded RGB images.
-        /// </summary>
-        RLE_RGB = 10,
-        /// <summary>
-        /// Compressed, black and white images.
-        /// </summary>
-        COMPRESSED_BLACK_WHITE = 11,
-        /// <summary>
-        /// Compressed color-mapped data, using Huffman, Delta, and runlength encoding.
-        /// </summary>
-        COMPRESSED_RLE_COLORMAPPED = 32,
-        /// <summary>
-        /// Compressed color-mapped data, using Huffman, Delta, and runlength encoding. 4-pass quadtree-type process.
-        /// </summary>
-        COMPRESSED_RLE_COLORMAPPED_4 = 33,
+        public void Save(string filename)
+        {
+            throw new NotImplementedException();
+        }
+        
+        public void Save(string filename, TGADataTypeCode format)
+        {
+            throw new NotImplementedException();
+        }
+        
+        public void Save(Stream stream, TGADataTypeCode format)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public static class TGA
@@ -127,10 +102,26 @@ namespace PckStudio.Classes.Utils.TGA
         private static TGAWriter _writer = new TGAWriter();
         private static TGAReader _reader = new TGAReader();
 
+        public static Bitmap FromFile(string filename)
+        {
+            if (Path.GetFileNameWithoutExtension(filename) != ".tga")
+                throw new InvalidDataException("File does not end in .tga .");
+            if (File.Exists(filename))
+            {
+                using var fs = File.OpenRead(filename);
+                return FromStream(fs);
+            }
+            throw new FileNotFoundException(filename);
+        }
+
         public static Bitmap FromStream(Stream stream)
         {
-            TGAFileData tgaFile = _reader.Read(stream);
-            return tgaFile.Bitmap;
+            return LoadTGAFileData(stream).Bitmap;
+        }
+        
+        private static TGAFileData LoadTGAFileData(Stream stream)
+        {
+            return _reader.Read(stream);
         }
 
         public static void Save(Stream stream, Bitmap bitmap, TGADataTypeCode format)

@@ -24,7 +24,6 @@ using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 using PckStudio.Classes.IO;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace PckStudio.Classes.Utils.TGA
 {
@@ -195,8 +194,7 @@ namespace PckStudio.Classes.Utils.TGA
                         seconds: ReadShort(stream)
                     );
                     extentionData.SoftwareID = ReadString(stream, 41, Encoding.ASCII);
-                    byte[] version = ReadBytes(stream, 3);
-                    extentionData.SoftwareVersion = version;
+                    extentionData.SoftwareVersion = ReadBytes(stream, 3);
                     extentionData.KeyColor = ReadInt(stream);
                     extentionData.PixelAspectRatio = ReadInt(stream);
                     extentionData.GammaValue = ReadInt(stream);
