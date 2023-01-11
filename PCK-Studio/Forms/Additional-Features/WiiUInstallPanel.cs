@@ -31,6 +31,11 @@ namespace PckStudio.Forms.Additional_Features
         {
             InitializeComponent();
             UpdateDLCPath();
+            buttonServerToggle.Enabled = true;
+            if (listViewPCKS.Columns.Count == 0)
+            {
+                listViewPCKS.Columns.Add(DLCPath, listViewPCKS.Width);
+            }
         }
 
         private readonly struct PckDir
@@ -206,15 +211,6 @@ namespace PckStudio.Forms.Additional_Features
         private void UpdateDLCPath()
         {
             DLCPath = $"{GetGameContentPath()}/WiiU/DLC/";
-            buttonServerToggle.Enabled = true;
-            if (listViewPCKS.Columns.Count == 0)
-            {
-                listViewPCKS.Columns.Add(DLCPath, listViewPCKS.Width);
-            }
-            else
-            {
-                listViewPCKS.Columns[0].Text = DLCPath;
-            }
         }
 
         private void buttonServerToggle_Click(object sender, EventArgs e)
@@ -275,6 +271,7 @@ namespace PckStudio.Forms.Additional_Features
         private void radioButton_Click(object sender, EventArgs e)
         {
             UpdateDLCPath();
+            listViewPCKS.Columns[0].Text = DLCPath;
         }
 
         private void listViewPCKS_MouseDown(object sender, MouseEventArgs e)
@@ -380,7 +377,7 @@ namespace PckStudio.Forms.Additional_Features
         private void PackImageSelection_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Filter = "PNG Image|*.png";
+            ofd.Filter = "Pack Image|*.png";
             if (ofd.ShowDialog() == DialogResult.OK)
                 TextBoxPackImage.Text = ofd.FileName;
         }
