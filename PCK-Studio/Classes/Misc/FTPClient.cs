@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Xml.Linq;
@@ -97,38 +99,26 @@ namespace PckStudio.Classes.Misc
                 SetRequestTimeout();
 
                 response = (FtpWebResponse)request.GetResponse();
+
                 Stream responseStream = response.GetResponseStream();
                 StreamReader streamReader = new StreamReader(responseStream);
-                string text = string.Empty;
-                try
-                {
+                
+                IList<string> text = new List<string>();
+
                     while (streamReader.Peek() != -1)
                     {
-                        text += streamReader.ReadLine() + "|";
+                    text.Add(streamReader.ReadLine());
                     }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.ToString());
-                }
-
                 streamReader.Close();
                 responseStream.Close();
+
                 response.Close();
                 request = null;
-
-                try
-                {
-                    return text.Split("|".ToCharArray());
+                return text.ToArray();
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.ToString());
             }
             return Array.Empty<string>();
         }
@@ -152,6 +142,10 @@ namespace PckStudio.Classes.Misc
                 Stream requestStream = request.GetRequestStream();
                 source.CopyTo(requestStream);
                 requestStream.Close();
+
+                response = (FtpWebResponse)request.GetResponse();
+                response.Close();
+
                 request = null;
             }
             catch (Exception ex)
