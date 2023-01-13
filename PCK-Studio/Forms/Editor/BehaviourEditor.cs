@@ -135,6 +135,7 @@ namespace PckStudio.Forms.Editor
 			if (diag.ShowDialog(this) == DialogResult.OK)
 			{
 				entry.name = diag.NewText;
+				treeView1.SelectedNode.Tag = entry;
 				treeView1.SelectedNode.Text = diag.NewText;
 			}
 		}
