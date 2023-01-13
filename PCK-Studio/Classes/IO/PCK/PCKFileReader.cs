@@ -53,8 +53,8 @@ namespace PckStudio.Classes.IO.PCK
             {
                 int file_size = ReadInt(stream);
                 var file_type = (PCKFile.FileData.FileType)ReadInt(stream);
-                string file_path = ReadString(stream).Replace('\\', '/');
-                var entry = new PCKFile.FileData(file_path, file_type, file_size);
+                string file_name = ReadString(stream).Replace('\\', '/');
+                var entry = new PCKFile.FileData(file_name, file_type, file_size);
                 _file.Files.Add(entry);
             }
         }
@@ -68,9 +68,9 @@ namespace PckStudio.Classes.IO.PCK
                 {
                     string key = _propertyList[ReadInt(stream)];
                     string value = ReadString(stream);
-                    file.properties.Add((key, value));
+                    file.Properties.Add((key, value));
                 }
-                stream.Read(file.data, 0, file.size);
+                stream.Read(file.Data, 0, file.Size);
             };
         }
 

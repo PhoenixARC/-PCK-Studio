@@ -432,7 +432,7 @@ namespace PckStudio.Forms
             var fs = File.OpenRead(filename);
             currentPCK = PCKFileReader.Read(fs, false);
             fs.Close();
-            return currentPCK.GetFile("0", PCKFile.FileData.FileType.InfoFile).properties.GetProperty("PACKID").Item2;
+            return currentPCK.GetFile("0", PCKFile.FileData.FileType.InfoFile).Properties.GetProperty("PACKID").Item2;
         }
 
         private void GetARCFromConsole()

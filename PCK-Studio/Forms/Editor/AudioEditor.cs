@@ -56,7 +56,7 @@ namespace PckStudio.Forms.Editor
 			_isLittleEndian = isLittleEndian;
 
 			audioPCK = file;
-			using (var stream = new MemoryStream(file.data))
+			using (var stream = new MemoryStream(file.Data))
 			{
 				audioFile = PCKAudioFileReader.Read(stream, isLittleEndian);
 			}

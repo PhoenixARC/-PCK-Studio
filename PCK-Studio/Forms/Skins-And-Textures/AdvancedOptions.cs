@@ -28,7 +28,7 @@ namespace PckStudio
                     {
                         foreach (PCKFile.FileData file in currentPCK.Files)
                         {
-                            file.properties.Add((entryTypeTextBox.Text, entryDataTextBox.Text));
+                            file.Properties.Add((entryTypeTextBox.Text, entryDataTextBox.Text));
                         }
                         MessageBox.Show("Data Added to All Entries");
                     }
@@ -37,11 +37,11 @@ namespace PckStudio
                     {
                         foreach (PCKFile.FileData file in currentPCK.Files)
                         {
-                            MemoryStream png = new MemoryStream(file.data);
-                            if (Path.GetExtension(file.filepath) == ".png" &&
+                            MemoryStream png = new MemoryStream(file.Data);
+                            if (Path.GetExtension(file.Filename) == ".png" &&
                                 Image.FromStream(png).Size.Height == Image.FromStream(png).Size.Width)
                             {
-                                file.properties.Add((entryTypeTextBox.Text, entryDataTextBox.Text));
+                                file.Properties.Add((entryTypeTextBox.Text, entryDataTextBox.Text));
                             }
                         }
                         MessageBox.Show("Data Added to 64x64 Image Entries");
@@ -51,11 +51,11 @@ namespace PckStudio
                     {
                         foreach (PCKFile.FileData file in currentPCK.Files)
                         {
-                            MemoryStream png = new MemoryStream(file.data);
-                            if (Path.GetExtension(file.filepath) == ".png" &&
+                            MemoryStream png = new MemoryStream(file.Data);
+                            if (Path.GetExtension(file.Filename) == ".png" &&
                                 Image.FromStream(png).Size.Height == Image.FromStream(png).Size.Width / 2)
                             {
-                                file.properties.Add((entryTypeTextBox.Text, entryDataTextBox.Text));
+                                file.Properties.Add((entryTypeTextBox.Text, entryDataTextBox.Text));
                             }
                         }
                         MessageBox.Show("Data Added to 64x32 Image Entries");
@@ -65,10 +65,10 @@ namespace PckStudio
                     {
                         foreach (PCKFile.FileData file in currentPCK.Files)
                         {
-                            MemoryStream png = new MemoryStream(file.data);
-                            if (Path.GetExtension(file.filepath) == ".png")
+                            MemoryStream png = new MemoryStream(file.Data);
+                            if (Path.GetExtension(file.Filename) == ".png")
                             {
-                                file.properties.Add((entryTypeTextBox.Text, entryDataTextBox.Text));
+                                file.Properties.Add((entryTypeTextBox.Text, entryDataTextBox.Text));
                             }
                         }
                         MessageBox.Show("Data Added to All PNG Image Entries");

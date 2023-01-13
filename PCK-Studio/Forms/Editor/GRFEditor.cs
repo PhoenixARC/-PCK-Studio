@@ -25,7 +25,7 @@ namespace PckStudio.Forms.Editor
         public GRFEditor(PCKFile.FileData file) : this()
         {
             _pckfile = file;
-            using(var stream = new MemoryStream(file.data))
+            using(var stream = new MemoryStream(file.Data))
             {
                 try
                 {

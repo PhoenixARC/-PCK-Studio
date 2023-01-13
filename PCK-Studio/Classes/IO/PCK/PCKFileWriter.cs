@@ -56,9 +56,9 @@ namespace PckStudio.Classes.IO.PCK
             WriteInt(stream, _pckfile.Files.Count);
             foreach (var file in _pckfile.Files)
             {
-                WriteInt(stream, file.size);
-                WriteInt(stream, (int)file.filetype);
-                WriteString(stream, file.filepath);
+                WriteInt(stream, file.Size);
+                WriteInt(stream, (int)file.Filetype);
+                WriteString(stream, file.Filename);
             }
         }
 
@@ -66,15 +66,15 @@ namespace PckStudio.Classes.IO.PCK
         {
             foreach (var file in _pckfile.Files)
             {
-                WriteInt(stream, file.properties.Count);
-                foreach (var property in file.properties)
+                WriteInt(stream, file.Properties.Count);
+                foreach (var property in file.Properties)
                 {
                     if (!_propertyList.Contains(property.Item1))
                         throw new Exception("Tag not in Look Up Table: " + property.Item1);
                     WriteInt(stream, _propertyList.IndexOf(property.Item1));
                     WriteString(stream, property.Item2);
                 }
-                WriteBytes(stream, file.data, file.size);
+                WriteBytes(stream, file.Data, file.Size);
             }
         }
     }

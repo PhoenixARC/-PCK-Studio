@@ -28,7 +28,7 @@ namespace PckStudio.Forms.Editor
 			InitializeComponent();
 			_file = file;
 
-			using(var stream = new MemoryStream(file.data))
+			using(var stream = new MemoryStream(file.Data))
 			{
                 colourfile = COLFileReader.Read(stream);
 			}

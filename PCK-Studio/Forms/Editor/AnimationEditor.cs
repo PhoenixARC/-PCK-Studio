@@ -252,14 +252,14 @@ namespace PckStudio.Forms.Editor
 		{
 			InitializeComponent();
 
-            isItem = file.filepath.Split('/').Contains("items");
-			TileName = Path.GetFileNameWithoutExtension(file.filepath);
+            isItem = file.Filename.Split('/').Contains("items");
+			TileName = Path.GetFileNameWithoutExtension(file.Filename);
 			animationFile = file;
 
-			using MemoryStream textureMem = new MemoryStream(animationFile.data);
+			using MemoryStream textureMem = new MemoryStream(animationFile.Data);
 			var texture = new Bitmap(textureMem);
-			currentAnimation = animationFile.properties.HasProperty("ANIM")
-				? new Animation(texture, animationFile.properties.GetPropertyValue("ANIM"))
+			currentAnimation = animationFile.Properties.HasProperty("ANIM")
+				? new Animation(texture, animationFile.Properties.GetPropertyValue("ANIM"))
 				: new Animation(texture);
 			player = new AnimationPlayer(pictureBoxWithInterpolationMode1);
 
@@ -336,7 +336,7 @@ namespace PckStudio.Forms.Editor
 		{
 
 			string anim = currentAnimation.BuildAnim();
-			animationFile.properties.SetProperty("ANIM", anim);
+			animationFile.Properties.SetProperty("ANIM", anim);
             using (var stream = new MemoryStream())
 			{
 				currentAnimation.BuildTexture().Save(stream, ImageFormat.Png);
