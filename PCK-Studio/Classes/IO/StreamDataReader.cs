@@ -39,7 +39,7 @@ namespace PckStudio.Classes.IO
         protected static string ReadString(Stream stream, int length, Encoding encoding)
         {
             byte[] buffer = ReadBytes(stream, length << Convert.ToInt32(encoding is UnicodeEncoding));
-            return encoding.GetString(buffer);
+            return encoding.GetString(buffer).TrimEnd('\0');
         }
 
         protected static byte[] ReadBytes(Stream stream, int count)
