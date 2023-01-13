@@ -39,7 +39,7 @@ namespace PckStudio.Classes.IO.Behaviour
                     posOverride.z = ReadFloat(stream);
                     riderPositionOverride.overrides.Add(posOverride);
                 }
-                behaviourFile.overrides.Add(riderPositionOverride);
+                behaviourFile.entries.Add(riderPositionOverride);
             }
             return behaviourFile;
         }
