@@ -23,10 +23,10 @@ namespace PckStudio
 
             System.Globalization.CultureInfo.CurrentCulture.NumberFormat = System.Globalization.NumberFormatInfo.InvariantInfo;
 
-            var f = new MainForm();
+            var mianForm = new MainForm();
             if (args.Length > 0 && File.Exists(args[0]) && args[0].EndsWith(".pck"))
-                f.LoadFromPath(args[0]);
-            Application.Run(f);
+                mianForm.LoadPck(args[0]);
+            Application.Run(mianForm);
         }
     }
 }

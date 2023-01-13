@@ -88,7 +88,7 @@ namespace PckStudio
 			};
 		}
 
-		public void LoadFromPath(string filepath)
+		public void LoadPck(string filepath)
 		{
 			treeViewMain.Nodes.Clear();
             currentPCK = openPck(filepath);
@@ -147,7 +147,7 @@ namespace PckStudio
 				ofd.Filter = "PCK (Minecraft Console Package)|*.pck";
 				if (ofd.ShowDialog() == DialogResult.OK)
 				{
-					LoadFromPath(ofd.FileName);
+					LoadPck(ofd.FileName);
 				}
 			}
 		}
@@ -1887,7 +1887,7 @@ namespace PckStudio
 			string[] Filepaths = (string[])e.Data.GetData(DataFormats.FileDrop, false);
 			if (Filepaths.Length > 1)
 				MessageBox.Show("Only one pck file at a time is currently supported");
-			LoadFromPath(Filepaths[0]);
+			LoadPck(Filepaths[0]);
 		}
 
 		private void OpenPck_DragLeave(object sender, EventArgs e)
