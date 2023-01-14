@@ -530,6 +530,11 @@ namespace PckStudio
 						buttonEdit.Text = "EDIT COLORS";
 						buttonEdit.Visible = true;
 						break;
+
+					case PCKFile.FileData.FileType.BehavioursFile when file.Filename == "behaviours.bin":
+						buttonEdit.Text = "EDIT BEHAVIOURS";
+						buttonEdit.Visible = true;
+						break;
 					default:
 						buttonEdit.Visible = false;
 						break;
