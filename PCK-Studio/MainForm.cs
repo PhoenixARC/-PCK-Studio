@@ -521,7 +521,7 @@ namespace PckStudio
 						buttonEdit.Visible = true;
 						break;
 
-					case PCKFile.FileData.FileType.AudioFile when file.Filename == "audio.pck":
+					case PCKFile.FileData.FileType.AudioFile:
 						buttonEdit.Text = "EDIT MUSIC CUES";
 						buttonEdit.Visible = true;
 						break;
