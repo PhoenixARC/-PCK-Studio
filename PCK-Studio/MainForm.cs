@@ -56,6 +56,7 @@ namespace PckStudio
 			imageList.Images.Add(Resources.CAPE_ICON); // Icon for Cape files (*.png)
 			imageList.Images.Add(Resources.TEXTURE_ICON); // Icon for Texture files (*.png;*.tga)
 			imageList.Images.Add(Resources.BEHAVIOURS_ICON); // Icon for Behaviour files (behaviours.bin)
+			imageList.Images.Add(Resources.ENTITY_MATERIALS_ICON); // Icon for Entity Material files (entityMaterials.bin)
 			pckOpen.AllowDrop = true;
 
             isSelectingTab = true;
@@ -1978,6 +1979,10 @@ namespace PckStudio
 				case PCKFile.FileData.FileType.BehavioursFile:
 					node.ImageIndex = 15;
 					node.SelectedImageIndex = 15;
+					break;
+				case PCKFile.FileData.FileType.MaterialFile:
+					node.ImageIndex = 16;
+					node.SelectedImageIndex = 16;
 					break;
 				default: // unknown file format
 					node.ImageIndex = 5;

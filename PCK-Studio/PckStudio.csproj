@@ -701,6 +701,7 @@
     <None Include="Resources\AddTexture.png" />
     <None Include="Resources\iconImageList\BEHAVIOURS ICON.png" />
     <None Include="Resources\Comparison.png" />
+    <None Include="Resources\iconImageList\ENTITY MATERIALS ICON.png" />
     <Content Include="Resources\PCK-Studio_Logo.ico" />
     <None Include="Resources\bg1.png" />
     <Content Include="Resources\NoImageFound.png" />
