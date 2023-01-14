@@ -162,9 +162,9 @@
 			this.flag1Checkbox.Enabled = false;
 			this.flag1Checkbox.Location = new System.Drawing.Point(174, 109);
 			this.flag1Checkbox.Name = "flag1Checkbox";
-			this.flag1Checkbox.Size = new System.Drawing.Size(108, 15);
+			this.flag1Checkbox.Size = new System.Drawing.Size(96, 15);
 			this.flag1Checkbox.TabIndex = 22;
-			this.flag1Checkbox.Text = "Unknown Flag 1";
+			this.flag1Checkbox.Text = "Mob is tamed";
 			this.flag1Checkbox.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.flag1Checkbox.UseSelectable = true;
 			this.flag1Checkbox.CheckedChanged += new System.EventHandler(this.flag1Checkbox_CheckedChanged);
@@ -175,9 +175,9 @@
 			this.flag2Checkbox.Enabled = false;
 			this.flag2Checkbox.Location = new System.Drawing.Point(174, 141);
 			this.flag2Checkbox.Name = "flag2Checkbox";
-			this.flag2Checkbox.Size = new System.Drawing.Size(108, 15);
+			this.flag2Checkbox.Size = new System.Drawing.Size(106, 15);
 			this.flag2Checkbox.TabIndex = 23;
-			this.flag2Checkbox.Text = "Unknown Flag 2";
+			this.flag2Checkbox.Text = "Mob has saddle";
 			this.flag2Checkbox.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.flag2Checkbox.UseSelectable = true;
 			this.flag2Checkbox.CheckedChanged += new System.EventHandler(this.flag2Checkbox_CheckedChanged);
