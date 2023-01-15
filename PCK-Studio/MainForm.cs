@@ -352,6 +352,8 @@ namespace PckStudio
 				file = originalAnimationFile;
 			}
 
+			if (!(file.Filename.StartsWith("res/textures/blocks/") || file.Filename.StartsWith("res/textures/items/"))) return;
+
 			using (AnimationEditor animationEditor = new AnimationEditor(file))
 			{
 				if (animationEditor.ShowDialog(this) == DialogResult.OK)
