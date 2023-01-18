@@ -56,6 +56,7 @@ namespace PckStudio
 			imageList.Images.Add(Resources.CAPE_ICON); // Icon for Cape files (*.png)
 			imageList.Images.Add(Resources.TEXTURE_ICON); // Icon for Texture files (*.png;*.tga)
 			imageList.Images.Add(Resources.BEHAVIOURS_ICON); // Icon for Behaviour files (behaviours.bin)
+			imageList.Images.Add(Resources.ENTITY_MATERIALS_ICON); // Icon for Entity Material files (entityMaterials.bin)
 			pckOpen.AllowDrop = true;
 
             isSelectingTab = true;
@@ -83,7 +84,7 @@ namespace PckStudio
 				[PCKFile.FileData.FileType.GameRulesHeader]     = HandleGameRuleFile,
 				[PCKFile.FileData.FileType.SkinDataFile]        = null,
 				[PCKFile.FileData.FileType.ModelsFile]          = HandleModelsFile,
-				[PCKFile.FileData.FileType.BehavioursFile]      = null,
+				[PCKFile.FileData.FileType.BehavioursFile]      = HandleBehavioursFile,
 				[PCKFile.FileData.FileType.MaterialFile]        = null,
 			};
 		}
@@ -351,6 +352,8 @@ namespace PckStudio
 				file = originalAnimationFile;
 			}
 
+			if (!(file.Filename.StartsWith("res/textures/blocks/") || file.Filename.StartsWith("res/textures/items/"))) return;
+
 			using (AnimationEditor animationEditor = new AnimationEditor(file))
 			{
 				if (animationEditor.ShowDialog(this) == DialogResult.OK)
@@ -451,6 +454,14 @@ namespace PckStudio
 			//throw new NotImplementedException();
 		}
 
+		public void HandleBehavioursFile(PCKFile.FileData file)
+		{
+			using BehaviourEditor locedit = new BehaviourEditor(file);
+			if (locedit.ShowDialog(this) == DialogResult.OK)
+				saved = false;
+			//throw new NotImplementedException();
+		}
+
 		private void selectNode(object sender, TreeViewEventArgs e)
 		{
 			ReloadMetaTreeView();
@@ -512,13 +523,18 @@ namespace PckStudio
 						buttonEdit.Visible = true;
 						break;
 
-					case PCKFile.FileData.FileType.AudioFile when file.Filename == "audio.pck":
+					case PCKFile.FileData.FileType.AudioFile:
 						buttonEdit.Text = "EDIT MUSIC CUES";
 						buttonEdit.Visible = true;
 						break;
 
 					case PCKFile.FileData.FileType.ColourTableFile when file.Filename == "colours.col":
 						buttonEdit.Text = "EDIT COLORS";
+						buttonEdit.Visible = true;
+						break;
+
+					case PCKFile.FileData.FileType.BehavioursFile when file.Filename == "behaviours.bin":
+						buttonEdit.Text = "EDIT BEHAVIOURS";
 						buttonEdit.Visible = true;
 						break;
 					default:
@@ -1970,6 +1986,10 @@ namespace PckStudio
 				case PCKFile.FileData.FileType.BehavioursFile:
 					node.ImageIndex = 15;
 					node.SelectedImageIndex = 15;
+					break;
+				case PCKFile.FileData.FileType.MaterialFile:
+					node.ImageIndex = 16;
+					node.SelectedImageIndex = 16;
 					break;
 				default: // unknown file format
 					node.ImageIndex = 5;

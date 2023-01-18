@@ -161,17 +161,22 @@ namespace PckStudio.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 7.0 (BETA)  
+        ///   Looks up a localized string similar to 7.01 (BETA) 
+        ///==========
+        ///Some features may be completely missing or incomplete at this point in time!
+        ///
+        ///-Added .3dst (3DS Texture) support  
+        ///-Semi-added Sub-Pck editing  
+        ///-Add an edit all properties tool item  
+        ///-Skin Preview has been improved  
+        ///-Added Pack Icon Injection into .arc file  
+        ///-Improved COL Editor
+        ///
+        ///7.0 (BETA)  
         ///==========  
         ///Some features may be completely missing or incomplete at this point in time!  
         ///  
-        ///-Massive codebase overhaul and optimization lead by miku-666 (aka NessieHax)!!!  
-        ///-Some UI redesigned by yaboiFoxx  
-        ///-Improved the changelog!  
-        ///-New icons for each of the file types, with unique image icons for skin, texture, and cape files  
-        ///-Added the ability to create Texture and Mash-Up packs  
-        ///-Added a feature to see stats about any given file, including file type  
-        ///-Added a feature set [rest of string was truncated]&quot;;.
+        ///-Massive codebase overhaul and optimization lead by miku-666 (aka NessieHax)!!!  [rest of string was truncated]&quot;;.
         /// </summary>
         public static string CHANGELOG {
             get {
@@ -245,6 +250,16 @@ namespace PckStudio.Properties {
         public static System.Drawing.Bitmap discord {
             get {
                 object obj = ResourceManager.GetObject("discord", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap ENTITY_MATERIALS_ICON {
+            get {
+                object obj = ResourceManager.GetObject("ENTITY_MATERIALS_ICON", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

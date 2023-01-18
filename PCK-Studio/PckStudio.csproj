@@ -148,6 +148,7 @@
     <Compile Include="Classes\IO\ARC\ARCFileWriter.cs" />
     <Compile Include="Classes\IO\ARC\ARCFileReader.cs" />
     <Compile Include="Classes\IO\Behaviour\BehavioursReader.cs" />
+    <Compile Include="Classes\IO\Behaviour\BehavioursWriter.cs" />
     <Compile Include="Classes\IO\CSMB\CSMBFileReader.cs" />
     <Compile Include="Classes\IO\CSMB\CSMBFileWriter.cs" />
     <Compile Include="Classes\IO\Model\ModelFileReader.cs" />
@@ -233,6 +234,12 @@
     </Compile>
     <Compile Include="Forms\Additional-Popups\TextPrompt.Designer.cs">
       <DependentUpon>TextPrompt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Editor\BehaviourEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Editor\BehaviourEditor.Designer.cs">
+      <DependentUpon>BehaviourEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Editor\COLEditor.cs">
       <SubType>Form</SubType>
@@ -458,6 +465,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\TextPrompt.resx">
       <DependentUpon>TextPrompt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Editor\BehaviourEditor.resx">
+      <DependentUpon>BehaviourEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Editor\COLEditor.ja.resx">
       <DependentUpon>COLEditor.cs</DependentUpon>
@@ -691,6 +701,7 @@
     <None Include="Resources\AddTexture.png" />
     <None Include="Resources\iconImageList\BEHAVIOURS ICON.png" />
     <None Include="Resources\Comparison.png" />
+    <None Include="Resources\iconImageList\ENTITY MATERIALS ICON.png" />
     <Content Include="Resources\PCK-Studio_Logo.ico" />
     <None Include="Resources\bg1.png" />
     <Content Include="Resources\NoImageFound.png" />

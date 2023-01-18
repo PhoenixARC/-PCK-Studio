@@ -8,7 +8,7 @@ namespace PckStudio.Classes.FileTypes
 {
     public class BehaviourFile
     {
-        public List<RiderPositionOverride> overrides { get; } = new List<RiderPositionOverride>();
+        public List<RiderPositionOverride> entries { get; } = new List<RiderPositionOverride>();
         public struct RiderPositionOverride
         {
             public string name;

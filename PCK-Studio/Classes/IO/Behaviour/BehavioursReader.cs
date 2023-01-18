@@ -10,12 +10,12 @@ namespace PckStudio.Classes.IO.Behaviour
 {
     public class BehavioursReader : StreamDataReader<BehaviourFile>
     {
-        public static BehaviourFile Read(Stream stream, bool useLittleEndian)
+        public static BehaviourFile Read(Stream stream)
         {
-            return new BehavioursReader(useLittleEndian).ReadFromStream(stream);
+            return new BehavioursReader().ReadFromStream(stream);
         }
 
-        protected BehavioursReader(bool useLittleEndian) : base(useLittleEndian)
+        protected BehavioursReader() : base(false) // Doesn't seem that Behaviours uses little endian
         {
         }
 
@@ -39,7 +39,7 @@ namespace PckStudio.Classes.IO.Behaviour
                     posOverride.z = ReadFloat(stream);
                     riderPositionOverride.overrides.Add(posOverride);
                 }
-                behaviourFile.overrides.Add(riderPositionOverride);
+                behaviourFile.entries.Add(riderPositionOverride);
             }
             return behaviourFile;
         }
