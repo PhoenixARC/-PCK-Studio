@@ -6,14 +6,14 @@ using System.Text;
 
 namespace PckStudio.Classes.IO.Model
 {
-    public class ModelReader : StreamDataReader<ModelFile>
+    public class ModelFileReader : StreamDataReader<ModelFile>
     {
-        public static ModelFile Read(Stream stream, bool useLittleEndian = false)
+        public static ModelFile Read(Stream stream)
         {
-            return new ModelReader(useLittleEndian).ReadFromStream(stream);
+            return new ModelFileReader().ReadFromStream(stream);
         }
 
-        private ModelReader(bool useLittleEndian) : base(useLittleEndian)
+        private ModelFileReader() : base(false)
         {
         }
 
@@ -32,7 +32,12 @@ namespace PckStudio.Classes.IO.Model
                 int partCount = ReadInt(stream);
                 for (; 0 < partCount; partCount--)
                 {
-                    string partname = ReadString(stream);
+                    string partName = ReadString(stream);
+                    if (version > 1)
+                    {
+                        string partParentName = ReadString(stream);
+                        Debug.WriteLineIf(partParentName.Length > 0, partParentName, category: nameof(ModelFileReader));
+                    }
                     float x = ReadFloat(stream);
                     float y = ReadFloat(stream);
                     float z = ReadFloat(stream);
@@ -40,13 +45,13 @@ namespace PckStudio.Classes.IO.Model
                     float yaw = ReadFloat(stream);
                     float pitch = ReadFloat(stream);
                     float roll = ReadFloat(stream);
-                    var part = new ModelFile.Model.Part(partname, (x, y, z), (yaw, pitch, roll));
+                    var part = new ModelFile.Model.Part(partName, (x, y, z), (yaw, pitch, roll));
                     if (version > 0)
                     {
                         float _1 = ReadFloat(stream);
                         float _2 = ReadFloat(stream);
                         float _3 = ReadFloat(stream);
-                        Debug.WriteLine("[{0}]: {1}, {2}, {3}", nameof(ModelReader), _1, _2, _3);
+                        Debug.WriteLine(string.Format("{0}, {1}, {2}", _1, _2, _3), category: nameof(ModelFileReader));
                     }
 
                     int boxCount = ReadInt(stream);
