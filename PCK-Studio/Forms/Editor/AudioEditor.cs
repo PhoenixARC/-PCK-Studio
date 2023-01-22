@@ -232,12 +232,10 @@ namespace PckStudio.Forms.Editor
 
 						if (exitCode != 0) continue;
 					}
-					else if (!duplicate_song)
-					{
-						Console.WriteLine(Path.GetFileName(file));
-						File.Delete(Path.Combine(parent.GetDataPath(), Path.GetFileName(file)));
+
+					// if the file is NOT a .wav and doesn't exist, copy the file
+					else if (!File.Exists(Path.Combine(parent.GetDataPath(), Path.GetFileName(file)))) 
 						File.Copy(file, Path.Combine(parent.GetDataPath(), Path.GetFileName(file)));
-					}
 
 					var songName = Path.GetFileNameWithoutExtension(file);
 					if (treeView1.SelectedNode is TreeNode t && t.Tag is PCKAudioFile.AudioCategory category)
