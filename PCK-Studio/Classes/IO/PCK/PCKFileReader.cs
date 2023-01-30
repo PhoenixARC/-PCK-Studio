@@ -25,6 +25,7 @@ namespace PckStudio.Classes.IO.PCK
             int pck_type = ReadInt(stream);
             if (pck_type > 0xf0_00_00) // 03 00 00 00 == true
                 throw new OverflowException(nameof(pck_type));
+            else if (pck_type < 3) throw new Exception(pck_type.ToString());
             _file = new PCKFile(pck_type);
             ReadLookUpTable(stream);
             ReadFileEntries(stream);

@@ -171,8 +171,14 @@ namespace PckStudio
 						"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 					Debug.WriteLine(ex.Message);
 				}
+				catch (Exception ex)
+				{
+					MessageBox.Show("Failed to open pck\n" + 
+						"If this is an Audio/Music Cues pck, please use the specialized editor while inside of the parent pck.",
+						"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					Debug.WriteLine("Can't open pck file of type: " + pck?.type.ToString());
+				}
 			}
-			if (pck?.type < 3) throw new Exception("Can't open pck file of type: " + pck.type.ToString());
 			return pck;
 		}
 
