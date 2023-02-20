@@ -24,7 +24,7 @@ namespace PckStudio.Forms.Utilities.Skins
 
 				try
 				{
-					Parent = arguments[0];
+					Parent = arguments[0].ToUpper(); // just in case a box has all lower, the editor still parses correctly
 					Pos.X = float.Parse(arguments[1]);
 					Pos.Y = float.Parse(arguments[2]);
 					Pos.Z = float.Parse(arguments[3]);
