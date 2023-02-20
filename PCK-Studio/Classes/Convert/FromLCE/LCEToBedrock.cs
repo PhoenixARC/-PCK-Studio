@@ -309,10 +309,21 @@ namespace PckStudio.Classes.Convert.FromLCE
                     case PCKFile.FileData.FileType.SkinFile:
                         ExportSkin(fd, ExportPath + "\\skin_pack", objects);
                         break;
+                    case PCKFile.FileData.FileType.CapeFile:
+                        ExportCape(fd, ExportPath + "\\skin_pack");
+                        break;
                     case PCKFile.FileData.FileType.SkinDataFile:
                         PCKFile SubPack = PCKFileReader.Read(new MemoryStream(fd.data), false);
                         foreach(PCKFile.FileData file in SubPack.Files)
-                            ExportSkin(file, ExportPath + "\\skin_pack", objects);
+                            switch(file.filetype)
+							{
+                                case PCKFile.FileData.FileType.SkinFile:
+                                    ExportSkin(file, ExportPath + "\\skin_pack", objects);
+                                    break;
+                                case PCKFile.FileData.FileType.CapeFile:
+                                    ExportCape(file, ExportPath + "\\skin_pack");
+                                    break;
+                            }
                         break;
                 }
             }
@@ -320,10 +331,9 @@ namespace PckStudio.Classes.Convert.FromLCE
             SJSON.serialize_name = localisables[0];
             SJSON.skins = objects.ToArray();
             CreateSkinPackManifest(ExportPath + "\\skin_pack", localisables[0]);
-            string SKINS_JSON = JsonConvert.SerializeObject(SJSON, Formatting.Indented,
-                new JsonSerializerSettings {NullValueHandling = NullValueHandling.Ignore});
+            string SKINS_JSON = JsonConvert.SerializeObject(SJSON, Formatting.Indented);
             File.WriteAllText(ExportPath + "\\skin_pack\\skins.json", SKINS_JSON);
-            string GEO_JSON = JsonConvert.SerializeObject(GJSON, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+            string GEO_JSON = JsonConvert.SerializeObject(GJSON, Formatting.Indented);
             File.WriteAllText(ExportPath + "\\skin_pack\\geometry.json", GEO_JSON);
             ZipOutputStream OutputStream = new ZipOutputStream(File.Create(ExportFilepath));
             OutputStream.SetLevel(0);
@@ -378,8 +388,7 @@ namespace PckStudio.Classes.Convert.FromLCE
                 }
             }
 
-            string JSON = JsonConvert.SerializeObject(languages.ToArray(), Formatting.Indented,
-                new JsonSerializerSettings {NullValueHandling = NullValueHandling.Ignore});
+            string JSON = JsonConvert.SerializeObject(languages.ToArray(), Formatting.Indented);
             File.WriteAllText(ExportPath + "\\languages.json", JSON);
         }
 
@@ -526,7 +535,7 @@ namespace PckStudio.Classes.Convert.FromLCE
             if (file.filetype != PCKFile.FileData.FileType.SkinFile) return;
 
             SkinObject So = new SkinObject();
-            string skinID = file.filepath.Replace("dlcskin", "").Replace(".png", "").Replace("Skins/", "");
+            string skinID = file.filepath.Replace(".png", "").Replace("Skins/", "");
             So.localization_name = skinID;
             So.texture = skinID + ".png";
 
@@ -544,58 +553,71 @@ namespace PckStudio.Classes.Convert.FromLCE
 
             List<modelBone> bones = new List<modelBone>();
 
-            bones.Add(new modelBone("head", null, head_and_body_pivot, ConvertBoxes("HEAD", file, head_and_body_pivot)));
-            bones.Add(new modelBone("body", null, head_and_body_pivot, ConvertBoxes("BODY", file, head_and_body_pivot)));
-            bones.Add(new modelBone("rightArm", null, right_arm_pivot, ConvertBoxes("ARM0", file, right_arm_pivot)));
-            bones.Add(new modelBone("leftArm", null, left_arm_pivot, ConvertBoxes("ARM1", file, left_arm_pivot)));
-            bones.Add(new modelBone("rightLeg", null, right_leg_pivot, ConvertBoxes("LEG0", file, right_leg_pivot)));
-            bones.Add(new modelBone("leftLeg", null, left_leg_pivot, ConvertBoxes("LEG1", file, left_leg_pivot)));
+            bones.Add(new modelBone("head", null, head_and_body_pivot, ConvertBoxes("HEAD", file, head_and_body_pivot), "base"));
+            bones.Add(new modelBone("body", null, head_and_body_pivot, ConvertBoxes("BODY", file, head_and_body_pivot), "base"));
+            bones.Add(new modelBone("rightArm", null, right_arm_pivot, ConvertBoxes("ARM0", file, right_arm_pivot), "base"));
+            bones.Add(new modelBone("leftArm", null, left_arm_pivot, ConvertBoxes("ARM1", file, left_arm_pivot), "base"));
+            bones.Add(new modelBone("rightLeg", null, right_leg_pivot, ConvertBoxes("LEG0", file, right_leg_pivot), "base"));
+            bones.Add(new modelBone("leftLeg", null, left_leg_pivot, ConvertBoxes("LEG1", file, left_leg_pivot), "base"));
 
-            bones.Add(new modelBone("hat", "head", head_and_body_pivot, ConvertBoxes("HEADWEAR", file, head_and_body_pivot)));
-            bones.Add(new modelBone("jacket", "body", head_and_body_pivot, ConvertBoxes("JACKET", file, head_and_body_pivot)));
-            bones.Add(new modelBone("rightSleeve", "rightArm", right_arm_pivot, ConvertBoxes("SLEEVE0", file, right_arm_pivot)));
-            bones.Add(new modelBone("leftSleeve", "leftArm", left_arm_pivot, ConvertBoxes("SLEEVE1", file, left_arm_pivot)));
-            bones.Add(new modelBone("rightPants", "rightLeg", right_leg_pivot, ConvertBoxes("PANTS0", file, right_leg_pivot)));
-            bones.Add(new modelBone("leftPants", "leftLeg", left_leg_pivot, ConvertBoxes("PANTS1", file, left_leg_pivot)));
-            bones.Add(new modelBone("rightSock", "rightLeg", right_leg_pivot, ConvertBoxes("SOCK0", file, right_leg_pivot)));
-            bones.Add(new modelBone("leftSock", "leftLeg", left_leg_pivot, ConvertBoxes("SOCK1", file, left_leg_pivot)));
+            bones.Add(new modelBone("hat", "head", head_and_body_pivot, ConvertBoxes("HEADWEAR", file, head_and_body_pivot), "clothing"));
+            bones.Add(new modelBone("jacket", "body", head_and_body_pivot, ConvertBoxes("JACKET", file, head_and_body_pivot), "clothing"));
+            bones.Add(new modelBone("rightSleeve", "rightArm", right_arm_pivot, ConvertBoxes("SLEEVE0", file, right_arm_pivot), "clothing"));
+            bones.Add(new modelBone("leftSleeve", "leftArm", left_arm_pivot, ConvertBoxes("SLEEVE1", file, left_arm_pivot), "clothing"));
+            bones.Add(new modelBone("rightPants", "rightLeg", right_leg_pivot, ConvertBoxes("PANTS0", file, right_leg_pivot), "clothing"));
+            bones.Add(new modelBone("leftPants", "leftLeg", left_leg_pivot, ConvertBoxes("PANTS1", file, left_leg_pivot), "clothing"));
+            bones.Add(new modelBone("rightSock", "rightLeg", right_leg_pivot, ConvertBoxes("SOCK0", file, right_leg_pivot), "clothing"));
+            bones.Add(new modelBone("leftSock", "leftLeg", left_leg_pivot, ConvertBoxes("SOCK1", file, left_leg_pivot), "clothing"));
 
-            bones.Add(new modelBone("helmet", "head", head_and_body_pivot, ConvertBoxes("HELMET", file, head_and_body_pivot)));
-            bones.Add(new modelBone("bodyArmor", "body", head_and_body_pivot, ConvertBoxes("BODYARMOR", file, head_and_body_pivot)));
-            bones.Add(new modelBone("belt", "body", head_and_body_pivot, ConvertBoxes("BELT", file, head_and_body_pivot)));
-            bones.Add(new modelBone("rightArmArmor", "rightArm", right_arm_pivot, ConvertBoxes("ARMARMOR0", file, right_arm_pivot)));
-            bones.Add(new modelBone("leftArmArmor", "leftArm", left_arm_pivot, ConvertBoxes("ARMARMOR1", file, left_arm_pivot)));
-            bones.Add(new modelBone("rightLegArmor", "rightLeg", right_leg_pivot, ConvertBoxes("LEGGING0", file, right_leg_pivot)));
-            bones.Add(new modelBone("leftLegArmor", "leftLeg", left_leg_pivot, ConvertBoxes("LEGGING1", file, left_leg_pivot)));
-            bones.Add(new modelBone("rightBoot", "rightLeg", right_leg_pivot, ConvertBoxes("BOOT0", file, right_leg_pivot)));
-            bones.Add(new modelBone("leftBoot", "leftLeg", left_leg_pivot, ConvertBoxes("BOOT1", file, left_leg_pivot)));
+            bones.Add(new modelBone("helmet", "head", head_and_body_pivot, ConvertBoxes("HELMET", file, head_and_body_pivot), "armor"));
+            bones.Add(new modelBone("bodyArmor", "body", head_and_body_pivot, ConvertBoxes("BODYARMOR", file, head_and_body_pivot), "armor"));
+            bones.Add(new modelBone("belt", "body", head_and_body_pivot, ConvertBoxes("BELT", file, head_and_body_pivot), "armor"));
+            bones.Add(new modelBone("rightArmArmor", "rightArm", right_arm_pivot, ConvertBoxes("ARMARMOR0", file, right_arm_pivot), "armor"));
+            bones.Add(new modelBone("leftArmArmor", "leftArm", left_arm_pivot, ConvertBoxes("ARMARMOR1", file, left_arm_pivot), "armor"));
+            bones.Add(new modelBone("rightLegArmor", "rightLeg", right_leg_pivot, ConvertBoxes("LEGGING0", file, right_leg_pivot), "armor"));
+            bones.Add(new modelBone("leftLegArmor", "leftLeg", left_leg_pivot, ConvertBoxes("LEGGING1", file, left_leg_pivot), "armor"));
+            bones.Add(new modelBone("rightBoot", "rightLeg", right_leg_pivot, ConvertBoxes("BOOT0", file, right_leg_pivot), "armor"));
+            bones.Add(new modelBone("leftBoot", "leftLeg", left_leg_pivot, ConvertBoxes("BOOT1", file, left_leg_pivot), "armor"));
 
             // calculates armor and item offsets
-            bones.Add(new modelBone("rightItem", "rightArm", new float[]{ -6f, 15f - float.Parse(offsets.Find(o => o.Item1 == "TOOL0").Item2), 1f }, null));
-            bones.Add(new modelBone("leftItem", "leftArm", new float[]{ 6f, 15f - float.Parse(offsets.Find(o => o.Item1 == "TOOL1").Item2), 1f }, null));
+            bones.Add(new modelBone("rightItem", "rightArm", new float[]{ -6f, 15f - float.Parse(offsets.Find(o => o.Item1 == "TOOL0").Item2), 1f }, null, "item"));
+            bones.Add(new modelBone("leftItem", "leftArm", new float[]{ 6f, 15f - float.Parse(offsets.Find(o => o.Item1 == "TOOL1").Item2), 1f }, null, "item"));
 
-            bones.Add(new modelBone("helmetArmorOffset", null, new float[] { 0f, 24f - float.Parse(offsets.Find(o => o.Item1 == "HELMET").Item2), 0f }, null));
-            bones.Add(new modelBone("bodyArmorOffset", null, new float[] { -4f, 12f - float.Parse(offsets.Find(o => o.Item1 == "BODY").Item2), -2f }, null));
-            bones.Add(new modelBone("rightArmArmorOffset", null, new float[] { 4f, 12f - float.Parse(offsets.Find(o => o.Item1 == "ARM0").Item2), -2f }, null));
-            bones.Add(new modelBone("leftArmArmorOffset", null, new float[] { -8f, 12f - float.Parse(offsets.Find(o => o.Item1 == "ARM1").Item2), -2f }, null));
-            bones.Add(new modelBone("rightLegArmorOffset", null, new float[] { -0.1f, float.Parse(offsets.Find(o => o.Item1 == "LEG0").Item2), -2f }, null));
-            bones.Add(new modelBone("leftLegArmorOffset", null, new float[] { -4.1f, float.Parse(offsets.Find(o => o.Item1 == "LEG1").Item2), -2f }, null));
+            bones.Add(new modelBone("helmetArmorOffset", "head", new float[] { 0f, 24f - float.Parse(offsets.Find(o => o.Item1 == "HEAD").Item2), 0f }, null, "armor_offset"));
+            bones.Add(new modelBone("bodyArmorOffset", "body", new float[] { -4f, 12f - float.Parse(offsets.Find(o => o.Item1 == "BODY").Item2), -2f }, null, "armor_offset"));
+            bones.Add(new modelBone("rightArmArmorOffset", "rightArm", new float[] { 4f, 12f - float.Parse(offsets.Find(o => o.Item1 == "ARM0").Item2), -2f }, null, "armor_offset"));
+            bones.Add(new modelBone("leftArmArmorOffset", "leftArm", new float[] { -8f, 12f - float.Parse(offsets.Find(o => o.Item1 == "ARM1").Item2), -2f }, null, "armor_offset"));
+            bones.Add(new modelBone("rightLegArmorOffset", "rightLeg", new float[] { -0.1f, float.Parse(offsets.Find(o => o.Item1 == "LEG0").Item2), -2f }, null, "armor_offset"));
+            bones.Add(new modelBone("leftLegArmorOffset", "leftLeg", new float[] { -4.1f, float.Parse(offsets.Find(o => o.Item1 == "LEG1").Item2), -2f }, null, "armor_offset"));
+            bones.Add(new modelBone("rightBootArmorOffset", "rightLeg", new float[] { 2f, 12f - float.Parse(offsets.Find(o => o.Item1 == "BOOT0").Item2), 0f }, null, "armor_offset"));
+            bones.Add(new modelBone("leftBootArmorOffset", "leftLeg", new float[] { -2f, 12f - float.Parse(offsets.Find(o => o.Item1 == "BOOT1").Item2), 0f }, null, "armor_offset"));
 
-            GJSON.Add(So.geometry, JToken.FromObject(new skinModel(bones.ToArray())));
+            string capepath = file.properties.Find(o => o.property == "CAPEPATH").value;
+
+            JToken geo = JToken.FromObject(new skinModel(bones.ToArray()));
+            if(capepath != null) geo["cape"] = capepath;
+
+            GJSON.Add(So.geometry, geo);
 
             File.WriteAllBytes(ExportPath + "\\" + skinID + ".png", file.data);
             src.Add(So);
+        }
+
+        void ExportCape(PCKFile.FileData file, string ExportPath)
+		{
+            string capeID = file.filepath.Replace(".png", "").Replace("Skins/", "");
+            File.WriteAllBytes(ExportPath + "\\" + capeID + ".png", file.data);
         }
 
         void CreateSkinPackManifest(string ExportPath, string localizedName)
         {
             SkinManifest manifest = new SkinManifest();
             manifest.header = new Header();
-            manifest.header.name = "skinpack."+localizedName;
+            manifest.header.name = localizedName;
+            manifest.header.description = $"Exported with PCK Studio";
             manifest.modules = new Module[] { new Module() };
             manifest.format_version = 1;
-            string JSON = JsonConvert.SerializeObject(manifest, Formatting.Indented,
-                new JsonSerializerSettings {NullValueHandling = NullValueHandling.Ignore});
+            string JSON = JsonConvert.SerializeObject(manifest, Formatting.Indented);
             File.WriteAllText(ExportPath + "\\manifest.json", JSON);
         }
 
@@ -611,8 +633,9 @@ namespace PckStudio.Classes.Convert.FromLCE
 
         class Header
         {
-            public string name = "IDS_DISPLAY_NAME";
             public int[] version = { 1, 0, 0 };
+            public string description = "";
+            public string name = "";
             public string uuid = Guid.NewGuid().ToString();
         }
         class Module
@@ -623,21 +646,21 @@ namespace PckStudio.Classes.Convert.FromLCE
         }
         class SkinJSON
         {
+            public SkinObject[] skins { get; set; }
             public string serialize_name = "";
             public string localization_name = "";
-            public SkinObject[] skins { get; set; }
         }
-        class SkinObject
+        public class SkinObject
         {
-            public string localization_name = "00000000";
+            public string localization_name = "dlcskin00000000";
             public string geometry = "geometry.humanoid.custom";
-            public string texture = "00000000.png";
+            public string texture = "dlcskin00000000.png";
             public string type = "free";
         }
 
         #region Model classes for ANIM conversion
 
-        class BOX
+        public class BOX
         {
             public BOX(string[] arguments)
             {
@@ -671,7 +694,7 @@ namespace PckStudio.Classes.Convert.FromLCE
             public float inflation;
         }
 
-        class modelCube
+        public class modelCube
         {
             public modelCube(float[] origin, float[] size, float[] uv, bool mirror = false, float inflate = 0.0f)
             {
@@ -691,20 +714,31 @@ namespace PckStudio.Classes.Convert.FromLCE
             public float inflate = 0.0f;
         }
 
-        class modelBone
+        public class modelBone
         {
-            public modelBone(string name, string parent, float[] pivot, modelCube[] cubes)
+            public modelBone(string name, string parent, float[] pivot, modelCube[] cubes, string metaBone = "")
             {
                 this.name = name;
                 this.parent = parent;
                 this.pivot = pivot;
                 this.cubes = cubes;
+                //if (!String.IsNullOrEmpty(metaBone)) this.META_BoneType = metaBone;
             }
 
+            //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+            //public string META_BoneType = null;
+
+            [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
             public string name = "partName";
+
+            [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
             public string parent = "parentName";
+
+            [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
             public float[] pivot = { 0, 0, 0 };
-            public modelCube[] cubes;
+
+            [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+            public modelCube[] cubes = null;
 
             public override string ToString()
 			{
@@ -712,7 +746,7 @@ namespace PckStudio.Classes.Convert.FromLCE
 			}
         }
 
-        class skinModel
+        public class skinModel
         {
             public skinModel(modelBone[] bones)
             {
