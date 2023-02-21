@@ -485,7 +485,7 @@ namespace PckStudio
 					buttonEdit.Visible = true;
 				}
 				else if (file.Properties.HasProperty("ANIM") &&
-						file.Properties.GetPropertyValue("ANIM", s => new SkinANIM(s)) == (eANIM_EFFECTS.RESOLUTION_64x64 | eANIM_EFFECTS.SLIM_MODEL))
+						file.Properties.GetPropertyValue("ANIM", s => new SkinANIM(s)) == (ANIM_EFFECTS.RESOLUTION_64x64 | ANIM_EFFECTS.SLIM_MODEL))
 				{
 					buttonEdit.Text = "View Skin";
 					buttonEdit.Visible = true;
