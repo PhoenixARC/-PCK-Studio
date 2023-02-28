@@ -33,7 +33,7 @@ namespace PckStudio.Classes.Misc
             : this(new Uri(host), credentials) { }
         
         public FTPClient(Uri uri, ICredentials credentials)
-            {
+        {
             if (uri.Scheme != Uri.UriSchemeFtp)
             {
                 throw new InvalidOperationException("Not a valid FTP Scheme");
@@ -49,7 +49,7 @@ namespace PckStudio.Classes.Misc
         /// <param name="credentials"></param>
         /// <param name="method">See <see cref="WebRequestMethods.Ftp"/></param>
         /// <returns><see cref="FtpWebRequest"/></returns>
-        public static FtpWebRequest CreateFTPWebRequest(Uri uri, ICredentials credentials, string method)
+        public static FtpWebRequest CreateRequest(Uri uri, ICredentials credentials, string method)
         {
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(uri);
             request.Credentials = credentials;
@@ -69,7 +69,7 @@ namespace PckStudio.Classes.Misc
         {
             try
             {
-                request = CreateFTPWebRequest(new Uri(hostUri, remoteFilepath), clientCredentials, WebRequestMethods.Ftp.DownloadFile);
+                request = CreateRequest(new Uri(hostUri, remoteFilepath), clientCredentials, WebRequestMethods.Ftp.DownloadFile);
                 
                 SetRequestTimeout();
 
@@ -94,7 +94,7 @@ namespace PckStudio.Classes.Misc
         {
             try
             {
-                request = CreateFTPWebRequest(new Uri(hostUri, directory), clientCredentials, WebRequestMethods.Ftp.ListDirectory);
+                request = CreateRequest(new Uri(hostUri, directory), clientCredentials, WebRequestMethods.Ftp.ListDirectory);
 
                 SetRequestTimeout();
 
@@ -135,7 +135,7 @@ namespace PckStudio.Classes.Misc
         {
             try
             {
-                request = CreateFTPWebRequest(new Uri(hostUri, remoteFile), clientCredentials, WebRequestMethods.Ftp.UploadFile);
+                request = CreateRequest(new Uri(hostUri, remoteFile), clientCredentials, WebRequestMethods.Ftp.UploadFile);
 
                 SetRequestTimeout();
 
@@ -158,7 +158,7 @@ namespace PckStudio.Classes.Misc
         {
             try
             {
-                request = CreateFTPWebRequest(new Uri(hostUri, filename), clientCredentials, WebRequestMethods.Ftp.DeleteFile);
+                request = CreateRequest(new Uri(hostUri, filename), clientCredentials, WebRequestMethods.Ftp.DeleteFile);
 
                 SetRequestTimeout();
 
@@ -177,7 +177,7 @@ namespace PckStudio.Classes.Misc
         {
             try
             {
-                request = CreateFTPWebRequest(new Uri(hostUri, name), clientCredentials, WebRequestMethods.Ftp.Rename);
+                request = CreateRequest(new Uri(hostUri, name), clientCredentials, WebRequestMethods.Ftp.Rename);
 
                 SetRequestTimeout();
 
@@ -196,7 +196,7 @@ namespace PckStudio.Classes.Misc
         {
             try
             {
-                request = CreateFTPWebRequest(new Uri(hostUri, serverFilepath), clientCredentials, WebRequestMethods.Ftp.AppendFile);
+                request = CreateRequest(new Uri(hostUri, serverFilepath), clientCredentials, WebRequestMethods.Ftp.AppendFile);
                 
                 SetRequestTimeout();
 
@@ -222,7 +222,7 @@ namespace PckStudio.Classes.Misc
         {
             try
             {
-                request = CreateFTPWebRequest(new Uri(hostUri, name), clientCredentials, WebRequestMethods.Ftp.MakeDirectory);
+                request = CreateRequest(new Uri(hostUri, name), clientCredentials, WebRequestMethods.Ftp.MakeDirectory);
 
                 SetRequestTimeout();
 
@@ -239,7 +239,7 @@ namespace PckStudio.Classes.Misc
 
         public long GetFileSize(string filepath)
         {
-            request = CreateFTPWebRequest(new Uri(hostUri, filepath), clientCredentials, WebRequestMethods.Ftp.GetFileSize);
+            request = CreateRequest(new Uri(hostUri, filepath), clientCredentials, WebRequestMethods.Ftp.GetFileSize);
             
             SetRequestTimeout();
             

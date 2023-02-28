@@ -23,6 +23,7 @@ using PckStudio.Forms.Editor;
 using PckStudio.Forms.Additional_Popups.Animation;
 using PckStudio.Forms.Additional_Popups;
 using PckStudio.Classes.Misc;
+using PckStudio.Forms.Additional_Features;
 
 namespace PckStudio
 {
@@ -88,8 +89,14 @@ namespace PckStudio
 			};
 		}
 
-		public void LoadFromPath(string filepath)
+		public void LoadPckFromFile(string filepath)
 		{
+			if (currentPCK is not null && !saved)
+			{
+				checkSaveState();
+			}
+
+			saved = true;
 			treeViewMain.Nodes.Clear();
             currentPCK = openPck(filepath);
 			if (currentPCK == null)
@@ -106,7 +113,7 @@ namespace PckStudio
 		private void Form1_Load(object sender, EventArgs e)
 		{
 			RPC.Initialize();
-			if (currentPCK == null)
+			if (currentPCK is null)
 				RPC.SetPresence("An Open Source .PCK File Editor", "Program by PhoenixARC");
 
 			skinToolStripMenuItem1.Click += (sender, e) => setFileType_Click(sender, e, PCKFile.FileData.FileType.SkinFile);
@@ -147,18 +154,18 @@ namespace PckStudio
 				ofd.Filter = "PCK (Minecraft Console Package)|*.pck";
 				if (ofd.ShowDialog() == DialogResult.OK)
 				{
-					LoadFromPath(ofd.FileName);
+					LoadPckFromFile(ofd.FileName);
 				}
 			}
 		}
 
-		private PCKFile openPck(string filePath)
+		private PCKFile openPck(string filepath)
 		{
 			PCKFile pck = null;
-			using (var fileStream = File.OpenRead(filePath))
+			using (var fileStream = File.OpenRead(filepath))
 			{
 				isTemplateFile = false;
-				saveLocation = filePath;
+				saveLocation = filepath;
 				try
 				{
 					pck = PCKFileReader.Read(fileStream, LittleEndianCheckBox.Checked);
@@ -1733,12 +1740,6 @@ namespace PckStudio
 			Debug.WriteLine("Completed in: " + duration);
 		}
 
-		private void wiiUPCKInstallerToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			installWiiU install = new installWiiU(null);
-			install.ShowDialog();
-		}
-
 		private void howToMakeABasicSkinPackToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			Process.Start("https://www.youtube.com/watch?v=A43aHRHkKxk");
@@ -1776,8 +1777,7 @@ namespace PckStudio
 
 		private void PS3PCKInstallerToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			installPS3 install = new installPS3(null);
-			install.ShowDialog();
+			
 		}
 
 		private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1794,9 +1794,6 @@ namespace PckStudio
 
 		private void VitaPCKInstallerToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-
-			installVita install = new installVita(null);
-			install.ShowDialog();
 		}
 
 		private void toPhoenixARCDeveloperToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1871,7 +1868,7 @@ namespace PckStudio
 			string[] Filepaths = (string[])e.Data.GetData(DataFormats.FileDrop, false);
 			if (Filepaths.Length > 1)
 				MessageBox.Show("Only one pck file at a time is currently supported");
-			LoadFromPath(Filepaths[0]);
+			LoadPckFromFile(Filepaths[0]);
 		}
 
 		private void OpenPck_DragLeave(object sender, EventArgs e)
@@ -2215,5 +2212,11 @@ namespace PckStudio
 				}
 			}
 		}
-	}
+
+        private void OpenInstallerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+			var installerPanel = new ConsoleInstaller();
+			installerPanel.Show(this);
+        }
+    }
 }

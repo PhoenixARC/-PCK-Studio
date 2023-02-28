@@ -40,13 +40,12 @@ namespace PckStudio.Forms.Additional_Features
                     "Wii U" => new WiiUInstallPanel(),
                     "Play Station 3" => new PS3InstallPanel(),
                     "PS Vita" => throw new NotImplementedException($"{text}-Installer is currently not implemented."),
-                    "Cemu" => throw new NotImplementedException($"{text}-Installer is currently not implemented."),
+                    "Cemu" => new CemuInstallPanel(),
                     "RPCS3" => throw new NotImplementedException($"{text}-Installer is currently not implemented."),
                     _ => throw new Exception($"No Control found for: {text}"),
                 };
 
                 shownControl.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Right;
-                
 
                 mainPanel.SetColumnSpan(shownControl, 2);
                 mainPanel.Controls.Add(shownControl, 0, 1);

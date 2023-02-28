@@ -11,6 +11,9 @@ namespace PckStudio
         public static readonly string BackUpAPIUrl = "https://raw.githubusercontent.com/PhoenixARC/pckstudio.tk/main/studio/PCK/api/";
         public static readonly string AppData = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "PCK-Studio");
         public static readonly string AppDataCache = Path.Combine(AppData, "cache");
+
+        public static MainForm MainInstance { get; private set; }
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -23,10 +26,10 @@ namespace PckStudio
 
             System.Globalization.CultureInfo.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
 
-            var f = new MainForm();
+            MainInstance = new MainForm();
             if (args.Length > 0 && File.Exists(args[0]) && args[0].EndsWith(".pck"))
-                f.LoadFromPath(args[0]);
-            Application.Run(f);
+                MainInstance.LoadPckFromFile(args[0]);
+            Application.Run(MainInstance);
         }
     }
 }

@@ -86,57 +86,6 @@ namespace PckStudio.Forms.Additional_Features
         {
             MessageBox.Show("Please use Aroma's ftp Plugin!");
             return;
-            FolderBrowserDialog sdFind = new FolderBrowserDialog();
-            if (sdFind.ShowDialog() == DialogResult.OK)
-            {
-                try
-                {
-                    string sdRoot = Directory.GetDirectoryRoot(sdFind.SelectedPath);
-                    Directory.CreateDirectory(sdRoot + "/wiiu/apps/");
-
-                    try
-                    {
-                        File.WriteAllBytes(sdRoot + "/wiiu/apps/apps.zip", Properties.Resources.apps);
-                    }
-                    catch
-                    {
-                        MessageBox.Show($"Could not extract resources to:\n{sdRoot}/wiiu/apps/apps.zip");
-                        return;
-                    }
-
-                    string zipPath = sdRoot + "/wiiu/apps/apps.zip";
-                    string extractPath = sdRoot + "/wiiu/apps/temp";
-                    ZipFile.ExtractToDirectory(zipPath, extractPath);
-
-                    if (!Directory.Exists(sdRoot + "/wiiu/apps/ftpiiu_everywhere"))
-                    {
-                        Directory.Move(sdRoot + "/wiiu/apps/temp/ftpiiu_everywhere", sdRoot + "/wiiu/apps/ftpiiu_everywhere");
-                    }
-
-                    if (!Directory.Exists(sdRoot + "/wiiu/apps/homebrew_launcher"))
-                    {
-                        Directory.Move(sdRoot + "/wiiu/apps/temp/homebrew_launcher", sdRoot + "/wiiu/apps/homebrew_launcher");
-                    }
-
-                    if (!Directory.Exists(sdRoot + "/wiiu/apps/mocha_fshax"))
-                    {
-                        Directory.Move(sdRoot + "/wiiu/apps/temp/mocha_fshax", sdRoot + "/wiiu/apps/mocha_fshax");
-                    }
-
-                    if (!File.Exists(sdRoot + "/wiiu/apps/sign_c2w_patcher.elf"))
-                    {
-                        File.Move(sdRoot + "/wiiu/apps/temp/sign_c2w_patcher.elf", sdRoot + "/wiiu/apps/sign_c2w_patcher.elf");
-                    }
-
-                    File.Delete(sdRoot + "/wiiu/apps/apps.zip");
-                    Directory.Delete(sdRoot + "/wiiu/apps/temp/", true);
-                }
-                catch (Exception er)
-                {
-                    MessageBox.Show(er.ToString());
-                }
-                MessageBox.Show("Done");
-            }
         }
 
         private enum ButtonState

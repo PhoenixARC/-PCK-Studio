@@ -1151,8 +1151,6 @@ namespace PckStudio.Forms
 
         private void buttonInstallWiiU_Click(object sender, EventArgs e)
         {
-            installWiiU install = new installWiiU(Program.AppData + "/PCK Center/myPcks/" + mod + ".pck");
-            install.ShowDialog();
         }
     }
 }
