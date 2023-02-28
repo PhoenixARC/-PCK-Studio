@@ -92,6 +92,10 @@ namespace PckStudio
 		public void LoadPck(string filepath)
 		{
 			treeViewMain.Nodes.Clear();
+            if (currentPCK is not null && !saved)
+            {
+                checkSaveState();
+            }
             currentPCK = openPck(filepath);
 			if (currentPCK == null)
 			{
