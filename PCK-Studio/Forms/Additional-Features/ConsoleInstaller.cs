@@ -38,7 +38,7 @@ namespace PckStudio.Forms.Additional_Features
                 shownControl = text switch
                 {
                     "Wii U" => new WiiUInstallPanel(),
-                    "Play Station 3" => new PS3InstallPanel(),
+                    "Play Station 3" => throw new NotImplementedException($"{text}-Installer is currently not implemented."),
                     "PS Vita" => throw new NotImplementedException($"{text}-Installer is currently not implemented."),
                     "Cemu" => new CemuInstallPanel(),
                     "RPCS3" => throw new NotImplementedException($"{text}-Installer is currently not implemented."),
