@@ -137,8 +137,9 @@
 			this.label11 = new MetroFramework.Controls.MetroLabel();
 			this.treeViewMain = new System.Windows.Forms.TreeView();
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
-			this.pictureBoxImagePreview = new PckStudio.PictureBoxWithInterpolationMode();
 			this.LittleEndianCheckBox = new MetroFramework.Controls.MetroCheckBox();
+			this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
+			this.pictureBoxImagePreview = new PckStudio.PictureBoxWithInterpolationMode();
 			this.contextMenuPCKEntries.SuspendLayout();
 			this.menuStrip.SuspendLayout();
 			this.contextMenuMetaTree.SuspendLayout();
@@ -828,6 +829,7 @@
 			// 
 			this.editorTab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
 			resources.ApplyResources(this.editorTab, "editorTab");
+			this.editorTab.Controls.Add(this.metroLabel3);
 			this.editorTab.Controls.Add(this.labelImageSize);
 			this.editorTab.Controls.Add(this.fileEntryCountLabel);
 			this.editorTab.Controls.Add(this.PropertiesTabControl);
@@ -1008,14 +1010,6 @@
 			resources.ApplyResources(this.imageList, "imageList");
 			this.imageList.TransparentColor = System.Drawing.Color.Transparent;
 			// 
-			// pictureBoxImagePreview
-			// 
-			resources.ApplyResources(this.pictureBoxImagePreview, "pictureBoxImagePreview");
-			this.pictureBoxImagePreview.BackColor = System.Drawing.Color.Transparent;
-			this.pictureBoxImagePreview.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-			this.pictureBoxImagePreview.Name = "pictureBoxImagePreview";
-			this.pictureBoxImagePreview.TabStop = false;
-			// 
 			// LittleEndianCheckBox
 			// 
 			resources.ApplyResources(this.LittleEndianCheckBox, "LittleEndianCheckBox");
@@ -1024,6 +1018,20 @@
 			this.LittleEndianCheckBox.Style = MetroFramework.MetroColorStyle.White;
 			this.LittleEndianCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.LittleEndianCheckBox.UseSelectable = true;
+			// 
+			// metroLabel3
+			// 
+			resources.ApplyResources(this.metroLabel3, "metroLabel3");
+			this.metroLabel3.Name = "metroLabel3";
+			this.metroLabel3.Theme = MetroFramework.MetroThemeStyle.Dark;
+			// 
+			// pictureBoxImagePreview
+			// 
+			resources.ApplyResources(this.pictureBoxImagePreview, "pictureBoxImagePreview");
+			this.pictureBoxImagePreview.BackColor = System.Drawing.Color.Transparent;
+			this.pictureBoxImagePreview.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+			this.pictureBoxImagePreview.Name = "pictureBoxImagePreview";
+			this.pictureBoxImagePreview.TabStop = false;
 			// 
 			// MainForm
 			// 
@@ -1173,6 +1181,7 @@
 		private System.Windows.Forms.ToolStripMenuItem CreateSkinsPCKToolStripMenuItem1;
 		private System.Windows.Forms.ToolStripMenuItem editAllEntriesToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem addFileToolStripMenuItem;
+		private MetroFramework.Controls.MetroLabel metroLabel3;
 	}
 }
 

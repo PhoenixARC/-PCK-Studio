@@ -168,6 +168,7 @@ namespace PckStudio
 				try
 				{
 					pck = PCKFileReader.Read(fileStream, LittleEndianCheckBox.Checked);
+					metroLabel3.Text = "Current PCK File: " + Path.GetFileName(filePath);
 				}
 				catch (OverflowException ex)
 				{
@@ -208,7 +209,7 @@ namespace PckStudio
 			advancedMetaAddingToolStripMenuItem.Enabled = true;
 			convertToBedrockToolStripMenuItem.Enabled = true;
 			addCustomPackImageToolStripMenuItem.Enabled = true;
-            BuildMainTreeView();
+			BuildMainTreeView();
 			isSelectingTab = true;
 			tabControl.SelectTab(1);
 			isSelectingTab = false;
