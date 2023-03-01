@@ -13,7 +13,7 @@ namespace PckStudio.Forms.Additional_Features
             InitializeComponent();
         }
 
-        private string GetConsoleRegion()
+        private string GetSelectedRegionTitleId()
         {
             if (radioButtonEur.Checked)
             {
@@ -32,7 +32,7 @@ namespace PckStudio.Forms.Additional_Features
 
         private string GetGameContentPath()
         {
-            string region = GetConsoleRegion();
+            string region = GetSelectedRegionTitleId();
             return $"{GameDirectoryTextBox.Text}/usr/title/0005000e/{region}/content";
         }
 
@@ -50,34 +50,52 @@ namespace PckStudio.Forms.Additional_Features
         private void ListDLCs()
         {
             DLCTreeView.Nodes.Clear();
-            DirectoryInfo directoryInfo = new DirectoryInfo($"{GetGameContentPath()}/WiiU/DLC");
-            foreach (var subDirectory in directoryInfo.GetDirectories())
+            if (string.IsNullOrWhiteSpace(GameDirectoryTextBox.Text) || !Directory.Exists(GameDirectoryTextBox.Text))
             {
-                if (subDirectory.GetFileSystemInfos().Length != 0)
+                MessageBox.Show("Please select a valid Game Directory!", "Invalid Directory Specified",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (!IsValidGameDirectory())
+            {
+                MessageBox.Show($"Could not find '{GetGameContentPath()}'!", "Not Found",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            DirectoryInfo dlcGameDirectory = new DirectoryInfo($"{GetGameContentPath()}/WiiU/DLC");
+            foreach (var subDirectoryInfo in dlcGameDirectory.GetDirectories())
+            {
+                if (subDirectoryInfo.GetFileSystemInfos().Length != 0)
                 {
-                    var node = DLCTreeView.Nodes.Add(subDirectory.Name);
-                    var dirs = subDirectory.GetDirectories("Data", SearchOption.TopDirectoryOnly);
+                    var node = DLCTreeView.Nodes.Add(subDirectoryInfo.Name);
+                    var dirs = subDirectoryInfo.GetDirectories("Data", SearchOption.TopDirectoryOnly);
                     bool hasDataFolder = dirs.Length != 0
-                        && dirs.FirstOrDefault(d => d.GetFiles().FirstOrDefault(f => f.Name.EndsWith(".pck")) is not null) is not null;
+                        && dirs.FirstOrDefault(
+                            d => d.GetFiles().FirstOrDefault(f => f.Name.EndsWith(".pck")) is not null
+                        ) is not null;
+
                     if (hasDataFolder)
                     {
-                        node.Tag = $"{subDirectory.FullName};{subDirectory.FullName}/Data";
+                        node.Tag = $"{subDirectoryInfo.FullName};{subDirectoryInfo.FullName}/Data";
                         node.Nodes.Add("Data");
                         continue;
                     }
-                    node.Tag = subDirectory.FullName;
+                    node.Tag = subDirectoryInfo.FullName;
                 }
             }
         }
 
-        private void radioButton_CheckedChanged(object sender, EventArgs e)
+        private void radioButton_Click(object sender, EventArgs e)
         {
-            if (!Directory.Exists(GetGameContentPath()))
-            {
-                MessageBox.Show($"Could not find '{GetGameContentPath()}'!", "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
             ListDLCs();
+        }
+
+        private bool IsValidGameDirectory()
+        {
+            string contentPath = GetGameContentPath();
+            return Directory.Exists(contentPath);
         }
 
         private void openSkinPackToolStripMenuItem_Click(object sender, EventArgs e)

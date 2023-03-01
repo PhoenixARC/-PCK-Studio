@@ -72,7 +72,7 @@
             // 
             this.GameDirectoryTextBox.CustomButton.Image = null;
             this.GameDirectoryTextBox.CustomButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.GameDirectoryTextBox.CustomButton.Location = new System.Drawing.Point(242, 1);
+            this.GameDirectoryTextBox.CustomButton.Location = new System.Drawing.Point(252, 1);
             this.GameDirectoryTextBox.CustomButton.Name = "";
             this.GameDirectoryTextBox.CustomButton.Size = new System.Drawing.Size(25, 25);
             this.GameDirectoryTextBox.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
@@ -123,7 +123,7 @@
             this.radioButtonJap.Text = "JAP";
             this.radioButtonJap.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.radioButtonJap.UseVisualStyleBackColor = false;
-            this.radioButtonJap.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
+            this.radioButtonJap.Click += new System.EventHandler(this.radioButton_Click);
             // 
             // radioButtonEur
             // 
@@ -148,7 +148,7 @@
             this.radioButtonEur.Text = "EUR";
             this.radioButtonEur.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.radioButtonEur.UseVisualStyleBackColor = false;
-            this.radioButtonEur.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
+            this.radioButtonEur.Click += new System.EventHandler(this.radioButton_Click);
             // 
             // textBoxHost
             // 
@@ -159,7 +159,7 @@
             // 
             this.textBoxHost.CustomButton.Image = null;
             this.textBoxHost.CustomButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.textBoxHost.CustomButton.Location = new System.Drawing.Point(242, 1);
+            this.textBoxHost.CustomButton.Location = new System.Drawing.Point(252, 1);
             this.textBoxHost.CustomButton.Name = "";
             this.textBoxHost.CustomButton.Size = new System.Drawing.Size(25, 25);
             this.textBoxHost.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
@@ -257,7 +257,7 @@
             this.radioButtonUs.Text = "US";
             this.radioButtonUs.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.radioButtonUs.UseVisualStyleBackColor = false;
-            this.radioButtonUs.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
+            this.radioButtonUs.Click += new System.EventHandler(this.radioButton_Click);
             // 
             // DLCTreeView
             // 
@@ -283,14 +283,14 @@
             // openSkinPackToolStripMenuItem
             // 
             this.openSkinPackToolStripMenuItem.Name = "openSkinPackToolStripMenuItem";
-            this.openSkinPackToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openSkinPackToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
             this.openSkinPackToolStripMenuItem.Text = "Open Skin Pack";
             this.openSkinPackToolStripMenuItem.Click += new System.EventHandler(this.openSkinPackToolStripMenuItem_Click);
             // 
             // openTexturePackToolStripMenuItem
             // 
             this.openTexturePackToolStripMenuItem.Name = "openTexturePackToolStripMenuItem";
-            this.openTexturePackToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openTexturePackToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
             this.openTexturePackToolStripMenuItem.Text = "Open Texture Pack";
             this.openTexturePackToolStripMenuItem.Click += new System.EventHandler(this.openTexturePackToolStripMenuItem_Click);
             // 
