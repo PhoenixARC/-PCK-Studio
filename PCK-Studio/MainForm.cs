@@ -40,6 +40,7 @@ namespace PckStudio
 		public MainForm()
 		{
 			InitializeComponent();
+			treeViewMain.TreeViewNodeSorter = new PckNodeSorter();
 			imageList.Images.Add(Resources.ZZFolder); // Icon for folders
 			imageList.Images.Add(Resources.BINKA_ICON); // Icon for music cue file (audio.pck)
 			imageList.Images.Add(Resources.IMAGE_ICON); // Icon for images (unused for now)
@@ -2189,6 +2190,28 @@ namespace PckStudio
 					}
 				}
 			}
+		}
+	public class PckNodeSorter : System.Collections.IComparer
+	{
+		int System.Collections.IComparer.Compare(Object x, Object y)
+		{
+			TreeNode NodeX = x as TreeNode;
+			TreeNode NodeY = y as TreeNode;
+
+			if (NodeX.Tag is PCKFile.FileData file)
+			{
+				switch (file.Filetype)
+				{
+					case PCKFile.FileData.FileType.SkinFile:
+					case PCKFile.FileData.FileType.CapeFile:
+						return 0; // ignore these files in order to preserve skin files
+				}
+			}
+
+			int result = NodeX.Text.CompareTo(NodeY.Text);
+			if (result != 0) return result;
+
+			return NodeX.ImageIndex.CompareTo(NodeY.ImageIndex);
 		}
 	}
 }
