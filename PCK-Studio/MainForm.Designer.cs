@@ -42,6 +42,7 @@
 			this.importSkinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.importExtractedSkinsFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.addTextureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.addFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.as3DSTextureFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.setFileTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -220,7 +221,8 @@
 			this.importSkinsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.importSkinToolStripMenuItem,
             this.importExtractedSkinsFolderToolStripMenuItem,
-            this.addTextureToolStripMenuItem});
+            this.addTextureToolStripMenuItem,
+            this.addFileToolStripMenuItem});
 			resources.ApplyResources(this.importSkinsToolStripMenuItem, "importSkinsToolStripMenuItem");
 			this.importSkinsToolStripMenuItem.Name = "importSkinsToolStripMenuItem";
 			// 
@@ -242,6 +244,13 @@
 			this.addTextureToolStripMenuItem.Name = "addTextureToolStripMenuItem";
 			resources.ApplyResources(this.addTextureToolStripMenuItem, "addTextureToolStripMenuItem");
 			this.addTextureToolStripMenuItem.Click += new System.EventHandler(this.addTextureToolStripMenuItem_Click);
+			// 
+			// addFileToolStripMenuItem
+			// 
+			this.addFileToolStripMenuItem.Image = global::PckStudio.Properties.Resources.blank;
+			this.addFileToolStripMenuItem.Name = "addFileToolStripMenuItem";
+			resources.ApplyResources(this.addFileToolStripMenuItem, "addFileToolStripMenuItem");
+			this.addFileToolStripMenuItem.Click += new System.EventHandler(this.addFileToolStripMenuItem_Click);
 			// 
 			// exportToolStripMenuItem
 			// 
@@ -1163,6 +1172,7 @@
         private System.Windows.Forms.ToolStripMenuItem addCustomPackImageToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem CreateSkinsPCKToolStripMenuItem1;
 		private System.Windows.Forms.ToolStripMenuItem editAllEntriesToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem addFileToolStripMenuItem;
 	}
 }
 

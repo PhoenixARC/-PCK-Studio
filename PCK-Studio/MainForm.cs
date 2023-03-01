@@ -2191,6 +2191,34 @@ namespace PckStudio
 				}
 			}
 		}
+
+		private void addFileToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			using var ofd = new OpenFileDialog();
+			// Suddenly, and randomly, this started throwing an exception because it wasn't formatted correctly? So now it's formatted correctly and now displays the file type name in the dialog.
+			ofd.Filter = "All files (*.*)|*.*";
+			ofd.Multiselect = false;
+
+			if (ofd.ShowDialog() == DialogResult.OK)
+			{
+				using AddFilePrompt diag = new AddFilePrompt("res/" + Path.GetFileName(ofd.FileName));
+				if (diag.ShowDialog(this) == DialogResult.OK)
+				{
+					PCKFile.FileData file = new PCKFile.FileData(diag.filepath, (PCKFile.FileData.FileType)diag.filetype);
+					file.SetData(File.ReadAllBytes(ofd.FileName));
+					currentPCK.Files.Add(file);
+
+					if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath)) RebuildSubPCK(treeViewMain.SelectedNode);
+					//else treeViewMain.Nodes.Add();
+
+					BuildMainTreeView();
+					saved = false;
+				}
+			}
+			return;
+		}
+	}
+
 	public class PckNodeSorter : System.Collections.IComparer
 	{
 		int System.Collections.IComparer.Compare(Object x, Object y)

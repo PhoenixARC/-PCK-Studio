@@ -214,7 +214,7 @@
 </value>
   </data>
   <data name="createToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>157, 22</value>
   </data>
   <data name="createToolStripMenuItem.Text" xml:space="preserve">
     <value>Create</value>
@@ -265,6 +265,12 @@
   <data name="addTextureToolStripMenuItem.Text" xml:space="preserve">
     <value>Add Texture</value>
   </data>
+  <data name="addFileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>228, 22</value>
+  </data>
+  <data name="addFileToolStripMenuItem.Text" xml:space="preserve">
+    <value>Add File</value>
+  </data>
   <data name="importSkinsToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
@@ -275,7 +281,7 @@
 </value>
   </data>
   <data name="importSkinsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>157, 22</value>
   </data>
   <data name="importSkinsToolStripMenuItem.Text" xml:space="preserve">
     <value>Import</value>
@@ -287,7 +293,7 @@
     <value>Export as 3DS Texture</value>
   </data>
   <data name="exportToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>157, 22</value>
   </data>
   <data name="exportToolStripMenuItem.Text" xml:space="preserve">
     <value>Export</value>
@@ -365,7 +371,7 @@
     <value>Entity Materials File (.BIN)</value>
   </data>
   <data name="setFileTypeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>157, 22</value>
   </data>
   <data name="setFileTypeToolStripMenuItem.Text" xml:space="preserve">
     <value>Set File Type</value>
@@ -389,7 +395,7 @@
     <value>Correct Skin Decimals</value>
   </data>
   <data name="miscFunctionsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>157, 22</value>
   </data>
   <data name="miscFunctionsToolStripMenuItem.Text" xml:space="preserve">
     <value>Misc. Functions</value>
@@ -404,13 +410,13 @@
 </value>
   </data>
   <data name="extractToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>157, 22</value>
   </data>
   <data name="extractToolStripMenuItem.Text" xml:space="preserve">
     <value>Extract</value>
   </data>
   <data name="cloneFileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>157, 22</value>
   </data>
   <data name="cloneFileToolStripMenuItem.Text" xml:space="preserve">
     <value>Clone</value>
@@ -423,7 +429,7 @@
 </value>
   </data>
   <data name="renameFileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>157, 22</value>
   </data>
   <data name="renameFileToolStripMenuItem.Text" xml:space="preserve">
     <value>Rename</value>
@@ -439,7 +445,7 @@
 </value>
   </data>
   <data name="replaceToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>157, 22</value>
   </data>
   <data name="replaceToolStripMenuItem.Text" xml:space="preserve">
     <value>Replace</value>
@@ -454,13 +460,13 @@
 </value>
   </data>
   <data name="deleteFileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>157, 22</value>
   </data>
   <data name="deleteFileToolStripMenuItem.Text" xml:space="preserve">
     <value>Delete</value>
   </data>
   <data name="contextMenuPCKEntries.Size" type="System.Drawing.Size, System.Drawing">
-    <value>181, 246</value>
+    <value>158, 224</value>
   </data>
   <data name="&gt;&gt;contextMenuPCKEntries.Name" xml:space="preserve">
     <value>contextMenuPCKEntries</value>
@@ -33526,6 +33532,12 @@
     <value>addTextureToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;addTextureToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;addFileToolStripMenuItem.Name" xml:space="preserve">
+    <value>addFileToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;addFileToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;exportToolStripMenuItem.Name" xml:space="preserve">

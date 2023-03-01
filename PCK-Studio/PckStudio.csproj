@@ -223,6 +223,12 @@
     <Compile Include="Forms\Additional-Popups\MipMapPrompt.Designer.cs">
       <DependentUpon>MipMapPrompt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Additional-Popups\AddFilePrompt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\AddFilePrompt.Designer.cs">
+      <DependentUpon>AddFilePrompt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Additional-Popups\RenamePrompt.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -457,6 +463,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\MipMapPrompt.resx">
       <DependentUpon>MipMapPrompt.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Additional-Popups\AddFilePrompt.resx">
+      <DependentUpon>AddFilePrompt.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\RenamePrompt.resx">
@@ -702,6 +712,7 @@
     <None Include="Resources\iconImageList\BEHAVIOURS ICON.png" />
     <None Include="Resources\Comparison.png" />
     <None Include="Resources\iconImageList\ENTITY MATERIALS ICON.png" />
+    <None Include="Resources\iconImageList\blank.png" />
     <Content Include="Resources\PCK-Studio_Logo.ico" />
     <None Include="Resources\bg1.png" />
     <Content Include="Resources\NoImageFound.png" />
