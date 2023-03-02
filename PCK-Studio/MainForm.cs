@@ -587,14 +587,39 @@ namespace PckStudio
 				dialog.Description = @"Select destination folder";
 				if (dialog.ShowDialog() == DialogResult.OK)
 				{
-					currentPCK.Files.ForEach(file =>
+					if(IsSubPCKNode(node.FullPath) && node.Tag == null)
 					{
-						if (file.Filename.StartsWith(selectedFolder))
+						GetAllChildNodes(node.Nodes).ForEach(fileNode =>
 						{
-							Directory.CreateDirectory($"{dialog.SelectedPath}/{Path.GetDirectoryName(file.Filename)}");
-							File.WriteAllBytes($"{dialog.SelectedPath}/{file.Filename}", file.Data);
+							if(fileNode.Tag is PCKFile.FileData file)
+							{
+								Directory.CreateDirectory($"{dialog.SelectedPath}/{Path.GetDirectoryName(file.Filename)}");
+								File.WriteAllBytes($"{dialog.SelectedPath}/{file.Filename}", file.Data);
+								if (file.Properties.Count > 0)
+								{
+									using var fs = File.CreateText($"{dialog.SelectedPath}/{file.Filename}.txt");
+									file.Properties.ForEach(property => fs.WriteLine($"{property.Item1}: {property.Item2}"));
+								}
+							}
 						}
-					});
+						);
+					}
+					else
+					{
+						currentPCK.Files.ForEach(file =>
+						{
+							if (file.Filename.StartsWith(selectedFolder))
+							{
+								Directory.CreateDirectory($"{dialog.SelectedPath}/{Path.GetDirectoryName(file.Filename)}");
+								File.WriteAllBytes($"{dialog.SelectedPath}/{file.Filename}", file.Data);
+								if (file.Properties.Count > 0)
+								{
+									using var fs = File.CreateText($"{dialog.SelectedPath}/{file.Filename}.txt");
+									file.Properties.ForEach(property => fs.WriteLine($"{property.Item1}: {property.Item2}"));
+								}
+							}
+						});
+					}
 					MessageBox.Show("Folder Extracted");
 				}
 			}
