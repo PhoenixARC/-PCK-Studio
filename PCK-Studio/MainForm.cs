@@ -67,7 +67,7 @@ namespace PckStudio
 			labelVersion.Text = "PCK Studio: " + Application.ProductVersion;
 			ChangelogRichTextBox.Text = Resources.CHANGELOG;
 #if DEBUG
-			DateTime date = DateTime.UtcNow.Date;
+			DateTime date = new FileInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).LastWriteTime;
 			System.Globalization.Calendar cal = new System.Globalization.CultureInfo("en-US").Calendar;
 
 			string n = "a"; // this is to specify which build release this is. This is manually updated for now
