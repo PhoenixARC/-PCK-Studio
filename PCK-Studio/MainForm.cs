@@ -67,16 +67,10 @@ namespace PckStudio
 			labelVersion.Text = "PCK Studio: " + Application.ProductVersion;
 			ChangelogRichTextBox.Text = Resources.CHANGELOG;
 #if DEBUG
-			DateTime date = new FileInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).LastWriteTime;
-			System.Globalization.Calendar cal = new System.Globalization.CultureInfo("en-US").Calendar;
-
-			string n = "a"; // this is to specify which build release this is. This is manually updated for now
-
-			labelVersion.Text += $" (Debug build {date.ToString("yy")}w{cal.GetWeekOfYear(date, System.Globalization.CalendarWeekRule.FirstDay, DayOfWeek.Monday)}{n})";
-			//adopted Minecraft Java Edition Snapshot format (YYwWWn) to keep better track of work in progress features and builds
+			labelVersion.Text += Program.Info.BuildVersion + " " + Program.Info.LastCommitHash;
 #endif
 
-			pckFileTypeHandler = new Dictionary<PCKFile.FileData.FileType, Action<PCKFile.FileData>>(15)
+            pckFileTypeHandler = new Dictionary<PCKFile.FileData.FileType, Action<PCKFile.FileData>>(15)
 			{
 				[PCKFile.FileData.FileType.SkinFile]            = HandleSkinFile,
 				[PCKFile.FileData.FileType.CapeFile]            = null,
