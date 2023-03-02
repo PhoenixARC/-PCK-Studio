@@ -171,22 +171,20 @@ namespace PckStudio.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 7.01 (BETA) 
-        ///==========
-        ///Some features may be completely missing or incomplete at this point in time!
+        ///   Looks up a localized string similar to 7.0 (IN DEVELOPMENT)  
+        ///====================  
+        ///Some features may be completely missing or incomplete at this point in time!  
         ///
         ///-Added .3dst (3DS Texture) support  
         ///-Semi-added Sub-Pck editing  
         ///-Add an edit all properties tool item  
         ///-Skin Preview has been improved  
         ///-Added Pack Icon Injection into .arc file  
-        ///-Improved COL Editor
-        ///
-        ///7.0 (BETA)  
-        ///==========  
-        ///Some features may be completely missing or incomplete at this point in time!  
-        ///  
-        ///-Massive codebase overhaul and optimization lead by miku-666 (aka NessieHax)!!!  [rest of string was truncated]&quot;;.
+        ///-Improved COL Editor  
+        ///-Massive codebase overhaul and optimization lead by miku-666 (aka NessieHax)!!!  
+        ///-Some UI redesigned by yaboiFoxx  
+        ///-Improved the changelog!  
+        ///-New icons for each o [rest of string was truncated]&quot;;.
         /// </summary>
         public static string CHANGELOG {
             get {
