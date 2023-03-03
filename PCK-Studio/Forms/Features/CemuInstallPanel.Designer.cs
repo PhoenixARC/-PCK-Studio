@@ -41,6 +41,7 @@
             this.DLCContextMenu = new MetroFramework.Controls.MetroContextMenu(this.components);
             this.openSkinPackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openTexturePackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addCustomPckToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.myTablePanel1.SuspendLayout();
             this.DLCContextMenu.SuspendLayout();
             this.SuspendLayout();
@@ -276,23 +277,31 @@
             // 
             this.DLCContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openSkinPackToolStripMenuItem,
-            this.openTexturePackToolStripMenuItem});
+            this.openTexturePackToolStripMenuItem,
+            this.addCustomPckToolStripMenuItem});
             this.DLCContextMenu.Name = "DLCContextMenu";
-            this.DLCContextMenu.Size = new System.Drawing.Size(173, 48);
+            this.DLCContextMenu.Size = new System.Drawing.Size(181, 92);
             // 
             // openSkinPackToolStripMenuItem
             // 
             this.openSkinPackToolStripMenuItem.Name = "openSkinPackToolStripMenuItem";
-            this.openSkinPackToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.openSkinPackToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.openSkinPackToolStripMenuItem.Text = "Open Skin Pack";
             this.openSkinPackToolStripMenuItem.Click += new System.EventHandler(this.openSkinPackToolStripMenuItem_Click);
             // 
             // openTexturePackToolStripMenuItem
             // 
             this.openTexturePackToolStripMenuItem.Name = "openTexturePackToolStripMenuItem";
-            this.openTexturePackToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.openTexturePackToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.openTexturePackToolStripMenuItem.Text = "Open Texture Pack";
             this.openTexturePackToolStripMenuItem.Click += new System.EventHandler(this.openTexturePackToolStripMenuItem_Click);
+            // 
+            // addCustomPckToolStripMenuItem
+            // 
+            this.addCustomPckToolStripMenuItem.Name = "addCustomPckToolStripMenuItem";
+            this.addCustomPckToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.addCustomPckToolStripMenuItem.Text = "Add Custom pck";
+            this.addCustomPckToolStripMenuItem.Click += new System.EventHandler(this.addCustomPckToolStripMenuItem_Click);
             // 
             // CemuInstallPanel
             // 
@@ -324,5 +333,6 @@
         private MetroFramework.Controls.MetroContextMenu DLCContextMenu;
         private System.Windows.Forms.ToolStripMenuItem openSkinPackToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openTexturePackToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addCustomPckToolStripMenuItem;
     }
 }

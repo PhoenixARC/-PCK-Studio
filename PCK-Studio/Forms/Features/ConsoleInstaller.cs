@@ -17,38 +17,50 @@
 **/
 using System;
 using System.Windows.Forms;
+
 namespace PckStudio.Forms.Additional_Features
 {
     public partial class ConsoleInstaller : MetroFramework.Forms.MetroForm
     {
-        private Control shownControl;
+        private Control currentlyShowingControl;
+        private const string WiiU = "Wii U";
+        private const string PS3 = "Play Station 3";
+        private const string PSVita = "PS Vita";
+        private const string CemU = "Cemu";
+        private const string RPCS3 = "RPCS3";
 
         public ConsoleInstaller()
         {
             InitializeComponent();
+            selectedConsoleComboBox.Items.AddRange(new string[]
+            {
+                WiiU,
+                PS3,
+                PSVita,
+                CemU,
+                RPCS3,
+            });
         }
 
         private void selectedConsoleComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Remove previous shown Control
-            mainPanel.Controls.Remove(shownControl);
+            mainPanel.Controls.Remove(currentlyShowingControl);
             if (selectedConsoleComboBox.SelectedIndex > -1)
             {
                 string text = selectedConsoleComboBox.Items[selectedConsoleComboBox.SelectedIndex].ToString();
-                shownControl = text switch
+                currentlyShowingControl = text switch
                 {
-                    "Wii U" => new WiiUInstallPanel(),
-                    "Play Station 3" => throw new NotImplementedException($"{text}-Installer is currently not implemented."),
-                    "PS Vita" => throw new NotImplementedException($"{text}-Installer is currently not implemented."),
-                    "Cemu" => new CemuInstallPanel(),
-                    "RPCS3" => throw new NotImplementedException($"{text}-Installer is currently not implemented."),
-                    _ => throw new Exception($"No Control found for: {text}"),
+                    WiiU => new WiiUInstallPanel(),
+                    PS3 => throw new NotImplementedException($"{text}-Installer is currently not implemented."),
+                    PSVita => throw new NotImplementedException($"{text}-Installer is currently not implemented."),
+                    CemU => new CemuInstallPanel(),
+                    RPCS3 => throw new NotImplementedException($"{text}-Installer is currently not implemented."),
+                    _ => throw new Exception($"No Panel found for: {text}"),
                 };
 
-                shownControl.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Right;
-
-                mainPanel.SetColumnSpan(shownControl, 2);
-                mainPanel.Controls.Add(shownControl, 0, 1);
+                currentlyShowingControl.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Right;
+                mainPanel.SetColumnSpan(currentlyShowingControl, 2);
+                mainPanel.Controls.Add(currentlyShowingControl, 0, 1);
             }
         }
     }

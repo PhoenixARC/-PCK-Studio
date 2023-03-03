@@ -50,7 +50,7 @@ namespace PckStudio.Forms.Additional_Features
         private void ListDLCs()
         {
             DLCTreeView.Nodes.Clear();
-            if (string.IsNullOrWhiteSpace(GameDirectoryTextBox.Text) || !Directory.Exists(GameDirectoryTextBox.Text))
+            if (!IsValidInstallDirectory())
             {
                 MessageBox.Show("Please select a valid Game Directory!", "Invalid Directory Specified",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -87,6 +87,11 @@ namespace PckStudio.Forms.Additional_Features
             }
         }
 
+        private bool IsValidInstallDirectory()
+        {
+            return !string.IsNullOrWhiteSpace(GameDirectoryTextBox.Text) && Directory.Exists(GameDirectoryTextBox.Text);
+        }
+
         private void radioButton_Click(object sender, EventArgs e)
         {
             ListDLCs();
@@ -94,8 +99,7 @@ namespace PckStudio.Forms.Additional_Features
 
         private bool IsValidGameDirectory()
         {
-            string contentPath = GetGameContentPath();
-            return Directory.Exists(contentPath);
+            return IsValidInstallDirectory() && Directory.Exists(GetGameContentPath());
         }
 
         private void openSkinPackToolStripMenuItem_Click(object sender, EventArgs e)
@@ -128,6 +132,36 @@ namespace PckStudio.Forms.Additional_Features
         private void DLCTreeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
             openTexturePackToolStripMenuItem.Visible = e.Node.Tag is string nodeData && nodeData.Split(';').Length >= 2;
+        }
+
+        private void addCustomPckToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RenamePrompt prompt = new RenamePrompt(string.Empty);
+            prompt.OKButton.Text = "OK";
+            
+            if (prompt.ShowDialog(this) != DialogResult.OK)
+                return;
+            if (string.IsNullOrWhiteSpace(prompt.NewText))
+            {
+                MessageBox.Show("Invalid Folder name entered!", "Invalid Folder Name", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (Directory.Exists($"{GetGameContentPath()}/WiiU/DLC/{prompt.NewText}"))
+            {
+                MessageBox.Show("A Folder with the same name already exists!", "Folder Name taken", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            Directory.CreateDirectory($"{GetGameContentPath()}/WiiU/DLC/{prompt.NewText}");
+
+            OpenFileDialog fileDialog = new OpenFileDialog();
+            fileDialog.Filter = "PCK (Minecraft Console Package)|*.pck";
+            fileDialog.CheckFileExists = true;
+            fileDialog.Multiselect = false;
+            if (fileDialog.ShowDialog(this) == DialogResult.OK)
+            {
+                File.Copy(fileDialog.FileName, $"{GetGameContentPath()}/WiiU/DLC/{prompt.NewText}/{fileDialog.SafeFileName}");
+            }
         }
     }
 }

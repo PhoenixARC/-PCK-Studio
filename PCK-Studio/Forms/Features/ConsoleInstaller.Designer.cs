@@ -65,18 +65,13 @@
             // selectedConsoleComboBox
             // 
             this.selectedConsoleComboBox.BackColor = System.Drawing.SystemColors.Window;
+            this.selectedConsoleComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.selectedConsoleComboBox.FormattingEnabled = true;
             this.selectedConsoleComboBox.ItemHeight = 23;
-            this.selectedConsoleComboBox.Items.AddRange(new object[] {
-            "Wii U",
-            "Play Station 3",
-            "PS Vita",
-            "Cemu",
-            "RPCS3"});
             this.selectedConsoleComboBox.Location = new System.Drawing.Point(192, 3);
             this.selectedConsoleComboBox.Name = "selectedConsoleComboBox";
             this.selectedConsoleComboBox.PromptText = "Select console";
-            this.selectedConsoleComboBox.Size = new System.Drawing.Size(121, 29);
+            this.selectedConsoleComboBox.Size = new System.Drawing.Size(184, 29);
             this.selectedConsoleComboBox.Style = MetroFramework.MetroColorStyle.Black;
             this.selectedConsoleComboBox.TabIndex = 0;
             this.selectedConsoleComboBox.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -110,10 +105,12 @@
             this.Controls.Add(this.mainPanel);
             this.Controls.Add(metroLabel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(419, 640);
             this.Name = "ConsoleInstaller";
             this.Style = MetroFramework.MetroColorStyle.Silver;
-            this.Text = "Console Installer";
+            this.Text = "Manage pcks";
             this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.mainPanel.ResumeLayout(false);
             this.mainPanel.PerformLayout();
