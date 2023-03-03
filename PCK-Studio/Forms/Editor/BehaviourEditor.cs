@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using MetroFramework.Forms;
 using PckStudio.Classes.FileTypes;
 using PckStudio.Classes.IO.Behaviour;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace PckStudio.Forms.Editor
 {
@@ -23,6 +26,19 @@ namespace PckStudio.Forms.Editor
 			foreach (var entry in behaviourFile.entries)
 			{
 				TreeNode EntryNode = new TreeNode(entry.name);
+
+				foreach (JObject content in Utilities.BehaviourUtil.entityData["entities"].Children())
+				{
+					var prop = content.Properties().FirstOrDefault(prop => prop.Name == entry.name);
+					if (prop is JProperty)
+					{
+						EntryNode.Text = (string)prop.Value;
+						EntryNode.ImageIndex = Utilities.BehaviourUtil.entityData["entities"].Children().ToList().IndexOf(content);
+						EntryNode.SelectedImageIndex = EntryNode.ImageIndex;
+						break;
+					}
+				}
+
 				EntryNode.Tag = entry;
 
 				foreach (var posOverride in entry.overrides)
@@ -30,6 +46,8 @@ namespace PckStudio.Forms.Editor
 					TreeNode OverrideNode = new TreeNode("Position Override");
 					OverrideNode.Tag = posOverride;
 					EntryNode.Nodes.Add(OverrideNode);
+					OverrideNode.ImageIndex = 103;
+					OverrideNode.SelectedImageIndex = OverrideNode.ImageIndex;
 				}
 
 				treeView1.Nodes.Add(EntryNode);
@@ -49,7 +67,6 @@ namespace PckStudio.Forms.Editor
 
 			treeView1.ImageList = new ImageList();
 			Utilities.BehaviourUtil.entityImages.ToList().ForEach(img => treeView1.ImageList.Images.Add(img));
-			treeView1.ImageList.ImageSize = new Size(32, 32);
 			treeView1.ImageList.ColorDepth = ColorDepth.Depth32Bit;
 			SetUpTree();
 		}
