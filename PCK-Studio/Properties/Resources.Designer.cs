@@ -265,9 +265,9 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap entities {
+        public static System.Drawing.Bitmap entities_sheet {
             get {
-                object obj = ResourceManager.GetObject("entities", resourceCulture);
+                object obj = ResourceManager.GetObject("entities_sheet", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
