@@ -12,10 +12,9 @@ namespace PckStudio.Forms.Editor
 {
 	public partial class BehaviourEditor : MetroForm
 	{
-		// Behaviours File Format research by Miku
+		// Behaviours File Format research by Miku and MattNL
 		private readonly PCKFile.FileData _file;
 		BehaviourFile behaviourFile;
-		bool _isLittleEndian = false;
 
 		void SetUpTree()
 		{
@@ -48,6 +47,10 @@ namespace PckStudio.Forms.Editor
 				behaviourFile = BehavioursReader.Read(stream);
 			}
 
+			treeView1.ImageList = new ImageList();
+			Utilities.BehaviourUtil.entityImages.ToList().ForEach(img => treeView1.ImageList.Images.Add(img));
+			treeView1.ImageList.ImageSize = new Size(32, 32);
+			treeView1.ImageList.ColorDepth = ColorDepth.Depth32Bit;
 			SetUpTree();
 		}
 
@@ -163,15 +166,26 @@ namespace PckStudio.Forms.Editor
 
 		private void addNewEntryToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			BehaviourFile.RiderPositionOverride NewOverride = new BehaviourFile.RiderPositionOverride("NewRiderOverride");
+			var diag = new Additional_Popups.Behaviours.AddBehaviour();
 
-			TreeNode NewOverrideNode = new TreeNode(NewOverride.name);
-			NewOverrideNode.Tag = NewOverride;
-			treeView1.Nodes.Add(NewOverrideNode);
+			if(diag.ShowDialog() == DialogResult.OK)
+			{
+				if (String.IsNullOrEmpty(diag.SelectedEntity)) return;
+				if (behaviourFile.entries.FindAll(behaviour => behaviour.name == diag.SelectedEntity).Count() > 0)
+				{
+					MessageBox.Show(this, "You cannot have two entries for one entity. Please use the \"Add New Position Override\" tool to add multiple overrides for entities", "Error", MessageBoxButtons.OK);
+					return;
+				}
+				BehaviourFile.RiderPositionOverride NewOverride = new BehaviourFile.RiderPositionOverride(diag.SelectedEntity);
 
-			treeView1.SelectedNode = NewOverrideNode;
+				TreeNode NewOverrideNode = new TreeNode(NewOverride.name);
+				NewOverrideNode.Tag = NewOverride;
+				treeView1.Nodes.Add(NewOverrideNode);
 
-			addNewPositionOverrideToolStripMenuItem_Click(sender, e); // adds a Position Override to the new Override
+				treeView1.SelectedNode = NewOverrideNode;
+
+				addNewPositionOverrideToolStripMenuItem_Click(sender, e); // adds a Position Override to the new Override
+			}
 		}
 
 		private void treeView1_KeyDown(object sender, KeyEventArgs e)
