@@ -30,9 +30,10 @@ namespace PckStudio
 	{
 		string saveLocation = string.Empty;
 		PCKFile currentPCK = null;
-		bool needsUpdate = false;
-		bool saved = true;
+		bool wasModified = false;
 		bool isTemplateFile = false;
+
+		bool needsUpdate = false;
 		bool isSelectingTab = false;
 
 		readonly Dictionary<PCKFile.FileData.FileType, Action<PCKFile.FileData>> pckFileTypeHandler;
@@ -92,11 +93,8 @@ namespace PckStudio
 
 		public void LoadPck(string filepath)
 		{
+            checkSaveState();
 			treeViewMain.Nodes.Clear();
-            if (currentPCK is not null && !saved)
-            {
-                checkSaveState();
-            }
             currentPCK = openPck(filepath);
 			if (currentPCK == null)
 			{
@@ -222,7 +220,7 @@ namespace PckStudio
 			tabControl.SelectTab(0);
 			isSelectingTab = false;
 			currentPCK = null;
-			saved = true;
+			wasModified = false;
 			isTemplateFile = false;
 			saveLocation = string.Empty;
 			pictureBoxImagePreview.Image = Resources.NoImageFound;
@@ -379,8 +377,7 @@ namespace PckStudio
 		private void HandleGameRuleFile(PCKFile.FileData file)
 		{
 			using GRFEditor grfEditor = new GRFEditor(file);
-			if (grfEditor.ShowDialog(this) == DialogResult.OK)
-				saved = false;
+			wasModified = grfEditor.ShowDialog(this) == DialogResult.OK;
 			UpdateRPC();
 		}
 
@@ -410,7 +407,7 @@ namespace PckStudio
             using AudioEditor audioEditor = new AudioEditor(file, locFile, LittleEndianCheckBox.Checked);
 			if (audioEditor.ShowDialog(this) == DialogResult.OK)
 			{
-				saved = false;
+				wasModified = true;
 				TrySetLocFile(locFile);
 			}
         }
@@ -418,8 +415,7 @@ namespace PckStudio
 		private void HandleLocalisationFile(PCKFile.FileData file)
 		{
             using LOCEditor locedit = new LOCEditor(file);
-			if (locedit.ShowDialog(this) == DialogResult.OK)
-				saved = false;
+			wasModified = locedit.ShowDialog(this) == DialogResult.OK;
 			UpdateRPC();
         }
 
@@ -432,8 +428,7 @@ namespace PckStudio
                 return;
             }
             using COLEditor diag = new COLEditor(file);
-			if (diag.ShowDialog(this) == DialogResult.OK)
-				saved = false;
+			wasModified = diag.ShowDialog(this) == DialogResult.OK;
         }
 
 		public void HandleSkinFile(PCKFile.FileData file)
@@ -444,7 +439,7 @@ namespace PckStudio
 					if (generate.ShowDialog() == DialogResult.OK)
 					{
 						entryDataTextBox.Text = entryTypeTextBox.Text = string.Empty;
-						saved = false;
+						wasModified = true;
 						ReloadMetaTreeView();
 					}
 			}
@@ -469,9 +464,7 @@ namespace PckStudio
 		public void HandleBehavioursFile(PCKFile.FileData file)
 		{
 			using BehaviourEditor locedit = new BehaviourEditor(file);
-			if (locedit.ShowDialog(this) == DialogResult.OK)
-				saved = false;
-			//throw new NotImplementedException();
+			wasModified = locedit.ShowDialog(this) == DialogResult.OK;
 		}
 
 		private void selectNode(object sender, TreeViewEventArgs e)
@@ -660,7 +653,7 @@ namespace PckStudio
 			{
 				PCKFileWriter.Write(fs, currentPCK, LittleEndianCheckBox.Checked, isSkinsPCK);
 			}
-			saved = true;
+			wasModified = false;
 			MessageBox.Show("Saved Pck file", "File Saved");
 		}
 
@@ -675,7 +668,7 @@ namespace PckStudio
 				{
 					file.SetData(File.ReadAllBytes(ofd.FileName));
 					if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath)) RebuildSubPCK(treeViewMain.SelectedNode);
-					saved = false;
+					wasModified = true;
 				}
 				return;
 			}
@@ -716,7 +709,7 @@ namespace PckStudio
                 }
                 currentPCK.Files.Remove(file);
                 node.Remove();
-                saved = false;
+                wasModified = true;
             }
             else if (MessageBox.Show("Are you sure want to delete this folder? All contents will be deleted", "Warning",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
@@ -724,7 +717,7 @@ namespace PckStudio
                 string pckFolderDir = node.FullPath;
                 currentPCK.Files.RemoveAll(file => file.Filename.StartsWith(pckFolderDir));
                 node.Remove();
-                saved = false;
+                wasModified = true;
             }
 			if (IsSubPCKNode(path)) RebuildSubPCK(node);
         }
@@ -762,7 +755,7 @@ namespace PckStudio
 							file.Filename = diag.NewText + file.Filename.Substring(node.FullPath.Length);
 					});
 				}
-				saved = false;
+				wasModified = true;
 				if (IsSubPCKNode(path)) RebuildSubPCK(node);
 				BuildMainTreeView();
 			}
@@ -816,7 +809,7 @@ namespace PckStudio
 					}
 
 					TrySetLocFile(locFile);
-					saved = false;
+					wasModified = true;
 					BuildMainTreeView();
 				}
 		}
@@ -874,7 +867,7 @@ namespace PckStudio
 							currentPCK.Files.Add(file);
 							ReloadMetaTreeView();
 							BuildMainTreeView();
-							saved = false;
+							wasModified = true;
 						}
 					}
 				}
@@ -1000,7 +993,7 @@ namespace PckStudio
 									if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath))
 										RebuildSubPCK(treeViewMain.SelectedNode);
 									ReloadMetaTreeView();
-									saved = false;
+									wasModified = true;
 								}
 								return;
 							}
@@ -1021,7 +1014,7 @@ namespace PckStudio
 									if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath))
 										RebuildSubPCK(treeViewMain.SelectedNode);
 									ReloadMetaTreeView();
-									saved = false;
+									wasModified = true;
 								}
 								return;
 							}
@@ -1045,7 +1038,7 @@ namespace PckStudio
 							if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath))
 								RebuildSubPCK(treeViewMain.SelectedNode);
 							ReloadMetaTreeView();
-							saved = false;
+							wasModified = true;
 						}
 					}
 				}
@@ -1105,7 +1098,7 @@ namespace PckStudio
 			{
 				treeMeta.SelectedNode.Remove();
 				if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath)) RebuildSubPCK(treeViewMain.SelectedNode);
-				saved = false;
+				wasModified = true;
 			}
 		}
 
@@ -1133,7 +1126,7 @@ namespace PckStudio
 					file.Properties.Add((add.PropertyName, add.PropertyValue));
 					if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath)) RebuildSubPCK(treeViewMain.SelectedNode);
 					ReloadMetaTreeView();
-					saved = false;
+					wasModified = true;
 				}
 			}
 		}
@@ -1301,7 +1294,7 @@ namespace PckStudio
 			{
 				currentPCK = InitializePack(new Random().Next(8000, int.MaxValue), 0, namePrompt.NewText, true);
 				isTemplateFile = true;
-                saved = false;
+                wasModified = true;
                 LoadEditorTab();
 			}
 		}
@@ -1314,7 +1307,7 @@ namespace PckStudio
 			{
                 currentPCK = InitializeTexturePack(new Random().Next(8000, int.MaxValue), 0, packPrompt.packName, packPrompt.packRes);
 				isTemplateFile = true;
-                saved = false;
+                wasModified = true;
                 LoadEditorTab();
 			}
 		}
@@ -1327,7 +1320,7 @@ namespace PckStudio
 			{
                 currentPCK = InitializeMashUpPack(new Random().Next(8000, int.MaxValue), 0, packPrompt.packName, packPrompt.packRes);
 				isTemplateFile = true;
-				saved = false;
+				wasModified = false;
 				LoadEditorTab();
 			}
 		}
@@ -1337,7 +1330,7 @@ namespace PckStudio
 			//opens dialog for bulk minefile editing
 			using AdvancedOptions advanced = new AdvancedOptions(currentPCK);
 			if (advanced.ShowDialog() == DialogResult.OK)
-				saved = false;
+				wasModified = true;
 		}
 
 		private void closeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1527,7 +1520,7 @@ namespace PckStudio
 					currentPCK.Files.Add(newFile);
 				}
 				BuildMainTreeView();
-				saved = false;
+				wasModified = true;
 			}
 		}
 		#endregion
@@ -1626,7 +1619,7 @@ namespace PckStudio
 								}
 								mfNew.Properties.Add(new ValueTuple<string, string>(key, value));
 							}
-							saved = false;
+							wasModified = true;
 						}
 						catch (Exception ex)
 						{
@@ -1664,6 +1657,7 @@ namespace PckStudio
 			}
 		}
 
+		[Obsolete("Community voted to let this feature be removed")]
 		private void addPasswordToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			if (!currentPCK.HasFile("0", PCKFile.FileData.FileType.InfoFile)) throw new FileNotFoundException("0 file not found");
@@ -1675,7 +1669,7 @@ namespace PckStudio
 					file.Properties.SetProperty("LOCK", add.Password);
 				add.Dispose();
 				ReloadMetaTreeView();
-				saved = false;
+				wasModified = true;
 			}
 		}
 
@@ -1839,16 +1833,16 @@ namespace PckStudio
 		private void checkSaveState()
 		{
 			if (currentPCK is not null &&
-				!saved &&
+				wasModified &&
 				MessageBox.Show("Save PCK?", "Unsaved PCK", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-			{
-				if (isTemplateFile || string.IsNullOrEmpty(saveLocation))
 				{
-					SaveTemplate();
-					return;
+					if (isTemplateFile || string.IsNullOrEmpty(saveLocation))
+					{
+						SaveTemplate();
+						return;
+					}
+					Save(saveLocation);
 				}
-				Save(saveLocation);
-			}
 		}
 
 		private void OpenPck_DragEnter(object sender, DragEventArgs e)
@@ -1968,7 +1962,7 @@ namespace PckStudio
 		private void setFileType_Click(object sender, EventArgs e, PCKFile.FileData.FileType type)
 		{
 			if (treeViewMain.SelectedNode is TreeNode t && t.Tag is PCKFile.FileData file)
-      {
+			{
 				Debug.WriteLine($"Setting {file.Filetype} to {type}");
 				file.Filetype = type;
 				SetPckFileIcon(t, type);
@@ -1990,7 +1984,7 @@ namespace PckStudio
 					file.SetData(File.ReadAllBytes(fileDialog.FileName));
 					currentPCK.Files.Add(file);
 					BuildMainTreeView();
-					saved = false;
+					wasModified = true;
 				}
 			}
 		}
@@ -2116,7 +2110,7 @@ namespace PckStudio
 						}
 						ReloadMetaTreeView();
 						if (IsSubPCKNode(node.FullPath)) RebuildSubPCK(node);
-						saved = false;
+						wasModified = true;
 					}
 				}
 			}
@@ -2132,7 +2126,7 @@ namespace PckStudio
 				}
 				ReloadMetaTreeView();
 				if (IsSubPCKNode(node.FullPath)) RebuildSubPCK(node);
-				saved = false;
+				wasModified = true;
 			}
 		}
 
@@ -2212,7 +2206,7 @@ namespace PckStudio
 						}
 						ReloadMetaTreeView();
 						if (IsSubPCKNode(node.FullPath)) RebuildSubPCK(node);
-						saved = false;
+						wasModified = true;
 					}
 				}
 			}
@@ -2238,7 +2232,7 @@ namespace PckStudio
 					//else treeViewMain.Nodes.Add();
 
 					BuildMainTreeView();
-					saved = false;
+					wasModified = true;
 				}
 			}
 			return;
