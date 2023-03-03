@@ -66,13 +66,13 @@
 			this.CancelBtn.UseVisualStyleBackColor = true;
 			this.CancelBtn.Click += new System.EventHandler(this.CancelBtn_Click);
 			// 
-			// treeViewBlocks
+			// treeViewEntity
 			// 
 			this.treeViewEntity.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
 			this.treeViewEntity.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.treeViewEntity.ForeColor = System.Drawing.Color.White;
 			this.treeViewEntity.Location = new System.Drawing.Point(0, 0);
-			this.treeViewEntity.Name = "treeViewBlocks";
+			this.treeViewEntity.Name = "treeViewEntity";
 			this.treeViewEntity.Size = new System.Drawing.Size(318, 142);
 			this.treeViewEntity.TabIndex = 14;
 			this.treeViewEntity.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViews_AfterSelect);
@@ -174,12 +174,12 @@
 		}
 
 		#endregion
-		private System.Windows.Forms.Button acceptBtn;
 		private System.Windows.Forms.Button CancelBtn;
 		private System.Windows.Forms.TreeView treeViewEntity;
 		private MetroFramework.Controls.MetroLabel metroLabel2;
 		private MetroFramework.Controls.MetroTextBox metroTextBox1;
 		private MetroFramework.Controls.MetroTabControl metroTabControl1;
 		private System.Windows.Forms.TabPage Blocks;
+		public System.Windows.Forms.Button acceptBtn;
 	}
 }
