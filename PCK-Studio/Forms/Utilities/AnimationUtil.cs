@@ -7,6 +7,7 @@ using System.Linq;
 using PckStudio.Properties;
 using PckStudio.Classes.FileTypes;
 using System.Drawing.Imaging;
+using PckStudio.Classes.Utils;
 using System.IO;
 
 namespace PckStudio.Forms.Utilities
@@ -21,7 +22,7 @@ namespace PckStudio.Forms.Utilities
         {
             get { 
                 if (_tileImages == null)
-                    _tileImages = CreateImageList(Resources.terrain_sheet, 16, 16).Concat(CreateImageList(Resources.items_sheet, 16, 16)).ToArray();
+                    _tileImages = ImageUtils.CreateImageList(Resources.terrain_sheet, 16).Concat(ImageUtils.CreateImageList(Resources.items_sheet, 16)).ToArray();
                 return _tileImages;
             }
         }
@@ -36,30 +37,5 @@ namespace PckStudio.Forms.Utilities
             }
             return file;
         }
-
-
-        private static IEnumerable<Image> CreateImageList(Image source, int width, int height)
-        {
-            int img_row_count = source.Width / width;
-            int img_column_count = source.Height / height;
-            for (int i = 0; i < img_column_count * img_row_count; i++)
-            {
-                int row = i / width;
-                int column = i % height;
-                Rectangle tileArea = new Rectangle(new Point(column * width, row * height), new Size(width, height));
-                Bitmap tileImage = new Bitmap(width, height);
-                using (Graphics gfx = Graphics.FromImage(tileImage))
-                {
-                    gfx.SmoothingMode = SmoothingMode.None;
-                    gfx.InterpolationMode = InterpolationMode.NearestNeighbor;
-                    gfx.PixelOffsetMode = PixelOffsetMode.HighQuality;
-
-                    gfx.DrawImage(source, new Rectangle(0, 0, width, height), tileArea, GraphicsUnit.Pixel);
-                }
-                yield return tileImage;
-            }
-            yield break;
-        }
-
     }
 }
