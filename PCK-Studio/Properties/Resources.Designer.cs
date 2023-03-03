@@ -265,10 +265,30 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap entities {
+            get {
+                object obj = ResourceManager.GetObject("entities", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap ENTITY_MATERIALS_ICON {
             get {
                 object obj = ResourceManager.GetObject("ENTITY_MATERIALS_ICON", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] entityBehaviourData {
+            get {
+                object obj = ResourceManager.GetObject("entityBehaviourData", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         
