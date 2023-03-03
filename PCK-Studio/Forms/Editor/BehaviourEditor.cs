@@ -149,6 +149,7 @@ namespace PckStudio.Forms.Editor
 
 		private void changeToolStripMenuItem_Click(object sender, EventArgs e)
 		{
+			if (treeView1.SelectedNode == null) return;
 			if (!(treeView1.SelectedNode.Tag is BehaviourFile.RiderPositionOverride entry)) return;
 
 			var diag = new Additional_Popups.Behaviours.AddBehaviour();
