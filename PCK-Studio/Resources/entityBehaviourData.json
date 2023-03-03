@@ -8,7 +8,7 @@
 		{ "blaze": "Blaze" },
 		{ "boat": "Boat" },
 		{ "cat": "Cat (PS4 EXCLUSIVE)" },
-		{ "cave_spider": "Cave Spider (PS4 EXCLUSIVE)" },
+		{ "cave_spider": "Cave Spider" },
 		{ "chest_minecart": "Chest Minecart" },
 		{ "chicken": "Chicken" },
 		{ "cod": "Cod" },
@@ -96,6 +96,14 @@
 		{ "zombie": "Zombie" },
 		{ "zombie_horse": "Zombie Horse" },
 		{ "zombie_pigman": "Zombie Pigman" },
-		{ "zombie_villager": "Zombie Villager" }
+		{ "zombie_villager": "Zombie Villager" },
+		{ "": "" },
+		{ "": "" },
+		{ "": "" },
+		{ "": "" },
+		{ "": "" },
+		{ "": "" },
+		{ "": "" },
+		{ "RiderOverrideIcon": "RiderOverrideIcon" }
 	]
 }
