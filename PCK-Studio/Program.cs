@@ -53,9 +53,6 @@ namespace PckStudio
 #if DEBUG
             Debug.Listeners.Add(new TextWriterTraceListener(Console.Out));
 #endif
-
-            Debug.WriteLine(Info.LastCommitHash);
-
             System.Globalization.CultureInfo.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
 
             var mainForm = new MainForm();
