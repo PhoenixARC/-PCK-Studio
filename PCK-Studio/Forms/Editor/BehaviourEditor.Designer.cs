@@ -80,7 +80,7 @@
             this.renameToolStripMenuItem,
             this.removeToolStripMenuItem});
 			this.metroContextMenu1.Name = "metroContextMenu1";
-			this.metroContextMenu1.Size = new System.Drawing.Size(118, 70);
+			this.metroContextMenu1.Size = new System.Drawing.Size(181, 92);
 			// 
 			// addToolStripMenuItem
 			// 
@@ -88,7 +88,7 @@
             this.addNewEntryToolStripMenuItem,
             this.addNewPositionOverrideToolStripMenuItem});
 			this.addToolStripMenuItem.Name = "addToolStripMenuItem";
-			this.addToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+			this.addToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.addToolStripMenuItem.Text = "Add";
 			// 
 			// addNewEntryToolStripMenuItem
@@ -108,14 +108,14 @@
 			// renameToolStripMenuItem
 			// 
 			this.renameToolStripMenuItem.Name = "renameToolStripMenuItem";
-			this.renameToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
-			this.renameToolStripMenuItem.Text = "Rename";
-			this.renameToolStripMenuItem.Click += new System.EventHandler(this.renameToolStripMenuItem_Click);
+			this.renameToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.renameToolStripMenuItem.Text = "Change";
+			this.renameToolStripMenuItem.Click += new System.EventHandler(this.changeToolStripMenuItem_Click);
 			// 
 			// removeToolStripMenuItem
 			// 
 			this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
-			this.removeToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+			this.removeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.removeToolStripMenuItem.Text = "Remove";
 			this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
 			// 

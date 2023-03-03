@@ -147,16 +147,36 @@ namespace PckStudio.Forms.Editor
 			}
 		}
 
-		private void renameToolStripMenuItem_Click(object sender, EventArgs e)
+		private void changeToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			if (!(treeView1.SelectedNode.Tag is BehaviourFile.RiderPositionOverride entry)) return;
 
-			using RenamePrompt diag = new RenamePrompt(entry.name);
-			if (diag.ShowDialog(this) == DialogResult.OK)
+			var diag = new Additional_Popups.Behaviours.AddBehaviour();
+			diag.acceptBtn.Text = "Save";
+
+			if (diag.ShowDialog() == DialogResult.OK)
 			{
-				entry.name = diag.NewText;
+				if (String.IsNullOrEmpty(diag.SelectedEntity)) return;
+				if (behaviourFile.entries.FindAll(behaviour => behaviour.name == diag.SelectedEntity).Count() > 0)
+				{
+					MessageBox.Show(this, "You cannot have two entries for one entity. Please use the \"Add New Position Override\" tool to add multiple overrides for entities", "Error", MessageBoxButtons.OK);
+					return;
+				}
+
+				entry.name = diag.SelectedEntity;
 				treeView1.SelectedNode.Tag = entry;
-				treeView1.SelectedNode.Text = diag.NewText;
+
+				foreach (JObject content in Utilities.BehaviourUtil.entityData["entities"].Children())
+				{
+					var prop = content.Properties().FirstOrDefault(prop => prop.Name == entry.name);
+					if (prop is JProperty)
+					{
+						treeView1.SelectedNode.Text = (string)prop.Value;
+						treeView1.SelectedNode.ImageIndex = Utilities.BehaviourUtil.entityData["entities"].Children().ToList().IndexOf(content);
+						treeView1.SelectedNode.SelectedImageIndex = treeView1.SelectedNode.ImageIndex;
+						break;
+					}
+				}
 			}
 		}
 
