@@ -124,6 +124,7 @@
 			this.labelVersion = new MetroFramework.Controls.MetroLabel();
 			this.ChangelogRichTextBox = new System.Windows.Forms.RichTextBox();
 			this.editorTab = new MetroFramework.Controls.MetroTabPage();
+			this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
 			this.labelImageSize = new MetroFramework.Controls.MetroLabel();
 			this.fileEntryCountLabel = new MetroFramework.Controls.MetroLabel();
 			this.PropertiesTabControl = new MetroFramework.Controls.MetroTabControl();
@@ -137,9 +138,9 @@
 			this.label11 = new MetroFramework.Controls.MetroLabel();
 			this.treeViewMain = new System.Windows.Forms.TreeView();
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
-			this.LittleEndianCheckBox = new MetroFramework.Controls.MetroCheckBox();
-			this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
 			this.pictureBoxImagePreview = new PckStudio.PictureBoxWithInterpolationMode();
+			this.LittleEndianCheckBox = new MetroFramework.Controls.MetroCheckBox();
+			this.behavioursbinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenuPCKEntries.SuspendLayout();
 			this.menuStrip.SuspendLayout();
 			this.contextMenuMetaTree.SuspendLayout();
@@ -177,7 +178,8 @@
             this.createAnimatedTextureToolStripMenuItem,
             this.audiopckToolStripMenuItem,
             this.colourscolToolStripMenuItem,
-            this.CreateSkinsPCKToolStripMenuItem1});
+            this.CreateSkinsPCKToolStripMenuItem1,
+            this.behavioursbinToolStripMenuItem});
 			resources.ApplyResources(this.createToolStripMenuItem, "createToolStripMenuItem");
 			this.createToolStripMenuItem.Name = "createToolStripMenuItem";
 			// 
@@ -201,18 +203,21 @@
 			// 
 			// audiopckToolStripMenuItem
 			// 
-			resources.ApplyResources(this.audiopckToolStripMenuItem, "audiopckToolStripMenuItem");
+			this.audiopckToolStripMenuItem.Image = global::PckStudio.Properties.Resources.BINKA_ICON;
 			this.audiopckToolStripMenuItem.Name = "audiopckToolStripMenuItem";
+			resources.ApplyResources(this.audiopckToolStripMenuItem, "audiopckToolStripMenuItem");
 			this.audiopckToolStripMenuItem.Click += new System.EventHandler(this.audiopckToolStripMenuItem_Click);
 			// 
 			// colourscolToolStripMenuItem
 			// 
+			this.colourscolToolStripMenuItem.Image = global::PckStudio.Properties.Resources.COL_ICON;
 			this.colourscolToolStripMenuItem.Name = "colourscolToolStripMenuItem";
 			resources.ApplyResources(this.colourscolToolStripMenuItem, "colourscolToolStripMenuItem");
 			this.colourscolToolStripMenuItem.Click += new System.EventHandler(this.colourscolToolStripMenuItem_Click);
 			// 
 			// CreateSkinsPCKToolStripMenuItem1
 			// 
+			this.CreateSkinsPCKToolStripMenuItem1.Image = global::PckStudio.Properties.Resources.SKINS_ICON;
 			this.CreateSkinsPCKToolStripMenuItem1.Name = "CreateSkinsPCKToolStripMenuItem1";
 			resources.ApplyResources(this.CreateSkinsPCKToolStripMenuItem1, "CreateSkinsPCKToolStripMenuItem1");
 			this.CreateSkinsPCKToolStripMenuItem1.Click += new System.EventHandler(this.CreateSkinsPCKToolStripMenuItem1_Click);
@@ -848,6 +853,12 @@
 			this.editorTab.VerticalScrollbarHighlightOnWheel = false;
 			this.editorTab.VerticalScrollbarSize = 0;
 			// 
+			// metroLabel3
+			// 
+			resources.ApplyResources(this.metroLabel3, "metroLabel3");
+			this.metroLabel3.Name = "metroLabel3";
+			this.metroLabel3.Theme = MetroFramework.MetroThemeStyle.Dark;
+			// 
 			// labelImageSize
 			// 
 			resources.ApplyResources(this.labelImageSize, "labelImageSize");
@@ -1010,6 +1021,14 @@
 			resources.ApplyResources(this.imageList, "imageList");
 			this.imageList.TransparentColor = System.Drawing.Color.Transparent;
 			// 
+			// pictureBoxImagePreview
+			// 
+			resources.ApplyResources(this.pictureBoxImagePreview, "pictureBoxImagePreview");
+			this.pictureBoxImagePreview.BackColor = System.Drawing.Color.Transparent;
+			this.pictureBoxImagePreview.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+			this.pictureBoxImagePreview.Name = "pictureBoxImagePreview";
+			this.pictureBoxImagePreview.TabStop = false;
+			// 
 			// LittleEndianCheckBox
 			// 
 			resources.ApplyResources(this.LittleEndianCheckBox, "LittleEndianCheckBox");
@@ -1019,19 +1038,12 @@
 			this.LittleEndianCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.LittleEndianCheckBox.UseSelectable = true;
 			// 
-			// metroLabel3
+			// behavioursbinToolStripMenuItem
 			// 
-			resources.ApplyResources(this.metroLabel3, "metroLabel3");
-			this.metroLabel3.Name = "metroLabel3";
-			this.metroLabel3.Theme = MetroFramework.MetroThemeStyle.Dark;
-			// 
-			// pictureBoxImagePreview
-			// 
-			resources.ApplyResources(this.pictureBoxImagePreview, "pictureBoxImagePreview");
-			this.pictureBoxImagePreview.BackColor = System.Drawing.Color.Transparent;
-			this.pictureBoxImagePreview.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-			this.pictureBoxImagePreview.Name = "pictureBoxImagePreview";
-			this.pictureBoxImagePreview.TabStop = false;
+			this.behavioursbinToolStripMenuItem.Image = global::PckStudio.Properties.Resources.BEHAVIOURS_ICON;
+			this.behavioursbinToolStripMenuItem.Name = "behavioursbinToolStripMenuItem";
+			resources.ApplyResources(this.behavioursbinToolStripMenuItem, "behavioursbinToolStripMenuItem");
+			this.behavioursbinToolStripMenuItem.Click += new System.EventHandler(this.behavioursbinToolStripMenuItem_Click);
 			// 
 			// MainForm
 			// 
@@ -1182,6 +1194,7 @@
 		private System.Windows.Forms.ToolStripMenuItem editAllEntriesToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem addFileToolStripMenuItem;
 		private MetroFramework.Controls.MetroLabel metroLabel3;
+		private System.Windows.Forms.ToolStripMenuItem behavioursbinToolStripMenuItem;
 	}
 }
 

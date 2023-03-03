@@ -200,6 +200,7 @@
     <Compile Include="Classes\Models\DefaultModels\Steve64x64Model.cs" />
     <Compile Include="Classes\Utils\3DS\3DSUtil.cs" />
     <Compile Include="Classes\Utils\ARC\ARCUtil.cs" />
+    <Compile Include="Classes\Utils\ImageUtils.cs" />
     <Compile Include="Classes\Utils\SkinANIM.cs" />
     <Compile Include="Classes\FileTypes\PCKProperties.cs" />
     <Compile Include="Classes\FileTypes\PCKFile.cs" />
@@ -242,6 +243,12 @@
     <Compile Include="Classes\Networking\Update.cs" />
     <Compile Include="Classes\Utils\GRF\CRC32.cs" />
     <Compile Include="Classes\Utils\RLE.cs" />
+    <Compile Include="Forms\Additional-Popups\Behaviours\AddBehaviour.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\Behaviours\AddBehaviour.Designer.cs">
+      <DependentUpon>AddBehaviour.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Additional-Popups\Loc\AddLanguage.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -362,6 +369,7 @@
     <Compile Include="Forms\Additional-Popups\Audio\pleaseWait.Designer.cs">
       <DependentUpon>pleaseWait.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Utilities\BehaviourUtil.cs" />
     <Compile Include="Forms\Utilities\AnimationUtil.cs" />
     <Compile Include="Forms\Utilities\Skins\BoxEditor.cs">
       <SubType>Form</SubType>
@@ -491,6 +499,9 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Classes\Utils\3DS\TextureCodec.cs" />
+    <EmbeddedResource Include="Forms\Additional-Popups\Behaviours\AddBehaviour.resx">
+      <DependentUpon>AddBehaviour.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\Loc\AddLanguage.resx">
       <DependentUpon>AddLanguage.cs</DependentUpon>
     </EmbeddedResource>
@@ -689,6 +700,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\entityBehaviourData.json" />
     <None Include="Resources\TexturePackIcon.png" />
     <None Include="Resources\apps.zip" />
     <None Include="Resources\binka\binkawin.asi" />
@@ -750,6 +762,7 @@
     <None Include="Resources\Comparison.png" />
     <None Include="Resources\iconImageList\ENTITY MATERIALS ICON.png" />
     <None Include="Resources\iconImageList\blank.png" />
+    <None Include="Resources\entities.png" />
     <Content Include="Resources\PCK-Studio_Logo.ico" />
     <None Include="Resources\bg1.png" />
     <Content Include="Resources\NoImageFound.png" />

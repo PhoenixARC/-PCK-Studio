@@ -817,7 +817,7 @@ namespace PckStudio
 
 					TrySetLocFile(locFile);
 					saved = false;
-					//BuildMainTreeView();
+					BuildMainTreeView();
 				}
 		}
 
@@ -2242,6 +2242,19 @@ namespace PckStudio
 				}
 			}
 			return;
+		}
+
+		private void behavioursbinToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			PCKFile.FileData NewBehaviourFile;
+			if (currentPCK.TryGetFile("behaviours.bin", PCKFile.FileData.FileType.BehavioursFile, out NewBehaviourFile))
+			{
+				MessageBox.Show("A behaviours file already exists in this PCK and a new one cannot be created.", "Operation aborted");
+				return;
+			}
+			NewBehaviourFile = BehaviourUtil.CreateNewBehaviourFile();
+			currentPCK.Files.Add(NewBehaviourFile);
+			BuildMainTreeView();
 		}
 	}
 

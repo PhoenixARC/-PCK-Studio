@@ -66,7 +66,7 @@
 			this.treeView1.Location = new System.Drawing.Point(20, 84);
 			this.treeView1.Margin = new System.Windows.Forms.Padding(0);
 			this.treeView1.Name = "treeView1";
-			this.treeView1.Size = new System.Drawing.Size(128, 176);
+			this.treeView1.Size = new System.Drawing.Size(186, 176);
 			this.treeView1.TabIndex = 13;
 			this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
 			this.treeView1.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseClick);
@@ -80,7 +80,7 @@
             this.renameToolStripMenuItem,
             this.removeToolStripMenuItem});
 			this.metroContextMenu1.Name = "metroContextMenu1";
-			this.metroContextMenu1.Size = new System.Drawing.Size(118, 70);
+			this.metroContextMenu1.Size = new System.Drawing.Size(181, 92);
 			// 
 			// addToolStripMenuItem
 			// 
@@ -88,7 +88,7 @@
             this.addNewEntryToolStripMenuItem,
             this.addNewPositionOverrideToolStripMenuItem});
 			this.addToolStripMenuItem.Name = "addToolStripMenuItem";
-			this.addToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+			this.addToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.addToolStripMenuItem.Text = "Add";
 			// 
 			// addNewEntryToolStripMenuItem
@@ -108,14 +108,14 @@
 			// renameToolStripMenuItem
 			// 
 			this.renameToolStripMenuItem.Name = "renameToolStripMenuItem";
-			this.renameToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
-			this.renameToolStripMenuItem.Text = "Rename";
-			this.renameToolStripMenuItem.Click += new System.EventHandler(this.renameToolStripMenuItem_Click);
+			this.renameToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.renameToolStripMenuItem.Text = "Change";
+			this.renameToolStripMenuItem.Click += new System.EventHandler(this.changeToolStripMenuItem_Click);
 			// 
 			// removeToolStripMenuItem
 			// 
 			this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
-			this.removeToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+			this.removeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.removeToolStripMenuItem.Text = "Remove";
 			this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
 			// 
@@ -128,7 +128,7 @@
             this.helpToolStripMenuItem});
 			this.menuStrip.Location = new System.Drawing.Point(20, 60);
 			this.menuStrip.Name = "menuStrip";
-			this.menuStrip.Size = new System.Drawing.Size(274, 24);
+			this.menuStrip.Size = new System.Drawing.Size(309, 24);
 			this.menuStrip.TabIndex = 14;
 			this.menuStrip.Text = "menuStrip1";
 			// 
@@ -145,7 +145,7 @@
 			// 
 			this.saveToolStripMenuItem1.Image = ((System.Drawing.Image)(resources.GetObject("saveToolStripMenuItem1.Image")));
 			this.saveToolStripMenuItem1.Name = "saveToolStripMenuItem1";
-			this.saveToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+			this.saveToolStripMenuItem1.Size = new System.Drawing.Size(98, 22);
 			this.saveToolStripMenuItem1.Text = "Save";
 			this.saveToolStripMenuItem1.Click += new System.EventHandler(this.saveToolStripMenuItem1_Click);
 			// 
@@ -160,7 +160,7 @@
 			// 
 			this.flag1Checkbox.AutoSize = true;
 			this.flag1Checkbox.Enabled = false;
-			this.flag1Checkbox.Location = new System.Drawing.Point(174, 109);
+			this.flag1Checkbox.Location = new System.Drawing.Point(221, 104);
 			this.flag1Checkbox.Name = "flag1Checkbox";
 			this.flag1Checkbox.Size = new System.Drawing.Size(96, 15);
 			this.flag1Checkbox.TabIndex = 22;
@@ -173,7 +173,7 @@
 			// 
 			this.flag2Checkbox.AutoSize = true;
 			this.flag2Checkbox.Enabled = false;
-			this.flag2Checkbox.Location = new System.Drawing.Point(174, 141);
+			this.flag2Checkbox.Location = new System.Drawing.Point(221, 136);
 			this.flag2Checkbox.Name = "flag2Checkbox";
 			this.flag2Checkbox.Size = new System.Drawing.Size(106, 15);
 			this.flag2Checkbox.TabIndex = 23;
@@ -188,7 +188,7 @@
 			this.zUpDown.DecimalPlaces = 3;
 			this.zUpDown.Enabled = false;
 			this.zUpDown.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
-			this.zUpDown.Location = new System.Drawing.Point(207, 225);
+			this.zUpDown.Location = new System.Drawing.Point(254, 220);
 			this.zUpDown.Maximum = new decimal(new int[] {
             255,
             0,
@@ -205,7 +205,7 @@
 			this.yUpDown.DecimalPlaces = 3;
 			this.yUpDown.Enabled = false;
 			this.yUpDown.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
-			this.yUpDown.Location = new System.Drawing.Point(207, 199);
+			this.yUpDown.Location = new System.Drawing.Point(254, 194);
 			this.yUpDown.Maximum = new decimal(new int[] {
             255,
             0,
@@ -219,7 +219,7 @@
 			// zLabel
 			// 
 			this.zLabel.AutoSize = true;
-			this.zLabel.Location = new System.Drawing.Point(174, 225);
+			this.zLabel.Location = new System.Drawing.Point(221, 220);
 			this.zLabel.Name = "zLabel";
 			this.zLabel.Size = new System.Drawing.Size(20, 19);
 			this.zLabel.TabIndex = 25;
@@ -229,7 +229,7 @@
 			// yLabel
 			// 
 			this.yLabel.AutoSize = true;
-			this.yLabel.Location = new System.Drawing.Point(175, 199);
+			this.yLabel.Location = new System.Drawing.Point(222, 194);
 			this.yLabel.Name = "yLabel";
 			this.yLabel.Size = new System.Drawing.Size(20, 19);
 			this.yLabel.TabIndex = 24;
@@ -242,7 +242,7 @@
 			this.xUpDown.DecimalPlaces = 3;
 			this.xUpDown.Enabled = false;
 			this.xUpDown.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
-			this.xUpDown.Location = new System.Drawing.Point(207, 173);
+			this.xUpDown.Location = new System.Drawing.Point(254, 168);
 			this.xUpDown.Maximum = new decimal(new int[] {
             255,
             0,
@@ -256,7 +256,7 @@
 			// xLabel
 			// 
 			this.xLabel.AutoSize = true;
-			this.xLabel.Location = new System.Drawing.Point(175, 173);
+			this.xLabel.Location = new System.Drawing.Point(222, 168);
 			this.xLabel.Name = "xLabel";
 			this.xLabel.Size = new System.Drawing.Size(20, 19);
 			this.xLabel.TabIndex = 30;
@@ -267,7 +267,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(314, 280);
+			this.ClientSize = new System.Drawing.Size(349, 280);
 			this.Controls.Add(this.xUpDown);
 			this.Controls.Add(this.xLabel);
 			this.Controls.Add(this.zUpDown);
