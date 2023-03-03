@@ -26,7 +26,7 @@ namespace PckStudio.Forms.Utilities
                 return _entityImages;
             }
         }
-        public static PCKFile.FileData CreateNewBehaviourFile(Image source, string tileName, bool isItem)
+        public static PCKFile.FileData CreateNewBehaviourFile()
         {
             PCKFile.FileData file = new PCKFile.FileData($"behaviours.bin", PCKFile.FileData.FileType.BehavioursFile);
 
