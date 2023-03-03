@@ -11,7 +11,7 @@ namespace PckStudio
     {
         // this is to specify which build release this is. This is manually updated for now
         // TODO: add different chars for different configurations
-        private const string BuildType = "a";
+        private const string BuildType = "b";
         private System.Globalization.Calendar BuildCalendar = new System.Globalization.CultureInfo("en-US").Calendar;
         private DateTime date = new FileInfo(Assembly.GetExecutingAssembly().Location).LastWriteTime;
 
