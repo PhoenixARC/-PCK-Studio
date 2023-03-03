@@ -817,7 +817,7 @@ namespace PckStudio
 
 					TrySetLocFile(locFile);
 					saved = false;
-					//BuildMainTreeView();
+					BuildMainTreeView();
 				}
 		}
 
