@@ -236,7 +236,7 @@
 			// 
 			resources.ApplyResources(this.importSkinToolStripMenuItem, "importSkinToolStripMenuItem");
 			this.importSkinToolStripMenuItem.Name = "importSkinToolStripMenuItem";
-			this.importSkinToolStripMenuItem.Click += new System.EventHandler(this.importSkin);
+			this.importSkinToolStripMenuItem.Click += new System.EventHandler(this.importSkinToolStripMenuItem_Click);
 			// 
 			// importExtractedSkinsFolderToolStripMenuItem
 			// 

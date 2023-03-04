@@ -678,7 +678,7 @@ namespace PckStudio
 			//if (folderDialog.ShowDialog() == DialogResult.OK)
 			//{
 			//	string[] FilePaths = Directory.GetFiles(folderDialog.SelectedPath, "*.png");
-			//	Array.ForEach(FilePaths, filePath => currentPCK.Files.Add(new PCKFile.FileData(filePath, 2)));
+			//	Array.ForEach(FilePaths, filePath => currentPCK.Createnew(filePath, 2));
 			//}
 			// should never happen unless its a folder
 			MessageBox.Show("Can't replace a folder.");
@@ -814,14 +814,14 @@ namespace PckStudio
 				}
 		}
 
-        private static PCKFile.FileData CreateNewAudioFile(bool isLittle)
+        private PCKFile.FileData CreateNewAudioFile(bool isLittle)
         {
             // create actual valid pck file structure
             PCKAudioFile audioPck = new PCKAudioFile();
             audioPck.AddCategory(PCKAudioFile.AudioCategory.EAudioType.Overworld);
             audioPck.AddCategory(PCKAudioFile.AudioCategory.EAudioType.Nether);
             audioPck.AddCategory(PCKAudioFile.AudioCategory.EAudioType.End);
-            PCKFile.FileData pckFileData = new PCKFile.FileData("audio.pck", PCKFile.FileData.FileType.AudioFile);
+            PCKFile.FileData pckFileData = currentPCK.CreateNew("audio.pck", PCKFile.FileData.FileType.AudioFile);
             using (var stream = new MemoryStream())
             {
                 PCKAudioFileWriter.Write(stream, audioPck, isLittle);
@@ -840,7 +840,6 @@ namespace PckStudio
 			if (!TryGetLocFile(out LOCFile locFile))
 				throw new Exception("No .loc file found.");
 			var file = CreateNewAudioFile(LittleEndianCheckBox.Checked);
-			currentPCK.Files.Add(file);
 			AudioEditor diag = new AudioEditor(file, locFile, LittleEndianCheckBox.Checked);
 			if (diag.ShowDialog(this) == DialogResult.OK)
 				TrySetLocFile(locFile);
@@ -935,10 +934,9 @@ namespace PckStudio
 				{
 					if (node.Tag is PCKFile.FileData node_file)
 					{
-						PCKFile.FileData new_file = new PCKFile.FileData(node_file.Filename, node_file.Filetype);
+						PCKFile.FileData new_file = newPCKFile.CreateNew(node_file.Filename, node_file.Filetype);
 						foreach (var prop in node_file.Properties) new_file.Properties.Add(prop);
 						new_file.SetData(node_file.Data);
-						newPCKFile.Files.Add(new_file);
 					}
 				}
 
@@ -1195,10 +1193,10 @@ namespace PckStudio
 		private PCKFile InitializePack(int packId, int packVersion, string packName, bool createSkinsPCK)
 		{
 			var newPck = new PCKFile(3);
-			var zeroFile = new PCKFile.FileData("0", PCKFile.FileData.FileType.InfoFile);
+			var zeroFile = newPck.CreateNew("0", PCKFile.FileData.FileType.InfoFile);
 			zeroFile.Properties.Add(("PACKID", packId.ToString()));
 			zeroFile.Properties.Add(("PACKVERSION", packVersion.ToString()));
-			var loc = new PCKFile.FileData("localisation.loc", PCKFile.FileData.FileType.LocalisationFile);
+			var loc = newPck.CreateNew("localisation.loc", PCKFile.FileData.FileType.LocalisationFile);
 			var locFile = new LOCFile();
 			locFile.InitializeDefault(packName);
 			using (var stream = new MemoryStream())
@@ -1206,18 +1204,15 @@ namespace PckStudio
 				LOCFileWriter.Write(stream, locFile);
 				loc.SetData(stream.ToArray());
 			}
-			newPck.Files.Add(zeroFile);
-			newPck.Files.Add(loc);
 
 			if (createSkinsPCK)
 			{
-                PCKFile.FileData skinsPCKFile = new PCKFile.FileData("Skins.pck", PCKFile.FileData.FileType.SkinDataFile);
+                PCKFile.FileData skinsPCKFile = newPck.CreateNew("Skins.pck", PCKFile.FileData.FileType.SkinDataFile);
                 using (var stream = new MemoryStream())
                 {
                     PCKFileWriter.Write(stream, new PCKFile(3), LittleEndianCheckBox.Checked, true);
                     skinsPCKFile.SetData(stream.ToArray());
                 }
-                newPck.Files.Add(skinsPCKFile);
             }
 			return newPck;
 		}
@@ -1225,7 +1220,7 @@ namespace PckStudio
 		private PCKFile InitializeTexturePack(int packId, int packVersion, string packName, string res, bool createSkinsPCK = false)
 		{
             var newPck = InitializePack(packId, packVersion, packName, createSkinsPCK);
-			var texturepackInfo = new PCKFile.FileData($"{res}/{res}Info.pck", PCKFile.FileData.FileType.TexturePackInfoFile);
+			var texturepackInfo = newPck.CreateNew($"{res}/{res}Info.pck", PCKFile.FileData.FileType.TexturePackInfoFile);
 			texturepackInfo.Properties.Add(("PACKID", "0"));
 			texturepackInfo.Properties.Add(("DATAPATH", $"{res}Data.pck"));
 
@@ -1233,18 +1228,16 @@ namespace PckStudio
 
 			using (var ms = new MemoryStream())
 			{
-				var icon = new PCKFile.FileData("icon.png", PCKFile.FileData.FileType.TextureFile);
+				var icon = infoPCK.CreateNew("icon.png", PCKFile.FileData.FileType.TextureFile);
 				Resources.TexturePackIcon.Save(ms, ImageFormat.Png);
 				icon.SetData(ms.ToArray());
-				infoPCK.Files.Add(icon);
 			}
 
 			using (var ms = new MemoryStream())
 			{
-			var comparison = new PCKFile.FileData("comparison.png", PCKFile.FileData.FileType.TextureFile);
-			Resources.Comparison.Save(ms, ImageFormat.Png);
-			comparison.SetData(ms.ToArray());
-			infoPCK.Files.Add(comparison);
+				var comparison = infoPCK.CreateNew("comparison.png", PCKFile.FileData.FileType.TextureFile);
+				Resources.Comparison.Save(ms, ImageFormat.Png);
+				comparison.SetData(ms.ToArray());
 			}
 
 			using (var ms = new MemoryStream())
@@ -1252,15 +1245,13 @@ namespace PckStudio
 				PCKFileWriter.Write(ms, infoPCK, LittleEndianCheckBox.Checked);
 				texturepackInfo.SetData(ms.ToArray());
 			}
-
-			newPck.Files.Add(texturepackInfo);
 			return newPck;
 		}
 
 		private PCKFile InitializeMashUpPack(int packId, int packVersion, string packName, string res)
 		{
             var newPck = InitializeTexturePack(packId, packVersion, packName, res, true);
-			var gameRuleFile = new PCKFile.FileData("GameRules.grf", PCKFile.FileData.FileType.GameRulesFile);
+			var gameRuleFile = newPck.CreateNew("GameRules.grf", PCKFile.FileData.FileType.GameRulesFile);
 			var grfFile = new GRFFile();
 			grfFile.AddRule("MapOptions",
 				new KeyValuePair<string, string>("seed", "0"),
@@ -1281,7 +1272,6 @@ namespace PckStudio
 				GRFFileWriter.Write(stream, grfFile, GRFFile.eCompressionType.ZlibRleCrc);
 				gameRuleFile.SetData(stream.ToArray());
 			}
-			newPck.Files.Add(gameRuleFile);
 			return newPck;
 		}
 
@@ -1575,7 +1565,7 @@ namespace PckStudio
 		}
 
 
-		private void importSkin(object sender, EventArgs e)
+		private void importSkinToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			using (OpenFileDialog contents = new OpenFileDialog())
 			{
@@ -1586,7 +1576,7 @@ namespace PckStudio
 				{
 					string skinNameImport = Path.GetFileName(contents.FileName);
 					byte[] data = File.ReadAllBytes(contents.FileName);
-					PCKFile.FileData mfNew = new PCKFile.FileData(skinNameImport, 0);
+					PCKFile.FileData mfNew = currentPCK.CreateNew(skinNameImport, PCKFile.FileData.FileType.SkinFile);
 					mfNew.SetData(data);
 					string propertyFile = Path.GetFileNameWithoutExtension(contents.FileName) + ".txt";
 					if (File.Exists(propertyFile))
@@ -1980,9 +1970,8 @@ namespace PckStudio
 				renamePrompt.TextLabel.Text = "Path";
 				if (renamePrompt.ShowDialog() == DialogResult.OK && !string.IsNullOrEmpty(renamePrompt.NewText))
 				{
-					var file = new PCKFile.FileData(renamePrompt.NewText, PCKFile.FileData.FileType.TextureFile);
+					var file = currentPCK.CreateNew(renamePrompt.NewText, PCKFile.FileData.FileType.TextureFile);
 					file.SetData(File.ReadAllBytes(fileDialog.FileName));
-					currentPCK.Files.Add(file);
 					BuildMainTreeView();
 					wasModified = true;
 				}
@@ -2060,9 +2049,8 @@ namespace PckStudio
 				MessageBox.Show("A color table file already exists in this PCK and a new one cannot be created.", "Operation aborted");
 				return;
 			}
-			NewColorFile = new PCKFile.FileData("colours.col", PCKFile.FileData.FileType.ColourTableFile);
+			NewColorFile = currentPCK.CreateNew("colours.col", PCKFile.FileData.FileType.ColourTableFile);
 			NewColorFile.SetData(Resources.tu69colours);
-			currentPCK.Files.Add(NewColorFile);
 			BuildMainTreeView();
 		}
 
@@ -2168,14 +2156,12 @@ namespace PckStudio
 				return;
 			}
 
-			PCKFile.FileData newSkinsPCKFile = new PCKFile.FileData("Skins.pck", PCKFile.FileData.FileType.SkinDataFile);
+			PCKFile.FileData newSkinsPCKFile = currentPCK.CreateNew("Skins.pck", PCKFile.FileData.FileType.SkinDataFile);
 			using (var stream = new MemoryStream())
 			{
 				PCKFileWriter.Write(stream, new PCKFile(3), LittleEndianCheckBox.Checked, true);
 				newSkinsPCKFile.SetData(stream.ToArray());
 			}
-
-			currentPCK.Files.Add(newSkinsPCKFile);
 
 			BuildMainTreeView();
 
@@ -2224,7 +2210,7 @@ namespace PckStudio
 				using AddFilePrompt diag = new AddFilePrompt("res/" + Path.GetFileName(ofd.FileName));
 				if (diag.ShowDialog(this) == DialogResult.OK)
 				{
-					PCKFile.FileData file = new PCKFile.FileData(diag.filepath, (PCKFile.FileData.FileType)diag.filetype);
+					PCKFile.FileData file = currentPCK.CreateNew(diag.filepath, (PCKFile.FileData.FileType)diag.filetype);
 					file.SetData(File.ReadAllBytes(ofd.FileName));
 					currentPCK.Files.Add(file);
 

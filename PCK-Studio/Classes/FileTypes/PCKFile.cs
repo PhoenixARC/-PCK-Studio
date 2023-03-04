@@ -121,6 +121,19 @@ namespace PckStudio.Classes.FileTypes
         }
 
         /// <summary>
+        /// Creates and adds new <see cref="FileData"/> object.
+        /// </summary>
+        /// <param name="name">Filename</param>
+        /// <param name="type">Filetype</param>
+        /// <returns>Added <see cref="FileData"/> object</returns>
+        public FileData CreateNew(string name, FileData.FileType type)
+        {
+            var file = new FileData(name, type);
+            Files.Add(file);
+            return file;
+        }
+
+        /// <summary>
         /// Checks wether a file with <paramref name="filepath"/> and <paramref name="type"/> exists
         /// </summary>
         /// <param name="filepath">Path to the file in the pck</param>
