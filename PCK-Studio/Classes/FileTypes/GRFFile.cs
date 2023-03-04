@@ -88,11 +88,14 @@ namespace PckStudio.Classes.FileTypes
             };
 
         public readonly GameRule Root = null;
+
         public int Crc => _crc;
         public bool IsWorld => _isWorld;
+        public eCompressionType CompressionLevel => _compressionLevel;
 
         private int _crc = 0;
         private bool _isWorld = false;
+        private eCompressionType _compressionLevel = eCompressionType.None;
 
         public enum eCompressionType : byte
         {
@@ -108,9 +111,12 @@ namespace PckStudio.Classes.FileTypes
         public GRFFile() : this(-1, false)
         {}
 
-        public GRFFile(int crc, bool isWolrd)
+        public GRFFile(int crc, bool isWolrd) : this(crc, isWolrd, eCompressionType.None)
+        {}
+        public GRFFile(int crc, bool isWolrd, eCompressionType compressionLevel)
         {
             Root = new GameRule("__ROOT__", null);
+            _compressionLevel = compressionLevel;
             _crc = crc;
             _isWorld = isWolrd;
         }
