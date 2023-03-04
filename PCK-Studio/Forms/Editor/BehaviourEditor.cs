@@ -232,6 +232,7 @@ namespace PckStudio.Forms.Editor
 					}
 				}
 				treeView1.Nodes.Add(NewOverrideNode);
+				treeView1.SelectedNode = NewOverrideNode;
 
 				addNewPositionOverrideToolStripMenuItem_Click(sender, e); // adds a Position Override to the new Override
 			}
