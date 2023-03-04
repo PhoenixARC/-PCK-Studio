@@ -2252,27 +2252,38 @@ namespace PckStudio
 		}
 	}
 
-	public class PckNodeSorter : System.Collections.IComparer
+	public class PckNodeSorter : System.Collections.IComparer, IComparer<TreeNode>
 	{
-		int System.Collections.IComparer.Compare(Object x, Object y)
+		private bool CheckForSkinAndCapeFiles(TreeNode node)
 		{
-			TreeNode NodeX = x as TreeNode;
-			TreeNode NodeY = y as TreeNode;
+            if (node.Tag is PCKFile.FileData file)
+            {
+				return file.Filetype == PCKFile.FileData.FileType.SkinFile ||
+					file.Filetype == PCKFile.FileData.FileType.CapeFile;
+            }
+			return false;
+        }
 
-			if (NodeX.Tag is PCKFile.FileData file)
-			{
-				switch (file.Filetype)
-				{
-					case PCKFile.FileData.FileType.SkinFile:
-					case PCKFile.FileData.FileType.CapeFile:
-						return 0; // ignore these files in order to preserve skin files
-				}
-			}
+        public int Compare(TreeNode first, TreeNode second)
+        {
+			// ignore these files in order to preserve skin(and cape) files
+            if (CheckForSkinAndCapeFiles(first))
+            {
+				return 0;
+            }
+            if (CheckForSkinAndCapeFiles(second))
+            {
+				return 0;
+            }
 
-			int result = NodeX.Text.CompareTo(NodeY.Text);
-			if (result != 0) return result;
+            int result = first.Text.CompareTo(second.Text);
+            if (result != 0) return result;
+            return first.ImageIndex.CompareTo(second.ImageIndex);
+        }
 
-			return NodeX.ImageIndex.CompareTo(NodeY.ImageIndex);
+        int System.Collections.IComparer.Compare(object x, object y)
+		{
+			return x is TreeNode NodeX && y is TreeNode NodeY ? Compare(NodeX, NodeY) : 0;
 		}
 	}
 }
