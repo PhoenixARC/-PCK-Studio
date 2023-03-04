@@ -101,10 +101,9 @@ namespace PckStudio
 				MessageBox.Show(string.Format("Failed to load {0}", Path.GetFileName(filepath)), "Error");
 				return;
 			}
-            if (addPasswordToolStripMenuItem.Enabled = checkForPassword())
-            {
-                LoadEditorTab();
-            }
+
+			CheckForPasswordAndRemove();
+            LoadEditorTab();
         }
 
 		private void Form1_Load(object sender, EventArgs e)
@@ -186,14 +185,12 @@ namespace PckStudio
 			return pck;
 		}
 
-		private bool checkForPassword()
+		private void CheckForPasswordAndRemove()
 		{
 			if (currentPCK.TryGetFile("0", PCKFile.FileData.FileType.InfoFile, out PCKFile.FileData file))
 			{
-				if (file.Properties.Contains("LOCK"))
-					return new LockPrompt(file.Properties.GetPropertyValue("LOCK")).ShowDialog() == DialogResult.OK;
+				file.Properties.RemoveAll(t => t.property.Equals("LOCK"));
 			}
-			return true;
 		}
 
 		private void LoadEditorTab()
@@ -231,7 +228,6 @@ namespace PckStudio
 			saveToolStripMenuItem.Enabled = false;
 			saveToolStripMenuItem1.Enabled = false;
 			metaToolStripMenuItem.Enabled = false;
-			addPasswordToolStripMenuItem.Enabled = false;
 			advancedMetaAddingToolStripMenuItem.Enabled = false;
 			closeToolStripMenuItem.Visible = false;
 			convertToBedrockToolStripMenuItem.Enabled = false;
@@ -1382,10 +1378,6 @@ namespace PckStudio
 							Debug.WriteLine(ex.Message);
 						}
 					}
-					if (pckfile.HasFile("0", PCKFile.FileData.FileType.InfoFile) &&
-						pckfile.GetFile("0", PCKFile.FileData.FileType.InfoFile).Properties.HasProperty("LOCK") &&
-						new LockPrompt(pckfile.GetFile("0", PCKFile.FileData.FileType.InfoFile).Properties.GetProperty("LOCK").Item2).ShowDialog() != DialogResult.OK)
-						return; // cancel extraction if password not provided
 					foreach (PCKFile.FileData file in pckfile.Files)
 					{
 						string filepath = $"{sfd.SelectedPath}/{file.Filename}";
@@ -1644,22 +1636,6 @@ namespace PckStudio
 						nodeCollection = node.Nodes;
                 }
 				nodeCollection.Add(folerNode);
-			}
-		}
-
-		[Obsolete("Community voted to let this feature be removed")]
-		private void addPasswordToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			if (!currentPCK.HasFile("0", PCKFile.FileData.FileType.InfoFile)) throw new FileNotFoundException("0 file not found");
-			PCKFile.FileData file = currentPCK.GetFile("0", PCKFile.FileData.FileType.InfoFile);
-			if (checkForPassword())
-			{
-				AddPCKPassword add = new AddPCKPassword();
-				if (add.ShowDialog() == DialogResult.OK)
-					file.Properties.SetProperty("LOCK", add.Password);
-				add.Dispose();
-				ReloadMetaTreeView();
-				wasModified = true;
 			}
 		}
 
