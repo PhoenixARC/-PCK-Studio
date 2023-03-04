@@ -3,11 +3,11 @@ using System.Drawing.Drawing2D;
 using System.Drawing;
 using System.Diagnostics;
 
-namespace PckStudio.Classes.Utils
+namespace PckStudio.Classes.Extentions
 {
-	internal class ImageUtils
+	internal static class ImageExtentions
 	{
-        public static IEnumerable<Image> CreateImageList(Image source, int size)
+        public static IEnumerable<Image> CreateImageList(this Image source, int size)
         {
             int img_row_count = source.Width / size;
             int img_column_count = source.Height / size;

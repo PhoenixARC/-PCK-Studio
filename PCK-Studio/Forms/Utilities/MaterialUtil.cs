@@ -1,16 +1,12 @@
 ﻿using Newtonsoft.Json.Linq;
-using System.Collections.Generic;
-using System.Drawing.Drawing2D;
 using System.Drawing;
 using System.Linq;
+using System.IO;
 
 using PckStudio.Properties;
 using PckStudio.Classes.FileTypes;
 using PckStudio.Classes.IO.Materials;
-using PckStudio.Classes.Utils;
-using System.Diagnostics;
-using System.Drawing.Imaging;
-using System.IO;
+using PckStudio.Classes.Extentions;
 
 namespace PckStudio.Forms.Utilities
 {
@@ -18,14 +14,8 @@ namespace PckStudio.Forms.Utilities
     {
         public static readonly JObject entityData = JObject.Parse(Resources.entityMaterialData);
         private static Image[] _entityImages;
-        public static Image[] entityImages
-        {
-            get { 
-                if (_entityImages == null)
-                    _entityImages = ImageUtils.CreateImageList(Resources.entities_sheet, 32).ToArray();
-                return _entityImages;
-            }
-        }
+        public static Image[] entityImages => _entityImages ??= Resources.entities_sheet.CreateImageList(32).ToArray();
+
         public static PCKFile.FileData CreateNewMaterialsFile()
         {
             PCKFile.FileData file = new PCKFile.FileData($"entityMaterials.bin", PCKFile.FileData.FileType.MaterialFile);

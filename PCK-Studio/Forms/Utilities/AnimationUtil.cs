@@ -1,14 +1,12 @@
 ﻿using Newtonsoft.Json.Linq;
-using System.Collections.Generic;
-using System.Drawing.Drawing2D;
 using System.Drawing;
 using System.Linq;
+using System.IO;
 
 using PckStudio.Properties;
 using PckStudio.Classes.FileTypes;
 using System.Drawing.Imaging;
-using PckStudio.Classes.Utils;
-using System.IO;
+using PckStudio.Classes.Extentions;
 
 namespace PckStudio.Forms.Utilities
 {
@@ -18,14 +16,9 @@ namespace PckStudio.Forms.Utilities
 
         public static readonly JObject tileData = JObject.Parse(Resources.tileData);
         private static Image[] _tileImages;
-        public static Image[] tileImages
-        {
-            get { 
-                if (_tileImages == null)
-                    _tileImages = ImageUtils.CreateImageList(Resources.terrain_sheet, 16).Concat(ImageUtils.CreateImageList(Resources.items_sheet, 16)).ToArray();
-                return _tileImages;
-            }
-        }
+
+        public static Image[] tileImages => _tileImages ??= Resources.terrain_sheet.CreateImageList(16).Concat(Resources.items_sheet.CreateImageList(16)).ToArray();
+
         public static PCKFile.FileData CreateNewAnimationFile(Image source, string tileName, bool isItem)
         {
             PCKFile.FileData file = new PCKFile.FileData($"res/textures/{GetAnimationSection(isItem)}/{tileName}.png", PCKFile.FileData.FileType.TextureFile);
