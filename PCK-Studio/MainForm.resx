@@ -606,6 +606,9 @@
   <data name="metaToolStripMenuItem.Text" xml:space="preserve">
     <value>Meta</value>
   </data>
+  <data name="convertPCTextrurePackToolStripMenuItem.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
   <data name="convertPCTextrurePackToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>217, 22</value>
   </data>

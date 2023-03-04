@@ -50,9 +50,6 @@ namespace PckStudio
         [STAThread]
         static void Main(string[] args)
         {
-#if DEBUG
-            Debug.Listeners.Add(new TextWriterTraceListener(Console.Out));
-#endif
             System.Globalization.CultureInfo.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
 
             var mainForm = new MainForm();

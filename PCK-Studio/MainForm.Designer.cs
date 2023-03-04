@@ -499,8 +499,8 @@
             // 
             // convertPCTextrurePackToolStripMenuItem
             // 
-            this.convertPCTextrurePackToolStripMenuItem.Name = "convertPCTextrurePackToolStripMenuItem";
             resources.ApplyResources(this.convertPCTextrurePackToolStripMenuItem, "convertPCTextrurePackToolStripMenuItem");
+            this.convertPCTextrurePackToolStripMenuItem.Name = "convertPCTextrurePackToolStripMenuItem";
             this.convertPCTextrurePackToolStripMenuItem.Click += new System.EventHandler(this.convertPCTextrurePackToolStripMenuItem_Click);
             // 
             // closeToolStripMenuItem
