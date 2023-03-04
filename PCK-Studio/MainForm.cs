@@ -2213,6 +2213,19 @@ namespace PckStudio
 			currentPCK.Files.Add(NewBehaviourFile);
 			BuildMainTreeView();
 		}
+
+		private void entityMaterialsbinToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			PCKFile.FileData NewMaterialsFile;
+			if (currentPCK.TryGetFile("entityMaterials.bin", PCKFile.FileData.FileType.MaterialFile, out NewMaterialsFile))
+			{
+				MessageBox.Show("A behaviours file already exists in this PCK and a new one cannot be created.", "Operation aborted");
+				return;
+			}
+			NewMaterialsFile = MaterialUtil.CreateNewMaterialsFile();
+			currentPCK.Files.Add(NewMaterialsFile);
+			BuildMainTreeView();
+		}
 	}
 
 	public class PckNodeSorter : System.Collections.IComparer, IComparer<TreeNode>
