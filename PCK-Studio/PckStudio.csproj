@@ -285,6 +285,12 @@
     <Compile Include="Forms\Additional-Popups\TextPrompt.Designer.cs">
       <DependentUpon>TextPrompt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Editor\MaterialsEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Editor\MaterialsEditor.Designer.cs">
+      <DependentUpon>MaterialsEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Editor\BehaviourEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -512,6 +518,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\TextPrompt.resx">
       <DependentUpon>TextPrompt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Editor\MaterialsEditor.resx">
+      <DependentUpon>MaterialsEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Editor\BehaviourEditor.resx">
       <DependentUpon>BehaviourEditor.cs</DependentUpon>
