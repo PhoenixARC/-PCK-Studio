@@ -22,7 +22,7 @@ namespace PckStudio.Forms.Editor
 		{
 			InitializeComponent();
 			_file = file;
-            using (var ms = new MemoryStream(file.data))
+            using (var ms = new MemoryStream(file.Data))
             {
                 currentLoc = LOCFileReader.Read(ms);
             }

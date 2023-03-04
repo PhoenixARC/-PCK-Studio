@@ -283,7 +283,7 @@ namespace PckStudio.Forms.Additional_Features
             }
             if (currentPCK is null) return string.Empty;
             return currentPCK.TryGetFile("0", PCKFile.FileData.FileType.InfoFile, out var file)
-                ? file.properties.GetProperty("PACKID").Item2
+                ? file.Properties.GetProperty("PACKID").Item2
                 : string.Empty;
         }
 

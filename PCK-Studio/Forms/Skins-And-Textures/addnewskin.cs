@@ -20,7 +20,7 @@ namespace PckStudio
         LOCFile currentLoc;
         PCKFile.FileData skin = new PCKFile.FileData("dlcskinXYXYXYXY", PCKFile.FileData.FileType.SkinFile);
         PCKFile.FileData cape = new PCKFile.FileData("dlccapeXYXYXYXY", PCKFile.FileData.FileType.CapeFile);
-        SkinANIM anim = new SkinANIM(eANIM_EFFECTS.NONE);
+        SkinANIM anim = new SkinANIM();
 
         eSkinType skinType;
         PCKProperties generatedModel = new PCKProperties();
@@ -47,7 +47,7 @@ namespace PckStudio
             switch (img.Height) // 64x64
             {
                 case 64:
-                    anim.SetANIMFlag(eANIM_EFFECTS.RESOLUTION_64x64, true);
+                    anim.SetFlag(ANIM_EFFECTS.RESOLUTION_64x64, true);
                     MessageBox.Show("64x64 Skin Detected");
                     skinPictureBoxTexture.Width = skinPictureBoxTexture.Height;
                     if (skinType != eSkinType._64x64 && skinType != eSkinType._64x64HD)
@@ -58,8 +58,8 @@ namespace PckStudio
                     skinType = eSkinType._64x64;
                     break;
                 case 32:
-                    anim.SetANIMFlag(eANIM_EFFECTS.RESOLUTION_64x64, false);
-                    anim.SetANIMFlag(eANIM_EFFECTS.SLIM_MODEL, false);
+                    anim.SetFlag(ANIM_EFFECTS.RESOLUTION_64x64, false);
+                    anim.SetFlag(ANIM_EFFECTS.SLIM_MODEL, false);
                     MessageBox.Show("64x32 Skin Detected");
                     skinPictureBoxTexture.Width = skinPictureBoxTexture.Height * 2;
                     if (skinType == eSkinType._64x64)
@@ -76,7 +76,7 @@ namespace PckStudio
                 default:
                     if (img.Width == img.Height) // 64x64 HD
                     {
-                        anim.SetANIMFlag(eANIM_EFFECTS.RESOLUTION_64x64, true);
+                        anim.SetFlag(ANIM_EFFECTS.RESOLUTION_64x64, true);
                         MessageBox.Show("64x64 HD Skin Detected");
                         skinPictureBoxTexture.Width = skinPictureBoxTexture.Height;
                         if (skinType != eSkinType._64x64 && skinType != eSkinType._64x64HD)
@@ -88,8 +88,8 @@ namespace PckStudio
                     }
                     else if (img.Width == img.Height / 2) // 64x32 HD
                     {
-                        anim.SetANIMFlag(eANIM_EFFECTS.RESOLUTION_64x64, false);
-                        anim.SetANIMFlag(eANIM_EFFECTS.SLIM_MODEL, false);
+                        anim.SetFlag(ANIM_EFFECTS.RESOLUTION_64x64, false);
+                        anim.SetFlag(ANIM_EFFECTS.SLIM_MODEL, false);
                         MessageBox.Show("64x32 HD Skin Detected");
                         skinPictureBoxTexture.Width = skinPictureBoxTexture.Height * 2;
                         if (skinType == eSkinType._64x64)
@@ -120,40 +120,40 @@ namespace PckStudio
         private void DrawModel()
 		{
             Bitmap bmp = new Bitmap(displayBox.Width, displayBox.Height);
-            bool isSlim = anim.GetANIMFlag(eANIM_EFFECTS.SLIM_MODEL);
+            bool isSlim = anim.GetFlag(ANIM_EFFECTS.SLIM_MODEL);
             using (Graphics g = Graphics.FromImage(bmp))
             {
-                if(!anim.GetANIMFlag(eANIM_EFFECTS.HEAD_DISABLED))
+                if(!anim.GetFlag(ANIM_EFFECTS.HEAD_DISABLED))
 				{
                     //Head
                     g.DrawRectangle(Pens.Black, 70, 15, 40, 40);
                     g.FillRectangle(Brushes.Gray, 71, 16, 39, 39);
                 }
-                if (!anim.GetANIMFlag(eANIM_EFFECTS.BODY_DISABLED))
+                if (!anim.GetFlag(ANIM_EFFECTS.BODY_DISABLED))
                 {
                     //Body
                     g.DrawRectangle(Pens.Black, 70, 55, 40, 60);
                     g.FillRectangle(Brushes.Gray, 71, 56, 39, 59);
                 }
-                if (!anim.GetANIMFlag(eANIM_EFFECTS.RIGHT_ARM_DISABLED))
+                if (!anim.GetFlag(ANIM_EFFECTS.RIGHT_ARM_DISABLED))
                 {
                     //Arm0
                     g.DrawRectangle(Pens.Black  , isSlim ? 55 : 50, 55, isSlim ? 15 : 20, 60);
                     g.FillRectangle(Brushes.Gray, isSlim ? 56 : 51, 56, isSlim ? 14 : 19, 59);
                 }
-                if (!anim.GetANIMFlag(eANIM_EFFECTS.LEFT_ARM_DISABLED))
+                if (!anim.GetFlag(ANIM_EFFECTS.LEFT_ARM_DISABLED))
                 {
                     //Arm1
                     g.DrawRectangle(Pens.Black, 110, 55, isSlim ? 15 : 20, 60);
                     g.FillRectangle(Brushes.Gray, 111, 56, isSlim ? 14 : 19, 59);
                 }
-                if (!anim.GetANIMFlag(eANIM_EFFECTS.RIGHT_LEG_DISABLED))
+                if (!anim.GetFlag(ANIM_EFFECTS.RIGHT_LEG_DISABLED))
                 {
                     //Leg0
                     g.DrawRectangle(Pens.Black, 70, 115, 20, 60);
                     g.FillRectangle(Brushes.Gray, 71, 116, 19, 59);
                 }
-                if (!anim.GetANIMFlag(eANIM_EFFECTS.LEFT_LEG_DISABLED))
+                if (!anim.GetFlag(ANIM_EFFECTS.LEFT_LEG_DISABLED))
                 {
                     //Leg1
                     g.DrawRectangle(Pens.Black, 90, 115, 20, 60);
@@ -222,27 +222,27 @@ namespace PckStudio
                 return;
             }
             string skinId = _skinId.ToString("d08");
-            skin.filepath = $"dlcskin{skinId}.png";
+            skin.Filename = $"dlcskin{skinId}.png";
             string skinDisplayNameLocKey = $"IDS_dlcskin{skinId}_DISPLAYNAME";
             currentLoc.AddLocKey(skinDisplayNameLocKey, textSkinName.Text);
-            skin.properties.Add(("DISPLAYNAME", textSkinName.Text));
-            skin.properties.Add(("DISPLAYNAMEID", skinDisplayNameLocKey));
+            skin.Properties.Add(("DISPLAYNAME", textSkinName.Text));
+            skin.Properties.Add(("DISPLAYNAMEID", skinDisplayNameLocKey));
             if (!string.IsNullOrEmpty(textThemeName.Text))
             {
-                skin.properties.Add(("THEMENAME", textThemeName.Text));
-                skin.properties.Add(("THEMENAMEID", $"IDS_dlcskin{skinId}_THEMENAME"));
+                skin.Properties.Add(("THEMENAME", textThemeName.Text));
+                skin.Properties.Add(("THEMENAMEID", $"IDS_dlcskin{skinId}_THEMENAME"));
                 currentLoc.AddLocKey($"IDS_dlcskin{skinId}_THEMENAME", textThemeName.Text);
             }
-            skin.properties.Add(("ANIM", anim.ToString()));
-            skin.properties.Add(("GAME_FLAGS", "0x18"));
-            skin.properties.Add(("FREE", "1"));
+            skin.Properties.Add(("ANIM", anim.ToString()));
+            skin.Properties.Add(("GAME_FLAGS", "0x18"));
+            skin.Properties.Add(("FREE", "1"));
 
             if (HasCape)
             {
                 try
                 {
-                    cape.filepath = $"dlccape{skinId}.png";
-                    skin.properties.Add(("CAPEPATH", cape.filepath));
+                    cape.Filename = $"dlccape{skinId}.png";
+                    skin.Properties.Add(("CAPEPATH", cape.Filename));
                 }
                 catch (Exception)
                 {

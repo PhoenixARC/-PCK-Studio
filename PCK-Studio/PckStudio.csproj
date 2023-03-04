@@ -15,10 +15,44 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
+  <Target Name="GetGitHash" BeforeTargets="WriteGitHash" Condition="'$(BuildHash)' == ''">
+    <PropertyGroup>
+      <!-- temp file for the git version (lives in "obj" folder)-->
+      <VerFile>$(IntermediateOutputPath)gitver</VerFile>
+    </PropertyGroup>
+    <!-- write the hash to the temp file.-->
+    <Exec Command="git -C $(ProjectDir) describe --always &gt; $(VerFile)" />
+    <!-- read the version into the GitVersion itemGroup-->
+    <ReadLinesFromFile File="$(VerFile)">
+      <Output TaskParameter="Lines" ItemName="GitVersion" />
+    </ReadLinesFromFile>
+    <!-- Set the BuildHash property to contain the GitVersion, if it wasn't already set.-->
+    <PropertyGroup>
+      <BuildHash>@(GitVersion)</BuildHash>
+    </PropertyGroup>
+  </Target>
+  <Target Name="WriteGitHash" BeforeTargets="CoreCompile">
+    <!-- names the obj/.../GitAssemblyInfo.cs file -->
+    <PropertyGroup>
+      <GitAssemblyInfoFile>$(IntermediateOutputPath)GitAssemblyInfo.cs</GitAssemblyInfoFile>
+    </PropertyGroup>
+    <!-- includes the GitAssemblyInfo for compilation into your project -->
+    <ItemGroup>
+      <Compile Include="$(GitAssemblyInfoFile)" />
+    </ItemGroup>
+    <!-- defines the AssemblyMetadata attribute that will be written -->
+    <ItemGroup>
+      <AssemblyAttributes Include="AssemblyMetadata">
+        <_Parameter1>GitHash</_Parameter1>
+        <_Parameter2>$(BuildHash)</_Parameter2>
+      </AssemblyAttributes>
+    </ItemGroup>
+    <!-- writes the attribute to the GitAssemblyInfo file -->
+    <WriteCodeFragment Language="C#" OutputFile="$(GitAssemblyInfoFile)" AssemblyAttributes="@(AssemblyAttributes)" />
+  </Target>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -137,19 +171,23 @@
     <Compile Include="Classes\API\PCKCenter\PCKCollectionsLocal.cs" />
     <Compile Include="Classes\API\PCKCenter\SaveLocalJSON.cs" />
     <Compile Include="Classes\FileTypes\ARCFile.cs" />
+    <Compile Include="Classes\FileTypes\MaterialsFile.cs" />
     <Compile Include="Classes\FileTypes\BehaviourFile.cs" />
     <Compile Include="Classes\FileTypes\CSMBFile.cs" />
     <Compile Include="Classes\FileTypes\ModelFile.cs" />
     <Compile Include="Classes\FileTypes\PCKAudioFile.cs" />
-    <Compile Include="Classes\FileTypes\Bink.cs" />
+    <Compile Include="Classes\FileTypes\Binka.cs" />
     <Compile Include="Classes\FileTypes\COLFile.cs" />
     <Compile Include="Classes\FileTypes\CSM.cs" />
     <Compile Include="Classes\FileTypes\GRFFile.cs" />
     <Compile Include="Classes\IO\ARC\ARCFileWriter.cs" />
     <Compile Include="Classes\IO\ARC\ARCFileReader.cs" />
     <Compile Include="Classes\IO\Behaviour\BehavioursReader.cs" />
+    <Compile Include="Classes\IO\Behaviour\BehavioursWriter.cs" />
     <Compile Include="Classes\IO\CSMB\CSMBFileReader.cs" />
     <Compile Include="Classes\IO\CSMB\CSMBFileWriter.cs" />
+    <Compile Include="Classes\IO\Materials\MaterialsReader.cs" />
+    <Compile Include="Classes\IO\Materials\MaterialsWriter.cs" />
     <Compile Include="Classes\IO\Model\ModelFileReader.cs" />
     <Compile Include="Classes\IO\Model\ModelFileWriter.cs" />
     <Compile Include="Classes\IO\PCK\PCKAudioFileReader.cs" />
@@ -163,6 +201,7 @@
     <Compile Include="Classes\Models\DefaultModels\Steve64x64Model.cs" />
     <Compile Include="Classes\Utils\3DS\3DSUtil.cs" />
     <Compile Include="Classes\Utils\ARC\ARCUtil.cs" />
+    <Compile Include="Classes\Extentions\ImageExtentions.cs" />
     <Compile Include="Classes\Utils\SkinANIM.cs" />
     <Compile Include="Classes\FileTypes\PCKProperties.cs" />
     <Compile Include="Classes\FileTypes\PCKFile.cs" />
@@ -223,6 +262,12 @@
     <Compile Include="Forms\Features\WiiUInstallPanel.Designer.cs">
       <DependentUpon>WiiUInstallPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Additional-Popups\EntityForms\AddEntry.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\EntityForms\AddEntry.Designer.cs">
+      <DependentUpon>AddEntry.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Additional-Popups\Loc\AddLanguage.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -241,6 +286,12 @@
     <Compile Include="Forms\Additional-Popups\MipMapPrompt.Designer.cs">
       <DependentUpon>MipMapPrompt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Additional-Popups\AddFilePrompt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\AddFilePrompt.Designer.cs">
+      <DependentUpon>AddFilePrompt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Additional-Popups\RenamePrompt.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -252,6 +303,18 @@
     </Compile>
     <Compile Include="Forms\Additional-Popups\TextPrompt.Designer.cs">
       <DependentUpon>TextPrompt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Editor\MaterialsEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Editor\MaterialsEditor.Designer.cs">
+      <DependentUpon>MaterialsEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Editor\BehaviourEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Editor\BehaviourEditor.Designer.cs">
+      <DependentUpon>BehaviourEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Editor\COLEditor.cs">
       <SubType>Form</SubType>
@@ -301,12 +364,6 @@
     <Compile Include="Forms\Skins-And-Textures\addNewSkin.Designer.cs">
       <DependentUpon>addNewSkin.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Additional-Popups\AddPCKPassword.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Additional-Popups\AddPCKPassword.Designer.cs">
-      <DependentUpon>AddPCKPassword.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\Skins-And-Textures\AdvancedOptions.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -331,6 +388,8 @@
     <Compile Include="Forms\Additional-Popups\Audio\pleaseWait.Designer.cs">
       <DependentUpon>pleaseWait.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Utilities\MaterialUtil.cs" />
+    <Compile Include="Forms\Utilities\BehaviourUtil.cs" />
     <Compile Include="Forms\Utilities\AnimationUtil.cs" />
     <Compile Include="Forms\Features\ConsoleInstaller.cs">
       <SubType>Form</SubType>
@@ -411,12 +470,6 @@
     <Compile Include="Forms\Utilities\pckCenterOpen.Designer.cs">
       <DependentUpon>pckCenterOpen.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Additional-Popups\LockPrompt.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Additional-Popups\LockPrompt.Designer.cs">
-      <DependentUpon>LockPrompt.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\Utilities\Pref.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -440,11 +493,11 @@
       <DependentUpon>MetaList.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
-    <Compile Include="Forms\Additional-Popups\programInfo.cs">
+    <Compile Include="Forms\Additional-Popups\CreditsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Additional-Popups\programInfo.Designer.cs">
-      <DependentUpon>programInfo.cs</DependentUpon>
+    <Compile Include="Forms\Additional-Popups\CreditsForm.Designer.cs">
+      <DependentUpon>CreditsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Classes\Utils\3DS\TextureCodec.cs" />
@@ -457,6 +510,9 @@
     <EmbeddedResource Include="Forms\Features\WiiUInstallPanel.resx">
       <DependentUpon>WiiUInstallPanel.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Additional-Popups\EntityForms\AddEntry.resx">
+      <DependentUpon>AddEntry.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\Loc\AddLanguage.resx">
       <DependentUpon>AddLanguage.cs</DependentUpon>
     </EmbeddedResource>
@@ -468,12 +524,22 @@
       <DependentUpon>MipMapPrompt.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Additional-Popups\AddFilePrompt.resx">
+      <DependentUpon>AddFilePrompt.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\RenamePrompt.resx">
       <DependentUpon>RenamePrompt.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\TextPrompt.resx">
       <DependentUpon>TextPrompt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Editor\MaterialsEditor.resx">
+      <DependentUpon>MaterialsEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Editor\BehaviourEditor.resx">
+      <DependentUpon>BehaviourEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Editor\COLEditor.ja.resx">
       <DependentUpon>COLEditor.cs</DependentUpon>
@@ -512,9 +578,6 @@
     <EmbeddedResource Include="Forms\Skins-And-Textures\addNewSkin.resx">
       <DependentUpon>addNewSkin.cs</DependentUpon>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Additional-Popups\AddPCKPassword.resx">
-      <DependentUpon>AddPCKPassword.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Skins-And-Textures\AdvancedOptions.ja.resx">
       <DependentUpon>AdvancedOptions.cs</DependentUpon>
@@ -592,12 +655,6 @@
     <EmbeddedResource Include="Forms\Utilities\pckCenterOpen.resx">
       <DependentUpon>pckCenterOpen.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Additional-Popups\LockPrompt.ja.resx">
-      <DependentUpon>LockPrompt.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Additional-Popups\LockPrompt.resx">
-      <DependentUpon>LockPrompt.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Utilities\Pref.ja.resx">
       <DependentUpon>Pref.cs</DependentUpon>
     </EmbeddedResource>
@@ -610,8 +667,8 @@
     <EmbeddedResource Include="Forms\Additional-Popups\MetaList.resx">
       <DependentUpon>MetaList.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Additional-Popups\programInfo.resx">
-      <DependentUpon>programInfo.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Additional-Popups\CreditsForm.resx">
+      <DependentUpon>CreditsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -639,6 +696,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\entityBehaviourData.json" />
+    <None Include="Resources\entityMaterialData.json" />
     <None Include="Resources\TexturePackIcon.png" />
     <None Include="Resources\apps.zip" />
     <None Include="Resources\binka\binkawin.asi" />
@@ -698,6 +757,9 @@
     <None Include="Resources\AddTexture.png" />
     <None Include="Resources\iconImageList\BEHAVIOURS ICON.png" />
     <None Include="Resources\Comparison.png" />
+    <None Include="Resources\iconImageList\ENTITY MATERIALS ICON.png" />
+    <None Include="Resources\iconImageList\blank.png" />
+    <None Include="Resources\entities.png" />
     <Content Include="Resources\PCK-Studio_Logo.ico" />
     <None Include="Resources\bg1.png" />
     <Content Include="Resources\NoImageFound.png" />
@@ -732,18 +794,6 @@
     <PackageReference Include="System.ValueTuple">
       <Version>4.5.0</Version>
     </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
-      <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.6.1 %28x86 and x64%29</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

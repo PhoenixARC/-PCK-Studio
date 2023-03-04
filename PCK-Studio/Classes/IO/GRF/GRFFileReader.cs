@@ -50,7 +50,7 @@ namespace PckStudio.Classes.IO.GRF
             {
                 compression_type = (GRFFile.eCompressionType)byte4;
             }
-            _file = new GRFFile(crc, byte4 > 0);
+            _file = new GRFFile(crc, byte4 > 0, compression_type);
 
             if (compression_type == GRFFile.eCompressionType.None && byte4 == 0)
                 return stream;

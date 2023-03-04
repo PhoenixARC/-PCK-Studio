@@ -4,10 +4,10 @@ using MetroFramework.Forms;
 
 namespace PckStudio
 {
-    public partial class programInfo : MetroForm
+    public partial class CreditsForm : MetroForm
     {
         int count = 0;
-        public programInfo()
+        public CreditsForm()
         {
             InitializeComponent();
         }

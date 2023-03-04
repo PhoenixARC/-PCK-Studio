@@ -10,6 +10,8 @@ namespace PckStudio.Classes.FileTypes
         public int type { get; }
         public List<FileData> Files { get; } = new List<FileData>();
 
+        public const string XMLVersionString = "XMLVERSION";
+
         public class FileData
         {
             public enum FileType : int
@@ -64,37 +66,39 @@ namespace PckStudio.Classes.FileTypes
                 MaterialFile     = 14,
             }
 
-            public string filepath { get; set; }
-            public FileType filetype { get; set; }
-            public byte[] data => _data;
-            public int size => _size;
-            public PCKProperties properties { get; } = new PCKProperties();
-
-            private byte[] _data = new byte[0];
-            private int _size = 0;
-
-            public FileData(string path, FileType type)
-            {
-                filetype = type;
-                filepath = path;
+            public string Filename {
+                get => filename;
+                set => filename = value.Replace('\\', '/');
             }
 
-            public FileData(string path, FileType type, int dataSize) : this(path, type)
+            public FileType Filetype { get; set; }
+            public byte[] Data => _data;
+            public int Size => _data is null ? 0 : _data.Length;
+            public PCKProperties Properties { get; } = new PCKProperties();
+
+            private string filename;
+            private byte[] _data = new byte[0];
+
+            public FileData(string name, FileType type)
             {
-                _size = dataSize;
+                Filetype = type;
+                Filename = name;
+            }
+
+            public FileData(string name, FileType type, int dataSize) : this(name, type)
+            {
                 _data = new byte[dataSize];
             }
 
-            public FileData(FileData file) : this(file.filepath, file.filetype)
+            public FileData(FileData file) : this(file.Filename, file.Filetype)
             {
-                properties = file.properties;
-                SetData(file.data);
+                Properties = file.Properties;
+                SetData(file.Data);
             }
 
             public void SetData(byte[] data)
             {
                 _data = data;
-                _size = data.Length;
             }
 
         }
@@ -104,16 +108,29 @@ namespace PckStudio.Classes.FileTypes
             this.type = type;
         }
 
-        public List<string> GatherPropertiesList()
+        public List<string> GetPropertyList()
         {
             var LUT = new List<string>();
-            Files.ForEach(file => file.properties.ForEach(pair =>
+            Files.ForEach(file => file.Properties.ForEach(pair =>
                 {
                     if (!LUT.Contains(pair.property))
                         LUT.Add(pair.property);
                 })
             );
             return LUT;
+        }
+
+        /// <summary>
+        /// Creates and adds new <see cref="FileData"/> object.
+        /// </summary>
+        /// <param name="name">Filename</param>
+        /// <param name="type">Filetype</param>
+        /// <returns>Added <see cref="FileData"/> object</returns>
+        public FileData CreateNew(string name, FileData.FileType type)
+        {
+            var file = new FileData(name, type);
+            Files.Add(file);
+            return file;
         }
 
         /// <summary>
@@ -135,7 +152,7 @@ namespace PckStudio.Classes.FileTypes
         /// <returns>FileData if found, otherwise null</returns>
         public FileData GetFile(string filepath, FileData.FileType type)
         {
-            return Files.FirstOrDefault(file => file.filepath.Equals(filepath) && file.filetype.Equals(type));
+            return Files.FirstOrDefault(file => file.Filename.Equals(filepath) && file.Filetype.Equals(type));
         }
 
         /// <summary>

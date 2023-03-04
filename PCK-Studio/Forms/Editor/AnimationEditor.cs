@@ -14,6 +14,9 @@ using System.Windows.Forms;
 using PckStudio.Classes.FileTypes;
 using PckStudio.Forms.Additional_Popups.Animation;
 using PckStudio.Forms.Utilities;
+using PckStudio.Classes.Extentions;
+using System.Runtime.CompilerServices;
+using System.Diagnostics;
 
 namespace PckStudio.Forms.Editor
 {
@@ -43,7 +46,7 @@ namespace PckStudio.Forms.Editor
 			
 			public Animation(Image image)
 			{
-                frameTextures = new List<Image>(SplitImageToFrameTextures(image));
+                frameTextures = new List<Image>(image.CreateImageList(ImageExtentions.ImageLayoutDirection.Horizontal));
             }
 
 			public Animation(Image image, string ANIM) : this(image)
@@ -115,24 +118,6 @@ namespace PckStudio.Forms.Editor
 			{
 				frames.RemoveAt(frameIndex);
 				return true;
-            }
-
-            private static IEnumerable<Image> SplitImageToFrameTextures(Image source)
-            {
-                for (int i = 0; i < source.Height / source.Width; i++)
-                {
-                    Rectangle tileArea = new Rectangle(0, i * source.Width, source.Width, source.Width);
-                    Bitmap tileImage = new Bitmap(source.Width, source.Width);
-                    using (Graphics gfx = Graphics.FromImage(tileImage))
-                    {
-                        gfx.SmoothingMode = SmoothingMode.None;
-                        gfx.InterpolationMode = InterpolationMode.NearestNeighbor;
-                        gfx.PixelOffsetMode = PixelOffsetMode.HighQuality;
-                        gfx.DrawImage(source, new Rectangle(0, 0, source.Width, source.Width), tileArea, GraphicsUnit.Pixel);
-                    }
-                    yield return tileImage;
-                }
-                yield break;
             }
 
 			public Frame GetFrame(int index) => frames[index];
@@ -224,7 +209,11 @@ namespace PckStudio.Forms.Editor
 				Task.Run(DoAnimate, cts.Token);
 			}
 
-            public void Stop() => cts.Cancel();
+			public void Stop([CallerMemberName] string callerName = default!)
+			{
+				Debug.WriteLine($"{nameof(AnimationPlayer.Stop)} called from {callerName}!");
+				cts.Cancel();
+			}
 
             public Animation.Frame GetCurrentFrame() => _animation[currentAnimationFrameIndex];
 
@@ -251,14 +240,15 @@ namespace PckStudio.Forms.Editor
 		public AnimationEditor(PCKFile.FileData file)
 		{
 			InitializeComponent();
-			isItem = file.filepath.Split('/').Contains("items");
-			TileName = Path.GetFileNameWithoutExtension(file.filepath);
+
+            isItem = file.Filename.Split('/').Contains("items");
+			TileName = Path.GetFileNameWithoutExtension(file.Filename);
 			animationFile = file;
 
-			using MemoryStream textureMem = new MemoryStream(animationFile.data);
+			using MemoryStream textureMem = new MemoryStream(animationFile.Data);
 			var texture = new Bitmap(textureMem);
-			currentAnimation = animationFile.properties.HasProperty("ANIM")
-				? new Animation(texture, animationFile.properties.GetProperty("ANIM").Item2)
+			currentAnimation = animationFile.Properties.HasProperty("ANIM")
+				? new Animation(texture, animationFile.Properties.GetPropertyValue("ANIM"))
 				: new Animation(texture);
 			player = new AnimationPlayer(pictureBoxWithInterpolationMode1);
 
@@ -281,7 +271,7 @@ namespace PckStudio.Forms.Editor
 			// $"Frame: {i}, Frame Time: {Animation.MinimumFrameTime}"
 			TextureIcons.Images.Clear();
 			TextureIcons.Images.AddRange(currentAnimation.GetFrameTextures().ToArray());
-			currentAnimation.GetFrames().ForEach(f => frameTreeView.Nodes.Add("", $"for {f.Ticks} frame" + (f.Ticks > 1 ? "s" : "" ), currentAnimation.GetFrameIndex(f.Texture), currentAnimation.GetFrameIndex(f.Texture)));
+			currentAnimation.GetFrames().ForEach(f => frameTreeView.Nodes.Add("", $"for {f.Ticks} frames", currentAnimation.GetFrameIndex(f.Texture), currentAnimation.GetFrameIndex(f.Texture)));
 			player.SelectFrame(currentAnimation, 0);
 		}
 
@@ -335,7 +325,7 @@ namespace PckStudio.Forms.Editor
 		{
 
 			string anim = currentAnimation.BuildAnim();
-			animationFile.properties.SetProperty("ANIM", anim);
+			animationFile.Properties.SetProperty("ANIM", anim);
             using (var stream = new MemoryStream())
 			{
 				currentAnimation.BuildTexture().Save(stream, ImageFormat.Png);
@@ -623,5 +613,13 @@ namespace PckStudio.Forms.Editor
 			// Interpolation flag wasn't being updated when the check box changed, this fixes the issue
 			currentAnimation.Interpolate = InterpolationCheckbox.Checked;
 		}
-	}
+
+        private void AnimationEditor_FormClosing(object sender, FormClosingEventArgs e)
+        {
+			if (player.IsPlaying)
+			{
+				player.Stop();
+			}
+        }
+    }
 }

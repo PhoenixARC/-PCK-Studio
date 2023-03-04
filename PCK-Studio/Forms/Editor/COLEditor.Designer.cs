@@ -403,6 +403,7 @@ namespace PckStudio.Forms.Editor
 			this.waterTreeView.Name = "waterTreeView";
 			this.waterTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView2_AfterSelect);
 			this.waterTreeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView2_KeyDown);
+			this.waterTreeView.LabelEdit = false;
 			// 
 			// ColorContextMenu
 			// 
@@ -438,6 +439,7 @@ namespace PckStudio.Forms.Editor
 			this.underwaterTreeView.Name = "underwaterTreeView";
 			this.underwaterTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView3_AfterSelect);
 			this.underwaterTreeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView3_KeyDown);
+			this.underwaterTreeView.LabelEdit = false;
 			// 
 			// fogTreeView
 			// 
@@ -446,6 +448,7 @@ namespace PckStudio.Forms.Editor
 			this.fogTreeView.Name = "fogTreeView";
 			this.fogTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView4_AfterSelect);
 			this.fogTreeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView4_KeyDown);
+			this.fogTreeView.LabelEdit = false;
 			// 
 			// colorsTab
 			// 
@@ -461,6 +464,7 @@ namespace PckStudio.Forms.Editor
 			this.colorTreeView.Name = "colorTreeView";
 			this.colorTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
 			this.colorTreeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView1_KeyDown);
+			this.colorTreeView.LabelEdit = false;
 			// 
 			// tabControl
 			// 

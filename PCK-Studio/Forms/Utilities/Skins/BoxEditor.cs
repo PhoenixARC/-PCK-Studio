@@ -24,7 +24,7 @@ namespace PckStudio.Forms.Utilities.Skins
 
 				try
 				{
-					Parent = arguments[0];
+					Parent = arguments[0].ToUpper(); // just in case a box has all lower, the editor still parses correctly
 					Pos.X = float.Parse(arguments[1]);
 					Pos.Y = float.Parse(arguments[2]);
 					Pos.Z = float.Parse(arguments[3]);
@@ -33,8 +33,8 @@ namespace PckStudio.Forms.Utilities.Skins
 					Size.Z = float.Parse(arguments[6]);
 					uvX = float.Parse(arguments[7]);
 					uvY = float.Parse(arguments[8]);
-					HideWithArmor = arguments[9] == "1";
-					Mirror = arguments[10] == "1";
+					HideWithArmor = Convert.ToBoolean(Int32.Parse(arguments[9]));
+					Mirror = Convert.ToBoolean(Int32.Parse(arguments[10]));
 					Inflation = float.Parse(arguments[11]);
 				}
 				catch (IndexOutOfRangeException)
@@ -84,7 +84,8 @@ namespace PckStudio.Forms.Utilities.Skins
 				$"{PosXUpDown.Value} {PosYUpDown.Value} {PosZUpDown.Value} " +
 				$"{SizeXUpDown.Value} {SizeYUpDown.Value} {SizeZUpDown.Value} " +
 				$"{uvXUpDown.Value} {uvYUpDown.Value} " +
-				$"{(mirrorCheckBox.Checked ? "1 " : "0 ")} {(mirrorCheckBox.Checked ? "1 " : "0 ")} " +
+				$"{Convert.ToInt32(armorCheckBox.Checked)} " +
+				$"{Convert.ToInt32(mirrorCheckBox.Checked)} " +
 				$"{inflationUpDown.Value}";
 			DialogResult = DialogResult.OK;
 			Close();

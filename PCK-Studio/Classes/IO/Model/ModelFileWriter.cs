@@ -8,23 +8,26 @@ using System.Threading.Tasks;
 
 namespace PckStudio.Classes.IO.Model
 {
-    internal class ModelWriter : StreamDataWriter
+    internal class ModelFileWriter : StreamDataWriter
     {
         private ModelFile _modelFile;
-        public static void Write(Stream stream, ModelFile modelFile)
+        private int _fileVersion;
+        public static void Write(Stream stream, ModelFile modelFile, int fileVersion = 1)
         {
-            new ModelWriter(modelFile, false).WriteToStream(stream);
+            new ModelFileWriter(modelFile, fileVersion).WriteToStream(stream);
         }
 
-        public ModelWriter(ModelFile modelFile, bool littleEndian) : base(littleEndian)
+        public ModelFileWriter(ModelFile modelFile, int fileVersion) : base(false)
         {
             _modelFile = modelFile;
+            if (fileVersion < 0 || fileVersion > 2)
+                throw new InvalidDataException(nameof(fileVersion));
+            _fileVersion = fileVersion;
         }
 
         protected override void WriteToStream(Stream stream)
         {
-            int version = 0;
-            WriteInt(stream, version);
+            WriteInt(stream, _fileVersion);
             WriteInt(stream, _modelFile.Models.Count);
             foreach (var model in _modelFile.Models)
             {
@@ -35,6 +38,12 @@ namespace PckStudio.Classes.IO.Model
                 foreach (var part in model.parts)
                 {
                     WriteString(stream, part.name);
+
+                    if (_fileVersion > 1)
+                    {
+                        WriteString(stream, model.parts[0].name.Equals(part.name) ? string.Empty : model.parts[0].name);
+                    }
+
                     WriteFloat(stream, part.position.x);
                     WriteFloat(stream, part.position.y);
                     WriteFloat(stream, part.position.z);
@@ -43,7 +52,7 @@ namespace PckStudio.Classes.IO.Model
                     WriteFloat(stream, part.rotation.pitch);
                     WriteFloat(stream, part.rotation.roll);
 
-                    if (version > 0)
+                    if (_fileVersion > 0)
                     {
                         WriteFloat(stream, 0.0f);
                         WriteFloat(stream, 0.0f);

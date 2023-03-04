@@ -130,7 +130,7 @@
 </value>
   </data>
   <data name="folderToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>167, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="folderToolStripMenuItem.Text" xml:space="preserve">
     <value>Folder</value>
@@ -152,7 +152,7 @@
 </value>
   </data>
   <data name="skinToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>167, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="skinToolStripMenuItem.Text" xml:space="preserve">
     <value>Skin</value>
@@ -174,36 +174,40 @@
 </value>
   </data>
   <data name="createAnimatedTextureToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>167, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="createAnimatedTextureToolStripMenuItem.Text" xml:space="preserve">
     <value>Animated Texture</value>
   </data>
-  <data name="audiopckToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vAAADrwBlbxySQAAAFlJREFUOE9jIAQ8Fjz4D8JWky+BMVSYeEA1A7SaDoExyQZRzQAol0GhYsd/EIZy
-        CQOKDSDZyehg1AAyDEja9es/CMOiD5aAoNKEAcUGwDTAEgzJCYc0AxgYAMwrpe0sH8vyAAAAAElFTkSu
-        QmCC
-</value>
-  </data>
   <data name="audiopckToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>167, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="audiopckToolStripMenuItem.Text" xml:space="preserve">
     <value>Audio.pck</value>
   </data>
   <data name="colourscolToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>167, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="colourscolToolStripMenuItem.Text" xml:space="preserve">
     <value>Colours.col</value>
   </data>
   <data name="CreateSkinsPCKToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>167, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="CreateSkinsPCKToolStripMenuItem1.Text" xml:space="preserve">
     <value>Skins.pck</value>
+  </data>
+  <data name="behavioursbinToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="behavioursbinToolStripMenuItem.Text" xml:space="preserve">
+    <value>Behaviours.bin</value>
+  </data>
+  <data name="entityMaterialsbinToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="entityMaterialsbinToolStripMenuItem.Text" xml:space="preserve">
+    <value>EntityMaterials.bin</value>
   </data>
   <data name="createToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -214,7 +218,7 @@
 </value>
   </data>
   <data name="createToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="createToolStripMenuItem.Text" xml:space="preserve">
     <value>Create</value>
@@ -265,6 +269,12 @@
   <data name="addTextureToolStripMenuItem.Text" xml:space="preserve">
     <value>Add Texture</value>
   </data>
+  <data name="addFileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>228, 22</value>
+  </data>
+  <data name="addFileToolStripMenuItem.Text" xml:space="preserve">
+    <value>Add File</value>
+  </data>
   <data name="importSkinsToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
@@ -275,7 +285,7 @@
 </value>
   </data>
   <data name="importSkinsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="importSkinsToolStripMenuItem.Text" xml:space="preserve">
     <value>Import</value>
@@ -287,7 +297,7 @@
     <value>Export as 3DS Texture</value>
   </data>
   <data name="exportToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="exportToolStripMenuItem.Text" xml:space="preserve">
     <value>Export</value>
@@ -365,7 +375,7 @@
     <value>Entity Materials File (.BIN)</value>
   </data>
   <data name="setFileTypeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="setFileTypeToolStripMenuItem.Text" xml:space="preserve">
     <value>Set File Type</value>
@@ -389,7 +399,7 @@
     <value>Correct Skin Decimals</value>
   </data>
   <data name="miscFunctionsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="miscFunctionsToolStripMenuItem.Text" xml:space="preserve">
     <value>Misc. Functions</value>
@@ -404,13 +414,13 @@
 </value>
   </data>
   <data name="extractToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="extractToolStripMenuItem.Text" xml:space="preserve">
     <value>Extract</value>
   </data>
   <data name="cloneFileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="cloneFileToolStripMenuItem.Text" xml:space="preserve">
     <value>Clone</value>
@@ -423,7 +433,7 @@
 </value>
   </data>
   <data name="renameFileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="renameFileToolStripMenuItem.Text" xml:space="preserve">
     <value>Rename</value>
@@ -439,25 +449,10 @@
 </value>
   </data>
   <data name="replaceToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="replaceToolStripMenuItem.Text" xml:space="preserve">
     <value>Replace</value>
-  </data>
-  <data name="moveUpToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vAAADrwBlbxySQAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xMkMEa+wAAABxSURBVDhPnY7B
-        DYAwDMQyWvdfKhCkk1pfKCoPPzDnqJGZr4wxsqCfaWVRYdy/i92RVs7x1xETXSy6I8vHLhY8chSL+chx
-        LHTkVyyeVk8RHBHbm0BAbG8CAbG9CQTE9iYQENubQEBsbwIBsb0JBGTdZ1yetvognHnUhQAAAABJRU5E
-        rkJggg==
-</value>
-  </data>
-  <data name="moveUpToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 22</value>
-  </data>
-  <data name="moveUpToolStripMenuItem.Text" xml:space="preserve">
-    <value>Move Up</value>
   </data>
   <data name="deleteFileToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -469,28 +464,13 @@
 </value>
   </data>
   <data name="deleteFileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="deleteFileToolStripMenuItem.Text" xml:space="preserve">
     <value>Delete</value>
   </data>
-  <data name="moveDownToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vAAADrwBlbxySQAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xMkMEa+wAAAB3SURBVDhPnY4B
-        CsAgDAN9mv//VLcIBZtTcRNOMOSCLSIK79G1BX0EJjjoIzDBQR+BCQ76CExw0EdggoM+AhMc9BGY4KDf
-        e0fpluFq5c+InPGD/MqXkZTLgLgZmWVRBsRpxGVRHslqZCULBMk8spPFMkwknuSIaA+fA/og+1pHjwAA
-        AABJRU5ErkJggg==
-</value>
-  </data>
-  <data name="moveDownToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 22</value>
-  </data>
-  <data name="moveDownToolStripMenuItem.Text" xml:space="preserve">
-    <value>Move Down</value>
-  </data>
   <data name="contextMenuPCKEntries.Size" type="System.Drawing.Size, System.Drawing">
-    <value>158, 268</value>
+    <value>181, 246</value>
   </data>
   <data name="&gt;&gt;contextMenuPCKEntries.Name" xml:space="preserve">
     <value>contextMenuPCKEntries</value>
@@ -613,24 +593,6 @@
   <data name="saveToolStripMenuItem.Text" xml:space="preserve">
     <value>Save As</value>
   </data>
-  <data name="addPasswordToolStripMenuItem.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="addPasswordToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vAAADrwBlbxySQAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4yMfEgaZUAAACRSURBVFhH7Y45
-        DoAwDATz/09DZWRF62utUIBHmgayk6xhaHBtvs5/HmBdor97/1roUEcaFGOkQTHGFpVg5WyaarB6PoSJ
-        MZsHPd7NgrZiCBqJWdBWDEEjMQvaiiFoJGZBW7EMM2Y2JjqWCVbPh+xBL1o5mwIFGWlQjJEGxRhbWCH9
-        3ft3DH3J0Yss5gHDF1jrBvn6/wGuM1ZgAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="addPasswordToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>217, 22</value>
-  </data>
-  <data name="addPasswordToolStripMenuItem.Text" xml:space="preserve">
-    <value>Add or Change Password</value>
-  </data>
   <data name="metaToolStripMenuItem.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
@@ -649,6 +611,9 @@
   </data>
   <data name="metaToolStripMenuItem.Text" xml:space="preserve">
     <value>Meta</value>
+  </data>
+  <data name="convertPCTextrurePackToolStripMenuItem.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="convertPCTextrurePackToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>217, 22</value>
@@ -28608,7 +28573,7 @@
     <value>editorTab</value>
   </data>
   <data name="&gt;&gt;pictureBox2.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="pckOpen.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>None</value>
@@ -29747,6 +29712,30 @@
   <data name="editorTab.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>None</value>
   </data>
+  <data name="metroLabel3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 28</value>
+  </data>
+  <data name="metroLabel3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>326, 19</value>
+  </data>
+  <data name="metroLabel3.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="metroLabel3.Text" xml:space="preserve">
+    <value>pckFileLabel</value>
+  </data>
+  <data name="&gt;&gt;metroLabel3.Name" xml:space="preserve">
+    <value>metroLabel3</value>
+  </data>
+  <data name="&gt;&gt;metroLabel3.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;metroLabel3.Parent" xml:space="preserve">
+    <value>editorTab</value>
+  </data>
+  <data name="&gt;&gt;metroLabel3.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
   <data name="labelImageSize.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
@@ -29772,7 +29761,7 @@
     <value>editorTab</value>
   </data>
   <data name="&gt;&gt;labelImageSize.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="fileEntryCountLabel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -29799,7 +29788,7 @@
     <value>editorTab</value>
   </data>
   <data name="&gt;&gt;fileEntryCountLabel.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="PropertiesTabControl.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Right</value>
@@ -30051,7 +30040,7 @@
     <value>editorTab</value>
   </data>
   <data name="&gt;&gt;PropertiesTabControl.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <metadata name="label11.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -30078,7 +30067,7 @@
     <value>editorTab</value>
   </data>
   <data name="&gt;&gt;label11.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="treeViewMain.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
@@ -30120,7 +30109,7 @@
     <value>editorTab</value>
   </data>
   <data name="&gt;&gt;treeViewMain.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="pictureBoxImagePreview.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -30153,7 +30142,7 @@
     <value>editorTab</value>
   </data>
   <data name="&gt;&gt;pictureBoxImagePreview.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>9</value>
   </data>
   <data name="editorTab.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 38</value>
@@ -32808,6 +32797,12 @@
   <data name="&gt;&gt;CreateSkinsPCKToolStripMenuItem1.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;behavioursbinToolStripMenuItem.Name" xml:space="preserve">
+    <value>behavioursbinToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;behavioursbinToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;importSkinsToolStripMenuItem.Name" xml:space="preserve">
     <value>importSkinsToolStripMenuItem</value>
   </data>
@@ -32830,6 +32825,12 @@
     <value>addTextureToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;addTextureToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;addFileToolStripMenuItem.Name" xml:space="preserve">
+    <value>addFileToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;addFileToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;exportToolStripMenuItem.Name" xml:space="preserve">
@@ -32970,22 +32971,10 @@
   <data name="&gt;&gt;replaceToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;moveUpToolStripMenuItem.Name" xml:space="preserve">
-    <value>moveUpToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;moveUpToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;deleteFileToolStripMenuItem.Name" xml:space="preserve">
     <value>deleteFileToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;deleteFileToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;moveDownToolStripMenuItem.Name" xml:space="preserve">
-    <value>moveDownToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;moveDownToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;fileToolStripMenuItem.Name" xml:space="preserve">
@@ -33040,12 +33029,6 @@
     <value>saveToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;saveToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;addPasswordToolStripMenuItem.Name" xml:space="preserve">
-    <value>addPasswordToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;addPasswordToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;metaToolStripMenuItem.Name" xml:space="preserve">
@@ -33263,6 +33246,12 @@
   </data>
   <data name="&gt;&gt;imageList.Type" xml:space="preserve">
     <value>System.Windows.Forms.ImageList, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;entityMaterialsbinToolStripMenuItem.Name" xml:space="preserve">
+    <value>entityMaterialsbinToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;entityMaterialsbinToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>MainForm</value>

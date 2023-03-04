@@ -25,7 +25,7 @@ namespace PckStudio.Forms.Editor
         public GRFEditor(PCKFile.FileData file) : this()
         {
             _pckfile = file;
-            using(var stream = new MemoryStream(file.data))
+            using(var stream = new MemoryStream(file.Data))
             {
                 try
                 {
@@ -55,6 +55,7 @@ namespace PckStudio.Forms.Editor
         private void OnLoad(object sender, EventArgs e)
         {
             RPC.SetPresence("GRF Editor", "Editing a GRF File");
+            toolStripComboBox1.SelectedIndex = (int)_file.CompressionLevel;
             loadGRFTreeView(GrfTreeView.Nodes, _file.Root);
         }
 
@@ -192,7 +193,7 @@ namespace PckStudio.Forms.Editor
             {
                 try
                 {
-                    GRFFileWriter.Write(stream, _file, GRFFile.eCompressionType.ZlibRleCrc);
+                    GRFFileWriter.Write(stream, _file, (GRFFile.eCompressionType)toolStripComboBox1.SelectedIndex/*GRFFile.eCompressionType.ZlibRleCrc*/);
                     _pckfile?.SetData(stream.ToArray());
                     MessageBox.Show("Saved!");
                 }
