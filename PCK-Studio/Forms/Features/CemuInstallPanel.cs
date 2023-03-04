@@ -2,10 +2,16 @@
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using System.Windows.Markup;
 using PckStudio.Classes.Misc;
 
 namespace PckStudio.Forms.Additional_Features
 {
+    /// <summary>
+    /// Wishlist:
+    ///  - add the ability to save the currently open pck file to the desired folder destination.
+    ///   (even if the pck file has not yet be saved to disk)
+    /// </summary>
     public partial class CemuInstallPanel : UserControl
     {
         public CemuInstallPanel()
@@ -64,25 +70,22 @@ namespace PckStudio.Forms.Additional_Features
                 return;
             }
 
-            DirectoryInfo dlcGameDirectory = new DirectoryInfo($"{GetGameContentPath()}/WiiU/DLC");
-            foreach (var subDirectoryInfo in dlcGameDirectory.GetDirectories())
+            DirectoryInfo dlcDirectory = new DirectoryInfo($"{GetGameContentPath()}/WiiU/DLC");
+            foreach (var directoryInfo in dlcDirectory.GetDirectories())
             {
-                if (subDirectoryInfo.GetFileSystemInfos().Length != 0)
+                if (directoryInfo.GetFileSystemInfos().Length != 0)
                 {
-                    var node = DLCTreeView.Nodes.Add(subDirectoryInfo.Name);
-                    var dirs = subDirectoryInfo.GetDirectories("Data", SearchOption.TopDirectoryOnly);
-                    bool hasDataFolder = dirs.Length != 0
+                    var node = DLCTreeView.Nodes.Add(directoryInfo.Name);
+                    var dirs = directoryInfo.GetDirectories("Data", SearchOption.TopDirectoryOnly);
+                    bool hasDataFolderAndPckFile = dirs.Length != 0
                         && dirs.FirstOrDefault(
                             d => d.GetFiles().FirstOrDefault(f => f.Name.EndsWith(".pck")) is not null
                         ) is not null;
 
-                    if (hasDataFolder)
-                    {
-                        node.Tag = $"{subDirectoryInfo.FullName};{subDirectoryInfo.FullName}/Data";
-                        node.Nodes.Add("Data");
-                        continue;
-                    }
-                    node.Tag = subDirectoryInfo.FullName;
+                    node.Tag = directoryInfo.FullName +
+                        (hasDataFolderAndPckFile
+                        ? $";{directoryInfo.FullName}/Data"
+                        : string.Empty);
                 }
             }
         }
@@ -138,6 +141,7 @@ namespace PckStudio.Forms.Additional_Features
         {
             RenamePrompt prompt = new RenamePrompt(string.Empty);
             prompt.OKButton.Text = "OK";
+            prompt.TextLabel.Text = "Folder:";
             
             if (prompt.ShowDialog(this) != DialogResult.OK)
                 return;
@@ -161,6 +165,17 @@ namespace PckStudio.Forms.Additional_Features
             if (fileDialog.ShowDialog(this) == DialogResult.OK)
             {
                 File.Copy(fileDialog.FileName, $"{GetGameContentPath()}/WiiU/DLC/{prompt.NewText}/{fileDialog.SafeFileName}");
+            }
+        }
+
+        private void removePckToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string pckName = DLCTreeView.SelectedNode.Text;
+            var result = MessageBox.Show($"Are you sure you want to permanetly delete '{pckName}'?", "Hold up!", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                Directory.Delete($"{GetGameContentPath()}/WiiU/DLC/{pckName}", recursive: true);
+                ListDLCs();
             }
         }
     }

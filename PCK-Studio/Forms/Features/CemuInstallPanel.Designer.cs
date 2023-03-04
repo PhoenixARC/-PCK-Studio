@@ -29,34 +29,34 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.TableLayoutPanel layoutPanel;
             this.BrowseDirectoryBtn = new System.Windows.Forms.Button();
             this.GameDirectoryTextBox = new MetroFramework.Controls.MetroTextBox();
             this.radioButtonJap = new System.Windows.Forms.RadioButton();
             this.radioButtonEur = new System.Windows.Forms.RadioButton();
-            this.textBoxHost = new MetroFramework.Controls.MetroTextBox();
-            this.buttonServerToggle = new System.Windows.Forms.Button();
-            this.myTablePanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.radioButtonUs = new System.Windows.Forms.RadioButton();
             this.DLCTreeView = new System.Windows.Forms.TreeView();
             this.DLCContextMenu = new MetroFramework.Controls.MetroContextMenu(this.components);
             this.openSkinPackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openTexturePackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addCustomPckToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.myTablePanel1.SuspendLayout();
+            this.removePckToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            layoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            layoutPanel.SuspendLayout();
             this.DLCContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // BrowseDirectoryBtn
             // 
             this.BrowseDirectoryBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.BrowseDirectoryBtn.BackColor = System.Drawing.Color.Sienna;
+            this.BrowseDirectoryBtn.BackColor = System.Drawing.Color.RoyalBlue;
             this.BrowseDirectoryBtn.Dock = System.Windows.Forms.DockStyle.Fill;
             this.BrowseDirectoryBtn.FlatAppearance.BorderSize = 0;
             this.BrowseDirectoryBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BrowseDirectoryBtn.Font = new System.Drawing.Font("Segoe UI", 9.75F);
             this.BrowseDirectoryBtn.ForeColor = System.Drawing.Color.White;
             this.BrowseDirectoryBtn.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.BrowseDirectoryBtn.Location = new System.Drawing.Point(287, 36);
+            this.BrowseDirectoryBtn.Location = new System.Drawing.Point(287, 3);
             this.BrowseDirectoryBtn.Name = "BrowseDirectoryBtn";
             this.BrowseDirectoryBtn.Size = new System.Drawing.Size(138, 27);
             this.BrowseDirectoryBtn.TabIndex = 12;
@@ -67,7 +67,7 @@
             // GameDirectoryTextBox
             // 
             this.GameDirectoryTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.myTablePanel1.SetColumnSpan(this.GameDirectoryTextBox, 2);
+            layoutPanel.SetColumnSpan(this.GameDirectoryTextBox, 2);
             // 
             // 
             // 
@@ -84,7 +84,7 @@
             this.GameDirectoryTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GameDirectoryTextBox.IconRight = true;
             this.GameDirectoryTextBox.Lines = new string[0];
-            this.GameDirectoryTextBox.Location = new System.Drawing.Point(3, 36);
+            this.GameDirectoryTextBox.Location = new System.Drawing.Point(3, 3);
             this.GameDirectoryTextBox.MaxLength = 32767;
             this.GameDirectoryTextBox.Name = "GameDirectoryTextBox";
             this.GameDirectoryTextBox.PasswordChar = '\0';
@@ -117,7 +117,7 @@
             this.radioButtonJap.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.radioButtonJap.ForeColor = System.Drawing.Color.White;
             this.radioButtonJap.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.radioButtonJap.Location = new System.Drawing.Point(287, 69);
+            this.radioButtonJap.Location = new System.Drawing.Point(287, 36);
             this.radioButtonJap.Name = "radioButtonJap";
             this.radioButtonJap.Size = new System.Drawing.Size(138, 30);
             this.radioButtonJap.TabIndex = 2;
@@ -141,7 +141,7 @@
             this.radioButtonEur.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.radioButtonEur.ForeColor = System.Drawing.Color.White;
             this.radioButtonEur.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.radioButtonEur.Location = new System.Drawing.Point(3, 69);
+            this.radioButtonEur.Location = new System.Drawing.Point(3, 36);
             this.radioButtonEur.Name = "radioButtonEur";
             this.radioButtonEur.Size = new System.Drawing.Size(136, 30);
             this.radioButtonEur.TabIndex = 1;
@@ -151,91 +151,30 @@
             this.radioButtonEur.UseVisualStyleBackColor = false;
             this.radioButtonEur.Click += new System.EventHandler(this.radioButton_Click);
             // 
-            // textBoxHost
+            // layoutPanel
             // 
-            this.textBoxHost.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.myTablePanel1.SetColumnSpan(this.textBoxHost, 2);
-            // 
-            // 
-            // 
-            this.textBoxHost.CustomButton.Image = null;
-            this.textBoxHost.CustomButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.textBoxHost.CustomButton.Location = new System.Drawing.Point(252, 1);
-            this.textBoxHost.CustomButton.Name = "";
-            this.textBoxHost.CustomButton.Size = new System.Drawing.Size(25, 25);
-            this.textBoxHost.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-            this.textBoxHost.CustomButton.TabIndex = 1;
-            this.textBoxHost.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.textBoxHost.CustomButton.UseSelectable = true;
-            this.textBoxHost.CustomButton.Visible = false;
-            this.textBoxHost.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBoxHost.Enabled = false;
-            this.textBoxHost.IconRight = true;
-            this.textBoxHost.Lines = new string[0];
-            this.textBoxHost.Location = new System.Drawing.Point(3, 3);
-            this.textBoxHost.MaxLength = 32767;
-            this.textBoxHost.Name = "textBoxHost";
-            this.textBoxHost.PasswordChar = '\0';
-            this.textBoxHost.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.textBoxHost.SelectedText = "";
-            this.textBoxHost.SelectionLength = 0;
-            this.textBoxHost.SelectionStart = 0;
-            this.textBoxHost.ShortcutsEnabled = true;
-            this.textBoxHost.Size = new System.Drawing.Size(278, 27);
-            this.textBoxHost.Style = MetroFramework.MetroColorStyle.Blue;
-            this.textBoxHost.TabIndex = 10;
-            this.textBoxHost.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.textBoxHost.UseSelectable = true;
-            this.textBoxHost.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-            this.textBoxHost.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
-            // 
-            // buttonServerToggle
-            // 
-            this.buttonServerToggle.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.buttonServerToggle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(178)))), ((int)(((byte)(13)))));
-            this.buttonServerToggle.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonServerToggle.FlatAppearance.BorderSize = 0;
-            this.buttonServerToggle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonServerToggle.Font = new System.Drawing.Font("Segoe UI", 9.75F);
-            this.buttonServerToggle.ForeColor = System.Drawing.Color.White;
-            this.buttonServerToggle.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.buttonServerToggle.Location = new System.Drawing.Point(287, 3);
-            this.buttonServerToggle.Name = "buttonServerToggle";
-            this.buttonServerToggle.Size = new System.Drawing.Size(138, 27);
-            this.buttonServerToggle.TabIndex = 9;
-            this.buttonServerToggle.Text = "Start";
-            this.buttonServerToggle.UseVisualStyleBackColor = false;
-            // 
-            // myTablePanel1
-            // 
-            this.myTablePanel1.BackColor = System.Drawing.Color.Black;
-            this.myTablePanel1.ColumnCount = 3;
-            this.myTablePanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33332F));
-            this.myTablePanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
-            this.myTablePanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
-            this.myTablePanel1.Controls.Add(this.buttonServerToggle, 2, 0);
-            this.myTablePanel1.Controls.Add(this.textBoxHost, 0, 0);
-            this.myTablePanel1.Controls.Add(this.radioButtonEur, 0, 2);
-            this.myTablePanel1.Controls.Add(this.radioButtonUs, 1, 2);
-            this.myTablePanel1.Controls.Add(this.radioButtonJap, 2, 2);
-            this.myTablePanel1.Controls.Add(this.GameDirectoryTextBox, 0, 1);
-            this.myTablePanel1.Controls.Add(this.BrowseDirectoryBtn, 2, 1);
-            this.myTablePanel1.Controls.Add(this.DLCTreeView, 0, 3);
-            this.myTablePanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.myTablePanel1.Location = new System.Drawing.Point(0, 0);
-            this.myTablePanel1.Margin = new System.Windows.Forms.Padding(0);
-            this.myTablePanel1.Name = "myTablePanel1";
-            this.myTablePanel1.RowCount = 7;
-            this.myTablePanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.myTablePanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.myTablePanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
-            this.myTablePanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.myTablePanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.myTablePanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.myTablePanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.myTablePanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.myTablePanel1.Size = new System.Drawing.Size(428, 556);
-            this.myTablePanel1.TabIndex = 4;
+            layoutPanel.BackColor = System.Drawing.Color.Black;
+            layoutPanel.ColumnCount = 3;
+            layoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33332F));
+            layoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
+            layoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
+            layoutPanel.Controls.Add(this.radioButtonEur, 0, 1);
+            layoutPanel.Controls.Add(this.radioButtonUs, 1, 1);
+            layoutPanel.Controls.Add(this.radioButtonJap, 2, 1);
+            layoutPanel.Controls.Add(this.GameDirectoryTextBox, 0, 0);
+            layoutPanel.Controls.Add(this.BrowseDirectoryBtn, 2, 0);
+            layoutPanel.Controls.Add(this.DLCTreeView, 0, 2);
+            layoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            layoutPanel.Location = new System.Drawing.Point(0, 0);
+            layoutPanel.Margin = new System.Windows.Forms.Padding(0);
+            layoutPanel.Name = "layoutPanel";
+            layoutPanel.RowCount = 3;
+            layoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            layoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
+            layoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            layoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            layoutPanel.Size = new System.Drawing.Size(428, 556);
+            layoutPanel.TabIndex = 4;
             // 
             // radioButtonUs
             // 
@@ -251,7 +190,7 @@
             this.radioButtonUs.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.radioButtonUs.ForeColor = System.Drawing.Color.White;
             this.radioButtonUs.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.radioButtonUs.Location = new System.Drawing.Point(145, 69);
+            this.radioButtonUs.Location = new System.Drawing.Point(145, 36);
             this.radioButtonUs.Name = "radioButtonUs";
             this.radioButtonUs.Size = new System.Drawing.Size(136, 30);
             this.radioButtonUs.TabIndex = 0;
@@ -265,11 +204,11 @@
             this.DLCTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.myTablePanel1.SetColumnSpan(this.DLCTreeView, 3);
+            layoutPanel.SetColumnSpan(this.DLCTreeView, 3);
             this.DLCTreeView.ContextMenuStrip = this.DLCContextMenu;
-            this.DLCTreeView.Location = new System.Drawing.Point(3, 105);
+            this.DLCTreeView.Location = new System.Drawing.Point(3, 72);
             this.DLCTreeView.Name = "DLCTreeView";
-            this.DLCTreeView.Size = new System.Drawing.Size(422, 448);
+            this.DLCTreeView.Size = new System.Drawing.Size(422, 481);
             this.DLCTreeView.TabIndex = 13;
             this.DLCTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.DLCTreeView_AfterSelect);
             // 
@@ -278,30 +217,38 @@
             this.DLCContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openSkinPackToolStripMenuItem,
             this.openTexturePackToolStripMenuItem,
-            this.addCustomPckToolStripMenuItem});
+            this.addCustomPckToolStripMenuItem,
+            this.removePckToolStripMenuItem});
             this.DLCContextMenu.Name = "DLCContextMenu";
-            this.DLCContextMenu.Size = new System.Drawing.Size(181, 92);
+            this.DLCContextMenu.Size = new System.Drawing.Size(173, 92);
             // 
             // openSkinPackToolStripMenuItem
             // 
             this.openSkinPackToolStripMenuItem.Name = "openSkinPackToolStripMenuItem";
-            this.openSkinPackToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openSkinPackToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
             this.openSkinPackToolStripMenuItem.Text = "Open Skin Pack";
             this.openSkinPackToolStripMenuItem.Click += new System.EventHandler(this.openSkinPackToolStripMenuItem_Click);
             // 
             // openTexturePackToolStripMenuItem
             // 
             this.openTexturePackToolStripMenuItem.Name = "openTexturePackToolStripMenuItem";
-            this.openTexturePackToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openTexturePackToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
             this.openTexturePackToolStripMenuItem.Text = "Open Texture Pack";
             this.openTexturePackToolStripMenuItem.Click += new System.EventHandler(this.openTexturePackToolStripMenuItem_Click);
             // 
             // addCustomPckToolStripMenuItem
             // 
             this.addCustomPckToolStripMenuItem.Name = "addCustomPckToolStripMenuItem";
-            this.addCustomPckToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.addCustomPckToolStripMenuItem.Text = "Add Custom pck";
+            this.addCustomPckToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.addCustomPckToolStripMenuItem.Text = "Add pck";
             this.addCustomPckToolStripMenuItem.Click += new System.EventHandler(this.addCustomPckToolStripMenuItem_Click);
+            // 
+            // removePckToolStripMenuItem
+            // 
+            this.removePckToolStripMenuItem.Name = "removePckToolStripMenuItem";
+            this.removePckToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.removePckToolStripMenuItem.Text = "Remove pck";
+            this.removePckToolStripMenuItem.Click += new System.EventHandler(this.removePckToolStripMenuItem_Click);
             // 
             // CemuInstallPanel
             // 
@@ -309,11 +256,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.Controls.Add(this.myTablePanel1);
+            this.Controls.Add(layoutPanel);
             this.Name = "CemuInstallPanel";
             this.Size = new System.Drawing.Size(428, 556);
-            this.myTablePanel1.ResumeLayout(false);
-            this.myTablePanel1.PerformLayout();
+            layoutPanel.ResumeLayout(false);
+            layoutPanel.PerformLayout();
             this.DLCContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -323,9 +270,6 @@
 
         private System.Windows.Forms.Button BrowseDirectoryBtn;
         private MetroFramework.Controls.MetroTextBox GameDirectoryTextBox;
-        private System.Windows.Forms.TableLayoutPanel myTablePanel1;
-        private System.Windows.Forms.Button buttonServerToggle;
-        private MetroFramework.Controls.MetroTextBox textBoxHost;
         private System.Windows.Forms.RadioButton radioButtonEur;
         private System.Windows.Forms.RadioButton radioButtonUs;
         private System.Windows.Forms.RadioButton radioButtonJap;
@@ -334,5 +278,6 @@
         private System.Windows.Forms.ToolStripMenuItem openSkinPackToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openTexturePackToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addCustomPckToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem removePckToolStripMenuItem;
     }
 }
