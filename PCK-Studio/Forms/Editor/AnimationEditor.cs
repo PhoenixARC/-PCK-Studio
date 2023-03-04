@@ -15,6 +15,8 @@ using PckStudio.Classes.FileTypes;
 using PckStudio.Forms.Additional_Popups.Animation;
 using PckStudio.Forms.Utilities;
 using PckStudio.Classes.Extentions;
+using System.Runtime.CompilerServices;
+using System.Diagnostics;
 
 namespace PckStudio.Forms.Editor
 {
@@ -207,7 +209,11 @@ namespace PckStudio.Forms.Editor
 				Task.Run(DoAnimate, cts.Token);
 			}
 
-            public void Stop() => cts.Cancel();
+			public void Stop([CallerMemberName] string callerName = default!)
+			{
+				Debug.WriteLine($"{nameof(AnimationPlayer.Stop)} called from {callerName}!");
+				cts.Cancel();
+			}
 
             public Animation.Frame GetCurrentFrame() => _animation[currentAnimationFrameIndex];
 
@@ -607,5 +613,13 @@ namespace PckStudio.Forms.Editor
 			// Interpolation flag wasn't being updated when the check box changed, this fixes the issue
 			currentAnimation.Interpolate = InterpolationCheckbox.Checked;
 		}
-	}
+
+        private void AnimationEditor_FormClosing(object sender, FormClosingEventArgs e)
+        {
+			if (player.IsPlaying)
+			{
+				player.Stop();
+			}
+        }
+    }
 }
