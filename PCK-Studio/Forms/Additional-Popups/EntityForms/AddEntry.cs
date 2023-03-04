@@ -56,6 +56,8 @@ namespace PckStudio.Forms.Additional_Popups.EntityForms
 				MessageBox.Show(j_ex.Message, "Error");
 				return;
 			}
+
+			treeViewEntity.Sort();
 		}
 
 		private void treeViews_AfterSelect(object sender, TreeViewEventArgs e)

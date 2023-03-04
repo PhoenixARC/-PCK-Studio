@@ -87,7 +87,7 @@ namespace PckStudio
 				[PCKFile.FileData.FileType.SkinDataFile]        = null,
 				[PCKFile.FileData.FileType.ModelsFile]          = HandleModelsFile,
 				[PCKFile.FileData.FileType.BehavioursFile]      = HandleBehavioursFile,
-				[PCKFile.FileData.FileType.MaterialFile]        = null,
+				[PCKFile.FileData.FileType.MaterialFile]        = HandleMaterialFile,
 			};
 		}
 
@@ -450,19 +450,20 @@ namespace PckStudio
 				}
 			}
         }
-
 		public void HandleModelsFile(PCKFile.FileData file)
 		{
 			MessageBox.Show("Models.bin support has not been implemented. You can use the Spark Editor for the time being to edit these files.", "Not implemented yet.");
-			//throw new NotImplementedException();
 		}
-
 		public void HandleBehavioursFile(PCKFile.FileData file)
 		{
-			using BehaviourEditor locedit = new BehaviourEditor(file);
-			wasModified = locedit.ShowDialog(this) == DialogResult.OK;
+			using BehaviourEditor edit = new BehaviourEditor(file);
+			wasModified = edit.ShowDialog(this) == DialogResult.OK;
 		}
-
+		public void HandleMaterialFile(PCKFile.FileData file)
+		{
+			using MaterialsEditor edit = new MaterialsEditor(file);
+			wasModified = edit.ShowDialog(this) == DialogResult.OK;
+		}
 		private void selectNode(object sender, TreeViewEventArgs e)
 		{
 			ReloadMetaTreeView();
