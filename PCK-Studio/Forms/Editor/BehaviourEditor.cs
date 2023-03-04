@@ -217,9 +217,19 @@ namespace PckStudio.Forms.Editor
 				BehaviourFile.RiderPositionOverride NewOverride = new BehaviourFile.RiderPositionOverride(diag.SelectedEntity);
 
 				TreeNode NewOverrideNode = new TreeNode(NewOverride.name);
-				NewOverrideNode.Tag = NewOverride;
-				treeView1.Nodes.Add(NewOverrideNode);
 
+				foreach (JObject content in Utilities.BehaviourUtil.entityData["entities"].Children())
+				{
+					var prop = content.Properties().FirstOrDefault(prop => prop.Name == NewOverride.name);
+					if (prop is JProperty)
+					{
+						NewOverrideNode.Text = (string)prop.Value;
+						NewOverrideNode.ImageIndex = Utilities.BehaviourUtil.entityData["entities"].Children().ToList().IndexOf(content);
+						NewOverrideNode.SelectedImageIndex = NewOverrideNode.ImageIndex;
+						break;
+					}
+				}
+				treeView1.Nodes.Add(NewOverrideNode);
 				treeView1.SelectedNode = NewOverrideNode;
 
 				addNewPositionOverrideToolStripMenuItem_Click(sender, e); // adds a Position Override to the new Override
