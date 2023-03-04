@@ -152,7 +152,7 @@ namespace PckStudio.Forms.Editor
 			if (treeView1.SelectedNode == null) return;
 			if (!(treeView1.SelectedNode.Tag is BehaviourFile.RiderPositionOverride entry)) return;
 
-			var diag = new Additional_Popups.EntryForms.AddEntry();
+			var diag = new Additional_Popups.EntityForms.AddEntry(Utilities.BehaviourUtil.entityData, Utilities.BehaviourUtil.entityImages);
 			diag.acceptBtn.Text = "Save";
 
 			if (diag.ShowDialog() == DialogResult.OK)
@@ -194,17 +194,19 @@ namespace PckStudio.Forms.Editor
 		{
 			if (treeView1.SelectedNode.Tag is BehaviourFile.RiderPositionOverride.PositionOverride) treeView1.SelectedNode = treeView1.SelectedNode.Parent;
 
-			if (treeView1.SelectedNode.Tag is BehaviourFile.RiderPositionOverride entry)
+			if (treeView1.SelectedNode.Tag is BehaviourFile.RiderPositionOverride)
 			{
 				TreeNode OverrideNode = new TreeNode("Position Override");
 				OverrideNode.Tag = new BehaviourFile.RiderPositionOverride.PositionOverride();
+				OverrideNode.ImageIndex = 103;
+				OverrideNode.SelectedImageIndex = 103;
 				treeView1.SelectedNode.Nodes.Add(OverrideNode);
 			}
 		}
 
 		private void addNewEntryToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			var diag = new Additional_Popups.EntryForms.AddEntry();
+			var diag = new Additional_Popups.EntityForms.AddEntry(Utilities.BehaviourUtil.entityData, Utilities.BehaviourUtil.entityImages);
 
 			if(diag.ShowDialog() == DialogResult.OK)
 			{
@@ -217,7 +219,7 @@ namespace PckStudio.Forms.Editor
 				BehaviourFile.RiderPositionOverride NewOverride = new BehaviourFile.RiderPositionOverride(diag.SelectedEntity);
 
 				TreeNode NewOverrideNode = new TreeNode(NewOverride.name);
-
+				NewOverrideNode.Tag = NewOverride;
 				foreach (JObject content in Utilities.BehaviourUtil.entityData["entities"].Children())
 				{
 					var prop = content.Properties().FirstOrDefault(prop => prop.Name == NewOverride.name);
@@ -230,7 +232,6 @@ namespace PckStudio.Forms.Editor
 					}
 				}
 				treeView1.Nodes.Add(NewOverrideNode);
-				treeView1.SelectedNode = NewOverrideNode;
 
 				addNewPositionOverrideToolStripMenuItem_Click(sender, e); // adds a Position Override to the new Override
 			}

@@ -1,4 +1,4 @@
-﻿namespace PckStudio.Forms.Additional_Popups.EntryForms
+﻿namespace PckStudio.Forms.Additional_Popups.EntityForms
 {
 	partial class AddEntry
 	{
