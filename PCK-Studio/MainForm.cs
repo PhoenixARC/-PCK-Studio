@@ -660,7 +660,18 @@ namespace PckStudio
 			{
 				using var ofd = new OpenFileDialog();
 				// Suddenly, and randomly, this started throwing an exception because it wasn't formatted correctly? So now it's formatted correctly and now displays the file type name in the dialog.
-				ofd.Filter = file.Filetype.ToString() + " (*" + Path.GetExtension(file.Filename) + ")|*" + Path.GetExtension(file.Filename);
+
+				string extra_extensions = "";
+
+				switch (file.Filetype)
+				{
+					case PCKFile.FileData.FileType.TextureFile:
+						if (Path.GetExtension(file.Filename) == ".png") extra_extensions = ";*.tga";
+						else if (Path.GetExtension(file.Filename) == ".tga") extra_extensions = ";*.png";
+						break;
+				}
+
+				ofd.Filter = $"{file.Filetype} (*{Path.GetExtension(file.Filename)}{extra_extensions})|*{Path.GetExtension(file.Filename)}{extra_extensions}";
 				if (ofd.ShowDialog() == DialogResult.OK)
 				{
 					file.SetData(File.ReadAllBytes(ofd.FileName));
@@ -669,15 +680,6 @@ namespace PckStudio
 				}
 				return;
 			}
-			//deleteEntryToolStripMenuItem_Click(sender, e);
-			//using FolderBrowserDialog folderDialog = new FolderBrowserDialog();
-			//folderDialog.Description = "Select Folder";
-			//if (folderDialog.ShowDialog() == DialogResult.OK)
-			//{
-			//	string[] FilePaths = Directory.GetFiles(folderDialog.SelectedPath, "*.png");
-			//	Array.ForEach(FilePaths, filePath => currentPCK.Createnew(filePath, 2));
-			//}
-			// should never happen unless its a folder
 			MessageBox.Show("Can't replace a folder.");
 		}
 
