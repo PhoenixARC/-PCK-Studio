@@ -7,6 +7,12 @@ namespace PckStudio.Classes.Extentions
 {
 	internal static class ImageExtentions
 	{
+        public enum ImageLayoutDirection
+        {
+            Horizontal,
+            Vertical
+        }
+
         public static IEnumerable<Image> CreateImageList(this Image source, Size size)
         {
             int img_row_count = source.Width / size.Width;
@@ -36,5 +42,27 @@ namespace PckStudio.Classes.Extentions
         {
             return CreateImageList(source, new Size(scalar, scalar));
         }
+
+        public static IEnumerable<Image> CreateImageList(this Image source, ImageLayoutDirection layoutDirection)
+        {
+            for (int i = 0; i < source.Height / source.Width; i++)
+            {
+                (Size size, Point point) locationInfo = layoutDirection == ImageLayoutDirection.Horizontal
+                    ? (new Size(source.Width, source.Width),   new Point(0, i * source.Width))
+                    : (new Size(source.Height, source.Height), new Point(i * source.Height, 0));
+                Rectangle tileArea = new Rectangle(locationInfo.point, locationInfo.size);
+                Bitmap tileImage = new Bitmap(locationInfo.size.Width, locationInfo.size.Height);
+                using (Graphics gfx = Graphics.FromImage(tileImage))
+                {
+                    gfx.SmoothingMode = SmoothingMode.None;
+                    gfx.InterpolationMode = InterpolationMode.NearestNeighbor;
+                    gfx.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                    gfx.DrawImage(source, new Rectangle(Point.Empty, locationInfo.size), tileArea, GraphicsUnit.Pixel);
+                }
+                yield return tileImage;
+            }
+            yield break;
+        }
+
     }
 }

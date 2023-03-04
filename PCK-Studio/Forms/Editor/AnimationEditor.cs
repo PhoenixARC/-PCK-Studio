@@ -14,6 +14,7 @@ using System.Windows.Forms;
 using PckStudio.Classes.FileTypes;
 using PckStudio.Forms.Additional_Popups.Animation;
 using PckStudio.Forms.Utilities;
+using PckStudio.Classes.Extentions;
 
 namespace PckStudio.Forms.Editor
 {
@@ -43,7 +44,7 @@ namespace PckStudio.Forms.Editor
 			
 			public Animation(Image image)
 			{
-                frameTextures = new List<Image>(SplitImageToFrameTextures(image));
+                frameTextures = new List<Image>(image.CreateImageList(ImageExtentions.ImageLayoutDirection.Horizontal));
             }
 
 			public Animation(Image image, string ANIM) : this(image)
@@ -115,24 +116,6 @@ namespace PckStudio.Forms.Editor
 			{
 				frames.RemoveAt(frameIndex);
 				return true;
-            }
-
-            private static IEnumerable<Image> SplitImageToFrameTextures(Image source)
-            {
-                for (int i = 0; i < source.Height / source.Width; i++)
-                {
-                    Rectangle tileArea = new Rectangle(0, i * source.Width, source.Width, source.Width);
-                    Bitmap tileImage = new Bitmap(source.Width, source.Width);
-                    using (Graphics gfx = Graphics.FromImage(tileImage))
-                    {
-                        gfx.SmoothingMode = SmoothingMode.None;
-                        gfx.InterpolationMode = InterpolationMode.NearestNeighbor;
-                        gfx.PixelOffsetMode = PixelOffsetMode.HighQuality;
-                        gfx.DrawImage(source, new Rectangle(0, 0, source.Width, source.Width), tileArea, GraphicsUnit.Pixel);
-                    }
-                    yield return tileImage;
-                }
-                yield break;
             }
 
 			public Frame GetFrame(int index) => frames[index];
