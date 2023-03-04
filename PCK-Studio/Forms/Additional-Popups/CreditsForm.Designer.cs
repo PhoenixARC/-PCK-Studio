@@ -1,6 +1,6 @@
 ﻿namespace PckStudio
 {
-    partial class programInfo
+    partial class CreditsForm
     {
         /// <summary>
         /// Required designer variable.

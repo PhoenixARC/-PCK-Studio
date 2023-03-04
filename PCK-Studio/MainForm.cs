@@ -1331,7 +1331,7 @@ namespace PckStudio
 
 		private void programInfoToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			using programInfo info = new programInfo();
+			using CreditsForm info = new CreditsForm();
 			info.ShowDialog();
 		}
 
