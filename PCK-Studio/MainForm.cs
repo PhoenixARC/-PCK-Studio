@@ -671,12 +671,17 @@ namespace PckStudio
 						break;
 				}
 
-				ofd.Filter = $"{file.Filetype} (*{Path.GetExtension(file.Filename)}{extra_extensions})|*{Path.GetExtension(file.Filename)}{extra_extensions}";
+				string fileExt = Path.GetExtension(file.Filename);
+
+				ofd.Filter = $"{file.Filetype} (*{fileExt}{extra_extensions})|*{fileExt}{extra_extensions}";
 				if (ofd.ShowDialog() == DialogResult.OK)
 				{
+					string newFileExt = Path.GetExtension(ofd.FileName);
 					file.SetData(File.ReadAllBytes(ofd.FileName));
+					file.Filename = file.Filename.Replace(fileExt, newFileExt);
 					if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath)) RebuildSubPCK(treeViewMain.SelectedNode);
 					wasModified = true;
+					BuildMainTreeView();
 				}
 				return;
 			}
