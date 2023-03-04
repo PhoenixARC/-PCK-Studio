@@ -23,16 +23,7 @@ namespace PckStudio.Classes.Extentions
                 int row = i / img_row_count;
                 int column = i % img_row_count;
                 Rectangle tileArea = new Rectangle(new Point(column * size.Height, row * size.Width), size);
-                Bitmap tileImage = new Bitmap(size.Width, size.Height);
-                using (Graphics gfx = Graphics.FromImage(tileImage))
-                {
-                    gfx.SmoothingMode = SmoothingMode.None;
-                    gfx.InterpolationMode = InterpolationMode.NearestNeighbor;
-                    gfx.PixelOffsetMode = PixelOffsetMode.HighQuality;
-
-                    gfx.DrawImage(source, new Rectangle(Point.Empty, size), tileArea, GraphicsUnit.Pixel);
-                }
-                yield return tileImage;
+                yield return GetTileImage(source, tileArea, size);
             }
             yield break;
         }
@@ -51,18 +42,22 @@ namespace PckStudio.Classes.Extentions
                     ? (new Size(source.Width, source.Width),   new Point(0, i * source.Width))
                     : (new Size(source.Height, source.Height), new Point(i * source.Height, 0));
                 Rectangle tileArea = new Rectangle(locationInfo.point, locationInfo.size);
-                Bitmap tileImage = new Bitmap(locationInfo.size.Width, locationInfo.size.Height);
-                using (Graphics gfx = Graphics.FromImage(tileImage))
-                {
-                    gfx.SmoothingMode = SmoothingMode.None;
-                    gfx.InterpolationMode = InterpolationMode.NearestNeighbor;
-                    gfx.PixelOffsetMode = PixelOffsetMode.HighQuality;
-                    gfx.DrawImage(source, new Rectangle(Point.Empty, locationInfo.size), tileArea, GraphicsUnit.Pixel);
-                }
-                yield return tileImage;
+                yield return GetTileImage(source, tileArea, locationInfo.size);
             }
             yield break;
         }
 
+        private static Image GetTileImage(Image source, Rectangle area, Size size, GraphicsUnit unit = GraphicsUnit.Pixel)
+        {
+            Image tileImage = new Bitmap(size.Width, size.Height);
+            using (Graphics gfx = Graphics.FromImage(tileImage))
+            {
+                gfx.SmoothingMode = SmoothingMode.None;
+                gfx.InterpolationMode = InterpolationMode.NearestNeighbor;
+                gfx.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                gfx.DrawImage(source, new Rectangle(Point.Empty, size), area, unit);
+            }
+            return tileImage;
+        }
     }
 }
