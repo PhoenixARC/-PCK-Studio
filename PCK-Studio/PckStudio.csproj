@@ -18,44 +18,41 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
-	<Target Name="GetGitHash" BeforeTargets="WriteGitHash" Condition="'$(BuildHash)' == ''">
-		<PropertyGroup>
-			<!-- temp file for the git version (lives in "obj" folder)-->
-			<VerFile>$(IntermediateOutputPath)gitver</VerFile>
-		</PropertyGroup>
-
-		<!-- write the hash to the temp file.-->
-		<Exec Command="git -C $(ProjectDir) describe --always &gt; $(VerFile)" />
-
-		<!-- read the version into the GitVersion itemGroup-->
-		<ReadLinesFromFile File="$(VerFile)">
-			<Output TaskParameter="Lines" ItemName="GitVersion" />
-		</ReadLinesFromFile>
-		<!-- Set the BuildHash property to contain the GitVersion, if it wasn't already set.-->
-		<PropertyGroup>
-			<BuildHash>@(GitVersion)</BuildHash>
-		</PropertyGroup>
-	</Target>
-
-	<Target Name="WriteGitHash" BeforeTargets="CoreCompile">
-		<!-- names the obj/.../GitAssemblyInfo.cs file -->
-		<PropertyGroup>
-			<GitAssemblyInfoFile>$(IntermediateOutputPath)GitAssemblyInfo.cs</GitAssemblyInfoFile>
-		</PropertyGroup>
-		<!-- includes the GitAssemblyInfo for compilation into your project -->
-		<ItemGroup>
-			<Compile Include="$(GitAssemblyInfoFile)" />
-		</ItemGroup>
-		<!-- defines the AssemblyMetadata attribute that will be written -->
-		<ItemGroup>
-			<AssemblyAttributes Include="AssemblyMetadata">
-				<_Parameter1>GitHash</_Parameter1>
-				<_Parameter2>$(BuildHash)</_Parameter2>
-			</AssemblyAttributes>
-		</ItemGroup>
-		<!-- writes the attribute to the GitAssemblyInfo file -->
-		<WriteCodeFragment Language="C#" OutputFile="$(GitAssemblyInfoFile)" AssemblyAttributes="@(AssemblyAttributes)" />
-	</Target>
+  <Target Name="GetGitHash" BeforeTargets="WriteGitHash" Condition="'$(BuildHash)' == ''">
+    <PropertyGroup>
+      <!-- temp file for the git version (lives in "obj" folder)-->
+      <VerFile>$(IntermediateOutputPath)gitver</VerFile>
+    </PropertyGroup>
+    <!-- write the hash to the temp file.-->
+    <Exec Command="git -C $(ProjectDir) describe --always &gt; $(VerFile)" />
+    <!-- read the version into the GitVersion itemGroup-->
+    <ReadLinesFromFile File="$(VerFile)">
+      <Output TaskParameter="Lines" ItemName="GitVersion" />
+    </ReadLinesFromFile>
+    <!-- Set the BuildHash property to contain the GitVersion, if it wasn't already set.-->
+    <PropertyGroup>
+      <BuildHash>@(GitVersion)</BuildHash>
+    </PropertyGroup>
+  </Target>
+  <Target Name="WriteGitHash" BeforeTargets="CoreCompile">
+    <!-- names the obj/.../GitAssemblyInfo.cs file -->
+    <PropertyGroup>
+      <GitAssemblyInfoFile>$(IntermediateOutputPath)GitAssemblyInfo.cs</GitAssemblyInfoFile>
+    </PropertyGroup>
+    <!-- includes the GitAssemblyInfo for compilation into your project -->
+    <ItemGroup>
+      <Compile Include="$(GitAssemblyInfoFile)" />
+    </ItemGroup>
+    <!-- defines the AssemblyMetadata attribute that will be written -->
+    <ItemGroup>
+      <AssemblyAttributes Include="AssemblyMetadata">
+        <_Parameter1>GitHash</_Parameter1>
+        <_Parameter2>$(BuildHash)</_Parameter2>
+      </AssemblyAttributes>
+    </ItemGroup>
+    <!-- writes the attribute to the GitAssemblyInfo file -->
+    <WriteCodeFragment Language="C#" OutputFile="$(GitAssemblyInfoFile)" AssemblyAttributes="@(AssemblyAttributes)" />
+  </Target>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -243,11 +240,11 @@
     <Compile Include="Classes\Networking\Update.cs" />
     <Compile Include="Classes\Utils\GRF\CRC32.cs" />
     <Compile Include="Classes\Utils\RLE.cs" />
-    <Compile Include="Forms\Additional-Popups\Behaviours\AddBehaviour.cs">
+    <Compile Include="Forms\Additional-Popups\EntityForms\AddEntry.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Additional-Popups\Behaviours\AddBehaviour.Designer.cs">
-      <DependentUpon>AddBehaviour.cs</DependentUpon>
+    <Compile Include="Forms\Additional-Popups\EntityForms\AddEntry.Designer.cs">
+      <DependentUpon>AddEntry.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Additional-Popups\Loc\AddLanguage.cs">
       <SubType>Form</SubType>
@@ -499,8 +496,8 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Classes\Utils\3DS\TextureCodec.cs" />
-    <EmbeddedResource Include="Forms\Additional-Popups\Behaviours\AddBehaviour.resx">
-      <DependentUpon>AddBehaviour.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Additional-Popups\EntityForms\AddEntry.resx">
+      <DependentUpon>AddEntry.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\Loc\AddLanguage.resx">
       <DependentUpon>AddLanguage.cs</DependentUpon>

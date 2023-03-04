@@ -152,7 +152,7 @@ namespace PckStudio.Forms.Editor
 			if (treeView1.SelectedNode == null) return;
 			if (!(treeView1.SelectedNode.Tag is BehaviourFile.RiderPositionOverride entry)) return;
 
-			var diag = new Additional_Popups.Behaviours.AddBehaviour();
+			var diag = new Additional_Popups.EntryForms.AddEntry();
 			diag.acceptBtn.Text = "Save";
 
 			if (diag.ShowDialog() == DialogResult.OK)
@@ -204,7 +204,7 @@ namespace PckStudio.Forms.Editor
 
 		private void addNewEntryToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			var diag = new Additional_Popups.Behaviours.AddBehaviour();
+			var diag = new Additional_Popups.EntryForms.AddEntry();
 
 			if(diag.ShowDialog() == DialogResult.OK)
 			{

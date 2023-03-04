@@ -5,9 +5,9 @@ using MetroFramework.Forms;
 using Newtonsoft.Json.Linq;
 using PckStudio.Forms.Utilities;
 
-namespace PckStudio.Forms.Additional_Popups.Behaviours
+namespace PckStudio.Forms.Additional_Popups.EntryForms
 {
-	public partial class AddBehaviour : MetroForm
+	public partial class AddEntry : MetroForm
 	{
         string selectedEntity = "";
 
@@ -15,7 +15,7 @@ namespace PckStudio.Forms.Additional_Popups.Behaviours
 
 		List<TreeNode> treeViewEntityCache = new List<TreeNode>();
 
-		public AddBehaviour()
+		public AddEntry()
 		{
 			InitializeComponent();
 			ImageList entities = new ImageList();

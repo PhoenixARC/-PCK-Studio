@@ -1,6 +1,6 @@
-﻿namespace PckStudio.Forms.Additional_Popups.Behaviours
+﻿namespace PckStudio.Forms.Additional_Popups.EntryForms
 {
-	partial class AddBehaviour
+	partial class AddEntry
 	{
 		/// <summary>
 		/// Required designer variable.
