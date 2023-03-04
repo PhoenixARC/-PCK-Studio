@@ -171,6 +171,7 @@
     <Compile Include="Classes\API\PCKCenter\PCKCollectionsLocal.cs" />
     <Compile Include="Classes\API\PCKCenter\SaveLocalJSON.cs" />
     <Compile Include="Classes\FileTypes\ARCFile.cs" />
+    <Compile Include="Classes\FileTypes\MaterialsFile.cs" />
     <Compile Include="Classes\FileTypes\BehaviourFile.cs" />
     <Compile Include="Classes\FileTypes\CSMBFile.cs" />
     <Compile Include="Classes\FileTypes\ModelFile.cs" />
@@ -185,6 +186,8 @@
     <Compile Include="Classes\IO\Behaviour\BehavioursWriter.cs" />
     <Compile Include="Classes\IO\CSMB\CSMBFileReader.cs" />
     <Compile Include="Classes\IO\CSMB\CSMBFileWriter.cs" />
+    <Compile Include="Classes\IO\Materials\MaterialsReader.cs" />
+    <Compile Include="Classes\IO\Materials\MaterialsWriter.cs" />
     <Compile Include="Classes\IO\Model\ModelFileReader.cs" />
     <Compile Include="Classes\IO\Model\ModelFileWriter.cs" />
     <Compile Include="Classes\IO\PCK\PCKAudioFileReader.cs" />
@@ -366,6 +369,7 @@
     <Compile Include="Forms\Additional-Popups\Audio\pleaseWait.Designer.cs">
       <DependentUpon>pleaseWait.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Utilities\MaterialUtil.cs" />
     <Compile Include="Forms\Utilities\BehaviourUtil.cs" />
     <Compile Include="Forms\Utilities\AnimationUtil.cs" />
     <Compile Include="Forms\Utilities\Skins\BoxEditor.cs">
