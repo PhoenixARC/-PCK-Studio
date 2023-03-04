@@ -3,34 +3,35 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using MetroFramework.Forms;
 using Newtonsoft.Json.Linq;
-using PckStudio.Forms.Utilities;
 
-namespace PckStudio.Forms.Additional_Popups.Behaviours
+namespace PckStudio.Forms.Additional_Popups.EntityForms
 {
-	public partial class AddBehaviour : MetroForm
+	public partial class AddEntry : MetroForm
 	{
         string selectedEntity = "";
 
+		JObject EntityJSONData;
 		public string SelectedEntity => selectedEntity;
 
 		List<TreeNode> treeViewEntityCache = new List<TreeNode>();
 
-		public AddBehaviour()
+		public AddEntry(JObject entityData, System.Drawing.Image[] entityImages)
 		{
 			InitializeComponent();
+			EntityJSONData = entityData;
 			ImageList entities = new ImageList();
 			entities.ColorDepth = ColorDepth.Depth32Bit;
 			entities.ImageSize = new System.Drawing.Size(32, 32);
-			entities.Images.AddRange(BehaviourUtil.entityImages);
+			entities.Images.AddRange(entityImages);
 			treeViewEntity.ImageList = entities;
 
 			try
 			{
 				int i = 0;
 
-				if (BehaviourUtil.entityData["entities"] != null)
+				if (EntityJSONData["entities"] != null)
 				{
-					foreach (JObject content in BehaviourUtil.entityData["entities"].Children())
+					foreach (JObject content in EntityJSONData["entities"].Children())
 					{
 						foreach (JProperty prop in content.Properties())
 						{

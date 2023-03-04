@@ -289,19 +289,55 @@ namespace PckStudio.Properties {
         ///		{ &quot;area_effect_cloud&quot;: &quot;Area Effect Cloud / Particle&quot; },
         ///		{ &quot;armor_stand&quot;: &quot;Armor Stand&quot; },
         ///		{ &quot;arrow&quot;: &quot;Arrow&quot; },
+        ///		{ &quot;bat&quot;: &quot;Bat&quot; },
         ///		{ &quot;blaze&quot;: &quot;Blaze&quot; },
         ///		{ &quot;boat&quot;: &quot;Boat&quot; },
         ///		{ &quot;cat&quot;: &quot;Cat (PS4 EXCLUSIVE)&quot; },
-        ///		{ &quot;cave_spider&quot;: &quot;Cave Spider (PS4 EXCLUSIVE)&quot; },
+        ///		{ &quot;cave_spider&quot;: &quot;Cave Spider&quot; },
         ///		{ &quot;chest_minecart&quot;: &quot;Chest Minecart&quot; },
         ///		{ &quot;chicken&quot;: &quot;Chicken&quot; },
         ///		{ &quot;cod&quot;: &quot;Cod&quot; },
         ///		{ &quot;commandblock_minecart&quot;: &quot;Command Block Minecart&quot; },
-        ///		{ &quot;cow&quot;: [rest of string was truncated]&quot;;.
+        ///		{ &quot; [rest of string was truncated]&quot;;.
         /// </summary>
         public static string entityBehaviourData {
             get {
                 return ResourceManager.GetString("entityBehaviourData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///	&quot;COMMENT&quot;: &quot;Entity data research by NessieHax (Miku-666) and MattNL&quot;,
+        ///	&quot;entities&quot;: [
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;bat&quot;: &quot;Bat&quot; },
+        ///		{ &quot;blaze_head&quot;: &quot;Blaze&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;drowned&quot;: &quot;Drowned&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;ender_dragon&quot;: &quot;Ender Dragon&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;enderman&quot;: &quot; [re....
+        /// </summary>
+        public static string entityMaterialData {
+            get {
+                return ResourceManager.GetString("entityMaterialData", resourceCulture);
             }
         }
         

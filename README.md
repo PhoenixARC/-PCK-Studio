@@ -60,5 +60,5 @@ $ cd "-PCK-Studio"
 *  [SlothWiiPlaza](https://github.com/Kashiiera)
 *  [jam1garner](https://github.com/jam1garner)
 
-### Other Credits
+## Other Credits
 *  [yaboiFoxx](https://github.com/yaboiFoxx) for Improved UI concept
