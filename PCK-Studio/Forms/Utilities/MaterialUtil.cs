@@ -33,7 +33,8 @@ namespace PckStudio.Forms.Utilities
             using (var stream = new MemoryStream())
             {
                 var matFile = new MaterialsFile();
-                MaterialsWriter.Write(stream, matFile);
+				matFile.entries.Add(new MaterialsFile.MaterialEntry("bat", "entity_alphatest"));
+				MaterialsWriter.Write(stream, matFile);
                 file.SetData(stream.ToArray());
             }
             
