@@ -71,6 +71,14 @@ namespace PckStudio.Forms.Additional_Features
             }
 
             DirectoryInfo dlcDirectory = new DirectoryInfo($"{GetGameContentPath()}/WiiU/DLC");
+            
+            if (!dlcDirectory.Exists)
+            {
+                MessageBox.Show($"'{GetGameContentPath()}/WiiU/DLC' does not exist!", "Not Found",
+                   MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             foreach (var directoryInfo in dlcDirectory.GetDirectories())
             {
                 if (directoryInfo.GetFileSystemInfos().Length != 0)
