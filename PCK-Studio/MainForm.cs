@@ -2196,7 +2196,6 @@ namespace PckStudio
 				{
 					PCKFile.FileData file = currentPCK.CreateNew(diag.filepath, (PCKFile.FileData.FileType)diag.filetype);
 					file.SetData(File.ReadAllBytes(ofd.FileName));
-					currentPCK.Files.Add(file);
 
 					if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath)) RebuildSubPCK(treeViewMain.SelectedNode);
 					//else treeViewMain.Nodes.Add();
