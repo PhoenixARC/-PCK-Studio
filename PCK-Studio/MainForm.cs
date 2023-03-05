@@ -1947,7 +1947,7 @@ namespace PckStudio
 		private void addTextureToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			using OpenFileDialog fileDialog = new OpenFileDialog();
-			fileDialog.Filter = "Texture File(*.png)|*.png";
+			fileDialog.Filter = "Texture File(*.png;*.tga)|*.png;*.tga";
 			if (fileDialog.ShowDialog() == DialogResult.OK)
 			{
 				using RenamePrompt renamePrompt = new RenamePrompt(Path.GetFileName(fileDialog.FileName));
