@@ -660,24 +660,31 @@ namespace PckStudio
 			{
 				using var ofd = new OpenFileDialog();
 				// Suddenly, and randomly, this started throwing an exception because it wasn't formatted correctly? So now it's formatted correctly and now displays the file type name in the dialog.
-				ofd.Filter = file.Filetype.ToString() + " (*" + Path.GetExtension(file.Filename) + ")|*" + Path.GetExtension(file.Filename);
+
+				string extra_extensions = "";
+
+				switch (file.Filetype)
+				{
+					case PCKFile.FileData.FileType.TextureFile:
+						if (Path.GetExtension(file.Filename) == ".png") extra_extensions = ";*.tga";
+						else if (Path.GetExtension(file.Filename) == ".tga") extra_extensions = ";*.png";
+						break;
+				}
+
+				string fileExt = Path.GetExtension(file.Filename);
+
+				ofd.Filter = $"{file.Filetype} (*{fileExt}{extra_extensions})|*{fileExt}{extra_extensions}";
 				if (ofd.ShowDialog() == DialogResult.OK)
 				{
+					string newFileExt = Path.GetExtension(ofd.FileName);
 					file.SetData(File.ReadAllBytes(ofd.FileName));
+					file.Filename = file.Filename.Replace(fileExt, newFileExt);
 					if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath)) RebuildSubPCK(treeViewMain.SelectedNode);
 					wasModified = true;
+					BuildMainTreeView();
 				}
 				return;
 			}
-			//deleteEntryToolStripMenuItem_Click(sender, e);
-			//using FolderBrowserDialog folderDialog = new FolderBrowserDialog();
-			//folderDialog.Description = "Select Folder";
-			//if (folderDialog.ShowDialog() == DialogResult.OK)
-			//{
-			//	string[] FilePaths = Directory.GetFiles(folderDialog.SelectedPath, "*.png");
-			//	Array.ForEach(FilePaths, filePath => currentPCK.Createnew(filePath, 2));
-			//}
-			// should never happen unless its a folder
 			MessageBox.Show("Can't replace a folder.");
 		}
 
@@ -1940,7 +1947,7 @@ namespace PckStudio
 		private void addTextureToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			using OpenFileDialog fileDialog = new OpenFileDialog();
-			fileDialog.Filter = "Texture File(*.png)|*.png";
+			fileDialog.Filter = "Texture File(*.png;*.tga)|*.png;*.tga";
 			if (fileDialog.ShowDialog() == DialogResult.OK)
 			{
 				using RenamePrompt renamePrompt = new RenamePrompt(Path.GetFileName(fileDialog.FileName));
@@ -2189,7 +2196,6 @@ namespace PckStudio
 				{
 					PCKFile.FileData file = currentPCK.CreateNew(diag.filepath, (PCKFile.FileData.FileType)diag.filetype);
 					file.SetData(File.ReadAllBytes(ofd.FileName));
-					currentPCK.Files.Add(file);
 
 					if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath)) RebuildSubPCK(treeViewMain.SelectedNode);
 					//else treeViewMain.Nodes.Add();
