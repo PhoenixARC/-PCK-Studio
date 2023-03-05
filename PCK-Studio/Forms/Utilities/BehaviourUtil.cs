@@ -5,8 +5,9 @@ using System.IO;
 
 using PckStudio.Properties;
 using PckStudio.Classes.FileTypes;
-using PckStudio.Classes.IO.Behaviour;
 using PckStudio.Classes.Extentions;
+using OMI.Formats.Behaviour;
+using OMI.Workers.Behaviour;
 
 namespace PckStudio.Forms.Utilities
 {
@@ -23,7 +24,8 @@ namespace PckStudio.Forms.Utilities
 
             using (var stream = new MemoryStream())
             {
-                BehavioursWriter.Write(stream, new BehaviourFile());
+                var writer = new BehavioursWriter(new BehaviourFile());
+                writer.WriteToStream(stream);
                 file.SetData(stream.ToArray());
             }
             

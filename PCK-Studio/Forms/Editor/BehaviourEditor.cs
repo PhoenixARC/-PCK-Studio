@@ -7,9 +7,10 @@ using System.Linq;
 using System.Windows.Forms;
 using MetroFramework.Forms;
 using PckStudio.Classes.FileTypes;
-using PckStudio.Classes.IO.Behaviour;
 using PckStudio.Forms.Additional_Popups.EntityForms;
 using Newtonsoft.Json.Linq;
+using OMI.Formats.Behaviour;
+using OMI.Workers.Behaviour;
 
 namespace PckStudio.Forms.Editor
 {
@@ -62,7 +63,8 @@ namespace PckStudio.Forms.Editor
 
 			using (var stream = new MemoryStream(file.Data))
 			{
-				behaviourFile = BehavioursReader.Read(stream);
+				var reader = new BehavioursReader();
+				behaviourFile = reader.FromStream(stream);
 			}
 
 			treeView1.ImageList = new ImageList();
@@ -267,7 +269,8 @@ namespace PckStudio.Forms.Editor
 					}
 				}
 
-				BehavioursWriter.Write(stream, behaviourFile);
+				var writer = new BehavioursWriter(behaviourFile);
+				writer.WriteToStream(stream);
 				_file.SetData(stream.ToArray());
 			}
 			DialogResult = DialogResult.OK;
