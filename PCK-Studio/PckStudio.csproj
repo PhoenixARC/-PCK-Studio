@@ -176,7 +176,6 @@
     <Compile Include="Classes\FileTypes\ModelFile.cs" />
     <Compile Include="Classes\FileTypes\PCKAudioFile.cs" />
     <Compile Include="Classes\FileTypes\Binka.cs" />
-    <Compile Include="Classes\FileTypes\COLFile.cs" />
     <Compile Include="Classes\FileTypes\CSM.cs" />
     <Compile Include="Classes\FileTypes\GRFFile.cs" />
     <Compile Include="Classes\IO\Behaviour\BehavioursReader.cs" />
@@ -189,8 +188,6 @@
     <Compile Include="Classes\IO\Model\ModelFileWriter.cs" />
     <Compile Include="Classes\IO\PCK\PCKAudioFileReader.cs" />
     <Compile Include="Classes\IO\PCK\PCKAudioFileWriter.cs" />
-    <Compile Include="Classes\IO\COL\COLFileReader.cs" />
-    <Compile Include="Classes\IO\COL\COLFileWriter.cs" />
     <Compile Include="Classes\IO\Sounds\SoundIO.cs" />
     <Compile Include="Classes\IO\Sounds\Sounds.cs" />
     <Compile Include="Classes\Misc\FTPClient.cs" />
