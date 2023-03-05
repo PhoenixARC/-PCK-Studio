@@ -91,18 +91,18 @@ namespace PckStudio.Classes.FileTypes
 
         public int Crc => _crc;
         public bool IsWorld => _isWorld;
-        public eCompressionType CompressionLevel => _compressionLevel;
+        public CompressionType CompressionLevel => _compressionLevel;
 
         private int _crc = 0;
         private bool _isWorld = false;
-        private eCompressionType _compressionLevel = eCompressionType.None;
+        private CompressionType _compressionLevel = CompressionType.None;
 
-        public enum eCompressionType : byte
+        public enum CompressionType : byte
         {
-            None       = 0,
-            Zlib       = 1,
-            ZlibRle    = 2,
-            ZlibRleCrc = 3,
+            None             = 0,
+            Compressed       = 1,
+            CompressedRle    = 2,
+            CompressedRleCrc = 3,
         }
 
         /// <summary>
@@ -111,9 +111,9 @@ namespace PckStudio.Classes.FileTypes
         public GRFFile() : this(-1, false)
         {}
 
-        public GRFFile(int crc, bool isWolrd) : this(crc, isWolrd, eCompressionType.None)
+        public GRFFile(int crc, bool isWolrd) : this(crc, isWolrd, CompressionType.None)
         {}
-        public GRFFile(int crc, bool isWolrd, eCompressionType compressionLevel)
+        public GRFFile(int crc, bool isWolrd, CompressionType compressionLevel)
         {
             Root = new GameRule("__ROOT__", null);
             _compressionLevel = compressionLevel;
@@ -236,7 +236,7 @@ namespace PckStudio.Classes.FileTypes
 
             public GameRule Parent { get; } = null;
             public Dictionary<string, string> Parameters { get; } = new Dictionary<string, string>();
-            public List<GameRule> SubRules { get; } = new List<GameRule>();
+            public List<GameRule> ChildRules { get; } = new List<GameRule>();
 
             public GameRule(string name, GameRule parent)
             {
@@ -254,7 +254,7 @@ namespace PckStudio.Classes.FileTypes
             {
                 if (validate && !ValidGameRules.Contains(gameRuleName)) return null;
                 var tag = new GameRule(gameRuleName, this);
-                SubRules.Add(tag);
+                ChildRules.Add(tag);
                 return tag;
             }
 
@@ -269,7 +269,7 @@ namespace PckStudio.Classes.FileTypes
             }
         }
 
-        public void AddGameRules(IEnumerable<GameRule> gameRules) => Root.SubRules.AddRange(gameRules);
+        public void AddGameRules(IEnumerable<GameRule> gameRules) => Root.ChildRules.AddRange(gameRules);
         
         public GameRule AddRule(string gameRuleName)
             => AddRule(gameRuleName, false);

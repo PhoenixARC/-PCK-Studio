@@ -40,7 +40,7 @@ namespace PckStudio.Classes.IO.GRF
                 return stream;
             }
 
-            GRFFile.eCompressionType compression_type = (GRFFile.eCompressionType)stream.ReadByte();
+            GRFFile.CompressionType compression_type = (GRFFile.CompressionType)stream.ReadByte();
             int crc = ReadInt(stream);
             int byte1 = stream.ReadByte();
             int byte2 = stream.ReadByte();
@@ -48,11 +48,11 @@ namespace PckStudio.Classes.IO.GRF
             int byte4 = stream.ReadByte();
             if (byte4 > 0)
             {
-                compression_type = (GRFFile.eCompressionType)byte4;
+                compression_type = (GRFFile.CompressionType)byte4;
             }
             _file = new GRFFile(crc, byte4 > 0, compression_type);
 
-            if (compression_type == GRFFile.eCompressionType.None && byte4 == 0)
+            if (compression_type == GRFFile.CompressionType.None && byte4 == 0)
                 return stream;
 
             int buf_size = ReadInt(stream);
@@ -68,7 +68,7 @@ namespace PckStudio.Classes.IO.GRF
             }
             var decompressed_stream = DecompressZLX(new_stream);
             new_stream.Dispose();
-            if (compression_type > GRFFile.eCompressionType.Zlib)
+            if (compression_type > GRFFile.CompressionType.Compressed)
             {
                 byte[] data = ReadBytes(decompressed_stream, buf_size);
                 byte[] decoded_data = RLE<byte>.Decode(data).ToArray();

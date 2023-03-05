@@ -15,14 +15,14 @@ namespace PckStudio.Classes.IO.GRF
         private readonly GRFFile _grfFile;
         private List<string> StringLookUpTable;
 
-        private GRFFile.eCompressionType _compressionType;
+        private GRFFile.CompressionType _compressionType;
 
-        public static void Write(in Stream stream, GRFFile grfFile, GRFFile.eCompressionType compressionType)
+        public static void Write(in Stream stream, GRFFile grfFile, GRFFile.CompressionType compressionType)
         {
             new GRFFileWriter(grfFile, compressionType).WriteToStream(stream);
         }
 
-        private GRFFileWriter(GRFFile grfFile, GRFFile.eCompressionType compressionType) : base(false)
+        private GRFFileWriter(GRFFile grfFile, GRFFile.CompressionType compressionType) : base(false)
         {
             _compressionType = compressionType;
             if (grfFile.IsWorld)
@@ -35,7 +35,7 @@ namespace PckStudio.Classes.IO.GRF
         private void PrepareLookUpTable(GRFFile.GameRule rule, List<string> LUT)
         {
             if (!LUT.Contains(rule.Name)) LUT.Add(rule.Name);
-            rule.SubRules.ForEach(subRule => PrepareLookUpTable(subRule, LUT));
+            rule.ChildRules.ForEach(subRule => PrepareLookUpTable(subRule, LUT));
             foreach (var param in rule.Parameters)
                 if (!LUT.Contains(param.Key)) LUT.Add(param.Key);
         }
@@ -55,15 +55,15 @@ namespace PckStudio.Classes.IO.GRF
             byte[] _buffer = sourceStream.ToArray();
             int _original_length = _buffer.Length;
 
-            if (_compressionType >= GRFFile.eCompressionType.ZlibRle)
+            if (_compressionType >= GRFFile.CompressionType.CompressedRle)
                 _buffer = CompressRle(_buffer);
-            if (_compressionType >= GRFFile.eCompressionType.Zlib)
+            if (_compressionType >= GRFFile.CompressionType.Compressed)
             {
                 _buffer = CompressZib(_buffer);
                 WriteInt(destinationStream, _original_length);
                 WriteInt(destinationStream, _buffer.Length);
             }
-            if (_compressionType >= GRFFile.eCompressionType.ZlibRleCrc)
+            if (_compressionType >= GRFFile.CompressionType.CompressedRleCrc)
                 MakeAndWriteCrc(destinationStream, _buffer);
             WriteBytes(destinationStream, _buffer);
             return;
@@ -100,8 +100,8 @@ namespace PckStudio.Classes.IO.GRF
         private void WriteHeader(Stream stream)
         {
             WriteShort(stream, 1);
-            if (_compressionType < GRFFile.eCompressionType.None ||
-                _compressionType > GRFFile.eCompressionType.ZlibRleCrc)
+            if (_compressionType < GRFFile.CompressionType.None ||
+                _compressionType > GRFFile.CompressionType.CompressedRleCrc)
                 throw new ArgumentException(nameof(_compressionType));
             stream.WriteByte((byte)_compressionType);
             WriteInt(stream, _grfFile.Crc);
@@ -115,7 +115,7 @@ namespace PckStudio.Classes.IO.GRF
         {
             WriteTagLookUpTable(stream);
             SetString(stream, _grfFile.Root.Name);
-            WriteInt(stream, _grfFile.Root.SubRules.Count);
+            WriteInt(stream, _grfFile.Root.ChildRules.Count);
             WriteGameRuleHierarchy(stream, _grfFile.Root);
         }
 
@@ -127,12 +127,12 @@ namespace PckStudio.Classes.IO.GRF
 
         private void WriteGameRuleHierarchy(Stream stream, GRFFile.GameRule rule)
         {
-            foreach (var subRule in rule.SubRules)
+            foreach (var subRule in rule.ChildRules)
             {
                 SetString(stream, subRule.Name);
                 WriteInt(stream, subRule.Parameters.Count);
                 foreach (var param in subRule.Parameters) WriteParameter(stream, param);
-                WriteInt(stream, subRule.SubRules.Count);
+                WriteInt(stream, subRule.ChildRules.Count);
                 WriteGameRuleHierarchy(stream, subRule);
             }
         }

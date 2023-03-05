@@ -1273,7 +1273,7 @@ namespace PckStudio
 				);
 			using (var stream = new MemoryStream())
 			{
-				GRFFileWriter.Write(stream, grfFile, GRFFile.eCompressionType.ZlibRleCrc);
+				GRFFileWriter.Write(stream, grfFile, GRFFile.CompressionType.None);
 				gameRuleFile.SetData(stream.ToArray());
 			}
 			return newPck;

@@ -61,7 +61,7 @@ namespace PckStudio.Forms.Editor
 
         private void loadGRFTreeView(TreeNodeCollection root, GRFFile.GameRule parentRule)
         {
-            foreach (var rule in parentRule.SubRules)
+            foreach (var rule in parentRule.ChildRules)
             {
                 TreeNode node = new TreeNode(rule.Name);
                 node.Tag = rule;
@@ -171,9 +171,9 @@ namespace PckStudio.Forms.Editor
         private bool removeTag(GRFFile.GameRule rule)
         {
             _ = rule.Parent ?? throw new ArgumentNullException(nameof(rule.Parent));
-            foreach (var subTag in rule.SubRules.ToList())
+            foreach (var subTag in rule.ChildRules.ToList())
                 return removeTag(subTag);
-            return rule.Parent.SubRules.Remove(rule);
+            return rule.Parent.ChildRules.Remove(rule);
         }
 
         private void GrfTreeView_KeyDown(object sender, KeyEventArgs e)
@@ -193,7 +193,7 @@ namespace PckStudio.Forms.Editor
             {
                 try
                 {
-                    GRFFileWriter.Write(stream, _file, (GRFFile.eCompressionType)toolStripComboBox1.SelectedIndex/*GRFFile.eCompressionType.ZlibRleCrc*/);
+                    GRFFileWriter.Write(stream, _file, (GRFFile.CompressionType)toolStripComboBox1.SelectedIndex/*GRFFile.eCompressionType.ZlibRleCrc*/);
                     _pckfile?.SetData(stream.ToArray());
                     MessageBox.Show("Saved!");
                 }
