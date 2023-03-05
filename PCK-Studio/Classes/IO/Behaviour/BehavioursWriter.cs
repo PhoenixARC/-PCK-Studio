@@ -29,8 +29,8 @@ namespace PckStudio.Classes.IO.Behaviour
                 WriteInt(stream, entry.overrides.Count);
                 foreach(var posOverride in entry.overrides)
 				{
-                    WriteBool(stream, posOverride._1);
-                    WriteBool(stream, posOverride._2);
+                    WriteBool(stream, posOverride.EntityIsTamed);
+                    WriteBool(stream, posOverride.EntityHasSaddle);
                     WriteFloat(stream, posOverride.x);
                     WriteFloat(stream, posOverride.y);
                     WriteFloat(stream, posOverride.z);

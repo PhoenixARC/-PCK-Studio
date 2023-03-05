@@ -32,8 +32,8 @@ namespace PckStudio.Classes.IO.Behaviour
                 for (; 0 < posOverideCount; posOverideCount--)
                 {
                     var posOverride = new BehaviourFile.RiderPositionOverride.PositionOverride();
-                    posOverride._1 = ReadBool(stream);
-                    posOverride._2 = ReadBool(stream);
+                    posOverride.EntityIsTamed = ReadBool(stream);
+                    posOverride.EntityHasSaddle = ReadBool(stream);
                     posOverride.x = ReadFloat(stream);
                     posOverride.y = ReadFloat(stream);
                     posOverride.z = ReadFloat(stream);
