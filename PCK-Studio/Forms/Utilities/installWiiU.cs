@@ -10,8 +10,9 @@ using System.Diagnostics;
 
 using PckStudio.Classes.FileTypes;
 using PckStudio.Classes.IO.PCK;
-using PckStudio.Classes.IO.ARC;
 using PckStudio.Classes.Misc;
+using OMI.Formats.Archive;
+using OMI.Workers.Archive;
 
 namespace PckStudio.Forms
 {
@@ -439,7 +440,8 @@ namespace PckStudio.Forms
         {
             using (FTPClient client = new FTPClient("ftp://" + textBoxHost.Text, "", "a3262443"))
                 client.DownloadFile(dlcPath + "../../Common/Media/MediaWiiU.arc", Program.AppData + "MediaWiiU.arc");
-            archive = ARCFileReader.Read(new MemoryStream(File.ReadAllBytes(Program.AppData + "MediaWiiU.arc")));
+            var reader = new ARCFileReader();
+            archive = reader.FromStream(new MemoryStream(File.ReadAllBytes(Program.AppData + "MediaWiiU.arc")));
         }
 
         private void ReplacePackImage(string PackID)
@@ -455,7 +457,8 @@ namespace PckStudio.Forms
             using (FTPClient client = new FTPClient("ftp://" + textBoxHost.Text, "", "a3262443"))
             {
                 MemoryStream ms = new MemoryStream();
-                ARCFileWriter.Write(ms, archive);
+                var writer = new ARCFileWriter(archive);
+                writer.WriteToStream(ms);
                 File.WriteAllBytes(Program.AppData + "MediaWiiU.arc", ms.ToArray());
                 client.UploadFile(Program.AppData + "MediaWiiU.arc", dlcPath + "../../Common/Media/MediaWiiU.arc");
                 archive.Clear();
