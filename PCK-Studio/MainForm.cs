@@ -831,7 +831,6 @@ namespace PckStudio
                 PCKAudioFileWriter.Write(stream, audioPck, isLittle);
                 pckFileData.SetData(stream.ToArray());
             }
-			BuildMainTreeView();
             return pckFileData;
         }
 
@@ -849,6 +848,7 @@ namespace PckStudio
 			if (diag.ShowDialog(this) == DialogResult.OK)
 				TrySetLocFile(locFile);
 			diag.Dispose();
+			BuildMainTreeView();
 		}
 
 		private void createAnimatedTextureToolStripMenuItem_Click(object sender, EventArgs e)
