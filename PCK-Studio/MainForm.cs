@@ -831,6 +831,7 @@ namespace PckStudio
                 PCKAudioFileWriter.Write(stream, audioPck, isLittle);
                 pckFileData.SetData(stream.ToArray());
             }
+			BuildMainTreeView();
             return pckFileData;
         }
 
