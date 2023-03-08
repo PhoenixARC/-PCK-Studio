@@ -155,7 +155,7 @@ namespace PckStudio
 			}
 		}
 
-		private PCKFile openPck(string filePath)
+		private PCKFile openPck(string filePath, bool firstAttempt = true)
 		{
 			PCKFile pck = null;
 			using (var fileStream = File.OpenRead(filePath))
@@ -169,13 +169,25 @@ namespace PckStudio
 				}
 				catch (OverflowException ex)
 				{
-					MessageBox.Show("Failed to open pck\n" +
-						$"Try {(LittleEndianCheckBox.Checked ? "unchecking" : "checking")} the 'Open/Save as Vita/PS4 pck' check box in the upper right corner.",
-						"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-					Debug.WriteLine(ex.Message);
+					if(firstAttempt)
+					{
+						LittleEndianCheckBox.Checked = !LittleEndianCheckBox.Checked;
+						pck = openPck(filePath, false);
+					}
+					else
+					{
+						LittleEndianCheckBox.Checked = false;
+						CloseEditorTab();
+						MessageBox.Show("Failed to open pck\n" +
+							$"Try {(LittleEndianCheckBox.Checked ? "unchecking" : "checking")} the 'Open/Save as Vita/PS4 pck' check box in the upper right corner.",
+							"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+						Debug.WriteLine(ex.Message);
+					}
 				}
 				catch (Exception ex)
 				{
+					LittleEndianCheckBox.Checked = false;
+					CloseEditorTab();
 					MessageBox.Show("Failed to open pck\n" + 
 						"If this is an Audio/Music Cues pck, please use the specialized editor while inside of the parent pck.",
 						"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
