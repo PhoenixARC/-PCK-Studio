@@ -195,6 +195,7 @@ namespace PckStudio.Forms.Editor
 
 		async void ProcessEntries(string[] FileList)
 		{
+			int success = 0;
 			int exitCode = 0;
 			pleaseWait waitDiag = new pleaseWait();
 			waitDiag.Show(this);
@@ -246,6 +247,7 @@ namespace PckStudio.Forms.Editor
 								//adds song without affecting the binka file
 								cat.SongNames.Add(songName);
 								treeView2.Nodes.Add(songName);
+								success++;
 							}
 							continue;
 						}
@@ -267,7 +269,11 @@ namespace PckStudio.Forms.Editor
 						});
 
 						if (!File.Exists(cacheSongLoc)) MessageBox.Show(this, $"\"{songName}.wav\" failed to convert for some reason. Please reach out to MNL#8935 on the communtiy Discord server and provide details. Thanks!", "Conversion failed");
-						else File.Delete(cacheSongLoc); //cleanup song
+						else
+						{
+							success++;
+							File.Delete(cacheSongLoc); //cleanup song
+						}
 
 						Cursor.Current = Cursors.Default;
 
@@ -276,7 +282,10 @@ namespace PckStudio.Forms.Editor
 
 					// if the file is NOT a .wav and doesn't exist, copy the file
 					else if (!File.Exists(new_loc))
+					{
 						File.Copy(file, new_loc);
+						success++;
+					}
 
 					// this is repeated again becuase this is meant to prevent any files that fail to convert from being added to the category
 					if (treeView1.SelectedNode is TreeNode t && t.Tag is PCKAudioFile.AudioCategory category)
@@ -288,6 +297,8 @@ namespace PckStudio.Forms.Editor
 			}
 			waitDiag.Close();
 			waitDiag.Dispose();
+
+			MessageBox.Show(this, $"Successfully processed and/or converted {success}/{FileList.Length} file{(FileList.Length != 1 ? "s" : "" )}", "Done!");
 		}
 
 		private void Binka_DragDrop(object sender, DragEventArgs e)
