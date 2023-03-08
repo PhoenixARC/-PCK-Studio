@@ -304,12 +304,23 @@ namespace PckStudio.Forms.Editor
 
 			PCKAudioFile.AudioCategory overworldCategory = audioFile.GetCategory(PCKAudioFile.AudioCategory.EAudioType.Overworld);
 
+			bool songs_missing = false;
 			foreach (var category in audioFile.Categories)
 			{
 				if (category.SongNames.Count < 1)
 				{
 					MessageBox.Show("The game will crash upon loading your pack if any of the categories are empty. Please remove or occupy the category.", "Empty Category");
 					return;
+				}
+
+				foreach(var song in category.SongNames)
+				{
+					string FileName = Path.Combine(parent.GetDataPath(), song + ".binka");
+					if (!File.Exists(FileName))
+					{
+						songs_missing = true;
+						MessageBox.Show("\"" + song + ".binka\" does not exist in the \"Data\" folder. The game will crash when attempting to load this track.", "File missing");
+					}
 				}
 
 				category.Name = "";
@@ -325,6 +336,12 @@ namespace PckStudio.Forms.Editor
 					}
 					category.Name = "include_overworld";
 				}
+			}
+
+			if (songs_missing)
+			{
+				MessageBox.Show("Failed to save AudioData file because there are missing song entries", "Error");
+				return;
 			}
 
 			using (var stream = new MemoryStream())
