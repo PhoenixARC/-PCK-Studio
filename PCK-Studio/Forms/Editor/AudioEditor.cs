@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Security.Cryptography;
+using System.Text.RegularExpressions;
 using System.Diagnostics;
 using MetroFramework.Forms;
 using PckStudio.Classes;
@@ -199,13 +200,19 @@ namespace PckStudio.Forms.Editor
 			{
 				if (Path.GetExtension(file) == ".binka" || Path.GetExtension(file) == ".wav")
 				{
-					string new_loc = Path.Combine(parent.GetDataPath(), Path.GetFileNameWithoutExtension(file) + ".binka");
-					string songName = Path.GetFileNameWithoutExtension(file);
+					string songName = string.Join("_", Path.GetFileNameWithoutExtension(file).Split(Path.GetInvalidFileNameChars()));
+					songName = Regex.Replace(songName, @"[^\u0000-\u007F]+", "_"); // Replace UTF characters
+					string cacheSongLoc = Path.Combine(Program.AppDataCache, songName + Path.GetExtension(file));
+
+					if(File.Exists(cacheSongLoc)) File.Delete(cacheSongLoc);
+					File.Copy(file, cacheSongLoc);
+
+					string new_loc = Path.Combine(parent.GetDataPath(), songName + ".binka");
 					bool is_duplicate_file = false; // To handle if a file already in the pack is dropped back in
 					bool loc_is_occupied = File.Exists(new_loc);
 					if (loc_is_occupied)
 					{
-						FileStream fs1 = File.OpenRead(file);
+						FileStream fs1 = File.OpenRead(cacheSongLoc);
 						FileStream fs2 = File.OpenRead(new_loc);
 
 						string hash1_str = BitConverter.ToString(MD5.Create().ComputeHash(fs1));
@@ -256,8 +263,11 @@ namespace PckStudio.Forms.Editor
 
 						await Task.Run(() =>
 						{
-                            exitCode = Binka.FromWav(file, new_loc, (int)compressionUpDown.Value);
+                            exitCode = Binka.FromWav(cacheSongLoc, new_loc, (int)compressionUpDown.Value);
 						});
+
+						if (!File.Exists(cacheSongLoc)) MessageBox.Show(this, $"\"{songName}.wav\" failed to convert for some reason. Please reach out to MNL#8935 on the communtiy Discord server and provide details. Thanks!", "Conversion failed");
+						else File.Delete(cacheSongLoc); //cleanup song
 
 						waitDiag.Close();
 						waitDiag.Dispose();
