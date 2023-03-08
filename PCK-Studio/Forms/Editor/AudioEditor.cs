@@ -196,7 +196,9 @@ namespace PckStudio.Forms.Editor
 		async void ProcessEntries(string[] FileList)
 		{
 			int exitCode = 0;
-            foreach (string file in FileList)
+			pleaseWait waitDiag = new pleaseWait();
+			waitDiag.Show(this);
+			foreach (string file in FileList)
 			{
 				if (Path.GetExtension(file) == ".binka" || Path.GetExtension(file) == ".wav")
 				{
@@ -258,8 +260,6 @@ namespace PckStudio.Forms.Editor
 					if (Path.GetExtension(file) == ".wav") // Convert Wave to BINKA
 					{
 						Cursor.Current = Cursors.WaitCursor;
-						pleaseWait waitDiag = new pleaseWait();
-						waitDiag.Show(this);
 
 						await Task.Run(() =>
 						{
@@ -269,8 +269,6 @@ namespace PckStudio.Forms.Editor
 						if (!File.Exists(cacheSongLoc)) MessageBox.Show(this, $"\"{songName}.wav\" failed to convert for some reason. Please reach out to MNL#8935 on the communtiy Discord server and provide details. Thanks!", "Conversion failed");
 						else File.Delete(cacheSongLoc); //cleanup song
 
-						waitDiag.Close();
-						waitDiag.Dispose();
 						Cursor.Current = Cursors.Default;
 
 						if (exitCode != 0) continue;
@@ -288,6 +286,8 @@ namespace PckStudio.Forms.Editor
 					}
 				}
 			}
+			waitDiag.Close();
+			waitDiag.Dispose();
 		}
 
 		private void Binka_DragDrop(object sender, DragEventArgs e)
