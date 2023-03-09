@@ -8,6 +8,7 @@ using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
 using MetroFramework.Forms;
+using NAudio.Wave;
 using PckStudio.Classes;
 using PckStudio.Classes.FileTypes;
 using PckStudio.Classes.IO.PCK;
@@ -208,14 +209,13 @@ namespace PckStudio.Forms.Editor
 					string cacheSongLoc = Path.Combine(Program.AppDataCache, songName + Path.GetExtension(file));
 
 					if(File.Exists(cacheSongLoc)) File.Delete(cacheSongLoc);
-					File.Copy(file, cacheSongLoc);
 
 					string new_loc = Path.Combine(parent.GetDataPath(), songName + ".binka");
 					bool is_duplicate_file = false; // To handle if a file already in the pack is dropped back in
 					bool loc_is_occupied = File.Exists(new_loc);
 					if (loc_is_occupied)
 					{
-						FileStream fs1 = File.OpenRead(cacheSongLoc);
+						FileStream fs1 = File.OpenRead(file);
 						FileStream fs2 = File.OpenRead(new_loc);
 
 						string hash1_str = BitConverter.ToString(MD5.Create().ComputeHash(fs1));
@@ -258,9 +258,20 @@ namespace PckStudio.Forms.Editor
 							if (File.Exists(new_loc) && !is_duplicate_file) File.Delete(new_loc);
 						}
 					}
-					
+
 					if (Path.GetExtension(file) == ".wav") // Convert Wave to BINKA
 					{
+						using (var reader = new WaveFileReader(file)) //read from original location
+						{
+							var newFormat = new WaveFormat(reader.WaveFormat.SampleRate, 16, reader.WaveFormat.Channels);
+							using (var conversionStream = new WaveFormatConversionStream(newFormat, reader))
+							{
+								WaveFileWriter.CreateWaveFile(cacheSongLoc, conversionStream); //write to new location
+							}
+							reader.Close();
+							reader.Dispose();
+						}
+
 						Cursor.Current = Cursors.WaitCursor;
 
 						await Task.Run(() =>
