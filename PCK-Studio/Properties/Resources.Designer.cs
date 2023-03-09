@@ -314,9 +314,9 @@ namespace PckStudio.Properties {
         ///		{ &quot;&quot;: &quot;&quot; },
         ///		{ &quot;&quot;: &quot;&quot; },
         ///		{ &quot;bat&quot;: &quot;Bat&quot; },
-        ///		{ &quot;blaze_head&quot;: &quot;Blaze&quot; },
+        ///		{ &quot;blaze_head&quot;: &quot;Blaze (Head Only)&quot; },
         ///		{ &quot;&quot;: &quot;&quot; },
-        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;cat&quot;: &quot;Cat (PS4 EXCLUSIVE)&quot; },
         ///		{ &quot;&quot;: &quot;&quot; },
         ///		{ &quot;&quot;: &quot;&quot; },
         ///		{ &quot;&quot;: &quot;&quot; },
@@ -331,13 +331,43 @@ namespace PckStudio.Properties {
         ///		{ &quot;&quot;: &quot;&quot; },
         ///		{ &quot;&quot;: &quot;&quot; },
         ///		{ &quot;&quot;: &quot;&quot; },
-        ///		{ &quot;ender_dragon&quot;: &quot;Ender Dragon&quot; },
-        ///		{ &quot;&quot;: &quot;&quot; },
-        ///		{ &quot;enderman&quot;: &quot; [re....
+        ///		{ &quot;ender_dragon&quot;: &quot;Ender Dragon&quot; }, [rest of string was truncated]&quot;;.
         /// </summary>
         public static string entityMaterialData {
             get {
                 return ResourceManager.GetString("entityMaterialData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///	&quot;COMMENT&quot;: &quot;Entity data research by NessieHax (Miku-666) and MattNL&quot;,
+        ///	&quot;entities&quot;: [
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;bat&quot;: &quot;Bat&quot; },
+        ///		{ &quot;blaze&quot;: &quot;Blaze&quot; },
+        ///		{ &quot;boat&quot;: &quot;Boat&quot; },
+        ///		{ &quot;cat&quot;: &quot;Cat (PS4 EXCLUSIVE)&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;chicken&quot;: &quot;Chicken&quot; },
+        ///		{ &quot;cod&quot;: &quot;Cod&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;cow&quot;: &quot;Cow&quot; },
+        ///		{ &quot;creeper&quot;: &quot;Creeper&quot; },
+        ///		{ &quot;dolphin&quot;: &quot;Dolphin&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;zombie.drowned&quot;: &quot;Drowned&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        /// [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string entityModelData {
+            get {
+                return ResourceManager.GetString("entityModelData", resourceCulture);
             }
         }
         
