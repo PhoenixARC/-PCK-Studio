@@ -17,7 +17,7 @@ namespace PckStudio.Forms.Utilities
         
         public static Image[] entityImages => _entityImages ??= Resources.entities_sheet.CreateImageList(32).ToArray();
 
-        public static PCKFile.FileData CreateNewBehaviourFile()
+        public static PCKFile.FileData CreateNewModelsFile()
         {
             PCKFile.FileData file = new PCKFile.FileData($"models.bin", PCKFile.FileData.FileType.ModelsFile);
 
