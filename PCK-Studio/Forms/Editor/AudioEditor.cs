@@ -574,5 +574,31 @@ namespace PckStudio.Forms.Editor
 				MessageBox.Show("There are no categories that aren't already used", "All possible categories are used");
 			}
 		}
+
+		private void organizeTracksToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if(MessageBox.Show("This function will move all binka files in the \"Data\" folder into a \"Music\" folder, to keep your data better organized. Would you like to continue?", "Move tracks?", MessageBoxButtons.YesNo) == DialogResult.Yes)
+			{
+				if (treeView1.Nodes.Count < 1 || !parent.CreateDataFolder()) return;
+				string musicdir = Path.Combine(parent.GetDataPath(), "Music");
+				Directory.CreateDirectory(musicdir);
+				foreach (var category in audioFile.Categories)
+				{
+					for (var i = 0; i < category.SongNames.Count; i++) // using standard for loop so the list can be modified
+					{
+						string song = category.SongNames[i];
+						string songpath = Path.Combine(parent.GetDataPath(), song + ".binka");
+						if (File.Exists(songpath))
+						{
+							File.Move(songpath, Path.Combine(musicdir, song + ".binka"));
+						}
+
+						category.SongNames[i] = Path.Combine("Music", song.Replace(song, Path.GetFileNameWithoutExtension(songpath)));
+					}
+				}
+				treeView2.Nodes.Clear();
+				treeView1.SelectedNode = null;
+			}
+		}
 	}
 }

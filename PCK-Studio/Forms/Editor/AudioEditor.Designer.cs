@@ -59,6 +59,7 @@ namespace PckStudio.Forms.Editor
 			this.playOverworldInCreative = new MetroFramework.Controls.MetroCheckBox();
 			this.compressionUpDown = new System.Windows.Forms.NumericUpDown();
 			this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
+			this.organizeTracksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenuStrip1.SuspendLayout();
 			this.menuStrip.SuspendLayout();
 			this.contextMenuStrip2.SuspendLayout();
@@ -148,7 +149,8 @@ namespace PckStudio.Forms.Editor
             this.creditsEditorToolStripMenuItem,
             this.deleteUnusedBINKAsToolStripMenuItem,
             this.openDataFolderToolStripMenuItem,
-            this.bulkReplaceExistingTracksToolStripMenuItem});
+            this.bulkReplaceExistingTracksToolStripMenuItem,
+            this.organizeTracksToolStripMenuItem});
 			this.toolsToolStripMenuItem.ForeColor = System.Drawing.Color.White;
 			this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
 			resources.ApplyResources(this.toolsToolStripMenuItem, "toolsToolStripMenuItem");
@@ -297,6 +299,12 @@ namespace PckStudio.Forms.Editor
 			this.metroLabel1.Name = "metroLabel1";
 			this.metroLabel1.Theme = MetroFramework.MetroThemeStyle.Dark;
 			// 
+			// organizeTracksToolStripMenuItem
+			// 
+			this.organizeTracksToolStripMenuItem.Name = "organizeTracksToolStripMenuItem";
+			resources.ApplyResources(this.organizeTracksToolStripMenuItem, "organizeTracksToolStripMenuItem");
+			this.organizeTracksToolStripMenuItem.Click += new System.EventHandler(this.organizeTracksToolStripMenuItem_Click);
+			// 
 			// AudioEditor
 			// 
 			resources.ApplyResources(this, "$this");
@@ -352,5 +360,6 @@ namespace PckStudio.Forms.Editor
 		private System.Windows.Forms.ToolStripMenuItem openDataFolderToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem bulkReplaceExistingTracksToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem changeCategoryToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem organizeTracksToolStripMenuItem;
 	}
 }
