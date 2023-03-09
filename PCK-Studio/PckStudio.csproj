@@ -369,6 +369,7 @@
     <Compile Include="Forms\Additional-Popups\Audio\pleaseWait.Designer.cs">
       <DependentUpon>pleaseWait.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Utilities\ModelsUtil.cs" />
     <Compile Include="Forms\Utilities\MaterialUtil.cs" />
     <Compile Include="Forms\Utilities\BehaviourUtil.cs" />
     <Compile Include="Forms\Utilities\AnimationUtil.cs" />
@@ -691,6 +692,7 @@
   <ItemGroup>
     <None Include="Resources\entityBehaviourData.json" />
     <None Include="Resources\entityMaterialData.json" />
+    <None Include="Resources\entityModelData.json" />
     <None Include="Resources\TexturePackIcon.png" />
     <None Include="Resources\apps.zip" />
     <None Include="Resources\binka\binkawin.asi" />
