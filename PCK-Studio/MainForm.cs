@@ -8,11 +8,12 @@ using System.Drawing.Drawing2D;
 using System.Diagnostics;
 using System.Drawing.Imaging;
 
+using OMI.Formats.GameRule;
+using OMI.Workers.GameRule;
 using PckStudio.Properties;
 using PckStudio.Classes.FileTypes;
 using PckStudio.Classes.IO.LOC;
 using PckStudio.Classes.IO.PCK;
-using PckStudio.Classes.IO.GRF;
 using PckStudio.Classes.Utils;
 using PckStudio.Classes.Utils.ARC;
 using PckStudio.Classes._3ds.Utils;
@@ -372,7 +373,7 @@ namespace PckStudio
 
 		private void HandleGameRuleFile(PCKFile.FileData file)
 		{
-			using GRFEditor grfEditor = new GRFEditor(file);
+			using GameRuleFileEditor grfEditor = new GameRuleFileEditor(file);
 			wasModified = grfEditor.ShowDialog(this) == DialogResult.OK;
 			UpdateRPC();
 		}
@@ -1256,7 +1257,7 @@ namespace PckStudio
 		{
             var newPck = InitializeTexturePack(packId, packVersion, packName, res, true);
 			var gameRuleFile = newPck.CreateNew("GameRules.grf", PCKFile.FileData.FileType.GameRulesFile);
-			var grfFile = new GRFFile();
+			var grfFile = new GameRuleFile();
 			grfFile.AddRule("MapOptions",
 				new KeyValuePair<string, string>("seed", "0"),
 				new KeyValuePair<string, string>("baseSaveName", string.Empty),
@@ -1272,8 +1273,9 @@ namespace PckStudio
 				new KeyValuePair<string, string>("spawnZ", "0")
 				);
 			using (var stream = new MemoryStream())
-			{
-				GRFFileWriter.Write(stream, grfFile, GRFFile.CompressionType.None);
+            {
+				var writer = new GameRuleFileWriter(grfFile);
+				writer.WriteToStream(stream);
 				gameRuleFile.SetData(stream.ToArray());
 			}
 			return newPck;
