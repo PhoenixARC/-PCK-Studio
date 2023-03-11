@@ -47,7 +47,7 @@ namespace PckStudio.Classes.FileTypes
 
         public struct Model
         {
-            public readonly string name;
+            public string name;
             public Size textureSize;
             public List<Part> parts { get; } = new List<Part>();
 
