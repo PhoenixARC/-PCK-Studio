@@ -464,7 +464,8 @@ namespace PckStudio
         }
 		public void HandleModelsFile(PCKFile.FileData file)
 		{
-			MessageBox.Show("Models.bin support has not been implemented. You can use the Spark Editor for the time being to edit these files.", "Not implemented yet.");
+			using ModelsEditor edit = new ModelsEditor(file);
+			wasModified = edit.ShowDialog(this) == DialogResult.OK;
 		}
 		public void HandleBehavioursFile(PCKFile.FileData file)
 		{
