@@ -171,7 +171,7 @@ namespace PckStudio.Forms.Editor
 
 				TreeNode NewModelNode = new TreeNode(NewModel.name);
 				NewModelNode.Tag = NewModel;
-				foreach (JObject content in Utilities.BehaviourUtil.entityData["entities"].Children())
+				foreach (JObject content in Utilities.ModelsUtil.entityData["entities"].Children())
 				{
 					var prop = content.Properties().FirstOrDefault(prop => prop.Name == NewModel.name);
 					if (prop is JProperty)
