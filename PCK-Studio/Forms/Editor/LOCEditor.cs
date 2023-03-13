@@ -6,10 +6,10 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using MetroFramework.Forms;
 using PckStudio.Classes.Misc;
-using PckStudio.Classes.FileTypes;
 using PckStudio.Forms.Additional_Popups.Loc;
 using OMI.Formats.Languages;
 using OMI.Workers.Language;
+using OMI.Formats.Pck;
 
 namespace PckStudio.Forms.Editor
 {
@@ -17,9 +17,9 @@ namespace PckStudio.Forms.Editor
     {
 		DataTable tbl;
 		LOCFile currentLoc;
-		PCKFile.FileData _file;
+		PckFile.FileData _file;
 
-		public LOCEditor(PCKFile.FileData file)
+		public LOCEditor(PckFile.FileData file)
 		{
 			InitializeComponent();
 			_file = file;

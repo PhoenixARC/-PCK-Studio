@@ -8,15 +8,15 @@ using System.Windows.Forms;
 using MetroFramework.Forms;
 using PckStudio.Classes.FileTypes;
 using PckStudio.Classes.IO.Materials;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using OMI.Formats.Pck;
 
 namespace PckStudio.Forms.Editor
 {
 	public partial class MaterialsEditor : MetroForm
 	{
 		// Behaviours File Format research by Miku and MattNL
-		private readonly PCKFile.FileData _file;
+		private readonly PckFile.FileData _file;
 		MaterialsFile materialFile;
 
 		void SetUpTree()
@@ -46,7 +46,7 @@ namespace PckStudio.Forms.Editor
 			treeView1.EndUpdate();
 		}
 
-		public MaterialsEditor(PCKFile.FileData file)
+		public MaterialsEditor(PckFile.FileData file)
 		{
 			InitializeComponent();
 			_file = file;

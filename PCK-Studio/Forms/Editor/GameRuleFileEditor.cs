@@ -11,12 +11,13 @@ using OMI.Formats.GameRule;
 using OMI.Workers.GameRule;
 using System.Diagnostics;
 using PckStudio.Forms.Additional_Popups.Audio;
+using OMI.Formats.Pck;
 
 namespace PckStudio.Forms.Editor
 {
     public partial class GameRuleFileEditor : MetroFramework.Forms.MetroForm
     {
-        private PCKFile.FileData _pckfile;
+        private PckFile.FileData _pckfile;
         private GameRuleFile _file;
 
         public GameRuleFileEditor()
@@ -34,7 +35,7 @@ namespace PckStudio.Forms.Editor
                 compressionTypeComboBox.SelectedIndex = compressionTypeComboBox.Items.IndexOf(dialog.Category);
         }
 
-        public GameRuleFileEditor(PCKFile.FileData file) : this()
+        public GameRuleFileEditor(PckFile.FileData file) : this()
         {
             _pckfile = file;
             using (var stream = new MemoryStream(file.Data))

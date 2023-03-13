@@ -192,10 +192,6 @@
     <Compile Include="Classes\Utils\ARC\ARCUtil.cs" />
     <Compile Include="Classes\Extentions\ImageExtentions.cs" />
     <Compile Include="Classes\Utils\SkinANIM.cs" />
-    <Compile Include="Classes\FileTypes\PCKProperties.cs" />
-    <Compile Include="Classes\FileTypes\PCKFile.cs" />
-    <Compile Include="Classes\IO\PCK\PCKFileReader.cs" />
-    <Compile Include="Classes\IO\PCK\PCKFileWriter.cs" />
     <Compile Include="Classes\IO\StreamDataReader.cs" />
     <Compile Include="Classes\IO\StreamDataWriter.cs" />
     <Compile Include="Classes\Models\DefaultModels\Steve64x32Model.cs" />

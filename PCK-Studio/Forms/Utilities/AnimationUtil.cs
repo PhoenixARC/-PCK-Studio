@@ -4,9 +4,9 @@ using System.Linq;
 using System.IO;
 
 using PckStudio.Properties;
-using PckStudio.Classes.FileTypes;
 using System.Drawing.Imaging;
 using PckStudio.Classes.Extentions;
+using OMI.Formats.Pck;
 
 namespace PckStudio.Forms.Utilities
 {
@@ -19,9 +19,9 @@ namespace PckStudio.Forms.Utilities
 
         public static Image[] tileImages => _tileImages ??= Resources.terrain_sheet.CreateImageList(16).Concat(Resources.items_sheet.CreateImageList(16)).ToArray();
 
-        public static PCKFile.FileData CreateNewAnimationFile(Image source, string tileName, bool isItem)
+        public static PckFile.FileData CreateNewAnimationFile(Image source, string tileName, bool isItem)
         {
-            PCKFile.FileData file = new PCKFile.FileData($"res/textures/{GetAnimationSection(isItem)}/{tileName}.png", PCKFile.FileData.FileType.TextureFile);
+            PckFile.FileData file = new PckFile.FileData($"res/textures/{GetAnimationSection(isItem)}/{tileName}.png", PckFile.FileData.FileType.TextureFile);
             file.Properties.Add(("ANIM", string.Empty));
             using (var stream = new MemoryStream())
             {

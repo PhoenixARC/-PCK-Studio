@@ -6,8 +6,8 @@ using System.Linq;
 using System.Windows.Forms;
 using MetroFramework.Forms;
 using OMI.Formats.Color;
+using OMI.Formats.Pck;
 using OMI.Workers.Color;
-using PckStudio.Classes.FileTypes;
 
 namespace PckStudio.Forms.Editor
 {
@@ -17,14 +17,14 @@ namespace PckStudio.Forms.Editor
         ColorContainer colourfile;
         ColorContainer.Color clipboard_color;
 
-		private readonly PCKFile.FileData _file;
+		private readonly PckFile.FileData _file;
 
 		List<TreeNode> colorCache = new List<TreeNode>();
 		List<TreeNode> waterCache = new List<TreeNode>();
 		List<TreeNode> underwaterCache = new List<TreeNode>();
 		List<TreeNode> fogCache = new List<TreeNode>();
 
-		public COLEditor(PCKFile.FileData file)
+		public COLEditor(PckFile.FileData file)
 		{
 			InitializeComponent();
 			_file = file;

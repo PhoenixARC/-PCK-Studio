@@ -3,28 +3,27 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
-using PckStudio.Classes.FileTypes;
 using System.Drawing.Imaging;
 using PckStudio.Classes.Utils;
 using PckStudio.Classes._3ds.Utils;
 using OMI.Formats.Languages;
+using OMI.Formats.Pck;
 
 namespace PckStudio
 {
     public partial class addNewSkin : MetroFramework.Forms.MetroForm
     {
-
-        public PCKFile.FileData SkinFile => skin;
-        public PCKFile.FileData CapeFile => cape;
+        public PckFile.FileData SkinFile => skin;
+        public PckFile.FileData CapeFile => cape;
         public bool HasCape = false;
 
         LOCFile currentLoc;
-        PCKFile.FileData skin = new PCKFile.FileData("dlcskinXYXYXYXY", PCKFile.FileData.FileType.SkinFile);
-        PCKFile.FileData cape = new PCKFile.FileData("dlccapeXYXYXYXY", PCKFile.FileData.FileType.CapeFile);
+        PckFile.FileData skin = new PckFile.FileData("dlcskinXYXYXYXY", PckFile.FileData.FileType.SkinFile);
+        PckFile.FileData cape = new PckFile.FileData("dlccapeXYXYXYXY", PckFile.FileData.FileType.CapeFile);
         SkinANIM anim = new SkinANIM();
 
         eSkinType skinType;
-        PCKProperties generatedModel = new PCKProperties();
+        PckFile.PCKProperties generatedModel = new PckFile.PCKProperties();
 
         enum eSkinType : int
         {

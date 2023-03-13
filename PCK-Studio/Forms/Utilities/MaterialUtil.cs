@@ -7,6 +7,7 @@ using PckStudio.Properties;
 using PckStudio.Classes.FileTypes;
 using PckStudio.Classes.IO.Materials;
 using PckStudio.Classes.Extentions;
+using OMI.Formats.Pck;
 
 namespace PckStudio.Forms.Utilities
 {
@@ -16,9 +17,9 @@ namespace PckStudio.Forms.Utilities
         private static Image[] _entityImages;
         public static Image[] entityImages => _entityImages ??= Resources.entities_sheet.CreateImageList(32).ToArray();
 
-        public static PCKFile.FileData CreateNewMaterialsFile()
+        public static PckFile.FileData CreateNewMaterialsFile()
         {
-            PCKFile.FileData file = new PCKFile.FileData($"entityMaterials.bin", PCKFile.FileData.FileType.MaterialFile);
+            PckFile.FileData file = new PckFile.FileData($"entityMaterials.bin", PckFile.FileData.FileType.MaterialFile);
 
             using (var stream = new MemoryStream())
             {

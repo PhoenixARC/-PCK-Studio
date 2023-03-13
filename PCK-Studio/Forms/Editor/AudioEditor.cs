@@ -12,6 +12,7 @@ using PckStudio.Classes.FileTypes;
 using PckStudio.Classes.IO.PCK;
 using PckStudio.Forms.Additional_Popups.Audio;
 using OMI.Formats.Languages;
+using OMI.Formats.Pck;
 
 // Audio Editor by MattNL
 // additional work and optimization by Miku-666
@@ -22,7 +23,7 @@ namespace PckStudio.Forms.Editor
 	{
 		public string defaultType = "yes";
 		PCKAudioFile audioFile = null;
-		PCKFile.FileData audioPCK;
+		PckFile.FileData audioPCK;
 		LOCFile loc;
 		bool _isLittleEndian = false;
         MainForm parent = null;
@@ -51,7 +52,7 @@ namespace PckStudio.Forms.Editor
 			return (PCKAudioFile.AudioCategory.EAudioType)Categories.IndexOf(category);
 		}
 
-		public AudioEditor(PCKFile.FileData file, LOCFile locFile, bool isLittleEndian)
+		public AudioEditor(PckFile.FileData file, LOCFile locFile, bool isLittleEndian)
 		{
 			InitializeComponent();
 			loc = locFile;
