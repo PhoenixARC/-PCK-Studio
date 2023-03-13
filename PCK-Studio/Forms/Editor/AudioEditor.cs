@@ -15,6 +15,7 @@ using PckStudio.Classes.IO.PCK;
 using PckStudio.Forms.Additional_Popups.Audio;
 using OMI.Formats.Languages;
 using OMI.Formats.Pck;
+using PckStudio.Forms.Additional_Popups;
 
 // Audio Editor by MattNL
 // additional work and optimization by Miku-666
@@ -129,12 +130,12 @@ namespace PckStudio.Forms.Editor
 			string[] available = Categories.FindAll(str => !audioFile.HasCategory(GetCategoryId(str))).ToArray();
 			if (available.Length > 0)
 			{
-				using addCategory add = new addCategory(available);
+				using ItemSelectionPopUp add = new ItemSelectionPopUp(available);
 				if (add.ShowDialog() == DialogResult.OK)
-					audioFile.AddCategory(GetCategoryId(add.Category));
+					audioFile.AddCategory(GetCategoryId(add.SelectedItem));
 				else return;
 
-				var category = audioFile.GetCategory(GetCategoryId(add.Category));
+				var category = audioFile.GetCategory(GetCategoryId(add.SelectedItem));
 				TreeNode treeNode = new TreeNode(GetCategoryFromId(category.audioType), (int)category.audioType, (int)category.audioType);
 				treeNode.Tag = category;
 				treeView1.Nodes.Add(treeNode);
@@ -557,15 +558,15 @@ namespace PckStudio.Forms.Editor
 			string[] available = Categories.FindAll(str => !audioFile.HasCategory(GetCategoryId(str))).ToArray();
 			if (available.Length > 0)
 			{
-				using addCategory add = new addCategory(available);
-				add.button1.Text = "Save";
+				using ItemSelectionPopUp add = new ItemSelectionPopUp(available);
+				add.okBtn.Text = "Save";
 				if (add.ShowDialog() != DialogResult.OK) return;
 
 				audioFile.RemoveCategory(category.audioType);
 
-				audioFile.AddCategory(category.parameterType, GetCategoryId(add.Category), category.audioType == PCKAudioFile.AudioCategory.EAudioType.Overworld && playOverworldInCreative.Checked ? "include_overworld" : "");
+				audioFile.AddCategory(category.parameterType, GetCategoryId(add.SelectedItem), category.audioType == PCKAudioFile.AudioCategory.EAudioType.Overworld && playOverworldInCreative.Checked ? "include_overworld" : "");
 
-				var newCategory = audioFile.GetCategory(GetCategoryId(add.Category));
+				var newCategory = audioFile.GetCategory(GetCategoryId(add.SelectedItem));
 
 				category.SongNames.ForEach(c => newCategory.SongNames.Add(c));
 

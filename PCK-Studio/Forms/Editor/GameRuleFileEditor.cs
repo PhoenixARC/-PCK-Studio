@@ -4,14 +4,13 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using PckStudio.Classes.FileTypes;
 using PckStudio.Forms.Additional_Popups.Grf;
 using PckStudio.Classes.Misc;
 using OMI.Formats.GameRule;
 using OMI.Workers.GameRule;
 using System.Diagnostics;
-using PckStudio.Forms.Additional_Popups.Audio;
 using OMI.Formats.Pck;
+using PckStudio.Forms.Additional_Popups;
 
 namespace PckStudio.Forms.Editor
 {
@@ -28,11 +27,11 @@ namespace PckStudio.Forms.Editor
 
         private void PromptForCompressionType()
         {
-            addCategory dialog = new addCategory(compressionTypeComboBox.Items.Cast<string>().ToArray());
+            ItemSelectionPopUp dialog = new ItemSelectionPopUp(compressionTypeComboBox.Items.Cast<string>().ToArray());
             dialog.label2.Text = "Type";
-            dialog.button1.Text = "Ok";
+            dialog.okBtn.Text = "Ok";
             if (dialog.ShowDialog() == DialogResult.OK)
-                compressionTypeComboBox.SelectedIndex = compressionTypeComboBox.Items.IndexOf(dialog.Category);
+                compressionTypeComboBox.SelectedIndex = compressionTypeComboBox.Items.IndexOf(dialog.SelectedItem);
         }
 
         public GameRuleFileEditor(PckFile.FileData file) : this()

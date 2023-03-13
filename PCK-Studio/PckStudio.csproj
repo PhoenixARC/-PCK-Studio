@@ -301,11 +301,11 @@
     <Compile Include="Forms\Additional-Popups\Audio\creditsEditor.Designer.cs">
       <DependentUpon>creditsEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Additional-Popups\Audio\addCategory.cs">
+    <Compile Include="Forms\Additional-Popups\ItemSelectionPopUp.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Additional-Popups\Audio\addCategory.Designer.cs">
-      <DependentUpon>addCategory.cs</DependentUpon>
+    <Compile Include="Forms\Additional-Popups\ItemSelectionPopUp.Designer.cs">
+      <DependentUpon>ItemSelectionPopUp.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Skins-And-Textures\addMeta.cs">
       <SubType>Form</SubType>
@@ -521,8 +521,8 @@
       <DependentUpon>creditsEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Additional-Popups\Audio\addCategory.resx">
-      <DependentUpon>addCategory.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Additional-Popups\ItemSelectionPopUp.resx">
+      <DependentUpon>ItemSelectionPopUp.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Skins-And-Textures\addMeta.ja.resx">
       <DependentUpon>addMeta.cs</DependentUpon>
