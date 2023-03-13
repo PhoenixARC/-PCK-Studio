@@ -172,7 +172,6 @@
     <Compile Include="Classes\API\PCKCenter\SaveLocalJSON.cs" />
     <Compile Include="Classes\FileTypes\MaterialsFile.cs" />
     <Compile Include="Classes\FileTypes\CSMBFile.cs" />
-    <Compile Include="Classes\FileTypes\ModelFile.cs" />
     <Compile Include="Classes\FileTypes\PCKAudioFile.cs" />
     <Compile Include="Classes\FileTypes\Binka.cs" />
     <Compile Include="Classes\FileTypes\CSM.cs" />
@@ -180,8 +179,6 @@
     <Compile Include="Classes\IO\CSMB\CSMBFileWriter.cs" />
     <Compile Include="Classes\IO\Materials\MaterialsReader.cs" />
     <Compile Include="Classes\IO\Materials\MaterialsWriter.cs" />
-    <Compile Include="Classes\IO\Model\ModelFileReader.cs" />
-    <Compile Include="Classes\IO\Model\ModelFileWriter.cs" />
     <Compile Include="Classes\IO\PCK\PCKAudioFileReader.cs" />
     <Compile Include="Classes\IO\PCK\PCKAudioFileWriter.cs" />
     <Compile Include="Classes\IO\Sounds\SoundIO.cs" />
