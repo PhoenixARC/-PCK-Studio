@@ -6,10 +6,10 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using MetroFramework.Forms;
-using PckStudio.Classes.FileTypes;
-using PckStudio.Classes.IO.Materials;
 using Newtonsoft.Json.Linq;
 using OMI.Formats.Pck;
+using OMI.Formats.Material;
+using OMI.Workers.Material;
 
 namespace PckStudio.Forms.Editor
 {
@@ -17,19 +17,19 @@ namespace PckStudio.Forms.Editor
 	{
 		// Behaviours File Format research by Miku and MattNL
 		private readonly PckFile.FileData _file;
-		MaterialsFile materialFile;
+		MaterialContainer materialFile;
 
 		void SetUpTree()
 		{
 			treeView1.BeginUpdate();
 			treeView1.Nodes.Clear();
-			foreach (var entry in materialFile.entries)
+			foreach (var entry in materialFile)
 			{
-				TreeNode EntryNode = new TreeNode(entry.name);
+				TreeNode EntryNode = new TreeNode(entry.Name);
 
 				foreach (JObject content in Utilities.MaterialUtil.entityData["entities"].Children())
 				{
-					var prop = content.Properties().FirstOrDefault(prop => prop.Name == entry.name);
+					var prop = content.Properties().FirstOrDefault(prop => prop.Name == entry.Name);
 					if (prop is JProperty)
 					{
 						EntryNode.Text = (string)prop.Value;
@@ -53,7 +53,8 @@ namespace PckStudio.Forms.Editor
 
 			using (var stream = new MemoryStream(file.Data))
 			{
-				materialFile = MaterialsReader.Read(stream);
+				var reader = new MaterialFileReader();
+                materialFile = reader.FromStream(stream);
 			}
 
 			treeView1.ImageList = new ImageList();
@@ -66,13 +67,13 @@ namespace PckStudio.Forms.Editor
 		{
 			if (e.Node == null) return;
 
-			bool enable = e.Node.Tag is MaterialsFile.MaterialEntry && treeView1.SelectedNode != null;
+			bool enable = e.Node.Tag is MaterialContainer.Material && treeView1.SelectedNode != null;
 			materialComboBox.Enabled = enable;
 
-			if (e.Node.Tag is MaterialsFile.MaterialEntry entry)
+			if (e.Node.Tag is MaterialContainer.Material entry)
 			{
 				materialComboBox.SelectedIndexChanged -= materialComboBox_SelectedIndexChanged;
-				materialComboBox.SelectedIndex = materialComboBox.Items.IndexOf(entry.material_type);
+				materialComboBox.SelectedIndex = materialComboBox.Items.IndexOf(entry.Type);
 				materialComboBox.SelectedIndexChanged += materialComboBox_SelectedIndexChanged;
 			}
 		}
@@ -112,17 +113,18 @@ namespace PckStudio.Forms.Editor
 		{
 			using (var stream = new MemoryStream())
 			{
-				materialFile = new MaterialsFile();
+				materialFile = new MaterialContainer();
 
 				foreach (TreeNode node in treeView1.Nodes)
 				{
-					if(node.Tag is MaterialsFile.MaterialEntry entry)
+					if(node.Tag is MaterialContainer.Material entry)
 					{
-						materialFile.entries.Add(entry);
+						materialFile.Add(entry);
 					}
 				}
 
-				MaterialsWriter.Write(stream, materialFile);
+				var writer = new MaterialFileWriter(materialFile);
+				writer.WriteToStream(stream);
 				_file.SetData(stream.ToArray());
 			}
 			DialogResult = DialogResult.OK;
@@ -134,21 +136,19 @@ namespace PckStudio.Forms.Editor
 
 			if (diag.ShowDialog() == DialogResult.OK)
 			{
-				if (String.IsNullOrEmpty(diag.SelectedEntity)) return;
-				if (materialFile.entries.FindAll(mat => mat.name == diag.SelectedEntity).Count() > 0)
+				if (string.IsNullOrEmpty(diag.SelectedEntity)) return;
+				if (materialFile.FindAll(mat => mat.Name == diag.SelectedEntity).Count() > 0)
 				{
 					MessageBox.Show(this, "You cannot have two entries for one entity. Please use the \"Add New Position Override\" tool to add multiple overrides for entities", "Error", MessageBoxButtons.OK);
 					return;
 				}
-				MaterialsFile.MaterialEntry NewEntry = new MaterialsFile.MaterialEntry();
-				NewEntry.name = diag.SelectedEntity;
-				NewEntry.material_type = "entity_alphatest";
+				var NewEntry = new MaterialContainer.Material(diag.SelectedEntity, "entity_alphatest");
 
-				TreeNode NewEntryNode = new TreeNode(NewEntry.name);
+				TreeNode NewEntryNode = new TreeNode(NewEntry.Name);
 				NewEntryNode.Tag = NewEntry;
 				foreach (JObject content in Utilities.MaterialUtil.entityData["entities"].Children())
 				{
-					var prop = content.Properties().FirstOrDefault(prop => prop.Name == NewEntry.name);
+					var prop = content.Properties().FirstOrDefault(prop => prop.Name == NewEntry.Name);
 					if (prop is JProperty)
 					{
 						NewEntryNode.Text = (string)prop.Value;
@@ -165,9 +165,9 @@ namespace PckStudio.Forms.Editor
 
 		private void materialComboBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if (treeView1.SelectedNode.Tag is MaterialsFile.MaterialEntry entry)
+			if (treeView1.SelectedNode.Tag is MaterialContainer.Material entry)
 			{
-				entry.material_type = materialComboBox.SelectedItem.ToString();
+				entry.Type = materialComboBox.SelectedItem.ToString();
 				treeView1.SelectedNode.Tag = entry;
 			}
 		}
