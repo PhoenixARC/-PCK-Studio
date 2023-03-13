@@ -11,6 +11,7 @@ using PckStudio.Classes;
 using PckStudio.Classes.FileTypes;
 using PckStudio.Classes.IO.PCK;
 using PckStudio.Forms.Additional_Popups.Audio;
+using OMI.Formats.Languages;
 
 // Audio Editor by MattNL
 // additional work and optimization by Miku-666

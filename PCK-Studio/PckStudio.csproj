@@ -194,8 +194,6 @@
     <Compile Include="Classes\Utils\SkinANIM.cs" />
     <Compile Include="Classes\FileTypes\PCKProperties.cs" />
     <Compile Include="Classes\FileTypes\PCKFile.cs" />
-    <Compile Include="Classes\IO\LOC\LOCFileReader.cs" />
-    <Compile Include="Classes\IO\LOC\LOCFileWriter.cs" />
     <Compile Include="Classes\IO\PCK\PCKFileReader.cs" />
     <Compile Include="Classes\IO\PCK\PCKFileWriter.cs" />
     <Compile Include="Classes\IO\StreamDataReader.cs" />
@@ -464,7 +462,6 @@
     <Compile Include="Classes\ToolboxItems\InterpolationPictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Classes\FileTypes\LOCFile.cs" />
     <Compile Include="Forms\Additional-Popups\MetaList.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -10,9 +10,11 @@ using System.Drawing.Imaging;
 
 using OMI.Formats.GameRule;
 using OMI.Workers.GameRule;
+using OMI.Formats.Languages;
+using OMI.Workers.Language;
+
 using PckStudio.Properties;
 using PckStudio.Classes.FileTypes;
-using PckStudio.Classes.IO.LOC;
 using PckStudio.Classes.IO.PCK;
 using PckStudio.Classes.Utils;
 using PckStudio.Classes.Utils.ARC;
@@ -1530,7 +1532,8 @@ namespace PckStudio
 			{
 				using (var stream = new MemoryStream(locdata.Data))
 				{
-					locFile = LOCFileReader.Read(stream);
+					var reader = new LOCFileReader();
+                    locFile = reader.FromStream(stream);
 				}
 				return true;
 			}

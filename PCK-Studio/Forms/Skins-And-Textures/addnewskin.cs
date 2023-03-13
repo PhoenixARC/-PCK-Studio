@@ -7,6 +7,7 @@ using PckStudio.Classes.FileTypes;
 using System.Drawing.Imaging;
 using PckStudio.Classes.Utils;
 using PckStudio.Classes._3ds.Utils;
+using OMI.Formats.Languages;
 
 namespace PckStudio
 {

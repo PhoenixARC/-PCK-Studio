@@ -7,8 +7,9 @@ using System.Windows.Forms;
 using MetroFramework.Forms;
 using PckStudio.Classes.Misc;
 using PckStudio.Classes.FileTypes;
-using PckStudio.Classes.IO.LOC;
 using PckStudio.Forms.Additional_Popups.Loc;
+using OMI.Formats.Languages;
+using OMI.Workers.Language;
 
 namespace PckStudio.Forms.Editor
 {
@@ -24,7 +25,8 @@ namespace PckStudio.Forms.Editor
 			_file = file;
             using (var ms = new MemoryStream(file.Data))
             {
-                currentLoc = LOCFileReader.Read(ms);
+				var reader = new LOCFileReader();
+                currentLoc = reader.FromStream(ms);
             }
 			tbl = new DataTable();
 			tbl.Columns.Add(new DataColumn("Language") { ReadOnly = true });
