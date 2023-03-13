@@ -206,7 +206,6 @@ namespace PckStudio
 			closeToolStripMenuItem.Visible = true;
 			saveToolStripMenuItem.Enabled = true;
 			saveToolStripMenuItem1.Enabled = true;
-			metaToolStripMenuItem.Enabled = true;
 			advancedMetaAddingToolStripMenuItem.Enabled = true;
 			convertToBedrockToolStripMenuItem.Enabled = true;
 			addCustomPackImageToolStripMenuItem.Enabled = true;
@@ -233,7 +232,6 @@ namespace PckStudio
 			treeMeta.Enabled = false;
 			saveToolStripMenuItem.Enabled = false;
 			saveToolStripMenuItem1.Enabled = false;
-			metaToolStripMenuItem.Enabled = false;
 			advancedMetaAddingToolStripMenuItem.Enabled = false;
 			closeToolStripMenuItem.Visible = false;
 			convertToBedrockToolStripMenuItem.Enabled = false;
@@ -1194,14 +1192,6 @@ namespace PckStudio
 		}
 
 		#endregion
-
-		private void metaToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			MetaList edit = new MetaList(currentPCK.GetPropertyList());
-			edit.TopMost = true;
-			edit.TopLevel = true;
-			edit.Show();
-		}
 
 		private PckFile InitializePack(int packId, int packVersion, string packName, bool createSkinsPCK)
 		{
