@@ -4,9 +4,10 @@ using System.Linq;
 using System.IO;
 
 using PckStudio.Properties;
-using PckStudio.Classes.FileTypes;
-using PckStudio.Classes.IO.Materials;
 using PckStudio.Classes.Extentions;
+using OMI.Formats.Pck;
+using OMI.Formats.Material;
+using OMI.Workers.Material;
 
 namespace PckStudio.Forms.Utilities
 {
@@ -16,15 +17,18 @@ namespace PckStudio.Forms.Utilities
         private static Image[] _entityImages;
         public static Image[] entityImages => _entityImages ??= Resources.entities_sheet.CreateImageList(32).ToArray();
 
-        public static PCKFile.FileData CreateNewMaterialsFile()
+        public static PckFile.FileData CreateNewMaterialsFile()
         {
-            PCKFile.FileData file = new PCKFile.FileData($"entityMaterials.bin", PCKFile.FileData.FileType.MaterialFile);
+            PckFile.FileData file = new PckFile.FileData($"entityMaterials.bin", PckFile.FileData.FileType.MaterialFile);
 
             using (var stream = new MemoryStream())
             {
-                var matFile = new MaterialsFile();
-				matFile.entries.Add(new MaterialsFile.MaterialEntry("bat", "entity_alphatest"));
-				MaterialsWriter.Write(stream, matFile);
+                var matFile = new MaterialContainer
+                {
+                    new MaterialContainer.Material("bat", "entity_alphatest")
+                };
+                var writer = new MaterialFileWriter(matFile);
+                writer.WriteToStream(stream);
                 file.SetData(stream.ToArray());
             }
             

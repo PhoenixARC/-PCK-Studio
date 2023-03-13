@@ -4,9 +4,10 @@ using System.Linq;
 using System.IO;
 
 using PckStudio.Properties;
-using PckStudio.Classes.FileTypes;
-using PckStudio.Classes.IO.Model;
 using PckStudio.Classes.Extentions;
+using OMI.Formats.Model;
+using OMI.Formats.Pck;
+using OMI.Workers.Model;
 
 namespace PckStudio.Forms.Utilities
 {
@@ -17,13 +18,14 @@ namespace PckStudio.Forms.Utilities
         
         public static Image[] entityImages => _entityImages ??= Resources.entities_sheet.CreateImageList(32).ToArray();
 
-        public static PCKFile.FileData CreateNewModelsFile()
+        public static PckFile.FileData CreateNewModelsFile()
         {
-            PCKFile.FileData file = new PCKFile.FileData($"models.bin", PCKFile.FileData.FileType.ModelsFile);
+            PckFile.FileData file = new PckFile.FileData($"models.bin", PckFile.FileData.FileType.ModelsFile);
 
             using (var stream = new MemoryStream())
             {
-                ModelFileWriter.Write(stream, new ModelFile());
+                var writer =  new ModelFileWriter(new ModelContainer());
+                writer.WriteToStream(stream);
                 file.SetData(stream.ToArray());
             }
             

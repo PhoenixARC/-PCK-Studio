@@ -17,12 +17,13 @@ using PckStudio.Forms.Utilities;
 using PckStudio.Classes.Extentions;
 using System.Runtime.CompilerServices;
 using System.Diagnostics;
+using OMI.Formats.Pck;
 
 namespace PckStudio.Forms.Editor
 {
 	public partial class AnimationEditor : MetroForm
 	{
-		PCKFile.FileData animationFile;
+		PckFile.FileData animationFile;
 		Animation currentAnimation;
         AnimationPlayer player;
 
@@ -237,7 +238,7 @@ namespace PckStudio.Forms.Editor
             }
 		}
 
-		public AnimationEditor(PCKFile.FileData file)
+		public AnimationEditor(PckFile.FileData file)
 		{
 			InitializeComponent();
 

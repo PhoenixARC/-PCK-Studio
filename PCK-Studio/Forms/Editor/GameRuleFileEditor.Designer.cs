@@ -1,6 +1,6 @@
 ﻿namespace PckStudio.Forms.Editor
 {
-    partial class GRFEditor
+    partial class GameRuleFileEditor
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GRFEditor));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GameRuleFileEditor));
             this.GrfTreeView = new System.Windows.Forms.TreeView();
             this.MessageContextMenu = new MetroFramework.Controls.MetroContextMenu(this.components);
             this.addGameRuleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -44,9 +44,11 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
             this.compressionLvlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripComboBox1 = new System.Windows.Forms.ToolStripComboBox();
+            this.compressionTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.compressionTypeComboBox = new System.Windows.Forms.ToolStripComboBox();
+            this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
             this.MessageContextMenu.SuspendLayout();
             this.DetailContextMenu.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -153,7 +155,8 @@
             this.menuStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.compressionLvlToolStripMenuItem});
+            this.compressionLvlToolStripMenuItem,
+            this.compressionTypeToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(25, 60);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(450, 24);
@@ -172,10 +175,10 @@
             // 
             // openToolStripMenuItem
             // 
-            this.openToolStripMenuItem.Enabled = false;
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.openToolStripMenuItem.Text = "Open";
+            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
@@ -184,6 +187,43 @@
             this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+            // 
+            // compressionLvlToolStripMenuItem
+            // 
+            this.compressionLvlToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripComboBox1});
+            this.compressionLvlToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Menu;
+            this.compressionLvlToolStripMenuItem.Name = "compressionLvlToolStripMenuItem";
+            this.compressionLvlToolStripMenuItem.Size = new System.Drawing.Size(106, 20);
+            this.compressionLvlToolStripMenuItem.Text = "Compression Lvl";
+            // 
+            // toolStripComboBox1
+            // 
+            this.toolStripComboBox1.Items.AddRange(new object[] {
+            "None",
+            "Compressed",
+            "Compressed + RLE",
+            "Compressed + RLE + CRC"});
+            this.toolStripComboBox1.Name = "toolStripComboBox1";
+            this.toolStripComboBox1.Size = new System.Drawing.Size(121, 23);
+            this.toolStripComboBox1.Text = "None";
+            // 
+            // compressionTypeToolStripMenuItem
+            // 
+            this.compressionTypeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.compressionTypeComboBox});
+            this.compressionTypeToolStripMenuItem.Name = "compressionTypeToolStripMenuItem";
+            this.compressionTypeToolStripMenuItem.Size = new System.Drawing.Size(116, 20);
+            this.compressionTypeToolStripMenuItem.Text = "Compression Type";
+            // 
+            // compressionTypeComboBox
+            // 
+            this.compressionTypeComboBox.Items.AddRange(new object[] {
+            "Zlib",
+            "Deflate",
+            "XMem"});
+            this.compressionTypeComboBox.Name = "compressionTypeComboBox";
+            this.compressionTypeComboBox.Size = new System.Drawing.Size(121, 23);
             // 
             // metroPanel1
             // 
@@ -204,26 +244,6 @@
             this.metroPanel1.VerticalScrollbarHighlightOnWheel = false;
             this.metroPanel1.VerticalScrollbarSize = 10;
             this.metroPanel1.Resize += new System.EventHandler(this.metroPanel1_Resize);
-            // 
-            // compressionLvlToolStripMenuItem
-            // 
-            this.compressionLvlToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripComboBox1});
-            this.compressionLvlToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Menu;
-            this.compressionLvlToolStripMenuItem.Name = "compressionLvlToolStripMenuItem";
-            this.compressionLvlToolStripMenuItem.Size = new System.Drawing.Size(106, 20);
-            this.compressionLvlToolStripMenuItem.Text = "Compression Lvl";
-            // 
-            // toolStripComboBox1
-            // 
-            this.toolStripComboBox1.Items.AddRange(new object[] {
-            "None",
-            "Compressed",
-            "Compressed + RLE",
-            "Compressed + RLE + CRC"});
-            this.toolStripComboBox1.Name = "toolStripComboBox1";
-            this.toolStripComboBox1.Size = new System.Drawing.Size(121, 23);
-            this.toolStripComboBox1.Text = "Zlib";
             // 
             // GRFEditor
             // 
@@ -274,5 +294,7 @@
         private MetroFramework.Controls.MetroPanel metroPanel1;
         private System.Windows.Forms.ToolStripMenuItem compressionLvlToolStripMenuItem;
         private System.Windows.Forms.ToolStripComboBox toolStripComboBox1;
+        private System.Windows.Forms.ToolStripMenuItem compressionTypeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripComboBox compressionTypeComboBox;
     }
 }

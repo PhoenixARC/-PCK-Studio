@@ -170,30 +170,14 @@
     <Compile Include="Classes\API\PCKCenter\PCKCollections.cs" />
     <Compile Include="Classes\API\PCKCenter\PCKCollectionsLocal.cs" />
     <Compile Include="Classes\API\PCKCenter\SaveLocalJSON.cs" />
-    <Compile Include="Classes\FileTypes\ARCFile.cs" />
-    <Compile Include="Classes\FileTypes\MaterialsFile.cs" />
-    <Compile Include="Classes\FileTypes\BehaviourFile.cs" />
     <Compile Include="Classes\FileTypes\CSMBFile.cs" />
-    <Compile Include="Classes\FileTypes\ModelFile.cs" />
     <Compile Include="Classes\FileTypes\PCKAudioFile.cs" />
     <Compile Include="Classes\FileTypes\Binka.cs" />
-    <Compile Include="Classes\FileTypes\COLFile.cs" />
     <Compile Include="Classes\FileTypes\CSM.cs" />
-    <Compile Include="Classes\FileTypes\GRFFile.cs" />
-    <Compile Include="Classes\IO\ARC\ARCFileWriter.cs" />
-    <Compile Include="Classes\IO\ARC\ARCFileReader.cs" />
-    <Compile Include="Classes\IO\Behaviour\BehavioursReader.cs" />
-    <Compile Include="Classes\IO\Behaviour\BehavioursWriter.cs" />
     <Compile Include="Classes\IO\CSMB\CSMBFileReader.cs" />
     <Compile Include="Classes\IO\CSMB\CSMBFileWriter.cs" />
-    <Compile Include="Classes\IO\Materials\MaterialsReader.cs" />
-    <Compile Include="Classes\IO\Materials\MaterialsWriter.cs" />
-    <Compile Include="Classes\IO\Model\ModelFileReader.cs" />
-    <Compile Include="Classes\IO\Model\ModelFileWriter.cs" />
     <Compile Include="Classes\IO\PCK\PCKAudioFileReader.cs" />
     <Compile Include="Classes\IO\PCK\PCKAudioFileWriter.cs" />
-    <Compile Include="Classes\IO\COL\COLFileReader.cs" />
-    <Compile Include="Classes\IO\COL\COLFileWriter.cs" />
     <Compile Include="Classes\IO\Sounds\SoundIO.cs" />
     <Compile Include="Classes\IO\Sounds\Sounds.cs" />
     <Compile Include="Classes\Misc\FTPClient.cs" />
@@ -202,14 +186,6 @@
     <Compile Include="Classes\Utils\ARC\ARCUtil.cs" />
     <Compile Include="Classes\Extentions\ImageExtentions.cs" />
     <Compile Include="Classes\Utils\SkinANIM.cs" />
-    <Compile Include="Classes\FileTypes\PCKProperties.cs" />
-    <Compile Include="Classes\FileTypes\PCKFile.cs" />
-    <Compile Include="Classes\IO\GRF\GRFFileReader.cs" />
-    <Compile Include="Classes\IO\GRF\GRFFileWriter.cs" />
-    <Compile Include="Classes\IO\LOC\LOCFileReader.cs" />
-    <Compile Include="Classes\IO\LOC\LOCFileWriter.cs" />
-    <Compile Include="Classes\IO\PCK\PCKFileReader.cs" />
-    <Compile Include="Classes\IO\PCK\PCKFileWriter.cs" />
     <Compile Include="Classes\IO\StreamDataReader.cs" />
     <Compile Include="Classes\IO\StreamDataWriter.cs" />
     <Compile Include="Classes\Models\DefaultModels\Steve64x32Model.cs" />
@@ -241,8 +217,6 @@
     <Compile Include="Classes\Networking\Network.cs" />
     <Compile Include="Classes\Misc\RichPresenceClient.cs" />
     <Compile Include="Classes\Networking\Update.cs" />
-    <Compile Include="Classes\Utils\GRF\CRC32.cs" />
-    <Compile Include="Classes\Utils\RLE.cs" />
     <Compile Include="Forms\Additional-Popups\EntityForms\AddEntry.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -351,11 +325,11 @@
     <Compile Include="Forms\Skins-And-Textures\AdvancedOptions.Designer.cs">
       <DependentUpon>AdvancedOptions.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Editor\GRFEditor.cs">
+    <Compile Include="Forms\Editor\GameRuleFileEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Editor\GRFEditor.Designer.cs">
-      <DependentUpon>GRFEditor.cs</DependentUpon>
+    <Compile Include="Forms\Editor\GameRuleFileEditor.Designer.cs">
+      <DependentUpon>GameRuleFileEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Additional-Popups\Grf\AddParameter.cs">
       <SubType>Form</SubType>
@@ -479,7 +453,6 @@
     <Compile Include="Classes\ToolboxItems\InterpolationPictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Classes\FileTypes\LOCFile.cs" />
     <Compile Include="Forms\Additional-Popups\MetaList.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -571,8 +544,8 @@
       <DependentUpon>AdvancedOptions.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Editor\GRFEditor.resx">
-      <DependentUpon>GRFEditor.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Editor\GameRuleFileEditor.resx">
+      <DependentUpon>GameRuleFileEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\Grf\AddParameter.resx">
       <DependentUpon>AddParameter.cs</DependentUpon>
@@ -789,14 +762,16 @@
     <PackageReference Include="Newtonsoft.Json">
       <Version>13.0.3</Version>
     </PackageReference>
-    <PackageReference Include="SharpZipLib">
-      <Version>1.4.2</Version>
-    </PackageReference>
     <PackageReference Include="System.ValueTuple">
       <Version>4.5.0</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Vendor\OMI-Lib\OMI Filetypes Library\OMI Filetype Library.csproj">
+      <Project>{693AEBC1-293D-4DF0-BCAE-26A1099FE7BB}</Project>
+      <Name>OMI Filetype Library</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
