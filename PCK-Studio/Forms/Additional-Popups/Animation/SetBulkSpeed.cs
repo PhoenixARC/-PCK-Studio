@@ -15,13 +15,23 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 
 		private void button1_Click(object sender, EventArgs e)
 		{
-			if (time < 0) return;
-			DialogResult = DialogResult.OK;
+
 		}
 
 		private void button2_Click(object sender, EventArgs e)
 		{
-			DialogResult = DialogResult.Cancel;
+
 		}
-	}
+
+        private void SaveButton_Click(object sender, EventArgs e)
+        {
+            if (time < 0) return;
+            DialogResult = DialogResult.OK;
+        }
+
+        private void CancelButton_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
+        }
+    }
 }

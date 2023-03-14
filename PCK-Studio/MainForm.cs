@@ -26,7 +26,7 @@ using PckStudio.ToolboxItems;
 
 namespace PckStudio
 {
-	public partial class MainForm : ThemeForm
+	public partial class MainForm : Form
 	{
 		string saveLocation = string.Empty;
 		PCKFile currentPCK = null;
@@ -1295,8 +1295,12 @@ namespace PckStudio
 		private void skinPackToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			RenamePrompt namePrompt = new RenamePrompt("");
-			namePrompt.OKButton.Text = "Ok";
-			if (namePrompt.ShowDialog() == DialogResult.OK)
+
+            //Miku, NML, PhoenixARC, here is another one of those problems.
+            // - EternalModz
+
+            //namePrompt.OKButton.Text = "Ok";
+            if (namePrompt.ShowDialog() == DialogResult.OK)
 			{
 				InitializeBasePack(new Random().Next(8000, int.MaxValue), 0, namePrompt.NewText, true);
 				isTemplateFile = true;
@@ -1634,7 +1638,11 @@ namespace PckStudio
 		private void folderToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			RenamePrompt folderNamePrompt = new RenamePrompt("");
-			folderNamePrompt.OKButton.Text = "Add";
+
+            //Miku, NML, PhoenixARC, here is another one of those problems.
+            // - EternalModz
+
+            //folderNamePrompt.OKButton.Text = "Add";
 			if (folderNamePrompt.ShowDialog() == DialogResult.OK)
 			{
 				TreeNode folerNode = CreateNode(folderNamePrompt.NewText);

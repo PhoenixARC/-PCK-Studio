@@ -130,7 +130,7 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>215, 129</value>
+    <value>215, 95</value>
   </data>
   <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
     <value>73, 13</value>
@@ -151,7 +151,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
-    <value>18</value>
+    <value>17</value>
   </data>
   <metadata name="label2.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>False</value>
@@ -163,7 +163,7 @@
     <value>NoControl</value>
   </data>
   <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>215, 97</value>
+    <value>215, 63</value>
   </data>
   <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
     <value>61, 13</value>
@@ -184,7 +184,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
-    <value>19</value>
+    <value>18</value>
   </data>
   <metadata name="label1.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>False</value>
@@ -196,7 +196,7 @@
     <value>NoControl</value>
   </data>
   <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>215, 64</value>
+    <value>215, 30</value>
   </data>
   <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
     <value>43, 13</value>
@@ -217,7 +217,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>20</value>
+    <value>19</value>
   </data>
   <data name="textTheme.Location" type="System.Drawing.Point, System.Drawing">
     <value>102, 78</value>
@@ -288,69 +288,6 @@
   <data name="&gt;&gt;contextMenuCape.Type" xml:space="preserve">
     <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="buttonDone.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="buttonDone.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="buttonDone.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="buttonDone.Location" type="System.Drawing.Point, System.Drawing">
-    <value>394, 260</value>
-  </data>
-  <data name="buttonDone.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
-  </data>
-  <data name="buttonDone.TabIndex" type="System.Int32, mscorlib">
-    <value>115</value>
-  </data>
-  <data name="buttonDone.Text" xml:space="preserve">
-    <value>Create Skin</value>
-  </data>
-  <data name="&gt;&gt;buttonDone.Name" xml:space="preserve">
-    <value>buttonDone</value>
-  </data>
-  <data name="&gt;&gt;buttonDone.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;buttonDone.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;buttonDone.ZOrder" xml:space="preserve">
-    <value>11</value>
-  </data>
-  <data name="buttonModelGen.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="buttonModelGen.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="buttonModelGen.Location" type="System.Drawing.Point, System.Drawing">
-    <value>14, 259</value>
-  </data>
-  <data name="buttonModelGen.Size" type="System.Drawing.Size, System.Drawing">
-    <value>90, 23</value>
-  </data>
-  <data name="buttonModelGen.TabIndex" type="System.Int32, mscorlib">
-    <value>113</value>
-  </data>
-  <data name="buttonModelGen.Text" xml:space="preserve">
-    <value>Edit Model</value>
-  </data>
-  <data name="&gt;&gt;buttonModelGen.Name" xml:space="preserve">
-    <value>buttonModelGen</value>
-  </data>
-  <data name="&gt;&gt;buttonModelGen.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;buttonModelGen.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;buttonModelGen.ZOrder" xml:space="preserve">
-    <value>12</value>
-  </data>
   <data name="buttonCape.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
@@ -363,7 +300,7 @@
     <value>NoControl</value>
   </data>
   <data name="buttonCape.Location" type="System.Drawing.Point, System.Drawing">
-    <value>443, 212</value>
+    <value>443, 187</value>
   </data>
   <data name="buttonCape.Size" type="System.Drawing.Size, System.Drawing">
     <value>23, 22</value>
@@ -381,7 +318,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;buttonCape.ZOrder" xml:space="preserve">
-    <value>13</value>
+    <value>12</value>
   </data>
   <data name="buttonSkin.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -395,7 +332,7 @@
     <value>NoControl</value>
   </data>
   <data name="buttonSkin.Location" type="System.Drawing.Point, System.Drawing">
-    <value>351, 212</value>
+    <value>351, 187</value>
   </data>
   <data name="buttonSkin.Size" type="System.Drawing.Size, System.Drawing">
     <value>23, 22</value>
@@ -413,13 +350,13 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;buttonSkin.ZOrder" xml:space="preserve">
-    <value>14</value>
+    <value>13</value>
   </data>
   <data name="displayBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="displayBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>14, 61</value>
+    <value>12, 17</value>
   </data>
   <data name="displayBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>184, 173</value>
@@ -437,7 +374,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;displayBox.ZOrder" xml:space="preserve">
-    <value>17</value>
+    <value>16</value>
   </data>
   <data name="radioAUTO.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -446,7 +383,7 @@
     <value>NoControl</value>
   </data>
   <data name="radioAUTO.Location" type="System.Drawing.Point, System.Drawing">
-    <value>388, 51</value>
+    <value>388, 17</value>
   </data>
   <data name="radioAUTO.Size" type="System.Drawing.Size, System.Drawing">
     <value>80, 17</value>
@@ -467,7 +404,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;radioAUTO.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>11</value>
   </data>
   <data name="radioLOCAL.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -476,7 +413,7 @@
     <value>NoControl</value>
   </data>
   <data name="radioLOCAL.Location" type="System.Drawing.Point, System.Drawing">
-    <value>388, 71</value>
+    <value>388, 37</value>
   </data>
   <data name="radioLOCAL.Size" type="System.Drawing.Size, System.Drawing">
     <value>58, 17</value>
@@ -497,7 +434,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;radioLOCAL.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>10</value>
   </data>
   <data name="labelSelectTexture.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -509,7 +446,7 @@
     <value>NoControl</value>
   </data>
   <data name="labelSelectTexture.Location" type="System.Drawing.Point, System.Drawing">
-    <value>308, 186</value>
+    <value>308, 161</value>
   </data>
   <data name="labelSelectTexture.Size" type="System.Drawing.Size, System.Drawing">
     <value>50, 13</value>
@@ -530,43 +467,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;labelSelectTexture.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="radioSERVER.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="radioSERVER.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="radioSERVER.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="radioSERVER.Location" type="System.Drawing.Point, System.Drawing">
-    <value>388, 28</value>
-  </data>
-  <data name="radioSERVER.Size" type="System.Drawing.Size, System.Drawing">
-    <value>64, 17</value>
-  </data>
-  <data name="radioSERVER.TabIndex" type="System.Int32, mscorlib">
-    <value>120</value>
-  </data>
-  <data name="radioSERVER.Text" xml:space="preserve">
-    <value>SERVER</value>
-  </data>
-  <data name="radioSERVER.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;radioSERVER.Name" xml:space="preserve">
-    <value>radioSERVER</value>
-  </data>
-  <data name="&gt;&gt;radioSERVER.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;radioSERVER.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;radioSERVER.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>9</value>
   </data>
   <data name="resource.Image" type="System.Resources.ResXNullRef, System.Windows.Forms">
     <value />
@@ -575,7 +476,7 @@
     <value>NoControl</value>
   </data>
   <data name="resource.Location" type="System.Drawing.Point, System.Drawing">
-    <value>53, 1</value>
+    <value>68, 1</value>
   </data>
   <data name="resource.Size" type="System.Drawing.Size, System.Drawing">
     <value>21, 21</value>
@@ -587,10 +488,10 @@
     <value>False</value>
   </data>
   <data name="textSkinID.Location" type="System.Drawing.Point, System.Drawing">
-    <value>292, 61</value>
+    <value>292, 27</value>
   </data>
   <data name="textSkinID.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
+    <value>90, 23</value>
   </data>
   <data name="textSkinID.TabIndex" type="System.Int32, mscorlib">
     <value>121</value>
@@ -605,7 +506,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;textSkinID.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>8</value>
   </data>
   <data name="resource.Image1" type="System.Resources.ResXNullRef, System.Windows.Forms">
     <value />
@@ -626,7 +527,7 @@
     <value>False</value>
   </data>
   <data name="textSkinName.Location" type="System.Drawing.Point, System.Drawing">
-    <value>292, 94</value>
+    <value>292, 60</value>
   </data>
   <data name="textSkinName.Size" type="System.Drawing.Size, System.Drawing">
     <value>174, 23</value>
@@ -644,7 +545,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;textSkinName.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>7</value>
   </data>
   <data name="resource.Image2" type="System.Resources.ResXNullRef, System.Windows.Forms">
     <value />
@@ -665,7 +566,7 @@
     <value>False</value>
   </data>
   <data name="textThemeName.Location" type="System.Drawing.Point, System.Drawing">
-    <value>292, 123</value>
+    <value>292, 89</value>
   </data>
   <data name="textThemeName.Size" type="System.Drawing.Size, System.Drawing">
     <value>174, 23</value>
@@ -683,7 +584,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;textThemeName.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>6</value>
   </data>
   <data name="label4.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -695,7 +596,7 @@
     <value>NoControl</value>
   </data>
   <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>400, 186</value>
+    <value>400, 161</value>
   </data>
   <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
     <value>54, 13</value>
@@ -716,37 +617,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="buttonAnimGen.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="buttonAnimGen.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="buttonAnimGen.Location" type="System.Drawing.Point, System.Drawing">
-    <value>108, 259</value>
-  </data>
-  <data name="buttonAnimGen.Size" type="System.Drawing.Size, System.Drawing">
-    <value>90, 23</value>
-  </data>
-  <data name="buttonAnimGen.TabIndex" type="System.Int32, mscorlib">
-    <value>125</value>
-  </data>
-  <data name="buttonAnimGen.Text" xml:space="preserve">
-    <value>Edit Skin Flags</value>
-  </data>
-  <data name="&gt;&gt;buttonAnimGen.Name" xml:space="preserve">
-    <value>buttonAnimGen</value>
-  </data>
-  <data name="&gt;&gt;buttonAnimGen.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;buttonAnimGen.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;buttonAnimGen.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>5</value>
   </data>
   <data name="capePictureBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>None</value>
@@ -755,7 +626,7 @@
     <value>NoControl</value>
   </data>
   <data name="capePictureBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>384, 152</value>
+    <value>384, 120</value>
   </data>
   <data name="capePictureBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>82, 82</value>
@@ -767,13 +638,13 @@
     <value>capePictureBox</value>
   </data>
   <data name="&gt;&gt;capePictureBox.Type" xml:space="preserve">
-    <value>PckStudio.PictureBoxWithInterpolationMode, PCK-Studio, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>PckStudio.ToolboxItems.PictureBoxWithInterpolationMode, PCK-Studio, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;capePictureBox.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
   <data name="&gt;&gt;capePictureBox.ZOrder" xml:space="preserve">
-    <value>15</value>
+    <value>14</value>
   </data>
   <data name="skinPictureBoxTexture.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>None</value>
@@ -782,7 +653,7 @@
     <value>NoControl</value>
   </data>
   <data name="skinPictureBoxTexture.Location" type="System.Drawing.Point, System.Drawing">
-    <value>292, 152</value>
+    <value>292, 120</value>
   </data>
   <data name="skinPictureBoxTexture.Size" type="System.Drawing.Size, System.Drawing">
     <value>82, 82</value>
@@ -797,13 +668,156 @@
     <value>skinPictureBoxTexture</value>
   </data>
   <data name="&gt;&gt;skinPictureBoxTexture.Type" xml:space="preserve">
-    <value>PckStudio.PictureBoxWithInterpolationMode, PCK-Studio, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>PckStudio.ToolboxItems.PictureBoxWithInterpolationMode, PCK-Studio, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;skinPictureBoxTexture.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
   <data name="&gt;&gt;skinPictureBoxTexture.ZOrder" xml:space="preserve">
-    <value>16</value>
+    <value>15</value>
+  </data>
+  <data name="CreateSkinButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="CreateSkinButton.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="CreateSkinButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAALtJREFUSEvt
+        1TEKwkAQheG9hKA23ke8T7TzpBZBD6HNOuv+ivDGxOyQLh9MYd5zVgwhaTFJzvlgc7GZqmPFMCv2td9k
+        /BCKmY+jqH8bPoRS5IDiTKwoRA/4/X3y+Q+IYp0iD2OdIg9jnSIPY50i99xtOpsdc7R52LhYp8g98gDZ
+        tVONFBVF7llT+bBrmxopKorc4x2wrZGiosg9s/9F75u8Yppv8rVWQnrWKQvLC+f2qrUpP3DPusU/UnoC
+        1EgDy/vtD/MAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="CreateSkinButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="CreateSkinButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>292, 231</value>
+  </data>
+  <data name="CreateSkinButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>179, 40</value>
+  </data>
+  <data name="CreateSkinButton.TabIndex" type="System.Int32, mscorlib">
+    <value>126</value>
+  </data>
+  <data name="CreateSkinButton.Text" xml:space="preserve">
+    <value>Create skin</value>
+  </data>
+  <data name="CreateSkinButton.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="CreateSkinButton.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
+    <value>ImageBeforeText</value>
+  </data>
+  <data name="&gt;&gt;CreateSkinButton.Name" xml:space="preserve">
+    <value>CreateSkinButton</value>
+  </data>
+  <data name="&gt;&gt;CreateSkinButton.Type" xml:space="preserve">
+    <value>CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton, CBH-Ultimate-Theme-Library-NET-Framework, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;CreateSkinButton.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;CreateSkinButton.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="EditFlagsButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="EditFlagsButton.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="EditFlagsButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAABqSURBVEhL7Y3RDYAgDAW7hPtPZRxHTT2hPyVNRDDIJSTw2sfJOOxg7xG0HIH9tgIdOLDyvsCD
+        tQz59wQ8E8R/EUTQsoG4mmDTsoG8LPBg5WY9z8IocY3qCIpQyZD3FTyC/6fAh/+nYDhEDjCoeGdLx/sx
+        AAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="EditFlagsButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="EditFlagsButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 193</value>
+  </data>
+  <data name="EditFlagsButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>184, 36</value>
+  </data>
+  <data name="EditFlagsButton.TabIndex" type="System.Int32, mscorlib">
+    <value>127</value>
+  </data>
+  <data name="EditFlagsButton.Text" xml:space="preserve">
+    <value>Edit Flags</value>
+  </data>
+  <data name="EditFlagsButton.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="EditFlagsButton.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
+    <value>ImageBeforeText</value>
+  </data>
+  <data name="&gt;&gt;EditFlagsButton.Name" xml:space="preserve">
+    <value>EditFlagsButton</value>
+  </data>
+  <data name="&gt;&gt;EditFlagsButton.Type" xml:space="preserve">
+    <value>CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton, CBH-Ultimate-Theme-Library-NET-Framework, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;EditFlagsButton.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;EditFlagsButton.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="EditModelButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="EditModelButton.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="EditModelButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAKtJREFUSEvt
+        1TEKwzAQRFE1PqQvlFwzlQO5hLKDx6AwX4YUIY0fTLWrUSe1y1d670vlXnlURuskI53R2cV1yQuEyhVy
+        c12q4bbvBCpXyOa65AVC5QpyXfKcULmCXJc8J1SuINelmlGJMkO7q+sSLTsztHtd8IF2/3vBDBZVkOuS
+        54TKFeS65DmhcgW5LtXsua8EKlfI6WP38+f6+HBe2hxQuTLSmfMP55JaewNTAaVYgdrPTAAAAABJRU5E
+        rkJggg==
+</value>
+  </data>
+  <data name="EditModelButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="EditModelButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 235</value>
+  </data>
+  <data name="EditModelButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>184, 36</value>
+  </data>
+  <data name="EditModelButton.TabIndex" type="System.Int32, mscorlib">
+    <value>128</value>
+  </data>
+  <data name="EditModelButton.Text" xml:space="preserve">
+    <value>Edit Model</value>
+  </data>
+  <data name="EditModelButton.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="EditModelButton.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
+    <value>ImageBeforeText</value>
+  </data>
+  <data name="&gt;&gt;EditModelButton.Name" xml:space="preserve">
+    <value>EditModelButton</value>
+  </data>
+  <data name="&gt;&gt;EditModelButton.Type" xml:space="preserve">
+    <value>CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton, CBH-Ultimate-Theme-Library-NET-Framework, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;EditModelButton.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;EditModelButton.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -812,7 +826,7 @@
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>483, 296</value>
+    <value>483, 283</value>
   </data>
   <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI, 8.25pt</value>
@@ -2542,11 +2556,17 @@
         AABJRU5ErkJggg==
 </value>
   </data>
+  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="$this.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
     <value>483, 296</value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
-    <value>CenterParent</value>
+    <value>CenterScreen</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Skin Creator</value>
@@ -2564,9 +2584,9 @@
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>addNewSkin</value>
+    <value>AddNewSkin</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>PckStudio.ToolboxItems.ThemeForm, PCK-Studio, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
 </root>

@@ -58,7 +58,10 @@ namespace PckStudio.Forms.Editor
 			if (treeViewLocKeys.SelectedNode is TreeNode)
 				using (RenamePrompt prompt = new RenamePrompt(""))
 				{
-					prompt.OKButton.Text = "Add";
+                    //Miku, NML, PhoenixARC, here is another one of those problems.
+                    // - EternalModz
+
+                    //prompt.OKButton.Text = "Add";
 					if (prompt.ShowDialog() == DialogResult.OK && 
 						!currentLoc.LocKeys.ContainsKey(prompt.NewText) &&
 						currentLoc.AddLocKey(prompt.NewText, ""))
@@ -95,12 +98,7 @@ namespace PckStudio.Forms.Editor
 
 		private void buttonReplaceAll_Click(object sender, EventArgs e)
 		{
-            for (int i = 0; i < tbl.Rows.Count; i++)
-            {
-                tbl.Rows[i][1] = textBoxReplaceAll.Text;
-            }
 
-			currentLoc.SetLocEntry(treeViewLocKeys.SelectedNode.Text, textBoxReplaceAll.Text);
 		}
 
         private void LOCEditor_Resize(object sender, EventArgs e)
@@ -146,5 +144,15 @@ namespace PckStudio.Forms.Editor
             }
 			DialogResult = DialogResult.OK;
         }
-	}
+
+        private void ReplaceAllButton_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < tbl.Rows.Count; i++)
+            {
+                tbl.Rows[i][1] = textBoxReplaceAll.Text;
+            }
+
+            currentLoc.SetLocEntry(treeViewLocKeys.SelectedNode.Text, textBoxReplaceAll.Text);
+        }
+    }
 }

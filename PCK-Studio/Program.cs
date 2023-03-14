@@ -26,7 +26,7 @@ namespace PckStudio
             Application.SetCompatibleTextRenderingDefault(false);
             DarkNet.Instance.SetCurrentProcessTheme(Theme.Auto);
             MainForm mainForm = new MainForm();
-
+            DarkNet.Instance.SetWindowThemeForms(mainForm, Theme.Auto);
             Application.Run(mainForm);
         }
     }

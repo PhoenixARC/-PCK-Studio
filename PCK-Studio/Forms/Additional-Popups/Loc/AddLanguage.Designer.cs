@@ -28,15 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddLanguage));
             this.LanguageComboBox = new MetroFramework.Controls.MetroComboBox();
-            this.AddBtn = new MetroFramework.Controls.MetroButton();
+            this.AddButton = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
             this.SuspendLayout();
             // 
             // LanguageComboBox
             // 
             this.LanguageComboBox.FormattingEnabled = true;
             this.LanguageComboBox.ItemHeight = 23;
-            this.LanguageComboBox.Location = new System.Drawing.Point(23, 63);
+            this.LanguageComboBox.Location = new System.Drawing.Point(23, 12);
             this.LanguageComboBox.Name = "LanguageComboBox";
             this.LanguageComboBox.Size = new System.Drawing.Size(243, 29);
             this.LanguageComboBox.Style = MetroFramework.MetroColorStyle.Black;
@@ -44,28 +45,47 @@
             this.LanguageComboBox.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.LanguageComboBox.UseSelectable = true;
             // 
-            // AddBtn
+            // AddButton
             // 
-            this.AddBtn.Location = new System.Drawing.Point(91, 98);
-            this.AddBtn.Name = "AddBtn";
-            this.AddBtn.Size = new System.Drawing.Size(101, 23);
-            this.AddBtn.TabIndex = 1;
-            this.AddBtn.Text = "Add";
-            this.AddBtn.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.AddBtn.UseSelectable = true;
-            this.AddBtn.Click += new System.EventHandler(this.AddBtn_Click);
+            this.AddButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.AddButton.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.AddButton.BorderRadius = 10;
+            this.AddButton.BorderSize = 1;
+            this.AddButton.ClickedColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.AddButton.FlatAppearance.BorderSize = 0;
+            this.AddButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.AddButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(250)))), ((int)(((byte)(165)))));
+            this.AddButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.AddButton.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.AddButton.ForeColor = System.Drawing.Color.White;
+            this.AddButton.GradientColorPrimary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.AddButton.GradientColorSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.AddButton.HoverOverColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(250)))), ((int)(((byte)(165)))));
+            this.AddButton.Image = ((System.Drawing.Image)(resources.GetObject("AddButton.Image")));
+            this.AddButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.AddButton.Location = new System.Drawing.Point(84, 49);
+            this.AddButton.Name = "AddButton";
+            this.AddButton.Size = new System.Drawing.Size(120, 40);
+            this.AddButton.TabIndex = 18;
+            this.AddButton.Text = "Add";
+            this.AddButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.AddButton.TextColor = System.Drawing.Color.White;
+            this.AddButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.AddButton.UseVisualStyleBackColor = false;
+            this.AddButton.Click += new System.EventHandler(this.AddButton_Click);
             // 
             // AddLanguage
             // 
-            this.AcceptButton = this.AddBtn;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.ClientSize = new System.Drawing.Size(289, 140);
-            this.Controls.Add(this.AddBtn);
+            this.ClientSize = new System.Drawing.Size(289, 101);
+            this.Controls.Add(this.AddButton);
             this.Controls.Add(this.LanguageComboBox);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.ForeColor = System.Drawing.Color.White;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Location = new System.Drawing.Point(0, 0);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(289, 140);
@@ -80,6 +100,6 @@
         #endregion
 
         private MetroFramework.Controls.MetroComboBox LanguageComboBox;
-        private MetroFramework.Controls.MetroButton AddBtn;
+        private CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton AddButton;
     }
 }

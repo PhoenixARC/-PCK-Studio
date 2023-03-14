@@ -17,13 +17,18 @@ namespace PckStudio.Forms.Additional_Popups.Audio
 
 		private void button1_Click(object sender, EventArgs e)
 		{
-			DialogResult = DialogResult.OK;
-			Close();
+
 		}
 
         private void creditsEditor_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void SaveButton_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.OK;
+            Close();
         }
     }
 }

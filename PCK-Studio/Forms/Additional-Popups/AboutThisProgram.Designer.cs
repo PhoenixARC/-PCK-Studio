@@ -30,17 +30,13 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AboutThisProgram));
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.DiscordServerButton = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
-            this.WebsiteButton = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
-            this.GitHubButton = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
-            this.label3 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label7 = new System.Windows.Forms.Label();
-            this.LegacyDevelopersTab = new MetroFramework.Controls.MetroTabPage();
-            this.OthersTab = new MetroFramework.Controls.MetroTabPage();
-            this.label6 = new System.Windows.Forms.Label();
+            this.GitHubButton = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
+            this.DiscordServerButton = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
+            this.WebsiteButton = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
+            this.ProgramInformationTabControl = new CBH.Controls.CrEaTiiOn_TabPage();
             this.DevelopersTab = new System.Windows.Forms.TabPage();
-            this.label8 = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
             this.AboutEternalModzButton = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
             this.EternalModzGitHubButton = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
@@ -61,11 +57,13 @@
             this.PhoenixARCGitHubButton = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
             this.crEaTiiOn_Ultimate_PictureBox1 = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_PictureBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.ProgramInformationTabControl = new CBH.Controls.CrEaTiiOn_TabPage();
+            this.LegacyDevelopersTab = new MetroFramework.Controls.MetroTabPage();
+            this.label3 = new System.Windows.Forms.Label();
+            this.OthersTab = new MetroFramework.Controls.MetroTabPage();
+            this.label6 = new System.Windows.Forms.Label();
             this.ProgramDetailsTab = new System.Windows.Forms.TabPage();
             this.panel2.SuspendLayout();
-            this.LegacyDevelopersTab.SuspendLayout();
-            this.OthersTab.SuspendLayout();
+            this.ProgramInformationTabControl.SuspendLayout();
             this.DevelopersTab.SuspendLayout();
             this.panel6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.crEaTiiOn_Ultimate_PictureBox3)).BeginInit();
@@ -75,8 +73,57 @@
             ((System.ComponentModel.ISupportInitialize)(this.crEaTiiOn_Ultimate_PictureBox2)).BeginInit();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.crEaTiiOn_Ultimate_PictureBox1)).BeginInit();
-            this.ProgramInformationTabControl.SuspendLayout();
+            this.LegacyDevelopersTab.SuspendLayout();
+            this.OthersTab.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.label7);
+            this.panel2.Controls.Add(this.GitHubButton);
+            this.panel2.Controls.Add(this.DiscordServerButton);
+            this.panel2.Controls.Add(this.WebsiteButton);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel2.Location = new System.Drawing.Point(0, 0);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(641, 45);
+            this.panel2.TabIndex = 0;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Segoe UI", 15F);
+            this.label7.Location = new System.Drawing.Point(3, 8);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(109, 28);
+            this.label7.TabIndex = 20;
+            this.label7.Text = "PCK Studio";
+            // 
+            // GitHubButton
+            // 
+            this.GitHubButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.GitHubButton.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.GitHubButton.BorderRadius = 15;
+            this.GitHubButton.BorderSize = 1;
+            this.GitHubButton.ClickedColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.GitHubButton.FlatAppearance.BorderSize = 0;
+            this.GitHubButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.GitHubButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.GitHubButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.GitHubButton.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.GitHubButton.ForeColor = System.Drawing.Color.White;
+            this.GitHubButton.GradientColorPrimary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.GitHubButton.GradientColorSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.GitHubButton.HoverOverColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.GitHubButton.Location = new System.Drawing.Point(543, 7);
+            this.GitHubButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.GitHubButton.Name = "GitHubButton";
+            this.GitHubButton.Size = new System.Drawing.Size(90, 30);
+            this.GitHubButton.TabIndex = 17;
+            this.GitHubButton.Text = "GitHub";
+            this.GitHubButton.TextColor = System.Drawing.Color.White;
+            this.GitHubButton.UseVisualStyleBackColor = false;
+            this.GitHubButton.Click += new System.EventHandler(this.GitHubPageButton);
             // 
             // DiscordServerButton
             // 
@@ -130,122 +177,28 @@
             this.WebsiteButton.UseVisualStyleBackColor = false;
             this.WebsiteButton.Click += new System.EventHandler(this.WebsiteButton_Click);
             // 
-            // GitHubButton
+            // ProgramInformationTabControl
             // 
-            this.GitHubButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.GitHubButton.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.GitHubButton.BorderRadius = 15;
-            this.GitHubButton.BorderSize = 1;
-            this.GitHubButton.ClickedColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.GitHubButton.FlatAppearance.BorderSize = 0;
-            this.GitHubButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.GitHubButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.GitHubButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.GitHubButton.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.GitHubButton.ForeColor = System.Drawing.Color.White;
-            this.GitHubButton.GradientColorPrimary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
-            this.GitHubButton.GradientColorSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
-            this.GitHubButton.HoverOverColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.GitHubButton.Location = new System.Drawing.Point(543, 7);
-            this.GitHubButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.GitHubButton.Name = "GitHubButton";
-            this.GitHubButton.Size = new System.Drawing.Size(90, 30);
-            this.GitHubButton.TabIndex = 17;
-            this.GitHubButton.Text = "GitHub";
-            this.GitHubButton.TextColor = System.Drawing.Color.White;
-            this.GitHubButton.UseVisualStyleBackColor = false;
-            this.GitHubButton.Click += new System.EventHandler(this.GitHubPageButton);
-            // 
-            // label3
-            // 
-            this.label3.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label3.AutoSize = true;
-            this.label3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.label3.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.label3.Location = new System.Drawing.Point(3, 0);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(372, 45);
-            this.label3.TabIndex = 7;
-            this.label3.Text = "Base program and PCK development by: Jam1gamer\r\nVisual tools, server development " +
-    "functions and OG UI by: JackHasWifi\r\nDevelopment assisted by: XxModZxXWiiPlaza a" +
-    "nd SlothWiiPlaza";
-            // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.label7);
-            this.panel2.Controls.Add(this.GitHubButton);
-            this.panel2.Controls.Add(this.DiscordServerButton);
-            this.panel2.Controls.Add(this.WebsiteButton);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel2.Location = new System.Drawing.Point(0, 0);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(641, 45);
-            this.panel2.TabIndex = 0;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Segoe UI", 15F);
-            this.label7.Location = new System.Drawing.Point(3, 8);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(109, 28);
-            this.label7.TabIndex = 20;
-            this.label7.Text = "PCK Studio";
-            // 
-            // LegacyDevelopersTab
-            // 
-            this.LegacyDevelopersTab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.LegacyDevelopersTab.Controls.Add(this.label3);
-            this.LegacyDevelopersTab.HorizontalScrollbarBarColor = true;
-            this.LegacyDevelopersTab.HorizontalScrollbarHighlightOnWheel = false;
-            this.LegacyDevelopersTab.HorizontalScrollbarSize = 10;
-            this.LegacyDevelopersTab.Location = new System.Drawing.Point(139, 4);
-            this.LegacyDevelopersTab.Name = "LegacyDevelopersTab";
-            this.LegacyDevelopersTab.Size = new System.Drawing.Size(498, 363);
-            this.LegacyDevelopersTab.TabIndex = 0;
-            this.LegacyDevelopersTab.Text = "Legacy Developers";
-            this.LegacyDevelopersTab.UseCustomBackColor = true;
-            this.LegacyDevelopersTab.UseCustomForeColor = true;
-            this.LegacyDevelopersTab.VerticalScrollbarBarColor = true;
-            this.LegacyDevelopersTab.VerticalScrollbarHighlightOnWheel = false;
-            this.LegacyDevelopersTab.VerticalScrollbarSize = 10;
-            // 
-            // OthersTab
-            // 
-            this.OthersTab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.OthersTab.Controls.Add(this.label6);
-            this.OthersTab.HorizontalScrollbarBarColor = true;
-            this.OthersTab.HorizontalScrollbarHighlightOnWheel = true;
-            this.OthersTab.HorizontalScrollbarSize = 10;
-            this.OthersTab.Location = new System.Drawing.Point(139, 4);
-            this.OthersTab.Name = "OthersTab";
-            this.OthersTab.Size = new System.Drawing.Size(498, 363);
-            this.OthersTab.TabIndex = 1;
-            this.OthersTab.Text = "Others";
-            this.OthersTab.UseCustomBackColor = true;
-            this.OthersTab.UseCustomForeColor = true;
-            this.OthersTab.VerticalScrollbarBarColor = true;
-            this.OthersTab.VerticalScrollbarHighlightOnWheel = false;
-            this.OthersTab.VerticalScrollbarSize = 10;
-            // 
-            // label6
-            // 
-            this.label6.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label6.AutoSize = true;
-            this.label6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.label6.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.label6.Location = new System.Drawing.Point(3, 0);
-            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(199, 30);
-            this.label6.TabIndex = 8;
-            this.label6.Text = "3D rendering found by: NewAgent\r\n3D skin rendering by: Łukasz Rejman";
+            this.ProgramInformationTabControl.Alignment = System.Windows.Forms.TabAlignment.Left;
+            this.ProgramInformationTabControl.Controls.Add(this.DevelopersTab);
+            this.ProgramInformationTabControl.Controls.Add(this.LegacyDevelopersTab);
+            this.ProgramInformationTabControl.Controls.Add(this.OthersTab);
+            this.ProgramInformationTabControl.Controls.Add(this.ProgramDetailsTab);
+            this.ProgramInformationTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ProgramInformationTabControl.ItemSize = new System.Drawing.Size(35, 135);
+            this.ProgramInformationTabControl.Location = new System.Drawing.Point(0, 45);
+            this.ProgramInformationTabControl.Multiline = true;
+            this.ProgramInformationTabControl.Name = "ProgramInformationTabControl";
+            this.ProgramInformationTabControl.SelectedIndex = 0;
+            this.ProgramInformationTabControl.ShowOuterBorders = false;
+            this.ProgramInformationTabControl.Size = new System.Drawing.Size(641, 371);
+            this.ProgramInformationTabControl.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
+            this.ProgramInformationTabControl.SquareColor = System.Drawing.Color.White;
+            this.ProgramInformationTabControl.TabIndex = 2;
             // 
             // DevelopersTab
             // 
             this.DevelopersTab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.DevelopersTab.Controls.Add(this.label8);
             this.DevelopersTab.Controls.Add(this.panel6);
             this.DevelopersTab.Controls.Add(this.panel5);
             this.DevelopersTab.Controls.Add(this.panel4);
@@ -255,19 +208,6 @@
             this.DevelopersTab.Size = new System.Drawing.Size(498, 363);
             this.DevelopersTab.TabIndex = 2;
             this.DevelopersTab.Text = "Developers";
-            // 
-            // label8
-            // 
-            this.label8.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label8.AutoSize = true;
-            this.label8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.label8.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.label8.Location = new System.Drawing.Point(16, 365);
-            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(372, 135);
-            this.label8.TabIndex = 9;
-            this.label8.Text = resources.GetString("label8.Text");
             // 
             // panel6
             // 
@@ -625,24 +565,69 @@
             this.label1.TabIndex = 4;
             this.label1.Text = "PhoenixARC";
             // 
-            // ProgramInformationTabControl
+            // LegacyDevelopersTab
             // 
-            this.ProgramInformationTabControl.Alignment = System.Windows.Forms.TabAlignment.Left;
-            this.ProgramInformationTabControl.Controls.Add(this.DevelopersTab);
-            this.ProgramInformationTabControl.Controls.Add(this.LegacyDevelopersTab);
-            this.ProgramInformationTabControl.Controls.Add(this.OthersTab);
-            this.ProgramInformationTabControl.Controls.Add(this.ProgramDetailsTab);
-            this.ProgramInformationTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ProgramInformationTabControl.ItemSize = new System.Drawing.Size(35, 135);
-            this.ProgramInformationTabControl.Location = new System.Drawing.Point(0, 45);
-            this.ProgramInformationTabControl.Multiline = true;
-            this.ProgramInformationTabControl.Name = "ProgramInformationTabControl";
-            this.ProgramInformationTabControl.SelectedIndex = 0;
-            this.ProgramInformationTabControl.ShowOuterBorders = false;
-            this.ProgramInformationTabControl.Size = new System.Drawing.Size(641, 371);
-            this.ProgramInformationTabControl.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
-            this.ProgramInformationTabControl.SquareColor = System.Drawing.Color.White;
-            this.ProgramInformationTabControl.TabIndex = 2;
+            this.LegacyDevelopersTab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.LegacyDevelopersTab.Controls.Add(this.label3);
+            this.LegacyDevelopersTab.HorizontalScrollbarBarColor = true;
+            this.LegacyDevelopersTab.HorizontalScrollbarHighlightOnWheel = false;
+            this.LegacyDevelopersTab.HorizontalScrollbarSize = 10;
+            this.LegacyDevelopersTab.Location = new System.Drawing.Point(139, 4);
+            this.LegacyDevelopersTab.Name = "LegacyDevelopersTab";
+            this.LegacyDevelopersTab.Size = new System.Drawing.Size(498, 363);
+            this.LegacyDevelopersTab.TabIndex = 0;
+            this.LegacyDevelopersTab.Text = "Legacy Developers";
+            this.LegacyDevelopersTab.UseCustomBackColor = true;
+            this.LegacyDevelopersTab.UseCustomForeColor = true;
+            this.LegacyDevelopersTab.VerticalScrollbarBarColor = true;
+            this.LegacyDevelopersTab.VerticalScrollbarHighlightOnWheel = false;
+            this.LegacyDevelopersTab.VerticalScrollbarSize = 10;
+            // 
+            // label3
+            // 
+            this.label3.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.label3.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.label3.Location = new System.Drawing.Point(3, 0);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(372, 45);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "Base program and PCK development by: Jam1gamer\r\nVisual tools, server development " +
+    "functions and OG UI by: JackHasWifi\r\nDevelopment assisted by: XxModZxXWiiPlaza a" +
+    "nd SlothWiiPlaza";
+            // 
+            // OthersTab
+            // 
+            this.OthersTab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.OthersTab.Controls.Add(this.label6);
+            this.OthersTab.HorizontalScrollbarBarColor = true;
+            this.OthersTab.HorizontalScrollbarHighlightOnWheel = true;
+            this.OthersTab.HorizontalScrollbarSize = 10;
+            this.OthersTab.Location = new System.Drawing.Point(139, 4);
+            this.OthersTab.Name = "OthersTab";
+            this.OthersTab.Size = new System.Drawing.Size(498, 363);
+            this.OthersTab.TabIndex = 1;
+            this.OthersTab.Text = "Others";
+            this.OthersTab.UseCustomBackColor = true;
+            this.OthersTab.UseCustomForeColor = true;
+            this.OthersTab.VerticalScrollbarBarColor = true;
+            this.OthersTab.VerticalScrollbarHighlightOnWheel = false;
+            this.OthersTab.VerticalScrollbarSize = 10;
+            // 
+            // label6
+            // 
+            this.label6.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label6.AutoSize = true;
+            this.label6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.label6.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.label6.Location = new System.Drawing.Point(3, 0);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(199, 30);
+            this.label6.TabIndex = 8;
+            this.label6.Text = "3D rendering found by: NewAgent\r\n3D skin rendering by: Łukasz Rejman";
             // 
             // ProgramDetailsTab
             // 
@@ -673,12 +658,8 @@
             this.Text = "About PCK Studio";
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            this.LegacyDevelopersTab.ResumeLayout(false);
-            this.LegacyDevelopersTab.PerformLayout();
-            this.OthersTab.ResumeLayout(false);
-            this.OthersTab.PerformLayout();
+            this.ProgramInformationTabControl.ResumeLayout(false);
             this.DevelopersTab.ResumeLayout(false);
-            this.DevelopersTab.PerformLayout();
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.crEaTiiOn_Ultimate_PictureBox3)).EndInit();
@@ -691,7 +672,10 @@
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.crEaTiiOn_Ultimate_PictureBox1)).EndInit();
-            this.ProgramInformationTabControl.ResumeLayout(false);
+            this.LegacyDevelopersTab.ResumeLayout(false);
+            this.LegacyDevelopersTab.PerformLayout();
+            this.OthersTab.ResumeLayout(false);
+            this.OthersTab.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -722,7 +706,6 @@
         private System.Windows.Forms.Label label1;
         private CBH.Controls.CrEaTiiOn_TabPage ProgramInformationTabControl;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label8;
         private CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton AboutEternalModzButton;
         private CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton EternalModzGitHubButton;
         private CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton AboutMikuButton;

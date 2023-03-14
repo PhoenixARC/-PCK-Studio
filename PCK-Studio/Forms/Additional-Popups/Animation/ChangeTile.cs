@@ -138,20 +138,30 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 
 		private void CancelBtn_Click(object sender, EventArgs e)
 		{
-			DialogResult = DialogResult.Cancel;
-			Close();
+
 		}
 
 		private void AcceptBtn_Click(object sender, EventArgs e)
 		{
-			if (string.IsNullOrEmpty(selectedTile)) CancelBtn_Click(sender, e);
-			DialogResult = DialogResult.OK;
-			Close();
+
 		}
 
         private void ChangeTile_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void SaveButton_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(selectedTile)) CancelBtn_Click(sender, e);
+            DialogResult = DialogResult.OK;
+            Close();
+        }
+
+        private void CancelButton_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
+            Close();
         }
     }
 }

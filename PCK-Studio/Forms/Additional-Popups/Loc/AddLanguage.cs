@@ -15,13 +15,18 @@ namespace PckStudio.Forms.Additional_Popups.Loc
 
         private void AddBtn_Click(object sender, EventArgs e)
         {
-            DialogResult = DialogResult.OK;
-            Close();
+
         }
 
         private void AddLanguage_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void AddButton_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.OK;
+            Close();
         }
     }
 }

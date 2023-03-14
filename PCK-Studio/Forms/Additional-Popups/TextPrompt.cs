@@ -15,10 +15,20 @@ namespace PckStudio.Forms.Additional_Popups
 
         private void okBtn_Click(object sender, EventArgs e)
         {
-            DialogResult = DialogResult.OK;
+
         }
 
         private void cancelBtn_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void SaveButton_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.OK;
+        }
+
+        private void CancelButton_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
         }

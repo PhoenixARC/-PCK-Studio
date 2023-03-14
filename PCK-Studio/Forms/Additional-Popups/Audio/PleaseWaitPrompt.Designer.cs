@@ -39,6 +39,7 @@
             this.metroLabel1.Size = new System.Drawing.Size(352, 19);
             this.metroLabel1.TabIndex = 0;
             this.metroLabel1.Text = "Please wait while PCK Studio converts the requested files. (:";
+            this.metroLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.metroLabel1.Theme = MetroFramework.MetroThemeStyle.Dark;
             // 
             // PleaseWait
@@ -50,6 +51,7 @@
             this.Controls.Add(this.metroLabel1);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.ForeColor = System.Drawing.Color.White;
+            this.Location = new System.Drawing.Point(0, 0);
             this.Name = "PleaseWait";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.ResumeLayout(false);

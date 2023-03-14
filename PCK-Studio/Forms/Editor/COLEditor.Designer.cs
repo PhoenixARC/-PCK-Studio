@@ -33,10 +33,13 @@ namespace PckStudio.Forms.Editor
 		{
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(COLEditor));
-            this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
             this.metroTextBox1 = new MetroFramework.Controls.MetroTextBox();
-            this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
-            this.setColorBtn = new MetroFramework.Controls.MetroButton();
+            this.alphaLabel = new MetroFramework.Controls.MetroLabel();
+            this.blueLabel = new MetroFramework.Controls.MetroLabel();
+            this.greenLabel = new MetroFramework.Controls.MetroLabel();
+            this.redLabel = new MetroFramework.Controls.MetroLabel();
+            this.colorTextbox = new MetroFramework.Controls.MetroTextBox();
+            this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -69,21 +72,17 @@ namespace PckStudio.Forms.Editor
             this.underwaterTab = new System.Windows.Forms.TabPage();
             this.fogTab = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.txHex = new System.Windows.Forms.TextBox();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
-            this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
-            this.metroLabel4 = new MetroFramework.Controls.MetroLabel();
-            this.metroLabel5 = new MetroFramework.Controls.MetroLabel();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.metroLabel6 = new MetroFramework.Controls.MetroLabel();
-            this.txRed = new ColorPicker.NumericTextBox();
-            this.txGreen = new ColorPicker.NumericTextBox();
-            this.txBlue = new ColorPicker.NumericTextBox();
-            this.txTransp = new ColorPicker.NumericTextBox();
-            this.cBox = new ColorPicker.ColorBox();
-            this.verticalColorSlider1 = new ColorPicker.VerticalColorSlider();
-            this.metroPanel1.SuspendLayout();
+            this.crEaTiiOn_ModernSlider1 = new CBH.Controls.CrEaTiiOn_ModernSlider();
+            this.crEaTiiOn_ModernSlider2 = new CBH.Controls.CrEaTiiOn_ModernSlider();
+            this.crEaTiiOn_ModernSlider3 = new CBH.Controls.CrEaTiiOn_ModernSlider();
+            this.crEaTiiOn_ModernSlider4 = new CBH.Controls.CrEaTiiOn_ModernSlider();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown4 = new System.Windows.Forms.NumericUpDown();
+            this.colorBox2D1 = new MechanikaDesign.WinForms.UI.ColorPicker.ColorBox2D();
+            this.colorSliderVertical1 = new MechanikaDesign.WinForms.UI.ColorPicker.ColorSliderVertical();
+            this.SetColorButton = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip.SuspendLayout();
             this.waterTab.SuspendLayout();
@@ -93,24 +92,11 @@ namespace PckStudio.Forms.Editor
             this.underwaterTab.SuspendLayout();
             this.fogTab.SuspendLayout();
             this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
-            this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
             this.SuspendLayout();
-            // 
-            // metroPanel1
-            // 
-            this.metroPanel1.Controls.Add(this.panel2);
-            this.metroPanel1.Controls.Add(this.tabControl);
-            resources.ApplyResources(this.metroPanel1, "metroPanel1");
-            this.metroPanel1.HorizontalScrollbarBarColor = true;
-            this.metroPanel1.HorizontalScrollbarHighlightOnWheel = false;
-            this.metroPanel1.HorizontalScrollbarSize = 10;
-            this.metroPanel1.Name = "metroPanel1";
-            this.metroPanel1.Style = MetroFramework.MetroColorStyle.Silver;
-            this.metroPanel1.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.metroPanel1.VerticalScrollbarBarColor = true;
-            this.metroPanel1.VerticalScrollbarHighlightOnWheel = false;
-            this.metroPanel1.VerticalScrollbarSize = 10;
             // 
             // metroTextBox1
             // 
@@ -127,7 +113,8 @@ namespace PckStudio.Forms.Editor
             this.metroTextBox1.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
             this.metroTextBox1.CustomButton.UseSelectable = true;
             this.metroTextBox1.CustomButton.Visible = ((bool)(resources.GetObject("resource.Visible")));
-            this.metroTextBox1.Lines = new string[0];
+            this.metroTextBox1.Lines = new string[] {
+        "Filter by searching..."};
             resources.ApplyResources(this.metroTextBox1, "metroTextBox1");
             this.metroTextBox1.MaxLength = 32767;
             this.metroTextBox1.Name = "metroTextBox1";
@@ -143,19 +130,76 @@ namespace PckStudio.Forms.Editor
             this.metroTextBox1.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
             this.metroTextBox1.TextChanged += new System.EventHandler(this.metroTextBox1_TextChanged);
             // 
-            // metroLabel2
+            // alphaLabel
             // 
-            resources.ApplyResources(this.metroLabel2, "metroLabel2");
-            this.metroLabel2.Name = "metroLabel2";
-            this.metroLabel2.Theme = MetroFramework.MetroThemeStyle.Dark;
+            resources.ApplyResources(this.alphaLabel, "alphaLabel");
+            this.alphaLabel.Name = "alphaLabel";
+            this.alphaLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.alphaLabel.UseCustomBackColor = true;
+            this.alphaLabel.UseCustomForeColor = true;
             // 
-            // setColorBtn
+            // blueLabel
             // 
-            resources.ApplyResources(this.setColorBtn, "setColorBtn");
-            this.setColorBtn.Name = "setColorBtn";
-            this.setColorBtn.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.setColorBtn.UseSelectable = true;
-            this.setColorBtn.Click += new System.EventHandler(this.setColorBtn_Click);
+            resources.ApplyResources(this.blueLabel, "blueLabel");
+            this.blueLabel.Name = "blueLabel";
+            this.blueLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.blueLabel.UseCustomBackColor = true;
+            this.blueLabel.UseCustomForeColor = true;
+            // 
+            // greenLabel
+            // 
+            resources.ApplyResources(this.greenLabel, "greenLabel");
+            this.greenLabel.Name = "greenLabel";
+            this.greenLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.greenLabel.UseCustomBackColor = true;
+            this.greenLabel.UseCustomForeColor = true;
+            // 
+            // redLabel
+            // 
+            resources.ApplyResources(this.redLabel, "redLabel");
+            this.redLabel.Name = "redLabel";
+            this.redLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.redLabel.UseCustomBackColor = true;
+            this.redLabel.UseCustomForeColor = true;
+            // 
+            // colorTextbox
+            // 
+            // 
+            // 
+            // 
+            this.colorTextbox.CustomButton.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image1")));
+            this.colorTextbox.CustomButton.ImeMode = ((System.Windows.Forms.ImeMode)(resources.GetObject("resource.ImeMode1")));
+            this.colorTextbox.CustomButton.Location = ((System.Drawing.Point)(resources.GetObject("resource.Location1")));
+            this.colorTextbox.CustomButton.Name = "";
+            this.colorTextbox.CustomButton.Size = ((System.Drawing.Size)(resources.GetObject("resource.Size1")));
+            this.colorTextbox.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.colorTextbox.CustomButton.TabIndex = ((int)(resources.GetObject("resource.TabIndex1")));
+            this.colorTextbox.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.colorTextbox.CustomButton.UseSelectable = true;
+            this.colorTextbox.CustomButton.Visible = ((bool)(resources.GetObject("resource.Visible1")));
+            this.colorTextbox.Lines = new string[0];
+            resources.ApplyResources(this.colorTextbox, "colorTextbox");
+            this.colorTextbox.MaxLength = 32767;
+            this.colorTextbox.Name = "colorTextbox";
+            this.colorTextbox.PasswordChar = '\0';
+            this.colorTextbox.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.colorTextbox.SelectedText = "";
+            this.colorTextbox.SelectionLength = 0;
+            this.colorTextbox.SelectionStart = 0;
+            this.colorTextbox.ShortcutsEnabled = true;
+            this.colorTextbox.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.colorTextbox.UseSelectable = true;
+            this.colorTextbox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.colorTextbox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            this.colorTextbox.TextChanged += new System.EventHandler(this.colorBox_TextChanged);
+            // 
+            // metroLabel1
+            // 
+            resources.ApplyResources(this.metroLabel1, "metroLabel1");
+            this.metroLabel1.Name = "metroLabel1";
+            this.metroLabel1.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.metroLabel1.UseCustomBackColor = true;
+            this.metroLabel1.UseCustomForeColor = true;
             // 
             // pictureBox1
             // 
@@ -167,7 +211,7 @@ namespace PckStudio.Forms.Editor
             // menuStrip
             // 
             resources.ApplyResources(this.menuStrip, "menuStrip");
-            this.menuStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.menuStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.targetUpdateToolToolStripMenuItem});
@@ -178,8 +222,8 @@ namespace PckStudio.Forms.Editor
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.saveToolStripMenuItem1});
             this.fileToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             resources.ApplyResources(this.fileToolStripMenuItem, "fileToolStripMenuItem");
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             // 
             // saveToolStripMenuItem1
             // 
@@ -204,8 +248,8 @@ namespace PckStudio.Forms.Editor
             this.TU69ToolStripMenuItem,
             this._1_9_1ToolStripMenuItem});
             this.targetUpdateToolToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.targetUpdateToolToolStripMenuItem.Name = "targetUpdateToolToolStripMenuItem";
             resources.ApplyResources(this.targetUpdateToolToolStripMenuItem, "targetUpdateToolToolStripMenuItem");
+            this.targetUpdateToolToolStripMenuItem.Name = "targetUpdateToolToolStripMenuItem";
             // 
             // TU12ToolStripMenuItem
             // 
@@ -281,7 +325,7 @@ namespace PckStudio.Forms.Editor
             // 
             // waterTreeView
             // 
-            this.waterTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.waterTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.waterTreeView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.waterTreeView.ContextMenuStrip = this.ColorContextMenu;
             resources.ApplyResources(this.waterTreeView, "waterTreeView");
@@ -319,8 +363,8 @@ namespace PckStudio.Forms.Editor
             // 
             // underwaterTreeView
             // 
-            this.underwaterTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.underwaterTreeView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.underwaterTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.underwaterTreeView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.underwaterTreeView.ContextMenuStrip = this.ColorContextMenu;
             this.underwaterTreeView.ForeColor = System.Drawing.Color.White;
             resources.ApplyResources(this.underwaterTreeView, "underwaterTreeView");
@@ -330,8 +374,8 @@ namespace PckStudio.Forms.Editor
             // 
             // fogTreeView
             // 
-            this.fogTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.fogTreeView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.fogTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.fogTreeView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.fogTreeView.ContextMenuStrip = this.ColorContextMenu;
             this.fogTreeView.ForeColor = System.Drawing.Color.White;
             resources.ApplyResources(this.fogTreeView, "fogTreeView");
@@ -348,7 +392,7 @@ namespace PckStudio.Forms.Editor
             // 
             // colorTreeView
             // 
-            this.colorTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.colorTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.colorTreeView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.colorTreeView.ContextMenuStrip = this.ColorContextMenu;
             resources.ApplyResources(this.colorTreeView, "colorTreeView");
@@ -359,11 +403,11 @@ namespace PckStudio.Forms.Editor
             // 
             // tabControl
             // 
+            resources.ApplyResources(this.tabControl, "tabControl");
             this.tabControl.Controls.Add(this.colorsTab);
             this.tabControl.Controls.Add(this.waterTab);
             this.tabControl.Controls.Add(this.underwaterTab);
             this.tabControl.Controls.Add(this.fogTab);
-            resources.ApplyResources(this.tabControl, "tabControl");
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
             this.tabControl.Style = MetroFramework.MetroColorStyle.White;
@@ -372,191 +416,209 @@ namespace PckStudio.Forms.Editor
             // 
             // underwaterTab
             // 
-            this.underwaterTab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.underwaterTab.BackColor = System.Drawing.SystemColors.WindowFrame;
             this.underwaterTab.Controls.Add(this.underwaterTreeView);
             resources.ApplyResources(this.underwaterTab, "underwaterTab");
             this.underwaterTab.Name = "underwaterTab";
             // 
             // fogTab
             // 
-            this.fogTab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.fogTab.BackColor = System.Drawing.SystemColors.WindowFrame;
             this.fogTab.Controls.Add(this.fogTreeView);
             resources.ApplyResources(this.fogTab, "fogTab");
             this.fogTab.Name = "fogTab";
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.verticalColorSlider1);
-            this.panel1.Controls.Add(this.cBox);
-            this.panel1.Controls.Add(this.panel3);
+            this.panel1.Controls.Add(this.SetColorButton);
+            this.panel1.Controls.Add(this.colorSliderVertical1);
+            this.panel1.Controls.Add(this.colorBox2D1);
+            this.panel1.Controls.Add(this.numericUpDown4);
+            this.panel1.Controls.Add(this.numericUpDown3);
+            this.panel1.Controls.Add(this.numericUpDown2);
+            this.panel1.Controls.Add(this.numericUpDown1);
+            this.panel1.Controls.Add(this.crEaTiiOn_ModernSlider3);
+            this.panel1.Controls.Add(this.crEaTiiOn_ModernSlider4);
+            this.panel1.Controls.Add(this.crEaTiiOn_ModernSlider2);
+            this.panel1.Controls.Add(this.crEaTiiOn_ModernSlider1);
+            this.panel1.Controls.Add(this.blueLabel);
+            this.panel1.Controls.Add(this.alphaLabel);
+            this.panel1.Controls.Add(this.greenLabel);
+            this.panel1.Controls.Add(this.redLabel);
+            this.panel1.Controls.Add(this.colorTextbox);
+            this.panel1.Controls.Add(this.pictureBox1);
+            this.panel1.Controls.Add(this.metroLabel1);
             resources.ApplyResources(this.panel1, "panel1");
             this.panel1.Name = "panel1";
             // 
-            // txHex
+            // crEaTiiOn_ModernSlider1
             // 
-            resources.ApplyResources(this.txHex, "txHex");
-            this.txHex.Name = "txHex";
+            this.crEaTiiOn_ModernSlider1.BarThickness = 4;
+            this.crEaTiiOn_ModernSlider1.BigStepIncrement = 10;
+            this.crEaTiiOn_ModernSlider1.Colors = ((System.Collections.Generic.List<System.Drawing.Color>)(resources.GetObject("crEaTiiOn_ModernSlider1.Colors")));
+            this.crEaTiiOn_ModernSlider1.CompositingQualityType = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+            this.crEaTiiOn_ModernSlider1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.crEaTiiOn_ModernSlider1.FilledColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(119)))), ((int)(((byte)(215)))));
+            this.crEaTiiOn_ModernSlider1.InterpolationType = System.Drawing.Drawing2D.InterpolationMode.HighQualityBilinear;
+            this.crEaTiiOn_ModernSlider1.KnobColor = System.Drawing.Color.Gray;
+            this.crEaTiiOn_ModernSlider1.KnobImage = null;
+            resources.ApplyResources(this.crEaTiiOn_ModernSlider1, "crEaTiiOn_ModernSlider1");
+            this.crEaTiiOn_ModernSlider1.Max = 100;
+            this.crEaTiiOn_ModernSlider1.Name = "crEaTiiOn_ModernSlider1";
+            this.crEaTiiOn_ModernSlider1.Percentage = 50;
+            this.crEaTiiOn_ModernSlider1.PixelOffsetType = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+            this.crEaTiiOn_ModernSlider1.Positions = ((System.Collections.Generic.List<float>)(resources.GetObject("crEaTiiOn_ModernSlider1.Positions")));
+            this.crEaTiiOn_ModernSlider1.QuickHopping = false;
+            this.crEaTiiOn_ModernSlider1.SliderStyle = CBH.Controls.CrEaTiiOn_ModernSlider.Style.Windows10;
+            this.crEaTiiOn_ModernSlider1.SmoothingType = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            this.crEaTiiOn_ModernSlider1.UnfilledColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(169)))), ((int)(((byte)(219)))));
             // 
-            // panel2
+            // crEaTiiOn_ModernSlider2
             // 
-            this.panel2.Controls.Add(this.panel1);
-            this.panel2.Controls.Add(this.pictureBox1);
-            this.panel2.Controls.Add(this.setColorBtn);
-            resources.ApplyResources(this.panel2, "panel2");
-            this.panel2.Name = "panel2";
+            this.crEaTiiOn_ModernSlider2.BarThickness = 4;
+            this.crEaTiiOn_ModernSlider2.BigStepIncrement = 10;
+            this.crEaTiiOn_ModernSlider2.Colors = ((System.Collections.Generic.List<System.Drawing.Color>)(resources.GetObject("crEaTiiOn_ModernSlider2.Colors")));
+            this.crEaTiiOn_ModernSlider2.CompositingQualityType = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+            this.crEaTiiOn_ModernSlider2.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.crEaTiiOn_ModernSlider2.FilledColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(119)))), ((int)(((byte)(215)))));
+            this.crEaTiiOn_ModernSlider2.InterpolationType = System.Drawing.Drawing2D.InterpolationMode.HighQualityBilinear;
+            this.crEaTiiOn_ModernSlider2.KnobColor = System.Drawing.Color.Gray;
+            this.crEaTiiOn_ModernSlider2.KnobImage = null;
+            resources.ApplyResources(this.crEaTiiOn_ModernSlider2, "crEaTiiOn_ModernSlider2");
+            this.crEaTiiOn_ModernSlider2.Max = 100;
+            this.crEaTiiOn_ModernSlider2.Name = "crEaTiiOn_ModernSlider2";
+            this.crEaTiiOn_ModernSlider2.Percentage = 50;
+            this.crEaTiiOn_ModernSlider2.PixelOffsetType = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+            this.crEaTiiOn_ModernSlider2.Positions = ((System.Collections.Generic.List<float>)(resources.GetObject("crEaTiiOn_ModernSlider2.Positions")));
+            this.crEaTiiOn_ModernSlider2.QuickHopping = false;
+            this.crEaTiiOn_ModernSlider2.SliderStyle = CBH.Controls.CrEaTiiOn_ModernSlider.Style.Windows10;
+            this.crEaTiiOn_ModernSlider2.SmoothingType = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            this.crEaTiiOn_ModernSlider2.UnfilledColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(169)))), ((int)(((byte)(219)))));
             // 
-            // metroLabel1
+            // crEaTiiOn_ModernSlider3
             // 
-            resources.ApplyResources(this.metroLabel1, "metroLabel1");
-            this.metroLabel1.Name = "metroLabel1";
-            this.metroLabel1.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.metroLabel1.UseCustomBackColor = true;
-            this.metroLabel1.UseCustomForeColor = true;
+            this.crEaTiiOn_ModernSlider3.BarThickness = 4;
+            this.crEaTiiOn_ModernSlider3.BigStepIncrement = 10;
+            this.crEaTiiOn_ModernSlider3.Colors = ((System.Collections.Generic.List<System.Drawing.Color>)(resources.GetObject("crEaTiiOn_ModernSlider3.Colors")));
+            this.crEaTiiOn_ModernSlider3.CompositingQualityType = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+            this.crEaTiiOn_ModernSlider3.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.crEaTiiOn_ModernSlider3.FilledColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(119)))), ((int)(((byte)(215)))));
+            this.crEaTiiOn_ModernSlider3.InterpolationType = System.Drawing.Drawing2D.InterpolationMode.HighQualityBilinear;
+            this.crEaTiiOn_ModernSlider3.KnobColor = System.Drawing.Color.Gray;
+            this.crEaTiiOn_ModernSlider3.KnobImage = null;
+            resources.ApplyResources(this.crEaTiiOn_ModernSlider3, "crEaTiiOn_ModernSlider3");
+            this.crEaTiiOn_ModernSlider3.Max = 100;
+            this.crEaTiiOn_ModernSlider3.Name = "crEaTiiOn_ModernSlider3";
+            this.crEaTiiOn_ModernSlider3.Percentage = 50;
+            this.crEaTiiOn_ModernSlider3.PixelOffsetType = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+            this.crEaTiiOn_ModernSlider3.Positions = ((System.Collections.Generic.List<float>)(resources.GetObject("crEaTiiOn_ModernSlider3.Positions")));
+            this.crEaTiiOn_ModernSlider3.QuickHopping = false;
+            this.crEaTiiOn_ModernSlider3.SliderStyle = CBH.Controls.CrEaTiiOn_ModernSlider.Style.Windows10;
+            this.crEaTiiOn_ModernSlider3.SmoothingType = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            this.crEaTiiOn_ModernSlider3.UnfilledColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(169)))), ((int)(((byte)(219)))));
             // 
-            // metroLabel3
+            // crEaTiiOn_ModernSlider4
             // 
-            resources.ApplyResources(this.metroLabel3, "metroLabel3");
-            this.metroLabel3.Name = "metroLabel3";
-            this.metroLabel3.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.metroLabel3.UseCustomBackColor = true;
-            this.metroLabel3.UseCustomForeColor = true;
+            this.crEaTiiOn_ModernSlider4.BarThickness = 4;
+            this.crEaTiiOn_ModernSlider4.BigStepIncrement = 10;
+            this.crEaTiiOn_ModernSlider4.Colors = ((System.Collections.Generic.List<System.Drawing.Color>)(resources.GetObject("crEaTiiOn_ModernSlider4.Colors")));
+            this.crEaTiiOn_ModernSlider4.CompositingQualityType = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+            this.crEaTiiOn_ModernSlider4.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.crEaTiiOn_ModernSlider4.FilledColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(119)))), ((int)(((byte)(215)))));
+            this.crEaTiiOn_ModernSlider4.InterpolationType = System.Drawing.Drawing2D.InterpolationMode.HighQualityBilinear;
+            this.crEaTiiOn_ModernSlider4.KnobColor = System.Drawing.Color.Gray;
+            this.crEaTiiOn_ModernSlider4.KnobImage = null;
+            resources.ApplyResources(this.crEaTiiOn_ModernSlider4, "crEaTiiOn_ModernSlider4");
+            this.crEaTiiOn_ModernSlider4.Max = 100;
+            this.crEaTiiOn_ModernSlider4.Name = "crEaTiiOn_ModernSlider4";
+            this.crEaTiiOn_ModernSlider4.Percentage = 50;
+            this.crEaTiiOn_ModernSlider4.PixelOffsetType = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+            this.crEaTiiOn_ModernSlider4.Positions = ((System.Collections.Generic.List<float>)(resources.GetObject("crEaTiiOn_ModernSlider4.Positions")));
+            this.crEaTiiOn_ModernSlider4.QuickHopping = false;
+            this.crEaTiiOn_ModernSlider4.SliderStyle = CBH.Controls.CrEaTiiOn_ModernSlider.Style.Windows10;
+            this.crEaTiiOn_ModernSlider4.SmoothingType = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            this.crEaTiiOn_ModernSlider4.UnfilledColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(169)))), ((int)(((byte)(219)))));
             // 
-            // metroLabel4
+            // numericUpDown1
             // 
-            resources.ApplyResources(this.metroLabel4, "metroLabel4");
-            this.metroLabel4.Name = "metroLabel4";
-            this.metroLabel4.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.metroLabel4.UseCustomBackColor = true;
-            this.metroLabel4.UseCustomForeColor = true;
+            this.numericUpDown1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.numericUpDown1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.numericUpDown1.ForeColor = System.Drawing.Color.White;
+            resources.ApplyResources(this.numericUpDown1, "numericUpDown1");
+            this.numericUpDown1.Name = "numericUpDown1";
             // 
-            // metroLabel5
+            // numericUpDown2
             // 
-            resources.ApplyResources(this.metroLabel5, "metroLabel5");
-            this.metroLabel5.Name = "metroLabel5";
-            this.metroLabel5.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.metroLabel5.UseCustomBackColor = true;
-            this.metroLabel5.UseCustomForeColor = true;
+            this.numericUpDown2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.numericUpDown2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.numericUpDown2.ForeColor = System.Drawing.Color.White;
+            resources.ApplyResources(this.numericUpDown2, "numericUpDown2");
+            this.numericUpDown2.Name = "numericUpDown2";
             // 
-            // panel3
+            // numericUpDown3
             // 
-            this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.panel3.Controls.Add(this.metroLabel6);
-            this.panel3.Controls.Add(this.metroLabel5);
-            this.panel3.Controls.Add(this.txRed);
-            this.panel3.Controls.Add(this.metroLabel4);
-            this.panel3.Controls.Add(this.txGreen);
-            this.panel3.Controls.Add(this.metroLabel3);
-            this.panel3.Controls.Add(this.txBlue);
-            this.panel3.Controls.Add(this.metroLabel1);
-            this.panel3.Controls.Add(this.txHex);
-            this.panel3.Controls.Add(this.txTransp);
-            resources.ApplyResources(this.panel3, "panel3");
-            this.panel3.Name = "panel3";
+            this.numericUpDown3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.numericUpDown3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.numericUpDown3.ForeColor = System.Drawing.Color.White;
+            resources.ApplyResources(this.numericUpDown3, "numericUpDown3");
+            this.numericUpDown3.Name = "numericUpDown3";
             // 
-            // metroLabel6
+            // numericUpDown4
             // 
-            resources.ApplyResources(this.metroLabel6, "metroLabel6");
-            this.metroLabel6.Name = "metroLabel6";
-            this.metroLabel6.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.metroLabel6.UseCustomBackColor = true;
-            this.metroLabel6.UseCustomForeColor = true;
+            this.numericUpDown4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.numericUpDown4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.numericUpDown4.ForeColor = System.Drawing.Color.White;
+            resources.ApplyResources(this.numericUpDown4, "numericUpDown4");
+            this.numericUpDown4.Name = "numericUpDown4";
             // 
-            // txRed
+            // colorBox2D1
             // 
-            this.txRed.AllowDecimal = false;
-            this.txRed.AllowNull = false;
-            this.txRed.AllowSign = false;
-            this.txRed.DecimalValue = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.txRed.DoubleValue = 0D;
-            this.txRed.Format = "";
-            this.txRed.Int32Value = 0;
-            resources.ApplyResources(this.txRed, "txRed");
-            this.txRed.Name = "txRed";
-            this.txRed.UInt32Value = ((uint)(0u));
+            this.colorBox2D1.ColorMode = MechanikaDesign.WinForms.UI.ColorPicker.ColorModes.Hue;
+            this.colorBox2D1.ColorRGB = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            resources.ApplyResources(this.colorBox2D1, "colorBox2D1");
+            this.colorBox2D1.Name = "colorBox2D1";
             // 
-            // txGreen
+            // colorSliderVertical1
             // 
-            this.txGreen.AllowDecimal = false;
-            this.txGreen.AllowNull = false;
-            this.txGreen.AllowSign = false;
-            this.txGreen.DecimalValue = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.txGreen.DoubleValue = 0D;
-            this.txGreen.Format = "";
-            this.txGreen.Int32Value = 0;
-            resources.ApplyResources(this.txGreen, "txGreen");
-            this.txGreen.Name = "txGreen";
-            this.txGreen.UInt32Value = ((uint)(0u));
+            this.colorSliderVertical1.BackColor = System.Drawing.Color.Transparent;
+            this.colorSliderVertical1.ColorMode = MechanikaDesign.WinForms.UI.ColorPicker.ColorModes.Hue;
+            this.colorSliderVertical1.ColorRGB = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            resources.ApplyResources(this.colorSliderVertical1, "colorSliderVertical1");
+            this.colorSliderVertical1.Name = "colorSliderVertical1";
+            this.colorSliderVertical1.NubColor = System.Drawing.Color.Empty;
+            this.colorSliderVertical1.Position = 0;
             // 
-            // txBlue
+            // SetColorButton
             // 
-            this.txBlue.AllowDecimal = false;
-            this.txBlue.AllowNull = false;
-            this.txBlue.AllowSign = false;
-            this.txBlue.DecimalValue = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.txBlue.DoubleValue = 0D;
-            this.txBlue.Format = "";
-            this.txBlue.Int32Value = 0;
-            resources.ApplyResources(this.txBlue, "txBlue");
-            this.txBlue.Name = "txBlue";
-            this.txBlue.UInt32Value = ((uint)(0u));
-            // 
-            // txTransp
-            // 
-            this.txTransp.AllowDecimal = false;
-            this.txTransp.AllowNull = false;
-            this.txTransp.AllowSign = false;
-            this.txTransp.DecimalValue = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.txTransp.DoubleValue = 0D;
-            this.txTransp.Format = "";
-            this.txTransp.Int32Value = 0;
-            resources.ApplyResources(this.txTransp, "txTransp");
-            this.txTransp.Name = "txTransp";
-            this.txTransp.UInt32Value = ((uint)(0u));
-            // 
-            // cBox
-            // 
-            this.cBox.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.cBox.DrawStyle = ColorPicker.DrawStyles.Hue;
-            resources.ApplyResources(this.cBox, "cBox");
-            this.cBox.Name = "cBox";
-            this.cBox.RGB = 16711680;
-            // 
-            // verticalColorSlider1
-            // 
-            this.verticalColorSlider1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.verticalColorSlider1.DrawStyle = ColorPicker.DrawStyles.Hue;
-            resources.ApplyResources(this.verticalColorSlider1, "verticalColorSlider1");
-            this.verticalColorSlider1.Name = "verticalColorSlider1";
-            this.verticalColorSlider1.RGB = 16711680;
+            this.SetColorButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.SetColorButton.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.SetColorButton.BorderRadius = 10;
+            this.SetColorButton.BorderSize = 1;
+            this.SetColorButton.ClickedColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.SetColorButton.FlatAppearance.BorderSize = 0;
+            this.SetColorButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.SetColorButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(250)))), ((int)(((byte)(165)))));
+            resources.ApplyResources(this.SetColorButton, "SetColorButton");
+            this.SetColorButton.ForeColor = System.Drawing.Color.White;
+            this.SetColorButton.GradientColorPrimary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.SetColorButton.GradientColorSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.SetColorButton.HoverOverColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(250)))), ((int)(((byte)(165)))));
+            this.SetColorButton.Name = "SetColorButton";
+            this.SetColorButton.TextColor = System.Drawing.Color.White;
+            this.SetColorButton.UseVisualStyleBackColor = false;
+            this.SetColorButton.Click += new System.EventHandler(this.SetColorButton_Click);
             // 
             // COLEditor
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.Controls.Add(this.metroPanel1);
+            this.Controls.Add(this.tabControl);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.metroTextBox1);
-            this.Controls.Add(this.metroLabel2);
             this.Controls.Add(this.menuStrip);
             this.ForeColor = System.Drawing.Color.White;
             this.Name = "COLEditor";
-            this.metroPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
@@ -567,17 +629,16 @@ namespace PckStudio.Forms.Editor
             this.underwaterTab.ResumeLayout(false);
             this.fogTab.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
-            this.panel3.ResumeLayout(false);
-            this.panel3.PerformLayout();
+            this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
 		}
 
 		#endregion
-
-		private MetroFramework.Controls.MetroPanel metroPanel1;
 		private TreeView colorTreeView;
 		private TreeView waterTreeView;
 		private TreeView fogTreeView;
@@ -586,16 +647,20 @@ namespace PckStudio.Forms.Editor
 		private System.Windows.Forms.MenuStrip menuStrip;
 		private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem1;
+		private MetroFramework.Controls.MetroLabel blueLabel;
+		private MetroFramework.Controls.MetroLabel greenLabel;
+		private MetroFramework.Controls.MetroLabel redLabel;
+		private MetroFramework.Controls.MetroLabel alphaLabel;
 		private TabPage waterTab;
 		private TabPage colorsTab;
 		private MetroFramework.Controls.MetroTabControl tabControl;
-		private MetroFramework.Controls.MetroButton setColorBtn;
 		private TabPage underwaterTab;
 		private TabPage fogTab;
+		private MetroFramework.Controls.MetroTextBox colorTextbox;
+		private MetroFramework.Controls.MetroLabel metroLabel1;
 		private MetroFramework.Controls.MetroContextMenu ColorContextMenu;
 		private ToolStripMenuItem restoreOriginalColorToolStripMenuItem;
 		private MetroFramework.Controls.MetroTextBox metroTextBox1;
-		private MetroFramework.Controls.MetroLabel metroLabel2;
 		private ToolStripMenuItem targetUpdateToolToolStripMenuItem;
 		private ToolStripMenuItem TU12ToolStripMenuItem;
 		private ToolStripMenuItem TU13ToolStripMenuItem;
@@ -612,20 +677,17 @@ namespace PckStudio.Forms.Editor
 		private ToolStripMenuItem _1_9_1ToolStripMenuItem;
 		private ToolStripMenuItem copyColorToolStripMenuItem;
 		private ToolStripMenuItem pasteColorToolStripMenuItem;
-        private Panel panel2;
         private Panel panel1;
-        private Panel panel3;
-        private MetroFramework.Controls.MetroLabel metroLabel6;
-        private MetroFramework.Controls.MetroLabel metroLabel5;
-        private ColorPicker.NumericTextBox txRed;
-        private MetroFramework.Controls.MetroLabel metroLabel4;
-        private ColorPicker.NumericTextBox txGreen;
-        private MetroFramework.Controls.MetroLabel metroLabel3;
-        private ColorPicker.NumericTextBox txBlue;
-        private MetroFramework.Controls.MetroLabel metroLabel1;
-        private TextBox txHex;
-        private ColorPicker.NumericTextBox txTransp;
-        private ColorPicker.ColorBox cBox;
-        private ColorPicker.VerticalColorSlider verticalColorSlider1;
+        private MechanikaDesign.WinForms.UI.ColorPicker.ColorSliderVertical colorSliderVertical1;
+        private MechanikaDesign.WinForms.UI.ColorPicker.ColorBox2D colorBox2D1;
+        private NumericUpDown numericUpDown4;
+        private NumericUpDown numericUpDown3;
+        private NumericUpDown numericUpDown2;
+        private NumericUpDown numericUpDown1;
+        private CBH.Controls.CrEaTiiOn_ModernSlider crEaTiiOn_ModernSlider3;
+        private CBH.Controls.CrEaTiiOn_ModernSlider crEaTiiOn_ModernSlider4;
+        private CBH.Controls.CrEaTiiOn_ModernSlider crEaTiiOn_ModernSlider2;
+        private CBH.Controls.CrEaTiiOn_ModernSlider crEaTiiOn_ModernSlider1;
+        private CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton SetColorButton;
     }
 }
