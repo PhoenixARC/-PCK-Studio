@@ -49,17 +49,20 @@ namespace PckStudio.Forms.Editor
 			TU69ToolStripMenuItem.Click += (sender, e) => SetUpDefaultFile(sender, e, 11);
 			_1_9_1ToolStripMenuItem.Click += (sender, e) => SetUpDefaultFile(sender, e, 12);
 
-			SetUpTable(false);
-			SetUpDefaultFile(null, EventArgs.Empty, 11);
-        }
+			SetUpDefaultFile(null, EventArgs.Empty, 11, false);
+		}
 
-		private void SetUpDefaultFile(object sender, EventArgs e, int ID)
+		private void SetUpDefaultFile(object sender, EventArgs e, int ID, bool targetVersion = true)
 		{
-			var result = MessageBox.Show(this, "This function will set up your colour table to match that of the chosen version. You may lose some entries in the table. Are you sure you would like to continue?", "Target update version?", MessageBoxButtons.YesNo);
-			if (result == DialogResult.No) return;
+			if(targetVersion)
+			{
+				var result = MessageBox.Show(this, "This function will set up your colour table to match that of the chosen version. You may lose some entries in the table. Are you sure you would like to continue?", "Target update version?", MessageBoxButtons.YesNo);
+				if (result == DialogResult.No) return;
+			}
+
 			var reader = new COLFileReader();
 
-            switch (ID)
+			switch (ID)
 			{
 				case 0: using (var stream = new MemoryStream(Properties.Resources.tu12colours)) default_colourfile = reader.FromStream(stream); break;
 				case 1: using (var stream = new MemoryStream(Properties.Resources.tu13colours)) default_colourfile = reader.FromStream(stream); break;
@@ -76,7 +79,7 @@ namespace PckStudio.Forms.Editor
 				case 12: using (var stream = new MemoryStream(Properties.Resources._1_91_colours)) default_colourfile = reader.FromStream(stream); break;
 				default: return;
 			}
-			SetUpTable(true);
+			SetUpTable(targetVersion);
 		}
 
 		void SetUpTable(bool targetVersion)
