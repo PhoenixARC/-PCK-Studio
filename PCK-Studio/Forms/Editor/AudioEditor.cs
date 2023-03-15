@@ -76,16 +76,19 @@ namespace PckStudio.Forms.Editor
 			treeView1.Nodes.Clear();
 			foreach (var category in audioFile.Categories)
 			{
-				if (category.Name == "include_overworld" &&
-					category.audioType == PCKAudioFile.AudioCategory.EAudioType.Creative &&
-					audioFile.TryGetCategory(PCKAudioFile.AudioCategory.EAudioType.Overworld, out PCKAudioFile.AudioCategory overworldCategory))
+				if(category.audioType == PCKAudioFile.AudioCategory.EAudioType.Creative)
 				{
-					foreach (var name in category.SongNames.ToList())
+					if (category.Name == "include_overworld" &&
+						audioFile.TryGetCategory(PCKAudioFile.AudioCategory.EAudioType.Overworld, out PCKAudioFile.AudioCategory overworldCategory))
 					{
-						if (overworldCategory.SongNames.Contains(name))
-							category.SongNames.Remove(name);
+						foreach (var name in category.SongNames.ToList())
+						{
+							if (overworldCategory.SongNames.Contains(name))
+								category.SongNames.Remove(name);
+						}
+						playOverworldInCreative.Checked = true;
 					}
-					playOverworldInCreative.Checked = true;
+					playOverworldInCreative.Visible = true;
 				}
 
 				TreeNode treeNode = new TreeNode(GetCategoryFromId(category.audioType), (int)category.audioType, (int)category.audioType);
@@ -136,6 +139,13 @@ namespace PckStudio.Forms.Editor
 				else return;
 
 				var category = audioFile.GetCategory(GetCategoryId(add.SelectedItem));
+
+				if (GetCategoryId(add.SelectedItem) == PCKAudioFile.AudioCategory.EAudioType.Creative)
+				{
+					playOverworldInCreative.Visible = true;
+					playOverworldInCreative.Checked = false;
+				}
+
 				TreeNode treeNode = new TreeNode(GetCategoryFromId(category.audioType), (int)category.audioType, (int)category.audioType);
 				treeNode.Tag = category;
 				treeView1.Nodes.Add(treeNode);
@@ -171,6 +181,11 @@ namespace PckStudio.Forms.Editor
 			if (treeView1.SelectedNode is TreeNode main &&
 				audioFile.RemoveCategory(GetCategoryId(treeView1.SelectedNode.Text)))
 			{
+				if(GetCategoryId(treeView1.SelectedNode.Text) == PCKAudioFile.AudioCategory.EAudioType.Creative)
+				{
+					playOverworldInCreative.Visible = false;
+					playOverworldInCreative.Checked = false;
+				}
 				treeView2.Nodes.Clear();
 				main.Remove();
 			}
