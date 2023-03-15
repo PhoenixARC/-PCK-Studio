@@ -458,7 +458,7 @@ namespace PckStudio.Forms.Editor
             redUpDown.Value = color.R;
             greenUpDown.Value = color.G;
             blueUpDown.Value = color.B;
-            pictureBox1.BackColor = Color.FromArgb(0xff, color);
+            pictureBox1.BackColor = Color.FromArgb(tabControl.SelectedTab == colorsTab ? 0xFF : color.A, color);
         }
 
 		private void metroTextBox1_TextChanged(object sender, EventArgs e)
