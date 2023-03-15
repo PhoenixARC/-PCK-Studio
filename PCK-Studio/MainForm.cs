@@ -703,6 +703,17 @@ namespace PckStudio
             if (node.Tag is PckFile.FileData)
             {
                 PckFile.FileData file = node.Tag as PckFile.FileData;
+
+				string itemPath = "res/textures/items/";
+
+				// warn the user about deleting compass.png and clock.png
+				if (file.Filetype == PckFile.FileData.FileType.TextureFile && 
+					(file.Filename == itemPath + "compass.png" || file.Filename == itemPath + "clock.png"))
+				{
+					if(MessageBox.Show("Are you sure want to delete this file? If \"compass.png\" or \"clock.png\" are missing, your game will crash upon loading this pack.", "Warning",
+				MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No) return;
+				}
+
                 // remove loc key if its a skin/cape
 				if (file.Filetype == PckFile.FileData.FileType.SkinFile || file.Filetype == PckFile.FileData.FileType.CapeFile)
                 {
