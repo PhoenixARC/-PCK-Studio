@@ -7,29 +7,32 @@ using System.Linq;
 using System.Windows.Forms;
 using MetroFramework.Forms;
 using PckStudio.Classes.FileTypes;
-using PckStudio.Classes.IO.Model;
 using PckStudio.Forms.Additional_Popups.EntityForms;
 using Newtonsoft.Json.Linq;
+using OMI.Formats.Model;
+using OMI.Formats.Pck;
+using OMI.Workers.Model;
+using OMI.Formats.Behaviour;
 
 namespace PckStudio.Forms.Editor
 {
 	public partial class ModelsEditor : MetroForm
 	{
 		// Behaviours File Format research by Miku and MattNL
-		private readonly PCKFile.FileData _file;
-		ModelFile modelFile;
+		private readonly PckFile.FileData _file;
+		ModelContainer modelFile;
 
 		void SetUpTree()
 		{
 			treeView1.BeginUpdate();
 			treeView1.Nodes.Clear();
-			foreach (var entry in modelFile.Models)
+			foreach (var entry in modelFile.Models.Values)
 			{
-				TreeNode EntryNode = new TreeNode(entry.name);
+				TreeNode EntryNode = new TreeNode(entry.Name);
 
 				foreach (JObject content in Utilities.ModelsUtil.entityData["entities"].Children())
 				{
-					var prop = content.Properties().FirstOrDefault(prop => prop.Name == entry.name);
+					var prop = content.Properties().FirstOrDefault(prop => prop.Name == entry.Name);
 					if (prop is JProperty)
 					{
 						EntryNode.Text = (string)prop.Value;
@@ -41,9 +44,9 @@ namespace PckStudio.Forms.Editor
 
 				EntryNode.Tag = entry;
 
-				foreach (var bone in entry.parts)
+				foreach (var bone in entry.Parts.Values)
 				{
-					TreeNode BoneNode = new TreeNode(bone.name);
+					TreeNode BoneNode = new TreeNode(bone.Name);
 					BoneNode.Tag = bone;
 					EntryNode.Nodes.Add(BoneNode);
 					BoneNode.ImageIndex = 120;
@@ -64,14 +67,15 @@ namespace PckStudio.Forms.Editor
 			treeView1.EndUpdate();
 		}
 
-		public ModelsEditor(PCKFile.FileData file)
+		public ModelsEditor(PckFile.FileData file)
 		{
 			InitializeComponent();
 			_file = file;
 
 			using (var stream = new MemoryStream(file.Data))
 			{
-				modelFile = ModelFileReader.Read(stream);
+				var reader = new ModelFileReader();
+				modelFile = reader.FromStream(stream);
 			}
 
 			treeView1.ImageList = new ImageList();
@@ -82,17 +86,7 @@ namespace PckStudio.Forms.Editor
 
 		private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
 		{
-			if (e.Node is null) return;
-
-			bool isValidOverride = e.Node.Tag is BehaviourFile.RiderPositionOverride.PositionOverride &&
-				treeView1.SelectedNode != null;
-			renameToolStripMenuItem.Visible = !isValidOverride;
-
-
-			if (isValidOverride)
-			{
-                var posOverride = e.Node.Tag as BehaviourFile.RiderPositionOverride.PositionOverride;
-			}
+			
 		}
 
 		private void removeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -103,27 +97,29 @@ namespace PckStudio.Forms.Editor
 
 		private void changeToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (treeView1.SelectedNode == null) return;
-			if (!(treeView1.SelectedNode.Tag is ModelFile.Model entry)) return;
+			if (treeView1.SelectedNode is null || treeView1.SelectedNode.Tag is not Model entry)
+				return;
 
 			var diag = new AddEntry(Utilities.ModelsUtil.entityData, Utilities.ModelsUtil.entityImages);
 			diag.acceptBtn.Text = "Save";
 
 			if (diag.ShowDialog() == DialogResult.OK)
 			{
-				if (String.IsNullOrEmpty(diag.SelectedEntity)) return;
-				if (modelFile.Models.FindAll(model => model.name == diag.SelectedEntity).Count() > 0)
-				{
-					MessageBox.Show(this, "You cannot have two models for one entity", "Error", MessageBoxButtons.OK);
+				if (string.IsNullOrEmpty(diag.SelectedEntity))
 					return;
-				}
 
-				entry.name = diag.SelectedEntity;
+
+				if (modelFile.Models.ContainsKey(diag.SelectedEntity))
+				{
+					modelFile.Models.Remove(diag.SelectedEntity);
+                }
+
+				entry.Name = diag.SelectedEntity;
 				treeView1.SelectedNode.Tag = entry;
 
 				foreach (JObject content in Utilities.ModelsUtil.entityData["entities"].Children())
 				{
-					var prop = content.Properties().FirstOrDefault(prop => prop.Name == entry.name);
+					var prop = content.Properties().FirstOrDefault(prop => prop.Name == entry.Name);
 					if (prop is JProperty)
 					{
 						treeView1.SelectedNode.Text = (string)prop.Value;
@@ -161,29 +157,35 @@ namespace PckStudio.Forms.Editor
 
 			if(diag.ShowDialog() == DialogResult.OK)
 			{
-				if (string.IsNullOrEmpty(diag.SelectedEntity)) return;
-				if (modelFile.Models.FindAll(model => model.name == diag.SelectedEntity).Count() > 0)
+				if (string.IsNullOrEmpty(diag.SelectedEntity))
+					return;
+				if (modelFile.Models.ContainsKey(diag.SelectedEntity))
 				{
 					MessageBox.Show(this, "You cannot have two models for one entity.", "Error", MessageBoxButtons.OK);
 					return;
 				}
-				ModelFile.Model NewModel = new ModelFile.Model(diag.SelectedEntity, 64, 64);
 
-				TreeNode NewModelNode = new TreeNode(NewModel.name);
-				NewModelNode.Tag = NewModel;
+				Model newModel = new Model()
+				{
+					Name = diag.SelectedEntity,
+					TextureSize = new Size(64, 64)
+				};
+
+				TreeNode modelNode = new TreeNode(newModel.Name);
+				modelNode.Tag = newModel;
 				foreach (JObject content in Utilities.ModelsUtil.entityData["entities"].Children())
 				{
-					var prop = content.Properties().FirstOrDefault(prop => prop.Name == NewModel.name);
+					var prop = content.Properties().FirstOrDefault(prop => prop.Name == newModel.Name);
 					if (prop is JProperty)
 					{
-						NewModelNode.Text = (string)prop.Value;
-						NewModelNode.ImageIndex = Utilities.ModelsUtil.entityData["entities"].Children().ToList().IndexOf(content);
-						NewModelNode.SelectedImageIndex = NewModelNode.ImageIndex;
+						modelNode.Text = (string)prop.Value;
+						modelNode.ImageIndex = Utilities.ModelsUtil.entityData["entities"].Children().ToList().IndexOf(content);
+						modelNode.SelectedImageIndex = modelNode.ImageIndex;
 						break;
 					}
 				}
-				treeView1.Nodes.Add(NewModelNode);
-				treeView1.SelectedNode = NewModelNode;
+				treeView1.Nodes.Add(modelNode);
+				treeView1.SelectedNode = modelNode;
 
 				//addNewPositionOverrideToolStripMenuItem_Click(sender, e); // adds a Position Override to the new Override
 			}
@@ -203,26 +205,8 @@ namespace PckStudio.Forms.Editor
 		{
 			using (var stream = new MemoryStream())
 			{
-				modelFile = new ModelFile();
-
-				foreach (TreeNode node in treeView1.Nodes)
-				{
-					if(node.Tag is ModelFile.Model entry)
-					{
-						entry.parts.Clear();
-						foreach (TreeNode boneNode in node.Nodes)
-						{
-							if(boneNode.Tag is ModelFile.Model.Part boneEntry)
-							{
-								entry.parts.Add(boneEntry);
-							}
-						}
-
-						modelFile.Models.Add(entry);
-					}
-				}
-
-				ModelFileWriter.Write(stream, modelFile);
+				var writer = new ModelFileWriter(modelFile);
+                writer.WriteToStream(stream);
 				_file.SetData(stream.ToArray());
 			}
 			DialogResult = DialogResult.OK;

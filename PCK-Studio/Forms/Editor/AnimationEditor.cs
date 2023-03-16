@@ -17,12 +17,13 @@ using PckStudio.Forms.Utilities;
 using PckStudio.Classes.Extentions;
 using System.Runtime.CompilerServices;
 using System.Diagnostics;
+using OMI.Formats.Pck;
 
 namespace PckStudio.Forms.Editor
 {
 	public partial class AnimationEditor : MetroForm
 	{
-		PCKFile.FileData animationFile;
+		PckFile.FileData animationFile;
 		Animation currentAnimation;
         AnimationPlayer player;
 
@@ -155,15 +156,22 @@ namespace PckStudio.Forms.Editor
 				return animationData.TrimEnd(',');
             }
 
-			public Image BuildTexture()
+			public Image BuildTexture(AnimationEditor ae)
 			{
 				int width = frameTextures[0].Width;
 				int height = frameTextures[0].Height;
 				if (width != height) throw new Exception("Invalid size");
-                var img = new Bitmap(width, height * FrameTextureCount);
+
+				bool isClockOrCompass = ae.TileName == "clock" || ae.TileName == "compass";
+
+				List<Image> linearImages = new List<Image>();
+				foreach (TreeNode n in ae.frameTreeView.Nodes) linearImages.Add(frameTextures[n.ImageIndex]);
+
+				var img = new Bitmap(width, height * (isClockOrCompass ? linearImages.Count : FrameTextureCount));
 				int pos_y = 0;
+
 				using (var g = Graphics.FromImage(img))
-				frameTextures.ForEach(texture =>
+				(isClockOrCompass ? linearImages : frameTextures).ForEach(texture =>
 				{
 					g.DrawImage(texture, 0, pos_y);
 					pos_y += height;
@@ -237,12 +245,19 @@ namespace PckStudio.Forms.Editor
             }
 		}
 
-		public AnimationEditor(PCKFile.FileData file)
+		public AnimationEditor(PckFile.FileData file)
 		{
 			InitializeComponent();
 
             isItem = file.Filename.Split('/').Contains("items");
 			TileName = Path.GetFileNameWithoutExtension(file.Filename);
+
+			InterpolationCheckbox.Visible = !(TileName == "clock" || TileName == "compass");
+			InterpolationCheckbox.Checked = InterpolationCheckbox.Visible;
+			bulkAnimationSpeedToolStripMenuItem.Enabled = InterpolationCheckbox.Visible;
+			importJavaAnimationToolStripMenuItem.Enabled = InterpolationCheckbox.Visible;
+			exportJavaAnimationToolStripMenuItem.Enabled = InterpolationCheckbox.Visible;
+
 			animationFile = file;
 
 			using MemoryStream textureMem = new MemoryStream(animationFile.Data);
@@ -325,10 +340,10 @@ namespace PckStudio.Forms.Editor
 		{
 
 			string anim = currentAnimation.BuildAnim();
-			animationFile.Properties.SetProperty("ANIM", anim);
+			animationFile.Properties.SetProperty("ANIM", TileName == "clock" || TileName == "compass" ? "" : anim);
             using (var stream = new MemoryStream())
 			{
-				currentAnimation.BuildTexture().Save(stream, ImageFormat.Png);
+				currentAnimation.BuildTexture(this).Save(stream, ImageFormat.Png);
 				animationFile.SetData(stream.ToArray());
 			}
 			//Reusing this for the tile path
@@ -434,7 +449,7 @@ namespace PckStudio.Forms.Editor
 			diag.SaveBtn.Text = "Add";
 			if (diag.ShowDialog(this) == DialogResult.OK)
 			{
-                currentAnimation.AddFrame(diag.FrameTextureIndex, diag.FrameTime);
+                currentAnimation.AddFrame(diag.FrameTextureIndex, TileName == "clock" || TileName == "compass" ? 1 : diag.FrameTime);
                 LoadAnimationTreeView();
 			}
 		}
@@ -550,6 +565,13 @@ namespace PckStudio.Forms.Editor
 					Console.WriteLine(diag.SelectedTile);
 					if (TileName != diag.SelectedTile) isItem = diag.IsItem;
 					TileName = diag.SelectedTile;
+
+					InterpolationCheckbox.Visible = !(TileName == "clock" || TileName == "compass");
+					InterpolationCheckbox.Checked = InterpolationCheckbox.Visible;
+					bulkAnimationSpeedToolStripMenuItem.Enabled = InterpolationCheckbox.Visible;
+					importJavaAnimationToolStripMenuItem.Enabled = InterpolationCheckbox.Visible;
+					exportJavaAnimationToolStripMenuItem.Enabled = InterpolationCheckbox.Visible;
+
 					foreach (JObject content in AnimationUtil.tileData[animationSection].Children())
 					{
 						var first = content.Properties().FirstOrDefault(p => p.Name == TileName);
@@ -582,7 +604,7 @@ namespace PckStudio.Forms.Editor
 			mcmeta["animation"] = animation;
 			File.WriteAllText(fileDialog.FileName, JsonConvert.SerializeObject(mcmeta, Formatting.Indented));
 			string fn = fileDialog.FileName;
-			currentAnimation.BuildTexture().Save(fn.Remove(fn.Length - 7));
+			currentAnimation.BuildTexture(this).Save(fn.Remove(fn.Length - 7));
 			MessageBox.Show("Your animation was successfully exported at " + fn, "Successful export");
 		}
 

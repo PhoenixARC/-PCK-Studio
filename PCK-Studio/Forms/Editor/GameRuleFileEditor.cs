@@ -4,82 +4,102 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using PckStudio.Classes.FileTypes;
-using PckStudio.Classes.IO.GRF;
 using PckStudio.Forms.Additional_Popups.Grf;
 using PckStudio.Classes.Misc;
+using OMI.Formats.GameRule;
+using OMI.Workers.GameRule;
+using System.Diagnostics;
+using OMI.Formats.Pck;
+using PckStudio.Forms.Additional_Popups;
 
 namespace PckStudio.Forms.Editor
 {
-    public partial class GRFEditor : MetroFramework.Forms.MetroForm
+    public partial class GameRuleFileEditor : MetroFramework.Forms.MetroForm
     {
-        private PCKFile.FileData _pckfile;
-        private GRFFile _file;
+        private PckFile.FileData _pckfile;
+        private GameRuleFile _file;
 
-
-        private GRFEditor()
+        public GameRuleFileEditor()
         {
             InitializeComponent();
+            PromptForCompressionType();
         }
 
-        public GRFEditor(PCKFile.FileData file) : this()
+        private void PromptForCompressionType()
+        {
+            ItemSelectionPopUp dialog = new ItemSelectionPopUp(compressionTypeComboBox.Items.Cast<string>().ToArray());
+            dialog.label2.Text = "Type";
+            dialog.okBtn.Text = "Ok";
+            if (dialog.ShowDialog() == DialogResult.OK)
+                compressionTypeComboBox.SelectedIndex = compressionTypeComboBox.Items.IndexOf(dialog.SelectedItem);
+        }
+
+        public GameRuleFileEditor(PckFile.FileData file) : this()
         {
             _pckfile = file;
-            using(var stream = new MemoryStream(file.Data))
+            using (var stream = new MemoryStream(file.Data))
             {
-                try
-                {
-                    _file = GRFFileReader.Read(stream);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                    MessageBox.Show("Faild to open .grf/.grh file");
-                }
+                _file = OpenGameRuleFile(stream, (GameRuleFile.CompressionType)compressionTypeComboBox.SelectedIndex);
             }
         }
 
-        public GRFEditor(Stream stream) : this()
+        public GameRuleFileEditor(Stream stream) : this()
+        {
+            _file = OpenGameRuleFile(stream, (GameRuleFile.CompressionType)compressionTypeComboBox.SelectedIndex);
+        }
+
+        private GameRuleFile OpenGameRuleFile(Stream stream, GameRuleFile.CompressionType compressionType)
         {
             try
             {
-                _file = GRFFileReader.Read(stream);
+                var reader = new GameRuleFileReader(compressionType);
+                return reader.FromStream(stream);
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Debug.WriteLine(ex.Message);
                 MessageBox.Show("Faild to open .grf/.grh file");
             }
+            return default!;
         }
 
         private void OnLoad(object sender, EventArgs e)
         {
             RPC.SetPresence("GRF Editor", "Editing a GRF File");
-            toolStripComboBox1.SelectedIndex = (int)_file.CompressionLevel;
-            loadGRFTreeView(GrfTreeView.Nodes, _file.Root);
+            ReloadGameRuleTree();
         }
 
-        private void loadGRFTreeView(TreeNodeCollection root, GRFFile.GameRule parentRule)
+        private void LoadGameRuleTree(TreeNodeCollection root, GameRuleFile.GameRule parentRule)
         {
             foreach (var rule in parentRule.ChildRules)
             {
                 TreeNode node = new TreeNode(rule.Name);
                 node.Tag = rule;
                 root.Add(node);
-                loadGRFTreeView(node.Nodes, rule);
+                LoadGameRuleTree(node.Nodes, rule);
+            }
+        }
+
+        private void ReloadGameRuleTree()
+        {
+            GrfTreeView.Nodes.Clear();
+            if (_file is not null)
+            {
+                toolStripComboBox1.SelectedIndex = (int)_file.FileHeader.CompressionLevel;
+                LoadGameRuleTree(GrfTreeView.Nodes, _file.Root);
             }
         }
 
         private void GrfTreeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            if (e.Node is TreeNode t && t.Tag is GRFFile.GameRule)
+            if (e.Node is TreeNode t && t.Tag is GameRuleFile.GameRule)
                 ReloadParameterTreeView();
         }
 
         private void ReloadParameterTreeView()
         {
             GrfParametersTreeView.Nodes.Clear();
-            if (GrfTreeView.SelectedNode is TreeNode t && t.Tag is GRFFile.GameRule rule)
+            if (GrfTreeView.SelectedNode is TreeNode t && t.Tag is GameRuleFile.GameRule rule)
             foreach (var param in rule.Parameters)
             {
                 GrfParametersTreeView.Nodes.Add(new TreeNode($"{param.Key}: {param.Value}") { Tag = param});
@@ -88,8 +108,8 @@ namespace PckStudio.Forms.Editor
 
         private void addDetailContextMenuItem_Click(object sender, EventArgs e)
         {
-            if (GrfTreeView.SelectedNode == null || !(GrfTreeView.SelectedNode.Tag is GRFFile.GameRule)) return;
-            var grfTag = GrfTreeView.SelectedNode.Tag as GRFFile.GameRule;
+            if (GrfTreeView.SelectedNode == null || !(GrfTreeView.SelectedNode.Tag is GameRuleFile.GameRule)) return;
+            var grfTag = GrfTreeView.SelectedNode.Tag as GameRuleFile.GameRule;
             AddParameter prompt = new AddParameter();
             if (prompt.ShowDialog() == DialogResult.OK)
             {
@@ -105,7 +125,7 @@ namespace PckStudio.Forms.Editor
 
         private void removeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (GrfTreeView.SelectedNode is TreeNode t && t.Tag is GRFFile.GameRule rule &&
+            if (GrfTreeView.SelectedNode is TreeNode t && t.Tag is GameRuleFile.GameRule rule &&
                 GrfParametersTreeView.SelectedNode is TreeNode paramNode && paramNode.Tag is KeyValuePair<string, string> pair &&
                 rule.Parameters.ContainsKey(pair.Key) && rule.Parameters.Remove(pair.Key))
             {
@@ -123,7 +143,7 @@ namespace PckStudio.Forms.Editor
 
         private void GrfDetailsTreeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            if (GrfTreeView.SelectedNode is TreeNode t && t.Tag is GRFFile.GameRule rule &&
+            if (GrfTreeView.SelectedNode is TreeNode t && t.Tag is GameRuleFile.GameRule rule &&
                 GrfParametersTreeView.SelectedNode is TreeNode paramNode && paramNode.Tag is KeyValuePair<string, string> param)
             {
                 AddParameter prompt = new AddParameter(param.Key, param.Value, false);
@@ -137,9 +157,9 @@ namespace PckStudio.Forms.Editor
 
         private void addGameRuleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            bool isValidNode = GrfTreeView.SelectedNode is TreeNode t && t.Tag is GRFFile.GameRule;
-            GRFFile.GameRule parentRule = isValidNode
-               ? GrfTreeView.SelectedNode.Tag as GRFFile.GameRule
+            bool isValidNode = GrfTreeView.SelectedNode is TreeNode t && t.Tag is GameRuleFile.GameRule;
+            var parentRule = isValidNode
+               ? GrfTreeView.SelectedNode.Tag as GameRuleFile.GameRule
                : _file.Root;
 
             TreeNodeCollection root = isValidNode
@@ -164,11 +184,11 @@ namespace PckStudio.Forms.Editor
 
         private void removeGameRuleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (GrfTreeView.SelectedNode is TreeNode t && t.Tag is GRFFile.GameRule tag && removeTag(tag))
+            if (GrfTreeView.SelectedNode is TreeNode t && t.Tag is GameRuleFile.GameRule tag && removeTag(tag))
                 t.Remove();
         }
 
-        private bool removeTag(GRFFile.GameRule rule)
+        private bool removeTag(GameRuleFile.GameRule rule)
         {
             _ = rule.Parent ?? throw new ArgumentNullException(nameof(rule.Parent));
             foreach (var subTag in rule.ChildRules.ToList())
@@ -184,7 +204,7 @@ namespace PckStudio.Forms.Editor
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (_file.IsWorld)
+            if (_file.FileHeader.unknownData[3] != 0)
             {
                 MessageBox.Show("World grf saving is currently unsupported");
                 return;
@@ -193,7 +213,11 @@ namespace PckStudio.Forms.Editor
             {
                 try
                 {
-                    GRFFileWriter.Write(stream, _file, (GRFFile.CompressionType)toolStripComboBox1.SelectedIndex/*GRFFile.eCompressionType.ZlibRleCrc*/);
+                    var writer = new GameRuleFileWriter(
+                        _file,
+                        (GameRuleFile.CompressionLevel)toolStripComboBox1.SelectedIndex,
+                        (GameRuleFile.CompressionType)compressionTypeComboBox.SelectedIndex);
+                    writer.WriteToStream(stream);
                     _pckfile?.SetData(stream.ToArray());
                     MessageBox.Show("Saved!");
                 }
@@ -212,6 +236,21 @@ namespace PckStudio.Forms.Editor
             GrfParametersTreeView.Size = new Size(metroPanel1.Size.Width / 2 - padding, metroPanel1.Size.Height);
             // good enough
             metroLabel2.Location = new Point(metroPanel1.Size.Width / 2 + 25, metroLabel2.Location.Y);
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "Game Rule File|*.grf";
+            PromptForCompressionType();
+            if (dialog.ShowDialog(this) == DialogResult.OK)
+            {
+                using (var fs = File.OpenRead(dialog.FileName))
+                {
+                    _file = OpenGameRuleFile(fs, (GameRuleFile.CompressionType)compressionTypeComboBox.SelectedIndex);
+                    ReloadGameRuleTree();
+                }
+            }
         }
     }
 }

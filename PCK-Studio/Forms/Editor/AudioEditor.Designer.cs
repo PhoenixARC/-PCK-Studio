@@ -45,6 +45,7 @@ namespace PckStudio.Forms.Editor
 			this.deleteUnusedBINKAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.openDataFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.bulkReplaceExistingTracksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.organizeTracksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.howToAddSongsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.whatAreTheCategoriesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -59,7 +60,6 @@ namespace PckStudio.Forms.Editor
 			this.playOverworldInCreative = new MetroFramework.Controls.MetroCheckBox();
 			this.compressionUpDown = new System.Windows.Forms.NumericUpDown();
 			this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
-			this.organizeTracksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenuStrip1.SuspendLayout();
 			this.menuStrip.SuspendLayout();
 			this.contextMenuStrip2.SuspendLayout();
@@ -178,6 +178,12 @@ namespace PckStudio.Forms.Editor
 			this.bulkReplaceExistingTracksToolStripMenuItem.Name = "bulkReplaceExistingTracksToolStripMenuItem";
 			resources.ApplyResources(this.bulkReplaceExistingTracksToolStripMenuItem, "bulkReplaceExistingTracksToolStripMenuItem");
 			this.bulkReplaceExistingTracksToolStripMenuItem.Click += new System.EventHandler(this.bulkReplaceExistingFilesToolStripMenuItem_Click);
+			// 
+			// organizeTracksToolStripMenuItem
+			// 
+			this.organizeTracksToolStripMenuItem.Name = "organizeTracksToolStripMenuItem";
+			resources.ApplyResources(this.organizeTracksToolStripMenuItem, "organizeTracksToolStripMenuItem");
+			this.organizeTracksToolStripMenuItem.Click += new System.EventHandler(this.organizeTracksToolStripMenuItem_Click);
 			// 
 			// helpToolStripMenuItem
 			// 
@@ -298,12 +304,6 @@ namespace PckStudio.Forms.Editor
 			resources.ApplyResources(this.metroLabel1, "metroLabel1");
 			this.metroLabel1.Name = "metroLabel1";
 			this.metroLabel1.Theme = MetroFramework.MetroThemeStyle.Dark;
-			// 
-			// organizeTracksToolStripMenuItem
-			// 
-			this.organizeTracksToolStripMenuItem.Name = "organizeTracksToolStripMenuItem";
-			resources.ApplyResources(this.organizeTracksToolStripMenuItem, "organizeTracksToolStripMenuItem");
-			this.organizeTracksToolStripMenuItem.Click += new System.EventHandler(this.organizeTracksToolStripMenuItem_Click);
 			// 
 			// AudioEditor
 			// 

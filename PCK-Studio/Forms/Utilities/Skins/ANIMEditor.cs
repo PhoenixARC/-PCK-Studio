@@ -5,6 +5,7 @@ using System.Linq;
 using System.IO;
 using System.Windows.Forms;
 using PckStudio.Classes.Utils;
+using PckStudio.Forms.Additional_Popups;
 
 namespace PckStudio.Forms.Utilities.Skins
 {
@@ -261,15 +262,13 @@ namespace PckStudio.Forms.Utilities.Skins
 
 		private void templateButton_Click(object sender, EventArgs e)
 		{
-			// Recycling the AddCategory popup to handle the ANIM templates (:
-			// diag.Category will be the ANIM codes
-			var diag = new Additional_Popups.Audio.addCategory(Templates.Keys.ToArray());
+			var diag = new ItemSelectionPopUp(Templates.Keys.ToArray());
 			diag.label2.Text = "Presets";
-			diag.button1.Text = "Load";
+			diag.okBtn.Text = "Load";
 
 			if (diag.ShowDialog() != DialogResult.OK) return;
 
-			var templateANIM = Templates[diag.Category];
+			var templateANIM = Templates[diag.SelectedItem];
 			DialogResult prompt = MessageBox.Show(this, "Would you like to add this preset's effects to your current ANIM? Otherwise all of your effects will be cleared. Either choice can be undone by pressing \"Restore ANIM\".", "", MessageBoxButtons.YesNo);
 			if (prompt == DialogResult.Yes) anim |= templateANIM;
 			else anim = templateANIM;

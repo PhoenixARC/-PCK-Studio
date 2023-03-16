@@ -13,6 +13,9 @@ using PckStudio.Classes;
 using PckStudio.Classes.FileTypes;
 using PckStudio.Classes.IO.PCK;
 using PckStudio.Forms.Additional_Popups.Audio;
+using OMI.Formats.Languages;
+using OMI.Formats.Pck;
+using PckStudio.Forms.Additional_Popups;
 
 // Audio Editor by MattNL
 // additional work and optimization by Miku-666
@@ -23,7 +26,7 @@ namespace PckStudio.Forms.Editor
 	{
 		public string defaultType = "yes";
 		PCKAudioFile audioFile = null;
-		PCKFile.FileData audioPCK;
+		PckFile.FileData audioPCK;
 		LOCFile loc;
 		bool _isLittleEndian = false;
         MainForm parent = null;
@@ -52,7 +55,7 @@ namespace PckStudio.Forms.Editor
 			return (PCKAudioFile.AudioCategory.EAudioType)Categories.IndexOf(category);
 		}
 
-		public AudioEditor(PCKFile.FileData file, LOCFile locFile, bool isLittleEndian)
+		public AudioEditor(PckFile.FileData file, LOCFile locFile, bool isLittleEndian)
 		{
 			InitializeComponent();
 			loc = locFile;
@@ -73,16 +76,19 @@ namespace PckStudio.Forms.Editor
 			treeView1.Nodes.Clear();
 			foreach (var category in audioFile.Categories)
 			{
-				if (category.Name == "include_overworld" &&
-					category.audioType == PCKAudioFile.AudioCategory.EAudioType.Creative &&
-					audioFile.TryGetCategory(PCKAudioFile.AudioCategory.EAudioType.Overworld, out PCKAudioFile.AudioCategory overworldCategory))
+				if(category.audioType == PCKAudioFile.AudioCategory.EAudioType.Creative)
 				{
-					foreach (var name in category.SongNames.ToList())
+					if (category.Name == "include_overworld" &&
+						audioFile.TryGetCategory(PCKAudioFile.AudioCategory.EAudioType.Overworld, out PCKAudioFile.AudioCategory overworldCategory))
 					{
-						if (overworldCategory.SongNames.Contains(name))
-							category.SongNames.Remove(name);
+						foreach (var name in category.SongNames.ToList())
+						{
+							if (overworldCategory.SongNames.Contains(name))
+								category.SongNames.Remove(name);
+						}
+						playOverworldInCreative.Checked = true;
 					}
-					playOverworldInCreative.Checked = true;
+					playOverworldInCreative.Visible = true;
 				}
 
 				TreeNode treeNode = new TreeNode(GetCategoryFromId(category.audioType), (int)category.audioType, (int)category.audioType);
@@ -127,12 +133,19 @@ namespace PckStudio.Forms.Editor
 			string[] available = Categories.FindAll(str => !audioFile.HasCategory(GetCategoryId(str))).ToArray();
 			if (available.Length > 0)
 			{
-				using addCategory add = new addCategory(available);
+				using ItemSelectionPopUp add = new ItemSelectionPopUp(available);
 				if (add.ShowDialog() == DialogResult.OK)
-					audioFile.AddCategory(GetCategoryId(add.Category));
+					audioFile.AddCategory(GetCategoryId(add.SelectedItem));
 				else return;
 
-				var category = audioFile.GetCategory(GetCategoryId(add.Category));
+				var category = audioFile.GetCategory(GetCategoryId(add.SelectedItem));
+
+				if (GetCategoryId(add.SelectedItem) == PCKAudioFile.AudioCategory.EAudioType.Creative)
+				{
+					playOverworldInCreative.Visible = true;
+					playOverworldInCreative.Checked = false;
+				}
+
 				TreeNode treeNode = new TreeNode(GetCategoryFromId(category.audioType), (int)category.audioType, (int)category.audioType);
 				treeNode.Tag = category;
 				treeView1.Nodes.Add(treeNode);
@@ -168,6 +181,11 @@ namespace PckStudio.Forms.Editor
 			if (treeView1.SelectedNode is TreeNode main &&
 				audioFile.RemoveCategory(GetCategoryId(treeView1.SelectedNode.Text)))
 			{
+				if(GetCategoryId(treeView1.SelectedNode.Text) == PCKAudioFile.AudioCategory.EAudioType.Creative)
+				{
+					playOverworldInCreative.Visible = false;
+					playOverworldInCreative.Checked = false;
+				}
 				treeView2.Nodes.Clear();
 				main.Remove();
 			}
@@ -555,15 +573,15 @@ namespace PckStudio.Forms.Editor
 			string[] available = Categories.FindAll(str => !audioFile.HasCategory(GetCategoryId(str))).ToArray();
 			if (available.Length > 0)
 			{
-				using addCategory add = new addCategory(available);
-				add.button1.Text = "Save";
+				using ItemSelectionPopUp add = new ItemSelectionPopUp(available);
+				add.okBtn.Text = "Save";
 				if (add.ShowDialog() != DialogResult.OK) return;
 
 				audioFile.RemoveCategory(category.audioType);
 
-				audioFile.AddCategory(category.parameterType, GetCategoryId(add.Category), category.audioType == PCKAudioFile.AudioCategory.EAudioType.Overworld && playOverworldInCreative.Checked ? "include_overworld" : "");
+				audioFile.AddCategory(category.parameterType, GetCategoryId(add.SelectedItem), category.audioType == PCKAudioFile.AudioCategory.EAudioType.Overworld && playOverworldInCreative.Checked ? "include_overworld" : "");
 
-				var newCategory = audioFile.GetCategory(GetCategoryId(add.Category));
+				var newCategory = audioFile.GetCategory(GetCategoryId(add.SelectedItem));
 
 				category.SongNames.ForEach(c => newCategory.SongNames.Add(c));
 

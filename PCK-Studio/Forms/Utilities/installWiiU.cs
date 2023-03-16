@@ -10,8 +10,11 @@ using System.Diagnostics;
 
 using PckStudio.Classes.FileTypes;
 using PckStudio.Classes.IO.PCK;
-using PckStudio.Classes.IO.ARC;
 using PckStudio.Classes.Misc;
+using OMI.Formats.Archive;
+using OMI.Workers.Archive;
+using OMI.Workers.Pck;
+using OMI.Formats.Pck;
 
 namespace PckStudio.Forms
 {
@@ -105,7 +108,7 @@ namespace PckStudio.Forms
             }
         }
         List<pckDir> pcks = new List<pckDir>();
-        PCKFile currentPCK = null;
+        PckFile currentPCK = null;
 
         private void updateDatabase()
         {
@@ -429,17 +432,22 @@ namespace PckStudio.Forms
 
         private string GetPackID(string filename)
         {
-            var fs = File.OpenRead(filename);
-            currentPCK = PCKFileReader.Read(fs, false);
-            fs.Close();
-            return currentPCK.GetFile("0", PCKFile.FileData.FileType.InfoFile).Properties.GetProperty("PACKID").Item2;
+            var reader = new PckFileReader();
+            currentPCK = reader.FromFile(filename);
+            if (currentPCK.TryGetFile("0", PckFile.FileData.FileType.InfoFile, out var file) &&
+                file.Properties.HasProperty("PACKID"))
+            {
+                file.Properties.GetProperty("PACKID");
+            }
+            throw new KeyNotFoundException();
         }
 
         private void GetARCFromConsole()
         {
             using (FTPClient client = new FTPClient("ftp://" + textBoxHost.Text, "", "a3262443"))
                 client.DownloadFile(dlcPath + "../../Common/Media/MediaWiiU.arc", Program.AppData + "MediaWiiU.arc");
-            archive = ARCFileReader.Read(new MemoryStream(File.ReadAllBytes(Program.AppData + "MediaWiiU.arc")));
+            var reader = new ARCFileReader();
+            archive = reader.FromStream(new MemoryStream(File.ReadAllBytes(Program.AppData + "MediaWiiU.arc")));
         }
 
         private void ReplacePackImage(string PackID)
@@ -455,7 +463,8 @@ namespace PckStudio.Forms
             using (FTPClient client = new FTPClient("ftp://" + textBoxHost.Text, "", "a3262443"))
             {
                 MemoryStream ms = new MemoryStream();
-                ARCFileWriter.Write(ms, archive);
+                var writer = new ARCFileWriter(archive);
+                writer.WriteToStream(ms);
                 File.WriteAllBytes(Program.AppData + "MediaWiiU.arc", ms.ToArray());
                 client.UploadFile(Program.AppData + "MediaWiiU.arc", dlcPath + "../../Common/Media/MediaWiiU.arc");
                 archive.Clear();
