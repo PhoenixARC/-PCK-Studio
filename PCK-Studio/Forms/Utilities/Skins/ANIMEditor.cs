@@ -169,11 +169,7 @@ namespace PckStudio.Forms.Utilities.Skins
 				if (!first) MessageBox.Show($"The following value \"{new_value}\" is not valid. Please try again.");
 				RenamePrompt diag = new RenamePrompt(new_value);
 				diag.TextLabel.Text = "ANIM";
-				
-				//Miku, NML, PhoenixARC, here is another one of those problems.
-				// - EternalModz
-				
-				//diag.SaveButton.Text = "Ok";
+				diag.RenameButton.Text = "Ok";
 				if (diag.ShowDialog() == DialogResult.OK)
 				{
 					new_value = diag.NewText;

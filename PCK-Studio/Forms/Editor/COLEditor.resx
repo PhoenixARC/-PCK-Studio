@@ -147,9 +147,6 @@
   <data name="metroTextBox1.TabIndex" type="System.Int32, mscorlib">
     <value>24</value>
   </data>
-  <data name="metroTextBox1.Text" xml:space="preserve">
-    <value>Filter by searching...</value>
-  </data>
   <data name="&gt;&gt;metroTextBox1.Name" xml:space="preserve">
     <value>metroTextBox1</value>
   </data>
@@ -380,19 +377,18 @@
 </value>
   </data>
   <data name="saveToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>98, 22</value>
   </data>
   <data name="saveToolStripMenuItem1.Text" xml:space="preserve">
     <value>Save</value>
   </data>
   <data name="fileToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAADfSURBVFhH7Zc9CsJAEIUXtNTbeIRcwVPYC2LhcUI8h5X3sVCL9U32LYhksz+TRpgPHoRk5vGV
-        GWek8N6vkB2yL0zHVT0o2yJ3pJYjK3Sg6Bz6mtBLoKQPXSNdQW7IG4noJFAwhB7v+WoWjF2RB/KUHXLh
-        53qw3CIgLCOBxVYBQS+BJY2AoJPAglZAEIlXeBw5cDwPhpcQEEQiMnA8jwyHnTKBOVgjmIAJmIAJmIAJ
-        /JfA90/p1A1Qk0jP+jwY1vyWpzixPg+GWw+TFNK1YX0ZWIin2dQdUBPpWLPW+MG5DyU9ZWg+UN+KAAAA
-        AElFTkSuQmCC
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAN9JREFUWEft
+        lz0KwkAQhRe01Nt4hFzBU9gLYuFxQjyHlfexUIv1TfYtiGSzP5NGmA8ehGTm8ZUZZ6Tw3q+QHbIvTMdV
+        PSjbInekliMrdKDoHPqa0EugpA9dI11BbsgbiegkUDCEHu/5ahaMXZEH8pQdcuHnerDcIiAsI4HFVgFB
+        L4EljYCgk8CCVkAQiVd4HDlwPA+GlxAQRCIycDyPDIedMoE5WCOYgAmYgAmYgAn8l8D3T+nUDVCTSM/6
+        PBjW/JanOLE+D4ZbD5MU0rVhfRlYiKfZ1B1QE+lYs9b4wbkPJT1laD5Q34oAAAAASUVORK5CYII=
 </value>
   </data>
   <data name="fileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
@@ -481,15 +477,15 @@
   </data>
   <data name="targetUpdateToolToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAGvSURBVFhH7Za5SgNRGEbTBYWgRhRMrATFRxALQcSXsItbLxaSwicSA3YaENRGQezcRQttLcQX
-        uJ5/7jegGcIsWQYhBw7M/bfJMsstDPjXOKFl/9H5+/cBONckbmEDbzHEji22iRMq7x4MLWIdvzEOq9nD
-        oto7g0EVvMKQY6zhbLDy2PE6ngQrzyVOaUw2GDCNHzYN7nBBqQAf/nsNsFzE+yDh3DtWlEoHjcN4Y1Pg
-        DEeUioXaUTy3RrjGIaWSQ9N+0O7cE44pnBh6yvhiA6CucDJoGMfwgltSODX0LvsR7gvLCsdDsd1ORlOh
-        zDDj1I9yNYXiofjI97gNhTLDjG0/yjUUiofiZ9/j5hTKDDPm/Sj3oFB7VBhB6dSoPYLSUZSPoHRq1B5B
-        6fZQ04u/4FGheCjO/SLM/TbM90Fk0JDfo9igqfVllPgbUGu/4IU1QraXkUFjFe2VarziilIBPhx5Ha/i
-        W5DwvVWlssGA1g1JE23zMROsPHZsMcuFdL4hCWGQbcl28RPjsJod7M6W7DcMLeEaHqJdnCF2fICWK6m8
-        99iZDS37j86f3wcY0DmFwg/cPTmHFnfblgAAAABJRU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAa9JREFUWEft
+        lrlKA1EYRtMFhaBGFEysBMVHEAtBxJewi1svFpLCJxIDdhoQ1EZB7NxFC20txBe4nn/uN6AZwixZBiEH
+        Dsz9t8kyyy0M+Nc4oWX/0fn79wE41yRuYQNvMcSOLbaJEyrvHgwtYh2/MQ6r2cOi2juDQRW8wpBjrOFs
+        sPLY8TqeBCvPJU5pTDYYMI0fNg3ucEGpAB/+ew2wXMT7IOHcO1aUSgeNw3hjU+AMR5SKhdpRPLdGuMYh
+        pZJD037Q7twTjimcGHrK+GIDoK5wMmgYx/CCW1I4NfQu+xHuC8sKx0Ox3U5GU6HMMOPUj3I1heKh+Mj3
+        uA2FMsOMbT/KNRSKh+Jn3+PmFMoMM+b9KPegUHtUGEHp1Kg9gtJRlI+gdGrUHkHp9lDTi7/gUaF4KM79
+        Isz9Nsz3QWTQkN+j2KCp9WWU+BtQa7/ghTVCtpeRQWMV7ZVqvOKKUgE+HHkdr+JbkPC9VaWywYDWDUkT
+        bfMxE6w8dmwxy4V0viEJYZBtyXbxE+Owmh3szpbsNwwt4Roeol2cIXZ8gJYrqbz32JkNLfuPzp/fBxjQ
+        OYXCD9w9OYcWd9uWAAAAAElFTkSuQmCC
 </value>
   </data>
   <data name="targetUpdateToolToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
@@ -525,8 +521,23 @@
   <metadata name="ColorContextMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>125, 17</value>
   </metadata>
+  <data name="restoreOriginalColorToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>134, 22</value>
+  </data>
+  <data name="copyColorToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>134, 22</value>
+  </data>
+  <data name="copyColorToolStripMenuItem.Text" xml:space="preserve">
+    <value>Copy Color</value>
+  </data>
+  <data name="pasteColorToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>134, 22</value>
+  </data>
+  <data name="pasteColorToolStripMenuItem.Text" xml:space="preserve">
+    <value>Paste Color</value>
+  </data>
   <data name="ColorContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>187, 70</value>
+    <value>135, 70</value>
   </data>
   <data name="&gt;&gt;ColorContextMenu.Name" xml:space="preserve">
     <value>ColorContextMenu</value>
@@ -537,17 +548,17 @@
   <data name="waterTreeView.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="copyColorToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>186, 22</value>
+  <data name="waterTreeView.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
   </data>
-  <data name="copyColorToolStripMenuItem.Text" xml:space="preserve">
-    <value>Copy Color</value>
+  <data name="waterTreeView.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
+    <value>No</value>
   </data>
   <data name="waterTreeView.Size" type="System.Drawing.Size, System.Drawing">
     <value>320, 335</value>
   </data>
-  <data name="pasteColorToolStripMenuItem.Text" xml:space="preserve">
-    <value>Paste Color</value>
+  <data name="waterTreeView.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
   <data name="&gt;&gt;waterTreeView.Name" xml:space="preserve">
     <value>waterTreeView</value>
@@ -585,31 +596,16 @@
   <data name="&gt;&gt;waterTab.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="waterTreeView.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+  <data name="underwaterTreeView.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="waterTreeView.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="underwaterTreeView.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
-  <data name="waterTreeView.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
-    <value>No</value>
+  <data name="underwaterTreeView.Size" type="System.Drawing.Size, System.Drawing">
+    <value>320, 335</value>
   </data>
-  <data name="waterTreeView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>320, 533</value>
-  </data>
-  <data name="waterTreeView.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;waterTreeView.Name" xml:space="preserve">
-    <value>waterTreeView</value>
-  </data>
-  <data name="&gt;&gt;waterTreeView.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TreeView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;waterTreeView.Parent" xml:space="preserve">
-    <value>waterTab</value>
-  </data>
-  <data name="&gt;&gt;waterTreeView.ZOrder" xml:space="preserve">
+  <data name="underwaterTreeView.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
   <data name="&gt;&gt;underwaterTreeView.Name" xml:space="preserve">
@@ -763,7 +759,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;tabControl.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="SetColorButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
@@ -3684,32 +3680,11 @@
   <data name="$this.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
-  <data name="$this.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterParent</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>COL Editor</value>
-  </data>
-  <data name="&gt;&gt;restoreOriginalColorToolStripMenuItem.Name" xml:space="preserve">
-    <value>restoreOriginalColorToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;restoreOriginalColorToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;copyColorToolStripMenuItem.Name" xml:space="preserve">
-    <value>copyColorToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;copyColorToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;pasteColorToolStripMenuItem.Name" xml:space="preserve">
-    <value>pasteColorToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;pasteColorToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;fileToolStripMenuItem.Name" xml:space="preserve">
     <value>fileToolStripMenuItem</value>
@@ -3805,6 +3780,24 @@
     <value>_1_9_1ToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;_1_9_1ToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;restoreOriginalColorToolStripMenuItem.Name" xml:space="preserve">
+    <value>restoreOriginalColorToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;restoreOriginalColorToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;copyColorToolStripMenuItem.Name" xml:space="preserve">
+    <value>copyColorToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;copyColorToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;pasteColorToolStripMenuItem.Name" xml:space="preserve">
+    <value>pasteColorToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;pasteColorToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">

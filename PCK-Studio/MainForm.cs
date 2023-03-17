@@ -1277,11 +1277,8 @@ namespace PckStudio
 		{
 			checkSaveState();
 			RenamePrompt namePrompt = new RenamePrompt("");
+            namePrompt.RenameButton.Text = "Ok";
 
-            //Miku, NML, PhoenixARC, here is another one of those problems.
-            // - EternalModz
-
-            //namePrompt.OKButton.Text = "Ok";
             if (namePrompt.ShowDialog() == DialogResult.OK)
 			{
 				currentPCK = InitializePack(new Random().Next(8000, int.MaxValue), 0, namePrompt.NewText, true);
@@ -1627,11 +1624,7 @@ namespace PckStudio
 		private void folderToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			RenamePrompt folderNamePrompt = new RenamePrompt("");
-
-            //Miku, NML, PhoenixARC, here is another one of those problems.
-            // - EternalModz
-
-            //folderNamePrompt.OKButton.Text = "Add";
+            folderNamePrompt.RenameButton.Text = "Add";
 			if (folderNamePrompt.ShowDialog() == DialogResult.OK)
 			{
 				TreeNode folerNode = CreateNode(folderNamePrompt.NewText);

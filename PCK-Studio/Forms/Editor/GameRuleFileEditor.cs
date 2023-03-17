@@ -169,10 +169,7 @@ namespace PckStudio.Forms.Editor
 
             using (RenamePrompt prompt = new RenamePrompt(""))
             {
-                //Miku, NML or PhoenixARC, this happened after I replaced the old button, it needs fixing. Same issue as all of the other issues.
-                // - EternalModz
-
-                //prompt.SaveButton.Text = "Add";
+                prompt.RenameButton.Text = "Add";
                 if (MessageBox.Show($"Add Game Rule to {parentRule.Name}", "Attention",
                     MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes &&
                     prompt.ShowDialog() == DialogResult.OK &&

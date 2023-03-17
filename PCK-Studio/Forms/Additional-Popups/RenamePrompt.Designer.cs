@@ -78,6 +78,7 @@
             this.RenameButton.BorderRadius = 10;
             this.RenameButton.BorderSize = 1;
             this.RenameButton.ClickedColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.RenameButton.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.RenameButton.FlatAppearance.BorderSize = 0;
             this.RenameButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.RenameButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(250)))), ((int)(((byte)(165)))));
@@ -112,6 +113,6 @@
         #endregion
         public System.Windows.Forms.Label TextLabel;
         private MetroFramework.Controls.MetroTextBox InputTextBox;
-        private CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton RenameButton;
+        internal CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton RenameButton;
     }
 }

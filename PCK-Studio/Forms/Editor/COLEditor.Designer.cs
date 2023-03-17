@@ -72,29 +72,30 @@ namespace PckStudio.Forms.Editor
             this.underwaterTab = new System.Windows.Forms.TabPage();
             this.fogTab = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.crEaTiiOn_ModernSlider1 = new CBH.Controls.CrEaTiiOn_ModernSlider();
-            this.crEaTiiOn_ModernSlider2 = new CBH.Controls.CrEaTiiOn_ModernSlider();
+            this.SetColorButton = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
+            this.colorSliderVertical1 = new MechanikaDesign.WinForms.UI.ColorPicker.ColorSliderVertical();
+            this.colorBox2D1 = new MechanikaDesign.WinForms.UI.ColorPicker.ColorBox2D();
+            this.numericUpDown4 = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.crEaTiiOn_ModernSlider3 = new CBH.Controls.CrEaTiiOn_ModernSlider();
             this.crEaTiiOn_ModernSlider4 = new CBH.Controls.CrEaTiiOn_ModernSlider();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown4 = new System.Windows.Forms.NumericUpDown();
-            this.colorBox2D1 = new MechanikaDesign.WinForms.UI.ColorPicker.ColorBox2D();
-            this.colorSliderVertical1 = new MechanikaDesign.WinForms.UI.ColorPicker.ColorSliderVertical();
-            this.SetColorButton = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
+            this.crEaTiiOn_ModernSlider2 = new CBH.Controls.CrEaTiiOn_ModernSlider();
+            this.crEaTiiOn_ModernSlider1 = new CBH.Controls.CrEaTiiOn_ModernSlider();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.tabControl.SuspendLayout();
-            this.colorsTab.SuspendLayout();
-            this.ColorContextMenu.SuspendLayout();
+            this.menuStrip.SuspendLayout();
             this.waterTab.SuspendLayout();
+            this.ColorContextMenu.SuspendLayout();
+            this.colorsTab.SuspendLayout();
+            this.tabControl.SuspendLayout();
             this.underwaterTab.SuspendLayout();
             this.fogTab.SuspendLayout();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // metroTextBox1
@@ -112,8 +113,7 @@ namespace PckStudio.Forms.Editor
             this.metroTextBox1.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
             this.metroTextBox1.CustomButton.UseSelectable = true;
             this.metroTextBox1.CustomButton.Visible = ((bool)(resources.GetObject("resource.Visible")));
-            this.metroTextBox1.Lines = new string[] {
-        "Filter by searching..."};
+            this.metroTextBox1.Lines = new string[0];
             resources.ApplyResources(this.metroTextBox1, "metroTextBox1");
             this.metroTextBox1.MaxLength = 32767;
             this.metroTextBox1.Name = "metroTextBox1";
@@ -365,8 +365,8 @@ namespace PckStudio.Forms.Editor
             this.underwaterTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.underwaterTreeView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.underwaterTreeView.ContextMenuStrip = this.ColorContextMenu;
-            this.underwaterTreeView.ForeColor = System.Drawing.Color.White;
             resources.ApplyResources(this.underwaterTreeView, "underwaterTreeView");
+            this.underwaterTreeView.ForeColor = System.Drawing.Color.White;
             this.underwaterTreeView.Name = "underwaterTreeView";
             this.underwaterTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView3_AfterSelect);
             this.underwaterTreeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView3_KeyDown);
@@ -450,49 +450,74 @@ namespace PckStudio.Forms.Editor
             resources.ApplyResources(this.panel1, "panel1");
             this.panel1.Name = "panel1";
             // 
-            // crEaTiiOn_ModernSlider1
+            // SetColorButton
             // 
-            this.crEaTiiOn_ModernSlider1.BarThickness = 4;
-            this.crEaTiiOn_ModernSlider1.BigStepIncrement = 10;
-            this.crEaTiiOn_ModernSlider1.Colors = ((System.Collections.Generic.List<System.Drawing.Color>)(resources.GetObject("crEaTiiOn_ModernSlider1.Colors")));
-            this.crEaTiiOn_ModernSlider1.CompositingQualityType = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
-            this.crEaTiiOn_ModernSlider1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.crEaTiiOn_ModernSlider1.FilledColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(119)))), ((int)(((byte)(215)))));
-            this.crEaTiiOn_ModernSlider1.InterpolationType = System.Drawing.Drawing2D.InterpolationMode.HighQualityBilinear;
-            this.crEaTiiOn_ModernSlider1.KnobColor = System.Drawing.Color.Gray;
-            this.crEaTiiOn_ModernSlider1.KnobImage = null;
-            resources.ApplyResources(this.crEaTiiOn_ModernSlider1, "crEaTiiOn_ModernSlider1");
-            this.crEaTiiOn_ModernSlider1.Max = 100;
-            this.crEaTiiOn_ModernSlider1.Name = "crEaTiiOn_ModernSlider1";
-            this.crEaTiiOn_ModernSlider1.Percentage = 50;
-            this.crEaTiiOn_ModernSlider1.PixelOffsetType = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
-            this.crEaTiiOn_ModernSlider1.Positions = ((System.Collections.Generic.List<float>)(resources.GetObject("crEaTiiOn_ModernSlider1.Positions")));
-            this.crEaTiiOn_ModernSlider1.QuickHopping = false;
-            this.crEaTiiOn_ModernSlider1.SliderStyle = CBH.Controls.CrEaTiiOn_ModernSlider.Style.Windows10;
-            this.crEaTiiOn_ModernSlider1.SmoothingType = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            this.crEaTiiOn_ModernSlider1.UnfilledColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(169)))), ((int)(((byte)(219)))));
+            this.SetColorButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.SetColorButton.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.SetColorButton.BorderRadius = 10;
+            this.SetColorButton.BorderSize = 1;
+            this.SetColorButton.ClickedColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.SetColorButton.FlatAppearance.BorderSize = 0;
+            this.SetColorButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.SetColorButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(250)))), ((int)(((byte)(165)))));
+            resources.ApplyResources(this.SetColorButton, "SetColorButton");
+            this.SetColorButton.ForeColor = System.Drawing.Color.White;
+            this.SetColorButton.GradientColorPrimary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.SetColorButton.GradientColorSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.SetColorButton.HoverOverColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(250)))), ((int)(((byte)(165)))));
+            this.SetColorButton.Name = "SetColorButton";
+            this.SetColorButton.TextColor = System.Drawing.Color.White;
+            this.SetColorButton.UseVisualStyleBackColor = false;
+            this.SetColorButton.Click += new System.EventHandler(this.SetColorButton_Click);
             // 
-            // crEaTiiOn_ModernSlider2
+            // colorSliderVertical1
             // 
-            this.crEaTiiOn_ModernSlider2.BarThickness = 4;
-            this.crEaTiiOn_ModernSlider2.BigStepIncrement = 10;
-            this.crEaTiiOn_ModernSlider2.Colors = ((System.Collections.Generic.List<System.Drawing.Color>)(resources.GetObject("crEaTiiOn_ModernSlider2.Colors")));
-            this.crEaTiiOn_ModernSlider2.CompositingQualityType = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
-            this.crEaTiiOn_ModernSlider2.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.crEaTiiOn_ModernSlider2.FilledColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(119)))), ((int)(((byte)(215)))));
-            this.crEaTiiOn_ModernSlider2.InterpolationType = System.Drawing.Drawing2D.InterpolationMode.HighQualityBilinear;
-            this.crEaTiiOn_ModernSlider2.KnobColor = System.Drawing.Color.Gray;
-            this.crEaTiiOn_ModernSlider2.KnobImage = null;
-            resources.ApplyResources(this.crEaTiiOn_ModernSlider2, "crEaTiiOn_ModernSlider2");
-            this.crEaTiiOn_ModernSlider2.Max = 100;
-            this.crEaTiiOn_ModernSlider2.Name = "crEaTiiOn_ModernSlider2";
-            this.crEaTiiOn_ModernSlider2.Percentage = 50;
-            this.crEaTiiOn_ModernSlider2.PixelOffsetType = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
-            this.crEaTiiOn_ModernSlider2.Positions = ((System.Collections.Generic.List<float>)(resources.GetObject("crEaTiiOn_ModernSlider2.Positions")));
-            this.crEaTiiOn_ModernSlider2.QuickHopping = false;
-            this.crEaTiiOn_ModernSlider2.SliderStyle = CBH.Controls.CrEaTiiOn_ModernSlider.Style.Windows10;
-            this.crEaTiiOn_ModernSlider2.SmoothingType = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            this.crEaTiiOn_ModernSlider2.UnfilledColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(169)))), ((int)(((byte)(219)))));
+            this.colorSliderVertical1.BackColor = System.Drawing.Color.Transparent;
+            this.colorSliderVertical1.ColorMode = MechanikaDesign.WinForms.UI.ColorPicker.ColorModes.Hue;
+            this.colorSliderVertical1.ColorRGB = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            resources.ApplyResources(this.colorSliderVertical1, "colorSliderVertical1");
+            this.colorSliderVertical1.Name = "colorSliderVertical1";
+            this.colorSliderVertical1.NubColor = System.Drawing.Color.Empty;
+            this.colorSliderVertical1.Position = 0;
+            // 
+            // colorBox2D1
+            // 
+            this.colorBox2D1.ColorMode = MechanikaDesign.WinForms.UI.ColorPicker.ColorModes.Hue;
+            this.colorBox2D1.ColorRGB = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            resources.ApplyResources(this.colorBox2D1, "colorBox2D1");
+            this.colorBox2D1.Name = "colorBox2D1";
+            // 
+            // numericUpDown4
+            // 
+            this.numericUpDown4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.numericUpDown4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.numericUpDown4.ForeColor = System.Drawing.Color.White;
+            resources.ApplyResources(this.numericUpDown4, "numericUpDown4");
+            this.numericUpDown4.Name = "numericUpDown4";
+            // 
+            // numericUpDown3
+            // 
+            this.numericUpDown3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.numericUpDown3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.numericUpDown3.ForeColor = System.Drawing.Color.White;
+            resources.ApplyResources(this.numericUpDown3, "numericUpDown3");
+            this.numericUpDown3.Name = "numericUpDown3";
+            // 
+            // numericUpDown2
+            // 
+            this.numericUpDown2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.numericUpDown2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.numericUpDown2.ForeColor = System.Drawing.Color.White;
+            resources.ApplyResources(this.numericUpDown2, "numericUpDown2");
+            this.numericUpDown2.Name = "numericUpDown2";
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.numericUpDown1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.numericUpDown1.ForeColor = System.Drawing.Color.White;
+            resources.ApplyResources(this.numericUpDown1, "numericUpDown1");
+            this.numericUpDown1.Name = "numericUpDown1";
             // 
             // crEaTiiOn_ModernSlider3
             // 
@@ -538,74 +563,49 @@ namespace PckStudio.Forms.Editor
             this.crEaTiiOn_ModernSlider4.SmoothingType = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             this.crEaTiiOn_ModernSlider4.UnfilledColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(169)))), ((int)(((byte)(219)))));
             // 
-            // numericUpDown1
+            // crEaTiiOn_ModernSlider2
             // 
-            this.numericUpDown1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.numericUpDown1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.numericUpDown1.ForeColor = System.Drawing.Color.White;
-            resources.ApplyResources(this.numericUpDown1, "numericUpDown1");
-            this.numericUpDown1.Name = "numericUpDown1";
+            this.crEaTiiOn_ModernSlider2.BarThickness = 4;
+            this.crEaTiiOn_ModernSlider2.BigStepIncrement = 10;
+            this.crEaTiiOn_ModernSlider2.Colors = ((System.Collections.Generic.List<System.Drawing.Color>)(resources.GetObject("crEaTiiOn_ModernSlider2.Colors")));
+            this.crEaTiiOn_ModernSlider2.CompositingQualityType = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+            this.crEaTiiOn_ModernSlider2.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.crEaTiiOn_ModernSlider2.FilledColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(119)))), ((int)(((byte)(215)))));
+            this.crEaTiiOn_ModernSlider2.InterpolationType = System.Drawing.Drawing2D.InterpolationMode.HighQualityBilinear;
+            this.crEaTiiOn_ModernSlider2.KnobColor = System.Drawing.Color.Gray;
+            this.crEaTiiOn_ModernSlider2.KnobImage = null;
+            resources.ApplyResources(this.crEaTiiOn_ModernSlider2, "crEaTiiOn_ModernSlider2");
+            this.crEaTiiOn_ModernSlider2.Max = 100;
+            this.crEaTiiOn_ModernSlider2.Name = "crEaTiiOn_ModernSlider2";
+            this.crEaTiiOn_ModernSlider2.Percentage = 50;
+            this.crEaTiiOn_ModernSlider2.PixelOffsetType = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+            this.crEaTiiOn_ModernSlider2.Positions = ((System.Collections.Generic.List<float>)(resources.GetObject("crEaTiiOn_ModernSlider2.Positions")));
+            this.crEaTiiOn_ModernSlider2.QuickHopping = false;
+            this.crEaTiiOn_ModernSlider2.SliderStyle = CBH.Controls.CrEaTiiOn_ModernSlider.Style.Windows10;
+            this.crEaTiiOn_ModernSlider2.SmoothingType = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            this.crEaTiiOn_ModernSlider2.UnfilledColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(169)))), ((int)(((byte)(219)))));
             // 
-            // numericUpDown2
+            // crEaTiiOn_ModernSlider1
             // 
-            this.numericUpDown2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.numericUpDown2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.numericUpDown2.ForeColor = System.Drawing.Color.White;
-            resources.ApplyResources(this.numericUpDown2, "numericUpDown2");
-            this.numericUpDown2.Name = "numericUpDown2";
-            // 
-            // numericUpDown3
-            // 
-            this.numericUpDown3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.numericUpDown3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.numericUpDown3.ForeColor = System.Drawing.Color.White;
-            resources.ApplyResources(this.numericUpDown3, "numericUpDown3");
-            this.numericUpDown3.Name = "numericUpDown3";
-            // 
-            // numericUpDown4
-            // 
-            this.numericUpDown4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.numericUpDown4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.numericUpDown4.ForeColor = System.Drawing.Color.White;
-            resources.ApplyResources(this.numericUpDown4, "numericUpDown4");
-            this.numericUpDown4.Name = "numericUpDown4";
-            // 
-            // colorBox2D1
-            // 
-            this.colorBox2D1.ColorMode = MechanikaDesign.WinForms.UI.ColorPicker.ColorModes.Hue;
-            this.colorBox2D1.ColorRGB = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            resources.ApplyResources(this.colorBox2D1, "colorBox2D1");
-            this.colorBox2D1.Name = "colorBox2D1";
-            // 
-            // colorSliderVertical1
-            // 
-            this.colorSliderVertical1.BackColor = System.Drawing.Color.Transparent;
-            this.colorSliderVertical1.ColorMode = MechanikaDesign.WinForms.UI.ColorPicker.ColorModes.Hue;
-            this.colorSliderVertical1.ColorRGB = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            resources.ApplyResources(this.colorSliderVertical1, "colorSliderVertical1");
-            this.colorSliderVertical1.Name = "colorSliderVertical1";
-            this.colorSliderVertical1.NubColor = System.Drawing.Color.Empty;
-            this.colorSliderVertical1.Position = 0;
-            // 
-            // SetColorButton
-            // 
-            this.SetColorButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.SetColorButton.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.SetColorButton.BorderRadius = 10;
-            this.SetColorButton.BorderSize = 1;
-            this.SetColorButton.ClickedColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.SetColorButton.FlatAppearance.BorderSize = 0;
-            this.SetColorButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.SetColorButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(250)))), ((int)(((byte)(165)))));
-            resources.ApplyResources(this.SetColorButton, "SetColorButton");
-            this.SetColorButton.ForeColor = System.Drawing.Color.White;
-            this.SetColorButton.GradientColorPrimary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
-            this.SetColorButton.GradientColorSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
-            this.SetColorButton.HoverOverColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(250)))), ((int)(((byte)(165)))));
-            this.SetColorButton.Name = "SetColorButton";
-            this.SetColorButton.TextColor = System.Drawing.Color.White;
-            this.SetColorButton.UseVisualStyleBackColor = false;
-            this.SetColorButton.Click += new System.EventHandler(this.SetColorButton_Click);
+            this.crEaTiiOn_ModernSlider1.BarThickness = 4;
+            this.crEaTiiOn_ModernSlider1.BigStepIncrement = 10;
+            this.crEaTiiOn_ModernSlider1.Colors = ((System.Collections.Generic.List<System.Drawing.Color>)(resources.GetObject("crEaTiiOn_ModernSlider1.Colors")));
+            this.crEaTiiOn_ModernSlider1.CompositingQualityType = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+            this.crEaTiiOn_ModernSlider1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.crEaTiiOn_ModernSlider1.FilledColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(119)))), ((int)(((byte)(215)))));
+            this.crEaTiiOn_ModernSlider1.InterpolationType = System.Drawing.Drawing2D.InterpolationMode.HighQualityBilinear;
+            this.crEaTiiOn_ModernSlider1.KnobColor = System.Drawing.Color.Gray;
+            this.crEaTiiOn_ModernSlider1.KnobImage = null;
+            resources.ApplyResources(this.crEaTiiOn_ModernSlider1, "crEaTiiOn_ModernSlider1");
+            this.crEaTiiOn_ModernSlider1.Max = 100;
+            this.crEaTiiOn_ModernSlider1.Name = "crEaTiiOn_ModernSlider1";
+            this.crEaTiiOn_ModernSlider1.Percentage = 50;
+            this.crEaTiiOn_ModernSlider1.PixelOffsetType = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+            this.crEaTiiOn_ModernSlider1.Positions = ((System.Collections.Generic.List<float>)(resources.GetObject("crEaTiiOn_ModernSlider1.Positions")));
+            this.crEaTiiOn_ModernSlider1.QuickHopping = false;
+            this.crEaTiiOn_ModernSlider1.SliderStyle = CBH.Controls.CrEaTiiOn_ModernSlider.Style.Windows10;
+            this.crEaTiiOn_ModernSlider1.SmoothingType = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            this.crEaTiiOn_ModernSlider1.UnfilledColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(169)))), ((int)(((byte)(219)))));
             // 
             // COLEditor
             // 
@@ -619,18 +619,20 @@ namespace PckStudio.Forms.Editor
             this.ForeColor = System.Drawing.Color.White;
             this.Name = "COLEditor";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.tabControl.ResumeLayout(false);
-            this.colorsTab.ResumeLayout(false);
-            this.ColorContextMenu.ResumeLayout(false);
+            this.menuStrip.ResumeLayout(false);
+            this.menuStrip.PerformLayout();
             this.waterTab.ResumeLayout(false);
+            this.ColorContextMenu.ResumeLayout(false);
+            this.colorsTab.ResumeLayout(false);
+            this.tabControl.ResumeLayout(false);
             this.underwaterTab.ResumeLayout(false);
             this.fogTab.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
 
 		}

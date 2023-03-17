@@ -204,6 +204,6 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 		private System.Windows.Forms.TreeView FrameList;
 		public System.Windows.Forms.ImageList TextureIcons;
         private CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton CancelButton;
-        private CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton SaveButton;
+        internal CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton SaveButton;
     }
 }

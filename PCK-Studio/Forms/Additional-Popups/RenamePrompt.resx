@@ -200,11 +200,11 @@
   </data>
   <data name="RenameButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAADWSURBVFhH7ZZBCsIwEEVDF1256gF04b1Ez6iX0L1u1Av0BN3FH3xFaQgVktQW8uCB6QzzB1dj
-        CoUUWGtbeZVHuZcrPMiTvMmW9vRo+JCHfL5/fqA9PZrdyK3cyYvsOUv3zdUa2vOioEr2VHyeFsLz/eVj
-        kP/7AvRHwzhvAZ4elGe0AM9oGBecR3nGC/AMQlsQ2soCC14gFsYtcIFYGOcF8PSgPIMFUsP8fAFjkP+f
-        BZQ7/UGioFpuZOgkW8ua9vS4pAF3OelR2kl3CYfOclfraC8UvjDmBTcW9LuwEs8rAAAAAElFTkSuQmCC
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAANZJREFUWEft
+        lkEKwjAQRUMXXbnqAXThvUTPqJfQvW7UC/QE3cUffEVpCBWS1Bby4IHpDPMHV2MKhRRYa1t5lUe5lys8
+        yJO8yZb29Gj4kId8vn9+oD09mt3IrdzJi+w5S/fN1Rra86KgSvZUfJ4WwvP95WOQ//sC9EfDOG8Bnh6U
+        Z7QAz2gYF5xHecYL8AxCWxDaygILXiAWxi1wgVgY5wXw9KA8gwVSw/x8AWOQ/58FlDv9QaKgWm5k6CRb
+        y5r29LikAXc56VHaSXcJh85yV+toLxS+MOYFNxb0u7ASzysAAAAASUVORK5CYII=
 </value>
   </data>
   <data name="RenameButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
@@ -2471,9 +2471,6 @@
         njz5G7/yK7/yKoCXBvj7aZF1ftlzufSWtQFL1ogWv4zfusMP8H995Svvf/DBB//ugw8++LXf+I3f+KOX
         vbLH9tge22N7bI/tsT22x/bYHttjC+3/B71iqRn22EDpAAAAAElFTkSuQmCC
 </value>
-  </data>
-  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="$this.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>

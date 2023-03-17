@@ -60,10 +60,7 @@ namespace PckStudio.Forms.Editor
 			if (treeViewLocKeys.SelectedNode is TreeNode)
 				using (RenamePrompt prompt = new RenamePrompt(""))
 				{
-                    //Miku, NML, PhoenixARC, here is another one of those problems.
-                    // - EternalModz
-
-                    //prompt.OKButton.Text = "Add";
+                    prompt.RenameButton.Text = "Add";
 					if (prompt.ShowDialog() == DialogResult.OK && 
 						!currentLoc.LocKeys.ContainsKey(prompt.NewText) &&
 						currentLoc.AddLocKey(prompt.NewText, ""))
