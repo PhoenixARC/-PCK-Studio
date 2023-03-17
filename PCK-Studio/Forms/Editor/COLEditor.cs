@@ -4,9 +4,10 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using PckStudio.ToolboxItems;
+using MetroFramework.Forms;
 using PckStudio.Classes.FileTypes;
 using PckStudio.Classes.IO.COL;
+using PckStudio.ToolboxItems;
 
 namespace PckStudio.Forms.Editor
 {
@@ -119,15 +120,37 @@ namespace PckStudio.Forms.Editor
 
 		void SetUpValueChanged(bool add)
 		{
-			//This function has been removed because of the new coloring system. -EternalModz
-		}
+			if(add)
+			{
+                //NML Miku PhoenixARC, more errors
+                //alphaUpDown.ValueChanged += color_ValueChanged;
+                //redUpDown.ValueChanged += color_ValueChanged;
+                //greenUpDown.ValueChanged += color_ValueChanged;
+                //blueUpDown.ValueChanged += color_ValueChanged;
+            }
+            else
+			{
+                //alphaUpDown.ValueChanged -= color_ValueChanged;
+                //redUpDown.ValueChanged -= color_ValueChanged;
+                //greenUpDown.ValueChanged -= color_ValueChanged;
+                //blueUpDown.ValueChanged -= color_ValueChanged;
+            }
+        }
 
 		private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
 		{
-			if (colorTreeView.SelectedNode.Tag is COLFile.ColorEntry colorEntry)
-			{
-				pictureBox1.BackColor = Color.FromArgb(0xff << 24 | (int)colorEntry.color);
-			}
+			if (colorTreeView.SelectedNode.Tag == null)
+				return;
+			var colorEntry = (COLFile.ColorEntry)colorTreeView.SelectedNode.Tag;
+			var color = colorEntry.color;
+			SetUpValueChanged(false);
+            //alphaUpDown.Visible = false;
+            //alphaLabel.Visible = false;
+            //redUpDown.Value = color >> 16 & 0xff;
+            //greenUpDown.Value = color >> 8 & 0xff;
+            //blueUpDown.Value = color & 0xff;
+            pictureBox1.BackColor = Color.FromArgb(0xff << 24 | (int)color);
+			SetUpValueChanged(true);
 		}
 
         private void treeView2_AfterSelect(object sender, TreeViewEventArgs e)
@@ -137,7 +160,14 @@ namespace PckStudio.Forms.Editor
 			var colorEntry = (COLFile.ExtendedColorEntry)waterTreeView.SelectedNode.Tag;
 			int color = (int)colorEntry.color;
 			SetUpValueChanged(false);
-			pictureBox1.BackColor = Color.FromArgb(color);
+            //alphaUpDown.Enabled = true;
+            //alphaUpDown.Visible = true;
+            //alphaLabel.Visible = true;
+            //alphaUpDown.Value = color >> 24 & 0xff;
+            //redUpDown.Value = color >> 16 & 0xff;
+            //greenUpDown.Value = color >> 8 & 0xff;
+            //blueUpDown.Value = color & 0xff;
+            pictureBox1.BackColor = Color.FromArgb(color);
 			SetUpValueChanged(true);
 		}
 
@@ -148,8 +178,13 @@ namespace PckStudio.Forms.Editor
 			var colorEntry = (COLFile.ExtendedColorEntry)underwaterTreeView.SelectedNode.Tag;
 			int color = (int)colorEntry.color_b;
 			SetUpValueChanged(false);
-			pictureBox1.BackColor = Color.FromArgb(255, Color.FromArgb(0xff << 24 | color));
-			SetUpValueChanged(true);
+            //alphaUpDown.Visible = false;
+            alphaLabel.Visible = false;
+            //redUpDown.Value = color >> 16 & 0xff;
+            //greenUpDown.Value = color >> 8 & 0xff;
+            //blueUpDown.Value = color & 0xff;
+            //pictureBox1.BackColor = Color.FromArgb(255, Color.FromArgb(0xff << 24 | color));
+            SetUpValueChanged(true);
 		}
 
 		private void treeView4_AfterSelect(object sender, TreeViewEventArgs e)
@@ -159,7 +194,12 @@ namespace PckStudio.Forms.Editor
 			var colorEntry = (COLFile.ExtendedColorEntry)fogTreeView.SelectedNode.Tag;
 			int color = (int)colorEntry.color_c;
 			SetUpValueChanged(false);
-			pictureBox1.BackColor = Color.FromArgb(255, Color.FromArgb(0xff << 24 | color));
+            //alphaUpDown.Visible = false;
+            alphaLabel.Visible = false;
+            //redUpDown.Value = color >> 16 & 0xff;
+            //greenUpDown.Value = color >> 8 & 0xff;
+            //blueUpDown.Value = color & 0xff;
+            pictureBox1.BackColor = Color.FromArgb(255, Color.FromArgb(0xff << 24 | color));
 			SetUpValueChanged(true);
 		}
 
@@ -319,12 +359,14 @@ namespace PckStudio.Forms.Editor
 			if (tabControl.SelectedTab == colorsTab)
 			{
 				var colorEntry = (COLFile.ColorEntry)colorTreeView.SelectedNode.Tag;
-				colorEntry.color = (uint)(((255 << 24) | (fixed_color.R << 16) | (fixed_color.G << 8) | fixed_color.B) & 0xffffffffL);
+                //fixed_color = Color.FromArgb(255, (int)redUpDown.Value, (int)greenUpDown.Value, (int)blueUpDown.Value);
+                colorEntry.color = (uint)(((255 << 24) | (fixed_color.R << 16) | (fixed_color.G << 8) | fixed_color.B) & 0xffffffffL);
 			}
 			else if (tabControl.SelectedTab != null && waterTreeView.SelectedNode != null) // just in case
 			{
 				var colorEntry = (COLFile.ExtendedColorEntry)waterTreeView.SelectedNode.Tag;
-				uint value = (uint)(((fixed_color.A << 24) | (fixed_color.R << 16) | (fixed_color.G << 8) | fixed_color.B) & 0xffffffffL);
+                //fixed_color = Color.FromArgb(tabControl.SelectedTab == waterTab ? (int)alphaUpDown.Value : 255, (int)redUpDown.Value, (int)greenUpDown.Value, (int)blueUpDown.Value);
+                uint value = (uint)(((fixed_color.A << 24) | (fixed_color.R << 16) | (fixed_color.G << 8) | fixed_color.B) & 0xffffffffL);
 				if (tabControl.SelectedTab == waterTab) colorEntry.color = value;
 				else if (tabControl.SelectedTab == underwaterTab) colorEntry.color_b = value;
 				else colorEntry.color_c = value;
@@ -336,49 +378,7 @@ namespace PckStudio.Forms.Editor
 
 		private void setColorBtn_Click(object sender, EventArgs e)
         {
-			//pictureBox1.BackColor = Color.FromArgb(0xff << 24 | cBox.RGB);
-			//return;
-			//ColorDialog colorPick = new ColorDialog();
-			//colorPick.AllowFullOpen = true;
-			//colorPick.AnyColor = true;
-			//colorPick.SolidColorOnly = tabControl.SelectedTab == colorsTab;
-			//if (colorPick.ShowDialog() != DialogResult.OK) return;
-            pictureBox1.BackColor = Color.FromArgb(0xff, cBox.Color);
-			
 
-			// TODO: make pretty :^)
-			if (tabControl.SelectedTab == waterTab &&
-				waterTreeView.SelectedNode is TreeNode t &&
-				t.Tag is COLFile.ExtendedColorEntry wcolorEntry)
-			{
-				// preserves the alpha so the user can handle it since the color picker doesn't support alpha
-				Color fixed_color = Color.FromArgb((int)((wcolorEntry.color >> 24) & 0xff), cBox.Color);
-				wcolorEntry.color = (uint)fixed_color.ToArgb();
-				pictureBox1.BackColor = fixed_color;
-			}
-			
-			if (tabControl.SelectedTab == underwaterTab &&
-				underwaterTreeView.SelectedNode is TreeNode uNode &&
-                uNode.Tag is COLFile.ExtendedColorEntry ucolorEntry)
-			{
-                // the game doesn't care about the alpha value for underwater colors
-                ucolorEntry.color_b = (uint)Color.FromArgb(0, cBox.Color).ToArgb();
-			}
-
-			if (tabControl.SelectedTab == fogTab &&
-				fogTreeView.SelectedNode is TreeNode fNode &&
-                fNode.Tag is COLFile.ExtendedColorEntry fcolorEntry)
-			{
-				// the game doesn't care about the alpha value for fog colors
-				fcolorEntry.color_c = (uint)Color.FromArgb(0, cBox.Color).ToArgb();
-			}
-			
-			if (tabControl.SelectedTab == colorsTab &&
-				colorTreeView.SelectedNode is TreeNode cNode &&
-                cNode.Tag is COLFile.ColorEntry colorEntry)
-			{
-				colorEntry.color = (uint)cBox.Color.ToArgb() & 0xffffff;
-			}
         }
 
 		private void alpha_ValueChanged(object sender, EventArgs e)
@@ -386,9 +386,13 @@ namespace PckStudio.Forms.Editor
 			if (tabControl.SelectedTab == waterTab && waterTreeView.SelectedNode != null &&
 				waterTreeView.SelectedNode.Tag != null && waterTreeView.SelectedNode.Tag is COLFile.ExtendedColorEntry)
 			{
-				var colorEntry = ((COLFile.ExtendedColorEntry)waterTreeView.SelectedNode.Tag);
-			}
-		}
+                //NML Miku PhoenixARC, more errors
+                var colorEntry = ((COLFile.ExtendedColorEntry)waterTreeView.SelectedNode.Tag);
+                //Color fixed_color = Color.FromArgb((int)alphaUpDown.Value, Color.FromArgb((int)colorEntry.color));
+                //colorEntry.color = (uint)fixed_color.ToArgb();
+                //pictureBox1.BackColor = fixed_color;
+            }
+        }
 
 		private void restoreOriginalColorToolStripMenuItem_Click(object sender, EventArgs e)
 		{
@@ -398,29 +402,45 @@ namespace PckStudio.Forms.Editor
 			{
 				COLFile.ColorEntry entry = default_colourfile.entries.Find(color => color.name == colorTreeView.SelectedNode.Text);
 				colorInfoD.color = entry.color;
-				pictureBox1.BackColor = Color.FromArgb(0xff << 24 | (int)colorInfoD.color);
+                //redUpDown.Value = colorInfoD.color >> 16 & 0xff;
+                //greenUpDown.Value = colorInfoD.color >> 8 & 0xff;
+                //blueUpDown.Value = colorInfoD.color & 0xff;
+                pictureBox1.BackColor = Color.FromArgb(0xff << 24 | (int)colorInfoD.color);
 			}
 			else if (tabControl.SelectedTab == waterTab && waterTreeView.SelectedNode != null &&
 			waterTreeView.SelectedNode.Tag != null && waterTreeView.SelectedNode.Tag is COLFile.ExtendedColorEntry colorInfo)
 			{
 				COLFile.ExtendedColorEntry entry = default_colourfile.waterEntries.Find(color => color.name == waterTreeView.SelectedNode.Text);
 				colorInfo.color = entry.color;
-				pictureBox1.BackColor = Color.FromArgb((int)colorInfo.color);
+                //alphaUpDown.Value = colorInfo.color >> 24 & 0xff;
+                //redUpDown.Value = colorInfo.color >> 16 & 0xff;
+                //greenUpDown.Value = colorInfo.color >> 8 & 0xff;
+                //blueUpDown.Value = colorInfo.color & 0xff;
+                pictureBox1.BackColor = Color.FromArgb((int)colorInfo.color);
 			}
 			else if (tabControl.SelectedTab == underwaterTab && underwaterTreeView.SelectedNode != null &&
 				underwaterTreeView.SelectedNode.Tag != null && underwaterTreeView.SelectedNode.Tag is COLFile.ExtendedColorEntry colorInfoB)
 			{
 				COLFile.ExtendedColorEntry entry = default_colourfile.waterEntries.Find(color => color.name == underwaterTreeView.SelectedNode.Text);
 				colorInfoB.color_b = entry.color_b;
-				pictureBox1.BackColor = Color.FromArgb(0xff << 24 | (int)colorInfoB.color_b);
+                //alphaUpDown.Value = colorInfoB.color_b >> 24 & 0xff;
+                //redUpDown.Value = colorInfoB.color_b >> 16 & 0xff;
+                //greenUpDown.Value = colorInfoB.color_b >> 8 & 0xff;
+                //blueUpDown.Value = colorInfoB.color_b & 0xff;
+                pictureBox1.BackColor = Color.FromArgb(0xff << 24 | (int)colorInfoB.color_b);
 			}
 			else if (tabControl.SelectedTab == fogTab && fogTreeView.SelectedNode != null &&
 				fogTreeView.SelectedNode.Tag != null && fogTreeView.SelectedNode.Tag is COLFile.ExtendedColorEntry colorInfoC)
 			{
 				COLFile.ExtendedColorEntry entry = default_colourfile.waterEntries.Find(color => color.name == fogTreeView.SelectedNode.Text);
 				colorInfoC.color_c = entry.color_c;
-			}
-			SetUpValueChanged(true);
+                //alphaUpDown.Value = colorInfoC.color_c >> 24 & 0xff;
+                //redUpDown.Value = colorInfoC.color_c >> 16 & 0xff;
+                //greenUpDown.Value = colorInfoC.color_c >> 8 & 0xff;
+                //blueUpDown.Value = colorInfoC.color_c & 0xff;
+                //pictureBox1.BackColor = Color.FromArgb(0xff << 24 | (int)colorInfoC.color_c);
+            }
+            SetUpValueChanged(true);
 		}
 
 		private void metroTextBox1_TextChanged(object sender, EventArgs e)
@@ -547,8 +567,64 @@ namespace PckStudio.Forms.Editor
 				colorEntry.color = (uint)fixed_color.ToArgb() & 0xffffff;
 			}
 
-			pictureBox1.BackColor = fixed_color;
-			SetUpValueChanged(true);
-		}
+            //redUpDown.Value = clipboard_color.color >> 16 & 0xff;
+            //greenUpDown.Value = clipboard_color.color >> 8 & 0xff;
+            //blueUpDown.Value = clipboard_color.color & 0xff;
+            //pictureBox1.BackColor = fixed_color;
+            //SetUpValueChanged(true);
+        }
+
+        private void SetColorButton_Click(object sender, EventArgs e)
+        {
+            ColorDialog colorPick = new ColorDialog();
+            colorPick.AllowFullOpen = true;
+            colorPick.AnyColor = true;
+            colorPick.SolidColorOnly = tabControl.SelectedTab == colorsTab;
+            if (colorPick.ShowDialog() != DialogResult.OK) return;
+            pictureBox1.BackColor = colorPick.Color;
+            if (tabControl.SelectedTab == waterTab && waterTreeView.SelectedNode != null &&
+                waterTreeView.SelectedNode.Tag != null && waterTreeView.SelectedNode.Tag is COLFile.ExtendedColorEntry)
+            {
+                var colorEntry = ((COLFile.ExtendedColorEntry)waterTreeView.SelectedNode.Tag);
+                // preserves the alpha so the user can handle it since the color picker doesn't support alpha
+                Color fixed_color = Color.FromArgb(Color.FromArgb((int)colorEntry.color).A, colorPick.Color);
+                colorEntry.color = (uint)fixed_color.ToArgb();
+                pictureBox1.BackColor = fixed_color;
+                //redUpDown.Value = colorPick.Color.R;
+                //greenUpDown.Value = colorPick.Color.G;
+                //blueUpDown.Value = colorPick.Color.B;
+				//MNL Miku or PhoenixARC all of these were errors
+            }
+            else if (tabControl.SelectedTab == underwaterTab && underwaterTreeView.SelectedNode != null &&
+                underwaterTreeView.SelectedNode.Tag != null && underwaterTreeView.SelectedNode.Tag is COLFile.ExtendedColorEntry)
+            {
+                var colorEntry = ((COLFile.ExtendedColorEntry)underwaterTreeView.SelectedNode.Tag);
+                // the game doesn't care about the alpha value for underwater colors
+                colorEntry.color_b = (uint)Color.FromArgb(0, colorPick.Color).ToArgb();
+                //redUpDown.Value = colorPick.Color.R;
+                //greenUpDown.Value = colorPick.Color.G;
+                //blueUpDown.Value = colorPick.Color.B;
+            }
+            else if (tabControl.SelectedTab == fogTab && fogTreeView.SelectedNode != null &&
+                fogTreeView.SelectedNode.Tag != null && fogTreeView.SelectedNode.Tag is COLFile.ExtendedColorEntry)
+            {
+                var colorEntry = ((COLFile.ExtendedColorEntry)fogTreeView.SelectedNode.Tag);
+                // the game doesn't care about the alpha value for fog colors
+                colorEntry.color_c = (uint)Color.FromArgb(0, colorPick.Color).ToArgb();
+                //redUpDown.Value = colorPick.Color.R;
+                //greenUpDown.Value = colorPick.Color.G;
+                //blueUpDown.Value = colorPick.Color.B;
+            }
+            else if (tabControl.SelectedTab == colorsTab && colorTreeView.SelectedNode != null &&
+                colorTreeView.SelectedNode.Tag != null && colorTreeView.SelectedNode.Tag is COLFile.ColorEntry)
+            {
+                var colorEntry = ((COLFile.ColorEntry)colorTreeView.SelectedNode.Tag);
+                colorEntry.color = (uint)colorPick.Color.ToArgb() & 0xffffff;
+                //redUpDown.Value = colorPick.Color.R;
+                //greenUpDown.Value = colorPick.Color.G;
+                //blueUpDown.Value = colorPick.Color.B;
+            }
+            colorPick.Dispose();
+        }
     }
 }

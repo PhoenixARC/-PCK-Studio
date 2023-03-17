@@ -150,7 +150,7 @@
     <value>3</value>
   </data>
   <data name="numericUpDown1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>72, 27</value>
+    <value>72, 33</value>
   </data>
   <data name="numericUpDown1.Size" type="System.Drawing.Size, System.Drawing">
     <value>120, 22</value>
@@ -179,13 +179,13 @@
   </data>
   <data name="GenerateButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAUtJREFUSEvt
-        lLtKQ0EURa8PgjYx5luiNrb+gLVgZWcvpLK0UlC0sfL1Af6CnWApFj4ba8FKBXFc+7K1mSQzE8EqCxY3
-        Z845MyS5c6oRxYQQ2niIt/iJKVSjWvXMepveUNDCJ3zDI+ziRkLVHOM7PmLL28WQ3HfhnJeyoWcBP3DP
-        SzEk7/HEYTH0nuGdwxiSX7jpsBj1ag+HMSTFXw8IDmOUhP87gM/nuILjXhqIejHvAJ5NvKlXQrjGZRyr
-        C/tAvvgbTOAq6v0WV9hxOoLccP8Baw3UhdJb1vVyhHqx7ADiadSNfVES1p2KIFf0H0ziGj5rES5xqS7s
-        A/nkAb8XjecUvuIFLtYFCdSLAy/aA546VNzBrFdUUJscFQeogTXMsJt3766XYkhqXOuV1ETVCN7K9Gdc
-        a1jOeLveqAB3UD9XLtp4G5veZkQuVfUNn99U065txsEAAAAASUVORK5CYII=
+        iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABGdBTUEAALGPC/xhBQAAASRJREFUSEvt
+        lr1qAkEURlfyB6aK2Aupbews0plNF7CxsbfKE6STKPgM1nY2KSzyGGnSBjRNaiHBHwybc3evXVZnxkEx
+        euDAsvPd+xUKO8GRwyaKohyGWLNUZq50jTkMnWILp+jKBJ/wRNeuh3BHJj3R1rWrIZjHeTzihxnmdH06
+        hO7iuF9CXZ8OoWqS9UpV16cjoSTrlf0rbuJb8uiEU/EQM+o9vqItTsVjfMRLPT/DBo7QlI1+4098wHPN
+        XWAbTfDy53rHumZv4jfr2bh4gV0saHYrxQMsaUxyRXyRAwOcij+wrMdyfo09/EFTnIq/MYtS2EebwiVG
+        xX99JJ7xK3l0wugjsZvPokBw+xcBgfBurj5LGJLLXgVvLZUZ+8vekX9EEPwCuNXOdC0GAskAAAAASUVO
+        RK5CYII=
 </value>
   </data>
   <data name="GenerateButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
@@ -229,14 +229,13 @@
   </data>
   <data name="CancelButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAZJJREFUSEvd
-        lVsrBGEYx6fdZT+aQymljeLTsC4c1lq3KC5EwhehEHLI4VIoFyh3Xr//zPPu7DBjonHBr341z/993jm8
-        cwr+N865Ko7hNl7ho6ntLRzFqrV/DybW8AbFPeogTXMHH1Bc45BNy4fmCrY0E/axF0s23IasjH14iEIH
-        LttwNjQthO3OzWHF4kzUg/OaADMWp0PDSNSX05gCc3RCbzhgURIGdEO15ruYf6kf0BzUkl5gl8UxhP7s
-        eywKodaEKSvbkE3juZUh1P0oahbFEG7gLSZuKLVf34ZFyhpR5JoWhVDrKu5wzaIYQp3pupUJyOsoFnEp
-        2nR1G05AvomnVsYQPmPmzWVsEj2pOxeMzeKTlTGEL5h6APIS+jMXupJP74YgzzxA6hJpR7iMYhwnos3w
-        gGkvoJbozMoYwl+/yVmP6TFmPaZHVoZQf/mYduMl7mHxL5pgYBBF8Z8KDw1+fYv/2AmadKn+c32AxX6u
-        PTR3/nD0cynmh9MJE/WF1dO1iif4amp7BYfxZ7/MP0IQvAN0A71NbIj0UQAAAABJRU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAASBJREFUWEft
+        lk0KgzAQhd1Ll0K76xW9iHdrN932JvZ95QXUiiRp/Fn4wWCYzLw3TQ1YnZwcmr7vL15mk62hxk7xVtyd
+        SoZea3ROxaGGWvFSAM+rt6JRz829wLP2VhxqaBRPukXSSVDrHkCj8VYaNFoAooagxrWQbx5AwEKwOAR7
+        roH/zQMIWRBmhyDnPShnHkDQwjAagrVzUN48gLAN4DuEY33zgAym12u4Tr6uWchoOARsZw4yGx47jN6J
+        VZHRfn+BDH5eOMfs7SgKwjaA0dvO2jkoPwSCFobZq0bOe1BuCIQsCLPmAfZcA/8PgYCFYNE8QI1rIX8I
+        Gi0AUeYBat0D6UOo4RAfJK3ioYj+5VPoVXASrVNpqHG/j9KTk22oqg+FO4+5CKyPOAAAAABJRU5ErkJg
+        gg==
 </value>
   </data>
   <data name="CancelButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
@@ -2514,6 +2513,6 @@
     <value>MipMapPrompt</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>PckStudio.Classes.ToolboxItems.ThemeForm, PCK-Studio, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>PckStudio.ToolboxItems.ThemeForm, PCK-Studio, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
 </root>

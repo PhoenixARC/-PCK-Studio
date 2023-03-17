@@ -117,13 +117,29 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="metroLabel1.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>False</value>
-  </metadata>
   <metadata name="metroLabel2.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>False</value>
   </metadata>
+  <metadata name="metroLabel1.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
+  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="CancelButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAOFJREFUSEvt
+        lTEOgzAQBHkCTZq8MMlTKdPlNc4O2pOMuIAtQsdIJ4xvd08CC4aLbkopD9XNt83gwevbHAleKnirmoeg
+        tQee3l6j5qiaZlkpH9XdrZ+gsRbwjm7lILAQNofQswb2wwOENkA6hD33oD08wGAjLIaw9h70hwcYHQDz
+        ENfx8EAB9QnhWq+7j3MKQQ4M/hcOCqsfCyzeySEUdN4jUsDqhbrS09UFRgfA4rSw9h70D8FgI6RHkT33
+        oH0IQhsgDQ/oWQP7QxBYCJvhARprYXuImud+rkGC8344F2uG4QvjMhwJEIsdYQAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="CreateButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAABBSURBVFhH7dIxCgAgFMPQ3v/SumR3sHwQ8zZBagYjPW2B4zzeN8AAAwzoB7Bbx/wZ9+uY72HX
+        T2iAAQZ8HCDdSzYZRU7AU4PQAAAAAABJRU5ErkJggg==
+</value>
+  </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAA0AAAAAAAEAIAD7NAAA1gAAAICAAAABACAAKAgBANE1AACAgAAAAQAIAChMAAD5PQEAQEAAAAEA

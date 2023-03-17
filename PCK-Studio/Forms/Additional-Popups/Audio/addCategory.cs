@@ -18,20 +18,30 @@ namespace PckStudio.Forms.Additional_Popups.Audio
 
 		private void button1_Click(object sender, EventArgs e)
 		{
-			_category = comboBox1.Text;
-			DialogResult = DialogResult.OK;
-			if(comboBox1.SelectedIndex > -1) Close();
+
 		}
 
 		private void cancelButton_Click(object sender, EventArgs e)
 		{
-			DialogResult = DialogResult.Cancel;
-			Close();
+
 		}
 
         private void addCategory_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void CancelButton_Click_1(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
+            Close();
+        }
+
+        private void AddButton_Click(object sender, EventArgs e)
+        {
+            _category = comboBox1.Text;
+            DialogResult = DialogResult.OK;
+            if (comboBox1.SelectedIndex > -1) Close();
         }
     }
 }

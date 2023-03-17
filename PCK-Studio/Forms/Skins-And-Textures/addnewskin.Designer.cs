@@ -38,22 +38,21 @@
             this.replaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuCape = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.replaceToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.buttonDone = new System.Windows.Forms.Button();
-            this.buttonModelGen = new System.Windows.Forms.Button();
             this.buttonCape = new System.Windows.Forms.Button();
             this.buttonSkin = new System.Windows.Forms.Button();
             this.displayBox = new System.Windows.Forms.PictureBox();
             this.radioAUTO = new System.Windows.Forms.RadioButton();
             this.radioLOCAL = new System.Windows.Forms.RadioButton();
             this.labelSelectTexture = new System.Windows.Forms.Label();
-            this.radioSERVER = new System.Windows.Forms.RadioButton();
             this.textSkinID = new MetroFramework.Controls.MetroTextBox();
             this.textSkinName = new MetroFramework.Controls.MetroTextBox();
             this.textThemeName = new MetroFramework.Controls.MetroTextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.buttonAnimGen = new System.Windows.Forms.Button();
             this.capePictureBox = new PckStudio.ToolboxItems.PictureBoxWithInterpolationMode();
             this.skinPictureBoxTexture = new PckStudio.ToolboxItems.PictureBoxWithInterpolationMode();
+            this.CreateSkinButton = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
+            this.EditFlagsButton = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
+            this.EditModelButton = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
             label3 = new System.Windows.Forms.Label();
             label2 = new System.Windows.Forms.Label();
             label1 = new System.Windows.Forms.Label();
@@ -113,22 +112,6 @@
             this.replaceToolStripMenuItem1.Name = "replaceToolStripMenuItem1";
             this.replaceToolStripMenuItem1.Click += new System.EventHandler(this.replaceToolStripMenuItem1_Click);
             // 
-            // buttonDone
-            // 
-            resources.ApplyResources(this.buttonDone, "buttonDone");
-            this.buttonDone.ForeColor = System.Drawing.Color.White;
-            this.buttonDone.Name = "buttonDone";
-            this.buttonDone.UseVisualStyleBackColor = true;
-            this.buttonDone.Click += new System.EventHandler(this.CreateButton_Click);
-            // 
-            // buttonModelGen
-            // 
-            resources.ApplyResources(this.buttonModelGen, "buttonModelGen");
-            this.buttonModelGen.ForeColor = System.Drawing.Color.White;
-            this.buttonModelGen.Name = "buttonModelGen";
-            this.buttonModelGen.UseVisualStyleBackColor = true;
-            this.buttonModelGen.Click += new System.EventHandler(this.CreateCustomModel_Click);
-            // 
             // buttonCape
             // 
             resources.ApplyResources(this.buttonCape, "buttonCape");
@@ -174,14 +157,6 @@
             this.labelSelectTexture.ForeColor = System.Drawing.Color.White;
             this.labelSelectTexture.Name = "labelSelectTexture";
             this.labelSelectTexture.Click += new System.EventHandler(this.pictureBox1_Click);
-            // 
-            // radioSERVER
-            // 
-            resources.ApplyResources(this.radioSERVER, "radioSERVER");
-            this.radioSERVER.ForeColor = System.Drawing.Color.White;
-            this.radioSERVER.Name = "radioSERVER";
-            this.radioSERVER.UseVisualStyleBackColor = true;
-            this.radioSERVER.CheckedChanged += new System.EventHandler(this.radioSERVER_CheckedChanged);
             // 
             // textSkinID
             // 
@@ -284,14 +259,6 @@
             this.label4.Name = "label4";
             this.label4.Click += new System.EventHandler(this.replaceToolStripMenuItem1_Click);
             // 
-            // buttonAnimGen
-            // 
-            resources.ApplyResources(this.buttonAnimGen, "buttonAnimGen");
-            this.buttonAnimGen.ForeColor = System.Drawing.Color.White;
-            this.buttonAnimGen.Name = "buttonAnimGen";
-            this.buttonAnimGen.UseVisualStyleBackColor = true;
-            this.buttonAnimGen.Click += new System.EventHandler(this.buttonAnimGen_Click);
-            // 
             // capePictureBox
             // 
             resources.ApplyResources(this.capePictureBox, "capePictureBox");
@@ -310,22 +277,81 @@
             this.skinPictureBoxTexture.TabStop = false;
             this.skinPictureBoxTexture.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
-            // addNewSkin
+            // CreateSkinButton
+            // 
+            this.CreateSkinButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.CreateSkinButton.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.CreateSkinButton.BorderRadius = 10;
+            this.CreateSkinButton.BorderSize = 1;
+            this.CreateSkinButton.ClickedColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.CreateSkinButton.FlatAppearance.BorderSize = 0;
+            this.CreateSkinButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.CreateSkinButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(250)))), ((int)(((byte)(165)))));
+            resources.ApplyResources(this.CreateSkinButton, "CreateSkinButton");
+            this.CreateSkinButton.ForeColor = System.Drawing.Color.White;
+            this.CreateSkinButton.GradientColorPrimary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.CreateSkinButton.GradientColorSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.CreateSkinButton.HoverOverColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(250)))), ((int)(((byte)(165)))));
+            this.CreateSkinButton.Name = "CreateSkinButton";
+            this.CreateSkinButton.TextColor = System.Drawing.Color.White;
+            this.CreateSkinButton.UseVisualStyleBackColor = false;
+            this.CreateSkinButton.Click += new System.EventHandler(this.CreateSkinButton_Click);
+            // 
+            // EditFlagsButton
+            // 
+            this.EditFlagsButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.EditFlagsButton.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.EditFlagsButton.BorderRadius = 10;
+            this.EditFlagsButton.BorderSize = 1;
+            this.EditFlagsButton.ClickedColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.EditFlagsButton.FlatAppearance.BorderSize = 0;
+            this.EditFlagsButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.EditFlagsButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            resources.ApplyResources(this.EditFlagsButton, "EditFlagsButton");
+            this.EditFlagsButton.ForeColor = System.Drawing.Color.White;
+            this.EditFlagsButton.GradientColorPrimary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.EditFlagsButton.GradientColorSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.EditFlagsButton.HoverOverColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.EditFlagsButton.Name = "EditFlagsButton";
+            this.EditFlagsButton.TextColor = System.Drawing.Color.White;
+            this.EditFlagsButton.UseVisualStyleBackColor = false;
+            this.EditFlagsButton.Click += new System.EventHandler(this.EditSkinButton_Click);
+            // 
+            // EditModelButton
+            // 
+            this.EditModelButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.EditModelButton.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.EditModelButton.BorderRadius = 10;
+            this.EditModelButton.BorderSize = 1;
+            this.EditModelButton.ClickedColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.EditModelButton.FlatAppearance.BorderSize = 0;
+            this.EditModelButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.EditModelButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            resources.ApplyResources(this.EditModelButton, "EditModelButton");
+            this.EditModelButton.ForeColor = System.Drawing.Color.White;
+            this.EditModelButton.GradientColorPrimary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.EditModelButton.GradientColorSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.EditModelButton.HoverOverColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.EditModelButton.Name = "EditModelButton";
+            this.EditModelButton.TextColor = System.Drawing.Color.White;
+            this.EditModelButton.UseVisualStyleBackColor = false;
+            this.EditModelButton.Click += new System.EventHandler(this.EditModelButton_Click);
+            // 
+            // AddNewSkin
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.Controls.Add(this.buttonAnimGen);
+            this.Controls.Add(this.EditModelButton);
+            this.Controls.Add(this.EditFlagsButton);
+            this.Controls.Add(this.CreateSkinButton);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.textThemeName);
             this.Controls.Add(this.textSkinName);
             this.Controls.Add(this.textSkinID);
-            this.Controls.Add(this.radioSERVER);
             this.Controls.Add(this.labelSelectTexture);
             this.Controls.Add(this.radioLOCAL);
             this.Controls.Add(this.radioAUTO);
-            this.Controls.Add(this.buttonDone);
-            this.Controls.Add(this.buttonModelGen);
             this.Controls.Add(this.buttonCape);
             this.Controls.Add(this.buttonSkin);
             this.Controls.Add(this.capePictureBox);
@@ -336,7 +362,7 @@
             this.Controls.Add(label1);
             this.ForeColor = System.Drawing.Color.White;
             this.MaximizeBox = false;
-            this.Name = "addNewSkin";
+            this.Name = "AddNewSkin";
             this.Load += new System.EventHandler(this.addnewskin_Load);
             this.contextMenuSkin.ResumeLayout(false);
             this.contextMenuCape.ResumeLayout(false);
@@ -354,8 +380,6 @@
         private System.Windows.Forms.ToolStripMenuItem replaceToolStripMenuItem;
         private System.Windows.Forms.ContextMenuStrip contextMenuCape;
         private System.Windows.Forms.ToolStripMenuItem replaceToolStripMenuItem1;
-        private System.Windows.Forms.Button buttonDone;
-        private System.Windows.Forms.Button buttonModelGen;
         private System.Windows.Forms.Button buttonCape;
         private System.Windows.Forms.Button buttonSkin;
         private PckStudio.ToolboxItems.PictureBoxWithInterpolationMode capePictureBox;
@@ -363,12 +387,13 @@
         private System.Windows.Forms.RadioButton radioAUTO;
         private System.Windows.Forms.RadioButton radioLOCAL;
         private System.Windows.Forms.Label labelSelectTexture;
-        private System.Windows.Forms.RadioButton radioSERVER;
 		private MetroFramework.Controls.MetroTextBox textSkinID;
 		private MetroFramework.Controls.MetroTextBox textSkinName;
 		private MetroFramework.Controls.MetroTextBox textThemeName;
 		private System.Windows.Forms.Label label4;
 		private PckStudio.ToolboxItems.PictureBoxWithInterpolationMode skinPictureBoxTexture;
-		private System.Windows.Forms.Button buttonAnimGen;
-	}
+        private CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton CreateSkinButton;
+        private CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton EditFlagsButton;
+        private CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton EditModelButton;
+    }
 }

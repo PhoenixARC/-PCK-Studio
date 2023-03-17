@@ -41,10 +41,10 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.locSort = new PckStudio.Forms.MyTablePanel();
-            this.buttonReplaceAll = new System.Windows.Forms.Button();
             this.dataGridViewLocEntryData = new System.Windows.Forms.DataGridView();
             this.textBoxReplaceAll = new System.Windows.Forms.TextBox();
             this.treeViewLocKeys = new System.Windows.Forms.TreeView();
+            this.ReplaceAllButton = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
             this.contextMenuStrip1.SuspendLayout();
             this.GridContextMenu.SuspendLayout();
             this.menuStrip.SuspendLayout();
@@ -94,7 +94,7 @@
             // 
             // menuStrip
             // 
-            this.menuStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
+            this.menuStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem});
             resources.ApplyResources(this.menuStrip, "menuStrip");
@@ -118,25 +118,18 @@
             // 
             this.locSort.AccessibleRole = System.Windows.Forms.AccessibleRole.Table;
             resources.ApplyResources(this.locSort, "locSort");
-            this.locSort.Controls.Add(this.buttonReplaceAll, 2, 0);
             this.locSort.Controls.Add(this.dataGridViewLocEntryData, 1, 1);
             this.locSort.Controls.Add(this.textBoxReplaceAll, 1, 0);
             this.locSort.Controls.Add(this.treeViewLocKeys, 0, 0);
+            this.locSort.Controls.Add(this.ReplaceAllButton, 2, 0);
+            this.locSort.ForeColor = System.Drawing.Color.Black;
             this.locSort.Name = "locSort";
-            // 
-            // buttonReplaceAll
-            // 
-            resources.ApplyResources(this.buttonReplaceAll, "buttonReplaceAll");
-            this.buttonReplaceAll.ForeColor = System.Drawing.Color.White;
-            this.buttonReplaceAll.Name = "buttonReplaceAll";
-            this.buttonReplaceAll.UseVisualStyleBackColor = true;
-            this.buttonReplaceAll.Click += new System.EventHandler(this.buttonReplaceAll_Click);
             // 
             // dataGridViewLocEntryData
             // 
             this.dataGridViewLocEntryData.AllowUserToAddRows = false;
             this.dataGridViewLocEntryData.AllowUserToDeleteRows = false;
-            this.dataGridViewLocEntryData.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
+            this.dataGridViewLocEntryData.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.dataGridViewLocEntryData.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 8.25F);
@@ -149,27 +142,51 @@
             this.locSort.SetColumnSpan(this.dataGridViewLocEntryData, 2);
             this.dataGridViewLocEntryData.ContextMenuStrip = this.GridContextMenu;
             resources.ApplyResources(this.dataGridViewLocEntryData, "dataGridViewLocEntryData");
+            this.dataGridViewLocEntryData.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.dataGridViewLocEntryData.Name = "dataGridViewLocEntryData";
             this.dataGridViewLocEntryData.RowHeadersVisible = false;
             this.dataGridViewLocEntryData.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEndEdit);
             // 
             // textBoxReplaceAll
             // 
+            this.textBoxReplaceAll.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.textBoxReplaceAll.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             resources.ApplyResources(this.textBoxReplaceAll, "textBoxReplaceAll");
+            this.textBoxReplaceAll.ForeColor = System.Drawing.Color.White;
             this.textBoxReplaceAll.Name = "textBoxReplaceAll";
             // 
             // treeViewLocKeys
             // 
-            this.treeViewLocKeys.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
+            this.treeViewLocKeys.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.treeViewLocKeys.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.treeViewLocKeys.ContextMenuStrip = this.contextMenuStrip1;
             resources.ApplyResources(this.treeViewLocKeys, "treeViewLocKeys");
-            this.treeViewLocKeys.ForeColor = System.Drawing.SystemColors.MenuBar;
+            this.treeViewLocKeys.ForeColor = System.Drawing.Color.White;
             this.treeViewLocKeys.LabelEdit = true;
             this.treeViewLocKeys.Name = "treeViewLocKeys";
             this.locSort.SetRowSpan(this.treeViewLocKeys, 2);
             this.treeViewLocKeys.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewLocKeys_AfterSelect);
             this.treeViewLocKeys.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView1_KeyDown);
+            // 
+            // ReplaceAllButton
+            // 
+            this.ReplaceAllButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.ReplaceAllButton.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.ReplaceAllButton.BorderRadius = 10;
+            this.ReplaceAllButton.BorderSize = 1;
+            this.ReplaceAllButton.ClickedColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.ReplaceAllButton.FlatAppearance.BorderSize = 0;
+            this.ReplaceAllButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.ReplaceAllButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(250)))), ((int)(((byte)(165)))));
+            resources.ApplyResources(this.ReplaceAllButton, "ReplaceAllButton");
+            this.ReplaceAllButton.ForeColor = System.Drawing.Color.White;
+            this.ReplaceAllButton.GradientColorPrimary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.ReplaceAllButton.GradientColorSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.ReplaceAllButton.HoverOverColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(250)))), ((int)(((byte)(165)))));
+            this.ReplaceAllButton.Name = "ReplaceAllButton";
+            this.ReplaceAllButton.TextColor = System.Drawing.Color.White;
+            this.ReplaceAllButton.UseVisualStyleBackColor = false;
+            this.ReplaceAllButton.Click += new System.EventHandler(this.ReplaceAllButton_Click);
             // 
             // LOCEditor
             // 
@@ -203,12 +220,12 @@
         private System.Windows.Forms.ToolStripMenuItem deleteDisplayIDToolStripMenuItem;
         private System.Windows.Forms.TextBox textBoxReplaceAll;
         private PckStudio.Forms.MyTablePanel locSort;
-        private System.Windows.Forms.Button buttonReplaceAll;
         private MetroFramework.Controls.MetroContextMenu GridContextMenu;
         private System.Windows.Forms.ToolStripMenuItem addLanguageToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem removeLanguageToolStripMenuItem;
         private System.Windows.Forms.MenuStrip menuStrip;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
+        private CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton ReplaceAllButton;
     }
 }

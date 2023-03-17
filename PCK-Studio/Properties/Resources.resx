@@ -322,4 +322,37 @@
   <data name="pckOpen" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\pckOpen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="check_all_480px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\check_all_480px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Close_50px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Close_50px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="edit_26px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\edit_26px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="file_32px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\file_32px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="generated_photos_30px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\generated_photos_30px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="help_30px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\help_30px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="menu_50px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\menu_50px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="rename_32px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rename_32px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="rubik_s_cube_24px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rubik's_cube_24px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="save_24px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\save_24px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Tools_48px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Tools_48px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

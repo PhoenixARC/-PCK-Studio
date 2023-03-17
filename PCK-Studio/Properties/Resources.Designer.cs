@@ -192,6 +192,16 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap check_all_480px {
+            get {
+                object obj = ResourceManager.GetObject("check_all_480px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap classic_template {
             get {
                 object obj = ResourceManager.GetObject("classic_template", resourceCulture);
@@ -205,6 +215,16 @@ namespace PckStudio.Properties {
         public static System.Drawing.Bitmap clock {
             get {
                 object obj = ResourceManager.GetObject("clock", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Close_50px {
+            get {
+                object obj = ResourceManager.GetObject("Close_50px", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -252,6 +272,16 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap edit_26px {
+            get {
+                object obj = ResourceManager.GetObject("edit_26px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap ExportFile {
             get {
                 object obj = ResourceManager.GetObject("ExportFile", resourceCulture);
@@ -272,6 +302,26 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap file_32px {
+            get {
+                object obj = ResourceManager.GetObject("file_32px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap generated_photos_30px {
+            get {
+                object obj = ResourceManager.GetObject("generated_photos_30px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap GRF_ICON {
             get {
                 object obj = ResourceManager.GetObject("GRF_ICON", resourceCulture);
@@ -285,6 +335,16 @@ namespace PckStudio.Properties {
         public static System.Drawing.Bitmap GRH_ICON {
             get {
                 object obj = ResourceManager.GetObject("GRH_ICON", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap help_30px {
+            get {
+                object obj = ResourceManager.GetObject("help_30px", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -325,6 +385,16 @@ namespace PckStudio.Properties {
         public static System.Drawing.Bitmap LOC_ICON {
             get {
                 object obj = ResourceManager.GetObject("LOC_ICON", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap menu_50px {
+            get {
+                object obj = ResourceManager.GetObject("menu_50px", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -462,9 +532,39 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap rename_32px {
+            get {
+                object obj = ResourceManager.GetObject("rename_32px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap Replace {
             get {
                 object obj = ResourceManager.GetObject("Replace", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap rubik_s_cube_24px {
+            get {
+                object obj = ResourceManager.GetObject("rubik_s_cube_24px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap save_24px {
+            get {
+                object obj = ResourceManager.GetObject("save_24px", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -570,6 +670,16 @@ namespace PckStudio.Properties {
         public static string tileData {
             get {
                 return ResourceManager.GetString("tileData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Tools_48px {
+            get {
+                object obj = ResourceManager.GetObject("Tools_48px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

@@ -114,7 +114,7 @@ namespace PckStudio
             }
 
             skinPictureBoxTexture.Image = img;
-            buttonDone.Enabled = true;
+            CreateSkinButton.Enabled = true;
             labelSelectTexture.Visible = false;
         }
 
@@ -216,6 +216,72 @@ namespace PckStudio
 
         private void CreateButton_Click(object sender, EventArgs e)
         {
+
+        }
+
+        private void textSkinID_TextChanged(object sender, EventArgs e)
+        {
+            bool validSkinId = int.TryParse(textSkinID.Text, out _);
+            textSkinID.ForeColor = validSkinId ? Color.Green : Color.Red;
+        }
+
+        private void CreateCustomModel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioAUTO.Checked)
+            {
+                try
+                {
+                    Random random = new Random();
+                    int num = random.Next(100000, 99999999);
+                    textSkinID.Text = num.ToString();
+                    textSkinID.Enabled = false;
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+        }
+
+        private void radioLOCAL_CheckedChanged(object sender, EventArgs e)
+        {
+            textSkinID.Enabled = radioLOCAL.Checked;
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            using (var ofdd = new OpenFileDialog())
+            {
+                ofdd.Filter = "PNG Files|*.png|3DS Texture|*.3dst";
+                ofdd.Title = "Select a Skin Texture File";
+                if (ofdd.ShowDialog() == DialogResult.OK)
+                {
+                    if (ofdd.FileName.EndsWith(".3dst"))
+                    {
+                        using (var fs = File.OpenRead(ofdd.FileName))
+                        {
+                            CheckImage(_3DSUtil.GetImageFrom3DST(fs));
+                            textSkinName.Text = Path.GetFileNameWithoutExtension(ofdd.FileName);
+                        }
+                        return;
+                    }
+                    CheckImage(Image.FromFile(ofdd.FileName));
+                }
+            }
+        }
+
+		private void buttonAnimGen_Click(object sender, EventArgs e)
+		{
+
+        }
+
+        private void CreateSkinButton_Click(object sender, EventArgs e)
+        {
             int _skinId = -1;
             if (!int.TryParse(textSkinID.Text, out _skinId))
             {
@@ -271,101 +337,8 @@ namespace PckStudio
             Close();
         }
 
-        private void textSkinID_TextChanged(object sender, EventArgs e)
+        private void EditSkinButton_Click(object sender, EventArgs e)
         {
-            bool validSkinId = int.TryParse(textSkinID.Text, out _);
-            textSkinID.ForeColor = validSkinId ? Color.Green : Color.Red;
-        }
-
-        private void CreateCustomModel_Click(object sender, EventArgs e)
-        {
-            //Prompt for skin model generator
-            if (MessageBox.Show("Create your own custom skin model?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1) != DialogResult.Yes)
-                return;
-            
-            PictureBox preview = new PictureBox(); //Creates new picture for generated model preview
-            GenerateModel generate = new GenerateModel(generatedModel, preview);
-
-            if (generate.ShowDialog() == DialogResult.OK) //Opens Model Generator Dialog
-            {
-                //comboBoxSkinType.Items.Add("Custom"); //Adds skin preset to combobox
-                //comboBoxSkinType.Text = "Custom"; //Sets combo to custom preset
-                displayBox.Image = preview.Image; //Sets displayBox to created model preview
-                try
-                {
-                    using (FileStream stream = File.OpenRead(Application.StartupPath + "\\temp.png"))
-                    {
-                        skinPictureBoxTexture.Image = Image.FromStream(stream);
-                    }
-                    buttonDone.Enabled = true;
-                    labelSelectTexture.Visible = false;
-                    if (skinType != eSkinType._64x64 && skinType != eSkinType._64x64HD)
-                    {
-                        buttonSkin.Location = new Point(buttonSkin.Location.X - skinPictureBoxTexture.Width, buttonSkin.Location.Y);
-                        skinType = eSkinType._64x64;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.ToString());
-                }
-            }
-        }
-
-        private void radioButton1_CheckedChanged(object sender, EventArgs e)
-        {
-            if (radioAUTO.Checked)
-            {
-                try
-                {
-                    Random random = new Random();
-                    int num = random.Next(100000, 99999999);
-                    textSkinID.Text = num.ToString();
-                    textSkinID.Enabled = false;
-                }
-                catch(Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-            }
-        }
-
-        private void radioLOCAL_CheckedChanged(object sender, EventArgs e)
-        {
-            textSkinID.Enabled = radioLOCAL.Checked;
-        }
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-            using (var ofdd = new OpenFileDialog())
-            {
-                ofdd.Filter = "PNG Files|*.png|3DS Texture|*.3dst";
-                ofdd.Title = "Select a Skin Texture File";
-                if (ofdd.ShowDialog() == DialogResult.OK)
-                {
-                    if (ofdd.FileName.EndsWith(".3dst"))
-                    {
-                        using (var fs = File.OpenRead(ofdd.FileName))
-                        {
-                            CheckImage(_3DSUtil.GetImageFrom3DST(fs));
-                            textSkinName.Text = Path.GetFileNameWithoutExtension(ofdd.FileName);
-                        }
-                        return;
-                    }
-                    CheckImage(Image.FromFile(ofdd.FileName));
-                }
-            }
-        }
-
-        private void radioSERVER_CheckedChanged(object sender, EventArgs e)
-        {
-            if (radioSERVER.Checked)
-            {
-            }
-        }
-
-		private void buttonAnimGen_Click(object sender, EventArgs e)
-		{
             using Forms.Utilities.Skins.ANIMEditor diag = new Forms.Utilities.Skins.ANIMEditor(anim.ToString());
             if (diag.ShowDialog(this) == DialogResult.OK && diag.saved)
             {
@@ -373,5 +346,10 @@ namespace PckStudio
                 DrawModel();
             }
         }
-	}
+
+        private void EditModelButton_Click(object sender, EventArgs e)
+        {
+
+        }
+    }
 }

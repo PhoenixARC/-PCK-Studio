@@ -28,7 +28,6 @@ namespace PckStudio
 
             MainForm mainForm = new MainForm();
             DarkNet.Instance.SetWindowThemeForms(mainForm, Theme.Auto);
-
             Application.Run(mainForm);
         }
     }

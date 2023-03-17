@@ -441,7 +441,13 @@ namespace PckStudio.Forms.Editor
 		private void addFrameToolStripMenuItem_Click(object sender, EventArgs e)
 		{
             using FrameEditor diag = new FrameEditor(TextureIcons);
-			diag.SaveBtn.Text = "Add";
+			
+			//Miku, MNL or Phoenix, this function needs a bit of fixing. 
+			//I removed the SaveBtn and replaced it with a button with the name 'SaveButton'
+			//It does not want to work though so this part needs fixing.
+			// - EternalModz
+
+			//diag.SaveButton.Text = "Add";
 			if (diag.ShowDialog(this) == DialogResult.OK)
 			{
                 currentAnimation.AddFrame(diag.FrameTextureIndex, diag.FrameTime);

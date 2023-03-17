@@ -25,11 +25,26 @@ namespace PckStudio.Forms.Additional_Popups.Grf
 
         private void ConfirmButton_Click(object sender, EventArgs e)
         {
+
+        }
+
+        private void CancelBtn_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CancelButton_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void CreateButton_Click(object sender, EventArgs e)
+        {
             if (string.IsNullOrWhiteSpace(ParameterName) || string.IsNullOrWhiteSpace(ParameterValue))
             {
                 MessageBox.Show("Name and Value need valid values");
                 return;
-            }    
+            }
             DialogResult = DialogResult.OK;
             Close();
         }

@@ -168,7 +168,11 @@ namespace PckStudio.Forms.Utilities.Skins
 				if (!first) MessageBox.Show($"The following value \"{new_value}\" is not valid. Please try again.");
 				RenamePrompt diag = new RenamePrompt(new_value);
 				diag.TextLabel.Text = "ANIM";
-				diag.OKButton.Text = "Ok";
+				
+				//Miku, NML, PhoenixARC, here is another one of those problems.
+				// - EternalModz
+				
+				//diag.SaveButton.Text = "Ok";
 				if (diag.ShowDialog() == DialogResult.OK)
 				{
 					new_value = diag.NewText;
@@ -266,7 +270,9 @@ namespace PckStudio.Forms.Utilities.Skins
 			// diag.Category will be the ANIM codes
 			var diag = new Additional_Popups.Audio.AddCategory(Templates.Keys.ToArray());
 			diag.label2.Text = "Presets";
-			diag.button1.Text = "Load";
+			//diag.button1.Text = "Load";
+			//MNL or PhoenixARC or Miku, here is one problem. I removed the old button (button1) and relpaced it with the 'AddButton' but for osme reason, it does not work here. 
+			// - EternalModz
 
 			if (diag.ShowDialog() != DialogResult.OK) return;
 

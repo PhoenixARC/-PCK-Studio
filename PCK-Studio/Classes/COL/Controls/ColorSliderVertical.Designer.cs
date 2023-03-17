@@ -1,17 +1,16 @@
-﻿
-namespace ColorPicker
+﻿namespace MechanikaDesign.WinForms.UI.ColorPicker
 {
-    partial class ColorBox
+    partial class ColorSliderVertical
     {
         /// <summary> 
-        /// Variable del diseñador necesaria.
+        /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
         /// <summary> 
-        /// Limpiar los recursos que se estén usando.
+        /// Clean up any resources being used.
         /// </summary>
-        /// <param name="disposing">true si los recursos administrados se deben desechar; false en caso contrario.</param>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -21,23 +20,22 @@ namespace ColorPicker
             base.Dispose(disposing);
         }
 
-        #region Código generado por el Diseñador de componentes
+        #region Component Designer generated code
 
         /// <summary> 
-        /// Método necesario para admitir el Diseñador. No se puede modificar
-        /// el contenido de este método con el editor de código.
+        /// Required method for Designer support - do not modify 
+        /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
         {
             this.SuspendLayout();
             // 
-            // ColorBox
+            // ColorSlider
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.MinimumSize = new System.Drawing.Size(265, 265);
-            this.Name = "ColorBox";
-            this.Size = new System.Drawing.Size(265, 265);
+            this.Name = "ColorSlider";
+            this.Size = new System.Drawing.Size(25, 150);
             this.ResumeLayout(false);
 
         }

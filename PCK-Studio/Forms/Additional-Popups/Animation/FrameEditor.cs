@@ -35,18 +35,28 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 
 		private void SaveBtn_Click(object sender, EventArgs e)
 		{
-			DialogResult = DialogResult.OK;
-			Close();
+
 		}
 
 		private void CancelBtn_Click(object sender, EventArgs e)
 		{
-			Close();
+
 		}
 
         private void FrameEditor_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void SaveButton_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.OK;
+            Close();
+        }
+
+        private void CancelButton_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }
