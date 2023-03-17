@@ -164,7 +164,7 @@ namespace PckStudio
 		{
 			isTemplateFile = false;
 			saveLocation = filePath;
-			var reader = new PckFileReader();
+			var reader = new PckFileReader(LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
 			PckFile pck = reader.FromFile(filePath);
 
             metroLabel3.Text = "Current PCK File: " + Path.GetFileName(filePath);
