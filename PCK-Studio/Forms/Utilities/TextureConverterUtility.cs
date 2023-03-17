@@ -6,12 +6,13 @@ using System.Windows.Forms;
 using PckStudio.ToolboxItems;
 using PckStudio.Properties;
 using PckStudio.Classes.FileTypes;
+using OMI.Formats.Pck;
 
 namespace PckStudio.Forms.Utilities
 {
     public partial class TextureConverterUtility : ThemeForm
     {
-        public TextureConverterUtility(TreeView tv0, PCKFile pck)
+        public TextureConverterUtility(TreeView tv0, PckFile pck)
         {
             InitializeComponent();
             TView = tv0;
@@ -23,7 +24,7 @@ namespace PckStudio.Forms.Utilities
 
         bool ToPC = true;
 
-        PCKFile Pck;
+        PckFile Pck;
 
         TreeView TView;
 
@@ -313,13 +314,13 @@ namespace PckStudio.Forms.Utilities
                     switch (tn.Text)
                     {
                         case ("terrain.png"):
-                            Terrain = Image.FromStream(new MemoryStream(((PCKFile.FileData)(tn.Tag)).data));
+                            Terrain = Image.FromStream(new MemoryStream(((PckFile.FileData)(tn.Tag)).Data));
                             break;
                         case ("items.png"):
-                            Items = Image.FromStream(new MemoryStream(((PCKFile.FileData)(tn.Tag)).data));
+                            Items = Image.FromStream(new MemoryStream(((PckFile.FileData)(tn.Tag)).Data));
                             break;
                         case ("art"):
-                            painting = Image.FromStream(new MemoryStream(((PCKFile.FileData)(tn.Nodes[0].Tag)).data));
+                            painting = Image.FromStream(new MemoryStream(((PckFile.FileData)(tn.Nodes[0].Tag)).Data));
                             break;
                         case ("mob"):
                             EntityNode = tn;
@@ -429,11 +430,11 @@ namespace PckStudio.Forms.Utilities
                 string Outpath = "assets\\minecraft\\textures\\";
 
 
-                foreach (PCKFile.FileData mf in Pck.Files)
+                foreach (PckFile.FileData mf in Pck.Files)
                 {
-                    FileInfo file = new FileInfo(Environment.CurrentDirectory + "\\Temp\\" + @"\" + mf.filepath);
+                    FileInfo file = new FileInfo(Environment.CurrentDirectory + "\\Temp\\" + @"\" + mf.Filename);
                     file.Directory.Create(); // If the directory already exists, this method does nothing.
-                    File.WriteAllBytes(Environment.CurrentDirectory + "\\Temp\\" + @"\" + mf.filepath, mf.data); //writes minefile to file
+                    File.WriteAllBytes(Environment.CurrentDirectory + "\\Temp\\" + @"\" + mf.Filename, mf.Data); //writes minefile to file
                 }
                 while (i <= ix)
                 {
@@ -454,11 +455,11 @@ namespace PckStudio.Forms.Utilities
                 string Outpath = "assets\\minecraft\\textures\\";
 
 
-                foreach (PCKFile.FileData mf in Pck.Files)
+                foreach (PckFile.FileData mf in Pck.Files)
                 {
-                    FileInfo file = new FileInfo(Environment.CurrentDirectory + "\\Temp\\" + @"\" + mf.filepath);
+                    FileInfo file = new FileInfo(Environment.CurrentDirectory + "\\Temp\\" + @"\" + mf.Filename);
                     file.Directory.Create(); // If the directory already exists, this method does nothing.
-                    File.WriteAllBytes(Environment.CurrentDirectory + "\\Temp\\" + @"\" + mf.filepath, mf.data); //writes minefile to file
+                    File.WriteAllBytes(Environment.CurrentDirectory + "\\Temp\\" + @"\" + mf.Filename, mf.Data); //writes minefile to file
                 }
                 while (i <= ix)
                 {
@@ -479,11 +480,11 @@ namespace PckStudio.Forms.Utilities
                 string Outpath = "assets\\minecraft\\textures\\";
 
 
-                foreach (PCKFile.FileData mf in Pck.Files)
+                foreach (PckFile.FileData mf in Pck.Files)
                 {
-                    FileInfo file = new FileInfo(Environment.CurrentDirectory + "\\Temp\\" + @"\" + mf.filepath);
+                    FileInfo file = new FileInfo(Environment.CurrentDirectory + "\\Temp\\" + @"\" + mf.Filename);
                     file.Directory.Create(); // If the directory already exists, this method does nothing.
-                    File.WriteAllBytes(Environment.CurrentDirectory + "\\Temp\\" + @"\" + mf.filepath, mf.data); //writes minefile to file
+                    File.WriteAllBytes(Environment.CurrentDirectory + "\\Temp\\" + @"\" + mf.Filename, mf.Data); //writes minefile to file
                 }
                 while (i <= ix)
                 {

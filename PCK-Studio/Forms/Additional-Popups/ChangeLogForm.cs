@@ -11,10 +11,5 @@ namespace PckStudio.Forms.Additional_Popups
             InitializeComponent();
             ChangelogRichTextBox.Text = Resources.CHANGELOG;
         }
-
-        private void ChangeLogForm_Load(object sender, EventArgs e)
-        {
-
-        }
     }
 }

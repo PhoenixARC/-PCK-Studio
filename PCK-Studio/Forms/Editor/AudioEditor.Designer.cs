@@ -343,5 +343,7 @@ namespace PckStudio.Forms.Editor
 		private MetroFramework.Controls.MetroLabel metroLabel1;
 		private System.Windows.Forms.ToolStripMenuItem openDataFolderToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem bulkReplaceExistingTracksToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem changeCategoryToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem organizeTracksToolStripMenuItem;
 	}
 }

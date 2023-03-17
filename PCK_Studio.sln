@@ -5,7 +5,9 @@ VisualStudioVersion = 17.1.32414.318
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PckStudio", "PCK-Studio\PckStudio.csproj", "{0ACAAEDE-93F5-4B5D-B8D7-A0C43359C0D6}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CrEaTiiOn-Brotherhood-Official-C-Theme", "CrEaTiiOn-Brotherhood-Official-C-Theme", "{7DB3F605-FB30-45C8-9D21-AE2FF3A0344D}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Vendor", "Vendor", "{FC87F3E5-B07E-4FFB-889F-66FA3A3CFCAA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OMI Filetype Library", "Vendor\OMI-Lib\OMI Filetypes Library\OMI Filetype Library.csproj", "{693AEBC1-293D-4DF0-BCAE-26A1099FE7BB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net Framework v4.8", "Vendor\CrEaTiiOn-Brotherhood-Official-C-Theme\Net_Framework_v4.8\Net Framework v4.8.csproj", "{C3D7B16C-C047-4BAA-884F-7A2308619C33}"
 EndProject
@@ -40,6 +42,24 @@ Global
 		{0ACAAEDE-93F5-4B5D-B8D7-A0C43359C0D6}.ReleasePortable|x64.Build.0 = ReleasePortable|Any CPU
 		{0ACAAEDE-93F5-4B5D-B8D7-A0C43359C0D6}.ReleasePortable|x86.ActiveCfg = ReleasePortable|Any CPU
 		{0ACAAEDE-93F5-4B5D-B8D7-A0C43359C0D6}.ReleasePortable|x86.Build.0 = ReleasePortable|Any CPU
+		{693AEBC1-293D-4DF0-BCAE-26A1099FE7BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{693AEBC1-293D-4DF0-BCAE-26A1099FE7BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{693AEBC1-293D-4DF0-BCAE-26A1099FE7BB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{693AEBC1-293D-4DF0-BCAE-26A1099FE7BB}.Debug|x64.Build.0 = Debug|Any CPU
+		{693AEBC1-293D-4DF0-BCAE-26A1099FE7BB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{693AEBC1-293D-4DF0-BCAE-26A1099FE7BB}.Debug|x86.Build.0 = Debug|Any CPU
+		{693AEBC1-293D-4DF0-BCAE-26A1099FE7BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{693AEBC1-293D-4DF0-BCAE-26A1099FE7BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{693AEBC1-293D-4DF0-BCAE-26A1099FE7BB}.Release|x64.ActiveCfg = Release|Any CPU
+		{693AEBC1-293D-4DF0-BCAE-26A1099FE7BB}.Release|x64.Build.0 = Release|Any CPU
+		{693AEBC1-293D-4DF0-BCAE-26A1099FE7BB}.Release|x86.ActiveCfg = Release|Any CPU
+		{693AEBC1-293D-4DF0-BCAE-26A1099FE7BB}.Release|x86.Build.0 = Release|Any CPU
+		{693AEBC1-293D-4DF0-BCAE-26A1099FE7BB}.ReleasePortable|Any CPU.ActiveCfg = Release|Any CPU
+		{693AEBC1-293D-4DF0-BCAE-26A1099FE7BB}.ReleasePortable|Any CPU.Build.0 = Release|Any CPU
+		{693AEBC1-293D-4DF0-BCAE-26A1099FE7BB}.ReleasePortable|x64.ActiveCfg = Release|Any CPU
+		{693AEBC1-293D-4DF0-BCAE-26A1099FE7BB}.ReleasePortable|x64.Build.0 = Release|Any CPU
+		{693AEBC1-293D-4DF0-BCAE-26A1099FE7BB}.ReleasePortable|x86.ActiveCfg = Release|Any CPU
+		{693AEBC1-293D-4DF0-BCAE-26A1099FE7BB}.ReleasePortable|x86.Build.0 = Release|Any CPU
 		{C3D7B16C-C047-4BAA-884F-7A2308619C33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C3D7B16C-C047-4BAA-884F-7A2308619C33}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C3D7B16C-C047-4BAA-884F-7A2308619C33}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -63,7 +83,8 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{C3D7B16C-C047-4BAA-884F-7A2308619C33} = {7DB3F605-FB30-45C8-9D21-AE2FF3A0344D}
+		{693AEBC1-293D-4DF0-BCAE-26A1099FE7BB} = {FC87F3E5-B07E-4FFB-889F-66FA3A3CFCAA}
+		{C3D7B16C-C047-4BAA-884F-7A2308619C33} = {FC87F3E5-B07E-4FFB-889F-66FA3A3CFCAA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9A3BF1FB-950F-401E-9F58-EA7BBADCE6F2}

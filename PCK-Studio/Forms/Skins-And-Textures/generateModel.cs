@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using PckStudio.Classes.FileTypes;
 using System.Text.RegularExpressions;
 using PckStudio.ToolboxItems;
+using OMI.Formats.Pck;
 
 namespace PckStudio
 {
@@ -28,7 +29,7 @@ namespace PckStudio
             right
         }
 
-        PCKProperties boxes;
+        PckFile.PCKProperties boxes;
 
         Color backgroundColor = Color.FromArgb(0xff, 0x50, 0x50, 0x50);
 
@@ -127,7 +128,7 @@ namespace PckStudio
         }
 
 
-        public GenerateModel(PCKProperties skinProperties, PictureBox preview)
+        public GenerateModel(PckFile.PCKProperties skinProperties, PictureBox preview)
         {
             InitializeComponent();
             boxes = skinProperties;

@@ -52,6 +52,7 @@ $ cd "-PCK-Studio"
 *  [PhoenixARC](https://github.com/PhoenixARC)
 *  [MattNL](https://github.com/MattN-L)
 *  [Miku-666](https://github.com/NessieHax)
+*  [EternalModz](https://github.com/EternalModz)
 
 ## Legacy PCK Studio Devs and contributors:
 *  [Nobledez](https://github.com/Nobledez)
@@ -59,5 +60,5 @@ $ cd "-PCK-Studio"
 *  [SlothWiiPlaza](https://github.com/Kashiiera)
 *  [jam1garner](https://github.com/jam1garner)
 
-### Other Credits
+## Other Credits
 *  [yaboiFoxx](https://github.com/yaboiFoxx) for Improved UI concept

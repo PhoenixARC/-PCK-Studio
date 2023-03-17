@@ -1,10 +1,30 @@
-﻿using System;
+﻿/* Copyright (c) 2022-present miku-666, MattNL
+ * This software is provided 'as-is', without any express or implied
+ * warranty. In no event will the authors be held liable for any damages
+ * arising from the use of this software.
+ * 
+ * Permission is granted to anyone to use this software for any purpose,
+ * including commercial applications, and to alter it and redistribute it
+ * freely, subject to the following restrictions:
+ * 
+ * 1. The origin of this software must not be misrepresented; you must not
+ *    claim that you wrote the original software. If you use this software
+ *    in a product, an acknowledgment in the product documentation would be
+ *    appreciated but is not required.
+ * 2. Altered source versions must be plainly marked as such, and must not be
+ *    misrepresented as being the original software.
+ * 3. This notice may not be removed or altered from any source distribution.
+**/
+using System;
 using System.Text.RegularExpressions;
 
 namespace PckStudio.Classes.Utils
 {
+	/// <summary>
+	/// For usage see <see cref="SkinANIM"/>
+	/// </summary>
 	[Flags]
-	public enum eANIM_EFFECTS : int
+	public enum ANIM_EFFECTS : int
 	{
 		NONE                  = 0,       // 0x00
 		STATIC_ARMS           = 1 << 0,  // 0x01
@@ -12,8 +32,8 @@ namespace PckStudio.Classes.Utils
 		STATIC_LEGS           = 1 << 2,  // 0x04
 		BAD_SANTA             = 1 << 3,  // 0x08
 
-		// Whatever effect this is should be a simple one as it's existed for a while
-        unk_BIT4              = 1 << 4,  // 0x10
+        // Whatever effect this is should be a simple one as it's existed for a while
+        __BIT_4               = 1 << 4,  // 0x10
         SYNCED_LEGS           = 1 << 5,  // 0x20
         SYNCED_ARMS           = 1 << 6,  // 0x40
         STATUE_OF_LIBERTY     = 1 << 7,  // 0x80
@@ -51,15 +71,20 @@ namespace PckStudio.Classes.Utils
 
 	public struct SkinANIM
 	{
-		eANIM_EFFECTS _ANIM = 0;
+		private ANIM_EFFECTS _ANIM;
 		public static readonly Regex animRegex = new Regex(@"^0x[0-9a-f]{1,8}\b", RegexOptions.IgnoreCase);
 
-		public SkinANIM(string anim)
+		public SkinANIM()
+			: this(ANIM_EFFECTS.NONE)
 		{
-			_ANIM = Parse(anim);
+		}
+		
+		public SkinANIM(string anim)
+            : this(ParseString(anim))
+        {
 		}
 
-		public SkinANIM(eANIM_EFFECTS anim)
+		public SkinANIM(ANIM_EFFECTS anim)
 		{
 			_ANIM = anim;
 		}
@@ -68,58 +93,46 @@ namespace PckStudio.Classes.Utils
 
 		public static bool IsValidANIM(string anim) => animRegex.IsMatch(anim ?? string.Empty);
 
-		public static eANIM_EFFECTS Parse(string anim)
+		public static ANIM_EFFECTS ParseString(string anim)
 			=> IsValidANIM(anim)
-				? (eANIM_EFFECTS)Convert.ToInt32(anim.TrimEnd(' ', '\n', '\r'), 16)
-				: eANIM_EFFECTS.NONE;
+				? (ANIM_EFFECTS)Convert.ToInt32(anim.TrimEnd(' ', '\n', '\r'), 16)
+				: ANIM_EFFECTS.NONE;
 
-		public void SetANIM(int anim) => SetANIM((eANIM_EFFECTS)anim);
-		public void SetANIM(eANIM_EFFECTS anim) => _ANIM = anim;
+		public void SetANIM(ANIM_EFFECTS anim) => _ANIM = anim;
 
 		public static SkinANIM operator |(SkinANIM a, SkinANIM b) => new SkinANIM(a._ANIM | b._ANIM);
-		public static SkinANIM operator |(SkinANIM a, eANIM_EFFECTS anim) => new SkinANIM(a._ANIM | anim);
-		public static implicit operator SkinANIM(eANIM_EFFECTS anim) => new SkinANIM(anim);
-
-		public static bool operator ==(SkinANIM a, eANIM_EFFECTS b)
-		{
-			return a._ANIM == b;
-		}
 		
-		public static bool operator !=(SkinANIM a, eANIM_EFFECTS b)
-		{
-			return !(a == b);
-		}
+		public static SkinANIM operator |(SkinANIM a, ANIM_EFFECTS anim) => new SkinANIM(a._ANIM | anim);
 
+		public static implicit operator SkinANIM(ANIM_EFFECTS anim) => new SkinANIM(anim);
 
+		public static bool operator ==(SkinANIM a, ANIM_EFFECTS b) => a._ANIM == b;		
+		
+		public static bool operator !=(SkinANIM a, ANIM_EFFECTS b) => !(a == b);
+
+		public override bool Equals(object obj) => obj is SkinANIM a && a == _ANIM;
+
+		public override int GetHashCode() => (int)_ANIM;
+		
 		/// <summary>
 		/// Sets the desired flag in the bitfield
 		/// </summary>
 		/// <param name="flag">ANIM Flag to set</param>
-		/// <param name="state">Wether to enable the flag</param>
-		public void SetANIMFlag(eANIM_EFFECTS flag, bool state)
+		/// <param name="state">State of the flag</param>
+		public void SetFlag(ANIM_EFFECTS flag, bool state)
 		{
 			if (state) _ANIM |= flag;
 			else _ANIM &= ~flag;
 		}
 
 		/// <summary>
-		/// Returns true if the desired flag is set in the bitfield, otherwise false
+		/// Gets a desired flags state
 		/// </summary>
-		/// <param name="flag">ANIM Flag to check</param>
-		/// <returns>Bool wether its set or not</returns>
-		public bool GetANIMFlag(eANIM_EFFECTS flag)
+		/// <param name="flag">Flag to check</param>
+		/// <returns>True if flag is set, otherwise false</returns>
+		public bool GetFlag(ANIM_EFFECTS flag)
 		{
 			return (_ANIM & flag) != 0;
-		}
-
-		public override bool Equals(object obj)
-		{
-			return obj is SkinANIM a && _ANIM == a._ANIM;
-		}
-
-		public override int GetHashCode()
-		{
-			return (int)_ANIM;
 		}
 	}
 }

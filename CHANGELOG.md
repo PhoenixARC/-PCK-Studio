@@ -1,7 +1,13 @@
-7.0 (BETA)  
-==========  
+7.0 (IN DEVELOPMENT)  
+====================  
 Some features may be completely missing or incomplete at this point in time!  
-  
+
+-Added .3dst (3DS Texture) support  
+-Semi-added Sub-Pck editing  
+-Add an edit all properties tool item  
+-Skin Preview has been improved  
+-Added Pack Icon Injection into .arc file  
+-Improved COL Editor  
 -Massive codebase overhaul and optimization lead by miku-666 (aka NessieHax)!!!  
 -Some UI redesigned by yaboiFoxx  
 -Improved the changelog!  

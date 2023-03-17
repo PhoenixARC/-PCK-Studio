@@ -2,24 +2,23 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using PckStudio.Classes.FileTypes;
 using PckStudio.Forms.Additional_Popups.Animation;
 using PckStudio.Forms.Utilities;
+using PckStudio.Classes.Extentions;
+using OMI.Formats.Pck;
 
 namespace PckStudio.Forms.Editor
 {
 	public partial class AnimationEditor : ThemeForm
 	{
-		PCKFile.FileData animationFile;
+		PckFile.FileData animationFile;
 		Animation currentAnimation;
         AnimationPlayer player;
 
@@ -28,238 +27,35 @@ namespace PckStudio.Forms.Editor
 
 		public string TileName = string.Empty;
 
-        sealed class Animation
-		{
-			public const int MinimumFrameTime = 1;
+		private bool IsEditingSpecial => IsSpecialTile(TileName);
 
-			private readonly List<Image> frameTextures;
-
-			private readonly List<Frame> frames = new List<Frame>();
-
-			public Frame this[int frameIndex] => frames[frameIndex];
-
-			// not implemented rn...
-			public bool Interpolate { get; set; } = false;
-			
-			public Animation(Image image)
-			{
-                frameTextures = new List<Image>(SplitImageToFrameTextures(image));
-            }
-
-			public Animation(Image image, string ANIM) : this(image)
-			{
-				ParseAnim(ANIM);
-            }
-
-            public struct Frame
-			{
-				public readonly Image Texture;
-				public int Ticks;
-
-				public static implicit operator Image(Frame f) => f.Texture;
-
-				public Frame(Image texture) : this(texture, MinimumFrameTime)
-				{}
-
-				public Frame(Image texture, int frameTime)
-				{
-					Texture = texture;
-					Ticks = frameTime;
-				}
-			}
-
-			public void ParseAnim(string ANIM)
-			{
-				_ = ANIM ?? throw new ArgumentNullException(nameof(ANIM));
-				ANIM = (Interpolate = ANIM.StartsWith("#")) ? ANIM.Substring(1) : ANIM;
-                string[] animData = ANIM.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-                int lastFrameTime = MinimumFrameTime;
-				if (animData.Length <= 0)
-				{
-					for(int i = 0; i < FrameTextureCount; i++)
-					{
-						AddFrame(i, 1);
-					}
-				}
-				else
-				{
-					foreach (string frameInfo in animData)
-					{
-						string[] frameData = frameInfo.Split('*');
-						//if (frameData.Length < 2)
-						//    continue; // shouldn't happen
-						int currentFrameIndex = int.TryParse(frameData[0], out currentFrameIndex) ? currentFrameIndex : 0;
-
-						// Some textures like the Halloween 2015's Lava texture don't have a
-						// frame time parameter for certain frames.
-						// This will detect that and place the last frame time in its place.
-						// This is accurate to console edition behavior.
-						// - MattNL
-						int currentFrameTime = string.IsNullOrEmpty(frameData[1]) ? lastFrameTime : int.Parse(frameData[1]);
-						AddFrame(currentFrameIndex, currentFrameTime);
-						lastFrameTime = currentFrameTime;
-					}
-				}
-            }
-			public Frame AddFrame(int frameTextureIndex) => AddFrame(frameTextureIndex, MinimumFrameTime);
-			public Frame AddFrame(int frameTextureIndex, int frameTime)
-			{
-				if (frameTextureIndex < 0 || frameTextureIndex >= frameTextures.Count)
-					throw new ArgumentOutOfRangeException(nameof(frameTextureIndex));
-				Frame f = new Frame(frameTextures[frameTextureIndex], frameTime);
-                frames.Add(f);
-				return f;
-			}
-
-			public bool RemoveFrame(int frameIndex)
-			{
-				frames.RemoveAt(frameIndex);
-				return true;
-            }
-
-            private static IEnumerable<Image> SplitImageToFrameTextures(Image source)
-            {
-                for (int i = 0; i < source.Height / source.Width; i++)
-                {
-                    Rectangle tileArea = new Rectangle(0, i * source.Width, source.Width, source.Width);
-                    Bitmap tileImage = new Bitmap(source.Width, source.Width);
-                    using (Graphics gfx = Graphics.FromImage(tileImage))
-                    {
-                        gfx.SmoothingMode = SmoothingMode.None;
-                        gfx.InterpolationMode = InterpolationMode.NearestNeighbor;
-                        gfx.PixelOffsetMode = PixelOffsetMode.HighQuality;
-                        gfx.DrawImage(source, new Rectangle(0, 0, source.Width, source.Width), tileArea, GraphicsUnit.Pixel);
-                    }
-                    yield return tileImage;
-                }
-                yield break;
-            }
-
-			public Frame GetFrame(int index) => frames[index];
-
-			public List<Frame> GetFrames()
-			{
-				return frames;
-			}
-
-			public List<Image> GetFrameTextures()
-			{
-				return frameTextures;
-			}
-
-			public int GetFrameIndex(Image frameTexture)
-			{
-				_ = frameTexture ?? throw new ArgumentNullException(nameof(frameTexture));
-				return frameTextures.IndexOf(frameTexture);
-			}
-
-			public int FrameCount => frames.Count;
-			public int FrameTextureCount => frameTextures.Count;
-
-			public void SetFrame(Frame frame, int frameTextureIndex, int frameTime = MinimumFrameTime)
-				=> SetFrame(frames.IndexOf(frame), frameTextureIndex, frameTime);
-			public void SetFrame(int frameIndex, int frameTextureIndex, int frameTime = MinimumFrameTime)
-			{
-				frames[frameIndex] = new Frame(frameTextures[frameTextureIndex], frameTime);
-			}
-
-			public string BuildAnim()
-			{
-                string animationData = Interpolate ? "#" : string.Empty;
-				frames.ForEach(frame => animationData += $"{GetFrameIndex(frame)}*{frame.Ticks},");
-				return animationData.TrimEnd(',');
-            }
-
-			public Image BuildTexture()
-			{
-				int width = frameTextures[0].Width;
-				int height = frameTextures[0].Height;
-				if (width != height) throw new Exception("Invalid size");
-                var img = new Bitmap(width, height * FrameTextureCount);
-				int pos_y = 0;
-				using (var g = Graphics.FromImage(img))
-				frameTextures.ForEach(texture =>
-				{
-					g.DrawImage(texture, 0, pos_y);
-					pos_y += height;
-				});
-				return img;
-			}
-		}
-
-        sealed class AnimationPlayer
+        private bool IsSpecialTile(string tileName)
         {
-            public const int BaseTickSpeed = 48;
-            public bool IsPlaying { get; private set; } = false;
+			return tileName == "clock" || tileName == "compass";
+        }
 
-            private int currentAnimationFrameIndex = 0;
-            private PictureBox display;
-            private Animation _animation;
-            private CancellationTokenSource cts = new CancellationTokenSource();
-
-            public AnimationPlayer(PictureBox display)
-            {
-                SetContext(display);
-            }
-
-            private async void DoAnimate()
-            {
-                _ = display ?? throw new ArgumentNullException(nameof(display));
-                _ = _animation ?? throw new ArgumentNullException(nameof(_animation));
-				IsPlaying = true;
-				while (!cts.IsCancellationRequested)
-				{
-					if (currentAnimationFrameIndex >= _animation.FrameCount)
-						currentAnimationFrameIndex = 0;
-					Animation.Frame frame = SetFrameDisplayed(currentAnimationFrameIndex++);
-					await Task.Delay(BaseTickSpeed * frame.Ticks);
-				}
-                IsPlaying = false;
-            }
-
-			public void Start(Animation animation)
-			{
-				_animation = animation;
-				cts = new CancellationTokenSource();
-				Task.Run(DoAnimate, cts.Token);
-			}
-
-            public void Stop() => cts.Cancel();
-
-            public Animation.Frame GetCurrentFrame() => _animation[currentAnimationFrameIndex];
-
-            public void SetContext(PictureBox display) => this.display = display;
-
-			public void SelectFrame(Animation animation, int index)
-			{
-				_animation = animation;
-                if (IsPlaying) Stop();
-                SetFrameDisplayed(index);
-                currentAnimationFrameIndex = index;
-            }
-
-			private Animation.Frame SetFrameDisplayed(int i)
-			{
-				Monitor.Enter(_animation);
-				Animation.Frame frame = _animation[i];
-				display.Image = frame;
-				Monitor.Exit(_animation);
-				return frame;
-            }
-		}
-
-		public AnimationEditor(PCKFile.FileData file)
+		public AnimationEditor(PckFile.FileData file)
 		{
 			InitializeComponent();
-			isItem = file.filepath.Split('/').Contains("items");
-			TileName = Path.GetFileNameWithoutExtension(file.filepath);
+
+            isItem = file.Filename.Split('/').Contains("items");
+			TileName = Path.GetFileNameWithoutExtension(file.Filename);
+
+			InterpolationCheckbox.Visible = !IsEditingSpecial;
+			InterpolationCheckbox.Checked = InterpolationCheckbox.Visible;
+			bulkAnimationSpeedToolStripMenuItem.Enabled = InterpolationCheckbox.Visible;
+			importJavaAnimationToolStripMenuItem.Enabled = InterpolationCheckbox.Visible;
+			exportJavaAnimationToolStripMenuItem.Enabled = InterpolationCheckbox.Visible;
+
 			animationFile = file;
 
-			using MemoryStream textureMem = new MemoryStream(animationFile.data);
+			using MemoryStream textureMem = new MemoryStream(animationFile.Data);
 			var texture = new Bitmap(textureMem);
-			currentAnimation = animationFile.properties.HasProperty("ANIM")
-				? new Animation(texture, animationFile.properties.GetProperty("ANIM").Item2)
-				: new Animation(texture);
+            var frameTextures = texture.CreateImageList(ImageExtentions.ImageLayoutDirection.Horizontal);
+
+            currentAnimation = animationFile.Properties.HasProperty("ANIM")
+				? new Animation(frameTextures, animationFile.Properties.GetPropertyValue("ANIM"))
+				: new Animation(frameTextures);
 			player = new AnimationPlayer(pictureBoxWithInterpolationMode1);
 
 			foreach (JObject content in AnimationUtil.tileData[animationSection].Children())
@@ -281,7 +77,15 @@ namespace PckStudio.Forms.Editor
 			// $"Frame: {i}, Frame Time: {Animation.MinimumFrameTime}"
 			TextureIcons.Images.Clear();
 			TextureIcons.Images.AddRange(currentAnimation.GetFrameTextures().ToArray());
-			currentAnimation.GetFrames().ForEach(f => frameTreeView.Nodes.Add("", $"for {f.Ticks} frame" + (f.Ticks > 1 ? "s" : "" ), currentAnimation.GetFrameIndex(f.Texture), currentAnimation.GetFrameIndex(f.Texture)));
+			foreach (var frame in currentAnimation.GetFrames())
+			{
+				var imageIndex = currentAnimation.GetTextureIndex(frame.Texture);
+				frameTreeView.Nodes.Add(new TreeNode($"for {frame.Ticks} frames")
+				{
+					ImageIndex = imageIndex,
+					SelectedImageIndex = imageIndex,
+				});
+            }
 			player.SelectFrame(currentAnimation, 0);
 		}
 
@@ -299,8 +103,8 @@ namespace PckStudio.Forms.Editor
 
 		private void StartAnimationBtn_Click(object sender, EventArgs e)
 		{
-			// crash fix: when pushing the play button on occasions, the animation will play twice the intended speed and crash PCK Studio after one iteration
-			player.Stop(); // force the player to stop before starting
+			// prevent player from crashing
+			player.Stop();
 			AnimationPlayBtn.Enabled = !(AnimationStopBtn.Enabled = !AnimationStopBtn.Enabled);
 			if (currentAnimation.FrameCount > 1)
 			{
@@ -333,12 +137,13 @@ namespace PckStudio.Forms.Editor
 
 		private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
-
 			string anim = currentAnimation.BuildAnim();
-			animationFile.properties.SetProperty("ANIM", anim);
+
+            animationFile.Properties.SetProperty("ANIM", IsEditingSpecial ? "" : anim);
             using (var stream = new MemoryStream())
 			{
-				currentAnimation.BuildTexture().Save(stream, ImageFormat.Png);
+				var texture = currentAnimation.BuildTexture(IsEditingSpecial);
+                texture.Save(stream, ImageFormat.Png);
 				animationFile.SetData(stream.ToArray());
 			}
 			//Reusing this for the tile path
@@ -426,7 +231,7 @@ namespace PckStudio.Forms.Editor
 		private void treeView1_doubleClick(object sender, EventArgs e)
 		{
             var frame = currentAnimation.GetFrame(frameTreeView.SelectedNode.Index);
-            using FrameEditor diag = new FrameEditor(frame.Ticks, currentAnimation.GetFrameIndex(frame.Texture), TextureIcons);
+            using FrameEditor diag = new FrameEditor(frame.Ticks, currentAnimation.GetTextureIndex(frame.Texture), TextureIcons);
 			if (diag.ShowDialog(this) == DialogResult.OK)
             {
 				/* Found a bug here. When passing the frame variable, it would replace the first instance of that frame and time
@@ -450,7 +255,7 @@ namespace PckStudio.Forms.Editor
 			//diag.SaveButton.Text = "Add";
 			if (diag.ShowDialog(this) == DialogResult.OK)
 			{
-                currentAnimation.AddFrame(diag.FrameTextureIndex, diag.FrameTime);
+                currentAnimation.AddFrame(diag.FrameTextureIndex, TileName == "clock" || TileName == "compass" ? 1 : diag.FrameTime);
                 LoadAnimationTreeView();
 			}
 		}
@@ -472,7 +277,7 @@ namespace PckStudio.Forms.Editor
 				for (int i = 0; i < list.Count; i++)
 				{
 					Animation.Frame f = list[i];
-					currentAnimation.SetFrame(f, currentAnimation.GetFrameIndex(f), diag.time);
+					currentAnimation.SetFrame(f, currentAnimation.GetTextureIndex(f), diag.time);
 				}
 				LoadAnimationTreeView();
 			}
@@ -486,15 +291,12 @@ namespace PckStudio.Forms.Editor
 			if (query == DialogResult.No) return;
 
 			OpenFileDialog fileDialog = new OpenFileDialog();
-			fileDialog.Multiselect = false;
 			fileDialog.Title = "Please select a valid Minecaft: Java Edition animation script";
 
 			// It's marked as .png.mcmeta just in case
 			// some weirdo tries to pass a pack.mcmeta or something
 			// -MattNL
 			fileDialog.Filter = "Animation Scripts (*.mcmeta)|*.png.mcmeta";
-			fileDialog.CheckPathExists = true;
-			fileDialog.CheckFileExists = true;
 			if (fileDialog.ShowDialog(this) != DialogResult.OK) return;
 			Console.WriteLine("Selected Animation Script: " + fileDialog.FileName);
 
@@ -505,8 +307,8 @@ namespace PckStudio.Forms.Editor
 				return;
 			}
 			using MemoryStream textureMem = new MemoryStream(File.ReadAllBytes(textureFile));
-			var new_animation = new Animation(Image.FromStream(textureMem));
-
+			var textures = Image.FromStream(textureMem).CreateImageList(ImageExtentions.ImageLayoutDirection.Horizontal);
+            var new_animation = new Animation(textures);
 			try
 			{
 				JObject mcmeta = JObject.Parse(File.ReadAllText(fileDialog.FileName));
@@ -566,6 +368,13 @@ namespace PckStudio.Forms.Editor
 					Console.WriteLine(diag.SelectedTile);
 					if (TileName != diag.SelectedTile) isItem = diag.IsItem;
 					TileName = diag.SelectedTile;
+
+					InterpolationCheckbox.Checked = 
+					bulkAnimationSpeedToolStripMenuItem.Enabled = 
+					importJavaAnimationToolStripMenuItem.Enabled = 
+					exportJavaAnimationToolStripMenuItem.Enabled = 
+					InterpolationCheckbox.Visible = !IsEditingSpecial;
+
 					foreach (JObject content in AnimationUtil.tileData[animationSection].Children())
 					{
 						var first = content.Properties().FirstOrDefault(p => p.Name == TileName);
@@ -578,31 +387,39 @@ namespace PckStudio.Forms.Editor
 		{
 			SaveFileDialog fileDialog = new SaveFileDialog();
 			fileDialog.Title = "Please choose where you want to save your new animation";
-
 			fileDialog.Filter = "Animation Scripts (*.mcmeta)|*.png.mcmeta";
-			fileDialog.CheckPathExists = true;
-			if (fileDialog.ShowDialog(this) != DialogResult.OK) return;
+			if (fileDialog.ShowDialog(this) == DialogResult.OK)
+            {
+                JObject mcmeta = ConvertAnimationToJava(currentAnimation);
+                string jsondata = JsonConvert.SerializeObject(mcmeta, Formatting.Indented);
+                string filename = fileDialog.FileName;
+                File.WriteAllText(filename, jsondata);
+                var finalTexture = currentAnimation.BuildTexture(isClockOrCompass: false);
+                finalTexture.Save(Path.GetFileNameWithoutExtension(filename)); // removes ".mcmeta" from filename!
+                MessageBox.Show("Animation was successfully exported to " + filename, "Export successful!");
+            }
+        }
 
-			JObject mcmeta = new JObject();
-			JObject animation = new JObject();
-			JArray frames = new JArray();
-			currentAnimation.GetFrames().ForEach(f => {
-				JObject frame = new JObject();
-				frame["index"] = currentAnimation.GetFrameIndex(f.Texture);
-				frame["time"] = f.Ticks;
-				frames.Add(frame);
-			});
-			animation["interpolation"] = InterpolationCheckbox.Checked;
-			animation["frames"] = frames;
-			mcmeta["comment"] = "Animation converted via PCK Studio";
-			mcmeta["animation"] = animation;
-			File.WriteAllText(fileDialog.FileName, JsonConvert.SerializeObject(mcmeta, Formatting.Indented));
-			string fn = fileDialog.FileName;
-			currentAnimation.BuildTexture().Save(fn.Remove(fn.Length - 7));
-			MessageBox.Show("Your animation was successfully exported at " + fn, "Successful export");
-		}
+        private JObject ConvertAnimationToJava(Animation animation)
+        {
+            JObject janimation = new JObject();
+            JObject mcmeta = new JObject();
+            mcmeta["comment"] = $"Animation converted by {ProductName}";
+            mcmeta["animation"] = janimation;
+            JArray jframes = new JArray();
+            foreach (var frame in animation.GetFrames())
+            {
+                JObject jframe = new JObject();
+                jframe["index"] = animation.GetTextureIndex(frame.Texture);
+                jframe["time"] = frame.Ticks;
+                jframes.Add(jframe);
+            };
+            janimation["interpolation"] = InterpolationCheckbox.Checked;
+            janimation["frames"] = jframes;	
+            return mcmeta;
+        }
 
-		private void howToInterpolation_Click(object sender, EventArgs e)
+        private void howToInterpolation_Click(object sender, EventArgs e)
 		{
 			MessageBox.Show("The Interpolation effect is when the animtion smoothly translates between the frames instead of simply displaying the next one. This can be seen with some vanilla Minecraft textures such as Magma and Prismarine.\n\nThe \"Interpolates\" checkbox at the bottom controls this.", "Interpolation");
 		}
@@ -629,5 +446,13 @@ namespace PckStudio.Forms.Editor
 			// Interpolation flag wasn't being updated when the check box changed, this fixes the issue
 			currentAnimation.Interpolate = InterpolationCheckbox.Checked;
 		}
-	}
+
+        private void AnimationEditor_FormClosing(object sender, FormClosingEventArgs e)
+        {
+			if (player.IsPlaying)
+			{
+				player.Stop();
+			}
+        }
+    }
 }

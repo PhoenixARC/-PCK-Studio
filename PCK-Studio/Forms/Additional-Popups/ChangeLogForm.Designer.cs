@@ -60,7 +60,6 @@
             this.Padding = new System.Windows.Forms.Padding(10);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "What\'s new in PCK Studio?";
-            this.Load += new System.EventHandler(this.ChangeLogForm_Load);
             this.ResumeLayout(false);
 
         }

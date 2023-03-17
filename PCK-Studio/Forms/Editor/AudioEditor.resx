@@ -145,8 +145,14 @@
   <data name="removeCategoryStripMenuItem.Text" xml:space="preserve">
     <value>Remove Category</value>
   </data>
+  <data name="changeCategoryToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>168, 22</value>
+  </data>
+  <data name="changeCategoryToolStripMenuItem.Text" xml:space="preserve">
+    <value>Set Category</value>
+  </data>
   <data name="contextMenuStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>169, 48</value>
+    <value>169, 70</value>
   </data>
   <data name="&gt;&gt;contextMenuStrip1.Name" xml:space="preserve">
     <value>contextMenuStrip1</value>
@@ -456,6 +462,12 @@
   <data name="bulkReplaceExistingTracksToolStripMenuItem.Text" xml:space="preserve">
     <value>Bulk Replace Existing Tracks</value>
   </data>
+  <data name="organizeTracksToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>220, 22</value>
+  </data>
+  <data name="organizeTracksToolStripMenuItem.Text" xml:space="preserve">
+    <value>Organize Tracks</value>
+  </data>
   <data name="toolsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>46, 20</value>
   </data>
@@ -468,11 +480,11 @@
   <data name="howToAddSongsToolStripMenuItem.Text" xml:space="preserve">
     <value>How to add songs</value>
   </data>
-  <data name="whatIsEachCategoryToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="whatAreTheCategoriesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>243, 22</value>
   </data>
-  <data name="whatIsEachCategoryToolStripMenuItem.Text" xml:space="preserve">
-    <value>What is each category?</value>
+  <data name="whatAreTheCategoriesToolStripMenuItem.Text" xml:space="preserve">
+    <value>What are the categories?</value>
   </data>
   <data name="howToEditCreditsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>243, 22</value>
@@ -598,6 +610,9 @@
   </data>
   <data name="playOverworldInCreative.Text" xml:space="preserve">
     <value>Play overworld songs in Creative</value>
+  </data>
+  <data name="playOverworldInCreative.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="&gt;&gt;playOverworldInCreative.Name" xml:space="preserve">
     <value>playOverworldInCreative</value>
@@ -3201,6 +3216,12 @@
   <data name="&gt;&gt;removeCategoryStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;changeCategoryToolStripMenuItem.Name" xml:space="preserve">
+    <value>changeCategoryToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;changeCategoryToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;catImages.Name" xml:space="preserve">
     <value>catImages</value>
   </data>
@@ -3249,6 +3270,12 @@
   <data name="&gt;&gt;bulkReplaceExistingTracksToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;organizeTracksToolStripMenuItem.Name" xml:space="preserve">
+    <value>organizeTracksToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;organizeTracksToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;helpToolStripMenuItem.Name" xml:space="preserve">
     <value>helpToolStripMenuItem</value>
   </data>
@@ -3261,10 +3288,10 @@
   <data name="&gt;&gt;howToAddSongsToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;whatIsEachCategoryToolStripMenuItem.Name" xml:space="preserve">
-    <value>whatIsEachCategoryToolStripMenuItem</value>
+  <data name="&gt;&gt;whatAreTheCategoriesToolStripMenuItem.Name" xml:space="preserve">
+    <value>whatAreTheCategoriesToolStripMenuItem</value>
   </data>
-  <data name="&gt;&gt;whatIsEachCategoryToolStripMenuItem.Type" xml:space="preserve">
+  <data name="&gt;&gt;whatAreTheCategoriesToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;howToEditCreditsToolStripMenuItem.Name" xml:space="preserve">

@@ -1,4 +1,5 @@
-﻿using PckStudio.Classes.FileTypes;
+﻿using OMI.Formats.Pck;
+using PckStudio.Classes.FileTypes;
 using PckStudio.ToolboxItems;
 using System;
 using System.Data;
@@ -11,14 +12,14 @@ namespace PckStudio
 {
     public partial class AdvancedOptions : ThemeForm
     {
-        PCKFile currentPCK;
+        PckFile currentPCK;
 
-        public AdvancedOptions(PCKFile currentPCKIn)
+        public AdvancedOptions(PckFile currentPCKIn)
         {
             InitializeComponent();
             currentPCK = currentPCKIn;
             treeMeta.Nodes.Clear();
-            treeMeta.Nodes.AddRange(currentPCK.GatherPropertiesList().Select((s) => new TreeNode(s)).ToArray());
+            treeMeta.Nodes.AddRange(currentPCK.GetPropertyList().Select((s) => new TreeNode(s)).ToArray());
         }
 
         private void applyButton_Click(object sender, EventArgs e)
@@ -27,22 +28,22 @@ namespace PckStudio
             {
                 case "All":
                     {
-                        foreach (PCKFile.FileData file in currentPCK.Files)
+                        foreach (PckFile.FileData file in currentPCK.Files)
                         {
-                            file.properties.Add((entryTypeTextBox.Text, entryDataTextBox.Text));
+                            file.Properties.Add((entryTypeTextBox.Text, entryDataTextBox.Text));
                         }
                         MessageBox.Show("Data Added to All Entries");
                     }
                     break;
                 case "64x64":
                     {
-                        foreach (PCKFile.FileData file in currentPCK.Files)
+                        foreach (PckFile.FileData file in currentPCK.Files)
                         {
-                            MemoryStream png = new MemoryStream(file.data);
-                            if (Path.GetExtension(file.filepath) == ".png" &&
+                            MemoryStream png = new MemoryStream(file.Data);
+                            if (Path.GetExtension(file.Filename) == ".png" &&
                                 Image.FromStream(png).Size.Height == Image.FromStream(png).Size.Width)
                             {
-                                file.properties.Add((entryTypeTextBox.Text, entryDataTextBox.Text));
+                                file.Properties.Add((entryTypeTextBox.Text, entryDataTextBox.Text));
                             }
                         }
                         MessageBox.Show("Data Added to 64x64 Image Entries");
@@ -50,13 +51,13 @@ namespace PckStudio
                     break;
                 case "64x32":
                     {
-                        foreach (PCKFile.FileData file in currentPCK.Files)
+                        foreach (PckFile.FileData file in currentPCK.Files)
                         {
-                            MemoryStream png = new MemoryStream(file.data);
-                            if (Path.GetExtension(file.filepath) == ".png" &&
+                            MemoryStream png = new MemoryStream(file.Data);
+                            if (Path.GetExtension(file.Filename) == ".png" &&
                                 Image.FromStream(png).Size.Height == Image.FromStream(png).Size.Width / 2)
                             {
-                                file.properties.Add((entryTypeTextBox.Text, entryDataTextBox.Text));
+                                file.Properties.Add((entryTypeTextBox.Text, entryDataTextBox.Text));
                             }
                         }
                         MessageBox.Show("Data Added to 64x32 Image Entries");
@@ -64,12 +65,12 @@ namespace PckStudio
                     break;
                 case "PNG Files":
                     {
-                        foreach (PCKFile.FileData file in currentPCK.Files)
+                        foreach (PckFile.FileData file in currentPCK.Files)
                         {
-                            MemoryStream png = new MemoryStream(file.data);
-                            if (Path.GetExtension(file.filepath) == ".png")
+                            MemoryStream png = new MemoryStream(file.Data);
+                            if (Path.GetExtension(file.Filename) == ".png")
                             {
-                                file.properties.Add((entryTypeTextBox.Text, entryDataTextBox.Text));
+                                file.Properties.Add((entryTypeTextBox.Text, entryDataTextBox.Text));
                             }
                         }
                         MessageBox.Show("Data Added to All PNG Image Entries");

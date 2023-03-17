@@ -1,3 +1,6 @@
+[submodule "OMI-Lib"]
+	path = Vendor/OMI-Lib
+	url = https://github.com/PhoenixARC/-OMI-Filetype-Library.git
 [submodule "Vendor/CrEaTiiOn-Brotherhood-Official-C-Theme"]
 	path = Vendor/CrEaTiiOn-Brotherhood-Official-C-Theme
 	url = https://github.com/NessieHax/CrEaTiiOn-Brotherhood-Official-C-Theme.git

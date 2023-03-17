@@ -22,5 +22,14 @@ namespace PckStudio.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("825875166574673940")]
+        public string RichPresenceId {
+            get {
+                return ((string)(this["RichPresenceId"]));
+            }
+        }
     }
 }

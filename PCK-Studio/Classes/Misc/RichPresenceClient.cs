@@ -1,5 +1,6 @@
 ﻿using System;
 using DiscordRPC;
+using PckStudio.Properties;
 
 namespace PckStudio.Classes.Misc
 {
@@ -11,7 +12,7 @@ namespace PckStudio.Classes.Misc
 
         public static void Initialize()
         {
-            Client = new DiscordRpcClient("825875166574673940");
+            Client = new DiscordRpcClient(Settings.Default.RichPresenceId);
             Client.Initialize();
         }
 

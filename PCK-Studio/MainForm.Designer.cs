@@ -66,9 +66,7 @@
             this.cloneFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.renameFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.replaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.moveUpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.moveDownToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -79,8 +77,6 @@
             this.extractToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.addPasswordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.metaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.convertPCTextrurePackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -178,9 +174,7 @@
             this.cloneFileToolStripMenuItem,
             this.renameFileToolStripMenuItem,
             this.replaceToolStripMenuItem,
-            this.moveUpToolStripMenuItem,
-            this.deleteFileToolStripMenuItem,
-            this.moveDownToolStripMenuItem});
+            this.deleteFileToolStripMenuItem});
             this.contextMenuPCKEntries.Name = "contextMenuStrip1";
             resources.ApplyResources(this.contextMenuPCKEntries, "contextMenuPCKEntries");
             // 
@@ -245,7 +239,7 @@
             // 
             resources.ApplyResources(this.importSkinToolStripMenuItem, "importSkinToolStripMenuItem");
             this.importSkinToolStripMenuItem.Name = "importSkinToolStripMenuItem";
-            this.importSkinToolStripMenuItem.Click += new System.EventHandler(this.importSkin);
+            this.importSkinToolStripMenuItem.Click += new System.EventHandler(this.importSkinToolStripMenuItem_Click);
             // 
             // importExtractedSkinsFolderToolStripMenuItem
             // 
@@ -402,23 +396,11 @@
             this.replaceToolStripMenuItem.Name = "replaceToolStripMenuItem";
             this.replaceToolStripMenuItem.Click += new System.EventHandler(this.replaceToolStripMenuItem_Click);
             // 
-            // moveUpToolStripMenuItem
-            // 
-            resources.ApplyResources(this.moveUpToolStripMenuItem, "moveUpToolStripMenuItem");
-            this.moveUpToolStripMenuItem.Name = "moveUpToolStripMenuItem";
-            this.moveUpToolStripMenuItem.Click += new System.EventHandler(this.moveUpToolStripMenuItem_Click);
-            // 
             // deleteFileToolStripMenuItem
             // 
             resources.ApplyResources(this.deleteFileToolStripMenuItem, "deleteFileToolStripMenuItem");
             this.deleteFileToolStripMenuItem.Name = "deleteFileToolStripMenuItem";
             this.deleteFileToolStripMenuItem.Click += new System.EventHandler(this.deleteFileToolStripMenuItem_Click);
-            // 
-            // moveDownToolStripMenuItem
-            // 
-            resources.ApplyResources(this.moveDownToolStripMenuItem, "moveDownToolStripMenuItem");
-            this.moveDownToolStripMenuItem.Name = "moveDownToolStripMenuItem";
-            this.moveDownToolStripMenuItem.Click += new System.EventHandler(this.moveDownToolStripMenuItem_Click);
             // 
             // menuStrip
             // 
@@ -441,8 +423,6 @@
             this.extractToolStripMenuItem1,
             this.saveToolStripMenuItem1,
             this.saveToolStripMenuItem,
-            this.addPasswordToolStripMenuItem,
-            this.metaToolStripMenuItem,
             this.convertPCTextrurePackToolStripMenuItem,
             this.closeToolStripMenuItem});
             this.fileToolStripMenuItem.ForeColor = System.Drawing.Color.White;
@@ -499,18 +479,6 @@
             resources.ApplyResources(this.saveToolStripMenuItem, "saveToolStripMenuItem");
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveAsPCK);
-            // 
-            // addPasswordToolStripMenuItem
-            // 
-            resources.ApplyResources(this.addPasswordToolStripMenuItem, "addPasswordToolStripMenuItem");
-            this.addPasswordToolStripMenuItem.Name = "addPasswordToolStripMenuItem";
-            this.addPasswordToolStripMenuItem.Click += new System.EventHandler(this.addPasswordToolStripMenuItem_Click);
-            // 
-            // metaToolStripMenuItem
-            // 
-            resources.ApplyResources(this.metaToolStripMenuItem, "metaToolStripMenuItem");
-            this.metaToolStripMenuItem.Name = "metaToolStripMenuItem";
-            this.metaToolStripMenuItem.Click += new System.EventHandler(this.metaToolStripMenuItem_Click);
             // 
             // convertPCTextrurePackToolStripMenuItem
             // 
@@ -1173,9 +1141,6 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuMetaTree;
         private System.Windows.Forms.ToolStripMenuItem addEntryToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteEntryToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem moveUpToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem moveDownToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem metaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addMultipleEntriesToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
@@ -1209,7 +1174,6 @@
         private System.Windows.Forms.ToolStripMenuItem VitaPCKInstallerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toNobledezJackToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toPhoenixARCDeveloperToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem addPasswordToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem joinDevelopmentDiscordToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem convertPCTextrurePackToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem forMattNLContributorToolStripMenuItem;
