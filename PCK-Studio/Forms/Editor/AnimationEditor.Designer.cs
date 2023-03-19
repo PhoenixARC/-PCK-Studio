@@ -228,7 +228,6 @@
             // 
             // InterpolationCheckbox
             // 
-            this.InterpolationCheckbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.InterpolationCheckbox.AutoSize = true;
             this.InterpolationCheckbox.Location = new System.Drawing.Point(161, 63);
             this.InterpolationCheckbox.Name = "InterpolationCheckbox";
