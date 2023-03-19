@@ -316,6 +316,7 @@
             this.Location = new System.Drawing.Point(0, 0);
             this.MinimumSize = new System.Drawing.Size(412, 362);
             this.Name = "AnimationEditor";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Animation Editor";
             this.contextMenuStrip1.ResumeLayout(false);
             this.menuStrip.ResumeLayout(false);
