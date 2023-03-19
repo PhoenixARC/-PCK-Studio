@@ -1,63 +1,70 @@
 ﻿using System;
-using System.Windows.Forms;
-using MetroFramework.Forms;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Drawing;
+using System.IO;
+using System.Net;
+using System.Security.Cryptography;
+using System.Threading;
+using System.Threading.Tasks;
+using Octokit;
+using PckStudio.Classes.Extentions;
 using PckStudio.ToolboxItems;
 
 namespace PckStudio
 {
     public partial class AboutThisProgram : ThemeForm
     {
-        int count = 0;
         public AboutThisProgram()
         {
             InitializeComponent();
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
+        private async Task<User[]> AcquireDeveloperUserInfoAsync(params string[] usernames)
         {
-            if (++count == 5)
+            var githubClient = new GitHubClient(new ProductHeaderValue(ProductName));
+            var result = new User[usernames.Length];
+            foreach (var (i, name) in usernames.enumerate())
             {
-                MessageBox.Show("🌸Miku🌸 was here!");
-                count = 0;
+                result[i] = await githubClient.User.Get(name);
             }
+            return result;
+        }
+
+        private void AboutThisProgram_Load(object sender, EventArgs e)
+        {
+            Task.Run(async () =>
+            {
+                // TODO: check if avatar has changed and only acquire info once
+                var devs = await AcquireDeveloperUserInfoAsync("PhoenixARC", "MattN-L", "EternalModz", "NessieHax");
+
+                phoenixarcPictureBox.Image = ImageExtentions.ImageFromUrl(devs[0].AvatarUrl);
+                phoenixarcGitHubButton.Click += (sender, e) => Process.Start(devs[0].HtmlUrl);
+
+                mattNLPictureBox.Image = ImageExtentions.ImageFromUrl(devs[1].AvatarUrl);
+                mattNLGitHubButton.Click += (sender, e) => Process.Start(devs[1].HtmlUrl);
+
+                eternalModzPictureBox.Image = ImageExtentions.ImageFromUrl(devs[2].AvatarUrl);
+                eternalModzGitHubButton.Click += (sender, e) => Process.Start(devs[2].HtmlUrl);
+
+                mikuPictureBox.Image = ImageExtentions.ImageFromUrl(devs[3].AvatarUrl);
+                mikuGitHubButton.Click += (sender, e) => Process.Start(devs[3].HtmlUrl);
+            });
         }
 
         private void GitHubPageButton(object sender, EventArgs e)
         {
-            //Launch browser to GitHub...
-            System.Diagnostics.Process.Start("https://github.com/PhoenixARC/-PCK-Studio");
+            Process.Start("https://github.com/PhoenixARC/-PCK-Studio");
         }
 
         private void WebsiteButton_Click(object sender, EventArgs e)
         {
-            //Launch browser to the PCK Studio website...
-            System.Diagnostics.Process.Start("https://pckstudio.xyz/");
+            Process.Start("https://pckstudio.xyz/");
         }
 
         private void DiscordDevelopmentServerButton(object sender, EventArgs e)
         {
-            //Launch browser to the Discord Server...
-            System.Diagnostics.Process.Start("https://discord.gg/dAepk3Bhud");
+            Process.Start("https://discord.gg/dAepk3Bhud");
         }
-
-		private void PhoenixARCGitHubButton_Click(object sender, EventArgs e)
-		{
-            System.Diagnostics.Process.Start("https://github.com/PhoenixARC");
-        }
-
-		private void MNLGitHubButton_Click(object sender, EventArgs e)
-		{
-            System.Diagnostics.Process.Start("https://github.com/MattN-L");
-        }
-
-		private void MikuGitHubButton_Click(object sender, EventArgs e)
-		{
-            System.Diagnostics.Process.Start("https://github.com/NessieHax");
-        }
-
-		private void EternalModzGitHubButton_Click(object sender, EventArgs e)
-		{
-            System.Diagnostics.Process.Start("https://github.com/EternalModz");
-        }
-	}
+    }
 }

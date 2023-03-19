@@ -3,6 +3,8 @@ using System.Drawing.Drawing2D;
 using System.Drawing;
 using System.Diagnostics;
 using System;
+using System.IO;
+using System.Net;
 
 namespace PckStudio.Classes.Extentions
 {
@@ -89,6 +91,17 @@ namespace PckStudio.Classes.Extentions
                 };
             }
             return result;
+        }
+
+        public static Image ImageFromUrl(string imageUrl)
+        {
+            WebClient client = new WebClient();
+            Stream stream = client.OpenRead(imageUrl);
+            Bitmap bitmap = new Bitmap(stream);
+            stream.Flush();
+            stream.Close();
+            client.Dispose();
+            return bitmap;
         }
 
         private static Size CalculateImageSize(Image[] sources, ImageLayoutDirection layoutDirection)

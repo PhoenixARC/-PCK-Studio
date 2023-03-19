@@ -39,24 +39,24 @@
             this.DevelopersTab = new System.Windows.Forms.TabPage();
             this.panel6 = new System.Windows.Forms.Panel();
             this.AboutEternalModzButton = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
-            this.EternalModzGitHubButton = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
-            this.label5 = new System.Windows.Forms.Label();
-            this.crEaTiiOn_Ultimate_PictureBox3 = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_PictureBox();
+            this.eternalModzGitHubButton = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
+            this.eternalModzLabel = new System.Windows.Forms.Label();
+            this.eternalModzPictureBox = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_PictureBox();
             this.panel5 = new System.Windows.Forms.Panel();
             this.AboutMikuButton = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
-            this.MikuGitHubButton = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
-            this.label4 = new System.Windows.Forms.Label();
-            this.crEaTiiOn_Ultimate_PictureBox4 = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_PictureBox();
+            this.mikuGitHubButton = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
+            this.mikuLabel = new System.Windows.Forms.Label();
+            this.mikuPictureBox = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_PictureBox();
             this.panel4 = new System.Windows.Forms.Panel();
             this.AboutMNLButton = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
-            this.MNLGitHubButton = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
-            this.label2 = new System.Windows.Forms.Label();
-            this.crEaTiiOn_Ultimate_PictureBox2 = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_PictureBox();
+            this.mattNLGitHubButton = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
+            this.mattNLLabel = new System.Windows.Forms.Label();
+            this.mattNLPictureBox = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_PictureBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.AboutPhoenixARCButton = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
-            this.PhoenixARCGitHubButton = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
-            this.crEaTiiOn_Ultimate_PictureBox1 = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_PictureBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.phoenixarcGitHubButton = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
+            this.phoenixarcPictureBox = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_PictureBox();
+            this.phoenixarcNameLabel = new System.Windows.Forms.Label();
             this.LegacyDevelopersTab = new MetroFramework.Controls.MetroTabPage();
             this.label3 = new System.Windows.Forms.Label();
             this.OthersTab = new MetroFramework.Controls.MetroTabPage();
@@ -66,13 +66,13 @@
             this.ProgramInformationTabControl.SuspendLayout();
             this.DevelopersTab.SuspendLayout();
             this.panel6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.crEaTiiOn_Ultimate_PictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eternalModzPictureBox)).BeginInit();
             this.panel5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.crEaTiiOn_Ultimate_PictureBox4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mikuPictureBox)).BeginInit();
             this.panel4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.crEaTiiOn_Ultimate_PictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mattNLPictureBox)).BeginInit();
             this.panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.crEaTiiOn_Ultimate_PictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.phoenixarcPictureBox)).BeginInit();
             this.LegacyDevelopersTab.SuspendLayout();
             this.OthersTab.SuspendLayout();
             this.SuspendLayout();
@@ -213,9 +213,9 @@
             // 
             this.panel6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.panel6.Controls.Add(this.AboutEternalModzButton);
-            this.panel6.Controls.Add(this.EternalModzGitHubButton);
-            this.panel6.Controls.Add(this.label5);
-            this.panel6.Controls.Add(this.crEaTiiOn_Ultimate_PictureBox3);
+            this.panel6.Controls.Add(this.eternalModzGitHubButton);
+            this.panel6.Controls.Add(this.eternalModzLabel);
+            this.panel6.Controls.Add(this.eternalModzPictureBox);
             this.panel6.Location = new System.Drawing.Point(252, 134);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(242, 125);
@@ -246,65 +246,64 @@
             this.AboutEternalModzButton.TextColor = System.Drawing.Color.White;
             this.AboutEternalModzButton.UseVisualStyleBackColor = false;
             // 
-            // EternalModzGitHubButton
+            // eternalModzGitHubButton
             // 
-            this.EternalModzGitHubButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.EternalModzGitHubButton.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.EternalModzGitHubButton.BorderRadius = 15;
-            this.EternalModzGitHubButton.BorderSize = 1;
-            this.EternalModzGitHubButton.ClickedColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.EternalModzGitHubButton.FlatAppearance.BorderSize = 0;
-            this.EternalModzGitHubButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.EternalModzGitHubButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.EternalModzGitHubButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.EternalModzGitHubButton.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.EternalModzGitHubButton.ForeColor = System.Drawing.Color.White;
-            this.EternalModzGitHubButton.GradientColorPrimary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
-            this.EternalModzGitHubButton.GradientColorSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
-            this.EternalModzGitHubButton.HoverOverColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.EternalModzGitHubButton.Location = new System.Drawing.Point(15, 87);
-            this.EternalModzGitHubButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.EternalModzGitHubButton.Name = "EternalModzGitHubButton";
-            this.EternalModzGitHubButton.Size = new System.Drawing.Size(105, 30);
-            this.EternalModzGitHubButton.TabIndex = 25;
-            this.EternalModzGitHubButton.Text = "GitHub Profile";
-            this.EternalModzGitHubButton.TextColor = System.Drawing.Color.White;
-            this.EternalModzGitHubButton.UseVisualStyleBackColor = false;
-            this.EternalModzGitHubButton.Click += new System.EventHandler(this.EternalModzGitHubButton_Click);
+            this.eternalModzGitHubButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.eternalModzGitHubButton.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.eternalModzGitHubButton.BorderRadius = 15;
+            this.eternalModzGitHubButton.BorderSize = 1;
+            this.eternalModzGitHubButton.ClickedColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.eternalModzGitHubButton.FlatAppearance.BorderSize = 0;
+            this.eternalModzGitHubButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.eternalModzGitHubButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.eternalModzGitHubButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.eternalModzGitHubButton.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.eternalModzGitHubButton.ForeColor = System.Drawing.Color.White;
+            this.eternalModzGitHubButton.GradientColorPrimary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.eternalModzGitHubButton.GradientColorSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.eternalModzGitHubButton.HoverOverColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.eternalModzGitHubButton.Location = new System.Drawing.Point(15, 87);
+            this.eternalModzGitHubButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.eternalModzGitHubButton.Name = "eternalModzGitHubButton";
+            this.eternalModzGitHubButton.Size = new System.Drawing.Size(105, 30);
+            this.eternalModzGitHubButton.TabIndex = 25;
+            this.eternalModzGitHubButton.Text = "GitHub Profile";
+            this.eternalModzGitHubButton.TextColor = System.Drawing.Color.White;
+            this.eternalModzGitHubButton.UseVisualStyleBackColor = false;
             // 
-            // label5
+            // eternalModzLabel
             // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.label5.Location = new System.Drawing.Point(79, 29);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(97, 21);
-            this.label5.TabIndex = 4;
-            this.label5.Text = "EternalModz";
+            this.eternalModzLabel.AutoSize = true;
+            this.eternalModzLabel.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.eternalModzLabel.Location = new System.Drawing.Point(79, 29);
+            this.eternalModzLabel.Name = "eternalModzLabel";
+            this.eternalModzLabel.Size = new System.Drawing.Size(97, 21);
+            this.eternalModzLabel.TabIndex = 4;
+            this.eternalModzLabel.Text = "EternalModz";
             // 
-            // crEaTiiOn_Ultimate_PictureBox3
+            // eternalModzPictureBox
             // 
-            this.crEaTiiOn_Ultimate_PictureBox3.BorderCapStyle = System.Drawing.Drawing2D.DashCap.Flat;
-            this.crEaTiiOn_Ultimate_PictureBox3.BorderLineStyle = System.Drawing.Drawing2D.DashStyle.Solid;
-            this.crEaTiiOn_Ultimate_PictureBox3.BorderSize = 2;
-            this.crEaTiiOn_Ultimate_PictureBox3.GradientAngle = 50F;
-            this.crEaTiiOn_Ultimate_PictureBox3.GradientColorPrimary = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.crEaTiiOn_Ultimate_PictureBox3.GradientColorSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.crEaTiiOn_Ultimate_PictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("crEaTiiOn_Ultimate_PictureBox3.Image")));
-            this.crEaTiiOn_Ultimate_PictureBox3.Location = new System.Drawing.Point(3, 4);
-            this.crEaTiiOn_Ultimate_PictureBox3.Name = "crEaTiiOn_Ultimate_PictureBox3";
-            this.crEaTiiOn_Ultimate_PictureBox3.Size = new System.Drawing.Size(70, 70);
-            this.crEaTiiOn_Ultimate_PictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.crEaTiiOn_Ultimate_PictureBox3.TabIndex = 3;
-            this.crEaTiiOn_Ultimate_PictureBox3.TabStop = false;
+            this.eternalModzPictureBox.BorderCapStyle = System.Drawing.Drawing2D.DashCap.Flat;
+            this.eternalModzPictureBox.BorderLineStyle = System.Drawing.Drawing2D.DashStyle.Solid;
+            this.eternalModzPictureBox.BorderSize = 2;
+            this.eternalModzPictureBox.GradientAngle = 50F;
+            this.eternalModzPictureBox.GradientColorPrimary = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.eternalModzPictureBox.GradientColorSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.eternalModzPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("eternalModzPictureBox.Image")));
+            this.eternalModzPictureBox.Location = new System.Drawing.Point(3, 4);
+            this.eternalModzPictureBox.Name = "eternalModzPictureBox";
+            this.eternalModzPictureBox.Size = new System.Drawing.Size(70, 70);
+            this.eternalModzPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.eternalModzPictureBox.TabIndex = 3;
+            this.eternalModzPictureBox.TabStop = false;
             // 
             // panel5
             // 
             this.panel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.panel5.Controls.Add(this.AboutMikuButton);
-            this.panel5.Controls.Add(this.MikuGitHubButton);
-            this.panel5.Controls.Add(this.label4);
-            this.panel5.Controls.Add(this.crEaTiiOn_Ultimate_PictureBox4);
+            this.panel5.Controls.Add(this.mikuGitHubButton);
+            this.panel5.Controls.Add(this.mikuLabel);
+            this.panel5.Controls.Add(this.mikuPictureBox);
             this.panel5.Location = new System.Drawing.Point(252, 3);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(242, 125);
@@ -335,65 +334,64 @@
             this.AboutMikuButton.TextColor = System.Drawing.Color.White;
             this.AboutMikuButton.UseVisualStyleBackColor = false;
             // 
-            // MikuGitHubButton
+            // mikuGitHubButton
             // 
-            this.MikuGitHubButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.MikuGitHubButton.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.MikuGitHubButton.BorderRadius = 15;
-            this.MikuGitHubButton.BorderSize = 1;
-            this.MikuGitHubButton.ClickedColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.MikuGitHubButton.FlatAppearance.BorderSize = 0;
-            this.MikuGitHubButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.MikuGitHubButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.MikuGitHubButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.MikuGitHubButton.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.MikuGitHubButton.ForeColor = System.Drawing.Color.White;
-            this.MikuGitHubButton.GradientColorPrimary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
-            this.MikuGitHubButton.GradientColorSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
-            this.MikuGitHubButton.HoverOverColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.MikuGitHubButton.Location = new System.Drawing.Point(15, 87);
-            this.MikuGitHubButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.MikuGitHubButton.Name = "MikuGitHubButton";
-            this.MikuGitHubButton.Size = new System.Drawing.Size(105, 30);
-            this.MikuGitHubButton.TabIndex = 23;
-            this.MikuGitHubButton.Text = "GitHub Profile";
-            this.MikuGitHubButton.TextColor = System.Drawing.Color.White;
-            this.MikuGitHubButton.UseVisualStyleBackColor = false;
-            this.MikuGitHubButton.Click += new System.EventHandler(this.MikuGitHubButton_Click);
+            this.mikuGitHubButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.mikuGitHubButton.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.mikuGitHubButton.BorderRadius = 15;
+            this.mikuGitHubButton.BorderSize = 1;
+            this.mikuGitHubButton.ClickedColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.mikuGitHubButton.FlatAppearance.BorderSize = 0;
+            this.mikuGitHubButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.mikuGitHubButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.mikuGitHubButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.mikuGitHubButton.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.mikuGitHubButton.ForeColor = System.Drawing.Color.White;
+            this.mikuGitHubButton.GradientColorPrimary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.mikuGitHubButton.GradientColorSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.mikuGitHubButton.HoverOverColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.mikuGitHubButton.Location = new System.Drawing.Point(15, 87);
+            this.mikuGitHubButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.mikuGitHubButton.Name = "mikuGitHubButton";
+            this.mikuGitHubButton.Size = new System.Drawing.Size(105, 30);
+            this.mikuGitHubButton.TabIndex = 23;
+            this.mikuGitHubButton.Text = "GitHub Profile";
+            this.mikuGitHubButton.TextColor = System.Drawing.Color.White;
+            this.mikuGitHubButton.UseVisualStyleBackColor = false;
             // 
-            // label4
+            // mikuLabel
             // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.label4.Location = new System.Drawing.Point(79, 29);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(78, 21);
-            this.label4.TabIndex = 4;
-            this.label4.Text = "Miku-666";
+            this.mikuLabel.AutoSize = true;
+            this.mikuLabel.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.mikuLabel.Location = new System.Drawing.Point(79, 29);
+            this.mikuLabel.Name = "mikuLabel";
+            this.mikuLabel.Size = new System.Drawing.Size(78, 21);
+            this.mikuLabel.TabIndex = 4;
+            this.mikuLabel.Text = "Miku-666";
             // 
-            // crEaTiiOn_Ultimate_PictureBox4
+            // mikuPictureBox
             // 
-            this.crEaTiiOn_Ultimate_PictureBox4.BorderCapStyle = System.Drawing.Drawing2D.DashCap.Flat;
-            this.crEaTiiOn_Ultimate_PictureBox4.BorderLineStyle = System.Drawing.Drawing2D.DashStyle.Solid;
-            this.crEaTiiOn_Ultimate_PictureBox4.BorderSize = 2;
-            this.crEaTiiOn_Ultimate_PictureBox4.GradientAngle = 50F;
-            this.crEaTiiOn_Ultimate_PictureBox4.GradientColorPrimary = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.crEaTiiOn_Ultimate_PictureBox4.GradientColorSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.crEaTiiOn_Ultimate_PictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("crEaTiiOn_Ultimate_PictureBox4.Image")));
-            this.crEaTiiOn_Ultimate_PictureBox4.Location = new System.Drawing.Point(3, 4);
-            this.crEaTiiOn_Ultimate_PictureBox4.Name = "crEaTiiOn_Ultimate_PictureBox4";
-            this.crEaTiiOn_Ultimate_PictureBox4.Size = new System.Drawing.Size(70, 70);
-            this.crEaTiiOn_Ultimate_PictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.crEaTiiOn_Ultimate_PictureBox4.TabIndex = 2;
-            this.crEaTiiOn_Ultimate_PictureBox4.TabStop = false;
+            this.mikuPictureBox.BorderCapStyle = System.Drawing.Drawing2D.DashCap.Flat;
+            this.mikuPictureBox.BorderLineStyle = System.Drawing.Drawing2D.DashStyle.Solid;
+            this.mikuPictureBox.BorderSize = 2;
+            this.mikuPictureBox.GradientAngle = 50F;
+            this.mikuPictureBox.GradientColorPrimary = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.mikuPictureBox.GradientColorSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.mikuPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("mikuPictureBox.Image")));
+            this.mikuPictureBox.Location = new System.Drawing.Point(3, 4);
+            this.mikuPictureBox.Name = "mikuPictureBox";
+            this.mikuPictureBox.Size = new System.Drawing.Size(70, 70);
+            this.mikuPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.mikuPictureBox.TabIndex = 2;
+            this.mikuPictureBox.TabStop = false;
             // 
             // panel4
             // 
             this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.panel4.Controls.Add(this.AboutMNLButton);
-            this.panel4.Controls.Add(this.MNLGitHubButton);
-            this.panel4.Controls.Add(this.label2);
-            this.panel4.Controls.Add(this.crEaTiiOn_Ultimate_PictureBox2);
+            this.panel4.Controls.Add(this.mattNLGitHubButton);
+            this.panel4.Controls.Add(this.mattNLLabel);
+            this.panel4.Controls.Add(this.mattNLPictureBox);
             this.panel4.Location = new System.Drawing.Point(4, 134);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(242, 125);
@@ -424,65 +422,64 @@
             this.AboutMNLButton.TextColor = System.Drawing.Color.White;
             this.AboutMNLButton.UseVisualStyleBackColor = false;
             // 
-            // MNLGitHubButton
+            // mattNLGitHubButton
             // 
-            this.MNLGitHubButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.MNLGitHubButton.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.MNLGitHubButton.BorderRadius = 15;
-            this.MNLGitHubButton.BorderSize = 1;
-            this.MNLGitHubButton.ClickedColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.MNLGitHubButton.FlatAppearance.BorderSize = 0;
-            this.MNLGitHubButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.MNLGitHubButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.MNLGitHubButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.MNLGitHubButton.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.MNLGitHubButton.ForeColor = System.Drawing.Color.White;
-            this.MNLGitHubButton.GradientColorPrimary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
-            this.MNLGitHubButton.GradientColorSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
-            this.MNLGitHubButton.HoverOverColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.MNLGitHubButton.Location = new System.Drawing.Point(15, 87);
-            this.MNLGitHubButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.MNLGitHubButton.Name = "MNLGitHubButton";
-            this.MNLGitHubButton.Size = new System.Drawing.Size(105, 30);
-            this.MNLGitHubButton.TabIndex = 25;
-            this.MNLGitHubButton.Text = "GitHub Profile";
-            this.MNLGitHubButton.TextColor = System.Drawing.Color.White;
-            this.MNLGitHubButton.UseVisualStyleBackColor = false;
-            this.MNLGitHubButton.Click += new System.EventHandler(this.MNLGitHubButton_Click);
+            this.mattNLGitHubButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.mattNLGitHubButton.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.mattNLGitHubButton.BorderRadius = 15;
+            this.mattNLGitHubButton.BorderSize = 1;
+            this.mattNLGitHubButton.ClickedColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.mattNLGitHubButton.FlatAppearance.BorderSize = 0;
+            this.mattNLGitHubButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.mattNLGitHubButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.mattNLGitHubButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.mattNLGitHubButton.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.mattNLGitHubButton.ForeColor = System.Drawing.Color.White;
+            this.mattNLGitHubButton.GradientColorPrimary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.mattNLGitHubButton.GradientColorSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.mattNLGitHubButton.HoverOverColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.mattNLGitHubButton.Location = new System.Drawing.Point(15, 87);
+            this.mattNLGitHubButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.mattNLGitHubButton.Name = "mattNLGitHubButton";
+            this.mattNLGitHubButton.Size = new System.Drawing.Size(105, 30);
+            this.mattNLGitHubButton.TabIndex = 25;
+            this.mattNLGitHubButton.Text = "GitHub Profile";
+            this.mattNLGitHubButton.TextColor = System.Drawing.Color.White;
+            this.mattNLGitHubButton.UseVisualStyleBackColor = false;
             // 
-            // label2
+            // mattNLLabel
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.label2.Location = new System.Drawing.Point(79, 29);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(62, 21);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "MattNL";
+            this.mattNLLabel.AutoSize = true;
+            this.mattNLLabel.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.mattNLLabel.Location = new System.Drawing.Point(79, 29);
+            this.mattNLLabel.Name = "mattNLLabel";
+            this.mattNLLabel.Size = new System.Drawing.Size(62, 21);
+            this.mattNLLabel.TabIndex = 4;
+            this.mattNLLabel.Text = "MattNL";
             // 
-            // crEaTiiOn_Ultimate_PictureBox2
+            // mattNLPictureBox
             // 
-            this.crEaTiiOn_Ultimate_PictureBox2.BorderCapStyle = System.Drawing.Drawing2D.DashCap.Flat;
-            this.crEaTiiOn_Ultimate_PictureBox2.BorderLineStyle = System.Drawing.Drawing2D.DashStyle.Solid;
-            this.crEaTiiOn_Ultimate_PictureBox2.BorderSize = 2;
-            this.crEaTiiOn_Ultimate_PictureBox2.GradientAngle = 50F;
-            this.crEaTiiOn_Ultimate_PictureBox2.GradientColorPrimary = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.crEaTiiOn_Ultimate_PictureBox2.GradientColorSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.crEaTiiOn_Ultimate_PictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("crEaTiiOn_Ultimate_PictureBox2.Image")));
-            this.crEaTiiOn_Ultimate_PictureBox2.Location = new System.Drawing.Point(3, 4);
-            this.crEaTiiOn_Ultimate_PictureBox2.Name = "crEaTiiOn_Ultimate_PictureBox2";
-            this.crEaTiiOn_Ultimate_PictureBox2.Size = new System.Drawing.Size(70, 70);
-            this.crEaTiiOn_Ultimate_PictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.crEaTiiOn_Ultimate_PictureBox2.TabIndex = 1;
-            this.crEaTiiOn_Ultimate_PictureBox2.TabStop = false;
+            this.mattNLPictureBox.BorderCapStyle = System.Drawing.Drawing2D.DashCap.Flat;
+            this.mattNLPictureBox.BorderLineStyle = System.Drawing.Drawing2D.DashStyle.Solid;
+            this.mattNLPictureBox.BorderSize = 2;
+            this.mattNLPictureBox.GradientAngle = 50F;
+            this.mattNLPictureBox.GradientColorPrimary = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.mattNLPictureBox.GradientColorSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.mattNLPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("mattNLPictureBox.Image")));
+            this.mattNLPictureBox.Location = new System.Drawing.Point(3, 4);
+            this.mattNLPictureBox.Name = "mattNLPictureBox";
+            this.mattNLPictureBox.Size = new System.Drawing.Size(70, 70);
+            this.mattNLPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.mattNLPictureBox.TabIndex = 1;
+            this.mattNLPictureBox.TabStop = false;
             // 
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.panel3.Controls.Add(this.AboutPhoenixARCButton);
-            this.panel3.Controls.Add(this.PhoenixARCGitHubButton);
-            this.panel3.Controls.Add(this.crEaTiiOn_Ultimate_PictureBox1);
-            this.panel3.Controls.Add(this.label1);
+            this.panel3.Controls.Add(this.phoenixarcGitHubButton);
+            this.panel3.Controls.Add(this.phoenixarcPictureBox);
+            this.panel3.Controls.Add(this.phoenixarcNameLabel);
             this.panel3.Location = new System.Drawing.Point(4, 3);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(242, 125);
@@ -513,57 +510,56 @@
             this.AboutPhoenixARCButton.TextColor = System.Drawing.Color.White;
             this.AboutPhoenixARCButton.UseVisualStyleBackColor = false;
             // 
-            // PhoenixARCGitHubButton
+            // phoenixarcGitHubButton
             // 
-            this.PhoenixARCGitHubButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.PhoenixARCGitHubButton.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.PhoenixARCGitHubButton.BorderRadius = 15;
-            this.PhoenixARCGitHubButton.BorderSize = 1;
-            this.PhoenixARCGitHubButton.ClickedColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.PhoenixARCGitHubButton.FlatAppearance.BorderSize = 0;
-            this.PhoenixARCGitHubButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.PhoenixARCGitHubButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.PhoenixARCGitHubButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.PhoenixARCGitHubButton.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.PhoenixARCGitHubButton.ForeColor = System.Drawing.Color.White;
-            this.PhoenixARCGitHubButton.GradientColorPrimary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
-            this.PhoenixARCGitHubButton.GradientColorSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
-            this.PhoenixARCGitHubButton.HoverOverColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.PhoenixARCGitHubButton.Location = new System.Drawing.Point(15, 92);
-            this.PhoenixARCGitHubButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.PhoenixARCGitHubButton.Name = "PhoenixARCGitHubButton";
-            this.PhoenixARCGitHubButton.Size = new System.Drawing.Size(105, 30);
-            this.PhoenixARCGitHubButton.TabIndex = 21;
-            this.PhoenixARCGitHubButton.Text = "Github Profile";
-            this.PhoenixARCGitHubButton.TextColor = System.Drawing.Color.White;
-            this.PhoenixARCGitHubButton.UseVisualStyleBackColor = false;
-            this.PhoenixARCGitHubButton.Click += new System.EventHandler(this.PhoenixARCGitHubButton_Click);
+            this.phoenixarcGitHubButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.phoenixarcGitHubButton.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.phoenixarcGitHubButton.BorderRadius = 15;
+            this.phoenixarcGitHubButton.BorderSize = 1;
+            this.phoenixarcGitHubButton.ClickedColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.phoenixarcGitHubButton.FlatAppearance.BorderSize = 0;
+            this.phoenixarcGitHubButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.phoenixarcGitHubButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.phoenixarcGitHubButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.phoenixarcGitHubButton.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.phoenixarcGitHubButton.ForeColor = System.Drawing.Color.White;
+            this.phoenixarcGitHubButton.GradientColorPrimary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.phoenixarcGitHubButton.GradientColorSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.phoenixarcGitHubButton.HoverOverColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.phoenixarcGitHubButton.Location = new System.Drawing.Point(15, 92);
+            this.phoenixarcGitHubButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.phoenixarcGitHubButton.Name = "phoenixarcGitHubButton";
+            this.phoenixarcGitHubButton.Size = new System.Drawing.Size(105, 30);
+            this.phoenixarcGitHubButton.TabIndex = 21;
+            this.phoenixarcGitHubButton.Text = "Github Profile";
+            this.phoenixarcGitHubButton.TextColor = System.Drawing.Color.White;
+            this.phoenixarcGitHubButton.UseVisualStyleBackColor = false;
             // 
-            // crEaTiiOn_Ultimate_PictureBox1
+            // phoenixarcPictureBox
             // 
-            this.crEaTiiOn_Ultimate_PictureBox1.BorderCapStyle = System.Drawing.Drawing2D.DashCap.Flat;
-            this.crEaTiiOn_Ultimate_PictureBox1.BorderLineStyle = System.Drawing.Drawing2D.DashStyle.Solid;
-            this.crEaTiiOn_Ultimate_PictureBox1.BorderSize = 2;
-            this.crEaTiiOn_Ultimate_PictureBox1.GradientAngle = 50F;
-            this.crEaTiiOn_Ultimate_PictureBox1.GradientColorPrimary = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.crEaTiiOn_Ultimate_PictureBox1.GradientColorSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.crEaTiiOn_Ultimate_PictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("crEaTiiOn_Ultimate_PictureBox1.Image")));
-            this.crEaTiiOn_Ultimate_PictureBox1.Location = new System.Drawing.Point(3, 4);
-            this.crEaTiiOn_Ultimate_PictureBox1.Name = "crEaTiiOn_Ultimate_PictureBox1";
-            this.crEaTiiOn_Ultimate_PictureBox1.Size = new System.Drawing.Size(70, 70);
-            this.crEaTiiOn_Ultimate_PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.crEaTiiOn_Ultimate_PictureBox1.TabIndex = 0;
-            this.crEaTiiOn_Ultimate_PictureBox1.TabStop = false;
+            this.phoenixarcPictureBox.BorderCapStyle = System.Drawing.Drawing2D.DashCap.Flat;
+            this.phoenixarcPictureBox.BorderLineStyle = System.Drawing.Drawing2D.DashStyle.Solid;
+            this.phoenixarcPictureBox.BorderSize = 2;
+            this.phoenixarcPictureBox.GradientAngle = 50F;
+            this.phoenixarcPictureBox.GradientColorPrimary = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.phoenixarcPictureBox.GradientColorSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.phoenixarcPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("phoenixarcPictureBox.Image")));
+            this.phoenixarcPictureBox.Location = new System.Drawing.Point(3, 4);
+            this.phoenixarcPictureBox.Name = "phoenixarcPictureBox";
+            this.phoenixarcPictureBox.Size = new System.Drawing.Size(70, 70);
+            this.phoenixarcPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.phoenixarcPictureBox.TabIndex = 0;
+            this.phoenixarcPictureBox.TabStop = false;
             // 
-            // label1
+            // phoenixarcNameLabel
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.label1.Location = new System.Drawing.Point(79, 29);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(95, 21);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "PhoenixARC";
+            this.phoenixarcNameLabel.AutoSize = true;
+            this.phoenixarcNameLabel.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.phoenixarcNameLabel.Location = new System.Drawing.Point(79, 29);
+            this.phoenixarcNameLabel.Name = "phoenixarcNameLabel";
+            this.phoenixarcNameLabel.Size = new System.Drawing.Size(95, 21);
+            this.phoenixarcNameLabel.TabIndex = 4;
+            this.phoenixarcNameLabel.Text = "PhoenixARC";
             // 
             // LegacyDevelopersTab
             // 
@@ -649,29 +645,33 @@
             this.Controls.Add(this.panel2);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.ForeColor = System.Drawing.Color.White;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Location = new System.Drawing.Point(0, 0);
             this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(657, 455);
             this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(657, 455);
             this.Name = "AboutThisProgram";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "About PCK Studio";
+            this.Load += new System.EventHandler(this.AboutThisProgram_Load);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.ProgramInformationTabControl.ResumeLayout(false);
             this.DevelopersTab.ResumeLayout(false);
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.crEaTiiOn_Ultimate_PictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eternalModzPictureBox)).EndInit();
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.crEaTiiOn_Ultimate_PictureBox4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mikuPictureBox)).EndInit();
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.crEaTiiOn_Ultimate_PictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mattNLPictureBox)).EndInit();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.crEaTiiOn_Ultimate_PictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.phoenixarcPictureBox)).EndInit();
             this.LegacyDevelopersTab.ResumeLayout(false);
             this.LegacyDevelopersTab.PerformLayout();
             this.OthersTab.ResumeLayout(false);
@@ -693,27 +693,27 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TabPage DevelopersTab;
         private System.Windows.Forms.Panel panel6;
-        private System.Windows.Forms.Label label5;
-        private CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_PictureBox crEaTiiOn_Ultimate_PictureBox3;
+        private System.Windows.Forms.Label eternalModzLabel;
+        private CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_PictureBox eternalModzPictureBox;
         private System.Windows.Forms.Panel panel5;
-        private System.Windows.Forms.Label label4;
-        private CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_PictureBox crEaTiiOn_Ultimate_PictureBox4;
+        private System.Windows.Forms.Label mikuLabel;
+        private CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_PictureBox mikuPictureBox;
         private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.Label label2;
-        private CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_PictureBox crEaTiiOn_Ultimate_PictureBox2;
+        private System.Windows.Forms.Label mattNLLabel;
+        private CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_PictureBox mattNLPictureBox;
         private System.Windows.Forms.Panel panel3;
-        private CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_PictureBox crEaTiiOn_Ultimate_PictureBox1;
-        private System.Windows.Forms.Label label1;
+        private CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_PictureBox phoenixarcPictureBox;
+        private System.Windows.Forms.Label phoenixarcNameLabel;
         private CBH.Controls.CrEaTiiOn_TabPage ProgramInformationTabControl;
         private System.Windows.Forms.Label label7;
         private CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton AboutEternalModzButton;
-        private CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton EternalModzGitHubButton;
+        private CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton eternalModzGitHubButton;
         private CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton AboutMikuButton;
-        private CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton MikuGitHubButton;
+        private CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton mikuGitHubButton;
         private CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton AboutMNLButton;
-        private CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton MNLGitHubButton;
+        private CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton mattNLGitHubButton;
         private CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton AboutPhoenixARCButton;
-        private CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton PhoenixARCGitHubButton;
+        private CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton phoenixarcGitHubButton;
         private System.Windows.Forms.TabPage ProgramDetailsTab;
     }
 }
