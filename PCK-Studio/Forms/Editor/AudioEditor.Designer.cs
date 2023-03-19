@@ -263,9 +263,9 @@ namespace PckStudio.Forms.Editor
             // 
             // compressionUpDown
             // 
+            resources.ApplyResources(this.compressionUpDown, "compressionUpDown");
             this.compressionUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.compressionUpDown.ForeColor = System.Drawing.SystemColors.Window;
-            resources.ApplyResources(this.compressionUpDown, "compressionUpDown");
             this.compressionUpDown.Maximum = new decimal(new int[] {
             9,
             0,
