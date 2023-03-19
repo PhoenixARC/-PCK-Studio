@@ -138,25 +138,25 @@
   <data name="resource.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
-  <data name="metroTextBox1.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="filterTextBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>16, 31</value>
   </data>
-  <data name="metroTextBox1.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="filterTextBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>324, 23</value>
   </data>
-  <data name="metroTextBox1.TabIndex" type="System.Int32, mscorlib">
+  <data name="filterTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>24</value>
   </data>
-  <data name="&gt;&gt;metroTextBox1.Name" xml:space="preserve">
-    <value>metroTextBox1</value>
+  <data name="&gt;&gt;filterTextBox.Name" xml:space="preserve">
+    <value>filterTextBox</value>
   </data>
-  <data name="&gt;&gt;metroTextBox1.Type" xml:space="preserve">
+  <data name="&gt;&gt;filterTextBox.Type" xml:space="preserve">
     <value>MetroFramework.Controls.MetroTextBox, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
   </data>
-  <data name="&gt;&gt;metroTextBox1.Parent" xml:space="preserve">
+  <data name="&gt;&gt;filterTextBox.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;metroTextBox1.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;filterTextBox.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
   <data name="alphaLabel.AutoSize" type="System.Boolean, mscorlib">
@@ -851,88 +851,88 @@
   <data name="&gt;&gt;colorBox2D1.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="numericUpDown4.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="blueUpDown.Location" type="System.Drawing.Point, System.Drawing">
     <value>358, 391</value>
   </data>
-  <data name="numericUpDown4.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="blueUpDown.Size" type="System.Drawing.Size, System.Drawing">
     <value>50, 22</value>
   </data>
-  <data name="numericUpDown4.TabIndex" type="System.Int32, mscorlib">
+  <data name="blueUpDown.TabIndex" type="System.Int32, mscorlib">
     <value>31</value>
   </data>
-  <data name="&gt;&gt;numericUpDown4.Name" xml:space="preserve">
-    <value>numericUpDown4</value>
+  <data name="&gt;&gt;blueUpDown.Name" xml:space="preserve">
+    <value>blueUpDown</value>
   </data>
-  <data name="&gt;&gt;numericUpDown4.Type" xml:space="preserve">
+  <data name="&gt;&gt;blueUpDown.Type" xml:space="preserve">
     <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;numericUpDown4.Parent" xml:space="preserve">
+  <data name="&gt;&gt;blueUpDown.Parent" xml:space="preserve">
     <value>panel1</value>
   </data>
-  <data name="&gt;&gt;numericUpDown4.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;blueUpDown.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="numericUpDown3.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="greenUpDown.Location" type="System.Drawing.Point, System.Drawing">
     <value>358, 367</value>
   </data>
-  <data name="numericUpDown3.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="greenUpDown.Size" type="System.Drawing.Size, System.Drawing">
     <value>50, 22</value>
   </data>
-  <data name="numericUpDown3.TabIndex" type="System.Int32, mscorlib">
+  <data name="greenUpDown.TabIndex" type="System.Int32, mscorlib">
     <value>30</value>
   </data>
-  <data name="&gt;&gt;numericUpDown3.Name" xml:space="preserve">
-    <value>numericUpDown3</value>
+  <data name="&gt;&gt;greenUpDown.Name" xml:space="preserve">
+    <value>greenUpDown</value>
   </data>
-  <data name="&gt;&gt;numericUpDown3.Type" xml:space="preserve">
+  <data name="&gt;&gt;greenUpDown.Type" xml:space="preserve">
     <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;numericUpDown3.Parent" xml:space="preserve">
+  <data name="&gt;&gt;greenUpDown.Parent" xml:space="preserve">
     <value>panel1</value>
   </data>
-  <data name="&gt;&gt;numericUpDown3.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;greenUpDown.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
-  <data name="numericUpDown2.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="redUpDown.Location" type="System.Drawing.Point, System.Drawing">
     <value>358, 341</value>
   </data>
-  <data name="numericUpDown2.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="redUpDown.Size" type="System.Drawing.Size, System.Drawing">
     <value>50, 22</value>
   </data>
-  <data name="numericUpDown2.TabIndex" type="System.Int32, mscorlib">
+  <data name="redUpDown.TabIndex" type="System.Int32, mscorlib">
     <value>29</value>
   </data>
-  <data name="&gt;&gt;numericUpDown2.Name" xml:space="preserve">
-    <value>numericUpDown2</value>
+  <data name="&gt;&gt;redUpDown.Name" xml:space="preserve">
+    <value>redUpDown</value>
   </data>
-  <data name="&gt;&gt;numericUpDown2.Type" xml:space="preserve">
+  <data name="&gt;&gt;redUpDown.Type" xml:space="preserve">
     <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;numericUpDown2.Parent" xml:space="preserve">
+  <data name="&gt;&gt;redUpDown.Parent" xml:space="preserve">
     <value>panel1</value>
   </data>
-  <data name="&gt;&gt;numericUpDown2.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;redUpDown.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
-  <data name="numericUpDown1.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="alphaUpDown.Location" type="System.Drawing.Point, System.Drawing">
     <value>358, 316</value>
   </data>
-  <data name="numericUpDown1.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="alphaUpDown.Size" type="System.Drawing.Size, System.Drawing">
     <value>50, 22</value>
   </data>
-  <data name="numericUpDown1.TabIndex" type="System.Int32, mscorlib">
+  <data name="alphaUpDown.TabIndex" type="System.Int32, mscorlib">
     <value>28</value>
   </data>
-  <data name="&gt;&gt;numericUpDown1.Name" xml:space="preserve">
-    <value>numericUpDown1</value>
+  <data name="&gt;&gt;alphaUpDown.Name" xml:space="preserve">
+    <value>alphaUpDown</value>
   </data>
-  <data name="&gt;&gt;numericUpDown1.Type" xml:space="preserve">
+  <data name="&gt;&gt;alphaUpDown.Type" xml:space="preserve">
     <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;numericUpDown1.Parent" xml:space="preserve">
+  <data name="&gt;&gt;alphaUpDown.Parent" xml:space="preserve">
     <value>panel1</value>
   </data>
-  <data name="&gt;&gt;numericUpDown1.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;alphaUpDown.ZOrder" xml:space="preserve">
     <value>6</value>
   </data>
   <data name="crEaTiiOn_ModernSlider3.Colors" mimetype="application/x-microsoft.net.object.binary.base64">
