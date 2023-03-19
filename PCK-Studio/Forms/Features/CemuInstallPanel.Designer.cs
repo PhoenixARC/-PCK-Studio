@@ -30,11 +30,11 @@
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.TableLayoutPanel layoutPanel;
-            this.BrowseDirectoryBtn = new System.Windows.Forms.Button();
-            this.GameDirectoryTextBox = new MetroFramework.Controls.MetroTextBox();
-            this.radioButtonJap = new System.Windows.Forms.RadioButton();
             this.radioButtonEur = new System.Windows.Forms.RadioButton();
             this.radioButtonUs = new System.Windows.Forms.RadioButton();
+            this.radioButtonJap = new System.Windows.Forms.RadioButton();
+            this.GameDirectoryTextBox = new MetroFramework.Controls.MetroTextBox();
+            this.BrowseDirectoryBtn = new System.Windows.Forms.Button();
             this.DLCTreeView = new System.Windows.Forms.TreeView();
             this.DLCContextMenu = new MetroFramework.Controls.MetroContextMenu(this.components);
             this.openSkinPackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -46,23 +46,101 @@
             this.DLCContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
-            // BrowseDirectoryBtn
+            // layoutPanel
             // 
-            this.BrowseDirectoryBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.BrowseDirectoryBtn.BackColor = System.Drawing.Color.RoyalBlue;
-            this.BrowseDirectoryBtn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.BrowseDirectoryBtn.FlatAppearance.BorderSize = 0;
-            this.BrowseDirectoryBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BrowseDirectoryBtn.Font = new System.Drawing.Font("Segoe UI", 9.75F);
-            this.BrowseDirectoryBtn.ForeColor = System.Drawing.Color.White;
-            this.BrowseDirectoryBtn.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.BrowseDirectoryBtn.Location = new System.Drawing.Point(287, 3);
-            this.BrowseDirectoryBtn.Name = "BrowseDirectoryBtn";
-            this.BrowseDirectoryBtn.Size = new System.Drawing.Size(138, 27);
-            this.BrowseDirectoryBtn.TabIndex = 12;
-            this.BrowseDirectoryBtn.Text = "Browse";
-            this.BrowseDirectoryBtn.UseVisualStyleBackColor = false;
-            this.BrowseDirectoryBtn.Click += new System.EventHandler(this.BrowseDirectoryBtn_Click);
+            layoutPanel.BackColor = System.Drawing.Color.Black;
+            layoutPanel.ColumnCount = 3;
+            layoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33332F));
+            layoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
+            layoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
+            layoutPanel.Controls.Add(this.radioButtonEur, 0, 1);
+            layoutPanel.Controls.Add(this.radioButtonUs, 1, 1);
+            layoutPanel.Controls.Add(this.radioButtonJap, 2, 1);
+            layoutPanel.Controls.Add(this.GameDirectoryTextBox, 0, 0);
+            layoutPanel.Controls.Add(this.BrowseDirectoryBtn, 2, 0);
+            layoutPanel.Controls.Add(this.DLCTreeView, 0, 2);
+            layoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            layoutPanel.Location = new System.Drawing.Point(0, 0);
+            layoutPanel.Margin = new System.Windows.Forms.Padding(0);
+            layoutPanel.Name = "layoutPanel";
+            layoutPanel.RowCount = 3;
+            layoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            layoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
+            layoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            layoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            layoutPanel.Size = new System.Drawing.Size(428, 556);
+            layoutPanel.TabIndex = 4;
+            // 
+            // radioButtonEur
+            // 
+            this.radioButtonEur.Appearance = System.Windows.Forms.Appearance.Button;
+            this.radioButtonEur.AutoSize = true;
+            this.radioButtonEur.BackColor = System.Drawing.Color.Transparent;
+            this.radioButtonEur.CheckAlign = System.Drawing.ContentAlignment.BottomRight;
+            this.radioButtonEur.Checked = true;
+            this.radioButtonEur.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.radioButtonEur.FlatAppearance.CheckedBackColor = System.Drawing.Color.DodgerBlue;
+            this.radioButtonEur.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Aqua;
+            this.radioButtonEur.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.radioButtonEur.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.radioButtonEur.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.radioButtonEur.ForeColor = System.Drawing.Color.White;
+            this.radioButtonEur.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.radioButtonEur.Location = new System.Drawing.Point(3, 36);
+            this.radioButtonEur.Name = "radioButtonEur";
+            this.radioButtonEur.Size = new System.Drawing.Size(136, 30);
+            this.radioButtonEur.TabIndex = 1;
+            this.radioButtonEur.TabStop = true;
+            this.radioButtonEur.Text = "EUR";
+            this.radioButtonEur.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.radioButtonEur.UseVisualStyleBackColor = false;
+            this.radioButtonEur.Click += new System.EventHandler(this.radioButton_Click);
+            // 
+            // radioButtonUs
+            // 
+            this.radioButtonUs.Appearance = System.Windows.Forms.Appearance.Button;
+            this.radioButtonUs.AutoSize = true;
+            this.radioButtonUs.BackColor = System.Drawing.Color.Transparent;
+            this.radioButtonUs.CheckAlign = System.Drawing.ContentAlignment.BottomRight;
+            this.radioButtonUs.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.radioButtonUs.FlatAppearance.CheckedBackColor = System.Drawing.Color.DodgerBlue;
+            this.radioButtonUs.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Aqua;
+            this.radioButtonUs.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.radioButtonUs.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.radioButtonUs.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.radioButtonUs.ForeColor = System.Drawing.Color.White;
+            this.radioButtonUs.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.radioButtonUs.Location = new System.Drawing.Point(145, 36);
+            this.radioButtonUs.Name = "radioButtonUs";
+            this.radioButtonUs.Size = new System.Drawing.Size(136, 30);
+            this.radioButtonUs.TabIndex = 0;
+            this.radioButtonUs.Text = "US";
+            this.radioButtonUs.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.radioButtonUs.UseVisualStyleBackColor = false;
+            this.radioButtonUs.Click += new System.EventHandler(this.radioButton_Click);
+            // 
+            // radioButtonJap
+            // 
+            this.radioButtonJap.Appearance = System.Windows.Forms.Appearance.Button;
+            this.radioButtonJap.AutoSize = true;
+            this.radioButtonJap.BackColor = System.Drawing.Color.Transparent;
+            this.radioButtonJap.CheckAlign = System.Drawing.ContentAlignment.BottomRight;
+            this.radioButtonJap.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.radioButtonJap.FlatAppearance.CheckedBackColor = System.Drawing.Color.DodgerBlue;
+            this.radioButtonJap.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Aqua;
+            this.radioButtonJap.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.radioButtonJap.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.radioButtonJap.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.radioButtonJap.ForeColor = System.Drawing.Color.White;
+            this.radioButtonJap.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.radioButtonJap.Location = new System.Drawing.Point(287, 36);
+            this.radioButtonJap.Name = "radioButtonJap";
+            this.radioButtonJap.Size = new System.Drawing.Size(138, 30);
+            this.radioButtonJap.TabIndex = 2;
+            this.radioButtonJap.Text = "JAP";
+            this.radioButtonJap.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.radioButtonJap.UseVisualStyleBackColor = false;
+            this.radioButtonJap.Click += new System.EventHandler(this.radioButton_Click);
             // 
             // GameDirectoryTextBox
             // 
@@ -103,101 +181,23 @@
             this.GameDirectoryTextBox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.GameDirectoryTextBox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
             // 
-            // radioButtonJap
+            // BrowseDirectoryBtn
             // 
-            this.radioButtonJap.Appearance = System.Windows.Forms.Appearance.Button;
-            this.radioButtonJap.AutoSize = true;
-            this.radioButtonJap.BackColor = System.Drawing.Color.Transparent;
-            this.radioButtonJap.CheckAlign = System.Drawing.ContentAlignment.BottomRight;
-            this.radioButtonJap.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.radioButtonJap.FlatAppearance.CheckedBackColor = System.Drawing.Color.Teal;
-            this.radioButtonJap.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Aqua;
-            this.radioButtonJap.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.radioButtonJap.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.radioButtonJap.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.radioButtonJap.ForeColor = System.Drawing.Color.White;
-            this.radioButtonJap.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.radioButtonJap.Location = new System.Drawing.Point(287, 36);
-            this.radioButtonJap.Name = "radioButtonJap";
-            this.radioButtonJap.Size = new System.Drawing.Size(138, 30);
-            this.radioButtonJap.TabIndex = 2;
-            this.radioButtonJap.Text = "JAP";
-            this.radioButtonJap.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioButtonJap.UseVisualStyleBackColor = false;
-            this.radioButtonJap.Click += new System.EventHandler(this.radioButton_Click);
-            // 
-            // radioButtonEur
-            // 
-            this.radioButtonEur.Appearance = System.Windows.Forms.Appearance.Button;
-            this.radioButtonEur.AutoSize = true;
-            this.radioButtonEur.BackColor = System.Drawing.Color.Transparent;
-            this.radioButtonEur.CheckAlign = System.Drawing.ContentAlignment.BottomRight;
-            this.radioButtonEur.Checked = true;
-            this.radioButtonEur.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.radioButtonEur.FlatAppearance.CheckedBackColor = System.Drawing.Color.Teal;
-            this.radioButtonEur.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Aqua;
-            this.radioButtonEur.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.radioButtonEur.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.radioButtonEur.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.radioButtonEur.ForeColor = System.Drawing.Color.White;
-            this.radioButtonEur.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.radioButtonEur.Location = new System.Drawing.Point(3, 36);
-            this.radioButtonEur.Name = "radioButtonEur";
-            this.radioButtonEur.Size = new System.Drawing.Size(136, 30);
-            this.radioButtonEur.TabIndex = 1;
-            this.radioButtonEur.TabStop = true;
-            this.radioButtonEur.Text = "EUR";
-            this.radioButtonEur.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioButtonEur.UseVisualStyleBackColor = false;
-            this.radioButtonEur.Click += new System.EventHandler(this.radioButton_Click);
-            // 
-            // layoutPanel
-            // 
-            layoutPanel.BackColor = System.Drawing.Color.Black;
-            layoutPanel.ColumnCount = 3;
-            layoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33332F));
-            layoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
-            layoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
-            layoutPanel.Controls.Add(this.radioButtonEur, 0, 1);
-            layoutPanel.Controls.Add(this.radioButtonUs, 1, 1);
-            layoutPanel.Controls.Add(this.radioButtonJap, 2, 1);
-            layoutPanel.Controls.Add(this.GameDirectoryTextBox, 0, 0);
-            layoutPanel.Controls.Add(this.BrowseDirectoryBtn, 2, 0);
-            layoutPanel.Controls.Add(this.DLCTreeView, 0, 2);
-            layoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            layoutPanel.Location = new System.Drawing.Point(0, 0);
-            layoutPanel.Margin = new System.Windows.Forms.Padding(0);
-            layoutPanel.Name = "layoutPanel";
-            layoutPanel.RowCount = 3;
-            layoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            layoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
-            layoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            layoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            layoutPanel.Size = new System.Drawing.Size(428, 556);
-            layoutPanel.TabIndex = 4;
-            // 
-            // radioButtonUs
-            // 
-            this.radioButtonUs.Appearance = System.Windows.Forms.Appearance.Button;
-            this.radioButtonUs.AutoSize = true;
-            this.radioButtonUs.BackColor = System.Drawing.Color.Transparent;
-            this.radioButtonUs.CheckAlign = System.Drawing.ContentAlignment.BottomRight;
-            this.radioButtonUs.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.radioButtonUs.FlatAppearance.CheckedBackColor = System.Drawing.Color.Teal;
-            this.radioButtonUs.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Aqua;
-            this.radioButtonUs.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.radioButtonUs.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.radioButtonUs.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.radioButtonUs.ForeColor = System.Drawing.Color.White;
-            this.radioButtonUs.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.radioButtonUs.Location = new System.Drawing.Point(145, 36);
-            this.radioButtonUs.Name = "radioButtonUs";
-            this.radioButtonUs.Size = new System.Drawing.Size(136, 30);
-            this.radioButtonUs.TabIndex = 0;
-            this.radioButtonUs.Text = "US";
-            this.radioButtonUs.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioButtonUs.UseVisualStyleBackColor = false;
-            this.radioButtonUs.Click += new System.EventHandler(this.radioButton_Click);
+            this.BrowseDirectoryBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.BrowseDirectoryBtn.BackColor = System.Drawing.Color.RoyalBlue;
+            this.BrowseDirectoryBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.BrowseDirectoryBtn.FlatAppearance.BorderSize = 0;
+            this.BrowseDirectoryBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BrowseDirectoryBtn.Font = new System.Drawing.Font("Segoe UI", 9.75F);
+            this.BrowseDirectoryBtn.ForeColor = System.Drawing.Color.White;
+            this.BrowseDirectoryBtn.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.BrowseDirectoryBtn.Location = new System.Drawing.Point(287, 3);
+            this.BrowseDirectoryBtn.Name = "BrowseDirectoryBtn";
+            this.BrowseDirectoryBtn.Size = new System.Drawing.Size(138, 27);
+            this.BrowseDirectoryBtn.TabIndex = 12;
+            this.BrowseDirectoryBtn.Text = "Browse";
+            this.BrowseDirectoryBtn.UseVisualStyleBackColor = false;
+            this.BrowseDirectoryBtn.Click += new System.EventHandler(this.BrowseDirectoryBtn_Click);
             // 
             // DLCTreeView
             // 
@@ -226,7 +226,7 @@
             // 
             this.openSkinPackToolStripMenuItem.Name = "openSkinPackToolStripMenuItem";
             this.openSkinPackToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
-            this.openSkinPackToolStripMenuItem.Text = "Open Skin Pack";
+            this.openSkinPackToolStripMenuItem.Text = "Open Pack";
             this.openSkinPackToolStripMenuItem.Click += new System.EventHandler(this.openSkinPackToolStripMenuItem_Click);
             // 
             // openTexturePackToolStripMenuItem

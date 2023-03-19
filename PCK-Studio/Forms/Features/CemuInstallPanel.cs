@@ -2,7 +2,6 @@
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using System.Windows.Markup;
 using PckStudio.Classes.Misc;
 
 namespace PckStudio.Forms.Additional_Features

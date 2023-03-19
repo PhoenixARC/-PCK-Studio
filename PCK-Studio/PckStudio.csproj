@@ -391,11 +391,11 @@
     <Compile Include="Forms\Utilities\MaterialUtil.cs" />
     <Compile Include="Forms\Utilities\BehaviourUtil.cs" />
     <Compile Include="Forms\Utilities\AnimationUtil.cs" />
-    <Compile Include="Forms\Features\ConsoleInstaller.cs">
+    <Compile Include="Forms\Features\PckManager.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Features\ConsoleInstaller.Designer.cs">
-      <DependentUpon>ConsoleInstaller.cs</DependentUpon>
+    <Compile Include="Forms\Features\PckManager.Designer.cs">
+      <DependentUpon>PckManager.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Utilities\Skins\BoxEditor.cs">
       <SubType>Form</SubType>
@@ -595,8 +595,8 @@
     <EmbeddedResource Include="Forms\Additional-Popups\Audio\pleaseWait.resx">
       <DependentUpon>pleaseWait.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Features\ConsoleInstaller.resx">
-      <DependentUpon>ConsoleInstaller.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Features\PckManager.resx">
+      <DependentUpon>PckManager.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Utilities\Skins\BoxEditor.resx">
       <DependentUpon>BoxEditor.cs</DependentUpon>

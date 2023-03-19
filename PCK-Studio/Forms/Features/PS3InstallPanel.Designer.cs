@@ -45,10 +45,10 @@
             this.radioButton3 = new System.Windows.Forms.RadioButton();
             this.radioButton4 = new System.Windows.Forms.RadioButton();
             this.listView = new System.Windows.Forms.ListView();
-            this.radioButton5 = new System.Windows.Forms.RadioButton();
             this.contextMenuStripCaffiine = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.replaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.replacePCKToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.radioButton5 = new System.Windows.Forms.RadioButton();
             this.ps3Panel.SuspendLayout();
             this.contextMenuStripCaffiine.SuspendLayout();
             this.SuspendLayout();
@@ -386,7 +386,7 @@
             // listView
             // 
             this.listView.Activation = System.Windows.Forms.ItemActivation.TwoClick;
-            this.listView.BackColor = System.Drawing.SystemColors.InfoText;
+            this.listView.BackColor = System.Drawing.SystemColors.Info;
             this.ps3Panel.SetColumnSpan(this.listView, 3);
             this.listView.ContextMenuStrip = this.contextMenuStripCaffiine;
             this.listView.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -399,27 +399,6 @@
             this.listView.UseCompatibleStateImageBehavior = false;
             this.listView.View = System.Windows.Forms.View.Details;
             this.listView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listViewPCKS_MouseDown);
-            // 
-            // radioButton5
-            // 
-            this.radioButton5.Appearance = System.Windows.Forms.Appearance.Button;
-            this.radioButton5.AutoSize = true;
-            this.radioButton5.BackColor = System.Drawing.Color.Transparent;
-            this.radioButton5.CheckAlign = System.Drawing.ContentAlignment.BottomRight;
-            this.radioButton5.FlatAppearance.CheckedBackColor = System.Drawing.Color.Teal;
-            this.radioButton5.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Aqua;
-            this.radioButton5.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.radioButton5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.radioButton5.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButton5.ForeColor = System.Drawing.Color.White;
-            this.radioButton5.Location = new System.Drawing.Point(3, 36);
-            this.radioButton5.Name = "radioButton5";
-            this.radioButton5.Size = new System.Drawing.Size(47, 30);
-            this.radioButton5.TabIndex = 1;
-            this.radioButton5.Text = "JAP";
-            this.radioButton5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioButton5.UseVisualStyleBackColor = false;
-            this.radioButton5.Click += new System.EventHandler(this.radioButton_Click);
             // 
             // contextMenuStripCaffiine
             // 
@@ -443,6 +422,27 @@
             this.replacePCKToolStripMenuItem.Name = "replacePCKToolStripMenuItem";
             this.replacePCKToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
             this.replacePCKToolStripMenuItem.Text = "Replace with external PCK";
+            // 
+            // radioButton5
+            // 
+            this.radioButton5.Appearance = System.Windows.Forms.Appearance.Button;
+            this.radioButton5.AutoSize = true;
+            this.radioButton5.BackColor = System.Drawing.Color.Transparent;
+            this.radioButton5.CheckAlign = System.Drawing.ContentAlignment.BottomRight;
+            this.radioButton5.FlatAppearance.CheckedBackColor = System.Drawing.Color.Teal;
+            this.radioButton5.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Aqua;
+            this.radioButton5.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.radioButton5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.radioButton5.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButton5.ForeColor = System.Drawing.Color.White;
+            this.radioButton5.Location = new System.Drawing.Point(3, 36);
+            this.radioButton5.Name = "radioButton5";
+            this.radioButton5.Size = new System.Drawing.Size(47, 30);
+            this.radioButton5.TabIndex = 1;
+            this.radioButton5.Text = "JAP";
+            this.radioButton5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.radioButton5.UseVisualStyleBackColor = false;
+            this.radioButton5.Click += new System.EventHandler(this.radioButton_Click);
             // 
             // PS3InstallPanel
             // 

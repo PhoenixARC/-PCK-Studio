@@ -2220,7 +2220,7 @@ namespace PckStudio
 
 		private void OpenInstallerToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			ConsoleInstaller installer = new ConsoleInstaller();
+			PckManager installer = new PckManager();
 			installer.Show(this);
 		}
 

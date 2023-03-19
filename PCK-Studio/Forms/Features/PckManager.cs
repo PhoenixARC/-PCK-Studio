@@ -20,7 +20,7 @@ using System.Windows.Forms;
 
 namespace PckStudio.Forms.Additional_Features
 {
-    public partial class ConsoleInstaller : MetroFramework.Forms.MetroForm
+    public partial class PckManager : MetroFramework.Forms.MetroForm
     {
         private Control currentlyShowingControl;
         private const string WiiU = "Wii U";
@@ -29,10 +29,10 @@ namespace PckStudio.Forms.Additional_Features
         private const string CemU = "Cemu";
         private const string RPCS3 = "RPCS3";
 
-        public ConsoleInstaller()
+        public PckManager()
         {
             InitializeComponent();
-            selectedConsoleComboBox.Items.AddRange(new string[]
+            selectedPlatformComboBox.Items.AddRange(new string[]
             {
                 WiiU,
                 PS3,
@@ -45,9 +45,9 @@ namespace PckStudio.Forms.Additional_Features
         private void selectedConsoleComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             mainPanel.Controls.Remove(currentlyShowingControl);
-            if (selectedConsoleComboBox.SelectedIndex > -1)
+            if (selectedPlatformComboBox.SelectedIndex > -1)
             {
-                string text = selectedConsoleComboBox.Items[selectedConsoleComboBox.SelectedIndex].ToString();
+                string text = selectedPlatformComboBox.Items[selectedPlatformComboBox.SelectedIndex].ToString();
                 currentlyShowingControl = text switch
                 {
                     WiiU => new WiiUInstallPanel(),
