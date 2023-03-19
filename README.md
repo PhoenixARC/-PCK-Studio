@@ -7,7 +7,7 @@ Modify .PCK archives as you please!
 * Add / Remove / Replace skins, audios, textures, animations and much more.
 * Edit localization data to make your mods support every language supported by minecraft itself!
 * PNG previewing
-* And much more!\
+* And much more!
 
 ## Supported File formats
 
@@ -47,6 +47,11 @@ $ cd "-PCK-Studio"
 
 * Forms will not load in viewer until the solution is build _at least_ once
 
+## Dependencies
+  > [OMI-Filetype-Library](https://github.com/PhoenixARC/-OMI-Filetype-Library) for Minecraft filetype handling.<br>
+  > [CrEaTiiOn-Brotherhood-Official-C-Theme](https://github.com/EternalModz/CrEaTiiOn-Brotherhood-Official-C-Theme) for better User Interface.<br>
+  > [MechanikaDesign.WinForms.UI.ColorPicker](https://www.mechanikadesign.com/software/colorpicker-controls-for-windows-forms/) for better color picking.<br>
+ 
 
 ## Active Dev Team:
 *  [PhoenixARC](https://github.com/PhoenixARC)

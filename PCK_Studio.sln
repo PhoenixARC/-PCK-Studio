@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OMI Filetype Library", "Ven
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net Framework v4.8", "Vendor\CrEaTiiOn-Brotherhood-Official-C-Theme\Net_Framework_v4.8\Net Framework v4.8.csproj", "{C3D7B16C-C047-4BAA-884F-7A2308619C33}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColorPicker", "Vendor\MechanikaDesign\ColorBox2D\ColorPicker.csproj", "{38F99682-D013-4AE3-8334-4BF492A11FF9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -78,6 +80,24 @@ Global
 		{C3D7B16C-C047-4BAA-884F-7A2308619C33}.ReleasePortable|x64.Build.0 = Release|Any CPU
 		{C3D7B16C-C047-4BAA-884F-7A2308619C33}.ReleasePortable|x86.ActiveCfg = Release|Any CPU
 		{C3D7B16C-C047-4BAA-884F-7A2308619C33}.ReleasePortable|x86.Build.0 = Release|Any CPU
+		{38F99682-D013-4AE3-8334-4BF492A11FF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38F99682-D013-4AE3-8334-4BF492A11FF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38F99682-D013-4AE3-8334-4BF492A11FF9}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{38F99682-D013-4AE3-8334-4BF492A11FF9}.Debug|x64.Build.0 = Debug|Any CPU
+		{38F99682-D013-4AE3-8334-4BF492A11FF9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{38F99682-D013-4AE3-8334-4BF492A11FF9}.Debug|x86.Build.0 = Debug|Any CPU
+		{38F99682-D013-4AE3-8334-4BF492A11FF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38F99682-D013-4AE3-8334-4BF492A11FF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38F99682-D013-4AE3-8334-4BF492A11FF9}.Release|x64.ActiveCfg = Release|Any CPU
+		{38F99682-D013-4AE3-8334-4BF492A11FF9}.Release|x64.Build.0 = Release|Any CPU
+		{38F99682-D013-4AE3-8334-4BF492A11FF9}.Release|x86.ActiveCfg = Release|Any CPU
+		{38F99682-D013-4AE3-8334-4BF492A11FF9}.Release|x86.Build.0 = Release|Any CPU
+		{38F99682-D013-4AE3-8334-4BF492A11FF9}.ReleasePortable|Any CPU.ActiveCfg = Release|Any CPU
+		{38F99682-D013-4AE3-8334-4BF492A11FF9}.ReleasePortable|Any CPU.Build.0 = Release|Any CPU
+		{38F99682-D013-4AE3-8334-4BF492A11FF9}.ReleasePortable|x64.ActiveCfg = Release|Any CPU
+		{38F99682-D013-4AE3-8334-4BF492A11FF9}.ReleasePortable|x64.Build.0 = Release|Any CPU
+		{38F99682-D013-4AE3-8334-4BF492A11FF9}.ReleasePortable|x86.ActiveCfg = Release|Any CPU
+		{38F99682-D013-4AE3-8334-4BF492A11FF9}.ReleasePortable|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -85,6 +105,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{693AEBC1-293D-4DF0-BCAE-26A1099FE7BB} = {FC87F3E5-B07E-4FFB-889F-66FA3A3CFCAA}
 		{C3D7B16C-C047-4BAA-884F-7A2308619C33} = {FC87F3E5-B07E-4FFB-889F-66FA3A3CFCAA}
+		{38F99682-D013-4AE3-8334-4BF492A11FF9} = {FC87F3E5-B07E-4FFB-889F-66FA3A3CFCAA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9A3BF1FB-950F-401E-9F58-EA7BBADCE6F2}

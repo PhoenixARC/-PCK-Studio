@@ -171,31 +171,6 @@
     <Compile Include="Classes\API\PCKCenter\PCKCollectionsLocal.cs" />
     <Compile Include="Classes\API\PCKCenter\SaveLocalJSON.cs" />
     <Compile Include="Classes\Extentions\EnumerableExtentions.cs" />
-    <Compile Include="Classes\COL\ColorChangedEventArgs.cs" />
-    <Compile Include="Classes\COL\ColorModes.cs" />
-    <Compile Include="Classes\COL\Controls\ColorBox2D.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Classes\COL\Controls\ColorBox2D.Designer.cs">
-      <DependentUpon>ColorBox2D.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Classes\COL\Controls\ColorHexagon.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Classes\COL\Controls\ColorHexagon.Designer.cs">
-      <DependentUpon>ColorHexagon.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Classes\COL\Controls\ColorSliderVertical.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Classes\COL\Controls\ColorSliderVertical.Designer.cs">
-      <DependentUpon>ColorSliderVertical.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Classes\COL\Controls\ColorWheel.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Classes\COL\HslColor.cs" />
-    <Compile Include="Classes\COL\MathExtensions.cs" />
     <Compile Include="Classes\FileTypes\CSMBFile.cs" />
     <Compile Include="Classes\FileTypes\PCKAudioFile.cs" />
     <Compile Include="Classes\FileTypes\Binka.cs" />
@@ -508,9 +483,6 @@
     <EmbeddedResource Include="Forms\Additional-Popups\EntityForms\AddEntry.resx">
       <DependentUpon>AddEntry.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Classes\COL\Controls\ColorSliderVertical.resx">
-      <DependentUpon>ColorSliderVertical.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\AboutThisProgram.resx">
       <DependentUpon>AboutThisProgram.cs</DependentUpon>
     </EmbeddedResource>
@@ -813,6 +785,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Vendor\MechanikaDesign\ColorBox2D\ColorPicker.csproj">
+      <Project>{38f99682-d013-4ae3-8334-4bf492a11ff9}</Project>
+      <Name>ColorPicker</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Vendor\OMI-Lib\OMI Filetypes Library\OMI Filetype Library.csproj">
       <Project>{693AEBC1-293D-4DF0-BCAE-26A1099FE7BB}</Project>
       <Name>OMI Filetype Library</Name>
