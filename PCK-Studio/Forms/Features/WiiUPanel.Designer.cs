@@ -1,6 +1,6 @@
 ﻿namespace PckStudio.Forms.Additional_Features
 {
-    partial class WiiUInstallPanel
+    partial class WiiUPanel
     {
         /// <summary> 
         /// Required designer variable.
@@ -31,7 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.myTablePanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonServerToggle = new System.Windows.Forms.Button();
-            this.textBoxHost = new MetroFramework.Controls.MetroTextBox();
+            this.IPv4TextBox = new MetroFramework.Controls.MetroTextBox();
             this.listViewPCKS = new System.Windows.Forms.ListView();
             this.contextMenuStripCaffiine = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.replaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -58,7 +58,7 @@
             this.myTablePanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
             this.myTablePanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
             this.myTablePanel1.Controls.Add(this.buttonServerToggle, 2, 0);
-            this.myTablePanel1.Controls.Add(this.textBoxHost, 0, 0);
+            this.myTablePanel1.Controls.Add(this.IPv4TextBox, 0, 0);
             this.myTablePanel1.Controls.Add(this.listViewPCKS, 0, 4);
             this.myTablePanel1.Controls.Add(this.radioButtonUSB);
             this.myTablePanel1.Controls.Add(this.TextBoxPackImage, 0, 1);
@@ -103,42 +103,42 @@
             // 
             // textBoxHost
             // 
-            this.textBoxHost.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.myTablePanel1.SetColumnSpan(this.textBoxHost, 2);
+            this.IPv4TextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.myTablePanel1.SetColumnSpan(this.IPv4TextBox, 2);
             // 
             // 
             // 
-            this.textBoxHost.CustomButton.Image = null;
-            this.textBoxHost.CustomButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.textBoxHost.CustomButton.Location = new System.Drawing.Point(312, 1);
-            this.textBoxHost.CustomButton.Name = "";
-            this.textBoxHost.CustomButton.Size = new System.Drawing.Size(25, 25);
-            this.textBoxHost.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-            this.textBoxHost.CustomButton.TabIndex = 1;
-            this.textBoxHost.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.textBoxHost.CustomButton.UseSelectable = true;
-            this.textBoxHost.CustomButton.Visible = false;
-            this.textBoxHost.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBoxHost.IconRight = true;
-            this.textBoxHost.Lines = new string[0];
-            this.textBoxHost.Location = new System.Drawing.Point(3, 3);
-            this.textBoxHost.MaxLength = 32767;
-            this.textBoxHost.Name = "textBoxHost";
-            this.textBoxHost.PasswordChar = '\0';
-            this.textBoxHost.PromptText = "Wii U IP";
-            this.textBoxHost.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.textBoxHost.SelectedText = "";
-            this.textBoxHost.SelectionLength = 0;
-            this.textBoxHost.SelectionStart = 0;
-            this.textBoxHost.ShortcutsEnabled = true;
-            this.textBoxHost.Size = new System.Drawing.Size(338, 27);
-            this.textBoxHost.Style = MetroFramework.MetroColorStyle.Blue;
-            this.textBoxHost.TabIndex = 10;
-            this.textBoxHost.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.textBoxHost.UseSelectable = true;
-            this.textBoxHost.WaterMark = "Wii U IP";
-            this.textBoxHost.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-            this.textBoxHost.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            this.IPv4TextBox.CustomButton.Image = null;
+            this.IPv4TextBox.CustomButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.IPv4TextBox.CustomButton.Location = new System.Drawing.Point(312, 1);
+            this.IPv4TextBox.CustomButton.Name = "";
+            this.IPv4TextBox.CustomButton.Size = new System.Drawing.Size(25, 25);
+            this.IPv4TextBox.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.IPv4TextBox.CustomButton.TabIndex = 1;
+            this.IPv4TextBox.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.IPv4TextBox.CustomButton.UseSelectable = true;
+            this.IPv4TextBox.CustomButton.Visible = false;
+            this.IPv4TextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.IPv4TextBox.IconRight = true;
+            this.IPv4TextBox.Lines = new string[0];
+            this.IPv4TextBox.Location = new System.Drawing.Point(3, 3);
+            this.IPv4TextBox.MaxLength = 32767;
+            this.IPv4TextBox.Name = "textBoxHost";
+            this.IPv4TextBox.PasswordChar = '\0';
+            this.IPv4TextBox.PromptText = "Wii U IP";
+            this.IPv4TextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.IPv4TextBox.SelectedText = "";
+            this.IPv4TextBox.SelectionLength = 0;
+            this.IPv4TextBox.SelectionStart = 0;
+            this.IPv4TextBox.ShortcutsEnabled = true;
+            this.IPv4TextBox.Size = new System.Drawing.Size(338, 27);
+            this.IPv4TextBox.Style = MetroFramework.MetroColorStyle.Blue;
+            this.IPv4TextBox.TabIndex = 10;
+            this.IPv4TextBox.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.IPv4TextBox.UseSelectable = true;
+            this.IPv4TextBox.WaterMark = "Wii U IP";
+            this.IPv4TextBox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.IPv4TextBox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
             // 
             // listViewPCKS
             // 
@@ -416,7 +416,7 @@
         private System.Windows.Forms.RadioButton radioButtonEur;
         private System.Windows.Forms.RadioButton radioButtonUs;
         private System.Windows.Forms.RadioButton radioButtonJap;
-        private MetroFramework.Controls.MetroTextBox textBoxHost;
+        private MetroFramework.Controls.MetroTextBox IPv4TextBox;
         private System.Windows.Forms.ListView listViewPCKS;
         private MetroFramework.Controls.MetroTextBox TextBoxPackImage;
         private System.Windows.Forms.Button PackImageSelection;

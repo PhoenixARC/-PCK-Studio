@@ -244,23 +244,23 @@
     <Compile Include="Classes\Networking\Update.cs" />
     <Compile Include="Classes\Utils\GRF\CRC32.cs" />
     <Compile Include="Classes\Utils\RLE.cs" />
-    <Compile Include="Forms\Features\CemuInstallPanel.cs">
+    <Compile Include="Forms\Features\CemuPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\Features\CemuInstallPanel.Designer.cs">
-      <DependentUpon>CemuInstallPanel.cs</DependentUpon>
+    <Compile Include="Forms\Features\CemuPanel.Designer.cs">
+      <DependentUpon>CemuPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Features\PS3InstallPanel.cs">
+    <Compile Include="Forms\Features\PS3Panel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\Features\PS3InstallPanel.Designer.cs">
-      <DependentUpon>PS3InstallPanel.cs</DependentUpon>
+    <Compile Include="Forms\Features\PS3Panel.Designer.cs">
+      <DependentUpon>PS3Panel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Features\WiiUInstallPanel.cs">
+    <Compile Include="Forms\Features\WiiUPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\Features\WiiUInstallPanel.Designer.cs">
-      <DependentUpon>WiiUInstallPanel.cs</DependentUpon>
+    <Compile Include="Forms\Features\WiiUPanel.Designer.cs">
+      <DependentUpon>WiiUPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Additional-Popups\EntityForms\AddEntry.cs">
       <SubType>Form</SubType>
@@ -501,14 +501,14 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Classes\Utils\3DS\TextureCodec.cs" />
-    <EmbeddedResource Include="Forms\Features\CemuInstallPanel.resx">
-      <DependentUpon>CemuInstallPanel.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Features\CemuPanel.resx">
+      <DependentUpon>CemuPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Features\PS3InstallPanel.resx">
-      <DependentUpon>PS3InstallPanel.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Features\PS3Panel.resx">
+      <DependentUpon>PS3Panel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Features\WiiUInstallPanel.resx">
-      <DependentUpon>WiiUInstallPanel.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Features\WiiUPanel.resx">
+      <DependentUpon>WiiUPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\EntityForms\AddEntry.resx">
       <DependentUpon>AddEntry.cs</DependentUpon>

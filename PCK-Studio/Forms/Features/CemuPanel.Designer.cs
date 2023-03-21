@@ -1,6 +1,6 @@
 ﻿namespace PckStudio.Forms.Additional_Features
 {
-    partial class CemuInstallPanel
+    partial class CemuPanel
     {
         /// <summary> 
         /// Required designer variable.

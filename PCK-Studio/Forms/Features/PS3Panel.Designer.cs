@@ -1,6 +1,6 @@
 ﻿namespace PckStudio.Forms.Additional_Features
 {
-    partial class PS3InstallPanel
+    partial class PS3Panel
     {
         /// <summary> 
         /// Required designer variable.

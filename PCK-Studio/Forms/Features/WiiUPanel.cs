@@ -13,10 +13,10 @@ using PckStudio.Classes.Misc;
 
 namespace PckStudio.Forms.Additional_Features
 {
-    public partial class WiiUInstallPanel : UserControl
+    public partial class WiiUPanel : UserControl
     {
-        string DLCPath = "";
-        string mod = "";
+        string DLCPath = string.Empty;
+        string mod = string.Empty;
         bool serverOn = false;
         ConsoleArchive archive = new ConsoleArchive();
         PCKFile currentPCK = null;
@@ -26,7 +26,7 @@ namespace PckStudio.Forms.Additional_Features
         private const string FtpSessionPassword = "a3262443";
         private ICredentials sessionCredentials = new NetworkCredential(FtpUsername, FtpSessionPassword);
 
-        public WiiUInstallPanel()
+        public WiiUPanel()
         {
             InitializeComponent();
             UpdateDLCPath();
@@ -36,49 +36,6 @@ namespace PckStudio.Forms.Additional_Features
                 listViewPCKS.Columns.Add(DLCPath, listViewPCKS.Width);
             }
         }
-
-        private readonly struct PckDir
-        {
-            public PckDir(string folder, string file)
-            {
-                FolderName = folder;
-                FileName = file;
-            }
-
-            public string FolderName { get; }
-            public string FileName { get; }
-        }
-
-        // TODO: find better name   
-        private static List<PckDir> pcks = new List<PckDir>()
-        {
-            new PckDir(folder: "Battle & Beasts", file: "BattleAndBeasts.pck"),
-            new PckDir(folder: "Battle & Beasts 2", file: "BattleAndBeasts2.pck"),
-            new PckDir(folder: "Biome Settlers Pack 1", file: "SkinsBiomeSettlers1.pck"),
-            new PckDir(folder: "Biome Settlers Pack 2", file: "SkinsBiomeSettlers2.pck"),
-            //new pckDir() { folder = "Campfire Tales Skin Pack", file = "" },
-            new PckDir(folder: "Doctor Who Skins Volume I", file: "SkinPackDrWho.pck"),
-            new PckDir(folder: "Doctor Who Skins Volume II", file: "SkinPackDrWho.pck"),
-            new PckDir(folder: "Festive Skin Pack", file: "SkinsFestive.pck"),
-            new PckDir(folder: "FINAL FANTASY XV Skin Pack", file: "FinalFantasyXV.pck"),
-            new PckDir(folder: "Magic The Gathering Skin Pack", file: "magicthegathering.pck"),
-            new PckDir(folder: "Mini Game Heroes Skin Pack", file: "Minigame2.pck"),
-            new PckDir(folder: "Mini Game Masters Skin Pack", file: "Minigame.pck"),
-            new PckDir(folder: "Moana Character Pack", file: "Moana.pck"),
-            new PckDir(folder: "Power Rangers Skin Pack", file: "PowerRangers.pck"),
-            new PckDir(folder: "Redstone Specialists Skin Pack", file: "SkinsRedstoneSpecialists.pck"),
-            new PckDir(folder: "Skin Pack 1", file: "Skins1.pck"),
-            new PckDir(folder: "Star Wars Classic Skin Pack", file: "StarWarsClassicPack.pck"),
-            new PckDir(folder: "Star Wars Prequel Skin Pack", file: "StarWarsPrequel.pck"),
-            new PckDir(folder: "Star Wars Rebels Skin Pack", file: "StarWarsRebelsPack.pck"),
-            new PckDir(folder: "Star Wars Sequel Skin Pack", file: "StarWarsSequel.pck"),
-            new PckDir(folder: "Story Mode Skin Pack", file: "PackStoryMode.pck"),
-            new PckDir(folder: "Stranger Things Skin Pack", file: "StrangerThings.pck"),
-            new PckDir(folder: "Strangers Biome Settlers 3 Skin Pack", file: "BiomeSettlers3_Strangers.pck"),
-            new PckDir(folder: "The Incredibles Skin Pack", file: "Incredibles.pck"),
-            new PckDir(folder: "The Simpsons Skin Pack", file: "SkinPackSimpsons.pck"),
-            new PckDir(folder: "Villains Skin Pack", file: "Villains.pck"),
-        };
 
         [Obsolete("Prompt user to use Aroma instead!")]
         private void buttonSelect_Click(object sender, EventArgs e)
@@ -91,7 +48,7 @@ namespace PckStudio.Forms.Additional_Features
         {
             Start,
             Stop,
-            Loading
+            Wait
         }
 
         private void SetButtonState(ButtonState state)
@@ -110,7 +67,7 @@ namespace PckStudio.Forms.Additional_Features
                     buttonServerToggle.Text = "Stop";
                     listViewPCKS.Enabled = true;
                     break;
-                case ButtonState.Loading:
+                case ButtonState.Wait:
                     buttonServerToggle.BackColor = Color.MediumAquamarine;
                     buttonServerToggle.Text = "Wait..";
                     break;
@@ -178,8 +135,7 @@ namespace PckStudio.Forms.Additional_Features
                 return;
             }
 
-            //Makes sure user typed in their ip
-            if (!Regex.IsMatch(textBoxHost.Text, @"^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$"))
+            if (!Regex.IsMatch(IPv4TextBox.Text, @"^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$"))
             {
                 MessageBox.Show("Please enter a valid Wii U IP!");
                 return;
@@ -188,11 +144,11 @@ namespace PckStudio.Forms.Additional_Features
             // Turn on server
             try
             {
-                SetButtonState(ButtonState.Loading);
+                SetButtonState(ButtonState.Wait);
 
                 ServicePointManager.Expect100Continue = true;
 
-                using (var client = new FTPClient($"ftp://{textBoxHost.Text}", sessionCredentials))
+                using (var client = new FTPClient($"ftp://{IPv4TextBox.Text}", sessionCredentials))
                 {
                     client.SetTimeoutLimit(TimeSpan.FromSeconds(10));
                     string[] dirList = client.ListDirectory(DLCPath);
@@ -235,7 +191,7 @@ namespace PckStudio.Forms.Additional_Features
         {
             if (listViewPCKS.SelectedItems.Count != 0)
             {
-                SetButtonState(ButtonState.Loading);
+                SetButtonState(ButtonState.Wait);
                 ReplacePck(mod);
                 MessageBox.Show("PCK Replaced!");
             }
@@ -247,7 +203,7 @@ namespace PckStudio.Forms.Additional_Features
         {
             if (listViewPCKS.SelectedItems.Count != 0)
             {
-                SetButtonState(ButtonState.Loading);
+                SetButtonState(ButtonState.Wait);
                 OpenFileDialog openPCK = new OpenFileDialog();
                 openPCK.Filter = "PCK File|*.pck";
 
@@ -263,7 +219,7 @@ namespace PckStudio.Forms.Additional_Features
 
         private void ReplacePck(string filename)
         {
-            using (FTPClient client = new FTPClient($"ftp://{textBoxHost.Text}", sessionCredentials))
+            using (FTPClient client = new FTPClient($"ftp://{IPv4TextBox.Text}", sessionCredentials))
                 client.UploadFile(filename, DLCPath + "/" + listViewPCKS.SelectedItems[0].Text + "/" + listViewPCKS.SelectedItems[0].Tag.ToString());
             if (!string.IsNullOrWhiteSpace(TextBoxPackImage.Text))
             {
@@ -289,7 +245,7 @@ namespace PckStudio.Forms.Additional_Features
         private void GetARCFromConsole()
         {
             using var ms = new MemoryStream();
-            using (FTPClient client = new FTPClient($"ftp://{textBoxHost.Text}", sessionCredentials))
+            using (FTPClient client = new FTPClient($"ftp://{IPv4TextBox.Text}", sessionCredentials))
             {
                 client.DownloadFile(ms, GetGameContentPath() + "/Common/Media/MediaWiiU.arc");
                 ms.Position = 0;
@@ -307,7 +263,7 @@ namespace PckStudio.Forms.Additional_Features
 
         private void SendARCToConsole()
         {
-            using (FTPClient client = new FTPClient($"ftp://{textBoxHost.Text}", sessionCredentials))
+            using (FTPClient client = new FTPClient($"ftp://{IPv4TextBox.Text}", sessionCredentials))
             {
                 using (var ms = new MemoryStream())
                 {

@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace PckStudio.Forms.Additional_Features
 {
-    public partial class PS3InstallPanel : UserControl
+    public partial class PS3Panel : UserControl
     {
         private string currentpath = "";
         private bool serverOn = false;
@@ -21,7 +21,7 @@ namespace PckStudio.Forms.Additional_Features
         private string DLCPath = "";
         private string mod = "";
 
-        public PS3InstallPanel()
+        public PS3Panel()
         {
             InitializeComponent();
         }

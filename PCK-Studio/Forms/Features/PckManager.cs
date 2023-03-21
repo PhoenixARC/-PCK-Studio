@@ -50,10 +50,10 @@ namespace PckStudio.Forms.Additional_Features
                 string text = selectedPlatformComboBox.Items[selectedPlatformComboBox.SelectedIndex].ToString();
                 currentlyShowingControl = text switch
                 {
-                    WiiU => new WiiUInstallPanel(),
+                    WiiU => new WiiUPanel(),
                     PS3 => throw new NotImplementedException($"{text}-Installer is currently not implemented."),
                     PSVita => throw new NotImplementedException($"{text}-Installer is currently not implemented."),
-                    CemU => new CemuInstallPanel(),
+                    CemU => new CemuPanel(),
                     RPCS3 => throw new NotImplementedException($"{text}-Installer is currently not implemented."),
                     _ => throw new Exception($"No Panel found for: {text}"),
                 };

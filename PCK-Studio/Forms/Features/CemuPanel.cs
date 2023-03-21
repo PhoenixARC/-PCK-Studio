@@ -11,9 +11,9 @@ namespace PckStudio.Forms.Additional_Features
     ///  - add the ability to save the currently open pck file to the desired folder destination.
     ///   (even if the pck file has not yet be saved to disk)
     /// </summary>
-    public partial class CemuInstallPanel : UserControl
+    public partial class CemuPanel : UserControl
     {
-        public CemuInstallPanel()
+        public CemuPanel()
         {
             InitializeComponent();
         }
