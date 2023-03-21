@@ -34,11 +34,11 @@
 			// metroLabel1
 			// 
 			this.metroLabel1.AutoSize = true;
-			this.metroLabel1.Location = new System.Drawing.Point(22, 20);
+			this.metroLabel1.Location = new System.Drawing.Point(19, 20);
 			this.metroLabel1.Name = "metroLabel1";
-			this.metroLabel1.Size = new System.Drawing.Size(352, 19);
+			this.metroLabel1.Size = new System.Drawing.Size(359, 19);
 			this.metroLabel1.TabIndex = 0;
-			this.metroLabel1.Text = "Please wait while PCK Studio converts the requested files. (:";
+			this.metroLabel1.Text = "Please wait while PCK Studio processes the requested files. (:";
 			this.metroLabel1.Theme = MetroFramework.MetroThemeStyle.Dark;
 			// 
 			// pleaseWait

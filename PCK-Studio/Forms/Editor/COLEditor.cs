@@ -5,32 +5,34 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using MetroFramework.Forms;
-using PckStudio.Classes.FileTypes;
-using PckStudio.Classes.IO.COL;
+using OMI.Formats.Color;
+using OMI.Formats.Pck;
+using OMI.Workers.Color;
 
 namespace PckStudio.Forms.Editor
 {
 	public partial class COLEditor : MetroForm
 	{
-		COLFile default_colourfile = COLFileReader.Read(new MemoryStream(Properties.Resources.tu69colours));
-		COLFile colourfile;
-		COLFile.ColorEntry clipboard_color;
+		ColorContainer default_colourfile;
+        ColorContainer colourfile;
+        ColorContainer.Color clipboard_color;
 
-		private readonly PCKFile.FileData _file;
+		private readonly PckFile.FileData _file;
 
 		List<TreeNode> colorCache = new List<TreeNode>();
 		List<TreeNode> waterCache = new List<TreeNode>();
 		List<TreeNode> underwaterCache = new List<TreeNode>();
 		List<TreeNode> fogCache = new List<TreeNode>();
 
-		public COLEditor(PCKFile.FileData file)
+		public COLEditor(PckFile.FileData file)
 		{
 			InitializeComponent();
 			_file = file;
 
 			using(var stream = new MemoryStream(file.Data))
 			{
-                colourfile = COLFileReader.Read(stream);
+				var reader = new COLFileReader();
+                colourfile = reader.FromStream(stream);
 			}
 
 			TU12ToolStripMenuItem.Click += (sender, e) => SetUpDefaultFile(sender, e, 0);
@@ -47,32 +49,37 @@ namespace PckStudio.Forms.Editor
 			TU69ToolStripMenuItem.Click += (sender, e) => SetUpDefaultFile(sender, e, 11);
 			_1_9_1ToolStripMenuItem.Click += (sender, e) => SetUpDefaultFile(sender, e, 12);
 
-			SetUpTable(false);
+			SetUpDefaultFile(null, EventArgs.Empty, 11, false);
 		}
 
-		private void SetUpDefaultFile(object sender, EventArgs e, int ID)
+		private void SetUpDefaultFile(object sender, EventArgs e, int ID, bool targetVersion = true)
 		{
-			var result = MessageBox.Show(this, "This function will set up your colour table to match that of the chosen version. You may lose some entries in the table. Are you sure you would like to continue?", "Target update version?", MessageBoxButtons.YesNo);
-			if (result == DialogResult.No) return;
-
-			switch(ID)
+			if(targetVersion)
 			{
-				case 0: using (var stream = new MemoryStream(Properties.Resources.tu12colours)) default_colourfile = COLFileReader.Read(stream); break;
-				case 1: using (var stream = new MemoryStream(Properties.Resources.tu13colours)) default_colourfile = COLFileReader.Read(stream); break;
-				case 2: using (var stream = new MemoryStream(Properties.Resources.tu14colours)) default_colourfile = COLFileReader.Read(stream); break;
-				case 3: using (var stream = new MemoryStream(Properties.Resources.tu19colours)) default_colourfile = COLFileReader.Read(stream); break;
-				case 4: using (var stream = new MemoryStream(Properties.Resources.tu31colours)) default_colourfile = COLFileReader.Read(stream); break;
-				case 5: using (var stream = new MemoryStream(Properties.Resources.tu32colours)) default_colourfile = COLFileReader.Read(stream); break;
-				case 6: using (var stream = new MemoryStream(Properties.Resources.tu43colours)) default_colourfile = COLFileReader.Read(stream); break;
-				case 7: using (var stream = new MemoryStream(Properties.Resources.tu46colours)) default_colourfile = COLFileReader.Read(stream); break;
-				case 8: using (var stream = new MemoryStream(Properties.Resources.tu51colours)) default_colourfile = COLFileReader.Read(stream); break;
-				case 9: using (var stream = new MemoryStream(Properties.Resources.tu53colours)) default_colourfile = COLFileReader.Read(stream); break;
-				case 10: using (var stream = new MemoryStream(Properties.Resources.tu54colours)) default_colourfile = COLFileReader.Read(stream); break;
-				case 11: using (var stream = new MemoryStream(Properties.Resources.tu69colours)) default_colourfile = COLFileReader.Read(stream); break;
-				case 12: using (var stream = new MemoryStream(Properties.Resources._1_91_colours)) default_colourfile = COLFileReader.Read(stream); break;
+				var result = MessageBox.Show(this, "This function will set up your colour table to match that of the chosen version. You may lose some entries in the table. Are you sure you would like to continue?", "Target update version?", MessageBoxButtons.YesNo);
+				if (result == DialogResult.No) return;
+			}
+
+			var reader = new COLFileReader();
+
+			switch (ID)
+			{
+				case 0: using (var stream = new MemoryStream(Properties.Resources.tu12colours)) default_colourfile = reader.FromStream(stream); break;
+				case 1: using (var stream = new MemoryStream(Properties.Resources.tu13colours)) default_colourfile = reader.FromStream(stream); break;
+				case 2: using (var stream = new MemoryStream(Properties.Resources.tu14colours)) default_colourfile = reader.FromStream(stream); break;
+				case 3: using (var stream = new MemoryStream(Properties.Resources.tu19colours)) default_colourfile = reader.FromStream(stream); break;
+				case 4: using (var stream = new MemoryStream(Properties.Resources.tu31colours)) default_colourfile = reader.FromStream(stream); break;
+				case 5: using (var stream = new MemoryStream(Properties.Resources.tu32colours)) default_colourfile = reader.FromStream(stream); break;
+				case 6: using (var stream = new MemoryStream(Properties.Resources.tu43colours)) default_colourfile = reader.FromStream(stream); break;
+				case 7: using (var stream = new MemoryStream(Properties.Resources.tu46colours)) default_colourfile = reader.FromStream(stream); break;
+				case 8: using (var stream = new MemoryStream(Properties.Resources.tu51colours)) default_colourfile = reader.FromStream(stream); break;
+				case 9: using (var stream = new MemoryStream(Properties.Resources.tu53colours)) default_colourfile = reader.FromStream(stream); break;
+				case 10: using (var stream = new MemoryStream(Properties.Resources.tu54colours)) default_colourfile = reader.FromStream(stream); break;
+				case 11: using (var stream = new MemoryStream(Properties.Resources.tu69colours)) default_colourfile = reader.FromStream(stream); break;
+				case 12: using (var stream = new MemoryStream(Properties.Resources._1_91_colours)) default_colourfile = reader.FromStream(stream); break;
 				default: return;
 			}
-			SetUpTable(true);
+			SetUpTable(targetVersion);
 		}
 
 		void SetUpTable(bool targetVersion)
@@ -82,35 +89,35 @@ namespace PckStudio.Forms.Editor
 			underwaterTreeView.Nodes.Clear();
 			fogTreeView.Nodes.Clear();
 
-			COLFile temp = targetVersion ? default_colourfile : colourfile;
+			ColorContainer temp = targetVersion ? default_colourfile : colourfile;
 
 			List<string> CurrentEntries = new List<string>();
 
-			foreach (var obj in temp.entries)
+			foreach (var obj in temp.Colors)
 			{
-				COLFile.ColorEntry entry = colourfile.entries.Find(color => color.name == obj.name);
-				TreeNode tn = new TreeNode(obj.name);
+				var entry = colourfile.Colors.Find(color => color.Name == obj.Name);
+				TreeNode tn = new TreeNode(obj.Name);
 				tn.Tag = entry != null ? entry : obj;
-				if (CurrentEntries.Contains(obj.name)) continue;
-				CurrentEntries.Add(obj.name);
+				if (CurrentEntries.Contains(obj.Name)) continue;
+				CurrentEntries.Add(obj.Name);
 				colorTreeView.Nodes.Add(tn);
 				colorCache.Add(tn);
 			}
 			CurrentEntries.Clear();
-			foreach (var obj in temp.waterEntries)
+			foreach (var obj in temp.WaterColors)
 			{
-				COLFile.ExtendedColorEntry entry = colourfile.waterEntries.Find(color => color.name == obj.name);
-				TreeNode tn = new TreeNode(obj.name);
+				var entry = colourfile.WaterColors.Find(color => color.Name == obj.Name);
+				TreeNode tn = new TreeNode(obj.Name);
 				tn.Tag = entry != null ? entry : obj;
-				if (CurrentEntries.Contains(obj.name)) continue;
-				CurrentEntries.Add(obj.name);
+				if (CurrentEntries.Contains(obj.Name)) continue;
+				CurrentEntries.Add(obj.Name);
 				waterTreeView.Nodes.Add(tn);
 				waterCache.Add(tn);
-				TreeNode tnB = new TreeNode(obj.name);
+				TreeNode tnB = new TreeNode(obj.Name);
 				tnB.Tag = entry != null ? entry : obj;
 				underwaterTreeView.Nodes.Add(tnB);
 				underwaterCache.Add(tnB);
-				TreeNode tnC = new TreeNode(obj.name);
+				TreeNode tnC = new TreeNode(obj.Name);
 				tnC.Tag = entry != null ? entry : obj;
 				fogTreeView.Nodes.Add(tnC);
 				fogCache.Add(tnC);
@@ -139,15 +146,15 @@ namespace PckStudio.Forms.Editor
 		{
 			if (colorTreeView.SelectedNode.Tag == null)
 				return;
-			var colorEntry = (COLFile.ColorEntry)colorTreeView.SelectedNode.Tag;
-			var color = colorEntry.color;
+			var colorEntry = (ColorContainer.Color)colorTreeView.SelectedNode.Tag;
+			var color = colorEntry.ColorPallette.ToArgb();
 			SetUpValueChanged(false);
 			alphaUpDown.Visible = false;
 			alphaLabel.Visible = false;
 			redUpDown.Value = color >> 16 & 0xff;
 			greenUpDown.Value = color >> 8 & 0xff;
 			blueUpDown.Value = color & 0xff;
-			pictureBox1.BackColor = Color.FromArgb(0xff << 24 | (int)color);
+			pictureBox1.BackColor = Color.FromArgb(0xff << 24 | color);
 			SetUpValueChanged(true);
 		}
 
@@ -155,8 +162,8 @@ namespace PckStudio.Forms.Editor
         {
 			if (waterTreeView.SelectedNode.Tag == null)
 				return;
-			var colorEntry = (COLFile.ExtendedColorEntry)waterTreeView.SelectedNode.Tag;
-			int color = (int)colorEntry.color;
+			var colorEntry = (ColorContainer.WaterColor)waterTreeView.SelectedNode.Tag;
+			int color = colorEntry.SurfaceColor.ToArgb();
 			SetUpValueChanged(false);
 			alphaUpDown.Enabled = true;
 			alphaUpDown.Visible = true;
@@ -165,7 +172,7 @@ namespace PckStudio.Forms.Editor
 			redUpDown.Value = color >> 16 & 0xff;
 			greenUpDown.Value = color >> 8 & 0xff;
 			blueUpDown.Value = color & 0xff;
-			pictureBox1.BackColor = Color.FromArgb(color);
+			pictureBox1.BackColor = colorEntry.SurfaceColor;
 			SetUpValueChanged(true);
 		}
 
@@ -173,8 +180,8 @@ namespace PckStudio.Forms.Editor
 		{
 			if (underwaterTreeView.SelectedNode.Tag == null)
 				return;
-			var colorEntry = (COLFile.ExtendedColorEntry)underwaterTreeView.SelectedNode.Tag;
-			int color = (int)colorEntry.color_b;
+			var colorEntry = (ColorContainer.WaterColor)underwaterTreeView.SelectedNode.Tag;
+			int color = colorEntry.UnderwaterColor.ToArgb();
 			SetUpValueChanged(false);
 			alphaUpDown.Visible = false;
 			alphaLabel.Visible = false;
@@ -189,8 +196,8 @@ namespace PckStudio.Forms.Editor
 		{
 			if (fogTreeView.SelectedNode.Tag == null)
 				return;
-			var colorEntry = (COLFile.ExtendedColorEntry)fogTreeView.SelectedNode.Tag;
-			int color = (int)colorEntry.color_c;
+			var colorEntry = (ColorContainer.WaterColor)fogTreeView.SelectedNode.Tag;
+			int color = colorEntry.FogColor.ToArgb();
 			SetUpValueChanged(false);
 			alphaUpDown.Visible = false;
 			alphaLabel.Visible = false;
@@ -203,22 +210,24 @@ namespace PckStudio.Forms.Editor
 
 		private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
-			List<string> PS4Biomes = new List<string>();
-			PS4Biomes.Add("bamboo_jungle");
-			PS4Biomes.Add("bamboo_jungle_hills");
-			PS4Biomes.Add("mesa_mutated");
-			PS4Biomes.Add("mega_spruce_taiga_mutated");
-			PS4Biomes.Add("mega_taiga_mutated");
+            List<string> PS4Biomes = new List<string>
+            {
+                "bamboo_jungle",
+                "bamboo_jungle_hills",
+                "mesa_mutated",
+                "mega_spruce_taiga_mutated",
+                "mega_taiga_mutated"
+            };
 
-			if (colourfile.waterEntries.Find(e => PS4Biomes.Contains(e.name)) != null)
+            if (colourfile.WaterColors.Find(e => PS4Biomes.Contains(e.Name)) != null)
 			{
 				var result = MessageBox.Show(this, "Biomes exclusive to PS4 Edition v1.91 were found in the water section of this colour table. This will crash all other editions of the game and PS4 Edition v1.90 and below. Would you like to remove them?", "Potentially unsupported biomes found", MessageBoxButtons.YesNoCancel);
 				switch (result)
 				{
 					case DialogResult.Yes:
-						foreach (var col in colourfile.waterEntries.ToList())
+						foreach (var col in colourfile.WaterColors.ToList())
 						{
-							if(PS4Biomes.Contains(col.name)) colourfile.waterEntries.Remove(col);
+							if(PS4Biomes.Contains(col.Name)) colourfile.WaterColors.Remove(col);
 						}
 						break;
 					case DialogResult.No:
@@ -229,45 +238,25 @@ namespace PckStudio.Forms.Editor
 			}
 			using (var stream = new MemoryStream())
 			{
-				COLFileWriter.Write(stream, colourfile);
+				var writer = new COLFileWriter(colourfile);
+                writer.WriteToStream(stream);
 				_file.SetData(stream.ToArray());
 			}
             DialogResult = DialogResult.OK;
         }
 
-		static byte[] StringToByteArrayFastest(string hex)
-		{
-			if (hex.Length % 2 == 1)
-				throw new Exception("The binary key cannot have an odd number of digits");
-
-			byte[] arr = new byte[hex.Length >> 1];
-
-			for (int i = 0; i < hex.Length >> 1; ++i)
-			{
-				arr[i] = (byte)((GetHexVal(hex[i << 1]) << 4) + (GetHexVal(hex[(i << 1) + 1])));
-			}
-
-			return arr;
-		}
-
-		static int GetHexVal(char hex)
-		{
-			int val = hex;
-			return val - (val < 58 ? 48 : (val < 97 ? 55 : 87));
-		}
-
 		public void treeView1_KeyDown(object sender, KeyEventArgs e)
 		{
 			var node = colorTreeView.SelectedNode;
-			if (e.KeyCode == Keys.Delete && node.Tag is COLFile.ColorEntry)
+			if (e.KeyCode == Keys.Delete && node.Tag is ColorContainer.Color)
 			{
 				restoreOriginalColorToolStripMenuItem_Click(sender, e);
 			}
-			else if (e.Control && e.KeyCode == Keys.C && node.Tag is COLFile.ColorEntry)
+			else if (e.Control && e.KeyCode == Keys.C && node.Tag is ColorContainer.Color)
 			{
 				copyColorToolStripMenuItem_Click(sender, e);
 			}
-			else if (e.Control && e.KeyCode == Keys.V && node.Tag is COLFile.ColorEntry)
+			else if (e.Control && e.KeyCode == Keys.V && node.Tag is ColorContainer.Color)
 			{
 				pasteColorToolStripMenuItem_Click(sender, e);
 			}
@@ -276,15 +265,15 @@ namespace PckStudio.Forms.Editor
         private void treeView2_KeyDown(object sender, KeyEventArgs e)
         {
 			var node = waterTreeView.SelectedNode;
-			if (e.KeyCode == Keys.Delete && node.Tag is COLFile.ExtendedColorEntry)
+			if (e.KeyCode == Keys.Delete && node.Tag is ColorContainer.WaterColor)
 			{
 				restoreOriginalColorToolStripMenuItem_Click(sender, e);
 			}
-			else if (e.Control && e.KeyCode == Keys.C && node.Tag is COLFile.ExtendedColorEntry)
+			else if (e.Control && e.KeyCode == Keys.C && node.Tag is ColorContainer.WaterColor)
 			{
 				copyColorToolStripMenuItem_Click(sender, e);
 			}
-			else if (e.Control && e.KeyCode == Keys.V && node.Tag is COLFile.ExtendedColorEntry)
+			else if (e.Control && e.KeyCode == Keys.V && node.Tag is ColorContainer.WaterColor)
 			{
 				pasteColorToolStripMenuItem_Click(sender, e);
 			}
@@ -293,15 +282,15 @@ namespace PckStudio.Forms.Editor
 		private void treeView3_KeyDown(object sender, KeyEventArgs e)
 		{
 			var node = underwaterTreeView.SelectedNode;
-			if (e.KeyCode == Keys.Delete && node.Tag is COLFile.ExtendedColorEntry)
+			if (e.KeyCode == Keys.Delete && node.Tag is ColorContainer.WaterColor)
 			{
 				restoreOriginalColorToolStripMenuItem_Click(sender, e);
 			}
-			else if (e.Control && e.KeyCode == Keys.C && node.Tag is COLFile.ExtendedColorEntry)
+			else if (e.Control && e.KeyCode == Keys.C && node.Tag is ColorContainer.WaterColor)
 			{
 				copyColorToolStripMenuItem_Click(sender, e);
 			}
-			else if (e.Control && e.KeyCode == Keys.V && node.Tag is COLFile.ExtendedColorEntry)
+			else if (e.Control && e.KeyCode == Keys.V && node.Tag is ColorContainer.WaterColor)
 			{
 				pasteColorToolStripMenuItem_Click(sender, e);
 			}
@@ -310,15 +299,15 @@ namespace PckStudio.Forms.Editor
 		private void treeView4_KeyDown(object sender, KeyEventArgs e)
 		{
 			var node = fogTreeView.SelectedNode;
-			if (e.KeyCode == Keys.Delete && node.Tag is COLFile.ExtendedColorEntry)
+			if (e.KeyCode == Keys.Delete && node.Tag is ColorContainer.WaterColor)
 			{
 				restoreOriginalColorToolStripMenuItem_Click(sender, e);
 			}
-			else if (e.Control && e.KeyCode == Keys.C && node.Tag is COLFile.ExtendedColorEntry)
+			else if (e.Control && e.KeyCode == Keys.C && node.Tag is ColorContainer.WaterColor)
 			{
 				copyColorToolStripMenuItem_Click(sender, e);
 			}
-			else if (e.Control && e.KeyCode == Keys.V && node.Tag is COLFile.ExtendedColorEntry)
+			else if (e.Control && e.KeyCode == Keys.V && node.Tag is ColorContainer.WaterColor)
 			{
 				pasteColorToolStripMenuItem_Click(sender, e);
 			}
@@ -354,19 +343,16 @@ namespace PckStudio.Forms.Editor
 			Color fixed_color = new Color();
 			if (tabControl.SelectedTab == colorsTab)
 			{
-				var colorEntry = (COLFile.ColorEntry)colorTreeView.SelectedNode.Tag;
-				fixed_color = Color.FromArgb(255, (int)redUpDown.Value, (int)greenUpDown.Value, (int)blueUpDown.Value);
-				colorEntry.color = (uint)(((255 << 24) | (fixed_color.R << 16) | (fixed_color.G << 8) | fixed_color.B) & 0xffffffffL);
+				var colorEntry = (ColorContainer.Color)colorTreeView.SelectedNode.Tag;
+				colorEntry.ColorPallette = fixed_color = Color.FromArgb(255, (int)redUpDown.Value, (int)greenUpDown.Value, (int)blueUpDown.Value);
 			}
 			else if (tabControl.SelectedTab != null && waterTreeView.SelectedNode != null) // just in case
 			{
-				var colorEntry = (COLFile.ExtendedColorEntry)waterTreeView.SelectedNode.Tag;
+				var colorEntry = (ColorContainer.WaterColor)waterTreeView.SelectedNode.Tag;
 				fixed_color = Color.FromArgb(tabControl.SelectedTab == waterTab ? (int)alphaUpDown.Value : 255, (int)redUpDown.Value, (int)greenUpDown.Value, (int)blueUpDown.Value);
-				uint value = (uint)(((fixed_color.A << 24) | (fixed_color.R << 16) | (fixed_color.G << 8) | fixed_color.B) & 0xffffffffL);
-				if (tabControl.SelectedTab == waterTab) colorEntry.color = value;
-				else if (tabControl.SelectedTab == underwaterTab) colorEntry.color_b = value;
-				else colorEntry.color_c = value;
-				fixed_color = Color.FromArgb((int)value);
+				if (tabControl.SelectedTab == waterTab) colorEntry.SurfaceColor = fixed_color;
+				else if (tabControl.SelectedTab == underwaterTab) colorEntry.UnderwaterColor = fixed_color;
+				else colorEntry.FogColor = fixed_color;
 			}
 
 			pictureBox1.BackColor = fixed_color;
@@ -381,42 +367,40 @@ namespace PckStudio.Forms.Editor
 			if (colorPick.ShowDialog() != DialogResult.OK) return;
             pictureBox1.BackColor = colorPick.Color;
 			if (tabControl.SelectedTab == waterTab && waterTreeView.SelectedNode != null &&
-				waterTreeView.SelectedNode.Tag != null && waterTreeView.SelectedNode.Tag is COLFile.ExtendedColorEntry)
+				waterTreeView.SelectedNode.Tag != null && waterTreeView.SelectedNode.Tag is ColorContainer.WaterColor)
 			{
-				var colorEntry = ((COLFile.ExtendedColorEntry)waterTreeView.SelectedNode.Tag);
+				var colorEntry = (ColorContainer.WaterColor)waterTreeView.SelectedNode.Tag;
 				// preserves the alpha so the user can handle it since the color picker doesn't support alpha
-				Color fixed_color = Color.FromArgb(Color.FromArgb((int)colorEntry.color).A, colorPick.Color);
-				colorEntry.color = (uint)fixed_color.ToArgb();
-				pictureBox1.BackColor = fixed_color;
+				pictureBox1.BackColor = colorEntry.SurfaceColor = Color.FromArgb(colorEntry.SurfaceColor.A, colorPick.Color);
 				redUpDown.Value = colorPick.Color.R;
 				greenUpDown.Value = colorPick.Color.G;
 				blueUpDown.Value = colorPick.Color.B;
 			}
 			else if (tabControl.SelectedTab == underwaterTab && underwaterTreeView.SelectedNode != null &&
-				underwaterTreeView.SelectedNode.Tag != null && underwaterTreeView.SelectedNode.Tag is COLFile.ExtendedColorEntry)
+				underwaterTreeView.SelectedNode.Tag != null && underwaterTreeView.SelectedNode.Tag is ColorContainer.WaterColor)
 			{
-				var colorEntry = ((COLFile.ExtendedColorEntry)underwaterTreeView.SelectedNode.Tag);
+				var colorEntry = (ColorContainer.WaterColor)underwaterTreeView.SelectedNode.Tag;
 				// the game doesn't care about the alpha value for underwater colors
-				colorEntry.color_b = (uint)Color.FromArgb(0, colorPick.Color).ToArgb();
+				colorEntry.UnderwaterColor = Color.FromArgb(0, colorPick.Color);
 				redUpDown.Value = colorPick.Color.R;
 				greenUpDown.Value = colorPick.Color.G;
 				blueUpDown.Value = colorPick.Color.B;
 			}
 			else if (tabControl.SelectedTab == fogTab && fogTreeView.SelectedNode != null &&
-				fogTreeView.SelectedNode.Tag != null && fogTreeView.SelectedNode.Tag is COLFile.ExtendedColorEntry)
+				fogTreeView.SelectedNode.Tag != null && fogTreeView.SelectedNode.Tag is ColorContainer.WaterColor)
 			{
-				var colorEntry = ((COLFile.ExtendedColorEntry)fogTreeView.SelectedNode.Tag);
+				var colorEntry = (ColorContainer.WaterColor)fogTreeView.SelectedNode.Tag;
 				// the game doesn't care about the alpha value for fog colors
-				colorEntry.color_c = (uint)Color.FromArgb(0, colorPick.Color).ToArgb();
+				colorEntry.FogColor = Color.FromArgb(0, colorPick.Color);
 				redUpDown.Value = colorPick.Color.R;
 				greenUpDown.Value = colorPick.Color.G;
 				blueUpDown.Value = colorPick.Color.B;
 			}
 			else if (tabControl.SelectedTab == colorsTab && colorTreeView.SelectedNode != null &&
-				colorTreeView.SelectedNode.Tag != null && colorTreeView.SelectedNode.Tag is COLFile.ColorEntry)
+				colorTreeView.SelectedNode.Tag != null && colorTreeView.SelectedNode.Tag is ColorContainer.Color)
 			{
-				var colorEntry = ((COLFile.ColorEntry)colorTreeView.SelectedNode.Tag);
-				colorEntry.color = (uint)colorPick.Color.ToArgb() & 0xffffff;
+				var colorEntry = (ColorContainer.Color)colorTreeView.SelectedNode.Tag;
+				colorEntry.ColorPallette = colorPick.Color;
 				redUpDown.Value = colorPick.Color.R;
 				greenUpDown.Value = colorPick.Color.G;
 				blueUpDown.Value = colorPick.Color.B;
@@ -427,12 +411,10 @@ namespace PckStudio.Forms.Editor
 		private void alpha_ValueChanged(object sender, EventArgs e)
 		{
 			if (tabControl.SelectedTab == waterTab && waterTreeView.SelectedNode != null &&
-				waterTreeView.SelectedNode.Tag != null && waterTreeView.SelectedNode.Tag is COLFile.ExtendedColorEntry)
+				waterTreeView.SelectedNode.Tag != null && waterTreeView.SelectedNode.Tag is ColorContainer.WaterColor)
 			{
-				var colorEntry = ((COLFile.ExtendedColorEntry)waterTreeView.SelectedNode.Tag);
-				Color fixed_color = Color.FromArgb((int)alphaUpDown.Value, Color.FromArgb((int)colorEntry.color));
-				colorEntry.color = (uint)fixed_color.ToArgb();
-				pictureBox1.BackColor = fixed_color;
+				var colorEntry = (ColorContainer.WaterColor)waterTreeView.SelectedNode.Tag;
+				pictureBox1.BackColor = colorEntry.SurfaceColor = Color.FromArgb((int)alphaUpDown.Value, colorEntry.SurfaceColor);
 			}
 		}
 
@@ -440,50 +422,44 @@ namespace PckStudio.Forms.Editor
 		{
 			SetUpValueChanged(false);
 			if (tabControl.SelectedTab == colorsTab && colorTreeView.SelectedNode != null &&
-				colorTreeView.SelectedNode.Tag != null && colorTreeView.SelectedNode.Tag is COLFile.ColorEntry colorInfoD)
+				colorTreeView.SelectedNode.Tag != null && colorTreeView.SelectedNode.Tag is ColorContainer.Color colorInfoD)
 			{
-				COLFile.ColorEntry entry = default_colourfile.entries.Find(color => color.name == colorTreeView.SelectedNode.Text);
-				colorInfoD.color = entry.color;
-				redUpDown.Value = colorInfoD.color >> 16 & 0xff;
-				greenUpDown.Value = colorInfoD.color >> 8 & 0xff;
-				blueUpDown.Value = colorInfoD.color & 0xff;
-				pictureBox1.BackColor = Color.FromArgb(0xff << 24 | (int)colorInfoD.color);
+				var entry = default_colourfile.Colors.Find(color => color.Name == colorTreeView.SelectedNode.Text);
+				colorInfoD.ColorPallette = entry.ColorPallette;
+				UpdateDisplayColor(entry.ColorPallette);
 			}
 			else if (tabControl.SelectedTab == waterTab && waterTreeView.SelectedNode != null &&
-			waterTreeView.SelectedNode.Tag != null && waterTreeView.SelectedNode.Tag is COLFile.ExtendedColorEntry colorInfo)
+			waterTreeView.SelectedNode.Tag != null && waterTreeView.SelectedNode.Tag is ColorContainer.WaterColor colorInfo)
 			{
-				COLFile.ExtendedColorEntry entry = default_colourfile.waterEntries.Find(color => color.name == waterTreeView.SelectedNode.Text);
-				colorInfo.color = entry.color;
-				alphaUpDown.Value = colorInfo.color >> 24 & 0xff;
-				redUpDown.Value = colorInfo.color >> 16 & 0xff;
-				greenUpDown.Value = colorInfo.color >> 8 & 0xff;
-				blueUpDown.Value = colorInfo.color & 0xff;
-				pictureBox1.BackColor = Color.FromArgb((int)colorInfo.color);
+				var entry = default_colourfile.WaterColors.Find(color => color.Name == waterTreeView.SelectedNode.Text);
+				colorInfo.SurfaceColor = entry.SurfaceColor;
+				UpdateDisplayColor(entry.SurfaceColor);
 			}
 			else if (tabControl.SelectedTab == underwaterTab && underwaterTreeView.SelectedNode != null &&
-				underwaterTreeView.SelectedNode.Tag != null && underwaterTreeView.SelectedNode.Tag is COLFile.ExtendedColorEntry colorInfoB)
+				underwaterTreeView.SelectedNode.Tag != null && underwaterTreeView.SelectedNode.Tag is ColorContainer.WaterColor colorInfoB)
 			{
-				COLFile.ExtendedColorEntry entry = default_colourfile.waterEntries.Find(color => color.name == underwaterTreeView.SelectedNode.Text);
-				colorInfoB.color_b = entry.color_b;
-				alphaUpDown.Value = colorInfoB.color_b >> 24 & 0xff;
-				redUpDown.Value = colorInfoB.color_b >> 16 & 0xff;
-				greenUpDown.Value = colorInfoB.color_b >> 8 & 0xff;
-				blueUpDown.Value = colorInfoB.color_b & 0xff;
-				pictureBox1.BackColor = Color.FromArgb(0xff << 24 | (int)colorInfoB.color_b);
+				var entry = default_colourfile.WaterColors.Find(color => color.Name == underwaterTreeView.SelectedNode.Text);
+				colorInfoB.UnderwaterColor = entry.UnderwaterColor;
+				UpdateDisplayColor(entry.UnderwaterColor);
 			}
 			else if (tabControl.SelectedTab == fogTab && fogTreeView.SelectedNode != null &&
-				fogTreeView.SelectedNode.Tag != null && fogTreeView.SelectedNode.Tag is COLFile.ExtendedColorEntry colorInfoC)
+				fogTreeView.SelectedNode.Tag != null && fogTreeView.SelectedNode.Tag is ColorContainer.WaterColor colorInfoC)
 			{
-				COLFile.ExtendedColorEntry entry = default_colourfile.waterEntries.Find(color => color.name == fogTreeView.SelectedNode.Text);
-				colorInfoC.color_c = entry.color_c;
-				alphaUpDown.Value = colorInfoC.color_c >> 24 & 0xff;
-				redUpDown.Value = colorInfoC.color_c >> 16 & 0xff;
-				greenUpDown.Value = colorInfoC.color_c >> 8 & 0xff;
-				blueUpDown.Value = colorInfoC.color_c & 0xff;
-				pictureBox1.BackColor = Color.FromArgb(0xff << 24 | (int)colorInfoC.color_c);
-			}
+				var entry = default_colourfile.WaterColors.Find(color => color.Name == fogTreeView.SelectedNode.Text);
+				colorInfoC.FogColor = entry.FogColor;
+				UpdateDisplayColor(entry.FogColor);
+            }
 			SetUpValueChanged(true);
 		}
+
+		private void UpdateDisplayColor(Color color)
+		{
+            alphaUpDown.Value = color.A;
+            redUpDown.Value = color.R;
+            greenUpDown.Value = color.G;
+            blueUpDown.Value = color.B;
+            pictureBox1.BackColor = Color.FromArgb(tabControl.SelectedTab == colorsTab ? 0xFF : color.A, color);
+        }
 
 		private void metroTextBox1_TextChanged(object sender, EventArgs e)
 		{
@@ -558,22 +534,26 @@ namespace PckStudio.Forms.Editor
 
 		private void copyColorToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			COLFile.ColorEntry colorToCopy = new COLFile.ColorEntry("", 0);
-			if (tabControl.SelectedTab == colorsTab && colorTreeView.SelectedNode.Tag is COLFile.ColorEntry colorInfoD)
+			var colorToCopy = new ColorContainer.Color()
+			{
+				Name = "",
+				ColorPallette = new Color()
+			};
+			if (tabControl.SelectedTab == colorsTab && colorTreeView.SelectedNode.Tag is ColorContainer.Color colorInfoD)
 			{
 				colorToCopy = colorInfoD;
 			}
-			else if (tabControl.SelectedTab == waterTab && waterTreeView.SelectedNode.Tag is COLFile.ExtendedColorEntry colorInfo)
+			else if (tabControl.SelectedTab == waterTab && waterTreeView.SelectedNode.Tag is ColorContainer.WaterColor colorInfo)
 			{
-				colorToCopy = colorInfo;
+				colorToCopy.ColorPallette = colorInfo.SurfaceColor;
 			}
-			else if (tabControl.SelectedTab == underwaterTab && underwaterTreeView.SelectedNode.Tag is COLFile.ExtendedColorEntry colorInfoB)
+			else if (tabControl.SelectedTab == underwaterTab && underwaterTreeView.SelectedNode.Tag is ColorContainer.WaterColor colorInfoB)
 			{
-				colorToCopy = colorInfoB;
+				colorToCopy.ColorPallette = colorInfoB.UnderwaterColor;
 			}
-			else if (tabControl.SelectedTab == fogTab && fogTreeView.SelectedNode.Tag is COLFile.ExtendedColorEntry colorInfoC)
+			else if (tabControl.SelectedTab == fogTab && fogTreeView.SelectedNode.Tag is ColorContainer.WaterColor colorInfoC)
 			{
-				colorToCopy = colorInfoC;
+				colorToCopy.ColorPallette = colorInfoC.FogColor;
 			}
 			clipboard_color = colorToCopy;
 		}
@@ -582,36 +562,36 @@ namespace PckStudio.Forms.Editor
 		{
 			if (clipboard_color == null) return;
 			SetUpValueChanged(false);
-			Color fixed_color = Color.FromArgb(255, Color.FromArgb(0xff << 24 | (int)clipboard_color.color));
+			Color fixed_color = Color.FromArgb(255, Color.FromArgb(0xff, clipboard_color.ColorPallette));
 
 			if (tabControl.SelectedTab == waterTab && waterTreeView.SelectedNode != null &&
-				waterTreeView.SelectedNode.Tag != null && waterTreeView.SelectedNode.Tag is COLFile.ExtendedColorEntry)
+				waterTreeView.SelectedNode.Tag != null && waterTreeView.SelectedNode.Tag is ColorContainer.WaterColor)
 			{
-				var colorEntry = ((COLFile.ExtendedColorEntry)waterTreeView.SelectedNode.Tag);
-				colorEntry.color = (uint)fixed_color.ToArgb();
+				var colorEntry = ((ColorContainer.WaterColor)waterTreeView.SelectedNode.Tag);
+				colorEntry.SurfaceColor = fixed_color;
 			}
 			else if (tabControl.SelectedTab == underwaterTab && underwaterTreeView.SelectedNode != null &&
-				underwaterTreeView.SelectedNode.Tag != null && underwaterTreeView.SelectedNode.Tag is COLFile.ExtendedColorEntry)
+				underwaterTreeView.SelectedNode.Tag != null && underwaterTreeView.SelectedNode.Tag is ColorContainer.WaterColor)
 			{
-				var colorEntry = ((COLFile.ExtendedColorEntry)underwaterTreeView.SelectedNode.Tag);
-				colorEntry.color_b = (uint)fixed_color.ToArgb();
+				var colorEntry = ((ColorContainer.WaterColor)underwaterTreeView.SelectedNode.Tag);
+				colorEntry.UnderwaterColor = fixed_color;
 			}
 			else if (tabControl.SelectedTab == fogTab && fogTreeView.SelectedNode != null &&
-				fogTreeView.SelectedNode.Tag != null && fogTreeView.SelectedNode.Tag is COLFile.ExtendedColorEntry)
+				fogTreeView.SelectedNode.Tag != null && fogTreeView.SelectedNode.Tag is ColorContainer.WaterColor)
 			{
-				var colorEntry = ((COLFile.ExtendedColorEntry)fogTreeView.SelectedNode.Tag);
-				colorEntry.color_c = (uint)fixed_color.ToArgb();
+				var colorEntry = ((ColorContainer.WaterColor)fogTreeView.SelectedNode.Tag);
+				colorEntry.FogColor = fixed_color;
 			}
 			else if (tabControl.SelectedTab == colorsTab && colorTreeView.SelectedNode != null &&
-				colorTreeView.SelectedNode.Tag != null && colorTreeView.SelectedNode.Tag is COLFile.ColorEntry)
+				colorTreeView.SelectedNode.Tag != null && colorTreeView.SelectedNode.Tag is ColorContainer.Color)
 			{
-				var colorEntry = ((COLFile.ColorEntry)colorTreeView.SelectedNode.Tag);
-				colorEntry.color = (uint)fixed_color.ToArgb() & 0xffffff;
+				var colorEntry = ((ColorContainer.Color)colorTreeView.SelectedNode.Tag);
+				colorEntry.ColorPallette = fixed_color;
 			}
 
-			redUpDown.Value = clipboard_color.color >> 16 & 0xff;
-			greenUpDown.Value = clipboard_color.color >> 8 & 0xff;
-			blueUpDown.Value = clipboard_color.color & 0xff;
+			redUpDown.Value = clipboard_color.ColorPallette.R;
+			greenUpDown.Value = clipboard_color.ColorPallette.G;
+			blueUpDown.Value = clipboard_color.ColorPallette.B;
 			pictureBox1.BackColor = fixed_color;
 			SetUpValueChanged(true);
 		}

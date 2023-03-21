@@ -79,7 +79,6 @@
             this.extractToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.metaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.convertPCTextrurePackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -105,8 +104,8 @@
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.administrativeToolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.storeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openPckManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.OpenInstallerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.joinDevelopmentDiscordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.miscToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addCustomPackImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -440,7 +439,6 @@
             this.extractToolStripMenuItem1,
             this.saveToolStripMenuItem1,
             this.saveToolStripMenuItem,
-            this.metaToolStripMenuItem,
             this.convertPCTextrurePackToolStripMenuItem,
             this.closeToolStripMenuItem});
             this.fileToolStripMenuItem.ForeColor = System.Drawing.Color.White;
@@ -497,12 +495,6 @@
             resources.ApplyResources(this.saveToolStripMenuItem, "saveToolStripMenuItem");
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveAsPCK);
-            // 
-            // metaToolStripMenuItem
-            // 
-            resources.ApplyResources(this.metaToolStripMenuItem, "metaToolStripMenuItem");
-            this.metaToolStripMenuItem.Name = "metaToolStripMenuItem";
-            this.metaToolStripMenuItem.Click += new System.EventHandler(this.metaToolStripMenuItem_Click);
             // 
             // convertPCTextrurePackToolStripMenuItem
             // 
@@ -673,24 +665,24 @@
             // storeToolStripMenuItem
             // 
             this.storeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.OpenInstallerToolStripMenuItem,
+            this.openPckManagerToolStripMenuItem,
             this.openToolStripMenuItem1,
             this.joinDevelopmentDiscordToolStripMenuItem});
             this.storeToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             resources.ApplyResources(this.storeToolStripMenuItem, "storeToolStripMenuItem");
             this.storeToolStripMenuItem.Name = "storeToolStripMenuItem";
             // 
+            // openPckManagerToolStripMenuItem
+            // 
+            this.openPckManagerToolStripMenuItem.Name = "openPckManagerToolStripMenuItem";
+            resources.ApplyResources(this.openPckManagerToolStripMenuItem, "openPckManagerToolStripMenuItem");
+            this.openPckManagerToolStripMenuItem.Click += new System.EventHandler(this.openPckManagerToolStripMenuItem_Click);
+            // 
             // openToolStripMenuItem1
             // 
             resources.ApplyResources(this.openToolStripMenuItem1, "openToolStripMenuItem1");
             this.openToolStripMenuItem1.Name = "openToolStripMenuItem1";
             this.openToolStripMenuItem1.Click += new System.EventHandler(this.openToolStripMenuItem1_Click);
-            // 
-            // OpenInstallerToolStripMenuItem
-            // 
-            this.OpenInstallerToolStripMenuItem.Name = "OpenInstallerToolStripMenuItem";
-            resources.ApplyResources(this.OpenInstallerToolStripMenuItem, "OpenInstallerToolStripMenuItem");
-            this.OpenInstallerToolStripMenuItem.Click += new System.EventHandler(this.OpenInstallerToolStripMenuItem_Click);
             // 
             // joinDevelopmentDiscordToolStripMenuItem
             // 
@@ -1081,7 +1073,6 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuMetaTree;
         private System.Windows.Forms.ToolStripMenuItem addEntryToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteEntryToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem metaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addMultipleEntriesToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
@@ -1178,6 +1169,7 @@
 		private MetroFramework.Controls.MetroLabel metroLabel3;
 		private System.Windows.Forms.ToolStripMenuItem behavioursbinToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem entityMaterialsbinToolStripMenuItem;
-	}
+        private System.Windows.Forms.ToolStripMenuItem openPckManagerToolStripMenuItem;
+    }
 }
 

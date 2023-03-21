@@ -5,29 +5,26 @@ using System.IO;
 
 using PckStudio.Properties;
 using PckStudio.Classes.Extentions;
+using OMI.Formats.Model;
 using OMI.Formats.Pck;
-using OMI.Formats.Material;
-using OMI.Workers.Material;
+using OMI.Workers.Model;
 
 namespace PckStudio.Forms.Utilities
 {
-    public static class MaterialUtil
+    public static class ModelsUtil
     {
-        public static readonly JObject entityData = JObject.Parse(Resources.entityMaterialData);
+        public static readonly JObject entityData = JObject.Parse(Resources.entityModelData);
         private static Image[] _entityImages;
+        
         public static Image[] entityImages => _entityImages ??= Resources.entities_sheet.CreateImageList(32).ToArray();
 
-        public static PckFile.FileData CreateNewMaterialsFile()
+        public static PckFile.FileData CreateNewModelsFile()
         {
-            PckFile.FileData file = new PckFile.FileData($"entityMaterials.bin", PckFile.FileData.FileType.MaterialFile);
+            PckFile.FileData file = new PckFile.FileData($"models.bin", PckFile.FileData.FileType.ModelsFile);
 
             using (var stream = new MemoryStream())
             {
-                var matFile = new MaterialContainer
-                {
-                    new MaterialContainer.Material("bat", "entity_alphatest")
-                };
-                var writer = new MaterialFileWriter(matFile);
+                var writer =  new ModelFileWriter(new ModelContainer());
                 writer.WriteToStream(stream);
                 file.SetData(stream.ToArray());
             }

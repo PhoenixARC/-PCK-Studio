@@ -43,8 +43,10 @@ namespace PckStudio.Forms.Additional_Features
 
         private void BrowseDirectoryBtn_Click(object sender, EventArgs e)
         {
-            OpenFolderDialog openFolderDialog = new OpenFolderDialog();
-            openFolderDialog.Title = "Cemu Game Directory";
+            OpenFolderDialog openFolderDialog = new OpenFolderDialog
+            {
+                Title = "Cemu Game Directory"
+            };
             if (openFolderDialog.ShowDialog(Handle) == true && Directory.Exists(openFolderDialog.ResultPath))
             {
                 GameDirectoryTextBox.Text = openFolderDialog.ResultPath;
@@ -165,10 +167,10 @@ namespace PckStudio.Forms.Additional_Features
             }
             Directory.CreateDirectory($"{GetGameContentPath()}/WiiU/DLC/{prompt.NewText}");
 
-            OpenFileDialog fileDialog = new OpenFileDialog();
-            fileDialog.Filter = "PCK (Minecraft Console Package)|*.pck";
-            fileDialog.CheckFileExists = true;
-            fileDialog.Multiselect = false;
+            OpenFileDialog fileDialog = new OpenFileDialog
+            {
+                Filter = "PCK (Minecraft Console Package)|*.pck"
+            };
             if (fileDialog.ShowDialog(this) == DialogResult.OK)
             {
                 File.Copy(fileDialog.FileName, $"{GetGameContentPath()}/WiiU/DLC/{prompt.NewText}/{fileDialog.SafeFileName}");
@@ -178,7 +180,7 @@ namespace PckStudio.Forms.Additional_Features
         private void removePckToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string pckName = DLCTreeView.SelectedNode.Text;
-            var result = MessageBox.Show($"Are you sure you want to permanetly delete '{pckName}'?", "Hold up!", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+            var result = MessageBox.Show($"Are you sure you want to permanently delete '{pckName}'?", "Hold up!", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
                 Directory.Delete($"{GetGameContentPath()}/WiiU/DLC/{pckName}", recursive: true);

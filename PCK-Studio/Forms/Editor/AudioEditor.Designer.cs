@@ -45,9 +45,10 @@ namespace PckStudio.Forms.Editor
 			this.deleteUnusedBINKAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.openDataFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.bulkReplaceExistingTracksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.organizeTracksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.howToAddSongsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.whatIsEachCategoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.whatAreTheCategoriesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.howToEditCreditsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.optimizeDataFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.bINKACompressionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -148,7 +149,8 @@ namespace PckStudio.Forms.Editor
             this.creditsEditorToolStripMenuItem,
             this.deleteUnusedBINKAsToolStripMenuItem,
             this.openDataFolderToolStripMenuItem,
-            this.bulkReplaceExistingTracksToolStripMenuItem});
+            this.bulkReplaceExistingTracksToolStripMenuItem,
+            this.organizeTracksToolStripMenuItem});
 			this.toolsToolStripMenuItem.ForeColor = System.Drawing.Color.White;
 			this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
 			resources.ApplyResources(this.toolsToolStripMenuItem, "toolsToolStripMenuItem");
@@ -177,11 +179,17 @@ namespace PckStudio.Forms.Editor
 			resources.ApplyResources(this.bulkReplaceExistingTracksToolStripMenuItem, "bulkReplaceExistingTracksToolStripMenuItem");
 			this.bulkReplaceExistingTracksToolStripMenuItem.Click += new System.EventHandler(this.bulkReplaceExistingFilesToolStripMenuItem_Click);
 			// 
+			// organizeTracksToolStripMenuItem
+			// 
+			this.organizeTracksToolStripMenuItem.Name = "organizeTracksToolStripMenuItem";
+			resources.ApplyResources(this.organizeTracksToolStripMenuItem, "organizeTracksToolStripMenuItem");
+			this.organizeTracksToolStripMenuItem.Click += new System.EventHandler(this.organizeTracksToolStripMenuItem_Click);
+			// 
 			// helpToolStripMenuItem
 			// 
 			this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.howToAddSongsToolStripMenuItem,
-            this.whatIsEachCategoryToolStripMenuItem,
+            this.whatAreTheCategoriesToolStripMenuItem,
             this.howToEditCreditsToolStripMenuItem,
             this.optimizeDataFolderToolStripMenuItem,
             this.bINKACompressionToolStripMenuItem});
@@ -195,11 +203,11 @@ namespace PckStudio.Forms.Editor
 			resources.ApplyResources(this.howToAddSongsToolStripMenuItem, "howToAddSongsToolStripMenuItem");
 			this.howToAddSongsToolStripMenuItem.Click += new System.EventHandler(this.howToAddSongsToolStripMenuItem_Click);
 			// 
-			// whatIsEachCategoryToolStripMenuItem
+			// whatAreTheCategoriesToolStripMenuItem
 			// 
-			this.whatIsEachCategoryToolStripMenuItem.Name = "whatIsEachCategoryToolStripMenuItem";
-			resources.ApplyResources(this.whatIsEachCategoryToolStripMenuItem, "whatIsEachCategoryToolStripMenuItem");
-			this.whatIsEachCategoryToolStripMenuItem.Click += new System.EventHandler(this.whatIsEachCategoryToolStripMenuItem_Click);
+			this.whatAreTheCategoriesToolStripMenuItem.Name = "whatAreTheCategoriesToolStripMenuItem";
+			resources.ApplyResources(this.whatAreTheCategoriesToolStripMenuItem, "whatAreTheCategoriesToolStripMenuItem");
+			this.whatAreTheCategoriesToolStripMenuItem.Click += new System.EventHandler(this.whatAreTheCategoriesToolStripMenuItem_Click);
 			// 
 			// howToEditCreditsToolStripMenuItem
 			// 
@@ -343,7 +351,7 @@ namespace PckStudio.Forms.Editor
 		private MetroFramework.Controls.MetroCheckBox playOverworldInCreative;
 		private System.Windows.Forms.ToolStripMenuItem deleteUnusedBINKAsToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem howToAddSongsToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem whatIsEachCategoryToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem whatAreTheCategoriesToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem howToEditCreditsToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem optimizeDataFolderToolStripMenuItem;
 		private System.Windows.Forms.NumericUpDown compressionUpDown;
@@ -352,5 +360,6 @@ namespace PckStudio.Forms.Editor
 		private System.Windows.Forms.ToolStripMenuItem openDataFolderToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem bulkReplaceExistingTracksToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem changeCategoryToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem organizeTracksToolStripMenuItem;
 	}
 }

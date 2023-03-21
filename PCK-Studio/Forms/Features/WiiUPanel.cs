@@ -6,9 +6,10 @@ using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using PckStudio.Classes.FileTypes;
-using PckStudio.Classes.IO.ARC;
-using PckStudio.Classes.IO.PCK;
+using OMI.Formats.Archive;
+using OMI.Formats.Pck;
+using OMI.Workers.Archive;
+using OMI.Workers.Pck;
 using PckStudio.Classes.Misc;
 
 namespace PckStudio.Forms.Additional_Features
@@ -19,7 +20,7 @@ namespace PckStudio.Forms.Additional_Features
         string mod = string.Empty;
         bool serverOn = false;
         ConsoleArchive archive = new ConsoleArchive();
-        PCKFile currentPCK = null;
+        PckFile currentPCK = null;
 
         private const string FtpUsername = "PCK_Studio_Client";
         // TODO: randomize per 'session'(instance)
@@ -232,12 +233,10 @@ namespace PckStudio.Forms.Additional_Features
 
         private string GetPackId(string filepath)
         {
-            using (var fs = File.OpenRead(filepath))
-            {
-                currentPCK = PCKFileReader.Read(fs, false);
-            }
+            var reader = new PckFileReader();
+            currentPCK = reader.FromFile(filepath);
             if (currentPCK is null) return string.Empty;
-            return currentPCK.TryGetFile("0", PCKFile.FileData.FileType.InfoFile, out var file)
+            return currentPCK.TryGetFile("0", PckFile.FileData.FileType.InfoFile, out var file)
                 ? file.Properties.GetProperty("PACKID").Item2
                 : string.Empty;
         }
@@ -249,7 +248,8 @@ namespace PckStudio.Forms.Additional_Features
             {
                 client.DownloadFile(ms, GetGameContentPath() + "/Common/Media/MediaWiiU.arc");
                 ms.Position = 0;
-                archive = ARCFileReader.Read(ms);
+                var reader = new ARCFileReader();
+                archive = reader.FromStream(ms);
             }
         }
 
@@ -267,7 +267,8 @@ namespace PckStudio.Forms.Additional_Features
             {
                 using (var ms = new MemoryStream())
                 {
-                    ARCFileWriter.Write(ms, archive);
+                    var writer = new ARCFileWriter(archive);
+                    writer.WriteToStream(ms);   
                     ms.Position = 0;
                     client.UploadFile(ms, GetGameContentPath() + "/Common/Media/MediaWiiU.arc");
                 }

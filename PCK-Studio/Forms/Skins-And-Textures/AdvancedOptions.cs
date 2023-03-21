@@ -1,4 +1,4 @@
-﻿using PckStudio.Classes.FileTypes;
+﻿using OMI.Formats.Pck;
 using System;
 using System.Data;
 using System.Drawing;
@@ -10,9 +10,9 @@ namespace PckStudio
 {
     public partial class AdvancedOptions : MetroFramework.Forms.MetroForm
     {
-        PCKFile currentPCK;
+        PckFile currentPCK;
 
-        public AdvancedOptions(PCKFile currentPCKIn)
+        public AdvancedOptions(PckFile currentPCKIn)
         {
             InitializeComponent();
             currentPCK = currentPCKIn;
@@ -26,7 +26,7 @@ namespace PckStudio
             {
                 case "All":
                     {
-                        foreach (PCKFile.FileData file in currentPCK.Files)
+                        foreach (PckFile.FileData file in currentPCK.Files)
                         {
                             file.Properties.Add((entryTypeTextBox.Text, entryDataTextBox.Text));
                         }
@@ -35,7 +35,7 @@ namespace PckStudio
                     break;
                 case "64x64":
                     {
-                        foreach (PCKFile.FileData file in currentPCK.Files)
+                        foreach (PckFile.FileData file in currentPCK.Files)
                         {
                             MemoryStream png = new MemoryStream(file.Data);
                             if (Path.GetExtension(file.Filename) == ".png" &&
@@ -49,7 +49,7 @@ namespace PckStudio
                     break;
                 case "64x32":
                     {
-                        foreach (PCKFile.FileData file in currentPCK.Files)
+                        foreach (PckFile.FileData file in currentPCK.Files)
                         {
                             MemoryStream png = new MemoryStream(file.Data);
                             if (Path.GetExtension(file.Filename) == ".png" &&
@@ -63,7 +63,7 @@ namespace PckStudio
                     break;
                 case "PNG Files":
                     {
-                        foreach (PCKFile.FileData file in currentPCK.Files)
+                        foreach (PckFile.FileData file in currentPCK.Files)
                         {
                             MemoryStream png = new MemoryStream(file.Data);
                             if (Path.GetExtension(file.Filename) == ".png")

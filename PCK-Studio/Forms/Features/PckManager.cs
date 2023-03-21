@@ -51,10 +51,10 @@ namespace PckStudio.Forms.Additional_Features
                 currentlyShowingControl = text switch
                 {
                     WiiU => new WiiUPanel(),
-                    PS3 => throw new NotImplementedException($"{text}-Installer is currently not implemented."),
-                    PSVita => throw new NotImplementedException($"{text}-Installer is currently not implemented."),
+                    PS3 => throw new NotImplementedException($"{text}-Panel is currently not implemented."),
+                    PSVita => throw new NotImplementedException($"{text}-Panel is currently not implemented."),
                     CemU => new CemuPanel(),
-                    RPCS3 => throw new NotImplementedException($"{text}-Installer is currently not implemented."),
+                    RPCS3 => throw new NotImplementedException($"{text}-Panel is currently not implemented."),
                     _ => throw new Exception($"No Panel found for: {text}"),
                 };
 

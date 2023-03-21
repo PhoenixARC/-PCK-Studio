@@ -17,6 +17,8 @@ using PckStudio;
 using System.IO.Compression;
 using PckStudio.Classes.FileTypes;
 using PckStudio.Classes.IO.PCK;
+using OMI.Formats.Pck;
+using OMI.Workers.Pck;
 
 namespace PckStudio.Forms
 {
@@ -134,16 +136,14 @@ namespace PckStudio.Forms
                     //MessageBox.Show(root);//debug thingy to make sure filepath is correct
 
                     //add all skins to a list
-                    List<PCKFile.FileData> skinsList = new List<PCKFile.FileData>();
-                    List<PCKFile.FileData> capesList = new List<PCKFile.FileData>();
+                    List<PckFile.FileData> skinsList = new List<PckFile.FileData>();
+                    List<PckFile.FileData> capesList = new List<PckFile.FileData>();
 
-                    PCKFile pck = null;
-                    using (var stream = File.OpenRead(Program.AppData + "/PCK-Center/myPcks/" + mod + ".pck"))
-                    {
-                        pck = PCKFileReader.Read(stream, false); // sets opened pck
-                    }
-                    PCKFile currentPCK = pck; //sets opened pck
-                    foreach (PCKFile.FileData skin in currentPCK.Files)
+                    PckFile pck = null;
+
+                    var reader = new PckFileReader();
+                    PckFile currentPCK = reader.FromFile(Program.AppData + "/PCK-Center/myPcks/" + mod + ".pck");
+                    foreach (PckFile.FileData skin in currentPCK.Files)
                     {
                         if (skin.Filename.Count() == 19)
                         {
@@ -177,7 +177,7 @@ namespace PckStudio.Forms
                         writeSkins.WriteLine("  \"skins\": [");
 
                         int skinAmount = 0;
-                        foreach (PCKFile.FileData newSkin in skinsList)
+                        foreach (PckFile.FileData newSkin in skinsList)
                         {
                             skinAmount += 1;
                             string skinName = "skinName";
@@ -234,7 +234,7 @@ namespace PckStudio.Forms
                     {
                         writeSkins.WriteLine("{");
                         int newSkinCount = 0;
-                        foreach (PCKFile.FileData newSkin in skinsList)
+                        foreach (PckFile.FileData newSkin in skinsList)
                         {
 
                             newSkinCount += 1;
@@ -1022,7 +1022,7 @@ namespace PckStudio.Forms
                     }
 
                     //adds skin textures
-                    foreach (PCKFile.FileData skinTexture in skinsList)
+                    foreach (PckFile.FileData skinTexture in skinsList)
                     {
                         var ms = new MemoryStream(skinTexture.Data);
                         Bitmap saveSkin = new Bitmap(Image.FromStream(ms));
@@ -1042,7 +1042,7 @@ namespace PckStudio.Forms
                     }
 
                     //adds cape textures
-                    foreach (PCKFile.FileData capeTexture in capesList)
+                    foreach (PckFile.FileData capeTexture in capesList)
                     {
                         File.WriteAllBytes(root + "/" + capeTexture.Filename, capeTexture.Data);
                     }

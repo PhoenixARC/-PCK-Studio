@@ -6,17 +6,18 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using MetroFramework.Forms;
-using PckStudio.Classes.FileTypes;
-using PckStudio.Classes.IO.Behaviour;
-using Newtonsoft.Json;
+using PckStudio.Forms.Additional_Popups.EntityForms;
 using Newtonsoft.Json.Linq;
+using OMI.Formats.Behaviour;
+using OMI.Workers.Behaviour;
+using OMI.Formats.Pck;
 
 namespace PckStudio.Forms.Editor
 {
 	public partial class BehaviourEditor : MetroForm
 	{
 		// Behaviours File Format research by Miku and MattNL
-		private readonly PCKFile.FileData _file;
+		private readonly PckFile.FileData _file;
 		BehaviourFile behaviourFile;
 
 		void SetUpTree()
@@ -55,68 +56,67 @@ namespace PckStudio.Forms.Editor
 			treeView1.EndUpdate();
 		}
 
-		public BehaviourEditor(PCKFile.FileData file)
+		public BehaviourEditor(PckFile.FileData file)
 		{
 			InitializeComponent();
 			_file = file;
 
 			using (var stream = new MemoryStream(file.Data))
 			{
-				behaviourFile = BehavioursReader.Read(stream);
+				var reader = new BehavioursReader();
+				behaviourFile = reader.FromStream(stream);
 			}
 
 			treeView1.ImageList = new ImageList();
-			Utilities.BehaviourUtil.entityImages.ToList().ForEach(img => treeView1.ImageList.Images.Add(img));
+            treeView1.ImageList.Images.AddRange(Utilities.BehaviourUtil.entityImages);
 			treeView1.ImageList.ColorDepth = ColorDepth.Depth32Bit;
 			SetUpTree();
 		}
 
 		private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
 		{
-			if (e.Node == null) return;
+			if (e.Node is null) return;
 
-			bool enable = e.Node.Tag is BehaviourFile.RiderPositionOverride.PositionOverride && treeView1.SelectedNode != null;
-			flag1Checkbox.Enabled = enable;
-			flag2Checkbox.Enabled = enable;
-			xUpDown.Enabled = enable;
-			yUpDown.Enabled = enable;
-			zUpDown.Enabled = enable;
+			bool isValidOverride = e.Node.Tag is BehaviourFile.RiderPositionOverride.PositionOverride &&
+				treeView1.SelectedNode != null;
+			MobIsTamedCheckbox.Enabled = isValidOverride;
+			MobHasSaddleCheckbox.Enabled = isValidOverride;
+			xUpDown.Enabled = isValidOverride;
+			yUpDown.Enabled = isValidOverride;
+			zUpDown.Enabled = isValidOverride;
+			renameToolStripMenuItem.Visible = !isValidOverride;
 
-			if (e.Node.Tag is BehaviourFile.RiderPositionOverride.PositionOverride posOverride)
+
+			if (isValidOverride)
 			{
-				flag1Checkbox.Checked = posOverride._1;
-				flag2Checkbox.Checked = posOverride._2;
+                var posOverride = e.Node.Tag as BehaviourFile.RiderPositionOverride.PositionOverride;
+                MobIsTamedCheckbox.Checked = posOverride.EntityIsTamed;
+				MobHasSaddleCheckbox.Checked = posOverride.EntityHasSaddle;
 				xUpDown.Value = (decimal)posOverride.x;
 				yUpDown.Value = (decimal)posOverride.y;
 				zUpDown.Value = (decimal)posOverride.z;
-
-				renameToolStripMenuItem.Visible = false;
 			}
-			else renameToolStripMenuItem.Visible = true;
 		}
 
 		private void removeToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (treeView1.SelectedNode == null) return;
-
+			if (treeView1.SelectedNode is null) return;
 			treeView1.SelectedNode.Remove();
 		}
 
-		private void flag1Checkbox_CheckedChanged(object sender, EventArgs e)
+		private void MobIsTamedCheckbox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (treeView1.SelectedNode.Tag is BehaviourFile.RiderPositionOverride.PositionOverride posOverride)
 			{
-				posOverride._1 = flag1Checkbox.Checked;
-				treeView1.SelectedNode.Tag = posOverride;
+				posOverride.EntityIsTamed = MobIsTamedCheckbox.Checked;
 			}
 		}
 
-		private void flag2Checkbox_CheckedChanged(object sender, EventArgs e)
+		private void MobHasSaddleCheckbox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (treeView1.SelectedNode.Tag is BehaviourFile.RiderPositionOverride.PositionOverride posOverride)
 			{
-				posOverride._2 = flag2Checkbox.Checked;
-				treeView1.SelectedNode.Tag = posOverride;
+				posOverride.EntityHasSaddle = MobHasSaddleCheckbox.Checked;
 			}
 		}
 
@@ -125,7 +125,6 @@ namespace PckStudio.Forms.Editor
 			if (treeView1.SelectedNode.Tag is BehaviourFile.RiderPositionOverride.PositionOverride posOverride)
 			{
 				posOverride.x = (float)xUpDown.Value;
-				treeView1.SelectedNode.Tag = posOverride;
 			}
 		}
 
@@ -134,7 +133,6 @@ namespace PckStudio.Forms.Editor
 			if (treeView1.SelectedNode.Tag is BehaviourFile.RiderPositionOverride.PositionOverride posOverride)
 			{
 				posOverride.y = (float)yUpDown.Value;
-				treeView1.SelectedNode.Tag = posOverride;
 			}
 		}
 
@@ -143,7 +141,6 @@ namespace PckStudio.Forms.Editor
 			if (treeView1.SelectedNode.Tag is BehaviourFile.RiderPositionOverride.PositionOverride posOverride)
 			{
 				posOverride.z = (float)zUpDown.Value;
-				treeView1.SelectedNode.Tag = posOverride;
 			}
 		}
 
@@ -183,8 +180,8 @@ namespace PckStudio.Forms.Editor
 
 		private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
 		{
-			flag1Checkbox.Enabled = false;
-			flag2Checkbox.Enabled = false;
+			MobIsTamedCheckbox.Enabled = false;
+			MobHasSaddleCheckbox.Enabled = false;
 			xUpDown.Enabled = false;
 			yUpDown.Enabled = false;
 			zUpDown.Enabled = false;
@@ -206,11 +203,11 @@ namespace PckStudio.Forms.Editor
 
 		private void addNewEntryToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			var diag = new Additional_Popups.EntityForms.AddEntry(Utilities.BehaviourUtil.entityData, Utilities.BehaviourUtil.entityImages);
+			var diag = new AddEntry(Utilities.BehaviourUtil.entityData, Utilities.BehaviourUtil.entityImages);
 
 			if(diag.ShowDialog() == DialogResult.OK)
 			{
-				if (String.IsNullOrEmpty(diag.SelectedEntity)) return;
+				if (string.IsNullOrEmpty(diag.SelectedEntity)) return;
 				if (behaviourFile.entries.FindAll(behaviour => behaviour.name == diag.SelectedEntity).Count() > 0)
 				{
 					MessageBox.Show(this, "You cannot have two entries for one entity. Please use the \"Add New Position Override\" tool to add multiple overrides for entities", "Error", MessageBoxButtons.OK);
@@ -272,7 +269,8 @@ namespace PckStudio.Forms.Editor
 					}
 				}
 
-				BehavioursWriter.Write(stream, behaviourFile);
+				var writer = new BehavioursWriter(behaviourFile);
+				writer.WriteToStream(stream);
 				_file.SetData(stream.ToArray());
 			}
 			DialogResult = DialogResult.OK;
