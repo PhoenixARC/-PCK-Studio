@@ -15,9 +15,10 @@ using System.Windows.Media.Imaging;
 using System.IO.Packaging;
 using PckStudio;
 using System.IO.Compression;
-using static PckStudio.MainForm;
 using PckStudio.Classes.FileTypes;
-using PckStudio.Classes.IO;
+using PckStudio.Classes.IO.PCK;
+using OMI.Formats.Pck;
+using OMI.Workers.Pck;
 
 namespace PckStudio.Forms
 {
@@ -33,6 +34,12 @@ namespace PckStudio.Forms
         MethodInvoker reloader;
         bool IsVita;
         string Pack;
+
+        public class Item
+        {
+            public string Id { get; set; }
+            public string Name { get; set; }
+        }
 
         public pckCenterOpen(string name, string authorIn, string descIn, string directIn, string adIn, Bitmap display, int mode, string mod, MethodInvoker reloader, bool Vita, string PackName)
         {
@@ -55,7 +62,7 @@ namespace PckStudio.Forms
 
         private void pckCenterOpen_Load(object sender, EventArgs e)
         {
-            if (mode==0)//Unowned Mode
+            if (mode == 0) // Unowned Mode
             {
                 buttonDirect.Visible = true;
 
@@ -69,7 +76,7 @@ namespace PckStudio.Forms
                 buttonBedrock.Visible = buttonDelete.Visible = buttonExport.Visible = false;
                 buttonInstallPs3.Visible = buttonInstallXbox.Visible = buttonInstallWiiU.Visible = false;
             }
-            else if (mode==1)//My Collection Mode
+            else if (mode == 1) // My Collection Mode
             {
                 buttonBedrock.Visible = true;
                 buttonInstallPs3.Visible = true;
@@ -129,27 +136,25 @@ namespace PckStudio.Forms
                     //MessageBox.Show(root);//debug thingy to make sure filepath is correct
 
                     //add all skins to a list
-                    List<PCKFile.FileData> skinsList = new List<PCKFile.FileData>();
-                    List<PCKFile.FileData> capesList = new List<PCKFile.FileData>();
+                    List<PckFile.FileData> skinsList = new List<PckFile.FileData>();
+                    List<PckFile.FileData> capesList = new List<PckFile.FileData>();
 
-                    PCKFile pck = null;
-                    using (var stream = File.OpenRead(Program.Appdata + "/PCK-Center/myPcks/" + mod + ".pck"))
+                    PckFile pck = null;
+
+                    var reader = new PckFileReader();
+                    PckFile currentPCK = reader.FromFile(Program.AppData + "/PCK-Center/myPcks/" + mod + ".pck");
+                    foreach (PckFile.FileData skin in currentPCK.Files)
                     {
-                        pck = PCKFileReader.Read(stream, false); // sets opened pck
-                    }
-                    PCKFile currentPCK = pck; //sets opened pck
-                    foreach (PCKFile.FileData skin in currentPCK.Files)
-                    {
-                        if (skin.filepath.Count() == 19)
+                        if (skin.Filename.Count() == 19)
                         {
-                            if (skin.filepath.Remove(7, skin.filepath.Count() - 7) == "dlcskin")
+                            if (skin.Filename.Remove(7, skin.Filename.Count() - 7) == "dlcskin")
                             {
                                 skinsList.Add(skin);
-                                uuid = skin.filepath.Remove(12, 7);
+                                uuid = skin.Filename.Remove(12, 7);
                                 uuid = uuid.Remove(0, 7);
                                 uuid = "abcdefa" + uuid;
                             }
-                            if (skin.filepath.Remove(7, skin.filepath.Count() - 7) == "dlccape")
+                            if (skin.Filename.Remove(7, skin.Filename.Count() - 7) == "dlccape")
                             {
                                 capesList.Add(skin);
                             }
@@ -172,19 +177,19 @@ namespace PckStudio.Forms
                         writeSkins.WriteLine("  \"skins\": [");
 
                         int skinAmount = 0;
-                        foreach (PCKFile.FileData newSkin in skinsList)
+                        foreach (PckFile.FileData newSkin in skinsList)
                         {
                             skinAmount += 1;
                             string skinName = "skinName";
                             string capePath = "";
                             bool hasCape = false;
 
-                            foreach (var entry in newSkin.properties)
+                            foreach (var entry in newSkin.Properties)
                             {
                                 if (entry.Item1 == "DISPLAYNAME")
                                 {
                                     skinName = entry.Item2;
-                                    skinDisplayNames.Add(new Item() { Id = newSkin.filepath.Remove(15, 4), Name = entry.Item2 });
+                                    skinDisplayNames.Add(new Item() { Id = newSkin.Filename.Remove(15, 4), Name = entry.Item2 });
                                 }
                                 if (entry.Item1 == "CAPEPATH")
                                 {
@@ -194,15 +199,15 @@ namespace PckStudio.Forms
                             }
 
                             writeSkins.WriteLine("    {");
-                            writeSkins.WriteLine("      \"localization_name\": " + "\"" + newSkin.filepath.Remove(15, 4) + "\",");
+                            writeSkins.WriteLine("      \"localization_name\": " + "\"" + newSkin.Filename.Remove(15, 4) + "\",");
 
-                            MemoryStream png = new MemoryStream(newSkin.data); //Gets image data from minefile data
+                            MemoryStream png = new MemoryStream(newSkin.Data); //Gets image data from minefile data
                             Image skinPicture = Image.FromStream(png); //Constructs image data into image
                             if (skinPicture.Height == skinPicture.Width)
                             {
-                                writeSkins.WriteLine("      \"geometry\": \"geometry." + packName + "." + newSkin.filepath.Remove(15, 4) + "\",");
+                                writeSkins.WriteLine("      \"geometry\": \"geometry." + packName + "." + newSkin.Filename.Remove(15, 4) + "\",");
                             }
-                            writeSkins.WriteLine("      \"texture\": " + "\"" + newSkin.filepath + "\",");
+                            writeSkins.WriteLine("      \"texture\": " + "\"" + newSkin.Filename + "\",");
                             if (hasCape == true)
                             {
                                 writeSkins.WriteLine("      \"cape\":" + "\"" + capePath + "\",");
@@ -229,12 +234,12 @@ namespace PckStudio.Forms
                     {
                         writeSkins.WriteLine("{");
                         int newSkinCount = 0;
-                        foreach (PCKFile.FileData newSkin in skinsList)
+                        foreach (PckFile.FileData newSkin in skinsList)
                         {
 
                             newSkinCount += 1;
                             string skinType = "steve";
-                            MemoryStream png = new MemoryStream(newSkin.data); //Gets image data from minefile data
+                            MemoryStream png = new MemoryStream(newSkin.Data); //Gets image data from minefile data
                             Image skinPicture = Image.FromStream(png); //Constructs image data into image
 
                             if (skinPicture.Height == skinPicture.Width / 2)
@@ -261,7 +266,7 @@ namespace PckStudio.Forms
                             if (skinPicture.Height == skinPicture.Width)
                             {
                                 //determines skin type based on image dimensions, existence of BOX tags, and the ANIM value
-                                foreach (var entry in newSkin.properties)
+                                foreach (var entry in newSkin.Properties)
                                 {
                                     if (entry.Item1.ToString() == "BOX")
                                     {
@@ -366,7 +371,7 @@ namespace PckStudio.Forms
                                 }
                             }
 
-                            writeSkins.WriteLine("  \"" + "geometry." + packName + "." + newSkin.filepath.Remove(15, 4) + "\": {");
+                            writeSkins.WriteLine("  \"" + "geometry." + packName + "." + newSkin.Filename.Remove(15, 4) + "\": {");
 
                             //makes skin model depending on what skin type the skin is
                             if (skinType == "custom")
@@ -447,7 +452,7 @@ namespace PckStudio.Forms
                                     }
                                     catch (Exception)
                                     {
-                                        MessageBox.Show("A HEAD BOX tag in " + newSkin.filepath + " has an invalid value!");
+                                        MessageBox.Show("A HEAD BOX tag in " + newSkin.Filename + " has an invalid value!");
                                     }
                                     if (modelAmount != modelDataHead.Count)
                                     {
@@ -538,7 +543,7 @@ namespace PckStudio.Forms
                                     }
                                     catch (Exception)
                                     {
-                                        MessageBox.Show("A BODY BOX tag in " + newSkin.filepath + " has an invalid value!");
+                                        MessageBox.Show("A BODY BOX tag in " + newSkin.Filename + " has an invalid value!");
                                     }
                                     if (modelAmount != modelDataBody.Count)
                                     {
@@ -629,7 +634,7 @@ namespace PckStudio.Forms
                                     }
                                     catch (Exception)
                                     {
-                                        MessageBox.Show("A ARM0 BOX tag in " + newSkin.filepath + " has an invalid value!");
+                                        MessageBox.Show("A ARM0 BOX tag in " + newSkin.Filename + " has an invalid value!");
                                     }
                                     if (modelAmount != modelDataLeftArm.Count)
                                     {
@@ -719,7 +724,7 @@ namespace PckStudio.Forms
                                     }
                                     catch (Exception)
                                     {
-                                        MessageBox.Show("A ARM1 BOX tag in " + newSkin.filepath + " has an invalid value!");
+                                        MessageBox.Show("A ARM1 BOX tag in " + newSkin.Filename + " has an invalid value!");
                                     }
                                     if (modelAmount != modelDataRightArm.Count)
                                     {
@@ -809,7 +814,7 @@ namespace PckStudio.Forms
                                     }
                                     catch (Exception)
                                     {
-                                        MessageBox.Show("A LEG1 BOX tag in " + newSkin.filepath + " has an invalid value!");
+                                        MessageBox.Show("A LEG1 BOX tag in " + newSkin.Filename + " has an invalid value!");
                                     }
                                     if (modelAmount != modelDataLeftLeg.Count)
                                     {
@@ -899,7 +904,7 @@ namespace PckStudio.Forms
                                     }
                                     catch (Exception)
                                     {
-                                        MessageBox.Show("A LEG0 BOX tag in " + newSkin.filepath + " has an invalid value!");
+                                        MessageBox.Show("A LEG0 BOX tag in " + newSkin.Filename + " has an invalid value!");
                                     }
                                     if (modelAmount != modelDataRightLeg.Count)
                                     {
@@ -1017,9 +1022,9 @@ namespace PckStudio.Forms
                     }
 
                     //adds skin textures
-                    foreach (PCKFile.FileData skinTexture in skinsList)
+                    foreach (PckFile.FileData skinTexture in skinsList)
                     {
-                        var ms = new MemoryStream(skinTexture.data);
+                        var ms = new MemoryStream(skinTexture.Data);
                         Bitmap saveSkin = new Bitmap(Image.FromStream(ms));
                         if (saveSkin.Width == saveSkin.Height)
                         {
@@ -1033,13 +1038,13 @@ namespace PckStudio.Forms
                         {
                             ResizeImage(saveSkin, 64, 64);
                         }
-                        saveSkin.Save(root + "/" + skinTexture.filepath, ImageFormat.Png);
+                        saveSkin.Save(root + "/" + skinTexture.Filename, ImageFormat.Png);
                     }
 
                     //adds cape textures
-                    foreach (PCKFile.FileData capeTexture in capesList)
+                    foreach (PckFile.FileData capeTexture in capesList)
                     {
-                        File.WriteAllBytes(root + "/" + capeTexture.filepath, capeTexture.data);
+                        File.WriteAllBytes(root + "/" + capeTexture.Filename, capeTexture.Data);
                     }
 
                     string startPath = root;
@@ -1102,9 +1107,10 @@ namespace PckStudio.Forms
         {
             try
             {
-                File.Delete(Program.Appdata + "/PCK-Center/myPcks/" + mod + ".pck");
-                File.Delete(Program.Appdata + "/PCK-Center/myPcks/" + mod + ".png");
-                File.Delete(Program.Appdata + "/PCK-Center/myPcks/" + mod + ".desc");
+                File.Delete(Program.AppData + "/PCK-Center/myPcks/" + mod + ".pck");
+                File.Delete(Program.AppData + "/PCK-Center/myPcks/" + mod + ".pck");
+                File.Delete(Program.AppData + "/PCK-Center/myPcks/" + mod + ".png");
+                File.Delete(Program.AppData + "/PCK-Center/myPcks/" + mod + ".desc");
                 reloader();
             }
             catch (Exception)
@@ -1124,7 +1130,7 @@ namespace PckStudio.Forms
             {
                 try
                 {
-                    File.Copy(Program.Appdata + "/PCK-Center/myPcks/" + mod + ".pck", export.FileName);
+                    File.Copy(Program.AppData + "/PCK-Center/myPcks/" + mod + ".pck", export.FileName);
                     MessageBox.Show("PCK Received from location!");
                 }catch (Exception)
                 {
@@ -1145,7 +1151,7 @@ namespace PckStudio.Forms
 
         private void buttonInstallWiiU_Click(object sender, EventArgs e)
         {
-            installWiiU install = new installWiiU(Program.Appdata + "/PCK Center/myPcks/" + mod + ".pck");
+            installWiiU install = new installWiiU(Program.AppData + "/PCK Center/myPcks/" + mod + ".pck");
             install.ShowDialog();
         }
     }

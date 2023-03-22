@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace API.PCKCenter.model
+namespace PckStudio.API.PCKCenter.model
 {
     public class PCKCenterJSON
     {

@@ -1,16 +1,15 @@
-﻿using PckStudio.Classes.FileTypes;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System;
+using System.IO;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using MetroFramework.Forms;
-using RichPresenceClient;
+using PckStudio.Classes.Misc;
 using PckStudio.Forms.Additional_Popups.Loc;
+using OMI.Formats.Languages;
+using OMI.Workers.Language;
+using OMI.Formats.Pck;
 
 namespace PckStudio.Forms.Editor
 {
@@ -18,13 +17,17 @@ namespace PckStudio.Forms.Editor
     {
 		DataTable tbl;
 		LOCFile currentLoc;
-		bool wasModified = false;
-		public bool WasModified => wasModified;
+		PckFile.FileData _file;
 
-		public LOCEditor(LOCFile loc)
+		public LOCEditor(PckFile.FileData file)
 		{
 			InitializeComponent();
-			currentLoc = loc;
+			_file = file;
+            using (var ms = new MemoryStream(file.Data))
+            {
+				var reader = new LOCFileReader();
+                currentLoc = reader.FromStream(ms);
+            }
 			tbl = new DataTable();
 			tbl.Columns.Add(new DataColumn("Language") { ReadOnly = true });
 			tbl.Columns.Add("Display Name");
@@ -39,11 +42,6 @@ namespace PckStudio.Forms.Editor
 			foreach(string locKey in currentLoc.LocKeys.Keys)
 				treeViewLocKeys.Nodes.Add(locKey);
 		}
-
-        private void LOCEditor_FormClosing(object sender, FormClosingEventArgs e)
-        {
-			RPC.SetPresence("An Open Source .PCK File Editor", "Program by PhoenixARC");
-        }
 
 		private void treeViewLocKeys_AfterSelect(object sender, TreeViewEventArgs e)
 		{
@@ -68,7 +66,6 @@ namespace PckStudio.Forms.Editor
 						currentLoc.AddLocKey(prompt.NewText, ""))
 					{
 						treeViewLocKeys.Nodes.Add(prompt.NewText);
-						wasModified = true;
 					}
 				}
         }
@@ -78,7 +75,6 @@ namespace PckStudio.Forms.Editor
 			if (treeViewLocKeys.SelectedNode is TreeNode t && currentLoc.RemoveLocKey(t.Text))
 			{
 				treeViewLocKeys.SelectedNode.Remove();
-				wasModified = true;
             }
 		}
 
@@ -91,7 +87,6 @@ namespace PckStudio.Forms.Editor
 				return;
             }
 			currentLoc.SetLocEntry(treeViewLocKeys.SelectedNode.Text, tbl.Rows[e.RowIndex][0].ToString(), tbl.Rows[e.RowIndex][1].ToString());
-			wasModified = true;
         }
 
         private void treeView1_KeyDown(object sender, KeyEventArgs e)
@@ -108,7 +103,6 @@ namespace PckStudio.Forms.Editor
             }
 
 			currentLoc.SetLocEntry(treeViewLocKeys.SelectedNode.Text, textBoxReplaceAll.Text);
-			wasModified = true;
 		}
 
         private void LOCEditor_Resize(object sender, EventArgs e)
@@ -142,8 +136,17 @@ namespace PckStudio.Forms.Editor
 				{
 					currentLoc.AddLanguage(dialog.SelectedLanguage);
 					ReloadTranslationTable();
-					wasModified = true;
 				}
 		}
-    }
+
+		private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+            using (var ms = new MemoryStream())
+            {
+                LOCFileWriter.Write(ms, currentLoc);
+                _file.SetData(ms.ToArray());
+            }
+			DialogResult = DialogResult.OK;
+        }
+	}
 }

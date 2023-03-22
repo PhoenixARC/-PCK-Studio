@@ -2,7 +2,7 @@
 
 namespace PckStudio.Models
 {
-	[global::System.Flags]
+	[Flags]
 	public enum Effects : byte
 	{
 		None = 0,

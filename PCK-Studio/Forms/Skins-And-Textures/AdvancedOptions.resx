@@ -117,28 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="contextMenuStrip2.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="contextMenuStrip2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>138, 48</value>
-  </data>
-  <data name="&gt;&gt;contextMenuStrip2.Name" xml:space="preserve">
-    <value>contextMenuStrip2</value>
-  </data>
-  <data name="&gt;&gt;contextMenuStrip2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="treeMeta.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 63</value>
+    <value>23, 63</value>
   </data>
   <data name="treeMeta.Size" type="System.Drawing.Size, System.Drawing">
-    <value>291, 142</value>
+    <value>272, 142</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="treeMeta.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+    <value>13</value>
   </data>
   <data name="&gt;&gt;treeMeta.Name" xml:space="preserve">
     <value>treeMeta</value>
@@ -150,36 +138,10 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;treeMeta.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>7</value>
   </data>
-  <data name="addEntryToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vAAADrwBlbxySQAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xMkMEa+wAAABSSURBVDhP5c0x
-        DsAgDENRxt7/wmkNSpRGf0CCCZAegxNMM7MlGMp3dIU6dxhKf/QMNxRogeQC8ivw5Vn7C0heJlFA+kL5
-        jWAohxRkde4wnGftBS90axNmphIGAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="addEntryToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>137, 22</value>
-  </data>
-  <data name="addEntryToolStripMenuItem.Text" xml:space="preserve">
-    <value>Add Entry</value>
-  </data>
-  <data name="deleteEntryToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vAAADrwBlbxySQAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xMkMEa+wAAACESURBVDhPlY0B
-        DoAgDAP3Dj7r09WTkqGUgJfUxtrOmHFEnL0U76FBqW8PZXmk/9uONEsIb3gsNRzoL/+R5hWC759mGsbQ
-        DnzdZbhmiSvhLsM1S1wJdxmuWeJKuMtwzRJXwl2Ga5a4Eu4yXLPElXCX4Zol/WCl6YGdI62n2Zv2cSXV
-        byIunLh7mD2ySLcAAAAASUVORK5CYII=
-</value>
-  </data>
-  <data name="deleteEntryToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>137, 22</value>
-  </data>
-  <data name="deleteEntryToolStripMenuItem.Text" xml:space="preserve">
-    <value>Delete Entry</value>
+  <data name="comboBox1.ItemHeight" type="System.Int32, mscorlib">
+    <value>23</value>
   </data>
   <data name="comboBox1.Items" xml:space="preserve">
     <value>All</value>
@@ -194,10 +156,10 @@
     <value>PNG Files</value>
   </data>
   <data name="comboBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>71, 256</value>
+    <value>71, 254</value>
   </data>
   <data name="comboBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>82, 21</value>
+    <value>82, 29</value>
   </data>
   <data name="comboBox1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -206,19 +168,19 @@
     <value>comboBox1</value>
   </data>
   <data name="&gt;&gt;comboBox1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>MetroFramework.Controls.MetroComboBox, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
   </data>
   <data name="&gt;&gt;comboBox1.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
   <data name="&gt;&gt;comboBox1.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>6</value>
   </data>
   <data name="label1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>20, 259</value>
+    <value>20, 260</value>
   </data>
   <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
     <value>45, 13</value>
@@ -239,41 +201,37 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>5</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="button1.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Popup</value>
+  <data name="applyButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>228, 260</value>
   </data>
-  <data name="button1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>228, 254</value>
-  </data>
-  <data name="button1.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="applyButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
   </data>
-  <data name="button1.TabIndex" type="System.Int32, mscorlib">
+  <data name="applyButton.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
-  <data name="button1.Text" xml:space="preserve">
+  <data name="applyButton.Text" xml:space="preserve">
     <value>Apply</value>
   </data>
-  <data name="&gt;&gt;button1.Name" xml:space="preserve">
-    <value>button1</value>
+  <data name="&gt;&gt;applyButton.Name" xml:space="preserve">
+    <value>applyButton</value>
   </data>
-  <data name="&gt;&gt;button1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;applyButton.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroButton, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
   </data>
-  <data name="&gt;&gt;button1.Parent" xml:space="preserve">
+  <data name="&gt;&gt;applyButton.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;button1.ZOrder" xml:space="preserve">
-    <value>5</value>
+  <data name="&gt;&gt;applyButton.ZOrder" xml:space="preserve">
+    <value>4</value>
   </data>
   <data name="label2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>208, 212</value>
+    <value>208, 208</value>
   </data>
   <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
     <value>57, 13</value>
@@ -300,7 +258,7 @@
     <value>True</value>
   </data>
   <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>52, 212</value>
+    <value>53, 208</value>
   </data>
   <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
     <value>58, 13</value>
@@ -323,47 +281,84 @@
   <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="textBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>164, 228</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="resource.Image" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
-  <data name="textBox1.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="resource.Location" type="System.Drawing.Point, System.Drawing">
+    <value>121, 2</value>
+  </data>
+  <data name="resource.Size" type="System.Drawing.Size, System.Drawing">
+    <value>15, 15</value>
+  </data>
+  <data name="resource.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="resource.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="entryDataTextBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>164, 224</value>
+  </data>
+  <data name="entryDataTextBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>139, 20</value>
   </data>
-  <data name="textBox1.TabIndex" type="System.Int32, mscorlib">
+  <data name="entryDataTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
   </data>
-  <data name="&gt;&gt;textBox1.Name" xml:space="preserve">
-    <value>textBox1</value>
+  <data name="&gt;&gt;entryDataTextBox.Name" xml:space="preserve">
+    <value>entryDataTextBox</value>
   </data>
-  <data name="&gt;&gt;textBox1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;entryDataTextBox.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroTextBox, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
   </data>
-  <data name="&gt;&gt;textBox1.Parent" xml:space="preserve">
+  <data name="&gt;&gt;entryDataTextBox.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;textBox1.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="comboBox2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 227</value>
-  </data>
-  <data name="comboBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>141, 21</value>
-  </data>
-  <data name="comboBox2.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
-  </data>
-  <data name="&gt;&gt;comboBox2.Name" xml:space="preserve">
-    <value>comboBox2</value>
-  </data>
-  <data name="&gt;&gt;comboBox2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;comboBox2.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;comboBox2.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;entryDataTextBox.ZOrder" xml:space="preserve">
     <value>3</value>
+  </data>
+  <data name="resource.Image1" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="resource.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="resource.Location1" type="System.Drawing.Point, System.Drawing">
+    <value>121, 2</value>
+  </data>
+  <data name="resource.Size1" type="System.Drawing.Size, System.Drawing">
+    <value>15, 15</value>
+  </data>
+  <data name="resource.TabIndex1" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="resource.Visible1" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="entryTypeTextBox.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="entryTypeTextBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>19, 224</value>
+  </data>
+  <data name="entryTypeTextBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>139, 20</value>
+  </data>
+  <data name="entryTypeTextBox.TabIndex" type="System.Int32, mscorlib">
+    <value>14</value>
+  </data>
+  <data name="&gt;&gt;entryTypeTextBox.Name" xml:space="preserve">
+    <value>entryTypeTextBox</value>
+  </data>
+  <data name="&gt;&gt;entryTypeTextBox.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroTextBox, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;entryTypeTextBox.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;entryTypeTextBox.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -372,7 +367,7 @@
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>315, 283</value>
+    <value>318, 296</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -2099,23 +2094,17 @@
         AABJRU5ErkJggg==
 </value>
   </data>
+  <data name="$this.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>318, 296</value>
+  </data>
+  <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>318, 296</value>
+  </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterParent</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Advanced</value>
-  </data>
-  <data name="&gt;&gt;addEntryToolStripMenuItem.Name" xml:space="preserve">
-    <value>addEntryToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;addEntryToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;deleteEntryToolStripMenuItem.Name" xml:space="preserve">
-    <value>deleteEntryToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;deleteEntryToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>AdvancedOptions</value>

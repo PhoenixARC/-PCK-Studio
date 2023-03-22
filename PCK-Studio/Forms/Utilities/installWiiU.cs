@@ -1,20 +1,20 @@
-﻿using FileTransferProtocolLib;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
+
 using PckStudio.Classes.FileTypes;
-using PckStudio.Classes.IO;
-using PckStudio.Classes.IO.ARC;
 using PckStudio.Classes.IO.PCK;
+using PckStudio.Classes.Misc;
+using OMI.Formats.Archive;
+using OMI.Workers.Archive;
+using OMI.Workers.Pck;
+using OMI.Formats.Pck;
 
 namespace PckStudio.Forms
 {
@@ -108,7 +108,7 @@ namespace PckStudio.Forms
             }
         }
         List<pckDir> pcks = new List<pckDir>();
-        PCKFile currentPCK = null;
+        PckFile currentPCK = null;
 
         private void updateDatabase()
         {
@@ -166,7 +166,6 @@ namespace PckStudio.Forms
 
         private void loadPcks()
         {
-
             string region = "";
             if (radioButtonEur.Checked)
             {
@@ -204,7 +203,6 @@ namespace PckStudio.Forms
 
         private void buttonServerToggle_Click(object sender, EventArgs e)
         {
-            string mode = "";
             if (serverOn == false)
             {
                 //Makes sure user typed in their ip
@@ -217,7 +215,7 @@ namespace PckStudio.Forms
                 //Turns Server On
                 try
                 {
-                    buttonMode(mode = "loading");
+                    buttonMode("loading");
 
                     ServicePointManager.Expect100Continue = true;
 
@@ -229,7 +227,7 @@ namespace PckStudio.Forms
                     request.Timeout = 1200000;
 
                     ServicePoint sp = request.ServicePoint;
-                    Console.WriteLine("ServicePoint connections = {0}.", sp.ConnectionLimit);
+                    Debug.WriteLine("ServicePoint connections = {0}.", sp.ConnectionLimit);
                     sp.ConnectionLimit = 1;
 
                     using (var response = (FtpWebResponse)request.GetResponse())
@@ -283,11 +281,11 @@ namespace PckStudio.Forms
                         }
                     }
 
-                    buttonMode(mode = "stop");
+                    buttonMode("stop");
                 }
                 catch (Exception disc)
                 {
-                    buttonMode(mode = "start");
+                    buttonMode("start");
                     MessageBox.Show(disc.ToString());
                 }
             }
@@ -297,7 +295,7 @@ namespace PckStudio.Forms
                 listViewPCKS.Items.Clear();
                 try
                 {
-                    buttonMode(mode = "start");
+                    buttonMode("start");
                 }
                 catch (Exception disc)
                 {
@@ -328,10 +326,10 @@ namespace PckStudio.Forms
 
         private void listViewPCKS_MouseDown(object sender, MouseEventArgs e)
         {
-            ListViewHitTestInfo HI = listViewPCKS.HitTest(e.Location);
+            ListViewHitTestInfo hitTestInfo = listViewPCKS.HitTest(e.Location);
             if (e.Button == MouseButtons.Right)
             {
-                if (HI.Location == ListViewHitTestLocations.None)
+                if (hitTestInfo.Location == ListViewHitTestLocations.None)
                 {
                 }
                 else
@@ -352,8 +350,8 @@ namespace PckStudio.Forms
                 
                 if (openPCK.ShowDialog() == DialogResult.OK)
                 {
-                    FTP client = new FTP("ftp://" + textBoxHost.Text, "", "a3262443");
-                    client.UploadFile(openPCK.FileName, dlcPath + "/" + listViewPCKS.SelectedItems[0].Text + "/" + listViewPCKS.SelectedItems[0].Tag.ToString());
+                    using (FTPClient client = new FTPClient("ftp://" + textBoxHost.Text, "", "a3262443"))
+                        client.UploadFile(openPCK.FileName, dlcPath + "/" + listViewPCKS.SelectedItems[0].Text + "/" + listViewPCKS.SelectedItems[0].Tag.ToString());
                     if(TextBoxPackImage.Text != "")
                     {
                         string PackID = GetPackID(openPCK.FileName);
@@ -375,7 +373,7 @@ namespace PckStudio.Forms
 
         private void buttonInstall_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Replace with " + Path.GetFileNameWithoutExtension(mod) + "?", "Install Mod",MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if (MessageBox.Show("Replace with " + Path.GetFileNameWithoutExtension(mod) + "?", "Install Mod", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 if (!Directory.Exists(dlcPath + pcks[listViewPCKS.SelectedItems[0].Index].folder + "/"))
                 {
@@ -417,8 +415,8 @@ namespace PckStudio.Forms
             if (listViewPCKS.SelectedItems.Count != 0)
             {
                 buttonMode("loading");
-                FTP client = new FTP("ftp://" + textBoxHost.Text, "", "a3262443");
-                client.UploadFile(mod, dlcPath + "/" + listViewPCKS.SelectedItems[0].Text + "/" + listViewPCKS.SelectedItems[0].Tag.ToString());
+                using (FTPClient client = new FTPClient("ftp://" + textBoxHost.Text, "", "a3262443"))
+                    client.UploadFile(mod, dlcPath + "/" + listViewPCKS.SelectedItems[0].Text + "/" + listViewPCKS.SelectedItems[0].Tag.ToString());
                 if (TextBoxPackImage.Text != "")
                 {
                     string PackID = GetPackID(mod);
@@ -434,17 +432,22 @@ namespace PckStudio.Forms
 
         private string GetPackID(string filename)
         {
-            var fs = File.OpenRead(filename);
-            currentPCK = PCKFileReader.Read(fs, false);
-            fs.Close();
-            return currentPCK.GetFile("0", PCKFile.FileData.FileType.InfoFile).properties.GetProperty("PACKID").Item2;
+            var reader = new PckFileReader();
+            currentPCK = reader.FromFile(filename);
+            if (currentPCK.TryGetFile("0", PckFile.FileData.FileType.InfoFile, out var file) &&
+                file.Properties.HasProperty("PACKID"))
+            {
+                file.Properties.GetProperty("PACKID");
+            }
+            throw new KeyNotFoundException();
         }
 
         private void GetARCFromConsole()
         {
-            FTP client = new FTP("ftp://" + textBoxHost.Text, "", "a3262443");
-            client.DownloadFile(dlcPath + "../../Common/Media/MediaWiiU.arc", Program.Appdata + "MediaWiiU.arc");
-            archive = ARCFileReader.Read(new MemoryStream(File.ReadAllBytes(Program.Appdata + "MediaWiiU.arc")));
+            using (FTPClient client = new FTPClient("ftp://" + textBoxHost.Text, "", "a3262443"))
+                client.DownloadFile(dlcPath + "../../Common/Media/MediaWiiU.arc", Program.AppData + "MediaWiiU.arc");
+            var reader = new ARCFileReader();
+            archive = reader.FromStream(new MemoryStream(File.ReadAllBytes(Program.AppData + "MediaWiiU.arc")));
         }
 
         private void ReplacePackImage(string PackID)
@@ -454,17 +457,22 @@ namespace PckStudio.Forms
             else
                 archive.Add("Graphics\\PackGraphics\\" + PackID + ".png", File.ReadAllBytes(TextBoxPackImage.Text));
         }
+
         private void SendARCToConsole()
         {
-            FTP client = new FTP("ftp://" + textBoxHost.Text, "", "a3262443");
-            MemoryStream ms = new MemoryStream();
-            ARCFileWriter.Write(ms, archive);
-            File.WriteAllBytes(Program.Appdata + "MediaWiiU.arc", ms.ToArray());
-            client.UploadFile(Program.Appdata + "MediaWiiU.arc", dlcPath + "../../Common/Media/MediaWiiU.arc");
-            archive.Clear();
-            currentPCK.Files.Clear();
-            currentPCK = null;
-            System.GC.Collect();
+            using (FTPClient client = new FTPClient("ftp://" + textBoxHost.Text, "", "a3262443"))
+            {
+                MemoryStream ms = new MemoryStream();
+                var writer = new ARCFileWriter(archive);
+                writer.WriteToStream(ms);
+                File.WriteAllBytes(Program.AppData + "MediaWiiU.arc", ms.ToArray());
+                client.UploadFile(Program.AppData + "MediaWiiU.arc", dlcPath + "../../Common/Media/MediaWiiU.arc");
+                archive.Clear();
+                currentPCK.Files.Clear();
+                currentPCK = null;
+                ms.Dispose();
+            }
+            GC.Collect();
         }
 
         private void PackImageSelection_Click(object sender, EventArgs e)

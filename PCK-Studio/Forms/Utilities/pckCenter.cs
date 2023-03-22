@@ -1,29 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Media.Imaging;
-using RichPresenceClient;
-using API.PCKCenter.model;
-using API.PCKCenter;
+using System.Diagnostics;
+using PckStudio.Classes.Misc;
+using PckStudio.API.PCKCenter.model;
+using PckStudio.API.PCKCenter;
 
 namespace PckStudio.Forms
 {
     public partial class pckCenter : MetroFramework.Forms.MetroForm
     {
         string[] mods;
-        string hosturl = "http://pckstudio.xyz/studio/PCK/api/";
-        string loadDirectory = "http://pckstudio.xyz/studio/PCK/api/pckCenterList.txt";
-        static string appData = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/PCK Studio/";
+        static string hosturl = Program.BaseAPIUrl;
+        static string loadDirectory = hosturl + "/pckCenterList.txt";
+        static string appData = Program.AppData;
         LocalActions LAct = new LocalActions();
-        string cacheDir;
+        string cacheDir = Program.AppDataCache + "/mods/";
 
         bool nobleLoaded = true;
         bool newLoaded = true;
@@ -37,8 +34,6 @@ namespace PckStudio.Forms
         {
             InitializeComponent();
             //listViewNav.SmallImageList = imgList;
-
-            cacheDir = appData + "\\cache\\mods\\";
 
             if (!Directory.Exists(cacheDir))
             {
@@ -265,7 +260,7 @@ namespace PckStudio.Forms
             }
 
             pckLayout.Enabled = false;
-            List<string> pckFiles = Directory.GetFiles(appData + "/PCK Center/myPcks/", "*.*", SearchOption.AllDirectories).Where(file => new string[] { ".pck" }.Contains(Path.GetExtension(file))).ToList();
+            List<string> pckFiles = Directory.GetFiles(appData + "/PCK-Center/myPcks/", "*.*", SearchOption.AllDirectories).Where(file => new string[] { ".pck" }.Contains(Path.GetExtension(file))).ToList();
             foreach (string pck in pckFiles)
             {
                 string pckName = "";
@@ -277,7 +272,7 @@ namespace PckStudio.Forms
                 string mod = Path.GetFileName(pck);
                 mod = Path.GetFileNameWithoutExtension(mod);
 
-                string[] parseDesc = File.ReadAllText(appData + "/PCK Center/myPcks/" + mod + ".desc").Split('\n');
+                string[] parseDesc = File.ReadAllText(appData + "/PCK-Center/myPcks/" + mod + ".desc").Split('\n');
                     pckName += parseDesc[0];
                     author += parseDesc[1];
                     desc += parseDesc[2];
@@ -285,7 +280,7 @@ namespace PckStudio.Forms
                     ad += parseDesc[4];
                 
                 
-                string filename = appData + "/PCK Center/myPcks/" + mod + ".png";
+                string filename = appData + "/PCK-Center/myPcks/" + mod + ".png";
 
                 Bitmap bmp = null;
                 using (FileStream memStream = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.Read))
@@ -317,7 +312,7 @@ namespace PckStudio.Forms
 
         private void pckCenter_Load(object sender, EventArgs e)
         {
-            Directory.CreateDirectory(appData + "/PCK Center/myPcks/");
+            Directory.CreateDirectory(appData + "/PCK-Center/myPcks/");
             reload(nobleLoaded);
             nobleLoaded = false;
 
@@ -328,7 +323,7 @@ namespace PckStudio.Forms
             }
             catch
             {
-                Console.WriteLine("ERROR WITH RPC");
+                Debug.WriteLine("ERROR WITH RPC");
             }
         }
         
@@ -339,6 +334,7 @@ namespace PckStudio.Forms
         private void pckLayout_MouseMove_1(object sender, MouseEventArgs e)
         {
         }
+
         //Down to Collection //Redownload //Yea
         private void pckLayout_MouseClick(object sender, MouseEventArgs e)
         {
@@ -356,9 +352,9 @@ namespace PckStudio.Forms
         private void buttonSubmit_Click(object sender, EventArgs e)
         {
             if(!isVita)
-            System.Diagnostics.Process.Start("mailto:phoenixarc.canarynotifs@gmail.com?subject=PCK%20Submission&body=Pack%20name(%E3%83%91%E3%83%83%E3%82%AF%E5%90%8D)%3A%0A%0Aauthor(%E8%91%97%E8%80%85)%3A%0A%0Adescription(%E8%AA%AC%E6%98%8E)%3A%0A%0Aimage(%E7%94%BB%E5%83%8F)%3A");
+                Process.Start("mailto:phoenixarc.canarynotifs@gmail.com?subject=PCK%20Submission&body=Pack%20name(%E3%83%91%E3%83%83%E3%82%AF%E5%90%8D)%3A%0A%0Aauthor(%E8%91%97%E8%80%85)%3A%0A%0Adescription(%E8%AA%AC%E6%98%8E)%3A%0A%0Aimage(%E7%94%BB%E5%83%8F)%3A");
             if(isVita)
-            System.Diagnostics.Process.Start("mailto:phoenixarc.canarynotifs@gmail.com?subject=PCK%20Submission--Vita--&body=Pack%20name(%E3%83%91%E3%83%83%E3%82%AF%E5%90%8D)%3A%0A%0Aauthor(%E8%91%97%E8%80%85)%3A%0A%0Adescription(%E8%AA%AC%E6%98%8E)%3A%0A%0Aimage(%E7%94%BB%E5%83%8F)%3A%3A%0A%0APack%20To%20Replace%3A%0A%0A");
+                Process.Start("mailto:phoenixarc.canarynotifs@gmail.com?subject=PCK%20Submission--Vita--&body=Pack%20name(%E3%83%91%E3%83%83%E3%82%AF%E5%90%8D)%3A%0A%0Aauthor(%E8%91%97%E8%80%85)%3A%0A%0Adescription(%E8%AA%AC%E6%98%8E)%3A%0A%0Aimage(%E7%94%BB%E5%83%8F)%3A%3A%0A%0APack%20To%20Replace%3A%0A%0A");
         }
 
         private void radioButtonTex_CheckedChanged(object sender, EventArgs e)
@@ -426,7 +422,7 @@ namespace PckStudio.Forms
 
         public PckPreview(string name, string author, string desc, string direct, string ad, Bitmap icon, int mode, string mod, MethodInvoker Reloader, bool vita, string packName) : base()
         {
-            this.reloader = Reloader;
+            reloader = Reloader;
             nameLabel.parentPreview = this;
             layout.parentPreview = this;
             this.name = name;
@@ -437,10 +433,10 @@ namespace PckStudio.Forms
             this.mode = mode;
             this.mod = mod;
             this.icon = icon;
-            this.IsVita = vita;
-            this.Pack = packName;
+            IsVita = vita;
+            Pack = packName;
             layout.BackColor = Color.White;
-            this.Size = new Size(250, 280);
+            Size = new Size(250, 280);
             nameLabel.Dock = DockStyle.Fill;
             nameLabel.Location = new Point(0,0);
             nameLabel.Size = new Size(230, 30);
@@ -451,7 +447,7 @@ namespace PckStudio.Forms
             iconBox.SizeMode = PictureBoxSizeMode.StretchImage;
             iconBox.Size = new Size(230, 230);
             layout.Margin = new Padding(0, 0, 0, 0);
-            this.Margin = new Padding(20, 15, 20, 15);
+            Margin = new Padding(20, 15, 20, 15);
             nameLabel.ForeColor = Color.Black;
             nameLabel.TextAlign = ContentAlignment.MiddleCenter;
             nameLabel.Font = new Font(nameLabel.Font.FontFamily, 14);
@@ -465,14 +461,7 @@ namespace PckStudio.Forms
 
         public void setHover(bool hover)
         {
-            if (hover)
-            {
-                layout.BackColor = Color.LightGray;
-            }
-            else
-            {
-                layout.BackColor = Color.White;
-            }
+            layout.BackColor = hover ? Color.LightGray : Color.White;
             layout.Refresh();
         }
         public void onClick()
@@ -483,6 +472,7 @@ namespace PckStudio.Forms
             pckCenterOpen openPck = new pckCenterOpen(name, author, desc, direct, ad, icon, mode, mod, reloader, IsVita, Pack);
             openPck.ShowDialog();
         }
+
         public void onDoubleClick()
         {
 

@@ -63,6 +63,26 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        public static byte[] _1_91_colours {
+            get {
+                object obj = ResourceManager.GetObject("_1_91_colours", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap AddTexture {
+            get {
+                object obj = ResourceManager.GetObject("AddTexture", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         public static byte[] apps {
             get {
                 object obj = ResourceManager.GetObject("apps", resourceCulture);
@@ -83,9 +103,9 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap bg1 {
+        public static System.Drawing.Bitmap BEHAVIOURS_ICON {
             get {
-                object obj = ResourceManager.GetObject("bg1", resourceCulture);
+                object obj = ResourceManager.GetObject("BEHAVIOURS_ICON", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -93,9 +113,9 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap bg2 {
+        public static System.Drawing.Bitmap bg1 {
             get {
-                object obj = ResourceManager.GetObject("bg2", resourceCulture);
+                object obj = ResourceManager.GetObject("bg1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -131,14 +151,40 @@ namespace PckStudio.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 6.5 [RELEASE]
-        /// - Audio Editor has been renamed to the Music Editor
-        /// - Music Editor now works with PSVita and PS4 files!
-        /// - Added a drag and drop feature for Binka files to the Music Editor to allow for efficient playlist building.
-        /// - You can now create a fresh Audio.pck file by using the &quot;Create audio.pck&quot; function, and this also includes PS4 and Vita!
-        /// - The categories in the Music Editor now sort themselves by category ID
-        /// - The categories in the Music Editor now have icons
-        /// - The Animation Editor  [rest of string was truncated]&quot;;.
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap blank {
+            get {
+                object obj = ResourceManager.GetObject("blank", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap CAPE_ICON {
+            get {
+                object obj = ResourceManager.GetObject("CAPE_ICON", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 7.0 (IN DEVELOPMENT)  
+        ///====================  
+        ///Some features may be completely missing or incomplete at this point in time!  
+        ///
+        ///-Added .3dst (3DS Texture) support  
+        ///-Semi-added Sub-Pck editing  
+        ///-Add an edit all properties tool item  
+        ///-Skin Preview has been improved  
+        ///-Added Pack Icon Injection into .arc file  
+        ///-Improved COL Editor  
+        ///-Massive codebase overhaul and optimization lead by miku-666 (aka NessieHax)!!!  
+        ///-Some UI redesigned by yaboiFoxx  
+        ///-Improved the changelog!  
+        ///-New icons for each o [rest of string was truncated]&quot;;.
         /// </summary>
         public static string CHANGELOG {
             get {
@@ -179,6 +225,26 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap COL_ICON {
+            get {
+                object obj = ResourceManager.GetObject("COL_ICON", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Comparison {
+            get {
+                object obj = ResourceManager.GetObject("Comparison", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap Del {
             get {
                 object obj = ResourceManager.GetObject("Del", resourceCulture);
@@ -193,6 +259,115 @@ namespace PckStudio.Properties {
             get {
                 object obj = ResourceManager.GetObject("discord", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap entities_sheet {
+            get {
+                object obj = ResourceManager.GetObject("entities_sheet", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap ENTITY_MATERIALS_ICON {
+            get {
+                object obj = ResourceManager.GetObject("ENTITY_MATERIALS_ICON", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///	&quot;COMMENT&quot;: &quot;Entity data research by NessieHax (Miku-666) and MattNL&quot;,
+        ///	&quot;entities&quot;: [
+        ///		{ &quot;area_effect_cloud&quot;: &quot;Area Effect Cloud / Particle&quot; },
+        ///		{ &quot;armor_stand&quot;: &quot;Armor Stand&quot; },
+        ///		{ &quot;arrow&quot;: &quot;Arrow&quot; },
+        ///		{ &quot;bat&quot;: &quot;Bat&quot; },
+        ///		{ &quot;blaze&quot;: &quot;Blaze&quot; },
+        ///		{ &quot;boat&quot;: &quot;Boat&quot; },
+        ///		{ &quot;cat&quot;: &quot;Cat (PS4 EXCLUSIVE)&quot; },
+        ///		{ &quot;cave_spider&quot;: &quot;Cave Spider&quot; },
+        ///		{ &quot;chest_minecart&quot;: &quot;Chest Minecart&quot; },
+        ///		{ &quot;chicken&quot;: &quot;Chicken&quot; },
+        ///		{ &quot;cod&quot;: &quot;Cod&quot; },
+        ///		{ &quot;commandblock_minecart&quot;: &quot;Command Block Minecart&quot; },
+        ///		{ &quot; [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string entityBehaviourData {
+            get {
+                return ResourceManager.GetString("entityBehaviourData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///	&quot;COMMENT&quot;: &quot;Entity data research by NessieHax (Miku-666) and MattNL&quot;,
+        ///	&quot;entities&quot;: [
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;bat&quot;: &quot;Bat&quot; },
+        ///		{ &quot;blaze_head&quot;: &quot;Blaze (Head Only)&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;cat&quot;: &quot;Cat (PS4 EXCLUSIVE)&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;drowned&quot;: &quot;Drowned&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;ender_dragon&quot;: &quot;Ender Dragon&quot; }, [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string entityMaterialData {
+            get {
+                return ResourceManager.GetString("entityMaterialData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///	&quot;COMMENT&quot;: &quot;Entity data research by NessieHax (Miku-666) and MattNL&quot;,
+        ///	&quot;entities&quot;: [
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;bat&quot;: &quot;Bat&quot; },
+        ///		{ &quot;blaze&quot;: &quot;Blaze&quot; },
+        ///		{ &quot;boat&quot;: &quot;Boat&quot; },
+        ///		{ &quot;cat&quot;: &quot;Cat (PS4 EXCLUSIVE)&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;chicken&quot;: &quot;Chicken&quot; },
+        ///		{ &quot;cod&quot;: &quot;Cod&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;cow&quot;: &quot;Cow&quot; },
+        ///		{ &quot;creeper&quot;: &quot;Creeper&quot; },
+        ///		{ &quot;dolphin&quot;: &quot;Dolphin&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;zombie.drowned&quot;: &quot;Drowned&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        /// [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string entityModelData {
+            get {
+                return ResourceManager.GetString("entityModelData", resourceCulture);
             }
         }
         
@@ -219,9 +394,39 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap GRF_ICON {
+            get {
+                object obj = ResourceManager.GetObject("GRF_ICON", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap GRH_ICON {
+            get {
+                object obj = ResourceManager.GetObject("GRH_ICON", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap IMAGE_ICON {
             get {
                 object obj = ResourceManager.GetObject("IMAGE_ICON", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap INFO_ICON {
+            get {
+                object obj = ResourceManager.GetObject("INFO_ICON", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -242,6 +447,16 @@ namespace PckStudio.Properties {
         public static System.Drawing.Bitmap LOC_ICON {
             get {
                 object obj = ResourceManager.GetObject("LOC_ICON", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap MODELS_ICON {
+            get {
+                object obj = ResourceManager.GetObject("MODELS_ICON", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -389,6 +604,26 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap SKIN_ICON {
+            get {
+                object obj = ResourceManager.GetObject("SKIN_ICON", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap SKINS_ICON {
+            get {
+                object obj = ResourceManager.GetObject("SKINS_ICON", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap slim_template {
             get {
                 object obj = ResourceManager.GetObject("slim_template", resourceCulture);
@@ -417,10 +652,30 @@ namespace PckStudio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap TEXTURE_ICON {
+            get {
+                object obj = ResourceManager.GetObject("TEXTURE_ICON", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap TexturePackIcon {
+            get {
+                object obj = ResourceManager.GetObject("TexturePackIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {
         ///	&quot;COMMENT_1&quot;: &quot;Tile data research by MattNL&quot;,
         ///	&quot;COMMENT_2&quot;: &quot;JSON conversion by PhoenixARC&quot;,
-        ///	&quot;Blocks&quot;: [
+        ///	&quot;blocks&quot;: [
         ///		{ &quot;grass_top&quot;: &quot;Grass Block (Top)&quot; },
         ///		{ &quot;stone&quot;: &quot;Stone&quot; },
         ///		{ &quot;dirt&quot;: &quot;Dirt&quot; },
@@ -437,6 +692,126 @@ namespace PckStudio.Properties {
         public static string tileData {
             get {
                 return ResourceManager.GetString("tileData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] tu12colours {
+            get {
+                object obj = ResourceManager.GetObject("tu12colours", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] tu13colours {
+            get {
+                object obj = ResourceManager.GetObject("tu13colours", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] tu14colours {
+            get {
+                object obj = ResourceManager.GetObject("tu14colours", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] tu19colours {
+            get {
+                object obj = ResourceManager.GetObject("tu19colours", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] tu31colours {
+            get {
+                object obj = ResourceManager.GetObject("tu31colours", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] tu32colours {
+            get {
+                object obj = ResourceManager.GetObject("tu32colours", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] tu43colours {
+            get {
+                object obj = ResourceManager.GetObject("tu43colours", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] tu46colours {
+            get {
+                object obj = ResourceManager.GetObject("tu46colours", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] tu51colours {
+            get {
+                object obj = ResourceManager.GetObject("tu51colours", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] tu53colours {
+            get {
+                object obj = ResourceManager.GetObject("tu53colours", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] tu54colours {
+            get {
+                object obj = ResourceManager.GetObject("tu54colours", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] tu69colours {
+            get {
+                object obj = ResourceManager.GetObject("tu69colours", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         

@@ -570,7 +570,7 @@
 			this.statueCheckBox.TabIndex = 3;
 			this.statueCheckBox.Text = "Statue of Liberty";
 			this.statueCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.toolTip.SetToolTip(this.statueCheckBox, "       The right arm is lifted likt the Statue of Liberty. Made for Angel of Libe" +
+			this.toolTip.SetToolTip(this.statueCheckBox, "       The right arm is lifted like the Statue of Liberty. Made for Angel of Libe" +
         "rty in the \"Doctor Who Volume I\" skin pack.       ");
 			this.statueCheckBox.UseSelectable = true;
 			// 
@@ -714,6 +714,8 @@
 			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.effectsGroup2);
 			this.Controls.Add(this.closeButton);
+			this.MaximumSize = new System.Drawing.Size(630, 554);
+			this.MinimizeBox = false;
 			this.MinimumSize = new System.Drawing.Size(630, 554);
 			this.Name = "ANIMEditor";
 			this.Style = MetroFramework.MetroColorStyle.Silver;

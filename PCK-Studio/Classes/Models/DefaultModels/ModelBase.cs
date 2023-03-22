@@ -7,57 +7,47 @@ namespace PckStudio.Models
 {
 	public abstract class ModelBase
 	{
-
-
 		public ModelBase()
-		{
-			textures = InitializeTextures();
-			foreach (Texture texture in textures)
-			{
-				texture.Updatedx += delegate(object sender, System.EventArgs args)
-				{
-					OnUpdated();
-				};
-			}
-		}
-
-
+		{ }
 
 		public Texture[] textures;
 
-		public  System.EventHandler Updated;
+		public EventHandler OnUpdate;
+        protected const float OverlayScale = 1.16f;
 
-		public Texture[] Textures
+        protected void Initialize()
 		{
-			get
-			{
-				return textures;
-			}
-		}
+            foreach (Texture texture in textures)
+            {
+                texture.Updatedx += (object sender, EventArgs args) => OnUpdated();
+            }
+        }
 
-		public  event System.EventHandler Updatedx
+		public Texture[] Textures => textures;
+
+		public event EventHandler Updatedx
 		{
 			add
 			{
-				System.EventHandler eventHandler = Updated;
-				System.EventHandler eventHandler2;
+				EventHandler eventHandler = OnUpdate;
+				EventHandler eventHandler2;
 				do
 				{
 					eventHandler2 = eventHandler;
-					System.EventHandler value2 = (System.EventHandler)System.Delegate.Combine(eventHandler2, value);
-					eventHandler = System.Threading.Interlocked.CompareExchange<System.EventHandler>(ref Updated, value2, eventHandler2);
+					EventHandler value2 = (EventHandler)Delegate.Combine(eventHandler2, value);
+					eventHandler = Interlocked.CompareExchange(ref OnUpdate, value2, eventHandler2);
 				}
 				while (eventHandler != eventHandler2);
 			}
 			remove
 			{
-				System.EventHandler eventHandler = Updated;
-				System.EventHandler eventHandler2;
+				EventHandler eventHandler = OnUpdate;
+				EventHandler eventHandler2;
 				do
 				{
 					eventHandler2 = eventHandler;
-					System.EventHandler value2 = (System.EventHandler)System.Delegate.Remove(eventHandler2, value);
-					eventHandler = System.Threading.Interlocked.CompareExchange<System.EventHandler>(ref Updated, value2, eventHandler2);
+					EventHandler value2 = (EventHandler)Delegate.Remove(eventHandler2, value);
+					eventHandler = Interlocked.CompareExchange(ref OnUpdate, value2, eventHandler2);
 				}
 				while (eventHandler != eventHandler2);
 			}
@@ -65,21 +55,12 @@ namespace PckStudio.Models
 
 		protected void OnUpdated()
 		{
-			if (Updated != null)
+			if (OnUpdate != null)
 			{
-				Updated(this, System.EventArgs.Empty);
+				OnUpdate(this, EventArgs.Empty);
 			}
 		}
 
-		protected abstract Texture[] InitializeTextures();
-
 		public abstract void AddToModelView(MinecraftModelView modelView);
-
-		[System.Runtime.CompilerServices.CompilerGenerated]
-		private void b__0(object sender, System.EventArgs args)
-		{
-			OnUpdated();
-		}
-
 	}
 }

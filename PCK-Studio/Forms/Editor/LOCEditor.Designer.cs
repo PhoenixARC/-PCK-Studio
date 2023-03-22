@@ -37,6 +37,9 @@
             this.GridContextMenu = new MetroFramework.Controls.MetroContextMenu(this.components);
             this.addLanguageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.removeLanguageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip = new System.Windows.Forms.MenuStrip();
+            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.locSort = new PckStudio.Forms.MyTablePanel();
             this.buttonReplaceAll = new System.Windows.Forms.Button();
             this.dataGridViewLocEntryData = new System.Windows.Forms.DataGridView();
@@ -44,6 +47,7 @@
             this.treeViewLocKeys = new System.Windows.Forms.TreeView();
             this.contextMenuStrip1.SuspendLayout();
             this.GridContextMenu.SuspendLayout();
+            this.menuStrip.SuspendLayout();
             this.locSort.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewLocEntryData)).BeginInit();
             this.SuspendLayout();
@@ -88,6 +92,28 @@
             this.removeLanguageToolStripMenuItem.Name = "removeLanguageToolStripMenuItem";
             resources.ApplyResources(this.removeLanguageToolStripMenuItem, "removeLanguageToolStripMenuItem");
             // 
+            // menuStrip
+            // 
+            this.menuStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
+            this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem});
+            resources.ApplyResources(this.menuStrip, "menuStrip");
+            this.menuStrip.Name = "menuStrip";
+            // 
+            // fileToolStripMenuItem
+            // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.saveToolStripMenuItem});
+            this.fileToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            resources.ApplyResources(this.fileToolStripMenuItem, "fileToolStripMenuItem");
+            // 
+            // saveToolStripMenuItem
+            // 
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            resources.ApplyResources(this.saveToolStripMenuItem, "saveToolStripMenuItem");
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+            // 
             // locSort
             // 
             this.locSort.AccessibleRole = System.Windows.Forms.AccessibleRole.Table;
@@ -110,6 +136,7 @@
             // 
             this.dataGridViewLocEntryData.AllowUserToAddRows = false;
             this.dataGridViewLocEntryData.AllowUserToDeleteRows = false;
+            this.dataGridViewLocEntryData.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
             this.dataGridViewLocEntryData.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -133,8 +160,11 @@
             // 
             // treeViewLocKeys
             // 
+            this.treeViewLocKeys.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
+            this.treeViewLocKeys.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.treeViewLocKeys.ContextMenuStrip = this.contextMenuStrip1;
             resources.ApplyResources(this.treeViewLocKeys, "treeViewLocKeys");
+            this.treeViewLocKeys.ForeColor = System.Drawing.SystemColors.MenuBar;
             this.treeViewLocKeys.LabelEdit = true;
             this.treeViewLocKeys.Name = "treeViewLocKeys";
             this.locSort.SetRowSpan(this.treeViewLocKeys, 2);
@@ -145,19 +175,22 @@
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.menuStrip);
             this.Controls.Add(this.locSort);
             this.Name = "LOCEditor";
             this.Style = MetroFramework.MetroColorStyle.Silver;
             this.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LOCEditor_FormClosing);
             this.Load += new System.EventHandler(this.LOCEditor_Load);
             this.Resize += new System.EventHandler(this.LOCEditor_Resize);
             this.contextMenuStrip1.ResumeLayout(false);
             this.GridContextMenu.ResumeLayout(false);
+            this.menuStrip.ResumeLayout(false);
+            this.menuStrip.PerformLayout();
             this.locSort.ResumeLayout(false);
             this.locSort.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewLocEntryData)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -174,5 +207,8 @@
         private MetroFramework.Controls.MetroContextMenu GridContextMenu;
         private System.Windows.Forms.ToolStripMenuItem addLanguageToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem removeLanguageToolStripMenuItem;
+        private System.Windows.Forms.MenuStrip menuStrip;
+        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
     }
 }

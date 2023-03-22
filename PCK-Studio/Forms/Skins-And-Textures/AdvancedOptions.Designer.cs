@@ -28,59 +28,36 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdvancedOptions));
             this.treeMeta = new System.Windows.Forms.TreeView();
-            this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.addEntryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.deleteEntryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.comboBox1 = new MetroFramework.Controls.MetroComboBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.applyButton = new MetroFramework.Controls.MetroButton();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.contextMenuStrip2.SuspendLayout();
+            this.entryDataTextBox = new MetroFramework.Controls.MetroTextBox();
+            this.entryTypeTextBox = new MetroFramework.Controls.MetroTextBox();
             this.SuspendLayout();
             // 
             // treeMeta
             // 
-            this.treeMeta.ContextMenuStrip = this.contextMenuStrip2;
             resources.ApplyResources(this.treeMeta, "treeMeta");
             this.treeMeta.Name = "treeMeta";
             this.treeMeta.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeMeta_AfterSelect);
             // 
-            // contextMenuStrip2
-            // 
-            this.contextMenuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addEntryToolStripMenuItem,
-            this.deleteEntryToolStripMenuItem});
-            this.contextMenuStrip2.Name = "contextMenuStrip1";
-            resources.ApplyResources(this.contextMenuStrip2, "contextMenuStrip2");
-            // 
-            // addEntryToolStripMenuItem
-            // 
-            resources.ApplyResources(this.addEntryToolStripMenuItem, "addEntryToolStripMenuItem");
-            this.addEntryToolStripMenuItem.Name = "addEntryToolStripMenuItem";
-            this.addEntryToolStripMenuItem.Click += new System.EventHandler(this.addEntryToolStripMenuItem_Click);
-            // 
-            // deleteEntryToolStripMenuItem
-            // 
-            resources.ApplyResources(this.deleteEntryToolStripMenuItem, "deleteEntryToolStripMenuItem");
-            this.deleteEntryToolStripMenuItem.Name = "deleteEntryToolStripMenuItem";
-            this.deleteEntryToolStripMenuItem.Click += new System.EventHandler(this.deleteEntryToolStripMenuItem_Click);
-            // 
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox1, "comboBox1");
             this.comboBox1.Items.AddRange(new object[] {
             resources.GetString("comboBox1.Items"),
             resources.GetString("comboBox1.Items1"),
             resources.GetString("comboBox1.Items2"),
             resources.GetString("comboBox1.Items3")});
-            resources.ApplyResources(this.comboBox1, "comboBox1");
             this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Style = MetroFramework.MetroColorStyle.Silver;
+            this.comboBox1.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.comboBox1.UseSelectable = true;
             // 
             // label1
             // 
@@ -88,13 +65,15 @@
             this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Name = "label1";
             // 
-            // button1
+            // applyButton
             // 
-            resources.ApplyResources(this.button1, "button1");
-            this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Name = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.applyButton.ForeColor = System.Drawing.Color.White;
+            resources.ApplyResources(this.applyButton, "applyButton");
+            this.applyButton.Name = "applyButton";
+            this.applyButton.Style = MetroFramework.MetroColorStyle.Silver;
+            this.applyButton.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.applyButton.UseSelectable = true;
+            this.applyButton.Click += new System.EventHandler(this.applyButton_Click);
             // 
             // label2
             // 
@@ -108,38 +87,87 @@
             this.label3.ForeColor = System.Drawing.Color.White;
             this.label3.Name = "label3";
             // 
-            // textBox1
+            // entryDataTextBox
             // 
-            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            resources.ApplyResources(this.textBox1, "textBox1");
-            this.textBox1.Name = "textBox1";
             // 
-            // comboBox2
             // 
-            this.comboBox2.FormattingEnabled = true;
-            resources.ApplyResources(this.comboBox2, "comboBox2");
-            this.comboBox2.Name = "comboBox2";
+            // 
+            this.entryDataTextBox.CustomButton.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image")));
+            this.entryDataTextBox.CustomButton.Location = ((System.Drawing.Point)(resources.GetObject("resource.Location")));
+            this.entryDataTextBox.CustomButton.Name = "";
+            this.entryDataTextBox.CustomButton.Size = ((System.Drawing.Size)(resources.GetObject("resource.Size")));
+            this.entryDataTextBox.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.entryDataTextBox.CustomButton.TabIndex = ((int)(resources.GetObject("resource.TabIndex")));
+            this.entryDataTextBox.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.entryDataTextBox.CustomButton.UseSelectable = true;
+            this.entryDataTextBox.CustomButton.Visible = ((bool)(resources.GetObject("resource.Visible")));
+            this.entryDataTextBox.Lines = new string[0];
+            resources.ApplyResources(this.entryDataTextBox, "entryDataTextBox");
+            this.entryDataTextBox.MaxLength = 32767;
+            this.entryDataTextBox.Name = "entryDataTextBox";
+            this.entryDataTextBox.PasswordChar = '\0';
+            this.entryDataTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.entryDataTextBox.SelectedText = "";
+            this.entryDataTextBox.SelectionLength = 0;
+            this.entryDataTextBox.SelectionStart = 0;
+            this.entryDataTextBox.ShortcutsEnabled = true;
+            this.entryDataTextBox.Style = MetroFramework.MetroColorStyle.Silver;
+            this.entryDataTextBox.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.entryDataTextBox.UseSelectable = true;
+            this.entryDataTextBox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.entryDataTextBox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            // 
+            // entryTypeTextBox
+            // 
+            // 
+            // 
+            // 
+            this.entryTypeTextBox.CustomButton.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image1")));
+            this.entryTypeTextBox.CustomButton.ImeMode = ((System.Windows.Forms.ImeMode)(resources.GetObject("resource.ImeMode")));
+            this.entryTypeTextBox.CustomButton.Location = ((System.Drawing.Point)(resources.GetObject("resource.Location1")));
+            this.entryTypeTextBox.CustomButton.Name = "";
+            this.entryTypeTextBox.CustomButton.Size = ((System.Drawing.Size)(resources.GetObject("resource.Size1")));
+            this.entryTypeTextBox.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.entryTypeTextBox.CustomButton.TabIndex = ((int)(resources.GetObject("resource.TabIndex1")));
+            this.entryTypeTextBox.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.entryTypeTextBox.CustomButton.UseSelectable = true;
+            this.entryTypeTextBox.CustomButton.Visible = ((bool)(resources.GetObject("resource.Visible1")));
+            resources.ApplyResources(this.entryTypeTextBox, "entryTypeTextBox");
+            this.entryTypeTextBox.Lines = new string[0];
+            this.entryTypeTextBox.MaxLength = 32767;
+            this.entryTypeTextBox.Name = "entryTypeTextBox";
+            this.entryTypeTextBox.PasswordChar = '\0';
+            this.entryTypeTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.entryTypeTextBox.SelectedText = "";
+            this.entryTypeTextBox.SelectionLength = 0;
+            this.entryTypeTextBox.SelectionStart = 0;
+            this.entryTypeTextBox.ShortcutsEnabled = true;
+            this.entryTypeTextBox.Style = MetroFramework.MetroColorStyle.Silver;
+            this.entryTypeTextBox.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.entryTypeTextBox.UseSelectable = true;
+            this.entryTypeTextBox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.entryTypeTextBox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
             // 
             // AdvancedOptions
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.entryTypeTextBox);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.comboBox2);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.entryDataTextBox);
+            this.Controls.Add(this.applyButton);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.treeMeta);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "AdvancedOptions";
             this.Resizable = false;
             this.ShadowType = MetroFramework.Forms.MetroFormShadowType.DropShadow;
             this.Style = MetroFramework.MetroColorStyle.Silver;
             this.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.contextMenuStrip2.ResumeLayout(false);
+            this.TopMost = true;
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -148,15 +176,12 @@
         #endregion
 
         private System.Windows.Forms.TreeView treeMeta;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private MetroFramework.Controls.MetroComboBox comboBox1;
+        private MetroFramework.Controls.MetroButton applyButton;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip2;
-        private System.Windows.Forms.ToolStripMenuItem addEntryToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem deleteEntryToolStripMenuItem;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private MetroFramework.Controls.MetroTextBox entryDataTextBox;
+        private MetroFramework.Controls.MetroTextBox entryTypeTextBox;
     }
 }

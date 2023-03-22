@@ -125,8 +125,34 @@
     <value>127, 8</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="addCategoryStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        vAAADrwBlbxySQAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xMkMEa+wAAABSSURBVDhP5c0x
+        DsAgDENRxt7/wmkNSpRGf0CCCZAegxNMM7MlGMp3dIU6dxhKf/QMNxRogeQC8ivw5Vn7C0heJlFA+kL5
+        jWAohxRkde4wnGftBS90axNmphIGAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="addCategoryStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>168, 22</value>
+  </data>
+  <data name="addCategoryStripMenuItem.Text" xml:space="preserve">
+    <value>Add Category</value>
+  </data>
+  <data name="removeCategoryStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>168, 22</value>
+  </data>
+  <data name="removeCategoryStripMenuItem.Text" xml:space="preserve">
+    <value>Remove Category</value>
+  </data>
+  <data name="changeCategoryToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>168, 22</value>
+  </data>
+  <data name="changeCategoryToolStripMenuItem.Text" xml:space="preserve">
+    <value>Set Category</value>
+  </data>
   <data name="contextMenuStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>169, 48</value>
+    <value>169, 70</value>
   </data>
   <data name="&gt;&gt;contextMenuStrip1.Name" xml:space="preserve">
     <value>contextMenuStrip1</value>
@@ -146,7 +172,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAADk
-        MAAAAk1TRnQBSQFMAgEBCQEAAWABAAFgAQABEAEAARABAAT/ASEBAAj/AUIBTQE2BwABNgMAASgDAAFA
+        MAAAAk1TRnQBSQFMAgEBCQEAAaABAAGgAQABEAEAARABAAT/ASEBAAj/AUIBTQE2BwABNgMAASgDAAFA
         AwABMAMAAQEBAAEgBgABMBIAAzgB/wM1Af8DNQH/AzMB/wMwAf8DLwH/Ay0B/wMtAf8DJAH/AzsB/wM4
         Af8DNQH/Ay0B/wMnAf8DNgH/AzIB/8AAAzgB/wN/Af8DeQH/A3kB/wN5Af8DcQH/A3EB/wN5Af8DeQH/
         A3EB/wNxAf8DcQH/A3kB/wN5Af8DfwH/AzIB/8AAAzIB/wN2Af8DsAH/A7AB/wOvAf8DrwH/A68B/wOo
@@ -384,37 +410,63 @@
   <data name="&gt;&gt;treeView1.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
-  <data name="addCategoryStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vAAADrwBlbxySQAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xMkMEa+wAAABSSURBVDhP5c0x
-        DsAgDENRxt7/wmkNSpRGf0CCCZAegxNMM7MlGMp3dIU6dxhKf/QMNxRogeQC8ivw5Vn7C0heJlFA+kL5
-        jWAohxRkde4wnGftBS90axNmphIGAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="addCategoryStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>168, 22</value>
-  </data>
-  <data name="addCategoryStripMenuItem.Text" xml:space="preserve">
-    <value>Add Category</value>
-  </data>
-  <data name="removeCategoryStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>168, 22</value>
-  </data>
-  <data name="removeCategoryStripMenuItem.Text" xml:space="preserve">
-    <value>Remove Category</value>
-  </data>
   <metadata name="menuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>19, 8</value>
   </metadata>
   <data name="menuStrip.AutoSize" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
+  <data name="saveToolStripMenuItem1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        vAAADrwBlbxySQAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4yMfEgaZUAAADfSURBVDhPYxg8
+        QLt++3yTGbf/Fm599P/Nh49wfPXxq/+rTt37f+Dak/8gOSBgAGEMANIMxGBFyAasPf/0v8GE8//z1t8C
+        y4HU4DIALIluwLpLL+HiMANAGKoNAWASCavv/n/57gPcgOvP3oENOXj7NViOoAFGU6791+k4ghWD5Aga
+        QCyGakMAkODcU89R/I8Ng9TgNADk14dPn/8/c+kqVgySgwUqVBsCwAx49urN/zsPHmPFIDmaGvAXJInN
+        38gYasBfqDYE0K7dOn/Wvut/sfkdGYPUgJI9VNuAAwYGAGn6yvdevWgPAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="saveToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>98, 22</value>
+  </data>
+  <data name="saveToolStripMenuItem1.Text" xml:space="preserve">
+    <value>Save</value>
+  </data>
   <data name="fileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>37, 20</value>
   </data>
   <data name="fileToolStripMenuItem.Text" xml:space="preserve">
     <value>File</value>
+  </data>
+  <data name="creditsEditorToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>220, 22</value>
+  </data>
+  <data name="creditsEditorToolStripMenuItem.Text" xml:space="preserve">
+    <value>Credits Editor</value>
+  </data>
+  <data name="deleteUnusedBINKAsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>220, 22</value>
+  </data>
+  <data name="deleteUnusedBINKAsToolStripMenuItem.Text" xml:space="preserve">
+    <value>Delete Unused BINKAs</value>
+  </data>
+  <data name="openDataFolderToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>220, 22</value>
+  </data>
+  <data name="openDataFolderToolStripMenuItem.Text" xml:space="preserve">
+    <value>Open Data Folder</value>
+  </data>
+  <data name="bulkReplaceExistingTracksToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>220, 22</value>
+  </data>
+  <data name="bulkReplaceExistingTracksToolStripMenuItem.Text" xml:space="preserve">
+    <value>Bulk Replace Existing Tracks</value>
+  </data>
+  <data name="organizeTracksToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>220, 22</value>
+  </data>
+  <data name="organizeTracksToolStripMenuItem.Text" xml:space="preserve">
+    <value>Organize Tracks</value>
   </data>
   <data name="toolsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>46, 20</value>
@@ -423,19 +475,19 @@
     <value>Tools</value>
   </data>
   <data name="howToAddSongsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>245, 22</value>
+    <value>243, 22</value>
   </data>
   <data name="howToAddSongsToolStripMenuItem.Text" xml:space="preserve">
     <value>How to add songs</value>
   </data>
-  <data name="whatIsEachCategoryToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>245, 22</value>
+  <data name="whatAreTheCategoriesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>243, 22</value>
   </data>
-  <data name="whatIsEachCategoryToolStripMenuItem.Text" xml:space="preserve">
-    <value>What is each category?</value>
+  <data name="whatAreTheCategoriesToolStripMenuItem.Text" xml:space="preserve">
+    <value>What are the categories?</value>
   </data>
   <data name="howToEditCreditsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>245, 22</value>
+    <value>243, 22</value>
   </data>
   <data name="howToEditCreditsToolStripMenuItem.Text" xml:space="preserve">
     <value>How to edit credits</value>
@@ -447,7 +499,7 @@
     <value>How to optimize the Data folder</value>
   </data>
   <data name="bINKACompressionToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>245, 22</value>
+    <value>243, 22</value>
   </data>
   <data name="bINKACompressionToolStripMenuItem.Text" xml:space="preserve">
     <value>BINKA Compression</value>
@@ -482,46 +534,38 @@
   <data name="&gt;&gt;menuStrip.ZOrder" xml:space="preserve">
     <value>7</value>
   </data>
-  <data name="saveToolStripMenuItem1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vAAADrwBlbxySQAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4yMfEgaZUAAADfSURBVDhPYxg8
-        QLt++3yTGbf/Fm599P/Nh49wfPXxq/+rTt37f+Dak/8gOSBgAGEMANIMxGBFyAasPf/0v8GE8//z1t8C
-        y4HU4DIALIluwLpLL+HiMANAGKoNAWASCavv/n/57gPcgOvP3oENOXj7NViOoAFGU6791+k4ghWD5Aga
-        QCyGakMAkODcU89R/I8Ng9TgNADk14dPn/8/c+kqVgySgwUqVBsCwAx49urN/zsPHmPFIDmaGvAXJInN
-        38gYasBfqDYE0K7dOn/Wvut/sfkdGYPUgJI9VNuAAwYGAGn6yvdevWgPAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="saveToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
-  </data>
-  <data name="saveToolStripMenuItem1.Text" xml:space="preserve">
-    <value>Save</value>
-  </data>
-  <data name="creditsEditorToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>220, 22</value>
-  </data>
-  <data name="creditsEditorToolStripMenuItem.Text" xml:space="preserve">
-    <value>Credits Editor</value>
-  </data>
-  <data name="deleteUnusedBINKAsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>220, 22</value>
-  </data>
-  <data name="deleteUnusedBINKAsToolStripMenuItem.Text" xml:space="preserve">
-    <value>Delete Unused BINKAs</value>
-  </data>
-  <data name="openDataFolderToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>220, 22</value>
-  </data>
-  <data name="openDataFolderToolStripMenuItem.Text" xml:space="preserve">
-    <value>Open Data Folder</value>
-  </data>
   <data name="treeView2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
   </data>
   <metadata name="contextMenuStrip2.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>282, 8</value>
   </metadata>
+  <data name="addEntryMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        vAAADrwBlbxySQAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xMkMEa+wAAABSSURBVDhP5c0x
+        DsAgDENRxt7/wmkNSpRGf0CCCZAegxNMM7MlGMp3dIU6dxhKf/QMNxRogeQC8ivw5Vn7C0heJlFA+kL5
+        jWAohxRkde4wnGftBS90axNmphIGAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="addEntryMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>173, 22</value>
+  </data>
+  <data name="addEntryMenuItem.Text" xml:space="preserve">
+    <value>Add Entry</value>
+  </data>
+  <data name="removeEntryMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>173, 22</value>
+  </data>
+  <data name="removeEntryMenuItem.Text" xml:space="preserve">
+    <value>Remove Entry</value>
+  </data>
+  <data name="verifyFileLocationToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>173, 22</value>
+  </data>
+  <data name="verifyFileLocationToolStripMenuItem.Text" xml:space="preserve">
+    <value>Verify File Location</value>
+  </data>
   <data name="contextMenuStrip2.Size" type="System.Drawing.Size, System.Drawing">
     <value>174, 70</value>
   </data>
@@ -552,32 +596,6 @@
   <data name="&gt;&gt;treeView2.ZOrder" xml:space="preserve">
     <value>6</value>
   </data>
-  <data name="addEntryMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vAAADrwBlbxySQAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xMkMEa+wAAABSSURBVDhP5c0x
-        DsAgDENRxt7/wmkNSpRGf0CCCZAegxNMM7MlGMp3dIU6dxhKf/QMNxRogeQC8ivw5Vn7C0heJlFA+kL5
-        jWAohxRkde4wnGftBS90axNmphIGAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="addEntryMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>173, 22</value>
-  </data>
-  <data name="addEntryMenuItem.Text" xml:space="preserve">
-    <value>Add Entry</value>
-  </data>
-  <data name="removeEntryMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>173, 22</value>
-  </data>
-  <data name="removeEntryMenuItem.Text" xml:space="preserve">
-    <value>Remove Entry</value>
-  </data>
-  <data name="verifyFileLocationToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>173, 22</value>
-  </data>
-  <data name="verifyFileLocationToolStripMenuItem.Text" xml:space="preserve">
-    <value>Verify File Location</value>
-  </data>
   <data name="playOverworldInCreative.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -592,6 +610,9 @@
   </data>
   <data name="playOverworldInCreative.Text" xml:space="preserve">
     <value>Play overworld songs in Creative</value>
+  </data>
+  <data name="playOverworldInCreative.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="&gt;&gt;playOverworldInCreative.Name" xml:space="preserve">
     <value>playOverworldInCreative</value>
@@ -653,12 +674,6 @@
   <data name="&gt;&gt;metroLabel1.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="bulkReplaceExistingTracksToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>220, 22</value>
-  </data>
-  <data name="bulkReplaceExistingTracksToolStripMenuItem.Text" xml:space="preserve">
-    <value>Bulk Replace Existing Tracks</value>
-  </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -669,6 +684,9 @@
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>450, 330</value>
+  </data>
+  <data name="$this.MaximumSize" type="System.Drawing.Size, System.Drawing">
     <value>450, 330</value>
   </data>
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
@@ -687,6 +705,12 @@
     <value>removeCategoryStripMenuItem</value>
   </data>
   <data name="&gt;&gt;removeCategoryStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;changeCategoryToolStripMenuItem.Name" xml:space="preserve">
+    <value>changeCategoryToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;changeCategoryToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;catImages.Name" xml:space="preserve">
@@ -731,6 +755,18 @@
   <data name="&gt;&gt;openDataFolderToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;bulkReplaceExistingTracksToolStripMenuItem.Name" xml:space="preserve">
+    <value>bulkReplaceExistingTracksToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;bulkReplaceExistingTracksToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;organizeTracksToolStripMenuItem.Name" xml:space="preserve">
+    <value>organizeTracksToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;organizeTracksToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;helpToolStripMenuItem.Name" xml:space="preserve">
     <value>helpToolStripMenuItem</value>
   </data>
@@ -743,10 +779,10 @@
   <data name="&gt;&gt;howToAddSongsToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;whatIsEachCategoryToolStripMenuItem.Name" xml:space="preserve">
-    <value>whatIsEachCategoryToolStripMenuItem</value>
+  <data name="&gt;&gt;whatAreTheCategoriesToolStripMenuItem.Name" xml:space="preserve">
+    <value>whatAreTheCategoriesToolStripMenuItem</value>
   </data>
-  <data name="&gt;&gt;whatIsEachCategoryToolStripMenuItem.Type" xml:space="preserve">
+  <data name="&gt;&gt;whatAreTheCategoriesToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;howToEditCreditsToolStripMenuItem.Name" xml:space="preserve">
@@ -783,12 +819,6 @@
     <value>verifyFileLocationToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;verifyFileLocationToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bulkReplaceExistingTracksToolStripMenuItem.Name" xml:space="preserve">
-    <value>bulkReplaceExistingTracksToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;bulkReplaceExistingTracksToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">

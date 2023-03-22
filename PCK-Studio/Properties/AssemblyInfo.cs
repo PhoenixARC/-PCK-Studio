@@ -11,9 +11,8 @@ using System.Security.Permissions;
 [assembly: AssemblyDescription("A Minecraft Legacy Console .pck Editor")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Nobledez & PhoenixARC")]
-[assembly: AssemblyProduct("PCK Studio")]
+[assembly: AssemblyProduct("PCK-Studio")]
 [assembly: AssemblyCopyright("Copyright ©  2021")]
-[assembly: AssemblyTrademark("PCK Studio")]
 [assembly: AssemblyCulture("")]
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 

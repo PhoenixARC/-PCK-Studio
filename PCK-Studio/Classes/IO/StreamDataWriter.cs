@@ -1,4 +1,21 @@
-﻿using System;
+﻿/* Copyright (c) 2022-present miku-666
+ * This software is provided 'as-is', without any express or implied
+ * warranty. In no event will the authors be held liable for any damages
+ * arising from the use of this software.
+ * 
+ * Permission is granted to anyone to use this software for any purpose,
+ * including commercial applications, and to alter it and redistribute it
+ * freely, subject to the following restrictions:
+ * 
+ * 1.The origin of this software must not be misrepresented; you must not
+ *    claim that you wrote the original software. If you use this software
+ *    in a product, an acknowledgment in the product documentation would be
+ *    appreciated but is not required.
+ * 2. Altered source versions must be plainly marked as such, and must not be
+ *    misrepresented as being the original software.
+ * 3. This notice may not be removed or altered from any source distribution.
+**/
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,7 +24,7 @@ using System.Threading.Tasks;
 
 namespace PckStudio.Classes.IO
 {
-    internal class StreamDataWriter
+    public abstract class StreamDataWriter
     {
         private static bool useLittleEndian;
         protected static bool IsUsingLittleEndian => useLittleEndian;
@@ -15,6 +32,13 @@ namespace PckStudio.Classes.IO
         protected StreamDataWriter(bool littleEndian)
         {
             useLittleEndian = littleEndian;
+        }
+
+        protected abstract void WriteToStream(Stream stream);
+
+        protected static void WriteBool(Stream stream, bool state)
+        {
+            stream.WriteByte((byte)(state ? 1 : 0));
         }
 
         protected static void WriteUShort(Stream stream, ushort value) => WriteShort(stream, (short)value);
@@ -54,5 +78,12 @@ namespace PckStudio.Classes.IO
             stream.Write(bytes, 0, count);
         }
 
+        protected static void WriteFloat(Stream stream, float value)
+        {
+            byte[] buffer = BitConverter.GetBytes(value);
+            if (BitConverter.IsLittleEndian && !useLittleEndian)
+                Array.Reverse(buffer);
+            WriteBytes(stream, buffer, 4);
+        }
     }
 }

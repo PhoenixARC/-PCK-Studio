@@ -1,21 +1,22 @@
 ﻿using System;
+using System.Drawing;
 
 namespace PckStudio.Models
 {
 	public abstract class Object3D
 	{
-		public abstract global::System.Drawing.Image Image { set; }
+		public abstract Image Image { set; }
 
 		public float Angle1
 		{
 			get
 			{
-				return this.angle1;
+				return angle1;
 			}
 			set
 			{
-				this.angle1 = value;
-				this.UpdateRotation();
+				angle1 = value;
+				OnUpdateRotation();
 			}
 		}
 
@@ -23,12 +24,12 @@ namespace PckStudio.Models
 		{
 			get
 			{
-				return this.angle2;
+				return angle2;
 			}
 			set
 			{
-				this.angle2 = value;
-				this.UpdateRotation();
+				angle2 = value;
+				OnUpdateRotation();
 			}
 		}
 
@@ -36,11 +37,11 @@ namespace PckStudio.Models
 		{
 			get
 			{
-				return this.minAngle1;
+				return minAngle1;
 			}
 			set
 			{
-				this.minAngle1 = value;
+				minAngle1 = value;
 			}
 		}
 
@@ -48,11 +49,11 @@ namespace PckStudio.Models
 		{
 			get
 			{
-				return this.minAngle2;
+				return minAngle2;
 			}
 			set
 			{
-				this.minAngle2 = value;
+				minAngle2 = value;
 			}
 		}
 
@@ -60,11 +61,11 @@ namespace PckStudio.Models
 		{
 			get
 			{
-				return this.maxAngle1;
+				return maxAngle1;
 			}
 			set
 			{
-				this.maxAngle1 = value;
+				maxAngle1 = value;
 			}
 		}
 
@@ -72,11 +73,11 @@ namespace PckStudio.Models
 		{
 			get
 			{
-				return this.maxAngle2;
+				return maxAngle2;
 			}
 			set
 			{
-				this.maxAngle2 = value;
+				maxAngle2 = value;
 			}
 		}
 
@@ -84,12 +85,12 @@ namespace PckStudio.Models
 		{
 			get
 			{
-				return this.maxAngle1 - this.minAngle1;
+				return maxAngle1 - minAngle1;
 			}
 			set
 			{
-				this.minAngle1 = this.angle1 - value / 2f;
-				this.maxAngle1 = this.angle1 + value / 2f;
+				minAngle1 = angle1 - value / 2f;
+				maxAngle1 = angle1 + value / 2f;
 			}
 		}
 
@@ -97,12 +98,12 @@ namespace PckStudio.Models
 		{
 			get
 			{
-				return this.maxAngle2 - this.minAngle2;
+				return maxAngle2 - minAngle2;
 			}
 			set
 			{
-				this.minAngle2 = this.angle2 - value / 2f;
-				this.maxAngle2 = this.angle2 + value / 2f;
+				minAngle2 = angle2 - value / 2f;
+				maxAngle2 = angle2 + value / 2f;
 			}
 		}
 
@@ -110,11 +111,11 @@ namespace PckStudio.Models
 		{
 			get
 			{
-				return this.minAngle1 / 0.0174532924f;
+				return minAngle1 / PIby180;
 			}
 			set
 			{
-				this.minAngle1 = value * 0.0174532924f;
+				minAngle1 = value * PIby180;
 			}
 		}
 
@@ -122,11 +123,11 @@ namespace PckStudio.Models
 		{
 			get
 			{
-				return this.minAngle2 / 0.0174532924f;
+				return minAngle2 / PIby180;
 			}
 			set
 			{
-				this.minAngle2 = value * 0.0174532924f;
+				minAngle2 = value * PIby180;
 			}
 		}
 
@@ -134,11 +135,11 @@ namespace PckStudio.Models
 		{
 			get
 			{
-				return this.maxAngle1 / 0.0174532924f;
+				return maxAngle1 / PIby180;
 			}
 			set
 			{
-				this.maxAngle1 = value * 0.0174532924f;
+				maxAngle1 = value * PIby180;
 			}
 		}
 
@@ -146,11 +147,11 @@ namespace PckStudio.Models
 		{
 			get
 			{
-				return this.maxAngle2 / 0.0174532924f;
+				return maxAngle2 / PIby180;
 			}
 			set
 			{
-				this.maxAngle2 = value * 0.0174532924f;
+				maxAngle2 = value * PIby180;
 			}
 		}
 
@@ -158,11 +159,11 @@ namespace PckStudio.Models
 		{
 			get
 			{
-				return this.AngleRange1 / 0.0174532924f;
+				return AngleRange1 / PIby180;
 			}
 			set
 			{
-				this.AngleRange1 = value * 0.0174532924f;
+				AngleRange1 = value * PIby180;
 			}
 		}
 
@@ -170,11 +171,11 @@ namespace PckStudio.Models
 		{
 			get
 			{
-				return this.AngleRange2 / 0.0174532924f;
+				return AngleRange2 / PIby180;
 			}
 			set
 			{
-				this.AngleRange2 = value * 0.0174532924f;
+				AngleRange2 = value * PIby180;
 			}
 		}
 
@@ -182,116 +183,116 @@ namespace PckStudio.Models
 		{
 			get
 			{
-				return this.scaleTransformation.M11;
+				return scaleTransformation.M11;
 			}
 			set
 			{
-				this.scaleTransformation = global::PckStudio.Models.Matrix3D.CreateScale(value);
-				this.localTransformation = this.positionTranslation * this.localRotation * this.originTranslation * this.scaleTransformation;
+				scaleTransformation = Matrix3D.CreateScale(value);
+				UpdateRotation();
 			}
 		}
 
-		public global::PckStudio.Models.RotationOrders RotationOrder
+		public RotationOrders RotationOrder
 		{
 			get
 			{
-				return this.order;
+				return order;
 			}
 			set
 			{
-				this.order = value;
-				switch (this.order)
+				order = value;
+				switch (order)
 				{
-				case global::PckStudio.Models.RotationOrders.XY:
-					this.Rotate = new global::PckStudio.Models.Object3D.RotateMethod(this.RotateXY);
-					this.UpdateRotation = new global::PckStudio.Models.Object3D.UpdateRotationMethod(this.UpdateRotationXY);
-					return;
-				case global::PckStudio.Models.RotationOrders.YX:
-					this.Rotate = new global::PckStudio.Models.Object3D.RotateMethod(this.RotateYX);
-					this.UpdateRotation = new global::PckStudio.Models.Object3D.UpdateRotationMethod(this.UpdateRotationYX);
-					return;
-				case global::PckStudio.Models.RotationOrders.XZ:
-					this.Rotate = new global::PckStudio.Models.Object3D.RotateMethod(this.RotateXZ);
-					this.UpdateRotation = new global::PckStudio.Models.Object3D.UpdateRotationMethod(this.UpdateRotationXZ);
-					return;
-				case global::PckStudio.Models.RotationOrders.ZX:
-					this.Rotate = new global::PckStudio.Models.Object3D.RotateMethod(this.RotateZX);
-					this.UpdateRotation = new global::PckStudio.Models.Object3D.UpdateRotationMethod(this.UpdateRotationZX);
-					return;
-				case global::PckStudio.Models.RotationOrders.YZ:
-					this.Rotate = new global::PckStudio.Models.Object3D.RotateMethod(this.RotateYZ);
-					this.UpdateRotation = new global::PckStudio.Models.Object3D.UpdateRotationMethod(this.UpdateRotationYZ);
-					return;
-				case global::PckStudio.Models.RotationOrders.ZY:
-					this.Rotate = new global::PckStudio.Models.Object3D.RotateMethod(this.RotateZY);
-					this.UpdateRotation = new global::PckStudio.Models.Object3D.UpdateRotationMethod(this.UpdateRotationZY);
-					return;
-				default:
-					return;
+					case RotationOrders.XY:
+						Rotate = new RotateMethod(RotateXY);
+						OnUpdateRotation = UpdateRotationXY;
+						return;
+					case RotationOrders.YX:
+						Rotate = new RotateMethod(RotateYX);
+						OnUpdateRotation = UpdateRotationYX;
+						return;
+					case RotationOrders.XZ:
+						Rotate = new RotateMethod(RotateXZ);
+						OnUpdateRotation = UpdateRotationXZ;
+						return;
+					case RotationOrders.ZX:
+						Rotate = new RotateMethod(RotateZX);
+						OnUpdateRotation = UpdateRotationZX;
+						return;
+					case RotationOrders.YZ:
+						Rotate = new RotateMethod(RotateYZ);
+						OnUpdateRotation = UpdateRotationYZ;
+						return;
+					case RotationOrders.ZY:
+						Rotate = new RotateMethod(RotateZY);
+						OnUpdateRotation = UpdateRotationZY;
+						return;
+					default:
+						return;
 				}
 			}
 		}
 
-		internal virtual global::PckStudio.Models.MinecraftModelView Viewport
+		internal virtual MinecraftModelView Viewport
 		{
 			set
 			{
-				this.viewport = value;
+				viewport = value;
 			}
 		}
 
-		public global::PckStudio.Models.Point3D Origin
+		public Point3D Origin
 		{
 			get
 			{
-				return new global::PckStudio.Models.Point3D(-this.originTranslation.M14, -this.originTranslation.M24, -this.originTranslation.M34);
+				return new Point3D(-originTranslation.M14, -originTranslation.M24, -originTranslation.M34);
 			}
 			set
 			{
-				this.originTranslation = global::PckStudio.Models.Matrix3D.CreateTranslation(-value.X, -value.Y, -value.Z);
-				this.localTransformation = this.positionTranslation * this.localRotation * this.originTranslation * this.scaleTransformation;
+				originTranslation = Matrix3D.CreateTranslation(-value.X, -value.Y, -value.Z);
+				UpdateRotation();
 			}
 		}
 
-		public global::PckStudio.Models.Point3D Position
+		public Point3D Position
 		{
 			get
 			{
-				return new global::PckStudio.Models.Point3D(this.positionTranslation.M14, this.positionTranslation.M24, this.positionTranslation.M34);
+				return new Point3D(positionTranslation.M14, positionTranslation.M24, positionTranslation.M34);
 			}
 			set
 			{
-				this.positionTranslation = global::PckStudio.Models.Matrix3D.CreateTranslation(value);
-				this.localTransformation = this.positionTranslation * this.localRotation * this.originTranslation * this.scaleTransformation;
-				this.Update();
+				positionTranslation = Matrix3D.CreateTranslation(value);
+				UpdateRotation();
+				Update();
 			}
 		}
 
 		internal abstract void Update();
 
-		public global::PckStudio.Models.Matrix3D GlobalTransformation
+		public Matrix3D GlobalTransformation
 		{
 			get
 			{
-				return this.globalTransformation;
+				return globalTransformation;
 			}
 			set
 			{
-				this.globalTransformation = value;
-				this.Update();
+				globalTransformation = value;
+				Update();
 			}
 		}
 
-		public global::PckStudio.Models.Matrix3D LocalTransformation
+		public Matrix3D LocalTransformation
 		{
 			get
 			{
-				return this.localTransformation;
+				return localTransformation;
 			}
 			set
 			{
-				this.localTransformation = value;
-				this.Update();
+				localTransformation = value;
+				Update();
 			}
 		}
 
@@ -299,165 +300,162 @@ namespace PckStudio.Models
 		{
 			this.angle1 = angle1;
 			this.angle2 = angle2;
-			this.UpdateRotation();
+			OnUpdateRotation();
 		}
 
 		public void RotateByMouse(float deltaX, float deltaY)
 		{
-			if (this.Rotate != null)
+			if (Rotate != null)
 			{
-				this.Rotate(deltaX, deltaY);
-				this.Update();
+				Rotate(deltaX, deltaY);
+				Update();
 			}
 		}
 
 		private void CorrectAngles()
 		{
-			if (this.angle1 > this.maxAngle1)
+			if (angle1 > maxAngle1)
 			{
-				this.angle1 = this.maxAngle1;
+				angle1 = maxAngle1;
 			}
-			else if (this.angle1 < this.minAngle1)
+			else if (angle1 < minAngle1)
 			{
-				this.angle1 = this.minAngle1;
+				angle1 = minAngle1;
 			}
-			if (this.angle2 > this.maxAngle2)
+			if (angle2 > maxAngle2)
 			{
-				this.angle2 = this.maxAngle2;
+				angle2 = maxAngle2;
 				return;
 			}
-			if (this.angle2 < this.minAngle2)
+			if (angle2 < minAngle2)
 			{
-				this.angle2 = this.minAngle2;
+				angle2 = minAngle2;
 			}
 		}
 
-		public abstract float HitTest(global::System.Drawing.PointF location);
+		public abstract float HitTest(PointF location);
 
 		private void RotateXY(float delta1, float delta2)
 		{
-			this.angle1 += delta1 * 0.0174532924f;
-			this.angle2 += delta2 * 0.0174532924f * (float)global::System.Math.Cos((double)(this.viewport.RotationY * 0.0174532924f));
-			this.UpdateRotationXY();
+			angle1 += delta1 * PIby180;
+			angle2 += delta2 * PIby180 * (float)Math.Cos((double)(viewport.RotationY * PIby180));
+			UpdateRotationXY();
 		}
 
 		private void RotateYX(float delta1, float delta2)
 		{
-			this.angle1 += delta1 * 0.0174532924f;
-			this.angle2 += delta2 * 0.0174532924f * (float)global::System.Math.Cos((double)this.viewport.RotationY * 3.1415926535897931 / 180.0);
-			this.UpdateRotationYX();
+			angle1 += delta1 * PIby180;
+			angle2 += delta2 * PIby180 * (float)Math.Cos(viewport.RotationY * 3.1415926535897931 / 180.0);
+			UpdateRotationYX();
 		}
 
 		private void RotateXZ(float delta1, float delta2)
 		{
-			this.angle1 += delta1 * 0.0174532924f * (float)global::System.Math.Cos((double)(this.viewport.RotationY * 0.0174532924f)) + delta2 * 0.0174532924f * (float)global::System.Math.Sin((double)(this.viewport.RotationY * 0.0174532924f));
-			this.angle2 += delta2 * 0.0174532924f * (float)global::System.Math.Cos((double)(this.viewport.RotationY * 0.0174532924f)) - delta1 * 0.0174532924f * (float)global::System.Math.Sin((double)(this.viewport.RotationY * 0.0174532924f));
-			this.UpdateRotationXZ();
+			angle1 += delta1 * PIby180 * (float)Math.Cos((double)(viewport.RotationY * PIby180)) + delta2 * PIby180 * (float)Math.Sin((double)(viewport.RotationY * PIby180));
+			angle2 += delta2 * PIby180 * (float)Math.Cos((double)(viewport.RotationY * PIby180)) - delta1 * PIby180 * (float)Math.Sin((double)(viewport.RotationY * PIby180));
+			UpdateRotationXZ();
 		}
 
 		private void RotateZX(float delta1, float delta2)
 		{
-			this.angle1 += delta1 * 0.0174532924f * (float)global::System.Math.Cos((double)(this.viewport.RotationY * 0.0174532924f)) + delta2 * 0.0174532924f * (float)global::System.Math.Sin((double)(this.viewport.RotationY * 0.0174532924f));
-			this.angle2 += delta2 * 0.0174532924f * (float)global::System.Math.Cos((double)(this.viewport.RotationY * 0.0174532924f)) - delta1 * 0.0174532924f * (float)global::System.Math.Sin((double)(this.viewport.RotationY * 0.0174532924f));
-			this.UpdateRotationZX();
+			angle1 += delta1 * PIby180 * (float)Math.Cos((double)(viewport.RotationY * PIby180)) + delta2 * PIby180 * (float)Math.Sin((double)(viewport.RotationY * PIby180));
+			angle2 += delta2 * PIby180 * (float)Math.Cos((double)(viewport.RotationY * PIby180)) - delta1 * PIby180 * (float)Math.Sin((double)(viewport.RotationY * PIby180));
+			UpdateRotationZX();
 		}
 
 		private void RotateZY(float delta1, float delta2)
 		{
-			this.angle1 -= delta2 * 0.0174532924f;
-			this.angle2 += delta1 * 0.0174532924f;
-			this.UpdateRotationZY();
+			angle1 -= delta2 * PIby180;
+			angle2 += delta1 * PIby180;
+			UpdateRotationZY();
 		}
 
 		private void RotateYZ(float delta1, float delta2)
 		{
-			this.angle1 += delta1 * 0.0174532924f;
-			this.angle2 += delta2 * 0.0174532924f * (float)global::System.Math.Sin((double)(this.viewport.RotationY * 0.0174532924f));
-			this.UpdateRotationYZ();
+			angle1 += delta1 * PIby180;
+			angle2 += delta2 * PIby180 * (float)Math.Sin((double)(viewport.RotationY * PIby180));
+			UpdateRotationYZ();
 		}
 
 		private void UpdateRotationXY()
 		{
-			this.CorrectAngles();
-			this.localRotation = global::PckStudio.Models.Matrix3D.CreateRotationY(this.angle1) * global::PckStudio.Models.Matrix3D.CreateRotationX(this.angle2);
-			this.localTransformation = this.positionTranslation * this.localRotation * this.originTranslation * this.scaleTransformation;
+			CorrectAngles();
+			localRotation = Matrix3D.CreateRotationY(angle1) * Matrix3D.CreateRotationX(angle2);
+			UpdateRotation();
 		}
 
 		private void UpdateRotationYX()
 		{
-			this.CorrectAngles();
-			this.localRotation = global::PckStudio.Models.Matrix3D.CreateRotationX(this.angle2) * global::PckStudio.Models.Matrix3D.CreateRotationY(this.angle1);
-			this.localTransformation = this.positionTranslation * this.localRotation * this.originTranslation * this.scaleTransformation;
+			CorrectAngles();
+			localRotation = Matrix3D.CreateRotationX(angle2) * Matrix3D.CreateRotationY(angle1);
+			UpdateRotation();
 		}
 
 		private void UpdateRotationXZ()
 		{
-			this.CorrectAngles();
-			this.localRotation = global::PckStudio.Models.Matrix3D.CreateRotationZ(this.angle1) * global::PckStudio.Models.Matrix3D.CreateRotationX(this.angle2);
-			this.localTransformation = this.positionTranslation * this.localRotation * this.originTranslation * this.scaleTransformation;
+			CorrectAngles();
+			localRotation = Matrix3D.CreateRotationZ(angle1) * Matrix3D.CreateRotationX(angle2);
+			UpdateRotation();
 		}
 
 		private void UpdateRotationZX()
 		{
-			this.CorrectAngles();
-			this.localRotation = global::PckStudio.Models.Matrix3D.CreateRotationX(this.angle2) * global::PckStudio.Models.Matrix3D.CreateRotationZ(this.angle1);
-			this.localTransformation = this.positionTranslation * this.localRotation * this.originTranslation * this.scaleTransformation;
+			CorrectAngles();
+			localRotation = Matrix3D.CreateRotationX(angle2) * Matrix3D.CreateRotationZ(angle1);
+			UpdateRotation();
 		}
 
 		private void UpdateRotationZY()
 		{
-			this.CorrectAngles();
-			this.localRotation = global::PckStudio.Models.Matrix3D.CreateRotationY(this.angle2) * global::PckStudio.Models.Matrix3D.CreateRotationZ(this.angle1);
-			this.localTransformation = this.positionTranslation * this.localRotation * this.originTranslation * this.scaleTransformation;
+			CorrectAngles();
+			localRotation = Matrix3D.CreateRotationY(angle2) * Matrix3D.CreateRotationZ(angle1);
+			UpdateRotation();
 		}
 
 		private void UpdateRotationYZ()
 		{
-			this.CorrectAngles();
-			this.localRotation = global::PckStudio.Models.Matrix3D.CreateRotationZ(this.angle2) * global::PckStudio.Models.Matrix3D.CreateRotationY(this.angle1);
-			this.localTransformation = this.positionTranslation * this.localRotation * this.originTranslation * this.scaleTransformation;
+			CorrectAngles();
+			localRotation = Matrix3D.CreateRotationZ(angle2) * Matrix3D.CreateRotationY(angle1);
+			UpdateRotation();
 		}
 
-		protected Object3D()
+		private void UpdateRotation()
 		{
-		}
+            localTransformation = positionTranslation * localRotation * originTranslation * scaleTransformation;
+        }
 
 		public const float PIby180 = 0.0174532924f;
 
-		protected global::PckStudio.Models.Matrix3D originTranslation = global::PckStudio.Models.Matrix3D.Identity;
+		protected Matrix3D originTranslation = Matrix3D.Identity;
 
-		protected global::PckStudio.Models.Matrix3D positionTranslation = global::PckStudio.Models.Matrix3D.Identity;
+		protected Matrix3D positionTranslation = Matrix3D.Identity;
 
-		protected global::PckStudio.Models.Matrix3D scaleTransformation = global::PckStudio.Models.Matrix3D.Identity;
+		protected Matrix3D scaleTransformation = Matrix3D.Identity;
 
-		protected global::PckStudio.Models.Matrix3D localRotation = global::PckStudio.Models.Matrix3D.Identity;
+		protected Matrix3D localRotation = Matrix3D.Identity;
 
-		protected global::PckStudio.Models.Matrix3D localTransformation = global::PckStudio.Models.Matrix3D.Identity;
+		protected Matrix3D localTransformation = Matrix3D.Identity;
 
-		protected global::PckStudio.Models.Matrix3D globalTransformation = global::PckStudio.Models.Matrix3D.Identity;
+		protected Matrix3D globalTransformation = Matrix3D.Identity;
 
 		private float angle1;
 
 		private float angle2;
 
-		private float maxAngle1 = 3.14159274f;
+		private float maxAngle1 = (float)Math.PI;
+		private float minAngle1 = (float)-Math.PI;
 
-		private float minAngle1 = -3.14159274f;
+		private float maxAngle2 = (float)Math.PI;
+		private float minAngle2 = (float)-Math.PI;
 
-		private float maxAngle2 = 3.14159274f;
+		private RotationOrders order;
 
-		private float minAngle2 = -3.14159274f;
+		protected MinecraftModelView viewport;
 
-		private global::PckStudio.Models.RotationOrders order;
+		private RotateMethod Rotate;
 
-		protected global::PckStudio.Models.MinecraftModelView viewport;
-
-		private global::PckStudio.Models.Object3D.RotateMethod Rotate;
-
-		private global::PckStudio.Models.Object3D.UpdateRotationMethod UpdateRotation;
+		private Action OnUpdateRotation;
 
 		private delegate void RotateMethod(float deltaX, float deltaY);
-
-		private delegate void UpdateRotationMethod();
 	}
 }

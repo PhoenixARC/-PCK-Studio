@@ -14,7 +14,7 @@ namespace PckStudio.Classes.IO.PCK
         { }
     }
 
-    internal class PCKAudioFileReader : StreamDataReader
+    internal class PCKAudioFileReader : StreamDataReader<PCKAudioFile>
     {
         private PCKAudioFile _file;
         private List<string> LUT = new List<string>();
@@ -30,7 +30,7 @@ namespace PckStudio.Classes.IO.PCK
         {
         }
 
-        private PCKAudioFile ReadFromStream(Stream stream)
+        protected override PCKAudioFile ReadFromStream(Stream stream)
         {
             int pck_type = ReadInt(stream);
             if (pck_type > 0xf00000) // 03 00 00 00 == true
