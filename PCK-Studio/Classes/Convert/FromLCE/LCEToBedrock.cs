@@ -1,16 +1,20 @@
-﻿using ICSharpCode.SharpZipLib.Zip;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using PckStudio.Classes.FileTypes;
-using PckStudio.Classes.IO;
-using PckStudio.Classes.IO.LOC;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 
-namespace PckStudio.Classes.Convert.FromLCE
+using ICSharpCode.SharpZipLib.Zip;
+using ICSharpCode.SharpZipLib.Zip.Compression;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using OMI.Formats.Languages;
+using OMI.Formats.Pck;
+using OMI.Workers.Language;
+using OMI.Workers.Pck;
+
+using PckStudio.Classes.Utils;
+
+namespace PckStudio.Classes.FromLCE
 {
 	internal class LCEToBedrock
     {
@@ -166,78 +170,68 @@ namespace PckStudio.Classes.Convert.FromLCE
 
         Dictionary<string, string> ImgCopyLookup = new Dictionary<string, string>()
         {
-
             { "res/mob", "/textures/entity" },
             { "res/art", "/textures/painting" },
             { "res/environment", "/textures/environment" },
             { "res/terrain", "/textures/environment" },
             { "res/armor", "/textures/models/armor" }
-
         };
 
         #endregion
 
         #region Texture Packs
 
-        public void ConvertTexturePack(PCKFile Source, string ExportPath)
+        public void ConvertTexturePack(PckFile sourcePck, string exportPath)
         {
-            Directory.CreateDirectory(ExportPath);
-            foreach (PCKFile.FileData fd in Source.Files)
+            Directory.CreateDirectory(exportPath);
+            foreach (PckFile.FileData file in sourcePck.Files)
             {
-                switch (fd.filetype)
+                switch (file.Filetype)
                 {
-                    case PCKFile.FileData.FileType.TextureFile:
-                        if(fd.filepath == "res/terrain.png")
-                            SplitSheet(fd.data, ExportPath, 0);
-                        if(fd.filepath == "res/items.png")
-                            SplitSheet(fd.data, ExportPath, 1);
+                    case PckFile.FileData.FileType.TextureFile:
+                        if (file.Filename == "res/terrain.png")
+                            SplitSheet(file.Data, exportPath, useItemsArray: false);
+                        if (file.Filename == "res/items.png")
+                            SplitSheet(file.Data, exportPath, useItemsArray: true);
                         break;
-                    case PCKFile.FileData.FileType.UIDataFile:
-                        CopyTexture(fd, ExportPath);
+                    case PckFile.FileData.FileType.UIDataFile:
+                        CopyTexture(file, exportPath);
                         break;
                 }
             }
         }
 
-        void SplitSheet(byte[] data, string exportPath, int Type)
+        void SplitSheet(byte[] data, string exportPath, bool useItemsArray)
         {
             MemoryStream ms = new MemoryStream(data);
 
             // Get the inputs.
 
+            int defaultWidth = 16;
+            int defaultHeight = 34;
+            string[,] sheetArray = BlockSheetArray;
             string OutPath = "\\textures\\blocks\\";
-            string[,] SheetArray = BlockSheetArray;
-            int DefaultWid = 16;
-            int DefaultHei = 34;
-            switch (Type)
+
+            if (useItemsArray)
             {
-                case 0:
-                    DefaultWid = 16;
-                    DefaultHei = 34; 
-                    SheetArray = BlockSheetArray;
-                    OutPath = "\\textures\\blocks\\";
-                    break;
-                case 1:
-                    DefaultWid = 16;
-                    DefaultHei = 17; 
-                    SheetArray = ItemSheetArray;
-                    OutPath = "\\textures\\items\\";
-                    break;
+                defaultHeight = 17; 
+                sheetArray = ItemSheetArray;
+                OutPath = "\\textures\\items\\";
             }
 
-            Bitmap bm = (Bitmap)Bitmap.FromStream(ms);
-            int wid = bm.Width / DefaultWid;
-            int hgt = bm.Height / DefaultHei;
+            var bm = Image.FromStream(ms);
+            int width = bm.Width / defaultWidth;
+            int height = bm.Height / defaultHeight;
             Directory.CreateDirectory(exportPath + OutPath);
 
             // Start splitting the Bitmap.
-            Bitmap piece = new Bitmap(wid, hgt);
-            Rectangle dest_rect = new Rectangle(0, 0, wid, hgt);
+            Bitmap piece = new Bitmap(width, height);
+            Rectangle dest_rect = new Rectangle(0, 0, width, height);
             using (Graphics gr = Graphics.FromImage(piece))
             {
-                int num_rows = bm.Height / hgt;
-                int num_cols = bm.Width / wid;
-                Rectangle source_rect = new Rectangle(0, 0, wid, hgt);
+                int num_rows = bm.Height / height;
+                int num_cols = bm.Width / width;
+                Rectangle source_rect = new Rectangle(0, 0, width, height);
                 for (int row = 0; row < num_rows; row++)
                 {
                     source_rect.X = 0;
@@ -249,37 +243,36 @@ namespace PckStudio.Classes.Convert.FromLCE
                             GraphicsUnit.Pixel);
 
                         // Save the piece.
-                        string filename = SheetArray[row, col] + ".png";
+                        string filename = sheetArray[row, col] + ".png";
                         if(!string.IsNullOrEmpty(filename) && filename != "debug")
                             piece.Save(exportPath + OutPath + filename, System.Drawing.Imaging.ImageFormat.Png);
 
                         // Move to the next column.
-                        source_rect.X += wid;
+                        source_rect.X += width;
                     }
-                    source_rect.Y += hgt;
+                    source_rect.Y += height;
                 }
             }
         }
 
-        void CopyTexture(PCKFile.FileData data, string exportPath)
+        void CopyTexture(PckFile.FileData file, string exportPath)
         {
-            string NewFileName = data.filepath;
-
-            foreach(KeyValuePair<string, string> kvp in ImgCopyLookup)
+            string exportName = file.Filename;
+            foreach(var kvp in ImgCopyLookup)
             {
-                NewFileName = NewFileName.Replace(kvp.Key, kvp.Value);
+                exportName = exportName.Replace(kvp.Key, kvp.Value);
             }
 
-            Directory.CreateDirectory(Path.GetDirectoryName(exportPath + NewFileName));
-            File.WriteAllBytes(exportPath + NewFileName, data.data);
+            Directory.CreateDirectory(Path.GetDirectoryName(exportPath + exportName));
+            File.WriteAllBytes(exportPath + exportName, file.Data);
         }
 
         #endregion
 
         #region Skin Packs
-        public void ConvertSkinPack(PCKFile Source, string ExportFilepath)
+        public void ConvertSkinPack(PckFile sourcePck, string ExportFilepath)
         {
-            List<SkinObject> objects = new List<SkinObject>();
+
             List<string> localisables = new List<string>();
 
             SkinJSON SJSON = new SkinJSON(); // Skins.json
@@ -287,124 +280,133 @@ namespace PckStudio.Classes.Convert.FromLCE
             string ExportPath = Path.GetDirectoryName(ExportFilepath);
             Directory.CreateDirectory(Path.Combine(ExportPath, "skin_pack"));
 
-            PCKFile.FileData locFileData;
-            if(Source.TryGetFile("localisation.loc", PCKFile.FileData.FileType.LocalisationFile, out locFileData) || 
-                Source.TryGetFile("languages.loc", PCKFile.FileData.FileType.LocalisationFile, out locFileData))
+            if (sourcePck.TryGetFile("localisation.loc", PckFile.FileData.FileType.LocalisationFile, out PckFile.FileData locFileData) ||
+                sourcePck.TryGetFile("languages.loc", PckFile.FileData.FileType.LocalisationFile, out locFileData))
             {
-                LOCFile lf = LOCFileReader.Read(new MemoryStream(locFileData.data));
+                var reader = new LOCFileReader();
 
-                string newPackName = lf.GetLocEntry("IDS_DISPLAY_NAME", "en-EN").ToLower().Replace(":", "");
-                if (!String.IsNullOrEmpty(newPackName))
+                using (var ms = new MemoryStream(locFileData.Data))
                 {
-                    PackName = newPackName.Replace(" ", "_");
-                }
+                    LOCFile locFile = reader.FromStream(ms);
+                    string newPackName = locFile.GetLocEntry("IDS_DISPLAY_NAME", "en-EN").ToLower().Replace(":", "");
+                    if (!string.IsNullOrEmpty(newPackName))
+                    {
+                        PackName = newPackName.Replace(" ", "_");
+                    }
 
-                ExportLOC(lf, ExportPath + "\\skin_pack\\texts", localisables);
-            }
-
-            foreach (PCKFile.FileData fd in Source.Files)
-            {
-                switch (fd.filetype)
-                {
-                    case PCKFile.FileData.FileType.SkinFile:
-                        ExportSkin(fd, ExportPath + "\\skin_pack", objects);
-                        break;
-                    case PCKFile.FileData.FileType.CapeFile:
-                        ExportCape(fd, ExportPath + "\\skin_pack");
-                        break;
-                    case PCKFile.FileData.FileType.SkinDataFile:
-                        PCKFile SubPack = PCKFileReader.Read(new MemoryStream(fd.data), false);
-                        foreach(PCKFile.FileData file in SubPack.Files)
-                            switch(file.filetype)
-							{
-                                case PCKFile.FileData.FileType.SkinFile:
-                                    ExportSkin(file, ExportPath + "\\skin_pack", objects);
-                                    break;
-                                case PCKFile.FileData.FileType.CapeFile:
-                                    ExportCape(file, ExportPath + "\\skin_pack");
-                                    break;
-                            }
-                        break;
+                    ExportLOC(locFile, ExportPath + "\\skin_pack\\texts", localisables);
                 }
             }
-            SJSON.localization_name = localisables[0];
-            SJSON.serialize_name = localisables[0];
-            SJSON.skins = objects.ToArray();
+
+            SJSON.skins = ConvertSkins(sourcePck, ExportPath).ToArray();
+            SJSON.localization_name = SJSON.serialize_name = localisables[0];
+
             CreateSkinPackManifest(ExportPath + "\\skin_pack", localisables[0]);
+
             string SKINS_JSON = JsonConvert.SerializeObject(SJSON, Formatting.Indented);
             File.WriteAllText(ExportPath + "\\skin_pack\\skins.json", SKINS_JSON);
+
             string GEO_JSON = JsonConvert.SerializeObject(GJSON, Formatting.Indented);
             File.WriteAllText(ExportPath + "\\skin_pack\\geometry.json", GEO_JSON);
-            ZipOutputStream OutputStream = new ZipOutputStream(File.Create(ExportFilepath));
-            OutputStream.SetLevel(0);
-            string[] files = Directory.GetFiles(ExportPath + "\\skin_pack", "*", SearchOption.AllDirectories);
-            foreach (string file in files)
+
+            using (var outputStream = new ZipOutputStream(File.Create(ExportFilepath)))
             {
-                ZipEntry entry = new ZipEntry(file.Replace(ExportPath+"\\", ""));
-                entry.DateTime = DateTime.Now;
-                OutputStream.PutNextEntry(entry);
-                byte[] sourceBytes = File.ReadAllBytes(file);
-                OutputStream.Write(sourceBytes, 0, sourceBytes.Length);
+                outputStream.SetLevel(Deflater.NO_COMPRESSION);
+                string[] files = Directory.GetFiles(ExportPath + "\\skin_pack", "*", SearchOption.AllDirectories);
+                foreach (string file in files)
+                {
+                    ZipEntry entry = new ZipEntry(file.Replace(ExportPath + "\\", ""));
+                    outputStream.PutNextEntry(entry);
+
+                    byte[] sourceBytes = File.ReadAllBytes(file);
+                    outputStream.Write(sourceBytes, 0, sourceBytes.Length);
+                }
+                //Directory.Delete(ExportPath + "\\skin_pack", true);
             }
-            //Directory.Delete(ExportPath + "\\skin_pack", true);
-            OutputStream.Close();
-            System.GC.Collect();
+            GC.Collect();
         }
 
-        void ExportLOC(LOCFile lf, string ExportPath, List<string> LocName)
+        private List<SkinObject> ConvertSkins(PckFile sourcePck, string exportPath)
         {
-            Directory.CreateDirectory(ExportPath);
+            List<SkinObject> skins = new List<SkinObject>();
+            foreach (PckFile.FileData file in sourcePck.Files)
+            {
+                switch (file.Filetype)
+                {
+                    case PckFile.FileData.FileType.SkinFile:
+                        skins.Add(ExportSkin(file, exportPath + "\\skin_pack"));
+                        break;
+                    case PckFile.FileData.FileType.CapeFile:
+                        ExportCape(file, exportPath + "\\skin_pack");
+                        break;
+                    case PckFile.FileData.FileType.SkinDataFile:
+                        var reader = new PckFileReader();
+                        using (var ms = new MemoryStream(file.Data))
+                        {
+                            PckFile subPack = reader.FromStream(ms);
+                            skins.AddRange(ConvertSkins(subPack, exportPath));
+                        }
+                        break;
+                }
+            }
+            return skins;
+        }
+
+        void ExportLOC(LOCFile locFile, string exportPath, List<string> LocName)
+        {
+            Directory.CreateDirectory(exportPath);
             LocName.Add(PackName);
             List<string> languages = new List<string>();
-            foreach (KeyValuePair<string, Dictionary<string, string>> kvp in lf.LocKeys)
-            {
-                string PackString = kvp.Key.Replace("IDS_DISPLAY_NAME", "skinpack." + PackName).Replace("IDS_DLCSKIN", "skin." + PackName + ".").Replace("_DISPLAYNAME", "").Replace(" ", "");
 
-                if (!PackString.EndsWith("_THEMENAME"))
+            foreach (var kvp in locFile.LocKeys)
+            {
+                string packString = kvp.Key.Replace("IDS_DISPLAY_NAME", "skinpack." + PackName).Replace("IDS_DLCSKIN", "skin." + PackName + ".").Replace("_DISPLAYNAME", "").Replace(" ", "");
+
+                if (!packString.EndsWith("_THEMENAME"))
                 {
                     foreach (KeyValuePair<string, string> text in kvp.Value)
                     {
-                        string BedrockLang = languageMap[text.Key];
-                        if (!languages.Contains(BedrockLang))
-                            languages.Add(BedrockLang);
-                        if (File.Exists(ExportPath + "\\" + BedrockLang + ".lang"))
+                        string bedrockLang = languageMap[text.Key];
+                        if (!languages.Contains(bedrockLang))
+                            languages.Add(bedrockLang);
+                        if (File.Exists(exportPath + "\\" + bedrockLang + ".lang"))
                         {
-                            if (!File.ReadAllText(ExportPath + "\\" + BedrockLang + ".lang").Contains(PackString))
+                            if (!File.ReadAllText(exportPath + "\\" + bedrockLang + ".lang").Contains(packString))
                             {
-                                using (StreamWriter sw = new StreamWriter(ExportPath + "\\" + BedrockLang + ".lang", true))
+                                using (StreamWriter sw = new StreamWriter(exportPath + "\\" + bedrockLang + ".lang", true))
                                 {
-                                    sw.WriteLine(PackString + "=" + text.Value);
+                                    sw.WriteLine(packString + "=" + text.Value);
                                 }
                             }
                         }
                         else
                         {
-                            using (StreamWriter sw = new StreamWriter(ExportPath + "\\" + BedrockLang + ".lang", true))
+                            using (StreamWriter sw = new StreamWriter(exportPath + "\\" + bedrockLang + ".lang", true))
                             {
-                                sw.WriteLine(PackString + "=" + text.Value);
+                                sw.WriteLine(packString + "=" + text.Value);
                             }
                         }
                     }
                 }
             }
 
-            string JSON = JsonConvert.SerializeObject(languages.ToArray(), Formatting.Indented);
-            File.WriteAllText(ExportPath + "\\languages.json", JSON);
+            string serializedLanguages = JsonConvert.SerializeObject(languages.ToArray(), Formatting.Indented);
+            File.WriteAllText(exportPath + "\\languages.json", serializedLanguages);
         }
 
-        List<ValueTuple<string, string>> offsets = null;
+        List<(string, string)> offsets = null;
 
-        List<ValueTuple<string, string>> GetSkinOffsets(PCKProperties SkinProps)
+        List<(string, string)> GetSkinOffsets(PckFile.PCKProperties skinProperties)
         {
-            List<ValueTuple<string, string>> skinOffsets = new List<ValueTuple<string, string>>();
+            List<(string, string)> skinOffsets = new List<ValueTuple<string, string>>();
 
             string part_offset = "";
 
-            foreach (string p in OffsetNames)
+            foreach (string offsetName in OffsetNames)
             {
                 try
                 {
-                    var v = SkinProps.Find(prop => prop.property == "OFFSET" && prop.value.StartsWith(p)).value;
+                    var v = skinProperties.Find(prop => prop.property == "OFFSET" && prop.value.StartsWith(offsetName)).value;
                     if (v != null && v.Length >= 2) part_offset = v.Split(' ')[2];
                     else part_offset = "0";
                 }
@@ -414,59 +416,60 @@ namespace PckStudio.Classes.Convert.FromLCE
                     part_offset = "0";
                 }
 
-                switch(p)
+                switch (offsetName)
 				{
                     case "HEAD":
-                        skinOffsets.Add(new ValueTuple<string, string>("HEADWEAR", part_offset));
+                        skinOffsets.Add(("HEADWEAR", part_offset));
                         break;
                     case "BODY":
-                        skinOffsets.Add(new ValueTuple<string, string>("JACKET", part_offset));
-                        skinOffsets.Add(new ValueTuple<string, string>("BODYARMOR", part_offset));
+                        skinOffsets.Add(("JACKET", part_offset));
+                        skinOffsets.Add(("BODYARMOR", part_offset));
                         break;
                     case "CHEST":
-                        skinOffsets.Add(new ValueTuple<string, string>("BELT", part_offset));
-                        skinOffsets.Add(new ValueTuple<string, string>("WAIST", part_offset));
+                        skinOffsets.Add(("BELT", part_offset));
+                        skinOffsets.Add(("WAIST", part_offset));
                         break;
                     case "ARM0":
-                        skinOffsets.Add(new ValueTuple<string, string>("SLEEVE0", part_offset));
-                        skinOffsets.Add(new ValueTuple<string, string>("SHOULDER0", part_offset));
+                        skinOffsets.Add(("SLEEVE0", part_offset));
+                        skinOffsets.Add(("SHOULDER0", part_offset));
                         break;
                     case "ARM1":
-                        skinOffsets.Add(new ValueTuple<string, string>("SLEEVE1", part_offset));
-                        skinOffsets.Add(new ValueTuple<string, string>("SHOULDER1", part_offset));
+                        skinOffsets.Add(("SLEEVE1", part_offset));
+                        skinOffsets.Add(("SHOULDER1", part_offset));
                         break;
                     case "LEG0":
-                        skinOffsets.Add(new ValueTuple<string, string>("PANTS0", part_offset));
-                        skinOffsets.Add(new ValueTuple<string, string>("SOCK0", part_offset));
+                        skinOffsets.Add(("PANTS0", part_offset));
+                        skinOffsets.Add(("SOCK0", part_offset));
                         break;
                     case "LEG1":
-                        skinOffsets.Add(new ValueTuple<string, string>("PANTS1", part_offset));
-                        skinOffsets.Add(new ValueTuple<string, string>("SOCK1", part_offset));
+                        skinOffsets.Add(("PANTS1", part_offset));
+                        skinOffsets.Add(("SOCK1", part_offset));
                         break;
                 }
                 
-                if(skinOffsets.Find(o => o.Item1 == p).ToTuple() != null) skinOffsets.Add(new ValueTuple<string, string>(p, part_offset));
+                if(skinOffsets.Find(p => p.Item1 == offsetName) != default!)
+                    skinOffsets.Add(new ValueTuple<string, string>(offsetName, part_offset));
             }
 
             return skinOffsets;
         }
 
-        modelCube[] ConvertBoxes(string part, PCKFile.FileData file, float[] pivot)
+        modelCube[] ConvertBoxes(string part, PckFile.FileData file, float[] pivot)
         {
             List<modelCube> cubes = new List<modelCube>();
 
-            Utils.SkinANIM anim = new Utils.SkinANIM("0");
+            var anim = new SkinANIM("0");
 
             Console.WriteLine(part);
             float offset = float.Parse(offsets.Find(o => o.Item1 == part).Item2);
 
-            foreach (ValueTuple<string, string> property in file.properties)
+            foreach (var (name, value) in file.Properties)
             {
-                string entry = property.Item2;
-                switch (property.Item1)
+                string entry = value;
+                switch (name)
                 {
                     case "ANIM":
-                        anim = new Utils.SkinANIM(property.Item2);
+                        anim = new SkinANIM(value);
                         break;
                     case "BOX":
                         string[] args = entry.Split(' ');
@@ -482,46 +485,58 @@ namespace PckStudio.Classes.Convert.FromLCE
                 }
             }
 
-            bool slim = anim.GetANIMFlag(Utils.eANIM_EFFECTS.SLIM_MODEL);
-            bool classic_res = !(slim && anim.GetANIMFlag(Utils.eANIM_EFFECTS.RESOLUTION_64x64));
+            bool slim = anim.GetFlag(ANIM_EFFECTS.SLIM_MODEL);
+            bool classic_res = !(slim && anim.GetFlag(ANIM_EFFECTS.RESOLUTION_64x64));
 
             switch (part)
             {
                 case "HEAD":
-                    if (!anim.GetANIMFlag(Utils.eANIM_EFFECTS.HEAD_DISABLED)) cubes.Add(new modelCube(new float[]{ -4, 24 - offset, -4 }, new float[] { 8, 8, 8 }, new float[] { 0, 0 }));
+                    if (!anim.GetFlag(ANIM_EFFECTS.HEAD_DISABLED))
+                        cubes.Add(new modelCube(new float[]{ -4, 24 - offset, -4 }, new float[] { 8, 8, 8 }, new float[] { 0, 0 }));
                     break;
                 case "BODY":
-                    if (!anim.GetANIMFlag(Utils.eANIM_EFFECTS.BODY_DISABLED)) cubes.Add(new modelCube(new float[] { -4, 12 - offset, -2 }, new float[] { 8, 12, 4 }, new float[] { 16, 16 }));
+                    if (!anim.GetFlag(ANIM_EFFECTS.BODY_DISABLED))
+                        cubes.Add(new modelCube(new float[] { -4, 12 - offset, -2 }, new float[] { 8, 12, 4 }, new float[] { 16, 16 }));
                     break;
                 case "ARM0":
-                    if (!anim.GetANIMFlag(Utils.eANIM_EFFECTS.RIGHT_ARM_DISABLED)) cubes.Add(new modelCube(new float[] { slim ? -7 : - 8, 12 - offset, -2 }, new float[] { slim ? 3 : 4, 12, 4 }, new float[] { 40, 16 }));
+                    if (!anim.GetFlag(ANIM_EFFECTS.RIGHT_ARM_DISABLED))
+                        cubes.Add(new modelCube(new float[] { slim ? -7 : - 8, 12 - offset, -2 }, new float[] { slim ? 3 : 4, 12, 4 }, new float[] { 40, 16 }));
                     break;
                 case "ARM1":
-                    if (!anim.GetANIMFlag(Utils.eANIM_EFFECTS.LEFT_ARM_DISABLED)) cubes.Add(new modelCube(new float[] {4, 12 - offset, -2 }, new float[] { slim ? 3 : 4, 12, 4 }, classic_res ? new float[] { 40, 16 } : new float[] { 32, 48 }, classic_res));
+                    if (!anim.GetFlag(ANIM_EFFECTS.LEFT_ARM_DISABLED))
+                        cubes.Add(new modelCube(new float[] {4, 12 - offset, -2 }, new float[] { slim ? 3 : 4, 12, 4 }, classic_res ? new float[] { 40, 16 } : new float[] { 32, 48 }, classic_res));
                     break;
                 case "LEG0":
-                    if (!anim.GetANIMFlag(Utils.eANIM_EFFECTS.RIGHT_LEG_DISABLED)) cubes.Add(new modelCube(new float[] { -3.9f, 0 - offset, -2 }, new float[] { 4, 12, 4 }, new float[] { 0, 16 }));
+                    if (!anim.GetFlag(ANIM_EFFECTS.RIGHT_LEG_DISABLED))
+                        cubes.Add(new modelCube(new float[] { -3.9f, 0 - offset, -2 }, new float[] { 4, 12, 4 }, new float[] { 0, 16 }));
                     break;
                 case "LEG1":
-                    if (!anim.GetANIMFlag(Utils.eANIM_EFFECTS.LEFT_LEG_DISABLED)) cubes.Add(new modelCube(new float[] {0.1f, 0 - offset, -2 }, new float[] { 4, 12, 4 }, classic_res ? new float[] { 0, 16 } : new float[] { 16, 48 }, classic_res));
+                    if (!anim.GetFlag(ANIM_EFFECTS.LEFT_LEG_DISABLED))
+                        cubes.Add(new modelCube(new float[] {0.1f, 0 - offset, -2 }, new float[] { 4, 12, 4 }, classic_res ? new float[] { 0, 16 } : new float[] { 16, 48 }, classic_res));
                     break;
                 case "HEADWEAR":
-                    if (!anim.GetANIMFlag(Utils.eANIM_EFFECTS.HEAD_OVERLAY_DISABLED)) cubes.Add(new modelCube(new float[] { -4, 24 - offset, -4 }, new float[] { 8, 8, 8 }, new float[] { 32, 0 }, false, 0.5f));
+                    if (!anim.GetFlag(ANIM_EFFECTS.HEAD_OVERLAY_DISABLED))
+                        cubes.Add(new modelCube(new float[] { -4, 24 - offset, -4 }, new float[] { 8, 8, 8 }, new float[] { 32, 0 }, false, 0.5f));
                     break;
                 case "JACKET":
-                    if (!classic_res && !anim.GetANIMFlag(Utils.eANIM_EFFECTS.BODY_OVERLAY_DISABLED)) cubes.Add(new modelCube(new float[] { 0, 24 - offset, 0 }, new float[] { 8, 12, 4 }, new float[] { 16, 32 }, false, 0.25f));
+                    if (!classic_res && !anim.GetFlag(ANIM_EFFECTS.BODY_OVERLAY_DISABLED))
+                        cubes.Add(new modelCube(new float[] { 0, 24 - offset, 0 }, new float[] { 8, 12, 4 }, new float[] { 16, 32 }, false, 0.25f));
                     break;
                 case "SLEEVE0":
-                    if (!classic_res && !anim.GetANIMFlag(Utils.eANIM_EFFECTS.RIGHT_ARM_OVERLAY_DISABLED)) cubes.Add(new modelCube(new float[] { slim ? -7 : -8, 12 - offset, -2 }, new float[] { slim ? 3 : 4, 12, 4 }, new float[] { 40, 32 }, false, 0.25f));
+                    if (!classic_res && !anim.GetFlag(ANIM_EFFECTS.RIGHT_ARM_OVERLAY_DISABLED))
+                        cubes.Add(new modelCube(new float[] { slim ? -7 : -8, 12 - offset, -2 }, new float[] { slim ? 3 : 4, 12, 4 }, new float[] { 40, 32 }, false, 0.25f));
                     break;
                 case "SLEEVE1":
-                    if (!classic_res && !anim.GetANIMFlag(Utils.eANIM_EFFECTS.LEFT_ARM_OVERLAY_DISABLED)) cubes.Add(new modelCube(new float[] { 4, 12 - offset, -2 }, new float[] { slim ? 3 : 4, 12, 4 }, new float[] { 48, 48 }, false, 0.25f));
+                    if (!classic_res && !anim.GetFlag(ANIM_EFFECTS.LEFT_ARM_OVERLAY_DISABLED))
+                        cubes.Add(new modelCube(new float[] { 4, 12 - offset, -2 }, new float[] { slim ? 3 : 4, 12, 4 }, new float[] { 48, 48 }, false, 0.25f));
                     break;
                 case "PANTS0":
-                    if (!classic_res && !anim.GetANIMFlag(Utils.eANIM_EFFECTS.RIGHT_LEG_OVERLAY_DISABLED)) cubes.Add(new modelCube(new float[] { -3.9f, 0 - offset, -2 }, new float[] { 4, 12, 4 }, new float[] { 0, 32 }, false, 0.25f));
+                    if (!classic_res && !anim.GetFlag(ANIM_EFFECTS.RIGHT_LEG_OVERLAY_DISABLED))
+                        cubes.Add(new modelCube(new float[] { -3.9f, 0 - offset, -2 }, new float[] { 4, 12, 4 }, new float[] { 0, 32 }, false, 0.25f));
                     break;
                 case "PANTS1":
-                    if (!classic_res && !anim.GetANIMFlag(Utils.eANIM_EFFECTS.LEFT_LEG_OVERLAY_DISABLED)) cubes.Add(new modelCube(new float[] { 0.1f, 0 - offset, -2 }, new float[] { 4, 12, 4 }, new float[] { 0, 48 }, false, 0.25f));
+                    if (!classic_res && !anim.GetFlag(ANIM_EFFECTS.LEFT_LEG_OVERLAY_DISABLED))
+                        cubes.Add(new modelCube(new float[] { 0.1f, 0 - offset, -2 }, new float[] { 4, 12, 4 }, new float[] { 0, 48 }, false, 0.25f));
                     break;
                 default:
                     break;
@@ -530,12 +545,13 @@ namespace PckStudio.Classes.Convert.FromLCE
             return cubes.ToArray();
         }
 
-        void ExportSkin(PCKFile.FileData file, string ExportPath, List<SkinObject> src)
+        SkinObject ExportSkin(PckFile.FileData file, string exportPath)
         {
-            if (file.filetype != PCKFile.FileData.FileType.SkinFile) return;
+            if (file.Filetype != PckFile.FileData.FileType.SkinFile)
+                return default!;
 
             SkinObject So = new SkinObject();
-            string skinID = file.filepath.Replace(".png", "").Replace("Skins/", "");
+            string skinID = file.Filename.Replace(".png", "").Replace("Skins/", "");
             So.localization_name = skinID;
             So.texture = skinID + ".png";
 
@@ -549,7 +565,7 @@ namespace PckStudio.Classes.Convert.FromLCE
             float[] right_leg_pivot = new float[] { -1.9f, 12, 0 };
             float[] left_leg_pivot = new float[] { 1.9f, 12, 0 };
 
-            offsets = GetSkinOffsets(file.properties);
+            offsets = GetSkinOffsets(file.Properties);
 
             List<modelBone> bones = new List<modelBone>();
 
@@ -592,33 +608,39 @@ namespace PckStudio.Classes.Convert.FromLCE
             bones.Add(new modelBone("rightBootArmorOffset", "rightLeg", new float[] { 2f, 12f - float.Parse(offsets.Find(o => o.Item1 == "BOOT0").Item2), 0f }, null, "armor_offset"));
             bones.Add(new modelBone("leftBootArmorOffset", "leftLeg", new float[] { -2f, 12f - float.Parse(offsets.Find(o => o.Item1 == "BOOT1").Item2), 0f }, null, "armor_offset"));
 
-            string capepath = file.properties.Find(o => o.property == "CAPEPATH").value;
+            string capepath = file.Properties.Find(o => o.property == "CAPEPATH").value;
 
             JToken geo = JToken.FromObject(new skinModel(bones.ToArray()));
-            if(capepath != null) geo["cape"] = capepath;
+            if (capepath != null)
+                geo["cape"] = capepath;
 
             GJSON.Add(So.geometry, geo);
 
-            File.WriteAllBytes(ExportPath + "\\" + skinID + ".png", file.data);
-            src.Add(So);
+            File.WriteAllBytes(exportPath + "\\" + skinID + ".png", file.Data);
+            return So;
         }
 
-        void ExportCape(PCKFile.FileData file, string ExportPath)
+        void ExportCape(PckFile.FileData file, string exportPath)
 		{
-            string capeID = file.filepath.Replace(".png", "").Replace("Skins/", "");
-            File.WriteAllBytes(ExportPath + "\\" + capeID + ".png", file.data);
+            if (file.Filetype != PckFile.FileData.FileType.CapeFile)
+                return;
+
+            string capeID = file.Filename.Replace(".png", string.Empty).Replace("Skins/", string.Empty);
+            File.WriteAllBytes(exportPath + "\\" + capeID + ".png", file.Data);
         }
 
-        void CreateSkinPackManifest(string ExportPath, string localizedName)
+        void CreateSkinPackManifest(string exportPath, string localizedName)
         {
             SkinManifest manifest = new SkinManifest();
-            manifest.header = new Header();
-            manifest.header.name = localizedName;
-            manifest.header.description = $"Exported with PCK Studio";
+            manifest.header = new Header()
+            { 
+                name = localizedName,
+                description = "Exported with PCK Studio",
+            };
             manifest.modules = new Module[] { new Module() };
             manifest.format_version = 1;
             string JSON = JsonConvert.SerializeObject(manifest, Formatting.Indented);
-            File.WriteAllText(ExportPath + "\\manifest.json", JSON);
+            File.WriteAllText(exportPath + "\\manifest.json", JSON);
         }
 
         #endregion
@@ -658,6 +680,8 @@ namespace PckStudio.Classes.Convert.FromLCE
             public string type = "free";
         }
 
+        #endregion
+
         #region Model classes for ANIM conversion
 
         public class BOX
@@ -679,7 +703,7 @@ namespace PckStudio.Classes.Convert.FromLCE
                     mirror = arguments[10] == "1";
                     inflation = float.Parse(arguments[11]);
                 }
-                catch (Exception e)
+                catch
                 {
                     return;
                 }
@@ -758,7 +782,6 @@ namespace PckStudio.Classes.Convert.FromLCE
             public int[] visible_bounds_offset = { 0, 1, 0};
             public modelBone[] bones;
         }
-        #endregion
         #endregion
     }
 }
