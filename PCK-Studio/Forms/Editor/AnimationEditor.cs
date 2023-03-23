@@ -23,7 +23,7 @@ namespace PckStudio.Forms.Editor
         AnimationPlayer player;
 
 		bool isItem = false;
-        string animationSection => AnimationUtil.GetAnimationSection(isItem);
+        string animationSection => AnimationResources.GetAnimationSection(isItem);
 
 		public string TileName = string.Empty;
 
@@ -58,7 +58,7 @@ namespace PckStudio.Forms.Editor
 				: new Animation(frameTextures);
 			player = new AnimationPlayer(pictureBoxWithInterpolationMode1);
 
-			foreach (JObject content in AnimationUtil.tileData[animationSection].Children())
+			foreach (JObject content in AnimationResources.tileData[animationSection].Children())
 			{
 				var prop = content.Properties().FirstOrDefault(prop => prop.Name == TileName);
 				if (prop is JProperty)
@@ -369,7 +369,7 @@ namespace PckStudio.Forms.Editor
 					exportJavaAnimationToolStripMenuItem.Enabled = 
 					InterpolationCheckbox.Visible = !IsEditingSpecial;
 
-					foreach (JObject content in AnimationUtil.tileData[animationSection].Children())
+					foreach (JObject content in AnimationResources.tileData[animationSection].Children())
 					{
 						var first = content.Properties().FirstOrDefault(p => p.Name == TileName);
 						if (first is JProperty p) tileLabel.Text = (string)p.Value;

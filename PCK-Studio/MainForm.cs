@@ -841,7 +841,7 @@ namespace PckStudio
             audioPck.AddCategory(PCKAudioFile.AudioCategory.EAudioType.Overworld);
             audioPck.AddCategory(PCKAudioFile.AudioCategory.EAudioType.Nether);
             audioPck.AddCategory(PCKAudioFile.AudioCategory.EAudioType.End);
-            PckFile.FileData pckFileData = currentPCK.CreateNew("audio.pck", PckFile.FileData.FileType.AudioFile);
+            PckFile.FileData pckFileData = currentPCK.CreateNewFile("audio.pck", PckFile.FileData.FileType.AudioFile);
             using (var stream = new MemoryStream())
             {
                 PCKAudioFileWriter.Write(stream, audioPck, isLittle);
@@ -869,28 +869,37 @@ namespace PckStudio
 
 		private void createAnimatedTextureToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			using (var ofd = new OpenFileDialog())
+			using var ofd = new OpenFileDialog()
 			{
-				ofd.Filter = "PNG Files | *.png";
-				ofd.Title = "Select a PNG File";
-				if (ofd.ShowDialog() == DialogResult.OK)
+				Filter = "PNG Files | *.png",
+				Title = "Select a PNG File",
+			};
+			if (ofd.ShowDialog() != DialogResult.OK)
+				return;
+
+			using ChangeTile diag = new ChangeTile();
+			if (diag.ShowDialog(this) != DialogResult.OK)
+				return;
+
+			using Image img = new Bitmap(ofd.FileName);
+			var file = currentPCK.CreateNewFile(
+				$"res/textures/{AnimationResources.GetAnimationSection(diag.IsItem)}/{diag.SelectedTile}.png",
+				PckFile.FileData.FileType.TextureFile,
+				() =>
 				{
-					using ChangeTile diag = new ChangeTile();
-					if (diag.ShowDialog(this) == DialogResult.OK)
-					{
-						using Image img = new Bitmap(ofd.FileName);
-						var file = AnimationUtil.CreateNewAnimationFile(img, diag.SelectedTile, diag.IsItem);
-						using AnimationEditor animationEditor = new AnimationEditor(file);
-						if (animationEditor.ShowDialog() == DialogResult.OK)
-						{
-							file.Filename = animationEditor.TileName;
-							currentPCK.Files.Add(file);
-							ReloadMetaTreeView();
-							BuildMainTreeView();
-							wasModified = true;
-						}
-					}
-				}
+					using var stream = new MemoryStream();
+					img.Save(stream, ImageFormat.Png);
+					return stream.ToArray();
+				});
+			file.Properties.Add(("ANIM", string.Empty));
+
+			using AnimationEditor animationEditor = new AnimationEditor(file);
+			if (animationEditor.ShowDialog() == DialogResult.OK)
+			{
+				file.Filename = animationEditor.TileName;
+				ReloadMetaTreeView();
+				BuildMainTreeView();
+				wasModified = true;
 			}
 		}
 
@@ -955,7 +964,7 @@ namespace PckStudio
 				{
 					if (node.Tag is PckFile.FileData node_file)
 					{
-						PckFile.FileData new_file = newPCKFile.CreateNew(node_file.Filename, node_file.Filetype);
+						PckFile.FileData new_file = newPCKFile.CreateNewFile(node_file.Filename, node_file.Filetype);
 						foreach (var prop in node_file.Properties) new_file.Properties.Add(prop);
 						new_file.SetData(node_file.Data);
 					}
@@ -1207,23 +1216,25 @@ namespace PckStudio
 		private PckFile InitializePack(int packId, int packVersion, string packName, bool createSkinsPCK)
 		{
 			var newPck = new PckFile(3);
-			var zeroFile = newPck.CreateNew("0", PckFile.FileData.FileType.InfoFile);
+			
+			var zeroFile = newPck.CreateNewFile("0", PckFile.FileData.FileType.InfoFile);
 			zeroFile.Properties.Add(("PACKID", packId.ToString()));
 			zeroFile.Properties.Add(("PACKVERSION", packVersion.ToString()));
-			var loc = newPck.CreateNew("localisation.loc", PckFile.FileData.FileType.LocalisationFile);
-			var locFile = new LOCFile();
-			locFile.InitializeDefault(packName);
-			using (var stream = new MemoryStream())
+
+			var loc = newPck.CreateNewFile("localisation.loc", PckFile.FileData.FileType.LocalisationFile, () =>
 			{
+				var locFile = new LOCFile();
+				locFile.InitializeDefault(packName);
+				using var stream = new MemoryStream();
 				LOCFileWriter.Write(stream, locFile);
-				loc.SetData(stream.ToArray());
-			}
+				return stream.ToArray();
+            });
 
 			if (createSkinsPCK)
 			{
-                PckFile.FileData skinsPCKFile = newPck.CreateNew("Skins.pck", PckFile.FileData.FileType.SkinDataFile);
-                using (var stream = new MemoryStream())
-                {
+                PckFile.FileData skinsPCKFile = newPck.CreateNewFile("Skins.pck", PckFile.FileData.FileType.SkinDataFile, () =>
+				{
+					using var stream = new MemoryStream();
 					var writer = new PckFileWriter(new PckFile(3)
 					{
 						HasVerionString = true
@@ -1232,8 +1243,8 @@ namespace PckStudio
 						? OMI.Endianness.LittleEndian
 						: OMI.Endianness.BigEndian);
 					writer.WriteToStream(stream);
-                    skinsPCKFile.SetData(stream.ToArray());
-                }
+                    return stream.ToArray();
+                });
             }
 			return newPck;
 		}
@@ -1241,7 +1252,17 @@ namespace PckStudio
 		private PckFile InitializeTexturePack(int packId, int packVersion, string packName, string res, bool createSkinsPCK = false)
 		{
             var newPck = InitializePack(packId, packVersion, packName, createSkinsPCK);
-			var texturepackInfo = newPck.CreateNew($"{res}/{res}Info.pck", PckFile.FileData.FileType.TexturePackInfoFile);
+			var texturepackInfo = newPck.CreateNewFile($"{res}/{res}Info.pck", PckFile.FileData.FileType.TexturePackInfoFile,
+				() =>
+				{
+                    using var ms = new MemoryStream();
+                    var writer = new PckFileWriter(new PckFile(3),
+                        LittleEndianCheckBox.Checked
+                            ? OMI.Endianness.LittleEndian
+                            : OMI.Endianness.BigEndian);
+                    writer.WriteToStream(ms);
+                    return ms.ToArray();
+                });
 			texturepackInfo.Properties.Add(("PACKID", "0"));
 			texturepackInfo.Properties.Add(("DATAPATH", $"{res}Data.pck"));
 
@@ -1249,34 +1270,25 @@ namespace PckStudio
 
 			using (var ms = new MemoryStream())
 			{
-				var icon = infoPCK.CreateNew("icon.png", PckFile.FileData.FileType.TextureFile);
+				var icon = infoPCK.CreateNewFile("icon.png", PckFile.FileData.FileType.TextureFile);
 				Resources.TexturePackIcon.Save(ms, ImageFormat.Png);
 				icon.SetData(ms.ToArray());
 			}
 
 			using (var ms = new MemoryStream())
 			{
-				var comparison = infoPCK.CreateNew("comparison.png", PckFile.FileData.FileType.TextureFile);
+				var comparison = infoPCK.CreateNewFile("comparison.png", PckFile.FileData.FileType.TextureFile);
 				Resources.Comparison.Save(ms, ImageFormat.Png);
 				comparison.SetData(ms.ToArray());
 			}
 
-			using (var ms = new MemoryStream())
-			{
-                var writer = new PckFileWriter(new PckFile(3),
-                    LittleEndianCheckBox.Checked
-                        ? OMI.Endianness.LittleEndian
-                        : OMI.Endianness.BigEndian);
-				writer.WriteToStream(ms);
-                texturepackInfo.SetData(ms.ToArray());
-			}
 			return newPck;
 		}
 
 		private PckFile InitializeMashUpPack(int packId, int packVersion, string packName, string res)
 		{
             var newPck = InitializeTexturePack(packId, packVersion, packName, res, true);
-			var gameRuleFile = newPck.CreateNew("GameRules.grf", PckFile.FileData.FileType.GameRulesFile);
+			var gameRuleFile = newPck.CreateNewFile("GameRules.grf", PckFile.FileData.FileType.GameRulesFile);
 			var grfFile = new GameRuleFile();
 			grfFile.AddRule("MapOptions",
 				new KeyValuePair<string, string>("seed", "0"),
@@ -1604,7 +1616,7 @@ namespace PckStudio
 				{
 					string skinNameImport = Path.GetFileName(contents.FileName);
 					byte[] data = File.ReadAllBytes(contents.FileName);
-					PckFile.FileData mfNew = currentPCK.CreateNew(skinNameImport, PckFile.FileData.FileType.SkinFile);
+					PckFile.FileData mfNew = currentPCK.CreateNewFile(skinNameImport, PckFile.FileData.FileType.SkinFile);
 					mfNew.SetData(data);
 					string propertyFile = Path.GetFileNameWithoutExtension(contents.FileName) + ".txt";
 					if (File.Exists(propertyFile))
@@ -1957,7 +1969,7 @@ namespace PckStudio
 				renamePrompt.TextLabel.Text = "Path";
 				if (renamePrompt.ShowDialog() == DialogResult.OK && !string.IsNullOrEmpty(renamePrompt.NewText))
 				{
-					var file = currentPCK.CreateNew(renamePrompt.NewText, PckFile.FileData.FileType.TextureFile);
+					var file = currentPCK.CreateNewFile(renamePrompt.NewText, PckFile.FileData.FileType.TextureFile);
 					file.SetData(File.ReadAllBytes(fileDialog.FileName));
 					BuildMainTreeView();
 					wasModified = true;
@@ -2030,14 +2042,13 @@ namespace PckStudio
 
 		private void colourscolToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			PckFile.FileData NewColorFile;
-			if (currentPCK.TryGetFile("colours.col", PckFile.FileData.FileType.ColourTableFile, out NewColorFile))
+			if (currentPCK.TryGetFile("colours.col", PckFile.FileData.FileType.ColourTableFile, out _))
 			{
 				MessageBox.Show("A color table file already exists in this PCK and a new one cannot be created.", "Operation aborted");
 				return;
 			}
-			NewColorFile = currentPCK.CreateNew("colours.col", PckFile.FileData.FileType.ColourTableFile);
-			NewColorFile.SetData(Resources.tu69colours);
+			var newColorFile = currentPCK.CreateNewFile("colours.col", PckFile.FileData.FileType.ColourTableFile);
+			newColorFile.SetData(Resources.tu69colours);
 			BuildMainTreeView();
 		}
 
@@ -2143,19 +2154,14 @@ namespace PckStudio
 				return;
 			}
 
-			PckFile.FileData newSkinsPCKFile = currentPCK.CreateNew("Skins.pck", PckFile.FileData.FileType.SkinDataFile);
-			using (var stream = new MemoryStream())
+			currentPCK.CreateNewFile("Skins.pck", PckFile.FileData.FileType.SkinDataFile, () =>
 			{
-                var writer = new PckFileWriter(new PckFile(3)
-                {
-                    HasVerionString = true
-                },
-                    LittleEndianCheckBox.Checked
-                        ? OMI.Endianness.LittleEndian
-                        : OMI.Endianness.BigEndian);
-                writer.WriteToStream(stream);
-				newSkinsPCKFile.SetData(stream.ToArray());
-			}
+				using var stream = new MemoryStream();
+				var writer = new PckFileWriter(new PckFile(3) { HasVerionString = true },
+					LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
+				writer.WriteToStream(stream);
+				return stream.ToArray();
+			});
 
 			BuildMainTreeView();
 
@@ -2204,7 +2210,7 @@ namespace PckStudio
 				using AddFilePrompt diag = new AddFilePrompt("res/" + Path.GetFileName(ofd.FileName));
 				if (diag.ShowDialog(this) == DialogResult.OK)
 				{
-					PckFile.FileData file = currentPCK.CreateNew(diag.filepath, (PckFile.FileData.FileType)diag.filetype);
+					PckFile.FileData file = currentPCK.CreateNewFile(diag.filepath, (PckFile.FileData.FileType)diag.filetype);
 					file.SetData(File.ReadAllBytes(ofd.FileName));
 
 					if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath)) RebuildSubPCK(treeViewMain.SelectedNode);
@@ -2219,27 +2225,24 @@ namespace PckStudio
 
 		private void behavioursbinToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			PckFile.FileData NewBehaviourFile;
-			if (currentPCK.TryGetFile("behaviours.bin", PckFile.FileData.FileType.BehavioursFile, out NewBehaviourFile))
+			if (currentPCK.TryGetFile("behaviours.bin", PckFile.FileData.FileType.BehavioursFile, out _))
 			{
 				MessageBox.Show("A behaviours file already exists in this PCK and a new one cannot be created.", "Operation aborted");
 				return;
 			}
-			NewBehaviourFile = BehaviourUtil.CreateNewBehaviourFile();
-			currentPCK.Files.Add(NewBehaviourFile);
+
+			currentPCK.CreateNewFile("behaviours.bin", PckFile.FileData.FileType.BehavioursFile, BehaviourResources.BehaviourFileInitializer);
 			BuildMainTreeView();
 		}
 
 		private void entityMaterialsbinToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			PckFile.FileData NewMaterialsFile;
-			if (currentPCK.TryGetFile("entityMaterials.bin", PckFile.FileData.FileType.MaterialFile, out NewMaterialsFile))
+			if (currentPCK.TryGetFile("entityMaterials.bin", PckFile.FileData.FileType.MaterialFile, out _))
 			{
 				MessageBox.Show("A behaviours file already exists in this PCK and a new one cannot be created.", "Operation aborted");
 				return;
 			}
-			NewMaterialsFile = MaterialUtil.CreateNewMaterialsFile();
-			currentPCK.Files.Add(NewMaterialsFile);
+			currentPCK.CreateNewFile("entityMaterials.bin", PckFile.FileData.FileType.MaterialFile, MaterialResources.MaterialsFileInitializer);
 			BuildMainTreeView();
 		}
     }

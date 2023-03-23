@@ -346,10 +346,10 @@
     <Compile Include="Forms\Additional-Popups\Audio\pleaseWait.Designer.cs">
       <DependentUpon>pleaseWait.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Utilities\ModelsUtil.cs" />
-    <Compile Include="Forms\Utilities\MaterialUtil.cs" />
-    <Compile Include="Forms\Utilities\BehaviourUtil.cs" />
-    <Compile Include="Forms\Utilities\AnimationUtil.cs" />
+    <Compile Include="Forms\Utilities\ModelsResources.cs" />
+    <Compile Include="Forms\Utilities\MaterialResources.cs" />
+    <Compile Include="Forms\Utilities\BehaviourResources.cs" />
+    <Compile Include="Forms\Utilities\AnimationResources.cs" />
     <Compile Include="Forms\Utilities\Skins\BoxEditor.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -5,30 +5,33 @@ using System.IO;
 
 using PckStudio.Properties;
 using PckStudio.Classes.Extentions;
-using OMI.Formats.Behaviour;
-using OMI.Workers.Behaviour;
+using OMI.Formats.Model;
 using OMI.Formats.Pck;
+using OMI.Workers.Model;
 
 namespace PckStudio.Forms.Utilities
 {
-    public static class BehaviourUtil
+    public static class ModelsResources
     {
-        public static readonly JObject entityData = JObject.Parse(Resources.entityBehaviourData);
+        public static readonly JObject entityData = JObject.Parse(Resources.entityModelData);
         private static Image[] _entityImages;
         
         public static Image[] entityImages => _entityImages ??= Resources.entities_sheet.CreateImageList(32).ToArray();
 
-        public static PckFile.FileData CreateNewBehaviourFile()
+        public static void ModelsFileInitializer(PckFile.FileData file)
         {
-            PckFile.FileData file = new PckFile.FileData($"behaviours.bin", PckFile.FileData.FileType.BehavioursFile);
-
             using (var stream = new MemoryStream())
             {
-                var writer = new BehavioursWriter(new BehaviourFile());
+                var writer = new ModelFileWriter(new ModelContainer());
                 writer.WriteToStream(stream);
                 file.SetData(stream.ToArray());
             }
-            
+        }
+
+        public static PckFile.FileData CreateNewModelsFile()
+        {
+            PckFile.FileData file = new PckFile.FileData("models.bin", PckFile.FileData.FileType.ModelsFile);
+            ModelsFileInitializer(file);
             return file;
         }
     }
