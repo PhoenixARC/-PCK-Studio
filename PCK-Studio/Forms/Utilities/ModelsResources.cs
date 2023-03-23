@@ -18,21 +18,12 @@ namespace PckStudio.Forms.Utilities
         
         public static Image[] entityImages => _entityImages ??= Resources.entities_sheet.CreateImageList(32).ToArray();
 
-        public static void ModelsFileInitializer(PckFile.FileData file)
+        public static byte[] ModelsFileInitializer()
         {
-            using (var stream = new MemoryStream())
-            {
-                var writer = new ModelFileWriter(new ModelContainer());
-                writer.WriteToStream(stream);
-                file.SetData(stream.ToArray());
-            }
-        }
-
-        public static PckFile.FileData CreateNewModelsFile()
-        {
-            PckFile.FileData file = new PckFile.FileData("models.bin", PckFile.FileData.FileType.ModelsFile);
-            ModelsFileInitializer(file);
-            return file;
+            using var stream = new MemoryStream();
+            var writer = new ModelFileWriter(new ModelContainer());
+            writer.WriteToStream(stream);
+            return stream.ToArray();
         }
     }
 }
