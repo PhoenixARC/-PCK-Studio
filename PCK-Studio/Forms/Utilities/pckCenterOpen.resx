@@ -117,155 +117,236 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="&gt;&gt;pictureBoxDisplay.ZOrder" xml:space="preserve">
-    <value>9</value>
-  </data>
-  <data name="&gt;&gt;buttonExport.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="buttonDirect.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="buttonInstallXbox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>30, 30</value>
+  <data name="buttonDirect.Location" type="System.Drawing.Point, System.Drawing">
+    <value>568, 338</value>
+  </data>
+  <data name="buttonDirect.Size" type="System.Drawing.Size, System.Drawing">
+    <value>169, 67</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="buttonDelete.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
+  <data name="buttonDirect.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
   </data>
-  <data name="buttonInstallWiiU.Location" type="System.Drawing.Point, System.Drawing">
-    <value>585, 338</value>
+  <data name="buttonDirect.Text" xml:space="preserve">
+    <value>DOWNLOAD TO COLLECTION</value>
   </data>
-  <data name="buttonDelete.Text" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="&gt;&gt;pictureBoxDisplay.Name" xml:space="preserve">
-    <value>pictureBoxDisplay</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="buttonInstallXbox.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Stretch</value>
-  </data>
-  <data name="buttonInstallXbox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>621, 338</value>
-  </data>
-  <data name="&gt;&gt;pictureBoxDisplay.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;buttonInstallPs3.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;labelName.ZOrder" xml:space="preserve">
-    <value>7</value>
+  <data name="buttonDirect.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="&gt;&gt;buttonDirect.Name" xml:space="preserve">
     <value>buttonDirect</value>
   </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>pckCenterOpen</value>
+  <data name="&gt;&gt;buttonDirect.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;buttonBedrock.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="buttonInstallPs3.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
-  </data>
-  <data name="buttonBedrock.Text" xml:space="preserve">
-    <value>Convert to Bedrock</value>
-  </data>
-  <data name="&gt;&gt;buttonInstallWiiU.Name" xml:space="preserve">
-    <value>buttonInstallWiiU</value>
-  </data>
-  <data name="&gt;&gt;labelDesc.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;buttonDirect.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="buttonDirect.Size" type="System.Drawing.Size, System.Drawing">
-    <value>169, 43</value>
-  </data>
-  <data name="labelDesc.Text" xml:space="preserve">
-    <value>labelDesc</value>
-  </data>
-  <data name="buttonBedrock.TabIndex" type="System.Int32, mscorlib">
-    <value>12</value>
-  </data>
-  <data name="&gt;&gt;buttonExport.Parent" xml:space="preserve">
+  <data name="&gt;&gt;buttonDirect.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="buttonInstallWiiU.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="pictureBoxDisplay.Size" type="System.Drawing.Size, System.Drawing">
-    <value>341, 341</value>
-  </data>
-  <data name="labelDesc.Location" type="System.Drawing.Point, System.Drawing">
-    <value>384, 64</value>
-  </data>
-  <data name="buttonInstallWiiU.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Stretch</value>
-  </data>
-  <data name="&gt;&gt;buttonBedrock.Name" xml:space="preserve">
-    <value>buttonBedrock</value>
-  </data>
-  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
-    <value>CenterParent</value>
-  </data>
-  <data name="buttonExport.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
-  </data>
-  <data name="labelDesc.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="buttonBedrock.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 30</value>
-  </data>
-  <data name="&gt;&gt;labelName.Name" xml:space="preserve">
-    <value>labelName</value>
-  </data>
-  <data name="buttonInstallPs3.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Stretch</value>
-  </data>
-  <data name="buttonDirect.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
+  <data name="&gt;&gt;buttonDirect.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="labelName.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="&gt;&gt;buttonInstallXbox.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="labelName.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 20.25pt</value>
   </data>
-  <data name="buttonInstallWiiU.Size" type="System.Drawing.Size, System.Drawing">
-    <value>30, 30</value>
+  <data name="labelName.Location" type="System.Drawing.Point, System.Drawing">
+    <value>24, 24</value>
   </data>
-  <data name="&gt;&gt;buttonInstallXbox.Name" xml:space="preserve">
-    <value>buttonInstallXbox</value>
-  </data>
-  <data name="&gt;&gt;buttonDelete.Name" xml:space="preserve">
-    <value>buttonDelete</value>
-  </data>
-  <data name="buttonExport.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="&gt;&gt;buttonInstallPs3.ZOrder" xml:space="preserve">
-    <value>1</value>
+  <data name="labelName.Size" type="System.Drawing.Size, System.Drawing">
+    <value>135, 31</value>
   </data>
   <data name="labelName.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
   </data>
+  <data name="labelName.Text" xml:space="preserve">
+    <value>Skin Pack</value>
+  </data>
+  <data name="&gt;&gt;labelName.Name" xml:space="preserve">
+    <value>labelName</value>
+  </data>
+  <data name="&gt;&gt;labelName.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;labelName.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;labelName.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="labelDesc.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="labelDesc.Location" type="System.Drawing.Point, System.Drawing">
+    <value>384, 64</value>
+  </data>
+  <data name="labelDesc.Size" type="System.Drawing.Size, System.Drawing">
+    <value>353, 222</value>
+  </data>
+  <data name="labelDesc.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="labelDesc.Text" xml:space="preserve">
+    <value>labelDesc</value>
+  </data>
+  <data name="&gt;&gt;labelDesc.Name" xml:space="preserve">
+    <value>labelDesc</value>
+  </data>
+  <data name="&gt;&gt;labelDesc.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;labelDesc.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;labelDesc.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
   <data name="buttonDelete.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
   </data>
-  <data name="buttonExport.Location" type="System.Drawing.Point, System.Drawing">
-    <value>692, 338</value>
-  </data>
-  <data name="buttonBedrock.Font" type="System.Drawing.Font, System.Drawing">
+  <data name="buttonDelete.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="buttonDelete.Location" type="System.Drawing.Point, System.Drawing">
+    <value>384, 338</value>
+  </data>
+  <data name="buttonDelete.Size" type="System.Drawing.Size, System.Drawing">
+    <value>178, 66</value>
+  </data>
+  <data name="buttonDelete.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="buttonDelete.Text" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="&gt;&gt;buttonDelete.Name" xml:space="preserve">
+    <value>buttonDelete</value>
+  </data>
+  <data name="&gt;&gt;buttonDelete.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;buttonDelete.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;buttonDelete.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="buttonExport.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="buttonExport.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="buttonExport.Location" type="System.Drawing.Point, System.Drawing">
+    <value>495, 256</value>
+  </data>
+  <data name="buttonExport.Size" type="System.Drawing.Size, System.Drawing">
+    <value>45, 30</value>
+  </data>
+  <data name="buttonExport.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="buttonExport.Text" xml:space="preserve">
+    <value>Get</value>
+  </data>
+  <data name="&gt;&gt;buttonExport.Name" xml:space="preserve">
+    <value>buttonExport</value>
+  </data>
+  <data name="&gt;&gt;buttonExport.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;buttonExport.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;buttonExport.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="buttonInstallPs3.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Stretch</value>
+  </data>
+  <data name="buttonInstallPs3.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="buttonInstallPs3.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="buttonInstallPs3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>460, 256</value>
   </data>
   <data name="buttonInstallPs3.Size" type="System.Drawing.Size, System.Drawing">
     <value>30, 30</value>
   </data>
-  <data name="buttonDirect.Location" type="System.Drawing.Point, System.Drawing">
-    <value>568, 362</value>
+  <data name="buttonInstallPs3.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;buttonInstallPs3.Name" xml:space="preserve">
+    <value>buttonInstallPs3</value>
+  </data>
+  <data name="&gt;&gt;buttonInstallPs3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;buttonInstallPs3.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;buttonInstallPs3.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="buttonInstallXbox.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Stretch</value>
+  </data>
+  <data name="buttonInstallXbox.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="buttonInstallXbox.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="buttonInstallXbox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>424, 256</value>
+  </data>
+  <data name="buttonInstallXbox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>30, 30</value>
+  </data>
+  <data name="buttonInstallXbox.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;buttonInstallXbox.Name" xml:space="preserve">
+    <value>buttonInstallXbox</value>
+  </data>
+  <data name="&gt;&gt;buttonInstallXbox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;buttonInstallXbox.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;buttonInstallXbox.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="buttonInstallWiiU.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Stretch</value>
+  </data>
+  <data name="buttonInstallWiiU.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="buttonInstallWiiU.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="buttonInstallWiiU.Location" type="System.Drawing.Point, System.Drawing">
+    <value>388, 256</value>
+  </data>
+  <data name="buttonInstallWiiU.Size" type="System.Drawing.Size, System.Drawing">
+    <value>30, 30</value>
+  </data>
+  <data name="buttonInstallWiiU.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;buttonInstallWiiU.Name" xml:space="preserve">
+    <value>buttonInstallWiiU</value>
   </data>
   <data name="&gt;&gt;buttonInstallWiiU.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -273,160 +354,82 @@
   <data name="&gt;&gt;buttonInstallWiiU.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
+  <data name="&gt;&gt;buttonInstallWiiU.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
   <data name="pictureBoxDisplay.Location" type="System.Drawing.Point, System.Drawing">
     <value>24, 64</value>
   </data>
-  <data name="buttonDirect.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
+  <data name="pictureBoxDisplay.Size" type="System.Drawing.Size, System.Drawing">
+    <value>341, 341</value>
   </data>
   <data name="pictureBoxDisplay.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
     <value>StretchImage</value>
   </data>
-  <data name="buttonInstallWiiU.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Segoe UI, 12pt</value>
+  <data name="pictureBoxDisplay.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
-  <data name="&gt;&gt;buttonInstallPs3.Name" xml:space="preserve">
-    <value>buttonInstallPs3</value>
+  <data name="&gt;&gt;pictureBoxDisplay.Name" xml:space="preserve">
+    <value>pictureBoxDisplay</value>
   </data>
-  <data name="&gt;&gt;labelName.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="buttonExport.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Segoe UI, 12pt</value>
-  </data>
-  <data name="buttonBedrock.Location" type="System.Drawing.Point, System.Drawing">
-    <value>585, 375</value>
-  </data>
-  <data name="labelName.Size" type="System.Drawing.Size, System.Drawing">
-    <value>135, 31</value>
-  </data>
-  <data name="labelName.Text" xml:space="preserve">
-    <value>Skin Pack</value>
-  </data>
-  <data name="&gt;&gt;buttonDirect.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;buttonDelete.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="buttonDirect.Text" xml:space="preserve">
-    <value>DOWNLOAD TO COLLECTION</value>
-  </data>
-  <data name="buttonInstallPs3.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Segoe UI, 12pt</value>
-  </data>
-  <data name="&gt;&gt;buttonDelete.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;buttonExport.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;buttonInstallXbox.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="buttonInstallPs3.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="labelDesc.Size" type="System.Drawing.Size, System.Drawing">
-    <value>353, 286</value>
-  </data>
-  <data name="buttonDelete.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Segoe UI, 12pt</value>
-  </data>
-  <data name="&gt;&gt;buttonInstallXbox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;buttonDirect.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;labelDesc.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="buttonExport.Size" type="System.Drawing.Size, System.Drawing">
-    <value>45, 30</value>
+  <data name="&gt;&gt;pictureBoxDisplay.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;pictureBoxDisplay.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="labelDesc.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 12pt</value>
-  </data>
-  <data name="buttonDelete.Size" type="System.Drawing.Size, System.Drawing">
-    <value>178, 66</value>
-  </data>
-  <data name="&gt;&gt;buttonBedrock.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 13</value>
-  </data>
-  <data name="buttonInstallXbox.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="&gt;&gt;buttonInstallWiiU.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="buttonDelete.Location" type="System.Drawing.Point, System.Drawing">
-    <value>384, 338</value>
-  </data>
-  <data name="&gt;&gt;buttonBedrock.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="labelName.Location" type="System.Drawing.Point, System.Drawing">
-    <value>24, 24</value>
-  </data>
-  <data name="&gt;&gt;buttonInstallPs3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="buttonInstallXbox.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
-  </data>
-  <data name="labelName.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 20.25pt</value>
-  </data>
-  <data name="&gt;&gt;labelDesc.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="buttonInstallXbox.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Segoe UI, 12pt</value>
+  <data name="&gt;&gt;pictureBoxDisplay.ZOrder" xml:space="preserve">
+    <value>9</value>
   </data>
   <data name="buttonBedrock.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
   </data>
-  <data name="&gt;&gt;labelName.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="buttonBedrock.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
   </data>
-  <data name="buttonInstallPs3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>657, 338</value>
+  <data name="buttonBedrock.Location" type="System.Drawing.Point, System.Drawing">
+    <value>388, 293</value>
   </data>
-  <data name="buttonExport.Text" xml:space="preserve">
-    <value>Get</value>
+  <data name="buttonBedrock.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 30</value>
   </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>760, 418</value>
+  <data name="buttonBedrock.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
   </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>MetroFramework.Forms.MetroForm, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  <data name="buttonBedrock.Text" xml:space="preserve">
+    <value>Convert to Bedrock</value>
   </data>
-  <data name="buttonInstallWiiU.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
+  <data name="&gt;&gt;buttonBedrock.Name" xml:space="preserve">
+    <value>buttonBedrock</value>
   </data>
-  <data name="&gt;&gt;labelDesc.Name" xml:space="preserve">
-    <value>labelDesc</value>
-  </data>
-  <data name="buttonDirect.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;buttonDelete.Type" xml:space="preserve">
+  <data name="&gt;&gt;buttonBedrock.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;buttonExport.Name" xml:space="preserve">
-    <value>buttonExport</value>
+  <data name="&gt;&gt;buttonBedrock.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
-  <data name="pictureBoxDisplay.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+  <data name="&gt;&gt;buttonBedrock.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 13</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>760, 418</value>
+  </data>
+  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
+    <value>CenterParent</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>pckCenterOpen</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>MetroFramework.Forms.MetroForm, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
 </root>

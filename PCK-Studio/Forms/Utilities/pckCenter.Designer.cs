@@ -1,4 +1,4 @@
-﻿namespace PckStudio.Forms
+﻿namespace PckStudio.Forms.Utilities
 {
     partial class pckCenter
     {

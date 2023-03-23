@@ -11,7 +11,7 @@ using PckStudio.Classes.Misc;
 using PckStudio.API.PCKCenter.model;
 using PckStudio.API.PCKCenter;
 
-namespace PckStudio.Forms
+namespace PckStudio.Forms.Utilities
 {
     public partial class pckCenter : MetroFramework.Forms.MetroForm
     {
@@ -174,10 +174,6 @@ namespace PckStudio.Forms
                                 EInfo.Description = desc;
                                 PJSON.Data.Add((++x).ToString(), EInfo);
                                 File.Copy(cacheDir + mod + ".png", cacheDir + "images/" + ++x + ".png");
-
-
-                                PckPreview pckPreview = new PckPreview(pckName, author, desc, direct, ad, bmp, 0, mod, null, IsVita, Packname);
-                                pckLayout.Controls.Add(pckPreview);
                             }
                         }
                         catch (Exception err) { Console.WriteLine(err.Message); }
@@ -287,9 +283,6 @@ namespace PckStudio.Forms
                 {
                     bmp = (Bitmap)Image.FromStream(memStream);
                 }
-
-                PckPreview pckPreview = new PckPreview(pckName, author, desc, direct, ad, bmp, 1, mod, loadCollectdion, PSVitaPCKCheckbox.Checked, "");
-                pckLayout.Controls.Add(pckPreview);
             }
             pckLayout.Enabled = true;
         }
@@ -400,143 +393,4 @@ namespace PckStudio.Forms
             else { MessageBox.Show("No Packs Avaliable!"); }
         }
     }
-
-    public class PckPreview : UserControl
-    {
-        string name;
-        string author;
-        string desc;
-        string direct;
-        string ad;
-        int mode;
-        string mod;
-        bool IsVita;
-        string Pack;
-
-        Bitmap icon;
-
-        PictureBox iconBox = new PictureBox();
-        public MyNameLabel nameLabel = new MyNameLabel();
-        MyTablePanel layout = new MyTablePanel();
-        MethodInvoker reloader;
-
-        public PckPreview(string name, string author, string desc, string direct, string ad, Bitmap icon, int mode, string mod, MethodInvoker Reloader, bool vita, string packName) : base()
-        {
-            reloader = Reloader;
-            nameLabel.parentPreview = this;
-            layout.parentPreview = this;
-            this.name = name;
-            this.author = author;
-            this.desc = desc;
-            this.direct = direct;
-            this.ad = ad;
-            this.mode = mode;
-            this.mod = mod;
-            this.icon = icon;
-            IsVita = vita;
-            Pack = packName;
-            layout.BackColor = Color.White;
-            Size = new Size(250, 280);
-            nameLabel.Dock = DockStyle.Fill;
-            nameLabel.Location = new Point(0,0);
-            nameLabel.Size = new Size(230, 30);
-            iconBox.Image = icon;
-            //iconBox.Dock = DockStyle.Fill;
-            iconBox.Anchor = AnchorStyles.None;
-            nameLabel.Text = name;
-            iconBox.SizeMode = PictureBoxSizeMode.StretchImage;
-            iconBox.Size = new Size(230, 230);
-            layout.Margin = new Padding(0, 0, 0, 0);
-            Margin = new Padding(20, 15, 20, 15);
-            nameLabel.ForeColor = Color.Black;
-            nameLabel.TextAlign = ContentAlignment.MiddleCenter;
-            nameLabel.Font = new Font(nameLabel.Font.FontFamily, 14);
-            layout.Controls.Add(iconBox, 0, 1);
-            layout.Controls.Add(nameLabel, 0, 0);
-            layout.Parent = this;
-            layout.Dock = DockStyle.Fill;
-            iconBox.Enabled = false;
-
-        }
-
-        public void setHover(bool hover)
-        {
-            layout.BackColor = hover ? Color.LightGray : Color.White;
-            layout.Refresh();
-        }
-        public void onClick()
-        {
-
-            layout.BackColor = Color.Gray;
-            layout.Refresh();
-            pckCenterOpen openPck = new pckCenterOpen(name, author, desc, direct, ad, icon, mode, mod, reloader, IsVita, Pack);
-            openPck.ShowDialog();
-        }
-
-        public void onDoubleClick()
-        {
-
-        }
-    }
-
-    public class MyTablePanel : TableLayoutPanel
-    {
-        public PckPreview parentPreview;
-
-        protected override void OnMouseEnter(EventArgs e)
-        {
-            if (parentPreview != null)
-            {
-                parentPreview.setHover(true);
-                base.OnMouseLeave(e);
-            }
-        }
-        protected override void OnMouseLeave(EventArgs e)
-        {
-            if(parentPreview != null)
-            {
-                parentPreview.setHover(false);
-                base.OnMouseLeave(e);
-            }
-        }
-        protected override void OnMouseClick(MouseEventArgs e)
-        {
-            if (parentPreview != null)
-            {
-                parentPreview.onClick();
-                base.OnMouseClick(e);
-            }
-        }
-        protected override void OnMouseDoubleClick(MouseEventArgs e)
-        {
-            if (parentPreview != null)
-            {
-                parentPreview.onDoubleClick();
-                base.OnMouseDoubleClick(e);
-            }
-        }
-    }
-
-    public class MyNameLabel : Label
-    {
-        public PckPreview parentPreview;
-
-        protected override void OnMouseEnter(EventArgs e)
-        {
-            parentPreview.setHover(true);
-            base.OnMouseEnter(e);
-        }
-        protected override void OnMouseLeave(EventArgs e)
-        {
-            parentPreview.setHover(false);
-            base.OnMouseLeave(e);
-        }
-        protected override void OnMouseClick(MouseEventArgs e)
-        {
-            parentPreview.onClick();
-            base.OnMouseClick(e);
-        }
-    }
 }
-
-
