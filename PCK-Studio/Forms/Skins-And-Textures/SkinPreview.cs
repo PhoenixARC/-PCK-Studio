@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using PckStudio.Classes.Models.DefaultModels;
+using PckStudio.Classes.Utils;
 using PckStudio.Models;
 
 namespace PckStudio.Forms
@@ -16,11 +12,16 @@ namespace PckStudio.Forms
         Image Texture;
         ModelBase Model;
 
-        public SkinPreview(Image img, ModelBase model = null)
+        public SkinPreview(Image img, SkinANIM anim, ModelBase model = null)
         {
             InitializeComponent();
             Texture = img;
+
             Model = model ?? new Steve64x32Model(Texture);
+            if (img.Width == 64 && img.Height == 64)
+            {
+                Model = model ?? new Steve64x64Model(Texture, anim);
+            }
         }
 
         private void SkinPreview_Load(object sender, EventArgs e) => RenderModel(Texture);

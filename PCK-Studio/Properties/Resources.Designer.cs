@@ -153,6 +153,16 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap blank {
+            get {
+                object obj = ResourceManager.GetObject("blank", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap CAPE_ICON {
             get {
                 object obj = ResourceManager.GetObject("CAPE_ICON", resourceCulture);
@@ -161,17 +171,20 @@ namespace PckStudio.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 7.0 (BETA)  
-        ///==========  
+        ///   Looks up a localized string similar to 7.0 (IN DEVELOPMENT)  
+        ///====================  
         ///Some features may be completely missing or incomplete at this point in time!  
-        ///  
+        ///
+        ///-Added .3dst (3DS Texture) support  
+        ///-Semi-added Sub-Pck editing  
+        ///-Add an edit all properties tool item  
+        ///-Skin Preview has been improved  
+        ///-Added Pack Icon Injection into .arc file  
+        ///-Improved COL Editor  
         ///-Massive codebase overhaul and optimization lead by miku-666 (aka NessieHax)!!!  
         ///-Some UI redesigned by yaboiFoxx  
         ///-Improved the changelog!  
-        ///-New icons for each of the file types, with unique image icons for skin, texture, and cape files  
-        ///-Added the ability to create Texture and Mash-Up packs  
-        ///-Added a feature to see stats about any given file, including file type  
-        ///-Added a feature set [rest of string was truncated]&quot;;.
+        ///-New icons for each o [rest of string was truncated]&quot;;.
         /// </summary>
         public static string CHANGELOG {
             get {
@@ -222,6 +235,16 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap Comparison {
+            get {
+                object obj = ResourceManager.GetObject("Comparison", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap Del {
             get {
                 object obj = ResourceManager.GetObject("Del", resourceCulture);
@@ -236,6 +259,115 @@ namespace PckStudio.Properties {
             get {
                 object obj = ResourceManager.GetObject("discord", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap entities_sheet {
+            get {
+                object obj = ResourceManager.GetObject("entities_sheet", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap ENTITY_MATERIALS_ICON {
+            get {
+                object obj = ResourceManager.GetObject("ENTITY_MATERIALS_ICON", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///	&quot;COMMENT&quot;: &quot;Entity data research by NessieHax (Miku-666) and MattNL&quot;,
+        ///	&quot;entities&quot;: [
+        ///		{ &quot;area_effect_cloud&quot;: &quot;Area Effect Cloud / Particle&quot; },
+        ///		{ &quot;armor_stand&quot;: &quot;Armor Stand&quot; },
+        ///		{ &quot;arrow&quot;: &quot;Arrow&quot; },
+        ///		{ &quot;bat&quot;: &quot;Bat&quot; },
+        ///		{ &quot;blaze&quot;: &quot;Blaze&quot; },
+        ///		{ &quot;boat&quot;: &quot;Boat&quot; },
+        ///		{ &quot;cat&quot;: &quot;Cat (PS4 EXCLUSIVE)&quot; },
+        ///		{ &quot;cave_spider&quot;: &quot;Cave Spider&quot; },
+        ///		{ &quot;chest_minecart&quot;: &quot;Chest Minecart&quot; },
+        ///		{ &quot;chicken&quot;: &quot;Chicken&quot; },
+        ///		{ &quot;cod&quot;: &quot;Cod&quot; },
+        ///		{ &quot;commandblock_minecart&quot;: &quot;Command Block Minecart&quot; },
+        ///		{ &quot; [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string entityBehaviourData {
+            get {
+                return ResourceManager.GetString("entityBehaviourData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///	&quot;COMMENT&quot;: &quot;Entity data research by NessieHax (Miku-666) and MattNL&quot;,
+        ///	&quot;entities&quot;: [
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;bat&quot;: &quot;Bat&quot; },
+        ///		{ &quot;blaze_head&quot;: &quot;Blaze (Head Only)&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;cat&quot;: &quot;Cat (PS4 EXCLUSIVE)&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;drowned&quot;: &quot;Drowned&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;ender_dragon&quot;: &quot;Ender Dragon&quot; }, [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string entityMaterialData {
+            get {
+                return ResourceManager.GetString("entityMaterialData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///	&quot;COMMENT&quot;: &quot;Entity data research by NessieHax (Miku-666) and MattNL&quot;,
+        ///	&quot;entities&quot;: [
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;bat&quot;: &quot;Bat&quot; },
+        ///		{ &quot;blaze&quot;: &quot;Blaze&quot; },
+        ///		{ &quot;boat&quot;: &quot;Boat&quot; },
+        ///		{ &quot;cat&quot;: &quot;Cat (PS4 EXCLUSIVE)&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;chicken&quot;: &quot;Chicken&quot; },
+        ///		{ &quot;cod&quot;: &quot;Cod&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;cow&quot;: &quot;Cow&quot; },
+        ///		{ &quot;creeper&quot;: &quot;Creeper&quot; },
+        ///		{ &quot;dolphin&quot;: &quot;Dolphin&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;zombie.drowned&quot;: &quot;Drowned&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        ///		{ &quot;&quot;: &quot;&quot; },
+        /// [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string entityModelData {
+            get {
+                return ResourceManager.GetString("entityModelData", resourceCulture);
             }
         }
         
@@ -525,6 +657,16 @@ namespace PckStudio.Properties {
         public static System.Drawing.Bitmap TEXTURE_ICON {
             get {
                 object obj = ResourceManager.GetObject("TEXTURE_ICON", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap TexturePackIcon {
+            get {
+                object obj = ResourceManager.GetObject("TexturePackIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

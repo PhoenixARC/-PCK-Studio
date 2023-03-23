@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Media.Imaging;
 using MetroFramework.Forms;
-using RichPresenceClient;
+using PckStudio.Classes.Misc;
 using PckStudio.Classes.Networking;
 using PckStudio.Classes.IO;
-using API.PCKCenter.model;
-using API.PCKCenter;
+using PckStudio.API.PCKCenter.model;
+using PckStudio.API.PCKCenter;
 
 namespace PckStudio.Forms.Utilities
 {
@@ -149,7 +149,7 @@ namespace PckStudio.Forms.Utilities
         {
             try
             {
-                Collections.TryDownloadPack(int.Parse(OnlineTreeView.SelectedNode.Tag.ToString()), VitaCheckBox.Checked, CategoryComboBox.Text);
+                Collections.TryDownloadPack(CategoryComboBox.Text, int.Parse(OnlineTreeView.SelectedNode.Tag.ToString()), VitaCheckBox.Checked);
                 MessageBox.Show("Download complete");/**/
             }
             catch

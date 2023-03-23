@@ -1,15 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
 using System.Windows.Forms;
 using MetroFramework.Forms;
-using System.Drawing.Drawing2D;
 using Newtonsoft.Json.Linq;
 using PckStudio.Forms.Utilities;
 
@@ -31,7 +23,7 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 			InitializeComponent();
 			ImageList tiles = new ImageList();
 			tiles.ColorDepth = ColorDepth.Depth32Bit;
-			tiles.Images.AddRange(AnimationUtil.tileImages);
+			tiles.Images.AddRange(AnimationResources.tileImages);
 			treeViewBlocks.ImageList = tiles;
 			treeViewItems.ImageList = tiles;
 
@@ -39,9 +31,9 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 			{
 				int i = 0;
 
-				if (AnimationUtil.tileData["blocks"] != null)
+				if (AnimationResources.tileData["blocks"] != null)
 				{
-					foreach (JObject content in AnimationUtil.tileData["blocks"].Children())
+					foreach (JObject content in AnimationResources.tileData["blocks"].Children())
 					{
 						foreach (JProperty prop in content.Properties())
 						{
@@ -60,9 +52,9 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 						}
 					}
 				}
-				if (AnimationUtil.tileData["items"] != null)
+				if (AnimationResources.tileData["items"] != null)
 				{
-					foreach (JObject content in AnimationUtil.tileData["items"].Children())
+					foreach (JObject content in AnimationResources.tileData["items"].Children())
 					{
                         foreach (JProperty prop in content.Properties())
 						{
@@ -113,14 +105,16 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 			{
 				foreach (TreeNode _node in treeViewBlockCache)
 				{
-					if (_node.Text.ToLower().Contains(metroTextBox1.Text.ToLower()))
+					if (_node.Text.ToLower().Contains(metroTextBox1.Text.ToLower()) || 
+						(_node.Tag as string).ToLower().Contains(metroTextBox1.Text.ToLower()))
 					{
 						treeViewBlocks.Nodes.Add((TreeNode)_node.Clone());
 					}
 				}
 				foreach (TreeNode _node in treeViewItemCache)
 				{
-					if (_node.Text.ToLower().Contains(metroTextBox1.Text.ToLower()))
+					if (_node.Text.ToLower().Contains(metroTextBox1.Text.ToLower()) ||
+						(_node.Tag as string).ToLower().Contains(metroTextBox1.Text.ToLower()))
 					{
 						treeViewItems.Nodes.Add((TreeNode)_node.Clone());
 					}

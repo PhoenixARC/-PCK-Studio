@@ -69,6 +69,8 @@ namespace PckStudio.Forms.Editor
 			this.waterTreeView = new System.Windows.Forms.TreeView();
 			this.ColorContextMenu = new MetroFramework.Controls.MetroContextMenu(this.components);
 			this.restoreOriginalColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.copyColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.pasteColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.underwaterTreeView = new System.Windows.Forms.TreeView();
 			this.fogTreeView = new System.Windows.Forms.TreeView();
 			this.colorsTab = new System.Windows.Forms.TabPage();
@@ -164,7 +166,7 @@ namespace PckStudio.Forms.Editor
 			// 
 			// blueUpDown
 			// 
-			this.blueUpDown.BackColor = System.Drawing.SystemColors.Desktop;
+			this.blueUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
 			this.blueUpDown.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
 			resources.ApplyResources(this.blueUpDown, "blueUpDown");
 			this.blueUpDown.Maximum = new decimal(new int[] {
@@ -176,7 +178,7 @@ namespace PckStudio.Forms.Editor
 			// 
 			// greenUpDown
 			// 
-			this.greenUpDown.BackColor = System.Drawing.SystemColors.Desktop;
+			this.greenUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
 			this.greenUpDown.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
 			resources.ApplyResources(this.greenUpDown, "greenUpDown");
 			this.greenUpDown.Maximum = new decimal(new int[] {
@@ -188,7 +190,7 @@ namespace PckStudio.Forms.Editor
 			// 
 			// redUpDown
 			// 
-			this.redUpDown.BackColor = System.Drawing.SystemColors.Desktop;
+			this.redUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
 			this.redUpDown.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
 			resources.ApplyResources(this.redUpDown, "redUpDown");
 			this.redUpDown.Maximum = new decimal(new int[] {
@@ -200,7 +202,7 @@ namespace PckStudio.Forms.Editor
 			// 
 			// alphaUpDown
 			// 
-			this.alphaUpDown.BackColor = System.Drawing.SystemColors.Desktop;
+			this.alphaUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
 			this.alphaUpDown.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
 			resources.ApplyResources(this.alphaUpDown, "alphaUpDown");
 			this.alphaUpDown.Maximum = new decimal(new int[] {
@@ -401,11 +403,14 @@ namespace PckStudio.Forms.Editor
 			this.waterTreeView.Name = "waterTreeView";
 			this.waterTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView2_AfterSelect);
 			this.waterTreeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView2_KeyDown);
+			this.waterTreeView.LabelEdit = false;
 			// 
 			// ColorContextMenu
 			// 
 			this.ColorContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.restoreOriginalColorToolStripMenuItem});
+            this.restoreOriginalColorToolStripMenuItem,
+            this.copyColorToolStripMenuItem,
+            this.pasteColorToolStripMenuItem});
 			this.ColorContextMenu.Name = "ColorContextMenu";
 			resources.ApplyResources(this.ColorContextMenu, "ColorContextMenu");
 			// 
@@ -415,6 +420,18 @@ namespace PckStudio.Forms.Editor
 			resources.ApplyResources(this.restoreOriginalColorToolStripMenuItem, "restoreOriginalColorToolStripMenuItem");
 			this.restoreOriginalColorToolStripMenuItem.Click += new System.EventHandler(this.restoreOriginalColorToolStripMenuItem_Click);
 			// 
+			// copyColorToolStripMenuItem
+			// 
+			this.copyColorToolStripMenuItem.Name = "copyColorToolStripMenuItem";
+			resources.ApplyResources(this.copyColorToolStripMenuItem, "copyColorToolStripMenuItem");
+			this.copyColorToolStripMenuItem.Click += new System.EventHandler(this.copyColorToolStripMenuItem_Click);
+			// 
+			// pasteColorToolStripMenuItem
+			// 
+			this.pasteColorToolStripMenuItem.Name = "pasteColorToolStripMenuItem";
+			resources.ApplyResources(this.pasteColorToolStripMenuItem, "pasteColorToolStripMenuItem");
+			this.pasteColorToolStripMenuItem.Click += new System.EventHandler(this.pasteColorToolStripMenuItem_Click);
+			// 
 			// underwaterTreeView
 			// 
 			this.underwaterTreeView.ContextMenuStrip = this.ColorContextMenu;
@@ -422,6 +439,7 @@ namespace PckStudio.Forms.Editor
 			this.underwaterTreeView.Name = "underwaterTreeView";
 			this.underwaterTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView3_AfterSelect);
 			this.underwaterTreeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView3_KeyDown);
+			this.underwaterTreeView.LabelEdit = false;
 			// 
 			// fogTreeView
 			// 
@@ -430,6 +448,7 @@ namespace PckStudio.Forms.Editor
 			this.fogTreeView.Name = "fogTreeView";
 			this.fogTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView4_AfterSelect);
 			this.fogTreeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView4_KeyDown);
+			this.fogTreeView.LabelEdit = false;
 			// 
 			// colorsTab
 			// 
@@ -445,6 +464,7 @@ namespace PckStudio.Forms.Editor
 			this.colorTreeView.Name = "colorTreeView";
 			this.colorTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
 			this.colorTreeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView1_KeyDown);
+			this.colorTreeView.LabelEdit = false;
 			// 
 			// tabControl
 			// 
@@ -454,7 +474,7 @@ namespace PckStudio.Forms.Editor
 			this.tabControl.Controls.Add(this.underwaterTab);
 			this.tabControl.Controls.Add(this.fogTab);
 			this.tabControl.Name = "tabControl";
-			this.tabControl.SelectedIndex = 3;
+			this.tabControl.SelectedIndex = 0;
 			this.tabControl.Style = MetroFramework.MetroColorStyle.White;
 			this.tabControl.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.tabControl.UseSelectable = true;
@@ -548,5 +568,7 @@ namespace PckStudio.Forms.Editor
 		private ToolStripMenuItem TU54ToolStripMenuItem;
 		private ToolStripMenuItem TU69ToolStripMenuItem;
 		private ToolStripMenuItem _1_9_1ToolStripMenuItem;
+		private ToolStripMenuItem copyColorToolStripMenuItem;
+		private ToolStripMenuItem pasteColorToolStripMenuItem;
 	}
 }

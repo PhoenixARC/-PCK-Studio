@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Threading;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -13,6 +11,7 @@ using Newtonsoft.Json;
 using MetroFramework.Forms;
 using PckStudio.Classes.FileTypes;
 using System.Text.RegularExpressions;
+using OMI.Formats.Pck;
 
 namespace PckStudio
 {
@@ -30,7 +29,7 @@ namespace PckStudio
             right
         }
 
-        PCKProperties boxes;
+        PckFile.PCKProperties boxes;
 
         Color backgroundColor = Color.FromArgb(0xff, 0x50, 0x50, 0x50);
 
@@ -106,7 +105,7 @@ namespace PckStudio
             public ValueTuple<string, string> ToProperty()
             {
                 string value = $"{Type} {X} {Y} {Z} {Width} {Height} {Length} {U} {V}";
-                return new ValueTuple<string, string>("BOX", value);
+                return new ValueTuple<string, string>("BOX", value.Replace(',', '.'));
             }
 
         }
@@ -124,12 +123,12 @@ namespace PckStudio
             public ValueTuple<string, string> ToProperty()
             {
                 string value = $"{Name} Y {YOffset}";
-                return new ValueTuple<string, string>("OFFSET", value);
+                return new ValueTuple<string, string>("OFFSET", value.Replace(',','.'));
             }
         }
 
 
-        public generateModel(PCKProperties skinProperties, PictureBox preview)
+        public generateModel(PckFile.PCKProperties skinProperties, PictureBox preview)
         {
             InitializeComponent();
             boxes = skinProperties;
@@ -153,7 +152,7 @@ namespace PckStudio
                 {
                     case "BOX":
                         {
-                            string[] Format = ReplaceWhitespace(property.Item2, ",").Split(',');
+                            string[] Format = ReplaceWhitespace(property.Item2, ",").TrimEnd('\n', '\r', ' ').Split(',');
                             if (Format.Length < 9)
                             {
                                 Console.WriteLine($"'{property.Item1}' property has too few arguments: {property.Item2}");
@@ -209,7 +208,7 @@ namespace PckStudio
 
                     case "OFFSET":
                         {
-                            string[] offset = ReplaceWhitespace(property.Item2, ",").Split(',');
+                            string[] offset = ReplaceWhitespace(property.Item2, ",").TrimEnd('\n', '\r', ' ').Split(',');
                             if (offset.Length < 3) continue;
                             string name = offset[0];
                             string dimension = offset[1]; // "Y"
@@ -256,18 +255,18 @@ namespace PckStudio
                 graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
                 // makes sure it reders/draws the full pixel in top left corner
                 graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
-                int headbodyY = (displayBox.Height / 2) + 25; //  25
-                int armY = (displayBox.Height / 2) + 35; // -60;
-                int legY = (displayBox.Height / 2) + 85; // -80;
-                int groundLevel = (displayBox.Height / 2) + 145;
+                float headbodyY = (displayBox.Height / 2) + 25; //  25
+                float armY = (displayBox.Height / 2) + 35; // -60;
+                float legY = (displayBox.Height / 2) + 85; // -80;
+                float groundLevel = (displayBox.Height / 2) + 145;
                 graphics.DrawLine(Pens.White, 0, groundLevel, displayBox.Width, groundLevel);
                 // Chooses Render settings based on current direction
                 foreach (ListViewItem listViewItem in listViewBoxes.Items)
                 {
                     if (!(listViewItem.Tag is ModelPart)) continue;
                     ModelPart part = listViewItem.Tag as ModelPart;
-                    int x = displayBox.Width / 2;
-                    int y = 0;
+                    float x = displayBox.Width / 2;
+                    float y = 0;
                     switch (direction)
                     {
                         case eViewDirection.front:
@@ -341,27 +340,27 @@ namespace PckStudio
                                 switch (part.Type)
                                 {
                                     case "HEAD":
-                                        y = headbodyY + int.Parse(offsetHead.Text) * 5;
+                                        y = headbodyY + float.Parse(offsetHead.Text) * 5;
                                         break;
 
                                     case "BODY":
-                                        y = headbodyY + int.Parse(offsetBody.Text) * 5;
+                                        y = headbodyY + float.Parse(offsetBody.Text) * 5;
                                         break;
 
                                     case "ARM0":
-                                        y = armY + int.Parse(offsetArms.Text) * 5;
+                                        y = armY + float.Parse(offsetArms.Text) * 5;
                                         break;
 
                                     case "ARM1":
-                                        y = armY + int.Parse(offsetArms.Text) * 5;
+                                        y = armY + float.Parse(offsetArms.Text) * 5;
                                         break;
 
                                     case "LEG0":
-                                        y = legY + int.Parse(offsetLegs.Text) * 5;
+                                        y = legY + float.Parse(offsetLegs.Text) * 5;
                                         break;
 
                                     case "LEG1":
-                                        y = legY + int.Parse(offsetLegs.Text) * 5;
+                                        y = legY + float.Parse(offsetLegs.Text) * 5;
                                         break;
                                 }
 
@@ -395,26 +394,26 @@ namespace PckStudio
                                 switch (part.Type)
                                 {
                                     case "HEAD":
-                                        y = headbodyY + int.Parse(offsetHead.Text) * 5;
+                                        y = headbodyY + float.Parse(offsetHead.Text) * 5;
                                         break;
                                     case "BODY":
-                                        y = headbodyY + int.Parse(offsetBody.Text) * 5;
+                                        y = headbodyY + float.Parse(offsetBody.Text) * 5;
                                         break;
                                     case "ARM0":
                                         x -= 25;
-                                        y = armY + int.Parse(offsetArms.Text) * 5;
+                                        y = armY + float.Parse(offsetArms.Text) * 5;
                                         break;
                                     case "ARM1":
                                         x += 25;
-                                        y = armY + int.Parse(offsetArms.Text) * 5;
+                                        y = armY + float.Parse(offsetArms.Text) * 5;
                                         break;
                                     case "LEG0":
                                         x -= 10;
-                                        y = legY + int.Parse(offsetLegs.Text) * 5;
+                                        y = legY + float.Parse(offsetLegs.Text) * 5;
                                         break;
                                     case "LEG1":
                                         x += 10;
-                                        y = legY + int.Parse(offsetLegs.Text) * 5;
+                                        y = legY + float.Parse(offsetLegs.Text) * 5;
                                         break;
                                 }
 
@@ -447,25 +446,25 @@ namespace PckStudio
                             switch (part.Type)
                             {
                                 case "HEAD":
-                                    y = headbodyY + int.Parse(offsetHead.Text) * 5;
+                                    y = headbodyY + float.Parse(offsetHead.Text) * 5;
                                     break;
                                 case "BODY":
-                                    y = headbodyY + int.Parse(offsetBody.Text) * 5;
+                                    y = headbodyY + float.Parse(offsetBody.Text) * 5;
                                     break;
 
                                 case "ARM0":
-                                    y = armY + int.Parse(offsetArms.Text) * 5;
+                                    y = armY + float.Parse(offsetArms.Text) * 5;
                                     break;
                                 case "ARM1":
-                                    y = armY + int.Parse(offsetArms.Text) * 5;
+                                    y = armY + float.Parse(offsetArms.Text) * 5;
                                     break;
 
                                 case "LEG0":
-                                    y = legY + int.Parse(offsetLegs.Text) * 5;
+                                    y = legY + float.Parse(offsetLegs.Text) * 5;
                                     break;
 
                                 case "LEG1":
-                                    y = legY + int.Parse(offsetLegs.Text) * 5;
+                                    y = legY + float.Parse(offsetLegs.Text) * 5;
                                     break;
                             }
                             //Maps imported Texture if auto texture is disabled
@@ -544,7 +543,7 @@ namespace PckStudio
                     {
                         if (listViewItemCurrent.SubItems[9].Text == "unchecked")
                         {
-                            int x = 0;
+                            float x = 0;
                             if (listViewItemCurrent.Tag.ToString() == "HEAD")
                                 x = displayBox.Width / 2;
                             else if (listViewItemCurrent.Tag.ToString() == "BODY")
@@ -595,7 +594,7 @@ namespace PckStudio
                     {
                         if (listViewItem1.SubItems[listViewItem1.SubItems.Count - 1].Text == "unchecked")
                         {
-                            int x = 0;
+                            float x = 0;
                             if (listViewItem1.Tag.ToString() == "HEAD")
                                 x = displayBox.Width / 2;
                             else if (listViewItem1.Tag.ToString() == "BODY")
@@ -711,7 +710,7 @@ namespace PckStudio
                     {
                         if (listViewItem1.SubItems[listViewItem1.SubItems.Count - 1].Text == "unchecked")
                         {
-                            int x = 0;
+                            float x = 0;
                             if (listViewItem1.Tag.ToString() == "HEAD")
                                 x = displayBox.Width / 2;
                             else if (listViewItem1.Tag.ToString() == "BODY")

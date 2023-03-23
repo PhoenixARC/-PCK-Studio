@@ -1,14 +1,15 @@
-﻿using PckStudio.Classes.FileTypes;
-using System;
-using System.Collections.Generic;
+﻿using System;
+using System.IO;
 using System.Data;
 using System.Linq;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using MetroFramework.Forms;
-using RichPresenceClient;
+using PckStudio.Classes.Misc;
 using PckStudio.Forms.Additional_Popups.Loc;
-using PckStudio.Classes.IO.LOC;
-using System.IO;
+using OMI.Formats.Languages;
+using OMI.Workers.Language;
+using OMI.Formats.Pck;
 
 namespace PckStudio.Forms.Editor
 {
@@ -16,15 +17,16 @@ namespace PckStudio.Forms.Editor
     {
 		DataTable tbl;
 		LOCFile currentLoc;
-		PCKFile.FileData _file;
+		PckFile.FileData _file;
 
-		public LOCEditor(PCKFile.FileData file)
+		public LOCEditor(PckFile.FileData file)
 		{
 			InitializeComponent();
 			_file = file;
-            using (var ms = new MemoryStream(file.data))
+            using (var ms = new MemoryStream(file.Data))
             {
-                currentLoc = LOCFileReader.Read(ms);
+				var reader = new LOCFileReader();
+                currentLoc = reader.FromStream(ms);
             }
 			tbl = new DataTable();
 			tbl.Columns.Add(new DataColumn("Language") { ReadOnly = true });
@@ -40,11 +42,6 @@ namespace PckStudio.Forms.Editor
 			foreach(string locKey in currentLoc.LocKeys.Keys)
 				treeViewLocKeys.Nodes.Add(locKey);
 		}
-
-        private void LOCEditor_FormClosing(object sender, FormClosingEventArgs e)
-        {
-			RPC.SetPresence("An Open Source .PCK File Editor", "Program by PhoenixARC");
-        }
 
 		private void treeViewLocKeys_AfterSelect(object sender, TreeViewEventArgs e)
 		{

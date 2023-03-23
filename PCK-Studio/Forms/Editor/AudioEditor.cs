@@ -2,15 +2,20 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Security.Cryptography;
+using System.Text.RegularExpressions;
 using System.Diagnostics;
 using MetroFramework.Forms;
-using System.Collections;
+using NAudio.Wave;
+using PckStudio.Classes;
 using PckStudio.Classes.FileTypes;
 using PckStudio.Classes.IO.PCK;
 using PckStudio.Forms.Additional_Popups.Audio;
+using OMI.Formats.Languages;
+using OMI.Formats.Pck;
+using PckStudio.Forms.Additional_Popups;
 
 // Audio Editor by MattNL
 // additional work and optimization by Miku-666
@@ -20,10 +25,8 @@ namespace PckStudio.Forms.Editor
 	public partial class AudioEditor : MetroForm
 	{
 		public string defaultType = "yes";
-		string tempDir = "";
-		Classes.Bink BINK = new Classes.Bink();
 		PCKAudioFile audioFile = null;
-		PCKFile.FileData audioPCK;
+		PckFile.FileData audioPCK;
 		LOCFile loc;
 		bool _isLittleEndian = false;
         MainForm parent = null;
@@ -52,32 +55,40 @@ namespace PckStudio.Forms.Editor
 			return (PCKAudioFile.AudioCategory.EAudioType)Categories.IndexOf(category);
 		}
 
-		public AudioEditor(PCKFile.FileData file, LOCFile locFile, bool isLittleEndian)
+		public AudioEditor(PckFile.FileData file, LOCFile locFile, bool isLittleEndian)
 		{
 			InitializeComponent();
 			loc = locFile;
 			_isLittleEndian = isLittleEndian;
 
-			BINK.SetUpBinka();
-
 			audioPCK = file;
-			using (var stream = new MemoryStream(file.data))
+			using (var stream = new MemoryStream(file.Data))
 			{
 				audioFile = PCKAudioFileReader.Read(stream, isLittleEndian);
 			}
 
+			SetUpTree();
+		}
+
+		public void SetUpTree()
+		{
+			treeView1.BeginUpdate();
+			treeView1.Nodes.Clear();
 			foreach (var category in audioFile.Categories)
 			{
-				if (category.Name == "include_overworld" &&
-					category.audioType == PCKAudioFile.AudioCategory.EAudioType.Creative &&
-					audioFile.TryGetCategory(PCKAudioFile.AudioCategory.EAudioType.Overworld, out PCKAudioFile.AudioCategory overworldCategory))
+				if(category.audioType == PCKAudioFile.AudioCategory.EAudioType.Creative)
 				{
-					foreach (var name in category.SongNames.ToList())
+					if (category.Name == "include_overworld" &&
+						audioFile.TryGetCategory(PCKAudioFile.AudioCategory.EAudioType.Overworld, out PCKAudioFile.AudioCategory overworldCategory))
 					{
-						if (overworldCategory.SongNames.Contains(name))
-							category.SongNames.Remove(name);
+						foreach (var name in category.SongNames.ToList())
+						{
+							if (overworldCategory.SongNames.Contains(name))
+								category.SongNames.Remove(name);
+						}
+						playOverworldInCreative.Checked = true;
 					}
-					playOverworldInCreative.Checked = true;
+					playOverworldInCreative.Visible = true;
 				}
 
 				TreeNode treeNode = new TreeNode(GetCategoryFromId(category.audioType), (int)category.audioType, (int)category.audioType);
@@ -85,6 +96,7 @@ namespace PckStudio.Forms.Editor
 				treeView1.Nodes.Add(treeNode);
 			}
 			playOverworldInCreative.Enabled = audioFile.HasCategory(PCKAudioFile.AudioCategory.EAudioType.Creative);
+			treeView1.EndUpdate();
 		}
 
 		private void AudioEditor_FormClosed(object sender, FormClosedEventArgs e)
@@ -118,22 +130,31 @@ namespace PckStudio.Forms.Editor
 
 		private void addCategoryStripMenuItem_Click(object sender, EventArgs e)
 		{
-			string[] avalible = Categories.FindAll(str => !audioFile.HasCategory(GetCategoryId(str))).ToArray();
-			if (avalible.Length > 0)
+			string[] available = Categories.FindAll(str => !audioFile.HasCategory(GetCategoryId(str))).ToArray();
+			if (available.Length > 0)
 			{
-				using addCategory add = new addCategory(avalible);
+				using ItemSelectionPopUp add = new ItemSelectionPopUp(available);
 				if (add.ShowDialog() == DialogResult.OK)
-					audioFile.AddCategory(GetCategoryId(add.Category));
+					audioFile.AddCategory(GetCategoryId(add.SelectedItem));
 				else return;
 
-				var category = audioFile.GetCategory(GetCategoryId(add.Category));
+				var category = audioFile.GetCategory(GetCategoryId(add.SelectedItem));
+
+				if (GetCategoryId(add.SelectedItem) == PCKAudioFile.AudioCategory.EAudioType.Creative)
+				{
+					playOverworldInCreative.Visible = true;
+					playOverworldInCreative.Checked = false;
+				}
+
 				TreeNode treeNode = new TreeNode(GetCategoryFromId(category.audioType), (int)category.audioType, (int)category.audioType);
 				treeNode.Tag = category;
 				treeView1.Nodes.Add(treeNode);
+
+				SetUpTree();
 			}
 			else
 			{
-				MessageBox.Show("All possible categories are used", "There are no more categories that could be added");
+				MessageBox.Show("There are no more categories that could be added", "All possible categories are used");
 			}
 		}
 
@@ -160,6 +181,11 @@ namespace PckStudio.Forms.Editor
 			if (treeView1.SelectedNode is TreeNode main &&
 				audioFile.RemoveCategory(GetCategoryId(treeView1.SelectedNode.Text)))
 			{
+				if(GetCategoryId(treeView1.SelectedNode.Text) == PCKAudioFile.AudioCategory.EAudioType.Creative)
+				{
+					playOverworldInCreative.Visible = false;
+					playOverworldInCreative.Checked = false;
+				}
 				treeView2.Nodes.Clear();
 				main.Remove();
 			}
@@ -188,52 +214,109 @@ namespace PckStudio.Forms.Editor
 
 		async void ProcessEntries(string[] FileList)
 		{
+			int success = 0;
+			int exitCode = 0;
+			pleaseWait waitDiag = new pleaseWait();
+			waitDiag.Show(this);
 			foreach (string file in FileList)
 			{
 				if (Path.GetExtension(file) == ".binka" || Path.GetExtension(file) == ".wav")
 				{
-					string new_loc = Path.Combine(parent.GetDataPath(), Path.GetFileNameWithoutExtension(file) + ".binka");
-					bool duplicate_song = false; // To handle if a file already in the pack is dropped back in
-					if (File.Exists(new_loc))
+					string songName = string.Join("_", Path.GetFileNameWithoutExtension(file).Split(Path.GetInvalidFileNameChars()));
+					songName = Regex.Replace(songName, @"[^\u0000-\u007F]+", "_"); // Replace UTF characters
+					string cacheSongLoc = Path.Combine(Program.AppDataCache, songName + Path.GetExtension(file));
+
+					if(File.Exists(cacheSongLoc)) File.Delete(cacheSongLoc);
+
+					string new_loc = Path.Combine(parent.GetDataPath(), songName + ".binka");
+					bool is_duplicate_file = false; // To handle if a file already in the pack is dropped back in
+					bool loc_is_occupied = File.Exists(new_loc);
+					if (loc_is_occupied)
 					{
-						duplicate_song = File.ReadAllBytes(file) == File.ReadAllBytes(new_loc);
-						if (duplicate_song)
+						FileStream fs1 = File.OpenRead(file);
+						FileStream fs2 = File.OpenRead(new_loc);
+
+						string hash1_str = BitConverter.ToString(MD5.Create().ComputeHash(fs1));
+						string hash2_str = BitConverter.ToString(MD5.Create().ComputeHash(fs2));
+
+						// close the file streams after calculating the hash
+						fs1.Close();
+						fs2.Close();
+
+						is_duplicate_file = hash1_str == hash2_str;
+
+						string diag_text = "A file named \"" + Path.GetFileNameWithoutExtension(file) + ".binka\" already exists in the Data folder.";
+
+						if (is_duplicate_file) diag_text = "\"" + Path.GetFileNameWithoutExtension(file) + ".binka\" has an identical copy present in the Data folder.";
+
+						diag_text += " Pressing yes will replace the existing file. By pressing no, the song entry will be added without affecting the file." +
+							"You can also cancel this operation and all files in queue.";
+
+						DialogResult user_prompt = MessageBox.Show(diag_text, "File already exists", MessageBoxButtons.YesNoCancel);
+						while (user_prompt == DialogResult.None) ; // Stops the editor from adding or processing the file until the user has made their choice
+						if (user_prompt == DialogResult.Cancel)
 						{
-							DialogResult user_prompt = MessageBox.Show("\"" + Path.GetFileNameWithoutExtension(file) + ".binka\" already exists. Continuing will replace the existing file. Are you sure you want to continue moving the file? By pressing no, the song entry will be added without moving the file. You can also cancel this operation and all files in queue.", "File already exists", MessageBoxButtons.YesNoCancel);
-							while (user_prompt == DialogResult.None) ; // Stops the editor from adding or processing the file until the user had made their choice
-							if (user_prompt == DialogResult.Cancel)
+							break;
+						}
+						else if (user_prompt == DialogResult.No)
+						{
+							if (treeView1.SelectedNode is TreeNode node && node.Tag is PCKAudioFile.AudioCategory cat)
 							{
-								break;
+								//adds song without affecting the binka file
+								cat.SongNames.Add(songName);
+								treeView2.Nodes.Add(songName);
+								success++;
 							}
-							else if (user_prompt == DialogResult.No) continue;
+							continue;
+						}
+						else if (user_prompt == DialogResult.Yes)
+						{
+							// deletes the file so that the copy function can happen safely
+							// and ignore duplicate files because well... they're duplicates lol
+							if (File.Exists(new_loc) && !is_duplicate_file) File.Delete(new_loc);
 						}
 					}
-					
+
 					if (Path.GetExtension(file) == ".wav") // Convert Wave to BINKA
 					{
+						using (var reader = new WaveFileReader(file)) //read from original location
+						{
+							var newFormat = new WaveFormat(reader.WaveFormat.SampleRate, 16, reader.WaveFormat.Channels);
+							using (var conversionStream = new WaveFormatConversionStream(newFormat, reader))
+							{
+								WaveFileWriter.CreateWaveFile(cacheSongLoc, conversionStream); //write to new location
+							}
+							reader.Close();
+							reader.Dispose();
+						}
+
 						Cursor.Current = Cursors.WaitCursor;
-						pleaseWait waitDiag = new pleaseWait();
-						waitDiag.Show(this);
 
 						await Task.Run(() =>
 						{
-							BINK.WavToBinka(file, new_loc, (int)compressionUpDown.Value);
+                            exitCode = Binka.FromWav(cacheSongLoc, new_loc, (int)compressionUpDown.Value);
 						});
 
-						waitDiag.Close();
-						waitDiag.Dispose();
+						if (!File.Exists(cacheSongLoc)) MessageBox.Show(this, $"\"{songName}.wav\" failed to convert for some reason. Please reach out to MNL#8935 on the communtiy Discord server and provide details. Thanks!", "Conversion failed");
+						else
+						{
+							success++;
+							File.Delete(cacheSongLoc); //cleanup song
+						}
+
 						Cursor.Current = Cursors.Default;
 
-						if (BINK.temp_error_code != 0) continue;
-					}
-					else if (!duplicate_song)
-					{
-						Console.WriteLine(Path.GetFileName(file));
-						File.Delete(Path.Combine(parent.GetDataPath(), Path.GetFileName(file)));
-						File.Copy(file, Path.Combine(parent.GetDataPath(), Path.GetFileName(file)));
+						if (exitCode != 0) continue;
 					}
 
-					var songName = Path.GetFileNameWithoutExtension(file);
+					// if the file is NOT a .wav and doesn't exist, copy the file
+					else if (!File.Exists(new_loc))
+					{
+						File.Copy(file, new_loc);
+						success++;
+					}
+
+					// this is repeated again becuase this is meant to prevent any files that fail to convert from being added to the category
 					if (treeView1.SelectedNode is TreeNode t && t.Tag is PCKAudioFile.AudioCategory category)
 					{
 						category.SongNames.Add(songName);
@@ -241,6 +324,10 @@ namespace PckStudio.Forms.Editor
 					}
 				}
 			}
+			waitDiag.Close();
+			waitDiag.Dispose();
+
+			MessageBox.Show(this, $"Successfully processed and/or converted {success}/{FileList.Length} file{(FileList.Length != 1 ? "s" : "" )}", "Done!");
 		}
 
 		private void Binka_DragDrop(object sender, DragEventArgs e)
@@ -266,8 +353,26 @@ namespace PckStudio.Forms.Editor
 			}
 
 			PCKAudioFile.AudioCategory overworldCategory = audioFile.GetCategory(PCKAudioFile.AudioCategory.EAudioType.Overworld);
+
+			bool songs_missing = false;
 			foreach (var category in audioFile.Categories)
 			{
+				if (category.SongNames.Count < 1)
+				{
+					MessageBox.Show("The game will crash upon loading your pack if any of the categories are empty. Please remove or occupy the category.", "Empty Category");
+					return;
+				}
+
+				foreach(var song in category.SongNames)
+				{
+					string FileName = Path.Combine(parent.GetDataPath(), song + ".binka");
+					if (!File.Exists(FileName))
+					{
+						songs_missing = true;
+						MessageBox.Show("\"" + song + ".binka\" does not exist in the \"Data\" folder. The game will crash when attempting to load this track.", "File missing");
+					}
+				}
+
 				category.Name = "";
 				if (playOverworldInCreative.Checked && category.audioType == PCKAudioFile.AudioCategory.EAudioType.Creative)
 				{
@@ -283,11 +388,9 @@ namespace PckStudio.Forms.Editor
 				}
 			}
 
-			bool emptyCat = false;
-
-			if (emptyCat)
+			if (songs_missing)
 			{
-				MessageBox.Show("The game will crash upon loading your pack if a category is empty", "Empty Category");
+				MessageBox.Show("Failed to save AudioData file because there are missing song entries", "Error");
 				return;
 			}
 
@@ -360,20 +463,20 @@ namespace PckStudio.Forms.Editor
 			MessageBox.Show("Right click the right window and press \"Add Entry\" or drag and drop a valid WAV file into the editor's right window. You can also drop other BINKA files, either from the main game or using a tool like BinkMan. The editor will automatically put the song in the Data folder for you.", "How to add a song");
 		}
 
-		private void whatIsEachCategoryToolStripMenuItem_Click(object sender, EventArgs e)
+		private void whatAreTheCategoriesToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			MessageBox.Show("Categories are pretty self explanatory. The game controls when each category should play.\n" +
 				"\nGAMEPLAY - Plays in the specified dimensions and game modes.\n" +
 				"-Overworld: Plays in survival mode and in Creative if no songs are set\n" +
-				"-Nether: Nothing special to note.\n" +
-				"-End: Prioritizes the final track when the dragon is alive.\n" +
+				"-Nether: Plays in the Nether.\n" +
+				"-End: Plays in the End. Prioritizes the final track when the dragon is alive.\n" +
 				"-Creative: Does not play survival tracks unless they're included.\n" +
 				"-Menu: Plays on the title screen and only once when the pack is loading. Perfect for intro songs.\n" +
 				"\nMINI GAMES - Will only play if you change the map grf files to load your pack and set the ThemeID to 0 for Vanilla maps.\n" +
 				"-Battle: Plays in the Battle Mini Game.\n" +
 				"-Tumble: Plays in the Tumble Mini Game.\n" +
 				"-Glide: Plays in the Glide Mini Game.\n", 
-				"What is each category?");
+				"What are the categories?");
 		}
 
 		private void howToEditCreditsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -407,7 +510,10 @@ namespace PckStudio.Forms.Editor
 		{
 			if (!parent.CreateDataFolder()) return;
 
-			OpenFileDialog ofn = new OpenFileDialog();
+			int exitCode = 0;
+
+
+            OpenFileDialog ofn = new OpenFileDialog();
 			ofn.Multiselect = true;
 			ofn.Filter = "Supported audio files (*.binka,*.wav)|*.binka;*.wav";
 			ofn.Title = "Please choose WAV or BINKA files to replace existing track files";
@@ -439,16 +545,16 @@ namespace PckStudio.Forms.Editor
 
 					await Task.Run(() =>
 					{
-						BINK.WavToBinka(file, new_loc, (int)compressionUpDown.Value);
+                        exitCode = Binka.FromWav(file, new_loc, (int)compressionUpDown.Value);
 					});
 
 					waitDiag.Close();
 					waitDiag.Dispose();
 					Cursor.Current = Cursors.Default;
 
-					if (BINK.temp_error_code != 0) continue;
+					if (exitCode != 0) continue;
 				}
-				else if(file_ext == ".binka") File.Copy(file, Path.Combine(parent.GetDataPath(), Path.GetFileName(file)));
+                else if(file_ext == ".binka") File.Copy(file, Path.Combine(parent.GetDataPath(), Path.GetFileName(file)));
 			}
 		}
 
@@ -456,7 +562,60 @@ namespace PckStudio.Forms.Editor
 		{
 			if (treeView2.SelectedNode != null && treeView1.SelectedNode.Tag is PCKAudioFile.AudioCategory)
 			{
-				BINK.BinkaToWav(Path.Combine(parent.GetDataPath(), treeView2.SelectedNode.Text + ".binka"), Path.Combine(parent.GetDataPath()));
+				Binka.ToWav(Path.Combine(parent.GetDataPath(), treeView2.SelectedNode.Text + ".binka"), Path.Combine(parent.GetDataPath()));
+			}
+		}
+
+		private void setCategoryToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (!(treeView1.SelectedNode is TreeNode t && t.Tag is PCKAudioFile.AudioCategory category)) return;
+
+			string[] available = Categories.FindAll(str => !audioFile.HasCategory(GetCategoryId(str))).ToArray();
+			if (available.Length > 0)
+			{
+				using ItemSelectionPopUp add = new ItemSelectionPopUp(available);
+				add.okBtn.Text = "Save";
+				if (add.ShowDialog() != DialogResult.OK) return;
+
+				audioFile.RemoveCategory(category.audioType);
+
+				audioFile.AddCategory(category.parameterType, GetCategoryId(add.SelectedItem), category.audioType == PCKAudioFile.AudioCategory.EAudioType.Overworld && playOverworldInCreative.Checked ? "include_overworld" : "");
+
+				var newCategory = audioFile.GetCategory(GetCategoryId(add.SelectedItem));
+
+				category.SongNames.ForEach(c => newCategory.SongNames.Add(c));
+
+				SetUpTree();
+			}
+			else
+			{
+				MessageBox.Show("There are no categories that aren't already used", "All possible categories are used");
+			}
+		}
+
+		private void organizeTracksToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if(MessageBox.Show("This function will move all binka files in the \"Data\" folder into a \"Music\" folder, to keep your data better organized. Would you like to continue?", "Move tracks?", MessageBoxButtons.YesNo) == DialogResult.Yes)
+			{
+				if (treeView1.Nodes.Count < 1 || !parent.CreateDataFolder()) return;
+				string musicdir = Path.Combine(parent.GetDataPath(), "Music");
+				Directory.CreateDirectory(musicdir);
+				foreach (var category in audioFile.Categories)
+				{
+					for (var i = 0; i < category.SongNames.Count; i++) // using standard for loop so the list can be modified
+					{
+						string song = category.SongNames[i];
+						string songpath = Path.Combine(parent.GetDataPath(), song + ".binka");
+						if (File.Exists(songpath))
+						{
+							File.Move(songpath, Path.Combine(musicdir, song + ".binka"));
+						}
+
+						category.SongNames[i] = Path.Combine("Music", song.Replace(song, Path.GetFileNameWithoutExtension(songpath)));
+					}
+				}
+				treeView2.Nodes.Clear();
+				treeView1.SelectedNode = null;
 			}
 		}
 	}

@@ -28,34 +28,36 @@
         /// </summary>
         private void InitializeComponent()
         {
+            MetroFramework.Controls.MetroLabel metroLabel1;
+            MetroFramework.Controls.MetroLabel metroLabel2;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddParameter));
-            this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
-            this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
             this.NameTextBox = new MetroFramework.Controls.MetroTextBox();
             this.ValueTextBox = new MetroFramework.Controls.MetroTextBox();
-            this.CancelButton = new MetroFramework.Controls.MetroButton();
-            this.ConfirmButton = new MetroFramework.Controls.MetroButton();
+            this.CancelBtn = new MetroFramework.Controls.MetroButton();
+            this.ConfirmBtn = new MetroFramework.Controls.MetroButton();
+            metroLabel1 = new MetroFramework.Controls.MetroLabel();
+            metroLabel2 = new MetroFramework.Controls.MetroLabel();
             this.SuspendLayout();
             // 
             // metroLabel1
             // 
-            this.metroLabel1.AutoSize = true;
-            this.metroLabel1.Location = new System.Drawing.Point(18, 27);
-            this.metroLabel1.Name = "metroLabel1";
-            this.metroLabel1.Size = new System.Drawing.Size(48, 19);
-            this.metroLabel1.TabIndex = 0;
-            this.metroLabel1.Text = "Name:";
-            this.metroLabel1.Theme = MetroFramework.MetroThemeStyle.Dark;
+            metroLabel1.AutoSize = true;
+            metroLabel1.Location = new System.Drawing.Point(18, 27);
+            metroLabel1.Name = "metroLabel1";
+            metroLabel1.Size = new System.Drawing.Size(48, 19);
+            metroLabel1.TabIndex = 0;
+            metroLabel1.Text = "Name:";
+            metroLabel1.Theme = MetroFramework.MetroThemeStyle.Dark;
             // 
             // metroLabel2
             // 
-            this.metroLabel2.AutoSize = true;
-            this.metroLabel2.Location = new System.Drawing.Point(17, 56);
-            this.metroLabel2.Name = "metroLabel2";
-            this.metroLabel2.Size = new System.Drawing.Size(42, 19);
-            this.metroLabel2.TabIndex = 1;
-            this.metroLabel2.Text = "Value:";
-            this.metroLabel2.Theme = MetroFramework.MetroThemeStyle.Dark;
+            metroLabel2.AutoSize = true;
+            metroLabel2.Location = new System.Drawing.Point(17, 56);
+            metroLabel2.Name = "metroLabel2";
+            metroLabel2.Size = new System.Drawing.Size(42, 19);
+            metroLabel2.TabIndex = 1;
+            metroLabel2.Text = "Value:";
+            metroLabel2.Theme = MetroFramework.MetroThemeStyle.Dark;
             // 
             // NameTextBox
             // 
@@ -121,42 +123,42 @@
             this.ValueTextBox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.ValueTextBox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
             // 
-            // CancelButton
+            // CancelBtn
             // 
-            this.CancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.CancelButton.Location = new System.Drawing.Point(23, 85);
-            this.CancelButton.Name = "CancelButton";
-            this.CancelButton.Size = new System.Drawing.Size(95, 23);
-            this.CancelButton.Style = MetroFramework.MetroColorStyle.White;
-            this.CancelButton.TabIndex = 4;
-            this.CancelButton.Text = "Cancel";
-            this.CancelButton.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.CancelButton.UseSelectable = true;
+            this.CancelBtn.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.CancelBtn.Location = new System.Drawing.Point(23, 85);
+            this.CancelBtn.Name = "CancelBtn";
+            this.CancelBtn.Size = new System.Drawing.Size(95, 23);
+            this.CancelBtn.Style = MetroFramework.MetroColorStyle.White;
+            this.CancelBtn.TabIndex = 4;
+            this.CancelBtn.Text = "Cancel";
+            this.CancelBtn.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.CancelBtn.UseSelectable = true;
             // 
-            // ConfirmButton
+            // ConfirmBtn
             // 
-            this.ConfirmButton.Location = new System.Drawing.Point(141, 85);
-            this.ConfirmButton.Name = "ConfirmButton";
-            this.ConfirmButton.Size = new System.Drawing.Size(96, 23);
-            this.ConfirmButton.Style = MetroFramework.MetroColorStyle.White;
-            this.ConfirmButton.TabIndex = 5;
-            this.ConfirmButton.Text = "Confirm";
-            this.ConfirmButton.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.ConfirmButton.UseSelectable = true;
-            this.ConfirmButton.Click += new System.EventHandler(this.ConfirmButton_Click);
+            this.ConfirmBtn.Location = new System.Drawing.Point(141, 85);
+            this.ConfirmBtn.Name = "ConfirmBtn";
+            this.ConfirmBtn.Size = new System.Drawing.Size(96, 23);
+            this.ConfirmBtn.Style = MetroFramework.MetroColorStyle.White;
+            this.ConfirmBtn.TabIndex = 5;
+            this.ConfirmBtn.Text = "Confirm";
+            this.ConfirmBtn.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.ConfirmBtn.UseSelectable = true;
+            this.ConfirmBtn.Click += new System.EventHandler(this.ConfirmButton_Click);
             // 
             // AddParameter
             // 
-            this.AcceptButton = this.ConfirmButton;
+            this.AcceptButton = this.ConfirmBtn;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(257, 126);
-            this.Controls.Add(this.ConfirmButton);
-            this.Controls.Add(this.CancelButton);
+            this.Controls.Add(this.ConfirmBtn);
+            this.Controls.Add(this.CancelBtn);
             this.Controls.Add(this.ValueTextBox);
             this.Controls.Add(this.NameTextBox);
-            this.Controls.Add(this.metroLabel2);
-            this.Controls.Add(this.metroLabel1);
+            this.Controls.Add(metroLabel2);
+            this.Controls.Add(metroLabel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -170,12 +172,9 @@
         }
 
         #endregion
-
-        private MetroFramework.Controls.MetroLabel metroLabel1;
-        private MetroFramework.Controls.MetroLabel metroLabel2;
         private MetroFramework.Controls.MetroTextBox ValueTextBox;
-        private MetroFramework.Controls.MetroButton CancelButton;
-        private MetroFramework.Controls.MetroButton ConfirmButton;
+        private MetroFramework.Controls.MetroButton CancelBtn;
+        private MetroFramework.Controls.MetroButton ConfirmBtn;
         private MetroFramework.Controls.MetroTextBox NameTextBox;
     }
 }

@@ -1,4 +1,5 @@
-﻿using PckStudio.Models;
+﻿using PckStudio.Classes.Utils;
+using PckStudio.Models;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -11,9 +12,11 @@ namespace PckStudio.Classes.Models.DefaultModels
 {
     internal class Steve64x64Model : ModelBase
     {
-        public Steve64x64Model(Texture texture)
+        SkinANIM _skinANIM;
+        public Steve64x64Model(Texture texture, SkinANIM anim)
         {
             textures = new Texture[1] { texture };
+            _skinANIM = anim;
             Initialize();
         }
 
@@ -21,7 +24,10 @@ namespace PckStudio.Classes.Models.DefaultModels
         {
             _ = Textures[0] ?? throw new NullReferenceException(nameof(Textures));
             Image source = Textures[0].Source;
-            Box head        = new Box(source, new Rectangle(8, 0, 16, 8), new Rectangle(0, 8, 32, 8), new Point3D(0f, 0f, 0f));
+
+            (int top, int side) armWidth = _skinANIM.GetFlag(ANIM_EFFECTS.SLIM_MODEL) ? (6, 14) : (8, 16);
+
+            Box head        = new Box(source, new Rectangle(8, 0, 16, 8),  new Rectangle(0, 8, 32, 8), new Point3D(0f, 0f, 0f));
             Box headOverlay = new Box(source, new Rectangle(40, 0, 16, 8), new Rectangle(32, 8, 32, 8), new Point3D(0f, 0f, 0f));
             headOverlay.Scale = OverlayScale;
 
@@ -29,12 +35,12 @@ namespace PckStudio.Classes.Models.DefaultModels
             Box bodyOverlay = new Box(source, new Rectangle(20, 32, 16, 4), new Rectangle(16, 36, 24, 12), new Point3D(0f, 0f, 0f));
             bodyOverlay.Scale = OverlayScale;
 
-            Box rightArm        = new Box(source, new Rectangle(44, 16, 8, 4), new Rectangle(40, 20, 16, 12), new Point3D(0f, 4f, 0f));
-            Box rightArmOverlay = new Box(source, new Rectangle(44, 32, 8, 4), new Rectangle(40, 36, 16, 12), new Point3D(0f, 4f, 0f));
+            Box rightArm        = new Box(source, new Rectangle(44, 16, armWidth.top, 4), new Rectangle(40, 20, armWidth.side, 12), new Point3D(0f, 4f, 0f));
+            Box rightArmOverlay = new Box(source, new Rectangle(44, 32, armWidth.top, 4), new Rectangle(40, 36, armWidth.side, 12), new Point3D(0f, 4f, 0f));
             rightArmOverlay.Scale = OverlayScale;
 
-            Box leftArm        = new Box(source, new Rectangle(36, 48, 8, 4), new Rectangle(32, 52, 16, 12), new Point3D(0f, 4f, 0f));
-            Box leftArmOverlay = new Box(source, new Rectangle(52, 48, 8, 4), new Rectangle(48, 52, 16, 12), new Point3D(0f, 4f, 0f));
+            Box leftArm        = new Box(source, new Rectangle(36, 48, armWidth.top, 4), new Rectangle(32, 52, armWidth.side, 12), new Point3D(0f, 4f, 0f));
+            Box leftArmOverlay = new Box(source, new Rectangle(52, 48, armWidth.top, 4), new Rectangle(48, 52, armWidth.side, 12), new Point3D(0f, 4f, 0f));
             leftArmOverlay.Scale = OverlayScale;
 
             Box rightLeg        = new Box(source, new Rectangle(4, 16, 8, 4), new Rectangle(0, 20, 16, 12), new Point3D(0f, 6f, 0f));

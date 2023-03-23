@@ -5,79 +5,81 @@ using System.IO;
 using System.Net;
 using System.Windows.Forms;
 
-namespace PckStudio.Classes
+namespace PckStudio.Classes.Networking
 {
-    class Update
+    public enum UpdateResult
     {
-        static string UpdateURL = "/Update/Download/setup/PCKStudio-Setup.msi";
-        static string BetaUpdateURL = "/Update/Download/setup/beta/PCKStudioBeta-Setup.msi";
+        // Base Failure value
+        Failure = -1,
+        // Base Success value
+        Success,
 
-        public static void UpdateProgram(bool Beta)
+        UpdateAvailable,
+
+        UpdateFailure,
+    }
+
+    class UpdateOptions
+    {
+        public bool IsBeta { get; set; }
+        public bool IsPortable { get; set; }
+        public string Domain
         {
-            //Forms.FakeProgressBar fb = new Forms.FakeProgressBar();
-            Thread thr = new Thread(() =>
+            get => _baseDomain?.OriginalString ?? (_betaDomain?.OriginalString ?? throw new NullReferenceException(nameof(_betaDomain)));
+            set
             {
-                Thread.CurrentThread.IsBackground = true;
-                //fb.ShowDialog();
-            });
-            if (Classes.Network.Portable)
-            {
-                UpdateURL = UpdateURL.Replace(".msi","Portable.msi");
-                BetaUpdateURL = BetaUpdateURL.Replace(".msi","Portable.msi");
-            }
-                string DLPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\Temp\\";
-            try
-            {
-                switch (Beta)
-                {
-                    case true:
-                        thr.Start();
-                        try
-                        {
-                            DownloadFile(DLPath + Path.GetFileName(Classes.Network.MainURL + BetaUpdateURL), Classes.Network.MainURL + BetaUpdateURL);
-                            Process.Start(DLPath + Path.GetFileName(Classes.Network.MainURL + BetaUpdateURL));
-                            Application.Exit();
-                        }
-                        catch(WebException ex)
-                        {
-                            Console.WriteLine(ex.Message);
-                            DownloadFile(DLPath + Path.GetFileName(Classes.Network.BackURL + BetaUpdateURL), Classes.Network.BackURL + BetaUpdateURL);
-                            Process.Start(DLPath + Path.GetFileName(Classes.Network.BackURL + BetaUpdateURL));
-                            Application.Exit();
-                        }
-                        break;
-                    case false:
-                        thr.Start();
-                        try
-                        {
-                            DownloadFile(DLPath + Path.GetFileName(Classes.Network.MainURL + UpdateURL), Classes.Network.MainURL + UpdateURL);
-                            Process.Start(DLPath + Path.GetFileName(Classes.Network.MainURL + UpdateURL));
-                            Application.Exit();
-                        }
-                        catch
-                        {
-                            DownloadFile(DLPath + Path.GetFileName(Classes.Network.BackURL + UpdateURL), Classes.Network.BackURL + UpdateURL);
-                            Process.Start(DLPath + Path.GetFileName(Classes.Network.BackURL + UpdateURL));
-                            Application.Exit();
-                        }
-                        break;
-                }
-            }
-            catch
-            {
-                thr.Abort();
-                MessageBox.Show("Could not update!");
+                _ = value ?? throw new NullReferenceException(nameof(value));
+                _baseDomain = new Uri(value);
             }
         }
 
-        static void DownloadFile(string FillePath, string URL)
+        private Uri _baseDomain;
+        private Uri _betaDomain;
+
+        public UpdateOptions(bool isBeta, bool isPortable, Uri baseUri, Uri betaUri)
         {
-            string remoteUri = Path.GetDirectoryName(URL);
+            IsBeta = isBeta;
+            IsPortable = isPortable;
+            _baseDomain = baseUri;
+            _betaDomain = betaUri;
+        }
+    }
 
-            WebClient myWebClient = new WebClient();
+    static class Update
+    {
+        public static UpdateResult CheckForUpdate(UpdateOptions options)
+        {
+            // TODO: implement this
+            return UpdateResult.Failure;
+        }
 
-            //Console.WriteLine("myWebClient.DownloadFile("+URL+", "+FillePath+");");
-            myWebClient.DownloadFile(URL, FillePath);
+        public static void UpdateProgram(UpdateOptions options)
+        {
+            string updateURL = options.Domain;
+            if (options.IsPortable)
+            {
+                updateURL = updateURL.Replace(".msi","Portable.msi");
+            }
+
+            string downloadPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\Temp\\";
+            string destinationURL = options.Domain;
+            if (TryDownloadFile(downloadPath + Path.GetFileName(destinationURL), destinationURL))
+            {
+                Process.Start(downloadPath + Path.GetFileName(destinationURL));
+                Application.Exit();
+            }
+        }
+
+        static bool TryDownloadFile(string filePath, string url)
+        {
+            try
+            {
+                using (WebClient client = new WebClient())
+                    client.DownloadFile(url, filePath);
+                return true;
+            }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
+            return false;
         }
     }
 }

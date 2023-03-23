@@ -23,7 +23,7 @@ namespace PckStudio.Classes.IO.CSMB
             {
                 CSMBPart part = new CSMBPart();
                 part.Name = ReadString(stream);
-                part.Parent = (ParentPart)ReadInt(stream);
+                part.Parent = (CSMBParentPart)ReadInt(stream);
                 part.posX = ReadFloat(stream);
                 part.posY = ReadFloat(stream);
                 part.posZ = ReadFloat(stream);
@@ -41,7 +41,7 @@ namespace PckStudio.Classes.IO.CSMB
             for (int i = 0; i < NumOfOffsets; i++)
             {
                 CSMBOffset offset = new CSMBOffset();
-                offset.offsetPart = (OffsetPart)ReadInt(stream);
+                offset.offsetPart = (CSMBOffsetPart)ReadInt(stream);
                 offset.VerticalOffset = ReadFloat(stream);
                 BinFile.Offsets.Add(offset);
             }

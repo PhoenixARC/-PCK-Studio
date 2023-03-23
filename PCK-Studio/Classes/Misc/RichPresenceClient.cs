@@ -1,19 +1,18 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 using DiscordRPC;
-using DiscordRPC.Exceptions;
+using PckStudio.Properties;
 
-namespace RichPresenceClient
+namespace PckStudio.Classes.Misc
 {
     // https://github.com/BullyWiiPlaza/Minecraft-Wii-U-Mod-Injector/blob/main/Minecraft%20Wii%20U%20Mod%20Injector/Helpers/DiscordRp.cs
-    class RPC
+    static class RPC
     {
         public static DiscordRpcClient Client;
-        public static DateTime StartUpTime = DateTime.UtcNow;
+        public static readonly DateTime StartUpTime = DateTime.UtcNow;
 
         public static void Initialize()
         {
-            Client = new DiscordRpcClient("825875166574673940");
+            Client = new DiscordRpcClient(Settings.Default.RichPresenceId);
             Client.Initialize();
         }
 
@@ -27,7 +26,7 @@ namespace RichPresenceClient
                 Assets = new Assets()
                 {
                     LargeImageKey = "pcklgo",
-                    LargeImageText = "PCK Studio",
+                    LargeImageText = "PCK-Studio",
                 }
             });
         }

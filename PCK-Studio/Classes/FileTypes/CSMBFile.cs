@@ -40,13 +40,12 @@ namespace PckStudio.Classes.FileTypes
     {
 		public List<CSMBPart> Parts = new List<CSMBPart>();
 		public List<CSMBOffset> Offsets = new List<CSMBOffset>();
-
     }
 
 	public class CSMBPart
     {
 		public string Name = "Partname";
-		public ParentPart Parent = 0;
+		public CSMBParentPart Parent = 0;
 		public float posX, posY, posZ = 0.0f;
 		public float sizeX, sizeY, sizeZ = 0.0f;
 		public int uvX, uvY = 0;
@@ -55,11 +54,11 @@ namespace PckStudio.Classes.FileTypes
 	}
 	public class CSMBOffset
     {
-		public OffsetPart offsetPart = 0;
+		public CSMBOffsetPart offsetPart = 0;
 		public float VerticalOffset = 0.0f;
 	}
 
-	public enum OffsetPart
+	public enum CSMBOffsetPart
 	{
 		HEAD = 0,
 		BODY = 1,
@@ -92,7 +91,7 @@ namespace PckStudio.Classes.FileTypes
 		CHEST = 28
 	}
 
-	public enum ParentPart
+	public enum CSMBParentPart
 	{
 		HEAD = 0,
 		BODY = 1,
