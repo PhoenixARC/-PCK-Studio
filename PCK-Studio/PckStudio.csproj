@@ -218,9 +218,12 @@
     <Compile Include="Classes\Networking\Network.cs" />
     <Compile Include="Classes\Misc\RichPresenceClient.cs" />
     <Compile Include="Classes\Networking\Update.cs" />
-    <Compile Include="Classes\Utils\TGA\TGA.cs" />
+    <Compile Include="Classes\Utils\TGA\TGAImage.cs" />
     <Compile Include="Classes\Utils\TGA\TGADataTypeCode.cs" />
     <Compile Include="Classes\Utils\TGA\TGAException.cs" />
+    <Compile Include="Classes\Utils\TGA\TGAExtentionData.cs" />
+    <Compile Include="Classes\Utils\TGA\TGAFooter.cs" />
+    <Compile Include="Classes\Utils\TGA\TGAHeader.cs" />
     <Compile Include="Classes\Utils\TGA\TGAReader.cs" />
     <Compile Include="Classes\Utils\TGA\TGAWriter.cs" />
     <Compile Include="Forms\Additional-Popups\EntityForms\AddEntry.cs">

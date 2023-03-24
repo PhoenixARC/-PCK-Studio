@@ -38,7 +38,7 @@ namespace PckStudio.Classes.Utils.TGA
         protected override TGAFileData ReadFromStream(Stream stream)
         {
             TGAHeader header = LoadHeader(stream);
-            Bitmap image = LoadImage(stream, header);
+            Image image = LoadImage(stream, header);
             TGAFooter footer = LoadFooter(stream);
             TGAExtentionData extentionData = LoadExtentionData(stream, footer);
             return new TGAFileData(header, image, footer, extentionData);
@@ -122,14 +122,14 @@ namespace PckStudio.Classes.Utils.TGA
             header.Origin.Y = ReadShort(stream);
             header.Width = ReadShort(stream);
             header.Height = ReadShort(stream);
-            header.BitsPerPixel = ReadBytes(stream, 1)[0];
+            header.BitsPerPixel = (byte)stream.ReadByte();
             header.ImageDescriptor = ReadBytes(stream, 1)[0];
             header.Id = ReadBytes(stream, headerIdLength);
             Debug.WriteLineIf(headerIdLength > 0, $"Image ID: {header.Id}");
             return header;
         }
 
-        private static Bitmap LoadImage(Stream stream, TGAHeader header)
+        private static Image LoadImage(Stream stream, TGAHeader header)
         {
             DebugLogHeader(header);
 
@@ -157,13 +157,13 @@ namespace PckStudio.Classes.Utils.TGA
 
             TGAFooter footer = new TGAFooter();
 
-            footer.extensionDataOffset = ReadInt(stream); // optional
-            footer.developerAreaDataOffset = ReadInt(stream); // optional
-            Debug.WriteLine("Extension Data Offset:         {0:x}", footer.extensionDataOffset);
-            Debug.WriteLine("Developer Area Data Offset:    {0:x}", footer.developerAreaDataOffset);
+            footer.ExtensionDataOffset = ReadInt(stream); // optional
+            footer.DeveloperAreaDataOffset = ReadInt(stream); // optional
+            Debug.WriteLine("Extension Data Offset:         {0:x}", footer.ExtensionDataOffset);
+            Debug.WriteLine("Developer Area Data Offset:    {0:x}", footer.DeveloperAreaDataOffset);
 
             string signature = ReadString(stream, 16, Encoding.ASCII);
-            Debug.WriteLineIf(!signature.Equals("TRUEVISION-XFILE") || ReadShort(stream) != 0x002E,
+            Debug.WriteLineIf(!signature.Equals(TGAFooter.Signature) || ReadShort(stream) != 0x002E,
                 "Footer end invalid");
 
             stream.Seek(origin, SeekOrigin.Begin);
@@ -172,9 +172,9 @@ namespace PckStudio.Classes.Utils.TGA
 
         private static TGAExtentionData LoadExtentionData(Stream stream, TGAFooter footer)
         {
-            if (footer.extensionDataOffset > 0)
+            if (footer.ExtensionDataOffset > 0)
             {
-                stream.Seek(footer.extensionDataOffset, SeekOrigin.Begin);
+                stream.Seek(footer.ExtensionDataOffset, SeekOrigin.Begin);
                 if (ReadShort(stream) == TGAExtentionData.ExtensionSize)
                 {
                     TGAExtentionData extentionData = new TGAExtentionData();

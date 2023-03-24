@@ -103,8 +103,9 @@ namespace PckStudio.Classes.Utils.TGA
         {
             WriteInt(stream, 0); // extensionDataOffset
             WriteInt(stream, 0); // developerAreaDataOffset
-            WriteString(stream, "TRUEVISION-XFILE", Encoding.ASCII);
-            WriteShort(stream, 0x002E);
+            WriteString(stream, TGAFooter.Signature, Encoding.ASCII);
+            stream.WriteByte(0x2E);
+            stream.WriteByte(0x00);
         }
 
         protected override void WriteToStream(Stream stream)

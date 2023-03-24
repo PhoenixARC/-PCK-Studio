@@ -508,7 +508,7 @@ namespace PckStudio
                             pictureBoxImagePreview.Image = Path.GetExtension(file.Filename) == ".png" &&
 								b[0] == 0x89 && b[1] == 'P' && b[2] == 'N' && b[3] == 'G'
 								? Image.FromStream(stream)
-								: TGA.FromStream(stream);
+								: TGAImage.FromStream(stream);
 							labelImageSize.Text = $"{pictureBoxImagePreview.Image.Size.Width}x{pictureBoxImagePreview.Image.Size.Height}";
 					}
 
@@ -2011,7 +2011,7 @@ namespace PckStudio
 
 						using var stream = new MemoryStream(file.Data);
                         Image originalTexture = textureExtension == ".tga"
-							? TGA.FromStream(stream)
+							? TGAImage.FromStream(stream)
 							: Image.FromStream(stream);
 						int NewWidth = originalTexture.Width / (int)Math.Pow(2,i - 1);
 						int NewHeight = originalTexture.Height / (int)Math.Pow(2, i - 1);
