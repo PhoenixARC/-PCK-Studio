@@ -1226,7 +1226,8 @@ namespace PckStudio
 				var locFile = new LOCFile();
 				locFile.InitializeDefault(packName);
 				using var stream = new MemoryStream();
-				LOCFileWriter.Write(stream, locFile);
+				var writer = new LOCFileWriter(locFile, 2);
+                writer.WriteToStream(stream);
 				return stream.ToArray();
             });
 
@@ -1592,7 +1593,8 @@ namespace PckStudio
 			{
 				using (var stream = new MemoryStream())
 				{
-					LOCFileWriter.Write(stream, locFile);
+					var writer = new LOCFileWriter(locFile, 2);
+                    writer.WriteToStream(stream);
 					locdata.SetData(stream.ToArray());
 				}
 				return true;
