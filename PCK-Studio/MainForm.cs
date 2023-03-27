@@ -1016,7 +1016,7 @@ namespace PckStudio
 							try
 							{
 								using ANIMEditor diag = new ANIMEditor(property.Item2);
-								if (diag.ShowDialog(this) == DialogResult.OK && diag.saved)
+								if (diag.ShowDialog(this) == DialogResult.OK)
 								{
 									file.Properties[i] = ("ANIM", diag.outANIM);
 									if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath))
@@ -1029,7 +1029,7 @@ namespace PckStudio
 							catch (Exception ex)
 							{
 								Debug.WriteLine(ex.Message);
-								MessageBox.Show("Failed to parse ANIM value, aborting to normal functionality. Please make sure the value only includes hexadecimal characters (0-9,A-F) and has no more than 8 characters. It can have an optional prefix of \"0x\".");
+								MessageBox.Show("Failed to parse ANIM value, aborting to normal functionality. Please make sure the value only includes hexadecimal characters (0-9,A-F) and has no more than 8 characters.");
 							}
 							break;
 

@@ -366,7 +366,7 @@ namespace PckStudio
 		private void buttonAnimGen_Click(object sender, EventArgs e)
 		{
             using Forms.Utilities.Skins.ANIMEditor diag = new Forms.Utilities.Skins.ANIMEditor(anim.ToString());
-            if (diag.ShowDialog(this) == DialogResult.OK && diag.saved)
+            if (diag.ShowDialog(this) == DialogResult.OK)
             {
                 anim = new SkinANIM(diag.outANIM);
                 DrawModel();

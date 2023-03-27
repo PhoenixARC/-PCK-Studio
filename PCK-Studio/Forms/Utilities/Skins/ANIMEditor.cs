@@ -1,280 +1,301 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
-using System.IO;
 using System.Windows.Forms;
 using PckStudio.Classes.Utils;
 using PckStudio.Forms.Additional_Popups;
 
 namespace PckStudio.Forms.Utilities.Skins
 {
-	public partial class ANIMEditor : MetroFramework.Forms.MetroForm
-	{
-		public bool saved = false;
-		readonly SkinANIM initialANIM;
-		public string outANIM => animValue.Text;
-		SkinANIM anim = new SkinANIM();
+    public partial class ANIMEditor : MetroFramework.Forms.MetroForm
+    {
+        readonly SkinANIM initialANIM;
+        public string outANIM => animValue.Text;
+        SkinANIM anim = new SkinANIM();
+        ANIMRuleSet ruleset;
 
-		void processCheckBoxes(bool set_all = false, bool value = false)
-		{
-			#region processes every single checkbox with the correct ANIM flags
-			helmetCheckBox.Enabled = set_all ? value : anim.GetFlag(ANIM_EFFECTS.HEAD_DISABLED);
-			chestplateCheckBox.Enabled = set_all ? value : anim.GetFlag(ANIM_EFFECTS.BODY_DISABLED);
-			leftArmorCheckBox.Enabled = set_all ? value : anim.GetFlag(ANIM_EFFECTS.LEFT_ARM_DISABLED);
-			rightArmorCheckBox.Enabled = set_all ? value : anim.GetFlag(ANIM_EFFECTS.RIGHT_ARM_DISABLED);
-			leftLeggingCheckBox.Enabled = set_all ? value : anim.GetFlag(ANIM_EFFECTS.LEFT_LEG_DISABLED);
-			rightLeggingCheckBox.Enabled = set_all ? value : anim.GetFlag(ANIM_EFFECTS.RIGHT_LEG_DISABLED);
+        sealed class ANIMRuleSet
+        {
+        private class Bictionary<T1, T2> : Dictionary<T1, T2>
+        {
+                public Bictionary(int capacity)
+                    : base(capacity)
+                { }
 
-			bobbingCheckBox.Checked = set_all ? value : anim.GetFlag(ANIM_EFFECTS.HEAD_BOBBING_DISABLED);
-			bodyCheckBox.Checked = set_all ? value : anim.GetFlag(ANIM_EFFECTS.BODY_DISABLED);
-			bodyOCheckBox.Checked = set_all ? value : anim.GetFlag(ANIM_EFFECTS.BODY_OVERLAY_DISABLED);
-			chestplateCheckBox.Checked = set_all ? value : anim.GetFlag(ANIM_EFFECTS.FORCE_BODY_ARMOR);
+            public T1 this[T2 index]
+            {
+                get
+                {
+                    if (!this.Any(x => x.Value.Equals(index)))
+                        throw new KeyNotFoundException();
+                    return this.First(x => x.Value.Equals(index)).Key;
+                }
+            }
 
-			classicCheckBox.Checked = set_all ? value : anim.GetFlag(ANIM_EFFECTS.RESOLUTION_64x64);
-			crouchCheckBox.Checked = set_all ? value : anim.GetFlag(ANIM_EFFECTS.DO_BACKWARDS_CROUCH);
-			dinnerboneCheckBox.Checked = set_all ? value : anim.GetFlag(ANIM_EFFECTS.DINNERBONE);
-			headCheckBox.Checked = set_all ? value : anim.GetFlag(ANIM_EFFECTS.HEAD_DISABLED);
+                internal void AddRange(IEnumerable<(T1, T2)> range)
+        {
+                    foreach (var (key, value) in range)
+                    {
+                        Add(key, value);
+                    }
+                }
+            }
+            private Bictionary<CheckBox, ANIM_EFFECTS> checkBoxLinkage;
+            private SkinANIM ANIM;
+            private bool ignoreCheckChanged = false;
 
-			headOCheckBox.Checked = set_all ? value : anim.GetFlag(ANIM_EFFECTS.HEAD_OVERLAY_DISABLED);
-			helmetCheckBox.Checked = set_all ? value : anim.GetFlag(ANIM_EFFECTS.FORCE_HEAD_ARMOR);
-			leftArmCheckBox.Checked = set_all ? value : anim.GetFlag(ANIM_EFFECTS.LEFT_ARM_DISABLED);
-			leftArmOCheckBox.Checked = set_all ? value : anim.GetFlag(ANIM_EFFECTS.LEFT_ARM_OVERLAY_DISABLED);
+            public ANIMRuleSet(SkinANIM anim, params (CheckBox, ANIM_EFFECTS)[] linkage)
+            {
+                ANIM = anim;
+                checkBoxLinkage = new Bictionary<CheckBox, ANIM_EFFECTS>(32);
+                if (linkage.Length < 32)
+                    Debug.WriteLine($"Not all {nameof(ANIM_EFFECTS)} are mapped to a given checkbox.");
 
-			leftArmorCheckBox.Checked = set_all ? value : anim.GetFlag(ANIM_EFFECTS.FORCE_LEFT_ARM_ARMOR);
-			leftLegCheckBox.Checked = set_all ? value : anim.GetFlag(ANIM_EFFECTS.LEFT_LEG_DISABLED);
-			leftLeggingCheckBox.Checked = set_all ? value : anim.GetFlag(ANIM_EFFECTS.FORCE_LEFT_LEG_ARMOR);
-			leftLegOCheckBox.Checked = set_all ? value : anim.GetFlag(ANIM_EFFECTS.LEFT_LEG_OVERLAY_DISABLED);
+                checkBoxLinkage.AddRange(linkage);
+                foreach (var (checkbox, effect) in linkage)
+                {
+                    checkbox.CheckedChanged += checkedChanged;
+                    checkbox.Checked = anim.GetFlag(effect);
+                }
+            }
 
-			noArmorCheckBox.Checked = set_all ? value : anim.GetFlag(ANIM_EFFECTS.ALL_ARMOR_DISABLED);
-			rightArmCheckBox.Checked = set_all ? value : anim.GetFlag(ANIM_EFFECTS.RIGHT_ARM_DISABLED);
-			rightArmOCheckBox.Checked = set_all ? value : anim.GetFlag(ANIM_EFFECTS.RIGHT_ARM_OVERLAY_DISABLED);
-			rightArmorCheckBox.Checked = set_all ? value : anim.GetFlag(ANIM_EFFECTS.FORCE_RIGHT_ARM_ARMOR);
+            internal void SetAll(bool state)
+            {
+                ignoreCheckChanged = true;
+                foreach (var item in checkBoxLinkage)
+                {
+                    ANIM.SetFlag(item.Value, state);
+                    item.Key.Checked = state;
+                }
+                ignoreCheckChanged = false;
+            }
 
-			rightLegCheckBox.Checked = set_all ? value : anim.GetFlag(ANIM_EFFECTS.RIGHT_LEG_DISABLED);
-			rightLeggingCheckBox.Checked = set_all ? value : anim.GetFlag(ANIM_EFFECTS.FORCE_RIGHT_LEG_ARMOR);
-			rightLegOCheckBox.Checked = set_all ? value : anim.GetFlag(ANIM_EFFECTS.RIGHT_LEG_OVERLAY_DISABLED);
-			santaCheckBox.Checked = set_all ? value : anim.GetFlag(ANIM_EFFECTS.BAD_SANTA);
+            internal void ApplyAnim(SkinANIM anim)
+            {
+                ANIM = anim;
+                foreach (var item in checkBoxLinkage)
+                {
+                    item.Key.Checked = anim.GetFlag(item.Value);
+                }
+            }
 
-			slimCheckBox.Checked = set_all ? value : anim.GetFlag(ANIM_EFFECTS.SLIM_MODEL);
-			staticArmsCheckBox.Checked = set_all ? value : anim.GetFlag(ANIM_EFFECTS.STATIC_ARMS);
-			staticLegsCheckBox.Checked = set_all ? value : anim.GetFlag(ANIM_EFFECTS.STATIC_LEGS);
-			statueCheckBox.Checked = set_all ? value : anim.GetFlag(ANIM_EFFECTS.STATUE_OF_LIBERTY);
+            private void checkedChanged(object sender, EventArgs e)
+            {
+                if (!ignoreCheckChanged && sender is CheckBox checkBox && checkBoxLinkage.ContainsKey(checkBox))
+                {
+                    switch (checkBoxLinkage[checkBox])
+                    {
+                        case ANIM_EFFECTS.HEAD_DISABLED:
+                            checkBoxLinkage[ANIM_EFFECTS.FORCE_HEAD_ARMOR].Enabled = !checkBox.Checked;
+                            break;
+                        case ANIM_EFFECTS.BODY_DISABLED:
+                            checkBoxLinkage[ANIM_EFFECTS.FORCE_BODY_ARMOR].Enabled = !checkBox.Checked;
+                            break;
+                        case ANIM_EFFECTS.LEFT_LEG_DISABLED:
+                            checkBoxLinkage[ANIM_EFFECTS.FORCE_LEFT_LEG_ARMOR].Enabled = !checkBox.Checked;
+                            break;
+                        case ANIM_EFFECTS.RIGHT_LEG_DISABLED:
+                            checkBoxLinkage[ANIM_EFFECTS.FORCE_RIGHT_LEG_ARMOR].Enabled = !checkBox.Checked;
+                            break;
+                        case ANIM_EFFECTS.LEFT_ARM_DISABLED:
+                            checkBoxLinkage[ANIM_EFFECTS.FORCE_LEFT_ARM_ARMOR].Enabled = !checkBox.Checked;
+                            break;
+                        case ANIM_EFFECTS.RIGHT_ARM_DISABLED:
+                            checkBoxLinkage[ANIM_EFFECTS.FORCE_RIGHT_ARM_ARMOR].Enabled = !checkBox.Checked;
+                            break;
+                        
+                        case ANIM_EFFECTS.RESOLUTION_64x64:
+                            checkBoxLinkage[ANIM_EFFECTS.SLIM_MODEL].Enabled = !checkBox.Checked;
+                            break;
+                        case ANIM_EFFECTS.SLIM_MODEL:
+                            checkBoxLinkage[ANIM_EFFECTS.RESOLUTION_64x64].Enabled = !checkBox.Checked;
+                            break;
+                        default:
+                            break;
+                    }
+                    ANIM.SetFlag(checkBoxLinkage[checkBox], checkBox.Checked && checkBox.Enabled);
+        }
+        }
+        }
 
-			syncArmsCheckBox.Checked = set_all ? value : anim.GetFlag(ANIM_EFFECTS.SYNCED_ARMS);
-			syncLegsCheckBox.Checked = set_all ? value : anim.GetFlag(ANIM_EFFECTS.SYNCED_LEGS);
-			unknownCheckBox.Checked = set_all ? value : anim.GetFlag(ANIM_EFFECTS.__BIT_4);
-			zombieCheckBox.Checked = set_all ? value : anim.GetFlag(ANIM_EFFECTS.ZOMBIE_ARMS);
-			#endregion
-		}
-
-		public ANIMEditor(string ANIM)
-		{
-			InitializeComponent();
-			if (!SkinANIM.IsValidANIM(ANIM))
-			{
-				DialogResult = DialogResult.Abort;
-				Close();
-			}
+        public ANIMEditor(string ANIM)
+        {
+            InitializeComponent();
+            if (!SkinANIM.IsValidANIM(ANIM))
+            {
+                DialogResult = DialogResult.Abort;
+                Close();
+            }
             initialANIM = anim = new SkinANIM(ANIM);
 
-			#region Event definitions, since the designer can't parse lambda experessions
-			bobbingCheckBox.CheckedChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, ANIM_EFFECTS.HEAD_BOBBING_DISABLED); };
-			bodyCheckBox.CheckedChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, ANIM_EFFECTS.BODY_DISABLED); };
-			bodyOCheckBox.CheckedChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, ANIM_EFFECTS.BODY_OVERLAY_DISABLED); };
-			chestplateCheckBox.CheckedChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, ANIM_EFFECTS.FORCE_BODY_ARMOR); };
+            ruleset = new ANIMRuleSet(anim,
+                (bobbingCheckBox, ANIM_EFFECTS.HEAD_BOBBING_DISABLED),
+                (bodyCheckBox, ANIM_EFFECTS.BODY_DISABLED),
+                (bodyOCheckBox, ANIM_EFFECTS.BODY_OVERLAY_DISABLED),
+                (chestplateCheckBox, ANIM_EFFECTS.FORCE_BODY_ARMOR),
+                (classicCheckBox, ANIM_EFFECTS.RESOLUTION_64x64),
+                (crouchCheckBox, ANIM_EFFECTS.DO_BACKWARDS_CROUCH),
+                (dinnerboneCheckBox, ANIM_EFFECTS.DINNERBONE),
+                (headCheckBox, ANIM_EFFECTS.HEAD_DISABLED),
+                (headOCheckBox, ANIM_EFFECTS.HEAD_OVERLAY_DISABLED),
+                (helmetCheckBox, ANIM_EFFECTS.FORCE_HEAD_ARMOR),
+                (leftArmCheckBox, ANIM_EFFECTS.LEFT_ARM_DISABLED),
+                (leftArmOCheckBox, ANIM_EFFECTS.LEFT_ARM_OVERLAY_DISABLED),
+                (leftArmorCheckBox, ANIM_EFFECTS.FORCE_LEFT_ARM_ARMOR),
+                (leftLegCheckBox, ANIM_EFFECTS.LEFT_LEG_DISABLED),
+                (leftLeggingCheckBox, ANIM_EFFECTS.FORCE_LEFT_LEG_ARMOR),
+                (leftLegOCheckBox, ANIM_EFFECTS.LEFT_LEG_OVERLAY_DISABLED),
+                (noArmorCheckBox, ANIM_EFFECTS.ALL_ARMOR_DISABLED),
+                (rightArmCheckBox, ANIM_EFFECTS.RIGHT_ARM_DISABLED),
+                (rightArmOCheckBox, ANIM_EFFECTS.RIGHT_ARM_OVERLAY_DISABLED),
+                (rightArmorCheckBox, ANIM_EFFECTS.FORCE_RIGHT_ARM_ARMOR),
+                (rightLegCheckBox, ANIM_EFFECTS.RIGHT_LEG_DISABLED),
+                (rightLeggingCheckBox, ANIM_EFFECTS.FORCE_RIGHT_LEG_ARMOR),
+                (rightLegOCheckBox, ANIM_EFFECTS.RIGHT_LEG_OVERLAY_DISABLED),
+                (santaCheckBox, ANIM_EFFECTS.BAD_SANTA),
+                (slimCheckBox, ANIM_EFFECTS.SLIM_MODEL),
+                (staticArmsCheckBox, ANIM_EFFECTS.STATIC_ARMS),
+                (staticLegsCheckBox, ANIM_EFFECTS.STATIC_LEGS),
+                (statueCheckBox, ANIM_EFFECTS.STATUE_OF_LIBERTY),
+                (syncArmsCheckBox, ANIM_EFFECTS.SYNCED_ARMS),
+                (syncLegsCheckBox, ANIM_EFFECTS.SYNCED_LEGS),
+                (unknownCheckBox, ANIM_EFFECTS.__BIT_4),
+                (zombieCheckBox, ANIM_EFFECTS.ZOMBIE_ARMS)
+            );
+        }
 
-			classicCheckBox.CheckedChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, ANIM_EFFECTS.RESOLUTION_64x64); };
-			crouchCheckBox.CheckedChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, ANIM_EFFECTS.DO_BACKWARDS_CROUCH); };
-			dinnerboneCheckBox.CheckedChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, ANIM_EFFECTS.DINNERBONE); };
-			headCheckBox.CheckedChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, ANIM_EFFECTS.HEAD_DISABLED); };
+        private void saveButton_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.OK;
+            Close();
+        }
 
-			headOCheckBox.CheckedChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, ANIM_EFFECTS.HEAD_OVERLAY_DISABLED); };
-			helmetCheckBox.CheckedChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, ANIM_EFFECTS.FORCE_HEAD_ARMOR); };
-			leftArmCheckBox.CheckedChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, ANIM_EFFECTS.LEFT_ARM_DISABLED); };
-			leftArmOCheckBox.CheckedChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, ANIM_EFFECTS.LEFT_ARM_OVERLAY_DISABLED); };
+        private void copyButton_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(animValue.Text);
+        }
 
-			leftArmorCheckBox.CheckedChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, ANIM_EFFECTS.FORCE_LEFT_ARM_ARMOR); };
-			leftLegCheckBox.CheckedChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, ANIM_EFFECTS.LEFT_LEG_DISABLED); };
-			leftLeggingCheckBox.CheckedChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, ANIM_EFFECTS.FORCE_LEFT_LEG_ARMOR); };
-			leftLegOCheckBox.CheckedChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, ANIM_EFFECTS.LEFT_LEG_OVERLAY_DISABLED); };
+        private void importButton_Click(object sender, EventArgs e)
+        {
+            string new_value = "";
 
-			noArmorCheckBox.CheckedChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, ANIM_EFFECTS.ALL_ARMOR_DISABLED); };
-			rightArmCheckBox.CheckedChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, ANIM_EFFECTS.RIGHT_ARM_DISABLED); };
-			rightArmOCheckBox.CheckedChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, ANIM_EFFECTS.RIGHT_ARM_OVERLAY_DISABLED); };
-			rightArmorCheckBox.CheckedChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, ANIM_EFFECTS.FORCE_RIGHT_ARM_ARMOR); };
+            bool first = true;
+            while (!SkinANIM.IsValidANIM(new_value))
+            {
+                if (!first) MessageBox.Show($"The following value \"{new_value}\" is not valid. Please try again.");
+                RenamePrompt diag = new RenamePrompt(new_value);
+                diag.TextLabel.Text = "ANIM";
+                diag.OKButton.Text = "Ok";
+                if (diag.ShowDialog() == DialogResult.OK)
+                {
+                    new_value = diag.NewText;
+                }
+                else return;
+                first = false;
+            }
+            anim = new SkinANIM(new_value);
+            ruleset.ApplyAnim(anim);
+        }
 
-			rightLegCheckBox.CheckedChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, ANIM_EFFECTS.RIGHT_LEG_DISABLED); };
-			rightLeggingCheckBox.CheckedChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, ANIM_EFFECTS.FORCE_RIGHT_LEG_ARMOR); };
-			rightLegOCheckBox.CheckedChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, ANIM_EFFECTS.RIGHT_LEG_OVERLAY_DISABLED); };
-			santaCheckBox.CheckedChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, ANIM_EFFECTS.BAD_SANTA); };
+        private void uncheckButton_Click(object sender, EventArgs e)
+        {
+            ruleset.SetAll(false);
+        }
 
-			slimCheckBox.CheckedChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, ANIM_EFFECTS.SLIM_MODEL); };
-			staticArmsCheckBox.CheckedChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, ANIM_EFFECTS.STATIC_ARMS); };
-			staticLegsCheckBox.CheckedChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, ANIM_EFFECTS.STATIC_LEGS); };
-			statueCheckBox.CheckedChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, ANIM_EFFECTS.STATUE_OF_LIBERTY); };
+        private void checkButton_Click(object sender, EventArgs e)
+        {
+            ruleset.SetAll(true);
+        }
 
-			syncArmsCheckBox.CheckedChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, ANIM_EFFECTS.SYNCED_ARMS); };
-			syncLegsCheckBox.CheckedChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, ANIM_EFFECTS.SYNCED_LEGS); };
-			unknownCheckBox.CheckedChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, ANIM_EFFECTS.__BIT_4); };
-			zombieCheckBox.CheckedChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, ANIM_EFFECTS.ZOMBIE_ARMS); };
+        private void exportButton_Click(object sender, EventArgs e)
+        {
+            using SaveFileDialog saveFileDialog = new SaveFileDialog
+            {
+                FileName = animValue.Text + ".png",
+                Filter = "Skin textures|*.png"
+            };
+            if (saveFileDialog.ShowDialog() != DialogResult.OK)
+                return;
+            bool isSlim = anim.GetFlag(ANIM_EFFECTS.SLIM_MODEL);
+            bool is64x64 = anim.GetFlag(ANIM_EFFECTS.RESOLUTION_64x64);
+            bool isClassic32 = !isSlim && !is64x64;
 
-			helmetCheckBox.EnabledChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, ANIM_EFFECTS.FORCE_HEAD_ARMOR); };
-			chestplateCheckBox.EnabledChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, ANIM_EFFECTS.FORCE_BODY_ARMOR); };
-			rightArmorCheckBox.EnabledChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, ANIM_EFFECTS.FORCE_RIGHT_ARM_ARMOR); };
-			leftArmorCheckBox.EnabledChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, ANIM_EFFECTS.FORCE_LEFT_ARM_ARMOR); };
-			rightLeggingCheckBox.EnabledChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, ANIM_EFFECTS.FORCE_RIGHT_LEG_ARMOR); };
-			leftLeggingCheckBox.EnabledChanged += (sender, EventArgs) => { flagChanged(sender, EventArgs, ANIM_EFFECTS.FORCE_LEFT_LEG_ARMOR); };
-			#endregion
-            processCheckBoxes();
-		}
+            Image skin = isSlim ? Properties.Resources.slim_template : Properties.Resources.classic_template;
 
-		private void closeButton_Click(object sender, EventArgs e)
-		{
-			DialogResult = DialogResult.OK;
+            Bitmap img = new Bitmap(64, isClassic32 ? 32 : 64);
+            using (Graphics graphic = Graphics.FromImage(img))
+            {
+                graphic.DrawImage(skin, new Rectangle(0, 0, 64, isClassic32 ? 32 : 64), new Rectangle(0, 0, 64, isClassic32 ? 32 : 64), GraphicsUnit.Pixel);
+                if (anim.GetFlag(ANIM_EFFECTS.HEAD_OVERLAY_DISABLED))
+                    graphic.FillRectangle(Brushes.Magenta, new Rectangle(32, 0, 32, 16));
+                if (anim.GetFlag(ANIM_EFFECTS.HEAD_DISABLED))
+                    graphic.FillRectangle(Brushes.Magenta, new Rectangle(0, 0, 32, 16));
+                if (anim.GetFlag(ANIM_EFFECTS.BODY_DISABLED))
+                    graphic.FillRectangle(Brushes.Magenta, new Rectangle(16, 16, 24, 16));
+                if (img.Height == 64)
+                {
+                    if (anim.GetFlag(ANIM_EFFECTS.RIGHT_ARM_DISABLED)) graphic.FillRectangle(Brushes.Magenta, new Rectangle(40, 16, 16, 16));
+                    if (anim.GetFlag(ANIM_EFFECTS.RIGHT_LEG_DISABLED)) graphic.FillRectangle(Brushes.Magenta, new Rectangle(0, 16, 16, 16));
+                    if (anim.GetFlag(ANIM_EFFECTS.BODY_OVERLAY_DISABLED)) graphic.FillRectangle(Brushes.Magenta, new Rectangle(16, 32, 24, 16));
+                    if (anim.GetFlag(ANIM_EFFECTS.RIGHT_ARM_OVERLAY_DISABLED)) graphic.FillRectangle(Brushes.Magenta, new Rectangle(40, 32, 16, 16));
+                    if (anim.GetFlag(ANIM_EFFECTS.RIGHT_LEG_OVERLAY_DISABLED)) graphic.FillRectangle(Brushes.Magenta, new Rectangle(0, 32, 16, 16));
+                    if (anim.GetFlag(ANIM_EFFECTS.LEFT_LEG_OVERLAY_DISABLED)) graphic.FillRectangle(Brushes.Magenta, new Rectangle(0, 48, 16, 16));
+                    if (anim.GetFlag(ANIM_EFFECTS.LEFT_LEG_DISABLED)) graphic.FillRectangle(Brushes.Magenta, new Rectangle(16, 48, 16, 16));
+                    if (anim.GetFlag(ANIM_EFFECTS.LEFT_ARM_DISABLED)) graphic.FillRectangle(Brushes.Magenta, new Rectangle(32, 48, 16, 16));
+                    if (anim.GetFlag(ANIM_EFFECTS.LEFT_ARM_OVERLAY_DISABLED)) graphic.FillRectangle(Brushes.Magenta, new Rectangle(48, 48, 16, 16));
+                }
+                else
+                {
+                    // Since both classic 32 arms and legs use the same texture, removing the texture would remove both limbs instead of just one.
+                    // So both must be disabled by the user before they're removed from the texture;
+                    if (anim.GetFlag(ANIM_EFFECTS.RIGHT_ARM_DISABLED) && anim.GetFlag(ANIM_EFFECTS.LEFT_ARM_DISABLED))
+                        graphic.FillRectangle(Brushes.Magenta, new Rectangle(40, 16, 16, 16));
+                    if (anim.GetFlag(ANIM_EFFECTS.RIGHT_LEG_DISABLED) && anim.GetFlag(ANIM_EFFECTS.LEFT_LEG_DISABLED))
+                        graphic.FillRectangle(Brushes.Magenta, new Rectangle(0, 16, 16, 16));
+                }
+                img.MakeTransparent(Color.Magenta);
+                skin = img;
+            }
+            skin.Save(saveFileDialog.FileName);
+        }
 
-			saved = true;
-			Close();
-		}
+        private void resetButton_Click(object sender, EventArgs e)
+        {
+            anim = initialANIM;
+            ruleset.ApplyAnim(anim);
+        }
 
-		private void flagChanged(object sender, EventArgs e, ANIM_EFFECTS flag)
-		{
-			// Set value
-			anim.SetFlag(flag, ((CheckBox)sender).Checked && ((CheckBox)sender).Enabled);
+        static readonly Dictionary<string, ANIM_EFFECTS> Templates = new Dictionary<string, ANIM_EFFECTS>()
+        {
+                { "Steve (64x32)",           ANIM_EFFECTS.NONE },
+                { "Steve (64x64)",           ANIM_EFFECTS.RESOLUTION_64x64 },
+                { "Alex (64x64)",            ANIM_EFFECTS.SLIM_MODEL },
+                { "Zombie Skins",            ANIM_EFFECTS.ZOMBIE_ARMS },
+                { "Cetacean Skins",          ANIM_EFFECTS.SYNCED_ARMS | ANIM_EFFECTS.SYNCED_LEGS },
+                { "Ski Skins",               ANIM_EFFECTS.SYNCED_ARMS | ANIM_EFFECTS.STATIC_LEGS },
+                { "Ghost Skins",             ANIM_EFFECTS.STATIC_LEGS | ANIM_EFFECTS.ZOMBIE_ARMS },
+                { "Medusa (Greek Myth.)",    ANIM_EFFECTS.SYNCED_LEGS },
+                { "Librarian (Halo)",        ANIM_EFFECTS.STATIC_LEGS },
+                { "Grim Reaper (Halloween)", ANIM_EFFECTS.STATIC_LEGS | ANIM_EFFECTS.STATIC_ARMS }
+        };
 
-			// Armor flags don't work if the respective parts are not enabled
-			helmetCheckBox.Enabled = anim.GetFlag(ANIM_EFFECTS.HEAD_DISABLED);
-			chestplateCheckBox.Enabled = anim.GetFlag(ANIM_EFFECTS.BODY_DISABLED);
-			rightArmorCheckBox.Enabled = anim.GetFlag(ANIM_EFFECTS.RIGHT_ARM_DISABLED);
-			leftArmorCheckBox.Enabled = anim.GetFlag(ANIM_EFFECTS.LEFT_ARM_DISABLED);
-			rightLeggingCheckBox.Enabled = anim.GetFlag(ANIM_EFFECTS.RIGHT_LEG_DISABLED);
-			leftLeggingCheckBox.Enabled = anim.GetFlag(ANIM_EFFECTS.LEFT_LEG_DISABLED);
+        private void templateButton_Click(object sender, EventArgs e)
+        {
+            var diag = new ItemSelectionPopUp(Templates.Keys.ToArray());
+            diag.label2.Text = "Presets";
+            diag.okBtn.Text = "Load";
 
-			animValue.Text = anim.ToString();
-		}
+            if (diag.ShowDialog() != DialogResult.OK) return;
 
-		private void copyButton_Click(object sender, EventArgs e)
-		{
-			Clipboard.SetText(animValue.Text);
-		}
-
-		private void importButton_Click(object sender, EventArgs e)
-		{
-			string new_value = "";
-
-			bool first = true;
-			while (!SkinANIM.IsValidANIM(new_value))
-			{
-				if (!first) MessageBox.Show($"The following value \"{new_value}\" is not valid. Please try again.");
-				RenamePrompt diag = new RenamePrompt(new_value);
-				diag.TextLabel.Text = "ANIM";
-				diag.OKButton.Text = "Ok";
-				if (diag.ShowDialog() == DialogResult.OK)
-				{
-					new_value = diag.NewText;
-				}
-				else return;
-				first = false;
-			}
-			anim = new SkinANIM(new_value);
-			processCheckBoxes();
-		}
-
-		private void uncheckButton_Click(object sender, EventArgs e)
-		{
-			processCheckBoxes(true);
-		}
-
-		private void checkButton_Click(object sender, EventArgs e)
-		{
-			processCheckBoxes(true, true);
-		}
-
-		private void exportButton_Click(object sender, EventArgs e)
-		{
-			SaveFileDialog saveFileDialog = new SaveFileDialog();
-			saveFileDialog.FileName = animValue.Text + ".png";
-			saveFileDialog.Filter = "Skin textures|*.png";
-			if (saveFileDialog.ShowDialog() != DialogResult.OK ||
-				string.IsNullOrWhiteSpace(Path.GetDirectoryName(saveFileDialog.FileName))) return;
-			bool isSlim = anim.GetFlag(ANIM_EFFECTS.SLIM_MODEL);
-			bool isClassic64 = anim.GetFlag(ANIM_EFFECTS.RESOLUTION_64x64);
-			bool isClassic32 = !isSlim && !isClassic64;
-
-			Image skin = isSlim ? Properties.Resources.slim_template : Properties.Resources.classic_template;
-
-			#region Image processing code for generating the skin templates based on the input ANIM value
-			Bitmap nb = new Bitmap(64, (!isSlim && !isClassic64) ? 32 : 64);
-			using (Graphics g = Graphics.FromImage(nb))
-			{
-				g.DrawImage(skin, new Rectangle(0, 0, 64, isClassic32 ? 32 : 64), new Rectangle(0, 0, 64, isClassic32 ? 32 : 64), GraphicsUnit.Pixel);
-				if (anim.GetFlag(ANIM_EFFECTS.HEAD_OVERLAY_DISABLED)) g.FillRectangle(Brushes.Magenta, new Rectangle(32, 0, 32, 16));
-				if (anim.GetFlag(ANIM_EFFECTS.HEAD_DISABLED)) g.FillRectangle(Brushes.Magenta, new Rectangle(0, 0, 32, 16));
-				if (anim.GetFlag(ANIM_EFFECTS.BODY_DISABLED)) g.FillRectangle(Brushes.Magenta, new Rectangle(16, 16, 24, 16));
-				if (nb.Height == 64)
-				{
-					if (anim.GetFlag(ANIM_EFFECTS.RIGHT_ARM_DISABLED)) g.FillRectangle(Brushes.Magenta, new Rectangle(40, 16, 16, 16));
-					if (anim.GetFlag(ANIM_EFFECTS.RIGHT_LEG_DISABLED)) g.FillRectangle(Brushes.Magenta, new Rectangle(0, 16, 16, 16));
-					if (anim.GetFlag(ANIM_EFFECTS.BODY_OVERLAY_DISABLED)) g.FillRectangle(Brushes.Magenta, new Rectangle(16, 32, 24, 16));
-					if (anim.GetFlag(ANIM_EFFECTS.RIGHT_ARM_OVERLAY_DISABLED)) g.FillRectangle(Brushes.Magenta, new Rectangle(40, 32, 16, 16));
-					if (anim.GetFlag(ANIM_EFFECTS.RIGHT_LEG_OVERLAY_DISABLED)) g.FillRectangle(Brushes.Magenta, new Rectangle(0, 32, 16, 16));
-					if (anim.GetFlag(ANIM_EFFECTS.LEFT_LEG_OVERLAY_DISABLED)) g.FillRectangle(Brushes.Magenta, new Rectangle(0, 48, 16, 16));
-					if (anim.GetFlag(ANIM_EFFECTS.LEFT_LEG_DISABLED)) g.FillRectangle(Brushes.Magenta, new Rectangle(16, 48, 16, 16));
-					if (anim.GetFlag(ANIM_EFFECTS.LEFT_ARM_DISABLED)) g.FillRectangle(Brushes.Magenta, new Rectangle(32, 48, 16, 16));
-					if (anim.GetFlag(ANIM_EFFECTS.LEFT_ARM_OVERLAY_DISABLED)) g.FillRectangle(Brushes.Magenta, new Rectangle(48, 48, 16, 16));
-				}
-				else
-				{ 
-					// Since both classic 32 arms and legs use the same texture, removing the texture would remove both limbs instead of just one.
-					// So both must be disabled by the user before they're removed from the texture;
-					if (anim.GetFlag(ANIM_EFFECTS.RIGHT_ARM_DISABLED) && anim.GetFlag(ANIM_EFFECTS.LEFT_ARM_DISABLED)) 
-						g.FillRectangle(Brushes.Magenta, new Rectangle(40, 16, 16, 16));
-					if (anim.GetFlag(ANIM_EFFECTS.RIGHT_LEG_DISABLED) && anim.GetFlag(ANIM_EFFECTS.LEFT_LEG_DISABLED)) 
-						g.FillRectangle(Brushes.Magenta, new Rectangle(0, 16, 16, 16));
-				}
-				nb.MakeTransparent(Color.Magenta);
-				skin = nb;
-			}
-			#endregion
-
-			skin.Save(saveFileDialog.FileName);
-		}
-
-		private void resetButton_Click(object sender, EventArgs e)
-		{
-			anim = initialANIM;
-			processCheckBoxes();
-		}
-
-		static readonly Dictionary<string, ANIM_EFFECTS> Templates = new Dictionary<string, ANIM_EFFECTS>()
-		{
-				{ "Steve (64x32)",           ANIM_EFFECTS.NONE },
-				{ "Steve (64x64)",           ANIM_EFFECTS.RESOLUTION_64x64 },
-				{ "Alex (64x64)",            ANIM_EFFECTS.SLIM_MODEL },
-				{ "Zombie Skins",            ANIM_EFFECTS.ZOMBIE_ARMS },
-				{ "Cetacean Skins",          ANIM_EFFECTS.SYNCED_ARMS | ANIM_EFFECTS.SYNCED_LEGS },
-				{ "Ski Skins",               ANIM_EFFECTS.SYNCED_ARMS | ANIM_EFFECTS.STATIC_LEGS },
-				{ "Ghost Skins",             ANIM_EFFECTS.STATIC_LEGS | ANIM_EFFECTS.ZOMBIE_ARMS },
-				{ "Medusa (Greek Myth.)",    ANIM_EFFECTS.SYNCED_LEGS },
-				{ "Librarian (Halo)",        ANIM_EFFECTS.STATIC_LEGS },
-				{ "Grim Reaper (Halloween)", ANIM_EFFECTS.STATIC_LEGS | ANIM_EFFECTS.STATIC_ARMS }
-		};
-
-		private void templateButton_Click(object sender, EventArgs e)
-		{
-			var diag = new ItemSelectionPopUp(Templates.Keys.ToArray());
-			diag.label2.Text = "Presets";
-			diag.okBtn.Text = "Load";
-
-			if (diag.ShowDialog() != DialogResult.OK) return;
-
-			var templateANIM = Templates[diag.SelectedItem];
-			DialogResult prompt = MessageBox.Show(this, "Would you like to add this preset's effects to your current ANIM? Otherwise all of your effects will be cleared. Either choice can be undone by pressing \"Restore ANIM\".", "", MessageBoxButtons.YesNo);
-			if (prompt == DialogResult.Yes) anim |= templateANIM;
-			else anim = templateANIM;
-			SkinANIM backup = anim;
-			processCheckBoxes();
-			anim = backup;
-		}
-	}
+            var templateANIM = Templates[diag.SelectedItem];
+            DialogResult prompt = MessageBox.Show(this, "Would you like to add this preset's effects to your current ANIM? Otherwise all of your effects will be cleared. Either choice can be undone by pressing \"Restore ANIM\".", "", MessageBoxButtons.YesNo);
+            if (prompt == DialogResult.Yes) anim |= templateANIM;
+            else anim = templateANIM;
+            SkinANIM backup = anim;
+            ruleset.ApplyAnim(anim);
+            anim = backup;
+        }
+    }
 }
