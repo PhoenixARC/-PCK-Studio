@@ -20,7 +20,6 @@ using PckStudio.Classes.Utils;
 using PckStudio.Classes.Utils.ARC;
 using PckStudio.Classes._3ds.Utils;
 using PckStudio.Forms;
-using PckStudio.Forms.Utilities.Skins;
 using PckStudio.Forms.Utilities;
 using PckStudio.Forms.Editor;
 using PckStudio.Forms.Additional_Popups.Animation;
@@ -449,7 +448,7 @@ namespace PckStudio
 				using (var ms = new MemoryStream(file.Data))
 				{
 					var texture = Image.FromStream(ms);
-					SkinPreview frm = new SkinPreview(texture, file.Properties.GetPropertyValue("ANIM", s => new SkinANIM(s)));
+					SkinPreview frm = new SkinPreview(texture, file.Properties.GetPropertyValue("ANIM", SkinANIM.FromString));
 					frm.ShowDialog(this);
 					frm.Dispose();
 				}
@@ -486,7 +485,7 @@ namespace PckStudio
 					buttonEdit.Visible = true;
 				}
 				else if (file.Properties.HasProperty("ANIM") &&
-						file.Properties.GetPropertyValue("ANIM", s => new SkinANIM(s)) == (ANIM_EFFECTS.RESOLUTION_64x64 | ANIM_EFFECTS.SLIM_MODEL))
+						file.Properties.GetPropertyValue("ANIM", s => SkinANIM.FromString(s) == (ANIM_EFFECTS.RESOLUTION_64x64 | ANIM_EFFECTS.SLIM_MODEL)))
 				{
 					buttonEdit.Text = "View Skin";
 					buttonEdit.Visible = true;
@@ -958,7 +957,10 @@ namespace PckStudio
 			if (parent_file.Filetype is PckFile.FileData.FileType.TexturePackInfoFile || parent_file.Filetype is PckFile.FileData.FileType.SkinDataFile)
 			{
 				Console.WriteLine("Rebuilding " + parent_file.Filename);
-				PckFile newPCKFile = new PckFile(3);
+				PckFile newPCKFile = new PckFile(3)
+				{
+					HasVerionString = parent_file.Filetype is PckFile.FileData.FileType.SkinDataFile
+				};
 
 				foreach (TreeNode node in GetAllChildNodes(parent.Nodes))
 				{
@@ -969,9 +971,6 @@ namespace PckStudio
 						new_file.SetData(node_file.Data);
 					}
 				}
-
-				// Bool to add the XMLVersion property
-				bool isSkinsPCK = parent_file.Filetype is PckFile.FileData.FileType.SkinDataFile;
 
 				using (MemoryStream ms = new MemoryStream())
 				{
@@ -1081,21 +1080,19 @@ namespace PckStudio
 
 			// Creates new empty file entry
 			PckFile.FileData mf = new PckFile.FileData(string.Empty, mfO.Filetype);
-			mf.SetData(mfO.Data); // adds file data to minefile
+			mf.SetData(mfO.Data);
 			string dirName = Path.GetDirectoryName(mfO.Filename);
 
 			int clone_number = 0;
-			string prev_clone_str = "_clone1";
 			string nameWithoutExt = Path.GetFileNameWithoutExtension(mfO.Filename);
 			string newFileName = mfO.Filename;
-			do // Checks for existing clones and names it accordingly
+			do
 			{
 				clone_number++;
 				string clone_str = "_clone" + clone_number.ToString();
 				bool isClone = nameWithoutExt.Contains("_clone");
 				if (isClone) newFileName = nameWithoutExt.Remove(nameWithoutExt.Length - 7) + clone_str + Path.GetExtension(mfO.Filename);
 				else newFileName = nameWithoutExt + clone_str + Path.GetExtension(mfO.Filename);
-				prev_clone_str = clone_str;
 			}
 			while (currentPCK.HasFile(dirName + (string.IsNullOrEmpty(dirName) ? "" : "/") + newFileName, mf.Filetype));
 

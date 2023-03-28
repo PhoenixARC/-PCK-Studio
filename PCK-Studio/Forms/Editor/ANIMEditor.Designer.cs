@@ -1,4 +1,4 @@
-﻿namespace PckStudio.Forms.Utilities.Skins
+﻿namespace PckStudio.Forms.Editor
 {
 	partial class ANIMEditor
 	{
@@ -28,6 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ANIMEditor));
             this.saveButton = new MetroFramework.Controls.MetroButton();
             this.effectsGroup = new System.Windows.Forms.GroupBox();
             this.rightLegOCheckBox = new MetroFramework.Controls.MetroCheckBox();
@@ -714,10 +715,13 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.effectsGroup2);
             this.Controls.Add(this.saveButton);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(630, 554);
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(630, 554);
             this.Name = "ANIMEditor";
+            this.Resizable = false;
             this.Style = MetroFramework.MetroColorStyle.Silver;
             this.Text = "ANIM Editor";
             this.Theme = MetroFramework.MetroThemeStyle.Dark;

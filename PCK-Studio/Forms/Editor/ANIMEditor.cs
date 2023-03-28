@@ -7,7 +7,7 @@ using System.Windows.Forms;
 using PckStudio.Classes.Utils;
 using PckStudio.Forms.Additional_Popups;
 
-namespace PckStudio.Forms.Utilities.Skins
+namespace PckStudio.Forms.Editor
 {
     public partial class ANIMEditor : MetroFramework.Forms.MetroForm
     {
@@ -18,24 +18,24 @@ namespace PckStudio.Forms.Utilities.Skins
 
         sealed class ANIMRuleSet
         {
-        private class Bictionary<T1, T2> : Dictionary<T1, T2>
-        {
+            private class Bictionary<T1, T2> : Dictionary<T1, T2>
+            {
                 public Bictionary(int capacity)
                     : base(capacity)
                 { }
 
-            public T1 this[T2 index]
-            {
-                get
+                public T1 this[T2 index]
                 {
-                    if (!this.Any(x => x.Value.Equals(index)))
-                        throw new KeyNotFoundException();
-                    return this.First(x => x.Value.Equals(index)).Key;
+                    get
+                    {
+                        if (!this.Any(x => x.Value.Equals(index)))
+                            throw new KeyNotFoundException();
+                        return this.First(x => x.Value.Equals(index)).Key;
+                    }
                 }
-            }
 
                 internal void AddRange(IEnumerable<(T1, T2)> range)
-        {
+                {
                     foreach (var (key, value) in range)
                     {
                         Add(key, value);
@@ -46,7 +46,9 @@ namespace PckStudio.Forms.Utilities.Skins
             private SkinANIM ANIM;
             private bool ignoreCheckChanged = false;
 
-            public ANIMRuleSet(SkinANIM anim, params (CheckBox, ANIM_EFFECTS)[] linkage)
+            public Action OnCheckboxChanged;
+
+            public ANIMRuleSet(ref SkinANIM anim, params (CheckBox, ANIM_EFFECTS)[] linkage)
             {
                 ANIM = anim;
                 checkBoxLinkage = new Bictionary<CheckBox, ANIM_EFFECTS>(32);
@@ -72,7 +74,7 @@ namespace PckStudio.Forms.Utilities.Skins
                 ignoreCheckChanged = false;
             }
 
-            internal void ApplyAnim(SkinANIM anim)
+            internal void ApplyAnim(ref SkinANIM anim)
             {
                 ANIM = anim;
                 foreach (var item in checkBoxLinkage)
@@ -116,8 +118,9 @@ namespace PckStudio.Forms.Utilities.Skins
                             break;
                     }
                     ANIM.SetFlag(checkBoxLinkage[checkBox], checkBox.Checked && checkBox.Enabled);
-        }
-        }
+                    OnCheckboxChanged?.Invoke();
+                }
+            }
         }
 
         public ANIMEditor(string ANIM)
@@ -128,9 +131,10 @@ namespace PckStudio.Forms.Utilities.Skins
                 DialogResult = DialogResult.Abort;
                 Close();
             }
-            initialANIM = anim = new SkinANIM(ANIM);
+            initialANIM = anim = SkinANIM.FromString(ANIM);
+            setDisplayAnim();
 
-            ruleset = new ANIMRuleSet(anim,
+            ruleset = new ANIMRuleSet(ref anim,
                 (bobbingCheckBox, ANIM_EFFECTS.HEAD_BOBBING_DISABLED),
                 (bodyCheckBox, ANIM_EFFECTS.BODY_DISABLED),
                 (bodyOCheckBox, ANIM_EFFECTS.BODY_OVERLAY_DISABLED),
@@ -164,6 +168,13 @@ namespace PckStudio.Forms.Utilities.Skins
                 (unknownCheckBox, ANIM_EFFECTS.__BIT_4),
                 (zombieCheckBox, ANIM_EFFECTS.ZOMBIE_ARMS)
             );
+
+            ruleset.OnCheckboxChanged = setDisplayAnim;
+        }
+
+        private void setDisplayAnim()
+        {
+            animValue.Text = anim.ToString();
         }
 
         private void saveButton_Click(object sender, EventArgs e)
@@ -195,8 +206,8 @@ namespace PckStudio.Forms.Utilities.Skins
                 else return;
                 first = false;
             }
-            anim = new SkinANIM(new_value);
-            ruleset.ApplyAnim(anim);
+            anim = SkinANIM.FromString(new_value);
+            ruleset.ApplyAnim(ref anim);
         }
 
         private void uncheckButton_Click(object sender, EventArgs e)
@@ -264,7 +275,7 @@ namespace PckStudio.Forms.Utilities.Skins
         private void resetButton_Click(object sender, EventArgs e)
         {
             anim = initialANIM;
-            ruleset.ApplyAnim(anim);
+            ruleset.ApplyAnim(ref anim);
         }
 
         static readonly Dictionary<string, ANIM_EFFECTS> Templates = new Dictionary<string, ANIM_EFFECTS>()
@@ -293,9 +304,7 @@ namespace PckStudio.Forms.Utilities.Skins
             DialogResult prompt = MessageBox.Show(this, "Would you like to add this preset's effects to your current ANIM? Otherwise all of your effects will be cleared. Either choice can be undone by pressing \"Restore ANIM\".", "", MessageBoxButtons.YesNo);
             if (prompt == DialogResult.Yes) anim |= templateANIM;
             else anim = templateANIM;
-            SkinANIM backup = anim;
-            ruleset.ApplyAnim(anim);
-            anim = backup;
+            ruleset.ApplyAnim(ref anim);
         }
     }
 }

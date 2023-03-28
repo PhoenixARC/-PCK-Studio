@@ -69,7 +69,7 @@ namespace PckStudio.Classes.Utils
 		DINNERBONE            = 1 << 31, // 0x80000000
     }
 
-	public struct SkinANIM
+	public class SkinANIM
 	{
 		private ANIM_EFFECTS _ANIM;
 		public static readonly Regex animRegex = new Regex(@"^0x[0-9a-f]{1,8}\b", RegexOptions.IgnoreCase);
@@ -77,11 +77,6 @@ namespace PckStudio.Classes.Utils
 		public SkinANIM()
 			: this(ANIM_EFFECTS.NONE)
 		{
-		}
-		
-		public SkinANIM(string anim)
-            : this(ParseString(anim))
-        {
 		}
 
 		public SkinANIM(ANIM_EFFECTS anim)
@@ -93,10 +88,10 @@ namespace PckStudio.Classes.Utils
 
 		public static bool IsValidANIM(string anim) => animRegex.IsMatch(anim ?? string.Empty);
 
-		public static ANIM_EFFECTS ParseString(string anim)
-			=> IsValidANIM(anim)
-				? (ANIM_EFFECTS)Convert.ToInt32(anim.TrimEnd(' ', '\n', '\r'), 16)
-				: ANIM_EFFECTS.NONE;
+		public static SkinANIM FromString(string value)
+			=> IsValidANIM(value)
+				? new SkinANIM((ANIM_EFFECTS)Convert.ToInt32(value.TrimEnd(' ', '\n', '\r'), 16))
+				: new SkinANIM();
 
 		public void SetANIM(ANIM_EFFECTS anim) => _ANIM = anim;
 
