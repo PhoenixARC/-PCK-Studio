@@ -1017,7 +1017,7 @@ namespace PckStudio
 								using ANIMEditor diag = new ANIMEditor(property.Item2);
 								if (diag.ShowDialog(this) == DialogResult.OK)
 								{
-									file.Properties[i] = ("ANIM", diag.outANIM);
+									file.Properties[i] = ("ANIM", diag.ResultAnim.ToString());
 									if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath))
 										RebuildSubPCK(treeViewMain.SelectedNode);
 									ReloadMetaTreeView();

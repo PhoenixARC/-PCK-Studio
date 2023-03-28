@@ -1,9 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
 using System.Linq;
+using System.Drawing;
+using System.Diagnostics;
 using System.Windows.Forms;
+using System.Collections.Generic;
+
 using PckStudio.Classes.Utils;
 using PckStudio.Forms.Additional_Popups;
 
@@ -11,13 +12,16 @@ namespace PckStudio.Forms.Editor
 {
     public partial class ANIMEditor : MetroFramework.Forms.MetroForm
     {
-        readonly SkinANIM initialANIM;
-        public string outANIM => animValue.Text;
-        SkinANIM anim = new SkinANIM();
-        ANIMRuleSet ruleset;
+        public SkinANIM ResultAnim => ruleset.Value;
+
+        private readonly SkinANIM initialANIM;
+        private ANIMRuleSet ruleset;
 
         sealed class ANIMRuleSet
         {
+            public SkinANIM Value => anim;
+            public Action<SkinANIM> OnCheckboxChanged;
+
             private class Bictionary<T1, T2> : Dictionary<T1, T2>
             {
                 public Bictionary(int capacity)
@@ -43,14 +47,12 @@ namespace PckStudio.Forms.Editor
                 }
             }
             private Bictionary<CheckBox, ANIM_EFFECTS> checkBoxLinkage;
-            private SkinANIM ANIM;
+            private SkinANIM anim;
             private bool ignoreCheckChanged = false;
 
-            public Action OnCheckboxChanged;
-
-            public ANIMRuleSet(ref SkinANIM anim, params (CheckBox, ANIM_EFFECTS)[] linkage)
+            public ANIMRuleSet(SkinANIM anim, params (CheckBox, ANIM_EFFECTS)[] linkage)
             {
-                ANIM = anim;
+                this.anim = anim;
                 checkBoxLinkage = new Bictionary<CheckBox, ANIM_EFFECTS>(32);
                 if (linkage.Length < 32)
                     Debug.WriteLine($"Not all {nameof(ANIM_EFFECTS)} are mapped to a given checkbox.");
@@ -65,20 +67,23 @@ namespace PckStudio.Forms.Editor
 
             internal void SetAll(bool state)
             {
-                ignoreCheckChanged = true;
                 foreach (var item in checkBoxLinkage)
                 {
-                    ANIM.SetFlag(item.Value, state);
-                    item.Key.Checked = state;
+                    IgnoreAndDo(item.Key, checkbox =>
+                    {
+                        anim.SetFlag(item.Value, state);
+                        checkbox.Checked = state;
+                        checkbox.Enabled = true;
+                    });
                 }
-                ignoreCheckChanged = false;
             }
 
-            internal void ApplyAnim(ref SkinANIM anim)
+            internal void ApplyAnim(SkinANIM anim)
             {
-                ANIM = anim;
+                this.anim = anim;
                 foreach (var item in checkBoxLinkage)
                 {
+                    IgnoreAndDo(item.Key, checkbox => checkbox.Enabled = true);
                     item.Key.Checked = anim.GetFlag(item.Value);
                 }
             }
@@ -109,17 +114,33 @@ namespace PckStudio.Forms.Editor
                             break;
                         
                         case ANIM_EFFECTS.RESOLUTION_64x64:
+
+                            if (checkBoxLinkage[ANIM_EFFECTS.SLIM_MODEL].Checked)
+                            {
+                                checkBoxLinkage[ANIM_EFFECTS.SLIM_MODEL].Checked = false;
+                            }
                             checkBoxLinkage[ANIM_EFFECTS.SLIM_MODEL].Enabled = !checkBox.Checked;
                             break;
                         case ANIM_EFFECTS.SLIM_MODEL:
+                            if (checkBoxLinkage[ANIM_EFFECTS.RESOLUTION_64x64].Checked)
+                            {
+                                checkBoxLinkage[ANIM_EFFECTS.RESOLUTION_64x64].Checked = false;
+                            }
                             checkBoxLinkage[ANIM_EFFECTS.RESOLUTION_64x64].Enabled = !checkBox.Checked;
                             break;
                         default:
                             break;
                     }
-                    ANIM.SetFlag(checkBoxLinkage[checkBox], checkBox.Checked && checkBox.Enabled);
-                    OnCheckboxChanged?.Invoke();
+                    anim.SetFlag(checkBoxLinkage[checkBox], checkBox.Checked && checkBox.Enabled);
+                    OnCheckboxChanged?.Invoke(anim);
                 }
+            }
+
+            private void IgnoreAndDo(CheckBox checkBox, Action<CheckBox> action)
+            {
+                ignoreCheckChanged = true;
+                action.Invoke(checkBox);
+                ignoreCheckChanged = false;
             }
         }
 
@@ -131,10 +152,10 @@ namespace PckStudio.Forms.Editor
                 DialogResult = DialogResult.Abort;
                 Close();
             }
-            initialANIM = anim = SkinANIM.FromString(ANIM);
-            setDisplayAnim();
+            var anim = initialANIM = SkinANIM.FromString(ANIM);
+            setDisplayAnim(anim);
 
-            ruleset = new ANIMRuleSet(ref anim,
+            ruleset = new ANIMRuleSet(anim,
                 (bobbingCheckBox, ANIM_EFFECTS.HEAD_BOBBING_DISABLED),
                 (bodyCheckBox, ANIM_EFFECTS.BODY_DISABLED),
                 (bodyOCheckBox, ANIM_EFFECTS.BODY_OVERLAY_DISABLED),
@@ -172,7 +193,7 @@ namespace PckStudio.Forms.Editor
             ruleset.OnCheckboxChanged = setDisplayAnim;
         }
 
-        private void setDisplayAnim()
+        private void setDisplayAnim(SkinANIM anim)
         {
             animValue.Text = anim.ToString();
         }
@@ -190,24 +211,20 @@ namespace PckStudio.Forms.Editor
 
         private void importButton_Click(object sender, EventArgs e)
         {
-            string new_value = "";
-
-            bool first = true;
-            while (!SkinANIM.IsValidANIM(new_value))
+            string value = string.Empty;
+            while (!SkinANIM.IsValidANIM(value))
             {
-                if (!first) MessageBox.Show($"The following value \"{new_value}\" is not valid. Please try again.");
-                RenamePrompt diag = new RenamePrompt(new_value);
+                if (!string.IsNullOrWhiteSpace(value)) MessageBox.Show($"The following value \"{value}\" is not valid. Please try again.");
+                RenamePrompt diag = new RenamePrompt(value);
                 diag.TextLabel.Text = "ANIM";
                 diag.OKButton.Text = "Ok";
                 if (diag.ShowDialog() == DialogResult.OK)
                 {
-                    new_value = diag.NewText;
+                    value = diag.NewText;
                 }
                 else return;
-                first = false;
             }
-            anim = SkinANIM.FromString(new_value);
-            ruleset.ApplyAnim(ref anim);
+            ruleset.ApplyAnim(SkinANIM.FromString(value));
         }
 
         private void uncheckButton_Click(object sender, EventArgs e)
@@ -229,8 +246,8 @@ namespace PckStudio.Forms.Editor
             };
             if (saveFileDialog.ShowDialog() != DialogResult.OK)
                 return;
-            bool isSlim = anim.GetFlag(ANIM_EFFECTS.SLIM_MODEL);
-            bool is64x64 = anim.GetFlag(ANIM_EFFECTS.RESOLUTION_64x64);
+            bool isSlim = ruleset.Value.GetFlag(ANIM_EFFECTS.SLIM_MODEL);
+            bool is64x64 = ruleset.Value.GetFlag(ANIM_EFFECTS.RESOLUTION_64x64);
             bool isClassic32 = !isSlim && !is64x64;
 
             Image skin = isSlim ? Properties.Resources.slim_template : Properties.Resources.classic_template;
@@ -239,31 +256,31 @@ namespace PckStudio.Forms.Editor
             using (Graphics graphic = Graphics.FromImage(img))
             {
                 graphic.DrawImage(skin, new Rectangle(0, 0, 64, isClassic32 ? 32 : 64), new Rectangle(0, 0, 64, isClassic32 ? 32 : 64), GraphicsUnit.Pixel);
-                if (anim.GetFlag(ANIM_EFFECTS.HEAD_OVERLAY_DISABLED))
+                if (ruleset.Value.GetFlag(ANIM_EFFECTS.HEAD_OVERLAY_DISABLED))
                     graphic.FillRectangle(Brushes.Magenta, new Rectangle(32, 0, 32, 16));
-                if (anim.GetFlag(ANIM_EFFECTS.HEAD_DISABLED))
+                if (ruleset.Value.GetFlag(ANIM_EFFECTS.HEAD_DISABLED))
                     graphic.FillRectangle(Brushes.Magenta, new Rectangle(0, 0, 32, 16));
-                if (anim.GetFlag(ANIM_EFFECTS.BODY_DISABLED))
+                if (ruleset.Value.GetFlag(ANIM_EFFECTS.BODY_DISABLED))
                     graphic.FillRectangle(Brushes.Magenta, new Rectangle(16, 16, 24, 16));
                 if (img.Height == 64)
                 {
-                    if (anim.GetFlag(ANIM_EFFECTS.RIGHT_ARM_DISABLED)) graphic.FillRectangle(Brushes.Magenta, new Rectangle(40, 16, 16, 16));
-                    if (anim.GetFlag(ANIM_EFFECTS.RIGHT_LEG_DISABLED)) graphic.FillRectangle(Brushes.Magenta, new Rectangle(0, 16, 16, 16));
-                    if (anim.GetFlag(ANIM_EFFECTS.BODY_OVERLAY_DISABLED)) graphic.FillRectangle(Brushes.Magenta, new Rectangle(16, 32, 24, 16));
-                    if (anim.GetFlag(ANIM_EFFECTS.RIGHT_ARM_OVERLAY_DISABLED)) graphic.FillRectangle(Brushes.Magenta, new Rectangle(40, 32, 16, 16));
-                    if (anim.GetFlag(ANIM_EFFECTS.RIGHT_LEG_OVERLAY_DISABLED)) graphic.FillRectangle(Brushes.Magenta, new Rectangle(0, 32, 16, 16));
-                    if (anim.GetFlag(ANIM_EFFECTS.LEFT_LEG_OVERLAY_DISABLED)) graphic.FillRectangle(Brushes.Magenta, new Rectangle(0, 48, 16, 16));
-                    if (anim.GetFlag(ANIM_EFFECTS.LEFT_LEG_DISABLED)) graphic.FillRectangle(Brushes.Magenta, new Rectangle(16, 48, 16, 16));
-                    if (anim.GetFlag(ANIM_EFFECTS.LEFT_ARM_DISABLED)) graphic.FillRectangle(Brushes.Magenta, new Rectangle(32, 48, 16, 16));
-                    if (anim.GetFlag(ANIM_EFFECTS.LEFT_ARM_OVERLAY_DISABLED)) graphic.FillRectangle(Brushes.Magenta, new Rectangle(48, 48, 16, 16));
+                    if (ruleset.Value.GetFlag(ANIM_EFFECTS.RIGHT_ARM_DISABLED)) graphic.FillRectangle(Brushes.Magenta, new Rectangle(40, 16, 16, 16));
+                    if (ruleset.Value.GetFlag(ANIM_EFFECTS.RIGHT_LEG_DISABLED)) graphic.FillRectangle(Brushes.Magenta, new Rectangle(0, 16, 16, 16));
+                    if (ruleset.Value.GetFlag(ANIM_EFFECTS.BODY_OVERLAY_DISABLED)) graphic.FillRectangle(Brushes.Magenta, new Rectangle(16, 32, 24, 16));
+                    if (ruleset.Value.GetFlag(ANIM_EFFECTS.RIGHT_ARM_OVERLAY_DISABLED)) graphic.FillRectangle(Brushes.Magenta, new Rectangle(40, 32, 16, 16));
+                    if (ruleset.Value.GetFlag(ANIM_EFFECTS.RIGHT_LEG_OVERLAY_DISABLED)) graphic.FillRectangle(Brushes.Magenta, new Rectangle(0, 32, 16, 16));
+                    if (ruleset.Value.GetFlag(ANIM_EFFECTS.LEFT_LEG_OVERLAY_DISABLED)) graphic.FillRectangle(Brushes.Magenta, new Rectangle(0, 48, 16, 16));
+                    if (ruleset.Value.GetFlag(ANIM_EFFECTS.LEFT_LEG_DISABLED)) graphic.FillRectangle(Brushes.Magenta, new Rectangle(16, 48, 16, 16));
+                    if (ruleset.Value.GetFlag(ANIM_EFFECTS.LEFT_ARM_DISABLED)) graphic.FillRectangle(Brushes.Magenta, new Rectangle(32, 48, 16, 16));
+                    if (ruleset.Value.GetFlag(ANIM_EFFECTS.LEFT_ARM_OVERLAY_DISABLED)) graphic.FillRectangle(Brushes.Magenta, new Rectangle(48, 48, 16, 16));
                 }
                 else
                 {
                     // Since both classic 32 arms and legs use the same texture, removing the texture would remove both limbs instead of just one.
                     // So both must be disabled by the user before they're removed from the texture;
-                    if (anim.GetFlag(ANIM_EFFECTS.RIGHT_ARM_DISABLED) && anim.GetFlag(ANIM_EFFECTS.LEFT_ARM_DISABLED))
+                    if (ruleset.Value.GetFlag(ANIM_EFFECTS.RIGHT_ARM_DISABLED) && ruleset.Value.GetFlag(ANIM_EFFECTS.LEFT_ARM_DISABLED))
                         graphic.FillRectangle(Brushes.Magenta, new Rectangle(40, 16, 16, 16));
-                    if (anim.GetFlag(ANIM_EFFECTS.RIGHT_LEG_DISABLED) && anim.GetFlag(ANIM_EFFECTS.LEFT_LEG_DISABLED))
+                    if (ruleset.Value.GetFlag(ANIM_EFFECTS.RIGHT_LEG_DISABLED) && ruleset.Value.GetFlag(ANIM_EFFECTS.LEFT_LEG_DISABLED))
                         graphic.FillRectangle(Brushes.Magenta, new Rectangle(0, 16, 16, 16));
                 }
                 img.MakeTransparent(Color.Magenta);
@@ -274,13 +291,13 @@ namespace PckStudio.Forms.Editor
 
         private void resetButton_Click(object sender, EventArgs e)
         {
-            anim = initialANIM;
-            ruleset.ApplyAnim(ref anim);
+            ruleset.ApplyAnim((SkinANIM)initialANIM.Clone());
         }
 
         static readonly Dictionary<string, ANIM_EFFECTS> Templates = new Dictionary<string, ANIM_EFFECTS>()
         {
-                { "Steve (64x32)",           ANIM_EFFECTS.NONE },
+                // TODO
+                //{ "Steve (64x32)",           0 },
                 { "Steve (64x64)",           ANIM_EFFECTS.RESOLUTION_64x64 },
                 { "Alex (64x64)",            ANIM_EFFECTS.SLIM_MODEL },
                 { "Zombie Skins",            ANIM_EFFECTS.ZOMBIE_ARMS },
@@ -298,13 +315,14 @@ namespace PckStudio.Forms.Editor
             diag.label2.Text = "Presets";
             diag.okBtn.Text = "Load";
 
-            if (diag.ShowDialog() != DialogResult.OK) return;
+            if (diag.ShowDialog() != DialogResult.OK)
+                return;
 
-            var templateANIM = Templates[diag.SelectedItem];
+            var templateANIM = new SkinANIM(Templates[diag.SelectedItem]);
             DialogResult prompt = MessageBox.Show(this, "Would you like to add this preset's effects to your current ANIM? Otherwise all of your effects will be cleared. Either choice can be undone by pressing \"Restore ANIM\".", "", MessageBoxButtons.YesNo);
-            if (prompt == DialogResult.Yes) anim |= templateANIM;
-            else anim = templateANIM;
-            ruleset.ApplyAnim(ref anim);
+            if (prompt == DialogResult.Yes)
+                templateANIM = ruleset.Value | templateANIM;
+            ruleset.ApplyAnim(templateANIM);
         }
     }
 }

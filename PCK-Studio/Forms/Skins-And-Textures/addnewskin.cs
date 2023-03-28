@@ -369,7 +369,7 @@ namespace PckStudio
             using ANIMEditor diag = new ANIMEditor(anim.ToString());
             if (diag.ShowDialog(this) == DialogResult.OK)
             {
-                anim = SkinANIM.FromString(diag.outANIM);
+                anim = diag.ResultAnim;
                 DrawModel();
             }
         }
