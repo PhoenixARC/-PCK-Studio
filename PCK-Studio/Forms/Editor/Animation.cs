@@ -41,8 +41,6 @@ namespace PckStudio.Forms.Editor
 			public readonly Image Texture;
 			public int Ticks;
 
-			public static implicit operator Image(Frame f) => f.Texture;
-
 			public Frame(Image texture) : this(texture, MinimumFrameTime)
 			{ }
 
@@ -131,7 +129,7 @@ namespace PckStudio.Forms.Editor
 		{
 			StringBuilder stringBuilder = new StringBuilder(Interpolate ? "#" : string.Empty);
 			foreach (var frame in frames)
-				stringBuilder.Append($"{GetTextureIndex(frame)}*{frame.Ticks},");
+				stringBuilder.Append($"{GetTextureIndex(frame.Texture)}*{frame.Ticks},");
 			return stringBuilder.ToString(0, stringBuilder.Length - 1);
 		}
 

@@ -265,14 +265,9 @@ namespace PckStudio.Forms.Editor
 		private void bulkAnimationSpeedToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			SetBulkSpeed diag = new SetBulkSpeed(frameTreeView);
-			if(diag.ShowDialog(this) == DialogResult.OK)
+			if (diag.ShowDialog(this) == DialogResult.OK)
 			{
-				var list = currentAnimation.GetFrames();
-				for (int i = 0; i < list.Count; i++)
-				{
-					Animation.Frame f = list[i];
-					currentAnimation.SetFrame(f, currentAnimation.GetTextureIndex(f), diag.time);
-				}
+				currentAnimation.GetFrames().ForEach(frame => frame.Ticks = diag.time);
 				LoadAnimationTreeView();
 			}
 			diag.Dispose();

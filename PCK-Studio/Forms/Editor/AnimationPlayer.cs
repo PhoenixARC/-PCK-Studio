@@ -68,7 +68,7 @@ namespace PckStudio.Forms.Editor
 		{
 			Monitor.Enter(_animation);
 			Animation.Frame frame = _animation[frameIndex];
-			display.Image = frame;
+			display.Image = frame.Texture;
 			Monitor.Exit(_animation);
 			return frame;
 		}
