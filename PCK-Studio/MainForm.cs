@@ -8,10 +8,11 @@ using System.Drawing.Drawing2D;
 using System.Diagnostics;
 using System.Drawing.Imaging;
 
+using OMI.Formats.Pck;
 using OMI.Formats.GameRule;
-using OMI.Workers.GameRule;
-using OMI.Workers.Pck;
 using OMI.Formats.Languages;
+using OMI.Workers.Pck;
+using OMI.Workers.GameRule;
 using OMI.Workers.Language;
 
 using PckStudio.Properties;
@@ -25,7 +26,6 @@ using PckStudio.Forms.Editor;
 using PckStudio.Forms.Additional_Popups.Animation;
 using PckStudio.Forms.Additional_Popups;
 using PckStudio.Classes.Misc;
-using OMI.Formats.Pck;
 using PckStudio.Classes.IO.PCK;
 
 namespace PckStudio
@@ -163,30 +163,25 @@ namespace PckStudio
 			isTemplateFile = false;
 			saveLocation = filePath;
 			var reader = new PckFileReader(LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
-			PckFile pck = reader.FromFile(filePath);
-
-            metroLabel3.Text = "Current PCK File: " + Path.GetFileName(filePath);
-   //         using (var fileStream = File.OpenRead(filePath))
-			//{
-			//	try
-			//	{					
-			//	}
-			//	catch (OverflowException ex)
-			//	{
-			//		MessageBox.Show("Failed to open pck\n" +
-			//			$"Try {(LittleEndianCheckBox.Checked ? "unchecking" : "checking")} the 'Open/Save as Vita/PS4 pck' check box in the upper right corner.",
-			//			"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-			//		Debug.WriteLine(ex.Message);
-			//	}
-			//	catch (Exception ex)
-			//	{
-			//		MessageBox.Show("Failed to open pck\n" + 
-			//			"If this is an Audio/Music Cues pck, please use the specialized editor while inside of the parent pck.",
-			//			"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-			//		Debug.WriteLine("Can't open pck file of type: " + pck?.type.ToString());
-			//	}
-			//}
-			return pck;
+			try
+			{
+				PckFile pck = reader.FromFile(filePath);
+				return pck;
+			}
+			catch (OverflowException ex)
+			{
+				MessageBox.Show("Failed to open pck\n" +
+					$"Try {(LittleEndianCheckBox.Checked ? "unchecking" : "checking")} the 'Open/Save as Vita/PS4 pck' check box in the upper right corner.",
+					"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				Debug.WriteLine(ex.Message);
+			}
+			catch
+			{
+				MessageBox.Show("Failed to open pck\n" +
+					"If this is an Audio/Music Cues pck, please use the specialized editor while inside of the parent pck.",
+					"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
+			return null;
 		}
 
 		private void CheckForPasswordAndRemove()
@@ -200,7 +195,11 @@ namespace PckStudio
 		private void LoadEditorTab()
 		{
 			fileEntryCountLabel.Text = "Files:" + currentPCK.Files.Count;
-			treeViewMain.Enabled = treeMeta.Enabled = true;
+			if (isTemplateFile)
+				pckFileLabel.Text = "Unsaved File!";
+			else
+				pckFileLabel.Text = "Current PCK File: " + Path.GetFileName(saveLocation);
+            treeViewMain.Enabled = treeMeta.Enabled = true;
 			closeToolStripMenuItem.Visible = true;
 			saveToolStripMenuItem.Enabled = true;
 			saveToolStripMenuItem1.Enabled = true;
@@ -235,7 +234,8 @@ namespace PckStudio
 			convertToBedrockToolStripMenuItem.Enabled = false;
             addCustomPackImageToolStripMenuItem.Enabled = false;
             fileEntryCountLabel.Text = string.Empty;
-			UpdateRPC();
+            pckFileLabel.Text = string.Empty;
+            UpdateRPC();
 
         }
 
@@ -2208,7 +2208,7 @@ namespace PckStudio
 				using AddFilePrompt diag = new AddFilePrompt("res/" + Path.GetFileName(ofd.FileName));
 				if (diag.ShowDialog(this) == DialogResult.OK)
 				{
-					PckFile.FileData file = currentPCK.CreateNewFile(diag.filepath, (PckFile.FileData.FileType)diag.filetype);
+					PckFile.FileData file = currentPCK.CreateNewFile(diag.Filepath, (PckFile.FileData.FileType)diag.Filetype);
 					file.SetData(File.ReadAllBytes(ofd.FileName));
 
 					if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath)) RebuildSubPCK(treeViewMain.SelectedNode);
