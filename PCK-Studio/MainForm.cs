@@ -113,8 +113,7 @@ namespace PckStudio
 		private void Form1_Load(object sender, EventArgs e)
 		{
 			RPC.Initialize();
-			if (currentPCK == null)
-				RPC.SetPresence("An Open Source .PCK File Editor", "Program by PhoenixARC");
+			UpdateRPC();
 
 			skinToolStripMenuItem1.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.SkinFile);
 			capeToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.CapeFile);
@@ -385,7 +384,7 @@ namespace PckStudio
 		{
 			if (currentPCK == null)
 			{
-				RPC.SetPresence("An Open Source .PCK File Editor", "Program by PhoenixARC");
+				RPC.SetPresence("An Open Source .PCK File Editor");
 				return;
 			};
 
@@ -393,11 +392,11 @@ namespace PckStudio
 					locfile.HasLocEntry("IDS_DISPLAY_NAME") &&
 					locfile.Languages.Contains("en-EN"))
 			{
-				RPC.SetPresence($"Editing a Pack: {locfile.GetLocEntry("IDS_DISPLAY_NAME", "en-EN")}", "Program by PhoenixARC");
+				RPC.SetPresence($"Editing a Pack: {locfile.GetLocEntry("IDS_DISPLAY_NAME", "en-EN")}");
 				return;
 			}
 			// default
-			RPC.SetPresence("An Open Source .PCK File Editor", "Program by PhoenixARC");
+			RPC.SetPresence("An Open Source .PCK File Editor");
 		}
 
 		private void HandleAudioFile(PckFile.FileData file)
