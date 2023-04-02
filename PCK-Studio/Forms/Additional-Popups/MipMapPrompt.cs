@@ -14,7 +14,6 @@ namespace PckStudio
 		public MipMapPrompt()
 		{
 			InitializeComponent();
-			FormBorderStyle = FormBorderStyle.None;
 		}
 
         private void OKBtn_Click(object sender, EventArgs e)
@@ -22,20 +21,9 @@ namespace PckStudio
 			DialogResult = DialogResult.OK;
         }
 
-        private void InputTextBox_KeyDown(object sender, KeyEventArgs e)
-        {
-			if (e.KeyCode == Keys.Enter)
-				OKBtn_Click(sender, e);
-        }
-
 		private void CancelButton_Click(object sender, EventArgs e)
 		{
 			DialogResult = DialogResult.Cancel;
-		}
-
-		private void button1_Click(object sender, EventArgs e)
-		{
-
 		}
 	}
 }
