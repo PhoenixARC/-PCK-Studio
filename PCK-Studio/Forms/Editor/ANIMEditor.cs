@@ -50,18 +50,16 @@ namespace PckStudio.Forms.Editor
             private SkinANIM anim;
             private bool ignoreCheckChanged = false;
 
-            public ANIMRuleSet(SkinANIM anim, params (CheckBox, ANIM_EFFECTS)[] linkage)
+            public ANIMRuleSet(params (CheckBox, ANIM_EFFECTS)[] linkage)
             {
-                this.anim = anim;
                 checkBoxLinkage = new Bictionary<CheckBox, ANIM_EFFECTS>(32);
                 if (linkage.Length < 32)
                     Debug.WriteLine($"Not all {nameof(ANIM_EFFECTS)} are mapped to a given checkbox.");
 
                 checkBoxLinkage.AddRange(linkage);
-                foreach (var (checkbox, effect) in linkage)
+                foreach (var (checkbox, _) in linkage)
                 {
                     checkbox.CheckedChanged += checkedChanged;
-                    checkbox.Checked = anim.GetFlag(effect);
                 }
             }
 
@@ -82,8 +80,9 @@ namespace PckStudio.Forms.Editor
             {
                 this.anim = anim;
                 foreach (var item in checkBoxLinkage)
+                    item.Key.Enabled = true;
+                foreach (var item in checkBoxLinkage)
                 {
-                    IgnoreAndDo(item.Key, checkbox => checkbox.Enabled = true);
                     item.Key.Checked = anim.GetFlag(item.Value);
                 }
             }
@@ -114,18 +113,12 @@ namespace PckStudio.Forms.Editor
                             break;
                         
                         case ANIM_EFFECTS.RESOLUTION_64x64:
-
-                            if (checkBoxLinkage[ANIM_EFFECTS.SLIM_MODEL].Checked)
-                            {
-                                checkBoxLinkage[ANIM_EFFECTS.SLIM_MODEL].Checked = false;
-                            }
+                            Uncheck(checkBoxLinkage[ANIM_EFFECTS.SLIM_MODEL]);
                             checkBoxLinkage[ANIM_EFFECTS.SLIM_MODEL].Enabled = !checkBox.Checked;
                             break;
+
                         case ANIM_EFFECTS.SLIM_MODEL:
-                            if (checkBoxLinkage[ANIM_EFFECTS.RESOLUTION_64x64].Checked)
-                            {
-                                checkBoxLinkage[ANIM_EFFECTS.RESOLUTION_64x64].Checked = false;
-                            }
+                            Uncheck(checkBoxLinkage[ANIM_EFFECTS.RESOLUTION_64x64]);
                             checkBoxLinkage[ANIM_EFFECTS.RESOLUTION_64x64].Enabled = !checkBox.Checked;
                             break;
                         default:
@@ -134,6 +127,11 @@ namespace PckStudio.Forms.Editor
                     anim.SetFlag(checkBoxLinkage[checkBox], checkBox.Checked && checkBox.Enabled);
                     OnCheckboxChanged?.Invoke(anim);
                 }
+            }
+
+            private void Uncheck(CheckBox checkBox)
+            {
+                checkBox.Checked = false;
             }
 
             private void IgnoreAndDo(CheckBox checkBox, Action<CheckBox> action)
@@ -153,9 +151,7 @@ namespace PckStudio.Forms.Editor
                 Close();
             }
             var anim = initialANIM = SkinANIM.FromString(ANIM);
-            setDisplayAnim(anim);
-
-            ruleset = new ANIMRuleSet(anim,
+            ruleset = new ANIMRuleSet(
                 (bobbingCheckBox, ANIM_EFFECTS.HEAD_BOBBING_DISABLED),
                 (bodyCheckBox, ANIM_EFFECTS.BODY_DISABLED),
                 (bodyOCheckBox, ANIM_EFFECTS.BODY_OVERLAY_DISABLED),
@@ -189,8 +185,9 @@ namespace PckStudio.Forms.Editor
                 (unknownCheckBox, ANIM_EFFECTS.__BIT_4),
                 (zombieCheckBox, ANIM_EFFECTS.ZOMBIE_ARMS)
             );
-
             ruleset.OnCheckboxChanged = setDisplayAnim;
+            setDisplayAnim(anim);
+            ruleset.ApplyAnim(anim);
         }
 
         private void setDisplayAnim(SkinANIM anim)
@@ -296,8 +293,7 @@ namespace PckStudio.Forms.Editor
 
         static readonly Dictionary<string, ANIM_EFFECTS> Templates = new Dictionary<string, ANIM_EFFECTS>()
         {
-                // TODO
-                //{ "Steve (64x32)",           0 },
+                { "Steve (64x32)",           ANIM_EFFECTS.NONE },
                 { "Steve (64x64)",           ANIM_EFFECTS.RESOLUTION_64x64 },
                 { "Alex (64x64)",            ANIM_EFFECTS.SLIM_MODEL },
                 { "Zombie Skins",            ANIM_EFFECTS.ZOMBIE_ARMS },
