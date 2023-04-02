@@ -1694,7 +1694,7 @@ namespace PckStudio
             };
             if (sfd.ShowDialog() == DialogResult.OK)
             {
-				LCEToBedrock lb = new LCEToBedrock();
+				BedrockConverter lb = new BedrockConverter();
 				lb.ConvertSkinPack(currentPCK, sfd.FileName);
 			}
 		}

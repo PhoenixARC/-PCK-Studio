@@ -16,11 +16,8 @@ using PckStudio.Classes.Utils;
 
 namespace PckStudio.Classes.FromLCE
 {
-	internal class LCEToBedrock
+	internal class BedrockConverter
     {
-
-        #region variables
-
         // this is just a placeholder in case the locfile entry fails
         // the placeholder name can be changed at any time
         string PackName = "pck_studio";
@@ -168,7 +165,7 @@ namespace PckStudio.Classes.FromLCE
             {"stripped_oak_log","stripped_oak_log_top","stripped_acacia_log","stripped_acacia_log_top","stripped_birch_log","stripped_birch_log_top","stripped_dark_oak_log","stripped_dark_oak_log_top","stripped_jungle_log","stripped_jungle_log_top","stripped_spruce_log","stripped_spruce_log_top","acacia_trapdoor","birch_trapdoor","dark_oak_trapdoor","jungle_trapdoor" }
         };
 
-        Dictionary<string, string> ImgCopyLookup = new Dictionary<string, string>()
+        static Dictionary<string, string> ImgCopyLookup = new Dictionary<string, string>()
         {
             { "res/mob", "/textures/entity" },
             { "res/art", "/textures/painting" },
@@ -176,8 +173,6 @@ namespace PckStudio.Classes.FromLCE
             { "res/terrain", "/textures/environment" },
             { "res/armor", "/textures/models/armor" }
         };
-
-        #endregion
 
         #region Texture Packs
 
@@ -219,9 +214,9 @@ namespace PckStudio.Classes.FromLCE
                 OutPath = "\\textures\\items\\";
             }
 
-            var bm = Image.FromStream(ms);
-            int width = bm.Width / defaultWidth;
-            int height = bm.Height / defaultHeight;
+            var img = Image.FromStream(ms);
+            int width = img.Width / defaultWidth;
+            int height = img.Height / defaultHeight;
             Directory.CreateDirectory(exportPath + OutPath);
 
             // Start splitting the Bitmap.
@@ -229,8 +224,8 @@ namespace PckStudio.Classes.FromLCE
             Rectangle dest_rect = new Rectangle(0, 0, width, height);
             using (Graphics gr = Graphics.FromImage(piece))
             {
-                int num_rows = bm.Height / height;
-                int num_cols = bm.Width / width;
+                int num_rows = img.Height / height;
+                int num_cols = img.Width / width;
                 Rectangle source_rect = new Rectangle(0, 0, width, height);
                 for (int row = 0; row < num_rows; row++)
                 {
@@ -239,8 +234,7 @@ namespace PckStudio.Classes.FromLCE
                     {
                         // Copy the piece of the image.
                         gr.Clear(Color.Transparent);
-                        gr.DrawImage(bm, dest_rect, source_rect,
-                            GraphicsUnit.Pixel);
+                        gr.DrawImage(img, dest_rect, source_rect, GraphicsUnit.Pixel);
 
                         // Save the piece.
                         string filename = sheetArray[row, col] + ".png";
