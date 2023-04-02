@@ -6,26 +6,27 @@ namespace PckStudio
 {
     public partial class AddFilePrompt : MetroForm
 	{
-		/// <summary>
-		/// Text entered <c>only access when DialogResult == DialogResult.OK</c>
-		/// </summary>
-		public string filepath => InputTextBox.Text;
-		public int filetype => FileTypeComboBox.SelectedIndex;
+        /// <summary>
+        /// Text entered only valid when <see cref="DialogResult"/> == <see cref="DialogResult.OK"/>,
+        /// otherwise <see cref="string.Empty"/>
+        /// </summary>
+        public string Filepath => DialogResult == DialogResult.OK ? InputTextBox.Text : string.Empty;
+		public int Filetype => FileTypeComboBox.SelectedIndex;
 
-		public AddFilePrompt(string InitialText) : this(InitialText, -1)
+		public AddFilePrompt(string initialText) : this(initialText, -1)
 		{ }
 
-		public AddFilePrompt(string InitialText, int maxChar)
+		public AddFilePrompt(string initialText, int maxChar)
 		{
 			InitializeComponent();
-			InputTextBox.Text = InitialText;
+			InputTextBox.Text = initialText;
 			InputTextBox.MaxLength = maxChar < 0 ? short.MaxValue : maxChar;
-			FormBorderStyle = FormBorderStyle.None;
 		}
 
         private void OKBtn_Click(object sender, EventArgs e)
         {
-			if(FileTypeComboBox.SelectedIndex > -1) DialogResult = DialogResult.OK;
+			if(FileTypeComboBox.SelectedIndex > -1)
+				DialogResult = DialogResult.OK;
         }
 
         private void InputTextBox_KeyDown(object sender, KeyEventArgs e)

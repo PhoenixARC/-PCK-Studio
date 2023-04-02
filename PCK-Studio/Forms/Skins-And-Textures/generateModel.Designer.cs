@@ -43,7 +43,7 @@
 			this.tabBody = new System.Windows.Forms.TabControl();
 			this.tabArmor = new System.Windows.Forms.TabPage();
 			this.tabPage1 = new System.Windows.Forms.TabPage();
-			this.myTablePanel2 = new PckStudio.Forms.MyTablePanel();
+			this.myTablePanel2 = new System.Windows.Forms.TableLayoutPanel();
 			this.offsetArms = new System.Windows.Forms.TextBox();
 			this.label14 = new System.Windows.Forms.Label();
 			this.offsetBody = new System.Windows.Forms.TextBox();
@@ -637,7 +637,7 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TabControl tabBody;
         private System.Windows.Forms.TabPage tabPage1;
-        private Forms.MyTablePanel myTablePanel2;
+        private System.Windows.Forms.TableLayoutPanel myTablePanel2;
         private System.Windows.Forms.TextBox offsetArms;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.TextBox offsetBody;

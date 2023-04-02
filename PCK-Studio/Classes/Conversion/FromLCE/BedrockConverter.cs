@@ -452,7 +452,7 @@ namespace PckStudio.Classes.FromLCE
         {
             List<modelCube> cubes = new List<modelCube>();
 
-            var anim = new SkinANIM("0");
+            var anim = new SkinANIM();
 
             Console.WriteLine(part);
             float offset = float.Parse(offsets.Find(o => o.Item1 == part).Item2);
@@ -463,7 +463,7 @@ namespace PckStudio.Classes.FromLCE
                 switch (name)
                 {
                     case "ANIM":
-                        anim = new SkinANIM(value);
+                        anim = SkinANIM.FromString(value);
                         break;
                     case "BOX":
                         string[] args = entry.Split(' ');
