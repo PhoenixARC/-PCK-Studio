@@ -107,7 +107,16 @@ namespace PckStudio.Classes.Extentions
             return new Size(width, heigh);
         }
 
-        public static Image ResizeImage(this Image image, int width, int height)
+        public struct GraphicsConfig
+        {
+            public CompositingMode CompositingMode { get; set; }
+            public CompositingQuality CompositingQuality { get; set; }
+            public InterpolationMode InterpolationMode { get; set; }
+            public SmoothingMode SmoothingMode {get; set; }
+            public PixelOffsetMode PixelOffsetMode { get; set; }
+        }
+
+        public static Image ResizeImage(this Image image, int width, int height, GraphicsConfig graphicsConfig)
         {
             var destRect = new Rectangle(0, 0, width, height);
             var destImage = new Bitmap(width, height);
@@ -116,11 +125,11 @@ namespace PckStudio.Classes.Extentions
 
             using (var graphics = Graphics.FromImage(destImage))
             {
-                graphics.CompositingMode = CompositingMode.SourceCopy;
-                graphics.CompositingQuality = CompositingQuality.HighQuality;
-                graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
-                graphics.SmoothingMode = SmoothingMode.HighQuality;
-                graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                graphics.CompositingMode = graphicsConfig.CompositingMode;
+                graphics.CompositingQuality = graphicsConfig.CompositingQuality;
+                graphics.InterpolationMode = graphicsConfig.InterpolationMode;
+                graphics.SmoothingMode = graphicsConfig.SmoothingMode;
+                graphics.PixelOffsetMode = graphicsConfig.PixelOffsetMode;
 
                 using (var wrapMode = new ImageAttributes())
                 {
