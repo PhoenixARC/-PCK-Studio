@@ -249,10 +249,12 @@ namespace PckStudio.Forms.Editor
 
             Image skin = isSlim ? Properties.Resources.slim_template : Properties.Resources.classic_template;
 
-            Bitmap img = new Bitmap(64, isClassic32 ? 32 : 64);
+            Size imgSize = new Size(64, isClassic32 ? 32 : 64);
+
+            Bitmap img = new Bitmap(imgSize.Width, imgSize.Height);
             using (Graphics graphic = Graphics.FromImage(img))
             {
-                graphic.DrawImage(skin, new Rectangle(0, 0, 64, isClassic32 ? 32 : 64), new Rectangle(0, 0, 64, isClassic32 ? 32 : 64), GraphicsUnit.Pixel);
+                graphic.DrawImage(skin, new Rectangle(Point.Empty, imgSize), new Rectangle(Point.Empty, imgSize), GraphicsUnit.Pixel);
                 if (ruleset.Value.GetFlag(ANIM_EFFECTS.HEAD_OVERLAY_DISABLED))
                     graphic.FillRectangle(Brushes.Magenta, new Rectangle(32, 0, 32, 16));
                 if (ruleset.Value.GetFlag(ANIM_EFFECTS.HEAD_DISABLED))
