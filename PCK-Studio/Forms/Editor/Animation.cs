@@ -14,11 +14,11 @@ namespace PckStudio.Forms.Editor
 
 		public int FrameCount => frames.Count;
 
-		public int FrameTextureCount => frameTextures.Count;
+		public int TextureCount => frameTextures.Count;
 
 		public Frame this[int frameIndex] => frames[frameIndex];
 
-		// not implemented rn...
+		// TODO: implement this
 		public bool Interpolate { get; set; } = false;
 
 		private readonly List<Image> frameTextures;
@@ -51,39 +51,37 @@ namespace PckStudio.Forms.Editor
 			}
 		}
 
-		public void ParseAnim(string ANIM)
+		private void ParseAnim(string ANIM)
 		{
 			_ = ANIM ?? throw new ArgumentNullException(nameof(ANIM));
 			ANIM = (Interpolate = ANIM.StartsWith("#")) ? ANIM.Substring(1) : ANIM;
 			string[] animData = ANIM.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
 			int lastFrameTime = MinimumFrameTime;
 			if (animData.Length <= 0)
-			{
-				for (int i = 0; i < FrameTextureCount; i++)
+				for (int i = 0; i < TextureCount; i++)
 				{
-					AddFrame(i, MinimumFrameTime);
+					AddFrame(i);
 				}
-			}
-			else
+			
+			foreach (string frameInfo in animData)
 			{
-				foreach (string frameInfo in animData)
-				{
-					string[] frameData = frameInfo.Split('*');
-					//if (frameData.Length < 2)
-					//    continue; // shouldn't happen
-					int currentFrameIndex = int.TryParse(frameData[0], out currentFrameIndex) ? currentFrameIndex : 0;
+				string[] frameData = frameInfo.Split('*');
+				//if (frameData.Length < 2)
+				//    continue; // shouldn't happen
+				int currentFrameIndex = 0;
+                int.TryParse(frameData[0], out currentFrameIndex);
 
-					// Some textures like the Halloween 2015's Lava texture don't have a
-					// frame time parameter for certain frames.
-					// This will detect that and place the last frame time in its place.
-					// This is accurate to console edition behavior.
-					// - MattNL
-					int currentFrameTime = string.IsNullOrEmpty(frameData[1]) ? lastFrameTime : int.Parse(frameData[1]);
-					AddFrame(currentFrameIndex, currentFrameTime);
-					lastFrameTime = currentFrameTime;
-				}
+				// Some textures like the Halloween 2015's Lava texture don't have a
+				// frame time parameter for certain frames.
+				// This will detect that and place the last frame time in its place.
+				// This is accurate to console edition behavior.
+				// - MattNL
+				int currentFrameTime = string.IsNullOrEmpty(frameData[1]) ? lastFrameTime : int.Parse(frameData[1]);
+				AddFrame(currentFrameIndex, currentFrameTime);
+				lastFrameTime = currentFrameTime;
 			}
 		}
+
 		public Frame AddFrame(int frameTextureIndex) => AddFrame(frameTextureIndex, MinimumFrameTime);
 		public Frame AddFrame(int frameTextureIndex, int frameTime)
 		{

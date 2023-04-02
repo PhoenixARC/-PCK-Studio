@@ -332,7 +332,7 @@ namespace PckStudio.Forms.Editor
 					}
 					else
 					{
-						for (int i = 0; i < new_animation.FrameTextureCount; i++)
+						for (int i = 0; i < new_animation.TextureCount; i++)
 						{
 							new_animation.AddFrame(i, frameTime);
 						}
