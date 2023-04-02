@@ -219,6 +219,7 @@
     <Compile Include="Classes\Networking\Network.cs" />
     <Compile Include="Classes\Misc\RichPresenceClient.cs" />
     <Compile Include="Classes\Networking\Update.cs" />
+    <Compile Include="Classes\Utils\SkinBOX.cs" />
     <Compile Include="Forms\Additional-Popups\EntityForms\AddEntry.cs">
       <SubType>Form</SubType>
     </Compile>

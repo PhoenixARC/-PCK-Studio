@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-
+using System.Numerics;
 using ICSharpCode.SharpZipLib.Zip;
 using ICSharpCode.SharpZipLib.Zip.Compression;
 using Newtonsoft.Json;
@@ -198,35 +198,32 @@ namespace PckStudio.Classes.FromLCE
 
         void SplitSheet(byte[] data, string exportPath, bool useItemsArray)
         {
-            MemoryStream ms = new MemoryStream(data);
-
-            // Get the inputs.
-
-            int defaultWidth = 16;
-            int defaultHeight = 34;
+            int defaultHorizontalCount = 16;
+            int defaultVerticalCount = 34;
             string[,] sheetArray = BlockSheetArray;
-            string OutPath = "\\textures\\blocks\\";
-
+            string outputPath = "\\textures\\blocks\\";
             if (useItemsArray)
             {
-                defaultHeight = 17; 
+                defaultVerticalCount = 17; 
                 sheetArray = ItemSheetArray;
-                OutPath = "\\textures\\items\\";
+                outputPath = "\\textures\\items\\";
             }
+            Directory.CreateDirectory(exportPath + outputPath);
 
+            MemoryStream ms = new MemoryStream(data);
             var img = Image.FromStream(ms);
-            int width = img.Width / defaultWidth;
-            int height = img.Height / defaultHeight;
-            Directory.CreateDirectory(exportPath + OutPath);
 
-            // Start splitting the Bitmap.
-            Bitmap piece = new Bitmap(width, height);
-            Rectangle dest_rect = new Rectangle(0, 0, width, height);
+            int targetWidth = img.Width / defaultHorizontalCount;
+            int targetHeight = img.Height / defaultVerticalCount;
+
+            // Start splitting the Image.
+            Bitmap piece = new Bitmap(targetWidth, targetHeight);
+            Rectangle dest_rect = new Rectangle(0, 0, targetWidth, targetHeight);
             using (Graphics gr = Graphics.FromImage(piece))
             {
-                int num_rows = img.Height / height;
-                int num_cols = img.Width / width;
-                Rectangle source_rect = new Rectangle(0, 0, width, height);
+                int num_rows = img.Height / targetHeight;
+                int num_cols = img.Width / targetWidth;
+                Rectangle source_rect = new Rectangle(0, 0, targetWidth, targetHeight);
                 for (int row = 0; row < num_rows; row++)
                 {
                     source_rect.X = 0;
@@ -239,16 +236,17 @@ namespace PckStudio.Classes.FromLCE
                         // Save the piece.
                         string filename = sheetArray[row, col] + ".png";
                         if(!string.IsNullOrEmpty(filename) && filename != "debug")
-                            piece.Save(exportPath + OutPath + filename, System.Drawing.Imaging.ImageFormat.Png);
+                            piece.Save(exportPath + outputPath + filename, System.Drawing.Imaging.ImageFormat.Png);
 
                         // Move to the next column.
-                        source_rect.X += width;
+                        source_rect.X += targetWidth;
                     }
-                    source_rect.Y += height;
+                    source_rect.Y += targetHeight;
                 }
             }
         }
 
+        [Obsolete("Wrong Behavior ?")]
         void CopyTexture(PckFile.FileData file, string exportPath)
         {
             string exportName = file.Filename;
@@ -264,14 +262,13 @@ namespace PckStudio.Classes.FromLCE
         #endregion
 
         #region Skin Packs
-        public void ConvertSkinPack(PckFile sourcePck, string ExportFilepath)
+        public void ConvertSkinPack(PckFile sourcePck, string exportFilepath)
         {
-
             List<string> localisables = new List<string>();
 
             SkinJSON SJSON = new SkinJSON(); // Skins.json
 
-            string ExportPath = Path.GetDirectoryName(ExportFilepath);
+            string ExportPath = Path.GetDirectoryName(exportFilepath);
             Directory.CreateDirectory(Path.Combine(ExportPath, "skin_pack"));
 
             if (sourcePck.TryGetFile("localisation.loc", PckFile.FileData.FileType.LocalisationFile, out PckFile.FileData locFileData) ||
@@ -288,7 +285,8 @@ namespace PckStudio.Classes.FromLCE
                         PackName = newPackName.Replace(" ", "_");
                     }
 
-                    ExportLOC(locFile, ExportPath + "\\skin_pack\\texts", localisables);
+                    localisables.Add(PackName);
+                    ExportLOC(locFile, ExportPath + "\\skin_pack\\texts");
                 }
             }
 
@@ -303,7 +301,7 @@ namespace PckStudio.Classes.FromLCE
             string GEO_JSON = JsonConvert.SerializeObject(GJSON, Formatting.Indented);
             File.WriteAllText(ExportPath + "\\skin_pack\\geometry.json", GEO_JSON);
 
-            using (var outputStream = new ZipOutputStream(File.Create(ExportFilepath)))
+            using (var outputStream = new ZipOutputStream(File.Create(exportFilepath)))
             {
                 outputStream.SetLevel(Deflater.NO_COMPRESSION);
                 string[] files = Directory.GetFiles(ExportPath + "\\skin_pack", "*", SearchOption.AllDirectories);
@@ -346,10 +344,9 @@ namespace PckStudio.Classes.FromLCE
             return skins;
         }
 
-        void ExportLOC(LOCFile locFile, string exportPath, List<string> LocName)
+        void ExportLOC(LOCFile locFile, string exportPath)
         {
             Directory.CreateDirectory(exportPath);
-            LocName.Add(PackName);
             List<string> languages = new List<string>();
 
             foreach (var kvp in locFile.LocKeys)
@@ -448,7 +445,7 @@ namespace PckStudio.Classes.FromLCE
             return skinOffsets;
         }
 
-        modelCube[] ConvertBoxes(string part, PckFile.FileData file, float[] pivot)
+        modelCube[] ConvertBoxes(string part, PckFile.FileData file, Vector3 pivot)
         {
             List<modelCube> cubes = new List<modelCube>();
 
@@ -466,12 +463,12 @@ namespace PckStudio.Classes.FromLCE
                         anim = SkinANIM.FromString(value);
                         break;
                     case "BOX":
-                        string[] args = entry.Split(' ');
-                        if (args[0] == part)
+                        SkinBOX box = SkinBOX.FromString(entry);
+                        if (box.Parent == part)
                         {
-                            BOX box = new BOX(args);
-                            float y = -1 * (box.posY + offset + box.sizeY);
-                            cubes.Add(new modelCube(new float[] { pivot[0] + box.posX, pivot[1] + y, pivot[2] + box.posZ }, new float[] { box.sizeX, box.sizeY, box.sizeZ }, new float[] { box.uvX, box.uvY }, box.mirror, box.inflation));
+                            float y = -1 * (box.Pos.Y + offset + box.Size.Y);
+                            cubes.Add(new modelCube(new Vector3(pivot.X + box.Pos.X, pivot.Y + y, pivot.Z + box.Pos.Z),
+                                box.Size, box.UV, box.Mirror, box.Inflation));
                         }
                         break;
                     default:
@@ -486,51 +483,51 @@ namespace PckStudio.Classes.FromLCE
             {
                 case "HEAD":
                     if (!anim.GetFlag(ANIM_EFFECTS.HEAD_DISABLED))
-                        cubes.Add(new modelCube(new float[]{ -4, 24 - offset, -4 }, new float[] { 8, 8, 8 }, new float[] { 0, 0 }));
+                        cubes.Add(new modelCube(new Vector3(- 4, 24 - offset, -4), new Vector3(8, 8, 8), new Vector2(0, 0)));
                     break;
                 case "BODY":
                     if (!anim.GetFlag(ANIM_EFFECTS.BODY_DISABLED))
-                        cubes.Add(new modelCube(new float[] { -4, 12 - offset, -2 }, new float[] { 8, 12, 4 }, new float[] { 16, 16 }));
+                        cubes.Add(new modelCube(new Vector3(-4, 12 - offset, -2), new Vector3(8, 12, 4), new Vector2(16, 16)));
                     break;
                 case "ARM0":
                     if (!anim.GetFlag(ANIM_EFFECTS.RIGHT_ARM_DISABLED))
-                        cubes.Add(new modelCube(new float[] { slim ? -7 : - 8, 12 - offset, -2 }, new float[] { slim ? 3 : 4, 12, 4 }, new float[] { 40, 16 }));
+                        cubes.Add(new modelCube(new Vector3(slim ? -7 : - 8, 12 - offset, -2), new Vector3(slim ? 3 : 4, 12, 4), new Vector2(40, 16)));
                     break;
                 case "ARM1":
                     if (!anim.GetFlag(ANIM_EFFECTS.LEFT_ARM_DISABLED))
-                        cubes.Add(new modelCube(new float[] {4, 12 - offset, -2 }, new float[] { slim ? 3 : 4, 12, 4 }, classic_res ? new float[] { 40, 16 } : new float[] { 32, 48 }, classic_res));
+                        cubes.Add(new modelCube(new Vector3(4, 12 - offset, -2), new Vector3(slim ? 3 : 4, 12, 4), classic_res ? new Vector2(40, 16) : new Vector2(32, 48), classic_res));
                     break;
                 case "LEG0":
                     if (!anim.GetFlag(ANIM_EFFECTS.RIGHT_LEG_DISABLED))
-                        cubes.Add(new modelCube(new float[] { -3.9f, 0 - offset, -2 }, new float[] { 4, 12, 4 }, new float[] { 0, 16 }));
+                        cubes.Add(new modelCube(new Vector3(-3.9f, 0 - offset, -2), new Vector3(4, 12, 4), new Vector2(0, 16)));
                     break;
                 case "LEG1":
                     if (!anim.GetFlag(ANIM_EFFECTS.LEFT_LEG_DISABLED))
-                        cubes.Add(new modelCube(new float[] {0.1f, 0 - offset, -2 }, new float[] { 4, 12, 4 }, classic_res ? new float[] { 0, 16 } : new float[] { 16, 48 }, classic_res));
+                        cubes.Add(new modelCube(new Vector3(0.1f, 0 - offset, -2), new Vector3(4, 12, 4), classic_res ? new Vector2(0, 16) : new Vector2(16, 48), classic_res));
                     break;
                 case "HEADWEAR":
                     if (!anim.GetFlag(ANIM_EFFECTS.HEAD_OVERLAY_DISABLED))
-                        cubes.Add(new modelCube(new float[] { -4, 24 - offset, -4 }, new float[] { 8, 8, 8 }, new float[] { 32, 0 }, false, 0.5f));
+                        cubes.Add(new modelCube(new Vector3(-4, 24 - offset, -4), new Vector3(8, 8, 8), new Vector2(32, 0), false, 0.5f));
                     break;
                 case "JACKET":
                     if (!classic_res && !anim.GetFlag(ANIM_EFFECTS.BODY_OVERLAY_DISABLED))
-                        cubes.Add(new modelCube(new float[] { 0, 24 - offset, 0 }, new float[] { 8, 12, 4 }, new float[] { 16, 32 }, false, 0.25f));
+                        cubes.Add(new modelCube(new Vector3(0, 24 - offset, 0), new Vector3(8, 12, 4), new Vector2(16, 32), false, 0.25f));
                     break;
                 case "SLEEVE0":
                     if (!classic_res && !anim.GetFlag(ANIM_EFFECTS.RIGHT_ARM_OVERLAY_DISABLED))
-                        cubes.Add(new modelCube(new float[] { slim ? -7 : -8, 12 - offset, -2 }, new float[] { slim ? 3 : 4, 12, 4 }, new float[] { 40, 32 }, false, 0.25f));
+                        cubes.Add(new modelCube(new Vector3(slim ? -7 : -8, 12 - offset, -2), new Vector3(slim ? 3 : 4, 12, 4), new Vector2(40, 32), false, 0.25f));
                     break;
                 case "SLEEVE1":
                     if (!classic_res && !anim.GetFlag(ANIM_EFFECTS.LEFT_ARM_OVERLAY_DISABLED))
-                        cubes.Add(new modelCube(new float[] { 4, 12 - offset, -2 }, new float[] { slim ? 3 : 4, 12, 4 }, new float[] { 48, 48 }, false, 0.25f));
+                        cubes.Add(new modelCube(new Vector3(4, 12 - offset, -2), new Vector3(slim ? 3 : 4, 12, 4), new Vector2(48, 48), false, 0.25f));
                     break;
                 case "PANTS0":
                     if (!classic_res && !anim.GetFlag(ANIM_EFFECTS.RIGHT_LEG_OVERLAY_DISABLED))
-                        cubes.Add(new modelCube(new float[] { -3.9f, 0 - offset, -2 }, new float[] { 4, 12, 4 }, new float[] { 0, 32 }, false, 0.25f));
+                        cubes.Add(new modelCube(new Vector3(-3.9f, 0 - offset, -2), new Vector3(4, 12, 4), new Vector2(0, 32), false, 0.25f));
                     break;
                 case "PANTS1":
                     if (!classic_res && !anim.GetFlag(ANIM_EFFECTS.LEFT_LEG_OVERLAY_DISABLED))
-                        cubes.Add(new modelCube(new float[] { 0.1f, 0 - offset, -2 }, new float[] { 4, 12, 4 }, new float[] { 0, 48 }, false, 0.25f));
+                        cubes.Add(new modelCube(new Vector3(0.1f, 0 - offset, -2), new Vector3(4, 12, 4), new Vector2(0, 48), false, 0.25f));
                     break;
                 default:
                     break;
@@ -544,20 +541,18 @@ namespace PckStudio.Classes.FromLCE
             if (file.Filetype != PckFile.FileData.FileType.SkinFile)
                 return default!;
 
-            SkinObject So = new SkinObject();
+            SkinObject skinObj = new SkinObject();
             string skinID = file.Filename.Replace(".png", "").Replace("Skins/", "");
-            So.localization_name = skinID;
-            So.texture = skinID + ".png";
+            skinObj.localization_name = skinID;
+            skinObj.texture = skinID + ".png";
 
-            So.geometry = "geometry." + PackName + "." + skinID;
+            skinObj.geometry = "geometry." + PackName + "." + skinID;
 
-            // creation of the custom skin model
-
-            float[] head_and_body_pivot = new float[] { 0, 24, 0 };
-            float[] right_arm_pivot = new float[] { -5, 22, 0 };
-            float[] left_arm_pivot = new float[] { 5, 22, 0 };
-            float[] right_leg_pivot = new float[] { -1.9f, 12, 0 };
-            float[] left_leg_pivot = new float[] { 1.9f, 12, 0 };
+            Vector3 head_and_body_pivot = new Vector3(0, 24, 0);
+            Vector3 right_arm_pivot = new Vector3(-5, 22, 0);
+            Vector3 left_arm_pivot = new Vector3(5, 22, 0);
+            Vector3 right_leg_pivot = new Vector3(-1.9f, 12, 0);
+            Vector3 left_leg_pivot = new Vector3(1.9f, 12, 0);
 
             offsets = GetSkinOffsets(file.Properties);
 
@@ -590,17 +585,17 @@ namespace PckStudio.Classes.FromLCE
             bones.Add(new modelBone("leftBoot", "leftLeg", left_leg_pivot, ConvertBoxes("BOOT1", file, left_leg_pivot), "armor"));
 
             // calculates armor and item offsets
-            bones.Add(new modelBone("rightItem", "rightArm", new float[]{ -6f, 15f - float.Parse(offsets.Find(o => o.Item1 == "TOOL0").Item2), 1f }, null, "item"));
-            bones.Add(new modelBone("leftItem", "leftArm", new float[]{ 6f, 15f - float.Parse(offsets.Find(o => o.Item1 == "TOOL1").Item2), 1f }, null, "item"));
+            bones.Add(new modelBone("rightItem", "rightArm", new Vector3(-6.0f, 15.0f - float.Parse(offsets.Find(o => o.Item1 == "TOOL0").Item2), 1.0f), null, "item"));
+            bones.Add(new modelBone("leftItem", "leftArm", new Vector3(6.0f, 15.0f - float.Parse(offsets.Find(o => o.Item1 == "TOOL1").Item2), 1.0f), null, "item"));
 
-            bones.Add(new modelBone("helmetArmorOffset", "head", new float[] { 0f, 24f - float.Parse(offsets.Find(o => o.Item1 == "HEAD").Item2), 0f }, null, "armor_offset"));
-            bones.Add(new modelBone("bodyArmorOffset", "body", new float[] { -4f, 12f - float.Parse(offsets.Find(o => o.Item1 == "BODY").Item2), -2f }, null, "armor_offset"));
-            bones.Add(new modelBone("rightArmArmorOffset", "rightArm", new float[] { 4f, 12f - float.Parse(offsets.Find(o => o.Item1 == "ARM0").Item2), -2f }, null, "armor_offset"));
-            bones.Add(new modelBone("leftArmArmorOffset", "leftArm", new float[] { -8f, 12f - float.Parse(offsets.Find(o => o.Item1 == "ARM1").Item2), -2f }, null, "armor_offset"));
-            bones.Add(new modelBone("rightLegArmorOffset", "rightLeg", new float[] { -0.1f, float.Parse(offsets.Find(o => o.Item1 == "LEG0").Item2), -2f }, null, "armor_offset"));
-            bones.Add(new modelBone("leftLegArmorOffset", "leftLeg", new float[] { -4.1f, float.Parse(offsets.Find(o => o.Item1 == "LEG1").Item2), -2f }, null, "armor_offset"));
-            bones.Add(new modelBone("rightBootArmorOffset", "rightLeg", new float[] { 2f, 12f - float.Parse(offsets.Find(o => o.Item1 == "BOOT0").Item2), 0f }, null, "armor_offset"));
-            bones.Add(new modelBone("leftBootArmorOffset", "leftLeg", new float[] { -2f, 12f - float.Parse(offsets.Find(o => o.Item1 == "BOOT1").Item2), 0f }, null, "armor_offset"));
+            bones.Add(new modelBone("helmetArmorOffset", "head", new Vector3(0f, 24f - float.Parse(offsets.Find(o => o.Item1 == "HEAD").Item2), 0f), null, "armor_offset"));
+            bones.Add(new modelBone("bodyArmorOffset", "body", new Vector3(- 4f, 12f - float.Parse(offsets.Find(o => o.Item1 == "BODY").Item2), -2f), null, "armor_offset"));
+            bones.Add(new modelBone("rightArmArmorOffset", "rightArm", new Vector3(4f, 12f - float.Parse(offsets.Find(o => o.Item1 == "ARM0").Item2), -2f), null, "armor_offset"));
+            bones.Add(new modelBone("leftArmArmorOffset", "leftArm", new Vector3(- 8f, 12f - float.Parse(offsets.Find(o => o.Item1 == "ARM1").Item2), -2f), null, "armor_offset"));
+            bones.Add(new modelBone("rightLegArmorOffset", "rightLeg", new Vector3(-0.1f, float.Parse(offsets.Find(o => o.Item1 == "LEG0").Item2), -2f), null, "armor_offset"));
+            bones.Add(new modelBone("leftLegArmorOffset", "leftLeg", new Vector3(-4.1f, float.Parse(offsets.Find(o => o.Item1 == "LEG1").Item2), -2f), null, "armor_offset"));
+            bones.Add(new modelBone("rightBootArmorOffset", "rightLeg", new Vector3(2f, 12f - float.Parse(offsets.Find(o => o.Item1 == "BOOT0").Item2), 0f), null, "armor_offset"));
+            bones.Add(new modelBone("leftBootArmorOffset", "leftLeg", new Vector3(- 2f, 12f - float.Parse(offsets.Find(o => o.Item1 == "BOOT1").Item2), 0f), null, "armor_offset"));
 
             string capepath = file.Properties.Find(o => o.property == "CAPEPATH").value;
 
@@ -608,10 +603,10 @@ namespace PckStudio.Classes.FromLCE
             if (capepath != null)
                 geo["cape"] = capepath;
 
-            GJSON.Add(So.geometry, geo);
+            GJSON.Add(skinObj.geometry, geo);
 
             File.WriteAllBytes(exportPath + "\\" + skinID + ".png", file.Data);
-            return So;
+            return skinObj;
         }
 
         void ExportCape(PckFile.FileData file, string exportPath)
@@ -654,18 +649,21 @@ namespace PckStudio.Classes.FromLCE
             public string name = "";
             public string uuid = Guid.NewGuid().ToString();
         }
+
         class Module
         {
             public int[] version = { 1, 0, 0 };
             public string type = "skin_pack";
             public string uuid = Guid.NewGuid().ToString();
         }
+
         class SkinJSON
         {
             public SkinObject[] skins { get; set; }
             public string serialize_name = "";
             public string localization_name = "";
         }
+
         public class SkinObject
         {
             public string localization_name = "dlcskin00000000";
@@ -678,43 +676,9 @@ namespace PckStudio.Classes.FromLCE
 
         #region Model classes for ANIM conversion
 
-        public class BOX
-        {
-            public BOX(string[] arguments)
-            {
-                try
-                {
-                    parent = arguments[0];
-                    posX = float.Parse(arguments[1]);
-                    posY = float.Parse(arguments[2]);
-                    posZ = float.Parse(arguments[3]);
-                    sizeX = float.Parse(arguments[4]);
-                    sizeY = float.Parse(arguments[5]);
-                    sizeZ = float.Parse(arguments[6]);
-                    uvX = float.Parse(arguments[7]);
-                    uvY = float.Parse(arguments[8]);
-                    hideWithArmor = arguments[9] == "1";
-                    mirror = arguments[10] == "1";
-                    inflation = float.Parse(arguments[11]);
-                }
-                catch
-                {
-                    return;
-                }
-            }
-
-            public string parent;
-            public float posX, posY, posZ;
-            public float sizeX, sizeY, sizeZ;
-            public float uvX, uvY;
-            public bool hideWithArmor;
-            public bool mirror;
-            public float inflation;
-        }
-
         public class modelCube
         {
-            public modelCube(float[] origin, float[] size, float[] uv, bool mirror = false, float inflate = 0.0f)
+            public modelCube(Vector3 origin, Vector3 size, Vector2 uv, bool mirror = false, float inflate = 0.0f)
             {
                 this.origin = origin;
                 this.size = size;
@@ -723,22 +687,22 @@ namespace PckStudio.Classes.FromLCE
                 this.inflate = inflate;
             }
 
-            public float[] origin = { 0, 0, 0 };
-            public float[] size = { 0, 0, 0 };
+            public Vector3 origin = Vector3.Zero;
+            public Vector3 size = Vector3.Zero;
             // for whatever reason, uv is a float on LCE,
             // so I've kept it a float for the sake of consistency
-            public float[] uv = { 0, 0};
+            public Vector2 uv = Vector2.Zero;
             public bool mirror = false;
             public float inflate = 0.0f;
         }
 
         public class modelBone
         {
-            public modelBone(string name, string parent, float[] pivot, modelCube[] cubes, string metaBone = "")
+            public modelBone(string name, string parent, Vector3 pivot, modelCube[] cubes, string metaBone = "")
             {
                 this.name = name;
                 this.parent = parent;
-                this.pivot = pivot;
+                pivot.CopyTo(this.pivot);
                 this.cubes = cubes;
                 //if (!String.IsNullOrEmpty(metaBone)) this.META_BoneType = metaBone;
             }
