@@ -170,7 +170,15 @@
     <Compile Include="Classes\API\PCKCenter\PCKCollections.cs" />
     <Compile Include="Classes\API\PCKCenter\PCKCollectionsLocal.cs" />
     <Compile Include="Classes\API\PCKCenter\SaveLocalJSON.cs" />
-    <Compile Include="Classes\Conversion\FromLCE\BedrockConverter.cs" />
+    <Compile Include="Classes\Conversion\Bedrock\BedrockConverter.cs" />
+    <Compile Include="Classes\Conversion\Bedrock\JsonDefinitions\Geometry.cs" />
+    <Compile Include="Classes\Conversion\Bedrock\JsonDefinitions\GeometryBone.cs" />
+    <Compile Include="Classes\Conversion\Bedrock\JsonDefinitions\GeometryCube.cs" />
+    <Compile Include="Classes\Conversion\Bedrock\JsonDefinitions\ManifestModule.cs" />
+    <Compile Include="Classes\Conversion\Bedrock\JsonDefinitions\SkinJSON.cs" />
+    <Compile Include="Classes\Conversion\Bedrock\JsonDefinitions\Manifest.cs" />
+    <Compile Include="Classes\Conversion\Bedrock\JsonDefinitions\ManifestHeader.cs" />
+    <Compile Include="Classes\Conversion\Bedrock\JsonDefinitions\SkinObject.cs" />
     <Compile Include="Classes\Extentions\EnumerableExtentions.cs" />
     <Compile Include="Classes\FileTypes\CSMBFile.cs" />
     <Compile Include="Classes\FileTypes\PCKAudioFile.cs" />

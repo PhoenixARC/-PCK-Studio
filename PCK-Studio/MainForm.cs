@@ -27,7 +27,7 @@ using PckStudio.Forms.Additional_Popups.Animation;
 using PckStudio.Forms.Additional_Popups;
 using PckStudio.Classes.Misc;
 using PckStudio.Classes.IO.PCK;
-using PckStudio.Classes.FromLCE;
+using PckStudio.Classes.Bedrock;
 
 namespace PckStudio
 {
