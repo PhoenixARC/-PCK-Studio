@@ -9,19 +9,18 @@ namespace PckStudio
 		/// <summary>
 		/// Text entered <c>only access when DialogResult == DialogResult.OK</c>
 		/// </summary>
-		public string packName => InputTextBox.Text;
-		public string packRes => metroComboBox1.Text;
+		public string PackName => InputTextBox.Text;
+		public string PackRes => metroComboBox1.Text;
 
-		public CreateTexturePack(string InitialText)
+		public CreateTexturePack()
 		{
 			InitializeComponent();
-			InputTextBox.Text = InitialText;
-			FormBorderStyle = FormBorderStyle.None;
 		}
 
         private void OKBtn_Click(object sender, EventArgs e)
         {
-			if (metroComboBox1.SelectedIndex < 0) return;
+			if (metroComboBox1.SelectedIndex < 0)
+				return;
 			DialogResult = DialogResult.OK;
         }
     }

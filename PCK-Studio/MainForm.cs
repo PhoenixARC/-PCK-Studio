@@ -1327,10 +1327,10 @@ namespace PckStudio
 		private void texturePackToolStripMenuItem_Click(object sender, EventArgs e)
 		{
             checkSaveState();
-            CreateTexturePack packPrompt = new CreateTexturePack("");
+            CreateTexturePack packPrompt = new CreateTexturePack();
 			if (packPrompt.ShowDialog() == DialogResult.OK)
 			{
-                currentPCK = InitializeTexturePack(new Random().Next(8000, int.MaxValue), 0, packPrompt.packName, packPrompt.packRes);
+                currentPCK = InitializeTexturePack(new Random().Next(8000, int.MaxValue), 0, packPrompt.PackName, packPrompt.PackRes);
 				isTemplateFile = true;
                 wasModified = true;
                 LoadEditorTab();
@@ -1340,10 +1340,10 @@ namespace PckStudio
 		private void mashUpPackToolStripMenuItem_Click(object sender, EventArgs e)
 		{
             checkSaveState();
-            CreateTexturePack packPrompt = new CreateTexturePack("");
+            CreateTexturePack packPrompt = new CreateTexturePack();
 			if (packPrompt.ShowDialog() == DialogResult.OK)
 			{
-                currentPCK = InitializeMashUpPack(new Random().Next(8000, int.MaxValue), 0, packPrompt.packName, packPrompt.packRes);
+                currentPCK = InitializeMashUpPack(new Random().Next(8000, int.MaxValue), 0, packPrompt.PackName, packPrompt.PackRes);
 				isTemplateFile = true;
 				wasModified = false;
 				LoadEditorTab();
