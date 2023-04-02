@@ -69,8 +69,8 @@
             this.importButton = new MetroFramework.Controls.MetroButton();
             this.exportButton = new MetroFramework.Controls.MetroButton();
             this.animValue = new MetroFramework.Controls.MetroLabel();
-            this.uncheckButton = new MetroFramework.Controls.MetroButton();
-            this.checkButton = new MetroFramework.Controls.MetroButton();
+            this.uncheckAllButton = new MetroFramework.Controls.MetroButton();
+            this.checkAllButton = new MetroFramework.Controls.MetroButton();
             this.toolTip = new MetroFramework.Components.MetroToolTip();
             this.resetButton = new MetroFramework.Controls.MetroButton();
             this.templateButton = new MetroFramework.Controls.MetroButton();
@@ -647,27 +647,27 @@
             this.animValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.animValue.Theme = MetroFramework.MetroThemeStyle.Dark;
             // 
-            // uncheckButton
+            // uncheckAllButton
             // 
-            this.uncheckButton.Location = new System.Drawing.Point(229, 90);
-            this.uncheckButton.Name = "uncheckButton";
-            this.uncheckButton.Size = new System.Drawing.Size(186, 23);
-            this.uncheckButton.TabIndex = 26;
-            this.uncheckButton.Text = "Uncheck All";
-            this.uncheckButton.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.uncheckButton.UseSelectable = true;
-            this.uncheckButton.Click += new System.EventHandler(this.uncheckButton_Click);
+            this.uncheckAllButton.Location = new System.Drawing.Point(229, 90);
+            this.uncheckAllButton.Name = "uncheckAllButton";
+            this.uncheckAllButton.Size = new System.Drawing.Size(186, 23);
+            this.uncheckAllButton.TabIndex = 26;
+            this.uncheckAllButton.Text = "Uncheck All";
+            this.uncheckAllButton.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.uncheckAllButton.UseSelectable = true;
+            this.uncheckAllButton.Click += new System.EventHandler(this.uncheckAllButton_Click);
             // 
-            // checkButton
+            // checkAllButton
             // 
-            this.checkButton.Location = new System.Drawing.Point(32, 90);
-            this.checkButton.Name = "checkButton";
-            this.checkButton.Size = new System.Drawing.Size(186, 23);
-            this.checkButton.TabIndex = 27;
-            this.checkButton.Text = "Check All";
-            this.checkButton.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.checkButton.UseSelectable = true;
-            this.checkButton.Click += new System.EventHandler(this.checkButton_Click);
+            this.checkAllButton.Location = new System.Drawing.Point(32, 90);
+            this.checkAllButton.Name = "checkAllButton";
+            this.checkAllButton.Size = new System.Drawing.Size(186, 23);
+            this.checkAllButton.TabIndex = 27;
+            this.checkAllButton.Text = "Check All";
+            this.checkAllButton.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.checkAllButton.UseSelectable = true;
+            this.checkAllButton.Click += new System.EventHandler(this.checkAllButton_Click);
             // 
             // toolTip
             // 
@@ -706,8 +706,8 @@
             this.Controls.Add(this.templateButton);
             this.Controls.Add(this.effectsGroup);
             this.Controls.Add(this.resetButton);
-            this.Controls.Add(this.checkButton);
-            this.Controls.Add(this.uncheckButton);
+            this.Controls.Add(this.checkAllButton);
+            this.Controls.Add(this.uncheckAllButton);
             this.Controls.Add(this.animValue);
             this.Controls.Add(this.exportButton);
             this.Controls.Add(this.importButton);
@@ -777,8 +777,8 @@
 		private MetroFramework.Controls.MetroButton importButton;
 		private MetroFramework.Controls.MetroButton exportButton;
 		private MetroFramework.Controls.MetroLabel animValue;
-		private MetroFramework.Controls.MetroButton uncheckButton;
-		private MetroFramework.Controls.MetroButton checkButton;
+		private MetroFramework.Controls.MetroButton uncheckAllButton;
+		private MetroFramework.Controls.MetroButton checkAllButton;
 		private MetroFramework.Components.MetroToolTip toolTip;
 		private MetroFramework.Controls.MetroButton resetButton;
 		private MetroFramework.Controls.MetroButton templateButton;

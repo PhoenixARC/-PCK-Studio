@@ -224,12 +224,12 @@ namespace PckStudio.Forms.Editor
             ruleset.ApplyAnim(SkinANIM.FromString(value));
         }
 
-        private void uncheckButton_Click(object sender, EventArgs e)
+        private void uncheckAllButton_Click(object sender, EventArgs e)
         {
             ruleset.SetAll(false);
         }
 
-        private void checkButton_Click(object sender, EventArgs e)
+        private void checkAllButton_Click(object sender, EventArgs e)
         {
             ruleset.SetAll(true);
         }
