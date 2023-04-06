@@ -187,8 +187,6 @@
     <Compile Include="Classes\Utils\ARC\ARCUtil.cs" />
     <Compile Include="Classes\Extentions\ImageExtentions.cs" />
     <Compile Include="Classes\Utils\SkinANIM.cs" />
-    <Compile Include="Classes\IO\StreamDataReader.cs" />
-    <Compile Include="Classes\IO\StreamDataWriter.cs" />
     <Compile Include="Classes\Models\DefaultModels\Steve64x32Model.cs" />
     <Compile Include="Classes\Models\DefaultModels\ModelBase.cs" />
     <Compile Include="Classes\Models\DefaultModels\Texture.cs" />

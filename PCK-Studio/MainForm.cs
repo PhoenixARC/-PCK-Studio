@@ -839,12 +839,15 @@ namespace PckStudio
             audioPck.AddCategory(PCKAudioFile.AudioCategory.EAudioType.Overworld);
             audioPck.AddCategory(PCKAudioFile.AudioCategory.EAudioType.Nether);
             audioPck.AddCategory(PCKAudioFile.AudioCategory.EAudioType.End);
-            PckFile.FileData pckFileData = currentPCK.CreateNewFile("audio.pck", PckFile.FileData.FileType.AudioFile);
-            using (var stream = new MemoryStream())
-            {
-                PCKAudioFileWriter.Write(stream, audioPck, isLittle);
-                pckFileData.SetData(stream.ToArray());
-            }
+			PckFile.FileData pckFileData = currentPCK.CreateNewFile("audio.pck", PckFile.FileData.FileType.AudioFile, () =>
+			{
+				using (var stream = new MemoryStream())
+				{
+					var writer = new PCKAudioFileWriter(audioPck, isLittle ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
+					writer.WriteToStream(stream);
+					return stream.ToArray();
+				}
+			});
             return pckFileData;
         }
 
