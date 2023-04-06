@@ -25,8 +25,7 @@ namespace PckStudio.Conversion.Bedrock
 	internal class BedrockSkinExporter
     {
         private IExportContext _exportContext;
-
-        private LOCFile loc;
+        private LOCFile _loc;
 
         /// <summary>
         /// <see cref="https://learn.microsoft.com/en-us/minecraft/creator/documents/packagingaskinpack#languagesjson"/>
@@ -75,7 +74,8 @@ namespace PckStudio.Conversion.Bedrock
         };
 
         /// <summary>
-        /// (Bedrock)Languge to key value dictionary
+        /// (Bedrock)Languge to key value dictionary.
+        /// See <see cref="SupportedBedrockLanguages"/>.
         /// </summary>
         private Dictionary<string, SortedDictionary<string, string>> bedrockLanguageFiles = new Dictionary<string, SortedDictionary<string, string>>(SupportedBedrockLanguages.Length);
 
@@ -134,23 +134,23 @@ namespace PckStudio.Conversion.Bedrock
             return skinOffsets;
         }
 
-        private static GeometryCube[] ConvertBoxes(string part, PckFile.FileData file, Vector3 pivot, List<(string, string)> offsets)
+        private GeometryCube[] ConvertBoxes(string part, PckFile.FileData file, Vector3 pivot, List<(string, string)> offsets)
         {
             List<GeometryCube> cubes = new List<GeometryCube>();
             var anim = new SkinANIM();
             Debug.WriteLine(part);
-            float offset = float.Parse(offsets.Find(o => o.Item1 == part).Item2);
+
+            float offset = TryGetOffsetValue(part, offsets);
 
             foreach (var (name, value) in file.Properties)
             {
-                string entry = value;
                 switch (name)
                 {
                     case "ANIM":
                         anim = SkinANIM.FromString(value);
                         break;
                     case "BOX":
-                        SkinBOX box = SkinBOX.FromString(entry);
+                        SkinBOX box = SkinBOX.FromString(value);
                         if (box.Parent == part)
                         {
                             float y = -1 * (box.Pos.Y + offset + box.Size.Y);
@@ -228,14 +228,10 @@ namespace PckStudio.Conversion.Bedrock
             SkinJSON skinJson = new SkinJSON();   // Skins.json
             JObject geometryJson = new JObject(); // Geometry.json
 
-            loc = AcquireLocFile(skinPck);
-            if (loc == null)
-            {
-                throw new ArgumentNullException("Loc file acquire fail.");
-            }
+            _loc = AcquireLocFile(skinPck) ?? throw new ArgumentNullException("Loc file acquire fail.");
 
             string bedrockPackName = "DummySkinPack";
-            var packNameTranslations = loc.GetLocEntries("IDS_DISPLAY_NAME");
+            var packNameTranslations = _loc.GetLocEntries("IDS_DISPLAY_NAME");
             if (packNameTranslations.ContainsKey("en-EN"))
             {
                 bedrockPackName = packNameTranslations["en-EN"].ToLower().Replace(":", string.Empty).Replace(' ', '_');
@@ -247,7 +243,9 @@ namespace PckStudio.Conversion.Bedrock
                 string bedrockLanguage = language.Replace('-', '_');
                 if (SupportedBedrockLanguages.Contains(bedrockLanguage))
                 {
-                    bedrockLanguageFiles[bedrockLanguage][$"skinpack.{bedrockPackName}"] = value;
+                    if (!bedrockLanguageFiles.ContainsKey(bedrockLanguage))
+                        bedrockLanguageFiles.Add(bedrockLanguage, new SortedDictionary<string, string>());
+                    bedrockLanguageFiles[bedrockLanguage].Add($"skinpack.{bedrockPackName}", value);
                 }
             }
 
@@ -258,17 +256,17 @@ namespace PckStudio.Conversion.Bedrock
             var skinManifest = CreateSkinPackManifest(skinJson.LocalizationName);
 
             string skinManifest_JSON = JsonConvert.SerializeObject(skinManifest, Formatting.Indented);
-            _exportContext.PutNextEntry("skin_pack\\manifest.json");
+            _exportContext.PutNextEntry("manifest.json");
             byte[] skinManifestData = Encoding.UTF8.GetBytes(skinManifest_JSON);
             _exportContext.Write(skinManifestData, 0, skinManifestData.Length);
 
             string SKINS_JSON = JsonConvert.SerializeObject(skinJson, Formatting.Indented);
-            _exportContext.PutNextEntry("skin_pack\\skins.json");
+            _exportContext.PutNextEntry("skins.json");
             byte[] skinsJsonData = Encoding.UTF8.GetBytes(SKINS_JSON);
             _exportContext.Write(skinsJsonData, 0, skinsJsonData.Length);
 
             string GEO_JSON = JsonConvert.SerializeObject(geometryJson, Formatting.Indented);
-            _exportContext.PutNextEntry("skin_pack\\geometry.json");
+            _exportContext.PutNextEntry("geometry.json");
             byte[] geometryJsonData = Encoding.UTF8.GetBytes(GEO_JSON);
             _exportContext.Write(geometryJsonData, 0, geometryJsonData.Length);
         }
@@ -278,7 +276,7 @@ namespace PckStudio.Conversion.Bedrock
         {
             if (file.Filetype != PckFile.FileData.FileType.CapeFile)
                 return;
-            string capeId = file.Filename.Replace(".png", string.Empty).Replace("Skins/", string.Empty);
+            string capeId = Path.GetFileNameWithoutExtension(file.Filename);
             _exportContext.PutNextEntry($"{capeId}.png");
             _exportContext.Write(file.Data, 0, file.Size);
         }
@@ -332,17 +330,17 @@ namespace PckStudio.Conversion.Bedrock
                 new GeometryBone("leftBoot", "leftLeg", left_leg_pivot, ConvertBoxes("BOOT1", file, left_leg_pivot, offsets), metaBone: "armor"),
 
                 // calculates armor and item offsets
-                new GeometryBone("rightItem", "rightArm", new Vector3(-6.0f, 15.0f - float.Parse(offsets.Find(o => o.Item1 == "TOOL0").Item2), 1.0f), null, "item"),
-                new GeometryBone("leftItem", "leftArm", new Vector3(6.0f, 15.0f - float.Parse(offsets.Find(o => o.Item1 == "TOOL1").Item2), 1.0f), null, "item"),
+                new GeometryBone("rightItem", "rightArm", new Vector3(-6.0f, 15.0f - TryGetOffsetValue("TOOL0", offsets), 1.0f), null, "item"),
+                new GeometryBone("leftItem", "leftArm", new Vector3(6.0f, 15.0f - TryGetOffsetValue("TOOL1", offsets), 1.0f), null, "item"),
 
-                new GeometryBone("helmetArmorOffset", "head", new Vector3(0f, 24f - float.Parse(offsets.Find(o => o.Item1 == "HEAD").Item2), 0f), null, "armor_offset"),
-                new GeometryBone("bodyArmorOffset", "body", new Vector3(-4f, 12f - float.Parse(offsets.Find(o => o.Item1 == "BODY").Item2), -2f), null, "armor_offset"),
-                new GeometryBone("rightArmArmorOffset", "rightArm", new Vector3(4f, 12f - float.Parse(offsets.Find(o => o.Item1 == "ARM0").Item2), -2f), null, "armor_offset"),
-                new GeometryBone("leftArmArmorOffset", "leftArm", new Vector3(-8f, 12f - float.Parse(offsets.Find(o => o.Item1 == "ARM1").Item2), -2f), null, "armor_offset"),
-                new GeometryBone("rightLegArmorOffset", "rightLeg", new Vector3(-0.1f, float.Parse(offsets.Find(o => o.Item1 == "LEG0").Item2), -2f), null, "armor_offset"),
-                new GeometryBone("leftLegArmorOffset", "leftLeg", new Vector3(-4.1f, float.Parse(offsets.Find(o => o.Item1 == "LEG1").Item2), -2f), null, "armor_offset"),
-                new GeometryBone("rightBootArmorOffset", "rightLeg", new Vector3(2f, 12f - float.Parse(offsets.Find(o => o.Item1 == "BOOT0").Item2), 0f), null, "armor_offset"),
-                new GeometryBone("leftBootArmorOffset", "leftLeg", new Vector3(-2f, 12f - float.Parse(offsets.Find(o => o.Item1 == "BOOT1").Item2), 0f), null, "armor_offset")
+                new GeometryBone("helmetArmorOffset", "head", new Vector3(0f, 24f - TryGetOffsetValue("HEAD", offsets), 0f), null, "armor_offset"),
+                new GeometryBone("bodyArmorOffset", "body", new Vector3(-4f, 12f - TryGetOffsetValue("BODY", offsets), -2f), null, "armor_offset"),
+                new GeometryBone("rightArmArmorOffset", "rightArm", new Vector3(4f, 12f - TryGetOffsetValue("ARM0", offsets), -2f), null, "armor_offset"),
+                new GeometryBone("leftArmArmorOffset", "leftArm", new Vector3(-8f, 12f - TryGetOffsetValue("ARM1", offsets), -2f), null, "armor_offset"),
+                new GeometryBone("rightLegArmorOffset", "rightLeg", new Vector3(-0.1f, TryGetOffsetValue("LEG0", offsets), -2f), null, "armor_offset"),
+                new GeometryBone("leftLegArmorOffset", "leftLeg", new Vector3(-4.1f, TryGetOffsetValue("LEG1", offsets), -2f), null, "armor_offset"),
+                new GeometryBone("rightBootArmorOffset", "rightLeg", new Vector3(2f, 12f - TryGetOffsetValue("BOOT0", offsets), 0f), null, "armor_offset"),
+                new GeometryBone("leftBootArmorOffset", "leftLeg", new Vector3(-2f, 12f - TryGetOffsetValue("BOOT1", offsets), 0f), null, "armor_offset")
             );
 
             string capepath = file.Properties.Find(o => o.property == "CAPEPATH").value;
@@ -355,6 +353,18 @@ namespace PckStudio.Conversion.Bedrock
             _exportContext.PutNextEntry(skinObj.TextureName);
             _exportContext.Write(file.Data, 0, file.Size);
             return skinObj;
+        }
+
+        private float TryGetOffsetValue(string name, List<(string, string)> offsets)
+        {
+            _ = name ?? throw new ArgumentNullException(nameof(name));
+            _ = offsets ?? throw new ArgumentNullException(nameof(offsets));
+            var offsetValue = offsets.Find(o => o.Item1.Equals(name));
+            if (offsetValue.Equals(default))
+                return 0.0f;
+            float value = 0;
+            float.TryParse(offsetValue.Item2, out value);
+            return value;
         }
 
         private LOCFile AcquireLocFile(PckFile sourcePck)
