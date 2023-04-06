@@ -33,7 +33,7 @@ namespace PckStudio.Conversion.Bedrock.Json
         }
 
         [JsonProperty("version")]
-        public int[] Version = { 1, 0, 0 };
+        public int[] Version { get; set; }
 
         [JsonProperty("name")]
         public string Name { get; set; } = string.Empty;

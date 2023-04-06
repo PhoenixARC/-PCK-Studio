@@ -27,7 +27,7 @@ using PckStudio.Forms.Additional_Popups.Animation;
 using PckStudio.Forms.Additional_Popups;
 using PckStudio.Classes.Misc;
 using PckStudio.Classes.IO.PCK;
-using PckStudio.Classes.Bedrock;
+using PckStudio.Conversion.Bedrock;
 
 namespace PckStudio
 {
@@ -1700,12 +1700,15 @@ namespace PckStudio
 		{
             SaveFileDialog sfd = new SaveFileDialog
             {
-                Filter = "MCPack File|*.mcpack"
+                Filter = "Minecraft Pack File|*.mcpack"
             };
             if (sfd.ShowDialog() == DialogResult.OK)
             {
-				BedrockConverter lb = new BedrockConverter();
-				lb.ConvertSkinPack(currentPCK, sfd.FileName);
+				using (var exportContext = new ZipExportContext(sfd.FileName))
+				{
+					BedrockSkinExporter converter = new BedrockSkinExporter(exportContext);
+					converter.ConvertSkinPack(currentPCK);
+				}
 			}
 		}
 

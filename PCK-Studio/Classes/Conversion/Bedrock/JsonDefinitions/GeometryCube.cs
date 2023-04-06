@@ -18,7 +18,7 @@
 using System.Numerics;
 using Newtonsoft.Json;
 
-namespace PckStudio.Classes.Conversion.Bedrock.JsonDefinitions
+namespace PckStudio.Conversion.Bedrock.JsonDefinitions
 {
     internal class GeometryCube
     {

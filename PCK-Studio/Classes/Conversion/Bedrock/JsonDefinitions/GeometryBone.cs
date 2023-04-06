@@ -18,7 +18,7 @@
 using System.Numerics;
 using Newtonsoft.Json;
 
-namespace PckStudio.Classes.Conversion.Bedrock.JsonDefinitions
+namespace PckStudio.Conversion.Bedrock.JsonDefinitions
 {
     internal class GeometryBone
     {
@@ -44,6 +44,6 @@ namespace PckStudio.Classes.Conversion.Bedrock.JsonDefinitions
         public float[] Pivot = { 0, 0, 0 };
 
         [JsonProperty(PropertyName = "cubes", NullValueHandling = NullValueHandling.Ignore)]
-        public GeometryCube[] Cubes = null;
+        public GeometryCube[] Cubes { get; set; }
     }
 }

@@ -22,13 +22,13 @@ namespace PckStudio.Conversion.Bedrock.Json
     internal class SkinObject
     {
         [JsonProperty("localization_name")]
-        public string LocalizationName = "dlcskin00000000";
+        public string LocalizationName { get; set; }
 
         [JsonProperty("geometry")]
         public string GeometryName = "geometry.humanoid.custom";
 
         [JsonProperty("texture")]
-        public string TextureName = "dlcskin00000000.png";
+        public string TextureName { get; set; }
 
         [JsonProperty("type")]
         public string Type = "free";

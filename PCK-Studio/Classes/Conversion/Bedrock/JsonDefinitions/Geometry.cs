@@ -15,18 +15,38 @@
  *    misrepresented as being the original software.
  * 3. This notice may not be removed or altered from any source distribution.
 **/
+using System.Numerics;
 using Newtonsoft.Json;
 
-namespace PckStudio.Classes.Conversion.Bedrock.JsonDefinitions
+namespace PckStudio.Conversion.Bedrock.JsonDefinitions
 {
     internal class Geometry
     {
-        public Geometry((int Width, int Height, int[] Offset) visibleBounds, params GeometryBone[] bones)
+        public struct VisibleBounds
+        {
+            public VisibleBounds(int width, int height, int[] offset)
+            {
+                Width = width;
+                Height = height;
+                Offset = new Vector<int>(offset,offset.Length-3);
+            }
+
+            public readonly int Width;
+            public readonly int Height;
+            public readonly Vector<int> Offset;
+        }
+
+        public Geometry(params GeometryBone[] bones)
+            : this(new VisibleBounds(width: 1, height: 2, offset: new int[3] { 0, 1, 0 }), bones)
+        {
+        }
+
+        public Geometry(VisibleBounds visibleBounds, params GeometryBone[] bones)
         {
             Bones = bones;
             VisibleBoundsWidth = visibleBounds.Width;
             VisibleBoundsHeight = visibleBounds.Height;
-            VisibleBoundsOffset = visibleBounds.Offset;
+            visibleBounds.Offset.CopyTo(VisibleBoundsOffset);
         }
 
         [JsonProperty("visible_bounds_width")]
