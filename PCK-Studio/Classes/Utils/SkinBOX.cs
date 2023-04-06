@@ -41,19 +41,31 @@ namespace PckStudio.Classes.Utils
                 throw new ArgumentException("Arguments must have at least a length of 9");
             }
             var parent = arguments[0];
-            var pos = new Vector3(float.Parse(arguments[1]), float.Parse(arguments[2]), float.Parse(arguments[3]));
-            var size = new Vector3(float.Parse(arguments[4]), float.Parse(arguments[5]), float.Parse(arguments[6]));
-            var uv = new Vector2(float.Parse(arguments[7]), float.Parse(arguments[8]));
+            var pos = TryGetVector3(arguments, 1);
+            var size = TryGetVector3(arguments, 4);
+            var uv = TryGetVector2(arguments, 7);
             var skinBox = new SkinBOX(parent, pos, size, uv);
-            try
-            {
-
+            if (arguments.Length >= 10)
                 skinBox.HideWithArmor = arguments[9] == "1";
+            if (arguments.Length >= 11)
                 skinBox.Mirror = arguments[10] == "1";
-                skinBox.Inflation = float.Parse(arguments[11]);
-            }
-            catch { }
+            if (arguments.Length >= 12)
+                float.TryParse(arguments[11], out skinBox.Inflation);
             return skinBox;
+        }
+
+        private static Vector2 TryGetVector2(string[] arguments, int startIndex)
+        {
+            float.TryParse(arguments[startIndex], out float x);
+            float.TryParse(arguments[startIndex + 1], out float y);
+            return new Vector2(x, y);
+        }
+
+        private static Vector3 TryGetVector3(string[] arguments, int startIndex)
+        {
+            var vec2 = TryGetVector2(arguments, startIndex);
+            float.TryParse(arguments[startIndex + 2], out float z);
+            return new Vector3(vec2, z);
         }
 
         public string Parent;
