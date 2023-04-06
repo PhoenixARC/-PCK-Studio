@@ -2,7 +2,7 @@
 Melon Build: A Revamp of PCK Studio!
 
 ## Melon Build:
-This is a revamp of PCK Studio! With a whole new UI and much more new features, you can make .pck files in a much cooler fashon! 
+This is a revamp of PCK Studio! With a whole new UI and much more new features. Make .pck files in a much cooler fashon! 
 
 ## Supported File formats
 
