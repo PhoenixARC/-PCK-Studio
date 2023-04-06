@@ -11,9 +11,15 @@ namespace PckStudio.Conversion.Bedrock
         private string _currentEntry;
         private Dictionary<string, byte[]> _buffer;
 
+        public InMemoryExportContext()
+        {
+            _buffer = new Dictionary<string, byte[]>();
+        }
+
         public void Dispose()
         {
-            _buffer.Clear();
+            _buffer?.Clear();
+            _buffer = null;
         }
 
         public void PutNextEntry(string name)
