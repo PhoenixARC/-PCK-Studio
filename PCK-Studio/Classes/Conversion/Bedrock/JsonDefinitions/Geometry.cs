@@ -15,6 +15,7 @@
  *    misrepresented as being the original software.
  * 3. This notice may not be removed or altered from any source distribution.
 **/
+using System;
 using System.Numerics;
 using Newtonsoft.Json;
 
@@ -22,22 +23,63 @@ namespace PckStudio.Conversion.Bedrock.JsonDefinitions
 {
     internal class Geometry
     {
+        public struct Offset
+        {
+            public Offset(int x, int y, int z)
+            {
+                this.x = x;
+                this.y = y;
+                this.z = z;
+            }
+
+            private int x, y, z;
+            public int X
+            {
+                get => x;
+                set => x = value;
+            }
+
+            public int Y
+            {
+                get => y;
+                set => y = value;
+            }
+
+            public int Z
+            {
+                get => z;
+                set => z = value;
+            }
+
+            public void CopyTo(int[] buffer, int index = 0)
+            {
+                if (buffer.Length > 3)
+                    throw new ArgumentException($"{nameof(buffer)} must be of size 3 or larger.");
+
+                if (buffer.Length < index || buffer.Length < index + 2)
+                    throw new IndexOutOfRangeException("index");
+
+                buffer[index] = x;
+                buffer[index + 1] = y;
+                buffer[index + 2] = z;
+            }
+        }
         public struct VisibleBounds
         {
-            public VisibleBounds(int width, int height, int[] offset)
+            public VisibleBounds(int width, int height, Offset offset)
             {
                 Width = width;
                 Height = height;
-                Offset = new Vector<int>(offset,offset.Length-3);
+                Offset = offset;
             }
 
             public readonly int Width;
             public readonly int Height;
-            public readonly Vector<int> Offset;
+            public readonly Offset Offset;
         }
 
         public Geometry(params GeometryBone[] bones)
-            : this(new VisibleBounds(width: 1, height: 2, offset: new int[3] { 0, 1, 0 }), bones)
+            : this(new VisibleBounds(width: 1, height: 2, offset: new Offset(0, 1, 0)), bones)
         {
         }
 
@@ -46,17 +88,18 @@ namespace PckStudio.Conversion.Bedrock.JsonDefinitions
             Bones = bones;
             VisibleBoundsWidth = visibleBounds.Width;
             VisibleBoundsHeight = visibleBounds.Height;
+            VisibleBoundsOffset = new int[3];
             visibleBounds.Offset.CopyTo(VisibleBoundsOffset);
         }
 
         [JsonProperty("visible_bounds_width")]
-        public int VisibleBoundsWidth = 1;
+        public int VisibleBoundsWidth { get; set; }
 
         [JsonProperty("visible_bounds_height")]
-        public int VisibleBoundsHeight = 2;
+        public int VisibleBoundsHeight { get; set; }
 
         [JsonProperty("visible_bounds_offset")]
-        public int[] VisibleBoundsOffset = { 0, 1, 0 };
+        public int[] VisibleBoundsOffset { get; set; }
 
         [JsonProperty("bones")]
         public GeometryBone[] Bones { get; set; }
