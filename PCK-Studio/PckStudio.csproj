@@ -170,6 +170,7 @@
     <Compile Include="Classes\API\PCKCenter\PCKCollections.cs" />
     <Compile Include="Classes\API\PCKCenter\PCKCollectionsLocal.cs" />
     <Compile Include="Classes\API\PCKCenter\SaveLocalJSON.cs" />
+    <Compile Include="Classes\Extentions\ControlExtensions.cs" />
     <Compile Include="Classes\Extentions\EnumerableExtentions.cs" />
     <Compile Include="Classes\FileTypes\CSMBFile.cs" />
     <Compile Include="Classes\FileTypes\PCKAudioFile.cs" />
