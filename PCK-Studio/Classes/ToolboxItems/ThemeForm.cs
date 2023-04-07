@@ -26,8 +26,8 @@ namespace PckStudio.ToolboxItems
         public ThemeForm(Theme theme)
             : base()
         {
-            DarkNet.Instance.SetWindowThemeForms(this, theme);
-            Invalidate();
+            if (!DesignMode)
+                DarkNet.Instance.SetWindowThemeForms(this, theme);
         }
 
         public ThemeForm()
