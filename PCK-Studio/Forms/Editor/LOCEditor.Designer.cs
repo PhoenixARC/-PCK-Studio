@@ -40,7 +40,8 @@
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.locSort = new PckStudio.Forms.MyTablePanel();
+            this.locSort = new System.Windows.Forms.TableLayoutPanel();
+            this.buttonReplaceAll = new System.Windows.Forms.Button();
             this.dataGridViewLocEntryData = new System.Windows.Forms.DataGridView();
             this.textBoxReplaceAll = new System.Windows.Forms.TextBox();
             this.treeViewLocKeys = new System.Windows.Forms.TreeView();
@@ -219,7 +220,8 @@
         private System.Windows.Forms.ToolStripMenuItem addDisplayIDToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteDisplayIDToolStripMenuItem;
         private System.Windows.Forms.TextBox textBoxReplaceAll;
-        private PckStudio.Forms.MyTablePanel locSort;
+        private System.Windows.Forms.TableLayoutPanel locSort;
+        private System.Windows.Forms.Button buttonReplaceAll;
         private MetroFramework.Controls.MetroContextMenu GridContextMenu;
         private System.Windows.Forms.ToolStripMenuItem addLanguageToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem removeLanguageToolStripMenuItem;

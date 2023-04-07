@@ -7,13 +7,14 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 {
 	public partial class SetBulkSpeed : ThemeForm
 	{
-		public int time => (int)TimeUpDown.Value;
-		public SetBulkSpeed(TreeView treeView)
+		public int Ticks => (int)TimeUpDown.Value;
+		
+		public SetBulkSpeed()
 		{
 			InitializeComponent();
 		}
 
-		private void button1_Click(object sender, EventArgs e)
+		private void saveButton_Click(object sender, EventArgs e)
 		{
 
 		}
@@ -25,7 +26,7 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 
         private void SaveButton_Click(object sender, EventArgs e)
         {
-            if (time < 0) return;
+            if (Ticks < 0) return;
             DialogResult = DialogResult.OK;
         }
 

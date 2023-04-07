@@ -23,7 +23,7 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 			InitializeComponent();
 			ImageList tiles = new ImageList();
 			tiles.ColorDepth = ColorDepth.Depth32Bit;
-			tiles.Images.AddRange(AnimationUtil.tileImages);
+			tiles.Images.AddRange(AnimationResources.tileImages);
 			treeViewBlocks.ImageList = tiles;
 			treeViewItems.ImageList = tiles;
 
@@ -31,9 +31,9 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 			{
 				int i = 0;
 
-				if (AnimationUtil.tileData["blocks"] != null)
+				if (AnimationResources.tileData["blocks"] != null)
 				{
-					foreach (JObject content in AnimationUtil.tileData["blocks"].Children())
+					foreach (JObject content in AnimationResources.tileData["blocks"].Children())
 					{
 						foreach (JProperty prop in content.Properties())
 						{
@@ -52,9 +52,9 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 						}
 					}
 				}
-				if (AnimationUtil.tileData["items"] != null)
+				if (AnimationResources.tileData["items"] != null)
 				{
-					foreach (JObject content in AnimationUtil.tileData["items"].Children())
+					foreach (JObject content in AnimationResources.tileData["items"].Children())
 					{
                         foreach (JProperty prop in content.Properties())
 						{

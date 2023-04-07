@@ -9,6 +9,7 @@ using PckStudio.Classes._3ds.Utils;
 using PckStudio.ToolboxItems;
 using OMI.Formats.Languages;
 using OMI.Formats.Pck;
+using PckStudio.Forms.Editor;
 
 namespace PckStudio
 {
@@ -378,10 +379,10 @@ namespace PckStudio
 
         private void EditSkinButton_Click(object sender, EventArgs e)
         {
-            using Forms.Utilities.Skins.ANIMEditor diag = new Forms.Utilities.Skins.ANIMEditor(anim.ToString());
-            if (diag.ShowDialog(this) == DialogResult.OK && diag.saved)
+            using ANIMEditor diag = new ANIMEditor(anim.ToString());
+            if (diag.ShowDialog(this) == DialogResult.OK)
             {
-                anim = new SkinANIM(diag.outANIM);
+                anim = diag.ResultAnim;
                 DrawModel();
             }
         }

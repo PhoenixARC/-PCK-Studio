@@ -138,6 +138,7 @@
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.Controls.Add(this.buttonDirect);
             this.Controls.Add(this.buttonBedrock);
             this.Controls.Add(this.buttonInstallPs3);
             this.Controls.Add(this.buttonInstallXbox);
@@ -146,7 +147,6 @@
             this.Controls.Add(this.buttonDelete);
             this.Controls.Add(this.labelDesc);
             this.Controls.Add(this.labelName);
-            this.Controls.Add(this.buttonDirect);
             this.Controls.Add(this.pictureBoxDisplay);
             this.ForeColor = System.Drawing.Color.White;
             this.MaximizeBox = false;

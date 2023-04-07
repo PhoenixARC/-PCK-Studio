@@ -190,8 +190,6 @@
     <Compile Include="Classes\Utils\ARC\ARCUtil.cs" />
     <Compile Include="Classes\Extentions\ImageExtentions.cs" />
     <Compile Include="Classes\Utils\SkinANIM.cs" />
-    <Compile Include="Classes\IO\StreamDataReader.cs" />
-    <Compile Include="Classes\IO\StreamDataWriter.cs" />
     <Compile Include="Classes\Models\DefaultModels\Steve64x32Model.cs" />
     <Compile Include="Classes\Models\DefaultModels\ModelBase.cs" />
     <Compile Include="Classes\Models\DefaultModels\Texture.cs" />
@@ -361,27 +359,27 @@
     <Compile Include="Forms\Additional-Popups\Grf\AddParameter.Designer.cs">
       <DependentUpon>AddParameter.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Utilities\ModelsUtil.cs" />
-    <Compile Include="Forms\Utilities\MaterialUtil.cs" />
-    <Compile Include="Forms\Utilities\BehaviourUtil.cs" />
-    <Compile Include="Forms\Utilities\AnimationUtil.cs" />
+    <Compile Include="Forms\Utilities\ModelsResources.cs" />
+    <Compile Include="Forms\Utilities\MaterialResources.cs" />
+    <Compile Include="Forms\Utilities\BehaviourResources.cs" />
+    <Compile Include="Forms\Utilities\AnimationResources.cs" />
+    <Compile Include="Forms\Editor\BoxEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Editor\BoxEditor.Designer.cs">
+      <DependentUpon>BoxEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Editor\ANIMEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Editor\ANIMEditor.Designer.cs">
+      <DependentUpon>ANIMEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Utilities\Preferences.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\Utilities\Preferences.Designer.cs">
       <DependentUpon>Preferences.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Utilities\Skins\BoxEditor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Utilities\Skins\BoxEditor.Designer.cs">
-      <DependentUpon>BoxEditor.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Utilities\Skins\ANIMEditor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Utilities\Skins\ANIMEditor.Designer.cs">
-      <DependentUpon>ANIMEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -565,17 +563,11 @@
     <EmbeddedResource Include="Forms\Additional-Popups\Grf\AddParameter.resx">
       <DependentUpon>AddParameter.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\Preferences.ja.resx">
-      <DependentUpon>Preferences.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\Preferences.resx">
-      <DependentUpon>Preferences.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\Skins\BoxEditor.resx">
+    <EmbeddedResource Include="Forms\Editor\BoxEditor.resx">
       <DependentUpon>BoxEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\Skins\ANIMEditor.resx">
+    <EmbeddedResource Include="Forms\Editor\ANIMEditor.resx">
       <DependentUpon>ANIMEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.ja.resx">

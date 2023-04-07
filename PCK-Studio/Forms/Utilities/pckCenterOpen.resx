@@ -244,7 +244,7 @@
     <value>Segoe UI, 12pt</value>
   </data>
   <data name="buttonExport.Location" type="System.Drawing.Point, System.Drawing">
-    <value>692, 338</value>
+    <value>495, 256</value>
   </data>
   <data name="buttonExport.Size" type="System.Drawing.Size, System.Drawing">
     <value>45, 30</value>
@@ -355,7 +355,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;buttonInstallWiiU.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="pictureBoxDisplay.Location" type="System.Drawing.Point, System.Drawing">
     <value>24, 64</value>

@@ -138,7 +138,8 @@ namespace PckStudio.Forms.Editor
 		{
             using (var ms = new MemoryStream())
             {
-                LOCFileWriter.Write(ms, currentLoc);
+				var writer = new LOCFileWriter(currentLoc, 2);
+                writer.WriteToStream(ms);
                 _file.SetData(ms.ToArray());
             }
 			DialogResult = DialogResult.OK;

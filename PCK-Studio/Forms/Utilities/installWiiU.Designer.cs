@@ -31,7 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InstallWiiU));
             this.metroTabPageMain = new MetroFramework.Controls.MetroTabPage();
-            this.myTablePanel1 = new PckStudio.Forms.MyTablePanel();
+            this.myTablePanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonServerToggle = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.radioButtonSystem = new System.Windows.Forms.RadioButton();
@@ -327,7 +327,7 @@
         #endregion
 
         private MetroFramework.Controls.MetroTabPage metroTabPageMain;
-        private MyTablePanel myTablePanel1;
+        private System.Windows.Forms.TableLayoutPanel myTablePanel1;
         private System.Windows.Forms.RadioButton radioButtonJap;
         private System.Windows.Forms.RadioButton radioButtonEur;
         private System.Windows.Forms.RadioButton radioButtonUs;

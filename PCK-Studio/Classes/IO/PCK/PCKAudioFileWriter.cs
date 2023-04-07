@@ -1,14 +1,17 @@
-﻿using PckStudio.Classes.FileTypes;
+﻿using OMI;
+using OMI.Workers;
+using PckStudio.Classes.FileTypes;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
 namespace PckStudio.Classes.IO.PCK
 {
-    internal class PCKAudioFileWriter : StreamDataWriter
+    internal class PCKAudioFileWriter : IDataFormatWriter
     {
 
         private PCKAudioFile _file;
+        private Endianness _endianness;
         private static readonly List<string> LUT = new List<string>
         {
             "CUENAME",
@@ -16,71 +19,82 @@ namespace PckStudio.Classes.IO.PCK
             "CREDITID"
         };
 
-        public static void Write(Stream stream, PCKAudioFile file, bool isLittleEndian)
-        {
-            new PCKAudioFileWriter(file, isLittleEndian).WriteToStream(stream);
-        }
-
-        private PCKAudioFileWriter(PCKAudioFile file, bool isLittleEndian) : base(isLittleEndian)
+        public PCKAudioFileWriter(PCKAudioFile file, Endianness endianness)
         {
             _file = file;
+            _endianness = endianness;
         }
 
-        protected override void WriteToStream(Stream stream)
+        public void WriteToFile(string filename)
         {
-            WriteInt(stream, _file.type);
-            WriteLookUpTable(stream);
-            WriteCategories(stream);
-            WriteCategorySongs(stream);
+            using(var fs = File.OpenWrite(filename))
+            {
+                WriteToStream(fs);
+            }
         }
 
-        private void WriteString(Stream stream, string s)
+        public void WriteToStream(Stream stream)
         {
-            WriteInt(stream, s.Length);
-            WriteString(stream, s, IsUsingLittleEndian ? Encoding.Unicode : Encoding.BigEndianUnicode);
-            WriteInt(stream, 0); // padding
+            using (var writer = new EndiannessAwareBinaryWriter(stream,
+                _endianness == Endianness.BigEndian
+                ? Encoding.BigEndianUnicode
+                : Encoding.Unicode,
+                leaveOpen: true, _endianness))
+            {
+                writer.Write(_file.type);
+                WriteLookUpTable(writer);
+                WriteCategories(writer);
+                WriteCategorySongs(writer);
+            }
         }
 
-        private void WriteLookUpTable(Stream stream)
+        private void WriteString(EndiannessAwareBinaryWriter writer, string s)
         {
-            WriteInt(stream, 3);
+            writer.Write(s.Length);
+            writer.WriteString(s);
+            writer.Write(0); // padding
+        }
+
+        private void WriteLookUpTable(EndiannessAwareBinaryWriter writer)
+        {
+            writer.Write(3);
             for (int i = 0; i < 3; i++)
             {
-                WriteInt(stream, i);
-                WriteString(stream, LUT[i]);
+                writer.Write(i);
+                WriteString(writer, LUT[i]);
             }
         }
 
-        private void WriteCategories(Stream stream)
+        private void WriteCategories(EndiannessAwareBinaryWriter writer)
         {
-            WriteInt(stream, _file.Categories.Length);
+            writer.Write(_file.Categories.Length);
             foreach (var category in _file.Categories)
             {
-                WriteInt(stream, (int)category.parameterType);
-                WriteInt(stream, (int)category.audioType);
-                WriteString(stream, category.Name);
+                writer.Write((int)category.parameterType);
+                writer.Write((int)category.audioType);
+                WriteString(writer, category.Name);
             }
         }
 
-        private void WriteCategorySongs(Stream stream)
+        private void WriteCategorySongs(EndiannessAwareBinaryWriter writer)
         {
             bool addCredit = true;
             foreach (var category in _file.Categories)
             {
-                WriteInt(stream, category.SongNames.Count + (addCredit ? _file.Credits.Count * 2 : 0));
+                writer.Write(category.SongNames.Count + (addCredit ? _file.Credits.Count * 2 : 0));
                 foreach (var name in category.SongNames)
                 {
-                    WriteInt(stream, LUT.IndexOf("CUENAME"));
-                    WriteString(stream, name);
+                    writer.Write(LUT.IndexOf("CUENAME"));
+                    WriteString(writer, name);
                 }
                 if (addCredit)
                 {
                     foreach (var credit in _file.Credits)
                     { 
-                        WriteInt(stream, LUT.IndexOf("CREDIT"));
-                        WriteString(stream, credit.Value);
-                        WriteInt(stream, LUT.IndexOf("CREDITID"));
-                        WriteString(stream, credit.Key);
+                        writer.Write(LUT.IndexOf("CREDIT"));
+                        WriteString(writer, credit.Value);
+                        writer.Write(LUT.IndexOf("CREDITID"));
+                        WriteString(writer, credit.Key);
                     }
                 }
                 addCredit = false;

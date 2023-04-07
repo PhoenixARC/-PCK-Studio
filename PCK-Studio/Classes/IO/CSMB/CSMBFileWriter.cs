@@ -1,54 +1,58 @@
 ﻿using System.IO;
 using System.Text;
 using PckStudio.Classes.FileTypes;
+using OMI.Workers;
+using OMI;
 
 namespace PckStudio.Classes.IO.CSMB
 {
-    internal class CSMBFileWriter : StreamDataWriter
+    internal class CSMBFileWriter : IDataFormatWriter
     {
         CSMBFile _CSMB;
-        public static void Write(Stream stream, CSMBFile file)
-        {
-            new CSMBFileWriter(file).WriteToStream(stream);
-        }
 
-        public CSMBFileWriter(CSMBFile csmb) : base(false)
+        public CSMBFileWriter(CSMBFile csmb)
         {
             _CSMB = csmb;
         }
 
-        protected override void WriteToStream(Stream stream)
+        public void WriteToFile(string filename)
         {
-            WriteInt(stream, 0);
-            WriteInt(stream, _CSMB.Parts.Count);
-            foreach(CSMBPart part in _CSMB.Parts)
+            using(var fs = File.OpenWrite(filename))
             {
-                WriteString(stream, part.Name);
-                WriteInt(stream, (int)part.Parent);
-                WriteFloat(stream, part.posX);
-                WriteFloat(stream, part.posY);
-                WriteFloat(stream, part.posZ);
-                WriteFloat(stream, part.sizeX);
-                WriteFloat(stream, part.sizeY);
-                WriteFloat(stream, part.sizeZ);
-                WriteInt(stream, part.uvX);
-                WriteInt(stream, part.uvY);
-                WriteBool(stream, part.MirrorTexture);
-                WriteBool(stream, part.HideWArmour);
-                WriteFloat(stream, part.Inflation);
-            }
-            WriteInt(stream, _CSMB.Offsets.Count);
-            foreach (CSMBOffset offset in _CSMB.Offsets)
-            {
-                WriteInt(stream, (int)offset.offsetPart);
-                WriteFloat(stream, offset.VerticalOffset);
+                WriteToStream(fs);
             }
         }
 
-        private void WriteString(Stream stream, string s)
+        public void WriteToStream(Stream stream)
         {
-            WriteShort(stream, (short)s.Length);
-            WriteString(stream, s, Encoding.ASCII);
+            using (var writer = new EndiannessAwareBinaryWriter(stream, Encoding.ASCII, leaveOpen: true, Endianness.LittleEndian))
+            {
+                writer.Write(0);
+                writer.Write(_CSMB.Parts.Count);
+                foreach (CSMBPart part in _CSMB.Parts)
+                {
+                    writer.Write((short)part.Name.Length);
+                    writer.WriteString(part.Name);
+                    writer.Write((int)part.Parent);
+                    writer.Write(part.posX);
+                    writer.Write(part.posY);
+                    writer.Write(part.posZ);
+                    writer.Write(part.sizeX);
+                    writer.Write(part.sizeY);
+                    writer.Write(part.sizeZ);
+                    writer.Write(part.uvX);
+                    writer.Write(part.uvY);
+                    writer.Write(part.MirrorTexture);
+                    writer.Write(part.HideWArmour);
+                    writer.Write(part.Inflation);
+                }
+                writer.Write(_CSMB.Offsets.Count);
+                foreach (CSMBOffset offset in _CSMB.Offsets)
+                {
+                    writer.Write((int)offset.offsetPart);
+                    writer.Write(offset.VerticalOffset);
+                }
+            }
         }
     }
 }

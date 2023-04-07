@@ -14,7 +14,6 @@ namespace PckStudio
 		public MipMapPrompt()
 		{
 			InitializeComponent();
-			FormBorderStyle = FormBorderStyle.None;
 		}
 
         private void OKBtn_Click(object sender, EventArgs e)

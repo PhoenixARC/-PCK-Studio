@@ -116,12 +116,12 @@
             this.tabControl = new MetroFramework.Controls.MetroTabControl();
             this.openTab = new MetroFramework.Controls.MetroTabPage();
             this.labelVersion = new MetroFramework.Controls.MetroLabel();
+            this.pckOpen = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.crEaTiiOn_Ultimate_GradientButton2 = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
             this.crEaTiiOn_Ultimate_GradientButton1 = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.crEaTiiOn_Ultimate_GradientButton3 = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
-            this.pckOpen = new System.Windows.Forms.PictureBox();
             this.editorTab = new MetroFramework.Controls.MetroTabPage();
             this.panel2 = new System.Windows.Forms.Panel();
             this.pictureBoxImagePreview = new PckStudio.ToolboxItems.PictureBoxWithInterpolationMode();
@@ -136,6 +136,7 @@
             this.buttonEdit = new MetroFramework.Controls.MetroButton();
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
             this.label11 = new MetroFramework.Controls.MetroLabel();
+            this.pckFileLabel = new MetroFramework.Controls.MetroLabel();
             this.treeViewMain = new System.Windows.Forms.TreeView();
             this.imageList = new System.Windows.Forms.ImageList(this.components);
             this.LittleEndianCheckBox = new MetroFramework.Controls.MetroCheckBox();
@@ -146,9 +147,9 @@
             this.contextMenuMetaTree.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.openTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pckOpen)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pckOpen)).BeginInit();
             this.editorTab.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImagePreview)).BeginInit();
@@ -210,8 +211,8 @@
             // 
             // audiopckToolStripMenuItem
             // 
-            resources.ApplyResources(this.audiopckToolStripMenuItem, "audiopckToolStripMenuItem");
             this.audiopckToolStripMenuItem.Name = "audiopckToolStripMenuItem";
+            resources.ApplyResources(this.audiopckToolStripMenuItem, "audiopckToolStripMenuItem");
             this.audiopckToolStripMenuItem.Click += new System.EventHandler(this.audiopckToolStripMenuItem_Click);
             // 
             // colourscolToolStripMenuItem
@@ -735,7 +736,7 @@
             this.tabControl.Controls.Add(this.editorTab);
             resources.ApplyResources(this.tabControl, "tabControl");
             this.tabControl.Name = "tabControl";
-            this.tabControl.SelectedIndex = 0;
+            this.tabControl.SelectedIndex = 1;
             this.tabControl.Style = MetroFramework.MetroColorStyle.Silver;
             this.tabControl.TabStop = false;
             this.tabControl.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -771,6 +772,19 @@
             this.labelVersion.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.labelVersion.UseCustomBackColor = true;
             this.labelVersion.UseCustomForeColor = true;
+            // 
+            // pckOpen
+            // 
+            this.pckOpen.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            resources.ApplyResources(this.pckOpen, "pckOpen");
+            this.pckOpen.Name = "pckOpen";
+            this.pckOpen.TabStop = false;
+            this.pckOpen.Click += new System.EventHandler(this.OpenPck_Click);
+            this.pckOpen.DragDrop += new System.Windows.Forms.DragEventHandler(this.OpenPck_DragDrop);
+            this.pckOpen.DragEnter += new System.Windows.Forms.DragEventHandler(this.OpenPck_DragEnter);
+            this.pckOpen.DragLeave += new System.EventHandler(this.OpenPck_DragLeave);
+            this.pckOpen.MouseEnter += new System.EventHandler(this.OpenPck_MouseEnter);
+            this.pckOpen.MouseLeave += new System.EventHandler(this.OpenPck_MouseLeave);
             // 
             // panel1
             // 
@@ -848,19 +862,6 @@
             this.crEaTiiOn_Ultimate_GradientButton3.UseVisualStyleBackColor = false;
             this.crEaTiiOn_Ultimate_GradientButton3.Click += new System.EventHandler(this.crEaTiiOn_Ultimate_GradientButton3_Click);
             // 
-            // pckOpen
-            // 
-            this.pckOpen.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            resources.ApplyResources(this.pckOpen, "pckOpen");
-            this.pckOpen.Name = "pckOpen";
-            this.pckOpen.TabStop = false;
-            this.pckOpen.Click += new System.EventHandler(this.OpenPck_Click);
-            this.pckOpen.DragDrop += new System.Windows.Forms.DragEventHandler(this.OpenPck_DragDrop);
-            this.pckOpen.DragEnter += new System.Windows.Forms.DragEventHandler(this.OpenPck_DragEnter);
-            this.pckOpen.DragLeave += new System.EventHandler(this.OpenPck_DragLeave);
-            this.pckOpen.MouseEnter += new System.EventHandler(this.OpenPck_MouseEnter);
-            this.pckOpen.MouseLeave += new System.EventHandler(this.OpenPck_MouseLeave);
-            // 
             // editorTab
             // 
             this.editorTab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
@@ -868,6 +869,7 @@
             this.editorTab.Controls.Add(this.panel2);
             this.editorTab.Controls.Add(this.PropertiesTabControl);
             this.editorTab.Controls.Add(this.label11);
+            this.editorTab.Controls.Add(this.pckFileLabel);
             this.editorTab.Controls.Add(this.treeViewMain);
             this.editorTab.Controls.Add(pictureBox2);
             this.editorTab.ForeColor = System.Drawing.Color.White;
@@ -893,8 +895,8 @@
             // 
             // pictureBoxImagePreview
             // 
-            this.pictureBoxImagePreview.BackColor = System.Drawing.Color.Transparent;
             resources.ApplyResources(this.pictureBoxImagePreview, "pictureBoxImagePreview");
+            this.pictureBoxImagePreview.BackColor = System.Drawing.Color.Transparent;
             this.pictureBoxImagePreview.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             this.pictureBoxImagePreview.Name = "pictureBoxImagePreview";
             this.pictureBoxImagePreview.TabStop = false;
@@ -1055,6 +1057,12 @@
             resources.ApplyResources(this.label11, "label11");
             this.label11.Name = "label11";
             // 
+            // pckFileLabel
+            // 
+            resources.ApplyResources(this.pckFileLabel, "pckFileLabel");
+            this.pckFileLabel.Name = "pckFileLabel";
+            this.pckFileLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
+            // 
             // treeViewMain
             // 
             this.treeViewMain.AllowDrop = true;
@@ -1112,9 +1120,9 @@
             this.tabControl.ResumeLayout(false);
             this.openTab.ResumeLayout(false);
             this.openTab.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pckOpen)).EndInit();
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pckOpen)).EndInit();
             this.editorTab.ResumeLayout(false);
             this.editorTab.PerformLayout();
             this.panel2.ResumeLayout(false);
@@ -1167,6 +1175,7 @@
         private MetroFramework.Controls.MetroTabPage editorTab;
         private MetroFramework.Controls.MetroCheckBox LittleEndianCheckBox;
         private MetroFramework.Controls.MetroLabel label11;
+        private MetroFramework.Controls.MetroLabel pckFileLabel;
         private System.Windows.Forms.ToolStripMenuItem wiiUPCKInstallerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem PS3PCKInstallerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;

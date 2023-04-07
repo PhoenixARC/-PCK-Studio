@@ -65,7 +65,8 @@ namespace PckStudio.Forms.Editor
 			audioPCK = file;
 			using (var stream = new MemoryStream(file.Data))
 			{
-				audioFile = PCKAudioFileReader.Read(stream, isLittleEndian);
+				var reader = new PCKAudioFileReader(isLittleEndian ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
+                audioFile = reader.FromStream(stream);
 			}
 
 			SetUpTree();
@@ -397,7 +398,8 @@ namespace PckStudio.Forms.Editor
 
 			using (var stream = new MemoryStream())
 			{
-				PCKAudioFileWriter.Write(stream, audioFile, _isLittleEndian);
+				var writer = new PCKAudioFileWriter(audioFile, _isLittleEndian ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
+                writer.WriteToStream(stream);
 				audioPCK.SetData(stream.ToArray());
 			}
 			DialogResult = DialogResult.OK;

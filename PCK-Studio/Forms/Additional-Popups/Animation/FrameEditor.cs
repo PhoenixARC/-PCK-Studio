@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using PckStudio.ToolboxItems;
@@ -13,16 +14,12 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 		public FrameEditor(ImageList texList)
 		{
 			InitializeComponent();
-			label3.Text = "Select a frame and frame time:";
 			FrameList.ImageList = texList;
-
-			int index = 0;
-			foreach (Image frameTex in texList.Images)
+			for (int index = 0; index < texList.Images.Count; index++)
 			{
 				TreeNode frame = new TreeNode($"Frame {index}", index, index);
 				FrameList.Nodes.Add(frame);
-				Console.WriteLine(index);
-				index++;
+				Debug.WriteLine(index);
 			}
 		}
 
@@ -31,16 +28,6 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 			FrameList.SelectedNode = FrameList.Nodes[frameTextureIndex];
 			FrameList.SelectedNode.EnsureVisible();
 			FrameTimeUpDown.Value = frameTime;
-		}
-
-		private void SaveBtn_Click(object sender, EventArgs e)
-		{
-
-		}
-
-		private void CancelBtn_Click(object sender, EventArgs e)
-		{
-
 		}
 
         private void FrameEditor_Load(object sender, EventArgs e)
@@ -54,9 +41,10 @@ namespace PckStudio.Forms.Additional_Popups.Animation
             Close();
         }
 
-        private void CancelButton_Click(object sender, EventArgs e)
-        {
+		private void CancelButton_Click(object sender, EventArgs e)
+		{
+            DialogResult = DialogResult.Cancel;
             Close();
-        }
-    }
+		}
+	}
 }

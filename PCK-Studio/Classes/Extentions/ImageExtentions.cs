@@ -3,6 +3,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing;
 using System.Diagnostics;
 using System;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Net;
 
@@ -10,7 +11,6 @@ namespace PckStudio.Classes.Extentions
 {
 	internal static class ImageExtentions
 	{
-
         public enum ImageLayoutDirection
         {
             Horizontal,
@@ -118,6 +118,39 @@ namespace PckStudio.Classes.Extentions
                 heigh *= sources.Length;
 
             return new Size(width, heigh);
+        }
+
+        public struct GraphicsConfig
+        {
+            public CompositingMode CompositingMode { get; set; }
+            public CompositingQuality CompositingQuality { get; set; }
+            public InterpolationMode InterpolationMode { get; set; }
+            public SmoothingMode SmoothingMode {get; set; }
+            public PixelOffsetMode PixelOffsetMode { get; set; }
+        }
+
+        public static Image ResizeImage(this Image image, int width, int height, GraphicsConfig graphicsConfig)
+        {
+            var destRect = new Rectangle(0, 0, width, height);
+            var destImage = new Bitmap(width, height);
+
+            destImage.SetResolution(image.HorizontalResolution, image.VerticalResolution);
+
+            using (var graphics = Graphics.FromImage(destImage))
+            {
+                graphics.CompositingMode = graphicsConfig.CompositingMode;
+                graphics.CompositingQuality = graphicsConfig.CompositingQuality;
+                graphics.InterpolationMode = graphicsConfig.InterpolationMode;
+                graphics.SmoothingMode = graphicsConfig.SmoothingMode;
+                graphics.PixelOffsetMode = graphicsConfig.PixelOffsetMode;
+
+                using (var wrapMode = new ImageAttributes())
+                {
+                    wrapMode.SetWrapMode(WrapMode.TileFlipXY);
+                    graphics.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, wrapMode);
+                }
+            }
+            return destImage;
         }
     }
 }

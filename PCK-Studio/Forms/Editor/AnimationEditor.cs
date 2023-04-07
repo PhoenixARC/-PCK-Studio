@@ -23,7 +23,7 @@ namespace PckStudio.Forms.Editor
         AnimationPlayer player;
 
 		bool isItem = false;
-        string animationSection => AnimationUtil.GetAnimationSection(isItem);
+        string animationSection => AnimationResources.GetAnimationSection(isItem);
 
 		public string TileName = string.Empty;
 
@@ -58,7 +58,7 @@ namespace PckStudio.Forms.Editor
 				: new Animation(frameTextures);
 			player = new AnimationPlayer(pictureBoxWithInterpolationMode1);
 
-			foreach (JObject content in AnimationUtil.tileData[animationSection].Children())
+			foreach (JObject content in AnimationResources.tileData[animationSection].Children())
 			{
 				var prop = content.Properties().FirstOrDefault(prop => prop.Name == TileName);
 				if (prop is JProperty)
@@ -265,15 +265,10 @@ namespace PckStudio.Forms.Editor
 
 		private void bulkAnimationSpeedToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			SetBulkSpeed diag = new SetBulkSpeed(frameTreeView);
-			if(diag.ShowDialog(this) == DialogResult.OK)
+			SetBulkSpeed diag = new SetBulkSpeed();
+			if (diag.ShowDialog(this) == DialogResult.OK)
 			{
-				var list = currentAnimation.GetFrames();
-				for (int i = 0; i < list.Count; i++)
-				{
-					Animation.Frame f = list[i];
-					currentAnimation.SetFrame(f, currentAnimation.GetTextureIndex(f), diag.time);
-				}
+				currentAnimation.GetFrames().ForEach(frame => frame.Ticks = diag.Ticks);
 				LoadAnimationTreeView();
 			}
 			diag.Dispose();
@@ -338,7 +333,7 @@ namespace PckStudio.Forms.Editor
 					}
 					else
 					{
-						for (int i = 0; i < new_animation.FrameTextureCount; i++)
+						for (int i = 0; i < new_animation.TextureCount; i++)
 						{
 							new_animation.AddFrame(i, frameTime);
 						}
@@ -370,7 +365,7 @@ namespace PckStudio.Forms.Editor
 					exportJavaAnimationToolStripMenuItem.Enabled = 
 					InterpolationCheckbox.Visible = !IsEditingSpecial;
 
-					foreach (JObject content in AnimationUtil.tileData[animationSection].Children())
+					foreach (JObject content in AnimationResources.tileData[animationSection].Children())
 					{
 						var first = content.Properties().FirstOrDefault(p => p.Name == TileName);
 						if (first is JProperty p) tileLabel.Text = (string)p.Value;
