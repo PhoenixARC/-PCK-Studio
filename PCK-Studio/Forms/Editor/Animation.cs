@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using PckStudio.Classes.Extentions;
+using PckStudio.Extensions;
 using System.Text;
 
 
@@ -140,7 +140,7 @@ namespace PckStudio.Forms.Editor
 
 			var textures = isClockOrCompass ? linearImages : frameTextures;
 
-			return ImageExtentions.ImageFromImageArray(textures.ToArray(), ImageExtentions.ImageLayoutDirection.Vertical);
+			return ImageExtensions.ImageFromImageArray(textures.ToArray(), ImageExtensions.ImageLayoutDirection.Vertical);
 		}
 	}
 }

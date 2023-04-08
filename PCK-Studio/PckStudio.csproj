@@ -170,7 +170,8 @@
     <Compile Include="Classes\API\PCKCenter\PCKCollections.cs" />
     <Compile Include="Classes\API\PCKCenter\PCKCollectionsLocal.cs" />
     <Compile Include="Classes\API\PCKCenter\SaveLocalJSON.cs" />
-    <Compile Include="Classes\Extentions\EnumerableExtentions.cs" />
+    <Compile Include="Classes\Extensions\BlendMode.cs" />
+    <Compile Include="Classes\Extensions\EnumerableExtensions.cs" />
     <Compile Include="Classes\FileTypes\CSMBFile.cs" />
     <Compile Include="Classes\FileTypes\PCKAudioFile.cs" />
     <Compile Include="Classes\FileTypes\Binka.cs" />
@@ -185,7 +186,7 @@
     <Compile Include="Classes\Models\DefaultModels\Steve64x64Model.cs" />
     <Compile Include="Classes\Utils\3DS\3DSUtil.cs" />
     <Compile Include="Classes\Utils\ARC\ARCUtil.cs" />
-    <Compile Include="Classes\Extentions\ImageExtentions.cs" />
+    <Compile Include="Classes\Extensions\ImageExtensions.cs" />
     <Compile Include="Classes\Utils\SkinANIM.cs" />
     <Compile Include="Classes\Models\DefaultModels\Steve64x32Model.cs" />
     <Compile Include="Classes\Models\DefaultModels\ModelBase.cs" />
