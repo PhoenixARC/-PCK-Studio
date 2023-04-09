@@ -5,6 +5,7 @@ using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Linq;
 
 namespace PckStudio.Extensions
 {
@@ -96,16 +97,17 @@ namespace PckStudio.Extensions
         {
             var horizontal = layoutDirection == ImageLayoutDirection.Horizontal;
 
-            // TODO: Validate all source images to be the same size.
             int width = sources[0].Width;
-            int heigh = sources[0].Height;
+            int height = sources[0].Height;
+            if (!sources.All(img => img.Width.Equals(width) && img.Height.Equals(height)))
+                throw new InvalidOperationException("Images must have the same width and height.");
 
             if (horizontal)
                 width *= sources.Length;
             else
-                heigh *= sources.Length;
+                height *= sources.Length;
 
-            return new Size(width, heigh);
+            return new Size(width, height);
         }
 
         public static Image ResizeImage(this Image image, int width, int height, GraphicsConfig graphicsConfig)
