@@ -201,6 +201,7 @@ namespace PckStudio.Extensions
                 BlendMode.Average => (source + overlay) / 2.0f,
                 BlendMode.AscendingOrder => source > overlay ? overlay : source,
                 BlendMode.DescendingOrder => source < overlay ? overlay : source,
+                BlendMode.Screen => 1f - (1f - source)*(1f - overlay),
                 _ => 0.0f
             };
             return (byte)Clamp(resultValue * 255, 0, 255);

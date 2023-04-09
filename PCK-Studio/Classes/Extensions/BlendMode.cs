@@ -7,6 +7,7 @@
         Multiply,
         Average,
         DescendingOrder,
-        AscendingOrder
+        AscendingOrder,
+        Screen
     }
 }
