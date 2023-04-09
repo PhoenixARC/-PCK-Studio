@@ -32,7 +32,7 @@ namespace PckStudio.Extensions
             }
         }
 
-        public static Image GetArea(this Image source, Rectangle area, GraphicsUnit unit = GraphicsUnit.Pixel)
+        public static Image GetArea(this Image source, Rectangle area)
         {
             Image tileImage = new Bitmap(area.Width, area.Height);
             using (Graphics gfx = Graphics.FromImage(tileImage))
@@ -40,7 +40,7 @@ namespace PckStudio.Extensions
                 gfx.SmoothingMode = SmoothingMode.None;
                 gfx.InterpolationMode = InterpolationMode.NearestNeighbor;
                 gfx.PixelOffsetMode = PixelOffsetMode.HighQuality;
-                gfx.DrawImage(source, new Rectangle(Point.Empty, area.Size), area, unit);
+                gfx.DrawImage(source, new Rectangle(Point.Empty, area.Size), area, GraphicsUnit.Pixel);
             }
             return tileImage;
         }
