@@ -1027,7 +1027,7 @@ namespace PckStudio.Forms
                     {
                         var ms = new MemoryStream(skinTexture.Data);
                         Bitmap saveSkin = new Bitmap(Image.FromStream(ms));
-                        var config = new ImageExtensions.GraphicsConfig()
+                        var config = new GraphicsConfig()
                         {
                              CompositingMode = CompositingMode.SourceCopy,
                              CompositingQuality = CompositingQuality.HighQuality,

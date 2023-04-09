@@ -172,6 +172,7 @@
     <Compile Include="Classes\API\PCKCenter\SaveLocalJSON.cs" />
     <Compile Include="Classes\Extensions\BlendMode.cs" />
     <Compile Include="Classes\Extensions\EnumerableExtensions.cs" />
+    <Compile Include="Classes\Extensions\GraphicsExtensions.cs" />
     <Compile Include="Classes\FileTypes\CSMBFile.cs" />
     <Compile Include="Classes\FileTypes\PCKAudioFile.cs" />
     <Compile Include="Classes\FileTypes\Binka.cs" />

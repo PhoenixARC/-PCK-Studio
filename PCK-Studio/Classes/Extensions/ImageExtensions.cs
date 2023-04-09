@@ -1,12 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Drawing.Drawing2D;
+﻿using System;
 using System.Drawing;
 using System.Diagnostics;
-using System;
 using System.Drawing.Imaging;
+using System.Drawing.Drawing2D;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Windows.Media.Media3D;
-using System.Web;
 
 namespace PckStudio.Extensions
 {
@@ -110,25 +108,6 @@ namespace PckStudio.Extensions
             return new Size(width, heigh);
         }
 
-        public struct GraphicsConfig
-        {
-            public CompositingMode CompositingMode { get; set; }
-            public CompositingQuality CompositingQuality { get; set; }
-            public InterpolationMode InterpolationMode { get; set; }
-            public SmoothingMode SmoothingMode { get; set; }
-            public PixelOffsetMode PixelOffsetMode { get; set; }
-
-            public void Apply(Graphics graphics)
-            {
-                graphics.CompositingMode = CompositingMode;
-                graphics.CompositingQuality = CompositingQuality;
-                graphics.InterpolationMode = InterpolationMode;
-                graphics.SmoothingMode = SmoothingMode;
-                graphics.PixelOffsetMode = PixelOffsetMode;
-            }
-
-        }
-
         public static Image ResizeImage(this Image image, int width, int height, GraphicsConfig graphicsConfig)
         {
             var destRect = new Rectangle(0, 0, width, height);
@@ -138,7 +117,7 @@ namespace PckStudio.Extensions
 
             using (var graphics = Graphics.FromImage(destImage))
             {
-                graphicsConfig.Apply(graphics);
+                graphics.ApplyConfig(graphicsConfig);
                 using (var wrapMode = new ImageAttributes())
                 {
                     wrapMode.SetWrapMode(WrapMode.TileFlipXY);
@@ -169,7 +148,6 @@ namespace PckStudio.Extensions
 
         public static Image Blend(this Image image, Image overlay, BlendMode mode)
         {
-            Stopwatch stopwatch = Stopwatch.StartNew();
             if (image is not Bitmap baseImage || overlay is not Bitmap overlayImage)
                 return image;
             BitmapData baseImageData = baseImage.LockBits(new Rectangle(Point.Empty, baseImage.Size),
@@ -200,8 +178,6 @@ namespace PckStudio.Extensions
             bitmapResult.UnlockBits(resultImageData);
             baseImage.UnlockBits(baseImageData);
             overlayImage.UnlockBits(overlayImageData);
-            stopwatch.Stop();
-            Debug.WriteLine($"{nameof(ImageExtensions.Blend)} took {stopwatch.ElapsedMilliseconds}ms");
             return bitmapResult;
         }
 
