@@ -22,14 +22,16 @@ namespace PckStudio.Extensions
             /// <summary>
             /// Size of sub section of the image
             /// </summary>
-            public Size SectionSize;
-            public Point SectionPoint;
+            public readonly Size SectionSize;
+            public readonly Point SectionPoint;
+            public readonly Rectangle SectionArea;
 
             public ImageLayoutInfo(int width, int height, int index, ImageLayoutDirection layoutDirection)
             {
                 bool horizontal = layoutDirection == ImageLayoutDirection.Horizontal;
                 SectionSize = horizontal ? new Size(width, width) : new Size(height, height);
                 SectionPoint = horizontal ? new Point(0, index * width) : new Point(index * height, 0);
+                SectionArea = new Rectangle(SectionPoint, SectionSize);
             }
         }
 
@@ -71,8 +73,7 @@ namespace PckStudio.Extensions
             for (int i = 0; i < source.Height / source.Width; i++)
             {
                 ImageLayoutInfo locationInfo = new ImageLayoutInfo(source.Width, source.Height, i, layoutDirection);
-                Rectangle tileArea = new Rectangle(locationInfo.SectionPoint, locationInfo.SectionSize);
-                yield return source.GetArea(tileArea);
+                yield return source.GetArea(locationInfo.SectionArea);
             }
             yield break;
         }
