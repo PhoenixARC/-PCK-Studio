@@ -9,14 +9,14 @@ using System.Linq;
 
 namespace PckStudio.Extensions
 {
-    internal static class ImageExtensions
-    {
         public enum ImageLayoutDirection
         {
             Horizontal,
             Vertical
         }
 
+    internal static class ImageExtensions
+    {
         private struct ImageLayoutInfo
         {
             /// <summary>

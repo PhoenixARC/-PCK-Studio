@@ -49,7 +49,7 @@ namespace PckStudio.Forms.Editor
 
 			using MemoryStream textureMem = new MemoryStream(animationFile.Data);
 			var texture = new Bitmap(textureMem);
-            var frameTextures = texture.CreateImageList(ImageExtensions.ImageLayoutDirection.Horizontal);
+            var frameTextures = texture.CreateImageList(ImageLayoutDirection.Horizontal);
 
             currentAnimation = animationFile.Properties.HasProperty("ANIM")
 				? new Animation(frameTextures, animationFile.Properties.GetPropertyValue("ANIM"))
@@ -294,7 +294,7 @@ namespace PckStudio.Forms.Editor
 				return;
 			}
 			using MemoryStream textureMem = new MemoryStream(File.ReadAllBytes(textureFile));
-			var textures = Image.FromStream(textureMem).CreateImageList(ImageExtensions.ImageLayoutDirection.Horizontal);
+			var textures = Image.FromStream(textureMem).CreateImageList(ImageLayoutDirection.Horizontal);
             var new_animation = new Animation(textures);
 			try
 			{
