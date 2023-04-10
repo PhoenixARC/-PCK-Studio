@@ -141,11 +141,38 @@ namespace PckStudio.Extensions
             return image;
         }
 
-        public static Image Blend(this Image bg, Color foregroundColor, BlendMode mode)
+        public static Image Blend(this Image image, Color foregroundColor, BlendMode mode)
         {
-            Bitmap bitmap = new Bitmap(bg);
-            bitmap.Fill(foregroundColor);
-            return bg.Blend(bitmap, mode);
+            if (image is not Bitmap baseImage)
+                return image;
+
+            BitmapData baseImageData = baseImage.LockBits(new Rectangle(Point.Empty, baseImage.Size),
+                        ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
+            byte[] baseImageBuffer = new byte[baseImageData.Stride * baseImageData.Height];
+
+            Marshal.Copy(baseImageData.Scan0, baseImageBuffer, 0, baseImageBuffer.Length);
+
+            float overlayR = foregroundColor.R / 255f;
+            float overlayG = foregroundColor.G / 255f;
+            float overlayB = foregroundColor.B / 255f;
+
+            for (int k = 0; k < baseImageBuffer.Length; k += 4)
+            {
+                baseImageBuffer[k + 0] = CalculateColorComponentBlendValue(baseImageBuffer[k + 0] / 255f, overlayR, mode);
+                baseImageBuffer[k + 1] = CalculateColorComponentBlendValue(baseImageBuffer[k + 1] / 255f, overlayG, mode);
+                baseImageBuffer[k + 2] = CalculateColorComponentBlendValue(baseImageBuffer[k + 2] / 255f, overlayB, mode);
+            }
+
+            Bitmap bitmapResult = new Bitmap(baseImage.Width, baseImage.Height, PixelFormat.Format32bppArgb);
+            BitmapData resultImageData = bitmapResult.LockBits(new Rectangle(Point.Empty, bitmapResult.Size),
+                ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+
+            Marshal.Copy(baseImageBuffer, 0, resultImageData.Scan0, baseImageBuffer.Length);
+
+            bitmapResult.UnlockBits(resultImageData);
+            baseImage.UnlockBits(baseImageData);
+
+            return bitmapResult;
         }
 
         public static Image Blend(this Image image, Image overlay, BlendMode mode)
