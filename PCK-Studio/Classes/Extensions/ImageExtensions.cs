@@ -50,13 +50,12 @@ namespace PckStudio.Extensions
 
         public static IEnumerable<Image> CreateImageList(this Image source, Size size)
         {
-            int img_row_count = source.Width / size.Width;
-            int img_column_count = source.Height / size.Height;
-            Debug.WriteLine($"{source.Width} {source.Height} {size} {img_column_count} {img_row_count}");
-            for (int i = 0; i < img_column_count * img_row_count; i++)
+            int rowCount = source.Width / size.Width;
+            int columnCount = source.Height / size.Height;
+            Debug.WriteLine($"{source.Width} {source.Height} {size} {columnCount} {rowCount}");
+            for (int i = 0; i < columnCount * rowCount; i++)
             {
-                int row = i / img_row_count;
-                int column = i % img_row_count;
+                int row = Math.DivRem(i, rowCount, out int column);
                 Rectangle tileArea = new Rectangle(new Point(column * size.Height, row * size.Width), size);
                 yield return source.GetArea(tileArea);
             }
