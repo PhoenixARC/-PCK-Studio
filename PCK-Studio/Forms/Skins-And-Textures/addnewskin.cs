@@ -5,10 +5,10 @@ using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using PckStudio.Classes.Utils;
-using PckStudio.Classes._3ds.Utils;
 using OMI.Formats.Languages;
 using OMI.Formats.Pck;
 using PckStudio.Forms.Editor;
+using PckStudio.Classes.IO._3DST;
 
 namespace PckStudio
 {
@@ -347,7 +347,8 @@ namespace PckStudio
                     {
                         using (var fs = File.OpenRead(ofdd.FileName))
                         {
-                            CheckImage(_3DSUtil.GetImageFrom3DST(fs));
+                            var reader = new _3DSTextureReader();
+                            CheckImage(reader.FromStream(fs));
                             textSkinName.Text = Path.GetFileNameWithoutExtension(ofdd.FileName);
                         }
                         return;

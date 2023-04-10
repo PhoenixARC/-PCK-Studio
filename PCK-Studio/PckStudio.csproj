@@ -176,7 +176,8 @@
     <Compile Include="Classes\FileTypes\CSMBFile.cs" />
     <Compile Include="Classes\FileTypes\PCKAudioFile.cs" />
     <Compile Include="Classes\FileTypes\Binka.cs" />
-    <Compile Include="Classes\FileTypes\CSM.cs" />
+    <Compile Include="Classes\IO\3DST\3DSTextureReader.cs" />
+    <Compile Include="Classes\IO\3DST\3DSTextureWriter.cs" />
     <Compile Include="Classes\IO\CSMB\CSMBFileReader.cs" />
     <Compile Include="Classes\IO\CSMB\CSMBFileWriter.cs" />
     <Compile Include="Classes\IO\PCK\PCKAudioFileReader.cs" />
@@ -185,7 +186,6 @@
     <Compile Include="Classes\IO\Sounds\Sounds.cs" />
     <Compile Include="Classes\Misc\FTPClient.cs" />
     <Compile Include="Classes\Models\DefaultModels\Steve64x64Model.cs" />
-    <Compile Include="Classes\Utils\3DS\3DSUtil.cs" />
     <Compile Include="Classes\Utils\ARC\ARCUtil.cs" />
     <Compile Include="Classes\Extensions\ImageExtensions.cs" />
     <Compile Include="Classes\Utils\SkinANIM.cs" />
@@ -464,7 +464,7 @@
       <DependentUpon>CreditsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Classes\Utils\3DS\TextureCodec.cs" />
+    <Compile Include="Classes\IO\3DST\TextureCodec.cs" />
     <EmbeddedResource Include="Forms\Additional-Popups\EntityForms\AddEntry.resx">
       <DependentUpon>AddEntry.cs</DependentUpon>
     </EmbeddedResource>

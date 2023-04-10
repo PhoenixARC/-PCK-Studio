@@ -19,7 +19,6 @@ using PckStudio.Properties;
 using PckStudio.Classes.FileTypes;
 using PckStudio.Classes.Utils;
 using PckStudio.Classes.Utils.ARC;
-using PckStudio.Classes._3ds.Utils;
 using PckStudio.Forms;
 using PckStudio.Forms.Utilities;
 using PckStudio.Forms.Editor;
@@ -27,6 +26,7 @@ using PckStudio.Forms.Additional_Popups.Animation;
 using PckStudio.Forms.Additional_Popups;
 using PckStudio.Classes.Misc;
 using PckStudio.Classes.IO.PCK;
+using PckStudio.Classes.IO._3DST;
 
 namespace PckStudio
 {
@@ -2069,11 +2069,11 @@ namespace PckStudio
 				saveFileDialog.DefaultExt = ".3dst";
 				if (saveFileDialog.ShowDialog() == DialogResult.OK)
 				{
-					using (var fs = saveFileDialog.OpenFile())
+					using (var ms = new MemoryStream(file.Data))
 					{
-						using var ms = new MemoryStream(file.Data);
 						Image img = Image.FromStream(ms);
-						_3DSUtil.SetImageTo3DST(fs, img);
+						var writer = new _3DSTextureWriter(img);
+						writer.WriteToFile(saveFileDialog.FileName);
 					}
 				}
 			}
