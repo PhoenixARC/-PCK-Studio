@@ -73,8 +73,8 @@ namespace PckStudio.Forms.Editor
             this.fogTab = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
             this.SetColorButton = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
-            this.colorSliderVertical1 = new MechanikaDesign.WinForms.UI.ColorPicker.ColorSliderVertical();
-            this.colorBox2D1 = new MechanikaDesign.WinForms.UI.ColorPicker.ColorBox2D();
+            this.colorSliderVertical1 = new CBH.Controls.CrEaTiiOn_ColorSliderVertical();
+            this.colorBox2D1 = new CBH.Controls.CrEaTiiOn_ColorBox2D();
             this.blueUpDown = new System.Windows.Forms.NumericUpDown();
             this.greenUpDown = new System.Windows.Forms.NumericUpDown();
             this.redUpDown = new System.Windows.Forms.NumericUpDown();
@@ -473,7 +473,7 @@ namespace PckStudio.Forms.Editor
             // colorSliderVertical1
             // 
             this.colorSliderVertical1.BackColor = System.Drawing.Color.Transparent;
-            this.colorSliderVertical1.ColorMode = MechanikaDesign.WinForms.UI.ColorPicker.ColorModes.Hue;
+            this.colorSliderVertical1.ColorMode = CBH.Controls.ColorModes.Hue;
             this.colorSliderVertical1.ColorRGB = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             resources.ApplyResources(this.colorSliderVertical1, "colorSliderVertical1");
             this.colorSliderVertical1.Name = "colorSliderVertical1";
@@ -482,7 +482,7 @@ namespace PckStudio.Forms.Editor
             // 
             // colorBox2D1
             // 
-            this.colorBox2D1.ColorMode = MechanikaDesign.WinForms.UI.ColorPicker.ColorModes.Hue;
+            this.colorBox2D1.ColorMode = CBH.Controls.ColorModes.Hue;
             this.colorBox2D1.ColorRGB = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             resources.ApplyResources(this.colorBox2D1, "colorBox2D1");
             this.colorBox2D1.Name = "colorBox2D1";
@@ -697,8 +697,8 @@ namespace PckStudio.Forms.Editor
 		private ToolStripMenuItem copyColorToolStripMenuItem;
 		private ToolStripMenuItem pasteColorToolStripMenuItem;
         private Panel panel1;
-        private MechanikaDesign.WinForms.UI.ColorPicker.ColorSliderVertical colorSliderVertical1;
-        private MechanikaDesign.WinForms.UI.ColorPicker.ColorBox2D colorBox2D1;
+        private CBH.Controls.CrEaTiiOn_ColorSliderVertical colorSliderVertical1;
+        private CBH.Controls.CrEaTiiOn_ColorBox2D colorBox2D1;
         private NumericUpDown blueUpDown;
         private NumericUpDown greenUpDown;
         private NumericUpDown redUpDown;

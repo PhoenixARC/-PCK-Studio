@@ -781,19 +781,13 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Vendor\MechanikaDesign\ColorBox2D\ColorPicker.csproj">
-      <Project>{38f99682-d013-4ae3-8334-4bf492a11ff9}</Project>
-      <Name>ColorPicker</Name>
+    <ProjectReference Include="..\Vendor\CrEaTiiOn-Brotherhood-Theme-Library-Net\CBH-WinForm-Theme-NET\CBH-WinForm-Theme-NET-.csproj">
+      <Project>{4f287251-7f2a-4b47-9102-4a1aabd41f20}</Project>
+      <Name>CBH-WinForm-Theme-NET-</Name>
     </ProjectReference>
     <ProjectReference Include="..\Vendor\OMI-Lib\OMI Filetypes Library\OMI Filetype Library.csproj">
       <Project>{693AEBC1-293D-4DF0-BCAE-26A1099FE7BB}</Project>
       <Name>OMI Filetype Library</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Vendor\CrEaTiiOn-Brotherhood-Official-C-Theme\Net_Framework_v4.8\Net Framework v4.8.csproj">
-      <Project>{c3d7b16c-c047-4baa-884f-7a2308619c33}</Project>
-      <Name>Net Framework v4.8</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
