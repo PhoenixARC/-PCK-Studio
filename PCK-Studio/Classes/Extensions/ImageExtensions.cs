@@ -9,11 +9,11 @@ using System.Linq;
 
 namespace PckStudio.Extensions
 {
-        public enum ImageLayoutDirection
-        {
-            Horizontal,
-            Vertical
-        }
+    public enum ImageLayoutDirection
+    {
+        Horizontal,
+        Vertical
+    }
 
     internal static class ImageExtensions
     {
@@ -151,7 +151,7 @@ namespace PckStudio.Extensions
             byte[] baseImageBuffer = new byte[baseImageData.Stride * baseImageData.Height];
 
             Marshal.Copy(baseImageData.Scan0, baseImageBuffer, 0, baseImageBuffer.Length);
-
+            
             float overlayR = foregroundColor.R / 255f;
             float overlayG = foregroundColor.G / 255f;
             float overlayB = foregroundColor.B / 255f;
@@ -177,8 +177,10 @@ namespace PckStudio.Extensions
 
         public static Image Blend(this Image image, Image overlay, BlendMode mode)
         {
-            if (image is not Bitmap baseImage || overlay is not Bitmap overlayImage)
+            if (image is not Bitmap baseImage || overlay is not Bitmap overlayImage ||
+                image.Width != overlay.Width || image.Height != overlay.Height)
                 return image;
+
             BitmapData baseImageData = baseImage.LockBits(new Rectangle(Point.Empty, baseImage.Size),
                 ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
             byte[] baseImageBuffer = new byte[baseImageData.Stride * baseImageData.Height];
