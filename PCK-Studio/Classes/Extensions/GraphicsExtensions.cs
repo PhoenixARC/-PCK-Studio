@@ -15,6 +15,7 @@ namespace PckStudio.Extensions
             InterpolationMode = InterpolationMode.Default;
             SmoothingMode = SmoothingMode.Default;
             PixelOffsetMode = PixelOffsetMode.Default;
+            CompositingMode = CompositingMode.SourceOver;
         }
 
         public CompositingMode CompositingMode { get; set; }
