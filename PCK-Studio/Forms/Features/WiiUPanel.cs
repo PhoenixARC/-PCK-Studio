@@ -246,7 +246,7 @@ namespace PckStudio.Forms.Additional_Features
             using var ms = new MemoryStream();
             using (FTPClient client = new FTPClient($"ftp://{IPv4TextBox.Text}", sessionCredentials))
             {
-                client.DownloadFile(ms, GetGameContentPath() + "/Common/Media/MediaWiiU.arc");
+                client.DownloadFile(GetGameContentPath() + "/Common/Media/MediaWiiU.arc", ms);
                 ms.Position = 0;
                 var reader = new ARCFileReader();
                 archive = reader.FromStream(ms);

@@ -10,18 +10,18 @@ namespace PckStudio.Classes.Misc
 {
     public class FTPClient : IDisposable
     {
-        private Uri hostUri;
-        private ICredentials clientCredentials;
+        private Uri _host;
+        private ICredentials _credentials;
 
-        private FtpWebRequest request = null;
-        private FtpWebResponse response = null;
+        private FtpWebRequest _request = null;
+        private FtpWebResponse _response = null;
         private int _timeout = 1_000; // 1 sec
 
         public FTPClient(string host, string username)
             : this(new Uri(host), username, string.Empty) { }
 
-        public FTPClient(Uri uri, string username)
-            : this(uri, username, string.Empty) { }
+        public FTPClient(Uri host, string username)
+            : this(host, username, string.Empty) { }
 
         public FTPClient(string host, string username, string password)
             : this(new Uri(host), username, password) { }
@@ -32,14 +32,14 @@ namespace PckStudio.Classes.Misc
         public FTPClient(string host, ICredentials credentials)
             : this(new Uri(host), credentials) { }
         
-        public FTPClient(Uri uri, ICredentials credentials)
+        public FTPClient(Uri host, ICredentials credentials)
         {
-            if (uri.Scheme != Uri.UriSchemeFtp)
+            if (host.Scheme != Uri.UriSchemeFtp)
             {
                 throw new InvalidOperationException("Not a valid FTP Scheme");
             }
-            hostUri = uri;
-            clientCredentials = credentials;
+            this._host = host;
+            _credentials = credentials;
         }
 
         /// <summary>
@@ -61,28 +61,27 @@ namespace PckStudio.Classes.Misc
         {
             using (var fs = File.OpenWrite(localFilepath))
             {
-                DownloadFile(fs, remoteFilepath);
+                DownloadFile(remoteFilepath, fs);
             }
         }
 
-        public void DownloadFile(Stream destination, string remoteFilepath)
+        public void DownloadFile(string remoteFilepath, Stream destination)
         {
             try
             {
-                request = CreateRequest(new Uri(hostUri, remoteFilepath), clientCredentials, WebRequestMethods.Ftp.DownloadFile);
-                
+                _request = CreateRequest(new Uri(_host, remoteFilepath), _credentials, WebRequestMethods.Ftp.DownloadFile);
                 SetRequestTimeout();
 
-                response = (FtpWebResponse)request.GetResponse();
-                Stream responseStream = response.GetResponseStream();
+                _response = (FtpWebResponse)_request.GetResponse();
+                Stream responseStream = _response.GetResponseStream();
 
                 long destinationOrigin = destination.Position;
                 responseStream.CopyTo(destination);
                 destination.Position = destinationOrigin;
 
                 responseStream.Close();
-                response.Close();
-                request = null;
+                _response.Close();
+                _request = null;
             }
             catch (Exception ex)
             {
@@ -94,30 +93,30 @@ namespace PckStudio.Classes.Misc
         {
             try
             {
-                request = CreateRequest(new Uri(hostUri, directory), clientCredentials, WebRequestMethods.Ftp.ListDirectory);
+                _request = CreateRequest(new Uri(_host, directory), _credentials, WebRequestMethods.Ftp.ListDirectory);
 
                 SetRequestTimeout();
 
-                response = (FtpWebResponse)request.GetResponse();
+                _response = (FtpWebResponse)_request.GetResponse();
 
-                Stream responseStream = response.GetResponseStream();
+                Stream responseStream = _response.GetResponseStream();
                 StreamReader streamReader = new StreamReader(responseStream);
-                
+
                 IList<string> text = new List<string>();
 
-                    while (streamReader.Peek() != -1)
-                    {
+                while (streamReader.Peek() != -1)
+                {
                     text.Add(streamReader.ReadLine());
-                    }
+                }
                 streamReader.Close();
                 responseStream.Close();
 
-                response.Close();
-                request = null;
+                _response.Close();
+                _request = null;
                 return text.ToArray();
-                }
-                catch (Exception ex)
-                {
+            }
+            catch (Exception ex)
+            {
                 Console.WriteLine(ex.ToString());
             }
             return Array.Empty<string>();
@@ -135,18 +134,18 @@ namespace PckStudio.Classes.Misc
         {
             try
             {
-                request = CreateRequest(new Uri(hostUri, remoteFile), clientCredentials, WebRequestMethods.Ftp.UploadFile);
+                _request = CreateRequest(new Uri(_host, remoteFile), _credentials, WebRequestMethods.Ftp.UploadFile);
 
                 SetRequestTimeout();
 
-                Stream requestStream = request.GetRequestStream();
+                Stream requestStream = _request.GetRequestStream();
                 source.CopyTo(requestStream);
                 requestStream.Close();
 
-                response = (FtpWebResponse)request.GetResponse();
-                response.Close();
+                _response = (FtpWebResponse)_request.GetResponse();
+                _response.Close();
 
-                request = null;
+                _request = null;
             }
             catch (Exception ex)
             {
@@ -158,14 +157,14 @@ namespace PckStudio.Classes.Misc
         {
             try
             {
-                request = CreateRequest(new Uri(hostUri, filename), clientCredentials, WebRequestMethods.Ftp.DeleteFile);
+                _request = CreateRequest(new Uri(_host, filename), _credentials, WebRequestMethods.Ftp.DeleteFile);
 
                 SetRequestTimeout();
 
-                response = (FtpWebResponse)request.GetResponse();
-                response.Close();
+                _response = (FtpWebResponse)_request.GetResponse();
+                _response.Close();
                 
-                request = null;
+                _request = null;
             }
             catch (Exception ex)
             {
@@ -177,14 +176,14 @@ namespace PckStudio.Classes.Misc
         {
             try
             {
-                request = CreateRequest(new Uri(hostUri, name), clientCredentials, WebRequestMethods.Ftp.Rename);
+                _request = CreateRequest(new Uri(_host, name), _credentials, WebRequestMethods.Ftp.Rename);
 
                 SetRequestTimeout();
 
-                request.RenameTo = newName;
-                response = (FtpWebResponse)request.GetResponse();
-                response.Close();
-                request = null;
+                _request.RenameTo = newName;
+                _response = (FtpWebResponse)_request.GetResponse();
+                _response.Close();
+                _request = null;
             }
             catch (Exception ex)
             {
@@ -196,21 +195,21 @@ namespace PckStudio.Classes.Misc
         {
             try
             {
-                request = CreateRequest(new Uri(hostUri, serverFilepath), clientCredentials, WebRequestMethods.Ftp.AppendFile);
+                _request = CreateRequest(new Uri(_host, serverFilepath), _credentials, WebRequestMethods.Ftp.AppendFile);
                 
                 SetRequestTimeout();
 
-                request.ContentLength = data.Length;
+                _request.ContentLength = data.Length;
 
-                Stream requestStream = request.GetRequestStream();
+                Stream requestStream = _request.GetRequestStream();
                 requestStream.Write(data, 0, data.Length);
                 requestStream.Close();
-                FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+                FtpWebResponse response = (FtpWebResponse)_request.GetResponse();
 
                 Console.WriteLine("Append status: {0}", response.StatusDescription);
 
                 response.Close();
-                request = null;
+                _request = null;
             }
             catch (Exception ex)
             {
@@ -222,14 +221,14 @@ namespace PckStudio.Classes.Misc
         {
             try
             {
-                request = CreateRequest(new Uri(hostUri, name), clientCredentials, WebRequestMethods.Ftp.MakeDirectory);
+                _request = CreateRequest(new Uri(_host, name), _credentials, WebRequestMethods.Ftp.MakeDirectory);
 
                 SetRequestTimeout();
 
-                response = (FtpWebResponse)request.GetResponse();
-                response.Close();
+                _response = (FtpWebResponse)_request.GetResponse();
+                _response.Close();
                 
-                request = null;
+                _request = null;
             }
             catch (Exception ex)
             {
@@ -239,15 +238,15 @@ namespace PckStudio.Classes.Misc
 
         public long GetFileSize(string filepath)
         {
-            request = CreateRequest(new Uri(hostUri, filepath), clientCredentials, WebRequestMethods.Ftp.GetFileSize);
+            _request = CreateRequest(new Uri(_host, filepath), _credentials, WebRequestMethods.Ftp.GetFileSize);
             
             SetRequestTimeout();
             
-            response = (FtpWebResponse)request.GetResponse();
-            long contentLength = response.ContentLength;
-            response.Close();
+            _response = (FtpWebResponse)_request.GetResponse();
+            long contentLength = _response.ContentLength;
+            _response.Close();
 
-            request = null;
+            _request = null;
             return contentLength;
         }
 
@@ -258,15 +257,15 @@ namespace PckStudio.Classes.Misc
 
         private void SetRequestTimeout()
         {
-            if (request != null)
-                request.Timeout = _timeout;
+            if (_request != null)
+                _request.Timeout = _timeout;
         }
 
         public void Dispose()
         {
-            response?.Dispose();
-            request = null;
-            response = null;
+            _response?.Dispose();
+            _request = null;
+            _response = null;
         }
     }
 }
