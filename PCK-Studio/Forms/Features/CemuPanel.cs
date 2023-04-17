@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using PckStudio.Classes.Extentions;
 using PckStudio.Classes.Misc;
 
 namespace PckStudio.Forms.Additional_Features
@@ -41,11 +42,16 @@ namespace PckStudio.Forms.Additional_Features
             return $"{GameDirectoryTextBox.Text}/usr/title/0005000e/{region}/content";
         }
 
+        private string GetContentSubDirectory(params string[] subpaths)
+        {
+            return Path.Combine(GetGameContentPath(), Path.Combine(subpaths));
+        }
+
         private void BrowseDirectoryBtn_Click(object sender, EventArgs e)
         {
             OpenFolderDialog openFolderDialog = new OpenFolderDialog
             {
-                Title = "Cemu Game Directory"
+                Title = "Select Cemu Game Directory"
             };
             if (openFolderDialog.ShowDialog(Handle) == true && Directory.Exists(openFolderDialog.ResultPath))
             {
@@ -71,11 +77,12 @@ namespace PckStudio.Forms.Additional_Features
                 return;
             }
 
-            DirectoryInfo dlcDirectory = new DirectoryInfo($"{GetGameContentPath()}/WiiU/DLC");
-            
+            string dirPath = GetContentSubDirectory("WiiU", "DLC");
+            DirectoryInfo dlcDirectory = new DirectoryInfo(dirPath);
+
             if (!dlcDirectory.Exists)
             {
-                MessageBox.Show($"'{GetGameContentPath()}/WiiU/DLC' does not exist!", "Not Found",
+                MessageBox.Show($"'{dirPath}' does not exist!", "Not Found",
                    MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
@@ -85,6 +92,7 @@ namespace PckStudio.Forms.Additional_Features
                 if (directoryInfo.GetFileSystemInfos().Length != 0)
                 {
                     var node = DLCTreeView.Nodes.Add(directoryInfo.Name);
+
                     var dirs = directoryInfo.GetDirectories("Data", SearchOption.TopDirectoryOnly);
                     bool hasDataFolderAndPckFile = dirs.Length != 0
                         && dirs.FirstOrDefault(
@@ -93,7 +101,7 @@ namespace PckStudio.Forms.Additional_Features
 
                     node.Tag = directoryInfo.FullName +
                         (hasDataFolderAndPckFile
-                        ? $";{directoryInfo.FullName}/Data"
+                        ? $";{directoryInfo.FullName}/Data" 
                         : string.Empty);
                 }
             }
@@ -154,26 +162,29 @@ namespace PckStudio.Forms.Additional_Features
             
             if (prompt.ShowDialog(this) != DialogResult.OK)
                 return;
-            if (string.IsNullOrWhiteSpace(prompt.NewText))
+            
+            if (prompt.NewText.ContainsAny(Path.GetInvalidPathChars()))
             {
                 MessageBox.Show("Invalid Folder name entered!", "Invalid Folder Name", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            if (Directory.Exists($"{GetGameContentPath()}/WiiU/DLC/{prompt.NewText}"))
+            string directoryPath = GetContentSubDirectory("WiiU", "DLC", prompt.NewText);
+
+            if (Directory.Exists(directoryPath))
             {
                 MessageBox.Show("A Folder with the same name already exists!", "Folder Name taken", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            Directory.CreateDirectory($"{GetGameContentPath()}/WiiU/DLC/{prompt.NewText}");
+            Directory.CreateDirectory(directoryPath);
 
-            OpenFileDialog fileDialog = new OpenFileDialog
+            using OpenFileDialog fileDialog = new OpenFileDialog
             {
                 Filter = "PCK (Minecraft Console Package)|*.pck"
             };
             if (fileDialog.ShowDialog(this) == DialogResult.OK)
             {
-                File.Copy(fileDialog.FileName, $"{GetGameContentPath()}/WiiU/DLC/{prompt.NewText}/{fileDialog.SafeFileName}");
+                File.Copy(fileDialog.FileName, Path.Combine(directoryPath, fileDialog.SafeFileName));
             }
         }
 
@@ -183,8 +194,9 @@ namespace PckStudio.Forms.Additional_Features
             var result = MessageBox.Show($"Are you sure you want to permanently delete '{pckName}'?", "Hold up!", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
-                Directory.Delete($"{GetGameContentPath()}/WiiU/DLC/{pckName}", recursive: true);
-                ListDLCs();
+                string directoryPath = GetContentSubDirectory("WiiU", "DLC", pckName);
+                Directory.Delete(directoryPath, recursive: true);
+                DLCTreeView.SelectedNode.Remove();
             }
         }
     }

@@ -68,7 +68,7 @@
             layoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
             layoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             layoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            layoutPanel.Size = new System.Drawing.Size(428, 556);
+            layoutPanel.Size = new System.Drawing.Size(430, 550);
             layoutPanel.TabIndex = 4;
             // 
             // radioButtonEur
@@ -88,7 +88,7 @@
             this.radioButtonEur.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.radioButtonEur.Location = new System.Drawing.Point(3, 36);
             this.radioButtonEur.Name = "radioButtonEur";
-            this.radioButtonEur.Size = new System.Drawing.Size(136, 30);
+            this.radioButtonEur.Size = new System.Drawing.Size(137, 30);
             this.radioButtonEur.TabIndex = 1;
             this.radioButtonEur.TabStop = true;
             this.radioButtonEur.Text = "EUR";
@@ -110,9 +110,9 @@
             this.radioButtonUs.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.radioButtonUs.ForeColor = System.Drawing.Color.White;
             this.radioButtonUs.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.radioButtonUs.Location = new System.Drawing.Point(145, 36);
+            this.radioButtonUs.Location = new System.Drawing.Point(146, 36);
             this.radioButtonUs.Name = "radioButtonUs";
-            this.radioButtonUs.Size = new System.Drawing.Size(136, 30);
+            this.radioButtonUs.Size = new System.Drawing.Size(137, 30);
             this.radioButtonUs.TabIndex = 0;
             this.radioButtonUs.Text = "US";
             this.radioButtonUs.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -133,7 +133,7 @@
             this.radioButtonJap.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.radioButtonJap.ForeColor = System.Drawing.Color.White;
             this.radioButtonJap.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.radioButtonJap.Location = new System.Drawing.Point(287, 36);
+            this.radioButtonJap.Location = new System.Drawing.Point(289, 36);
             this.radioButtonJap.Name = "radioButtonJap";
             this.radioButtonJap.Size = new System.Drawing.Size(138, 30);
             this.radioButtonJap.TabIndex = 2;
@@ -160,7 +160,6 @@
             this.GameDirectoryTextBox.CustomButton.UseSelectable = true;
             this.GameDirectoryTextBox.CustomButton.Visible = false;
             this.GameDirectoryTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.GameDirectoryTextBox.IconRight = true;
             this.GameDirectoryTextBox.Lines = new string[0];
             this.GameDirectoryTextBox.Location = new System.Drawing.Point(3, 3);
             this.GameDirectoryTextBox.MaxLength = 32767;
@@ -172,7 +171,7 @@
             this.GameDirectoryTextBox.SelectionLength = 0;
             this.GameDirectoryTextBox.SelectionStart = 0;
             this.GameDirectoryTextBox.ShortcutsEnabled = true;
-            this.GameDirectoryTextBox.Size = new System.Drawing.Size(278, 27);
+            this.GameDirectoryTextBox.Size = new System.Drawing.Size(280, 27);
             this.GameDirectoryTextBox.Style = MetroFramework.MetroColorStyle.Blue;
             this.GameDirectoryTextBox.TabIndex = 11;
             this.GameDirectoryTextBox.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -184,14 +183,14 @@
             // BrowseDirectoryBtn
             // 
             this.BrowseDirectoryBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.BrowseDirectoryBtn.BackColor = System.Drawing.Color.RoyalBlue;
+            this.BrowseDirectoryBtn.BackColor = System.Drawing.Color.DarkCyan;
             this.BrowseDirectoryBtn.Dock = System.Windows.Forms.DockStyle.Fill;
             this.BrowseDirectoryBtn.FlatAppearance.BorderSize = 0;
             this.BrowseDirectoryBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BrowseDirectoryBtn.Font = new System.Drawing.Font("Segoe UI", 9.75F);
             this.BrowseDirectoryBtn.ForeColor = System.Drawing.Color.White;
             this.BrowseDirectoryBtn.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.BrowseDirectoryBtn.Location = new System.Drawing.Point(287, 3);
+            this.BrowseDirectoryBtn.Location = new System.Drawing.Point(289, 3);
             this.BrowseDirectoryBtn.Name = "BrowseDirectoryBtn";
             this.BrowseDirectoryBtn.Size = new System.Drawing.Size(138, 27);
             this.BrowseDirectoryBtn.TabIndex = 12;
@@ -208,7 +207,7 @@
             this.DLCTreeView.ContextMenuStrip = this.DLCContextMenu;
             this.DLCTreeView.Location = new System.Drawing.Point(3, 72);
             this.DLCTreeView.Name = "DLCTreeView";
-            this.DLCTreeView.Size = new System.Drawing.Size(422, 481);
+            this.DLCTreeView.Size = new System.Drawing.Size(424, 475);
             this.DLCTreeView.TabIndex = 13;
             this.DLCTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.DLCTreeView_AfterSelect);
             // 
@@ -250,15 +249,15 @@
             this.removePckToolStripMenuItem.Text = "Remove pck";
             this.removePckToolStripMenuItem.Click += new System.EventHandler(this.removePckToolStripMenuItem_Click);
             // 
-            // CemuInstallPanel
+            // CemuPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.Controls.Add(layoutPanel);
-            this.Name = "CemuInstallPanel";
-            this.Size = new System.Drawing.Size(428, 556);
+            this.Name = "CemuPanel";
+            this.Size = new System.Drawing.Size(430, 550);
             layoutPanel.ResumeLayout(false);
             layoutPanel.PerformLayout();
             this.DLCContextMenu.ResumeLayout(false);
