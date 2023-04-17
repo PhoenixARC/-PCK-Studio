@@ -145,7 +145,7 @@ namespace PckStudio.Forms.Additional_Features
             }
 
             //Makes sure user typed in their ip
-            if (string.IsNullOrWhiteSpace(textBoxHost.Text))
+            if (string.IsNullOrWhiteSpace(metroTextBox1.Text))
             {
                 MessageBox.Show("Please enter a valid Playstation®3 IP!");
                 return;
@@ -159,8 +159,8 @@ namespace PckStudio.Forms.Additional_Features
                 ServicePointManager.Expect100Continue = true;
 
                 //ServicePointManager.ServerCertificateValidationCallback = new System.Net.Security.RemoteCertificateValidationCallback(OnValidateCertificate);
-                FtpWebRequest request = (FtpWebRequest)WebRequest.Create("ftp://" + textBoxHost.Text + "/" + DLCPath);
-                currentpath = textBoxHost.Text + "/" + DLCPath;
+                FtpWebRequest request = (FtpWebRequest)WebRequest.Create("ftp://" + metroTextBox1.Text + "/" + DLCPath);
+                currentpath = metroTextBox1.Text + "/" + DLCPath;
                 request.Method = WebRequestMethods.Ftp.ListDirectory;
                 request.Credentials = new NetworkCredential("", "");
                 request.EnableSsl = false;
@@ -190,7 +190,7 @@ namespace PckStudio.Forms.Additional_Features
                 foreach (ListViewItem pck in listViewPCKS.Items)
                 {
                     int i = 0;
-                    FtpWebRequest request2 = (FtpWebRequest)WebRequest.Create("ftp://" + textBoxHost.Text + "/" + DLCPath + "/");
+                    FtpWebRequest request2 = (FtpWebRequest)WebRequest.Create("ftp://" + metroTextBox1.Text + "/" + DLCPath + "/");
                     request2.Method = WebRequestMethods.Ftp.ListDirectory;
                     request2.Credentials = new NetworkCredential("", "");
                     request2.EnableSsl = false;
@@ -302,7 +302,7 @@ namespace PckStudio.Forms.Additional_Features
             SetupDLCPath();
         }
 
-        private void installPS3_Load(object sender, EventArgs e)
+        private void PS3Panel_Load(object sender, EventArgs e)
         {
             SetupDLCPath();
         }

@@ -32,7 +32,6 @@
             this.EurDig = new System.Windows.Forms.RadioButton();
             this.USDig = new System.Windows.Forms.RadioButton();
             this.buttonServerToggle = new System.Windows.Forms.Button();
-            this.textBoxHost = new MetroFramework.Controls.MetroTextBox();
             this.EurDisc = new System.Windows.Forms.RadioButton();
             this.USDisc = new System.Windows.Forms.RadioButton();
             this.listViewPCKS = new System.Windows.Forms.ListView();
@@ -107,43 +106,6 @@
             this.buttonServerToggle.TabIndex = 9;
             this.buttonServerToggle.Text = "Start";
             this.buttonServerToggle.UseVisualStyleBackColor = false;
-            // 
-            // textBoxHost
-            // 
-            this.textBoxHost.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.textBoxHost.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            // 
-            // 
-            // 
-            this.textBoxHost.CustomButton.Image = null;
-            this.textBoxHost.CustomButton.Location = new System.Drawing.Point(260, 2);
-            this.textBoxHost.CustomButton.Name = "";
-            this.textBoxHost.CustomButton.Size = new System.Drawing.Size(15, 15);
-            this.textBoxHost.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-            this.textBoxHost.CustomButton.TabIndex = 1;
-            this.textBoxHost.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.textBoxHost.CustomButton.UseSelectable = true;
-            this.textBoxHost.CustomButton.Visible = false;
-            this.textBoxHost.IconRight = true;
-            this.textBoxHost.Lines = new string[0];
-            this.textBoxHost.Location = new System.Drawing.Point(3, 6);
-            this.textBoxHost.MaxLength = 32767;
-            this.textBoxHost.Name = "textBoxHost";
-            this.textBoxHost.PasswordChar = '\0';
-            this.textBoxHost.PromptText = "PS3 IP";
-            this.textBoxHost.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.textBoxHost.SelectedText = "";
-            this.textBoxHost.SelectionLength = 0;
-            this.textBoxHost.SelectionStart = 0;
-            this.textBoxHost.ShortcutsEnabled = true;
-            this.textBoxHost.Size = new System.Drawing.Size(278, 20);
-            this.textBoxHost.Style = MetroFramework.MetroColorStyle.Blue;
-            this.textBoxHost.TabIndex = 10;
-            this.textBoxHost.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.textBoxHost.UseSelectable = true;
-            this.textBoxHost.WaterMark = "PS3 IP";
-            this.textBoxHost.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-            this.textBoxHost.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
             // 
             // EurDisc
             // 
@@ -462,7 +424,6 @@
         private System.Windows.Forms.RadioButton EurDig;
         private System.Windows.Forms.RadioButton USDig;
         private System.Windows.Forms.Button buttonServerToggle;
-        private MetroFramework.Controls.MetroTextBox textBoxHost;
         private System.Windows.Forms.RadioButton EurDisc;
         private System.Windows.Forms.RadioButton USDisc;
         private System.Windows.Forms.ListView listViewPCKS;
