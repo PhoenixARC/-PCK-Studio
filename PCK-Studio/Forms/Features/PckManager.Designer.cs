@@ -31,7 +31,7 @@
             MetroFramework.Controls.MetroLabel metroLabel1;
             MetroFramework.Controls.MetroLabel metroLabel2;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PckManager));
-            this.selectedPlatformComboBox = new MetroFramework.Controls.MetroComboBox();
+            this.supportedPlatformComboBox = new MetroFramework.Controls.MetroComboBox();
             this.mainPanel = new System.Windows.Forms.TableLayoutPanel();
             metroLabel1 = new MetroFramework.Controls.MetroLabel();
             metroLabel2 = new MetroFramework.Controls.MetroLabel();
@@ -62,21 +62,21 @@
             metroLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             metroLabel2.Theme = MetroFramework.MetroThemeStyle.Dark;
             // 
-            // selectedPlatformComboBox
+            // supportedPlatformComboBox
             // 
-            this.selectedPlatformComboBox.BackColor = System.Drawing.SystemColors.Window;
-            this.selectedPlatformComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.selectedPlatformComboBox.FormattingEnabled = true;
-            this.selectedPlatformComboBox.ItemHeight = 23;
-            this.selectedPlatformComboBox.Location = new System.Drawing.Point(192, 3);
-            this.selectedPlatformComboBox.Name = "selectedPlatformComboBox";
-            this.selectedPlatformComboBox.PromptText = "Select Platform";
-            this.selectedPlatformComboBox.Size = new System.Drawing.Size(184, 29);
-            this.selectedPlatformComboBox.Style = MetroFramework.MetroColorStyle.Black;
-            this.selectedPlatformComboBox.TabIndex = 0;
-            this.selectedPlatformComboBox.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.selectedPlatformComboBox.UseSelectable = true;
-            this.selectedPlatformComboBox.SelectedIndexChanged += new System.EventHandler(this.selectedConsoleComboBox_SelectedIndexChanged);
+            this.supportedPlatformComboBox.BackColor = System.Drawing.SystemColors.Window;
+            this.supportedPlatformComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.supportedPlatformComboBox.FormattingEnabled = true;
+            this.supportedPlatformComboBox.ItemHeight = 23;
+            this.supportedPlatformComboBox.Location = new System.Drawing.Point(192, 3);
+            this.supportedPlatformComboBox.Name = "supportedPlatformComboBox";
+            this.supportedPlatformComboBox.PromptText = "Select Platform";
+            this.supportedPlatformComboBox.Size = new System.Drawing.Size(184, 29);
+            this.supportedPlatformComboBox.Style = MetroFramework.MetroColorStyle.Black;
+            this.supportedPlatformComboBox.TabIndex = 0;
+            this.supportedPlatformComboBox.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.supportedPlatformComboBox.UseSelectable = true;
+            this.supportedPlatformComboBox.SelectedIndexChanged += new System.EventHandler(this.supportedPlatformComboBox_SelectedIndexChanged);
             // 
             // mainPanel
             // 
@@ -84,7 +84,7 @@
             this.mainPanel.ColumnCount = 2;
             this.mainPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.mainPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.mainPanel.Controls.Add(this.selectedPlatformComboBox, 1, 0);
+            this.mainPanel.Controls.Add(this.supportedPlatformComboBox, 1, 0);
             this.mainPanel.Controls.Add(metroLabel2, 0, 0);
             this.mainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mainPanel.Location = new System.Drawing.Point(20, 60);
@@ -121,7 +121,7 @@
 
         #endregion
 
-        private MetroFramework.Controls.MetroComboBox selectedPlatformComboBox;
+        private MetroFramework.Controls.MetroComboBox supportedPlatformComboBox;
         private System.Windows.Forms.TableLayoutPanel mainPanel;
     }
 }

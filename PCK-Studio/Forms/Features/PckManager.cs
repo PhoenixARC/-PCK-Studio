@@ -32,7 +32,7 @@ namespace PckStudio.Forms.Additional_Features
         public PckManager()
         {
             InitializeComponent();
-            selectedPlatformComboBox.Items.AddRange(new string[]
+            supportedPlatformComboBox.Items.AddRange(new string[]
             {
                 WiiU,
                 PS3,
@@ -42,12 +42,12 @@ namespace PckStudio.Forms.Additional_Features
             });
         }
 
-        private void selectedConsoleComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void supportedPlatformComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             mainPanel.Controls.Remove(currentlyShowingControl);
-            if (selectedPlatformComboBox.SelectedIndex > -1)
+            if (supportedPlatformComboBox.SelectedIndex > -1)
             {
-                string text = selectedPlatformComboBox.Items[selectedPlatformComboBox.SelectedIndex].ToString();
+                string text = supportedPlatformComboBox.Items[supportedPlatformComboBox.SelectedIndex].ToString();
                 currentlyShowingControl = text switch
                 {
                     WiiU => new WiiUPanel(),
