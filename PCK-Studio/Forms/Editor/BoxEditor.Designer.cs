@@ -1,4 +1,4 @@
-﻿namespace PckStudio.Forms.Utilities.Skins
+﻿namespace PckStudio.Forms.Editor
 {
 	partial class BoxEditor
 	{

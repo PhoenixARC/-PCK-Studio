@@ -69,19 +69,14 @@ namespace PckStudio.Classes.Utils
 		DINNERBONE            = 1 << 31, // 0x80000000
     }
 
-	public struct SkinANIM
-	{
+	public class SkinANIM : ICloneable, IEquatable<SkinANIM>
+    {
 		private ANIM_EFFECTS _ANIM;
 		public static readonly Regex animRegex = new Regex(@"^0x[0-9a-f]{1,8}\b", RegexOptions.IgnoreCase);
 
 		public SkinANIM()
 			: this(ANIM_EFFECTS.NONE)
 		{
-		}
-		
-		public SkinANIM(string anim)
-            : this(ParseString(anim))
-        {
 		}
 
 		public SkinANIM(ANIM_EFFECTS anim)
@@ -93,10 +88,10 @@ namespace PckStudio.Classes.Utils
 
 		public static bool IsValidANIM(string anim) => animRegex.IsMatch(anim ?? string.Empty);
 
-		public static ANIM_EFFECTS ParseString(string anim)
-			=> IsValidANIM(anim)
-				? (ANIM_EFFECTS)Convert.ToInt32(anim.TrimEnd(' ', '\n', '\r'), 16)
-				: ANIM_EFFECTS.NONE;
+		public static SkinANIM FromString(string value)
+			=> IsValidANIM(value)
+				? new SkinANIM((ANIM_EFFECTS)Convert.ToInt32(value.TrimEnd(' ', '\n', '\r'), 16))
+				: new SkinANIM();
 
 		public void SetANIM(ANIM_EFFECTS anim) => _ANIM = anim;
 
@@ -107,10 +102,16 @@ namespace PckStudio.Classes.Utils
 		public static implicit operator SkinANIM(ANIM_EFFECTS anim) => new SkinANIM(anim);
 
 		public static bool operator ==(SkinANIM a, ANIM_EFFECTS b) => a._ANIM == b;		
-		
 		public static bool operator !=(SkinANIM a, ANIM_EFFECTS b) => !(a == b);
+		public static bool operator ==(SkinANIM a, SkinANIM b) => a.Equals(b);
+		public static bool operator !=(SkinANIM a, SkinANIM b) => !a.Equals(b);
 
-		public override bool Equals(object obj) => obj is SkinANIM a && a == _ANIM;
+        public bool Equals(SkinANIM other)
+        {
+            return _ANIM == other._ANIM;
+        }
+
+		public override bool Equals(object obj) => obj is SkinANIM a && Equals(a);
 
 		public override int GetHashCode() => (int)_ANIM;
 		
@@ -134,5 +135,10 @@ namespace PckStudio.Classes.Utils
 		{
 			return (_ANIM & flag) != 0;
 		}
-	}
+
+        public object Clone()
+        {
+            return MemberwiseClone();
+        }
+    }
 }

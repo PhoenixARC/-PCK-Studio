@@ -122,7 +122,7 @@
             this.labelVersion = new MetroFramework.Controls.MetroLabel();
             this.ChangelogRichTextBox = new System.Windows.Forms.RichTextBox();
             this.editorTab = new MetroFramework.Controls.MetroTabPage();
-            this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
+            this.pckFileLabel = new MetroFramework.Controls.MetroLabel();
             this.labelImageSize = new MetroFramework.Controls.MetroLabel();
             this.fileEntryCountLabel = new MetroFramework.Controls.MetroLabel();
             this.PropertiesTabControl = new MetroFramework.Controls.MetroTabControl();
@@ -818,7 +818,7 @@
             // 
             this.editorTab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
             resources.ApplyResources(this.editorTab, "editorTab");
-            this.editorTab.Controls.Add(this.metroLabel3);
+            this.editorTab.Controls.Add(this.pckFileLabel);
             this.editorTab.Controls.Add(this.labelImageSize);
             this.editorTab.Controls.Add(this.fileEntryCountLabel);
             this.editorTab.Controls.Add(this.PropertiesTabControl);
@@ -837,11 +837,11 @@
             this.editorTab.VerticalScrollbarHighlightOnWheel = false;
             this.editorTab.VerticalScrollbarSize = 0;
             // 
-            // metroLabel3
+            // pckFileLabel
             // 
-            resources.ApplyResources(this.metroLabel3, "metroLabel3");
-            this.metroLabel3.Name = "metroLabel3";
-            this.metroLabel3.Theme = MetroFramework.MetroThemeStyle.Dark;
+            resources.ApplyResources(this.pckFileLabel, "pckFileLabel");
+            this.pckFileLabel.Name = "pckFileLabel";
+            this.pckFileLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
             // 
             // labelImageSize
             // 
@@ -1166,7 +1166,7 @@
 		private System.Windows.Forms.ToolStripMenuItem CreateSkinsPCKToolStripMenuItem1;
 		private System.Windows.Forms.ToolStripMenuItem editAllEntriesToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem addFileToolStripMenuItem;
-		private MetroFramework.Controls.MetroLabel metroLabel3;
+		private MetroFramework.Controls.MetroLabel pckFileLabel;
 		private System.Windows.Forms.ToolStripMenuItem behavioursbinToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem entityMaterialsbinToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openPckManagerToolStripMenuItem;

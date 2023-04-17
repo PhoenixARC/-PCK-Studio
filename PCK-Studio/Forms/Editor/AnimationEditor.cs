@@ -3,15 +3,13 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using PckStudio.Classes.FileTypes;
 using PckStudio.Forms.Additional_Popups.Animation;
 using PckStudio.Forms.Utilities;
-using PckStudio.Classes.Extentions;
+using PckStudio.Extensions;
 using OMI.Formats.Pck;
 
 namespace PckStudio.Forms.Editor
@@ -23,7 +21,7 @@ namespace PckStudio.Forms.Editor
         AnimationPlayer player;
 
 		bool isItem = false;
-        string animationSection => AnimationUtil.GetAnimationSection(isItem);
+        string animationSection => AnimationResources.GetAnimationSection(isItem);
 
 		public string TileName = string.Empty;
 
@@ -51,14 +49,14 @@ namespace PckStudio.Forms.Editor
 
 			using MemoryStream textureMem = new MemoryStream(animationFile.Data);
 			var texture = new Bitmap(textureMem);
-            var frameTextures = texture.CreateImageList(ImageExtentions.ImageLayoutDirection.Horizontal);
+            var frameTextures = texture.CreateImageList(ImageLayoutDirection.Horizontal);
 
             currentAnimation = animationFile.Properties.HasProperty("ANIM")
 				? new Animation(frameTextures, animationFile.Properties.GetPropertyValue("ANIM"))
 				: new Animation(frameTextures);
 			player = new AnimationPlayer(pictureBoxWithInterpolationMode1);
 
-			foreach (JObject content in AnimationUtil.tileData[animationSection].Children())
+			foreach (JObject content in AnimationResources.tileData[animationSection].Children())
 			{
 				var prop = content.Properties().FirstOrDefault(prop => prop.Name == TileName);
 				if (prop is JProperty)
@@ -264,15 +262,10 @@ namespace PckStudio.Forms.Editor
 
 		private void bulkAnimationSpeedToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			SetBulkSpeed diag = new SetBulkSpeed(frameTreeView);
-			if(diag.ShowDialog(this) == DialogResult.OK)
+			SetBulkSpeed diag = new SetBulkSpeed();
+			if (diag.ShowDialog(this) == DialogResult.OK)
 			{
-				var list = currentAnimation.GetFrames();
-				for (int i = 0; i < list.Count; i++)
-				{
-					Animation.Frame f = list[i];
-					currentAnimation.SetFrame(f, currentAnimation.GetTextureIndex(f), diag.time);
-				}
+				currentAnimation.GetFrames().ForEach(frame => frame.Ticks = diag.Ticks);
 				LoadAnimationTreeView();
 			}
 			diag.Dispose();
@@ -301,7 +294,7 @@ namespace PckStudio.Forms.Editor
 				return;
 			}
 			using MemoryStream textureMem = new MemoryStream(File.ReadAllBytes(textureFile));
-			var textures = Image.FromStream(textureMem).CreateImageList(ImageExtentions.ImageLayoutDirection.Horizontal);
+			var textures = Image.FromStream(textureMem).CreateImageList(ImageLayoutDirection.Horizontal);
             var new_animation = new Animation(textures);
 			try
 			{
@@ -337,7 +330,7 @@ namespace PckStudio.Forms.Editor
 					}
 					else
 					{
-						for (int i = 0; i < new_animation.FrameTextureCount; i++)
+						for (int i = 0; i < new_animation.TextureCount; i++)
 						{
 							new_animation.AddFrame(i, frameTime);
 						}
@@ -369,7 +362,7 @@ namespace PckStudio.Forms.Editor
 					exportJavaAnimationToolStripMenuItem.Enabled = 
 					InterpolationCheckbox.Visible = !IsEditingSpecial;
 
-					foreach (JObject content in AnimationUtil.tileData[animationSection].Children())
+					foreach (JObject content in AnimationResources.tileData[animationSection].Children())
 					{
 						var first = content.Properties().FirstOrDefault(p => p.Name == TileName);
 						if (first is JProperty p) tileLabel.Text = (string)p.Value;

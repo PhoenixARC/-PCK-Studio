@@ -19,18 +19,11 @@ namespace PckStudio
 			InitializeComponent();
 			InputTextBox.Text = InitialText;
 			InputTextBox.MaxLength = maxChar < 0 ? short.MaxValue : maxChar;
-			FormBorderStyle = FormBorderStyle.None;
 		}
 
         private void OKBtn_Click(object sender, EventArgs e)
         {
 			DialogResult = DialogResult.OK;
-        }
-
-        private void InputTextBox_KeyDown(object sender, KeyEventArgs e)
-        {
-			if (e.KeyCode == Keys.Enter)
-				OKBtn_Click(sender, e);
         }
     }
 }

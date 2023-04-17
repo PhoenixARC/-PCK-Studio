@@ -2,7 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using PckStudio.Classes.Extentions;
+using PckStudio.Extensions;
 using PckStudio.Classes.Misc;
 
 namespace PckStudio.Forms.Additional_Features

@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Numerics;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
-namespace PckStudio.Forms.Utilities.Skins
+namespace PckStudio.Forms.Editor
 {
 	public partial class BoxEditor : MetroFramework.Forms.MetroForm
 	{
@@ -11,13 +12,12 @@ namespace PckStudio.Forms.Utilities.Skins
 		class BOX
 		{
 			public string Parent;
-			public (float X, float Y, float Z) Pos;
-			public (float X, float Y, float Z) Size;
-			public float uvX, uvY;
+			public Vector3 Pos;
+			public Vector3 Size;
+			public float U, V;
 			public bool HideWithArmor;
 			public bool Mirror;
 			public float Inflation;
-
 			public BOX(string input)
 			{
 				string[] arguments = Regex.Split(input, @"\s+");
@@ -25,16 +25,12 @@ namespace PckStudio.Forms.Utilities.Skins
 				try
 				{
 					Parent = arguments[0].ToUpper(); // just in case a box has all lower, the editor still parses correctly
-					Pos.X = float.Parse(arguments[1]);
-					Pos.Y = float.Parse(arguments[2]);
-					Pos.Z = float.Parse(arguments[3]);
-					Size.X = float.Parse(arguments[4]);
-					Size.Y = float.Parse(arguments[5]);
-					Size.Z = float.Parse(arguments[6]);
-					uvX = float.Parse(arguments[7]);
-					uvY = float.Parse(arguments[8]);
-					HideWithArmor = Convert.ToBoolean(Int32.Parse(arguments[9]));
-					Mirror = Convert.ToBoolean(Int32.Parse(arguments[10]));
+					Pos = new Vector3(float.Parse(arguments[1]), float.Parse(arguments[2]), float.Parse(arguments[3]));
+					Size = new Vector3(float.Parse(arguments[4]), float.Parse(arguments[5]), float.Parse(arguments[6]));
+					U = float.Parse(arguments[7]);
+					V = float.Parse(arguments[8]);
+					HideWithArmor = Convert.ToBoolean(int.Parse(arguments[9]));
+					Mirror = Convert.ToBoolean(int.Parse(arguments[10]));
 					Inflation = float.Parse(arguments[11]);
 				}
 				catch (IndexOutOfRangeException)
@@ -70,8 +66,8 @@ namespace PckStudio.Forms.Utilities.Skins
 			SizeXUpDown.Value = (decimal)box.Size.X;
 			SizeYUpDown.Value = (decimal)box.Size.Y;
 			SizeZUpDown.Value = (decimal)box.Size.Z;
-			uvXUpDown.Value = (decimal)box.uvX;
-			uvYUpDown.Value = (decimal)box.uvY;
+			uvXUpDown.Value = (decimal)box.U;
+			uvYUpDown.Value = (decimal)box.V;
 			armorCheckBox.Checked = box.HideWithArmor;
 			mirrorCheckBox.Checked = box.Mirror;
 			inflationUpDown.Value = (decimal)box.Inflation;

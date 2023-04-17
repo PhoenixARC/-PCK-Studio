@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PckStudio.Classes.Extentions
+namespace PckStudio.Extensions
 {
     internal static class StringExtension
     {

@@ -2,14 +2,35 @@
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
-using PckStudio.Classes._3ds.Utils;
 
 namespace PckStudio.Classes._3ds
 {
+    /// <summary>
+    ///     Format of the texture used on the PICA200.
+    /// </summary>
+    public enum _3DSTextureFormat
+    {
+        argb8 = 0,
+        rgb8 = 1,
+        rgba5551 = 2,
+        rgb565 = 3,
+        rgba4 = 4,
+        la8 = 5,
+        hilo8 = 6,
+        l8 = 7,
+        a8 = 8,
+        la4 = 9,
+        l4 = 0xa,
+        a4 = 0xb,
+        etc1 = 0xc,
+        etc1a4 = 0xd,
+        dontCare
+    }
+
     class TextureCodec
     {
-        private static int[] tileOrder = { 0, 1, 8, 9, 2, 3, 10, 11, 16, 17, 24, 25, 18, 19, 26, 27, 4, 5, 12, 13, 6, 7, 14, 15, 20, 21, 28, 29, 22, 23, 30, 31, 32, 33, 40, 41, 34, 35, 42, 43, 48, 49, 56, 57, 50, 51, 58, 59, 36, 37, 44, 45, 38, 39, 46, 47, 52, 53, 60, 61, 54, 55, 62, 63 };
-        private static int[,] etc1LUT = { { 2, 8, -2, -8 }, { 5, 17, -5, -17 }, { 9, 29, -9, -29 }, { 13, 42, -13, -42 }, { 18, 60, -18, -60 }, { 24, 80, -24, -80 }, { 33, 106, -33, -106 }, { 47, 183, -47, -183 } };
+        private static readonly int[] tileOrder = { 0, 1, 8, 9, 2, 3, 10, 11, 16, 17, 24, 25, 18, 19, 26, 27, 4, 5, 12, 13, 6, 7, 14, 15, 20, 21, 28, 29, 22, 23, 30, 31, 32, 33, 40, 41, 34, 35, 42, 43, 48, 49, 56, 57, 50, 51, 58, 59, 36, 37, 44, 45, 38, 39, 46, 47, 52, 53, 60, 61, 54, 55, 62, 63 };
+        private static readonly int[,] etc1LUT = { { 2, 8, -2, -8 }, { 5, 17, -5, -17 }, { 9, 29, -9, -29 }, { 13, 42, -13, -42 }, { 18, 60, -18, -60 }, { 24, 80, -24, -80 }, { 33, 106, -33, -106 }, { 47, 183, -47, -183 } };
 
         private static class TextureConverter
         {

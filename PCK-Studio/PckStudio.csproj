@@ -170,12 +170,15 @@
     <Compile Include="Classes\API\PCKCenter\PCKCollections.cs" />
     <Compile Include="Classes\API\PCKCenter\PCKCollectionsLocal.cs" />
     <Compile Include="Classes\API\PCKCenter\SaveLocalJSON.cs" />
-    <Compile Include="Classes\Extentions\EnumerableExtentions.cs" />
-    <Compile Include="Classes\Extentions\StringExtension.cs" />
+    <Compile Include="Classes\Extensions\BlendMode.cs" />
+    <Compile Include="Classes\Extensions\EnumerableExtensions.cs" />
+    <Compile Include="Classes\Extensions\GraphicsExtensions.cs" />
+    <Compile Include="Classes\Extensions\StringExtension.cs" />
     <Compile Include="Classes\FileTypes\CSMBFile.cs" />
     <Compile Include="Classes\FileTypes\PCKAudioFile.cs" />
     <Compile Include="Classes\FileTypes\Binka.cs" />
-    <Compile Include="Classes\FileTypes\CSM.cs" />
+    <Compile Include="Classes\IO\3DST\3DSTextureReader.cs" />
+    <Compile Include="Classes\IO\3DST\3DSTextureWriter.cs" />
     <Compile Include="Classes\IO\CSMB\CSMBFileReader.cs" />
     <Compile Include="Classes\IO\CSMB\CSMBFileWriter.cs" />
     <Compile Include="Classes\IO\PCK\PCKAudioFileReader.cs" />
@@ -185,12 +188,9 @@
     <Compile Include="Classes\Misc\FTPClient.cs" />
     <Compile Include="Classes\Misc\OpenFolderDialog.cs" />
     <Compile Include="Classes\Models\DefaultModels\Steve64x64Model.cs" />
-    <Compile Include="Classes\Utils\3DS\3DSUtil.cs" />
     <Compile Include="Classes\Utils\ARC\ARCUtil.cs" />
-    <Compile Include="Classes\Extentions\ImageExtentions.cs" />
+    <Compile Include="Classes\Extensions\ImageExtensions.cs" />
     <Compile Include="Classes\Utils\SkinANIM.cs" />
-    <Compile Include="Classes\IO\StreamDataReader.cs" />
-    <Compile Include="Classes\IO\StreamDataWriter.cs" />
     <Compile Include="Classes\Models\DefaultModels\Steve64x32Model.cs" />
     <Compile Include="Classes\Models\DefaultModels\ModelBase.cs" />
     <Compile Include="Classes\Models\DefaultModels\Texture.cs" />
@@ -366,26 +366,26 @@
     <Compile Include="Forms\Additional-Popups\Audio\pleaseWait.Designer.cs">
       <DependentUpon>pleaseWait.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Utilities\ModelsUtil.cs" />
-    <Compile Include="Forms\Utilities\MaterialUtil.cs" />
-    <Compile Include="Forms\Utilities\BehaviourUtil.cs" />
-    <Compile Include="Forms\Utilities\AnimationUtil.cs" />
+    <Compile Include="Forms\Utilities\ModelsResources.cs" />
+    <Compile Include="Forms\Utilities\MaterialResources.cs" />
+    <Compile Include="Forms\Utilities\BehaviourResources.cs" />
+    <Compile Include="Forms\Utilities\AnimationResources.cs" />
+    <Compile Include="Forms\Editor\BoxEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\Features\PckManager.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\Features\PckManager.Designer.cs">
       <DependentUpon>PckManager.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Utilities\Skins\BoxEditor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Utilities\Skins\BoxEditor.Designer.cs">
+    <Compile Include="Forms\Editor\BoxEditor.Designer.cs">
       <DependentUpon>BoxEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Utilities\Skins\ANIMEditor.cs">
+    <Compile Include="Forms\Editor\ANIMEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Utilities\Skins\ANIMEditor.Designer.cs">
+    <Compile Include="Forms\Editor\ANIMEditor.Designer.cs">
       <DependentUpon>ANIMEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForm.cs">
@@ -424,7 +424,7 @@
     <Compile Include="Forms\Editor\AudioEditor.Designer.cs">
       <DependentUpon>AudioEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Classes\Utils\ListUtils.cs" />
+    <Compile Include="Classes\Extensions\ListExtensions.cs" />
     <Compile Include="Forms\Utilities\PCK Manager.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -472,7 +472,7 @@
       <DependentUpon>CreditsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Classes\Utils\3DS\TextureCodec.cs" />
+    <Compile Include="Classes\IO\3DST\TextureCodec.cs" />
     <EmbeddedResource Include="Forms\Features\CemuPanel.resx">
       <DependentUpon>CemuPanel.cs</DependentUpon>
     </EmbeddedResource>
@@ -570,10 +570,10 @@
     <EmbeddedResource Include="Forms\Features\PckManager.resx">
       <DependentUpon>PckManager.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\Skins\BoxEditor.resx">
+    <EmbeddedResource Include="Forms\Editor\BoxEditor.resx">
       <DependentUpon>BoxEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\Skins\ANIMEditor.resx">
+    <EmbeddedResource Include="Forms\Editor\ANIMEditor.resx">
       <DependentUpon>ANIMEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.ja.resx">

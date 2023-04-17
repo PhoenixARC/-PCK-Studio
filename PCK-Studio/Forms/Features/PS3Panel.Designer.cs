@@ -37,7 +37,7 @@
             this.USDisc = new System.Windows.Forms.RadioButton();
             this.listViewPCKS = new System.Windows.Forms.ListView();
             this.JPDig = new System.Windows.Forms.RadioButton();
-            this.ps3Panel = new PckStudio.Forms.MyTablePanel();
+            this.layoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.button1 = new System.Windows.Forms.Button();
@@ -49,7 +49,7 @@
             this.replaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.replacePCKToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.radioButton5 = new System.Windows.Forms.RadioButton();
-            this.ps3Panel.SuspendLayout();
+            this.layoutPanel.SuspendLayout();
             this.contextMenuStripCaffiine.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -218,35 +218,35 @@
             this.JPDig.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.JPDig.UseVisualStyleBackColor = false;
             // 
-            // ps3Panel
+            // layoutPanel
             // 
-            this.ps3Panel.BackColor = System.Drawing.Color.Black;
-            this.ps3Panel.ColumnCount = 3;
-            this.ps3Panel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.ps3Panel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
-            this.ps3Panel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
-            this.ps3Panel.Controls.Add(this.radioButton1, 1, 1);
-            this.ps3Panel.Controls.Add(this.radioButton2, 2, 1);
-            this.ps3Panel.Controls.Add(this.button1, 2, 0);
-            this.ps3Panel.Controls.Add(this.metroTextBox1, 0, 0);
-            this.ps3Panel.Controls.Add(this.radioButton3, 1, 2);
-            this.ps3Panel.Controls.Add(this.radioButton4, 2, 2);
-            this.ps3Panel.Controls.Add(this.listView, 0, 3);
-            this.ps3Panel.Controls.Add(this.radioButton5, 0, 1);
-            this.ps3Panel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ps3Panel.Location = new System.Drawing.Point(0, 0);
-            this.ps3Panel.Margin = new System.Windows.Forms.Padding(0);
-            this.ps3Panel.Name = "ps3Panel";
-            this.ps3Panel.RowCount = 7;
-            this.ps3Panel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.ps3Panel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
-            this.ps3Panel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
-            this.ps3Panel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.ps3Panel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.ps3Panel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.ps3Panel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.ps3Panel.Size = new System.Drawing.Size(468, 633);
-            this.ps3Panel.TabIndex = 3;
+            this.layoutPanel.BackColor = System.Drawing.Color.Black;
+            this.layoutPanel.ColumnCount = 3;
+            this.layoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.layoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
+            this.layoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
+            this.layoutPanel.Controls.Add(this.radioButton1, 1, 1);
+            this.layoutPanel.Controls.Add(this.radioButton2, 2, 1);
+            this.layoutPanel.Controls.Add(this.button1, 2, 0);
+            this.layoutPanel.Controls.Add(this.metroTextBox1, 0, 0);
+            this.layoutPanel.Controls.Add(this.radioButton3, 1, 2);
+            this.layoutPanel.Controls.Add(this.radioButton4, 2, 2);
+            this.layoutPanel.Controls.Add(this.listView, 0, 3);
+            this.layoutPanel.Controls.Add(this.radioButton5, 0, 1);
+            this.layoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.layoutPanel.Location = new System.Drawing.Point(0, 0);
+            this.layoutPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.layoutPanel.Name = "layoutPanel";
+            this.layoutPanel.RowCount = 7;
+            this.layoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.layoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
+            this.layoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
+            this.layoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.layoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.layoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.layoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.layoutPanel.Size = new System.Drawing.Size(468, 633);
+            this.layoutPanel.TabIndex = 3;
             // 
             // radioButton1
             // 
@@ -302,13 +302,13 @@
             this.button1.TabIndex = 9;
             this.button1.Text = "Start";
             this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.buttonInstall_Click);
+            this.button1.Click += new System.EventHandler(this.buttonServerToggle_Click);
             // 
             // metroTextBox1
             // 
             this.metroTextBox1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.metroTextBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.ps3Panel.SetColumnSpan(this.metroTextBox1, 2);
+            this.layoutPanel.SetColumnSpan(this.metroTextBox1, 2);
             // 
             // 
             // 
@@ -387,7 +387,7 @@
             // 
             this.listView.Activation = System.Windows.Forms.ItemActivation.TwoClick;
             this.listView.BackColor = System.Drawing.SystemColors.Info;
-            this.ps3Panel.SetColumnSpan(this.listView, 3);
+            this.layoutPanel.SetColumnSpan(this.listView, 3);
             this.listView.ContextMenuStrip = this.contextMenuStripCaffiine;
             this.listView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listView.Enabled = false;
@@ -444,13 +444,14 @@
             this.radioButton5.UseVisualStyleBackColor = false;
             this.radioButton5.Click += new System.EventHandler(this.radioButton_Click);
             // 
-            // PS3InstallPanel
+            // PS3Panel
             // 
-            this.Controls.Add(this.ps3Panel);
-            this.Name = "PS3InstallPanel";
+            this.Controls.Add(this.layoutPanel);
+            this.Name = "PS3Panel";
             this.Size = new System.Drawing.Size(468, 633);
-            this.ps3Panel.ResumeLayout(false);
-            this.ps3Panel.PerformLayout();
+            this.Load += new System.EventHandler(this.PS3Panel_Load);
+            this.layoutPanel.ResumeLayout(false);
+            this.layoutPanel.PerformLayout();
             this.contextMenuStripCaffiine.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -466,7 +467,7 @@
         private System.Windows.Forms.RadioButton USDisc;
         private System.Windows.Forms.ListView listViewPCKS;
         private System.Windows.Forms.RadioButton JPDig;
-        private MyTablePanel ps3Panel;
+        private System.Windows.Forms.TableLayoutPanel layoutPanel;
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.Button button1;
