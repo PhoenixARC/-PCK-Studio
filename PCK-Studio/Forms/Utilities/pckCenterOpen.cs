@@ -19,7 +19,7 @@ using PckStudio.Classes.FileTypes;
 using PckStudio.Classes.IO.PCK;
 using OMI.Formats.Pck;
 using OMI.Workers.Pck;
-using PckStudio.Classes.Extentions;
+using PckStudio.Extensions;
 
 namespace PckStudio.Forms
 {
@@ -1027,17 +1027,26 @@ namespace PckStudio.Forms
                     {
                         var ms = new MemoryStream(skinTexture.Data);
                         Bitmap saveSkin = new Bitmap(Image.FromStream(ms));
+                        var config = new GraphicsConfig()
+                        {
+                             CompositingMode = CompositingMode.SourceCopy,
+                             CompositingQuality = CompositingQuality.HighQuality,
+                             InterpolationMode = InterpolationMode.NearestNeighbor,
+                             SmoothingMode = SmoothingMode.HighQuality,
+                             PixelOffsetMode = PixelOffsetMode.HighQuality,
+                        };
+
                         if (saveSkin.Width == saveSkin.Height)
                         {
-                            saveSkin.ResizeImage(64, 64);
+                            saveSkin.ResizeImage(64, 64, config);
                         }
                         else if (saveSkin.Height == saveSkin.Width / 2)
                         {
-                            saveSkin.ResizeImage(64, 32);
+                            saveSkin.ResizeImage(64, 32, config);
                         }
                         else
                         {
-                            saveSkin.ResizeImage(64, 64);
+                            saveSkin.ResizeImage(64, 64, config);
                         }
                         saveSkin.Save(root + "/" + skinTexture.Filename, ImageFormat.Png);
                     }

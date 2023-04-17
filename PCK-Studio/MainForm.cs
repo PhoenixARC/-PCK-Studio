@@ -8,19 +8,18 @@ using System.Drawing.Drawing2D;
 using System.Diagnostics;
 using System.Drawing.Imaging;
 
+using OMI.Formats.Pck;
 using OMI.Formats.GameRule;
-using OMI.Workers.GameRule;
-using OMI.Workers.Pck;
 using OMI.Formats.Languages;
+using OMI.Workers.Pck;
+using OMI.Workers.GameRule;
 using OMI.Workers.Language;
 
 using PckStudio.Properties;
 using PckStudio.Classes.FileTypes;
 using PckStudio.Classes.Utils;
 using PckStudio.Classes.Utils.ARC;
-using PckStudio.Classes._3ds.Utils;
 using PckStudio.Forms;
-using PckStudio.Forms.Utilities.Skins;
 using PckStudio.Forms.Utilities;
 using PckStudio.Forms.Editor;
 using PckStudio.Forms.Additional_Popups.Animation;
@@ -28,8 +27,8 @@ using PckStudio.Classes.IO.PCK;
 using PckStudio.Classes.Utils.TGA;
 using PckStudio.Forms.Additional_Popups;
 using PckStudio.Classes.Misc;
-using OMI.Formats.Pck;
 using PckStudio.Classes.IO.PCK;
+using PckStudio.Classes.IO._3DST;
 
 namespace PckStudio
 {
@@ -116,8 +115,7 @@ namespace PckStudio
 		private void Form1_Load(object sender, EventArgs e)
 		{
 			RPC.Initialize();
-			if (currentPCK == null)
-				RPC.SetPresence("An Open Source .PCK File Editor", "Program by PhoenixARC");
+			UpdateRPC();
 
 			skinToolStripMenuItem1.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.SkinFile);
 			capeToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.CapeFile);
@@ -167,30 +165,25 @@ namespace PckStudio
 			isTemplateFile = false;
 			saveLocation = filePath;
 			var reader = new PckFileReader(LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
-			PckFile pck = reader.FromFile(filePath);
-
-            metroLabel3.Text = "Current PCK File: " + Path.GetFileName(filePath);
-   //         using (var fileStream = File.OpenRead(filePath))
-			//{
-			//	try
-			//	{					
-			//	}
-			//	catch (OverflowException ex)
-			//	{
-			//		MessageBox.Show("Failed to open pck\n" +
-			//			$"Try {(LittleEndianCheckBox.Checked ? "unchecking" : "checking")} the 'Open/Save as Vita/PS4 pck' check box in the upper right corner.",
-			//			"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-			//		Debug.WriteLine(ex.Message);
-			//	}
-			//	catch (Exception ex)
-			//	{
-			//		MessageBox.Show("Failed to open pck\n" + 
-			//			"If this is an Audio/Music Cues pck, please use the specialized editor while inside of the parent pck.",
-			//			"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-			//		Debug.WriteLine("Can't open pck file of type: " + pck?.type.ToString());
-			//	}
-			//}
-			return pck;
+			try
+			{
+				PckFile pck = reader.FromFile(filePath);
+				return pck;
+			}
+			catch (OverflowException ex)
+			{
+				MessageBox.Show("Failed to open pck\n" +
+					$"Try {(LittleEndianCheckBox.Checked ? "unchecking" : "checking")} the 'Open/Save as Vita/PS4 pck' check box in the upper right corner.",
+					"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				Debug.WriteLine(ex.Message);
+			}
+			catch
+			{
+				MessageBox.Show("Failed to open pck\n" +
+					"If this is an Audio/Music Cues pck, please use the specialized editor while inside of the parent pck.",
+					"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
+			return null;
 		}
 
 		private void CheckForPasswordAndRemove()
@@ -204,7 +197,11 @@ namespace PckStudio
 		private void LoadEditorTab()
 		{
 			fileEntryCountLabel.Text = "Files:" + currentPCK.Files.Count;
-			treeViewMain.Enabled = treeMeta.Enabled = true;
+			if (isTemplateFile)
+				pckFileLabel.Text = "Unsaved File!";
+			else
+				pckFileLabel.Text = "Current PCK File: " + Path.GetFileName(saveLocation);
+            treeViewMain.Enabled = treeMeta.Enabled = true;
 			closeToolStripMenuItem.Visible = true;
 			saveToolStripMenuItem.Enabled = true;
 			saveToolStripMenuItem1.Enabled = true;
@@ -239,7 +236,8 @@ namespace PckStudio
 			convertToBedrockToolStripMenuItem.Enabled = false;
             addCustomPackImageToolStripMenuItem.Enabled = false;
             fileEntryCountLabel.Text = string.Empty;
-			UpdateRPC();
+            pckFileLabel.Text = string.Empty;
+            UpdateRPC();
 
         }
 
@@ -388,7 +386,7 @@ namespace PckStudio
 		{
 			if (currentPCK == null)
 			{
-				RPC.SetPresence("An Open Source .PCK File Editor", "Program by PhoenixARC");
+				RPC.SetPresence("An Open Source .PCK File Editor");
 				return;
 			};
 
@@ -396,11 +394,11 @@ namespace PckStudio
 					locfile.HasLocEntry("IDS_DISPLAY_NAME") &&
 					locfile.Languages.Contains("en-EN"))
 			{
-				RPC.SetPresence($"Editing a Pack: {locfile.GetLocEntry("IDS_DISPLAY_NAME", "en-EN")}", "Program by PhoenixARC");
+				RPC.SetPresence($"Editing a Pack: {locfile.GetLocEntry("IDS_DISPLAY_NAME", "en-EN")}");
 				return;
 			}
 			// default
-			RPC.SetPresence("An Open Source .PCK File Editor", "Program by PhoenixARC");
+			RPC.SetPresence("An Open Source .PCK File Editor");
 		}
 
 		private void HandleAudioFile(PckFile.FileData file)
@@ -451,7 +449,7 @@ namespace PckStudio
 				using (var ms = new MemoryStream(file.Data))
 				{
 					var texture = Image.FromStream(ms);
-					SkinPreview frm = new SkinPreview(texture, file.Properties.GetPropertyValue("ANIM", s => new SkinANIM(s)));
+					SkinPreview frm = new SkinPreview(texture, file.Properties.GetPropertyValue("ANIM", SkinANIM.FromString));
 					frm.ShowDialog(this);
 					frm.Dispose();
 				}
@@ -488,7 +486,7 @@ namespace PckStudio
 					buttonEdit.Visible = true;
 				}
 				else if (file.Properties.HasProperty("ANIM") &&
-						file.Properties.GetPropertyValue("ANIM", s => new SkinANIM(s)) == (ANIM_EFFECTS.RESOLUTION_64x64 | ANIM_EFFECTS.SLIM_MODEL))
+						file.Properties.GetPropertyValue("ANIM", s => SkinANIM.FromString(s) == (ANIM_EFFECTS.RESOLUTION_64x64 | ANIM_EFFECTS.SLIM_MODEL)))
 				{
 					buttonEdit.Text = "View Skin";
 					buttonEdit.Visible = true;
@@ -838,12 +836,15 @@ namespace PckStudio
             audioPck.AddCategory(PCKAudioFile.AudioCategory.EAudioType.Overworld);
             audioPck.AddCategory(PCKAudioFile.AudioCategory.EAudioType.Nether);
             audioPck.AddCategory(PCKAudioFile.AudioCategory.EAudioType.End);
-            PckFile.FileData pckFileData = currentPCK.CreateNewFile("audio.pck", PckFile.FileData.FileType.AudioFile);
-            using (var stream = new MemoryStream())
-            {
-                PCKAudioFileWriter.Write(stream, audioPck, isLittle);
-                pckFileData.SetData(stream.ToArray());
-            }
+			PckFile.FileData pckFileData = currentPCK.CreateNewFile("audio.pck", PckFile.FileData.FileType.AudioFile, () =>
+			{
+				using (var stream = new MemoryStream())
+				{
+					var writer = new PCKAudioFileWriter(audioPck, isLittle ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
+					writer.WriteToStream(stream);
+					return stream.ToArray();
+				}
+			});
             return pckFileData;
         }
 
@@ -955,7 +956,10 @@ namespace PckStudio
 			if (parent_file.Filetype is PckFile.FileData.FileType.TexturePackInfoFile || parent_file.Filetype is PckFile.FileData.FileType.SkinDataFile)
 			{
 				Console.WriteLine("Rebuilding " + parent_file.Filename);
-				PckFile newPCKFile = new PckFile(3);
+				PckFile newPCKFile = new PckFile(3)
+				{
+					HasVerionString = parent_file.Filetype is PckFile.FileData.FileType.SkinDataFile
+				};
 
 				foreach (TreeNode node in GetAllChildNodes(parent.Nodes))
 				{
@@ -966,9 +970,6 @@ namespace PckStudio
 						new_file.SetData(node_file.Data);
 					}
 				}
-
-				// Bool to add the XMLVersion property
-				bool isSkinsPCK = parent_file.Filetype is PckFile.FileData.FileType.SkinDataFile;
 
 				using (MemoryStream ms = new MemoryStream())
 				{
@@ -1013,9 +1014,9 @@ namespace PckStudio
 							try
 							{
 								using ANIMEditor diag = new ANIMEditor(property.Item2);
-								if (diag.ShowDialog(this) == DialogResult.OK && diag.saved)
+								if (diag.ShowDialog(this) == DialogResult.OK)
 								{
-									file.Properties[i] = ("ANIM", diag.outANIM);
+									file.Properties[i] = ("ANIM", diag.ResultAnim.ToString());
 									if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath))
 										RebuildSubPCK(treeViewMain.SelectedNode);
 									ReloadMetaTreeView();
@@ -1026,7 +1027,7 @@ namespace PckStudio
 							catch (Exception ex)
 							{
 								Debug.WriteLine(ex.Message);
-								MessageBox.Show("Failed to parse ANIM value, aborting to normal functionality. Please make sure the value only includes hexadecimal characters (0-9,A-F) and has no more than 8 characters. It can have an optional prefix of \"0x\".");
+								MessageBox.Show("Failed to parse ANIM value, aborting to normal functionality. Please make sure the value only includes hexadecimal characters (0-9,A-F) and has no more than 8 characters.");
 							}
 							break;
 
@@ -1078,21 +1079,19 @@ namespace PckStudio
 
 			// Creates new empty file entry
 			PckFile.FileData mf = new PckFile.FileData(string.Empty, mfO.Filetype);
-			mf.SetData(mfO.Data); // adds file data to minefile
+			mf.SetData(mfO.Data);
 			string dirName = Path.GetDirectoryName(mfO.Filename);
 
 			int clone_number = 0;
-			string prev_clone_str = "_clone1";
 			string nameWithoutExt = Path.GetFileNameWithoutExtension(mfO.Filename);
 			string newFileName = mfO.Filename;
-			do // Checks for existing clones and names it accordingly
+			do
 			{
 				clone_number++;
 				string clone_str = "_clone" + clone_number.ToString();
 				bool isClone = nameWithoutExt.Contains("_clone");
 				if (isClone) newFileName = nameWithoutExt.Remove(nameWithoutExt.Length - 7) + clone_str + Path.GetExtension(mfO.Filename);
 				else newFileName = nameWithoutExt + clone_str + Path.GetExtension(mfO.Filename);
-				prev_clone_str = clone_str;
 			}
 			while (currentPCK.HasFile(dirName + (string.IsNullOrEmpty(dirName) ? "" : "/") + newFileName, mf.Filetype));
 
@@ -1223,7 +1222,8 @@ namespace PckStudio
 				var locFile = new LOCFile();
 				locFile.InitializeDefault(packName);
 				using var stream = new MemoryStream();
-				LOCFileWriter.Write(stream, locFile);
+				var writer = new LOCFileWriter(locFile, 2);
+                writer.WriteToStream(stream);
 				return stream.ToArray();
             });
 
@@ -1327,10 +1327,10 @@ namespace PckStudio
 		private void texturePackToolStripMenuItem_Click(object sender, EventArgs e)
 		{
             checkSaveState();
-            CreateTexturePack packPrompt = new CreateTexturePack("");
+            CreateTexturePack packPrompt = new CreateTexturePack();
 			if (packPrompt.ShowDialog() == DialogResult.OK)
 			{
-                currentPCK = InitializeTexturePack(new Random().Next(8000, int.MaxValue), 0, packPrompt.packName, packPrompt.packRes);
+                currentPCK = InitializeTexturePack(new Random().Next(8000, int.MaxValue), 0, packPrompt.PackName, packPrompt.PackRes);
 				isTemplateFile = true;
                 wasModified = true;
                 LoadEditorTab();
@@ -1340,10 +1340,10 @@ namespace PckStudio
 		private void mashUpPackToolStripMenuItem_Click(object sender, EventArgs e)
 		{
             checkSaveState();
-            CreateTexturePack packPrompt = new CreateTexturePack("");
+            CreateTexturePack packPrompt = new CreateTexturePack();
 			if (packPrompt.ShowDialog() == DialogResult.OK)
 			{
-                currentPCK = InitializeMashUpPack(new Random().Next(8000, int.MaxValue), 0, packPrompt.packName, packPrompt.packRes);
+                currentPCK = InitializeMashUpPack(new Random().Next(8000, int.MaxValue), 0, packPrompt.PackName, packPrompt.PackRes);
 				isTemplateFile = true;
 				wasModified = false;
 				LoadEditorTab();
@@ -1589,7 +1589,8 @@ namespace PckStudio
 			{
 				using (var stream = new MemoryStream())
 				{
-					LOCFileWriter.Write(stream, locFile);
+					var writer = new LOCFileWriter(locFile, 2);
+                    writer.WriteToStream(stream);
 					locdata.SetData(stream.ToArray());
 				}
 				return true;
@@ -2065,11 +2066,11 @@ namespace PckStudio
 				saveFileDialog.DefaultExt = ".3dst";
 				if (saveFileDialog.ShowDialog() == DialogResult.OK)
 				{
-					using (var fs = saveFileDialog.OpenFile())
+					using (var ms = new MemoryStream(file.Data))
 					{
-						using var ms = new MemoryStream(file.Data);
 						Image img = Image.FromStream(ms);
-						_3DSUtil.SetImageTo3DST(fs, img);
+						var writer = new _3DSTextureWriter(img);
+						writer.WriteToFile(saveFileDialog.FileName);
 					}
 				}
 			}
@@ -2207,7 +2208,7 @@ namespace PckStudio
 				using AddFilePrompt diag = new AddFilePrompt("res/" + Path.GetFileName(ofd.FileName));
 				if (diag.ShowDialog(this) == DialogResult.OK)
 				{
-					PckFile.FileData file = currentPCK.CreateNewFile(diag.filepath, (PckFile.FileData.FileType)diag.filetype);
+					PckFile.FileData file = currentPCK.CreateNewFile(diag.Filepath, (PckFile.FileData.FileType)diag.Filetype);
 					file.SetData(File.ReadAllBytes(ofd.FileName));
 
 					if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath)) RebuildSubPCK(treeViewMain.SelectedNode);

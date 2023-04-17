@@ -21,51 +21,46 @@ using System.Drawing;
 using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
-using PckStudio.Classes.IO;
 using System.Text;
+using OMI.Workers;
+using OMI;
 
 namespace PckStudio.Classes.Utils.TGA
 {
-    internal class TGAWriter : StreamDataWriter
+    internal class TGAWriter : IDataFormatWriter
     {
         private Bitmap _bitmap;
         private TGADataTypeCode _format;
 
-        public TGAWriter() : base(littleEndian: true)
-        {
-        }
-
-        public void Write(Stream stream, Bitmap bitmap, TGADataTypeCode format)
+        public TGAWriter(Bitmap bitmap, TGADataTypeCode format)
         {
             _format = format;
             _bitmap = bitmap;
-            WriteToStream(stream);
         }
 
-        public void SaveHeader(Stream stream, TGAHeader header)
+        public void SaveHeader(EndiannessAwareBinaryWriter writer, TGAHeader header)
         {
-
-            WriteBytes(stream, header.Id);
-            WriteBytes(stream, new byte[]
+            writer.Write(header.Id);
+            writer.Write(new byte[]
             {
                 header.Colormap.Type,
                 (byte)header.DataTypeCode
             });
-            WriteShort(stream, header.Colormap.Origin);
-            WriteShort(stream, header.Colormap.Length);
-            stream.WriteByte(header.Colormap.Depth);
-            WriteShort(stream, header.Origin.X);
-            WriteShort(stream, header.Origin.Y);
-            WriteShort(stream, header.Width);
-            WriteShort(stream, header.Height);
-            WriteBytes(stream, new byte[]
+            writer.Write(header.Colormap.Origin);
+            writer.Write(header.Colormap.Length);
+            writer.Write(header.Colormap.Depth);
+            writer.Write(header.Origin.X);
+            writer.Write(header.Origin.Y);
+            writer.Write(header.Width);
+            writer.Write(header.Height);
+            writer.Write(new byte[]
             {
                 header.BitsPerPixel,
                 header.ImageDescriptor,
             });
         }
 
-        public void SaveImage(Stream stream, Bitmap bitmap, TGAHeader header)
+        public void SaveImage(EndiannessAwareBinaryWriter writer, Bitmap bitmap, TGAHeader header)
         {
             Debug.Assert(bitmap.Width == header.Width || bitmap.Height == header.Height,
                 "Header resolution doesn't match Image resolution");
@@ -88,7 +83,7 @@ namespace PckStudio.Classes.Utils.TGA
                         case TGADataTypeCode.RGB:
                             if (header.BitsPerPixel == 32)
                             {
-                                WriteBytes(stream, pixel);
+                                writer.Write(pixel);
                             }
                             break;
                         default:
@@ -99,18 +94,30 @@ namespace PckStudio.Classes.Utils.TGA
 
         }
 
-        private void SaveFooter(Stream stream)
+        private void SaveFooter(EndiannessAwareBinaryWriter writer)
         {
-            WriteInt(stream, 0); // extensionDataOffset
-            WriteInt(stream, 0); // developerAreaDataOffset
-            WriteString(stream, TGAFooter.Signature, Encoding.ASCII);
-            stream.WriteByte(0x2E);
-            stream.WriteByte(0x00);
+            writer.Write(0); // extensionDataOffset
+            writer.Write(0); // developerAreaDataOffset
+            writer.WriteString(TGAFooter.Signature);
+            writer.Write((byte)0x2E);
+            writer.Write((byte)0x00);
         }
 
-        protected override void WriteToStream(Stream stream)
+        
+        public void WriteToStream(Stream stream)
         {
-            SaveHeader(stream, default);
+            using (var writer = new EndiannessAwareBinaryWriter(stream, Encoding.ASCII, leaveOpen: true, Endianness.LittleEndian))
+            {
+                SaveHeader(writer, default);
+            }
+        }
+
+        public void WriteToFile(string filename)
+        {
+            using (var fs = File.OpenWrite(filename))
+            {
+                WriteToStream(fs);
+            }
         }
     }
 }

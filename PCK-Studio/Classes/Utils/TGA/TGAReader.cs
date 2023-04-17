@@ -24,27 +24,40 @@ using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 using PckStudio.Classes.IO;
 using System.Collections.Generic;
+using OMI.Workers;
+using OMI;
 
 namespace PckStudio.Classes.Utils.TGA
 {
-    internal class TGAReader : StreamDataReader<TGAFileData>
+    internal class TGAReader : IDataFormatReader<TGAFileData>, IDataFormatReader
     {
-        public TGAReader() : base(useLittleEndian: true)
+        object IDataFormatReader.FromStream(Stream stream) => FromStream(stream);
+
+        object IDataFormatReader.FromFile(string filename) => FromFile(filename);
+
+        public TGAFileData FromFile(string filename)
         {
+            if (File.Exists(filename))
+            {
+                using( var fs = File.OpenRead(filename) )
+                {
+                    return FromStream(fs);
+                }
+            }
+            throw new FileNotFoundException(filename);
         }
 
-        public TGAFileData Read(Stream stream) => ReadFromStream(stream);
-
-        protected override TGAFileData ReadFromStream(Stream stream)
+        public TGAFileData FromStream(Stream stream)
         {
-            TGAHeader header = LoadHeader(stream);
-            Image image = LoadImage(stream, header);
-            TGAFooter footer = LoadFooter(stream);
-            TGAExtentionData extentionData = LoadExtentionData(stream, footer);
+            using var reader = new EndiannessAwareBinaryReader(stream, Encoding.ASCII, leaveOpen: true, Endianness.LittleEndian);
+            TGAHeader header = LoadHeader(reader);
+            Image image = LoadImage(reader, header);
+            TGAFooter footer = LoadFooter(reader);
+            TGAExtentionData extentionData = LoadExtentionData(reader, footer);
             return new TGAFileData(header, image, footer, extentionData);
         }
 
-        private static void TGA_HandleRGB(Stream stream, TGAHeader header, BitmapData bitmapData)
+        private static void TGA_HandleRGB(EndiannessAwareBinaryReader reader, TGAHeader header, BitmapData bitmapData)
         {
             int bytesPerPixel = header.BitsPerPixel / 8;
 
@@ -56,11 +69,11 @@ namespace PckStudio.Classes.Utils.TGA
                 _ => throw new NotSupportedException(nameof(bytesPerPixel))
             };
 
-            byte[] data = ReadBytes(stream, header.Height * header.Width * bytesPerPixel);
+            byte[] data = reader.ReadBytes(header.Height * header.Width * bytesPerPixel);
             Marshal.Copy(data, 0, bitmapData.Scan0, data.Length);
         }
 
-        private static void TGA_HandleRLERGB(Stream stream, TGAHeader header, BitmapData bitmapData)
+        private static void TGA_HandleRLERGB(EndiannessAwareBinaryReader reader, TGAHeader header, BitmapData bitmapData)
         {
             int bytesPerPixel = header.BitsPerPixel / 8;
 
@@ -75,17 +88,17 @@ namespace PckStudio.Classes.Utils.TGA
             int pixelOffset = 0;
             while (header.Width * header.Height > pixelOffset)
             {
-                byte packetInfo = ReadBytes(stream, 1)[0];
+                byte packetInfo = reader.ReadByte();
                 bool isRleChunk = (packetInfo & 0x80) != 0;
                 int count = packetInfo & 0x7f;
                 if (!isRleChunk)
                 {
-                    byte[] data = ReadBytes(stream, bytesPerPixel * count);
+                    byte[] data = reader.ReadBytes(bytesPerPixel * count);
                     Marshal.Copy(data, 0, bitmapData.Scan0 + pixelOffset * bytesPerPixel, data.Length);
                     pixelOffset += count;
                     continue;
                 }
-                byte[] rleColor = ReadBytes(stream, bytesPerPixel);
+                byte[] rleColor = reader.ReadBytes(bytesPerPixel);
                 for (int i = 0; i < count; i++)
                 {
                     byte[] data = rleColor;
@@ -95,7 +108,7 @@ namespace PckStudio.Classes.Utils.TGA
             }
         }
 
-        private static void TGA_HandleNoData(Stream stream, TGAHeader header, BitmapData bitmapData)
+        private static void TGA_HandleNoData(EndiannessAwareBinaryReader reader, TGAHeader header, BitmapData bitmapData)
         {
             Random r = new Random();
             byte[] bytes = new byte[bitmapData.Width * bitmapData.Height * 4];
@@ -103,33 +116,33 @@ namespace PckStudio.Classes.Utils.TGA
             Marshal.Copy(bytes, 0, bitmapData.Scan0, bytes.Length);
         }
 
-        private static readonly Dictionary<TGADataTypeCode, Action<Stream, TGAHeader, BitmapData>> TGADataTypeHandler = new()
+        private static readonly Dictionary<TGADataTypeCode, Action<EndiannessAwareBinaryReader, TGAHeader, BitmapData>> TGADataTypeHandler = new()
         {
             [TGADataTypeCode.RGB] = TGA_HandleRGB,
             [TGADataTypeCode.RLE_RGB] = TGA_HandleRLERGB,
             [TGADataTypeCode.NO_DATA] = TGA_HandleNoData,
         };
         
-        private static TGAHeader LoadHeader(Stream stream)
+        private static TGAHeader LoadHeader(EndiannessAwareBinaryReader reader)
         {
             var header = new TGAHeader();
-            byte[] bytes = ReadBytes(stream, 3);
+            byte[] bytes = reader.ReadBytes(3);
             (var headerIdLength, header.Colormap.Type, header.DataTypeCode) = (bytes[0], bytes[1], (TGADataTypeCode)bytes[2]);
-            header.Colormap.Origin = ReadShort(stream);
-            header.Colormap.Length = ReadShort(stream);
-            header.Colormap.Depth = ReadBytes(stream, 1)[0];
-            header.Origin.X = ReadShort(stream);
-            header.Origin.Y = ReadShort(stream);
-            header.Width = ReadShort(stream);
-            header.Height = ReadShort(stream);
-            header.BitsPerPixel = (byte)stream.ReadByte();
-            header.ImageDescriptor = ReadBytes(stream, 1)[0];
-            header.Id = ReadBytes(stream, headerIdLength);
+            header.Colormap.Origin = reader.ReadInt16();
+            header.Colormap.Length = reader.ReadInt16();
+            header.Colormap.Depth = reader.ReadByte();
+            header.Origin.X = reader.ReadInt16();
+            header.Origin.Y = reader.ReadInt16();
+            header.Width = reader.ReadInt16();
+            header.Height = reader.ReadInt16();
+            header.BitsPerPixel = reader.ReadByte();
+            header.ImageDescriptor = reader.ReadByte();
+            header.Id = reader.ReadBytes(headerIdLength);
             Debug.WriteLineIf(headerIdLength > 0, $"Image ID: {header.Id}");
             return header;
         }
 
-        private static Image LoadImage(Stream stream, TGAHeader header)
+        private static Image LoadImage(EndiannessAwareBinaryReader reader, TGAHeader header)
         {
             DebugLogHeader(header);
 
@@ -144,64 +157,64 @@ namespace PckStudio.Classes.Utils.TGA
 
             if (!TGADataTypeHandler.TryGetValue(header.DataTypeCode, out var handleFunction))
                 throw new NotSupportedException(nameof(header.DataTypeCode));
-            handleFunction?.Invoke(stream, header, bitmapData);
+            handleFunction?.Invoke(reader, header, bitmapData);
             bitmap.UnlockBits(bitmapData);
             bitmap.RotateFlip(RotateFlipType.RotateNoneFlipY);
             return bitmap;
         }
 
-        private static TGAFooter LoadFooter(Stream stream)
+        private static TGAFooter LoadFooter(EndiannessAwareBinaryReader reader)
         {
-            long origin = stream.Position;
-            stream.Seek(-26, SeekOrigin.End);
+            long origin = reader.BaseStream.Position;
+            reader.BaseStream.Seek(-26, SeekOrigin.End);
 
             TGAFooter footer = new TGAFooter();
 
-            footer.ExtensionDataOffset = ReadInt(stream); // optional
-            footer.DeveloperAreaDataOffset = ReadInt(stream); // optional
+            footer.ExtensionDataOffset = reader.ReadInt32(); // optional
+            footer.DeveloperAreaDataOffset = reader.ReadInt32(); // optional
             Debug.WriteLine("Extension Data Offset:         {0:x}", footer.ExtensionDataOffset);
             Debug.WriteLine("Developer Area Data Offset:    {0:x}", footer.DeveloperAreaDataOffset);
 
-            string signature = ReadString(stream, 16, Encoding.ASCII);
-            Debug.WriteLineIf(!signature.Equals(TGAFooter.Signature) || ReadShort(stream) != 0x002E,
+            string signature = reader.ReadString(16);
+            Debug.WriteLineIf(!signature.Equals(TGAFooter.Signature) || reader.ReadInt16() != 0x002E,
                 "Footer end invalid");
 
-            stream.Seek(origin, SeekOrigin.Begin);
+            reader.BaseStream.Seek(origin, SeekOrigin.Begin);
             return footer;
         }
 
-        private static TGAExtentionData LoadExtentionData(Stream stream, TGAFooter footer)
+        private static TGAExtentionData LoadExtentionData(EndiannessAwareBinaryReader reader, TGAFooter footer)
         {
             if (footer.ExtensionDataOffset > 0)
             {
-                stream.Seek(footer.ExtensionDataOffset, SeekOrigin.Begin);
-                if (ReadShort(stream) == TGAExtentionData.ExtensionSize)
+                reader.BaseStream.Seek(footer.ExtensionDataOffset, SeekOrigin.Begin);
+                if (reader.ReadInt16() == TGAExtentionData.ExtensionSize)
                 {
                     TGAExtentionData extentionData = new TGAExtentionData();
-                    extentionData.AuthorName = ReadString(stream, 41, Encoding.ASCII);
-                    extentionData.AuthorComment = ReadString(stream, 324, Encoding.ASCII);
-                    short month = ReadShort(stream);
-                    short day = ReadShort(stream);
-                    short year = ReadShort(stream);
-                    short hour = ReadShort(stream);
-                    short minute = ReadShort(stream);
-                    short second = ReadShort(stream);
+                    extentionData.AuthorName = reader.ReadString(41);
+                    extentionData.AuthorComment = reader.ReadString(324);
+                    short month = reader.ReadInt16();
+                    short day = reader.ReadInt16();
+                    short year = reader.ReadInt16();
+                    short hour = reader.ReadInt16();
+                    short minute = reader.ReadInt16();
+                    short second = reader.ReadInt16();
                     extentionData.TimeStamp = new DateTime(year, month, day, hour, minute, second);
-                    extentionData.JobID = ReadString(stream, 41, Encoding.ASCII);
+                    extentionData.JobID = reader.ReadString(41);
                     extentionData.JobTime = new TimeSpan(
-                        hours: ReadShort(stream),
-                        minutes: ReadShort(stream),
-                        seconds: ReadShort(stream)
+                        hours: reader.ReadInt16(),
+                        minutes: reader.ReadInt16(),
+                        seconds: reader.ReadInt16()
                     );
-                    extentionData.SoftwareID = ReadString(stream, 41, Encoding.ASCII);
-                    extentionData.SoftwareVersion = ReadBytes(stream, 3);
-                    extentionData.KeyColor = ReadInt(stream);
-                    extentionData.PixelAspectRatio = ReadInt(stream);
-                    extentionData.GammaValue = ReadInt(stream);
-                    extentionData.ColorCorrectionOffset = ReadInt(stream);
-                    extentionData.PostageStampOffset = ReadInt(stream);
-                    extentionData.ScanLineOffset = ReadInt(stream);
-                    extentionData.AttributesType = (byte)stream.ReadByte();
+                    extentionData.SoftwareID = reader.ReadString(41);
+                    extentionData.SoftwareVersion = reader.ReadBytes(3);
+                    extentionData.KeyColor = reader.ReadInt32();
+                    extentionData.PixelAspectRatio = reader.ReadInt32();
+                    extentionData.GammaValue = reader.ReadInt32();
+                    extentionData.ColorCorrectionOffset = reader.ReadInt32();
+                    extentionData.PostageStampOffset = reader.ReadInt32();
+                    extentionData.ScanLineOffset = reader.ReadInt32();
+                    extentionData.AttributesType = reader.ReadByte();
                     DebugLogExtentionData(extentionData);
 
                     return extentionData;

@@ -1,12 +1,9 @@
 ﻿using Newtonsoft.Json.Linq;
 using System.Drawing;
 using System.Linq;
-using System.IO;
 
 using PckStudio.Properties;
-using System.Drawing.Imaging;
-using PckStudio.Classes.Extentions;
-using OMI.Formats.Pck;
+using PckStudio.Extensions;
 
 namespace PckStudio.Forms.Utilities
 {

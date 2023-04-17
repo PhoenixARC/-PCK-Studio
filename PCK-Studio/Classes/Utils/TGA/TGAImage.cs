@@ -21,7 +21,7 @@ using System;
 
 namespace PckStudio.Classes.Utils.TGA
 {
-    public readonly struct TGAFileData
+    public class TGAFileData
     {
         public TGAFileData(TGAHeader header, Image bitmap, TGAFooter footer, TGAExtentionData extentionData)
         {
