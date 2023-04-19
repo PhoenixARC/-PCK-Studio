@@ -56,7 +56,7 @@ $ cd PCK-Studio
 >  [Nobledez](https://github.com/Nobledez)<br>
 >  [jam1garner](https://github.com/jam1garner)<br>
 >  [XxModZxXWiiPlaza](https://github.com/XxModZxXWiiPlaza)<br>
->  [SlothWiiPlaza](https://github.com/Kashiiera)<br>
+>  SlothWiiPlaza<br>
 
 ## Other Credits
 *  [yaboiFoxx](https://github.com/yaboiFoxx) for Improved UI concept
