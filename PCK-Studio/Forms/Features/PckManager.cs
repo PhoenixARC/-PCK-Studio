@@ -48,19 +48,27 @@ namespace PckStudio.Forms.Additional_Features
             if (supportedPlatformComboBox.SelectedIndex > -1)
             {
                 string text = supportedPlatformComboBox.Items[supportedPlatformComboBox.SelectedIndex].ToString();
-                currentlyShowingControl = text switch
+                try
                 {
-                    WiiU => new WiiUPanel(),
-                    PS3 => throw new NotImplementedException($"{text}-Panel is currently not implemented."),
-                    PSVita => throw new NotImplementedException($"{text}-Panel is currently not implemented."),
-                    CemU => new CemuPanel(),
-                    RPCS3 => throw new NotImplementedException($"{text}-Panel is currently not implemented."),
-                    _ => throw new Exception($"No Panel found for: {text}"),
-                };
 
-                currentlyShowingControl.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Right;
-                mainPanel.SetColumnSpan(currentlyShowingControl, 2);
-                mainPanel.Controls.Add(currentlyShowingControl, 0, 1);
+                    currentlyShowingControl = text switch
+                    {
+                        WiiU => new WiiUPanel(),
+                        PS3 => throw new NotImplementedException($"{text}-Panel is currently not implemented."),
+                        PSVita => throw new NotImplementedException($"{text}-Panel is currently not implemented."),
+                        CemU => new CemuPanel(),
+                        RPCS3 => throw new NotImplementedException($"{text}-Panel is currently not implemented."),
+                        _ => throw new Exception($"No Panel found for: {text}"),
+                    };
+                    currentlyShowingControl.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Right;
+                    mainPanel.SetColumnSpan(currentlyShowingControl, 2);
+                    mainPanel.Controls.Add(currentlyShowingControl, 0, 1);
+                }
+                catch (NotImplementedException ex)
+                {
+                    MessageBox.Show(ex.Message, "Not Implemented");
+                }
+
             }
         }
     }
