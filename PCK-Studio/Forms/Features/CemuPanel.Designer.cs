@@ -210,6 +210,7 @@
             this.DLCTreeView.Size = new System.Drawing.Size(424, 475);
             this.DLCTreeView.TabIndex = 13;
             this.DLCTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.DLCTreeView_AfterSelect);
+            this.DLCTreeView.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.DLCTreeView_NodeMouseDoubleClick);
             // 
             // DLCContextMenu
             // 

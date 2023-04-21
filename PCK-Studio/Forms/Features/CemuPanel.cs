@@ -60,6 +60,41 @@ namespace PckStudio.Forms.Additional_Features
             }
         }
 
+        private class DLCDirectoryInfo
+        {
+            private readonly bool _hasTexturePack;
+            private readonly string _basePckPath;
+            private readonly string _texturePackPath;
+
+            public bool HasTexturePack => _hasTexturePack;
+            public string PackPath => _basePckPath;
+            public string TexturePackPath => _texturePackPath;
+
+            public DLCDirectoryInfo(DirectoryInfo directory)
+            {
+                _basePckPath = directory.GetFiles().FirstOrDefault(f => f.Name.EndsWith(".pck")).FullName;
+                _ = _basePckPath ?? throw new NullReferenceException($"Could not find any '.pck' inside {directory.Name}");
+                if (TryGetDataDirectory(directory, out var dataDir))
+                {
+                    var tpFileInfo = dataDir.GetFiles().FirstOrDefault(f => !f.Name.Equals("audio.pck") && f.Name.EndsWith(".pck"));
+                    _hasTexturePack = tpFileInfo is not null;
+                    _texturePackPath = _hasTexturePack ? tpFileInfo.FullName : string.Empty;
+                }
+            }
+
+            public DLCDirectoryInfo(string path)
+                : this(new DirectoryInfo(path))
+            {
+            }
+
+            private bool TryGetDataDirectory(DirectoryInfo directory, out DirectoryInfo dataDirectory)
+            {
+                var dirs = directory.GetDirectories("Data", SearchOption.TopDirectoryOnly);
+                dataDirectory = dirs.Length != 0 ? dirs[0] : null;
+                return dirs.Length != 0;
+            }
+        }
+
         private void ListDLCs()
         {
             DLCTreeView.Nodes.Clear();
@@ -92,17 +127,7 @@ namespace PckStudio.Forms.Additional_Features
                 if (directoryInfo.GetFileSystemInfos().Length != 0)
                 {
                     var node = DLCTreeView.Nodes.Add(directoryInfo.Name);
-
-                    var dirs = directoryInfo.GetDirectories("Data", SearchOption.TopDirectoryOnly);
-                    bool hasDataFolderAndPckFile = dirs.Length != 0
-                        && dirs.FirstOrDefault(
-                            d => d.GetFiles().FirstOrDefault(f => f.Name.EndsWith(".pck")) is not null
-                        ) is not null;
-
-                    node.Tag = directoryInfo.FullName +
-                        (hasDataFolderAndPckFile
-                        ? $";{directoryInfo.FullName}/Data" 
-                        : string.Empty);
+                    node.Tag = new DLCDirectoryInfo(directoryInfo);
                 }
             }
         }
@@ -124,34 +149,23 @@ namespace PckStudio.Forms.Additional_Features
 
         private void openSkinPackToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (DLCTreeView.SelectedNode.Tag is string path &&
-                Directory.Exists(path.Split(';')[0]))
+            if (DLCTreeView.SelectedNode.Tag is DLCDirectoryInfo dlcDir)
             {
-                string pckFilePath = Directory.GetFiles(path.Split(';')[0]).FirstOrDefault(s => s.EndsWith(".pck"));
-                if (!string.IsNullOrEmpty(pckFilePath))
-                {
-                    Program.MainInstance.LoadPckFromFile(pckFilePath);
-                }
+                Program.MainInstance.LoadPckFromFile(dlcDir.PackPath);
             }
         }
 
         private void openTexturePackToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (DLCTreeView.SelectedNode.Tag is string path &&
-                path.Split(';').Length > 1 &&
-                Directory.Exists(path.Split(';')[1]))
+            if (DLCTreeView.SelectedNode.Tag is DLCDirectoryInfo dlcDir && dlcDir.HasTexturePack)
             {
-                string pckFilePath = Directory.GetFiles(path.Split(';')[1]).FirstOrDefault(s => s.EndsWith(".pck"));
-                if (!string.IsNullOrEmpty(pckFilePath))
-                {
-                    Program.MainInstance.LoadPckFromFile(pckFilePath);
-                }
+                Program.MainInstance.LoadPckFromFile(dlcDir.TexturePackPath);
             }
         }
 
         private void DLCTreeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            openTexturePackToolStripMenuItem.Visible = e.Node.Tag is string nodeData && nodeData.Split(';').Length >= 2;
+            openTexturePackToolStripMenuItem.Visible = e.Node.Tag is DLCDirectoryInfo dlcDir && dlcDir.HasTexturePack;
         }
 
         private void addCustomPckToolStripMenuItem_Click(object sender, EventArgs e)
@@ -198,6 +212,11 @@ namespace PckStudio.Forms.Additional_Features
                 Directory.Delete(directoryPath, recursive: true);
                 DLCTreeView.SelectedNode.Remove();
             }
+        }
+
+        private void DLCTreeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            openSkinPackToolStripMenuItem_Click(sender, e);
         }
     }
 }
