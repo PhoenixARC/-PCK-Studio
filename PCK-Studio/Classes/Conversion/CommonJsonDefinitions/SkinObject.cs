@@ -15,37 +15,22 @@
  *    misrepresented as being the original software.
  * 3. This notice may not be removed or altered from any source distribution.
 **/
-using System.Numerics;
 using Newtonsoft.Json;
 
-namespace PckStudio.Conversion.Bedrock.JsonDefinitions
+namespace PckStudio.Conversion.Common.JsonDefinitions
 {
-    internal class GeometryCube
+    internal class SkinObject
     {
-        public GeometryCube(Vector3 origin, Vector3 size, Vector2 uv, bool mirror = false, float inflate = 0.0f)
-        {
-            origin.CopyTo(Origin);
-            size.CopyTo(Size);
-            uv.CopyTo(UV);
-            Mirror = mirror;
-            Inflate = inflate;
-        }
+        [JsonProperty("localization_name")]
+        public string LocalizationName { get; set; }
 
-        [JsonProperty("origin")]
-        public float[] Origin = { 0, 0, 0 };
+        [JsonProperty("geometry")]
+        public string GeometryName = "geometry.humanoid.custom";
 
-        [JsonProperty("size")]
-        public float[] Size = { 0, 0, 0 };
+        [JsonProperty("texture")]
+        public string TextureName { get; set; }
 
-        // for whatever reason, uv is a float on LCE,
-        // so I've kept it a float for the sake of consistency
-        [JsonProperty("uv")]
-        public float[] UV = { 0, 0 };
-
-        [JsonProperty("mirror")]
-        public bool Mirror = false;
-
-        [JsonProperty("inflate")]
-        public float Inflate = 0.0f;
+        [JsonProperty("type")]
+        public string Type = "free";
     }
 }

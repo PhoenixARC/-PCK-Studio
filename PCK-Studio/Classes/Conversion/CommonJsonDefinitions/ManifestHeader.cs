@@ -15,19 +15,33 @@
  *    misrepresented as being the original software.
  * 3. This notice may not be removed or altered from any source distribution.
 **/
+using System;
 using Newtonsoft.Json;
 
-namespace PckStudio.Conversion.Bedrock.Json
+namespace PckStudio.Conversion.Common.JsonDefinitions
 {
-    internal class Manifest
+    internal class ManifestHeader
     {
-        [JsonProperty("header")]
-        public ManifestHeader Header { get; set; }
+        public ManifestHeader(Version version = default!)
+        {
+            version ??= new Version(1, 0, 0);
+            Version = new int[3]
+            {
+                version.Major, version.Minor, version.Build
+            };
+            UUID = Guid.NewGuid().ToString();
+        }
 
-        [JsonProperty("modules")]
-        public ManifestModule[] Modules { get; set; }
+        [JsonProperty("version")]
+        public int[] Version { get; set; }
 
-        [JsonProperty("format_version")]
-        public int FormatVersion = 1;
+        [JsonProperty("name")]
+        public string Name { get; set; } = string.Empty;
+
+        [JsonProperty("description")]
+        public string Description { get; set; } = string.Empty;
+
+        [JsonProperty("uuid")]
+        public string UUID { get; }
     }
 }

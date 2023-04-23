@@ -19,7 +19,7 @@ using System;
 using System.Numerics;
 using Newtonsoft.Json;
 
-namespace PckStudio.Conversion.Bedrock.JsonDefinitions
+namespace PckStudio.Conversion.Common.JsonDefinitions
 {
     internal class Geometry
     {

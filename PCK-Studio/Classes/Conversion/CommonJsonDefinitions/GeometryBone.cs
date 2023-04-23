@@ -18,7 +18,7 @@
 using System.Numerics;
 using Newtonsoft.Json;
 
-namespace PckStudio.Conversion.Bedrock.JsonDefinitions
+namespace PckStudio.Conversion.Common.JsonDefinitions
 {
     internal class GeometryBone
     {
@@ -35,7 +35,7 @@ namespace PckStudio.Conversion.Bedrock.JsonDefinitions
         //public string META_BoneType = null;
 
         [JsonProperty(PropertyName = "name", NullValueHandling = NullValueHandling.Ignore)]
-        public string Name = "partName";
+        public string Name { get; set; } = "partName";
 
         [JsonProperty(PropertyName = "parent", NullValueHandling = NullValueHandling.Ignore)]
         public string Parent = "parentName";

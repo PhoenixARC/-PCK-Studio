@@ -14,9 +14,8 @@ using OMI.Formats.Pck;
 using OMI.Workers.Language;
 using OMI.Workers.Pck;
 
-using PckStudio.Conversion.Bedrock.Json;
 using PckStudio.Classes.Utils;
-using PckStudio.Conversion.Bedrock.JsonDefinitions;
+using PckStudio.Conversion.Common.JsonDefinitions;
 using System.Diagnostics;
 using System.Linq;
 
@@ -63,7 +62,7 @@ namespace PckStudio.Conversion.Bedrock
             "uk_UA"
         };
 
-        static List<string> OffsetNames = new List<string>
+        static string[] OffsetNames = new string[]
         {
             "HEAD", "HELMET",
             "BODY", "CHEST", "BELT",
@@ -228,7 +227,7 @@ namespace PckStudio.Conversion.Bedrock
             SkinJSON skinJson = new SkinJSON();   // Skins.json
             JObject geometryJson = new JObject(); // Geometry.json
 
-            _loc = AcquireLocFile(skinPck) ?? throw new ArgumentNullException("Loc file acquire fail.");
+            _loc = AcquireLocFile(skinPck) ?? throw new ArgumentNullException($"{nameof(AcquireLocFile)} failed.");
 
             string bedrockPackName = "DummySkinPack";
             var packNameTranslations = _loc.GetLocEntries("IDS_DISPLAY_NAME");

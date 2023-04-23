@@ -15,31 +15,35 @@
  *    misrepresented as being the original software.
  * 3. This notice may not be removed or altered from any source distribution.
 **/
-using System;
+using System.Numerics;
 using Newtonsoft.Json;
 
-namespace PckStudio.Conversion.Bedrock.Json
+namespace PckStudio.Conversion.Common.JsonDefinitions
 {
-    internal class ManifestModule
+    internal class GeometryCube
     {
-        public ManifestModule(string type, Version version = default!)
+        public GeometryCube(Vector3 origin, Vector3 size, Vector2 uv, bool mirror = false, float inflate = 0.0f)
         {
-            Type = type;
-            version ??= new Version(1, 0, 0);
-            Version = new int[3]
-            {
-                version.Major, version.Minor, version.Build,
-            };
-            UUID = Guid.NewGuid().ToString();
+            origin.CopyTo(Origin);
+            size.CopyTo(Size);
+            uv.CopyTo(UV);
+            Mirror = mirror;
+            Inflate = inflate;
         }
 
-        [JsonProperty("version")]
-        public int[] Version { get; set; }
+        [JsonProperty("origin")]
+        public float[] Origin = { 0, 0, 0 };
 
-        [JsonProperty("type")]
-        public string Type { get; set; }
+        [JsonProperty("size")]
+        public float[] Size = { 0, 0, 0 };
 
-        [JsonProperty("uuid")]
-        public string UUID { get; }
+        [JsonProperty("uv")]
+        public float[] UV = { 0, 0 };
+
+        [JsonProperty("mirror", NullValueHandling = NullValueHandling.Ignore)]
+        public bool Mirror { get; set; }
+
+        [JsonProperty("inflate", NullValueHandling = NullValueHandling.Ignore)]
+        public float Inflate { get; set; }
     }
 }

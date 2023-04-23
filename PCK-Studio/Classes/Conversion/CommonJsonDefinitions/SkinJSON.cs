@@ -17,20 +17,17 @@
 **/
 using Newtonsoft.Json;
 
-namespace PckStudio.Conversion.Bedrock.Json
+namespace PckStudio.Conversion.Common.JsonDefinitions
 {
-    internal class SkinObject
+    internal class SkinJSON
     {
+        [JsonProperty("serialize_name")]
+        public string SerializeName = string.Empty;
+
         [JsonProperty("localization_name")]
-        public string LocalizationName { get; set; }
+        public string LocalizationName = string.Empty;
 
-        [JsonProperty("geometry")]
-        public string GeometryName = "geometry.humanoid.custom";
-
-        [JsonProperty("texture")]
-        public string TextureName { get; set; }
-
-        [JsonProperty("type")]
-        public string Type = "free";
+        [JsonProperty("skins")]
+        public SkinObject[] Skins { get; set; }
     }
 }
