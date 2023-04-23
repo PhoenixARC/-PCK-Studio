@@ -19,7 +19,7 @@ using PckStudio.Classes.FileTypes;
 using PckStudio.Classes.IO.PCK;
 using OMI.Formats.Pck;
 using OMI.Workers.Pck;
-using PckStudio.Classes.Extentions;
+using PckStudio.Extensions;
 
 namespace PckStudio.Forms
 {
@@ -1027,7 +1027,7 @@ namespace PckStudio.Forms
                     {
                         var ms = new MemoryStream(skinTexture.Data);
                         Bitmap saveSkin = new Bitmap(Image.FromStream(ms));
-                        var config = new ImageExtentions.GraphicsConfig()
+                        var config = new GraphicsConfig()
                         {
                              CompositingMode = CompositingMode.SourceCopy,
                              CompositingQuality = CompositingQuality.HighQuality,

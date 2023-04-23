@@ -19,7 +19,6 @@ using PckStudio.Properties;
 using PckStudio.Classes.FileTypes;
 using PckStudio.Classes.Utils;
 using PckStudio.Classes.Utils.ARC;
-using PckStudio.Classes._3ds.Utils;
 using PckStudio.Forms;
 using PckStudio.Forms.Utilities;
 using PckStudio.Forms.Editor;
@@ -27,6 +26,7 @@ using PckStudio.Forms.Additional_Popups.Animation;
 using PckStudio.Forms.Additional_Popups;
 using PckStudio.Classes.Misc;
 using PckStudio.Classes.IO.PCK;
+using PckStudio.Classes.IO._3DST;
 using PckStudio.Conversion.Bedrock;
 
 namespace PckStudio
@@ -840,12 +840,15 @@ namespace PckStudio
             audioPck.AddCategory(PCKAudioFile.AudioCategory.EAudioType.Overworld);
             audioPck.AddCategory(PCKAudioFile.AudioCategory.EAudioType.Nether);
             audioPck.AddCategory(PCKAudioFile.AudioCategory.EAudioType.End);
-            PckFile.FileData pckFileData = currentPCK.CreateNewFile("audio.pck", PckFile.FileData.FileType.AudioFile);
-            using (var stream = new MemoryStream())
-            {
-                PCKAudioFileWriter.Write(stream, audioPck, isLittle);
-                pckFileData.SetData(stream.ToArray());
-            }
+			PckFile.FileData pckFileData = currentPCK.CreateNewFile("audio.pck", PckFile.FileData.FileType.AudioFile, () =>
+			{
+				using (var stream = new MemoryStream())
+				{
+					var writer = new PCKAudioFileWriter(audioPck, isLittle ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
+					writer.WriteToStream(stream);
+					return stream.ToArray();
+				}
+			});
             return pckFileData;
         }
 
@@ -2078,11 +2081,11 @@ namespace PckStudio
 				saveFileDialog.DefaultExt = ".3dst";
 				if (saveFileDialog.ShowDialog() == DialogResult.OK)
 				{
-					using (var fs = saveFileDialog.OpenFile())
+					using (var ms = new MemoryStream(file.Data))
 					{
-						using var ms = new MemoryStream(file.Data);
 						Image img = Image.FromStream(ms);
-						_3DSUtil.SetImageTo3DST(fs, img);
+						var writer = new _3DSTextureWriter(img);
+						writer.WriteToFile(saveFileDialog.FileName);
 					}
 				}
 			}

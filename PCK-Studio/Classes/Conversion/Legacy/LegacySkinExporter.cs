@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using OMI.Formats.Pck;
 using PckStudio.Classes.Conversion.Legacy.JsonDefinitions;
-using PckStudio.Classes.Extentions;
+using PckStudio.Extensions;
 using PckStudio.Conversion.Common.JsonDefinitions;
 
 namespace PckStudio.Conversion.Legacy

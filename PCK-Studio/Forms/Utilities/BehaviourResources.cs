@@ -4,11 +4,9 @@ using System.Linq;
 using System.IO;
 
 using PckStudio.Properties;
-using PckStudio.Classes.Extentions;
+using PckStudio.Extensions;
 using OMI.Formats.Behaviour;
 using OMI.Workers.Behaviour;
-using OMI.Formats.Pck;
-using System;
 
 namespace PckStudio.Forms.Utilities
 {

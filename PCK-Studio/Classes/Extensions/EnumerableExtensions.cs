@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace PckStudio.Classes.Extentions
+namespace PckStudio.Extensions
 {
-    internal static class EnumerableExtentions
+    internal static class EnumerableExtensions
     {
         public static IEnumerable<(int index, T type)>enumerate<T>(this IEnumerable<T> array)
         {

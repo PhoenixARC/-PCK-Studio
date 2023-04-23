@@ -170,6 +170,9 @@
     <Compile Include="Classes\API\PCKCenter\PCKCollections.cs" />
     <Compile Include="Classes\API\PCKCenter\PCKCollectionsLocal.cs" />
     <Compile Include="Classes\API\PCKCenter\SaveLocalJSON.cs" />
+    <Compile Include="Classes\Extensions\BlendMode.cs" />
+    <Compile Include="Classes\Extensions\EnumerableExtensions.cs" />
+    <Compile Include="Classes\Extensions\GraphicsExtensions.cs" />
     <Compile Include="Classes\Conversion\Bedrock\BedrockSkinExporter.cs" />
     <Compile Include="Classes\Conversion\Bedrock\FileExportContext.cs" />
     <Compile Include="Classes\Conversion\Bedrock\IExportContext.cs" />
@@ -185,11 +188,11 @@
     <Compile Include="Classes\Conversion\Bedrock\ZipExportContext.cs" />
     <Compile Include="Classes\Conversion\Legacy\JsonDefinitions\BlockbenchBedrockModel.cs" />
     <Compile Include="Classes\Conversion\Legacy\LegacySkinExporter.cs" />
-    <Compile Include="Classes\Extentions\EnumerableExtentions.cs" />
     <Compile Include="Classes\FileTypes\CSMBFile.cs" />
     <Compile Include="Classes\FileTypes\PCKAudioFile.cs" />
     <Compile Include="Classes\FileTypes\Binka.cs" />
-    <Compile Include="Classes\FileTypes\CSM.cs" />
+    <Compile Include="Classes\IO\3DST\3DSTextureReader.cs" />
+    <Compile Include="Classes\IO\3DST\3DSTextureWriter.cs" />
     <Compile Include="Classes\IO\CSMB\CSMBFileReader.cs" />
     <Compile Include="Classes\IO\CSMB\CSMBFileWriter.cs" />
     <Compile Include="Classes\IO\PCK\PCKAudioFileReader.cs" />
@@ -198,12 +201,9 @@
     <Compile Include="Classes\IO\Sounds\Sounds.cs" />
     <Compile Include="Classes\Misc\FTPClient.cs" />
     <Compile Include="Classes\Models\DefaultModels\Steve64x64Model.cs" />
-    <Compile Include="Classes\Utils\3DS\3DSUtil.cs" />
     <Compile Include="Classes\Utils\ARC\ARCUtil.cs" />
-    <Compile Include="Classes\Extentions\ImageExtentions.cs" />
+    <Compile Include="Classes\Extensions\ImageExtensions.cs" />
     <Compile Include="Classes\Utils\SkinANIM.cs" />
-    <Compile Include="Classes\IO\StreamDataReader.cs" />
-    <Compile Include="Classes\IO\StreamDataWriter.cs" />
     <Compile Include="Classes\Models\DefaultModels\Steve64x32Model.cs" />
     <Compile Include="Classes\Models\DefaultModels\ModelBase.cs" />
     <Compile Include="Classes\Models\DefaultModels\Texture.cs" />
@@ -432,7 +432,7 @@
     <Compile Include="Forms\Utilities\installWiiU.Designer.cs">
       <DependentUpon>installWiiU.cs</DependentUpon>
     </Compile>
-    <Compile Include="Classes\Utils\ListUtils.cs" />
+    <Compile Include="Classes\Extensions\ListExtensions.cs" />
     <Compile Include="Forms\Utilities\PCK Manager.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -480,7 +480,7 @@
       <DependentUpon>CreditsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Classes\Utils\3DS\TextureCodec.cs" />
+    <Compile Include="Classes\IO\3DST\TextureCodec.cs" />
     <EmbeddedResource Include="Forms\Additional-Popups\EntityForms\AddEntry.resx">
       <DependentUpon>AddEntry.cs</DependentUpon>
     </EmbeddedResource>
