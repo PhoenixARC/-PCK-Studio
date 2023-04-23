@@ -183,6 +183,8 @@
     <Compile Include="Classes\Conversion\CommonJsonDefinitions\ManifestHeader.cs" />
     <Compile Include="Classes\Conversion\CommonJsonDefinitions\SkinObject.cs" />
     <Compile Include="Classes\Conversion\Bedrock\ZipExportContext.cs" />
+    <Compile Include="Classes\Conversion\Legacy\JsonDefinitions\BlockbenchBedrockModel.cs" />
+    <Compile Include="Classes\Conversion\Legacy\LegacySkinExporter.cs" />
     <Compile Include="Classes\Extentions\EnumerableExtentions.cs" />
     <Compile Include="Classes\FileTypes\CSMBFile.cs" />
     <Compile Include="Classes\FileTypes\PCKAudioFile.cs" />
