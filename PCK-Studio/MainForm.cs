@@ -835,15 +835,15 @@ namespace PckStudio
         private PckFile.FileData CreateNewAudioFile(bool isLittle)
         {
             // create actual valid pck file structure
-            PCKAudioFile audioPck = new PCKAudioFile();
-            audioPck.AddCategory(PCKAudioFile.AudioCategory.EAudioType.Overworld);
-            audioPck.AddCategory(PCKAudioFile.AudioCategory.EAudioType.Nether);
-            audioPck.AddCategory(PCKAudioFile.AudioCategory.EAudioType.End);
+            PckAudioFile audioPck = new PckAudioFile();
+            audioPck.AddCategory(PckAudioFile.AudioCategory.EAudioType.Overworld);
+            audioPck.AddCategory(PckAudioFile.AudioCategory.EAudioType.Nether);
+            audioPck.AddCategory(PckAudioFile.AudioCategory.EAudioType.End);
 			PckFile.FileData pckFileData = currentPCK.CreateNewFile("audio.pck", PckFile.FileData.FileType.AudioFile, () =>
 			{
 				using (var stream = new MemoryStream())
 				{
-					var writer = new PCKAudioFileWriter(audioPck, isLittle ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
+					var writer = new PckAudioFileWriter(audioPck, isLittle ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
 					writer.WriteToStream(stream);
 					return stream.ToArray();
 				}
