@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Numerics;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using PckStudio.Classes.Models;
 
 namespace PckStudio.Forms.Editor
 {
@@ -9,50 +8,13 @@ namespace PckStudio.Forms.Editor
 	{
 		public string Result;
 
-		class BOX
-		{
-			public string Parent;
-			public Vector3 Pos;
-			public Vector3 Size;
-			public float U, V;
-			public bool HideWithArmor;
-			public bool Mirror;
-			public float Inflation;
-			public BOX(string input)
-			{
-				string[] arguments = Regex.Split(input, @"\s+");
-
-				try
-				{
-					Parent = arguments[0].ToUpper(); // just in case a box has all lower, the editor still parses correctly
-					Pos = new Vector3(float.Parse(arguments[1]), float.Parse(arguments[2]), float.Parse(arguments[3]));
-					Size = new Vector3(float.Parse(arguments[4]), float.Parse(arguments[5]), float.Parse(arguments[6]));
-					U = float.Parse(arguments[7]);
-					V = float.Parse(arguments[8]);
-					HideWithArmor = Convert.ToBoolean(int.Parse(arguments[9]));
-					Mirror = Convert.ToBoolean(int.Parse(arguments[10]));
-					Inflation = float.Parse(arguments[11]);
-				}
-				catch (IndexOutOfRangeException)
-				{
-					// This is normal as some box values can have less parameters but no more than 12
-					return;
-				}
-				catch (Exception ex)
-				{
-					Parent = string.Empty;
-				}
-			}
-
-		}
-
 		public BoxEditor(string inBOX, bool hasInflation)
 		{
 			InitializeComponent();
 
 			inflationUpDown.Enabled = hasInflation;
 
-			BOX box = new BOX(inBOX);
+			SkinBox box = new SkinBox(inBOX);
 
 			if (string.IsNullOrEmpty(box.Parent) || !parentComboBox.Items.Contains(box.Parent))
 			{
