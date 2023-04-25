@@ -77,12 +77,12 @@ namespace PckStudio.Extensions
             yield break;
         }
 
-        public static Image ImageFromImageArray(Image[] sources, ImageLayoutDirection layoutDirection)
+        public static Image CombineImages(IList<Image> sources, ImageLayoutDirection layoutDirection)
         {
             Size imageSize = CalculateImageSize(sources, layoutDirection);
-            var result = new Bitmap(imageSize.Width, imageSize.Height);
+            var image = new Bitmap(imageSize.Width, imageSize.Height);
 
-            using (var graphic = Graphics.FromImage(result))
+            using (var graphic = Graphics.FromImage(image))
             {
                 foreach (var (i, texture) in sources.enumerate())
                 {
@@ -90,22 +90,27 @@ namespace PckStudio.Extensions
                     graphic.DrawImage(texture, info.SectionPoint);
                 };
             }
-            return result;
+            return image;
         }
 
-        private static Size CalculateImageSize(Image[] sources, ImageLayoutDirection layoutDirection)
+        private static Size CalculateImageSize(IList<Image> sources, ImageLayoutDirection layoutDirection)
         {
+            if (sources.Count == 0)
+            {
+                return Size.Empty;
+            }
             var horizontal = layoutDirection == ImageLayoutDirection.Horizontal;
 
             int width = sources[0].Width;
             int height = sources[0].Height;
+
             if (!sources.All(img => img.Width.Equals(width) && img.Height.Equals(height)))
                 throw new InvalidOperationException("Images must have the same width and height.");
 
             if (horizontal)
-                width *= sources.Length;
+                width *= sources.Count;
             else
-                height *= sources.Length;
+                height *= sources.Count;
 
             return new Size(width, height);
         }
