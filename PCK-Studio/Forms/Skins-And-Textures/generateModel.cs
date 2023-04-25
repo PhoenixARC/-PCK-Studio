@@ -15,6 +15,7 @@ using OMI.Formats.Pck;
 
 namespace PckStudio
 {
+    [Obsolete]
     public partial class generateModel : MetroForm
     {
         PictureBox skinPreview;
