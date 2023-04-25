@@ -146,7 +146,7 @@ namespace PckStudio.Extensions
             return image;
         }
 
-        public static Image Blend(this Image image, Color foregroundColor, BlendMode mode)
+        public static Image Blend(this Image image, Color overlayColor, BlendMode mode)
         {
             if (image is not Bitmap baseImage)
                 return image;
@@ -157,15 +157,13 @@ namespace PckStudio.Extensions
 
             Marshal.Copy(baseImageData.Scan0, baseImageBuffer, 0, baseImageBuffer.Length);
             
-            float overlayR = foregroundColor.R / 255f;
-            float overlayG = foregroundColor.G / 255f;
-            float overlayB = foregroundColor.B / 255f;
+            var normalized = overlayColor.Normalize();
 
             for (int k = 0; k < baseImageBuffer.Length; k += 4)
             {
-                baseImageBuffer[k + 0] = CalculateColorComponentBlendValue(baseImageBuffer[k + 0] / 255f, overlayR, mode);
-                baseImageBuffer[k + 1] = CalculateColorComponentBlendValue(baseImageBuffer[k + 1] / 255f, overlayG, mode);
-                baseImageBuffer[k + 2] = CalculateColorComponentBlendValue(baseImageBuffer[k + 2] / 255f, overlayB, mode);
+                baseImageBuffer[k + 0] = ColorExtensions.CalculateColorBlendValue(baseImageBuffer[k + 0] / 255f, normalized.X, mode);
+                baseImageBuffer[k + 1] = ColorExtensions.CalculateColorBlendValue(baseImageBuffer[k + 1] / 255f, normalized.Y, mode);
+                baseImageBuffer[k + 2] = ColorExtensions.CalculateColorBlendValue(baseImageBuffer[k + 2] / 255f, normalized.Z, mode);
             }
 
             Bitmap bitmapResult = new Bitmap(baseImage.Width, baseImage.Height, PixelFormat.Format32bppArgb);
@@ -200,9 +198,9 @@ namespace PckStudio.Extensions
 
             for (int k = 0; k < baseImageBuffer.Length && k < overlayImageBuffer.Length; k += 4)
             {
-                baseImageBuffer[k + 0] = CalculateColorComponentBlendValue(baseImageBuffer[k + 0] / 255f, overlayImageBuffer[k + 0] / 255f, mode);
-                baseImageBuffer[k + 1] = CalculateColorComponentBlendValue(baseImageBuffer[k + 1] / 255f, overlayImageBuffer[k + 1] / 255f, mode);
-                baseImageBuffer[k + 2] = CalculateColorComponentBlendValue(baseImageBuffer[k + 2] / 255f, overlayImageBuffer[k + 2] / 255f, mode);
+                baseImageBuffer[k + 0] = ColorExtensions.CalculateColorBlendValue(baseImageBuffer[k + 0] / 255f, overlayImageBuffer[k + 0] / 255f, mode);
+                baseImageBuffer[k + 1] = ColorExtensions.CalculateColorBlendValue(baseImageBuffer[k + 1] / 255f, overlayImageBuffer[k + 1] / 255f, mode);
+                baseImageBuffer[k + 2] = ColorExtensions.CalculateColorBlendValue(baseImageBuffer[k + 2] / 255f, overlayImageBuffer[k + 2] / 255f, mode);
             }
 
             Bitmap bitmapResult = new Bitmap(baseImage.Width, baseImage.Height, PixelFormat.Format32bppArgb);
@@ -215,32 +213,6 @@ namespace PckStudio.Extensions
             baseImage.UnlockBits(baseImageData);
             overlayImage.UnlockBits(overlayImageData);
             return bitmapResult;
-        }
-
-        private static T Clamp<T>(T value, T min, T max) where T : IComparable<T>
-        {
-            if (value.CompareTo(min) < 0) return min;
-            else if (value.CompareTo(max) > 0) return max;
-            else return value;
-        }
-
-        private static byte CalculateColorComponentBlendValue(float source, float overlay, BlendMode blendType)
-        {
-            source = Clamp(source, 0.0f, 1.0f);
-            overlay = Clamp(overlay, 0.0f, 1.0f);
-
-            float resultValue = blendType switch
-            {
-                BlendMode.Add => source + overlay,
-                BlendMode.Subtract => source - overlay,
-                BlendMode.Multiply => source * overlay,
-                BlendMode.Average => (source + overlay) / 2.0f,
-                BlendMode.AscendingOrder => source > overlay ? overlay : source,
-                BlendMode.DescendingOrder => source < overlay ? overlay : source,
-                BlendMode.Screen => 1f - (1f - source)*(1f - overlay),
-                _ => 0.0f
-            };
-            return (byte)Clamp(resultValue * 255, 0, 255);
         }
     }
 }
