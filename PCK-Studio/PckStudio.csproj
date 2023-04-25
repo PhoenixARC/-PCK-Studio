@@ -187,6 +187,7 @@
     <Compile Include="Classes\IO\Sounds\Sounds.cs" />
     <Compile Include="Classes\Misc\FTPClient.cs" />
     <Compile Include="Classes\Models\DefaultModels\Steve64x64Model.cs" />
+    <Compile Include="Classes\Models\SkinBox.cs" />
     <Compile Include="Classes\Utils\ARC\ARCUtil.cs" />
     <Compile Include="Classes\Extensions\ImageExtensions.cs" />
     <Compile Include="Classes\Utils\SkinANIM.cs" />
