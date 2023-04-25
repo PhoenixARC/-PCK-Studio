@@ -127,16 +127,6 @@ namespace PckStudio
 			modelsFileBINToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.ModelsFile);
 			behavioursFileBINToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.BehavioursFile);
 			entityMaterialsFileBINToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.MaterialFile);
-
-			try
-			{
-				Directory.CreateDirectory(Program.AppDataCache + "\\mods\\");
-			}
-			catch (UnauthorizedAccessException ex)
-			{
-				MessageBox.Show("Could not Create directory due to Unauthorized Access");
-				Debug.WriteLine(ex.Message);
-			}
 		}
 
 		private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
