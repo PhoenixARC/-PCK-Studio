@@ -7,13 +7,13 @@ namespace PckStudio.Classes.Models
 {
 	public class SkinBox
 	{
-		public string Parent;
+		public string Type;
 		public Vector3 Pos;
 		public Vector3 Size;
 		public float U, V;
 		public bool HideWithArmor;
 		public bool Mirror;
-		public float Inflation;
+		public float Scale;
 		public SkinBox(string input)
 		{
 			try
@@ -31,7 +31,7 @@ namespace PckStudio.Classes.Models
 					arguments[x] = "0"; // set any missing arguments to '0'
 				}
 
-				Parent = arguments[0].ToUpper(); // just in case a box has all lower, the editor still parses correctly
+				Type = arguments[0].ToUpper(); // just in case a box has all lower, the editor still parses correctly
 
 				Pos = new Vector3(float.Parse(arguments[1]), float.Parse(arguments[2]), float.Parse(arguments[3]));
 				Size = new Vector3(float.Parse(arguments[4]), float.Parse(arguments[5]), float.Parse(arguments[6]));
@@ -39,7 +39,7 @@ namespace PckStudio.Classes.Models
 				V = float.Parse(arguments[8]);
 				HideWithArmor = Convert.ToBoolean(int.Parse(arguments[9]));
 				Mirror = Convert.ToBoolean(int.Parse(arguments[10]));
-				Inflation = float.Parse(arguments[11]);
+				Scale = float.Parse(arguments[11]);
 			}
 			catch (FormatException fex)
 			{
@@ -53,9 +53,14 @@ namespace PckStudio.Classes.Models
 			}
 			catch (Exception ex)
 			{
-				Parent = string.Empty;
+				Type = string.Empty;
 			}
 		}
 
+		public ValueTuple<string, string> ToProperty()
+		{
+			string value = $"{Type} {Pos.X} {Pos.Y} {Pos.Z} {Size.X} {Size.Y} {Size.Z} {U} {V} {HideWithArmor} {Mirror} {Scale}";
+			return new ValueTuple<string, string>("BOX", value.Replace(',', '.'));
+		}
 	}
 }
