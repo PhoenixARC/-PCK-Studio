@@ -72,7 +72,7 @@ namespace PckStudio
 			labelVersion.Text = "PCK Studio: " + Application.ProductVersion;
 			ChangelogRichTextBox.Text = Resources.CHANGELOG;
 #if DEBUG
-			labelVersion.Text += Program.Info.BuildVersion + " " + Program.Info.LastCommitHash;
+			labelVersion.Text += $" (Debug build: {Program.Info.BuildVersion}@{Program.Info.LastCommitHash})";
 #endif
 
             pckFileTypeHandler = new Dictionary<PckFile.FileData.FileType, Action<PckFile.FileData>>(15)
