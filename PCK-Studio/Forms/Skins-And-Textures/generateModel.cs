@@ -46,12 +46,23 @@ namespace PckStudio
             // 64x64 Overlay Parts
             "HEADWEAR",
             "JACKET",
-            "SHOULDER0",
-            "SHOULDER1",
             "SLEEVE0",
             "SLEEVE1",
             "PANTS0",
             "PANTS1",
+            "SOCK0",
+            "SOCK1",
+
+            // Armor Parts
+            "HELMET",
+            "CHEST",
+            "SHOULDER0",
+            "SHOULDER1",
+            "WAIST",
+            "LEGGING0",
+            "LEGGING1",
+            "BOOT0",
+            "BOOT1",
         };
 
         private static readonly string[] ValidModelOffsetTypes = new string[]
@@ -67,11 +78,11 @@ namespace PckStudio
             // Armor Offsets
             "HELMET",
             "CHEST",
+            "WAIST",
+            "LEGGING0",
+            "LEGGING1",
             "BOOT0",
             "BOOT1",
-            "WAIST",
-            "PANTS0",
-            "PANTS1",
 
             "TOOL0",
             "TOOL1",
