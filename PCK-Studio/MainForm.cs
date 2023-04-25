@@ -2179,7 +2179,7 @@ namespace PckStudio
 							int idx = line.IndexOf(' ');
 							if (idx == -1 || line.Length - 1 == idx)
 								continue;
-							file.Properties.Add((line.Substring(0, idx), line.Substring(idx + 1)));
+							file.Properties.Add((line.Substring(0, idx).Replace(":", string.Empty), line.Substring(idx + 1)));
 						}
 						ReloadMetaTreeView();
 						if (IsSubPCKNode(node.FullPath)) RebuildSubPCK(node);
