@@ -119,6 +119,8 @@ namespace PckStudio
             skinPreview = preview;
             if (texturePreview.Image == null)
                 texturePreview.Image = new Bitmap(64, 64);
+            comboParent.Items.Clear();
+            ValidModelBoxTypes.ToList().ForEach(p => comboParent.Items.Add(p));
             loadData();
         }
         private static readonly Regex sWhitespace = new Regex(@"\s+");
