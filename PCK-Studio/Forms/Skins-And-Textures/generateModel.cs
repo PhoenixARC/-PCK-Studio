@@ -1140,7 +1140,7 @@ namespace PckStudio
             modelBoxes.Add(new SkinBox("ARM0 -3 -2 -2 4 12 4 40 16 0 0 0"));
             modelBoxes.Add(new SkinBox("ARM1 -1 -2 -2 4 12 4 40 16 0 1 0"));
             modelBoxes.Add(new SkinBox("LEG0 -2 0 -2 4 12 4 0 16 0 0 0"));
-            modelBoxes.Add(new SkinBox("LEG1 -2 0 -2 4 12 0 16 0 1 0"));
+            modelBoxes.Add(new SkinBox("LEG1 -2 0 -2 4 12 4 0 16 0 1 0"));
             comboParent.Enabled = true;
             updateListView();
             render();
