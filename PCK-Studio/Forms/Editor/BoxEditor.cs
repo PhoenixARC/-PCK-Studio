@@ -16,12 +16,12 @@ namespace PckStudio.Forms.Editor
 
 			SkinBox box = new SkinBox(inBOX);
 
-			if (string.IsNullOrEmpty(box.Parent) || !parentComboBox.Items.Contains(box.Parent))
+			if (string.IsNullOrEmpty(box.Type) || !parentComboBox.Items.Contains(box.Type))
 			{
 				throw new Exception("Failed to parse BOX value");
 			}
 
-			parentComboBox.SelectedItem = parentComboBox.Items[parentComboBox.Items.IndexOf(box.Parent)];
+			parentComboBox.SelectedItem = parentComboBox.Items[parentComboBox.Items.IndexOf(box.Type)];
 			PosXUpDown.Value = (decimal)box.Pos.X;
 			PosYUpDown.Value = (decimal)box.Pos.Y;
 			PosZUpDown.Value = (decimal)box.Pos.Z;
@@ -32,7 +32,7 @@ namespace PckStudio.Forms.Editor
 			uvYUpDown.Value = (decimal)box.V;
 			armorCheckBox.Checked = box.HideWithArmor;
 			mirrorCheckBox.Checked = box.Mirror;
-			inflationUpDown.Value = (decimal)box.Inflation;
+			inflationUpDown.Value = (decimal)box.Scale;
 		}
 
 		private void saveButton_Click(object sender, EventArgs e)
