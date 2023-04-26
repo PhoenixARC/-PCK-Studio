@@ -22,8 +22,6 @@ namespace PckStudio.Classes.Models
 
 				int old_length = arguments.Length - 1;
 
-				Console.WriteLine($"Old length - {old_length}");
-
 				Array.Resize<string>(ref arguments, 12);
 
 				for (int x = 11; x > old_length; x--)
