@@ -424,7 +424,7 @@ namespace PckStudio
 		{
 			if (file.Properties.HasProperty("BOX"))
 			{
-				using (generateModel generate = new generateModel(file.Properties, new PictureBox()))
+				using (generateModel generate = new generateModel(file.Properties, Image.FromStream(new MemoryStream(file.Data))))
 					if (generate.ShowDialog() == DialogResult.OK)
 					{
 						entryDataTextBox.Text = entryTypeTextBox.Text = string.Empty;

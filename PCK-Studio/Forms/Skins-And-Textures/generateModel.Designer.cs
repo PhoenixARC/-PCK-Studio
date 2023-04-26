@@ -370,8 +370,6 @@
 			// checkTextureGenerate
 			// 
 			resources.ApplyResources(this.checkTextureGenerate, "checkTextureGenerate");
-			this.checkTextureGenerate.Checked = true;
-			this.checkTextureGenerate.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.checkTextureGenerate.Name = "checkTextureGenerate";
 			this.checkTextureGenerate.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.checkTextureGenerate.UseSelectable = true;
@@ -503,13 +501,13 @@
 			// 
 			resources.ApplyResources(this.Z, "Z");
 			// 
-			// Width
+			// _Width
 			// 
-			resources.ApplyResources(this._Width, "Width");
+			resources.ApplyResources(this._Width, "_Width");
 			// 
-			// Height
+			// _Height
 			// 
-			resources.ApplyResources(this._Height, "Height");
+			resources.ApplyResources(this._Height, "_Height");
 			// 
 			// Length
 			// 

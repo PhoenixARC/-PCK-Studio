@@ -10,7 +10,6 @@ using System.Collections;
 using System.IO;
 using Newtonsoft.Json;
 using MetroFramework.Forms;
-using PckStudio.Classes.FileTypes;
 using PckStudio.Classes.Models;
 using System.Text.RegularExpressions;
 using OMI.Formats.Pck;
@@ -20,7 +19,7 @@ namespace PckStudio
     [Obsolete]
     public partial class generateModel : MetroForm
     {
-        PictureBox skinPreview;
+        PictureBox skinPreview = new PictureBox();
 
         eViewDirection direction = eViewDirection.front;
 
@@ -111,14 +110,11 @@ namespace PckStudio
             }
         }
 
-
-        public generateModel(PckFile.PCKProperties skinProperties, PictureBox preview)
+        public generateModel(PckFile.PCKProperties skinProperties, Image texture)
         {
             InitializeComponent();
             boxes = skinProperties;
-            skinPreview = preview;
-            if (texturePreview.Image == null)
-                texturePreview.Image = new Bitmap(64, 64);
+            texturePreview.Image = texture;
             comboParent.Items.Clear();
             ValidModelBoxTypes.ToList().ForEach(p => comboParent.Items.Add(p));
             loadData();
@@ -287,6 +283,7 @@ namespace PckStudio
                                         (part.V + part.Size.Z) * gfx_scale,
                                         part.Size.X * gfx_scale,
                                         part.Size.Y * gfx_scale);
+                                    graphics.DrawImage(texturePreview.Image, destRect, srcRect, GraphicsUnit.Pixel);
                                 }
                                 else
                                 {
