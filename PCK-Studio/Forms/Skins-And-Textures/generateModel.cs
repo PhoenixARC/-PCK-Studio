@@ -50,6 +50,7 @@ namespace PckStudio
             "JACKET",
             "SLEEVE0",
             "SLEEVE1",
+            "WAIST",
             "PANTS0",
             "PANTS1",
             "SOCK0",
@@ -57,10 +58,10 @@ namespace PckStudio
 
             // Armor Parts
             "HELMET",
-            "CHEST",
-            "SHOULDER0",
-            "SHOULDER1",
-            "WAIST",
+            "CHEST", "BODYARMOR",
+            "SHOULDER0", "ARMARMOR0",
+            "SHOULDER1", "ARMARMOR0",
+            "BELT",
             "LEGGING0",
             "LEGGING1",
             "BOOT0",
@@ -79,8 +80,10 @@ namespace PckStudio
 
             // Armor Offsets
             "HELMET",
-            "CHEST",
-            "WAIST",
+            "CHEST", "BODYARMOR",
+            "SHOULDER0", "ARMARMOR0",
+            "SHOULDER1", "ARMARMOR0",
+            "BELT",
             "LEGGING0",
             "LEGGING1",
             "BOOT0",
@@ -234,10 +237,14 @@ namespace PckStudio
                                     case "BODY":
                                     case "JACKET":
                                     case "CHEST":
+                                    case "BODYARMOR":
+                                    case "BELT":
+                                    case "WAIST":
                                         y = headbodyY + int.Parse(offsetBody.Text) * 5;
                                         break;
 
                                     case "ARM0":
+                                    case "ARMARMOR0":
                                     case "SLEEVE0":
                                     case "SHOULDER0":
                                         x -= 25;
@@ -245,6 +252,7 @@ namespace PckStudio
                                         break;
 
                                     case "ARM1":
+                                    case "ARMARMOR1":
                                     case "SLEEVE1":
                                     case "SHOULDER1":
                                         x += 25;
@@ -306,16 +314,21 @@ namespace PckStudio
                                     case "BODY":
                                     case "JACKET":
                                     case "CHEST":
+                                    case "BODYARMOR":
+                                    case "BELT":
+                                    case "WAIST":
                                         y = headbodyY + int.Parse(offsetBody.Text) * 5;
                                         break;
 
                                     case "ARM0":
+                                    case "ARMARMOR0":
                                     case "SLEEVE0":
                                     case "SHOULDER0":
                                         y = armY + int.Parse(offsetArms.Text) * 5;
                                         break;
 
                                     case "ARM1":
+                                    case "ARMARMOR1":
                                     case "SLEEVE1":
                                     case "SHOULDER1":
                                         y = armY + int.Parse(offsetArms.Text) * 5;
@@ -375,10 +388,14 @@ namespace PckStudio
                                     case "BODY":
                                     case "JACKET":
                                     case "CHEST":
+                                    case "BODYARMOR":
+                                    case "BELT":
+                                    case "WAIST":
                                         y = headbodyY + int.Parse(offsetBody.Text) * 5;
                                         break;
 
                                     case "ARM0":
+                                    case "ARMARMOR0":
                                     case "SLEEVE0":
                                     case "SHOULDER0":
                                         x -= 25;
@@ -386,6 +403,7 @@ namespace PckStudio
                                         break;
 
                                     case "ARM1":
+                                    case "ARMARMOR1":
                                     case "SLEEVE1":
                                     case "SHOULDER1":
                                         x += 25;
@@ -447,16 +465,21 @@ namespace PckStudio
                                 case "BODY":
                                 case "JACKET":
                                 case "CHEST":
+                                case "BODYARMOR":
+                                case "BELT":
+                                case "WAIST":
                                     y = headbodyY + int.Parse(offsetBody.Text) * 5;
                                     break;
 
                                 case "ARM0":
+                                case "ARMARMOR0":
                                 case "SLEEVE0":
                                 case "SHOULDER0":
                                     y = armY + int.Parse(offsetArms.Text) * 5;
                                     break;
 
                                 case "ARM1":
+                                case "ARMARMOR1":
                                 case "SLEEVE1":
                                 case "SHOULDER1":
                                     y = armY + int.Parse(offsetArms.Text) * 5;
