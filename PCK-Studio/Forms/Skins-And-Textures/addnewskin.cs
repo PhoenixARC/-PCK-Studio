@@ -87,7 +87,7 @@ namespace PckStudio
                         //comboBoxSkinType.Text = "Steve (64x64)";
                         skinType = eSkinType._64x64HD;
                     }
-                    else if (img.Width == img.Height / 2) // 64x32 HD
+                    else if (img.Height == img.Width / 2) // 64x32 HD
                     {
                         anim.SetFlag(ANIM_EFFECTS.RESOLUTION_64x64, false);
                         anim.SetFlag(ANIM_EFFECTS.SLIM_MODEL, false);
