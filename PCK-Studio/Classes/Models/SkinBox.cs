@@ -57,7 +57,7 @@ namespace PckStudio.Classes.Models
 
 		public ValueTuple<string, string> ToProperty()
 		{
-			string value = $"{Type} {Pos.X} {Pos.Y} {Pos.Z} {Size.X} {Size.Y} {Size.Z} {U} {V} {HideWithArmor} {Mirror} {Scale}";
+			string value = $"{Type} {Pos.X} {Pos.Y} {Pos.Z} {Size.X} {Size.Y} {Size.Z} {U} {V} {Convert.ToInt32(HideWithArmor)} {Convert.ToInt32(Mirror)} {Scale}";
 			return new ValueTuple<string, string>("BOX", value.Replace(',', '.'));
 		}
 	}
