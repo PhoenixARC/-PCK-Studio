@@ -231,28 +231,44 @@ namespace PckStudio
                                 switch (part.Type)
                                 {
                                     case "HEAD":
+                                    case "HEADWEAR":
+                                    case "HELMET":
                                         y = headbodyY + int.Parse(offsetHead.Text) * 5;
                                         break;
                                     case "BODY":
+                                    case "JACKET":
+                                    case "CHEST":
                                         y = headbodyY + int.Parse(offsetBody.Text) * 5;
                                         break;
 
                                     case "ARM0":
+                                    case "SLEEVE0":
+                                    case "SHOULDER0":
                                         x -= 25;
                                         y = armY + int.Parse(offsetArms.Text) * 5;
                                         break;
 
                                     case "ARM1":
+                                    case "SLEEVE1":
+                                    case "SHOULDER1":
                                         x += 25;
                                         y = armY + int.Parse(offsetArms.Text) * 5;
                                         break;
 
                                     case "LEG0":
+                                    case "PANTS0":
+                                    case "SOCK0":
+                                    case "LEGGING0":
+                                    case "BOOT0":
                                         x -= 10;
                                         y = legY + int.Parse(offsetLegs.Text) * 5;
                                         break;
 
                                     case "LEG1":
+                                    case "PANTS1":
+                                    case "SOCK1":
+                                    case "LEGGING1":
+                                    case "BOOT1":
                                         x += 10;
                                         y = legY + int.Parse(offsetLegs.Text) * 5;
                                         break;
@@ -286,27 +302,42 @@ namespace PckStudio
                                 switch (part.Type)
                                 {
                                     case "HEAD":
-                                        y = headbodyY + float.Parse(offsetHead.Text) * 5;
+                                    case "HEADWEAR":
+                                    case "HELMET":
+                                        y = headbodyY + int.Parse(offsetHead.Text) * 5;
                                         break;
-
                                     case "BODY":
-                                        y = headbodyY + float.Parse(offsetBody.Text) * 5;
+                                    case "JACKET":
+                                    case "CHEST":
+                                        y = headbodyY + int.Parse(offsetBody.Text) * 5;
                                         break;
 
                                     case "ARM0":
-                                        y = armY + float.Parse(offsetArms.Text) * 5;
+                                    case "SLEEVE0":
+                                    case "SHOULDER0":
+                                        y = armY + int.Parse(offsetArms.Text) * 5;
                                         break;
 
                                     case "ARM1":
-                                        y = armY + float.Parse(offsetArms.Text) * 5;
+                                    case "SLEEVE1":
+                                    case "SHOULDER1":
+                                        y = armY + int.Parse(offsetArms.Text) * 5;
                                         break;
 
                                     case "LEG0":
-                                        y = legY + float.Parse(offsetLegs.Text) * 5;
+                                    case "PANTS0":
+                                    case "SOCK0":
+                                    case "LEGGING0":
+                                    case "BOOT0":
+                                        y = legY + int.Parse(offsetLegs.Text) * 5;
                                         break;
 
                                     case "LEG1":
-                                        y = legY + float.Parse(offsetLegs.Text) * 5;
+                                    case "PANTS1":
+                                    case "SOCK1":
+                                    case "LEGGING1":
+                                    case "BOOT1":
+                                        y = legY + int.Parse(offsetLegs.Text) * 5;
                                         break;
                                 }
 
@@ -340,26 +371,46 @@ namespace PckStudio
                                 switch (part.Type)
                                 {
                                     case "HEAD":
-                                        y = headbodyY + float.Parse(offsetHead.Text) * 5;
+                                    case "HEADWEAR":
+                                    case "HELMET":
+                                        y = headbodyY + int.Parse(offsetHead.Text) * 5;
                                         break;
                                     case "BODY":
-                                        y = headbodyY + float.Parse(offsetBody.Text) * 5;
+                                    case "JACKET":
+                                    case "CHEST":
+                                        y = headbodyY + int.Parse(offsetBody.Text) * 5;
                                         break;
+
                                     case "ARM0":
+                                    case "SLEEVE0":
+                                    case "SHOULDER0":
                                         x -= 25;
-                                        y = armY + float.Parse(offsetArms.Text) * 5;
+                                        y = armY + int.Parse(offsetArms.Text) * 5;
                                         break;
+
                                     case "ARM1":
+                                    case "SLEEVE1":
+                                    case "SHOULDER1":
                                         x += 25;
-                                        y = armY + float.Parse(offsetArms.Text) * 5;
+                                        y = armY + int.Parse(offsetArms.Text) * 5;
                                         break;
+
                                     case "LEG0":
+                                    case "PANTS0":
+                                    case "SOCK0":
+                                    case "LEGGING0":
+                                    case "BOOT0":
                                         x -= 10;
-                                        y = legY + float.Parse(offsetLegs.Text) * 5;
+                                        y = legY + int.Parse(offsetLegs.Text) * 5;
                                         break;
+
                                     case "LEG1":
+                                    case "PANTS1":
+                                    case "SOCK1":
+                                    case "LEGGING1":
+                                    case "BOOT1":
                                         x += 10;
-                                        y = legY + float.Parse(offsetLegs.Text) * 5;
+                                        y = legY + int.Parse(offsetLegs.Text) * 5;
                                         break;
                                 }
 
@@ -392,25 +443,42 @@ namespace PckStudio
                             switch (part.Type)
                             {
                                 case "HEAD":
-                                    y = headbodyY + float.Parse(offsetHead.Text) * 5;
+                                case "HEADWEAR":
+                                case "HELMET":
+                                    y = headbodyY + int.Parse(offsetHead.Text) * 5;
                                     break;
                                 case "BODY":
-                                    y = headbodyY + float.Parse(offsetBody.Text) * 5;
+                                case "JACKET":
+                                case "CHEST":
+                                    y = headbodyY + int.Parse(offsetBody.Text) * 5;
                                     break;
 
                                 case "ARM0":
-                                    y = armY + float.Parse(offsetArms.Text) * 5;
+                                case "SLEEVE0":
+                                case "SHOULDER0":
+                                    y = armY + int.Parse(offsetArms.Text) * 5;
                                     break;
+
                                 case "ARM1":
-                                    y = armY + float.Parse(offsetArms.Text) * 5;
+                                case "SLEEVE1":
+                                case "SHOULDER1":
+                                    y = armY + int.Parse(offsetArms.Text) * 5;
                                     break;
 
                                 case "LEG0":
-                                    y = legY + float.Parse(offsetLegs.Text) * 5;
+                                case "PANTS0":
+                                case "SOCK0":
+                                case "LEGGING0":
+                                case "BOOT0":
+                                    y = legY + int.Parse(offsetLegs.Text) * 5;
                                     break;
 
                                 case "LEG1":
-                                    y = legY + float.Parse(offsetLegs.Text) * 5;
+                                case "PANTS1":
+                                case "SOCK1":
+                                case "LEGGING1":
+                                case "BOOT1":
+                                    y = legY + int.Parse(offsetLegs.Text) * 5;
                                     break;
                             }
                             //Maps imported Texture if auto texture is disabled
