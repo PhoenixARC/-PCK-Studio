@@ -1056,18 +1056,29 @@ namespace PckStudio
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "PNG Image Files | *.png";
             openFileDialog.Title = "Select Skin Texture";
-            if (openFileDialog.ShowDialog() == DialogResult.OK && Image.FromFile(openFileDialog.FileName).Width == Image.FromFile(openFileDialog.FileName).Height)
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK) // skins can only be a 1:1 ratio (base 64x64) or a 2:1 ratio (base 64x32)
             {
-                checkTextureGenerate.Checked = false;
-                Bitmap bitmap = new Bitmap(64, 64);
-                using (Graphics graphics = Graphics.FromImage(bitmap))
-                {
-                    graphics.DrawImage(Image.FromFile(openFileDialog.FileName), 0, 0, 64, 64);
-                    graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
+                using (var img = Image.FromFile(openFileDialog.FileName))
+				{
+                    if ((img.Width == img.Height || img.Height == img.Width / 2))
+                    {
+                        checkTextureGenerate.Checked = false;
+                        Bitmap bitmap = new Bitmap(img.Width, img.Width);
+                        using (Graphics graphics = Graphics.FromImage(bitmap))
+                        {
+                            graphics.DrawImage(img, 0, 0, img.Width, img.Height);
+                            graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
+                        }
+                        texturePreview.Image = bitmap;
+                        render();
+                    }
+                    else
+					{
+                        MessageBox.Show(this, "Not a valid skin file", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
-                texturePreview.Image = bitmap;
             }
-            render();
         }
 
 
