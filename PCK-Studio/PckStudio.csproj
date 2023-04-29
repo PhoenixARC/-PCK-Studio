@@ -186,6 +186,7 @@
     <Compile Include="Classes\IO\Sounds\SoundIO.cs" />
     <Compile Include="Classes\IO\Sounds\Sounds.cs" />
     <Compile Include="Classes\Misc\FTPClient.cs" />
+    <Compile Include="Classes\Misc\FileCacher.cs" />
     <Compile Include="Classes\Models\DefaultModels\Steve64x64Model.cs" />
     <Compile Include="Classes\Models\SkinBox.cs" />
     <Compile Include="Classes\Utils\ARC\ARCUtil.cs" />
@@ -763,6 +764,10 @@
     <ProjectReference Include="..\Vendor\OMI-Lib\OMI Filetypes Library\OMI Filetype Library.csproj">
       <Project>{693AEBC1-293D-4DF0-BCAE-26A1099FE7BB}</Project>
       <Name>OMI Filetype Library</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Vendor\SharpMss32\SharpMss32\SharpMss32.csproj">
+      <Project>{e8d0b671-3ab1-48b6-a767-58df67bd5d11}</Project>
+      <Name>SharpMss32</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
