@@ -22,7 +22,7 @@ namespace PckStudio.Extensions
             return value;
         }
 
-        public static byte CalculateColorBlendValue(float source, float overlay, BlendMode blendType)
+        public static byte BlendValues(float source, float overlay, BlendMode blendType)
         {
             source = Clamp(source, 0.0f, 1.0f);
             overlay = Clamp(overlay, 0.0f, 1.0f);

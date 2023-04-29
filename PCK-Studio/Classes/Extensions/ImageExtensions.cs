@@ -179,9 +179,9 @@ namespace PckStudio.Extensions
 
             for (int k = 0; k < baseImageBuffer.Length; k += 4)
             {
-                baseImageBuffer[k + 0] = ColorExtensions.CalculateColorBlendValue(baseImageBuffer[k + 0] / 255f, normalized.X, mode);
-                baseImageBuffer[k + 1] = ColorExtensions.CalculateColorBlendValue(baseImageBuffer[k + 1] / 255f, normalized.Y, mode);
-                baseImageBuffer[k + 2] = ColorExtensions.CalculateColorBlendValue(baseImageBuffer[k + 2] / 255f, normalized.Z, mode);
+                baseImageBuffer[k + 0] = ColorExtensions.BlendValues(baseImageBuffer[k + 0] / 255f, normalized.X, mode);
+                baseImageBuffer[k + 1] = ColorExtensions.BlendValues(baseImageBuffer[k + 1] / 255f, normalized.Y, mode);
+                baseImageBuffer[k + 2] = ColorExtensions.BlendValues(baseImageBuffer[k + 2] / 255f, normalized.Z, mode);
             }
 
             Bitmap bitmapResult = new Bitmap(baseImage.Width, baseImage.Height, PixelFormat.Format32bppArgb);
@@ -216,9 +216,9 @@ namespace PckStudio.Extensions
 
             for (int k = 0; k < baseImageBuffer.Length && k < overlayImageBuffer.Length; k += 4)
             {
-                baseImageBuffer[k + 0] = ColorExtensions.CalculateColorBlendValue(baseImageBuffer[k + 0] / 255f, overlayImageBuffer[k + 0] / 255f, mode);
-                baseImageBuffer[k + 1] = ColorExtensions.CalculateColorBlendValue(baseImageBuffer[k + 1] / 255f, overlayImageBuffer[k + 1] / 255f, mode);
-                baseImageBuffer[k + 2] = ColorExtensions.CalculateColorBlendValue(baseImageBuffer[k + 2] / 255f, overlayImageBuffer[k + 2] / 255f, mode);
+                baseImageBuffer[k + 0] = ColorExtensions.BlendValues(baseImageBuffer[k + 0] / 255f, overlayImageBuffer[k + 0] / 255f, mode);
+                baseImageBuffer[k + 1] = ColorExtensions.BlendValues(baseImageBuffer[k + 1] / 255f, overlayImageBuffer[k + 1] / 255f, mode);
+                baseImageBuffer[k + 2] = ColorExtensions.BlendValues(baseImageBuffer[k + 2] / 255f, overlayImageBuffer[k + 2] / 255f, mode);
             }
 
             Bitmap bitmapResult = new Bitmap(baseImage.Width, baseImage.Height, PixelFormat.Format32bppArgb);
