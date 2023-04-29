@@ -7,6 +7,7 @@ using System.Windows.Forms;
 
 namespace PckStudio.Classes.Networking
 {
+    [Obsolete]
     public enum UpdateResult
     {
         // Base Failure value
@@ -19,6 +20,7 @@ namespace PckStudio.Classes.Networking
         UpdateFailure,
     }
 
+    [Obsolete]
     class UpdateOptions
     {
         public bool IsBeta { get; set; }
@@ -45,6 +47,7 @@ namespace PckStudio.Classes.Networking
         }
     }
 
+    [Obsolete]
     static class Update
     {
         public static UpdateResult CheckForUpdate(UpdateOptions options)
