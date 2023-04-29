@@ -28,9 +28,27 @@ namespace PckStudio.Extensions
 
             public ImageLayoutInfo(int width, int height, int index, ImageLayoutDirection layoutDirection)
             {
-                bool horizontal = layoutDirection == ImageLayoutDirection.Horizontal;
-                SectionSize = horizontal ? new Size(width, width) : new Size(height, height);
-                SectionPoint = horizontal ? new Point(0, index * width) : new Point(index * height, 0);
+                switch(layoutDirection)
+                {
+                    case ImageLayoutDirection.Horizontal:
+                        {
+                            SectionSize = new Size(height,height);
+                            SectionPoint = new Point(index * height, 0);
+                        }
+                        break;
+
+                    case ImageLayoutDirection.Vertical:
+                        {
+                            SectionSize = new Size(width, width);
+                            SectionPoint = new Point(0, index * width);
+                        }
+                        break;
+
+                    default:
+                        SectionSize = Size.Empty;
+                        SectionPoint = new Point(-1, -1);
+                        break;
+                }
                 SectionArea = new Rectangle(SectionPoint, SectionSize);
             }
         }
@@ -86,7 +104,7 @@ namespace PckStudio.Extensions
             {
                 foreach (var (i, texture) in sources.enumerate())
                 {
-                    var info = new ImageLayoutInfo(imageSize.Width, imageSize.Height, i, layoutDirection);
+                    var info = new ImageLayoutInfo(texture.Width, texture.Height, i, layoutDirection);
                     graphic.DrawImage(texture, info.SectionPoint);
                 };
             }
