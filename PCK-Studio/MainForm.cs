@@ -2236,9 +2236,14 @@ namespace PckStudio
 			currentPCK.CreateNewFile("entityMaterials.bin", PckFile.FileData.FileType.MaterialFile, MaterialResources.MaterialsFileInitializer);
 			BuildMainTreeView();
 		}
-    }
 
-    public class PckNodeSorter : System.Collections.IComparer, IComparer<TreeNode>
+		private void trelloBoardToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			Process.Start("https://trello.com/b/0XLNOEbe/pck-studio");
+		}
+	}
+
+	public class PckNodeSorter : System.Collections.IComparer, IComparer<TreeNode>
 	{
 		private bool CheckForSkinAndCapeFiles(TreeNode node)
 		{
