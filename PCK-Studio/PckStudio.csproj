@@ -658,6 +658,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\entityBehaviourData.json" />
+    <None Include="Resources\entityData.json" />
     <None Include="Resources\entityMaterialData.json" />
     <None Include="Resources\entityModelData.json" />
     <None Include="Resources\TexturePackIcon.png" />
