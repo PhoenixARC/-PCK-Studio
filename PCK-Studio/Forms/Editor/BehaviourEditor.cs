@@ -28,13 +28,13 @@ namespace PckStudio.Forms.Editor
 			{
 				TreeNode EntryNode = new TreeNode(entry.name);
 
-				foreach (JObject content in Utilities.BehaviourUtil.entityData["entities"].Children())
+				foreach (JObject content in Utilities.BehaviourResources.entityData["behaviours"].Children())
 				{
 					var prop = content.Properties().FirstOrDefault(prop => prop.Name == entry.name);
 					if (prop is JProperty)
 					{
 						EntryNode.Text = (string)prop.Value;
-						EntryNode.ImageIndex = Utilities.BehaviourUtil.entityData["entities"].Children().ToList().IndexOf(content);
+						EntryNode.ImageIndex = Utilities.BehaviourResources.entityData["behaviours"].Children().ToList().IndexOf(content);
 						EntryNode.SelectedImageIndex = EntryNode.ImageIndex;
 						break;
 					}
@@ -68,7 +68,7 @@ namespace PckStudio.Forms.Editor
 			}
 
 			treeView1.ImageList = new ImageList();
-            treeView1.ImageList.Images.AddRange(Utilities.BehaviourUtil.entityImages);
+            treeView1.ImageList.Images.AddRange(Utilities.BehaviourResources.entityImages);
 			treeView1.ImageList.ColorDepth = ColorDepth.Depth32Bit;
 			SetUpTree();
 		}
@@ -149,7 +149,7 @@ namespace PckStudio.Forms.Editor
 			if (treeView1.SelectedNode == null) return;
 			if (!(treeView1.SelectedNode.Tag is BehaviourFile.RiderPositionOverride entry)) return;
 
-			var diag = new Additional_Popups.EntityForms.AddEntry(Utilities.BehaviourUtil.entityData, Utilities.BehaviourUtil.entityImages);
+			var diag = new Additional_Popups.EntityForms.AddEntry(Utilities.BehaviourResources.entityData, Utilities.BehaviourResources.entityImages);
 			diag.acceptBtn.Text = "Save";
 
 			if (diag.ShowDialog() == DialogResult.OK)
@@ -164,13 +164,13 @@ namespace PckStudio.Forms.Editor
 				entry.name = diag.SelectedEntity;
 				treeView1.SelectedNode.Tag = entry;
 
-				foreach (JObject content in Utilities.BehaviourUtil.entityData["entities"].Children())
+				foreach (JObject content in Utilities.BehaviourResources.entityData["behaviours"].Children())
 				{
 					var prop = content.Properties().FirstOrDefault(prop => prop.Name == entry.name);
 					if (prop is JProperty)
 					{
 						treeView1.SelectedNode.Text = (string)prop.Value;
-						treeView1.SelectedNode.ImageIndex = Utilities.BehaviourUtil.entityData["entities"].Children().ToList().IndexOf(content);
+						treeView1.SelectedNode.ImageIndex = Utilities.BehaviourResources.entityData["behaviours"].Children().ToList().IndexOf(content);
 						treeView1.SelectedNode.SelectedImageIndex = treeView1.SelectedNode.ImageIndex;
 						break;
 					}
@@ -203,7 +203,7 @@ namespace PckStudio.Forms.Editor
 
 		private void addNewEntryToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			var diag = new AddEntry(Utilities.BehaviourUtil.entityData, Utilities.BehaviourUtil.entityImages);
+			var diag = new AddEntry(Utilities.BehaviourResources.entityData, Utilities.BehaviourResources.entityImages);
 
 			if(diag.ShowDialog() == DialogResult.OK)
 			{
@@ -217,13 +217,13 @@ namespace PckStudio.Forms.Editor
 
 				TreeNode NewOverrideNode = new TreeNode(NewOverride.name);
 				NewOverrideNode.Tag = NewOverride;
-				foreach (JObject content in Utilities.BehaviourUtil.entityData["entities"].Children())
+				foreach (JObject content in Utilities.BehaviourResources.entityData["behaviours"].Children())
 				{
 					var prop = content.Properties().FirstOrDefault(prop => prop.Name == NewOverride.name);
 					if (prop is JProperty)
 					{
 						NewOverrideNode.Text = (string)prop.Value;
-						NewOverrideNode.ImageIndex = Utilities.BehaviourUtil.entityData["entities"].Children().ToList().IndexOf(content);
+						NewOverrideNode.ImageIndex = Utilities.BehaviourResources.entityData["behaviours"].Children().ToList().IndexOf(content);
 						NewOverrideNode.SelectedImageIndex = NewOverrideNode.ImageIndex;
 						break;
 					}

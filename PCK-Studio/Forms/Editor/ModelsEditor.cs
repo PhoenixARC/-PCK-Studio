@@ -13,6 +13,7 @@ using OMI.Formats.Model;
 using OMI.Formats.Pck;
 using OMI.Workers.Model;
 using OMI.Formats.Behaviour;
+using PckStudio.Forms.Utilities;
 
 namespace PckStudio.Forms.Editor
 {
@@ -30,13 +31,13 @@ namespace PckStudio.Forms.Editor
 			{
 				TreeNode EntryNode = new TreeNode(entry.Name);
 
-				foreach (JObject content in Utilities.ModelsUtil.entityData["entities"].Children())
+				foreach (JObject content in ModelsResources.entityData["entities"].Children())
 				{
 					var prop = content.Properties().FirstOrDefault(prop => prop.Name == entry.Name);
 					if (prop is JProperty)
 					{
 						EntryNode.Text = (string)prop.Value;
-						EntryNode.ImageIndex = Utilities.ModelsUtil.entityData["entities"].Children().ToList().IndexOf(content);
+						EntryNode.ImageIndex = ModelsResources.entityData["entities"].Children().ToList().IndexOf(content);
 						EntryNode.SelectedImageIndex = EntryNode.ImageIndex;
 						break;
 					}
@@ -79,7 +80,7 @@ namespace PckStudio.Forms.Editor
 			}
 
 			treeView1.ImageList = new ImageList();
-            treeView1.ImageList.Images.AddRange(Utilities.ModelsUtil.entityImages);
+            treeView1.ImageList.Images.AddRange(ModelsResources.entityImages);
 			treeView1.ImageList.ColorDepth = ColorDepth.Depth32Bit;
 			SetUpTree();
 		}
@@ -100,7 +101,7 @@ namespace PckStudio.Forms.Editor
 			if (treeView1.SelectedNode is null || treeView1.SelectedNode.Tag is not Model entry)
 				return;
 
-			var diag = new AddEntry(Utilities.ModelsUtil.entityData, Utilities.ModelsUtil.entityImages);
+			var diag = new AddEntry(ModelsResources.entityData, ModelsResources.entityImages);
 			diag.acceptBtn.Text = "Save";
 
 			if (diag.ShowDialog() == DialogResult.OK)
@@ -117,13 +118,13 @@ namespace PckStudio.Forms.Editor
 				entry.Name = diag.SelectedEntity;
 				treeView1.SelectedNode.Tag = entry;
 
-				foreach (JObject content in Utilities.ModelsUtil.entityData["entities"].Children())
+				foreach (JObject content in ModelsResources.entityData["entities"].Children())
 				{
 					var prop = content.Properties().FirstOrDefault(prop => prop.Name == entry.Name);
 					if (prop is JProperty)
 					{
 						treeView1.SelectedNode.Text = (string)prop.Value;
-						treeView1.SelectedNode.ImageIndex = Utilities.ModelsUtil.entityData["entities"].Children().ToList().IndexOf(content);
+						treeView1.SelectedNode.ImageIndex = ModelsResources.entityData["entities"].Children().ToList().IndexOf(content);
 						treeView1.SelectedNode.SelectedImageIndex = treeView1.SelectedNode.ImageIndex;
 						break;
 					}
@@ -153,7 +154,7 @@ namespace PckStudio.Forms.Editor
 
 		private void addNewEntryToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			var diag = new AddEntry(Utilities.ModelsUtil.entityData, Utilities.ModelsUtil.entityImages);
+			var diag = new AddEntry(ModelsResources.entityData, ModelsResources.entityImages);
 
 			if(diag.ShowDialog() == DialogResult.OK)
 			{
@@ -173,13 +174,13 @@ namespace PckStudio.Forms.Editor
 
 				TreeNode modelNode = new TreeNode(newModel.Name);
 				modelNode.Tag = newModel;
-				foreach (JObject content in Utilities.ModelsUtil.entityData["entities"].Children())
+				foreach (JObject content in ModelsResources.entityData["entities"].Children())
 				{
 					var prop = content.Properties().FirstOrDefault(prop => prop.Name == newModel.Name);
 					if (prop is JProperty)
 					{
 						modelNode.Text = (string)prop.Value;
-						modelNode.ImageIndex = Utilities.ModelsUtil.entityData["entities"].Children().ToList().IndexOf(content);
+						modelNode.ImageIndex = ModelsResources.entityData["entities"].Children().ToList().IndexOf(content);
 						modelNode.SelectedImageIndex = modelNode.ImageIndex;
 						break;
 					}

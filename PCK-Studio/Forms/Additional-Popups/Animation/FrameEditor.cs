@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Drawing;
 using MetroFramework.Forms;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace PckStudio.Forms.Additional_Popups.Animation
 {
@@ -13,16 +13,12 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 		public FrameEditor(ImageList texList)
 		{
 			InitializeComponent();
-			label3.Text = "Select a frame and frame time:";
 			FrameList.ImageList = texList;
-
-			int index = 0;
-			foreach (Image frameTex in texList.Images)
+			for (int index = 0; index < texList.Images.Count; index++)
 			{
 				TreeNode frame = new TreeNode($"Frame {index}", index, index);
 				FrameList.Nodes.Add(frame);
-				Console.WriteLine(index);
-				index++;
+				Debug.WriteLine(index);
 			}
 		}
 
@@ -41,7 +37,8 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 
 		private void CancelBtn_Click(object sender, EventArgs e)
 		{
-			Close();
+            DialogResult = DialogResult.Cancel;
+            Close();
 		}
 	}
 }

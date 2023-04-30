@@ -87,7 +87,7 @@
 			this.Controls.Add(this.button1);
 			this.Controls.Add(this.CancelBtn);
 			this.Controls.Add(this.TextLabel);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "MipMapPrompt";

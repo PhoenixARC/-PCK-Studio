@@ -21,7 +21,7 @@ namespace PckStudio
             {
                 // adopted Minecraft Java Edition Snapshot format (YYwWWn)
                 // to keep better track of work in progress features and builds
-                return string.Format("(Debug build #{0}w{1}{2})",
+                return string.Format("#{0}w{1}{2}",
                     date.ToString("yy"),
                     BuildCalendar.GetWeekOfYear(date, System.Globalization.CalendarWeekRule.FirstDay, DayOfWeek.Monday),
                     BuildType);
@@ -37,6 +37,7 @@ namespace PckStudio
 
     static class Program
     {
+        public static readonly string ProjectUrl = "https://github.com/PhoenixARC/-PCK-Studio";
         public static readonly string BaseAPIUrl = "http://api.pckstudio.xyz/api/pck";
         public static readonly string BackUpAPIUrl = "https://raw.githubusercontent.com/PhoenixARC/pckstudio.tk/main/studio/PCK/api/";
         public static readonly string AppData = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "PCK-Studio");

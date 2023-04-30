@@ -5,7 +5,7 @@ namespace PckStudio.Forms.Additional_Popups
 {
     public partial class TextPrompt : MetroFramework.Forms.MetroForm
     {
-        public string[] TextOutput => DialogResult == DialogResult.OK ? PromptTextBox.Lines : null;
+        public string[] TextOutput => DialogResult == DialogResult.OK ? PromptTextBox.Lines : Array.Empty<string>();
         public TextPrompt(string[] list = null)
         {
             InitializeComponent();

@@ -610,7 +610,7 @@
     <value>myTablePanel2</value>
   </data>
   <data name="&gt;&gt;myTablePanel2.Type" xml:space="preserve">
-    <value>PckStudio.Forms.MyTablePanel, PCK-Studio, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;myTablePanel2.Parent" xml:space="preserve">
     <value>tabPage1</value>
@@ -1413,16 +1413,16 @@
   <data name="Z.Width" type="System.Int32, mscorlib">
     <value>30</value>
   </data>
-  <data name="Width.Text" xml:space="preserve">
+  <data name="_Width.Text" xml:space="preserve">
     <value>Width</value>
   </data>
-  <data name="Width.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+  <data name="_Width.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
     <value>Center</value>
   </data>
-  <data name="Height.Text" xml:space="preserve">
+  <data name="_Height.Text" xml:space="preserve">
     <value>Height</value>
   </data>
-  <data name="Height.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+  <data name="_Height.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
     <value>Center</value>
   </data>
   <data name="Length.Text" xml:space="preserve">
@@ -3267,16 +3267,16 @@
   <data name="&gt;&gt;Z.Type" xml:space="preserve">
     <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;Width.Name" xml:space="preserve">
-    <value>Width</value>
+  <data name="&gt;&gt;_Width.Name" xml:space="preserve">
+    <value>_Width</value>
   </data>
-  <data name="&gt;&gt;Width.Type" xml:space="preserve">
+  <data name="&gt;&gt;_Width.Type" xml:space="preserve">
     <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;Height.Name" xml:space="preserve">
-    <value>Height</value>
+  <data name="&gt;&gt;_Height.Name" xml:space="preserve">
+    <value>_Height</value>
   </data>
-  <data name="&gt;&gt;Height.Type" xml:space="preserve">
+  <data name="&gt;&gt;_Height.Type" xml:space="preserve">
     <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;Length.Name" xml:space="preserve">

@@ -28483,6 +28483,12 @@
   <data name="joinDevelopmentDiscordToolStripMenuItem.Text" xml:space="preserve">
     <value>Join Development Discord</value>
   </data>
+  <data name="trelloBoardToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>212, 22</value>
+  </data>
+  <data name="trelloBoardToolStripMenuItem.Text" xml:space="preserve">
+    <value>Trello Board</value>
+  </data>
   <data name="storeToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
@@ -30419,28 +30425,25 @@
   <data name="editorTab.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>None</value>
   </data>
-  <data name="metroLabel3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 28</value>
+  <data name="pckFileLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 17</value>
   </data>
-  <data name="metroLabel3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>326, 19</value>
+  <data name="pckFileLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>332, 23</value>
   </data>
-  <data name="metroLabel3.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+  <data name="pckFileLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
   </data>
-  <data name="metroLabel3.Text" xml:space="preserve">
+  <data name="&gt;&gt;pckFileLabel.Name" xml:space="preserve">
     <value>pckFileLabel</value>
   </data>
-  <data name="&gt;&gt;metroLabel3.Name" xml:space="preserve">
-    <value>metroLabel3</value>
-  </data>
-  <data name="&gt;&gt;metroLabel3.Type" xml:space="preserve">
+  <data name="&gt;&gt;pckFileLabel.Type" xml:space="preserve">
     <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
   </data>
-  <data name="&gt;&gt;metroLabel3.Parent" xml:space="preserve">
+  <data name="&gt;&gt;pckFileLabel.Parent" xml:space="preserve">
     <value>editorTab</value>
   </data>
-  <data name="&gt;&gt;metroLabel3.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;pckFileLabel.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
   <data name="labelImageSize.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
@@ -33965,6 +33968,12 @@
   </data>
   <data name="&gt;&gt;imageList.Type" xml:space="preserve">
     <value>System.Windows.Forms.ImageList, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;trelloBoardToolStripMenuItem.Name" xml:space="preserve">
+    <value>trelloBoardToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;trelloBoardToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>MainForm</value>

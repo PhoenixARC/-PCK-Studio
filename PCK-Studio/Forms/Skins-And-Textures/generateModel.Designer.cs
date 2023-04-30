@@ -43,7 +43,7 @@
 			this.tabBody = new System.Windows.Forms.TabControl();
 			this.tabArmor = new System.Windows.Forms.TabPage();
 			this.tabPage1 = new System.Windows.Forms.TabPage();
-			this.myTablePanel2 = new PckStudio.Forms.MyTablePanel();
+			this.myTablePanel2 = new System.Windows.Forms.TableLayoutPanel();
 			this.offsetArms = new System.Windows.Forms.TextBox();
 			this.label14 = new System.Windows.Forms.Label();
 			this.offsetBody = new System.Windows.Forms.TextBox();
@@ -370,8 +370,6 @@
 			// checkTextureGenerate
 			// 
 			resources.ApplyResources(this.checkTextureGenerate, "checkTextureGenerate");
-			this.checkTextureGenerate.Checked = true;
-			this.checkTextureGenerate.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.checkTextureGenerate.Name = "checkTextureGenerate";
 			this.checkTextureGenerate.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.checkTextureGenerate.UseSelectable = true;
@@ -503,13 +501,13 @@
 			// 
 			resources.ApplyResources(this.Z, "Z");
 			// 
-			// Width
+			// _Width
 			// 
-			resources.ApplyResources(this._Width, "Width");
+			resources.ApplyResources(this._Width, "_Width");
 			// 
-			// Height
+			// _Height
 			// 
-			resources.ApplyResources(this._Height, "Height");
+			resources.ApplyResources(this._Height, "_Height");
 			// 
 			// Length
 			// 
@@ -637,7 +635,7 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TabControl tabBody;
         private System.Windows.Forms.TabPage tabPage1;
-        private Forms.MyTablePanel myTablePanel2;
+        private System.Windows.Forms.TableLayoutPanel myTablePanel2;
         private System.Windows.Forms.TextBox offsetArms;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.TextBox offsetBody;

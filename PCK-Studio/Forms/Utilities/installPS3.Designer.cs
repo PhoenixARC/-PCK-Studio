@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.metroTabPageMain = new MetroFramework.Controls.MetroTabPage();
-            this.myTablePanel1 = new PckStudio.Forms.MyTablePanel();
+            this.myTablePanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.EurDig = new System.Windows.Forms.RadioButton();
             this.USDig = new System.Windows.Forms.RadioButton();
             this.buttonServerToggle = new System.Windows.Forms.Button();
@@ -339,7 +339,7 @@
         #endregion
 
         private MetroFramework.Controls.MetroTabPage metroTabPageMain;
-        private MyTablePanel myTablePanel1;
+        private System.Windows.Forms.TableLayoutPanel myTablePanel1;
         private System.Windows.Forms.RadioButton USDisc;
         private System.Windows.Forms.RadioButton JPDig;
         private System.Windows.Forms.RadioButton EurDisc;

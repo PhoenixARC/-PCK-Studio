@@ -116,7 +116,7 @@
             this.Controls.Add(this.InputTextBox);
             this.Controls.Add(this.OKButton);
             this.Controls.Add(this.TextLabel);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "CreateTexturePack";
