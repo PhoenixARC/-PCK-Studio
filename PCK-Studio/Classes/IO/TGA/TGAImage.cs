@@ -19,7 +19,7 @@ using System.IO;
 using System.Drawing;
 using System;
 
-namespace PckStudio.Classes.Utils.TGA
+namespace PckStudio.IO.TGA
 {
     public class TGAFileData
     {

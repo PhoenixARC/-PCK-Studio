@@ -15,26 +15,13 @@
  *    misrepresented as being the original software.
  * 3. This notice may not be removed or altered from any source distribution.
 **/
-using System;
 
-namespace PckStudio.Classes.Utils.TGA
+namespace PckStudio.IO.TGA
 {
-    public struct TGAExtentionData
+    public struct TGAFooter
     {
-        public const short ExtensionSize = 0x1EF;
-        public string AuthorName;
-        public string AuthorComment;
-        public DateTime TimeStamp;
-        public string JobID;
-        public TimeSpan JobTime;
-        public string SoftwareID;
-        public byte[] SoftwareVersion;
-        public int KeyColor;
-        public int PixelAspectRatio;
-        public int GammaValue;
-        public int ColorCorrectionOffset;
-        public int PostageStampOffset;
-        public int ScanLineOffset;
-        public byte AttributesType;
+        internal const string Signature = "TRUEVISION-XFILE";
+        public int ExtensionDataOffset; 
+        public int DeveloperAreaDataOffset;
     }
 }

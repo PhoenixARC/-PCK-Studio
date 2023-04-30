@@ -22,12 +22,11 @@ using System.Drawing;
 using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
-using PckStudio.Classes.IO;
 using System.Collections.Generic;
 using OMI.Workers;
 using OMI;
 
-namespace PckStudio.Classes.Utils.TGA
+namespace PckStudio.IO.TGA
 {
     internal class TGAReader : IDataFormatReader<TGAFileData>, IDataFormatReader
     {

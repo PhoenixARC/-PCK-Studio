@@ -25,7 +25,7 @@ using System.Text;
 using OMI.Workers;
 using OMI;
 
-namespace PckStudio.Classes.Utils.TGA
+namespace PckStudio.IO.TGA
 {
     internal class TGAWriter : IDataFormatWriter
     {

@@ -15,23 +15,26 @@
  *    misrepresented as being the original software.
  * 3. This notice may not be removed or altered from any source distribution.
 **/
+using System;
 
-namespace PckStudio.Classes.Utils.TGA
+namespace PckStudio.IO.TGA
 {
-    /// <summary>
-    /// Resources:
-    ///  <http://www.paulbourke.net/dataformats/tga/>
-    ///  <https://en.wikipedia.org/wiki/Truevision_TGA>
-    /// </summary>
-    public struct TGAHeader
+    public struct TGAExtentionData
     {
-        public byte[] Id;
-        public TGADataTypeCode DataTypeCode;
-        public (byte Type, short Origin/*Offset*/, short Length, byte Depth) Colormap;
-        public (short X, short Y) Origin;
-        public short Width;
-        public short Height;
-        public byte BitsPerPixel;
-        public byte ImageDescriptor;
+        public const short ExtensionSize = 0x1EF;
+        public string AuthorName;
+        public string AuthorComment;
+        public DateTime TimeStamp;
+        public string JobID;
+        public TimeSpan JobTime;
+        public string SoftwareID;
+        public byte[] SoftwareVersion;
+        public int KeyColor;
+        public int PixelAspectRatio;
+        public int GammaValue;
+        public int ColorCorrectionOffset;
+        public int PostageStampOffset;
+        public int ScanLineOffset;
+        public byte AttributesType;
     }
 }
