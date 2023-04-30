@@ -23,10 +23,12 @@ namespace PckStudio.Forms.Additional_Features
     public partial class PckManager : MetroFramework.Forms.MetroForm
     {
         private Control currentlyShowingControl;
+        private const string CemU = "Cemu";
+
+        // TODO: Implement these Panels
         private const string WiiU = "Wii U";
         private const string PS3 = "Play Station 3";
         private const string PSVita = "PS Vita";
-        private const string CemU = "Cemu";
         private const string RPCS3 = "RPCS3";
 
         public PckManager()
@@ -34,11 +36,11 @@ namespace PckStudio.Forms.Additional_Features
             InitializeComponent();
             supportedPlatformComboBox.Items.AddRange(new string[]
             {
-                WiiU,
-                PS3,
-                PSVita,
+                // WiiU,
+                // PS3,
+                // PSVita,
                 CemU,
-                RPCS3,
+                // RPCS3,
             });
         }
 
@@ -50,14 +52,13 @@ namespace PckStudio.Forms.Additional_Features
                 string text = supportedPlatformComboBox.Items[supportedPlatformComboBox.SelectedIndex].ToString();
                 try
                 {
-
                     currentlyShowingControl = text switch
                     {
-                        WiiU => new WiiUPanel(),
-                        PS3 => throw new NotImplementedException($"{text}-Panel is currently not implemented."),
-                        PSVita => throw new NotImplementedException($"{text}-Panel is currently not implemented."),
                         CemU => new CemuPanel(),
-                        RPCS3 => throw new NotImplementedException($"{text}-Panel is currently not implemented."),
+                        //WiiU => new WiiUPanel(),
+                        //PS3 => throw new NotImplementedException($"{text}-Panel is currently not implemented."),
+                        //PSVita => throw new NotImplementedException($"{text}-Panel is currently not implemented."),
+                        //RPCS3 => throw new NotImplementedException($"{text}-Panel is currently not implemented."),
                         _ => throw new Exception($"No Panel found for: {text}"),
                     };
                     currentlyShowingControl.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Right;
