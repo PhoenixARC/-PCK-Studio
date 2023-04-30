@@ -7,10 +7,10 @@ using System.Text;
 
 namespace PckStudio.Classes.IO.PCK
 {
-    internal class PCKAudioFileWriter : IDataFormatWriter
+    internal class PckAudioFileWriter : IDataFormatWriter
     {
 
-        private PCKAudioFile _file;
+        private PckAudioFile _file;
         private Endianness _endianness;
         private static readonly List<string> LUT = new List<string>
         {
@@ -19,7 +19,7 @@ namespace PckStudio.Classes.IO.PCK
             "CREDITID"
         };
 
-        public PCKAudioFileWriter(PCKAudioFile file, Endianness endianness)
+        public PckAudioFileWriter(PckAudioFile file, Endianness endianness)
         {
             _file = file;
             _endianness = endianness;

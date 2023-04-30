@@ -28,9 +28,27 @@ namespace PckStudio.Extensions
 
             public ImageLayoutInfo(int width, int height, int index, ImageLayoutDirection layoutDirection)
             {
-                bool horizontal = layoutDirection == ImageLayoutDirection.Horizontal;
-                SectionSize = horizontal ? new Size(width, width) : new Size(height, height);
-                SectionPoint = horizontal ? new Point(0, index * width) : new Point(index * height, 0);
+                switch(layoutDirection)
+                {
+                    case ImageLayoutDirection.Horizontal:
+                        {
+                            SectionSize = new Size(height,height);
+                            SectionPoint = new Point(index * height, 0);
+                        }
+                        break;
+
+                    case ImageLayoutDirection.Vertical:
+                        {
+                            SectionSize = new Size(width, width);
+                            SectionPoint = new Point(0, index * width);
+                        }
+                        break;
+
+                    default:
+                        SectionSize = Size.Empty;
+                        SectionPoint = new Point(-1, -1);
+                        break;
+                }
                 SectionArea = new Rectangle(SectionPoint, SectionSize);
             }
         }
@@ -77,35 +95,40 @@ namespace PckStudio.Extensions
             yield break;
         }
 
-        public static Image ImageFromImageArray(Image[] sources, ImageLayoutDirection layoutDirection)
+        public static Image CombineImages(IList<Image> sources, ImageLayoutDirection layoutDirection)
         {
             Size imageSize = CalculateImageSize(sources, layoutDirection);
-            var result = new Bitmap(imageSize.Width, imageSize.Height);
+            var image = new Bitmap(imageSize.Width, imageSize.Height);
 
-            using (var graphic = Graphics.FromImage(result))
+            using (var graphic = Graphics.FromImage(image))
             {
                 foreach (var (i, texture) in sources.enumerate())
                 {
-                    var info = new ImageLayoutInfo(imageSize.Width, imageSize.Height, i, layoutDirection);
+                    var info = new ImageLayoutInfo(texture.Width, texture.Height, i, layoutDirection);
                     graphic.DrawImage(texture, info.SectionPoint);
                 };
             }
-            return result;
+            return image;
         }
 
-        private static Size CalculateImageSize(Image[] sources, ImageLayoutDirection layoutDirection)
+        private static Size CalculateImageSize(IList<Image> sources, ImageLayoutDirection layoutDirection)
         {
+            if (sources.Count == 0)
+            {
+                return Size.Empty;
+            }
             var horizontal = layoutDirection == ImageLayoutDirection.Horizontal;
 
             int width = sources[0].Width;
             int height = sources[0].Height;
+
             if (!sources.All(img => img.Width.Equals(width) && img.Height.Equals(height)))
                 throw new InvalidOperationException("Images must have the same width and height.");
 
             if (horizontal)
-                width *= sources.Length;
+                width *= sources.Count;
             else
-                height *= sources.Length;
+                height *= sources.Count;
 
             return new Size(width, height);
         }
@@ -141,7 +164,7 @@ namespace PckStudio.Extensions
             return image;
         }
 
-        public static Image Blend(this Image image, Color foregroundColor, BlendMode mode)
+        public static Image Blend(this Image image, Color overlayColor, BlendMode mode)
         {
             if (image is not Bitmap baseImage)
                 return image;
@@ -152,15 +175,13 @@ namespace PckStudio.Extensions
 
             Marshal.Copy(baseImageData.Scan0, baseImageBuffer, 0, baseImageBuffer.Length);
             
-            float overlayR = foregroundColor.R / 255f;
-            float overlayG = foregroundColor.G / 255f;
-            float overlayB = foregroundColor.B / 255f;
+            var normalized = overlayColor.Normalize();
 
             for (int k = 0; k < baseImageBuffer.Length; k += 4)
             {
-                baseImageBuffer[k + 0] = CalculateColorComponentBlendValue(baseImageBuffer[k + 0] / 255f, overlayR, mode);
-                baseImageBuffer[k + 1] = CalculateColorComponentBlendValue(baseImageBuffer[k + 1] / 255f, overlayG, mode);
-                baseImageBuffer[k + 2] = CalculateColorComponentBlendValue(baseImageBuffer[k + 2] / 255f, overlayB, mode);
+                baseImageBuffer[k + 0] = ColorExtensions.BlendValues(baseImageBuffer[k + 0] / 255f, normalized.X, mode);
+                baseImageBuffer[k + 1] = ColorExtensions.BlendValues(baseImageBuffer[k + 1] / 255f, normalized.Y, mode);
+                baseImageBuffer[k + 2] = ColorExtensions.BlendValues(baseImageBuffer[k + 2] / 255f, normalized.Z, mode);
             }
 
             Bitmap bitmapResult = new Bitmap(baseImage.Width, baseImage.Height, PixelFormat.Format32bppArgb);
@@ -195,9 +216,9 @@ namespace PckStudio.Extensions
 
             for (int k = 0; k < baseImageBuffer.Length && k < overlayImageBuffer.Length; k += 4)
             {
-                baseImageBuffer[k + 0] = CalculateColorComponentBlendValue(baseImageBuffer[k + 0] / 255f, overlayImageBuffer[k + 0] / 255f, mode);
-                baseImageBuffer[k + 1] = CalculateColorComponentBlendValue(baseImageBuffer[k + 1] / 255f, overlayImageBuffer[k + 1] / 255f, mode);
-                baseImageBuffer[k + 2] = CalculateColorComponentBlendValue(baseImageBuffer[k + 2] / 255f, overlayImageBuffer[k + 2] / 255f, mode);
+                baseImageBuffer[k + 0] = ColorExtensions.BlendValues(baseImageBuffer[k + 0] / 255f, overlayImageBuffer[k + 0] / 255f, mode);
+                baseImageBuffer[k + 1] = ColorExtensions.BlendValues(baseImageBuffer[k + 1] / 255f, overlayImageBuffer[k + 1] / 255f, mode);
+                baseImageBuffer[k + 2] = ColorExtensions.BlendValues(baseImageBuffer[k + 2] / 255f, overlayImageBuffer[k + 2] / 255f, mode);
             }
 
             Bitmap bitmapResult = new Bitmap(baseImage.Width, baseImage.Height, PixelFormat.Format32bppArgb);
@@ -210,32 +231,6 @@ namespace PckStudio.Extensions
             baseImage.UnlockBits(baseImageData);
             overlayImage.UnlockBits(overlayImageData);
             return bitmapResult;
-        }
-
-        private static T Clamp<T>(T value, T min, T max) where T : IComparable<T>
-        {
-            if (value.CompareTo(min) < 0) return min;
-            else if (value.CompareTo(max) > 0) return max;
-            else return value;
-        }
-
-        private static byte CalculateColorComponentBlendValue(float source, float overlay, BlendMode blendType)
-        {
-            source = Clamp(source, 0.0f, 1.0f);
-            overlay = Clamp(overlay, 0.0f, 1.0f);
-
-            float resultValue = blendType switch
-            {
-                BlendMode.Add => source + overlay,
-                BlendMode.Subtract => source - overlay,
-                BlendMode.Multiply => source * overlay,
-                BlendMode.Average => (source + overlay) / 2.0f,
-                BlendMode.AscendingOrder => source > overlay ? overlay : source,
-                BlendMode.DescendingOrder => source < overlay ? overlay : source,
-                BlendMode.Screen => 1f - (1f - source)*(1f - overlay),
-                _ => 0.0f
-            };
-            return (byte)Clamp(resultValue * 255, 0, 255);
         }
     }
 }

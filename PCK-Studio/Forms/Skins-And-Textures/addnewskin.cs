@@ -87,7 +87,7 @@ namespace PckStudio
                         //comboBoxSkinType.Text = "Steve (64x64)";
                         skinType = eSkinType._64x64HD;
                     }
-                    else if (img.Width == img.Height / 2) // 64x32 HD
+                    else if (img.Height == img.Width / 2) // 64x32 HD
                     {
                         anim.SetFlag(ANIM_EFFECTS.RESOLUTION_64x64, false);
                         anim.SetFlag(ANIM_EFFECTS.SLIM_MODEL, false);
@@ -283,14 +283,10 @@ namespace PckStudio
             if (MessageBox.Show("Create your own custom skin model?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1) != DialogResult.Yes)
                 return;
             
-            PictureBox preview = new PictureBox(); //Creates new picture for generated model preview
-            generateModel generate = new generateModel(generatedModel, preview);
+            generateModel generate = new generateModel(generatedModel, Properties.Resources.classic_template);
 
             if (generate.ShowDialog() == DialogResult.OK) //Opens Model Generator Dialog
             {
-                //comboBoxSkinType.Items.Add("Custom"); //Adds skin preset to combobox
-                //comboBoxSkinType.Text = "Custom"; //Sets combo to custom preset
-                displayBox.Image = preview.Image; //Sets displayBox to created model preview
                 try
                 {
                     using (FileStream stream = File.OpenRead(Application.StartupPath + "\\temp.png"))

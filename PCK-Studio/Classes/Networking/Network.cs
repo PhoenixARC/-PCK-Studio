@@ -5,6 +5,7 @@ using System.Windows.Forms;
 
 namespace PckStudio.Classes.Networking
 {
+    [Obsolete]
     class Network
     {
         public static string Version = Application.ProductVersion;

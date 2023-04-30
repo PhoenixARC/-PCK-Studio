@@ -73,7 +73,7 @@ namespace PckStudio
 			labelVersion.Text = "PCK Studio: " + Application.ProductVersion;
 			ChangelogRichTextBox.Text = Resources.CHANGELOG;
 #if DEBUG
-			labelVersion.Text += Program.Info.BuildVersion + " " + Program.Info.LastCommitHash;
+			labelVersion.Text += $" (Debug build: {Program.Info.BuildVersion}@{Program.Info.LastCommitHash})";
 #endif
 
             pckFileTypeHandler = new Dictionary<PckFile.FileData.FileType, Action<PckFile.FileData>>(15)
@@ -128,16 +128,6 @@ namespace PckStudio
 			modelsFileBINToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.ModelsFile);
 			behavioursFileBINToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.BehavioursFile);
 			entityMaterialsFileBINToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.MaterialFile);
-
-			try
-			{
-				Directory.CreateDirectory(Program.AppDataCache + "\\mods\\");
-			}
-			catch (UnauthorizedAccessException ex)
-			{
-				MessageBox.Show("Could not Create directory due to Unauthorized Access");
-				Debug.WriteLine(ex.Message);
-			}
 		}
 
 		private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
@@ -435,7 +425,7 @@ namespace PckStudio
 		{
 			if (file.Properties.HasProperty("BOX"))
 			{
-				using (generateModel generate = new generateModel(file.Properties, new PictureBox()))
+				using (generateModel generate = new generateModel(file.Properties, Image.FromStream(new MemoryStream(file.Data))))
 					if (generate.ShowDialog() == DialogResult.OK)
 					{
 						entryDataTextBox.Text = entryTypeTextBox.Text = string.Empty;
@@ -836,15 +826,15 @@ namespace PckStudio
         private PckFile.FileData CreateNewAudioFile(bool isLittle)
         {
             // create actual valid pck file structure
-            PCKAudioFile audioPck = new PCKAudioFile();
-            audioPck.AddCategory(PCKAudioFile.AudioCategory.EAudioType.Overworld);
-            audioPck.AddCategory(PCKAudioFile.AudioCategory.EAudioType.Nether);
-            audioPck.AddCategory(PCKAudioFile.AudioCategory.EAudioType.End);
+            PckAudioFile audioPck = new PckAudioFile();
+            audioPck.AddCategory(PckAudioFile.AudioCategory.EAudioType.Overworld);
+            audioPck.AddCategory(PckAudioFile.AudioCategory.EAudioType.Nether);
+            audioPck.AddCategory(PckAudioFile.AudioCategory.EAudioType.End);
 			PckFile.FileData pckFileData = currentPCK.CreateNewFile("audio.pck", PckFile.FileData.FileType.AudioFile, () =>
 			{
 				using (var stream = new MemoryStream())
 				{
-					var writer = new PCKAudioFileWriter(audioPck, isLittle ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
+					var writer = new PckAudioFileWriter(audioPck, isLittle ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
 					writer.WriteToStream(stream);
 					return stream.ToArray();
 				}
@@ -2180,7 +2170,7 @@ namespace PckStudio
 							int idx = line.IndexOf(' ');
 							if (idx == -1 || line.Length - 1 == idx)
 								continue;
-							file.Properties.Add((line.Substring(0, idx), line.Substring(idx + 1)));
+							file.Properties.Add((line.Substring(0, idx).Replace(":", string.Empty), line.Substring(idx + 1)));
 						}
 						ReloadMetaTreeView();
 						if (IsSubPCKNode(node.FullPath)) RebuildSubPCK(node);

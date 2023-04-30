@@ -171,23 +171,26 @@
     <Compile Include="Classes\API\PCKCenter\PCKCollectionsLocal.cs" />
     <Compile Include="Classes\API\PCKCenter\SaveLocalJSON.cs" />
     <Compile Include="Classes\Extensions\BlendMode.cs" />
+    <Compile Include="Classes\Extensions\ColorExtensions.cs" />
     <Compile Include="Classes\Extensions\EnumerableExtensions.cs" />
     <Compile Include="Classes\Extensions\GraphicsExtensions.cs" />
     <Compile Include="Classes\Extensions\StringExtension.cs" />
     <Compile Include="Classes\FileTypes\CSMBFile.cs" />
-    <Compile Include="Classes\FileTypes\PCKAudioFile.cs" />
+    <Compile Include="Classes\FileTypes\PckAudioFile.cs" />
     <Compile Include="Classes\FileTypes\Binka.cs" />
     <Compile Include="Classes\IO\3DST\3DSTextureReader.cs" />
     <Compile Include="Classes\IO\3DST\3DSTextureWriter.cs" />
     <Compile Include="Classes\IO\CSMB\CSMBFileReader.cs" />
     <Compile Include="Classes\IO\CSMB\CSMBFileWriter.cs" />
-    <Compile Include="Classes\IO\PCK\PCKAudioFileReader.cs" />
-    <Compile Include="Classes\IO\PCK\PCKAudioFileWriter.cs" />
+    <Compile Include="Classes\IO\PckAudio\PckAudioFileReader.cs" />
+    <Compile Include="Classes\IO\PckAudio\PckAudioFileWriter.cs" />
     <Compile Include="Classes\IO\Sounds\SoundIO.cs" />
     <Compile Include="Classes\IO\Sounds\Sounds.cs" />
     <Compile Include="Classes\Misc\FTPClient.cs" />
+    <Compile Include="Classes\Misc\FileCacher.cs" />
     <Compile Include="Classes\Misc\OpenFolderDialog.cs" />
     <Compile Include="Classes\Models\DefaultModels\Steve64x64Model.cs" />
+    <Compile Include="Classes\Models\SkinBox.cs" />
     <Compile Include="Classes\Utils\ARC\ARCUtil.cs" />
     <Compile Include="Classes\Extensions\ImageExtensions.cs" />
     <Compile Include="Classes\Utils\SkinANIM.cs" />
@@ -760,6 +763,10 @@
     <ProjectReference Include="..\Vendor\OMI-Lib\OMI Filetypes Library\OMI Filetype Library.csproj">
       <Project>{693AEBC1-293D-4DF0-BCAE-26A1099FE7BB}</Project>
       <Name>OMI Filetype Library</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Vendor\SharpMss32\SharpMss32\SharpMss32.csproj">
+      <Project>{e8d0b671-3ab1-48b6-a767-58df67bd5d11}</Project>
+      <Name>SharpMss32</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
