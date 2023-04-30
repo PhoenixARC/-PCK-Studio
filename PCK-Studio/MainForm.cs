@@ -958,7 +958,7 @@ namespace PckStudio
 				{
 					if (node.Tag is PckFile.FileData node_file)
 					{
-						PckFile.FileData new_file = newPCKFile.CreateNewFile(node_file.Filename, node_file.Filetype);
+						PckFile.FileData new_file = newPCKFile.CreateNewFile(node_file.Filename.Replace(parent_file.Filename + "/", String.Empty), node_file.Filetype);
 						foreach (var prop in node_file.Properties) new_file.Properties.Add(prop);
 						new_file.SetData(node_file.Data);
 					}
