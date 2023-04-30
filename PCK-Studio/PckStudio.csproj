@@ -226,12 +226,6 @@
     <Compile Include="Forms\Features\CemuPanel.Designer.cs">
       <DependentUpon>CemuPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Features\PS3Panel.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Forms\Features\PS3Panel.Designer.cs">
-      <DependentUpon>PS3Panel.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\Features\WiiUPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -475,9 +469,6 @@
     <Compile Include="Classes\IO\3DST\TextureCodec.cs" />
     <EmbeddedResource Include="Forms\Features\CemuPanel.resx">
       <DependentUpon>CemuPanel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Features\PS3Panel.resx">
-      <DependentUpon>PS3Panel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Features\WiiUPanel.resx">
       <DependentUpon>WiiUPanel.cs</DependentUpon>
