@@ -617,6 +617,7 @@ namespace PckStudio
 			{
 				Save(saveFileDialog.FileName);
 				saveLocation = saveFileDialog.FileName;
+				pckFileLabel.Text = "Current PCK File: " + Path.GetFileName(saveLocation);
 				isTemplateFile = false;
 			}
 		}
