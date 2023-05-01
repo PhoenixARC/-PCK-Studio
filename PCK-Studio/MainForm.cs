@@ -861,6 +861,10 @@ namespace PckStudio
 			AudioEditor diag = new AudioEditor(file, locFile, LittleEndianCheckBox.Checked);
 			if (diag.ShowDialog(this) == DialogResult.OK)
 				TrySetLocFile(locFile);
+			else
+			{
+				currentPCK.Files.Remove(file); //delete file if not saved
+			}
 			diag.Dispose();
 			BuildMainTreeView();
 		}
