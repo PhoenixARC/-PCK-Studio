@@ -1665,6 +1665,7 @@ namespace PckStudio
 		private void folderToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			RenamePrompt folderNamePrompt = new RenamePrompt("");
+			if(treeViewMain.SelectedNode is not null) folderNamePrompt.contextLabel.Text = $"New folder at the location of \"{treeViewMain.SelectedNode.FullPath}\"";
 			folderNamePrompt.OKButton.Text = "Add";
 			if (folderNamePrompt.ShowDialog() == DialogResult.OK)
 			{
