@@ -504,11 +504,10 @@ namespace PckStudio
 						}
 
 						if ((file.Filename.StartsWith("res/textures/blocks/") || file.Filename.StartsWith("res/textures/items/")) &&
-							!file.Filename.EndsWith("clock.png") && !file.Filename.EndsWith("compass.png") &&
 							file.Filetype == PckFile.FileData.FileType.TextureFile 
 							&& !IsFilePathMipMapped(file.Filename))
 						{
-							buttonEdit.Text = "EDIT TEXTURE ANIMATION";
+							buttonEdit.Text = "EDIT TILE ANIMATION";
 							buttonEdit.Visible = true;
 						}
 						break;
