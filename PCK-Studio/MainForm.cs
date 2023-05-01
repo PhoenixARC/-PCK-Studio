@@ -1681,15 +1681,16 @@ namespace PckStudio
 				TreeNodeCollection nodeCollection = treeViewMain.Nodes;
 				if (treeViewMain.SelectedNode is TreeNode node)
 				{
-                    if (node.Tag is PckFile.FileData)
+                    if (node.Tag is PckFile.FileData fd &&
+						(fd.Filetype != PckFile.FileData.FileType.TexturePackInfoFile &&
+						fd.Filetype != PckFile.FileData.FileType.SkinDataFile))
 					{
 						if (node.Parent is TreeNode parentNode)
 						{
 							nodeCollection = parentNode.Nodes;
 						}
 					}
-					else
-						nodeCollection = node.Nodes;
+					else nodeCollection = node.Nodes;
                 }
 				nodeCollection.Add(folerNode);
 			}
