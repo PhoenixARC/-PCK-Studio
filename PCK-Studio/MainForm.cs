@@ -844,11 +844,17 @@ namespace PckStudio
 
 		private void audiopckToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (currentPCK.Files.FindIndex(file => file.Filename.Contains("audio.pck")) != -1)
+			if (currentPCK.Files.FindIndex(file => file.Filetype == PckFile.FileData.FileType.AudioFile) != -1)
 			{
-				MessageBox.Show("There is already an audio.pck present in this file!", "Can't create audio.pck");
+				MessageBox.Show("There is already an music cues PCK present in this PCK!", "Can't create audio.pck");
 				return;
 			}
+			if (String.IsNullOrEmpty(saveLocation))
+			{
+				MessageBox.Show("You must save your pck before creating or opening a music cues PCK file", "Can't create audio.pck");
+				return;
+			}
+
 			if (!TryGetLocFile(out LOCFile locFile))
 				throw new Exception("No .loc file found.");
 			var file = CreateNewAudioFile(LittleEndianCheckBox.Checked);
