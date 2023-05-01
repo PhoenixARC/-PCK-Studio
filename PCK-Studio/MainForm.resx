@@ -30930,16 +30930,16 @@
     <value>True</value>
   </data>
   <data name="LittleEndianCheckBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>866, 49</value>
+    <value>826, 49</value>
   </data>
   <data name="LittleEndianCheckBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>167, 15</value>
+    <value>207, 15</value>
   </data>
   <data name="LittleEndianCheckBox.TabIndex" type="System.Int32, mscorlib">
     <value>21</value>
   </data>
   <data name="LittleEndianCheckBox.Text" xml:space="preserve">
-    <value>Open/Save as Vita/PS4 PCK</value>
+    <value>Open/Save as Switch/Vita/PS4 PCK</value>
   </data>
   <data name="&gt;&gt;LittleEndianCheckBox.Name" xml:space="preserve">
     <value>LittleEndianCheckBox</value>
@@ -33473,6 +33473,9 @@
         AP//AADgBwAA4AcAAMADAADAAwAAwAMAAMADAADAAwAAwAMAAMADAADABwAAwA8AAMAfAADgPwAA4H8A
         AP//AAA=
 </value>
+  </data>
+  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
     <value>1064, 660</value>
