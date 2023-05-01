@@ -51,10 +51,12 @@
 			// 
 			// InputTextBox
 			// 
+			resources.ApplyResources(this.InputTextBox, "InputTextBox");
 			// 
 			// 
 			// 
 			this.InputTextBox.CustomButton.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image")));
+			this.InputTextBox.CustomButton.ImeMode = ((System.Windows.Forms.ImeMode)(resources.GetObject("resource.ImeMode")));
 			this.InputTextBox.CustomButton.Location = ((System.Drawing.Point)(resources.GetObject("resource.Location")));
 			this.InputTextBox.CustomButton.Name = "";
 			this.InputTextBox.CustomButton.Size = ((System.Drawing.Size)(resources.GetObject("resource.Size")));
@@ -64,7 +66,6 @@
 			this.InputTextBox.CustomButton.UseSelectable = true;
 			this.InputTextBox.CustomButton.Visible = ((bool)(resources.GetObject("resource.Visible")));
 			this.InputTextBox.Lines = new string[0];
-			resources.ApplyResources(this.InputTextBox, "InputTextBox");
 			this.InputTextBox.MaxLength = 255;
 			this.InputTextBox.Name = "InputTextBox";
 			this.InputTextBox.PasswordChar = '\0';
@@ -82,8 +83,10 @@
 			// contextLabel
 			// 
 			resources.ApplyResources(this.contextLabel, "contextLabel");
+			this.contextLabel.FontSize = MetroFramework.MetroLabelSize.Small;
 			this.contextLabel.Name = "contextLabel";
 			this.contextLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.contextLabel.WrapToLine = true;
 			// 
 			// RenamePrompt
 			// 
