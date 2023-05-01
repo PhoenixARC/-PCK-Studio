@@ -849,6 +849,12 @@ namespace PckStudio
 				MessageBox.Show("There is already an music cues PCK present in this PCK!", "Can't create audio.pck");
 				return;
 			}
+			else if (currentPCK.Files.FindIndex(file => file.Filename == "audio.pck") != -1)
+			{
+				// the chances of this happening is really really slim but just in case
+				MessageBox.Show("There is already a file in this PCK named \"audio.pck\"!", "Can't create audio.pck");
+				return;
+			}
 			if (String.IsNullOrEmpty(saveLocation))
 			{
 				MessageBox.Show("You must save your pck before creating or opening a music cues PCK file", "Can't create audio.pck");
