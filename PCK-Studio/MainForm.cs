@@ -736,36 +736,30 @@ namespace PckStudio
 			TreeNode node = treeViewMain.SelectedNode;
 			if (node == null) return;
 			string path = node.FullPath;
-			using RenamePrompt diag = new RenamePrompt(node.FullPath);
+
+			bool sub = IsSubPCKNode(path);
+
+			using RenamePrompt diag = new RenamePrompt(node.Tag is null ? Path.GetFileName(node.FullPath) : node.FullPath);
+
 			if (diag.ShowDialog(this) == DialogResult.OK)
 			{
-				if (node.Tag is PckFile.FileData file 
-					&& file.Filetype is not PckFile.FileData.FileType.TexturePackInfoFile 
-					&& file.Filetype is not PckFile.FileData.FileType.SkinDataFile)
+				if (node.Tag is PckFile.FileData file)
 				{
 					file.Filename = diag.NewText;
 				}
-				else if(!IsSubPCKNode(path)) // folder
+				else // folders
 				{
+					node.Text = diag.NewText;
 					foreach (var childNode in GetAllChildNodes(node.Nodes))
 					{
-						if (childNode.Tag is PckFile.FileData folderFile &&
-							childNode.FullPath.StartsWith(childNode.FullPath))
+						if (childNode.Tag is PckFile.FileData folderFile)
 						{
-							folderFile.Filename = diag.NewText + childNode.FullPath.Substring(childNode.FullPath.Length);
+							folderFile.Filename = childNode.FullPath;
 						}
 					}
 				}
-				else
-				{
-					currentPCK.Files.ForEach(file =>
-					{
-						if (file.Filename.StartsWith(node.FullPath))
-							file.Filename = diag.NewText + file.Filename.Substring(node.FullPath.Length);
-					});
-				}
 				wasModified = true;
-				if (IsSubPCKNode(path)) RebuildSubPCK(node);
+				if (sub) RebuildSubPCK(node);
 				BuildMainTreeView();
 			}
 		}
