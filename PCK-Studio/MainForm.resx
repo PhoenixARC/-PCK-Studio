@@ -28511,11 +28511,29 @@
   <data name="addCustomPackImageToolStripMenuItem.Text" xml:space="preserve">
     <value>Add Custom Pack Icon</value>
   </data>
+  <data name="wavBinkaToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="wavBinkaToolStripMenuItem.Text" xml:space="preserve">
+    <value>Wav -&gt; Binka</value>
+  </data>
+  <data name="binkaWavToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="binkaWavToolStripMenuItem.Text" xml:space="preserve">
+    <value>Binka -&gt; Wav</value>
+  </data>
+  <data name="convertMusicFilesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>195, 22</value>
+  </data>
+  <data name="convertMusicFilesToolStripMenuItem.Text" xml:space="preserve">
+    <value>Convert Music Files</value>
+  </data>
   <data name="miscToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>47, 20</value>
+    <value>46, 20</value>
   </data>
   <data name="miscToolStripMenuItem.Text" xml:space="preserve">
-    <value>Misc.</value>
+    <value>Tools</value>
   </data>
   <data name="menuStrip.Location" type="System.Drawing.Point, System.Drawing">
     <value>24, 44</value>
@@ -33927,6 +33945,12 @@
   <data name="&gt;&gt;joinDevelopmentDiscordToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;trelloBoardToolStripMenuItem.Name" xml:space="preserve">
+    <value>trelloBoardToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;trelloBoardToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;miscToolStripMenuItem.Name" xml:space="preserve">
     <value>miscToolStripMenuItem</value>
   </data>
@@ -33969,10 +33993,22 @@
   <data name="&gt;&gt;imageList.Type" xml:space="preserve">
     <value>System.Windows.Forms.ImageList, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;trelloBoardToolStripMenuItem.Name" xml:space="preserve">
-    <value>trelloBoardToolStripMenuItem</value>
+  <data name="&gt;&gt;convertMusicFilesToolStripMenuItem.Name" xml:space="preserve">
+    <value>convertMusicFilesToolStripMenuItem</value>
   </data>
-  <data name="&gt;&gt;trelloBoardToolStripMenuItem.Type" xml:space="preserve">
+  <data name="&gt;&gt;convertMusicFilesToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;wavBinkaToolStripMenuItem.Name" xml:space="preserve">
+    <value>wavBinkaToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;wavBinkaToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;binkaWavToolStripMenuItem.Name" xml:space="preserve">
+    <value>binkaWavToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;binkaWavToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">

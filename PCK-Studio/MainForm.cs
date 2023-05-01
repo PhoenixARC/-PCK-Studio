@@ -2253,6 +2253,82 @@ namespace PckStudio
 		{
 			Process.Start("https://trello.com/b/0XLNOEbe/pck-studio");
 		}
+
+		private async void wavBinkaToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			int success = 0;
+			int exitCode = 0;
+
+			OpenFileDialog ofn = new OpenFileDialog();
+			ofn.Multiselect = true;
+			ofn.Filter = "WAV files (*.wav)|*.wav";
+			ofn.Title = "Please choose WAV files to convert to BINKA";
+			ofn.ShowDialog();
+			ofn.Dispose();
+			if (ofn.FileNames.Length < 1) return; // Return if empty or if the user cancels
+
+			Forms.Additional_Popups.Audio.pleaseWait waitDiag = new Forms.Additional_Popups.Audio.pleaseWait();
+			waitDiag.Show(this);
+			foreach (string file in ofn.FileNames)
+			{
+				string songName = string.Join("_", Path.GetFileNameWithoutExtension(file).Split(Path.GetInvalidFileNameChars()));
+				songName = System.Text.RegularExpressions.Regex.Replace(songName, @"[^\u0000-\u007F]+", "_"); // Replace UTF characters
+				string cacheSongLoc = Path.Combine(Program.AppDataCache, songName + Path.GetExtension(file));
+
+				if (File.Exists(cacheSongLoc)) File.Delete(cacheSongLoc);
+
+				using (var reader = new NAudio.Wave.WaveFileReader(file)) //read from original location
+				{
+					var newFormat = new NAudio.Wave.WaveFormat(reader.WaveFormat.SampleRate, 16, reader.WaveFormat.Channels);
+					using (var conversionStream = new NAudio.Wave.WaveFormatConversionStream(newFormat, reader))
+					{
+						NAudio.Wave.WaveFileWriter.CreateWaveFile(cacheSongLoc, conversionStream); //write to new location
+					}
+					reader.Close();
+					reader.Dispose();
+				}
+
+				Cursor.Current = Cursors.WaitCursor;
+
+				await System.Threading.Tasks.Task.Run(() =>
+				{
+					exitCode = Classes.Binka.FromWav(cacheSongLoc, Path.Combine(Path.GetDirectoryName(file), Path.GetFileNameWithoutExtension(file) + ".binka"), 4);
+				});
+
+				if (exitCode != 0) continue;
+
+				success++;
+			}
+
+			waitDiag.Close();
+			waitDiag.Dispose();
+			MessageBox.Show(this, $"Successfully converted {success}/{ofn.FileNames.Length} file{(ofn.FileNames.Length != 1 ? "s" : "")}", "Done!");
+		}
+
+		private void binkaWavToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			int success = 0;
+
+			OpenFileDialog ofn = new OpenFileDialog();
+			ofn.Multiselect = true;
+			ofn.Filter = "BINKA files (*.binka)|*.binka";
+			ofn.Title = "Please choose BINKA files to convert to WAV";
+			ofn.ShowDialog();
+			ofn.Dispose();
+			if (ofn.FileNames.Length < 1) return; // Return if empty or if the user cancels
+
+			Forms.Additional_Popups.Audio.pleaseWait waitDiag = new Forms.Additional_Popups.Audio.pleaseWait();
+			waitDiag.Show(this);
+			foreach (string file in ofn.FileNames)
+			{
+				Classes.Binka.ToWav(file, Path.Combine(Path.GetDirectoryName(file), Path.GetFileNameWithoutExtension(file) + ".binka"));
+				success++;
+			}
+
+			waitDiag.Close();
+			waitDiag.Dispose();
+			MessageBox.Show(this, $"Successfully converted {success}/{ofn.FileNames.Length} file{(ofn.FileNames.Length != 1 ? "s" : "")}", "Done!");
+		}
 	}
 
 	public class PckNodeSorter : System.Collections.IComparer, IComparer<TreeNode>
