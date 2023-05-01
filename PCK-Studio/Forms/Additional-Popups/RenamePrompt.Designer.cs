@@ -32,6 +32,7 @@
 			this.TextLabel = new System.Windows.Forms.Label();
 			this.OKButton = new System.Windows.Forms.Button();
 			this.InputTextBox = new MetroFramework.Controls.MetroTextBox();
+			this.contextLabel = new MetroFramework.Controls.MetroLabel();
 			this.SuspendLayout();
 			// 
 			// TextLabel
@@ -78,15 +79,21 @@
 			this.InputTextBox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
 			this.InputTextBox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
 			// 
+			// contextLabel
+			// 
+			resources.ApplyResources(this.contextLabel, "contextLabel");
+			this.contextLabel.Name = "contextLabel";
+			this.contextLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
+			// 
 			// RenamePrompt
 			// 
 			this.AcceptButton = this.OKButton;
 			resources.ApplyResources(this, "$this");
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.Controls.Add(this.contextLabel);
 			this.Controls.Add(this.InputTextBox);
 			this.Controls.Add(this.OKButton);
 			this.Controls.Add(this.TextLabel);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "RenamePrompt";
@@ -103,5 +110,6 @@
         public System.Windows.Forms.Button OKButton;
         public System.Windows.Forms.Label TextLabel;
         private MetroFramework.Controls.MetroTextBox InputTextBox;
-    }
+		public MetroFramework.Controls.MetroLabel contextLabel;
+	}
 }
