@@ -217,7 +217,7 @@ namespace PckStudio.Forms.Editor
 		{
 			int success = 0;
 			int exitCode = 0;
-			pleaseWait waitDiag = new pleaseWait();
+			InProgressPrompt waitDiag = new InProgressPrompt();
 			waitDiag.Show(this);
 			foreach (string file in FileList)
 			{
@@ -541,7 +541,7 @@ namespace PckStudio.Forms.Editor
 				if (file_ext == ".wav") // Convert Wave to BINKA
 				{
 					Cursor.Current = Cursors.WaitCursor;
-					pleaseWait waitDiag = new pleaseWait();
+					InProgressPrompt waitDiag = new InProgressPrompt();
 					waitDiag.Show(this);
 
 					await Task.Run(() =>

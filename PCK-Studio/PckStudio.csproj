@@ -344,11 +344,11 @@
     <Compile Include="Forms\Additional-Popups\Grf\AddParameter.Designer.cs">
       <DependentUpon>AddParameter.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Additional-Popups\Audio\pleaseWait.cs">
+    <Compile Include="Forms\Additional-Popups\InProgressPrompt.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Additional-Popups\Audio\pleaseWait.Designer.cs">
-      <DependentUpon>pleaseWait.cs</DependentUpon>
+    <Compile Include="Forms\Additional-Popups\InProgressPrompt.Designer.cs">
+      <DependentUpon>InProgressPrompt.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Utilities\ModelsResources.cs" />
     <Compile Include="Forms\Utilities\MaterialResources.cs" />
@@ -551,8 +551,8 @@
     <EmbeddedResource Include="Forms\Additional-Popups\Grf\AddParameter.resx">
       <DependentUpon>AddParameter.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Additional-Popups\Audio\pleaseWait.resx">
-      <DependentUpon>pleaseWait.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Additional-Popups\InProgressPrompt.resx">
+      <DependentUpon>InProgressPrompt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Editor\BoxEditor.resx">
       <DependentUpon>BoxEditor.cs</DependentUpon>

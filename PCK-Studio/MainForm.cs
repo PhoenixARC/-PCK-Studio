@@ -71,6 +71,7 @@ namespace PckStudio
 
 			labelVersion.Text = "PCK Studio: " + Application.ProductVersion;
 			ChangelogRichTextBox.Text = Resources.CHANGELOG;
+
 #if BETA
             labelVersion.Text += $"{Program.Info.BetaBuildVersion}";
 #endif
@@ -450,16 +451,19 @@ namespace PckStudio
 		{
 			MessageBox.Show("Models.bin support has not been implemented. You can use the Spark Editor for the time being to edit these files.", "Not implemented yet.");
 		}
+		
 		public void HandleBehavioursFile(PckFile.FileData file)
 		{
 			using BehaviourEditor edit = new BehaviourEditor(file);
 			wasModified = edit.ShowDialog(this) == DialogResult.OK;
 		}
+
 		public void HandleMaterialFile(PckFile.FileData file)
 		{
 			using MaterialsEditor edit = new MaterialsEditor(file);
 			wasModified = edit.ShowDialog(this) == DialogResult.OK;
 		}
+		
 		private void selectNode(object sender, TreeViewEventArgs e)
 		{
 			ReloadMetaTreeView();
@@ -2270,7 +2274,7 @@ namespace PckStudio
 			ofn.Dispose();
 			if (ofn.FileNames.Length < 1) return; // Return if empty or if the user cancels
 
-			Forms.Additional_Popups.Audio.pleaseWait waitDiag = new Forms.Additional_Popups.Audio.pleaseWait();
+			InProgressPrompt waitDiag = new InProgressPrompt();
 			waitDiag.Show(this);
 			foreach (string file in ofn.FileNames)
 			{
@@ -2321,6 +2325,7 @@ namespace PckStudio
 			if (ofn.FileNames.Length < 1) return; // Return if empty or if the user cancels
 
 			Forms.Additional_Popups.Audio.pleaseWait waitDiag = new Forms.Additional_Popups.Audio.pleaseWait();
+			InProgressPrompt waitDiag = new InProgressPrompt();
 			waitDiag.Show(this);
 			foreach (string file in ofn.FileNames)
 			{
