@@ -1804,12 +1804,6 @@ namespace PckStudio
 			Process.Start("https://discord.gg/aJtZNFVQTv");
 		}
 
-		private void convertPCTextrurePackToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			TextureConverterUtility tex = new TextureConverterUtility(treeViewMain, currentPCK);
-			tex.ShowDialog();
-		}
-
 		private void OpenPck_MouseEnter(object sender, EventArgs e)
 		{
 			pckOpen.Image = Resources.pckOpen;

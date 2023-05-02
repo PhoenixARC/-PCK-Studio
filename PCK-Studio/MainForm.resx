@@ -522,7 +522,7 @@
 </value>
   </data>
   <data name="newToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>217, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="newToolStripMenuItem.Text" xml:space="preserve">
     <value>New</value>
@@ -536,7 +536,7 @@
 </value>
   </data>
   <data name="openToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>217, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="openToolStripMenuItem.Text" xml:space="preserve">
     <value>Open</value>
@@ -550,7 +550,7 @@
 </value>
   </data>
   <data name="extractToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>217, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="extractToolStripMenuItem1.Text" xml:space="preserve">
     <value>Extract</value>
@@ -569,7 +569,7 @@
 </value>
   </data>
   <data name="saveToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>217, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="saveToolStripMenuItem1.Text" xml:space="preserve">
     <value>Save</value>
@@ -588,22 +588,13 @@
 </value>
   </data>
   <data name="saveToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>217, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="saveToolStripMenuItem.Text" xml:space="preserve">
     <value>Save As</value>
   </data>
-  <data name="convertPCTextrurePackToolStripMenuItem.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="convertPCTextrurePackToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>217, 22</value>
-  </data>
-  <data name="convertPCTextrurePackToolStripMenuItem.Text" xml:space="preserve">
-    <value>Convert to PC Texture pack</value>
-  </data>
   <data name="closeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>217, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="closeToolStripMenuItem.Text" xml:space="preserve">
     <value>Close</value>
@@ -28512,13 +28503,13 @@
     <value>Add Custom Pack Icon</value>
   </data>
   <data name="wavBinkaToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>145, 22</value>
   </data>
   <data name="wavBinkaToolStripMenuItem.Text" xml:space="preserve">
     <value>Wav -&gt; Binka</value>
   </data>
   <data name="binkaWavToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>145, 22</value>
   </data>
   <data name="binkaWavToolStripMenuItem.Text" xml:space="preserve">
     <value>Binka -&gt; Wav</value>
@@ -33474,9 +33465,6 @@
         AP//AAA=
 </value>
   </data>
-  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
     <value>1064, 660</value>
   </data>
@@ -33768,12 +33756,6 @@
   <data name="&gt;&gt;saveToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;convertPCTextrurePackToolStripMenuItem.Name" xml:space="preserve">
-    <value>convertPCTextrurePackToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;convertPCTextrurePackToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;closeToolStripMenuItem.Name" xml:space="preserve">
     <value>closeToolStripMenuItem</value>
   </data>
@@ -33966,6 +33948,24 @@
   <data name="&gt;&gt;addCustomPackImageToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;convertMusicFilesToolStripMenuItem.Name" xml:space="preserve">
+    <value>convertMusicFilesToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;convertMusicFilesToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;wavBinkaToolStripMenuItem.Name" xml:space="preserve">
+    <value>wavBinkaToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;wavBinkaToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;binkaWavToolStripMenuItem.Name" xml:space="preserve">
+    <value>binkaWavToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;binkaWavToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;addEntryToolStripMenuItem.Name" xml:space="preserve">
     <value>addEntryToolStripMenuItem</value>
   </data>
@@ -33995,24 +33995,6 @@
   </data>
   <data name="&gt;&gt;imageList.Type" xml:space="preserve">
     <value>System.Windows.Forms.ImageList, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;convertMusicFilesToolStripMenuItem.Name" xml:space="preserve">
-    <value>convertMusicFilesToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;convertMusicFilesToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;wavBinkaToolStripMenuItem.Name" xml:space="preserve">
-    <value>wavBinkaToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;wavBinkaToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;binkaWavToolStripMenuItem.Name" xml:space="preserve">
-    <value>binkaWavToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;binkaWavToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>MainForm</value>
