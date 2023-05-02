@@ -18,39 +18,40 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
-  <Target Name="GetGitHash" BeforeTargets="WriteGitHash" Condition="'$(BuildHash)' == ''">
-    <PropertyGroup>
-      <!-- temp file for the git version (lives in "obj" folder)-->
-      <VerFile>$(IntermediateOutputPath)gitver</VerFile>
-    </PropertyGroup>
-    <!-- write the hash to the temp file.-->
-    <Exec Command="git -C $(ProjectDir) describe --always &gt; $(VerFile)" />
-    <!-- read the version into the GitVersion itemGroup-->
-    <ReadLinesFromFile File="$(VerFile)">
-      <Output TaskParameter="Lines" ItemName="GitVersion" />
-    </ReadLinesFromFile>
-    <!-- Set the BuildHash property to contain the GitVersion, if it wasn't already set.-->
-    <PropertyGroup>
-      <BuildHash>@(GitVersion)</BuildHash>
-    </PropertyGroup>
+  <Target Name="GetGitHash" BeforeTargets="WriteGitInfo" Condition="'$(BuildHash)' == ''">
+	  <!-- write hash and branch to console.-->
+    <Exec Command="git -C $(ProjectDir) describe --always" ConsoleToMsBuild="true">
+		  <Output TaskParameter="ConsoleOutput" PropertyName="GitHash" />
+	  </Exec>
+    <Exec Command="git -C $(ProjectDir) branch --show-current" ConsoleToMsBuild="true">
+		  <Output TaskParameter="ConsoleOutput" PropertyName="GitBranch" />
+	  </Exec>
+	  <PropertyGroup>  
+		  <BuildHash>$(GitHash)</BuildHash>
+		  <BuildBranch>$(GitBranch)</BuildBranch>
+	  </PropertyGroup>
   </Target>
-  <Target Name="WriteGitHash" BeforeTargets="CoreCompile">
-    <!-- names the obj/.../GitAssemblyInfo.cs file -->
+  <Target Name="WriteGitInfo" BeforeTargets="CoreCompile">
+	<!-- names the obj/.../GitAssemblyInfo.cs file -->
     <PropertyGroup>
       <GitAssemblyInfoFile>$(IntermediateOutputPath)GitAssemblyInfo.cs</GitAssemblyInfoFile>
     </PropertyGroup>
-    <!-- includes the GitAssemblyInfo for compilation into your project -->
+	<!-- includes the GitAssemblyInfo for compilation into your project -->
     <ItemGroup>
       <Compile Include="$(GitAssemblyInfoFile)" />
     </ItemGroup>
-    <!-- defines the AssemblyMetadata attribute that will be written -->
+	<!-- defines the AssemblyMetadata attribute that will be written -->
     <ItemGroup>
       <AssemblyAttributes Include="AssemblyMetadata">
         <_Parameter1>GitHash</_Parameter1>
         <_Parameter2>$(BuildHash)</_Parameter2>
       </AssemblyAttributes>
+      <AssemblyAttributes Include="AssemblyMetadata">
+        <_Parameter1>GitBranch</_Parameter1>
+        <_Parameter2>$(BuildBranch)</_Parameter2>
+      </AssemblyAttributes>
     </ItemGroup>
-    <!-- writes the attribute to the GitAssemblyInfo file -->
+	<!-- writes the attribute to the GitAssemblyInfo file -->
     <WriteCodeFragment Language="C#" OutputFile="$(GitAssemblyInfoFile)" AssemblyAttributes="@(AssemblyAttributes)" />
   </Target>
   <PropertyGroup>
@@ -82,13 +83,23 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>false</Optimize>
+	<DebugType>none</DebugType>
+    <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Beta|AnyCPU'">
+	<PlatformTarget>AnyCPU</PlatformTarget>
+	<DebugType>pdbonly</DebugType>
+	<Optimize>false</Optimize>
+	<OutputPath>bin\Beta\</OutputPath>
+	<DefineConstants>BETA;TRACE</DefineConstants>
+	<ErrorReport>prompt</ErrorReport>
+	<WarningLevel>4</WarningLevel>
+	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Resources\PCK-Studio_Logo.ico</ApplicationIcon>
@@ -123,16 +134,6 @@
   <PropertyGroup>
     <ManifestKeyFile>
     </ManifestKeyFile>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleasePortable|AnyCPU'">
-    <OutputPath>bin\ReleasePortable\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <LangVersion>preview</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup>

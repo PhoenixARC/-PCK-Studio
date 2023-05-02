@@ -15,7 +15,7 @@ namespace PckStudio
         private System.Globalization.Calendar BuildCalendar = new System.Globalization.CultureInfo("en-US").Calendar;
         private DateTime date = new FileInfo(Assembly.GetExecutingAssembly().Location).LastWriteTime;
 
-        public string BuildVersion
+        public string BetaBuildVersion
         {
             get
             {
@@ -27,12 +27,34 @@ namespace PckStudio
                     BuildType);
             }
         }
+    }
 
-        public string LastCommitHash =>
-            Assembly
-                .GetEntryAssembly()
-                .GetCustomAttributes<AssemblyMetadataAttribute>()
-                .FirstOrDefault(attr => attr.Key == "GitHash")?.Value;
+    static class CommitInfo
+    {
+        private static string _branchName = null;
+        private static string _commitHash = null;
+
+        public static string BranchName
+        {
+            get
+            {
+                return _branchName ??= Assembly
+                        .GetEntryAssembly()
+                        .GetCustomAttributes<AssemblyMetadataAttribute>()
+                        .FirstOrDefault(attr => attr.Key == "GitBranch")?.Value;
+            }
+        }
+
+        public static string CommitHash
+        {
+            get
+            {
+                return _commitHash ??= Assembly
+                        .GetEntryAssembly()
+                        .GetCustomAttributes<AssemblyMetadataAttribute>()
+                        .FirstOrDefault(attr => attr.Key == "GitHash")?.Value;
+            }
+        }
     }
 
     static class Program
