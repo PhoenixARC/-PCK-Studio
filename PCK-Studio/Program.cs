@@ -12,7 +12,7 @@ namespace PckStudio
         // this is to specify which build release this is. This is manually updated for now
         // TODO: add different chars for different configurations
         private const string BuildType = "b";
-        private System.Globalization.Calendar BuildCalendar = new System.Globalization.CultureInfo("en-US").Calendar;
+        private static System.Globalization.Calendar _buildCalendar;
         private DateTime date = new FileInfo(Assembly.GetExecutingAssembly().Location).LastWriteTime;
 
         public string BetaBuildVersion
@@ -21,9 +21,10 @@ namespace PckStudio
             {
                 // adopted Minecraft Java Edition Snapshot format (YYwWWn)
                 // to keep better track of work in progress features and builds
+                _buildCalendar ??= new System.Globalization.CultureInfo("en-US").Calendar;
                 return string.Format("#{0}w{1}{2}",
                     date.ToString("yy"),
-                    BuildCalendar.GetWeekOfYear(date, System.Globalization.CalendarWeekRule.FirstDay, DayOfWeek.Monday),
+                    _buildCalendar.GetWeekOfYear(date, System.Globalization.CalendarWeekRule.FirstDay, DayOfWeek.Monday),
                     BuildType);
             }
         }
@@ -74,7 +75,7 @@ namespace PckStudio
         static void Main(string[] args)
         {
             System.Globalization.CultureInfo.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
-
+            
             var mainForm = new MainForm();
             if (args.Length > 0 && File.Exists(args[0]) && args[0].EndsWith(".pck"))
                 mainForm.LoadPck(args[0]);
