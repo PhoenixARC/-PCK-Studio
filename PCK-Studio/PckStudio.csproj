@@ -19,28 +19,28 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <Target Name="GetGitHash" BeforeTargets="WriteGitInfo" Condition="'$(BuildHash)' == ''">
-	  <!-- write hash and branch to console.-->
+    <!-- write hash and branch to console.-->
     <Exec Command="git -C $(ProjectDir) describe --always" ConsoleToMsBuild="true">
-		  <Output TaskParameter="ConsoleOutput" PropertyName="GitHash" />
-	  </Exec>
+      <Output TaskParameter="ConsoleOutput" PropertyName="GitHash" />
+    </Exec>
     <Exec Command="git -C $(ProjectDir) branch --show-current" ConsoleToMsBuild="true">
-		  <Output TaskParameter="ConsoleOutput" PropertyName="GitBranch" />
-	  </Exec>
-	  <PropertyGroup>  
-		  <BuildHash>$(GitHash)</BuildHash>
-		  <BuildBranch>$(GitBranch)</BuildBranch>
-	  </PropertyGroup>
+      <Output TaskParameter="ConsoleOutput" PropertyName="GitBranch" />
+    </Exec>
+    <PropertyGroup>
+      <BuildHash>$(GitHash)</BuildHash>
+      <BuildBranch>$(GitBranch)</BuildBranch>
+    </PropertyGroup>
   </Target>
   <Target Name="WriteGitInfo" BeforeTargets="CoreCompile">
-	<!-- names the obj/.../GitAssemblyInfo.cs file -->
+    <!-- names the obj/.../GitAssemblyInfo.cs file -->
     <PropertyGroup>
       <GitAssemblyInfoFile>$(IntermediateOutputPath)GitAssemblyInfo.cs</GitAssemblyInfoFile>
     </PropertyGroup>
-	<!-- includes the GitAssemblyInfo for compilation into your project -->
+    <!-- includes the GitAssemblyInfo for compilation into your project -->
     <ItemGroup>
       <Compile Include="$(GitAssemblyInfoFile)" />
     </ItemGroup>
-	<!-- defines the AssemblyMetadata attribute that will be written -->
+    <!-- defines the AssemblyMetadata attribute that will be written -->
     <ItemGroup>
       <AssemblyAttributes Include="AssemblyMetadata">
         <_Parameter1>GitHash</_Parameter1>
@@ -51,7 +51,7 @@
         <_Parameter2>$(BuildBranch)</_Parameter2>
       </AssemblyAttributes>
     </ItemGroup>
-	<!-- writes the attribute to the GitAssemblyInfo file -->
+    <!-- writes the attribute to the GitAssemblyInfo file -->
     <WriteCodeFragment Language="C#" OutputFile="$(GitAssemblyInfoFile)" AssemblyAttributes="@(AssemblyAttributes)" />
   </Target>
   <PropertyGroup>
@@ -83,7 +83,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
-	<DebugType>none</DebugType>
+    <DebugType>none</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
@@ -92,14 +92,14 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Beta|AnyCPU'">
-	<PlatformTarget>AnyCPU</PlatformTarget>
-	<DebugType>pdbonly</DebugType>
-	<Optimize>false</Optimize>
-	<OutputPath>bin\Beta\</OutputPath>
-	<DefineConstants>BETA;TRACE</DefineConstants>
-	<ErrorReport>prompt</ErrorReport>
-	<WarningLevel>4</WarningLevel>
-	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Beta\</OutputPath>
+    <DefineConstants>BETA;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Resources\PCK-Studio_Logo.ico</ApplicationIcon>
@@ -460,6 +460,7 @@
     <Compile Include="Classes\ToolboxItems\InterpolationPictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="PckNodeSorter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Forms\Additional-Popups\CreditsForm.cs">
       <SubType>Form</SubType>
