@@ -37,7 +37,9 @@ namespace PckStudio
 		bool wasModified = false;
 		bool isTemplateFile = false;
 
+		[Obsolete]
 		bool needsUpdate = false;
+
 		bool isSelectingTab = false;
 
 		readonly Dictionary<PckFile.FileData.FileType, Action<PckFile.FileData>> pckFileTypeHandler;
