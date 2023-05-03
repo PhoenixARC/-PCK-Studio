@@ -103,7 +103,7 @@
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.administrativeToolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.storeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.openPckCenterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.wiiUPCKInstallerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.PS3PCKInstallerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.VitaPCKInstallerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -663,7 +663,7 @@
             // storeToolStripMenuItem
             // 
             this.storeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openToolStripMenuItem1,
+            this.openPckCenterToolStripMenuItem,
             this.wiiUPCKInstallerToolStripMenuItem,
             this.PS3PCKInstallerToolStripMenuItem,
             this.VitaPCKInstallerToolStripMenuItem,
@@ -673,11 +673,11 @@
             resources.ApplyResources(this.storeToolStripMenuItem, "storeToolStripMenuItem");
             this.storeToolStripMenuItem.Name = "storeToolStripMenuItem";
             // 
-            // openToolStripMenuItem1
+            // openPckCenterToolStripMenuItem
             // 
-            resources.ApplyResources(this.openToolStripMenuItem1, "openToolStripMenuItem1");
-            this.openToolStripMenuItem1.Name = "openToolStripMenuItem1";
-            this.openToolStripMenuItem1.Click += new System.EventHandler(this.openToolStripMenuItem1_Click);
+            resources.ApplyResources(this.openPckCenterToolStripMenuItem, "openPckCenterToolStripMenuItem");
+            this.openPckCenterToolStripMenuItem.Name = "openPckCenterToolStripMenuItem";
+            this.openPckCenterToolStripMenuItem.Click += new System.EventHandler(this.openPckCenterToolStripMenuItem_Click);
             // 
             // wiiUPCKInstallerToolStripMenuItem
             // 
@@ -1136,7 +1136,7 @@
         private System.Windows.Forms.ToolStripMenuItem donateToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem convertToBedrockToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem storeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem openPckCenterToolStripMenuItem;
         private MetroFramework.Controls.MetroTabControl tabControl;
         private MetroFramework.Controls.MetroTabPage editorTab;
         private MetroFramework.Controls.MetroCheckBox LittleEndianCheckBox;

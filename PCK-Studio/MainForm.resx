@@ -621,7 +621,7 @@
 </value>
   </data>
   <data name="advancedMetaAddingToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>176, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="advancedMetaAddingToolStripMenuItem.Text" xml:space="preserve">
     <value>Advanced Bulk</value>
@@ -647,7 +647,7 @@
 </value>
   </data>
   <data name="convertToBedrockToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>176, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="convertToBedrockToolStripMenuItem.Text" xml:space="preserve">
     <value>Convert to Bedrock</value>
@@ -25777,7 +25777,7 @@
   <data name="helpToolStripMenuItem.Text" xml:space="preserve">
     <value>Help</value>
   </data>
-  <data name="openToolStripMenuItem1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="openPckCenterToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAA+gAAAPoCAYAAABNo9TkAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
         vAAADrwBlbxySQAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4yMfEgaZUAAP+NSURBVHhe7P0H
@@ -27612,10 +27612,10 @@
         nDU2AQAAgLPGJgAAAHDW2AQAAABOevQh/w2VkWR8zwQAigAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="openToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="openPckCenterToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>212, 22</value>
   </data>
-  <data name="openToolStripMenuItem1.Text" xml:space="preserve">
+  <data name="openPckCenterToolStripMenuItem.Text" xml:space="preserve">
     <value>Open PCK Center</value>
   </data>
   <data name="wiiUPCKInstallerToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -33900,10 +33900,10 @@
   <data name="&gt;&gt;storeToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;openToolStripMenuItem1.Name" xml:space="preserve">
-    <value>openToolStripMenuItem1</value>
+  <data name="&gt;&gt;openPckCenterToolStripMenuItem.Name" xml:space="preserve">
+    <value>openPckCenterToolStripMenuItem</value>
   </data>
-  <data name="&gt;&gt;openToolStripMenuItem1.Type" xml:space="preserve">
+  <data name="&gt;&gt;openPckCenterToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;wiiUPCKInstallerToolStripMenuItem.Name" xml:space="preserve">

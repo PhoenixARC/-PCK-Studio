@@ -1714,8 +1714,9 @@ namespace PckStudio
 			MessageBox.Show("This feature is currently being reworked.", "Currently unavailable", MessageBoxButtons.OK, MessageBoxIcon.Information);
 		}
 
-		private void openToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void openPckCenterToolStripMenuItem_Click(object sender, EventArgs e)
 		{
+#if BETA || DEBUG
 			DateTime Begin = DateTime.Now;
 			//pckCenter open = new pckCenter();
 			PckCenterBeta open = new PckCenterBeta();
@@ -1723,6 +1724,7 @@ namespace PckStudio
 			TimeSpan duration = new TimeSpan(DateTime.Now.Ticks - Begin.Ticks);
 
 			Debug.WriteLine("Completed in: " + duration);
+#endif
 		}
 
 		private void wiiUPCKInstallerToolStripMenuItem_Click(object sender, EventArgs e)
