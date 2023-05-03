@@ -28,25 +28,30 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			MetroFramework.Controls.MetroLabel parentLabel;
+			MetroFramework.Controls.MetroLabel positionLabel;
+			MetroFramework.Controls.MetroLabel sizeLabel;
+			MetroFramework.Controls.MetroLabel uvLabel;
+			MetroFramework.Controls.MetroLabel inflationLabel;
 			this.closeButton = new MetroFramework.Controls.MetroButton();
 			this.toolTip = new MetroFramework.Components.MetroToolTip();
-			this.parentLabel = new MetroFramework.Controls.MetroLabel();
 			this.parentComboBox = new MetroFramework.Controls.MetroComboBox();
-			this.positionLabel = new MetroFramework.Controls.MetroLabel();
 			this.PosXUpDown = new System.Windows.Forms.NumericUpDown();
 			this.PosYUpDown = new System.Windows.Forms.NumericUpDown();
 			this.PosZUpDown = new System.Windows.Forms.NumericUpDown();
 			this.SizeZUpDown = new System.Windows.Forms.NumericUpDown();
 			this.SizeYUpDown = new System.Windows.Forms.NumericUpDown();
 			this.SizeXUpDown = new System.Windows.Forms.NumericUpDown();
-			this.sizeLabel = new MetroFramework.Controls.MetroLabel();
 			this.uvYUpDown = new System.Windows.Forms.NumericUpDown();
 			this.uvXUpDown = new System.Windows.Forms.NumericUpDown();
-			this.uvLabel = new MetroFramework.Controls.MetroLabel();
 			this.armorCheckBox = new MetroFramework.Controls.MetroCheckBox();
 			this.mirrorCheckBox = new MetroFramework.Controls.MetroCheckBox();
 			this.inflationUpDown = new System.Windows.Forms.NumericUpDown();
-			this.inflationLabel = new MetroFramework.Controls.MetroLabel();
+			parentLabel = new MetroFramework.Controls.MetroLabel();
+			positionLabel = new MetroFramework.Controls.MetroLabel();
+			sizeLabel = new MetroFramework.Controls.MetroLabel();
+			uvLabel = new MetroFramework.Controls.MetroLabel();
+			inflationLabel = new MetroFramework.Controls.MetroLabel();
 			((System.ComponentModel.ISupportInitialize)(this.PosXUpDown)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.PosYUpDown)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.PosZUpDown)).BeginInit();
@@ -78,14 +83,14 @@
 			// 
 			// parentLabel
 			// 
-			this.parentLabel.AutoSize = true;
-			this.parentLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
-			this.parentLabel.Location = new System.Drawing.Point(357, 72);
-			this.parentLabel.Name = "parentLabel";
-			this.parentLabel.Size = new System.Drawing.Size(64, 25);
-			this.parentLabel.TabIndex = 2;
-			this.parentLabel.Text = "Parent:";
-			this.parentLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
+			parentLabel.AutoSize = true;
+			parentLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
+			parentLabel.Location = new System.Drawing.Point(357, 72);
+			parentLabel.Name = "parentLabel";
+			parentLabel.Size = new System.Drawing.Size(64, 25);
+			parentLabel.TabIndex = 2;
+			parentLabel.Text = "Parent:";
+			parentLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
 			// 
 			// parentComboBox
 			// 
@@ -114,13 +119,7 @@
             "ARMARMOR1",
             "ARMARMOR0",
             "BODYARMOR",
-            "BELT",
-            "TOOL0",
-            "TOOL1",
-            "HELMET",
-            "SHOULDER0",
-            "SHOULDER1",
-            "CHEST"});
+            "BELT"});
 			this.parentComboBox.Location = new System.Drawing.Point(417, 72);
 			this.parentComboBox.Name = "parentComboBox";
 			this.parentComboBox.Size = new System.Drawing.Size(163, 29);
@@ -130,14 +129,14 @@
 			// 
 			// positionLabel
 			// 
-			this.positionLabel.AutoSize = true;
-			this.positionLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
-			this.positionLabel.Location = new System.Drawing.Point(33, 72);
-			this.positionLabel.Name = "positionLabel";
-			this.positionLabel.Size = new System.Drawing.Size(75, 25);
-			this.positionLabel.TabIndex = 4;
-			this.positionLabel.Text = "Position:";
-			this.positionLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
+			positionLabel.AutoSize = true;
+			positionLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
+			positionLabel.Location = new System.Drawing.Point(33, 72);
+			positionLabel.Name = "positionLabel";
+			positionLabel.Size = new System.Drawing.Size(75, 25);
+			positionLabel.TabIndex = 4;
+			positionLabel.Text = "Position:";
+			positionLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
 			// 
 			// PosXUpDown
 			// 
@@ -276,14 +275,14 @@
 			// 
 			// sizeLabel
 			// 
-			this.sizeLabel.AutoSize = true;
-			this.sizeLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
-			this.sizeLabel.Location = new System.Drawing.Point(33, 97);
-			this.sizeLabel.Name = "sizeLabel";
-			this.sizeLabel.Size = new System.Drawing.Size(46, 25);
-			this.sizeLabel.TabIndex = 22;
-			this.sizeLabel.Text = "Size:";
-			this.sizeLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
+			sizeLabel.AutoSize = true;
+			sizeLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
+			sizeLabel.Location = new System.Drawing.Point(33, 97);
+			sizeLabel.Name = "sizeLabel";
+			sizeLabel.Size = new System.Drawing.Size(46, 25);
+			sizeLabel.TabIndex = 22;
+			sizeLabel.Text = "Size:";
+			sizeLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
 			// 
 			// uvYUpDown
 			// 
@@ -337,14 +336,14 @@
 			// 
 			// uvLabel
 			// 
-			this.uvLabel.AutoSize = true;
-			this.uvLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
-			this.uvLabel.Location = new System.Drawing.Point(33, 123);
-			this.uvLabel.Name = "uvLabel";
-			this.uvLabel.Size = new System.Drawing.Size(39, 25);
-			this.uvLabel.TabIndex = 26;
-			this.uvLabel.Text = "UV:";
-			this.uvLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
+			uvLabel.AutoSize = true;
+			uvLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
+			uvLabel.Location = new System.Drawing.Point(33, 123);
+			uvLabel.Name = "uvLabel";
+			uvLabel.Size = new System.Drawing.Size(39, 25);
+			uvLabel.TabIndex = 26;
+			uvLabel.Text = "UV:";
+			uvLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
 			// 
 			// armorCheckBox
 			// 
@@ -394,14 +393,14 @@
 			// 
 			// inflationLabel
 			// 
-			this.inflationLabel.AutoSize = true;
-			this.inflationLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
-			this.inflationLabel.Location = new System.Drawing.Point(33, 149);
-			this.inflationLabel.Name = "inflationLabel";
-			this.inflationLabel.Size = new System.Drawing.Size(55, 25);
-			this.inflationLabel.TabIndex = 31;
-			this.inflationLabel.Text = "Scale:";
-			this.inflationLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
+			inflationLabel.AutoSize = true;
+			inflationLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
+			inflationLabel.Location = new System.Drawing.Point(33, 149);
+			inflationLabel.Name = "inflationLabel";
+			inflationLabel.Size = new System.Drawing.Size(55, 25);
+			inflationLabel.TabIndex = 31;
+			inflationLabel.Text = "Scale:";
+			inflationLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
 			// 
 			// BoxEditor
 			// 
@@ -417,14 +416,14 @@
 			this.Controls.Add(this.PosZUpDown);
 			this.Controls.Add(this.PosYUpDown);
 			this.Controls.Add(this.PosXUpDown);
-			this.Controls.Add(this.inflationLabel);
+			this.Controls.Add(inflationLabel);
 			this.Controls.Add(this.parentComboBox);
 			this.Controls.Add(this.mirrorCheckBox);
 			this.Controls.Add(this.armorCheckBox);
-			this.Controls.Add(this.uvLabel);
-			this.Controls.Add(this.sizeLabel);
-			this.Controls.Add(this.positionLabel);
-			this.Controls.Add(this.parentLabel);
+			this.Controls.Add(uvLabel);
+			this.Controls.Add(sizeLabel);
+			this.Controls.Add(positionLabel);
+			this.Controls.Add(parentLabel);
 			this.Controls.Add(this.closeButton);
 			this.MaximumSize = new System.Drawing.Size(630, 554);
 			this.MinimizeBox = false;
@@ -450,22 +449,17 @@
 		#endregion
 		private MetroFramework.Controls.MetroButton closeButton;
 		private MetroFramework.Components.MetroToolTip toolTip;
-		private MetroFramework.Controls.MetroLabel parentLabel;
 		private MetroFramework.Controls.MetroComboBox parentComboBox;
-		private MetroFramework.Controls.MetroLabel positionLabel;
 		private System.Windows.Forms.NumericUpDown PosXUpDown;
 		private System.Windows.Forms.NumericUpDown PosYUpDown;
 		private System.Windows.Forms.NumericUpDown PosZUpDown;
 		private System.Windows.Forms.NumericUpDown SizeZUpDown;
 		private System.Windows.Forms.NumericUpDown SizeYUpDown;
 		private System.Windows.Forms.NumericUpDown SizeXUpDown;
-		private MetroFramework.Controls.MetroLabel sizeLabel;
 		private System.Windows.Forms.NumericUpDown uvYUpDown;
 		private System.Windows.Forms.NumericUpDown uvXUpDown;
-		private MetroFramework.Controls.MetroLabel uvLabel;
 		private MetroFramework.Controls.MetroCheckBox armorCheckBox;
 		private MetroFramework.Controls.MetroCheckBox mirrorCheckBox;
 		private System.Windows.Forms.NumericUpDown inflationUpDown;
-		private MetroFramework.Controls.MetroLabel inflationLabel;
 	}
 }
