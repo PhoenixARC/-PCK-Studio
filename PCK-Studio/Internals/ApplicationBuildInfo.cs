@@ -21,7 +21,7 @@ using System.Reflection;
 
 namespace PckStudio.Internal
 {
-    static class ApplicationBuildInfo
+    static internal class ApplicationBuildInfo
     {
         // this is to specify which build release this is. This is manually updated for now
         // TODO: add different chars for different configurations

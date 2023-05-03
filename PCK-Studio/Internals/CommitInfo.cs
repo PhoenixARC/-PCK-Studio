@@ -20,7 +20,7 @@ using System.Reflection;
 
 namespace PckStudio.Internal
 {
-    static class CommitInfo
+    static internal class CommitInfo
     {
         private static string _branchName = null;
         private static string _commitHash = null;
