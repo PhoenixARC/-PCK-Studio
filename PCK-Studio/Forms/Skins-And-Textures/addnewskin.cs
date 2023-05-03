@@ -4,9 +4,9 @@ using System.IO;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
-using PckStudio.Classes.Utils;
 using OMI.Formats.Languages;
 using OMI.Formats.Pck;
+using PckStudio.Internal;
 using PckStudio.Forms.Editor;
 using PckStudio.Classes.IO._3DST;
 

@@ -27,6 +27,7 @@ using PckStudio.Forms.Additional_Popups;
 using PckStudio.Classes.Misc;
 using PckStudio.Classes.IO.PCK;
 using PckStudio.Classes.IO._3DST;
+using PckStudio.Internal;
 
 namespace PckStudio
 {
@@ -75,7 +76,7 @@ namespace PckStudio
 			ChangelogRichTextBox.Text = Resources.CHANGELOG;
 
 #if BETA
-			labelVersion.Text += $"{Program.Info.BetaBuildVersion}";
+			labelVersion.Text += $"{ApplicationBuildInfo.BetaBuildVersion}";
 #endif
 #if DEBUG
 			labelVersion.Text += $" (Debug build: {CommitInfo.BranchName}@{CommitInfo.CommitHash})";

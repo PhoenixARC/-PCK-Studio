@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
-using PckStudio.Classes.Models;
+using PckStudio.Internal;
 
 namespace PckStudio.Forms.Editor
 {
@@ -14,7 +14,7 @@ namespace PckStudio.Forms.Editor
 
 			inflationUpDown.Enabled = hasInflation;
 
-			SkinBox box = new SkinBox(inBOX);
+			var box = SkinBOX.FromString(inBOX);
 
 			if (string.IsNullOrEmpty(box.Type) || !parentComboBox.Items.Contains(box.Type))
 			{
@@ -28,8 +28,8 @@ namespace PckStudio.Forms.Editor
 			SizeXUpDown.Value = (decimal)box.Size.X;
 			SizeYUpDown.Value = (decimal)box.Size.Y;
 			SizeZUpDown.Value = (decimal)box.Size.Z;
-			uvXUpDown.Value = (decimal)box.U;
-			uvYUpDown.Value = (decimal)box.V;
+			uvXUpDown.Value = (decimal)box.UV.X;
+			uvYUpDown.Value = (decimal)box.UV.Y;
 			armorCheckBox.Checked = box.HideWithArmor;
 			mirrorCheckBox.Checked = box.Mirror;
 			inflationUpDown.Value = (decimal)box.Scale;

@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using System.Collections.Generic;
 
-using PckStudio.Classes.Utils;
+using PckStudio.Internal;
 using PckStudio.Forms.Additional_Popups;
 
 namespace PckStudio.Forms.Editor

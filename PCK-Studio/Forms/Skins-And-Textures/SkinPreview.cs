@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using PckStudio.Classes.Models.DefaultModels;
-using PckStudio.Classes.Utils;
+using PckStudio.Internal;
 using PckStudio.Models;
 
 namespace PckStudio.Forms
