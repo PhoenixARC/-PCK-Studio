@@ -20,7 +20,7 @@ using System.Numerics;
 
 namespace PckStudio.Internal
 {
-    public class SkinBOX
+    public class SkinBOX : ICloneable, IEquatable<SkinBOX>
     {
         public string Type;
         public Vector3 Pos;
@@ -85,6 +85,29 @@ namespace PckStudio.Internal
             var vec2 = TryGetVector2(arguments, startIndex);
             float.TryParse(arguments[startIndex + 2], out float z);
             return new Vector3(vec2, z);
+        }
+
+        public override int GetHashCode()
+        {
+            return Type.GetHashCode() % Pos.GetHashCode() * UV.GetHashCode() % Size.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is SkinBOX box && Equals(box);
+        }
+
+        public bool Equals(SkinBOX other)
+        {
+            return Type.Equals(other.Type) &&
+                Pos.Equals(other.Pos) &&
+                Size.Equals(other.Size) &&
+                UV.Equals(other.UV);
+        }
+
+        public object Clone()
+        {
+            return new SkinBOX((string)Type.Clone(), Pos, Size, UV, HideWithArmor, Mirror, Scale);
         }
     }
 }
