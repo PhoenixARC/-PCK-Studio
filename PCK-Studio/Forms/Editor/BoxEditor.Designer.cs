@@ -352,9 +352,9 @@
 			this.armorCheckBox.FontWeight = MetroFramework.MetroCheckBoxWeight.Light;
 			this.armorCheckBox.Location = new System.Drawing.Point(363, 101);
 			this.armorCheckBox.Name = "armorCheckBox";
-			this.armorCheckBox.Size = new System.Drawing.Size(225, 25);
+			this.armorCheckBox.Size = new System.Drawing.Size(245, 25);
 			this.armorCheckBox.TabIndex = 29;
-			this.armorCheckBox.Text = "Hide when wearing armor";
+			this.armorCheckBox.Text = "Hide when wearing a helmet";
 			this.armorCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.armorCheckBox.UseSelectable = true;
 			// 
