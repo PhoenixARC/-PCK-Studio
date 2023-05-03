@@ -72,7 +72,9 @@ namespace PckStudio
 			tabControl.SelectTab(0);
 			isSelectingTab = false;
 
-			labelVersion.Text = "PCK Studio: " + Application.ProductVersion;
+			Text = Application.ProductName;
+
+            labelVersion.Text = $"{Application.ProductName}: {Application.ProductVersion}";
 			ChangelogRichTextBox.Text = Resources.CHANGELOG;
 
 #if BETA

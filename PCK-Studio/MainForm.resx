@@ -522,7 +522,7 @@
 </value>
   </data>
   <data name="newToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>114, 22</value>
   </data>
   <data name="newToolStripMenuItem.Text" xml:space="preserve">
     <value>New</value>
@@ -536,7 +536,7 @@
 </value>
   </data>
   <data name="openToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>114, 22</value>
   </data>
   <data name="openToolStripMenuItem.Text" xml:space="preserve">
     <value>Open</value>
@@ -550,7 +550,7 @@
 </value>
   </data>
   <data name="extractToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>114, 22</value>
   </data>
   <data name="extractToolStripMenuItem1.Text" xml:space="preserve">
     <value>Extract</value>
@@ -569,7 +569,7 @@
 </value>
   </data>
   <data name="saveToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>114, 22</value>
   </data>
   <data name="saveToolStripMenuItem1.Text" xml:space="preserve">
     <value>Save</value>
@@ -588,13 +588,13 @@
 </value>
   </data>
   <data name="saveToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>114, 22</value>
   </data>
   <data name="saveToolStripMenuItem.Text" xml:space="preserve">
     <value>Save As</value>
   </data>
   <data name="closeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>114, 22</value>
   </data>
   <data name="closeToolStripMenuItem.Text" xml:space="preserve">
     <value>Close</value>
@@ -621,7 +621,7 @@
 </value>
   </data>
   <data name="advancedMetaAddingToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>176, 22</value>
   </data>
   <data name="advancedMetaAddingToolStripMenuItem.Text" xml:space="preserve">
     <value>Advanced Bulk</value>
@@ -647,7 +647,7 @@
 </value>
   </data>
   <data name="convertToBedrockToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>176, 22</value>
   </data>
   <data name="convertToBedrockToolStripMenuItem.Text" xml:space="preserve">
     <value>Convert to Bedrock</value>
