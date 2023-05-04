@@ -47,7 +47,7 @@
             this.okBtn.ForeColor = System.Drawing.Color.White;
             this.okBtn.Name = "okBtn";
             this.okBtn.UseVisualStyleBackColor = true;
-            this.okBtn.Click += new System.EventHandler(this.button1_Click);
+            this.okBtn.Click += new System.EventHandler(this.okBtn_Click);
             // 
             // cancelButton
             // 

@@ -140,7 +140,7 @@ namespace PckStudio.Forms.Editor
 
 			var textures = isClockOrCompass ? linearImages : frameTextures;
 
-			return ImageExtensions.ImageFromImageArray(textures.ToArray(), ImageLayoutDirection.Vertical);
+			return ImageExtensions.CombineImages(textures, ImageLayoutDirection.Vertical);
 		}
 	}
 }

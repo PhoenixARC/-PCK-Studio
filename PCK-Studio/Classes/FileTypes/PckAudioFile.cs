@@ -7,7 +7,7 @@ using OMI.Formats.Languages;
 
 namespace PckStudio.Classes.FileTypes
 {
-    public class PCKAudioFile
+    public class PckAudioFile
     {
 		public class InvalidCategoryException : Exception
         {

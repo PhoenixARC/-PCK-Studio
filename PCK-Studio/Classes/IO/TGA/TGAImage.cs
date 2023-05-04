@@ -41,7 +41,7 @@ namespace PckStudio.IO.TGA
 
     public static class TGAImage
     {
-        private static TGAWriter _writer = new TGAWriter();
+        // private static TGAWriter _writer = new TGAWriter();
         private static TGAReader _reader = new TGAReader();
 
         public static Image FromFile(string filename)
@@ -58,7 +58,7 @@ namespace PckStudio.IO.TGA
 
         public static Image FromStream(Stream stream)
         {
-            return _reader.Read(stream).Bitmap;
+            return _reader.FromStream(stream).Bitmap;
         }
     }
 }

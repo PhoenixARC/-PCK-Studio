@@ -60,14 +60,6 @@ namespace PckStudio.IO.TGA
         {
             int bytesPerPixel = header.BitsPerPixel / 8;
 
-            bitmapData.PixelFormat = bytesPerPixel switch
-            {
-                2 => PixelFormat.Format16bppArgb1555,
-                3 => PixelFormat.Format24bppRgb,
-                4 => PixelFormat.Format32bppArgb,
-                _ => throw new NotSupportedException(nameof(bytesPerPixel))
-            };
-
             byte[] data = reader.ReadBytes(header.Height * header.Width * bytesPerPixel);
             Marshal.Copy(data, 0, bitmapData.Scan0, data.Length);
         }
@@ -75,35 +67,51 @@ namespace PckStudio.IO.TGA
         private static void TGA_HandleRLERGB(EndiannessAwareBinaryReader reader, TGAHeader header, BitmapData bitmapData)
         {
             int bytesPerPixel = header.BitsPerPixel / 8;
+            Debug.WriteLine($"bytesPerPixel={bytesPerPixel}");
+            int dataOffset = 0;
 
-            bitmapData.PixelFormat = bytesPerPixel switch
+            byte[] dataBuffer = new byte[header.Width * header.Height * bytesPerPixel];
+            do
             {
-                2 => PixelFormat.Format16bppArgb1555,
-                3 => PixelFormat.Format24bppRgb,
-                4 => PixelFormat.Format32bppArgb,
-                _ => throw new NotSupportedException(nameof(bytesPerPixel))
-            };
+                var packetheader = PacketHeader.ReadHeader(reader);
+                if (!packetheader.IsCompressed)
+                {
+                    int bytesRead = packetheader.Count * bytesPerPixel;
+                    reader.ReadBytes(bytesRead).CopyTo(dataBuffer, dataOffset);
+                    dataOffset += bytesRead;
+                }
+                else
+                {
+                    byte[] rleColor = reader.ReadBytes(bytesPerPixel);
+                    for (int i = 0; i < packetheader.Count; i++)
+                    {
+                        rleColor.CopyTo(dataBuffer, dataOffset);
+                        dataOffset += bytesPerPixel;
+                    }
+                }
+            } while (dataOffset <= dataBuffer.Length);
+            Marshal.Copy(dataBuffer, 0, bitmapData.Scan0, dataBuffer.Length);
+        }
 
-            int pixelOffset = 0;
-            while (header.Width * header.Height > pixelOffset)
+        private struct PacketHeader
+        {
+            public readonly bool IsCompressed;
+            public readonly int Count;
+
+            private PacketHeader(bool isCompressed, int count)
             {
-                byte packetInfo = reader.ReadByte();
-                bool isRleChunk = (packetInfo & 0x80) != 0;
-                int count = packetInfo & 0x7f;
-                if (!isRleChunk)
-                {
-                    byte[] data = reader.ReadBytes(bytesPerPixel * count);
-                    Marshal.Copy(data, 0, bitmapData.Scan0 + pixelOffset * bytesPerPixel, data.Length);
-                    pixelOffset += count;
-                    continue;
-                }
-                byte[] rleColor = reader.ReadBytes(bytesPerPixel);
-                for (int i = 0; i < count; i++)
-                {
-                    byte[] data = rleColor;
-                    Marshal.Copy(data, 0, bitmapData.Scan0 + pixelOffset * bytesPerPixel +i, data.Length);
-                }
-                pixelOffset += count; 
+                IsCompressed = isCompressed;
+                Count = count;
+            }
+
+            public static PacketHeader ReadHeader(EndiannessAwareBinaryReader reader)
+            {
+                byte chunkHeader = reader.ReadByte();
+                bool isCompressed = (chunkHeader & 0x80) != 0;
+                int count = (chunkHeader & 0x7f) + 1;
+                //Debug.WriteLine($"count={count}");
+                //Debug.WriteLine($"isCompressed={isCompressed}");
+                return new PacketHeader(isCompressed, count);
             }
         }
 
@@ -141,6 +149,17 @@ namespace PckStudio.IO.TGA
             return header;
         }
 
+        private static PixelFormat GetPixelFormat(int bytesPerPixel)
+        {
+            return bytesPerPixel switch
+            {
+                2 => PixelFormat.Format16bppArgb1555,
+                3 => PixelFormat.Format24bppRgb,
+                4 => PixelFormat.Format32bppArgb,
+                _ => throw new NotSupportedException(nameof(bytesPerPixel))
+            };
+        }
+
         private static Image LoadImage(EndiannessAwareBinaryReader reader, TGAHeader header)
         {
             DebugLogHeader(header);
@@ -152,7 +171,7 @@ namespace PckStudio.IO.TGA
             BitmapData bitmapData = bitmap.LockBits(
                 new Rectangle(0, 0, header.Width, header.Height),
                 ImageLockMode.WriteOnly,
-                PixelFormat.Undefined);
+                GetPixelFormat(header.BitsPerPixel >> 3));
 
             if (!TGADataTypeHandler.TryGetValue(header.DataTypeCode, out var handleFunction))
                 throw new NotSupportedException(nameof(header.DataTypeCode));

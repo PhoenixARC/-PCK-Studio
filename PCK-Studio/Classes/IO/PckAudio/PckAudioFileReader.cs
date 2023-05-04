@@ -17,23 +17,23 @@ namespace PckStudio.Classes.IO.PCK
         { }
     }
 
-    internal class PCKAudioFileReader : IDataFormatReader<PCKAudioFile>, IDataFormatReader
+    internal class PckAudioFileReader : IDataFormatReader<PckAudioFile>, IDataFormatReader
     {
-        private PCKAudioFile _file;
+        private PckAudioFile _file;
         private Endianness _endianness;
         private List<string> LUT = new List<string>();
-        private List<PCKAudioFile.AudioCategory.EAudioType> _OriginalAudioTypeOrder = new List<PCKAudioFile.AudioCategory.EAudioType>();
+        private List<PckAudioFile.AudioCategory.EAudioType> _OriginalAudioTypeOrder = new List<PckAudioFile.AudioCategory.EAudioType>();
 
-        public PCKAudioFileReader(Endianness endianness)
+        public PckAudioFileReader(Endianness endianness)
         {
             _endianness = endianness;
         }
 
-        public PCKAudioFile FromFile(string filename)
+        public PckAudioFile FromFile(string filename)
         {
             if(File.Exists(filename))
             {
-                PCKAudioFile file;
+                PckAudioFile file;
                 using(var fs = File.OpenRead(filename))
                 {
                     file = FromStream(fs);
@@ -43,7 +43,7 @@ namespace PckStudio.Classes.IO.PCK
             throw new FileNotFoundException(filename);
         }
 
-        public PCKAudioFile FromStream(Stream stream)
+        public PckAudioFile FromStream(Stream stream)
         {
             using (var reader = new EndiannessAwareBinaryReader(stream,
                 _endianness == Endianness.BigEndian
@@ -56,7 +56,7 @@ namespace PckStudio.Classes.IO.PCK
                     throw new OverflowException(nameof(pck_type));
                 if (pck_type > 1)
                     throw new InvalidAudioPckException(nameof(pck_type));
-                _file = new PCKAudioFile();
+                _file = new PckAudioFile();
                 ReadLookUpTable(reader);
                 ReadCategories(reader);
                 ReadCategorySongs(reader);
@@ -81,8 +81,8 @@ namespace PckStudio.Classes.IO.PCK
             int categoryEntryCount = reader.ReadInt32();
             for (; 0 < categoryEntryCount; categoryEntryCount--)
             {
-                var parameterType = (PCKAudioFile.AudioCategory.EAudioParameterType)reader.ReadInt32();
-                var audioType = (PCKAudioFile.AudioCategory.EAudioType)reader.ReadInt32();
+                var parameterType = (PckAudioFile.AudioCategory.EAudioParameterType)reader.ReadInt32();
+                var audioType = (PckAudioFile.AudioCategory.EAudioType)reader.ReadInt32();
                 string name = ReadString(reader);
                 // AddCategory puts the file's categories out of order and causes some songs to be put in the wrong categories
                 // This is my simple fix for the issue.

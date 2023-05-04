@@ -14,7 +14,7 @@ namespace PckStudio.Forms.Utilities
 {
     public static class MaterialResources
     {
-        public static readonly JObject entityData = JObject.Parse(Resources.entityMaterialData);
+        public static readonly JObject entityData = JObject.Parse(Resources.entityData);
         private static Image[] _entityImages;
         public static Image[] entityImages => _entityImages ??= Resources.entities_sheet.CreateImageList(32).ToArray();
 

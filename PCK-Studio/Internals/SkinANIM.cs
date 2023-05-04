@@ -18,7 +18,7 @@
 using System;
 using System.Text.RegularExpressions;
 
-namespace PckStudio.Classes.Utils
+namespace PckStudio.Internal
 {
 	/// <summary>
 	/// For usage see <see cref="SkinANIM"/>
