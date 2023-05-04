@@ -18,7 +18,7 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
-  <Target Name="GetGitHash" BeforeTargets="WriteGitInfo" Condition="'$(BuildHash)' == ''">
+  <Target Name="GetGitHash" BeforeTargets="WriteGitInfo" Condition="'$(Configuration)' == 'Debug' AND '$(BuildHash)' == ''">
     <!-- write hash and branch to console.-->
     <Exec Command="git -C $(ProjectDir) describe --always" ConsoleToMsBuild="true">
       <Output TaskParameter="ConsoleOutput" PropertyName="GitHash" />
@@ -31,7 +31,7 @@
       <BuildBranch>$(GitBranch)</BuildBranch>
     </PropertyGroup>
   </Target>
-  <Target Name="WriteGitInfo" BeforeTargets="CoreCompile">
+  <Target Name="WriteGitInfo" BeforeTargets="CoreCompile" Condition="'$(Configuration)' == 'Debug'">
     <!-- names the obj/.../GitAssemblyInfo.cs file -->
     <PropertyGroup>
       <GitAssemblyInfoFile>$(IntermediateOutputPath)GitAssemblyInfo.cs</GitAssemblyInfoFile>
