@@ -217,7 +217,7 @@ namespace PckStudio.Forms.Editor
 		{
 			int success = 0;
 			int exitCode = 0;
-			pleaseWait waitDiag = new pleaseWait();
+			InProgressPrompt waitDiag = new InProgressPrompt();
 			waitDiag.Show(this);
 			foreach (string file in FileList)
 			{
@@ -415,8 +415,7 @@ namespace PckStudio.Forms.Editor
 				"The \"Menu\" category will only play once when loading the pack, and never again.\n\n" +
 				"The \"Creative\" category will only play songs listed in that category, and unlike other editions of Minecraft, will NOT play songs from the Overworld category. You can fix this by clicking the checkbox found at the top of the form.\n\n" +
 				"The mini game categories will only play if you have your pack loaded in those mini games.\n\n" +
-				"You can edit the credits for the PCK in the Credits editor! No more managing credit IDs!\n\n" +
-				"You can modify and create PSVita and PS4 audio pcks by clicking \"PS4/Vita\" in the \"Create -> Audio.pck\" context menu", "Help");
+				"You can edit the credits for the PCK in the Credits editor! No more managing credit IDs!\n\n", "Help");
 		}
 
 		private void creditsEditorToolStripMenuItem_Click(object sender, EventArgs e)
@@ -542,7 +541,7 @@ namespace PckStudio.Forms.Editor
 				if (file_ext == ".wav") // Convert Wave to BINKA
 				{
 					Cursor.Current = Cursors.WaitCursor;
-					pleaseWait waitDiag = new pleaseWait();
+					InProgressPrompt waitDiag = new InProgressPrompt();
 					waitDiag.Show(this);
 
 					await Task.Run(() =>

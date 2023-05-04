@@ -1,40 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Reflection;
 using System.Windows.Forms;
 
 namespace PckStudio
 {
-    sealed class ProgramInfo
-    {
-        // this is to specify which build release this is. This is manually updated for now
-        // TODO: add different chars for different configurations
-        private const string BuildType = "b";
-        private System.Globalization.Calendar BuildCalendar = new System.Globalization.CultureInfo("en-US").Calendar;
-        private DateTime date = new FileInfo(Assembly.GetExecutingAssembly().Location).LastWriteTime;
-
-        public string BuildVersion
-        {
-            get
-            {
-                // adopted Minecraft Java Edition Snapshot format (YYwWWn)
-                // to keep better track of work in progress features and builds
-                return string.Format("#{0}w{1}{2}",
-                    date.ToString("yy"),
-                    BuildCalendar.GetWeekOfYear(date, System.Globalization.CalendarWeekRule.FirstDay, DayOfWeek.Monday),
-                    BuildType);
-            }
-        }
-
-        public string LastCommitHash =>
-            Assembly
-                .GetEntryAssembly()
-                .GetCustomAttributes<AssemblyMetadataAttribute>()
-                .FirstOrDefault(attr => attr.Key == "GitHash")?.Value;
-    }
-
     static class Program
     {
         public static readonly string ProjectUrl = "https://github.com/PhoenixARC/-PCK-Studio";
@@ -42,8 +12,6 @@ namespace PckStudio
         public static readonly string BackUpAPIUrl = "https://raw.githubusercontent.com/PhoenixARC/pckstudio.tk/main/studio/PCK/api/";
         public static readonly string AppData = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "PCK-Studio");
         public static readonly string AppDataCache = Path.Combine(AppData, "cache");
-
-        public static readonly ProgramInfo Info = new ProgramInfo();
 
         public static MainForm MainInstance { get; private set; }
 

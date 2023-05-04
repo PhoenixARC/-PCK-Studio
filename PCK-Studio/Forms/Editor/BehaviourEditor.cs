@@ -28,13 +28,13 @@ namespace PckStudio.Forms.Editor
 			{
 				TreeNode EntryNode = new TreeNode(entry.name);
 
-				foreach (JObject content in Utilities.BehaviourResources.entityData["entities"].Children())
+				foreach (JObject content in Utilities.BehaviourResources.entityData["behaviours"].Children())
 				{
 					var prop = content.Properties().FirstOrDefault(prop => prop.Name == entry.name);
 					if (prop is JProperty)
 					{
 						EntryNode.Text = (string)prop.Value;
-						EntryNode.ImageIndex = Utilities.BehaviourResources.entityData["entities"].Children().ToList().IndexOf(content);
+						EntryNode.ImageIndex = Utilities.BehaviourResources.entityData["behaviours"].Children().ToList().IndexOf(content);
 						EntryNode.SelectedImageIndex = EntryNode.ImageIndex;
 						break;
 					}
@@ -164,13 +164,13 @@ namespace PckStudio.Forms.Editor
 				entry.name = diag.SelectedEntity;
 				treeView1.SelectedNode.Tag = entry;
 
-				foreach (JObject content in Utilities.BehaviourResources.entityData["entities"].Children())
+				foreach (JObject content in Utilities.BehaviourResources.entityData["behaviours"].Children())
 				{
 					var prop = content.Properties().FirstOrDefault(prop => prop.Name == entry.name);
 					if (prop is JProperty)
 					{
 						treeView1.SelectedNode.Text = (string)prop.Value;
-						treeView1.SelectedNode.ImageIndex = Utilities.BehaviourResources.entityData["entities"].Children().ToList().IndexOf(content);
+						treeView1.SelectedNode.ImageIndex = Utilities.BehaviourResources.entityData["behaviours"].Children().ToList().IndexOf(content);
 						treeView1.SelectedNode.SelectedImageIndex = treeView1.SelectedNode.ImageIndex;
 						break;
 					}
@@ -217,13 +217,13 @@ namespace PckStudio.Forms.Editor
 
 				TreeNode NewOverrideNode = new TreeNode(NewOverride.name);
 				NewOverrideNode.Tag = NewOverride;
-				foreach (JObject content in Utilities.BehaviourResources.entityData["entities"].Children())
+				foreach (JObject content in Utilities.BehaviourResources.entityData["behaviours"].Children())
 				{
 					var prop = content.Properties().FirstOrDefault(prop => prop.Name == NewOverride.name);
 					if (prop is JProperty)
 					{
 						NewOverrideNode.Text = (string)prop.Value;
-						NewOverrideNode.ImageIndex = Utilities.BehaviourResources.entityData["entities"].Children().ToList().IndexOf(content);
+						NewOverrideNode.ImageIndex = Utilities.BehaviourResources.entityData["behaviours"].Children().ToList().IndexOf(content);
 						NewOverrideNode.SelectedImageIndex = NewOverrideNode.ImageIndex;
 						break;
 					}

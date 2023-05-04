@@ -4,15 +4,15 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Linq;
-using System.Numerics;
 using System.Windows.Forms;
 using System.Collections;
 using System.IO;
+using System.Text.RegularExpressions;
+
 using Newtonsoft.Json;
 using MetroFramework.Forms;
-using PckStudio.Classes.Models;
-using System.Text.RegularExpressions;
 using OMI.Formats.Pck;
+using PckStudio.Internal;
 
 namespace PckStudio
 {
@@ -93,7 +93,7 @@ namespace PckStudio
             "TOOL1",
         };
 
-        List<SkinBox> modelBoxes = new List<SkinBox>();
+        List<SkinBOX> modelBoxes = new List<SkinBOX>();
         List<ModelOffset> modelOffsets = new List<ModelOffset>();
 
         class ModelOffset
@@ -137,7 +137,7 @@ namespace PckStudio
                 {
                     case "BOX":
                         {
-                            SkinBox box = new SkinBox(property.Item2);
+                            var box = SkinBOX.FromString(property.Item2);
 
                             string name = box.Type;
                             if (ValidModelBoxTypes.Contains(name))
@@ -208,8 +208,8 @@ namespace PckStudio
                 // Chooses Render settings based on current direction
                 foreach (ListViewItem listViewItem in listViewBoxes.Items)
                 {
-                    if (!(listViewItem.Tag is SkinBox)) continue;
-                    SkinBox part = listViewItem.Tag as SkinBox;
+                    if (!(listViewItem.Tag is SkinBOX part))
+                        continue;
                     float x = displayBox.Width / 2;
                     float y = 0;
 
@@ -287,8 +287,8 @@ namespace PckStudio
                                         part.Size.X * 5,
                                         part.Size.Y * 5);
                                     RectangleF srcRect = new RectangleF(
-                                        (part.U + part.Size.Z) * gfx_scale,
-                                        (part.V + part.Size.Z) * gfx_scale,
+                                        (part.UV.X + part.Size.Z) * gfx_scale,
+                                        (part.UV.Y + part.Size.Z) * gfx_scale,
                                         part.Size.X * gfx_scale,
                                         part.Size.Y * gfx_scale);
                                     graphics.DrawImage(texturePreview.Image, destRect, srcRect, GraphicsUnit.Pixel);
@@ -360,8 +360,8 @@ namespace PckStudio
                                         part.Size.Z * 5,
                                         part.Size.Y * 5);
                                     RectangleF srcRect = new RectangleF(
-                                        (part.U + part.Size.Z + part.Size.X) * gfx_scale,
-                                        (part.V + part.Size.Z) * gfx_scale,
+                                        (part.UV.X + part.Size.Z + part.Size.X) * gfx_scale,
+                                        (part.UV.Y + part.Size.Z) * gfx_scale,
                                         part.Size.Z * gfx_scale,
                                         part.Size.Y * gfx_scale);
                                     graphics.DrawImage(texturePreview.Image, destRect, srcRect, GraphicsUnit.Pixel);
@@ -438,8 +438,8 @@ namespace PckStudio
                                         part.Size.X * 5,
                                         part.Size.Y * 5);
                                     RectangleF srcRect = new RectangleF(
-                                        (part.U + part.Size.Z * 2 + part.Size.X) * gfx_scale,
-                                        (part.V + part.Size.Z) * gfx_scale,
+                                        (part.UV.X + part.Size.Z * 2 + part.Size.X) * gfx_scale,
+                                        (part.UV.Y + part.Size.Z) * gfx_scale,
                                         part.Size.X * gfx_scale,
                                         part.Size.Y * gfx_scale);
                                     graphics.DrawImage(texturePreview.Image, destRect, srcRect, GraphicsUnit.Pixel);
@@ -510,8 +510,8 @@ namespace PckStudio
                                     part.Size.Z * 5,
                                     part.Size.Y * 5);
                                 RectangleF srcRect = new RectangleF(
-                                    (part.U + part.Size.Z + part.Size.X) * gfx_scale,
-                                    (part.V + part.Size.Z) * gfx_scale,
+                                    (part.UV.X + part.Size.Z + part.Size.X) * gfx_scale,
+                                    (part.UV.Y + part.Size.Z) * gfx_scale,
                                     part.Size.Z * gfx_scale,
                                     part.Size.Y * gfx_scale);
                                 graphics.DrawImage(texturePreview.Image, destRect, srcRect, GraphicsUnit.Pixel);
@@ -546,8 +546,8 @@ namespace PckStudio
                         float width = part.Size.X * 2;
                         float height = part.Size.Y * 2;
                         float length = part.Size.Z * 2;
-                        float u = part.U * 2;
-                        float v = part.V * 2;
+                        float u = part.UV.X * 2;
+                        float v = part.UV.Y * 2;
                         Random r = new Random();
                         Brush brush = new SolidBrush(Color.FromArgb(r.Next(int.MinValue, int.MaxValue)));
                         graphics.FillRectangle(brush, u + length, v, width, length);
@@ -873,7 +873,7 @@ namespace PckStudio
         //Creates Item
         private void createToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            modelBoxes.Add(new SkinBox("NEW_BOX 0 0 0 1 1 1 0 0 0 0 0"));
+            modelBoxes.Add(SkinBOX.FromString("NEW_BOX 0 0 0 1 1 1 0 0 0 0 0"));
             updateListView();
             render();
         }
@@ -883,10 +883,10 @@ namespace PckStudio
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
             changeColorToolStripMenuItem.Visible = false;
-            if (listViewBoxes.SelectedItems.Count != 0 && listViewBoxes.SelectedItems[0].Tag is SkinBox)
+            if (listViewBoxes.SelectedItems.Count != 0 && listViewBoxes.SelectedItems[0].Tag is SkinBOX)
             {
                 changeColorToolStripMenuItem.Visible = true;
-                var part = listViewBoxes.SelectedItems[0].Tag as SkinBox;
+                var part = listViewBoxes.SelectedItems[0].Tag as SkinBOX;
                 //graphics.DrawRectangle(Pens.Yellow, x + (float)double.Parse(this.selected.SubItems[3].Text) * 5 - 1, y + (float)double.Parse(this.selected.SubItems[2].Text) * 5 - 1, (float)double.Parse(this.selected.SubItems[6].Text) * 5 + 2, (float)double.Parse(this.selected.SubItems[5].Text) * 5 + 2);
                 //graphics.DrawRectangle(Pens.Black, x + (float)double.Parse(this.selected.SubItems[3].Text) * 5, y + (float)double.Parse(this.selected.SubItems[2].Text) * 5, (float)double.Parse(this.selected.SubItems[6].Text) * 5, (float)double.Parse(this.selected.SubItems[5].Text) * 5);
                 comboParent.Text = part.Type;
@@ -896,8 +896,8 @@ namespace PckStudio
                 SizeXUpDown.Value = (decimal)part.Size.X;
                 SizeYUpDown.Value = (decimal)part.Size.Y;
                 SizeZUpDown.Value = (decimal)part.Size.Z;
-                TextureXUpDown.Value = (decimal)part.U;
-                TextureYUpDown.Value = (decimal)part.V;
+                TextureXUpDown.Value = (decimal)part.UV.X;
+                TextureYUpDown.Value = (decimal)part.UV.Y;
                 render();
             }
         }
@@ -907,9 +907,8 @@ namespace PckStudio
         private void comboParent_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (listViewBoxes.SelectedItems.Count != 0 &&
-                listViewBoxes.SelectedItems[0].Tag is SkinBox)
+                listViewBoxes.SelectedItems[0].Tag is SkinBOX part)
             {
-                var part = listViewBoxes.SelectedItems[0].Tag as SkinBox;
                 part.Type = comboParent.Text;
                 buttonIMPORT.Enabled = true;
                 buttonEXPORT.Enabled = true;
@@ -928,9 +927,8 @@ namespace PckStudio
         private void SizeXUpDown_ValueChanged(object sender, EventArgs e)
         {
             if (listViewBoxes.SelectedItems.Count != 0 &&
-                listViewBoxes.SelectedItems[0].Tag is SkinBox)
+                listViewBoxes.SelectedItems[0].Tag is SkinBOX part)
             {
-                var part = listViewBoxes.SelectedItems[0].Tag as SkinBox;
                 part.Size.X = (float)SizeXUpDown.Value;
             }
             updateListView();
@@ -940,9 +938,8 @@ namespace PckStudio
         private void SizeYUpDown_ValueChanged(object sender, EventArgs e)
         {
             if (listViewBoxes.SelectedItems.Count != 0 &&
-                listViewBoxes.SelectedItems[0].Tag is SkinBox)
+                listViewBoxes.SelectedItems[0].Tag is SkinBOX part)
             {
-                var part = listViewBoxes.SelectedItems[0].Tag as SkinBox;
                 part.Size.Y = (float)SizeYUpDown.Value;
             }
             updateListView();
@@ -952,9 +949,8 @@ namespace PckStudio
         private void SizeZUpDown_ValueChanged(object sender, EventArgs e)
         {
             if (listViewBoxes.SelectedItems.Count != 0 &&
-                listViewBoxes.SelectedItems[0].Tag is SkinBox)
+                listViewBoxes.SelectedItems[0].Tag is SkinBOX part)
             {
-                var part = listViewBoxes.SelectedItems[0].Tag as SkinBox;
                 part.Size.Z = (float)SizeZUpDown.Value;
             }
             updateListView();
@@ -964,9 +960,8 @@ namespace PckStudio
         private void PosXUpDown_ValueChanged(object sender, EventArgs e)
         {
             if (listViewBoxes.SelectedItems.Count != 0 &&
-                listViewBoxes.SelectedItems[0].Tag is SkinBox)
+                listViewBoxes.SelectedItems[0].Tag is SkinBOX part)
             {
-                var part = listViewBoxes.SelectedItems[0].Tag as SkinBox;
                 part.Pos.X = (float)PosXUpDown.Value;
             }
             updateListView();
@@ -977,9 +972,8 @@ namespace PckStudio
         private void PosYUpDown_ValueChanged(object sender, EventArgs e)
         {
             if (listViewBoxes.SelectedItems.Count != 0 &&
-                listViewBoxes.SelectedItems[0].Tag is SkinBox)
+                listViewBoxes.SelectedItems[0].Tag is SkinBOX part)
             {
-                var part = listViewBoxes.SelectedItems[0].Tag as SkinBox;
                 part.Pos.Y = (float)PosYUpDown.Value;
             }
             updateListView();
@@ -990,9 +984,8 @@ namespace PckStudio
         private void PosZUpDown_ValueChanged(object sender, EventArgs e)
         {
             if (listViewBoxes.SelectedItems.Count != 0 &&
-                listViewBoxes.SelectedItems[0].Tag is SkinBox)
+                listViewBoxes.SelectedItems[0].Tag is SkinBOX part)
             {
-                var part = listViewBoxes.SelectedItems[0].Tag as SkinBox;
                 part.Pos.Z = (float)PosZUpDown.Value;
             }
             updateListView();
@@ -1032,10 +1025,9 @@ namespace PckStudio
         private void TextureXUpDown_ValueChanged(object sender, EventArgs e)
         {
             if (listViewBoxes.SelectedItems.Count != 0 &&
-                listViewBoxes.SelectedItems[0].Tag is SkinBox)
+                listViewBoxes.SelectedItems[0].Tag is SkinBOX part)
             {
-                var part = listViewBoxes.SelectedItems[0].Tag as SkinBox;
-                part.U = (int)TextureXUpDown.Value;
+                part.UV.X = (int)TextureXUpDown.Value;
             }
             updateListView();
             render();
@@ -1046,10 +1038,9 @@ namespace PckStudio
         private void TextureYUpDown_ValueChanged(object sender, EventArgs e)
         {
             if (listViewBoxes.SelectedItems.Count != 0 &&
-                listViewBoxes.SelectedItems[0].Tag is SkinBox)
+                listViewBoxes.SelectedItems[0].Tag is SkinBOX part)
             {
-                var part = listViewBoxes.SelectedItems[0].Tag as SkinBox;
-                part.V = (int)TextureXUpDown.Value;
+                part.UV.Y = (int)TextureYUpDown.Value;
             }
             updateListView();
             render();
@@ -1155,12 +1146,12 @@ namespace PckStudio
         //Loads in model template(Steve)
         private void buttonTemplate_Click(object sender, EventArgs e)
         {
-            modelBoxes.Add(new SkinBox("HEAD -4 -8 -4 8 8 8 0 0 0 0 0"));
-            modelBoxes.Add(new SkinBox("BODY -4 0 -2 8 12 4 16 16 0 0 0"));
-            modelBoxes.Add(new SkinBox("ARM0 -3 -2 -2 4 12 4 40 16 0 0 0"));
-            modelBoxes.Add(new SkinBox("ARM1 -1 -2 -2 4 12 4 40 16 0 1 0"));
-            modelBoxes.Add(new SkinBox("LEG0 -2 0 -2 4 12 4 0 16 0 0 0"));
-            modelBoxes.Add(new SkinBox("LEG1 -2 0 -2 4 12 4 0 16 0 1 0"));
+            modelBoxes.Add(SkinBOX.FromString("HEAD -4 -8 -4 8 8 8 0 0 0 0 0"));
+            modelBoxes.Add(SkinBOX.FromString("BODY -4 0 -2 8 12 4 16 16 0 0 0"));
+            modelBoxes.Add(SkinBOX.FromString("ARM0 -3 -2 -2 4 12 4 40 16 0 0 0"));
+            modelBoxes.Add(SkinBOX.FromString("ARM1 -1 -2 -2 4 12 4 40 16 0 1 0"));
+            modelBoxes.Add(SkinBOX.FromString("LEG0 -2 0 -2 4 12 4 0 16 0 0 0"));
+            modelBoxes.Add(SkinBOX.FromString("LEG1 -2 0 -2 4 12 4 0 16 0 1 0"));
             comboParent.Enabled = true;
             updateListView();
             render();
@@ -1179,8 +1170,8 @@ namespace PckStudio
                 listViewItem.SubItems.Add(new ListViewItem.ListViewSubItem(listViewItem, part.Size.X.ToString()));
                 listViewItem.SubItems.Add(new ListViewItem.ListViewSubItem(listViewItem, part.Size.Y.ToString()));
                 listViewItem.SubItems.Add(new ListViewItem.ListViewSubItem(listViewItem, part.Size.Z.ToString()));
-                listViewItem.SubItems.Add(new ListViewItem.ListViewSubItem(listViewItem, part.U.ToString()));
-                listViewItem.SubItems.Add(new ListViewItem.ListViewSubItem(listViewItem, part.V.ToString()));
+                listViewItem.SubItems.Add(new ListViewItem.ListViewSubItem(listViewItem, part.UV.X.ToString()));
+                listViewItem.SubItems.Add(new ListViewItem.ListViewSubItem(listViewItem, part.UV.Y.ToString()));
                 listViewBoxes.Items.Add(listViewItem);
             }
         }
@@ -1223,23 +1214,21 @@ namespace PckStudio
                 List<string> lines = str1.Split(new[] { "\n\r", "\n" }, StringSplitOptions.None).ToList();
                 if (string.IsNullOrEmpty(lines[lines.Count - 1]))
                     lines.RemoveAt(lines.Count - 1);
-                int passedlines = 0;
-                for (int i = 0; i < lines.Count;)
+                for (int i = 0; i < lines.Count; i += 11)
                 {
-                    string name = lines[0 + passedlines];
-                    string parent = lines[1 + passedlines];
-                    float PosX = float.Parse(lines[3 + passedlines]);
-                    float PosY = float.Parse(lines[4 + passedlines]);
-                    float PosZ = float.Parse(lines[5 + passedlines]);
-                    float SizeX = float.Parse(lines[6 + passedlines]);
-                    float SizeY = float.Parse(lines[7 + passedlines]);
-                    float SizeZ = float.Parse(lines[8 + passedlines]);
-                    float UvX = float.Parse(lines[9 + passedlines]);
-                    float UvY = float.Parse(lines[10 + passedlines]);
-                    passedlines += 11;
-                    i += 11;
+                    string name =    lines[0 + i];
+                    string parent = lines[1 + i];
+                    float PosX = float.Parse(lines[3 + i]);
+                    float PosY = float.Parse(lines[4 + i]);
+                    float PosZ = float.Parse(lines[5 + i]);
+                    float SizeX = float.Parse(lines[6 + i]);
+                    float SizeY = float.Parse(lines[7 + i]);
+                    float SizeZ = float.Parse(lines[8 + i]);
+                    float UvX = float.Parse(lines[9 + i]);
+                    float UvY = float.Parse(lines[10 + i]);
+
                     // CSM doesn't support armor, mirror, or scale values as far as I know of - May
-                    modelBoxes.Add(new SkinBox($"{parent} {PosX} {PosY} {PosZ} {SizeX} {SizeY} {SizeZ} {UvX} {UvY} {false} {false} {0}"));
+                    modelBoxes.Add(SkinBOX.FromString($"{parent} {PosX} {PosY} {PosZ} {SizeX} {SizeY} {SizeZ} {UvX} {UvY} {false} {false} {0}"));
                 }
             }
             comboParent.Enabled = true;
@@ -1326,9 +1315,8 @@ namespace PckStudio
         private void listView1_Click(object sender, EventArgs e)
         {
             if (listViewBoxes.SelectedItems.Count != 0 && listViewBoxes.SelectedItems[0] != null &&
-                listViewBoxes.SelectedItems[0].Tag is SkinBox)
+                listViewBoxes.SelectedItems[0].Tag is SkinBOX part)
             {
-                var part = listViewBoxes.SelectedItems[0].Tag as SkinBox;
                 comboParent.Text = part.Type;
                 PosXUpDown.Value = (decimal)part.Pos.X;
                 PosYUpDown.Value = (decimal)part.Pos.Y;
@@ -1336,8 +1324,8 @@ namespace PckStudio
                 SizeXUpDown.Value = (decimal)part.Size.X;
                 SizeYUpDown.Value = (decimal)part.Size.Y;
                 SizeZUpDown.Value = (decimal)part.Size.Z;
-                TextureXUpDown.Value = (decimal)part.U;
-                TextureYUpDown.Value = (decimal)part.V;
+                TextureXUpDown.Value = (decimal)part.UV.X;
+                TextureYUpDown.Value = (decimal)part.UV.Y;
                 SizeXUpDown.Enabled = true;
                 SizeYUpDown.Enabled = true;
                 SizeZUpDown.Enabled = true;
@@ -1376,9 +1364,9 @@ namespace PckStudio
         private void delStuffUsingDelKey(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Delete && listViewBoxes.SelectedItems.Count != 0 &&
-                listViewBoxes.SelectedItems[0].Tag is SkinBox)
+                listViewBoxes.SelectedItems[0].Tag is SkinBOX part)
             {
-                if (modelBoxes.Remove(listViewBoxes.SelectedItems[0].Tag as SkinBox))
+                if (modelBoxes.Remove(part))
                     listViewBoxes.SelectedItems[0].Remove();
                 render();
             }

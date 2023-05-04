@@ -5,11 +5,11 @@ using System.Drawing.Imaging;
 using System.Windows.Forms;
 using MetroFramework.Forms;
 using PckStudio.Properties;
-using PckStudio.Classes.FileTypes;
 using OMI.Formats.Pck;
 
 namespace PckStudio.Forms.Utilities
 {
+    [Obsolete()]
     public partial class TextureConverterUtility : MetroForm
     {
         public TextureConverterUtility(TreeView tv0, PckFile pck)

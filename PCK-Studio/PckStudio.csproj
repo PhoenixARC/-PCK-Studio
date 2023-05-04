@@ -18,23 +18,20 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
-  <Target Name="GetGitHash" BeforeTargets="WriteGitHash" Condition="'$(BuildHash)' == ''">
+  <Target Name="GetGitHash" BeforeTargets="WriteGitInfo" Condition="'$(Configuration)' == 'Debug' AND '$(BuildHash)' == ''">
+    <!-- write hash and branch to console.-->
+    <Exec Command="git -C $(ProjectDir) describe --always" ConsoleToMsBuild="true">
+      <Output TaskParameter="ConsoleOutput" PropertyName="GitHash" />
+    </Exec>
+    <Exec Command="git -C $(ProjectDir) branch --show-current" ConsoleToMsBuild="true">
+      <Output TaskParameter="ConsoleOutput" PropertyName="GitBranch" />
+    </Exec>
     <PropertyGroup>
-      <!-- temp file for the git version (lives in "obj" folder)-->
-      <VerFile>$(IntermediateOutputPath)gitver</VerFile>
-    </PropertyGroup>
-    <!-- write the hash to the temp file.-->
-    <Exec Command="git -C $(ProjectDir) describe --always &gt; $(VerFile)" />
-    <!-- read the version into the GitVersion itemGroup-->
-    <ReadLinesFromFile File="$(VerFile)">
-      <Output TaskParameter="Lines" ItemName="GitVersion" />
-    </ReadLinesFromFile>
-    <!-- Set the BuildHash property to contain the GitVersion, if it wasn't already set.-->
-    <PropertyGroup>
-      <BuildHash>@(GitVersion)</BuildHash>
+      <BuildHash>$(GitHash)</BuildHash>
+      <BuildBranch>$(GitBranch)</BuildBranch>
     </PropertyGroup>
   </Target>
-  <Target Name="WriteGitHash" BeforeTargets="CoreCompile">
+  <Target Name="WriteGitInfo" BeforeTargets="CoreCompile" Condition="'$(Configuration)' == 'Debug'">
     <!-- names the obj/.../GitAssemblyInfo.cs file -->
     <PropertyGroup>
       <GitAssemblyInfoFile>$(IntermediateOutputPath)GitAssemblyInfo.cs</GitAssemblyInfoFile>
@@ -48,6 +45,10 @@
       <AssemblyAttributes Include="AssemblyMetadata">
         <_Parameter1>GitHash</_Parameter1>
         <_Parameter2>$(BuildHash)</_Parameter2>
+      </AssemblyAttributes>
+      <AssemblyAttributes Include="AssemblyMetadata">
+        <_Parameter1>GitBranch</_Parameter1>
+        <_Parameter2>$(BuildBranch)</_Parameter2>
       </AssemblyAttributes>
     </ItemGroup>
     <!-- writes the attribute to the GitAssemblyInfo file -->
@@ -82,10 +83,20 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>false</Optimize>
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Beta|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Beta\</OutputPath>
+    <DefineConstants>BETA;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -124,16 +135,6 @@
     <ManifestKeyFile>
     </ManifestKeyFile>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleasePortable|AnyCPU'">
-    <OutputPath>bin\ReleasePortable\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <LangVersion>preview</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <Prefer32Bit>true</Prefer32Bit>
-  </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup>
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
@@ -166,15 +167,17 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\ListExtensions.cs" />
+    <Compile Include="Extensions\StringExtension.cs" />
+    <Compile Include="Internals\ApplicationBuildInfo.cs" />
     <Compile Include="Classes\API\PCKCenter\model\PCKCenterJSON.cs" />
     <Compile Include="Classes\API\PCKCenter\PCKCollections.cs" />
     <Compile Include="Classes\API\PCKCenter\PCKCollectionsLocal.cs" />
     <Compile Include="Classes\API\PCKCenter\SaveLocalJSON.cs" />
-    <Compile Include="Classes\Extensions\BlendMode.cs" />
-    <Compile Include="Classes\Extensions\ColorExtensions.cs" />
-    <Compile Include="Classes\Extensions\EnumerableExtensions.cs" />
-    <Compile Include="Classes\Extensions\GraphicsExtensions.cs" />
-    <Compile Include="Classes\Extensions\StringExtension.cs" />
+    <Compile Include="Extensions\BlendMode.cs" />
+    <Compile Include="Extensions\ColorExtensions.cs" />
+    <Compile Include="Extensions\EnumerableExtensions.cs" />
+    <Compile Include="Extensions\GraphicsExtensions.cs" />
     <Compile Include="Classes\FileTypes\CSMBFile.cs" />
     <Compile Include="Classes\FileTypes\PckAudioFile.cs" />
     <Compile Include="Classes\FileTypes\Binka.cs" />
@@ -190,10 +193,10 @@
     <Compile Include="Classes\Misc\FileCacher.cs" />
     <Compile Include="Classes\Misc\OpenFolderDialog.cs" />
     <Compile Include="Classes\Models\DefaultModels\Steve64x64Model.cs" />
-    <Compile Include="Classes\Models\SkinBox.cs" />
+    <Compile Include="Internals\SkinBOX.cs" />
     <Compile Include="Classes\Utils\ARC\ARCUtil.cs" />
-    <Compile Include="Classes\Extensions\ImageExtensions.cs" />
-    <Compile Include="Classes\Utils\SkinANIM.cs" />
+    <Compile Include="Extensions\ImageExtensions.cs" />
+    <Compile Include="Internals\SkinANIM.cs" />
     <Compile Include="Classes\Models\DefaultModels\Steve64x32Model.cs" />
     <Compile Include="Classes\Models\DefaultModels\ModelBase.cs" />
     <Compile Include="Classes\Models\DefaultModels\Texture.cs" />
@@ -235,6 +238,7 @@
     <Compile Include="Forms\Features\WiiUPanel.Designer.cs">
       <DependentUpon>WiiUPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Internals\CommitInfo.cs" />
     <Compile Include="Forms\Additional-Popups\EntityForms\AddEntry.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -357,11 +361,11 @@
     <Compile Include="Forms\Additional-Popups\Grf\AddParameter.Designer.cs">
       <DependentUpon>AddParameter.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Additional-Popups\Audio\pleaseWait.cs">
+    <Compile Include="Forms\Additional-Popups\InProgressPrompt.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Additional-Popups\Audio\pleaseWait.Designer.cs">
-      <DependentUpon>pleaseWait.cs</DependentUpon>
+    <Compile Include="Forms\Additional-Popups\InProgressPrompt.Designer.cs">
+      <DependentUpon>InProgressPrompt.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Utilities\ModelsResources.cs" />
     <Compile Include="Forms\Utilities\MaterialResources.cs" />
@@ -421,7 +425,6 @@
     <Compile Include="Forms\Editor\AudioEditor.Designer.cs">
       <DependentUpon>AudioEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Classes\Extensions\ListExtensions.cs" />
     <Compile Include="Forms\Utilities\PCK Manager.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -461,6 +464,7 @@
     <Compile Include="Classes\ToolboxItems\InterpolationPictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="PckNodeSorter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Forms\Additional-Popups\CreditsForm.cs">
       <SubType>Form</SubType>
@@ -558,8 +562,8 @@
     <EmbeddedResource Include="Forms\Additional-Popups\Grf\AddParameter.resx">
       <DependentUpon>AddParameter.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Additional-Popups\Audio\pleaseWait.resx">
-      <DependentUpon>pleaseWait.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Additional-Popups\InProgressPrompt.resx">
+      <DependentUpon>InProgressPrompt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Features\PckManager.resx">
       <DependentUpon>PckManager.cs</DependentUpon>
@@ -656,9 +660,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\entityBehaviourData.json" />
-    <None Include="Resources\entityMaterialData.json" />
-    <None Include="Resources\entityModelData.json" />
+    <None Include="Resources\entityData.json" />
     <None Include="Resources\TexturePackIcon.png" />
     <None Include="Resources\apps.zip" />
     <None Include="Resources\binka\binkawin.asi" />

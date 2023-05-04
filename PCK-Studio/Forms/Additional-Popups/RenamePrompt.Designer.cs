@@ -32,6 +32,7 @@
 			this.TextLabel = new System.Windows.Forms.Label();
 			this.OKButton = new System.Windows.Forms.Button();
 			this.InputTextBox = new MetroFramework.Controls.MetroTextBox();
+			this.contextLabel = new MetroFramework.Controls.MetroLabel();
 			this.SuspendLayout();
 			// 
 			// TextLabel
@@ -50,10 +51,12 @@
 			// 
 			// InputTextBox
 			// 
+			resources.ApplyResources(this.InputTextBox, "InputTextBox");
 			// 
 			// 
 			// 
 			this.InputTextBox.CustomButton.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image")));
+			this.InputTextBox.CustomButton.ImeMode = ((System.Windows.Forms.ImeMode)(resources.GetObject("resource.ImeMode")));
 			this.InputTextBox.CustomButton.Location = ((System.Drawing.Point)(resources.GetObject("resource.Location")));
 			this.InputTextBox.CustomButton.Name = "";
 			this.InputTextBox.CustomButton.Size = ((System.Drawing.Size)(resources.GetObject("resource.Size")));
@@ -63,7 +66,6 @@
 			this.InputTextBox.CustomButton.UseSelectable = true;
 			this.InputTextBox.CustomButton.Visible = ((bool)(resources.GetObject("resource.Visible")));
 			this.InputTextBox.Lines = new string[0];
-			resources.ApplyResources(this.InputTextBox, "InputTextBox");
 			this.InputTextBox.MaxLength = 255;
 			this.InputTextBox.Name = "InputTextBox";
 			this.InputTextBox.PasswordChar = '\0';
@@ -78,15 +80,23 @@
 			this.InputTextBox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
 			this.InputTextBox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
 			// 
+			// contextLabel
+			// 
+			resources.ApplyResources(this.contextLabel, "contextLabel");
+			this.contextLabel.FontSize = MetroFramework.MetroLabelSize.Small;
+			this.contextLabel.Name = "contextLabel";
+			this.contextLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.contextLabel.WrapToLine = true;
+			// 
 			// RenamePrompt
 			// 
 			this.AcceptButton = this.OKButton;
 			resources.ApplyResources(this, "$this");
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.Controls.Add(this.contextLabel);
 			this.Controls.Add(this.InputTextBox);
 			this.Controls.Add(this.OKButton);
 			this.Controls.Add(this.TextLabel);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "RenamePrompt";
@@ -103,5 +113,6 @@
         public System.Windows.Forms.Button OKButton;
         public System.Windows.Forms.Label TextLabel;
         private MetroFramework.Controls.MetroTextBox InputTextBox;
-    }
+		public MetroFramework.Controls.MetroLabel contextLabel;
+	}
 }
