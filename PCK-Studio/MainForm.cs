@@ -282,12 +282,14 @@ namespace PckStudio
 				{
 					case PckFile.FileData.FileType.SkinDataFile:
 					case PckFile.FileData.FileType.TexturePackInfoFile:
+						if (file.Data.Length == 0)
+							break;
 						using (var stream = new MemoryStream(file.Data))
 						{
 							try
 							{
-								var writer = new PckFileReader(LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
-								PckFile subPCKfile = writer.FromStream(stream);
+								var reader = new PckFileReader(LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
+								PckFile subPCKfile = reader.FromStream(stream);
 								// passes parent path to remove from sub pck filepaths
 								BuildPckTreeView(node.Nodes, subPCKfile, file.Filename + "/");
 							}
