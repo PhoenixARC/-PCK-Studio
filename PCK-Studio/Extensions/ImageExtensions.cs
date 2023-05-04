@@ -17,39 +17,36 @@ namespace PckStudio.Extensions
 
     internal static class ImageExtensions
     {
-        private struct ImageLayoutInfo
+        private struct ImageSection
         {
-            /// <summary>
-            /// Size of sub section of the image
-            /// </summary>
-            public readonly Size SectionSize;
-            public readonly Point SectionPoint;
-            public readonly Rectangle SectionArea;
+            public readonly Size Size;
+            public readonly Point Point;
+            public readonly Rectangle Area;
 
-            public ImageLayoutInfo(int width, int height, int index, ImageLayoutDirection layoutDirection)
+            public ImageSection(Size sectionSize, int index, ImageLayoutDirection layoutDirection)
             {
                 switch(layoutDirection)
                 {
                     case ImageLayoutDirection.Horizontal:
                         {
-                            SectionSize = new Size(height,height);
-                            SectionPoint = new Point(index * height, 0);
+                            Size = new Size(sectionSize.Height, sectionSize.Height);
+                            Point = new Point(index * sectionSize.Height, 0);
                         }
                         break;
 
                     case ImageLayoutDirection.Vertical:
                         {
-                            SectionSize = new Size(width, width);
-                            SectionPoint = new Point(0, index * width);
+                            Size = new Size(sectionSize.Width, sectionSize.Width);
+                            Point = new Point(0, index * sectionSize.Width);
                         }
                         break;
 
                     default:
-                        SectionSize = Size.Empty;
-                        SectionPoint = new Point(-1, -1);
+                        Size = Size.Empty;
+                        Point = new Point(-1, -1);
                         break;
                 }
-                SectionArea = new Rectangle(SectionPoint, SectionSize);
+                Area = new Rectangle(Point, Size);
             }
         }
 
@@ -89,8 +86,8 @@ namespace PckStudio.Extensions
         {
             for (int i = 0; i < source.Height / source.Width; i++)
             {
-                ImageLayoutInfo locationInfo = new ImageLayoutInfo(source.Width, source.Height, i, layoutDirection);
-                yield return source.GetArea(locationInfo.SectionArea);
+                ImageSection locationInfo = new ImageSection(source.Size, i, layoutDirection);
+                yield return source.GetArea(locationInfo.Area);
             }
             yield break;
         }
@@ -104,8 +101,8 @@ namespace PckStudio.Extensions
             {
                 foreach (var (i, texture) in sources.enumerate())
                 {
-                    var info = new ImageLayoutInfo(texture.Width, texture.Height, i, layoutDirection);
-                    graphic.DrawImage(texture, info.SectionPoint);
+                    var info = new ImageSection(texture.Size, i, layoutDirection);
+                    graphic.DrawImage(texture, info.Point);
                 };
             }
             return image;
