@@ -29,13 +29,29 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RenamePrompt));
-            this.InputTextBox = new MetroFramework.Controls.MetroTextBox();
             this.TextLabel = new System.Windows.Forms.Label();
-            this.RenameButton = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
+            this.OKButton = new System.Windows.Forms.Button();
+            this.InputTextBox = new MetroFramework.Controls.MetroTextBox();
+            this.contextLabel = new MetroFramework.Controls.MetroLabel();
             this.SuspendLayout();
+            // 
+            // TextLabel
+            // 
+            resources.ApplyResources(this.TextLabel, "TextLabel");
+            this.TextLabel.ForeColor = System.Drawing.Color.White;
+            this.TextLabel.Name = "TextLabel";
+            // 
+            // OKButton
+            // 
+            resources.ApplyResources(this.OKButton, "OKButton");
+            this.OKButton.ForeColor = System.Drawing.Color.White;
+            this.OKButton.Name = "OKButton";
+            this.OKButton.UseVisualStyleBackColor = true;
+            this.OKButton.Click += new System.EventHandler(this.OKBtn_Click);
             // 
             // InputTextBox
             // 
+            resources.ApplyResources(this.InputTextBox, "InputTextBox");
             // 
             // 
             // 
@@ -50,7 +66,6 @@
             this.InputTextBox.CustomButton.UseSelectable = true;
             this.InputTextBox.CustomButton.Visible = ((bool)(resources.GetObject("resource.Visible")));
             this.InputTextBox.Lines = new string[0];
-            resources.ApplyResources(this.InputTextBox, "InputTextBox");
             this.InputTextBox.MaxLength = 255;
             this.InputTextBox.Name = "InputTextBox";
             this.InputTextBox.PasswordChar = '\0';
@@ -65,43 +80,24 @@
             this.InputTextBox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.InputTextBox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
             // 
-            // TextLabel
+            // contextLabel
             // 
-            resources.ApplyResources(this.TextLabel, "TextLabel");
-            this.TextLabel.ForeColor = System.Drawing.Color.White;
-            this.TextLabel.Name = "TextLabel";
-            // 
-            // RenameButton
-            // 
-            this.RenameButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.RenameButton.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.RenameButton.BorderRadius = 10;
-            this.RenameButton.BorderSize = 1;
-            this.RenameButton.ClickedColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.RenameButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.RenameButton.FlatAppearance.BorderSize = 0;
-            this.RenameButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.RenameButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(250)))), ((int)(((byte)(165)))));
-            resources.ApplyResources(this.RenameButton, "RenameButton");
-            this.RenameButton.ForeColor = System.Drawing.Color.White;
-            this.RenameButton.GradientColorPrimary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
-            this.RenameButton.GradientColorSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
-            this.RenameButton.HoverOverColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(250)))), ((int)(((byte)(165)))));
-            this.RenameButton.Name = "RenameButton";
-            this.RenameButton.TextColor = System.Drawing.Color.White;
-            this.RenameButton.UseVisualStyleBackColor = false;
-            this.RenameButton.Click += new System.EventHandler(this.RenameButton_Click);
+            resources.ApplyResources(this.contextLabel, "contextLabel");
+            this.contextLabel.FontSize = MetroFramework.MetroLabelSize.Small;
+            this.contextLabel.Name = "contextLabel";
+            this.contextLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.contextLabel.WrapToLine = true;
             // 
             // RenamePrompt
             // 
+            this.AcceptButton = this.OKButton;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.Controls.Add(this.RenameButton);
+            this.Controls.Add(this.contextLabel);
             this.Controls.Add(this.InputTextBox);
+            this.Controls.Add(this.OKButton);
             this.Controls.Add(this.TextLabel);
-            this.ForeColor = System.Drawing.Color.White;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "RenamePrompt";
@@ -111,8 +107,9 @@
         }
 
         #endregion
+        public System.Windows.Forms.Button OKButton;
         public System.Windows.Forms.Label TextLabel;
         private MetroFramework.Controls.MetroTextBox InputTextBox;
-        internal CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton RenameButton;
-    }
+		public MetroFramework.Controls.MetroLabel contextLabel;
+	}
 }

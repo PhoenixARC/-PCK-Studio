@@ -47,7 +47,7 @@
             this.okBtn.ForeColor = System.Drawing.Color.White;
             this.okBtn.Name = "okBtn";
             this.okBtn.UseVisualStyleBackColor = true;
-            this.okBtn.Click += new System.EventHandler(this.button1_Click);
+            this.okBtn.Click += new System.EventHandler(this.okBtn_Click);
             // 
             // cancelButton
             // 
@@ -69,6 +69,7 @@
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.ControlBox = false;
             this.Controls.Add(this.ComboBox);
             this.Controls.Add(this.cancelButton);
@@ -78,19 +79,15 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ItemSelectionPopUp";
-            this.Resizable = false;
-            this.ShadowType = MetroFramework.Forms.MetroFormShadowType.DropShadow;
-            this.Style = MetroFramework.MetroColorStyle.Silver;
-            this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-		private System.Windows.Forms.Button cancelButton;
-		public System.Windows.Forms.Label label2;
-		public System.Windows.Forms.Button okBtn;
+        private System.Windows.Forms.Button cancelButton;
+        public System.Windows.Forms.Label label2;
+        public System.Windows.Forms.Button okBtn;
         private MetroFramework.Controls.MetroComboBox ComboBox;
     }
 }

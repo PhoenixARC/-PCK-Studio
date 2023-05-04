@@ -18,23 +18,20 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
-  <Target Name="GetGitHash" BeforeTargets="WriteGitHash" Condition="'$(BuildHash)' == ''">
+  <Target Name="GetGitHash" BeforeTargets="WriteGitInfo" Condition="'$(Configuration)' == 'Debug' AND '$(BuildHash)' == ''">
+    <!-- write hash and branch to console.-->
+    <Exec Command="git -C $(ProjectDir) describe --always" ConsoleToMsBuild="true">
+      <Output TaskParameter="ConsoleOutput" PropertyName="GitHash" />
+    </Exec>
+    <Exec Command="git -C $(ProjectDir) branch --show-current" ConsoleToMsBuild="true">
+      <Output TaskParameter="ConsoleOutput" PropertyName="GitBranch" />
+    </Exec>
     <PropertyGroup>
-      <!-- temp file for the git version (lives in "obj" folder)-->
-      <VerFile>$(IntermediateOutputPath)gitver</VerFile>
-    </PropertyGroup>
-    <!-- write the hash to the temp file.-->
-    <Exec Command="git -C $(ProjectDir) describe --always &gt; $(VerFile)" />
-    <!-- read the version into the GitVersion itemGroup-->
-    <ReadLinesFromFile File="$(VerFile)">
-      <Output TaskParameter="Lines" ItemName="GitVersion" />
-    </ReadLinesFromFile>
-    <!-- Set the BuildHash property to contain the GitVersion, if it wasn't already set.-->
-    <PropertyGroup>
-      <BuildHash>@(GitVersion)</BuildHash>
+      <BuildHash>$(GitHash)</BuildHash>
+      <BuildBranch>$(GitBranch)</BuildBranch>
     </PropertyGroup>
   </Target>
-  <Target Name="WriteGitHash" BeforeTargets="CoreCompile">
+  <Target Name="WriteGitInfo" BeforeTargets="CoreCompile" Condition="'$(Configuration)' == 'Debug'">
     <!-- names the obj/.../GitAssemblyInfo.cs file -->
     <PropertyGroup>
       <GitAssemblyInfoFile>$(IntermediateOutputPath)GitAssemblyInfo.cs</GitAssemblyInfoFile>
@@ -48,6 +45,10 @@
       <AssemblyAttributes Include="AssemblyMetadata">
         <_Parameter1>GitHash</_Parameter1>
         <_Parameter2>$(BuildHash)</_Parameter2>
+      </AssemblyAttributes>
+      <AssemblyAttributes Include="AssemblyMetadata">
+        <_Parameter1>GitBranch</_Parameter1>
+        <_Parameter2>$(BuildBranch)</_Parameter2>
       </AssemblyAttributes>
     </ItemGroup>
     <!-- writes the attribute to the GitAssemblyInfo file -->
@@ -82,10 +83,20 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>false</Optimize>
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Beta|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Beta\</OutputPath>
+    <DefineConstants>BETA;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -124,16 +135,6 @@
     <ManifestKeyFile>
     </ManifestKeyFile>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleasePortable|AnyCPU'">
-    <OutputPath>bin\ReleasePortable\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <LangVersion>preview</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <Prefer32Bit>true</Prefer32Bit>
-  </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup>
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
@@ -166,31 +167,37 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\ControlExtensions.cs" />
+    <Compile Include="Internals\ApplicationBuildInfo.cs" />
     <Compile Include="Classes\API\PCKCenter\model\PCKCenterJSON.cs" />
     <Compile Include="Classes\API\PCKCenter\PCKCollections.cs" />
     <Compile Include="Classes\API\PCKCenter\PCKCollectionsLocal.cs" />
     <Compile Include="Classes\API\PCKCenter\SaveLocalJSON.cs" />
-    <Compile Include="Classes\Extentions\ControlExtensions.cs" />
-    <Compile Include="Classes\Extentions\EnumerableExtentions.cs" />
+    <Compile Include="Extensions\BlendMode.cs" />
+    <Compile Include="Extensions\ColorExtensions.cs" />
+    <Compile Include="Extensions\EnumerableExtensions.cs" />
+    <Compile Include="Extensions\GraphicsExtensions.cs" />
     <Compile Include="Classes\FileTypes\CSMBFile.cs" />
-    <Compile Include="Classes\FileTypes\PCKAudioFile.cs" />
+    <Compile Include="Classes\FileTypes\PckAudioFile.cs" />
     <Compile Include="Classes\FileTypes\Binka.cs" />
-    <Compile Include="Classes\FileTypes\CSM.cs" />
+    <Compile Include="Classes\IO\3DST\3DSTextureReader.cs" />
+    <Compile Include="Classes\IO\3DST\3DSTextureWriter.cs" />
     <Compile Include="Classes\IO\CSMB\CSMBFileReader.cs" />
     <Compile Include="Classes\IO\CSMB\CSMBFileWriter.cs" />
-    <Compile Include="Classes\IO\PCK\PCKAudioFileReader.cs" />
-    <Compile Include="Classes\IO\PCK\PCKAudioFileWriter.cs" />
+    <Compile Include="Classes\IO\PckAudio\PckAudioFileReader.cs" />
+    <Compile Include="Classes\IO\PckAudio\PckAudioFileWriter.cs" />
     <Compile Include="Classes\IO\Sounds\SoundIO.cs" />
     <Compile Include="Classes\IO\Sounds\Sounds.cs" />
     <Compile Include="Classes\Misc\FTPClient.cs" />
+    <Compile Include="Classes\Misc\FileCacher.cs" />
     <Compile Include="Classes\Models\DefaultModels\Steve64x64Model.cs" />
     <Compile Include="Classes\ToolboxItems\ThemeForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Classes\Utils\3DS\3DSUtil.cs" />
+    <Compile Include="Internals\SkinBOX.cs" />
     <Compile Include="Classes\Utils\ARC\ARCUtil.cs" />
-    <Compile Include="Classes\Extentions\ImageExtentions.cs" />
-    <Compile Include="Classes\Utils\SkinANIM.cs" />
+    <Compile Include="Extensions\ImageExtensions.cs" />
+    <Compile Include="Internals\SkinANIM.cs" />
     <Compile Include="Classes\Models\DefaultModels\Steve64x32Model.cs" />
     <Compile Include="Classes\Models\DefaultModels\ModelBase.cs" />
     <Compile Include="Classes\Models\DefaultModels\Texture.cs" />
@@ -226,12 +233,7 @@
     <Compile Include="Forms\Additional-Popups\Audio\creditsEditor.Designer.cs">
       <DependentUpon>creditsEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Additional-Popups\Audio\PleaseWaitPrompt.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Additional-Popups\Audio\PleaseWaitPrompt.Designer.cs">
-      <DependentUpon>PleaseWaitPrompt.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Internals\CommitInfo.cs" />
     <Compile Include="Forms\Additional-Popups\EntityForms\AddEntry.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -360,6 +362,12 @@
     <Compile Include="Forms\Additional-Popups\Grf\AddParameter.Designer.cs">
       <DependentUpon>AddParameter.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Additional-Popups\InProgressPrompt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\InProgressPrompt.Designer.cs">
+      <DependentUpon>InProgressPrompt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Utilities\ModelsResources.cs" />
     <Compile Include="Forms\Utilities\MaterialResources.cs" />
     <Compile Include="Forms\Utilities\BehaviourResources.cs" />
@@ -436,7 +444,7 @@
     <Compile Include="Forms\Utilities\InstallWiiU.Designer.cs">
       <DependentUpon>InstallWiiU.cs</DependentUpon>
     </Compile>
-    <Compile Include="Classes\Utils\ListUtils.cs" />
+    <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="Forms\Utilities\PCK Manager.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -470,15 +478,13 @@
     <Compile Include="Classes\ToolboxItems\InterpolationPictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="PckNodeSorter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Classes\Utils\3DS\TextureCodec.cs" />
     <EmbeddedResource Include="Forms\Additional-Popups\Audio\creditsEditor.resx">
       <DependentUpon>creditsEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Additional-Popups\Audio\PleaseWaitPrompt.resx">
-      <DependentUpon>PleaseWaitPrompt.cs</DependentUpon>
-    </EmbeddedResource>
+    <Compile Include="Classes\IO\3DST\TextureCodec.cs" />
     <EmbeddedResource Include="Forms\Additional-Popups\EntityForms\AddEntry.resx">
       <DependentUpon>AddEntry.cs</DependentUpon>
     </EmbeddedResource>
@@ -537,6 +543,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\ItemSelectionPopUp.resx">
       <DependentUpon>ItemSelectionPopUp.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Skins-And-Textures\AddMeta.ja.resx">
       <DependentUpon>AddMeta.cs</DependentUpon>
@@ -563,6 +570,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\Grf\AddParameter.resx">
       <DependentUpon>AddParameter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Additional-Popups\InProgressPrompt.resx">
+      <DependentUpon>InProgressPrompt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Editor\BoxEditor.resx">
       <DependentUpon>BoxEditor.cs</DependentUpon>
@@ -660,13 +670,11 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\entityBehaviourData.json" />
-    <None Include="Resources\entityMaterialData.json" />
-    <None Include="Resources\entityModelData.json" />
     <None Include="Resources\Tools_48px.png" />
     <None Include="Resources\save_24px.png" />
     <None Include="Resources\rubik%27s_cube_24px.png" />
     <None Include="Resources\rename_32px.png" />
+    <None Include="Resources\entityData.json" />
     <None Include="Resources\TexturePackIcon.png" />
     <None Include="Resources\apps.zip" />
     <None Include="Resources\binka\binkawin.asi" />
@@ -788,6 +796,10 @@
     <ProjectReference Include="..\Vendor\OMI-Lib\OMI Filetypes Library\OMI Filetype Library.csproj">
       <Project>{693AEBC1-293D-4DF0-BCAE-26A1099FE7BB}</Project>
       <Name>OMI Filetype Library</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Vendor\SharpMss32\SharpMss32\SharpMss32.csproj">
+      <Project>{e8d0b671-3ab1-48b6-a767-58df67bd5d11}</Project>
+      <Name>SharpMss32</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -60,7 +60,7 @@ namespace PckStudio.Forms.Editor
 			if (treeViewLocKeys.SelectedNode is TreeNode)
 				using (RenamePrompt prompt = new RenamePrompt(""))
 				{
-                    prompt.RenameButton.Text = "Add";
+                    prompt.OKButton.Text = "Add";
 					if (prompt.ShowDialog() == DialogResult.OK && 
 						!currentLoc.LocKeys.ContainsKey(prompt.NewText) &&
 						currentLoc.AddLocKey(prompt.NewText, ""))

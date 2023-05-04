@@ -279,7 +279,7 @@ namespace PckStudio.Models
 		{
 			System.Drawing.Bitmap bitmap = new System.Drawing.Bitmap(0x154, 0x12);
 			Version version = new Version(Application.ProductVersion);
-			string s = string.Format("{0} {1}.{2}{3}", Application.ProductName, version.Major, version.Minor, (version.Build != 0) ? ("." + version.Build) : "");
+			string s = string.Format("{0} {1}.{2}{3}", Application.ProductName, version.Major, version.Minor, (version.Build > 0) ? ("." + version.Build) : "");
 			using (System.Drawing.Graphics graphics = System.Drawing.Graphics.FromImage(bitmap))
 			{
 				using (System.Drawing.Brush brush = new System.Drawing.SolidBrush(System.Drawing.Color.FromArgb(0x7F, System.Drawing.Color.Gray)))

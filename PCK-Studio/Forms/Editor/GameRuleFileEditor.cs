@@ -169,7 +169,7 @@ namespace PckStudio.Forms.Editor
 
             using (RenamePrompt prompt = new RenamePrompt(""))
             {
-                prompt.RenameButton.Text = "Add";
+                prompt.OKButton.Text = "Add";
                 if (MessageBox.Show($"Add Game Rule to {parentRule.Name}", "Attention",
                     MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes &&
                     prompt.ShowDialog() == DialogResult.OK &&

@@ -5,12 +5,13 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using System.Collections.Generic;
 
-using PckStudio.Classes.Utils;
+using PckStudio.Internal;
 using PckStudio.Forms.Additional_Popups;
+using PckStudio.ToolboxItems;
 
 namespace PckStudio.Forms.Editor
 {
-    public partial class ANIMEditor : MetroFramework.Forms.MetroForm
+    public partial class ANIMEditor : ThemeForm
     {
         public SkinANIM ResultAnim => ruleset.Value;
 
@@ -214,7 +215,7 @@ namespace PckStudio.Forms.Editor
                 if (!string.IsNullOrWhiteSpace(value)) MessageBox.Show($"The following value \"{value}\" is not valid. Please try again.");
                 RenamePrompt diag = new RenamePrompt(value);
                 diag.TextLabel.Text = "ANIM";
-                diag.RenameButton.Text = "Ok";
+                diag.OKButton.Text = "Ok";
                 if (diag.ShowDialog() == DialogResult.OK)
                 {
                     value = diag.NewText;

@@ -345,5 +345,6 @@ namespace PckStudio.Forms.Editor
 		private System.Windows.Forms.ToolStripMenuItem bulkReplaceExistingTracksToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem changeCategoryToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem organizeTracksToolStripMenuItem;
-	}
+        private System.Windows.Forms.ToolStripMenuItem convertToWAVToolStripMenuItem;
+    }
 }

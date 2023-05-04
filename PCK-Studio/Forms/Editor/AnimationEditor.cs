@@ -3,15 +3,13 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using PckStudio.Classes.FileTypes;
 using PckStudio.Forms.Additional_Popups.Animation;
 using PckStudio.Forms.Utilities;
-using PckStudio.Classes.Extentions;
+using PckStudio.Extensions;
 using OMI.Formats.Pck;
 
 namespace PckStudio.Forms.Editor
@@ -51,7 +49,7 @@ namespace PckStudio.Forms.Editor
 
 			using MemoryStream textureMem = new MemoryStream(animationFile.Data);
 			var texture = new Bitmap(textureMem);
-            var frameTextures = texture.CreateImageList(ImageExtentions.ImageLayoutDirection.Horizontal);
+            var frameTextures = texture.CreateImageList(ImageLayoutDirection.Vertical);
 
             currentAnimation = animationFile.Properties.HasProperty("ANIM")
 				? new Animation(frameTextures, animationFile.Properties.GetPropertyValue("ANIM"))
@@ -297,7 +295,7 @@ namespace PckStudio.Forms.Editor
 				return;
 			}
 			using MemoryStream textureMem = new MemoryStream(File.ReadAllBytes(textureFile));
-			var textures = Image.FromStream(textureMem).CreateImageList(ImageExtentions.ImageLayoutDirection.Horizontal);
+			var textures = Image.FromStream(textureMem).CreateImageList(ImageLayoutDirection.Horizontal);
             var new_animation = new Animation(textures);
 			try
 			{

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Windows.Forms;
-using MetroFramework.Forms;
+using PckStudio.ToolboxItems;
 
 namespace PckStudio
 {
-    public partial class AddFilePrompt : MetroForm
+    public partial class AddFilePrompt : ThemeForm
 	{
         /// <summary>
         /// Text entered only valid when <see cref="DialogResult"/> == <see cref="DialogResult.OK"/>,

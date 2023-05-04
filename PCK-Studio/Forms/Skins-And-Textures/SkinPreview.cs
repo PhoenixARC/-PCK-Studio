@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Drawing;
 using PckStudio.Classes.Models.DefaultModels;
-using PckStudio.ToolboxItems;
-using PckStudio.Classes.Utils;
+using PckStudio.Internal;
 using PckStudio.Models;
+using PckStudio.ToolboxItems;
 
 namespace PckStudio.Forms
 {

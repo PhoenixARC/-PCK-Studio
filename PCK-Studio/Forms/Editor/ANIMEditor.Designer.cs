@@ -702,7 +702,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(630, 554);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.ClientSize = new System.Drawing.Size(614, 515);
             this.Controls.Add(this.templateButton);
             this.Controls.Add(this.effectsGroup);
             this.Controls.Add(this.resetButton);
@@ -716,15 +717,13 @@
             this.Controls.Add(this.effectsGroup2);
             this.Controls.Add(this.saveButton);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Location = new System.Drawing.Point(0, 0);
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(630, 554);
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(630, 554);
             this.Name = "ANIMEditor";
-            this.Resizable = false;
-            this.Style = MetroFramework.MetroColorStyle.Silver;
             this.Text = "ANIM Editor";
-            this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.effectsGroup.ResumeLayout(false);
             this.effectsGroup.PerformLayout();
             this.effectsGroup2.ResumeLayout(false);

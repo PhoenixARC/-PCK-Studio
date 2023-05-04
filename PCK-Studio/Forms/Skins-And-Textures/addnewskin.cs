@@ -4,12 +4,12 @@ using System.IO;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
-using PckStudio.Classes.Utils;
-using PckStudio.Classes._3ds.Utils;
-using PckStudio.ToolboxItems;
 using OMI.Formats.Languages;
 using OMI.Formats.Pck;
+using PckStudio.Internal;
 using PckStudio.Forms.Editor;
+using PckStudio.Classes.IO._3DST;
+using PckStudio.ToolboxItems;
 
 namespace PckStudio
 {
@@ -88,7 +88,7 @@ namespace PckStudio
                         //comboBoxSkinType.Text = "Steve (64x64)";
                         skinType = eSkinType._64x64HD;
                     }
-                    else if (img.Width == img.Height / 2) // 64x32 HD
+                    else if (img.Height == img.Width / 2) // 64x32 HD
                     {
                         anim.SetFlag(ANIM_EFFECTS.RESOLUTION_64x64, false);
                         anim.SetFlag(ANIM_EFFECTS.SLIM_MODEL, false);
@@ -305,7 +305,8 @@ namespace PckStudio
                     {
                         using (var fs = File.OpenRead(ofdd.FileName))
                         {
-                            CheckImage(_3DSUtil.GetImageFrom3DST(fs));
+                            var reader = new _3DSTextureReader();
+                            CheckImage(reader.FromStream(fs));
                             textSkinName.Text = Path.GetFileNameWithoutExtension(ofdd.FileName);
                         }
                         return;

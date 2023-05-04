@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Windows.Forms;
-
-// Audio Editor by MattNL
+using PckStudio.ToolboxItems;
 
 namespace PckStudio.Forms.Additional_Popups
 {
-	public partial class ItemSelectionPopUp : MetroFramework.Forms.MetroForm
+	public partial class ItemSelectionPopUp : ThemeForm
 	{
 		public string SelectedItem => DialogResult == DialogResult.OK ? ComboBox.Text : string.Empty;
 
@@ -15,7 +14,7 @@ namespace PckStudio.Forms.Additional_Popups
 			ComboBox.Items.AddRange(items);
 		}
 
-		private void button1_Click(object sender, EventArgs e)
+		private void okBtn_Click(object sender, EventArgs e)
 		{
 			if(ComboBox.SelectedIndex > -1)
 				cancelButton_Click(sender, e);

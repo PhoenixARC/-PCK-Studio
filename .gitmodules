@@ -4,3 +4,6 @@
 [submodule "CrEaTiiOn-Brotherhood-Theme-Library"]
 	path = Vendor/CrEaTiiOn-Brotherhood-Theme-Library-Net
 	url = https://github.com/EternalModz/CrEaTiiOn-Brotherhood-Theme-Library-NET.git
+[submodule "Vendor/SharpMss32"]
+	path = Vendor/SharpMss32
+	url = https://github.com/NessieHax/SharpMss32.git

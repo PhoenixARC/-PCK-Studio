@@ -7,17 +7,20 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Collections;
 using System.IO;
+using System.Text.RegularExpressions;
+
 using Newtonsoft.Json;
 using PckStudio.Classes.FileTypes;
 using System.Text.RegularExpressions;
 using PckStudio.ToolboxItems;
 using OMI.Formats.Pck;
+using PckStudio.Internal;
 
 namespace PckStudio
 {
     public partial class GenerateModel : ThemeForm
     {
-        PictureBox skinPreview;
+        PictureBox skinPreview = new PictureBox();
 
         eViewDirection direction = eViewDirection.front;
 
@@ -46,12 +49,24 @@ namespace PckStudio
             // 64x64 Overlay Parts
             "HEADWEAR",
             "JACKET",
-            "SHOULDER0",
-            "SHOULDER1",
             "SLEEVE0",
             "SLEEVE1",
+            "WAIST",
             "PANTS0",
             "PANTS1",
+            "SOCK0",
+            "SOCK1",
+
+            // Armor Parts
+            "HELMET",
+            "CHEST", "BODYARMOR",
+            "SHOULDER0", "ARMARMOR0",
+            "SHOULDER1", "ARMARMOR0",
+            "BELT",
+            "LEGGING0",
+            "LEGGING1",
+            "BOOT0",
+            "BOOT1",
         };
 
         private static readonly string[] ValidModelOffsetTypes = new string[]
@@ -66,49 +81,21 @@ namespace PckStudio
 
             // Armor Offsets
             "HELMET",
-            "CHEST",
+            "CHEST", "BODYARMOR",
+            "SHOULDER0", "ARMARMOR0",
+            "SHOULDER1", "ARMARMOR0",
+            "BELT",
+            "LEGGING0",
+            "LEGGING1",
             "BOOT0",
             "BOOT1",
-            "WAIST",
-            "PANTS0",
-            "PANTS1",
 
             "TOOL0",
             "TOOL1",
         };
 
-        List<ModelPart> modelParts = new List<ModelPart>();
+        List<SkinBOX> modelBoxes = new List<SkinBOX>();
         List<ModelOffset> modelOffsets = new List<ModelOffset>();
-
-        class ModelPart
-        {
-            public string Type;
-            public float X, Y, Z;
-            public float Width;
-            public float Height;
-            public float Length;
-            public int U, V;
-
-            public ModelPart(string type, float x, float y, float z, float width, float height, float length, int u, int v)
-            {
-                Type = type;
-                X = x;
-                Y = y;
-                Z = z;
-                Width = width;
-                Height = height;
-                Length = length;
-                U = u;
-                V = v;
-            }
-
-            public ValueTuple<string, string> ToProperty()
-            {
-                string value = $"{Type} {X} {Y} {Z} {Width} {Height} {Length} {U} {V}";
-                return new ValueTuple<string, string>("BOX", value.Replace(',', '.'));
-            }
-
-        }
 
         class ModelOffset
         {
@@ -128,13 +115,13 @@ namespace PckStudio
         }
 
 
-        public GenerateModel(PckFile.PCKProperties skinProperties, PictureBox preview)
+        public GenerateModel(PckFile.PCKProperties skinProperties, Image texture)
         {
             InitializeComponent();
             boxes = skinProperties;
-            skinPreview = preview;
-            if (texturePreview.Image == null)
-                texturePreview.Image = new Bitmap(64, 64);
+            texturePreview.Image = texture;
+            comboParent.Items.Clear();
+            ValidModelBoxTypes.ToList().ForEach(p => comboParent.Items.Add(p));
             loadData();
         }
         private static readonly Regex sWhitespace = new Regex(@"\s+");
@@ -152,56 +139,14 @@ namespace PckStudio
                 {
                     case "BOX":
                         {
-                            string[] Format = ReplaceWhitespace(property.Item2, ",").TrimEnd('\n', '\r', ' ').Split(',');
-                            if (Format.Length < 9)
-                            {
-                                Console.WriteLine($"'{property.Item1}' property has too few arguments: {property.Item2}");
-                                continue;
-                            }
-                            string name = Format[0];
+                            var box = SkinBOX.FromString(property.Item2);
+
+                            string name = box.Type;
                             if (ValidModelBoxTypes.Contains(name))
                             {
-                                // %10ls = name
-                                // %f
-                                // %f
-                                // %f
-                                // %f
-                                // %f
-                                // %f
-                                // %f
-                                // %f
-                                // %d
-                                // %d
-                                // %f
-                                try
-                                {
-                                    float x = float.Parse(Format[1]);
-                                    float y = float.Parse(Format[2]);
-                                    float z = float.Parse(Format[3]);
-                                    float sizeX = float.Parse(Format[4]);
-                                    float sizeY = float.Parse(Format[5]);
-                                    float sizeZ = float.Parse(Format[6]);
-                                    int u = int.Parse(Format[7]);
-                                    int v = int.Parse(Format[8]);
-                                    modelParts.Add(new ModelPart(name, x, y, z, sizeX, sizeY, sizeZ, u, v));
-                                }
-                                catch (FormatException ex)
-                                {
-                                    Console.WriteLine(ex.Message);
-                                    MessageBox.Show("A Format Exception was thrown\nFailed to parse BOX value", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                }
-                                catch (OverflowException ex)
-                                {
-                                    Console.WriteLine(ex.Message);
-                                    MessageBox.Show("An Overflow Exception was thrown\nFailed to parse BOX value", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                }
+                                modelBoxes.Add(box);
                             }
-                            if (Format.Length >= 11)
-                            {
-                                string unk1 = Format[9];
-                                string unk2 = Format[10];
-                                Console.WriteLine($"{unk1} | {unk2}");
-                            }
+
                             comboParent.Enabled = true;
                             break;
                         }
@@ -260,52 +205,76 @@ namespace PckStudio
                 float legY = (displayBox.Height / 2) + 85; // -80;
                 float groundLevel = (displayBox.Height / 2) + 145;
                 graphics.DrawLine(Pens.White, 0, groundLevel, displayBox.Width, groundLevel);
+                float gfx_scale = texturePreview.Image.Width / 64; // used for displaying larger graphics properly; 64 is the base skin width for all models
+
                 // Chooses Render settings based on current direction
                 foreach (ListViewItem listViewItem in listViewBoxes.Items)
                 {
-                    if (!(listViewItem.Tag is ModelPart)) continue;
-                    ModelPart part = listViewItem.Tag as ModelPart;
+                    if (!(listViewItem.Tag is SkinBOX part))
+                        continue;
                     float x = displayBox.Width / 2;
                     float y = 0;
+
                     switch (direction)
                     {
                         case eViewDirection.front:
                             {
                                 //Sets X & Y based on model part class
                                 // listViewItem.Text -> part.Type
-                                // listViewItem.SubItems[1] -> part.X
-                                // listViewItem.SubItems[2] -> part.Y
-                                // listViewItem.SubItems[3] -> part.Z
-                                // listViewItem.SubItems[4] -> part.Width
-                                // listViewItem.SubItems[5] -> part.Height
-                                // listViewItem.SubItems[6] -> part.Length
+                                // listViewItem.SubItems[1] -> part.Pos.X
+                                // listViewItem.SubItems[2] -> part.Pos.Y
+                                // listViewItem.SubItems[3] -> part.Pos.Z
+                                // listViewItem.SubItems[4] -> part.Size.X
+                                // listViewItem.SubItems[5] -> part.Size.Y
+                                // listViewItem.SubItems[6] -> part.Size.Z
                                 // listViewItem.SubItems[7] -> part.U
                                 // listViewItem.SubItems[8] -> part.V
                                 switch (part.Type)
                                 {
                                     case "HEAD":
+                                    case "HEADWEAR":
+                                    case "HELMET":
                                         y = headbodyY + int.Parse(offsetHead.Text) * 5;
                                         break;
                                     case "BODY":
+                                    case "JACKET":
+                                    case "CHEST":
+                                    case "BODYARMOR":
+                                    case "BELT":
+                                    case "WAIST":
                                         y = headbodyY + int.Parse(offsetBody.Text) * 5;
                                         break;
 
                                     case "ARM0":
+                                    case "ARMARMOR0":
+                                    case "SLEEVE0":
+                                    case "SHOULDER0":
                                         x -= 25;
                                         y = armY + int.Parse(offsetArms.Text) * 5;
                                         break;
 
                                     case "ARM1":
+                                    case "ARMARMOR1":
+                                    case "SLEEVE1":
+                                    case "SHOULDER1":
                                         x += 25;
                                         y = armY + int.Parse(offsetArms.Text) * 5;
                                         break;
 
                                     case "LEG0":
+                                    case "PANTS0":
+                                    case "SOCK0":
+                                    case "LEGGING0":
+                                    case "BOOT0":
                                         x -= 10;
                                         y = legY + int.Parse(offsetLegs.Text) * 5;
                                         break;
 
                                     case "LEG1":
+                                    case "PANTS1":
+                                    case "SOCK1":
+                                    case "LEGGING1":
+                                    case "BOOT1":
                                         x += 10;
                                         y = legY + int.Parse(offsetLegs.Text) * 5;
                                         break;
@@ -315,20 +284,20 @@ namespace PckStudio
                                 if (!checkTextureGenerate.Checked)
                                 {
                                     RectangleF destRect = new RectangleF(
-                                        x + part.X * 5,
-                                        y + part.Y * 5,
-                                        part.Width * 5,
-                                        part.Height * 5);
+                                        x + part.Pos.X * 5,
+                                        y + part.Pos.Y * 5,
+                                        part.Size.X * 5,
+                                        part.Size.Y * 5);
                                     RectangleF srcRect = new RectangleF(
-                                        part.U + part.Length,
-                                        part.V + part.Length,
-                                        part.Width,
-                                        part.Height);
+                                        (part.UV.X + part.Size.Z) * gfx_scale,
+                                        (part.UV.Y + part.Size.Z) * gfx_scale,
+                                        part.Size.X * gfx_scale,
+                                        part.Size.Y * gfx_scale);
                                     graphics.DrawImage(texturePreview.Image, destRect, srcRect, GraphicsUnit.Pixel);
                                 }
                                 else
                                 {
-                                    graphics.FillRectangle(new SolidBrush(listViewItem.ForeColor), x + part.X * 5, y + part.Y * 5, part.Width * 5, part.Height * 5);
+                                    graphics.FillRectangle(new SolidBrush(listViewItem.ForeColor), x + part.Pos.X * 5, y + part.Pos.Y * 5, part.Size.X * 5, part.Size.Y * 5);
                                 }
 
                                 break;
@@ -340,27 +309,47 @@ namespace PckStudio
                                 switch (part.Type)
                                 {
                                     case "HEAD":
-                                        y = headbodyY + float.Parse(offsetHead.Text) * 5;
+                                    case "HEADWEAR":
+                                    case "HELMET":
+                                        y = headbodyY + int.Parse(offsetHead.Text) * 5;
                                         break;
-
                                     case "BODY":
-                                        y = headbodyY + float.Parse(offsetBody.Text) * 5;
+                                    case "JACKET":
+                                    case "CHEST":
+                                    case "BODYARMOR":
+                                    case "BELT":
+                                    case "WAIST":
+                                        y = headbodyY + int.Parse(offsetBody.Text) * 5;
                                         break;
 
                                     case "ARM0":
-                                        y = armY + float.Parse(offsetArms.Text) * 5;
+                                    case "ARMARMOR0":
+                                    case "SLEEVE0":
+                                    case "SHOULDER0":
+                                        y = armY + int.Parse(offsetArms.Text) * 5;
                                         break;
 
                                     case "ARM1":
-                                        y = armY + float.Parse(offsetArms.Text) * 5;
+                                    case "ARMARMOR1":
+                                    case "SLEEVE1":
+                                    case "SHOULDER1":
+                                        y = armY + int.Parse(offsetArms.Text) * 5;
                                         break;
 
                                     case "LEG0":
-                                        y = legY + float.Parse(offsetLegs.Text) * 5;
+                                    case "PANTS0":
+                                    case "SOCK0":
+                                    case "LEGGING0":
+                                    case "BOOT0":
+                                        y = legY + int.Parse(offsetLegs.Text) * 5;
                                         break;
 
                                     case "LEG1":
-                                        y = legY + float.Parse(offsetLegs.Text) * 5;
+                                    case "PANTS1":
+                                    case "SOCK1":
+                                    case "LEGGING1":
+                                    case "BOOT1":
+                                        y = legY + int.Parse(offsetLegs.Text) * 5;
                                         break;
                                 }
 
@@ -368,21 +357,21 @@ namespace PckStudio
                                 if (!checkTextureGenerate.Checked)
                                 {
                                     RectangleF destRect = new RectangleF(
-                                        x + part.Z * 5,
-                                        y + part.Y * 5,
-                                        part.Length * 5,
-                                        part.Height * 5);
+                                        x + part.Pos.Z * 5,
+                                        y + part.Pos.Y * 5,
+                                        part.Size.Z * 5,
+                                        part.Size.Y * 5);
                                     RectangleF srcRect = new RectangleF(
-                                        part.U + part.Length + part.Width,
-                                        part.V + part.Length,
-                                        part.Length,
-                                        part.Height);
+                                        (part.UV.X + part.Size.Z + part.Size.X) * gfx_scale,
+                                        (part.UV.Y + part.Size.Z) * gfx_scale,
+                                        part.Size.Z * gfx_scale,
+                                        part.Size.Y * gfx_scale);
                                     graphics.DrawImage(texturePreview.Image, destRect, srcRect, GraphicsUnit.Pixel);
                                 }
                                 else
                                 {
                                     //Draws Part
-                                    graphics.FillRectangle(new SolidBrush(listViewItem.ForeColor), x + part.Z * 5, y + part.Y * 5, part.Length * 5, part.Height * 5);
+                                    graphics.FillRectangle(new SolidBrush(listViewItem.ForeColor), x + part.Pos.Z * 5, y + part.Pos.Y * 5, part.Size.Z * 5, part.Size.Y * 5);
                                 }
                                 bitmapModelPreview.RotateFlip(RotateFlipType.RotateNoneFlipX);
                                 break;
@@ -394,26 +383,51 @@ namespace PckStudio
                                 switch (part.Type)
                                 {
                                     case "HEAD":
-                                        y = headbodyY + float.Parse(offsetHead.Text) * 5;
+                                    case "HEADWEAR":
+                                    case "HELMET":
+                                        y = headbodyY + int.Parse(offsetHead.Text) * 5;
                                         break;
                                     case "BODY":
-                                        y = headbodyY + float.Parse(offsetBody.Text) * 5;
+                                    case "JACKET":
+                                    case "CHEST":
+                                    case "BODYARMOR":
+                                    case "BELT":
+                                    case "WAIST":
+                                        y = headbodyY + int.Parse(offsetBody.Text) * 5;
                                         break;
+
                                     case "ARM0":
+                                    case "ARMARMOR0":
+                                    case "SLEEVE0":
+                                    case "SHOULDER0":
                                         x -= 25;
-                                        y = armY + float.Parse(offsetArms.Text) * 5;
+                                        y = armY + int.Parse(offsetArms.Text) * 5;
                                         break;
+
                                     case "ARM1":
+                                    case "ARMARMOR1":
+                                    case "SLEEVE1":
+                                    case "SHOULDER1":
                                         x += 25;
-                                        y = armY + float.Parse(offsetArms.Text) * 5;
+                                        y = armY + int.Parse(offsetArms.Text) * 5;
                                         break;
+
                                     case "LEG0":
+                                    case "PANTS0":
+                                    case "SOCK0":
+                                    case "LEGGING0":
+                                    case "BOOT0":
                                         x -= 10;
-                                        y = legY + float.Parse(offsetLegs.Text) * 5;
+                                        y = legY + int.Parse(offsetLegs.Text) * 5;
                                         break;
+
                                     case "LEG1":
+                                    case "PANTS1":
+                                    case "SOCK1":
+                                    case "LEGGING1":
+                                    case "BOOT1":
                                         x += 10;
-                                        y = legY + float.Parse(offsetLegs.Text) * 5;
+                                        y = legY + int.Parse(offsetLegs.Text) * 5;
                                         break;
                                 }
 
@@ -421,21 +435,21 @@ namespace PckStudio
                                 if (!checkTextureGenerate.Checked)
                                 {
                                     RectangleF destRect = new RectangleF(
-                                        x + part.X * 5,
-                                        y + part.Y * 5,
-                                        part.Width * 5,
-                                        part.Height * 5);
+                                        x + part.Pos.X * 5,
+                                        y + part.Pos.Y * 5,
+                                        part.Size.X * 5,
+                                        part.Size.Y * 5);
                                     RectangleF srcRect = new RectangleF(
-                                        part.U + part.Length * 2 + part.Width,
-                                        part.V + part.Length,
-                                        part.Width,
-                                        part.Height);
+                                        (part.UV.X + part.Size.Z * 2 + part.Size.X) * gfx_scale,
+                                        (part.UV.Y + part.Size.Z) * gfx_scale,
+                                        part.Size.X * gfx_scale,
+                                        part.Size.Y * gfx_scale);
                                     graphics.DrawImage(texturePreview.Image, destRect, srcRect, GraphicsUnit.Pixel);
                                 }
                                 else
                                 {
                                     //Draws Part
-                                    graphics.FillRectangle(new SolidBrush(listViewItem.ForeColor), x + part.X * 5, y + part.Y * 5, part.Width * 5, part.Height * 5);
+                                    graphics.FillRectangle(new SolidBrush(listViewItem.ForeColor), x + part.Pos.X * 5, y + part.Pos.Y * 5, part.Size.X * 5, part.Size.Y * 5);
                                 }
                                 bitmapModelPreview.RotateFlip(RotateFlipType.RotateNoneFlipX);
                                 break;
@@ -446,46 +460,68 @@ namespace PckStudio
                             switch (part.Type)
                             {
                                 case "HEAD":
-                                    y = headbodyY + float.Parse(offsetHead.Text) * 5;
+                                case "HEADWEAR":
+                                case "HELMET":
+                                    y = headbodyY + int.Parse(offsetHead.Text) * 5;
                                     break;
                                 case "BODY":
-                                    y = headbodyY + float.Parse(offsetBody.Text) * 5;
+                                case "JACKET":
+                                case "CHEST":
+                                case "BODYARMOR":
+                                case "BELT":
+                                case "WAIST":
+                                    y = headbodyY + int.Parse(offsetBody.Text) * 5;
                                     break;
 
                                 case "ARM0":
-                                    y = armY + float.Parse(offsetArms.Text) * 5;
+                                case "ARMARMOR0":
+                                case "SLEEVE0":
+                                case "SHOULDER0":
+                                    y = armY + int.Parse(offsetArms.Text) * 5;
                                     break;
+
                                 case "ARM1":
-                                    y = armY + float.Parse(offsetArms.Text) * 5;
+                                case "ARMARMOR1":
+                                case "SLEEVE1":
+                                case "SHOULDER1":
+                                    y = armY + int.Parse(offsetArms.Text) * 5;
                                     break;
 
                                 case "LEG0":
-                                    y = legY + float.Parse(offsetLegs.Text) * 5;
+                                case "PANTS0":
+                                case "SOCK0":
+                                case "LEGGING0":
+                                case "BOOT0":
+                                    y = legY + int.Parse(offsetLegs.Text) * 5;
                                     break;
 
                                 case "LEG1":
-                                    y = legY + float.Parse(offsetLegs.Text) * 5;
+                                case "PANTS1":
+                                case "SOCK1":
+                                case "LEGGING1":
+                                case "BOOT1":
+                                    y = legY + int.Parse(offsetLegs.Text) * 5;
                                     break;
                             }
                             //Maps imported Texture if auto texture is disabled
                             if (!checkTextureGenerate.Checked)
                             {
                                 RectangleF destRect = new RectangleF(
-                                    x + part.Z * 5,
-                                    y + part.Y * 5,
-                                    part.Length * 5,
-                                    part.Height * 5);
+                                    x + part.Pos.Z * 5,
+                                    y + part.Pos.Y * 5,
+                                    part.Size.Z * 5,
+                                    part.Size.Y * 5);
                                 RectangleF srcRect = new RectangleF(
-                                    part.U + part.Length + part.Width,
-                                    part.V + part.Length,
-                                    part.Length,
-                                    part.Height);
+                                    (part.UV.X + part.Size.Z + part.Size.X) * gfx_scale,
+                                    (part.UV.Y + part.Size.Z) * gfx_scale,
+                                    part.Size.Z * gfx_scale,
+                                    part.Size.Y * gfx_scale);
                                 graphics.DrawImage(texturePreview.Image, destRect, srcRect, GraphicsUnit.Pixel);
                             }
                             else
                             {
                                 //Draws Part
-                                graphics.FillRectangle(new SolidBrush(listViewItem.ForeColor), x + part.Z * 5, y + part.Y * 5, part.Length * 5, part.Height * 5);
+                                graphics.FillRectangle(new SolidBrush(listViewItem.ForeColor), x + part.Pos.Z * 5, y + part.Pos.Y * 5, part.Size.Z * 5, part.Size.Y * 5);
                             }
                             break;
                     }
@@ -507,13 +543,13 @@ namespace PckStudio
                 Bitmap bitmapAutoTexture = new Bitmap(texturePreview.Width, texturePreview.Height);
                 using (Graphics graphics = Graphics.FromImage(bitmapAutoTexture))
                 {
-                    foreach (var part in modelParts)
+                    foreach (var part in modelBoxes)
                     {
-                        float width = part.Width * 2;
-                        float height = part.Height * 2;
-                        float length = part.Length * 2;
-                        int u = part.U * 2;
-                        int v = part.V * 2;
+                        float width = part.Size.X * 2;
+                        float height = part.Size.Y * 2;
+                        float length = part.Size.Z * 2;
+                        float u = part.UV.X * 2;
+                        float v = part.UV.Y * 2;
                         Random r = new Random();
                         Brush brush = new SolidBrush(Color.FromArgb(r.Next(int.MinValue, int.MaxValue)));
                         graphics.FillRectangle(brush, u + length, v, width, length);
@@ -839,7 +875,7 @@ namespace PckStudio
         //Creates Item
         private void createToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            modelParts.Add(new ModelPart("New Part", 0, 0, 0, 0, 0, 0, 0, 0));
+            modelBoxes.Add(SkinBOX.FromString("NEW_BOX 0 0 0 1 1 1 0 0 0 0 0"));
             updateListView();
             render();
         }
@@ -849,21 +885,21 @@ namespace PckStudio
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
             changeColorToolStripMenuItem.Visible = false;
-            if (listViewBoxes.SelectedItems.Count != 0 && listViewBoxes.SelectedItems[0].Tag is ModelPart)
+            if (listViewBoxes.SelectedItems.Count != 0 && listViewBoxes.SelectedItems[0].Tag is SkinBOX)
             {
                 changeColorToolStripMenuItem.Visible = true;
-                var part = listViewBoxes.SelectedItems[0].Tag as ModelPart;
+                var part = listViewBoxes.SelectedItems[0].Tag as SkinBOX;
                 //graphics.DrawRectangle(Pens.Yellow, x + (float)double.Parse(this.selected.SubItems[3].Text) * 5 - 1, y + (float)double.Parse(this.selected.SubItems[2].Text) * 5 - 1, (float)double.Parse(this.selected.SubItems[6].Text) * 5 + 2, (float)double.Parse(this.selected.SubItems[5].Text) * 5 + 2);
                 //graphics.DrawRectangle(Pens.Black, x + (float)double.Parse(this.selected.SubItems[3].Text) * 5, y + (float)double.Parse(this.selected.SubItems[2].Text) * 5, (float)double.Parse(this.selected.SubItems[6].Text) * 5, (float)double.Parse(this.selected.SubItems[5].Text) * 5);
                 comboParent.Text = part.Type;
-                PosXUpDown.Value = (decimal)part.X;
-                PosYUpDown.Value = (decimal)part.Y;
-                PosZUpDown.Value = (decimal)part.Z;
-                SizeXUpDown.Value = (decimal)part.Width;
-                SizeYUpDown.Value = (decimal)part.Height;
-                SizeZUpDown.Value = (decimal)part.Length;
-                TextureXUpDown.Value = part.U;
-                TextureYUpDown.Value = part.V;
+                PosXUpDown.Value = (decimal)part.Pos.X;
+                PosYUpDown.Value = (decimal)part.Pos.Y;
+                PosZUpDown.Value = (decimal)part.Pos.Z;
+                SizeXUpDown.Value = (decimal)part.Size.X;
+                SizeYUpDown.Value = (decimal)part.Size.Y;
+                SizeZUpDown.Value = (decimal)part.Size.Z;
+                TextureXUpDown.Value = (decimal)part.UV.X;
+                TextureYUpDown.Value = (decimal)part.UV.Y;
                 render();
             }
         }
@@ -873,9 +909,8 @@ namespace PckStudio
         private void comboParent_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (listViewBoxes.SelectedItems.Count != 0 &&
-                listViewBoxes.SelectedItems[0].Tag is ModelPart)
+                listViewBoxes.SelectedItems[0].Tag is SkinBOX part)
             {
-                var part = listViewBoxes.SelectedItems[0].Tag as ModelPart;
                 part.Type = comboParent.Text;
                 buttonIMPORT.Enabled = true;
                 buttonEXPORT.Enabled = true;
@@ -894,10 +929,9 @@ namespace PckStudio
         private void SizeXUpDown_ValueChanged(object sender, EventArgs e)
         {
             if (listViewBoxes.SelectedItems.Count != 0 &&
-                listViewBoxes.SelectedItems[0].Tag is ModelPart)
+                listViewBoxes.SelectedItems[0].Tag is SkinBOX part)
             {
-                var part = listViewBoxes.SelectedItems[0].Tag as ModelPart;
-                part.Width = (float)SizeXUpDown.Value;
+                part.Size.X = (float)SizeXUpDown.Value;
             }
             updateListView();
             render();
@@ -906,10 +940,9 @@ namespace PckStudio
         private void SizeYUpDown_ValueChanged(object sender, EventArgs e)
         {
             if (listViewBoxes.SelectedItems.Count != 0 &&
-                listViewBoxes.SelectedItems[0].Tag is ModelPart)
+                listViewBoxes.SelectedItems[0].Tag is SkinBOX part)
             {
-                var part = listViewBoxes.SelectedItems[0].Tag as ModelPart;
-                part.Height = (float)SizeYUpDown.Value;
+                part.Size.Y = (float)SizeYUpDown.Value;
             }
             updateListView();
             render();
@@ -918,10 +951,9 @@ namespace PckStudio
         private void SizeZUpDown_ValueChanged(object sender, EventArgs e)
         {
             if (listViewBoxes.SelectedItems.Count != 0 &&
-                listViewBoxes.SelectedItems[0].Tag is ModelPart)
+                listViewBoxes.SelectedItems[0].Tag is SkinBOX part)
             {
-                var part = listViewBoxes.SelectedItems[0].Tag as ModelPart;
-                part.Length = (float)SizeZUpDown.Value;
+                part.Size.Z = (float)SizeZUpDown.Value;
             }
             updateListView();
             render();
@@ -930,10 +962,9 @@ namespace PckStudio
         private void PosXUpDown_ValueChanged(object sender, EventArgs e)
         {
             if (listViewBoxes.SelectedItems.Count != 0 &&
-                listViewBoxes.SelectedItems[0].Tag is ModelPart)
+                listViewBoxes.SelectedItems[0].Tag is SkinBOX part)
             {
-                var part = listViewBoxes.SelectedItems[0].Tag as ModelPart;
-                part.X = (float)PosXUpDown.Value;
+                part.Pos.X = (float)PosXUpDown.Value;
             }
             updateListView();
             render();
@@ -943,10 +974,9 @@ namespace PckStudio
         private void PosYUpDown_ValueChanged(object sender, EventArgs e)
         {
             if (listViewBoxes.SelectedItems.Count != 0 &&
-                listViewBoxes.SelectedItems[0].Tag is ModelPart)
+                listViewBoxes.SelectedItems[0].Tag is SkinBOX part)
             {
-                var part = listViewBoxes.SelectedItems[0].Tag as ModelPart;
-                part.Y = (float)PosYUpDown.Value;
+                part.Pos.Y = (float)PosYUpDown.Value;
             }
             updateListView();
             render();
@@ -956,10 +986,9 @@ namespace PckStudio
         private void PosZUpDown_ValueChanged(object sender, EventArgs e)
         {
             if (listViewBoxes.SelectedItems.Count != 0 &&
-                listViewBoxes.SelectedItems[0].Tag is ModelPart)
+                listViewBoxes.SelectedItems[0].Tag is SkinBOX part)
             {
-                var part = listViewBoxes.SelectedItems[0].Tag as ModelPart;
-                part.Z = (float)PosZUpDown.Value;
+                part.Pos.Z = (float)PosZUpDown.Value;
             }
             updateListView();
             render();
@@ -998,10 +1027,9 @@ namespace PckStudio
         private void TextureXUpDown_ValueChanged(object sender, EventArgs e)
         {
             if (listViewBoxes.SelectedItems.Count != 0 &&
-                listViewBoxes.SelectedItems[0].Tag is ModelPart)
+                listViewBoxes.SelectedItems[0].Tag is SkinBOX part)
             {
-                var part = listViewBoxes.SelectedItems[0].Tag as ModelPart;
-                part.U = (int)TextureXUpDown.Value;
+                part.UV.X = (int)TextureXUpDown.Value;
             }
             updateListView();
             render();
@@ -1012,10 +1040,9 @@ namespace PckStudio
         private void TextureYUpDown_ValueChanged(object sender, EventArgs e)
         {
             if (listViewBoxes.SelectedItems.Count != 0 &&
-                listViewBoxes.SelectedItems[0].Tag is ModelPart)
+                listViewBoxes.SelectedItems[0].Tag is SkinBOX part)
             {
-                var part = listViewBoxes.SelectedItems[0].Tag as ModelPart;
-                part.V = (int)TextureXUpDown.Value;
+                part.UV.Y = (int)TextureYUpDown.Value;
             }
             updateListView();
             render();
@@ -1042,18 +1069,29 @@ namespace PckStudio
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "PNG Image Files | *.png";
             openFileDialog.Title = "Select Skin Texture";
-            if (openFileDialog.ShowDialog() == DialogResult.OK && Image.FromFile(openFileDialog.FileName).Width == Image.FromFile(openFileDialog.FileName).Height)
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK) // skins can only be a 1:1 ratio (base 64x64) or a 2:1 ratio (base 64x32)
             {
-                checkTextureGenerate.Checked = false;
-                Bitmap bitmap = new Bitmap(64, 64);
-                using (Graphics graphics = Graphics.FromImage(bitmap))
-                {
-                    graphics.DrawImage(Image.FromFile(openFileDialog.FileName), 0, 0, 64, 64);
-                    graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
+                using (var img = Image.FromFile(openFileDialog.FileName))
+				{
+                    if ((img.Width == img.Height || img.Height == img.Width / 2))
+                    {
+                        checkTextureGenerate.Checked = false;
+                        Bitmap bitmap = new Bitmap(img.Width, img.Width);
+                        using (Graphics graphics = Graphics.FromImage(bitmap))
+                        {
+                            graphics.DrawImage(img, 0, 0, img.Width, img.Height);
+                            graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
+                        }
+                        texturePreview.Image = bitmap;
+                        render();
+                    }
+                    else
+					{
+                        MessageBox.Show(this, "Not a valid skin file", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
-                texturePreview.Image = bitmap;
             }
-            render();
         }
 
 
@@ -1061,7 +1099,7 @@ namespace PckStudio
         private void buttonDone_Click(object sender, EventArgs e)
         {
             Bitmap bitmap1 = new Bitmap(displayBox.Width, displayBox.Height);
-            foreach (var part in modelParts)
+            foreach (var part in modelBoxes)
             {
                 boxes.Add(part.ToProperty());
             }
@@ -1110,12 +1148,12 @@ namespace PckStudio
         //Loads in model template(Steve)
         private void buttonTemplate_Click(object sender, EventArgs e)
         {
-            modelParts.Add(new ModelPart("HEAD", -4, -8, -4, 8, 8, 8, 0, 0));
-            modelParts.Add(new ModelPart("BODY", -4, 0, -2, 8, 12, 4, 16, 16));
-            modelParts.Add(new ModelPart("ARM0", -3, -2, -2, 4, 12, 4, 40, 16));
-            modelParts.Add(new ModelPart("ARM1", -1, -2, -2, 4, 12, 4, 40, 16));
-            modelParts.Add(new ModelPart("LEG0", -2, 0, -2, 4, 12, 4, 0, 16));
-            modelParts.Add(new ModelPart("LEG1", -2, 0, -2, 4, 12, 4, 0, 16));
+            modelBoxes.Add(SkinBOX.FromString("HEAD -4 -8 -4 8 8 8 0 0 0 0 0"));
+            modelBoxes.Add(SkinBOX.FromString("BODY -4 0 -2 8 12 4 16 16 0 0 0"));
+            modelBoxes.Add(SkinBOX.FromString("ARM0 -3 -2 -2 4 12 4 40 16 0 0 0"));
+            modelBoxes.Add(SkinBOX.FromString("ARM1 -1 -2 -2 4 12 4 40 16 0 1 0"));
+            modelBoxes.Add(SkinBOX.FromString("LEG0 -2 0 -2 4 12 4 0 16 0 0 0"));
+            modelBoxes.Add(SkinBOX.FromString("LEG1 -2 0 -2 4 12 4 0 16 0 1 0"));
             comboParent.Enabled = true;
             updateListView();
             render();
@@ -1124,18 +1162,18 @@ namespace PckStudio
         private void updateListView()
         {
             listViewBoxes.Items.Clear();
-            foreach (var part in modelParts)
+            foreach (var part in modelBoxes)
             {
                 ListViewItem listViewItem = new ListViewItem(part.Type);
                 listViewItem.Tag = part;
-                listViewItem.SubItems.Add(new ListViewItem.ListViewSubItem(listViewItem, part.X.ToString()));
-                listViewItem.SubItems.Add(new ListViewItem.ListViewSubItem(listViewItem, part.Y.ToString()));
-                listViewItem.SubItems.Add(new ListViewItem.ListViewSubItem(listViewItem, part.Z.ToString()));
-                listViewItem.SubItems.Add(new ListViewItem.ListViewSubItem(listViewItem, part.Width.ToString()));
-                listViewItem.SubItems.Add(new ListViewItem.ListViewSubItem(listViewItem, part.Height.ToString()));
-                listViewItem.SubItems.Add(new ListViewItem.ListViewSubItem(listViewItem, part.Length.ToString()));
-                listViewItem.SubItems.Add(new ListViewItem.ListViewSubItem(listViewItem, part.U.ToString()));
-                listViewItem.SubItems.Add(new ListViewItem.ListViewSubItem(listViewItem, part.V.ToString()));
+                listViewItem.SubItems.Add(new ListViewItem.ListViewSubItem(listViewItem, part.Pos.X.ToString()));
+                listViewItem.SubItems.Add(new ListViewItem.ListViewSubItem(listViewItem, part.Pos.Y.ToString()));
+                listViewItem.SubItems.Add(new ListViewItem.ListViewSubItem(listViewItem, part.Pos.Z.ToString()));
+                listViewItem.SubItems.Add(new ListViewItem.ListViewSubItem(listViewItem, part.Size.X.ToString()));
+                listViewItem.SubItems.Add(new ListViewItem.ListViewSubItem(listViewItem, part.Size.Y.ToString()));
+                listViewItem.SubItems.Add(new ListViewItem.ListViewSubItem(listViewItem, part.Size.Z.ToString()));
+                listViewItem.SubItems.Add(new ListViewItem.ListViewSubItem(listViewItem, part.UV.X.ToString()));
+                listViewItem.SubItems.Add(new ListViewItem.ListViewSubItem(listViewItem, part.UV.Y.ToString()));
                 listViewBoxes.Items.Add(listViewItem);
             }
         }
@@ -1174,27 +1212,25 @@ namespace PckStudio
                 listViewBoxes.Items.Clear();
                 string str1 = File.ReadAllText(openFileDialog.FileName);
 
-                modelParts.Clear();
+                modelBoxes.Clear();
                 List<string> lines = str1.Split(new[] { "\n\r", "\n" }, StringSplitOptions.None).ToList();
                 if (string.IsNullOrEmpty(lines[lines.Count - 1]))
                     lines.RemoveAt(lines.Count - 1);
-                int currentLine = 0;
-                int passedlines = 0;
-                for (int i = 0; i < lines.Count;)
+                for (int i = 0; i < lines.Count; i += 11)
                 {
-                    string name = lines[0 + passedlines];
-                    string parent = lines[1 + passedlines];
-                    float PosX = float.Parse(lines[3 + passedlines]);
-                    float PosY = float.Parse(lines[4 + passedlines]);
-                    float PosZ = float.Parse(lines[5 + passedlines]);
-                    float SizeX = float.Parse(lines[6 + passedlines]);
-                    float SizeY = float.Parse(lines[7 + passedlines]);
-                    float SizeZ = float.Parse(lines[8 + passedlines]);
-                    int UvX = int.Parse(lines[9 + passedlines]);
-                    int UvY = int.Parse(lines[10 + passedlines]);
-                    passedlines += 11;
-                    i += 11;
-                    modelParts.Add(new ModelPart(parent, PosX, PosY, PosZ, SizeX, SizeY, SizeZ, UvX, UvY));
+                    string name =    lines[0 + i];
+                    string parent = lines[1 + i];
+                    float PosX = float.Parse(lines[3 + i]);
+                    float PosY = float.Parse(lines[4 + i]);
+                    float PosZ = float.Parse(lines[5 + i]);
+                    float SizeX = float.Parse(lines[6 + i]);
+                    float SizeY = float.Parse(lines[7 + i]);
+                    float SizeZ = float.Parse(lines[8 + i]);
+                    float UvX = float.Parse(lines[9 + i]);
+                    float UvY = float.Parse(lines[10 + i]);
+
+                    // CSM doesn't support armor, mirror, or scale values as far as I know of - May
+                    modelBoxes.Add(SkinBOX.FromString($"{parent} {PosX} {PosY} {PosZ} {SizeX} {SizeY} {SizeZ} {UvX} {UvY} {false} {false} {0}"));
                 }
             }
             comboParent.Enabled = true;
@@ -1281,18 +1317,17 @@ namespace PckStudio
         private void listView1_Click(object sender, EventArgs e)
         {
             if (listViewBoxes.SelectedItems.Count != 0 && listViewBoxes.SelectedItems[0] != null &&
-                listViewBoxes.SelectedItems[0].Tag is ModelPart)
+                listViewBoxes.SelectedItems[0].Tag is SkinBOX part)
             {
-                var part = listViewBoxes.SelectedItems[0].Tag as ModelPart;
                 comboParent.Text = part.Type;
-                PosXUpDown.Value = (decimal)part.X;
-                PosYUpDown.Value = (decimal)part.Y;
-                PosZUpDown.Value = (decimal)part.Z;
-                SizeXUpDown.Value = (decimal)part.Width;
-                SizeYUpDown.Value = (decimal)part.Height;
-                SizeZUpDown.Value = (decimal)part.Length;
-                TextureXUpDown.Value = part.U;
-                TextureYUpDown.Value = part.V;
+                PosXUpDown.Value = (decimal)part.Pos.X;
+                PosYUpDown.Value = (decimal)part.Pos.Y;
+                PosZUpDown.Value = (decimal)part.Pos.Z;
+                SizeXUpDown.Value = (decimal)part.Size.X;
+                SizeYUpDown.Value = (decimal)part.Size.Y;
+                SizeZUpDown.Value = (decimal)part.Size.Z;
+                TextureXUpDown.Value = (decimal)part.UV.X;
+                TextureYUpDown.Value = (decimal)part.UV.Y;
                 SizeXUpDown.Enabled = true;
                 SizeYUpDown.Enabled = true;
                 SizeZUpDown.Enabled = true;
@@ -1331,9 +1366,9 @@ namespace PckStudio
         private void delStuffUsingDelKey(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Delete && listViewBoxes.SelectedItems.Count != 0 &&
-                listViewBoxes.SelectedItems[0].Tag is ModelPart)
+                listViewBoxes.SelectedItems[0].Tag is SkinBOX part)
             {
-                if (modelParts.Remove(listViewBoxes.SelectedItems[0].Tag as ModelPart))
+                if (modelBoxes.Remove(part))
                     listViewBoxes.SelectedItems[0].Remove();
                 render();
             }
