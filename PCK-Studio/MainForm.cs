@@ -497,13 +497,21 @@ namespace PckStudio
 					case PckFile.FileData.FileType.SkinFile:
 					case PckFile.FileData.FileType.CapeFile:
 					case PckFile.FileData.FileType.TextureFile:
-						// TODO: Add tga support
-						if (Path.GetExtension(file.Filename) == ".tga") break;
-						using (MemoryStream stream = new MemoryStream(file.Data))
 						{
-							try
+							// TODO: Add tga support
+							if (Path.GetExtension(file.Filename) == ".tga") break;
+							using MemoryStream stream = new MemoryStream(file.Data);
+
+							var img = Image.FromStream(stream);
+
+							if (img.RawFormat != ImageFormat.Jpeg || img.RawFormat != ImageFormat.Png)
 							{
-								pictureBoxImagePreview.Image = Image.FromStream(stream);
+								img = new Bitmap(img);
+							}
+
+                            try
+							{
+								pictureBoxImagePreview.Image = img;
 								labelImageSize.Text = $"{pictureBoxImagePreview.Image.Size.Width}x{pictureBoxImagePreview.Image.Size.Height}";
 							}
 							catch (Exception ex)
@@ -513,14 +521,15 @@ namespace PckStudio
 								Debug.WriteLine("Not a supported image format. Setting back to default");
 								Debug.WriteLine(string.Format("An error occured of type: {0} with message: {1}", ex.GetType(), ex.Message), "Exception");
 							}
-						}
 
-						if ((file.Filename.StartsWith("res/textures/blocks/") || file.Filename.StartsWith("res/textures/items/")) &&
-							file.Filetype == PckFile.FileData.FileType.TextureFile 
-							&& !IsFilePathMipMapped(file.Filename))
-						{
-							buttonEdit.Text = "EDIT TILE ANIMATION";
-							buttonEdit.Visible = true;
+
+							if ((file.Filename.StartsWith("res/textures/blocks/") || file.Filename.StartsWith("res/textures/items/")) &&
+								file.Filetype == PckFile.FileData.FileType.TextureFile
+								&& !IsFilePathMipMapped(file.Filename))
+							{
+								buttonEdit.Text = "EDIT TILE ANIMATION";
+								buttonEdit.Visible = true;
+							}
 						}
 						break;
 
@@ -2264,26 +2273,29 @@ namespace PckStudio
 
 		private async void wavBinkaToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			int success = 0;
-			int exitCode = 0;
+            using OpenFileDialog fileDialog = new OpenFileDialog
+            {
+                Multiselect = true,
+                Filter = "WAV files (*.wav)|*.wav",
+                Title = "Please choose WAV files to convert to BINKA"
+            };
+            if (fileDialog.ShowDialog() != DialogResult.OK)
+				return;
 
-			OpenFileDialog ofn = new OpenFileDialog();
-			ofn.Multiselect = true;
-			ofn.Filter = "WAV files (*.wav)|*.wav";
-			ofn.Title = "Please choose WAV files to convert to BINKA";
-			ofn.ShowDialog();
-			ofn.Dispose();
-			if (ofn.FileNames.Length < 1) return; // Return if empty or if the user cancels
-
-			InProgressPrompt waitDiag = new InProgressPrompt();
+            InProgressPrompt waitDiag = new InProgressPrompt();
 			waitDiag.Show(this);
-			foreach (string file in ofn.FileNames)
+			
+			int convertedCounter = 0;
+			foreach (string file in fileDialog.FileNames)
 			{
-				string songName = string.Join("_", Path.GetFileNameWithoutExtension(file).Split(Path.GetInvalidFileNameChars()));
+				string[] a = Path.GetFileNameWithoutExtension(file).Split(Path.GetInvalidFileNameChars());
+
+                string songName = string.Join("_", a);
 				songName = System.Text.RegularExpressions.Regex.Replace(songName, @"[^\u0000-\u007F]+", "_"); // Replace UTF characters
 				string cacheSongLoc = Path.Combine(Program.AppDataCache, songName + Path.GetExtension(file));
 
-				if (File.Exists(cacheSongLoc)) File.Delete(cacheSongLoc);
+				if (File.Exists(cacheSongLoc))
+					File.Delete(cacheSongLoc);
 
 				using (var reader = new NAudio.Wave.WaveFileReader(file)) //read from original location
 				{
@@ -2292,25 +2304,27 @@ namespace PckStudio
 					{
 						NAudio.Wave.WaveFileWriter.CreateWaveFile(cacheSongLoc, conversionStream); //write to new location
 					}
-					reader.Close();
-					reader.Dispose();
 				}
 
 				Cursor.Current = Cursors.WaitCursor;
 
+				int exitCode = 0;
 				await System.Threading.Tasks.Task.Run(() =>
 				{
 					exitCode = Classes.Binka.FromWav(cacheSongLoc, Path.Combine(Path.GetDirectoryName(file), Path.GetFileNameWithoutExtension(file) + ".binka"), 4);
 				});
 
-				if (exitCode != 0) continue;
+				if (exitCode != 0)
+					continue;
 
-				success++;
+				convertedCounter++;
 			}
 
-			waitDiag.Close();
+			int fileCount = fileDialog.FileNames.Length;
+
+            waitDiag.Close();
 			waitDiag.Dispose();
-			MessageBox.Show(this, $"Successfully converted {success}/{ofn.FileNames.Length} file{(ofn.FileNames.Length != 1 ? "s" : "")}", "Done!");
+			MessageBox.Show(this, $"Successfully converted {convertedCounter}/{fileCount} file{(fileCount != 1 ? "s" : "")}", "Done!");
 		}
 
 		private void binkaWavToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2324,7 +2338,8 @@ namespace PckStudio
                 Title = "Please choose BINKA files to convert to WAV"
             };
             
-			if (fileDialog.ShowDialog() != DialogResult.OK) return;
+			if (fileDialog.ShowDialog() != DialogResult.OK)
+				return;
 
 			InProgressPrompt waitDiag = new InProgressPrompt();
 			waitDiag.Show(this);
