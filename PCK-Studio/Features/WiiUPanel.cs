@@ -12,7 +12,7 @@ using OMI.Workers.Archive;
 using OMI.Workers.Pck;
 using PckStudio.Classes.Misc;
 
-namespace PckStudio.Forms.Additional_Features
+namespace PckStudio.Features
 {
     public partial class WiiUPanel : UserControl
     {

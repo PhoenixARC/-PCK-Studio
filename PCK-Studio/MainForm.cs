@@ -26,9 +26,9 @@ using PckStudio.Forms.Additional_Popups.Animation;
 using PckStudio.Forms.Additional_Popups;
 using PckStudio.Classes.Misc;
 using PckStudio.Classes.IO.PCK;
-using PckStudio.Forms.Additional_Features;
 using PckStudio.Classes.IO._3DST;
 using PckStudio.Internal;
+using PckStudio.Features;
 
 namespace PckStudio
 {

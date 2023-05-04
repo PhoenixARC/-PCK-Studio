@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using PckStudio.Extensions;
 using PckStudio.Classes.Misc;
 
-namespace PckStudio.Forms.Additional_Features
+namespace PckStudio.Features
 {
     /// <summary>
     /// Wishlist:
