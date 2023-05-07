@@ -205,6 +205,16 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap clock1 {
+            get {
+                object obj = ResourceManager.GetObject("clock1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap COL_ICON {
             get {
                 object obj = ResourceManager.GetObject("COL_ICON", resourceCulture);
@@ -225,19 +235,9 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Del {
+        public static System.Drawing.Bitmap Discord {
             get {
-                object obj = ResourceManager.GetObject("Del", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap discord {
-            get {
-                object obj = ResourceManager.GetObject("discord", resourceCulture);
+                object obj = ResourceManager.GetObject("Discord", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -297,9 +297,9 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap ExportFile {
+        public static System.Drawing.Bitmap file_delete {
             get {
-                object obj = ResourceManager.GetObject("ExportFile", resourceCulture);
+                object obj = ResourceManager.GetObject("file_delete", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -307,9 +307,29 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap external_content_duckduckgo {
+        public static System.Drawing.Bitmap file_empty {
             get {
-                object obj = ResourceManager.GetObject("external-content.duckduckgo", resourceCulture);
+                object obj = ResourceManager.GetObject("file_empty", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap file_export {
+            get {
+                object obj = ResourceManager.GetObject("file_export", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap file_new {
+            get {
+                object obj = ResourceManager.GetObject("file_new", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -487,9 +507,9 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap ps3 {
+        public static System.Drawing.Bitmap PS3 {
             get {
-                object obj = ResourceManager.GetObject("ps3", resourceCulture);
+                object obj = ResourceManager.GetObject("PS3", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -731,9 +751,9 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap wii_u_games_tool {
+        public static System.Drawing.Bitmap WiiU {
             get {
-                object obj = ResourceManager.GetObject("wii-u-games-tool", resourceCulture);
+                object obj = ResourceManager.GetObject("WiiU", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -741,9 +761,9 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap wiiu {
+        public static System.Drawing.Bitmap Xbox {
             get {
-                object obj = ResourceManager.GetObject("wiiu", resourceCulture);
+                object obj = ResourceManager.GetObject("Xbox", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -751,19 +771,9 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap xbox {
+        public static System.Drawing.Bitmap Youtube {
             get {
-                object obj = ResourceManager.GetObject("xbox", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap youtube_PNG15 {
-            get {
-                object obj = ResourceManager.GetObject("youtube_PNG15", resourceCulture);
+                object obj = ResourceManager.GetObject("Youtube", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
