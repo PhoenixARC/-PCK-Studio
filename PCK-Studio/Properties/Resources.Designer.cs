@@ -101,16 +101,6 @@ namespace PckStudio.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap bg1 {
-            get {
-                object obj = ResourceManager.GetObject("bg1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
         public static byte[] binka_encode {
@@ -347,6 +337,16 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap HamburgerMenuIcon {
+            get {
+                object obj = ResourceManager.GetObject("HamburgerMenuIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap IMAGE_ICON {
             get {
                 object obj = ResourceManager.GetObject("IMAGE_ICON", resourceCulture);
@@ -390,16 +390,6 @@ namespace PckStudio.Properties {
         public static System.Drawing.Bitmap MODELS_ICON {
             get {
                 object obj = ResourceManager.GetObject("MODELS_ICON", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap MROE {
-            get {
-                object obj = ResourceManager.GetObject("MROE", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -490,16 +480,6 @@ namespace PckStudio.Properties {
         public static System.Drawing.Bitmap pckOpen {
             get {
                 object obj = ResourceManager.GetObject("pckOpen", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap power3 {
-            get {
-                object obj = ResourceManager.GetObject("power3", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -745,16 +725,6 @@ namespace PckStudio.Properties {
             get {
                 object obj = ResourceManager.GetObject("tu69colours", resourceCulture);
                 return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap turn_off__1_1 {
-            get {
-                object obj = ResourceManager.GetObject("turn-off (1)1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

@@ -680,18 +680,15 @@
     <None Include="Resources\tileData.json" />
     <None Include="Resources\Del.png" />
     <None Include="Resources\ExportFile.png" />
-    <None Include="Resources\power3.png" />
-    <None Include="Resources\power.png" />
     <None Include="Resources\youtube_PNG15.png" />
     <None Include="Resources\pckClosed.png" />
     <None Include="Resources\wii-u-games-tool.png" />
-    <None Include="Resources\turn-off %281%291.png" />
     <None Include="Resources\discord.png" />
     <None Include="Resources\external-content.duckduckgo.png" />
     <None Include="Resources\clock.png" />
     <None Include="Resources\changeTile.png" />
     <None Include="Resources\items.png" />
-    <None Include="Resources\MROE.png" />
+    <None Include="Resources\HamburgerMenuIcon.png" />
     <None Include="Resources\sdDownload.png" />
     <None Include="Resources\Replace.png" />
     <None Include="Resources\pack.png" />
@@ -723,7 +720,6 @@
     <None Include="Resources\iconImageList\blank.png" />
     <None Include="Resources\entities.png" />
     <Content Include="Resources\PCK-Studio_Logo.ico" />
-    <None Include="Resources\bg1.png" />
     <Content Include="Resources\NoImageFound.png" />
   </ItemGroup>
   <ItemGroup>

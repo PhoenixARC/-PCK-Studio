@@ -160,9 +160,6 @@
   <data name="BEHAVIOURS_ICON" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\iconImageList\BEHAVIOURS ICON.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="bg1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\bg1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="ZUnknown" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\iconImageList\ZUnknown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -196,9 +193,6 @@
   <data name="discord" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\discord.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="power3" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\power3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="AddTexture" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\AddTexture.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -229,8 +223,8 @@
   <data name="GRF_ICON" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\iconImageList\GRF ICON.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="MROE" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\MROE.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="HamburgerMenuIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\HamburgerMenuIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="wii-u-games-tool" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\wii-u-games-tool.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -294,9 +288,6 @@
   </data>
   <data name="tu12colours" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\fileTemplates\tu12colours.col;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="turn-off (1)1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\turn-off (1)1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="tu14colours" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\fileTemplates\tu14colours.col;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
