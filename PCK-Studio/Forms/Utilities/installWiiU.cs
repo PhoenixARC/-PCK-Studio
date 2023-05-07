@@ -67,7 +67,7 @@ namespace PckStudio.Forms
                     {
                         try
                         {
-                            File.WriteAllBytes(sdRoot + "/wiiu/apps/apps.zip", PckStudio.Properties.Resources.apps);
+                            // File.WriteAllBytes(sdRoot + "/wiiu/apps/apps.zip", PckStudio.Properties.Resources.apps);
                         }
                         catch
                         {
