@@ -717,6 +717,7 @@
     <Content Include="Resources\icons\file_delete.png" />
     <Content Include="Resources\icons\file_empty.png" />
     <None Include="Resources\icons\file_export.png" />
+    <None Include="Resources\icons\file_import.png" />
     <Content Include="Resources\icons\file_new.png" />
     <Content Include="Resources\icons\music.png" />
     <Content Include="Resources\icons\Replace.png" />
