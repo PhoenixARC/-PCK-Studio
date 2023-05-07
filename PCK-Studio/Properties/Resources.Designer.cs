@@ -81,16 +81,6 @@ namespace PckStudio.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        public static byte[] apps {
-            get {
-                object obj = ResourceManager.GetObject("apps", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap ARROW {
@@ -106,16 +96,6 @@ namespace PckStudio.Properties {
         public static System.Drawing.Bitmap BEHAVIOURS_ICON {
             get {
                 object obj = ResourceManager.GetObject("BEHAVIOURS_ICON", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap bg1 {
-            get {
-                object obj = ResourceManager.GetObject("bg1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -245,19 +225,9 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Del {
+        public static System.Drawing.Bitmap Discord {
             get {
-                object obj = ResourceManager.GetObject("Del", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap discord {
-            get {
-                object obj = ResourceManager.GetObject("discord", resourceCulture);
+                object obj = ResourceManager.GetObject("Discord", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -317,9 +287,9 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap ExportFile {
+        public static System.Drawing.Bitmap file_delete {
             get {
-                object obj = ResourceManager.GetObject("ExportFile", resourceCulture);
+                object obj = ResourceManager.GetObject("file_delete", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -327,9 +297,29 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap external_content_duckduckgo {
+        public static System.Drawing.Bitmap file_empty {
             get {
-                object obj = ResourceManager.GetObject("external-content.duckduckgo", resourceCulture);
+                object obj = ResourceManager.GetObject("file_empty", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap file_export {
+            get {
+                object obj = ResourceManager.GetObject("file_export", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap file_new {
+            get {
+                object obj = ResourceManager.GetObject("file_new", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -350,6 +340,16 @@ namespace PckStudio.Properties {
         public static System.Drawing.Bitmap GRH_ICON {
             get {
                 object obj = ResourceManager.GetObject("GRH_ICON", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap HamburgerMenuIcon {
+            get {
+                object obj = ResourceManager.GetObject("HamburgerMenuIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -400,16 +400,6 @@ namespace PckStudio.Properties {
         public static System.Drawing.Bitmap MODELS_ICON {
             get {
                 object obj = ResourceManager.GetObject("MODELS_ICON", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap MROE {
-            get {
-                object obj = ResourceManager.GetObject("MROE", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -507,19 +497,9 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap power3 {
+        public static System.Drawing.Bitmap PS3 {
             get {
-                object obj = ResourceManager.GetObject("power3", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap ps3 {
-            get {
-                object obj = ResourceManager.GetObject("ps3", resourceCulture);
+                object obj = ResourceManager.GetObject("PS3", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -530,16 +510,6 @@ namespace PckStudio.Properties {
         public static System.Drawing.Bitmap Replace {
             get {
                 object obj = ResourceManager.GetObject("Replace", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap sdDownload {
-            get {
-                object obj = ResourceManager.GetObject("sdDownload", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -761,9 +731,9 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap turn_off__1_1 {
+        public static System.Drawing.Bitmap WiiU {
             get {
-                object obj = ResourceManager.GetObject("turn-off (1)1", resourceCulture);
+                object obj = ResourceManager.GetObject("WiiU", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -771,9 +741,9 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap wii_u_games_tool {
+        public static System.Drawing.Bitmap Xbox {
             get {
-                object obj = ResourceManager.GetObject("wii-u-games-tool", resourceCulture);
+                object obj = ResourceManager.GetObject("Xbox", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -781,29 +751,9 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap wiiu {
+        public static System.Drawing.Bitmap Youtube {
             get {
-                object obj = ResourceManager.GetObject("wiiu", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap xbox {
-            get {
-                object obj = ResourceManager.GetObject("xbox", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap youtube_PNG15 {
-            get {
-                object obj = ResourceManager.GetObject("youtube_PNG15", resourceCulture);
+                object obj = ResourceManager.GetObject("Youtube", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

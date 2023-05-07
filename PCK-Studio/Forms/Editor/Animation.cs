@@ -51,11 +51,12 @@ namespace PckStudio.Forms.Editor
 			}
 		}
 
-		private void ParseAnim(string ANIM)
+		private void ParseAnim(string anim)
 		{
-			_ = ANIM ?? throw new ArgumentNullException(nameof(ANIM));
-			ANIM = (Interpolate = ANIM.StartsWith("#")) ? ANIM.Substring(1) : ANIM;
-			string[] animData = ANIM.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+			_ = anim ?? throw new ArgumentNullException(nameof(anim));
+			anim = anim.Trim();
+			anim = (Interpolate = anim.StartsWith("#")) ? anim.Substring(1) : anim;
+			string[] animData = anim.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
 			int lastFrameTime = MinimumFrameTime;
 			if (animData.Length <= 0)
 				for (int i = 0; i < TextureCount; i++)

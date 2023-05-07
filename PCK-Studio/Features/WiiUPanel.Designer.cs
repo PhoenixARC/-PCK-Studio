@@ -269,7 +269,6 @@
             // 
             // buttonSelect
             // 
-            this.buttonSelect.BackgroundImage = global::PckStudio.Properties.Resources.sdDownload;
             this.buttonSelect.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.buttonSelect.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonSelect.FlatStyle = System.Windows.Forms.FlatStyle.Flat;

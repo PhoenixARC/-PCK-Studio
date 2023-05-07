@@ -428,9 +428,9 @@
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.editToolStripMenuItem,
+            this.miscToolStripMenuItem,
             this.helpToolStripMenuItem,
-            this.storeToolStripMenuItem,
-            this.miscToolStripMenuItem});
+            this.storeToolStripMenuItem});
             this.menuStrip.Name = "menuStrip";
             // 
             // fileToolStripMenuItem
@@ -654,8 +654,9 @@
             // 
             // administrativeToolsToolStripMenuItem
             // 
-            resources.ApplyResources(this.administrativeToolsToolStripMenuItem, "administrativeToolsToolStripMenuItem");
+            this.administrativeToolsToolStripMenuItem.Image = global::PckStudio.Properties.Resources.pckCenterHeader;
             this.administrativeToolsToolStripMenuItem.Name = "administrativeToolsToolStripMenuItem";
+            resources.ApplyResources(this.administrativeToolsToolStripMenuItem, "administrativeToolsToolStripMenuItem");
             this.administrativeToolsToolStripMenuItem.Click += new System.EventHandler(this.administrativeToolsToolStripMenuItem_Click);
             // 
             // storeToolStripMenuItem
@@ -665,13 +666,15 @@
             this.joinDevelopmentDiscordToolStripMenuItem,
             this.trelloBoardToolStripMenuItem});
             this.storeToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            resources.ApplyResources(this.storeToolStripMenuItem, "storeToolStripMenuItem");
+            this.storeToolStripMenuItem.Image = global::PckStudio.Properties.Resources.HamburgerMenuIcon;
             this.storeToolStripMenuItem.Name = "storeToolStripMenuItem";
+            resources.ApplyResources(this.storeToolStripMenuItem, "storeToolStripMenuItem");
             // 
             // openPckCenterToolStripMenuItem
             // 
-            resources.ApplyResources(this.openPckCenterToolStripMenuItem, "openPckCenterToolStripMenuItem");
+            this.openPckCenterToolStripMenuItem.Image = global::PckStudio.Properties.Resources.pckCenterHeader;
             this.openPckCenterToolStripMenuItem.Name = "openPckCenterToolStripMenuItem";
+            resources.ApplyResources(this.openPckCenterToolStripMenuItem, "openPckCenterToolStripMenuItem");
             this.openPckCenterToolStripMenuItem.Click += new System.EventHandler(this.openPckCenterToolStripMenuItem_Click);
             // 
             // joinDevelopmentDiscordToolStripMenuItem
