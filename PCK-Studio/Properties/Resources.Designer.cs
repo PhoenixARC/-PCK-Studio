@@ -205,16 +205,6 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap clock1 {
-            get {
-                object obj = ResourceManager.GetObject("clock1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         public static System.Drawing.Bitmap COL_ICON {
             get {
                 object obj = ResourceManager.GetObject("COL_ICON", resourceCulture);

@@ -130,9 +130,6 @@
   <data name="NoImageFound" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\NoImageFound.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Xbox" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\external\Xbox.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="tu51colours" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\fileTemplates\tu51colours.col;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -160,9 +157,6 @@
   <data name="ZUnknown" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\iconImageList\ZUnknown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="WiiU" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\external\WiiU.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="ARROW" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\iconImageList\ARROW.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -186,9 +180,6 @@
   </data>
   <data name="pckClosed" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\pckClosed.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Discord" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\external\Discord.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="AddTexture" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\AddTexture.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -231,12 +222,6 @@
   </data>
   <data name="CAPE_ICON" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\iconImageList\CAPE ICON.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Youtube" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\external\Youtube.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="PS3" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\external\PS3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="tu19colours" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\fileTemplates\tu19colours.col;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -310,9 +295,6 @@
   <data name="entityData" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\entityData.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="clock1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icons\clock.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="file_delete" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons\file_delete.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -324,5 +306,20 @@
   </data>
   <data name="file_export" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons\file_export.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Discord" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\external\Discord.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PS3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\external\PS3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="WiiU" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\external\WiiU.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Xbox" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\external\Xbox.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Youtube" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\external\Youtube.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
