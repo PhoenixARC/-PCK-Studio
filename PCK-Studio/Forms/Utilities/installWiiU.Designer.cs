@@ -118,7 +118,6 @@
             // 
             // buttonSelect
             // 
-            this.buttonSelect.BackgroundImage = global::PckStudio.Properties.Resources.sdDownload;
             resources.ApplyResources(this.buttonSelect, "buttonSelect");
             this.buttonSelect.ForeColor = System.Drawing.Color.White;
             this.buttonSelect.Name = "buttonSelect";
