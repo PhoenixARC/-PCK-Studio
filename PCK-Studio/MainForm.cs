@@ -28,6 +28,7 @@ using PckStudio.Classes.Misc;
 using PckStudio.Classes.IO.PCK;
 using PckStudio.Classes.IO._3DST;
 using PckStudio.Internal;
+using PckStudio.Features;
 
 namespace PckStudio
 {
@@ -104,7 +105,7 @@ namespace PckStudio
 			};
 		}
 
-		public void LoadPck(string filepath)
+		public void LoadPckFromFile(string filepath)
 		{
 			checkSaveState();
 			treeViewMain.Nodes.Clear();
@@ -152,7 +153,7 @@ namespace PckStudio
 				ofd.Filter = "PCK (Minecraft Console Package)|*.pck";
 				if (ofd.ShowDialog() == DialogResult.OK)
 				{
-					LoadPck(ofd.FileName);
+					LoadPckFromFile(ofd.FileName);
 				}
 			}
 		}
@@ -1741,12 +1742,6 @@ namespace PckStudio
 #endif
 		}
 
-		private void wiiUPCKInstallerToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			installWiiU install = new installWiiU(null);
-			install.ShowDialog();
-		}
-
 		private void howToMakeABasicSkinPackToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			Process.Start("https://www.youtube.com/watch?v=A43aHRHkKxk");
@@ -1784,8 +1779,7 @@ namespace PckStudio
 
 		private void PS3PCKInstallerToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			installPS3 install = new installPS3(null);
-			install.ShowDialog();
+			
 		}
 
 		private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1802,9 +1796,6 @@ namespace PckStudio
 
 		private void VitaPCKInstallerToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-
-			installVita install = new installVita(null);
-			install.ShowDialog();
 		}
 
 		private void toPhoenixARCDeveloperToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1874,7 +1865,7 @@ namespace PckStudio
 			string[] Filepaths = (string[])e.Data.GetData(DataFormats.FileDrop, false);
 			if (Filepaths.Length > 1)
 				MessageBox.Show("Only one pck file at a time is currently supported");
-			LoadPck(Filepaths[0]);
+			LoadPckFromFile(Filepaths[0]);
 		}
 
 		private void OpenPck_DragLeave(object sender, EventArgs e)
@@ -2271,6 +2262,12 @@ namespace PckStudio
 		private void trelloBoardToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			Process.Start("https://trello.com/b/0XLNOEbe/pck-studio");
+		}
+
+		private void openPckManagerToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			PckManager installer = new PckManager();
+			installer.Show(this);
 		}
 
 		private async void wavBinkaToolStripMenuItem_Click(object sender, EventArgs e)

@@ -104,9 +104,6 @@
             this.administrativeToolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.storeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openPckCenterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.wiiUPCKInstallerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.PS3PCKInstallerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.VitaPCKInstallerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.joinDevelopmentDiscordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.trelloBoardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.miscToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -141,8 +138,9 @@
             this.label11 = new MetroFramework.Controls.MetroLabel();
             this.treeViewMain = new System.Windows.Forms.TreeView();
             this.imageList = new System.Windows.Forms.ImageList(this.components);
-            this.pictureBoxImagePreview = new PckStudio.PictureBoxWithInterpolationMode();
             this.LittleEndianCheckBox = new MetroFramework.Controls.MetroCheckBox();
+            this.openPckManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pictureBoxImagePreview = new PckStudio.PictureBoxWithInterpolationMode();
             this.contextMenuPCKEntries.SuspendLayout();
             this.menuStrip.SuspendLayout();
             this.contextMenuMetaTree.SuspendLayout();
@@ -665,9 +663,6 @@
             // 
             this.storeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openPckCenterToolStripMenuItem,
-            this.wiiUPCKInstallerToolStripMenuItem,
-            this.PS3PCKInstallerToolStripMenuItem,
-            this.VitaPCKInstallerToolStripMenuItem,
             this.joinDevelopmentDiscordToolStripMenuItem,
             this.trelloBoardToolStripMenuItem});
             this.storeToolStripMenuItem.ForeColor = System.Drawing.Color.White;
@@ -681,24 +676,6 @@
             this.openPckCenterToolStripMenuItem.Name = "openPckCenterToolStripMenuItem";
             resources.ApplyResources(this.openPckCenterToolStripMenuItem, "openPckCenterToolStripMenuItem");
             this.openPckCenterToolStripMenuItem.Click += new System.EventHandler(this.openPckCenterToolStripMenuItem_Click);
-            // 
-            // wiiUPCKInstallerToolStripMenuItem
-            // 
-            resources.ApplyResources(this.wiiUPCKInstallerToolStripMenuItem, "wiiUPCKInstallerToolStripMenuItem");
-            this.wiiUPCKInstallerToolStripMenuItem.Name = "wiiUPCKInstallerToolStripMenuItem";
-            this.wiiUPCKInstallerToolStripMenuItem.Click += new System.EventHandler(this.wiiUPCKInstallerToolStripMenuItem_Click);
-            // 
-            // PS3PCKInstallerToolStripMenuItem
-            // 
-            resources.ApplyResources(this.PS3PCKInstallerToolStripMenuItem, "PS3PCKInstallerToolStripMenuItem");
-            this.PS3PCKInstallerToolStripMenuItem.Name = "PS3PCKInstallerToolStripMenuItem";
-            this.PS3PCKInstallerToolStripMenuItem.Click += new System.EventHandler(this.PS3PCKInstallerToolStripMenuItem_Click);
-            // 
-            // VitaPCKInstallerToolStripMenuItem
-            // 
-            resources.ApplyResources(this.VitaPCKInstallerToolStripMenuItem, "VitaPCKInstallerToolStripMenuItem");
-            this.VitaPCKInstallerToolStripMenuItem.Name = "VitaPCKInstallerToolStripMenuItem";
-            this.VitaPCKInstallerToolStripMenuItem.Click += new System.EventHandler(this.VitaPCKInstallerToolStripMenuItem_Click);
             // 
             // joinDevelopmentDiscordToolStripMenuItem
             // 
@@ -716,6 +693,7 @@
             // 
             this.miscToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addCustomPackImageToolStripMenuItem,
+            this.openPckManagerToolStripMenuItem,
             this.convertMusicFilesToolStripMenuItem});
             this.miscToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.miscToolStripMenuItem.Name = "miscToolStripMenuItem";
@@ -1048,14 +1026,6 @@
             resources.ApplyResources(this.imageList, "imageList");
             this.imageList.TransparentColor = System.Drawing.Color.Transparent;
             // 
-            // pictureBoxImagePreview
-            // 
-            resources.ApplyResources(this.pictureBoxImagePreview, "pictureBoxImagePreview");
-            this.pictureBoxImagePreview.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBoxImagePreview.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-            this.pictureBoxImagePreview.Name = "pictureBoxImagePreview";
-            this.pictureBoxImagePreview.TabStop = false;
-            // 
             // LittleEndianCheckBox
             // 
             resources.ApplyResources(this.LittleEndianCheckBox, "LittleEndianCheckBox");
@@ -1064,6 +1034,20 @@
             this.LittleEndianCheckBox.Style = MetroFramework.MetroColorStyle.White;
             this.LittleEndianCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.LittleEndianCheckBox.UseSelectable = true;
+            // 
+            // openPckManagerToolStripMenuItem
+            // 
+            this.openPckManagerToolStripMenuItem.Name = "openPckManagerToolStripMenuItem";
+            resources.ApplyResources(this.openPckManagerToolStripMenuItem, "openPckManagerToolStripMenuItem");
+            this.openPckManagerToolStripMenuItem.Click += new System.EventHandler(this.openPckManagerToolStripMenuItem_Click);
+            // 
+            // pictureBoxImagePreview
+            // 
+            resources.ApplyResources(this.pictureBoxImagePreview, "pictureBoxImagePreview");
+            this.pictureBoxImagePreview.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBoxImagePreview.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+            this.pictureBoxImagePreview.Name = "pictureBoxImagePreview";
+            this.pictureBoxImagePreview.TabStop = false;
             // 
             // MainForm
             // 
@@ -1144,11 +1128,9 @@
         private MetroFramework.Controls.MetroTabPage editorTab;
         private MetroFramework.Controls.MetroCheckBox LittleEndianCheckBox;
         private MetroFramework.Controls.MetroLabel label11;
-        private System.Windows.Forms.ToolStripMenuItem wiiUPCKInstallerToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem PS3PCKInstallerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem OpenInstallerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem administrativeToolsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem VitaPCKInstallerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toNobledezJackToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toPhoenixARCDeveloperToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem joinDevelopmentDiscordToolStripMenuItem;
@@ -1217,6 +1199,7 @@
 		private System.Windows.Forms.ToolStripMenuItem convertMusicFilesToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem wavBinkaToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem binkaWavToolStripMenuItem;
-	}
+        private System.Windows.Forms.ToolStripMenuItem openPckManagerToolStripMenuItem;
+    }
 }
 

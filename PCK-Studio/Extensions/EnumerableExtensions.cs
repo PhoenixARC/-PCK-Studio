@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace PckStudio.Extensions
 {
@@ -12,6 +13,16 @@ namespace PckStudio.Extensions
                 yield return (i++, item);
             }
             yield break;
+        }
+
+        public static bool ContainsAny<T>(this IEnumerable<T> array, params T[] items)
+        {
+            foreach (var item in array)
+            {
+                if (items.Contains(item))
+                    return true;
+            }
+            return false;
         }
     }
 }

@@ -13,6 +13,8 @@ namespace PckStudio
         public static readonly string AppData = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "PCK-Studio");
         public static readonly string AppDataCache = Path.Combine(AppData, "cache");
 
+        public static MainForm MainInstance { get; private set; }
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -20,11 +22,11 @@ namespace PckStudio
         static void Main(string[] args)
         {
             System.Globalization.CultureInfo.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
-            
-            var mainForm = new MainForm();
+
+            MainInstance = new MainForm();
             if (args.Length > 0 && File.Exists(args[0]) && args[0].EndsWith(".pck"))
-                mainForm.LoadPck(args[0]);
-            Application.Run(mainForm);
+                MainInstance.LoadPckFromFile(args[0]);
+            Application.Run(MainInstance);
         }
     }
 }
