@@ -21,7 +21,7 @@ using System;
 
 namespace PckStudio.IO.TGA
 {
-    public class TGAFileData
+    internal class TGAFileData
     {
         public TGAFileData(TGAHeader header, Image bitmap, TGAFooter footer, TGAExtentionData extentionData)
         {
@@ -39,7 +39,7 @@ namespace PckStudio.IO.TGA
         public readonly TGAExtentionData ExtentionData;
     }
 
-    public static class TGAImage
+    internal static class TGAImage
     {
         // private static TGAWriter _writer = new TGAWriter();
         private static TGAReader _reader = new TGAReader();

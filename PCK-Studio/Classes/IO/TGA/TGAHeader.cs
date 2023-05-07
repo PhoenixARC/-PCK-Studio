@@ -23,7 +23,7 @@ namespace PckStudio.IO.TGA
     ///  <http://www.paulbourke.net/dataformats/tga/>
     ///  <https://en.wikipedia.org/wiki/Truevision_TGA>
     /// </summary>
-    public struct TGAHeader
+    internal struct TGAHeader
     {
         public byte[] Id;
         public TGADataTypeCode DataTypeCode;

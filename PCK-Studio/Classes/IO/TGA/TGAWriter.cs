@@ -38,7 +38,7 @@ namespace PckStudio.IO.TGA
             _bitmap = bitmap;
         }
 
-        public void SaveHeader(EndiannessAwareBinaryWriter writer, TGAHeader header)
+        private void SaveHeader(EndiannessAwareBinaryWriter writer, TGAHeader header)
         {
             writer.Write(header.Id);
             writer.Write(new byte[]
@@ -60,7 +60,7 @@ namespace PckStudio.IO.TGA
             });
         }
 
-        public void SaveImage(EndiannessAwareBinaryWriter writer, Bitmap bitmap, TGAHeader header)
+        private void SaveImage(EndiannessAwareBinaryWriter writer, Bitmap bitmap, TGAHeader header)
         {
             Debug.Assert(bitmap.Width == header.Width || bitmap.Height == header.Height,
                 "Header resolution doesn't match Image resolution");

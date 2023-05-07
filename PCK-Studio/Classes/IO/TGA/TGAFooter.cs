@@ -18,7 +18,7 @@
 
 namespace PckStudio.IO.TGA
 {
-    public struct TGAFooter
+    internal struct TGAFooter
     {
         internal const string Signature = "TRUEVISION-XFILE";
         public int ExtensionDataOffset; 

@@ -18,7 +18,7 @@
 
 namespace PckStudio.IO.TGA
 {
-    public enum TGADataTypeCode : byte
+    internal enum TGADataTypeCode : byte
     {
         /// <summary>
         /// No image data included.

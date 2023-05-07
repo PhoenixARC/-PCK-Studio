@@ -19,7 +19,7 @@ using System;
 
 namespace PckStudio.IO.TGA
 {
-    public struct TGAExtentionData
+    internal struct TGAExtentionData
     {
         public const short ExtensionSize = 0x1EF;
         public string AuthorName;
