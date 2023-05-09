@@ -10,7 +10,7 @@ namespace PckStudio.Forms.Editor
 	// TODO: write as a UI control ??
 	sealed class AnimationPlayer
 	{
-		public const int BaseTickSpeed = 48;
+		private const int TickInMillisecond = 50; // 1 InGame tick
 		public bool IsPlaying { get; private set; } = false;
 
 		private int currentAnimationFrameIndex = 0;
@@ -33,7 +33,7 @@ namespace PckStudio.Forms.Editor
 				if (currentAnimationFrameIndex >= _animation.FrameCount)
 					currentAnimationFrameIndex = 0;
 				Animation.Frame frame = SetDisplayFrame(currentAnimationFrameIndex++);
-				await Task.Delay(BaseTickSpeed * frame.Ticks);
+				await Task.Delay(TickInMillisecond * frame.Ticks);
 			}
 			IsPlaying = false;
 		}
