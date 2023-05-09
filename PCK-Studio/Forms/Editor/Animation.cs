@@ -36,7 +36,7 @@ namespace PckStudio.Forms.Editor
 			ParseAnim(ANIM);
 		}
 
-		public struct Frame
+		public class Frame
 		{
 			public readonly Image Texture;
 			public int Ticks;
