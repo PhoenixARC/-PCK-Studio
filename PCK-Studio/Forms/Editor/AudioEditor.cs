@@ -17,8 +17,7 @@ using OMI.Formats.Languages;
 using OMI.Formats.Pck;
 using PckStudio.Forms.Additional_Popups;
 
-// Audio Editor by MattNL
-// additional work and optimization by Miku-666
+// Audio Editor by MattNL and Miku-666
 
 namespace PckStudio.Forms.Editor
 {
@@ -75,9 +74,15 @@ namespace PckStudio.Forms.Editor
 		{
 			treeView1.BeginUpdate();
 			treeView1.Nodes.Clear();
+
 			foreach (var category in audioFile.Categories)
 			{
-				if(category.audioType == PckAudioFile.AudioCategory.EAudioType.Creative)
+				// fix songs with directories using backslash instead of forward slash
+				// Songs with a backslash instead of a forward slash would not play in RPCS3
+				foreach (string songname in category.SongNames.FindAll(s => s.Contains('\\')))
+					category.SongNames[category.SongNames.IndexOf(songname)] = songname.Replace('\\', '/');
+
+				if (category.audioType == PckAudioFile.AudioCategory.EAudioType.Creative)
 				{
 					if (category.Name == "include_overworld" &&
 						audioFile.TryGetCategory(PckAudioFile.AudioCategory.EAudioType.Overworld, out PckAudioFile.AudioCategory overworldCategory))
