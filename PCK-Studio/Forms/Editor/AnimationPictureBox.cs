@@ -12,9 +12,35 @@ namespace PckStudio.Forms.Editor
 {
 	internal class AnimationPictureBox : PictureBox
     {
-		private const int TickInMillisecond = 50; // 1 InGame tick
-		public bool IsPlaying { get; private set; } = false;
+		public bool IsPlaying => _isPlaying;
 
+        public void Start(Animation animation)
+		{
+			_animation = animation;
+			cts = new CancellationTokenSource();
+			Task.Run(DoAnimate, cts.Token);
+		}
+
+		public void Stop([CallerMemberName] string callerName = default!)
+		{
+			Debug.WriteLine($"{nameof(AnimationPictureBox.Stop)} called from {callerName}!");
+			cts.Cancel();
+		}
+
+		public Animation.Frame GetCurrentFrame() => _animation[currentAnimationFrameIndex];
+
+		public void SelectFrame(Animation animation, int index)
+		{
+			if (IsPlaying)
+				Stop();
+			_animation = animation;
+			currentAnimationFrameIndex = index;
+            currentFrame = SetAnimationFrame(index);
+		}
+
+		private const int TickInMillisecond = 50; // 1 InGame tick
+
+        private bool _isPlaying = false;
 		private int currentAnimationFrameIndex = 0;
 		private Animation.Frame currentFrame;
 		private Animation _animation;
@@ -30,7 +56,7 @@ namespace PckStudio.Forms.Editor
         private async void DoAnimate()
 		{
 			_ = _animation ?? throw new ArgumentNullException(nameof(_animation));
-			IsPlaying = true;
+			_isPlaying = true;
 			Animation.Frame nextFrame;
 			while (!cts.IsCancellationRequested)
 			{
@@ -57,42 +83,23 @@ namespace PckStudio.Forms.Editor
 				SetAnimationFrame(currentFrame);
                 await Task.Delay(TickInMillisecond * currentFrame.Ticks);
             }
-			IsPlaying = false;
+            _isPlaying = false;
 		}
 
         private async Task InterpolateFrame(Animation.Frame currentFrame, Animation.Frame nextFrame)
         {
-            for (int i = 0; i < currentFrame.Ticks; i++)
+            for (int tick = 0; tick < currentFrame.Ticks && !cts.IsCancellationRequested; tick++)
             {
-                double delta = 1.0f - i / (double)currentFrame.Ticks;
-                Image = currentFrame.Texture.Interpolate(nextFrame.Texture, delta);
+                double delta = 1.0f - tick / (double)currentFrame.Ticks;
+				if (!IsDisposed)
+					Invoke(() =>
+					{
+                        if (!IsDisposed)
+                            Image = currentFrame.Texture.Interpolate(nextFrame.Texture, delta);
+					});
                 await Task.Delay(TickInMillisecond);
             }
         }
-
-        public void Start(Animation animation)
-		{
-			_animation = animation;
-			cts = new CancellationTokenSource();
-			Task.Run(DoAnimate, cts.Token);
-		}
-
-		public void Stop([CallerMemberName] string callerName = default!)
-		{
-			Debug.WriteLine($"{nameof(AnimationPictureBox.Stop)} called from {callerName}!");
-			cts.Cancel();
-		}
-
-		public Animation.Frame GetCurrentFrame() => _animation[currentAnimationFrameIndex];
-
-		public void SelectFrame(Animation animation, int index)
-		{
-			if (IsPlaying)
-				Stop();
-			_animation = animation;
-			currentAnimationFrameIndex = index;
-            currentFrame = SetAnimationFrame(index);
-		}
 
 		private Animation.Frame SetAnimationFrame(int frameIndex)
 		{
@@ -103,7 +110,7 @@ namespace PckStudio.Forms.Editor
 
 		private void SetAnimationFrame(Animation.Frame frame)
 		{
-            Image = frame.Texture;
-		}
+            Invoke(() => Image = frame.Texture);
+        }
 	}
 }
