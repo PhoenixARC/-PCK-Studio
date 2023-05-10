@@ -53,19 +53,18 @@ namespace PckStudio
             "WAIST",
             "PANTS0",
             "PANTS1",
-            "SOCK0",
-            "SOCK1",
 
             // Armor Parts
-            "HELMET",
-            "CHEST", "BODYARMOR",
-            "SHOULDER0", "ARMARMOR0",
-            "SHOULDER1", "ARMARMOR0",
+            "BODYARMOR",
+            "ARMARMOR0",
+            "ARMARMOR1",
             "BELT",
             "LEGGING0",
             "LEGGING1",
+            "SOCK0",
+            "SOCK1",
             "BOOT0",
-            "BOOT1",
+            "BOOT1"
         };
 
         private static readonly string[] ValidModelOffsetTypes = new string[]
@@ -86,8 +85,8 @@ namespace PckStudio
             "BELT",
             "LEGGING0",
             "LEGGING1",
-            "BOOT0",
-            "BOOT1",
+            "SOCK0", "BOOT0",
+            "SOCK1", "BOOT1",
 
             "TOOL0",
             "TOOL1",
@@ -115,6 +114,7 @@ namespace PckStudio
 
         public generateModel(PckFile.PCKProperties skinProperties, Image texture)
         {
+            MessageBox.Show(this, "This feature is now considered obsolete and will no longer recieve updates. A better alternative is currently under development. Use at your own risk.", "Obsolete Feature", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             InitializeComponent();
             boxes = skinProperties;
             texturePreview.Image = texture;
