@@ -612,12 +612,14 @@ namespace PckStudio.Forms.Editor
 					{
 						string song = category.SongNames[i];
 						string songpath = Path.Combine(parent.GetDataPath(), song + ".binka");
-						if (File.Exists(songpath))
+						string new_path = Path.Combine(musicdir, Path.GetFileName(song) + ".binka");
+						if (File.Exists(songpath) && !File.Exists(new_path))
 						{
-							File.Move(songpath, Path.Combine(musicdir, song + ".binka"));
-						}
+							File.Move(songpath, new_path);
 
-						category.SongNames[i] = Path.Combine("Music", song.Replace(song, Path.GetFileNameWithoutExtension(songpath)));
+							// Songs with a backslash instead of a forward slash were not playing in RPCS3
+							category.SongNames[i] = "Music/" + song.Replace(song, Path.GetFileNameWithoutExtension(songpath));
+						}
 					}
 				}
 				treeView2.Nodes.Clear();
