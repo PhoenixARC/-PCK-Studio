@@ -229,5 +229,43 @@ namespace PckStudio.Extensions
             overlayImage.UnlockBits(overlayImageData);
             return bitmapResult;
         }
+
+        public static Image Interpolate(this Image image1, Image image2, double delta)
+        {
+            delta = ColorExtensions.Clamp(delta, 0.0, 1.0);
+            if (image1 is not Bitmap baseImage || image2 is not Bitmap overlayImage ||
+                image1.Width != image2.Width || image1.Height != image2.Height)
+                return image1;
+
+            BitmapData baseImageData = baseImage.LockBits(new Rectangle(Point.Empty, baseImage.Size),
+                ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
+            byte[] baseImageBuffer = new byte[baseImageData.Stride * baseImageData.Height];
+
+            Marshal.Copy(baseImageData.Scan0, baseImageBuffer, 0, baseImageBuffer.Length);
+
+            BitmapData overlayImageData = overlayImage.LockBits(new Rectangle(Point.Empty, overlayImage.Size),
+                ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+            byte[] overlayImageBuffer = new byte[overlayImageData.Stride * overlayImageData.Height];
+
+            Marshal.Copy(overlayImageData.Scan0, overlayImageBuffer, 0, overlayImageBuffer.Length);
+
+            for (int k = 0; k < baseImageBuffer.Length && k < overlayImageBuffer.Length; k += 4)
+            {
+                baseImageBuffer[k + 0] = ColorExtensions.Mix(delta, baseImageBuffer[k + 0], overlayImageBuffer[k + 0]);
+                baseImageBuffer[k + 1] = ColorExtensions.Mix(delta, baseImageBuffer[k + 1], overlayImageBuffer[k + 1]);
+                baseImageBuffer[k + 2] = ColorExtensions.Mix(delta, baseImageBuffer[k + 2], overlayImageBuffer[k + 2]);
+            }
+
+            Bitmap bitmapResult = new Bitmap(baseImage.Width, baseImage.Height, PixelFormat.Format32bppArgb);
+            BitmapData resultImageData = bitmapResult.LockBits(new Rectangle(Point.Empty, bitmapResult.Size),
+                ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+
+            Marshal.Copy(baseImageBuffer, 0, resultImageData.Scan0, baseImageBuffer.Length);
+
+            bitmapResult.UnlockBits(resultImageData);
+            baseImage.UnlockBits(baseImageData);
+            overlayImage.UnlockBits(overlayImageData);
+            return bitmapResult;
+        }
     }
 }

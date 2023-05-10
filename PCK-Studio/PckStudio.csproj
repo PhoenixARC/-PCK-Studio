@@ -281,7 +281,9 @@
       <DependentUpon>TextPrompt.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Editor\Animation.cs" />
-    <Compile Include="Forms\Editor\AnimationPlayer.cs" />
+    <Compile Include="Forms\Editor\AnimationPlayer.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Forms\Editor\MaterialsEditor.cs">
       <SubType>Form</SubType>
     </Compile>

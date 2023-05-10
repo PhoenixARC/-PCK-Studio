@@ -18,7 +18,6 @@ namespace PckStudio.Forms.Editor
 	{
 		PckFile.FileData animationFile;
 		Animation currentAnimation;
-        AnimationPlayer player;
 
 		bool isItem = false;
         string animationSection => AnimationResources.GetAnimationSection(isItem);
@@ -54,7 +53,6 @@ namespace PckStudio.Forms.Editor
             currentAnimation = animationFile.Properties.HasProperty("ANIM")
 				? new Animation(frameTextures, animationFile.Properties.GetPropertyValue("ANIM"))
 				: new Animation(frameTextures);
-			player = new AnimationPlayer(pictureBoxWithInterpolationMode1);
 
 			foreach (JObject content in AnimationResources.tileData[animationSection].Children())
 			{
@@ -84,14 +82,14 @@ namespace PckStudio.Forms.Editor
 					SelectedImageIndex = imageIndex,
 				});
             }
-			player.SelectFrame(currentAnimation, 0);
+			animationPictureBox.SelectFrame(currentAnimation, 0);
 		}
 
 		private void frameTreeView_AfterSelect(object sender, TreeViewEventArgs e)
 		{
-			if (player.IsPlaying && !AnimationPlayBtn.Enabled)
+			if (animationPictureBox.IsPlaying && !AnimationPlayBtn.Enabled)
                 AnimationPlayBtn.Enabled = !(AnimationStopBtn.Enabled = !AnimationStopBtn.Enabled);
-			player.SelectFrame(currentAnimation, frameTreeView.SelectedNode.Index);
+            animationPictureBox.SelectFrame(currentAnimation, frameTreeView.SelectedNode.Index);
 		}
 
 		private int mix(double ratio, int val1, int val2) // Ported from Java Edition code
@@ -101,20 +99,19 @@ namespace PckStudio.Forms.Editor
 
 		private void StartAnimationBtn_Click(object sender, EventArgs e)
 		{
-			// prevent player from crashing
-			player.Stop();
+            // prevent player from crashing
+            animationPictureBox.Stop();
 			AnimationPlayBtn.Enabled = !(AnimationStopBtn.Enabled = !AnimationStopBtn.Enabled);
 			if (currentAnimation.FrameCount > 1)
 			{
-				player.SetContext(pictureBoxWithInterpolationMode1);
-				player.Start(currentAnimation);
+                animationPictureBox.Start(currentAnimation);
 			}
 		}
 
 		private void StopAnimationBtn_Click(object sender, EventArgs e)
 		{
             AnimationPlayBtn.Enabled = !(AnimationStopBtn.Enabled = !AnimationStopBtn.Enabled);
-            player.Stop();
+            animationPictureBox.Stop();
 		}
 
 		private void frameTreeView_KeyDown(object sender, KeyEventArgs e)
@@ -436,9 +433,9 @@ namespace PckStudio.Forms.Editor
 
         private void AnimationEditor_FormClosing(object sender, FormClosingEventArgs e)
         {
-			if (player.IsPlaying)
+			if (animationPictureBox.IsPlaying)
 			{
-				player.Stop();
+                animationPictureBox.Stop();
 			}
         }
     }

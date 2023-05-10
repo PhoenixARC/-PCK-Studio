@@ -53,11 +53,11 @@
             this.AnimationStopBtn = new MetroFramework.Controls.MetroButton();
             this.tileLabel = new MetroFramework.Controls.MetroLabel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.pictureBoxWithInterpolationMode1 = new PckStudio.PictureBoxWithInterpolationMode();
+            this.animationPictureBox = new PckStudio.Forms.Editor.AnimationPictureBox();
             this.contextMenuStrip1.SuspendLayout();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxWithInterpolationMode1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.animationPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // frameTreeView
@@ -282,18 +282,17 @@
             this.pictureBox1.TabIndex = 21;
             this.pictureBox1.TabStop = false;
             // 
-            // pictureBoxWithInterpolationMode1
+            // animationPictureBox
             // 
-            this.pictureBoxWithInterpolationMode1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.animationPictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBoxWithInterpolationMode1.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-            this.pictureBoxWithInterpolationMode1.Location = new System.Drawing.Point(157, 88);
-            this.pictureBoxWithInterpolationMode1.Name = "pictureBoxWithInterpolationMode1";
-            this.pictureBoxWithInterpolationMode1.Size = new System.Drawing.Size(235, 223);
-            this.pictureBoxWithInterpolationMode1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBoxWithInterpolationMode1.TabIndex = 16;
-            this.pictureBoxWithInterpolationMode1.TabStop = false;
+            this.animationPictureBox.Location = new System.Drawing.Point(157, 88);
+            this.animationPictureBox.Name = "animationPictureBox";
+            this.animationPictureBox.Size = new System.Drawing.Size(235, 223);
+            this.animationPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.animationPictureBox.TabIndex = 16;
+            this.animationPictureBox.TabStop = false;
             // 
             // AnimationEditor
             // 
@@ -305,7 +304,7 @@
             this.Controls.Add(this.AnimationStopBtn);
             this.Controls.Add(this.AnimationPlayBtn);
             this.Controls.Add(this.tileLabel);
-            this.Controls.Add(this.pictureBoxWithInterpolationMode1);
+            this.Controls.Add(this.animationPictureBox);
             this.Controls.Add(this.frameTreeView);
             this.Controls.Add(this.menuStrip);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -319,7 +318,7 @@
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxWithInterpolationMode1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.animationPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -331,7 +330,7 @@
 		private System.Windows.Forms.MenuStrip menuStrip;
 		private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem1;
-		private PictureBoxWithInterpolationMode pictureBoxWithInterpolationMode1;
+		private PckStudio.Forms.Editor.AnimationPictureBox animationPictureBox;
 		private MetroFramework.Controls.MetroCheckBox InterpolationCheckbox;
 		private MetroFramework.Controls.MetroButton AnimationPlayBtn;
 		private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;

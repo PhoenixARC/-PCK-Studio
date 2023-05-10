@@ -1,44 +1,76 @@
 ﻿using System;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Runtime.CompilerServices;
 using System.Diagnostics;
+using System.Windows.Forms;
+using System.Threading.Tasks;
+using System.Drawing.Drawing2D;
+using System.Runtime.CompilerServices;
+
+using PckStudio.Extensions;
 
 namespace PckStudio.Forms.Editor
 {
-	// TODO: write as a UI control ??
-	sealed class AnimationPlayer
-	{
+	internal class AnimationPictureBox : PictureBox
+    {
 		private const int TickInMillisecond = 50; // 1 InGame tick
 		public bool IsPlaying { get; private set; } = false;
 
 		private int currentAnimationFrameIndex = 0;
-		private PictureBox display;
+		private Animation.Frame currentFrame;
 		private Animation _animation;
 		private CancellationTokenSource cts = new CancellationTokenSource();
 
-		public AnimationPlayer(PictureBox display)
-		{
-			SetContext(display);
-		}
+		protected override void OnPaint(PaintEventArgs pe)
+        {
+			pe.Graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
+			pe.Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+            base.OnPaint(pe);
+        }
 
-		private async void DoAnimate()
+        private async void DoAnimate()
 		{
-			_ = display ?? throw new ArgumentNullException(nameof(display));
 			_ = _animation ?? throw new ArgumentNullException(nameof(_animation));
 			IsPlaying = true;
+			Animation.Frame nextFrame;
 			while (!cts.IsCancellationRequested)
 			{
 				if (currentAnimationFrameIndex >= _animation.FrameCount)
+				{
 					currentAnimationFrameIndex = 0;
-				Animation.Frame frame = SetDisplayFrame(currentAnimationFrameIndex++);
-				await Task.Delay(TickInMillisecond * frame.Ticks);
-			}
+				}
+
+				if (currentAnimationFrameIndex + 1 >= _animation.FrameCount)
+				{
+					nextFrame = _animation[0];
+                }
+				else
+				{
+					nextFrame = _animation[currentAnimationFrameIndex + 1];
+				}
+
+                currentFrame = _animation[currentAnimationFrameIndex++];
+				if (_animation.Interpolate)
+				{
+                    await InterpolateFrame(currentFrame, nextFrame);
+					continue;
+				}
+				SetAnimationFrame(currentFrame);
+                await Task.Delay(TickInMillisecond * currentFrame.Ticks);
+            }
 			IsPlaying = false;
 		}
 
-		public void Start(Animation animation)
+        private async Task InterpolateFrame(Animation.Frame currentFrame, Animation.Frame nextFrame)
+        {
+            for (int i = 0; i < currentFrame.Ticks; i++)
+            {
+                double delta = 1.0f - i / (double)currentFrame.Ticks;
+                Image = currentFrame.Texture.Interpolate(nextFrame.Texture, delta);
+                await Task.Delay(TickInMillisecond);
+            }
+        }
+
+        public void Start(Animation animation)
 		{
 			_animation = animation;
 			cts = new CancellationTokenSource();
@@ -47,30 +79,31 @@ namespace PckStudio.Forms.Editor
 
 		public void Stop([CallerMemberName] string callerName = default!)
 		{
-			Debug.WriteLine($"{nameof(AnimationPlayer.Stop)} called from {callerName}!");
+			Debug.WriteLine($"{nameof(AnimationPictureBox.Stop)} called from {callerName}!");
 			cts.Cancel();
 		}
 
 		public Animation.Frame GetCurrentFrame() => _animation[currentAnimationFrameIndex];
 
-		public void SetContext(PictureBox display) => this.display = display;
-
 		public void SelectFrame(Animation animation, int index)
 		{
-			_animation = animation;
 			if (IsPlaying)
 				Stop();
-			SetDisplayFrame(index);
+			_animation = animation;
 			currentAnimationFrameIndex = index;
+            currentFrame = SetAnimationFrame(index);
 		}
 
-		private Animation.Frame SetDisplayFrame(int frameIndex)
+		private Animation.Frame SetAnimationFrame(int frameIndex)
 		{
-			Monitor.Enter(_animation);
-			Animation.Frame frame = _animation[frameIndex];
-			display.Image = frame.Texture;
-			Monitor.Exit(_animation);
+			var frame = _animation[frameIndex];
+			SetAnimationFrame(frame);
 			return frame;
+		}
+
+		private void SetAnimationFrame(Animation.Frame frame)
+		{
+            Image = frame.Texture;
 		}
 	}
 }
