@@ -403,13 +403,10 @@ namespace PckStudio
 
 		private void HandleAudioFile(PckFile.FileData file)
 		{
-			if (!TryGetLocFile(out LOCFile locFile))
-				throw new Exception("No .loc File found.");
-			using AudioEditor audioEditor = new AudioEditor(file, locFile, LittleEndianCheckBox.Checked);
+			using AudioEditor audioEditor = new AudioEditor(file, LittleEndianCheckBox.Checked);
 			if (audioEditor.ShowDialog(this) == DialogResult.OK)
 			{
 				wasModified = true;
-				TrySetLocFile(locFile);
 			}
 		}
 
@@ -868,7 +865,7 @@ namespace PckStudio
 			}
 			else if (currentPCK.Files.FindIndex(file => file.Filename == "audio.pck") != -1)
 			{
-				// the chances of this happening is really really slim but just in case
+				// the chance of this happening is really really slim but just in case
 				MessageBox.Show("There is already a file in this PCK named \"audio.pck\"!", "Can't create audio.pck");
 				return;
 			}
@@ -878,13 +875,9 @@ namespace PckStudio
 				return;
 			}
 
-			if (!TryGetLocFile(out LOCFile locFile))
-				throw new Exception("No .loc file found.");
 			var file = CreateNewAudioFile(LittleEndianCheckBox.Checked);
-			AudioEditor diag = new AudioEditor(file, locFile, LittleEndianCheckBox.Checked);
-			if (diag.ShowDialog(this) == DialogResult.OK)
-				TrySetLocFile(locFile);
-			else
+			AudioEditor diag = new AudioEditor(file, LittleEndianCheckBox.Checked);
+			if(diag.ShowDialog(this) != DialogResult.OK)
 			{
 				currentPCK.Files.Remove(file); //delete file if not saved
 			}
