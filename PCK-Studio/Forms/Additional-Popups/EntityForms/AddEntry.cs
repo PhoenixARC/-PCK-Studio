@@ -10,15 +10,14 @@ namespace PckStudio.Forms.Additional_Popups.EntityForms
 	{
         string selectedEntity = "";
 
-		JObject EntityJSONData;
+		JObject EntityJSONData = JObject.Parse(Properties.Resources.entityData);
 		public string SelectedEntity => selectedEntity;
 
 		List<TreeNode> treeViewEntityCache = new List<TreeNode>();
 
-		public AddEntry(JObject entityData, System.Drawing.Image[] entityImages)
+		public AddEntry(string dataType, System.Drawing.Image[] entityImages)
 		{
 			InitializeComponent();
-			EntityJSONData = entityData;
 			ImageList entities = new ImageList();
 			entities.ColorDepth = ColorDepth.Depth32Bit;
 			entities.ImageSize = new System.Drawing.Size(32, 32);
@@ -29,9 +28,9 @@ namespace PckStudio.Forms.Additional_Popups.EntityForms
 			{
 				int i = 0;
 
-				if (EntityJSONData["entities"] != null)
+				if (EntityJSONData[dataType] != null)
 				{
-					foreach (JObject content in EntityJSONData["entities"].Children())
+					foreach (JObject content in EntityJSONData[dataType].Children())
 					{
 						foreach (JProperty prop in content.Properties())
 						{

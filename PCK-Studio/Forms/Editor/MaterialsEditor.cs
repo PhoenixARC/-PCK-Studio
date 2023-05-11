@@ -19,6 +19,8 @@ namespace PckStudio.Forms.Editor
 		private readonly PckFile.FileData _file;
 		MaterialContainer materialFile;
 
+		private readonly JObject EntityJSONData = JObject.Parse(Properties.Resources.entityData);
+
 		void SetUpTree()
 		{
 			treeView1.BeginUpdate();
@@ -27,13 +29,13 @@ namespace PckStudio.Forms.Editor
 			{
 				TreeNode EntryNode = new TreeNode(entry.Name);
 
-				foreach (JObject content in Utilities.MaterialResources.entityData["materials"].Children())
+				foreach (JObject content in EntityJSONData["materials"].Children())
 				{
 					var prop = content.Properties().FirstOrDefault(prop => prop.Name == entry.Name);
 					if (prop is JProperty)
 					{
 						EntryNode.Text = (string)prop.Value;
-						EntryNode.ImageIndex = Utilities.MaterialResources.entityData["materials"].Children().ToList().IndexOf(content);
+						EntryNode.ImageIndex = EntityJSONData["materials"].Children().ToList().IndexOf(content);
 						EntryNode.SelectedImageIndex = EntryNode.ImageIndex;
 						break;
 					}
@@ -132,7 +134,7 @@ namespace PckStudio.Forms.Editor
 
 		private void addToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			var diag = new Additional_Popups.EntityForms.AddEntry(Utilities.MaterialResources.entityData, Utilities.MaterialResources.entityImages);
+			var diag = new Additional_Popups.EntityForms.AddEntry("materials", Utilities.MaterialResources.entityImages);
 
 			if (diag.ShowDialog() == DialogResult.OK)
 			{
@@ -146,13 +148,13 @@ namespace PckStudio.Forms.Editor
 
 				TreeNode NewEntryNode = new TreeNode(NewEntry.Name);
 				NewEntryNode.Tag = NewEntry;
-				foreach (JObject content in Utilities.MaterialResources.entityData["materials"].Children())
+				foreach (JObject content in EntityJSONData["materials"].Children())
 				{
 					var prop = content.Properties().FirstOrDefault(prop => prop.Name == NewEntry.Name);
 					if (prop is JProperty)
 					{
 						NewEntryNode.Text = (string)prop.Value;
-						NewEntryNode.ImageIndex = Utilities.MaterialResources.entityData["materials"].Children().ToList().IndexOf(content);
+						NewEntryNode.ImageIndex = EntityJSONData["materials"].Children().ToList().IndexOf(content);
 						NewEntryNode.SelectedImageIndex = NewEntryNode.ImageIndex;
 						break;
 					}
