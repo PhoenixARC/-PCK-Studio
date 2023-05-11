@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -17,6 +18,61 @@ namespace PckStudio.Features
         public CemuPanel()
         {
             InitializeComponent();
+            if (!TryApplyPermanentCemuConfig() &&
+                MessageBox.Show("Failed to get Cemu perma settings\nDo you want to open your local settings.xml file?",
+                "Cemu mlc path not found",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning) == DialogResult.Yes
+                )
+            {
+
+                OpenFileDialog fileDialog = new OpenFileDialog()
+                {
+                    Filter = "Cemu Settings|settings.xml",
+                };
+
+                if (fileDialog.ShowDialog(this) == DialogResult.OK)
+                {
+                    TryApplyCemuConfig(fileDialog.FileName);
+                }
+            }
+        }
+
+        private bool TryApplyCemuConfig(string settingsPath)
+        {
+            string cemuPath = Path.Combine(Path.GetDirectoryName(settingsPath), "Cemu.exe");
+            if (File.Exists(cemuPath))
+            {
+                var xml = new XmlDocument();
+                xml.Load(settingsPath);
+                GameDirectoryTextBox.Text = xml.SelectSingleNode("content").SelectSingleNode("mlc_path").InnerText;
+                BrowseDirectoryBtn.Enabled = false;
+            }
+            return false;
+        }
+
+        private bool TryApplyPermanentCemuConfig()
+        {
+            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Cemu");
+            string filepath = Path.Combine(path, "perm_setting.xml");
+            if (Directory.Exists(path) && File.Exists(filepath))
+            {
+                try
+                {
+                    var xml = new XmlDocument();
+                    xml.Load(filepath);
+                    var configNode = xml.SelectSingleNode("config");
+                    var mlcpathNode = configNode.SelectSingleNode("MlcPath");
+                    GameDirectoryTextBox.Text = mlcpathNode.InnerText;
+                    BrowseDirectoryBtn.Enabled = false;
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+            return false;
         }
 
         private string GetSelectedRegionTitleId()
@@ -51,12 +107,11 @@ namespace PckStudio.Features
         {
             OpenFolderDialog openFolderDialog = new OpenFolderDialog
             {
-                Title = "Select Cemu Game Directory"
+                Title = "Select Cemu mlc01 Directory"
             };
             if (openFolderDialog.ShowDialog(Handle) == true && Directory.Exists(openFolderDialog.ResultPath))
             {
                 GameDirectoryTextBox.Text = openFolderDialog.ResultPath;
-                ListDLCs();
             }
         }
 
@@ -217,6 +272,11 @@ namespace PckStudio.Features
         private void DLCTreeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             openSkinPackToolStripMenuItem_Click(sender, e);
+        }
+
+        private void GameDirectoryTextBox_TextChanged(object sender, EventArgs e)
+        {
+            ListDLCs();
         }
     }
 }

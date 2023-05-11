@@ -151,7 +151,7 @@
             // 
             this.GameDirectoryTextBox.CustomButton.Image = null;
             this.GameDirectoryTextBox.CustomButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.GameDirectoryTextBox.CustomButton.Location = new System.Drawing.Point(252, 1);
+            this.GameDirectoryTextBox.CustomButton.Location = new System.Drawing.Point(254, 1);
             this.GameDirectoryTextBox.CustomButton.Name = "";
             this.GameDirectoryTextBox.CustomButton.Size = new System.Drawing.Size(25, 25);
             this.GameDirectoryTextBox.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
@@ -160,6 +160,7 @@
             this.GameDirectoryTextBox.CustomButton.UseSelectable = true;
             this.GameDirectoryTextBox.CustomButton.Visible = false;
             this.GameDirectoryTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.GameDirectoryTextBox.Enabled = false;
             this.GameDirectoryTextBox.Lines = new string[0];
             this.GameDirectoryTextBox.Location = new System.Drawing.Point(3, 3);
             this.GameDirectoryTextBox.MaxLength = 32767;
@@ -179,6 +180,7 @@
             this.GameDirectoryTextBox.WaterMark = "Cemu Game Directory";
             this.GameDirectoryTextBox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.GameDirectoryTextBox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            this.GameDirectoryTextBox.TextChanged += new System.EventHandler(this.GameDirectoryTextBox_TextChanged);
             // 
             // BrowseDirectoryBtn
             // 

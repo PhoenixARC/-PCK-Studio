@@ -44,6 +44,11 @@ namespace PckStudio.Features
             });
         }
 
+        protected override void OnGotFocus(EventArgs e)
+        {
+            currentlyShowingControl?.Focus();
+        }
+
         private void supportedPlatformComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             mainPanel.Controls.Remove(currentlyShowingControl);
