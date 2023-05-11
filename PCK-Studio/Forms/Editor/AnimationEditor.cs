@@ -87,31 +87,24 @@ namespace PckStudio.Forms.Editor
 
 		private void frameTreeView_AfterSelect(object sender, TreeViewEventArgs e)
 		{
-			if (animationPictureBox.IsPlaying && !AnimationPlayBtn.Enabled)
-                AnimationPlayBtn.Enabled = !(AnimationStopBtn.Enabled = !AnimationStopBtn.Enabled);
+			if (animationPictureBox.IsPlaying)
+                AnimationStartStopBtn.Text = "Play Animation";
             animationPictureBox.SelectFrame(currentAnimation, frameTreeView.SelectedNode.Index);
 		}
 
-		private int mix(double ratio, int val1, int val2) // Ported from Java Edition code
+		private void AnimationStartStopBtn_Click(object sender, EventArgs e)
 		{
-			return (int)(ratio * val1 + (1.0D - ratio) * val2);
-		}
-
-		private void StartAnimationBtn_Click(object sender, EventArgs e)
-		{
-            // prevent player from crashing
-            animationPictureBox.Stop();
-			AnimationPlayBtn.Enabled = !(AnimationStopBtn.Enabled = !AnimationStopBtn.Enabled);
-			if (currentAnimation.FrameCount > 1)
+			if (animationPictureBox.IsPlaying)
+			{
+				AnimationStartStopBtn.Text = "Play Animation";
+				animationPictureBox.Stop();
+				return;
+			}
+            if (currentAnimation.FrameCount > 1)
 			{
                 animationPictureBox.Start(currentAnimation);
+				AnimationStartStopBtn.Text = "Stop Animation";
 			}
-		}
-
-		private void StopAnimationBtn_Click(object sender, EventArgs e)
-		{
-            AnimationPlayBtn.Enabled = !(AnimationStopBtn.Enabled = !AnimationStopBtn.Enabled);
-            animationPictureBox.Stop();
 		}
 
 		private void frameTreeView_KeyDown(object sender, KeyEventArgs e)
