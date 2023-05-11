@@ -10,7 +10,7 @@ namespace PckStudio.Forms.Additional_Popups.EntityForms
 	{
         string selectedEntity = "";
 
-		JObject EntityJSONData = JObject.Parse(Properties.Resources.entityData);
+		private static JObject EntityJSONData = JObject.Parse(Properties.Resources.entityData);
 		public string SelectedEntity => selectedEntity;
 
 		List<TreeNode> treeViewEntityCache = new List<TreeNode>();
