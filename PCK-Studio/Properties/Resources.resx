@@ -322,4 +322,7 @@
   <data name="file_import" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons\file_import.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="ranch" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icons\ranch.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

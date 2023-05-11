@@ -201,6 +201,9 @@ namespace PckStudio
 				pckFileLabel.Text = "Current PCK File: " + Path.GetFileName(saveLocation);
 			treeViewMain.Enabled = treeMeta.Enabled = true;
 			closeToolStripMenuItem.Visible = true;
+			fullBoxSupportToolStripMenuItem.Checked = currentPCK.HasVerionString;
+			packSettingsToolStripMenuItem.Visible = true;
+
 			saveToolStripMenuItem.Enabled = true;
 			saveToolStripMenuItem1.Enabled = true;
 			advancedMetaAddingToolStripMenuItem.Enabled = true;
@@ -210,7 +213,7 @@ namespace PckStudio
 			isSelectingTab = true;
 			tabControl.SelectTab(1);
 			isSelectingTab = false;
-			UpdateRPC();
+            UpdateRPC();
 		}
 
 		private void CloseEditorTab()
@@ -231,7 +234,8 @@ namespace PckStudio
 			saveToolStripMenuItem1.Enabled = false;
 			advancedMetaAddingToolStripMenuItem.Enabled = false;
 			closeToolStripMenuItem.Visible = false;
-			convertToBedrockToolStripMenuItem.Enabled = false;
+            packSettingsToolStripMenuItem.Visible = false;
+            convertToBedrockToolStripMenuItem.Enabled = false;
 			addCustomPackImageToolStripMenuItem.Enabled = false;
 			fileEntryCountLabel.Text = string.Empty;
 			pckFileLabel.Text = string.Empty;
@@ -644,24 +648,6 @@ namespace PckStudio
 
 		private void Save(string filePath)
 		{
-			bool isSkinsPCK = false;
-			if (!currentPCK.TryGetFile("0", PckFile.FileData.FileType.InfoFile, out PckFile.FileData _))
-			{
-				switch(MessageBox.Show(this, "The info file, \"0\", was not detected. Would you like to save as a Skins.pck archive?", "Save as Skins archive?", MessageBoxButtons.YesNoCancel))
-				{
-					case DialogResult.Yes:
-						isSkinsPCK = true;
-						break;
-					case DialogResult.No:
-						isSkinsPCK = false;
-						break;
-					case DialogResult.Cancel:
-					default:
-						return; // Cancel operation
-				}
-			}
-			currentPCK.HasVerionString = isSkinsPCK;
-
 			var writer = new PckFileWriter(currentPCK, LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
 			writer.WriteToFile(filePath);
 			wasModified = false;
@@ -976,10 +962,7 @@ namespace PckStudio
 			if (parent_file.Filetype is PckFile.FileData.FileType.TexturePackInfoFile || parent_file.Filetype is PckFile.FileData.FileType.SkinDataFile)
 			{
 				Console.WriteLine("Rebuilding " + parent_file.Filename);
-				PckFile newPCKFile = new PckFile(3)
-				{
-					HasVerionString = parent_file.Filetype is PckFile.FileData.FileType.SkinDataFile
-				};
+				PckFile newPCKFile = new PckFile(3, parent_file.Filetype is PckFile.FileData.FileType.SkinDataFile);
 
 				foreach (TreeNode node in GetAllChildNodes(parent.Nodes))
 				{
@@ -1252,10 +1235,7 @@ namespace PckStudio
 				PckFile.FileData skinsPCKFile = newPck.CreateNewFile("Skins.pck", PckFile.FileData.FileType.SkinDataFile, () =>
 				{
 					using var stream = new MemoryStream();
-					var writer = new PckFileWriter(new PckFile(3)
-					{
-						HasVerionString = true
-					},
+					var writer = new PckFileWriter(new PckFile(3, true),
 					LittleEndianCheckBox.Checked
 						? OMI.Endianness.LittleEndian
 						: OMI.Endianness.BigEndian);
@@ -2163,7 +2143,7 @@ namespace PckStudio
 			currentPCK.CreateNewFile("Skins.pck", PckFile.FileData.FileType.SkinDataFile, () =>
 			{
 				using var stream = new MemoryStream();
-				var writer = new PckFileWriter(new PckFile(3) { HasVerionString = true },
+				var writer = new PckFileWriter(new PckFile(3, true),
 					LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
 				writer.WriteToStream(stream);
 				return stream.ToArray();
@@ -2345,5 +2325,10 @@ namespace PckStudio
 			waitDiag.Dispose();
 			MessageBox.Show(this, $"Successfully converted {success}/{fileDialog.FileNames.Length} file{(fileDialog.FileNames.Length != 1 ? "s" : "")}", "Done!");
 		}
-	}
+
+        private void fullBoxSupportToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+			currentPCK.SetVersion(fullBoxSupportToolStripMenuItem.Checked);
+        }
+    }
 }
