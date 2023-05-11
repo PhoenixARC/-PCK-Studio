@@ -39,10 +39,9 @@ namespace PckStudio.Forms.Editor
 			TileName = Path.GetFileNameWithoutExtension(file.Filename);
 
 			InterpolationCheckbox.Visible = !IsEditingSpecial;
-			InterpolationCheckbox.Checked = InterpolationCheckbox.Visible;
-			bulkAnimationSpeedToolStripMenuItem.Enabled = InterpolationCheckbox.Visible;
-			importJavaAnimationToolStripMenuItem.Enabled = InterpolationCheckbox.Visible;
-			exportJavaAnimationToolStripMenuItem.Enabled = InterpolationCheckbox.Visible;
+			bulkAnimationSpeedToolStripMenuItem.Enabled = !IsEditingSpecial;
+			importJavaAnimationToolStripMenuItem.Enabled = !IsEditingSpecial;
+			exportJavaAnimationToolStripMenuItem.Enabled = !IsEditingSpecial;
 
 			animationFile = file;
 
@@ -72,7 +71,7 @@ namespace PckStudio.Forms.Editor
 			frameTreeView.Nodes.Clear();
 			// $"Frame: {i}, Frame Time: {Animation.MinimumFrameTime}"
 			TextureIcons.Images.Clear();
-			TextureIcons.Images.AddRange(currentAnimation.GetFrameTextures().ToArray());
+			TextureIcons.Images.AddRange(currentAnimation.GetTextures().ToArray());
 			foreach (var frame in currentAnimation.GetFrames())
 			{
 				var imageIndex = currentAnimation.GetTextureIndex(frame.Texture);
@@ -125,17 +124,19 @@ namespace PckStudio.Forms.Editor
 
 		private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
-			string anim = currentAnimation.BuildAnim();
-
-            animationFile.Properties.SetProperty("ANIM", IsEditingSpecial ? "" : anim);
-            using (var stream = new MemoryStream())
+			if (!IsEditingSpecial)
 			{
-				var texture = currentAnimation.BuildTexture(IsEditingSpecial);
-                texture.Save(stream, ImageFormat.Png);
-				animationFile.SetData(stream.ToArray());
+				string anim = currentAnimation.BuildAnim();
+				animationFile.Properties.SetProperty("ANIM", anim);
+				using (var stream = new MemoryStream())
+				{
+					var texture = currentAnimation.BuildTexture();
+					texture.Save(stream, ImageFormat.Png);
+					animationFile.SetData(stream.ToArray());
+				}
+				//Reusing this for the tile path
+				TileName = "res/textures/" + (isItem ? "items/" : "blocks/") + TileName + ".png" ;
 			}
-			//Reusing this for the tile path
-			TileName = "res/textures/" + (isItem ? "items/" : "blocks/") + TileName + ".png" ;
 			DialogResult = DialogResult.OK;
 		}
 
@@ -222,8 +223,11 @@ namespace PckStudio.Forms.Editor
             using FrameEditor diag = new FrameEditor(frame.Ticks, currentAnimation.GetTextureIndex(frame.Texture), TextureIcons);
 			if (diag.ShowDialog(this) == DialogResult.OK)
             {
-				/* Found a bug here. When passing the frame variable, it would replace the first instance of that frame and time
-				 * rather than the actual frame that was clicked. I've just switched to passing the index to fix this for now. -Matt
+				/* Found a bug here. When passing the frame variable,
+				 * it would replace the first instance of that frame and time
+				 * rather than the actual frame that was clicked.
+				 * I've just switched to passing the index to fix this for now.
+				 * - Matt
 				*/
 
                 currentAnimation.SetFrame(frameTreeView.SelectedNode.Index, diag.FrameTextureIndex, diag.FrameTime);
@@ -283,8 +287,7 @@ namespace PckStudio.Forms.Editor
 				MessageBox.Show(textureFile + " was not found", "Texture not found");
 				return;
 			}
-			using MemoryStream textureMem = new MemoryStream(File.ReadAllBytes(textureFile));
-			var textures = Image.FromStream(textureMem).CreateImageList(ImageLayoutDirection.Horizontal);
+			var textures = Image.FromFile(textureFile).CreateImageList(ImageLayoutDirection.Horizontal);
             var new_animation = new Animation(textures);
 			try
 			{
@@ -371,7 +374,7 @@ namespace PckStudio.Forms.Editor
                 string jsondata = JsonConvert.SerializeObject(mcmeta, Formatting.Indented);
                 string filename = fileDialog.FileName;
                 File.WriteAllText(filename, jsondata);
-                var finalTexture = currentAnimation.BuildTexture(isClockOrCompass: false);
+                var finalTexture = currentAnimation.BuildTexture();
                 finalTexture.Save(Path.GetFileNameWithoutExtension(filename)); // removes ".mcmeta" from filename!
                 MessageBox.Show("Animation was successfully exported to " + filename, "Export successful!");
             }

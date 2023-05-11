@@ -58,10 +58,13 @@ namespace PckStudio.Forms.Editor
 			string[] animData = anim.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
 			int lastFrameTime = MinimumFrameTime;
 			if (animData.Length <= 0)
+			{
 				for (int i = 0; i < TextureCount; i++)
 				{
 					AddFrame(i);
 				}
+				return;
+			}
 			
 			foreach (string frameInfo in animData)
 			{
@@ -80,14 +83,19 @@ namespace PckStudio.Forms.Editor
 			}
 		}
 
-		public Frame AddFrame(int frameTextureIndex) => AddFrame(frameTextureIndex, MinimumFrameTime);
-		public Frame AddFrame(int frameTextureIndex, int frameTime)
+		private void CheckTextureIndex(int index)
 		{
-			if (frameTextureIndex < 0 || frameTextureIndex >= textures.Count)
-				throw new ArgumentOutOfRangeException(nameof(frameTextureIndex));
-			Frame f = new Frame(textures[frameTextureIndex], frameTime);
-			frames.Add(f);
-			return f;
+            if ((index < 0 || index >= textures.Count))
+                throw new ArgumentOutOfRangeException(nameof(index));
+        }
+
+		public Frame AddFrame(int textureIndex) => AddFrame(textureIndex, MinimumFrameTime);
+		public Frame AddFrame(int textureIndex, int frameTime)
+		{
+			CheckTextureIndex(textureIndex);
+			Frame frame = new Frame(textures[textureIndex], frameTime);
+			frames.Add(frame);
+			return frame;
 		}
 
 		public bool RemoveFrame(int frameIndex)
@@ -103,7 +111,7 @@ namespace PckStudio.Forms.Editor
 			return frames;
 		}
 
-		public List<Image> GetFrameTextures()
+		public List<Image> GetTextures()
 		{
 			return textures;
 		}
@@ -114,11 +122,15 @@ namespace PckStudio.Forms.Editor
 			return textures.IndexOf(frameTexture);
 		}
 
-		public void SetFrame(Frame frame, int frameTextureIndex, int frameTime = MinimumFrameTime)
-			=> SetFrame(frames.IndexOf(frame), frameTextureIndex, frameTime);
-		public void SetFrame(int frameIndex, int frameTextureIndex, int frameTime = MinimumFrameTime)
+		public void SetFrame(int frameIndex, Frame frame)
 		{
-			frames[frameIndex] = new Frame(textures[frameTextureIndex], frameTime);
+			frames[frameIndex] = frame;
+        }
+
+		public void SetFrame(int frameIndex, int textureIndex, int frameTime = MinimumFrameTime)
+		{
+			CheckTextureIndex(textureIndex);
+			SetFrame(frameIndex, new Frame(textures[textureIndex], frameTime));
 		}
 
 		public string BuildAnim()
@@ -129,10 +141,8 @@ namespace PckStudio.Forms.Editor
 			return stringBuilder.ToString(0, stringBuilder.Length - 1);
 		}
 
-		public Image BuildTexture(bool isClockOrCompass, List<Image> linearImages = default!)
-		{
-			var textures = isClockOrCompass ? linearImages : this.textures;
-			
+		public Image BuildTexture()
+		{	
 			if (textures[0].Width != textures[0].Height)
 				throw new Exception("Invalid size");
 
