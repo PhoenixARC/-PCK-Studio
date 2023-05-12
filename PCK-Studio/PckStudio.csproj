@@ -192,6 +192,7 @@
     <Compile Include="Classes\Misc\FileCacher.cs" />
     <Compile Include="Classes\Misc\OpenFolderDialog.cs" />
     <Compile Include="Classes\Models\DefaultModels\Steve64x64Model.cs" />
+    <Compile Include="Internals\ApplicationScope.cs" />
     <Compile Include="Internals\SkinBOX.cs" />
     <Compile Include="Classes\Utils\ARC\ARCUtil.cs" />
     <Compile Include="Extensions\ImageExtensions.cs" />
