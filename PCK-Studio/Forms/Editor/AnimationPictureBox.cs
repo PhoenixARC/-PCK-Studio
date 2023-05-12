@@ -27,8 +27,6 @@ namespace PckStudio.Forms.Editor
 			cts.Cancel();
 		}
 
-		public Animation.Frame GetCurrentFrame() => _animation[currentAnimationFrameIndex];
-
 		public void SelectFrame(Animation animation, int index)
 		{
 			if (IsPlaying)
@@ -67,14 +65,14 @@ namespace PckStudio.Forms.Editor
 
 				if (currentAnimationFrameIndex + 1 >= _animation.FrameCount)
 				{
-					nextFrame = _animation[0];
+					nextFrame = _animation.GetFrame(0);
                 }
 				else
 				{
-					nextFrame = _animation[currentAnimationFrameIndex + 1];
+					nextFrame = _animation.GetFrame(currentAnimationFrameIndex + 1);
 				}
 
-                currentFrame = _animation[currentAnimationFrameIndex++];
+                currentFrame = _animation.GetFrame(currentAnimationFrameIndex++);
 				if (_animation.Interpolate)
 				{
                     await InterpolateFrame(currentFrame, nextFrame);
@@ -103,7 +101,7 @@ namespace PckStudio.Forms.Editor
 
 		private Animation.Frame SetAnimationFrame(int frameIndex)
 		{
-			var frame = _animation[frameIndex];
+			var frame = _animation.GetFrame(frameIndex);
 			SetAnimationFrame(frame);
 			return frame;
 		}

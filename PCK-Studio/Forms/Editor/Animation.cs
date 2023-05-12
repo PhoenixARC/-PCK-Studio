@@ -16,8 +16,6 @@ namespace PckStudio.Forms.Editor
 
 		public int TextureCount => textures.Count;
 
-		public Frame this[int frameIndex] => frames[frameIndex];
-
 		public bool Interpolate { get; set; } = false;
 
 		private readonly List<Image> textures;
