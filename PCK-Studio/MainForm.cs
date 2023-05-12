@@ -909,13 +909,12 @@ namespace PckStudio
 
 		bool IsSubPCKNode(string nodePath, string extention = ".pck")
 		{
-			// written by miku, implemented and modified by me - MNL
+			// written by miku, implemented and modified by MattNL
 			if (nodePath.EndsWith(extention)) return false;
 
 			string[] subpaths = nodePath.Split('/');
-			var conditions = subpaths.Select(s => Path.GetExtension(s).Equals(extention));
 
-			bool isSubFile = conditions.Contains(true);
+			bool isSubFile = subpaths.Any(s => Path.GetExtension(s).Equals(extention));
 
 			if(isSubFile) Console.WriteLine($"{nodePath} is a Sub-PCK File");
 
@@ -1750,11 +1749,6 @@ namespace PckStudio
 			Process.Start("https://www.youtube.com/watch?v=hTlImrRrCKQ");
 		}
 
-		private void PS3PCKInstallerToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			
-		}
-
 		private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			Pref setting = new Pref();
@@ -1765,10 +1759,6 @@ namespace PckStudio
 		{
 			PCK_Manager pckm = new PCK_Manager();
 			pckm.Show();
-		}
-
-		private void VitaPCKInstallerToolStripMenuItem_Click(object sender, EventArgs e)
-		{
 		}
 
 		private void toPhoenixARCDeveloperToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1995,18 +1985,18 @@ namespace PckStudio
 				{
 					for (int i = 2; i < 2 + diag.Levels; i++)
 					{
-						string mippedPath = textureDirectory + "/" + textureName + "MipMapLevel" + i + textureExtension;
+						string mippedPath = $"{textureDirectory}/{textureName}MipMapLevel{i}{textureExtension}";
 						Debug.WriteLine(mippedPath);
 						if (currentPCK.HasFile(mippedPath, PckFile.FileData.FileType.TextureFile)) 
 							currentPCK.Files.Remove(currentPCK.GetFile(mippedPath, PckFile.FileData.FileType.TextureFile));
 						PckFile.FileData MipMappedFile = new PckFile.FileData(mippedPath, PckFile.FileData.FileType.TextureFile);
 
+
 						Image originalTexture = Image.FromStream(new MemoryStream(file.Data));
-						int NewWidth = originalTexture.Width / (int)Math.Pow(2,i - 1);
-						int NewHeight = originalTexture.Height / (int)Math.Pow(2, i - 1);
-						Rectangle tileArea = new Rectangle(0, 0,
-							NewWidth < 1 ? 1 : NewWidth, 
-							NewHeight < 1 ? 1 : NewHeight);
+						int NewWidth = Math.Max(originalTexture.Width / (int)Math.Pow(2,i - 1), 1);
+						int NewHeight = Math.Max(originalTexture.Height / (int)Math.Pow(2, i - 1), 1);
+						
+						Rectangle tileArea = new Rectangle(0, 0, NewWidth, NewHeight);
 						Image mippedTexture = new Bitmap(NewWidth, NewHeight);
 						using (Graphics gfx = Graphics.FromImage(mippedTexture))
 						{
@@ -2018,6 +2008,7 @@ namespace PckStudio
 						MemoryStream texStream = new MemoryStream();
 						mippedTexture.Save(texStream, ImageFormat.Png);
 						MipMappedFile.SetData(texStream.ToArray());
+						texStream.Dispose();
 
 						currentPCK.Files.Insert(currentPCK.Files.IndexOf(file) + i - 1, MipMappedFile);
 					}
@@ -2040,7 +2031,7 @@ namespace PckStudio
 
 		private void tabControl_Selecting(object sender, TabControlCancelEventArgs e)
 		{
-			if (!isSelectingTab) e.Cancel = true;
+			e.Cancel = !isSelectingTab;
 		}
 
 		private void as3DSTextureFileToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2050,7 +2041,7 @@ namespace PckStudio
 				file.Filetype == PckFile.FileData.FileType.SkinFile)
 			{
 				SaveFileDialog saveFileDialog = new SaveFileDialog();
-				saveFileDialog.Filter = "3DS Texture | *.3dst";
+				saveFileDialog.Filter = "3DS Texture|*.3dst";
 				saveFileDialog.DefaultExt = ".3dst";
 				if (saveFileDialog.ShowDialog() == DialogResult.OK)
 				{
