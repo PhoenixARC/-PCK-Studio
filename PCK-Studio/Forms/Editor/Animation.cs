@@ -31,7 +31,7 @@ namespace PckStudio.Forms.Editor
 
 		public Animation(IEnumerable<Image> frameTextures, string ANIM)
 		{
-            this.textures = new List<Image>(textures);
+            this.textures = new List<Image>(frameTextures);
             ParseAnim(ANIM);
 		}
 
