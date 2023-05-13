@@ -144,7 +144,7 @@ namespace PckStudio.Forms.Editor
 			if (textures[0].Width != textures[0].Height)
 				throw new Exception("Invalid size");
 
-			return ImageExtensions.CombineImages(textures, ImageLayoutDirection.Vertical);
+            return textures.CombineImages(ImageLayoutDirection.Vertical);
 		}
 	}
 }

@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace PckStudio.Extensions
 {
-    public enum ImageLayoutDirection
+    internal enum ImageLayoutDirection
     {
         Horizontal,
         Vertical
@@ -23,7 +23,7 @@ namespace PckStudio.Extensions
             public readonly Point Point;
             public readonly Rectangle Area;
 
-            public ImageSection(Size sectionSize, int index, ImageLayoutDirection layoutDirection)
+            internal ImageSection(Size sectionSize, int index, ImageLayoutDirection layoutDirection)
             {
                 switch(layoutDirection)
                 {
@@ -50,7 +50,7 @@ namespace PckStudio.Extensions
             }
         }
 
-        public static Image GetArea(this Image source, Rectangle area)
+        internal static Image GetArea(this Image source, Rectangle area)
         {
             Image tileImage = new Bitmap(area.Width, area.Height);
             using (Graphics gfx = Graphics.FromImage(tileImage))
@@ -63,26 +63,43 @@ namespace PckStudio.Extensions
             return tileImage;
         }
 
-        public static IEnumerable<Image> CreateImageList(this Image source, Size size)
+        /// <summary>
+        /// Creates an image array by reading in horizontal order
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="size">Size of individual image inside of <paramref name="source"/></param>
+        internal static IEnumerable<Image> CreateImageList(this Image source, Size size)
+        {
+            return source.CreateImageList(size, ImageLayoutDirection.Horizontal);
+        }
+
+        internal static IEnumerable<Image> CreateImageList(this Image source, int scalar)
+        {
+            return source.CreateImageList(scalar, ImageLayoutDirection.Horizontal);
+        }
+
+        internal static IEnumerable<Image> CreateImageList(this Image source, int scalar, ImageLayoutDirection layoutDirection)
+        {
+            return CreateImageList(source, new Size(scalar, scalar), layoutDirection);
+        }
+
+        internal static IEnumerable<Image> CreateImageList(this Image source, Size size, ImageLayoutDirection imageLayout)
         {
             int rowCount = source.Width / size.Width;
             int columnCount = source.Height / size.Height;
-            Debug.WriteLine($"{source.Width} {source.Height} {size} {columnCount} {rowCount}");
+            Debug.WriteLine($"{nameof(source.Size)}={source.Size}, {nameof(size)}={size}, {columnCount} {rowCount}");
             for (int i = 0; i < columnCount * rowCount; i++)
             {
                 int row = Math.DivRem(i, rowCount, out int column);
-                Rectangle tileArea = new Rectangle(new Point(column * size.Height, row * size.Width), size);
+                if (imageLayout == ImageLayoutDirection.Vertical)
+                    column = Math.DivRem(i, columnCount, out row);
+                Rectangle tileArea = new Rectangle(new Point(column * size.Width, row * size.Height), size);
                 yield return source.GetArea(tileArea);
             }
             yield break;
         }
 
-        public static IEnumerable<Image> CreateImageList(this Image source, int scalar)
-        {
-            return CreateImageList(source, new Size(scalar, scalar));
-        }
-
-        public static IEnumerable<Image> CreateImageList(this Image source, ImageLayoutDirection layoutDirection)
+        internal static IEnumerable<Image> CreateImageList(this Image source, ImageLayoutDirection layoutDirection)
         {
             for (int i = 0; i < source.Height / source.Width; i++)
             {
@@ -92,7 +109,7 @@ namespace PckStudio.Extensions
             yield break;
         }
 
-        public static Image CombineImages(IList<Image> sources, ImageLayoutDirection layoutDirection)
+        internal static Image CombineImages(this IList<Image> sources, ImageLayoutDirection layoutDirection)
         {
             Size imageSize = CalculateImageSize(sources, layoutDirection);
             var image = new Bitmap(imageSize.Width, imageSize.Height);
@@ -130,7 +147,7 @@ namespace PckStudio.Extensions
             return new Size(width, height);
         }
 
-        public static Image ResizeImage(this Image image, int width, int height, GraphicsConfig graphicsConfig)
+        internal static Image ResizeImage(this Image image, int width, int height, GraphicsConfig graphicsConfig)
         {
             var destRect = new Rectangle(0, 0, width, height);
             var destImage = new Bitmap(width, height);
@@ -149,7 +166,7 @@ namespace PckStudio.Extensions
             return destImage;
         }
 
-        public static Image Fill(this Image image, Color color)
+        internal static Image Fill(this Image image, Color color)
         {
             using (var g = Graphics.FromImage(image))
             {
@@ -161,7 +178,7 @@ namespace PckStudio.Extensions
             return image;
         }
 
-        public static Image Blend(this Image image, Color overlayColor, BlendMode mode)
+        internal static Image Blend(this Image image, Color overlayColor, BlendMode mode)
         {
             if (image is not Bitmap baseImage)
                 return image;
@@ -193,7 +210,7 @@ namespace PckStudio.Extensions
             return bitmapResult;
         }
 
-        public static Image Blend(this Image image, Image overlay, BlendMode mode)
+        internal static Image Blend(this Image image, Image overlay, BlendMode mode)
         {
             if (image is not Bitmap baseImage || overlay is not Bitmap overlayImage ||
                 image.Width != overlay.Width || image.Height != overlay.Height)
@@ -230,7 +247,7 @@ namespace PckStudio.Extensions
             return bitmapResult;
         }
 
-        public static Image Interpolate(this Image image1, Image image2, double delta)
+        internal static Image Interpolate(this Image image1, Image image2, double delta)
         {
             delta = ColorExtensions.Clamp(delta, 0.0, 1.0);
             if (image1 is not Bitmap baseImage || image2 is not Bitmap overlayImage ||
