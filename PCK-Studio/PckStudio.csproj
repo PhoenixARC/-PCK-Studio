@@ -167,6 +167,11 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\ToolboxItems\PictureBoxWithInterpolationMode.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Extensions\ImageLayoutDirection.cs" />
+    <Compile Include="Extensions\ImageSection.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="Internals\ApplicationBuildInfo.cs" />
     <Compile Include="Classes\API\PCKCenter\model\PCKCenterJSON.cs" />
@@ -461,9 +466,6 @@
     </Compile>
     <Compile Include="Forms\Utilities\TextureConverterUtility.Designer.cs">
       <DependentUpon>TextureConverterUtility.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Classes\ToolboxItems\InterpolationPictureBox.cs">
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="PckNodeSorter.cs" />
     <Compile Include="Program.cs" />
