@@ -39,10 +39,10 @@ namespace PckStudio.Forms.Editor
             isItem = file.Filename.Split('/').Contains("items");
 			TileName = Path.GetFileNameWithoutExtension(file.Filename);
 
+			bulkAnimationSpeedToolStripMenuItem.Enabled =
+			importJavaAnimationToolStripMenuItem.Enabled =
+			exportJavaAnimationToolStripMenuItem.Enabled =
 			InterpolationCheckbox.Visible = !IsEditingSpecial;
-			bulkAnimationSpeedToolStripMenuItem.Enabled = !IsEditingSpecial;
-			importJavaAnimationToolStripMenuItem.Enabled = !IsEditingSpecial;
-			exportJavaAnimationToolStripMenuItem.Enabled = !IsEditingSpecial;
 
 			animationFile = file;
 
@@ -376,7 +376,7 @@ namespace PckStudio.Forms.Editor
                 string filename = fileDialog.FileName;
                 File.WriteAllText(filename, jsondata);
                 var finalTexture = currentAnimation.BuildTexture();
-                finalTexture.Save(Path.GetFileNameWithoutExtension(filename)); // removes ".mcmeta" from filename!
+                finalTexture.Save(Path.Combine(Path.GetDirectoryName(filename), Path.GetFileNameWithoutExtension(filename))); // removes ".mcmeta" from filename!
                 MessageBox.Show("Animation was successfully exported to " + filename, "Export successful!");
             }
         }
