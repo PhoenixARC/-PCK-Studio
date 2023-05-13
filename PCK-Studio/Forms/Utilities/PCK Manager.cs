@@ -5,6 +5,7 @@ using PckStudio.ToolboxItems;
 
 namespace PckStudio.Forms
 {
+    [Obsolete("For what is this thing used?")]
     public partial class PCK_Manager : ThemeForm
     {
         public PCK_Manager()

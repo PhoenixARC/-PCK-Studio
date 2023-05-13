@@ -49,15 +49,15 @@
             this.setBulkSpedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.javaAnimationSupportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.InterpolationCheckbox = new MetroFramework.Controls.MetroCheckBox();
-            this.AnimationPlayBtn = new MetroFramework.Controls.MetroButton();
-            this.AnimationStopBtn = new MetroFramework.Controls.MetroButton();
+            this.AnimationStartStopBtn = new MetroFramework.Controls.MetroButton();
             this.tileLabel = new MetroFramework.Controls.MetroLabel();
+            this.animationPictureBox = new PckStudio.Forms.Editor.AnimationPictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.pictureBoxWithInterpolationMode1 = new PckStudio.ToolboxItems.PictureBoxWithInterpolationMode();
+            this.importGifToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.menuStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.animationPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxWithInterpolationMode1)).BeginInit();
             this.SuspendLayout();
             // 
             // frameTreeView
@@ -151,7 +151,8 @@
             this.bulkAnimationSpeedToolStripMenuItem,
             this.importJavaAnimationToolStripMenuItem,
             this.exportJavaAnimationToolStripMenuItem,
-            this.changeTileToolStripMenuItem});
+            this.changeTileToolStripMenuItem,
+            this.importGifToolStripMenuItem});
             this.editToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.editToolStripMenuItem.Image = global::PckStudio.Properties.Resources.Tools_48px;
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
@@ -231,37 +232,24 @@
             this.InterpolationCheckbox.AutoSize = true;
             this.InterpolationCheckbox.Location = new System.Drawing.Point(161, 63);
             this.InterpolationCheckbox.Name = "InterpolationCheckbox";
-            this.InterpolationCheckbox.Size = new System.Drawing.Size(231, 15);
+            this.InterpolationCheckbox.Size = new System.Drawing.Size(129, 15);
             this.InterpolationCheckbox.TabIndex = 17;
-            this.InterpolationCheckbox.Text = "Enable Interpolation (not shown below)";
+            this.InterpolationCheckbox.Text = "Enable Interpolation";
             this.InterpolationCheckbox.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.InterpolationCheckbox.UseSelectable = true;
             this.InterpolationCheckbox.CheckedChanged += new System.EventHandler(this.InterpolationCheckbox_CheckedChanged);
             // 
-            // AnimationPlayBtn
+            // AnimationStartStopBtn
             // 
-            this.AnimationPlayBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.AnimationPlayBtn.Location = new System.Drawing.Point(157, 317);
-            this.AnimationPlayBtn.Name = "AnimationPlayBtn";
-            this.AnimationPlayBtn.Size = new System.Drawing.Size(116, 24);
-            this.AnimationPlayBtn.TabIndex = 18;
-            this.AnimationPlayBtn.Text = "Play Animation";
-            this.AnimationPlayBtn.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.AnimationPlayBtn.UseSelectable = true;
-            this.AnimationPlayBtn.Click += new System.EventHandler(this.StartAnimationBtn_Click);
-            // 
-            // AnimationStopBtn
-            // 
-            this.AnimationStopBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.AnimationStopBtn.Enabled = false;
-            this.AnimationStopBtn.Location = new System.Drawing.Point(276, 317);
-            this.AnimationStopBtn.Name = "AnimationStopBtn";
-            this.AnimationStopBtn.Size = new System.Drawing.Size(116, 24);
-            this.AnimationStopBtn.TabIndex = 19;
-            this.AnimationStopBtn.Text = "Stop Animation";
-            this.AnimationStopBtn.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.AnimationStopBtn.UseSelectable = true;
-            this.AnimationStopBtn.Click += new System.EventHandler(this.StopAnimationBtn_Click);
+            this.AnimationStartStopBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.AnimationStartStopBtn.Location = new System.Drawing.Point(157, 317);
+            this.AnimationStartStopBtn.Name = "AnimationStartStopBtn";
+            this.AnimationStartStopBtn.Size = new System.Drawing.Size(232, 24);
+            this.AnimationStartStopBtn.TabIndex = 18;
+            this.AnimationStartStopBtn.Text = "Play Animation";
+            this.AnimationStartStopBtn.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.AnimationStartStopBtn.UseSelectable = true;
+            this.AnimationStartStopBtn.Click += new System.EventHandler(this.AnimationStartStopBtn_Click);
             // 
             // tileLabel
             // 
@@ -275,26 +263,34 @@
             this.tileLabel.Text = "tileLabel";
             this.tileLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
             // 
+            // animationPictureBox
+            // 
+            this.animationPictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.animationPictureBox.Location = new System.Drawing.Point(157, 88);
+            this.animationPictureBox.Name = "animationPictureBox";
+            this.animationPictureBox.Size = new System.Drawing.Size(235, 223);
+            this.animationPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.animationPictureBox.TabIndex = 16;
+            this.animationPictureBox.TabStop = false;
+            // 
             // pictureBox1
             // 
+            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox1.Location = new System.Drawing.Point(154, 60);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(244, 24);
+            this.pictureBox1.Size = new System.Drawing.Size(255, 24);
             this.pictureBox1.TabIndex = 21;
             this.pictureBox1.TabStop = false;
             // 
-            // pictureBoxWithInterpolationMode1
+            // importGifToolStripMenuItem
             // 
-            this.pictureBoxWithInterpolationMode1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBoxWithInterpolationMode1.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-            this.pictureBoxWithInterpolationMode1.Location = new System.Drawing.Point(157, 88);
-            this.pictureBoxWithInterpolationMode1.Name = "pictureBoxWithInterpolationMode1";
-            this.pictureBoxWithInterpolationMode1.Size = new System.Drawing.Size(235, 223);
-            this.pictureBoxWithInterpolationMode1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBoxWithInterpolationMode1.TabIndex = 16;
-            this.pictureBoxWithInterpolationMode1.TabStop = false;
+            this.importGifToolStripMenuItem.Name = "importGifToolStripMenuItem";
+            this.importGifToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.importGifToolStripMenuItem.Text = "Import Gif";
+            this.importGifToolStripMenuItem.Click += new System.EventHandler(this.importGifToolStripMenuItem_Click);
             // 
             // AnimationEditor
             // 
@@ -304,10 +300,9 @@
             this.ClientSize = new System.Drawing.Size(412, 362);
             this.Controls.Add(this.InterpolationCheckbox);
             this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.AnimationStopBtn);
-            this.Controls.Add(this.AnimationPlayBtn);
+            this.Controls.Add(this.AnimationStartStopBtn);
             this.Controls.Add(this.tileLabel);
-            this.Controls.Add(this.pictureBoxWithInterpolationMode1);
+            this.Controls.Add(this.animationPictureBox);
             this.Controls.Add(this.frameTreeView);
             this.Controls.Add(this.menuStrip);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F);
@@ -321,8 +316,8 @@
             this.contextMenuStrip1.ResumeLayout(false);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.animationPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxWithInterpolationMode1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -334,13 +329,12 @@
 		private System.Windows.Forms.MenuStrip menuStrip;
 		private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem1;
-		private PckStudio.ToolboxItems.PictureBoxWithInterpolationMode pictureBoxWithInterpolationMode1;
+		private PckStudio.Forms.Editor.AnimationPictureBox animationPictureBox;
 		private MetroFramework.Controls.MetroCheckBox InterpolationCheckbox;
-		private MetroFramework.Controls.MetroButton AnimationPlayBtn;
+		private MetroFramework.Controls.MetroButton AnimationStartStopBtn;
 		private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
 		private System.Windows.Forms.ToolStripMenuItem addFrameToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem removeFrameToolStripMenuItem;
-		private MetroFramework.Controls.MetroButton AnimationStopBtn;
 		private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem bulkAnimationSpeedToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem importJavaAnimationToolStripMenuItem;
@@ -353,6 +347,7 @@
 		private System.Windows.Forms.ToolStripMenuItem setBulkSpedToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem javaAnimationSupportToolStripMenuItem;
 		private System.Windows.Forms.ImageList TextureIcons;
-		private System.Windows.Forms.PictureBox pictureBox1;
-	}
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.ToolStripMenuItem importGifToolStripMenuItem;
+    }
 }

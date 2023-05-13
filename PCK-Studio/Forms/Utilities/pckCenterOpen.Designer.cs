@@ -87,7 +87,7 @@
             // buttonInstallPs3
             // 
             this.buttonInstallPs3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            this.buttonInstallPs3.BackgroundImage = global::PckStudio.Properties.Resources.ps3;
+            this.buttonInstallPs3.BackgroundImage = global::PckStudio.Properties.Resources.PS3;
             resources.ApplyResources(this.buttonInstallPs3, "buttonInstallPs3");
             this.buttonInstallPs3.FlatAppearance.BorderSize = 0;
             this.buttonInstallPs3.ForeColor = System.Drawing.Color.White;
@@ -98,7 +98,7 @@
             // buttonInstallXbox
             // 
             this.buttonInstallXbox.BackColor = System.Drawing.Color.Lime;
-            this.buttonInstallXbox.BackgroundImage = global::PckStudio.Properties.Resources.xbox;
+            this.buttonInstallXbox.BackgroundImage = global::PckStudio.Properties.Resources.Xbox;
             resources.ApplyResources(this.buttonInstallXbox, "buttonInstallXbox");
             this.buttonInstallXbox.FlatAppearance.BorderSize = 0;
             this.buttonInstallXbox.ForeColor = System.Drawing.Color.White;
@@ -109,7 +109,7 @@
             // buttonInstallWiiU
             // 
             this.buttonInstallWiiU.BackColor = System.Drawing.Color.DeepSkyBlue;
-            this.buttonInstallWiiU.BackgroundImage = global::PckStudio.Properties.Resources.wiiu;
+            this.buttonInstallWiiU.BackgroundImage = global::PckStudio.Properties.Resources.WiiU;
             resources.ApplyResources(this.buttonInstallWiiU, "buttonInstallWiiU");
             this.buttonInstallWiiU.FlatAppearance.BorderSize = 0;
             this.buttonInstallWiiU.ForeColor = System.Drawing.Color.White;

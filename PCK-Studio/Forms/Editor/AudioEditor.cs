@@ -16,10 +16,8 @@ using PckStudio.Classes.IO.PCK;
 using OMI.Formats.Languages;
 using OMI.Formats.Pck;
 using PckStudio.Forms.Additional_Popups;
-using PckStudio.Forms.Additional_Popups.Audio;
 
-// Audio Editor by MattNL
-// additional work and optimization by Miku-666
+// Audio Editor by MattNL and Miku-666
 
 namespace PckStudio.Forms.Editor
 {
@@ -28,7 +26,6 @@ namespace PckStudio.Forms.Editor
 		public string defaultType = "yes";
 		PckAudioFile audioFile = null;
 		PckFile.FileData audioPCK;
-		LOCFile loc;
 		bool _isLittleEndian = false;
         MainForm parent = null;
 
@@ -56,10 +53,9 @@ namespace PckStudio.Forms.Editor
 			return (PckAudioFile.AudioCategory.EAudioType)Categories.IndexOf(category);
 		}
 
-		public AudioEditor(PckFile.FileData file, LOCFile locFile, bool isLittleEndian)
+		public AudioEditor(PckFile.FileData file, bool isLittleEndian)
 		{
 			InitializeComponent();
-			loc = locFile;
 			_isLittleEndian = isLittleEndian;
 
 			audioPCK = file;
@@ -76,9 +72,15 @@ namespace PckStudio.Forms.Editor
 		{
 			treeView1.BeginUpdate();
 			treeView1.Nodes.Clear();
+
 			foreach (var category in audioFile.Categories)
 			{
-				if(category.audioType == PckAudioFile.AudioCategory.EAudioType.Creative)
+				// fix songs with directories using backslash instead of forward slash
+				// Songs with a backslash instead of a forward slash would not play in RPCS3
+				foreach (string songname in category.SongNames.FindAll(s => s.Contains('\\')))
+					category.SongNames[category.SongNames.IndexOf(songname)] = songname.Replace('\\', '/');
+
+				if (category.audioType == PckAudioFile.AudioCategory.EAudioType.Creative)
 				{
 					if (category.Name == "include_overworld" &&
 						audioFile.TryGetCategory(PckAudioFile.AudioCategory.EAudioType.Overworld, out PckAudioFile.AudioCategory overworldCategory))
@@ -419,14 +421,6 @@ namespace PckStudio.Forms.Editor
 				"You can edit the credits for the PCK in the Credits editor! No more managing credit IDs!\n\n", "Help");
 		}
 
-		private void creditsEditorToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			var credits = audioFile.GetCreditsString();
-			using (CreditsEditor prompt = new CreditsEditor(credits))
-				if (prompt.ShowDialog() == DialogResult.OK)
-					audioFile.SetCredits(prompt.Credits.Split('\n'));
-		}
-
 		private void deleteUnusedBINKAsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			DialogResult dr = MessageBox.Show("This will delete all unused BINKA songs in the Data directory. This cannot be undone. Are you sure you want to continue?", "Warning", MessageBoxButtons.YesNo);
@@ -610,12 +604,14 @@ namespace PckStudio.Forms.Editor
 					{
 						string song = category.SongNames[i];
 						string songpath = Path.Combine(parent.GetDataPath(), song + ".binka");
-						if (File.Exists(songpath))
+						string new_path = Path.Combine(musicdir, Path.GetFileName(song) + ".binka");
+						if (File.Exists(songpath) && !File.Exists(new_path))
 						{
-							File.Move(songpath, Path.Combine(musicdir, song + ".binka"));
-						}
+							File.Move(songpath, new_path);
 
-						category.SongNames[i] = Path.Combine("Music", song.Replace(song, Path.GetFileNameWithoutExtension(songpath)));
+							// Songs with a backslash instead of a forward slash were not playing in RPCS3
+							category.SongNames[i] = "Music/" + song.Replace(song, Path.GetFileNameWithoutExtension(songpath));
+						}
 					}
 				}
 				treeView2.Nodes.Clear();

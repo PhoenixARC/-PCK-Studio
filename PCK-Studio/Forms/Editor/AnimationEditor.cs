@@ -11,6 +11,7 @@ using PckStudio.Forms.Additional_Popups.Animation;
 using PckStudio.Forms.Utilities;
 using PckStudio.Extensions;
 using OMI.Formats.Pck;
+using System.Collections.Generic;
 
 namespace PckStudio.Forms.Editor
 {
@@ -18,7 +19,6 @@ namespace PckStudio.Forms.Editor
 	{
 		PckFile.FileData animationFile;
 		Animation currentAnimation;
-        AnimationPlayer player;
 
 		bool isItem = false;
         string animationSection => AnimationResources.GetAnimationSection(isItem);
@@ -40,10 +40,9 @@ namespace PckStudio.Forms.Editor
 			TileName = Path.GetFileNameWithoutExtension(file.Filename);
 
 			InterpolationCheckbox.Visible = !IsEditingSpecial;
-			InterpolationCheckbox.Checked = InterpolationCheckbox.Visible;
-			bulkAnimationSpeedToolStripMenuItem.Enabled = InterpolationCheckbox.Visible;
-			importJavaAnimationToolStripMenuItem.Enabled = InterpolationCheckbox.Visible;
-			exportJavaAnimationToolStripMenuItem.Enabled = InterpolationCheckbox.Visible;
+			bulkAnimationSpeedToolStripMenuItem.Enabled = !IsEditingSpecial;
+			importJavaAnimationToolStripMenuItem.Enabled = !IsEditingSpecial;
+			exportJavaAnimationToolStripMenuItem.Enabled = !IsEditingSpecial;
 
 			animationFile = file;
 
@@ -54,7 +53,6 @@ namespace PckStudio.Forms.Editor
             currentAnimation = animationFile.Properties.HasProperty("ANIM")
 				? new Animation(frameTextures, animationFile.Properties.GetPropertyValue("ANIM"))
 				: new Animation(frameTextures);
-			player = new AnimationPlayer(pictureBoxWithInterpolationMode1);
 
 			foreach (JObject content in AnimationResources.tileData[animationSection].Children())
 			{
@@ -74,7 +72,7 @@ namespace PckStudio.Forms.Editor
 			frameTreeView.Nodes.Clear();
 			// $"Frame: {i}, Frame Time: {Animation.MinimumFrameTime}"
 			TextureIcons.Images.Clear();
-			TextureIcons.Images.AddRange(currentAnimation.GetFrameTextures().ToArray());
+			TextureIcons.Images.AddRange(currentAnimation.GetTextures().ToArray());
 			foreach (var frame in currentAnimation.GetFrames())
 			{
 				var imageIndex = currentAnimation.GetTextureIndex(frame.Texture);
@@ -84,37 +82,29 @@ namespace PckStudio.Forms.Editor
 					SelectedImageIndex = imageIndex,
 				});
             }
-			player.SelectFrame(currentAnimation, 0);
+			animationPictureBox.SelectFrame(currentAnimation, 0);
 		}
 
 		private void frameTreeView_AfterSelect(object sender, TreeViewEventArgs e)
 		{
-			if (player.IsPlaying && !AnimationPlayBtn.Enabled)
-                AnimationPlayBtn.Enabled = !(AnimationStopBtn.Enabled = !AnimationStopBtn.Enabled);
-			player.SelectFrame(currentAnimation, frameTreeView.SelectedNode.Index);
+			if (animationPictureBox.IsPlaying)
+                AnimationStartStopBtn.Text = "Play Animation";
+            animationPictureBox.SelectFrame(currentAnimation, frameTreeView.SelectedNode.Index);
 		}
 
-		private int mix(double ratio, int val1, int val2) // Ported from Java Edition code
+		private void AnimationStartStopBtn_Click(object sender, EventArgs e)
 		{
-			return (int)(ratio * val1 + (1.0D - ratio) * val2);
-		}
-
-		private void StartAnimationBtn_Click(object sender, EventArgs e)
-		{
-			// prevent player from crashing
-			player.Stop();
-			AnimationPlayBtn.Enabled = !(AnimationStopBtn.Enabled = !AnimationStopBtn.Enabled);
-			if (currentAnimation.FrameCount > 1)
+			if (animationPictureBox.IsPlaying)
 			{
-				player.SetContext(pictureBoxWithInterpolationMode1);
-				player.Start(currentAnimation);
+				AnimationStartStopBtn.Text = "Play Animation";
+				animationPictureBox.Stop();
+				return;
 			}
-		}
-
-		private void StopAnimationBtn_Click(object sender, EventArgs e)
-		{
-            AnimationPlayBtn.Enabled = !(AnimationStopBtn.Enabled = !AnimationStopBtn.Enabled);
-            player.Stop();
+            if (currentAnimation.FrameCount > 1)
+			{
+                animationPictureBox.Start(currentAnimation);
+				AnimationStartStopBtn.Text = "Stop Animation";
+			}
 		}
 
 		private void frameTreeView_KeyDown(object sender, KeyEventArgs e)
@@ -135,17 +125,19 @@ namespace PckStudio.Forms.Editor
 
 		private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
-			string anim = currentAnimation.BuildAnim();
-
-            animationFile.Properties.SetProperty("ANIM", IsEditingSpecial ? "" : anim);
-            using (var stream = new MemoryStream())
+			if (!IsEditingSpecial)
 			{
-				var texture = currentAnimation.BuildTexture(IsEditingSpecial);
-                texture.Save(stream, ImageFormat.Png);
-				animationFile.SetData(stream.ToArray());
+				string anim = currentAnimation.BuildAnim();
+				animationFile.Properties.SetProperty("ANIM", anim);
+				using (var stream = new MemoryStream())
+				{
+					var texture = currentAnimation.BuildTexture();
+					texture.Save(stream, ImageFormat.Png);
+					animationFile.SetData(stream.ToArray());
+				}
+				//Reusing this for the tile path
+				TileName = "res/textures/" + (isItem ? "items/" : "blocks/") + TileName + ".png" ;
 			}
-			//Reusing this for the tile path
-			TileName = "res/textures/" + (isItem ? "items/" : "blocks/") + TileName + ".png" ;
 			DialogResult = DialogResult.OK;
 		}
 
@@ -232,8 +224,11 @@ namespace PckStudio.Forms.Editor
             using FrameEditor diag = new FrameEditor(frame.Ticks, currentAnimation.GetTextureIndex(frame.Texture), TextureIcons);
 			if (diag.ShowDialog(this) == DialogResult.OK)
             {
-				/* Found a bug here. When passing the frame variable, it would replace the first instance of that frame and time
-				 * rather than the actual frame that was clicked. I've just switched to passing the index to fix this for now. -Matt
+				/* Found a bug here. When passing the frame variable,
+				 * it would replace the first instance of that frame and time
+				 * rather than the actual frame that was clicked.
+				 * I've just switched to passing the index to fix this for now.
+				 * - Matt
 				*/
 
                 currentAnimation.SetFrame(frameTreeView.SelectedNode.Index, diag.FrameTextureIndex, diag.FrameTime);
@@ -294,8 +289,7 @@ namespace PckStudio.Forms.Editor
 				MessageBox.Show(textureFile + " was not found", "Texture not found");
 				return;
 			}
-			using MemoryStream textureMem = new MemoryStream(File.ReadAllBytes(textureFile));
-			var textures = Image.FromStream(textureMem).CreateImageList(ImageLayoutDirection.Horizontal);
+			var textures = Image.FromFile(textureFile).CreateImageList(ImageLayoutDirection.Horizontal);
             var new_animation = new Animation(textures);
 			try
 			{
@@ -382,7 +376,7 @@ namespace PckStudio.Forms.Editor
                 string jsondata = JsonConvert.SerializeObject(mcmeta, Formatting.Indented);
                 string filename = fileDialog.FileName;
                 File.WriteAllText(filename, jsondata);
-                var finalTexture = currentAnimation.BuildTexture(isClockOrCompass: false);
+                var finalTexture = currentAnimation.BuildTexture();
                 finalTexture.Save(Path.GetFileNameWithoutExtension(filename)); // removes ".mcmeta" from filename!
                 MessageBox.Show("Animation was successfully exported to " + filename, "Export successful!");
             }
@@ -437,10 +431,41 @@ namespace PckStudio.Forms.Editor
 
         private void AnimationEditor_FormClosing(object sender, FormClosingEventArgs e)
         {
-			if (player.IsPlaying)
+			if (animationPictureBox.IsPlaying)
 			{
-				player.Stop();
+                animationPictureBox.Stop();
 			}
+        }
+
+        private void importGifToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+			OpenFileDialog fileDialog = new OpenFileDialog()
+			{
+				Filter = "GIF|*.gif"
+			};
+			if (fileDialog.ShowDialog(this) != DialogResult.OK)
+				return;
+
+			var gif = Image.FromFile(fileDialog.FileName);
+			if (!gif.RawFormat.Equals(ImageFormat.Gif))
+			{
+				MessageBox.Show("Selected file is not a gif", "Invalid file", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+
+
+            FrameDimension dimension = new FrameDimension(gif.FrameDimensionsList[0]);
+            int frameCount = gif.GetFrameCount(dimension);
+
+			var textures = new List<Image>(frameCount);
+
+			for (int i = 0; i < frameCount; i++)
+			{
+				gif.SelectActiveFrame(dimension, i);
+				textures.Add(new Bitmap(gif));
+			}
+			currentAnimation = new Animation(textures);
+			LoadAnimationTreeView();
         }
     }
 }

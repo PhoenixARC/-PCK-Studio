@@ -138,6 +138,7 @@
             // pictureBox1
             // 
             resources.ApplyResources(this.pictureBox1, "pictureBox1");
+            this.pictureBox1.Image = global::PckStudio.Properties.Resources.pckCenterHeader;
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.TabStop = false;
             // 
@@ -196,13 +197,13 @@
             // 
             // deleteToolStripMenuItem
             // 
-            this.deleteToolStripMenuItem.Image = global::PckStudio.Properties.Resources.Del;
+            this.deleteToolStripMenuItem.Image = global::PckStudio.Properties.Resources.file_delete;
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
             resources.ApplyResources(this.deleteToolStripMenuItem, "deleteToolStripMenuItem");
             // 
             // exportToolStripMenuItem
             // 
-            this.exportToolStripMenuItem.Image = global::PckStudio.Properties.Resources.ExportFile;
+            this.exportToolStripMenuItem.Image = global::PckStudio.Properties.Resources.file_export;
             this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
             resources.ApplyResources(this.exportToolStripMenuItem, "exportToolStripMenuItem");
             // 

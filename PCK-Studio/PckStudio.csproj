@@ -167,6 +167,12 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\ToolboxItems\PictureBoxWithInterpolationMode.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Extensions\ImageLayoutDirection.cs" />
+    <Compile Include="Extensions\ImageSection.cs" />
+    <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="Extensions\ControlExtensions.cs" />
     <Compile Include="Internals\ApplicationBuildInfo.cs" />
     <Compile Include="Classes\API\PCKCenter\model\PCKCenterJSON.cs" />
@@ -190,10 +196,12 @@
     <Compile Include="Classes\IO\Sounds\Sounds.cs" />
     <Compile Include="Classes\Misc\FTPClient.cs" />
     <Compile Include="Classes\Misc\FileCacher.cs" />
+    <Compile Include="Classes\Misc\OpenFolderDialog.cs" />
     <Compile Include="Classes\Models\DefaultModels\Steve64x64Model.cs" />
     <Compile Include="Classes\ToolboxItems\ThemeForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Internals\ApplicationScope.cs" />
     <Compile Include="Internals\SkinBOX.cs" />
     <Compile Include="Classes\Utils\ARC\ARCUtil.cs" />
     <Compile Include="Extensions\ImageExtensions.cs" />
@@ -227,11 +235,17 @@
     <Compile Include="Classes\Networking\Network.cs" />
     <Compile Include="Classes\Misc\RichPresenceClient.cs" />
     <Compile Include="Classes\Networking\Update.cs" />
-    <Compile Include="Forms\Additional-Popups\Audio\creditsEditor.cs">
-      <SubType>Form</SubType>
+    <Compile Include="Features\CemuPanel.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\Additional-Popups\Audio\creditsEditor.Designer.cs">
-      <DependentUpon>creditsEditor.cs</DependentUpon>
+    <Compile Include="Features\CemuPanel.Designer.cs">
+      <DependentUpon>CemuPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Features\WiiUPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Features\WiiUPanel.Designer.cs">
+      <DependentUpon>WiiUPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="Internals\CommitInfo.cs" />
     <Compile Include="Forms\Additional-Popups\EntityForms\AddEntry.cs">
@@ -289,7 +303,9 @@
       <DependentUpon>TextPrompt.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Editor\Animation.cs" />
-    <Compile Include="Forms\Editor\AnimationPlayer.cs" />
+    <Compile Include="Forms\Editor\AnimationPictureBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Forms\Editor\MaterialsEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -368,12 +384,17 @@
     <Compile Include="Forms\Additional-Popups\InProgressPrompt.Designer.cs">
       <DependentUpon>InProgressPrompt.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Utilities\ModelsResources.cs" />
     <Compile Include="Forms\Utilities\MaterialResources.cs" />
     <Compile Include="Forms\Utilities\BehaviourResources.cs" />
     <Compile Include="Forms\Utilities\AnimationResources.cs" />
     <Compile Include="Forms\Editor\BoxEditor.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Features\PckManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Features\PckManager.Designer.cs">
+      <DependentUpon>PckManager.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Editor\BoxEditor.Designer.cs">
       <DependentUpon>BoxEditor.cs</DependentUpon>
@@ -426,25 +447,6 @@
     <Compile Include="Forms\Editor\AudioEditor.Designer.cs">
       <DependentUpon>AudioEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Utilities\InstallPS3.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Utilities\InstallPS3.Designer.cs">
-      <DependentUpon>InstallPS3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Utilities\InstallVita.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Utilities\InstallVita.Designer.cs">
-      <DependentUpon>InstallVita.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Utilities\InstallWiiU.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Utilities\InstallWiiU.Designer.cs">
-      <DependentUpon>InstallWiiU.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="Forms\Utilities\PCK Manager.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -475,9 +477,6 @@
     <Compile Include="Forms\Utilities\TextureConverterUtility.Designer.cs">
       <DependentUpon>TextureConverterUtility.cs</DependentUpon>
     </Compile>
-    <Compile Include="Classes\ToolboxItems\InterpolationPictureBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="PckNodeSorter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -485,6 +484,12 @@
       <DependentUpon>creditsEditor.cs</DependentUpon>
     </EmbeddedResource>
     <Compile Include="Classes\IO\3DST\TextureCodec.cs" />
+    <EmbeddedResource Include="Features\CemuPanel.resx">
+      <DependentUpon>CemuPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Features\WiiUPanel.resx">
+      <DependentUpon>WiiUPanel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\EntityForms\AddEntry.resx">
       <DependentUpon>AddEntry.cs</DependentUpon>
     </EmbeddedResource>
@@ -574,6 +579,9 @@
     <EmbeddedResource Include="Forms\Additional-Popups\InProgressPrompt.resx">
       <DependentUpon>InProgressPrompt.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Features\PckManager.resx">
+      <DependentUpon>PckManager.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Editor\BoxEditor.resx">
       <DependentUpon>BoxEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -608,18 +616,6 @@
       <DependentUpon>AudioEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\InstallPS3.resx">
-      <DependentUpon>InstallPS3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\InstallVita.resx">
-      <DependentUpon>InstallVita.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\InstallWiiU.ja.resx">
-      <DependentUpon>InstallWiiU.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\InstallWiiU.resx">
-      <DependentUpon>InstallWiiU.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Utilities\PCK Manager.ja.resx">
       <DependentUpon>PCK Manager.cs</DependentUpon>
     </EmbeddedResource>
@@ -640,6 +636,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Utilities\pckCenterOpen.resx">
       <DependentUpon>pckCenterOpen.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Utilities\TextureConverterUtility.resx">
       <DependentUpon>TextureConverterUtility.cs</DependentUpon>
@@ -676,7 +673,6 @@
     <None Include="Resources\rename_32px.png" />
     <None Include="Resources\entityData.json" />
     <None Include="Resources\TexturePackIcon.png" />
-    <None Include="Resources\apps.zip" />
     <None Include="Resources\binka\binkawin.asi" />
     <None Include="Resources\fileTemplates\1.91_colours.col" />
     <None Include="Resources\fileTemplates\tu12colours.col" />
@@ -692,28 +688,18 @@
     <None Include="Resources\fileTemplates\tu54colours.col" />
     <None Include="Resources\fileTemplates\tu69colours.col" />
     <None Include="Resources\tileData.json" />
-    <None Include="Resources\Del.png" />
-    <None Include="Resources\ExportFile.png" />
-    <None Include="Resources\power3.png" />
-    <None Include="Resources\power.png" />
-    <None Include="Resources\youtube_PNG15.png" />
+    <None Include="Resources\external\Youtube.png" />
     <None Include="Resources\pckClosed.png" />
-    <None Include="Resources\pckClosed.bmp" />
-    <None Include="Resources\wii-u-games-tool.png" />
-    <None Include="Resources\turn-off %281%291.png" />
-    <None Include="Resources\discord.png" />
-    <None Include="Resources\external-content.duckduckgo.png" />
-    <None Include="Resources\clock.png" />
+    <None Include="Resources\external\Discord.png" />
+    <None Include="Resources\icons\clock.png" />
     <None Include="Resources\changeTile.png" />
     <None Include="Resources\items.png" />
-    <None Include="Resources\MROE.png" />
-    <None Include="Resources\sdDownload.png" />
-    <None Include="Resources\Replace.png" />
+    <None Include="Resources\HamburgerMenuIcon.png" />
     <None Include="Resources\pack.png" />
     <None Include="Resources\terrain.png" />
-    <None Include="Resources\xbox.png" />
-    <None Include="Resources\ps3.png" />
-    <None Include="Resources\wiiu.png" />
+    <None Include="Resources\external\Xbox.png" />
+    <None Include="Resources\external\PS3.png" />
+    <None Include="Resources\external\WiiU.png" />
     <None Include="Resources\Splash.png" />
     <None Include="Resources\pckOpen.png" />
     <None Include="Resources\pckDrop.png" />
@@ -737,6 +723,14 @@
     <None Include="Resources\iconImageList\ENTITY MATERIALS ICON.png" />
     <None Include="Resources\iconImageList\blank.png" />
     <None Include="Resources\entities.png" />
+    <Content Include="Resources\icons\file_delete.png" />
+    <Content Include="Resources\icons\file_empty.png" />
+    <None Include="Resources\icons\file_export.png" />
+    <None Include="Resources\icons\file_import.png" />
+    <Content Include="Resources\icons\file_new.png" />
+    <Content Include="Resources\icons\music.png" />
+    <None Include="Resources\icons\ranch.png" />
+    <Content Include="Resources\icons\Replace.png" />
     <None Include="Resources\help_30px.png" />
     <None Include="Resources\menu_50px.png" />
     <None Include="Resources\check_all_480px.png" />
@@ -745,7 +739,6 @@
     <None Include="Resources\file_32px.png" />
     <None Include="Resources\generated_photos_30px.png" />
     <Content Include="Resources\PCK-Studio_Logo.ico" />
-    <None Include="Resources\bg1.png" />
     <Content Include="Resources\NoImageFound.png" />
   </ItemGroup>
   <ItemGroup>
