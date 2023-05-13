@@ -23,18 +23,16 @@ namespace PckStudio.Forms.Editor
 		private readonly List<Frame> frames = new List<Frame>();
 
 
-		public Animation(IEnumerable<Image> image)
+		public Animation(IEnumerable<Image> textures)
 		{
-			textures = new List<Image>(image);
-            for (int i = 0; i < TextureCount; i++)
-            {
-                AddFrame(i);
-            }
+			this.textures = new List<Image>(textures);
+            AddSingleFrames();
         }
 
-		public Animation(IEnumerable<Image> frameTextures, string ANIM) : this(frameTextures)
+		public Animation(IEnumerable<Image> frameTextures, string ANIM)
 		{
-			ParseAnim(ANIM);
+            this.textures = new List<Image>(textures);
+            ParseAnim(ANIM);
 		}
 
 		public class Frame
@@ -61,11 +59,8 @@ namespace PckStudio.Forms.Editor
 			int lastFrameTime = MinimumFrameTime;
 			if (animData.Length <= 0)
 			{
-				for (int i = 0; i < TextureCount; i++)
-				{
-					AddFrame(i);
-				}
-				return;
+				AddSingleFrames();
+                return;
 			}
 			
 			foreach (string frameInfo in animData)
@@ -99,6 +94,14 @@ namespace PckStudio.Forms.Editor
 			frames.Add(frame);
 			return frame;
 		}
+
+		private void AddSingleFrames()
+		{
+            for (int i = 0; i < TextureCount; i++)
+            {
+                AddFrame(i);
+            }
+        }
 
 		public bool RemoveFrame(int frameIndex)
 		{
