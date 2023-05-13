@@ -13,6 +13,7 @@ namespace PckStudio
         protected override void OnPaint(PaintEventArgs paintEventArgs)
         {
             paintEventArgs.Graphics.InterpolationMode = InterpolationMode;
+            paintEventArgs.Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
             base.OnPaint(paintEventArgs);
         }
     }
