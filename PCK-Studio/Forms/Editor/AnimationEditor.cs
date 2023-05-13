@@ -11,6 +11,7 @@ using PckStudio.Forms.Additional_Popups.Animation;
 using PckStudio.Forms.Utilities;
 using PckStudio.Extensions;
 using OMI.Formats.Pck;
+using System.Collections.Generic;
 
 namespace PckStudio.Forms.Editor
 {
@@ -433,6 +434,37 @@ namespace PckStudio.Forms.Editor
 			{
                 animationPictureBox.Stop();
 			}
+        }
+
+        private void importGifToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+			OpenFileDialog fileDialog = new OpenFileDialog()
+			{
+				Filter = "GIF|*.gif"
+			};
+			if (fileDialog.ShowDialog(this) != DialogResult.OK)
+				return;
+
+			var gif = Image.FromFile(fileDialog.FileName);
+			if (!gif.RawFormat.Equals(ImageFormat.Gif))
+			{
+				MessageBox.Show("Selected file is not a gif", "Invalid file", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+
+
+            FrameDimension dimension = new FrameDimension(gif.FrameDimensionsList[0]);
+            int frameCount = gif.GetFrameCount(dimension);
+
+			var textures = new List<Image>(frameCount);
+
+			for (int i = 0; i < frameCount; i++)
+			{
+				gif.SelectActiveFrame(dimension, i);
+				textures.Add(new Bitmap(gif));
+			}
+			currentAnimation = new Animation(textures);
+			LoadAnimationTreeView();
         }
     }
 }

@@ -26,7 +26,11 @@ namespace PckStudio.Forms.Editor
 		public Animation(IEnumerable<Image> image)
 		{
 			textures = new List<Image>(image);
-		}
+            for (int i = 0; i < TextureCount; i++)
+            {
+                AddFrame(i);
+            }
+        }
 
 		public Animation(IEnumerable<Image> frameTextures, string ANIM) : this(frameTextures)
 		{

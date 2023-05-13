@@ -53,6 +53,7 @@
             this.tileLabel = new MetroFramework.Controls.MetroLabel();
             this.animationPictureBox = new PckStudio.Forms.Editor.AnimationPictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.importGifToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.animationPictureBox)).BeginInit();
@@ -149,7 +150,8 @@
             this.bulkAnimationSpeedToolStripMenuItem,
             this.importJavaAnimationToolStripMenuItem,
             this.exportJavaAnimationToolStripMenuItem,
-            this.changeTileToolStripMenuItem});
+            this.changeTileToolStripMenuItem,
+            this.importGifToolStripMenuItem});
             this.editToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
@@ -281,6 +283,13 @@
             this.pictureBox1.TabIndex = 21;
             this.pictureBox1.TabStop = false;
             // 
+            // importGifToolStripMenuItem
+            // 
+            this.importGifToolStripMenuItem.Name = "importGifToolStripMenuItem";
+            this.importGifToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.importGifToolStripMenuItem.Text = "Import Gif";
+            this.importGifToolStripMenuItem.Click += new System.EventHandler(this.importGifToolStripMenuItem_Click);
+            // 
             // AnimationEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -335,5 +344,6 @@
 		private System.Windows.Forms.ToolStripMenuItem javaAnimationSupportToolStripMenuItem;
 		private System.Windows.Forms.ImageList TextureIcons;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.ToolStripMenuItem importGifToolStripMenuItem;
     }
 }
