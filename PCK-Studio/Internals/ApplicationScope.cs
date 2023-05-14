@@ -24,7 +24,7 @@ namespace PckStudio
             Stopwatch stopwatch = Stopwatch.StartNew();
             {
                 _entityImages ??= Resources.entities_sheet.CreateImageList(32).ToArray();
-                AppDataCacher = new FileCacher(Program.AppDataCache);
+                AppDataCacher ??= new FileCacher(Program.AppDataCache);
                 _ = AnimationResources.JsonTileData;
                 _ = AnimationResources.ItemList;
                 _ = AnimationResources.BlockList;
