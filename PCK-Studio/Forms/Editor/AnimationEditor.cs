@@ -12,18 +12,20 @@ using PckStudio.Forms.Utilities;
 using PckStudio.Extensions;
 using OMI.Formats.Pck;
 using System.Collections.Generic;
+using PckStudio.Models;
+using System.Diagnostics;
 
 namespace PckStudio.Forms.Editor
 {
     public partial class AnimationEditor : MetroForm
 	{
-		PckFile.FileData animationFile;
-		Animation currentAnimation;
+		private PckFile.FileData animationFile;
+		private Animation currentAnimation;
 
-		bool isItem = false;
-        string animationSection => AnimationResources.GetAnimationSection(isItem);
+		private bool isItem = false;
+        private string animationSection => AnimationResources.GetAnimationSection(isItem);
 
-		public string TileName = string.Empty;
+		private string TileName = string.Empty;
 
 		private bool IsEditingSpecial => IsSpecialTile(TileName);
 
@@ -40,21 +42,24 @@ namespace PckStudio.Forms.Editor
 			TileName = Path.GetFileNameWithoutExtension(file.Filename);
 
 			bulkAnimationSpeedToolStripMenuItem.Enabled =
-			importJavaAnimationToolStripMenuItem.Enabled =
-			exportJavaAnimationToolStripMenuItem.Enabled =
+			importToolStripMenuItem.Enabled =
+			exportAsToolStripMenuItem.Enabled =
 			InterpolationCheckbox.Visible = !IsEditingSpecial;
 
 			animationFile = file;
 
-			using MemoryStream textureMem = new MemoryStream(animationFile.Data);
-			var texture = new Bitmap(textureMem);
-            var frameTextures = texture.CreateImageList(ImageLayoutDirection.Vertical);
+			if (file.Size > 0)
+			{
+				using MemoryStream textureMem = new MemoryStream(animationFile.Data);
+				var texture = new Bitmap(textureMem);
+				var frameTextures = texture.CreateImageList(ImageLayoutDirection.Vertical);
 
-            currentAnimation = animationFile.Properties.HasProperty("ANIM")
-				? new Animation(frameTextures, animationFile.Properties.GetPropertyValue("ANIM"))
-				: new Animation(frameTextures);
+				currentAnimation = animationFile.Properties.HasProperty("ANIM")
+					? new Animation(frameTextures, animationFile.Properties.GetPropertyValue("ANIM"))
+					: new Animation(frameTextures);
+			}
 
-			foreach (JObject content in AnimationResources.tileData[animationSection].Children())
+			foreach (JObject content in AnimationResources.JsonTileData[animationSection].Children())
 			{
 				var prop = content.Properties().FirstOrDefault(prop => prop.Name == TileName);
 				if (prop is JProperty)
@@ -65,12 +70,17 @@ namespace PckStudio.Forms.Editor
 			}
             LoadAnimationTreeView();
 		}
-		
-		private void LoadAnimationTreeView()
+
+        private void LoadAnimationTreeView()
 		{
-			InterpolationCheckbox.Checked = currentAnimation.Interpolate;
+			if (currentAnimation is null)
+			{
+                AnimationStartStopBtn.Enabled = false;
+                return;
+			}
+            AnimationStartStopBtn.Enabled = true;
+            InterpolationCheckbox.Checked = currentAnimation.Interpolate;
 			frameTreeView.Nodes.Clear();
-			// $"Frame: {i}, Frame Time: {Animation.MinimumFrameTime}"
 			TextureIcons.Images.Clear();
 			TextureIcons.Images.AddRange(currentAnimation.GetTextures().ToArray());
 			foreach (var frame in currentAnimation.GetFrames())
@@ -125,7 +135,7 @@ namespace PckStudio.Forms.Editor
 
 		private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
-			if (!IsEditingSpecial)
+			if (!IsEditingSpecial && currentAnimation is not null)
 			{
 				string anim = currentAnimation.BuildAnim();
 				animationFile.Properties.SetProperty("ANIM", anim);
@@ -135,10 +145,11 @@ namespace PckStudio.Forms.Editor
 					texture.Save(stream, ImageFormat.Png);
 					animationFile.SetData(stream.ToArray());
 				}
-				//Reusing this for the tile path
-				TileName = "res/textures/" + (isItem ? "items/" : "blocks/") + TileName + ".png" ;
+				animationFile.Filename = "res/textures/" + (isItem ? "items/" : "blocks/") + TileName + ".png" ;
+				DialogResult = DialogResult.OK;
+				return;
 			}
-			DialogResult = DialogResult.OK;
+			DialogResult = DialogResult.Cancel;
 		}
 
 		// Most of the code below is modified code from this link: https://docs.microsoft.com/en-us/dotnet/api/system.windows.forms.treeview.itemdrag?view=windowsdesktop-6.0
@@ -272,14 +283,15 @@ namespace PckStudio.Forms.Editor
 			DialogResult query = MessageBox.Show("This feature will replace the existing animation data. It might fail if the selected animation script is invalid. Are you sure that you want to continue?", "Warning", MessageBoxButtons.YesNo);
 			if (query == DialogResult.No) return;
 
-			OpenFileDialog fileDialog = new OpenFileDialog();
-			fileDialog.Title = "Please select a valid Minecaft: Java Edition animation script";
-
-			// It's marked as .png.mcmeta just in case
-			// some weirdo tries to pass a pack.mcmeta or something
-			// -MattNL
-			fileDialog.Filter = "Animation Scripts (*.mcmeta)|*.png.mcmeta";
-			if (fileDialog.ShowDialog(this) != DialogResult.OK) return;
+            OpenFileDialog fileDialog = new OpenFileDialog
+            {
+                Title = "Please select a valid Minecaft: Java Edition animation script",
+                // It's marked as .png.mcmeta just in case
+                // some weirdo tries to pass a pack.mcmeta or something
+                // -MattNL
+                Filter = "Animation Scripts (*.mcmeta)|*.png.mcmeta"
+            };
+            if (fileDialog.ShowDialog(this) != DialogResult.OK) return;
 			Console.WriteLine("Selected Animation Script: " + fileDialog.FileName);
 
 			string textureFile = fileDialog.FileName.Substring(0, fileDialog.FileName.Length - ".mcmeta".Length);
@@ -343,28 +355,32 @@ namespace PckStudio.Forms.Editor
 
 		private void changeTileToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			using (ChangeTile diag = new ChangeTile())
+            using (ChangeTile diag = new ChangeTile())
 				if (diag.ShowDialog(this) == DialogResult.OK)
 				{
 					Console.WriteLine(diag.SelectedTile);
 					if (TileName != diag.SelectedTile) isItem = diag.IsItem;
 					TileName = diag.SelectedTile;
 
-					InterpolationCheckbox.Checked = 
 					bulkAnimationSpeedToolStripMenuItem.Enabled = 
-					importJavaAnimationToolStripMenuItem.Enabled = 
-					exportJavaAnimationToolStripMenuItem.Enabled = 
+					importToolStripMenuItem.Enabled = 
+					exportAsToolStripMenuItem.Enabled = 
 					InterpolationCheckbox.Visible = !IsEditingSpecial;
 
-					foreach (JObject content in AnimationResources.tileData[animationSection].Children())
-					{
-						var first = content.Properties().FirstOrDefault(p => p.Name == TileName);
-						if (first is JProperty p) tileLabel.Text = (string)p.Value;
-                    }
+					SetTileLabel();
 				}
-		}
+        }
 
-		private void exportJavaAnimationToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SetTileLabel()
+        {
+            foreach (JObject content in AnimationResources.JsonTileData[animationSection].Children())
+            {
+                var first = content.Properties().FirstOrDefault(p => p.Name == TileName);
+                if (first is JProperty p) tileLabel.Text = (string)p.Value;
+            }
+        }
+
+        private void exportJavaAnimationToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			SaveFileDialog fileDialog = new SaveFileDialog();
 			fileDialog.Title = "Please choose where you want to save your new animation";
@@ -383,7 +399,7 @@ namespace PckStudio.Forms.Editor
 
         private void howToInterpolation_Click(object sender, EventArgs e)
 		{
-			MessageBox.Show("The Interpolation effect is when the animtion smoothly translates between the frames instead of simply displaying the next one. This can be seen with some vanilla Minecraft textures such as Magma and Prismarine.\n\nThe \"Interpolates\" checkbox at the bottom controls this.", "Interpolation");
+			MessageBox.Show("The Interpolation effect is when the animtion smoothly translates between the frames instead of simply displaying the next one. This can be seen with some vanilla Minecraft textures such as Magma and Prismarine.\n\nThe \"Interpolates\" checkbox above the animation controls this.", "Interpolation");
 		}
 
 		private void editorControlsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -406,7 +422,8 @@ namespace PckStudio.Forms.Editor
 		private void InterpolationCheckbox_CheckedChanged(object sender, EventArgs e)
 		{
 			// Interpolation flag wasn't being updated when the check box changed, this fixes the issue
-			currentAnimation.Interpolate = InterpolationCheckbox.Checked;
+			if (currentAnimation is not null)
+				currentAnimation.Interpolate = InterpolationCheckbox.Checked;
 		}
 
         private void AnimationEditor_FormClosing(object sender, FormClosingEventArgs e)
@@ -421,7 +438,7 @@ namespace PckStudio.Forms.Editor
         {
 			OpenFileDialog fileDialog = new OpenFileDialog()
 			{
-				Filter = "GIF|*.gif"
+				Filter = "GIF file|*.gif"
 			};
 			if (fileDialog.ShowDialog(this) != DialogResult.OK)
 				return;
@@ -433,7 +450,6 @@ namespace PckStudio.Forms.Editor
 				return;
 			}
 
-
             FrameDimension dimension = new FrameDimension(gif.FrameDimensionsList[0]);
             int frameCount = gif.GetFrameCount(dimension);
 
@@ -444,6 +460,21 @@ namespace PckStudio.Forms.Editor
 				gif.SelectActiveFrame(dimension, i);
 				textures.Add(new Bitmap(gif));
 			}
+			currentAnimation = new Animation(textures);
+			LoadAnimationTreeView();
+        }
+
+        private void animationTextureToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using var ofd = new OpenFileDialog()
+            {
+                Filter = "PNG Files | *.png",
+                Title = "Select a PNG File",
+            };
+            if (ofd.ShowDialog() != DialogResult.OK)
+                return;
+            Image img = Image.FromFile(ofd.FileName);
+            var textures = img.CreateImageList(ImageLayoutDirection.Vertical);
 			currentAnimation = new Animation(textures);
 			LoadAnimationTreeView();
         }

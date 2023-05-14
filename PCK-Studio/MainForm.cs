@@ -356,6 +356,9 @@ namespace PckStudio
 
 		private void HandleTextureFile(PckFile.FileData file)
 		{
+			if (!(file.Filename.StartsWith("res/textures/blocks/") || file.Filename.StartsWith("res/textures/items/")))
+				return;
+
 			if (IsFilePathMipMapped(file.Filename) &&
 				currentPCK.Files.Find(pckfile =>
 					// todo write cleaner ?
@@ -367,13 +370,11 @@ namespace PckStudio
 				file = originalAnimationFile;
 			}
 
-			if (!(file.Filename.StartsWith("res/textures/blocks/") || file.Filename.StartsWith("res/textures/items/"))) return;
-
 			using (AnimationEditor animationEditor = new AnimationEditor(file))
 			{
 				if (animationEditor.ShowDialog(this) == DialogResult.OK)
 				{
-					file.Filename = animationEditor.TileName;
+					wasModified = true;
 					BuildMainTreeView();
 				}
 			}
@@ -873,37 +874,21 @@ namespace PckStudio
 
 		private void createAnimatedTextureToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			using var ofd = new OpenFileDialog()
-			{
-				Filter = "PNG Files | *.png",
-				Title = "Select a PNG File",
-			};
-			if (ofd.ShowDialog() != DialogResult.OK)
-				return;
-
 			using ChangeTile diag = new ChangeTile();
 			if (diag.ShowDialog(this) != DialogResult.OK)
 				return;
 
-			using Image img = new Bitmap(ofd.FileName);
-			var file = currentPCK.CreateNewFile(
+			var file = new PckFile.FileData(
 				$"res/textures/{AnimationResources.GetAnimationSection(diag.IsItem)}/{diag.SelectedTile}.png",
-				PckFile.FileData.FileType.TextureFile,
-				() =>
-				{
-					using var stream = new MemoryStream();
-					img.Save(stream, ImageFormat.Png);
-					return stream.ToArray();
-				});
-			file.Properties.Add(("ANIM", string.Empty));
+				PckFile.FileData.FileType.TextureFile);
 
 			using AnimationEditor animationEditor = new AnimationEditor(file);
 			if (animationEditor.ShowDialog() == DialogResult.OK)
 			{
-				file.Filename = animationEditor.TileName;
-				ReloadMetaTreeView();
-				BuildMainTreeView();
 				wasModified = true;
+				currentPCK.Files.Add(file);
+				BuildMainTreeView();
+				ReloadMetaTreeView();
 			}
 		}
 
