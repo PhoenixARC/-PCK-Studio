@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
+using PckStudio.Forms.Utilities;
 
 namespace PckStudio
 {
@@ -22,7 +23,7 @@ namespace PckStudio
         static void Main(string[] args)
         {
             System.Globalization.CultureInfo.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
-
+            ApplicationScope.Initialize();
             MainInstance = new MainForm();
             if (args.Length > 0 && File.Exists(args[0]) && args[0].EndsWith(".pck"))
                 MainInstance.LoadPckFromFile(args[0]);

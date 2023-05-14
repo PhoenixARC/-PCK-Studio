@@ -70,7 +70,7 @@ namespace PckStudio.Forms.Editor
 			}
 
 			treeView1.ImageList = new ImageList();
-            treeView1.ImageList.Images.AddRange(Utilities.BehaviourResources.entityImages);
+            treeView1.ImageList.Images.AddRange(ApplicationScope.EntityImages);
 			treeView1.ImageList.ColorDepth = ColorDepth.Depth32Bit;
 			SetUpTree();
 		}
@@ -151,7 +151,7 @@ namespace PckStudio.Forms.Editor
 			if (treeView1.SelectedNode == null) return;
 			if (!(treeView1.SelectedNode.Tag is BehaviourFile.RiderPositionOverride entry)) return;
 
-			var diag = new AddEntry("behaviours", Utilities.BehaviourResources.entityImages);
+			var diag = new AddEntry("behaviours", ApplicationScope.EntityImages);
 			diag.acceptBtn.Text = "Save";
 
 			if (diag.ShowDialog() == DialogResult.OK)
@@ -205,7 +205,7 @@ namespace PckStudio.Forms.Editor
 
 		private void addNewEntryToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			var diag = new AddEntry("behaviours", Utilities.BehaviourResources.entityImages);
+			var diag = new AddEntry("behaviours", ApplicationScope.EntityImages);
 
 			if(diag.ShowDialog() == DialogResult.OK)
 			{

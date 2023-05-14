@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows.Forms;
 using MetroFramework.Forms;
 using Newtonsoft.Json.Linq;
+using PckStudio.Extensions;
 using PckStudio.Forms.Utilities;
 
 namespace PckStudio.Forms.Additional_Popups.Animation
@@ -15,71 +17,25 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 		public string SelectedTile => selectedTile;
 		public bool IsItem => isItem;
 
-		List<TreeNode> treeViewBlockCache = new List<TreeNode>();
+        List<TreeNode> treeViewBlockCache = new List<TreeNode>();
 		List<TreeNode> treeViewItemCache = new List<TreeNode>();
 
 		public ChangeTile()
 		{
 			InitializeComponent();
-			ImageList tiles = new ImageList();
-			tiles.ColorDepth = ColorDepth.Depth32Bit;
-			tiles.Images.AddRange(AnimationResources.tileImages);
-			treeViewBlocks.ImageList = tiles;
-			treeViewItems.ImageList = tiles;
+			treeViewBlocks.ImageList = AnimationResources.BlockList;
+			treeViewItems.ImageList = AnimationResources.ItemList;
+			InitializeTreeviews();
+        }
 
-			try
-			{
-				int i = 0;
-
-				if (AnimationResources.tileData["blocks"] != null)
-				{
-					foreach (JObject content in AnimationResources.tileData["blocks"].Children())
-					{
-						foreach (JProperty prop in content.Properties())
-						{
-							if (!string.IsNullOrEmpty((string)prop.Value))
-							{
-								TreeNode tileNode = new TreeNode((string)prop.Value)
-								{
-									Tag = prop.Name,
-									ImageIndex = i,
-									SelectedImageIndex = i,
-								};
-								treeViewBlocks.Nodes.Add(tileNode);
-								treeViewBlockCache.Add(tileNode);
-							}
-							i++;
-						}
-					}
-				}
-				if (AnimationResources.tileData["items"] != null)
-				{
-					foreach (JObject content in AnimationResources.tileData["items"].Children())
-					{
-                        foreach (JProperty prop in content.Properties())
-						{
-							if (!string.IsNullOrEmpty((string)prop.Value))
-							{
-                                TreeNode tileNode = new TreeNode((string)prop.Value)
-                                {
-                                    Tag = prop.Name,
-                                    ImageIndex = i,
-                                    SelectedImageIndex = i,
-                                };
-                                treeViewItems.Nodes.Add(tileNode);
-								treeViewItemCache.Add(tileNode);
-							}
-							i++;
-						}
-					}
-				}
-			}
-			catch (Newtonsoft.Json.JsonException j_ex)
-			{
-				MessageBox.Show(j_ex.Message, "Error");
-				return;
-			}
-		}
+		private void InitializeTreeviews()
+		{
+            Stopwatch stopwatch = Stopwatch.StartNew();
+            GetTileDataToView("blocks", treeViewBlocks.Nodes, treeViewBlockCache.Add);
+            GetTileDataToView("items", treeViewItems.Nodes, treeViewItemCache.Add);
+            stopwatch.Stop();
+            Debug.WriteLine($"{nameof(InitializeTreeviews)} took {stopwatch.ElapsedMilliseconds}ms");
+        }
 
 		private void treeViews_AfterSelect(object sender, TreeViewEventArgs e)
 		{
@@ -90,6 +46,38 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 				isItem = e.Node.TreeView == treeViewItems;
 			}
 		}
+
+		private void GetTileDataToView(string key, TreeNodeCollection collection, Action<TreeNode> additinalAction)
+		{
+            try
+            {
+                if (AnimationResources.JsonTileData[key] is not null)
+                {
+                    foreach ( (int i, JToken content) in AnimationResources.JsonTileData[key].Children().enumerate())
+                    {
+                        foreach (JProperty prop in ((JObject)content).Properties())
+                        {
+                            if (!string.IsNullOrEmpty((string)prop.Value))
+                            {
+                                TreeNode tileNode = new TreeNode((string)prop.Value)
+                                {
+                                    Tag = prop.Name,
+                                    ImageIndex = i,
+                                    SelectedImageIndex = i,
+                                };
+                                collection.Add(tileNode);
+                                additinalAction(tileNode);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Newtonsoft.Json.JsonException j_ex)
+            {
+                MessageBox.Show(j_ex.Message, "Error");
+                return;
+            }
+        }
 
 		void filter_TextChanged(object sender, EventArgs e)
 		{

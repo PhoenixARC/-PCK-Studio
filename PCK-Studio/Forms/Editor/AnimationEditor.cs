@@ -371,7 +371,7 @@ namespace PckStudio.Forms.Editor
 			fileDialog.Filter = "Animation Scripts (*.mcmeta)|*.png.mcmeta";
 			if (fileDialog.ShowDialog(this) == DialogResult.OK)
             {
-                JObject mcmeta = ConvertAnimationToJava(currentAnimation);
+                JObject mcmeta = AnimationResources.ConvertAnimationToJson(currentAnimation, InterpolationCheckbox.Checked);
                 string jsondata = JsonConvert.SerializeObject(mcmeta, Formatting.Indented);
                 string filename = fileDialog.FileName;
                 File.WriteAllText(filename, jsondata);
@@ -379,25 +379,6 @@ namespace PckStudio.Forms.Editor
                 finalTexture.Save(Path.Combine(Path.GetDirectoryName(filename), Path.GetFileNameWithoutExtension(filename))); // removes ".mcmeta" from filename!
                 MessageBox.Show("Animation was successfully exported to " + filename, "Export successful!");
             }
-        }
-
-        private JObject ConvertAnimationToJava(Animation animation)
-        {
-            JObject janimation = new JObject();
-            JObject mcmeta = new JObject();
-            mcmeta["comment"] = $"Animation converted by {ProductName}";
-            mcmeta["animation"] = janimation;
-            JArray jframes = new JArray();
-            foreach (var frame in animation.GetFrames())
-            {
-                JObject jframe = new JObject();
-                jframe["index"] = animation.GetTextureIndex(frame.Texture);
-                jframe["time"] = frame.Ticks;
-                jframes.Add(jframe);
-            };
-            janimation["interpolation"] = InterpolationCheckbox.Checked;
-            janimation["frames"] = jframes;	
-            return mcmeta;
         }
 
         private void howToInterpolation_Click(object sender, EventArgs e)

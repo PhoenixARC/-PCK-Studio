@@ -60,7 +60,7 @@ namespace PckStudio.Forms.Editor
 			}
 
 			treeView1.ImageList = new ImageList();
-			Utilities.MaterialResources.entityImages.ToList().ForEach(img => treeView1.ImageList.Images.Add(img));
+			ApplicationScope.EntityImages.ToList().ForEach(treeView1.ImageList.Images.Add);
 			treeView1.ImageList.ColorDepth = ColorDepth.Depth32Bit;
 			SetUpTree();
 		}
@@ -134,7 +134,7 @@ namespace PckStudio.Forms.Editor
 
 		private void addToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			var diag = new Additional_Popups.EntityForms.AddEntry("materials", Utilities.MaterialResources.entityImages);
+			var diag = new Additional_Popups.EntityForms.AddEntry("materials", ApplicationScope.EntityImages);
 
 			if (diag.ShowDialog() == DialogResult.OK)
 			{
