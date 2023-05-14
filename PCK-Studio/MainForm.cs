@@ -29,6 +29,7 @@ using PckStudio.Classes.IO.PCK;
 using PckStudio.Classes.IO._3DST;
 using PckStudio.Internal;
 using PckStudio.Features;
+using PckStudio.Popups;
 
 namespace PckStudio
 {
@@ -2172,8 +2173,10 @@ namespace PckStudio
 				using AddFilePrompt diag = new AddFilePrompt("res/" + Path.GetFileName(ofd.FileName));
 				if (diag.ShowDialog(this) == DialogResult.OK)
 				{
-					PckFile.FileData file = currentPCK.CreateNewFile(diag.Filepath, (PckFile.FileData.FileType)diag.Filetype);
-					file.SetData(File.ReadAllBytes(ofd.FileName));
+					PckFile.FileData file = currentPCK.CreateNewFile(
+						diag.Filepath,
+						diag.Filetype,
+						() => File.ReadAllBytes(ofd.FileName));
 
 					if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath)) RebuildSubPCK(treeViewMain.SelectedNode);
 					//else treeViewMain.Nodes.Add();
