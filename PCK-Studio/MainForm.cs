@@ -17,7 +17,6 @@ using OMI.Workers.Language;
 
 using PckStudio.Properties;
 using PckStudio.Classes.FileTypes;
-using PckStudio.Classes.Utils;
 using PckStudio.Classes.Utils.ARC;
 using PckStudio.Forms;
 using PckStudio.Forms.Utilities;
@@ -29,6 +28,7 @@ using PckStudio.Classes.IO.PCK;
 using PckStudio.Classes.IO._3DST;
 using PckStudio.Internal;
 using PckStudio.Features;
+using PckStudio.Extensions;
 using PckStudio.Popups;
 
 namespace PckStudio
@@ -344,29 +344,13 @@ namespace PckStudio
 			}
 		}
 
-		bool IsFilePathMipMapped(string filepath)
-		{
-			// We only want to test the file name itself. ex: "terrainMipMapLevel2"
-			string name = Path.GetFileNameWithoutExtension(filepath);
-			// check if last character is a digit (0-9). If not return false
-			if (!char.IsDigit(name[name.Length - 1])) return false;
-			// If string does not end with MipMapLevel, then it's not MipMapped
-			if (!name.Remove(name.Length - 1, 1).EndsWith("MipMapLevel")) return false;
-			return true;
-		}
-
 		private void HandleTextureFile(PckFile.FileData file)
 		{
 			if (!(file.Filename.StartsWith("res/textures/blocks/") || file.Filename.StartsWith("res/textures/items/")))
 				return;
 
-			if (IsFilePathMipMapped(file.Filename) &&
-				currentPCK.Files.Find(pckfile =>
-					// todo write cleaner ?
-					pckfile.Filename.Equals(
-						file.Filename.Remove(file.Filename.Length - 12 - Path.GetExtension(file.Filename).Length)
-						+ Path.GetExtension(file.Filename)))
-				is PckFile.FileData originalAnimationFile)
+			if (file.IsMipmappedFile() &&
+				currentPCK.Files.Find(pckfile => pckfile.Filename.Equals(file.GetNormalPath())) is PckFile.FileData originalAnimationFile)
 			{
 				file = originalAnimationFile;
 			}
@@ -531,7 +515,7 @@ namespace PckStudio
 
 							if ((file.Filename.StartsWith("res/textures/blocks/") || file.Filename.StartsWith("res/textures/items/")) &&
 								file.Filetype == PckFile.FileData.FileType.TextureFile
-								&& !IsFilePathMipMapped(file.Filename))
+								&& !file.IsMipmappedFile())
 							{
 								buttonEdit.Text = "EDIT TILE ANIMATION";
 								buttonEdit.Visible = true;
@@ -1959,7 +1943,8 @@ namespace PckStudio
 				string textureDirectory = Path.GetDirectoryName(file.Filename);
 				string textureName = Path.GetFileNameWithoutExtension(file.Filename);
 
-				if (IsFilePathMipMapped(textureName)) return;
+				if (file.IsMipmappedFile())
+					return;
 
 				string textureExtension = Path.GetExtension(file.Filename);
 

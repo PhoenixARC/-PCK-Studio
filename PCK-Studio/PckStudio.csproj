@@ -176,6 +176,7 @@
     <Compile Include="Extensions\ImageLayoutDirection.cs" />
     <Compile Include="Extensions\ImageSection.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
+    <Compile Include="Extensions\PckFileExtensions.cs" />
     <Compile Include="Internals\ApplicationBuildInfo.cs" />
     <Compile Include="Classes\API\PCKCenter\model\PCKCenterJSON.cs" />
     <Compile Include="Classes\API\PCKCenter\PCKCollections.cs" />
