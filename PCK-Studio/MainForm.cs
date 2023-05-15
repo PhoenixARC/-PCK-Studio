@@ -135,9 +135,16 @@ namespace PckStudio
 			modelsFileBINToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.ModelsFile);
 			behavioursFileBINToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.BehavioursFile);
 			entityMaterialsFileBINToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.MaterialFile);
+
+			LoadUserSettings();
 		}
 
-		private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
+        private void LoadUserSettings()
+        {
+			LittleEndianCheckBox.Checked = Settings.Default.UseLittleEndianAsDefault;
+        }
+
+        private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
 		{
 			checkSaveState();
 			RPC.Deinitialize();
@@ -2281,6 +2288,12 @@ namespace PckStudio
         private void fullBoxSupportToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
         {
 			currentPCK.SetVersion(fullBoxSupportToolStripMenuItem.Checked);
+        }
+
+        private void settingsToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+			var appSettings = new AppBehaviorSettingsForm();
+			appSettings.ShowDialog(this);
         }
     }
 }

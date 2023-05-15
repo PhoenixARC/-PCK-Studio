@@ -5,5 +5,11 @@
     <Setting Name="RichPresenceId" Type="System.String" Scope="Application">
       <Value Profile="(Default)">825875166574673940</Value>
     </Setting>
+    <Setting Name="AutoSaveChanges" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="UseLittleEndianAsDefault" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

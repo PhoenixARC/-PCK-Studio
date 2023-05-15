@@ -143,6 +143,7 @@
             this.imageList = new System.Windows.Forms.ImageList(this.components);
             this.pictureBoxImagePreview = new PckStudio.PictureBoxWithInterpolationMode();
             this.LittleEndianCheckBox = new MetroFramework.Controls.MetroCheckBox();
+            this.settingsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuPCKEntries.SuspendLayout();
             this.menuStrip.SuspendLayout();
             this.contextMenuMetaTree.SuspendLayout();
@@ -724,7 +725,8 @@
             this.storeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openPckCenterToolStripMenuItem,
             this.joinDevelopmentDiscordToolStripMenuItem,
-            this.trelloBoardToolStripMenuItem});
+            this.trelloBoardToolStripMenuItem,
+            this.settingsToolStripMenuItem1});
             this.storeToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.storeToolStripMenuItem.Image = global::PckStudio.Properties.Resources.HamburgerMenuIcon;
             this.storeToolStripMenuItem.Name = "storeToolStripMenuItem";
@@ -1067,6 +1069,13 @@
             this.LittleEndianCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.LittleEndianCheckBox.UseSelectable = true;
             // 
+            // settingsToolStripMenuItem1
+            // 
+            this.settingsToolStripMenuItem1.Image = global::PckStudio.Properties.Resources.ranch;
+            this.settingsToolStripMenuItem1.Name = "settingsToolStripMenuItem1";
+            resources.ApplyResources(this.settingsToolStripMenuItem1, "settingsToolStripMenuItem1");
+            this.settingsToolStripMenuItem1.Click += new System.EventHandler(this.settingsToolStripMenuItem1_Click);
+            // 
             // MainForm
             // 
             this.ApplyImageInvert = true;
@@ -1219,6 +1228,7 @@
         private System.Windows.Forms.ToolStripMenuItem openPckManagerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem packSettingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fullBoxSupportToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem1;
     }
 }
 

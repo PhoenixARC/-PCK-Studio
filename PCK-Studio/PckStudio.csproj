@@ -177,6 +177,12 @@
     <Compile Include="Extensions\ImageSection.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="Extensions\PckFileExtensions.cs" />
+    <Compile Include="Forms\Utilities\AppBehaviorSettingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Utilities\AppBehaviorSettingsForm.Designer.cs">
+      <DependentUpon>AppBehaviorSettingsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Internals\ApplicationBuildInfo.cs" />
     <Compile Include="Classes\API\PCKCenter\model\PCKCenterJSON.cs" />
     <Compile Include="Classes\API\PCKCenter\PCKCollections.cs" />
@@ -580,6 +586,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Editor\ANIMEditor.resx">
       <DependentUpon>ANIMEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Utilities\AppBehaviorSettingsForm.resx">
+      <DependentUpon>AppBehaviorSettingsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.ja.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
