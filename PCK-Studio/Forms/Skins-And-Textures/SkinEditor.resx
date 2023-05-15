@@ -151,7 +151,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
-    <value>18</value>
+    <value>20</value>
   </data>
   <metadata name="label2.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>False</value>
@@ -184,7 +184,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
-    <value>19</value>
+    <value>21</value>
   </data>
   <metadata name="label1.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>False</value>
@@ -217,7 +217,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>20</value>
+    <value>22</value>
   </data>
   <data name="textTheme.Location" type="System.Drawing.Point, System.Drawing">
     <value>102, 78</value>
@@ -288,6 +288,9 @@
   <data name="&gt;&gt;contextMenuCape.Type" xml:space="preserve">
     <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="buttonDone.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom</value>
+  </data>
   <data name="buttonDone.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
@@ -298,7 +301,7 @@
     <value>NoControl</value>
   </data>
   <data name="buttonDone.Location" type="System.Drawing.Point, System.Drawing">
-    <value>394, 260</value>
+    <value>394, 273</value>
   </data>
   <data name="buttonDone.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
@@ -319,7 +322,13 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;buttonDone.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>13</value>
+  </data>
+  <data name="buttonModelGen.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom</value>
+  </data>
+  <data name="buttonModelGen.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="buttonModelGen.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
@@ -328,7 +337,7 @@
     <value>NoControl</value>
   </data>
   <data name="buttonModelGen.Location" type="System.Drawing.Point, System.Drawing">
-    <value>14, 259</value>
+    <value>14, 272</value>
   </data>
   <data name="buttonModelGen.Size" type="System.Drawing.Size, System.Drawing">
     <value>90, 23</value>
@@ -349,7 +358,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;buttonModelGen.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>14</value>
   </data>
   <data name="buttonCape.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -381,7 +390,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;buttonCape.ZOrder" xml:space="preserve">
-    <value>13</value>
+    <value>15</value>
   </data>
   <data name="buttonSkin.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -413,7 +422,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;buttonSkin.ZOrder" xml:space="preserve">
-    <value>14</value>
+    <value>16</value>
   </data>
   <data name="displayBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -437,7 +446,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;displayBox.ZOrder" xml:space="preserve">
-    <value>17</value>
+    <value>19</value>
   </data>
   <data name="radioAUTO.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -467,7 +476,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;radioAUTO.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>12</value>
   </data>
   <data name="radioLOCAL.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -497,40 +506,40 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;radioLOCAL.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>11</value>
   </data>
-  <data name="labelSelectTexture.AutoSize" type="System.Boolean, mscorlib">
+  <data name="labelSelectSkin.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="labelSelectTexture.Font" type="System.Drawing.Font, System.Drawing">
+  <data name="labelSelectSkin.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 8.25pt, style=Underline</value>
   </data>
-  <data name="labelSelectTexture.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="labelSelectSkin.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="labelSelectTexture.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="labelSelectSkin.Location" type="System.Drawing.Point, System.Drawing">
     <value>308, 186</value>
   </data>
-  <data name="labelSelectTexture.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="labelSelectSkin.Size" type="System.Drawing.Size, System.Drawing">
     <value>50, 13</value>
   </data>
-  <data name="labelSelectTexture.TabIndex" type="System.Int32, mscorlib">
+  <data name="labelSelectSkin.TabIndex" type="System.Int32, mscorlib">
     <value>119</value>
   </data>
-  <data name="labelSelectTexture.Text" xml:space="preserve">
+  <data name="labelSelectSkin.Text" xml:space="preserve">
     <value>Add Skin</value>
   </data>
-  <data name="&gt;&gt;labelSelectTexture.Name" xml:space="preserve">
-    <value>labelSelectTexture</value>
+  <data name="&gt;&gt;labelSelectSkin.Name" xml:space="preserve">
+    <value>labelSelectSkin</value>
   </data>
-  <data name="&gt;&gt;labelSelectTexture.Type" xml:space="preserve">
+  <data name="&gt;&gt;labelSelectSkin.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;labelSelectTexture.Parent" xml:space="preserve">
+  <data name="&gt;&gt;labelSelectSkin.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;labelSelectTexture.ZOrder" xml:space="preserve">
-    <value>8</value>
+  <data name="&gt;&gt;labelSelectSkin.ZOrder" xml:space="preserve">
+    <value>10</value>
   </data>
   <data name="radioSERVER.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -566,7 +575,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;radioSERVER.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>9</value>
   </data>
   <data name="resource.Image" type="System.Resources.ResXNullRef, System.Windows.Forms">
     <value />
@@ -605,7 +614,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;textSkinID.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>8</value>
   </data>
   <data name="resource.Image1" type="System.Resources.ResXNullRef, System.Windows.Forms">
     <value />
@@ -644,7 +653,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;textSkinName.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>7</value>
   </data>
   <data name="resource.Image2" type="System.Resources.ResXNullRef, System.Windows.Forms">
     <value />
@@ -683,40 +692,43 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;textThemeName.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>6</value>
   </data>
-  <data name="label4.AutoSize" type="System.Boolean, mscorlib">
+  <data name="labelSelectCape.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="label4.Font" type="System.Drawing.Font, System.Drawing">
+  <data name="labelSelectCape.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 8.25pt, style=Underline</value>
   </data>
-  <data name="label4.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="labelSelectCape.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="labelSelectCape.Location" type="System.Drawing.Point, System.Drawing">
     <value>400, 186</value>
   </data>
-  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="labelSelectCape.Size" type="System.Drawing.Size, System.Drawing">
     <value>54, 13</value>
   </data>
-  <data name="label4.TabIndex" type="System.Int32, mscorlib">
+  <data name="labelSelectCape.TabIndex" type="System.Int32, mscorlib">
     <value>124</value>
   </data>
-  <data name="label4.Text" xml:space="preserve">
+  <data name="labelSelectCape.Text" xml:space="preserve">
     <value>Add Cape</value>
   </data>
-  <data name="&gt;&gt;label4.Name" xml:space="preserve">
-    <value>label4</value>
+  <data name="&gt;&gt;labelSelectCape.Name" xml:space="preserve">
+    <value>labelSelectCape</value>
   </data>
-  <data name="&gt;&gt;label4.Type" xml:space="preserve">
+  <data name="&gt;&gt;labelSelectCape.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;label4.Parent" xml:space="preserve">
+  <data name="&gt;&gt;labelSelectCape.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
-    <value>3</value>
+  <data name="&gt;&gt;labelSelectCape.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="buttonAnimGen.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom</value>
   </data>
   <data name="buttonAnimGen.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
@@ -725,16 +737,16 @@
     <value>NoControl</value>
   </data>
   <data name="buttonAnimGen.Location" type="System.Drawing.Point, System.Drawing">
-    <value>108, 259</value>
+    <value>14, 243</value>
   </data>
   <data name="buttonAnimGen.Size" type="System.Drawing.Size, System.Drawing">
-    <value>90, 23</value>
+    <value>184, 23</value>
   </data>
   <data name="buttonAnimGen.TabIndex" type="System.Int32, mscorlib">
     <value>125</value>
   </data>
   <data name="buttonAnimGen.Text" xml:space="preserve">
-    <value>Edit Skin Flags</value>
+    <value>Edit Skin Flags (ANIM)</value>
   </data>
   <data name="&gt;&gt;buttonAnimGen.Name" xml:space="preserve">
     <value>buttonAnimGen</value>
@@ -746,10 +758,43 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;buttonAnimGen.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>4</value>
   </data>
-  <data name="capePictureBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>None</value>
+  <data name="buttonViewSkin.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom</value>
+  </data>
+  <data name="buttonViewSkin.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="buttonViewSkin.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="buttonViewSkin.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="buttonViewSkin.Location" type="System.Drawing.Point, System.Drawing">
+    <value>108, 272</value>
+  </data>
+  <data name="buttonViewSkin.Size" type="System.Drawing.Size, System.Drawing">
+    <value>90, 23</value>
+  </data>
+  <data name="buttonViewSkin.TabIndex" type="System.Int32, mscorlib">
+    <value>126</value>
+  </data>
+  <data name="buttonViewSkin.Text" xml:space="preserve">
+    <value>View Skin</value>
+  </data>
+  <data name="&gt;&gt;buttonViewSkin.Name" xml:space="preserve">
+    <value>buttonViewSkin</value>
+  </data>
+  <data name="&gt;&gt;buttonViewSkin.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;buttonViewSkin.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;buttonViewSkin.ZOrder" xml:space="preserve">
+    <value>3</value>
   </data>
   <data name="capePictureBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -759,6 +804,9 @@
   </data>
   <data name="capePictureBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>82, 82</value>
+  </data>
+  <data name="capePictureBox.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
+    <value>Zoom</value>
   </data>
   <data name="capePictureBox.TabIndex" type="System.Int32, mscorlib">
     <value>109</value>
@@ -773,10 +821,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;capePictureBox.ZOrder" xml:space="preserve">
-    <value>15</value>
-  </data>
-  <data name="skinPictureBoxTexture.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>None</value>
+    <value>17</value>
   </data>
   <data name="skinPictureBoxTexture.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -803,7 +848,34 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;skinPictureBoxTexture.ZOrder" xml:space="preserve">
-    <value>16</value>
+    <value>18</value>
+  </data>
+  <data name="metroCheckBox1.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="metroCheckBox1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>292, 243</value>
+  </data>
+  <data name="metroCheckBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>108, 15</value>
+  </data>
+  <data name="metroCheckBox1.TabIndex" type="System.Int32, mscorlib">
+    <value>127</value>
+  </data>
+  <data name="metroCheckBox1.Text" xml:space="preserve">
+    <value>Set as Free Skin?</value>
+  </data>
+  <data name="&gt;&gt;metroCheckBox1.Name" xml:space="preserve">
+    <value>metroCheckBox1</value>
+  </data>
+  <data name="&gt;&gt;metroCheckBox1.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroCheckBox, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;metroCheckBox1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;metroCheckBox1.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -812,7 +884,7 @@
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>483, 296</value>
+    <value>483, 309</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -2561,7 +2633,7 @@
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>addNewSkin</value>
+    <value>SkinEditor</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>MetroFramework.Forms.MetroForm, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>

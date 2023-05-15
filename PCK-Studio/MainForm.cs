@@ -418,26 +418,60 @@ namespace PckStudio
 
 		public void HandleSkinFile(PckFile.FileData file)
 		{
-			if (file.Properties.HasProperty("BOX"))
+			if (!TryGetLocFile(out LOCFile locFile))
 			{
-				using (generateModel generate = new generateModel(file.Properties, Image.FromStream(new MemoryStream(file.Data))))
-					if (generate.ShowDialog() == DialogResult.OK)
-					{
-						entryDataTextBox.Text = entryTypeTextBox.Text = string.Empty;
-						wasModified = true;
-						ReloadMetaTreeView();
-					}
+				MessageBox.Show("No .loc file found", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
 			}
-			else
+
+			//honestly unsure if there's a cleaner way to do this ^^; - May
+
+			var capeFile = new PckFile.FileData("", PckFile.FileData.FileType.CapeFile);
+
+			foreach (TreeNode n in GetAllChildNodes(treeViewMain.Nodes))
 			{
-				using (var ms = new MemoryStream(file.Data))
+				var prop = file.Properties.Find(p => p.property == "CAPEPATH");
+				if (n.Tag is PckFile.FileData && prop.property != null && n.Name.Contains(prop.value))
 				{
-					var texture = Image.FromStream(ms);
-					SkinPreview frm = new SkinPreview(texture, file.Properties.GetPropertyValue("ANIM", SkinANIM.FromString));
-					frm.ShowDialog(this);
-					frm.Dispose();
+					capeFile = n.Tag as PckFile.FileData;
 				}
 			}
+
+			using (SkinEditor diag = new SkinEditor(file, capeFile.Filename != "" ? capeFile : null, locFile))
+				if (diag.ShowDialog() == DialogResult.OK)
+				{
+					file = diag.SkinFile;
+					if (diag.HasCape)
+					{
+						if(capeFile.Filename != "")
+						{
+							capeFile.SetData(diag.CapeFile.Data);
+						}
+						else
+						{
+							if (currentPCK.HasFile("Skins.pck", PckFile.FileData.FileType.SkinDataFile)) // Prioritize Skins.pck
+							{
+								TreeNode subPCK = treeViewMain.Nodes.Find("Skins.pck", false).FirstOrDefault();
+								if (subPCK.Nodes.ContainsKey("Skins")) diag.CapeFile.Filename = diag.CapeFile.Filename.Insert(0, "Skins/");
+								diag.CapeFile.Filename = diag.CapeFile.Filename.Insert(0, "Skins.pck/");
+								TreeNode newNode = new TreeNode(Path.GetFileName(diag.CapeFile.Filename));
+								newNode.Tag = diag.CapeFile;
+								SetPckFileIcon(newNode, PckFile.FileData.FileType.SkinFile);
+								subPCK.Nodes.Add(newNode);
+							}
+							else
+							{
+								if (treeViewMain.Nodes.ContainsKey("Skins")) diag.CapeFile.Filename = diag.CapeFile.Filename.Insert(0, "Skins/"); // Then Skins folder
+								currentPCK.Files.Add(diag.CapeFile);
+							}
+						}
+					}
+
+					RebuildSubPCK(treeViewMain.SelectedNode);
+					TrySetLocFile(locFile);
+					wasModified = true;
+					BuildMainTreeView();
+				}
 		}
 		public void HandleModelsFile(PckFile.FileData file)
 		{
@@ -467,18 +501,11 @@ namespace PckStudio
 			if (node is TreeNode t && t.Tag is PckFile.FileData file)
 			{
 				viewFileInfoToolStripMenuItem.Visible = true;
-				if (file.Properties.HasProperty("BOX"))
+				if (file.Filetype == PckFile.FileData.FileType.SkinFile)
 				{
-					buttonEdit.Text = "EDIT BOXES";
+					buttonEdit.Text = "EDIT SKIN";
 					buttonEdit.Visible = true;
 				}
-				else if (file.Properties.HasProperty("ANIM") &&
-						file.Properties.GetPropertyValue("ANIM", s => SkinANIM.FromString(s) == (ANIM_EFFECTS.RESOLUTION_64x64 | ANIM_EFFECTS.SLIM_MODEL)))
-				{
-					buttonEdit.Text = "View Skin";
-					buttonEdit.Visible = true;
-				}
-
 				switch (file.Filetype)
 				{
 					case PckFile.FileData.FileType.SkinFile:
@@ -760,10 +787,9 @@ namespace PckStudio
 				MessageBox.Show("No .loc file found", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
-			using (addNewSkin add = new addNewSkin(locFile))
+			using (SkinEditor add = new SkinEditor(locFile))
 				if (add.ShowDialog() == DialogResult.OK)
 				{
-
 					if (currentPCK.HasFile("Skins.pck", PckFile.FileData.FileType.SkinDataFile)) // Prioritize Skins.pck
 					{
 						TreeNode subPCK = treeViewMain.Nodes.Find("Skins.pck", false).FirstOrDefault();
