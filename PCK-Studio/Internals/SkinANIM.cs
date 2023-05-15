@@ -31,10 +31,9 @@ namespace PckStudio.Internal
 		ZOMBIE_ARMS           = 1 << 1,  // 0x02
 		STATIC_LEGS           = 1 << 2,  // 0x04
 		BAD_SANTA             = 1 << 3,  // 0x08
-
-        // Whatever effect this is should be a simple one as it's existed for a while
-        __BIT_4               = 1 << 4,  // 0x10
-        SYNCED_LEGS           = 1 << 5,  // 0x20
+										 //
+		__BIT_4               = 1 << 4,  // 0x10 - Unused??
+		SYNCED_LEGS           = 1 << 5,  // 0x20
         SYNCED_ARMS           = 1 << 6,  // 0x40
         STATUE_OF_LIBERTY     = 1 << 7,  // 0x80
 

@@ -69,9 +69,22 @@ namespace PckStudio.Forms.Editor
                 {
                     IgnoreAndDo(item.Key, checkbox =>
                     {
-                        anim.SetFlag(item.Value, state);
                         checkbox.Checked = state;
-                        checkbox.Enabled = true;
+                        switch(checkBoxLinkage[checkbox])
+						{
+                            case ANIM_EFFECTS.FORCE_HEAD_ARMOR:
+                            case ANIM_EFFECTS.FORCE_BODY_ARMOR:
+                            case ANIM_EFFECTS.FORCE_LEFT_ARM_ARMOR:
+                            case ANIM_EFFECTS.FORCE_RIGHT_ARM_ARMOR:
+                            case ANIM_EFFECTS.FORCE_LEFT_LEG_ARMOR:
+                            case ANIM_EFFECTS.FORCE_RIGHT_LEG_ARMOR:
+                                checkbox.Enabled = state;
+                                break;
+                            case ANIM_EFFECTS.RESOLUTION_64x64:
+                                if (state) checkbox.Checked = false; // Prioritize slim model > classic model, LCE would
+                                break;
+						}
+                        anim.SetFlag(item.Value, checkbox.Checked);
                     });
                 }
             }
@@ -79,8 +92,6 @@ namespace PckStudio.Forms.Editor
             internal void ApplyAnim(SkinANIM anim)
             {
                 this.anim = anim;
-                foreach (var item in checkBoxLinkage)
-                    item.Key.Enabled = true;
                 foreach (var item in checkBoxLinkage)
                 {
                     item.Key.Checked = anim.GetFlag(item.Value);
@@ -94,22 +105,28 @@ namespace PckStudio.Forms.Editor
                     switch (checkBoxLinkage[checkBox])
                     {
                         case ANIM_EFFECTS.HEAD_DISABLED:
-                            checkBoxLinkage[ANIM_EFFECTS.FORCE_HEAD_ARMOR].Enabled = !checkBox.Checked;
+                            checkBoxLinkage[ANIM_EFFECTS.FORCE_HEAD_ARMOR].Enabled = checkBox.Checked;
+                            Uncheck(checkBoxLinkage[ANIM_EFFECTS.FORCE_HEAD_ARMOR]);
                             break;
                         case ANIM_EFFECTS.BODY_DISABLED:
-                            checkBoxLinkage[ANIM_EFFECTS.FORCE_BODY_ARMOR].Enabled = !checkBox.Checked;
+                            checkBoxLinkage[ANIM_EFFECTS.FORCE_BODY_ARMOR].Enabled = checkBox.Checked;
+                            Uncheck(checkBoxLinkage[ANIM_EFFECTS.FORCE_BODY_ARMOR]);
                             break;
                         case ANIM_EFFECTS.LEFT_LEG_DISABLED:
-                            checkBoxLinkage[ANIM_EFFECTS.FORCE_LEFT_LEG_ARMOR].Enabled = !checkBox.Checked;
+                            checkBoxLinkage[ANIM_EFFECTS.FORCE_LEFT_LEG_ARMOR].Enabled = checkBox.Checked;
+                            Uncheck(checkBoxLinkage[ANIM_EFFECTS.FORCE_LEFT_LEG_ARMOR]);
                             break;
                         case ANIM_EFFECTS.RIGHT_LEG_DISABLED:
-                            checkBoxLinkage[ANIM_EFFECTS.FORCE_RIGHT_LEG_ARMOR].Enabled = !checkBox.Checked;
+                            checkBoxLinkage[ANIM_EFFECTS.FORCE_RIGHT_LEG_ARMOR].Enabled = checkBox.Checked;
+                            Uncheck(checkBoxLinkage[ANIM_EFFECTS.FORCE_RIGHT_LEG_ARMOR]);
                             break;
                         case ANIM_EFFECTS.LEFT_ARM_DISABLED:
-                            checkBoxLinkage[ANIM_EFFECTS.FORCE_LEFT_ARM_ARMOR].Enabled = !checkBox.Checked;
+                            checkBoxLinkage[ANIM_EFFECTS.FORCE_LEFT_ARM_ARMOR].Enabled = checkBox.Checked;
+                            Uncheck(checkBoxLinkage[ANIM_EFFECTS.FORCE_LEFT_ARM_ARMOR]);
                             break;
                         case ANIM_EFFECTS.RIGHT_ARM_DISABLED:
-                            checkBoxLinkage[ANIM_EFFECTS.FORCE_RIGHT_ARM_ARMOR].Enabled = !checkBox.Checked;
+                            checkBoxLinkage[ANIM_EFFECTS.FORCE_RIGHT_ARM_ARMOR].Enabled = checkBox.Checked;
+                            Uncheck(checkBoxLinkage[ANIM_EFFECTS.FORCE_RIGHT_ARM_ARMOR]);
                             break;
                         
                         case ANIM_EFFECTS.RESOLUTION_64x64:
@@ -227,11 +244,13 @@ namespace PckStudio.Forms.Editor
         private void uncheckAllButton_Click(object sender, EventArgs e)
         {
             ruleset.SetAll(false);
+            setDisplayAnim(ruleset.Value);
         }
 
         private void checkAllButton_Click(object sender, EventArgs e)
         {
             ruleset.SetAll(true);
+            setDisplayAnim(ruleset.Value);
         }
 
         private void exportButton_Click(object sender, EventArgs e)
@@ -291,6 +310,7 @@ namespace PckStudio.Forms.Editor
         private void resetButton_Click(object sender, EventArgs e)
         {
             ruleset.ApplyAnim((SkinANIM)initialANIM.Clone());
+            setDisplayAnim((SkinANIM)initialANIM.Clone());
         }
 
         static readonly Dictionary<string, ANIM_EFFECTS> Templates = new Dictionary<string, ANIM_EFFECTS>()
