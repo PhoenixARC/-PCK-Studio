@@ -11,6 +11,7 @@ using OMI.Workers.GameRule;
 using System.Diagnostics;
 using OMI.Formats.Pck;
 using PckStudio.Forms.Additional_Popups;
+using PckStudio.Models;
 
 namespace PckStudio.Forms.Editor
 {
@@ -18,7 +19,8 @@ namespace PckStudio.Forms.Editor
     {
         private PckFile.FileData _pckfile;
         private GameRuleFile _file;
-
+        private GameRuleFile.CompressionType compressionType;
+        private GameRuleFile.CompressionLevel compressionLevel;
         public GameRuleFileEditor()
         {
             InitializeComponent();
@@ -27,28 +29,44 @@ namespace PckStudio.Forms.Editor
 
         private void PromptForCompressionType()
         {
-            ItemSelectionPopUp dialog = new ItemSelectionPopUp(compressionTypeComboBox.Items.Cast<string>().ToArray());
+            ItemSelectionPopUp dialog = new ItemSelectionPopUp("Wii U, PS Vita", "PS3", "Xbox 360");
             dialog.label2.Text = "Type";
             dialog.okBtn.Text = "Ok";
             if (dialog.ShowDialog() == DialogResult.OK)
-                compressionTypeComboBox.SelectedIndex = compressionTypeComboBox.Items.IndexOf(dialog.SelectedItem);
+            {
+                switch(dialog.SelectedItem)
+                {
+                    case "Wii U, PS Vita":
+                        wiiUPSVitaToolStripMenuItem.Checked = true;
+                        break;
+                    case "PS3":
+                        pS3ToolStripMenuItem.Checked = true;
+                            break;
+                    case "Xbox 360":
+                        xbox360ToolStripMenuItem.Checked = true;
+                        break;
+                }
+            }
         }
 
         public GameRuleFileEditor(PckFile.FileData file) : this()
         {
             _pckfile = file;
-            using (var stream = new MemoryStream(file.Data))
+            if (file.Size > 0)
             {
-                _file = OpenGameRuleFile(stream, (GameRuleFile.CompressionType)compressionTypeComboBox.SelectedIndex);
+                using (var stream = new MemoryStream(file.Data))
+                {
+                    _file = OpenGameRuleFile(stream);
+                }
             }
         }
 
         public GameRuleFileEditor(Stream stream) : this()
         {
-            _file = OpenGameRuleFile(stream, (GameRuleFile.CompressionType)compressionTypeComboBox.SelectedIndex);
+            _file = OpenGameRuleFile(stream);
         }
 
-        private GameRuleFile OpenGameRuleFile(Stream stream, GameRuleFile.CompressionType compressionType)
+        private GameRuleFile OpenGameRuleFile(Stream stream)
         {
             try
             {
@@ -83,10 +101,29 @@ namespace PckStudio.Forms.Editor
         private void ReloadGameRuleTree()
         {
             GrfTreeView.Nodes.Clear();
+            SetCompressionLevel();
             if (_file is not null)
             {
-                toolStripComboBox1.SelectedIndex = (int)_file.FileHeader.CompressionLevel;
                 LoadGameRuleTree(GrfTreeView.Nodes, _file.Root);
+            }
+        }
+
+        private void SetCompressionLevel()
+        {
+            switch (_file.FileHeader.CompressionLevel)
+            {
+                case GameRuleFile.CompressionLevel.None:
+                    noneToolStripMenuItem.Checked = true;
+                    break;
+                case GameRuleFile.CompressionLevel.Compressed:
+                    compressedToolStripMenuItem.Checked = true;
+                    break;
+                case GameRuleFile.CompressionLevel.CompressedRle:
+                    compressedRLEToolStripMenuItem.Checked = true;
+                    break;
+                case GameRuleFile.CompressionLevel.CompressedRleCrc:
+                    compressedRLECRCToolStripMenuItem.Checked = true;
+                    break;
             }
         }
 
@@ -215,8 +252,8 @@ namespace PckStudio.Forms.Editor
                 {
                     var writer = new GameRuleFileWriter(
                         _file,
-                        (GameRuleFile.CompressionLevel)toolStripComboBox1.SelectedIndex,
-                        (GameRuleFile.CompressionType)compressionTypeComboBox.SelectedIndex);
+                        compressionLevel,
+                        compressionType);
                     writer.WriteToStream(stream);
                     _pckfile?.SetData(stream.ToArray());
                     MessageBox.Show("Saved!");
@@ -247,10 +284,52 @@ namespace PckStudio.Forms.Editor
             {
                 using (var fs = File.OpenRead(dialog.FileName))
                 {
-                    _file = OpenGameRuleFile(fs, (GameRuleFile.CompressionType)compressionTypeComboBox.SelectedIndex);
+                    _file = OpenGameRuleFile(fs);
                     ReloadGameRuleTree();
                 }
             }
+        }
+
+        private void noneToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+            if (sender is ToolStripRadioButtonMenuItem radioButton && radioButton.Checked)
+                compressionLevel = GameRuleFile.CompressionLevel.None;
+        }
+
+        private void compressedToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+            if (sender is ToolStripRadioButtonMenuItem radioButton && radioButton.Checked)
+                compressionLevel = GameRuleFile.CompressionLevel.Compressed;
+        }
+
+        private void compressedRLEToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+            if (sender is ToolStripRadioButtonMenuItem radioButton && radioButton.Checked)
+                compressionLevel = GameRuleFile.CompressionLevel.CompressedRle;
+        }
+
+        private void compressedRLECRCToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+            if (sender is ToolStripRadioButtonMenuItem radioButton && radioButton.Checked)
+                compressionLevel = GameRuleFile.CompressionLevel.CompressedRleCrc;
+        }
+
+        private void wiiUPSVitaToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+            if (sender is ToolStripRadioButtonMenuItem radioButton && radioButton.Checked)
+                compressionType = GameRuleFile.CompressionType.Zlib;
+        }
+
+        private void pS3ToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+            if (sender is ToolStripRadioButtonMenuItem radioButton && radioButton.Checked)
+                compressionType = GameRuleFile.CompressionType.Deflate;
+        }
+
+        private void xbox360ToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+            if (sender is ToolStripRadioButtonMenuItem radioButton && radioButton.Checked)
+                compressionType = GameRuleFile.CompressionType.XMem;
         }
     }
 }

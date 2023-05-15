@@ -170,6 +170,9 @@
     <Compile Include="Classes\ToolboxItems\PictureBoxWithInterpolationMode.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Classes\ToolboxItems\ToolStripRadioButtonMenuItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Extensions\ImageLayoutDirection.cs" />
     <Compile Include="Extensions\ImageSection.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />

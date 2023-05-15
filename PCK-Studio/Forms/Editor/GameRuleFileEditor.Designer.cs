@@ -45,10 +45,16 @@
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.compressionLvlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripComboBox1 = new System.Windows.Forms.ToolStripComboBox();
-            this.compressionTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.compressionTypeComboBox = new System.Windows.Forms.ToolStripComboBox();
+            this.levelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.typeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
+            this.noneToolStripMenuItem = new PckStudio.ToolStripRadioButtonMenuItem();
+            this.compressedToolStripMenuItem = new PckStudio.ToolStripRadioButtonMenuItem();
+            this.compressedRLEToolStripMenuItem = new PckStudio.ToolStripRadioButtonMenuItem();
+            this.compressedRLECRCToolStripMenuItem = new PckStudio.ToolStripRadioButtonMenuItem();
+            this.wiiUPSVitaToolStripMenuItem = new PckStudio.ToolStripRadioButtonMenuItem();
+            this.pS3ToolStripMenuItem = new PckStudio.ToolStripRadioButtonMenuItem();
+            this.xbox360ToolStripMenuItem = new PckStudio.ToolStripRadioButtonMenuItem();
             this.MessageContextMenu.SuspendLayout();
             this.DetailContextMenu.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -155,8 +161,7 @@
             this.menuStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.compressionLvlToolStripMenuItem,
-            this.compressionTypeToolStripMenuItem});
+            this.compressionLvlToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(25, 60);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(450, 24);
@@ -176,7 +181,7 @@
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
@@ -184,47 +189,42 @@
             // 
             this.saveToolStripMenuItem.BackColor = System.Drawing.Color.Transparent;
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // compressionLvlToolStripMenuItem
             // 
             this.compressionLvlToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripComboBox1});
+            this.levelToolStripMenuItem,
+            this.typeToolStripMenuItem});
             this.compressionLvlToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Menu;
             this.compressionLvlToolStripMenuItem.Name = "compressionLvlToolStripMenuItem";
-            this.compressionLvlToolStripMenuItem.Size = new System.Drawing.Size(106, 20);
-            this.compressionLvlToolStripMenuItem.Text = "Compression Lvl";
+            this.compressionLvlToolStripMenuItem.Size = new System.Drawing.Size(89, 20);
+            this.compressionLvlToolStripMenuItem.Text = "Compression";
             // 
-            // toolStripComboBox1
+            // levelToolStripMenuItem
             // 
-            this.toolStripComboBox1.Items.AddRange(new object[] {
-            "None",
-            "Compressed",
-            "Compressed + RLE",
-            "Compressed + RLE + CRC"});
-            this.toolStripComboBox1.Name = "toolStripComboBox1";
-            this.toolStripComboBox1.Size = new System.Drawing.Size(121, 23);
-            this.toolStripComboBox1.Text = "None";
+            this.levelToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.levelToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.noneToolStripMenuItem,
+            this.compressedToolStripMenuItem,
+            this.compressedRLEToolStripMenuItem,
+            this.compressedRLECRCToolStripMenuItem});
+            this.levelToolStripMenuItem.Name = "levelToolStripMenuItem";
+            this.levelToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.levelToolStripMenuItem.Text = "Level";
             // 
-            // compressionTypeToolStripMenuItem
+            // typeToolStripMenuItem
             // 
-            this.compressionTypeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.compressionTypeComboBox});
-            this.compressionTypeToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Menu;
-            this.compressionTypeToolStripMenuItem.Name = "compressionTypeToolStripMenuItem";
-            this.compressionTypeToolStripMenuItem.Size = new System.Drawing.Size(116, 20);
-            this.compressionTypeToolStripMenuItem.Text = "Compression Type";
-            // 
-            // compressionTypeComboBox
-            // 
-            this.compressionTypeComboBox.Items.AddRange(new object[] {
-            "Wii U, PS Vita",
-            "PS3",
-            "Xbox 360"});
-            this.compressionTypeComboBox.Name = "compressionTypeComboBox";
-            this.compressionTypeComboBox.Size = new System.Drawing.Size(121, 23);
+            this.typeToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.typeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.wiiUPSVitaToolStripMenuItem,
+            this.pS3ToolStripMenuItem,
+            this.xbox360ToolStripMenuItem});
+            this.typeToolStripMenuItem.Name = "typeToolStripMenuItem";
+            this.typeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.typeToolStripMenuItem.Text = "Type";
             // 
             // metroPanel1
             // 
@@ -245,6 +245,72 @@
             this.metroPanel1.VerticalScrollbarHighlightOnWheel = false;
             this.metroPanel1.VerticalScrollbarSize = 10;
             this.metroPanel1.Resize += new System.EventHandler(this.metroPanel1_Resize);
+            // 
+            // noneToolStripMenuItem
+            // 
+            this.noneToolStripMenuItem.Checked = true;
+            this.noneToolStripMenuItem.CheckOnClick = true;
+            this.noneToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.noneToolStripMenuItem.Name = "noneToolStripMenuItem";
+            this.noneToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.noneToolStripMenuItem.Text = "None";
+            this.noneToolStripMenuItem.CheckedChanged += new System.EventHandler(this.noneToolStripMenuItem_CheckedChanged);
+            // 
+            // compressedToolStripMenuItem
+            // 
+            this.compressedToolStripMenuItem.CheckOnClick = true;
+            this.compressedToolStripMenuItem.Name = "compressedToolStripMenuItem";
+            this.compressedToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.compressedToolStripMenuItem.Text = "Compressed";
+            this.compressedToolStripMenuItem.CheckedChanged += new System.EventHandler(this.compressedToolStripMenuItem_CheckedChanged);
+            // 
+            // compressedRLEToolStripMenuItem
+            // 
+            this.compressedRLEToolStripMenuItem.CheckOnClick = true;
+            this.compressedRLEToolStripMenuItem.Name = "compressedRLEToolStripMenuItem";
+            this.compressedRLEToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.compressedRLEToolStripMenuItem.Text = "Compressed + RLE";
+            this.compressedRLEToolStripMenuItem.CheckedChanged += new System.EventHandler(this.compressedRLEToolStripMenuItem_CheckedChanged);
+            // 
+            // compressedRLECRCToolStripMenuItem
+            // 
+            this.compressedRLECRCToolStripMenuItem.CheckOnClick = true;
+            this.compressedRLECRCToolStripMenuItem.Name = "compressedRLECRCToolStripMenuItem";
+            this.compressedRLECRCToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.compressedRLECRCToolStripMenuItem.Text = "Compressed + RLE + CRC";
+            this.compressedRLECRCToolStripMenuItem.CheckedChanged += new System.EventHandler(this.compressedRLECRCToolStripMenuItem_CheckedChanged);
+            // 
+            // wiiUPSVitaToolStripMenuItem
+            // 
+            this.wiiUPSVitaToolStripMenuItem.BackColor = System.Drawing.SystemColors.Window;
+            this.wiiUPSVitaToolStripMenuItem.CheckOnClick = true;
+            this.wiiUPSVitaToolStripMenuItem.Name = "wiiUPSVitaToolStripMenuItem";
+            this.wiiUPSVitaToolStripMenuItem.ShowShortcutKeys = false;
+            this.wiiUPSVitaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.wiiUPSVitaToolStripMenuItem.Text = "Wii U, PS Vita";
+            this.wiiUPSVitaToolStripMenuItem.CheckedChanged += new System.EventHandler(this.wiiUPSVitaToolStripMenuItem_CheckedChanged);
+            // 
+            // pS3ToolStripMenuItem
+            // 
+            this.pS3ToolStripMenuItem.BackColor = System.Drawing.SystemColors.Window;
+            this.pS3ToolStripMenuItem.CheckOnClick = true;
+            this.pS3ToolStripMenuItem.Name = "pS3ToolStripMenuItem";
+            this.pS3ToolStripMenuItem.ShowShortcutKeys = false;
+            this.pS3ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.pS3ToolStripMenuItem.Text = "PS3";
+            this.pS3ToolStripMenuItem.CheckedChanged += new System.EventHandler(this.pS3ToolStripMenuItem_CheckedChanged);
+            // 
+            // xbox360ToolStripMenuItem
+            // 
+            this.xbox360ToolStripMenuItem.BackColor = System.Drawing.SystemColors.Window;
+            this.xbox360ToolStripMenuItem.Checked = true;
+            this.xbox360ToolStripMenuItem.CheckOnClick = true;
+            this.xbox360ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.xbox360ToolStripMenuItem.Name = "xbox360ToolStripMenuItem";
+            this.xbox360ToolStripMenuItem.ShowShortcutKeys = false;
+            this.xbox360ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.xbox360ToolStripMenuItem.Text = "Xbox 360";
+            this.xbox360ToolStripMenuItem.CheckedChanged += new System.EventHandler(this.xbox360ToolStripMenuItem_CheckedChanged);
             // 
             // GameRuleFileEditor
             // 
@@ -294,8 +360,17 @@
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
         private MetroFramework.Controls.MetroPanel metroPanel1;
         private System.Windows.Forms.ToolStripMenuItem compressionLvlToolStripMenuItem;
-        private System.Windows.Forms.ToolStripComboBox toolStripComboBox1;
-        private System.Windows.Forms.ToolStripMenuItem compressionTypeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripComboBox compressionTypeComboBox;
+        private System.Windows.Forms.ToolStripMenuItem levelToolStripMenuItem;
+
+        private PckStudio.ToolStripRadioButtonMenuItem noneToolStripMenuItem;
+        private PckStudio.ToolStripRadioButtonMenuItem compressedToolStripMenuItem;
+        private PckStudio.ToolStripRadioButtonMenuItem compressedRLEToolStripMenuItem;
+        private PckStudio.ToolStripRadioButtonMenuItem compressedRLECRCToolStripMenuItem;
+
+        private System.Windows.Forms.ToolStripMenuItem typeToolStripMenuItem;
+
+        private PckStudio.ToolStripRadioButtonMenuItem wiiUPSVitaToolStripMenuItem;
+        private PckStudio.ToolStripRadioButtonMenuItem pS3ToolStripMenuItem;
+        private PckStudio.ToolStripRadioButtonMenuItem xbox360ToolStripMenuItem;
     }
 }
