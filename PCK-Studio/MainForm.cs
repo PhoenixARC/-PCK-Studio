@@ -40,9 +40,6 @@ namespace PckStudio
 		bool wasModified = false;
 		bool isTemplateFile = false;
 
-		[Obsolete]
-		bool needsUpdate = false;
-
 		bool isSelectingTab = false;
 
 		readonly Dictionary<PckFile.FileData.FileType, Action<PckFile.FileData>> pckFileTypeHandler;
@@ -1754,15 +1751,6 @@ namespace PckStudio
 		private void OpenPck_MouseLeave(object sender, EventArgs e)
 		{
 			pckOpen.Image = Resources.pckClosed;
-		}
-
-		private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
-		{
-			if (needsUpdate && File.Exists(Program.AppData + @"\nobleUpdater.exe"))
-			{
-				Process.Start(Program.AppData + @"\nobleUpdater.exe"); // starts updater
-				Application.Exit(); // closes PCK Studio to let updatear finish the job
-			}
 		}
 
 		private void checkSaveState()
