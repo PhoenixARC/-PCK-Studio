@@ -7,6 +7,7 @@ using System.Collections.Generic;
 
 using PckStudio.Internal;
 using PckStudio.Forms.Additional_Popups;
+using PckStudio.Properties;
 
 namespace PckStudio.Forms.Editor
 {
@@ -87,6 +88,7 @@ namespace PckStudio.Forms.Editor
                         anim.SetFlag(item.Value, checkbox.Checked);
                     });
                 }
+                OnCheckboxChanged?.Invoke(anim);
             }
 
             internal void ApplyAnim(SkinANIM anim)
@@ -162,6 +164,9 @@ namespace PckStudio.Forms.Editor
         public ANIMEditor(string ANIM)
         {
             InitializeComponent();
+
+            saveButton.Visible = !Settings.Default.AutoSaveChanges;
+
             if (!SkinANIM.IsValidANIM(ANIM))
             {
                 DialogResult = DialogResult.Abort;
@@ -215,7 +220,6 @@ namespace PckStudio.Forms.Editor
         private void saveButton_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.OK;
-            Close();
         }
 
         private void copyButton_Click(object sender, EventArgs e)
@@ -244,13 +248,11 @@ namespace PckStudio.Forms.Editor
         private void uncheckAllButton_Click(object sender, EventArgs e)
         {
             ruleset.SetAll(false);
-            setDisplayAnim(ruleset.Value);
         }
 
         private void checkAllButton_Click(object sender, EventArgs e)
         {
             ruleset.SetAll(true);
-            setDisplayAnim(ruleset.Value);
         }
 
         private void exportButton_Click(object sender, EventArgs e)
@@ -341,6 +343,14 @@ namespace PckStudio.Forms.Editor
             if (prompt == DialogResult.Yes)
                 templateANIM = ruleset.Value | templateANIM;
             ruleset.ApplyAnim(templateANIM);
+        }
+
+        private void ANIMEditor_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (Settings.Default.AutoSaveChanges)
+            {
+                saveButton_Click(sender, EventArgs.Empty);
+            }
         }
     }
 }

@@ -16,6 +16,7 @@ using PckStudio.Forms.Additional_Popups.Audio;
 using OMI.Formats.Languages;
 using OMI.Formats.Pck;
 using PckStudio.Forms.Additional_Popups;
+using PckStudio.Properties;
 
 // Audio Editor by MattNL and Miku-666
 
@@ -56,7 +57,10 @@ namespace PckStudio.Forms.Editor
 		public AudioEditor(PckFile.FileData file, bool isLittleEndian)
 		{
 			InitializeComponent();
-			_isLittleEndian = isLittleEndian;
+
+			saveToolStripMenuItem1.Visible = !Settings.Default.AutoSaveChanges;
+
+            _isLittleEndian = isLittleEndian;
 
 			audioPCK = file;
 			using (var stream = new MemoryStream(file.Data))
@@ -101,12 +105,6 @@ namespace PckStudio.Forms.Editor
 			}
 			playOverworldInCreative.Enabled = audioFile.HasCategory(PckAudioFile.AudioCategory.EAudioType.Creative);
 			treeView1.EndUpdate();
-		}
-
-		private void AudioEditor_FormClosed(object sender, FormClosedEventArgs e)
-		{
-			// Clean up is throwing an error of some kind? FreeLibrary maybe??
-			//BINK.CleanUpBinka();
 		}
 
 		private void verifyFileLocationToolStripMenuItem_Click(object sender, EventArgs e)
@@ -624,5 +622,13 @@ namespace PckStudio.Forms.Editor
 				treeView1.SelectedNode = null;
 			}
 		}
-	}
+
+        private void AudioEditor_FormClosing(object sender, FormClosingEventArgs e)
+        {
+			if (Settings.Default.AutoSaveChanges)
+			{
+				saveToolStripMenuItem1_Click(sender, EventArgs.Empty);
+			}
+        }
+    }
 }

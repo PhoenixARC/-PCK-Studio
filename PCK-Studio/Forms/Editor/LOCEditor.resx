@@ -170,7 +170,7 @@
     <value>321, 17</value>
   </metadata>
   <data name="saveToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>98, 22</value>
   </data>
   <data name="saveToolStripMenuItem.Text" xml:space="preserve">
     <value>Save</value>
@@ -325,7 +325,7 @@
     <value>locSort</value>
   </data>
   <data name="&gt;&gt;locSort.Type" xml:space="preserve">
-    <value>PckStudio.Forms.MyTablePanel, PCK Studio, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;locSort.Parent" xml:space="preserve">
     <value>$this</value>
@@ -2069,9 +2069,6 @@
         G+hjDW20iAiLRHOFixxnkP0cZJRpF1U/QwpVsgOg8KFHYQQTM7dSnLR5QRAEQRAE+D85YJDPCXlFCwAA
         AABJRU5ErkJggg==
 </value>
-  </data>
-  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
     <value>900, 667</value>

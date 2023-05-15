@@ -46,15 +46,15 @@
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.compressionLvlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.levelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.typeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
             this.noneToolStripMenuItem = new PckStudio.ToolStripRadioButtonMenuItem();
             this.compressedToolStripMenuItem = new PckStudio.ToolStripRadioButtonMenuItem();
             this.compressedRLEToolStripMenuItem = new PckStudio.ToolStripRadioButtonMenuItem();
             this.compressedRLECRCToolStripMenuItem = new PckStudio.ToolStripRadioButtonMenuItem();
+            this.typeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.wiiUPSVitaToolStripMenuItem = new PckStudio.ToolStripRadioButtonMenuItem();
             this.pS3ToolStripMenuItem = new PckStudio.ToolStripRadioButtonMenuItem();
             this.xbox360ToolStripMenuItem = new PckStudio.ToolStripRadioButtonMenuItem();
+            this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
             this.MessageContextMenu.SuspendLayout();
             this.DetailContextMenu.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -212,39 +212,8 @@
             this.compressedRLEToolStripMenuItem,
             this.compressedRLECRCToolStripMenuItem});
             this.levelToolStripMenuItem.Name = "levelToolStripMenuItem";
-            this.levelToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.levelToolStripMenuItem.Size = new System.Drawing.Size(101, 22);
             this.levelToolStripMenuItem.Text = "Level";
-            // 
-            // typeToolStripMenuItem
-            // 
-            this.typeToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.typeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.wiiUPSVitaToolStripMenuItem,
-            this.pS3ToolStripMenuItem,
-            this.xbox360ToolStripMenuItem});
-            this.typeToolStripMenuItem.Name = "typeToolStripMenuItem";
-            this.typeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.typeToolStripMenuItem.Text = "Type";
-            // 
-            // metroPanel1
-            // 
-            this.metroPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.metroPanel1.Controls.Add(this.GrfParametersTreeView);
-            this.metroPanel1.Controls.Add(this.GrfTreeView);
-            this.metroPanel1.HorizontalScrollbarBarColor = true;
-            this.metroPanel1.HorizontalScrollbarHighlightOnWheel = false;
-            this.metroPanel1.HorizontalScrollbarSize = 10;
-            this.metroPanel1.Location = new System.Drawing.Point(25, 110);
-            this.metroPanel1.Name = "metroPanel1";
-            this.metroPanel1.Size = new System.Drawing.Size(450, 312);
-            this.metroPanel1.TabIndex = 4;
-            this.metroPanel1.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.metroPanel1.VerticalScrollbarBarColor = true;
-            this.metroPanel1.VerticalScrollbarHighlightOnWheel = false;
-            this.metroPanel1.VerticalScrollbarSize = 10;
-            this.metroPanel1.Resize += new System.EventHandler(this.metroPanel1_Resize);
             // 
             // noneToolStripMenuItem
             // 
@@ -280,13 +249,24 @@
             this.compressedRLECRCToolStripMenuItem.Text = "Compressed + RLE + CRC";
             this.compressedRLECRCToolStripMenuItem.CheckedChanged += new System.EventHandler(this.compressedRLECRCToolStripMenuItem_CheckedChanged);
             // 
+            // typeToolStripMenuItem
+            // 
+            this.typeToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.typeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.wiiUPSVitaToolStripMenuItem,
+            this.pS3ToolStripMenuItem,
+            this.xbox360ToolStripMenuItem});
+            this.typeToolStripMenuItem.Name = "typeToolStripMenuItem";
+            this.typeToolStripMenuItem.Size = new System.Drawing.Size(101, 22);
+            this.typeToolStripMenuItem.Text = "Type";
+            // 
             // wiiUPSVitaToolStripMenuItem
             // 
             this.wiiUPSVitaToolStripMenuItem.BackColor = System.Drawing.SystemColors.Window;
             this.wiiUPSVitaToolStripMenuItem.CheckOnClick = true;
             this.wiiUPSVitaToolStripMenuItem.Name = "wiiUPSVitaToolStripMenuItem";
             this.wiiUPSVitaToolStripMenuItem.ShowShortcutKeys = false;
-            this.wiiUPSVitaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.wiiUPSVitaToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
             this.wiiUPSVitaToolStripMenuItem.Text = "Wii U, PS Vita";
             this.wiiUPSVitaToolStripMenuItem.CheckedChanged += new System.EventHandler(this.wiiUPSVitaToolStripMenuItem_CheckedChanged);
             // 
@@ -296,7 +276,7 @@
             this.pS3ToolStripMenuItem.CheckOnClick = true;
             this.pS3ToolStripMenuItem.Name = "pS3ToolStripMenuItem";
             this.pS3ToolStripMenuItem.ShowShortcutKeys = false;
-            this.pS3ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.pS3ToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
             this.pS3ToolStripMenuItem.Text = "PS3";
             this.pS3ToolStripMenuItem.CheckedChanged += new System.EventHandler(this.pS3ToolStripMenuItem_CheckedChanged);
             // 
@@ -308,9 +288,29 @@
             this.xbox360ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.xbox360ToolStripMenuItem.Name = "xbox360ToolStripMenuItem";
             this.xbox360ToolStripMenuItem.ShowShortcutKeys = false;
-            this.xbox360ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.xbox360ToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
             this.xbox360ToolStripMenuItem.Text = "Xbox 360";
             this.xbox360ToolStripMenuItem.CheckedChanged += new System.EventHandler(this.xbox360ToolStripMenuItem_CheckedChanged);
+            // 
+            // metroPanel1
+            // 
+            this.metroPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.metroPanel1.Controls.Add(this.GrfParametersTreeView);
+            this.metroPanel1.Controls.Add(this.GrfTreeView);
+            this.metroPanel1.HorizontalScrollbarBarColor = true;
+            this.metroPanel1.HorizontalScrollbarHighlightOnWheel = false;
+            this.metroPanel1.HorizontalScrollbarSize = 10;
+            this.metroPanel1.Location = new System.Drawing.Point(25, 110);
+            this.metroPanel1.Name = "metroPanel1";
+            this.metroPanel1.Size = new System.Drawing.Size(450, 312);
+            this.metroPanel1.TabIndex = 4;
+            this.metroPanel1.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.metroPanel1.VerticalScrollbarBarColor = true;
+            this.metroPanel1.VerticalScrollbarHighlightOnWheel = false;
+            this.metroPanel1.VerticalScrollbarSize = 10;
+            this.metroPanel1.Resize += new System.EventHandler(this.metroPanel1_Resize);
             // 
             // GameRuleFileEditor
             // 
@@ -331,6 +331,7 @@
             this.Style = MetroFramework.MetroColorStyle.Silver;
             this.Text = "GRF Editor";
             this.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.GameRuleFileEditor_FormClosing);
             this.Load += new System.EventHandler(this.OnLoad);
             this.MessageContextMenu.ResumeLayout(false);
             this.DetailContextMenu.ResumeLayout(false);

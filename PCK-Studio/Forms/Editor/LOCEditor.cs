@@ -10,6 +10,7 @@ using PckStudio.Forms.Additional_Popups.Loc;
 using OMI.Formats.Languages;
 using OMI.Workers.Language;
 using OMI.Formats.Pck;
+using PckStudio.Properties;
 
 namespace PckStudio.Forms.Editor
 {
@@ -34,6 +35,8 @@ namespace PckStudio.Forms.Editor
 			dataGridViewLocEntryData.DataSource = tbl;
             DataGridViewColumn column = dataGridViewLocEntryData.Columns[1];
             column.Width = dataGridViewLocEntryData.Width;
+
+			saveToolStripMenuItem.Visible = !Settings.Default.AutoSaveChanges;
         }
 
 		private void LOCEditor_Load(object sender, EventArgs e)
@@ -149,5 +152,13 @@ namespace PckStudio.Forms.Editor
             }
 			DialogResult = DialogResult.OK;
         }
-	}
+
+        private void LOCEditor_FormClosing(object sender, FormClosingEventArgs e)
+        {
+			if (Settings.Default.AutoSaveChanges)
+			{
+				saveToolStripMenuItem_Click(sender, EventArgs.Empty);
+			}
+        }
+    }
 }

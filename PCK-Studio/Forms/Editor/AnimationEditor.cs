@@ -14,6 +14,7 @@ using OMI.Formats.Pck;
 using System.Collections.Generic;
 using PckStudio.Models;
 using System.Diagnostics;
+using PckStudio.Properties;
 
 namespace PckStudio.Forms.Editor
 {
@@ -45,6 +46,8 @@ namespace PckStudio.Forms.Editor
 			importToolStripMenuItem.Enabled =
 			exportAsToolStripMenuItem.Enabled =
 			InterpolationCheckbox.Visible = !IsEditingSpecial;
+
+			saveToolStripMenuItem1.Visible = !Settings.Default.AutoSaveChanges;
 
 			animationFile = file;
 
@@ -431,6 +434,10 @@ namespace PckStudio.Forms.Editor
 			if (animationPictureBox.IsPlaying)
 			{
                 animationPictureBox.Stop();
+			}
+			if (Settings.Default.AutoSaveChanges)
+			{
+				saveToolStripMenuItem1_Click(sender, EventArgs.Empty);
 			}
         }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using PckStudio.Internal;
+using PckStudio.Properties;
 
 namespace PckStudio.Forms.Editor
 {
@@ -12,7 +13,9 @@ namespace PckStudio.Forms.Editor
 		{
 			InitializeComponent();
 
-			inflationUpDown.Enabled = hasInflation;
+			closeButton.Visible =!Settings.Default.AutoSaveChanges;
+
+            inflationUpDown.Enabled = hasInflation;
 
 			var box = SkinBOX.FromString(inBOX);
 
@@ -46,7 +49,14 @@ namespace PckStudio.Forms.Editor
 				$"{Convert.ToInt32(mirrorCheckBox.Checked)} " +
 				$"{inflationUpDown.Value}";
 			DialogResult = DialogResult.OK;
-			Close();
 		}
-	}
+
+        private void BoxEditor_FormClosing(object sender, FormClosingEventArgs e)
+        {
+			if (Settings.Default.AutoSaveChanges)
+			{
+				saveButton_Click(sender, EventArgs.Empty);
+			}
+        }
+    }
 }

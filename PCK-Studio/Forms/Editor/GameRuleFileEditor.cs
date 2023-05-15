@@ -12,6 +12,7 @@ using System.Diagnostics;
 using OMI.Formats.Pck;
 using PckStudio.Forms.Additional_Popups;
 using PckStudio.Models;
+using PckStudio.Properties;
 
 namespace PckStudio.Forms.Editor
 {
@@ -25,6 +26,7 @@ namespace PckStudio.Forms.Editor
         {
             InitializeComponent();
             PromptForCompressionType();
+            saveToolStripMenuItem.Visible = !Settings.Default.AutoSaveChanges;
         }
 
         private void PromptForCompressionType()
@@ -256,6 +258,7 @@ namespace PckStudio.Forms.Editor
                         compressionType);
                     writer.WriteToStream(stream);
                     _pckfile?.SetData(stream.ToArray());
+                    DialogResult = DialogResult.OK;
                     MessageBox.Show("Saved!");
                 }
                 catch (Exception ex)
@@ -330,6 +333,14 @@ namespace PckStudio.Forms.Editor
         {
             if (sender is ToolStripRadioButtonMenuItem radioButton && radioButton.Checked)
                 compressionType = GameRuleFile.CompressionType.XMem;
+        }
+
+        private void GameRuleFileEditor_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (Settings.Default.AutoSaveChanges)
+            {
+                saveToolStripMenuItem_Click(sender, EventArgs.Empty);
+            }
         }
     }
 }
