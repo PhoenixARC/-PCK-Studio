@@ -133,11 +133,11 @@ namespace PckStudio
         {
             foreach (var property in boxes)
             {
-                switch (property.Item1)
+                switch (property.Key)
                 {
                     case "BOX":
                         {
-                            var box = SkinBOX.FromString(property.Item2);
+                            var box = SkinBOX.FromString(property.Value);
 
                             string name = box.Type;
                             if (ValidModelBoxTypes.Contains(name))
@@ -151,7 +151,7 @@ namespace PckStudio
 
                     case "OFFSET":
                         {
-                            string[] offset = ReplaceWhitespace(property.Item2, ",").TrimEnd('\n', '\r', ' ').Split(',');
+                            string[] offset = ReplaceWhitespace(property.Value, ",").TrimEnd('\n', '\r', ' ').Split(',');
                             if (offset.Length < 3) continue;
                             string name = offset[0];
                             string dimension = offset[1]; // "Y"
@@ -1099,7 +1099,7 @@ namespace PckStudio
             Bitmap bitmap1 = new Bitmap(displayBox.Width, displayBox.Height);
             foreach (var part in modelBoxes)
             {
-                boxes.Add(part.ToProperty());
+                boxes.Add("BOX", part);
             }
 
             Bitmap bitmap2 = new Bitmap(64, 64);

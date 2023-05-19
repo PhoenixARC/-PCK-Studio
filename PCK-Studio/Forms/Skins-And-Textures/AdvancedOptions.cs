@@ -28,7 +28,7 @@ namespace PckStudio
                     {
                         foreach (PckFile.FileData file in currentPCK.Files)
                         {
-                            file.Properties.Add((entryTypeTextBox.Text, entryDataTextBox.Text));
+                            file.Properties.Add(entryTypeTextBox.Text, entryDataTextBox.Text);
                         }
                         MessageBox.Show("Data Added to All Entries");
                     }
@@ -41,7 +41,7 @@ namespace PckStudio
                             if (Path.GetExtension(file.Filename) == ".png" &&
                                 Image.FromStream(png).Size.Height == Image.FromStream(png).Size.Width)
                             {
-                                file.Properties.Add((entryTypeTextBox.Text, entryDataTextBox.Text));
+                                file.Properties.Add(entryTypeTextBox.Text, entryDataTextBox.Text);
                             }
                         }
                         MessageBox.Show("Data Added to 64x64 Image Entries");
@@ -55,7 +55,7 @@ namespace PckStudio
                             if (Path.GetExtension(file.Filename) == ".png" &&
                                 Image.FromStream(png).Size.Height == Image.FromStream(png).Size.Width / 2)
                             {
-                                file.Properties.Add((entryTypeTextBox.Text, entryDataTextBox.Text));
+                                file.Properties.Add(entryTypeTextBox.Text, entryDataTextBox.Text);
                             }
                         }
                         MessageBox.Show("Data Added to 64x32 Image Entries");
@@ -68,7 +68,7 @@ namespace PckStudio
                             MemoryStream png = new MemoryStream(file.Data);
                             if (Path.GetExtension(file.Filename) == ".png")
                             {
-                                file.Properties.Add((entryTypeTextBox.Text, entryDataTextBox.Text));
+                                file.Properties.Add(entryTypeTextBox.Text, entryDataTextBox.Text);
                             }
                         }
                         MessageBox.Show("Data Added to All PNG Image Entries");

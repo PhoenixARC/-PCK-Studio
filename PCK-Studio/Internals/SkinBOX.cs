@@ -65,12 +65,14 @@ namespace PckStudio.Internal
 
         public ValueTuple<string, string> ToProperty()
 		{
-			return new ValueTuple<string, string>("BOX", ToString().Replace(',', '.'));
+			return new ValueTuple<string, string>("BOX", ToString());
 		}
 
         public override string ToString()
         {
-			return $"{Type} {Pos.X} {Pos.Y} {Pos.Z} {Size.X} {Size.Y} {Size.Z} {UV.X} {UV.Y} {Convert.ToInt32(HideWithArmor)} {Convert.ToInt32(Mirror)} {Scale}";
+			return
+                $"{Type} {Pos.X} {Pos.Y} {Pos.Z} {Size.X} {Size.Y} {Size.Z} {UV.X} {UV.Y} {Convert.ToInt32(HideWithArmor)} {Convert.ToInt32(Mirror)} {Scale}"
+                .Replace(',', '.');
         }
 
         private static Vector2 TryGetVector2(string[] arguments, int startIndex)

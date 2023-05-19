@@ -187,15 +187,15 @@ namespace PckStudio.Forms
 
                             foreach (var entry in newSkin.Properties)
                             {
-                                if (entry.Item1 == "DISPLAYNAME")
+                                if (entry.Key == "DISPLAYNAME")
                                 {
-                                    skinName = entry.Item2;
-                                    skinDisplayNames.Add(new Item() { Id = newSkin.Filename.Remove(15, 4), Name = entry.Item2 });
+                                    skinName = entry.Key;
+                                    skinDisplayNames.Add(new Item() { Id = newSkin.Filename.Remove(15, 4), Name = entry.Value });
                                 }
-                                if (entry.Item1 == "CAPEPATH")
+                                if (entry.Key == "CAPEPATH")
                                 {
                                     hasCape = true;
-                                    capePath = entry.Item2;
+                                    capePath = entry.Value;
                                 }
                             }
 
@@ -269,11 +269,11 @@ namespace PckStudio.Forms
                                 //determines skin type based on image dimensions, existence of BOX tags, and the ANIM value
                                 foreach (var entry in newSkin.Properties)
                                 {
-                                    if (entry.Item1.ToString() == "BOX")
+                                    if (entry.Key == "BOX")
                                     {
                                         string mClass = "";
                                         string mData = "";
-                                        foreach (char dCheck in entry.Item2)
+                                        foreach (char dCheck in entry.Key)
                                         {
                                             if (dCheck.ToString() != " ")
                                             {
@@ -281,7 +281,7 @@ namespace PckStudio.Forms
                                             }
                                             else
                                             {
-                                                mData = entry.Item2.Remove(0, mClass.Count() + 1);
+                                                mData = entry.Value.Remove(0, mClass.Count() + 1);
                                                 break;
                                             }
                                         }
@@ -318,13 +318,13 @@ namespace PckStudio.Forms
                                         }
                                     }
 
-                                    if (entry.Item1 == "OFFSET")
+                                    if (entry.Key == "OFFSET")
                                     {
                                         string oClass = "";
                                         string oData = "";
-                                        foreach (char oCheck in entry.Item2)
+                                        foreach (char oCheck in entry.Value)
                                         {
-                                            oData = entry.Item2;
+                                            oData = entry.Value;
                                             if (oCheck.ToString() != " ")
                                             {
                                                 oClass += oCheck.ToString();
@@ -353,13 +353,13 @@ namespace PckStudio.Forms
                                         }
                                     }
 
-                                    if (entry.Item1 == "ANIM")
+                                    if (entry.Key == "ANIM")
                                     {
-                                        if (entry.Item2 == "0x40000")
+                                        if (entry.Value == "0x40000")
                                         {
 
                                         }
-                                        else if (entry.Item2 == "0x80000")
+                                        else if (entry.Value == "0x80000")
                                         {
                                             skinType = "alex";
                                         }
