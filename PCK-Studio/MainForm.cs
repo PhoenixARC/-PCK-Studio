@@ -425,9 +425,14 @@ namespace PckStudio
 
 		public void HandleSkinFile(PckFile.FileData file)
 		{
+			if (file.Size <= 0)
+				return;
+			using (var ms = new MemoryStream(file.Data))
+			{
+				var texture = Image.FromStream(ms);
 			if (file.Properties.HasProperty("BOX"))
 			{
-				using (generateModel generate = new generateModel(file.Properties, Image.FromStream(new MemoryStream(file.Data))))
+					using generateModel generate = new generateModel(file.Properties, texture);
 					if (generate.ShowDialog() == DialogResult.OK)
 					{
 						entryDataTextBox.Text = entryTypeTextBox.Text = string.Empty;
@@ -437,15 +442,13 @@ namespace PckStudio
 			}
 			else
 			{
-				using (var ms = new MemoryStream(file.Data))
-				{
-					var texture = Image.FromStream(ms);
 					SkinPreview frm = new SkinPreview(texture, file.Properties.GetPropertyValue("ANIM", SkinANIM.FromString));
 					frm.ShowDialog(this);
 					frm.Dispose();
 				}
 			}
 		}
+
 		public void HandleModelsFile(PckFile.FileData file)
 		{
 			MessageBox.Show("Models.bin support has not been implemented. You can use the Spark Editor for the time being to edit these files.", "Not implemented yet.");
