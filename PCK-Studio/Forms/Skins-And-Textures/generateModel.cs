@@ -114,7 +114,7 @@ namespace PckStudio
 
         public generateModel(PckFile.PCKProperties skinProperties, Image texture)
         {
-            MessageBox.Show(this, "This feature is now considered obsolete and will no longer recieve updates. A better alternative is currently under development. Use at your own risk.", "Obsolete Feature", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            MessageBox.Show(this, "This feature is now considered deprecated and will no longer recieve updates. A better alternative is currently under development. Use at your own risk.", "Deprecated Feature", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             InitializeComponent();
             boxes = skinProperties;
             texturePreview.Image = texture;
