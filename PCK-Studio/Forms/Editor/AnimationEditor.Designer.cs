@@ -40,6 +40,7 @@
             this.saveToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.animationTextureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importJavaAnimationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importGifToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -57,7 +58,6 @@
             this.tileLabel = new MetroFramework.Controls.MetroLabel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.animationPictureBox = new PckStudio.Forms.Editor.AnimationPictureBox();
-            this.animationTextureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -148,14 +148,14 @@
             // 
             this.saveToolStripMenuItem1.Image = ((System.Drawing.Image)(resources.GetObject("saveToolStripMenuItem1.Image")));
             this.saveToolStripMenuItem1.Name = "saveToolStripMenuItem1";
-            this.saveToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.saveToolStripMenuItem1.Size = new System.Drawing.Size(122, 22);
             this.saveToolStripMenuItem1.Text = "Save";
             this.saveToolStripMenuItem1.Click += new System.EventHandler(this.saveToolStripMenuItem1_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(119, 6);
             // 
             // importToolStripMenuItem
             // 
@@ -164,20 +164,27 @@
             this.importJavaAnimationToolStripMenuItem,
             this.importGifToolStripMenuItem});
             this.importToolStripMenuItem.Name = "importToolStripMenuItem";
-            this.importToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.importToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.importToolStripMenuItem.Text = "Import";
+            // 
+            // animationTextureToolStripMenuItem
+            // 
+            this.animationTextureToolStripMenuItem.Name = "animationTextureToolStripMenuItem";
+            this.animationTextureToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.animationTextureToolStripMenuItem.Text = "Animation Texture";
+            this.animationTextureToolStripMenuItem.Click += new System.EventHandler(this.animationTextureToolStripMenuItem_Click);
             // 
             // importJavaAnimationToolStripMenuItem
             // 
             this.importJavaAnimationToolStripMenuItem.Name = "importJavaAnimationToolStripMenuItem";
-            this.importJavaAnimationToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.importJavaAnimationToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.importJavaAnimationToolStripMenuItem.Text = "Java Animation";
             this.importJavaAnimationToolStripMenuItem.Click += new System.EventHandler(this.importJavaAnimationToolStripMenuItem_Click);
             // 
             // importGifToolStripMenuItem
             // 
             this.importGifToolStripMenuItem.Name = "importGifToolStripMenuItem";
-            this.importGifToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.importGifToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.importGifToolStripMenuItem.Text = "Gif";
             this.importGifToolStripMenuItem.Click += new System.EventHandler(this.importGifToolStripMenuItem_Click);
             // 
@@ -186,7 +193,7 @@
             this.exportAsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.exportJavaAnimationToolStripMenuItem});
             this.exportAsToolStripMenuItem.Name = "exportAsToolStripMenuItem";
-            this.exportAsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exportAsToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.exportAsToolStripMenuItem.Text = "Export as";
             // 
             // exportJavaAnimationToolStripMenuItem
@@ -274,10 +281,12 @@
             // 
             // AnimationStartStopBtn
             // 
-            this.AnimationStartStopBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.AnimationStartStopBtn.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.AnimationStartStopBtn.Location = new System.Drawing.Point(157, 317);
             this.AnimationStartStopBtn.Name = "AnimationStartStopBtn";
             this.AnimationStartStopBtn.Size = new System.Drawing.Size(232, 24);
+            this.AnimationStartStopBtn.Style = MetroFramework.MetroColorStyle.White;
             this.AnimationStartStopBtn.TabIndex = 18;
             this.AnimationStartStopBtn.Text = "Play Animation";
             this.AnimationStartStopBtn.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -317,13 +326,6 @@
             this.animationPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.animationPictureBox.TabIndex = 16;
             this.animationPictureBox.TabStop = false;
-            // 
-            // animationTextureToolStripMenuItem
-            // 
-            this.animationTextureToolStripMenuItem.Name = "animationTextureToolStripMenuItem";
-            this.animationTextureToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.animationTextureToolStripMenuItem.Text = "Animation Texture";
-            this.animationTextureToolStripMenuItem.Click += new System.EventHandler(this.animationTextureToolStripMenuItem_Click);
             // 
             // AnimationEditor
             // 
