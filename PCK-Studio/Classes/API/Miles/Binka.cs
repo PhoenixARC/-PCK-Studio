@@ -4,7 +4,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using SharpMSS;
 
-namespace PckStudio.Classes
+namespace PckStudio.API.Miles
 {
 	internal static class Binka
 	{

@@ -194,7 +194,7 @@
     <Compile Include="Extensions\GraphicsExtensions.cs" />
     <Compile Include="Classes\FileTypes\CSMBFile.cs" />
     <Compile Include="Classes\FileTypes\PckAudioFile.cs" />
-    <Compile Include="Classes\FileTypes\Binka.cs" />
+    <Compile Include="Classes\API\Miles\Binka.cs" />
     <Compile Include="Classes\IO\3DST\3DSTextureReader.cs" />
     <Compile Include="Classes\IO\3DST\3DSTextureWriter.cs" />
     <Compile Include="Classes\IO\CSMB\CSMBFileReader.cs" />

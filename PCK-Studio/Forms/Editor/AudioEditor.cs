@@ -7,16 +7,18 @@ using System.Windows.Forms;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
+
 using MetroFramework.Forms;
 using NAudio.Wave;
-using PckStudio.Classes;
+
+using OMI.Formats.Pck;
+
 using PckStudio.Classes.FileTypes;
 using PckStudio.Classes.IO.PCK;
 using PckStudio.Forms.Additional_Popups.Audio;
-using OMI.Formats.Languages;
-using OMI.Formats.Pck;
 using PckStudio.Forms.Additional_Popups;
 using PckStudio.Properties;
+using PckStudio.API.Miles;
 
 // Audio Editor by MattNL and Miku-666
 

@@ -30,6 +30,7 @@ using PckStudio.Internal;
 using PckStudio.Features;
 using PckStudio.Extensions;
 using PckStudio.Popups;
+using PckStudio.API.Miles;
 
 namespace PckStudio
 {
@@ -2244,7 +2245,7 @@ namespace PckStudio
 				int exitCode = 0;
 				await System.Threading.Tasks.Task.Run(() =>
 				{
-					exitCode = Classes.Binka.FromWav(cacheSongLoc, Path.Combine(Path.GetDirectoryName(waveFilepath), Path.GetFileNameWithoutExtension(waveFilepath) + ".binka"), 4);
+					exitCode = Binka.FromWav(cacheSongLoc, Path.Combine(Path.GetDirectoryName(waveFilepath), Path.GetFileNameWithoutExtension(waveFilepath) + ".binka"), 4);
 				});
 
 				if (exitCode != 0)
@@ -2278,7 +2279,7 @@ namespace PckStudio
 			waitDiag.Show(this);
 			foreach (string file in fileDialog.FileNames)
 			{
-				Classes.Binka.ToWav(file, Path.Combine(Path.GetDirectoryName(file), Path.GetFileNameWithoutExtension(file) + ".binka"));
+				Binka.ToWav(file, Path.Combine(Path.GetDirectoryName(file), Path.GetFileNameWithoutExtension(file) + ".binka"));
 				success++;
 			}
 
