@@ -354,8 +354,7 @@ namespace PckStudio
 			if (!(file.Filename.StartsWith("res/textures/blocks/") || file.Filename.StartsWith("res/textures/items/")))
 				return;
 
-			if (file.IsMipmappedFile() &&
-				currentPCK.Files.Find(pckfile => pckfile.Filename.Equals(file.GetNormalPath())) is PckFile.FileData originalAnimationFile)
+			if (file.IsMipmappedFile() && currentPCK.Files.TryGetValue(file.GetNormalPath(), out PckFile.FileData originalAnimationFile))
 			{
 				file = originalAnimationFile;
 			}
@@ -607,19 +606,19 @@ namespace PckStudio
 					}
 					else
 					{
-						currentPCK.Files.ForEach(file =>
+						foreach (var _file in currentPCK.Files)
 						{
-							if (file.Filename.StartsWith(selectedFolder))
+							if (_file.Filename.StartsWith(selectedFolder))
 							{
-								Directory.CreateDirectory($"{dialog.SelectedPath}/{Path.GetDirectoryName(file.Filename)}");
-								File.WriteAllBytes($"{dialog.SelectedPath}/{file.Filename}", file.Data);
-								if (file.Properties.Count > 0)
+								Directory.CreateDirectory($"{dialog.SelectedPath}/{Path.GetDirectoryName(_file.Filename)}");
+								File.WriteAllBytes($"{dialog.SelectedPath}/{_file.Filename}", _file.Data);
+								if (_file.Properties.Count > 0)
 								{
-									using var fs = File.CreateText($"{dialog.SelectedPath}/{file.Filename}.txt");
-									file.Properties.ForEach(property => fs.WriteLine($"{property.Key} :  {property.Value}"));
+									using var fs = File.CreateText($"{dialog.SelectedPath}/{_file.Filename}.txt");
+									_file.Properties.ForEach(property => fs.WriteLine($"{property.Key}: {property.Value}"));
 								}
 							}
-						});
+						};
 					}
 					MessageBox.Show("Folder Extracted");
 				}
@@ -838,18 +837,18 @@ namespace PckStudio
 
 		private void audiopckToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (currentPCK.Files.FindIndex(file => file.Filetype == PckFile.FileData.FileType.AudioFile) != -1)
-			{
-				MessageBox.Show("There is already an music cues PCK present in this PCK!", "Can't create audio.pck");
-				return;
-			}
-			else if (currentPCK.Files.FindIndex(file => file.Filename == "audio.pck") != -1)
+			//if (currentPCK.Files.Contains(file => file.Filetype == PckFile.FileData.FileType.AudioFile) != -1)
+			//{
+			//	MessageBox.Show("There is already an music cues PCK present in this PCK!", "Can't create audio.pck");
+			//	return;
+			//}
+			if (currentPCK.Files.Contains("audio.pck"))
 			{
 				// the chance of this happening is really really slim but just in case
 				MessageBox.Show("There is already a file in this PCK named \"audio.pck\"!", "Can't create audio.pck");
 				return;
 			}
-			if (String.IsNullOrEmpty(saveLocation))
+			if (string.IsNullOrEmpty(saveLocation))
 			{
 				MessageBox.Show("You must save your pck before creating or opening a music cues PCK file", "Can't create audio.pck");
 				return;
