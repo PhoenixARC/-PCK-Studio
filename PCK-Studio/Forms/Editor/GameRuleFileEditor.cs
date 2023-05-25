@@ -103,9 +103,9 @@ namespace PckStudio.Forms.Editor
         private void ReloadGameRuleTree()
         {
             GrfTreeView.Nodes.Clear();
-            SetCompressionLevel();
             if (_file is not null)
             {
+                SetCompressionLevel();
                 LoadGameRuleTree(GrfTreeView.Nodes, _file.Root);
             }
         }
