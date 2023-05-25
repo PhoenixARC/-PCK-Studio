@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using PckStudio.Extensions;
 using PckStudio.Classes.Misc;
+using System.Xml.Serialization;
 
 namespace PckStudio.Features
 {
@@ -60,7 +61,11 @@ namespace PckStudio.Features
                 try
                 {
                     var xml = new XmlDocument();
-                    xml.Load(filepath);
+                    using (var reader = new StreamReader(filepath))
+                    {
+                        reader.ReadLine();
+                        xml.Load(reader);
+                    }
                     var configNode = xml.SelectSingleNode("config");
                     var mlcpathNode = configNode.SelectSingleNode("MlcPath");
                     GameDirectoryTextBox.Text = mlcpathNode.InnerText;
