@@ -40,11 +40,12 @@
             this.saveToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.animationTextureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.importAnimationTextureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importJavaAnimationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importGifToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportJavaAnimationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.gifToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bulkAnimationSpeedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changeTileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -148,60 +149,68 @@
             // 
             this.saveToolStripMenuItem1.Image = ((System.Drawing.Image)(resources.GetObject("saveToolStripMenuItem1.Image")));
             this.saveToolStripMenuItem1.Name = "saveToolStripMenuItem1";
-            this.saveToolStripMenuItem1.Size = new System.Drawing.Size(122, 22);
+            this.saveToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.saveToolStripMenuItem1.Text = "Save";
             this.saveToolStripMenuItem1.Click += new System.EventHandler(this.saveToolStripMenuItem1_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(119, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
             // 
             // importToolStripMenuItem
             // 
             this.importToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.animationTextureToolStripMenuItem,
+            this.importAnimationTextureToolStripMenuItem,
             this.importJavaAnimationToolStripMenuItem,
             this.importGifToolStripMenuItem});
             this.importToolStripMenuItem.Name = "importToolStripMenuItem";
-            this.importToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.importToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.importToolStripMenuItem.Text = "Import";
             // 
-            // animationTextureToolStripMenuItem
+            // importAnimationTextureToolStripMenuItem
             // 
-            this.animationTextureToolStripMenuItem.Name = "animationTextureToolStripMenuItem";
-            this.animationTextureToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
-            this.animationTextureToolStripMenuItem.Text = "Animation Texture";
-            this.animationTextureToolStripMenuItem.Click += new System.EventHandler(this.animationTextureToolStripMenuItem_Click);
+            this.importAnimationTextureToolStripMenuItem.Name = "importAnimationTextureToolStripMenuItem";
+            this.importAnimationTextureToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.importAnimationTextureToolStripMenuItem.Text = "Animation Texture";
+            this.importAnimationTextureToolStripMenuItem.Click += new System.EventHandler(this.importAnimationTextureToolStripMenuItem_Click);
             // 
             // importJavaAnimationToolStripMenuItem
             // 
             this.importJavaAnimationToolStripMenuItem.Name = "importJavaAnimationToolStripMenuItem";
-            this.importJavaAnimationToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.importJavaAnimationToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.importJavaAnimationToolStripMenuItem.Text = "Java Animation";
             this.importJavaAnimationToolStripMenuItem.Click += new System.EventHandler(this.importJavaAnimationToolStripMenuItem_Click);
             // 
             // importGifToolStripMenuItem
             // 
             this.importGifToolStripMenuItem.Name = "importGifToolStripMenuItem";
-            this.importGifToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.importGifToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.importGifToolStripMenuItem.Text = "Gif";
             this.importGifToolStripMenuItem.Click += new System.EventHandler(this.importGifToolStripMenuItem_Click);
             // 
             // exportAsToolStripMenuItem
             // 
             this.exportAsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.exportJavaAnimationToolStripMenuItem});
+            this.exportJavaAnimationToolStripMenuItem,
+            this.gifToolStripMenuItem});
             this.exportAsToolStripMenuItem.Name = "exportAsToolStripMenuItem";
-            this.exportAsToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.exportAsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exportAsToolStripMenuItem.Text = "Export as";
             // 
             // exportJavaAnimationToolStripMenuItem
             // 
             this.exportJavaAnimationToolStripMenuItem.Name = "exportJavaAnimationToolStripMenuItem";
-            this.exportJavaAnimationToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.exportJavaAnimationToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exportJavaAnimationToolStripMenuItem.Text = "Java Animation";
             this.exportJavaAnimationToolStripMenuItem.Click += new System.EventHandler(this.exportJavaAnimationToolStripMenuItem_Click);
+            // 
+            // gifToolStripMenuItem
+            // 
+            this.gifToolStripMenuItem.Name = "gifToolStripMenuItem";
+            this.gifToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.gifToolStripMenuItem.Text = "Gif";
+            this.gifToolStripMenuItem.Click += new System.EventHandler(this.gifToolStripMenuItem_Click);
             // 
             // editToolStripMenuItem
             // 
@@ -385,6 +394,7 @@
         private System.Windows.Forms.ToolStripMenuItem exportAsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exportJavaAnimationToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem animationTextureToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem importAnimationTextureToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem gifToolStripMenuItem;
     }
 }

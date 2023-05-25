@@ -1,19 +1,19 @@
-﻿using MetroFramework.Forms;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using System.Collections.Generic;
+
+using MetroFramework.Forms;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using OMI.Formats.Pck;
+
 using PckStudio.Forms.Additional_Popups.Animation;
 using PckStudio.Forms.Utilities;
 using PckStudio.Extensions;
-using OMI.Formats.Pck;
-using System.Collections.Generic;
-using PckStudio.Models;
-using System.Diagnostics;
 using PckStudio.Properties;
 
 namespace PckStudio.Forms.Editor
@@ -24,34 +24,29 @@ namespace PckStudio.Forms.Editor
 		private Animation currentAnimation;
 
 		private bool isItem = false;
-        private string animationSection => AnimationResources.GetAnimationSection(isItem);
 
 		private string TileName = string.Empty;
-
-		private bool IsEditingSpecial => IsSpecialTile(TileName);
 
         private bool IsSpecialTile(string tileName)
         {
 			return tileName == "clock" || tileName == "compass";
         }
 
-		public AnimationEditor(PckFile.FileData file)
+        public AnimationEditor(PckFile.FileData file)
 		{
 			InitializeComponent();
+			animationFile = file;
 
-            isItem = file.Filename.Split('/').Contains("items");
-			TileName = Path.GetFileNameWithoutExtension(file.Filename);
+			TileName = Path.GetFileNameWithoutExtension(animationFile.Filename);
 
 			bulkAnimationSpeedToolStripMenuItem.Enabled =
 			importToolStripMenuItem.Enabled =
 			exportAsToolStripMenuItem.Enabled =
-			InterpolationCheckbox.Visible = !IsEditingSpecial;
+			InterpolationCheckbox.Visible = !IsSpecialTile(TileName);
 
-			saveToolStripMenuItem1.Visible = !Settings.Default.AutoSaveChanges;
+			toolStripSeparator1.Visible = saveToolStripMenuItem1.Visible = !Settings.Default.AutoSaveChanges;
 
-			animationFile = file;
-
-			if (file.Size > 0)
+			if (animationFile.Size > 0)
 			{
 				using MemoryStream textureMem = new MemoryStream(animationFile.Data);
 				var texture = new Bitmap(textureMem);
@@ -61,16 +56,10 @@ namespace PckStudio.Forms.Editor
 					? new Animation(frameTextures, animationFile.Properties.GetPropertyValue("ANIM"))
 					: new Animation(frameTextures);
 			}
-
-			foreach (JObject content in AnimationResources.JsonTileData[animationSection].Children())
-			{
-				var prop = content.Properties().FirstOrDefault(prop => prop.Name == TileName);
-				if (prop is JProperty)
-				{
-					tileLabel.Text = (string)prop.Value;
-					break;
-				}
-			}
+            currentAnimation.Category = animationFile.Filename.Split('/').Contains("items")
+				? Animation.AnimationCategory.Items
+				: Animation.AnimationCategory.Blocks;
+			SetTileLabel();
             LoadAnimationTreeView();
 		}
 
@@ -138,7 +127,7 @@ namespace PckStudio.Forms.Editor
 
 		private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
-			if (!IsEditingSpecial && currentAnimation is not null)
+			if (!IsSpecialTile(TileName) && currentAnimation is not null)
 			{
 				string anim = currentAnimation.BuildAnim();
 				animationFile.Properties.SetProperty("ANIM", anim);
@@ -148,7 +137,7 @@ namespace PckStudio.Forms.Editor
 					texture.Save(stream, ImageFormat.Png);
 					animationFile.SetData(stream.ToArray());
 				}
-				animationFile.Filename = "res/textures/" + (isItem ? "items/" : "blocks/") + TileName + ".png" ;
+				animationFile.Filename = $"res/textures/{AnimationResources.GetAnimationSection(currentAnimation.Category)}/{TileName}.png";
 				DialogResult = DialogResult.OK;
 				return;
 			}
@@ -362,13 +351,13 @@ namespace PckStudio.Forms.Editor
 				if (diag.ShowDialog(this) == DialogResult.OK)
 				{
 					Console.WriteLine(diag.SelectedTile);
-					if (TileName != diag.SelectedTile) isItem = diag.IsItem;
+                    currentAnimation.Category = diag.Category;
 					TileName = diag.SelectedTile;
 
 					bulkAnimationSpeedToolStripMenuItem.Enabled = 
 					importToolStripMenuItem.Enabled = 
 					exportAsToolStripMenuItem.Enabled = 
-					InterpolationCheckbox.Visible = !IsEditingSpecial;
+					InterpolationCheckbox.Visible = !IsSpecialTile(TileName);
 
 					SetTileLabel();
 				}
@@ -376,10 +365,14 @@ namespace PckStudio.Forms.Editor
 
         private void SetTileLabel()
         {
-            foreach (JObject content in AnimationResources.JsonTileData[animationSection].Children())
+            foreach (JObject content in AnimationResources.JsonTileData[AnimationResources.GetAnimationSection(currentAnimation.Category)].Children())
             {
                 var first = content.Properties().FirstOrDefault(p => p.Name == TileName);
-                if (first is JProperty p) tileLabel.Text = (string)p.Value;
+                if (first is JProperty p)
+				{
+					tileLabel.Text = (string)p.Value;
+					break;
+				}
             }
         }
 
@@ -424,7 +417,6 @@ namespace PckStudio.Forms.Editor
 
 		private void InterpolationCheckbox_CheckedChanged(object sender, EventArgs e)
 		{
-			// Interpolation flag wasn't being updated when the check box changed, this fixes the issue
 			if (currentAnimation is not null)
 				currentAnimation.Interpolate = InterpolationCheckbox.Checked;
 		}
@@ -471,7 +463,7 @@ namespace PckStudio.Forms.Editor
 			LoadAnimationTreeView();
         }
 
-        private void animationTextureToolStripMenuItem_Click(object sender, EventArgs e)
+        private void importAnimationTextureToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using var ofd = new OpenFileDialog()
             {
@@ -485,5 +477,38 @@ namespace PckStudio.Forms.Editor
 			currentAnimation = new Animation(textures);
 			LoadAnimationTreeView();
         }
+
+        //[System.Runtime.InteropServices.DllImport("gdi32.dll")]
+        //public static extern bool DeleteObject(IntPtr hObject);
+
+        private void gifToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var fileDialog = new SaveFileDialog()
+            {
+                Filter = "GIF file|*.gif"
+            };
+            if (fileDialog.ShowDialog(this) != DialogResult.OK)
+                return;
+
+			// TODO
+			//GifBitmapEncoder gifBitmapEncoder = new GifBitmapEncoder();
+
+			//foreach (Bitmap texture in currentAnimation.GetTextures())
+			//{
+			//	var bmp = texture.GetHbitmap();
+			//	var src = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(
+			//		bmp,
+			//		IntPtr.Zero,
+			//		System.Windows.Int32Rect.Empty,
+			//		BitmapSizeOptions.FromWidthAndHeight(texture.Width, texture.Height));
+			//	gifBitmapEncoder.Frames.Add(BitmapFrame.Create(src));
+			//	DeleteObject(bmp); // recommended, handle memory leak
+			//}
+
+			//using (var fs = fileDialog.OpenFile())
+			//{
+			//	gifBitmapEncoder.Save(fs);
+			//}
+		}
     }
 }

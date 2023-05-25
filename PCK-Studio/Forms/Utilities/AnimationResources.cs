@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -12,7 +13,18 @@ namespace PckStudio.Forms.Utilities
 {
     public static class AnimationResources
     {
-        public static string GetAnimationSection(bool isItem) => isItem ? "items" : "blocks";
+        private const string __blocks = "blocks";
+        private const string __items = "items";
+
+        internal static string GetAnimationSection(Animation.AnimationCategory category)
+        {
+            return category switch
+            {
+                Animation.AnimationCategory.Items => __items,
+                Animation.AnimationCategory.Blocks => __blocks,
+                _ => throw new ArgumentOutOfRangeException(category.ToString())
+            };
+        }
 
         private static JObject _jsonData = JObject.Parse(Resources.tileData);
         public static JObject JsonTileData => _jsonData ??= JObject.Parse(Resources.tileData);

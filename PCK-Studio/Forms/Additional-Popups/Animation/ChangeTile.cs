@@ -9,13 +9,13 @@ using PckStudio.Forms.Utilities;
 
 namespace PckStudio.Forms.Additional_Popups.Animation
 {
-	public partial class ChangeTile : MetroForm
+	internal partial class ChangeTile : MetroForm
 	{
         string selectedTile = "";
+        Editor.Animation.AnimationCategory category = Editor.Animation.AnimationCategory.Blocks;
 
-        bool isItem = false;
 		public string SelectedTile => selectedTile;
-		public bool IsItem => isItem;
+		public Editor.Animation.AnimationCategory Category => category;
 
         List<TreeNode> treeViewBlockCache = new List<TreeNode>();
 		List<TreeNode> treeViewItemCache = new List<TreeNode>();
@@ -43,8 +43,10 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 			{
 				selectedTile = tileData;
 				Console.WriteLine(selectedTile);
-				isItem = e.Node.TreeView == treeViewItems;
-			}
+                category = e.Node.TreeView == treeViewItems
+					? Editor.Animation.AnimationCategory.Items
+					: Editor.Animation.AnimationCategory.Blocks;
+            }
 		}
 
 		private void GetTileDataToView(string key, TreeNodeCollection collection, Action<TreeNode> additinalAction)
@@ -127,14 +129,16 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 		private void CancelBtn_Click(object sender, EventArgs e)
 		{
 			DialogResult = DialogResult.Cancel;
-			Close();
 		}
 
 		private void AcceptBtn_Click(object sender, EventArgs e)
 		{
-			if (string.IsNullOrEmpty(selectedTile)) CancelBtn_Click(sender, e);
-			DialogResult = DialogResult.OK;
-			Close();
+			if (string.IsNullOrEmpty(selectedTile))
+			{
+                DialogResult = DialogResult.Cancel;
+				return;
+            }
+            DialogResult = DialogResult.OK;
 		}
 	}
 }

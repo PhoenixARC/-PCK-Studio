@@ -872,7 +872,7 @@ namespace PckStudio
 				return;
 
 			var file = new PckFile.FileData(
-				$"res/textures/{AnimationResources.GetAnimationSection(diag.IsItem)}/{diag.SelectedTile}.png",
+				$"res/textures/{AnimationResources.GetAnimationSection(diag.Category)}/{diag.SelectedTile}.png",
 				PckFile.FileData.FileType.TextureFile);
 
 			using AnimationEditor animationEditor = new AnimationEditor(file);
