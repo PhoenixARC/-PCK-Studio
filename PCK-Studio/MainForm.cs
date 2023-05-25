@@ -1037,11 +1037,11 @@ namespace PckStudio
 
 					}
 
-					using (AddPropertyPrompt addDialog = new AddPropertyPrompt(property.Key, property.Value))
+					using (AddPropertyPrompt addProperty = new AddPropertyPrompt(property))
 					{
-						if (addDialog.ShowDialog() == DialogResult.OK)
+						if (addProperty.ShowDialog() == DialogResult.OK)
 						{
-							file.Properties[i] = new KeyValuePair<string, string>(addDialog.PropertyName, addDialog.PropertyValue);
+							file.Properties[i] = addProperty.Property;
 							if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath))
 								RebuildSubPCK(treeViewMain.SelectedNode);
 							ReloadMetaTreeView();
@@ -1124,10 +1124,10 @@ namespace PckStudio
 			if (treeViewMain.SelectedNode is TreeNode t &&
 				t.Tag is PckFile.FileData file)
 			{
-				using AddPropertyPrompt add = new AddPropertyPrompt();
-				if (add.ShowDialog() == DialogResult.OK)
+				using AddPropertyPrompt addProperty = new AddPropertyPrompt();
+				if (addProperty.ShowDialog() == DialogResult.OK)
 				{
-					file.Properties.Add((add.PropertyName, add.PropertyValue));
+					file.Properties.Add(addProperty.Property);
 					if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath)) RebuildSubPCK(treeViewMain.SelectedNode);
 					ReloadMetaTreeView();
 					wasModified = true;

@@ -1,18 +1,24 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace PckStudio.Forms.Additional_Popups
 {
     public partial class AddPropertyPrompt : MetroFramework.Forms.MetroForm
     {
-        public string PropertyName => textBox1.Text;
-        public string PropertyValue => textBox2.Text;
+        public KeyValuePair<string, string> Property => new KeyValuePair<string, string>(keyTextBox.Text, valueTextBox.Text);
+
+        public AddPropertyPrompt(KeyValuePair<string, string> property)
+            : this(property.Key, property.Value)
+        {
+
+        }
 
         public AddPropertyPrompt(string name, string value)
         {
             InitializeComponent();
-            textBox1.Text = name;
-            textBox2.Text = value;
+            keyTextBox.Text = name;
+            valueTextBox.Text = value;
         }
 
         public AddPropertyPrompt()
@@ -20,10 +26,9 @@ namespace PckStudio.Forms.Additional_Popups
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void saveButton_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.OK;
-            Close();
         }
     }
 }
