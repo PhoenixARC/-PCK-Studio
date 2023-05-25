@@ -35,7 +35,15 @@ namespace PckStudio.Forms.Editor
 
 		public bool Interpolate { get; set; } = false;
 
-		private readonly List<Image> textures;
+		public enum AnimationCategory
+        {
+            Items,
+            Blocks
+        }
+
+		public AnimationCategory Category { get; set; }
+
+        private readonly List<Image> textures;
 
 		private readonly List<Frame> frames = new List<Frame>();
 
@@ -46,9 +54,9 @@ namespace PckStudio.Forms.Editor
             AddSingleFrames();
         }
 
-		public Animation(IEnumerable<Image> frameTextures, string ANIM)
+		public Animation(IEnumerable<Image> textures, string ANIM)
 		{
-            this.textures = new List<Image>(frameTextures);
+            this.textures = new List<Image>(textures);
             ParseAnim(ANIM);
 		}
 
