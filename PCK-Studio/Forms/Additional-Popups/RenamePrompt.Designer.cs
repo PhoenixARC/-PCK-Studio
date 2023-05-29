@@ -104,6 +104,7 @@
 			this.ShadowType = MetroFramework.Forms.MetroFormShadowType.DropShadow;
 			this.Style = MetroFramework.MetroColorStyle.Silver;
 			this.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.Load += new System.EventHandler(this.RenamePrompt_Load);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

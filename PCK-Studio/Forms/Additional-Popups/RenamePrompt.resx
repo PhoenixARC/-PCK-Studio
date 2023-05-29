@@ -127,7 +127,7 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="TextLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>19, 91</value>
+    <value>19, 90</value>
   </data>
   <data name="TextLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>35, 13</value>
@@ -163,7 +163,7 @@
     <value>NoControl</value>
   </data>
   <data name="OKButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>95, 119</value>
+    <value>95, 118</value>
   </data>
   <data name="OKButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
@@ -208,7 +208,7 @@
     <value>False</value>
   </data>
   <data name="InputTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>60, 86</value>
+    <value>60, 85</value>
   </data>
   <data name="InputTextBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>165, 23</value>
@@ -232,10 +232,10 @@
     <value>Top</value>
   </data>
   <data name="contextLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>17, 43</value>
+    <value>28, 39</value>
   </data>
   <data name="contextLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>231, 32</value>
+    <value>208, 39</value>
   </data>
   <data name="contextLabel.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -262,7 +262,7 @@
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>264, 151</value>
+    <value>264, 150</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -2483,9 +2483,6 @@
         njz5G7/yK7/yKoCXBvj7aZF1ftlzufSWtQFL1ogWv4zfusMP8H995Svvf/DBB//ugw8++LXf+I3f+KOX
         vbLH9tge22N7bI/tsT22x/bYHttjC+3/B71iqRn22EDpAAAAAElFTkSuQmCC
 </value>
-  </data>
-  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterParent</value>

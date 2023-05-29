@@ -25,5 +25,14 @@ namespace PckStudio
         {
 			DialogResult = DialogResult.OK;
         }
-    }
+
+		private void RenamePrompt_Load(object sender, EventArgs e)
+		{
+			if(String.IsNullOrEmpty(contextLabel.Text))
+			{
+				contextLabel.Visible = false;
+				Size = new System.Drawing.Size(264, 85);
+			}
+		}
+	}
 }
