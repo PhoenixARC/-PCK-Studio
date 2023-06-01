@@ -807,7 +807,7 @@
 		{ "leggingsCloth_overlay": "Leather Pants (Overlay)" },
 		{ "tipped_arrow_head": "Tipped Arrow (Overlay)" },
 		{ "potion_bottle_lingering": "Lingering Potion" },
-		{ "": "" },
+		{ "barrier": "debug_fourj_item" },
 		{ "mutton_raw": "Raw Mutton" },
 		{ "rabbit_raw": "Raw Rabbit" },
 		{ "fish_pufferfish_raw": "Pufferfish" },
