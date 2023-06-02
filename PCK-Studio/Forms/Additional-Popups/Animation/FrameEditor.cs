@@ -18,7 +18,6 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 			{
 				TreeNode frame = new TreeNode($"Frame {index}", index, index);
 				FrameList.Nodes.Add(frame);
-				Debug.WriteLine(index);
 			}
 		}
 
