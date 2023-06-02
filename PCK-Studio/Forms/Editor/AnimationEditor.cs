@@ -78,7 +78,7 @@ namespace PckStudio.Forms.Editor
 			foreach (var frame in currentAnimation.GetFrames())
 			{
 				var imageIndex = currentAnimation.GetTextureIndex(frame.Texture);
-				frameTreeView.Nodes.Add(new TreeNode($"for {frame.Ticks} frames")
+				frameTreeView.Nodes.Add(new TreeNode($"for {frame.Ticks} ticks")
 				{
 					ImageIndex = imageIndex,
 					SelectedImageIndex = imageIndex,
