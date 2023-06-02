@@ -371,10 +371,23 @@ namespace PckStudio.Forms.Editor
                 if (first is JProperty p)
 				{
 					tileLabel.Text = (string)p.Value;
-					break;
+					return;
 				}
             }
-        }
+			
+			switch(MessageBox.Show(this, 
+				$"{TileName} is not a valid tile for animation, and will not play in game. Would you like to choose a new tile?", 
+				"Not a valid tile", 
+				MessageBoxButtons.YesNo))
+			{
+				case DialogResult.Yes:
+					changeTileToolStripMenuItem_Click(null, null);
+					break;
+				default:
+					DialogResult = DialogResult.Abort;
+					break;
+			}
+		}
 
         private void exportJavaAnimationToolStripMenuItem_Click(object sender, EventArgs e)
 		{
