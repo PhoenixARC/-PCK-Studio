@@ -483,14 +483,17 @@ namespace PckStudio.Forms.Editor
 
         private void gifToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var fileDialog = new SaveFileDialog()
-            {
-                Filter = "GIF file|*.gif"
-            };
-            if (fileDialog.ShowDialog(this) != DialogResult.OK)
-                return;
+			MessageBox.Show(this, "This feature is still under development", "Coming soon");
+			return;
 
 			// TODO
+			//var fileDialog = new SaveFileDialog()
+            //{
+            //    Filter = "GIF file|*.gif"
+            //};
+            //if (fileDialog.ShowDialog(this) != DialogResult.OK)
+            //    return;
+
 			//GifBitmapEncoder gifBitmapEncoder = new GifBitmapEncoder();
 
 			//foreach (Bitmap texture in currentAnimation.GetTextures())
