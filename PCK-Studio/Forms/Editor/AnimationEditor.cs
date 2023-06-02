@@ -395,13 +395,13 @@ namespace PckStudio.Forms.Editor
 
         private void howToInterpolation_Click(object sender, EventArgs e)
 		{
-			MessageBox.Show("The Interpolation effect is when the animtion smoothly translates between the frames instead of simply displaying the next one. This can be seen with some vanilla Minecraft textures such as Magma and Prismarine.\n\nThe \"Interpolates\" checkbox above the animation controls this.", "Interpolation");
+			MessageBox.Show("The Interpolation effect is when the animtion smoothly translates between the frames instead of simply displaying the next one. This can be seen with some vanilla Minecraft textures such as Magma and Prismarine.", "Interpolation");
 		}
 
 		private void editorControlsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			MessageBox.Show("Simply drag and drop frames in the tree to rearrange your animation.\n\n" +
-				"You can also preview your animation at any time by simply pressing the \"Play Animation\" button!", "Editor Controls");
+				"You can also preview your animation at any time by simply pressing the button under the animation display.", "Editor Controls");
 		}
 
 		private void setBulkSpeedToolStripMenuItem_Click(object sender, EventArgs e)
