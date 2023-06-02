@@ -23,7 +23,11 @@ namespace PckStudio
 
         private void OKBtn_Click(object sender, EventArgs e)
         {
-			DialogResult = DialogResult.OK;
+			if (String.IsNullOrEmpty(InputTextBox.Text))
+			{
+				MessageBox.Show(this, "Please insert a value in the text box.", "Empty string");
+			}
+			else DialogResult = DialogResult.OK;
         }
 
 		private void RenamePrompt_Load(object sender, EventArgs e)
