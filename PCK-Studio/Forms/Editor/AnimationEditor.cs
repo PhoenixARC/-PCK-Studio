@@ -513,5 +513,12 @@ namespace PckStudio.Forms.Editor
 			//	gifBitmapEncoder.Save(fs);
 			//}
 		}
-    }
+
+		private void frameTimeandTicksToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			MessageBox.Show(this, "The frame time is the time that the current frame is displayed for. This unit is measured in ticks. " +
+				"All time related functions in Minecraft use ticks, notably redstone repeaters. There are 20 ticks in 1 second, so " +
+				"1 tick is 1/20 of a second. To find how long your frame is, divide the frame time by 20", "Frame Time and Ticks");
+		}
+	}
 }
