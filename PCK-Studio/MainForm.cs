@@ -348,7 +348,7 @@ namespace PckStudio
 			if (!(file.Filename.StartsWith("res/textures/blocks/") || file.Filename.StartsWith("res/textures/items/")))
 				return;
 
-			if (file.IsMipmappedFile() && currentPCK.Files.TryGetValue(file.GetNormalPath(), out PckFile.FileData originalAnimationFile))
+			if (file.IsMipmappedFile() && currentPCK.Files.TryGetValue(file.GetNormalPath(), PckFile.FileData.FileType.TextureFile, out PckFile.FileData originalAnimationFile))
 			{
 				file = originalAnimationFile;
 			}
@@ -424,18 +424,18 @@ namespace PckStudio
 			using (var ms = new MemoryStream(file.Data))
 			{
 				var texture = Image.FromStream(ms);
-			if (file.Properties.HasProperty("BOX"))
-			{
-					using generateModel generate = new generateModel(file.Properties, texture);
-					if (generate.ShowDialog() == DialogResult.OK)
-					{
-						entryDataTextBox.Text = entryTypeTextBox.Text = string.Empty;
-						wasModified = true;
-						ReloadMetaTreeView();
-					}
-			}
-			else
-			{
+				if (file.Properties.HasProperty("BOX"))
+				{
+						using generateModel generate = new generateModel(file.Properties, texture);
+						if (generate.ShowDialog() == DialogResult.OK)
+						{
+							entryDataTextBox.Text = entryTypeTextBox.Text = string.Empty;
+							wasModified = true;
+							ReloadMetaTreeView();
+						}
+				}
+				else
+				{
 					SkinPreview frm = new SkinPreview(texture, file.Properties.GetPropertyValue("ANIM", SkinANIM.FromString));
 					frm.ShowDialog(this);
 					frm.Dispose();
@@ -836,7 +836,7 @@ namespace PckStudio
 			//	MessageBox.Show("There is already an music cues PCK present in this PCK!", "Can't create audio.pck");
 			//	return;
 			//}
-			if (currentPCK.Files.Contains("audio.pck"))
+			if (currentPCK.Files.Contains("audio.pck", PckFile.FileData.FileType.AudioFile))
 			{
 				// the chance of this happening is really really slim but just in case
 				MessageBox.Show("There is already a file in this PCK named \"audio.pck\"!", "Can't create audio.pck");
