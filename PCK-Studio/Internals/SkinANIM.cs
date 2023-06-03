@@ -73,6 +73,8 @@ namespace PckStudio.Internal
 		private ANIM_EFFECTS _ANIM;
 		public static readonly Regex animRegex = new Regex(@"^0x[0-9a-f]{1,8}\b", RegexOptions.IgnoreCase);
 
+		public static readonly SkinANIM Empty = new SkinANIM();
+
 		public SkinANIM()
 			: this(ANIM_EFFECTS.NONE)
 		{
