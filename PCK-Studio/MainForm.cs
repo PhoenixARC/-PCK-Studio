@@ -183,8 +183,9 @@ namespace PckStudio
 			}
 			catch
 			{
-				MessageBox.Show("Failed to open pck\n" +
-					"If this is an Audio/Music Cues pck, please use the specialized editor while inside of the parent pck.",
+				MessageBox.Show("Failed to open pck. There's two common reasons for this:\n" +
+					"1. The file is audio/music cues PCK file. Please use the specialized editor while inside of a pck file.\n" +
+					"2. We're aware of an issue where a pck file might fail to load because it contains multiple entries with the same path.",
 					"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
 			return null;
@@ -1324,8 +1325,12 @@ namespace PckStudio
 		{
 			//opens dialog for bulk minefile editing
 			using AdvancedOptions advanced = new AdvancedOptions(currentPCK);
+			advanced.littleEndian = LittleEndianCheckBox.Checked;
 			if (advanced.ShowDialog() == DialogResult.OK)
+			{
 				wasModified = true;
+				BuildMainTreeView();
+			}
 		}
 
 		private void closeToolStripMenuItem_Click(object sender, EventArgs e)

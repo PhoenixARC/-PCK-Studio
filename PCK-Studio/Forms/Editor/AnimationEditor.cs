@@ -78,7 +78,7 @@ namespace PckStudio.Forms.Editor
 			foreach (var frame in currentAnimation.GetFrames())
 			{
 				var imageIndex = currentAnimation.GetTextureIndex(frame.Texture);
-				frameTreeView.Nodes.Add(new TreeNode($"for {frame.Ticks} frames")
+				frameTreeView.Nodes.Add(new TreeNode($"for {frame.Ticks} ticks")
 				{
 					ImageIndex = imageIndex,
 					SelectedImageIndex = imageIndex,
@@ -371,10 +371,23 @@ namespace PckStudio.Forms.Editor
                 if (first is JProperty p)
 				{
 					tileLabel.Text = (string)p.Value;
-					break;
+					return;
 				}
             }
-        }
+			
+			switch(MessageBox.Show(this, 
+				$"{TileName} is not a valid tile for animation, and will not play in game. Would you like to choose a new tile?", 
+				"Not a valid tile", 
+				MessageBoxButtons.YesNo))
+			{
+				case DialogResult.Yes:
+					changeTileToolStripMenuItem_Click(null, null);
+					break;
+				default:
+					DialogResult = DialogResult.Abort;
+					break;
+			}
+		}
 
         private void exportJavaAnimationToolStripMenuItem_Click(object sender, EventArgs e)
 		{
@@ -395,13 +408,13 @@ namespace PckStudio.Forms.Editor
 
         private void howToInterpolation_Click(object sender, EventArgs e)
 		{
-			MessageBox.Show("The Interpolation effect is when the animtion smoothly translates between the frames instead of simply displaying the next one. This can be seen with some vanilla Minecraft textures such as Magma and Prismarine.\n\nThe \"Interpolates\" checkbox above the animation controls this.", "Interpolation");
+			MessageBox.Show("The Interpolation effect is when the animtion smoothly translates between the frames instead of simply displaying the next one. This can be seen with some vanilla Minecraft textures such as Magma and Prismarine.", "Interpolation");
 		}
 
 		private void editorControlsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			MessageBox.Show("Simply drag and drop frames in the tree to rearrange your animation.\n\n" +
-				"You can also preview your animation at any time by simply pressing the \"Play Animation\" button!", "Editor Controls");
+				"You can also preview your animation at any time by simply pressing the button under the animation display.", "Editor Controls");
 		}
 
 		private void setBulkSpeedToolStripMenuItem_Click(object sender, EventArgs e)
@@ -483,14 +496,17 @@ namespace PckStudio.Forms.Editor
 
         private void gifToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var fileDialog = new SaveFileDialog()
-            {
-                Filter = "GIF file|*.gif"
-            };
-            if (fileDialog.ShowDialog(this) != DialogResult.OK)
-                return;
+			MessageBox.Show(this, "This feature is still under development", "Coming soon");
+			return;
 
 			// TODO
+			//var fileDialog = new SaveFileDialog()
+            //{
+            //    Filter = "GIF file|*.gif"
+            //};
+            //if (fileDialog.ShowDialog(this) != DialogResult.OK)
+            //    return;
+
 			//GifBitmapEncoder gifBitmapEncoder = new GifBitmapEncoder();
 
 			//foreach (Bitmap texture in currentAnimation.GetTextures())
@@ -510,5 +526,12 @@ namespace PckStudio.Forms.Editor
 			//	gifBitmapEncoder.Save(fs);
 			//}
 		}
-    }
+
+		private void frameTimeandTicksToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			MessageBox.Show(this, "The frame time is the time that the current frame is displayed for. This unit is measured in ticks. " +
+				"All time related functions in Minecraft use ticks, notably redstone repeaters. There are 20 ticks in 1 second, so " +
+				"1 tick is 1/20 of a second. To find how long your frame is, divide the frame time by 20", "Frame Time and Ticks");
+		}
+	}
 }
