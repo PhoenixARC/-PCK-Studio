@@ -160,7 +160,6 @@
             this.GameDirectoryTextBox.CustomButton.UseSelectable = true;
             this.GameDirectoryTextBox.CustomButton.Visible = false;
             this.GameDirectoryTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.GameDirectoryTextBox.Enabled = false;
             this.GameDirectoryTextBox.Lines = new string[0];
             this.GameDirectoryTextBox.Location = new System.Drawing.Point(3, 3);
             this.GameDirectoryTextBox.MaxLength = 32767;
@@ -181,6 +180,7 @@
             this.GameDirectoryTextBox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.GameDirectoryTextBox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
             this.GameDirectoryTextBox.TextChanged += new System.EventHandler(this.GameDirectoryTextBox_TextChanged);
+            this.GameDirectoryTextBox.Click += new System.EventHandler(this.GameDirectoryTextBox_Click);
             // 
             // BrowseDirectoryBtn
             // 
@@ -213,6 +213,8 @@
             this.DLCTreeView.TabIndex = 13;
             this.DLCTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.DLCTreeView_AfterSelect);
             this.DLCTreeView.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.DLCTreeView_NodeMouseDoubleClick);
+            this.DLCTreeView.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.DLCTreeView_KeyPress);
+            this.DLCTreeView.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.DLCTreeView_PreviewKeyDown);
             // 
             // DLCContextMenu
             // 

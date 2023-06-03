@@ -47,17 +47,17 @@ namespace PckStudio.Features
             {
                 try
                 {
-                var xml = new XmlDocument();
-                xml.Load(settingsPath);
-                GameDirectoryTextBox.Text = xml.SelectSingleNode("content").SelectSingleNode("mlc_path").InnerText;
+                    var xml = new XmlDocument();
+                    xml.Load(settingsPath);
+                    GameDirectoryTextBox.Text = xml.SelectSingleNode("content").SelectSingleNode("mlc_path").InnerText;
                     GameDirectoryTextBox.ReadOnly = true;
-                BrowseDirectoryBtn.Enabled = false;
-            }
+                    BrowseDirectoryBtn.Enabled = false;
+                }
                 catch (Exception ex)
                 {
                     Debug.WriteLine(ex, category: $"{nameof(CemuPanel)}:{nameof(TryApplyCemuConfig)}");
-            return false;
-        }
+                    return false;
+                }
             }
             return false;
         }
@@ -294,6 +294,28 @@ namespace PckStudio.Features
         private void GameDirectoryTextBox_TextChanged(object sender, EventArgs e)
         {
             ListDLCs();
+        }
+
+        private void GameDirectoryTextBox_Click(object sender, EventArgs e)
+        {
+            if (GameDirectoryTextBox.ReadOnly)
+            {
+                Process.Start(GetContentSubDirectory("WiiU", "DLC"));
+            }
+        }
+
+        private void DLCTreeView_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter && DLCTreeView.SelectedNode is not null)
+            {
+                openSkinPackToolStripMenuItem_Click(sender, EventArgs.Empty);
+            }
+            base.OnPreviewKeyDown(e);
+        }
+
+        private void DLCTreeView_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = true;
         }
     }
 }
