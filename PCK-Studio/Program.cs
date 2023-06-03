@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
-using PckStudio.Forms.Utilities;
 
 namespace PckStudio
 {
