@@ -186,10 +186,10 @@
     <value>Material Files (.bin)</value>
   </data>
   <data name="comboBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>71, 254</value>
+    <value>65, 254</value>
   </data>
   <data name="comboBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>151, 29</value>
+    <value>157, 29</value>
   </data>
   <data name="comboBox1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
