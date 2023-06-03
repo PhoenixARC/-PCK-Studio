@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using PckStudio.Extensions;
 using PckStudio.Classes.Misc;
 using System.Xml.Serialization;
+using System.Diagnostics;
 
 namespace PckStudio.Features
 {
@@ -72,8 +73,9 @@ namespace PckStudio.Features
                     BrowseDirectoryBtn.Enabled = false;
                     return true;
                 }
-                catch
+                catch (Exception ex)
                 {
+                    Debug.WriteLine(ex, category: $"{nameof(CemuPanel)}:{nameof(TryApplyPermanentCemuConfig)}");
                     return false;
                 }
             }
