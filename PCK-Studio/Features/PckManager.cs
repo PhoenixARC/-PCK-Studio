@@ -23,6 +23,7 @@ namespace PckStudio.Features
     public partial class PckManager : MetroFramework.Forms.MetroForm
     {
         private Control currentlyShowingControl;
+        private string currentlyShowingControlName;
         private const string CemU = "Cemu";
 
         // TODO: Implement these Panels
@@ -49,22 +50,22 @@ namespace PckStudio.Features
             currentlyShowingControl?.Focus();
         }
 
-        private void supportedPlatformComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void supportedPlatformComboBox_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            mainPanel.Controls.Remove(currentlyShowingControl);
-            if (supportedPlatformComboBox.SelectedIndex > -1)
+            if (!supportedPlatformComboBox.SelectedItem.Equals(currentlyShowingControlName))
             {
-                string text = supportedPlatformComboBox.Items[supportedPlatformComboBox.SelectedIndex].ToString();
+                mainPanel.Controls.Remove(currentlyShowingControl);
+                currentlyShowingControlName = supportedPlatformComboBox.Items[supportedPlatformComboBox.SelectedIndex].ToString();
                 try
                 {
-                    currentlyShowingControl = text switch
+                    currentlyShowingControl = currentlyShowingControlName switch
                     {
                         CemU => new CemuPanel(),
                         //WiiU => new WiiUPanel(),
                         //PS3 => throw new NotImplementedException($"{text}-Panel is currently not implemented."),
                         //PSVita => throw new NotImplementedException($"{text}-Panel is currently not implemented."),
                         //RPCS3 => throw new NotImplementedException($"{text}-Panel is currently not implemented."),
-                        _ => throw new Exception($"No Panel found for: {text}"),
+                        _ => throw new Exception($"No Panel found for: {currentlyShowingControlName}"),
                     };
                     currentlyShowingControl.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Right;
                     mainPanel.SetColumnSpan(currentlyShowingControl, 2);
