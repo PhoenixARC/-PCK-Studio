@@ -9,12 +9,13 @@ using PckStudio.Classes.Misc;
 using PckStudio.Forms.Utilities;
 using PckStudio.Properties;
 using PckStudio.Extensions;
+using System.Globalization;
 
 namespace PckStudio
 {
     internal static class ApplicationScope
     {
-        public static FileCacher AppDataCacher { get; private set; }
+        public static FileCacher DataCacher { get; private set; }
 
         private static Image[] _entityImages;
         public static Image[] EntityImages => _entityImages;
@@ -24,13 +25,14 @@ namespace PckStudio
             Stopwatch stopwatch = Stopwatch.StartNew();
             {
                 _entityImages ??= Resources.entities_sheet.CreateImageList(32).ToArray();
-                AppDataCacher ??= new FileCacher(Program.AppDataCache);
+                DataCacher ??= new FileCacher(Program.AppDataCache);
                 _ = AnimationResources.JsonTileData;
                 _ = AnimationResources.ItemList;
                 _ = AnimationResources.BlockList;
             }
             stopwatch.Stop();
             Debug.WriteLine($"{nameof(ApplicationScope.Initialize)} took {stopwatch.ElapsedMilliseconds}ms");
+            CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
         }
     }
 }

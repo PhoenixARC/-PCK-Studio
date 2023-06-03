@@ -10,10 +10,10 @@ namespace PckStudio.API.Miles
 	{
 		public static int FromWav(string inputFilepath, string outputFilepath, int compressionLevel)
 		{
-			ApplicationScope.AppDataCacher.Cache(Properties.Resources.binka_encode, "binka_encode.exe");
+			ApplicationScope.DataCacher.Cache(Properties.Resources.binka_encode, "binka_encode.exe");
             var process = Process.Start(new ProcessStartInfo
 			{
-				FileName = ApplicationScope.AppDataCacher.GetCachedFilepath("binka_encode.exe"),
+				FileName = ApplicationScope.DataCacher.GetCachedFilepath("binka_encode.exe"),
 				Arguments = $"\"{inputFilepath}\" \"{outputFilepath}\" -s -b{compressionLevel}",
 				UseShellExecute = true,
 				CreateNoWindow = true,
@@ -30,16 +30,16 @@ namespace PckStudio.API.Miles
 				throw new Exception("Not a Bink Audio file.");
 			}
 
-			ApplicationScope.AppDataCacher.Cache(Properties.Resources.mss32, "mss32.dll");
-            ApplicationScope.AppDataCacher.Cache(Properties.Resources.binkawin, "binkawin.asi");
+			ApplicationScope.DataCacher.Cache(Properties.Resources.mss32, "mss32.dll");
+            ApplicationScope.DataCacher.Cache(Properties.Resources.binkawin, "binkawin.asi");
 
-			LibHandle mss32LibHandle = new LibHandle(ApplicationScope.AppDataCacher.GetCachedFilepath("mss32.dll"));
+			LibHandle mss32LibHandle = new LibHandle(ApplicationScope.DataCacher.GetCachedFilepath("mss32.dll"));
 
 			string destinationFilepath = Path.Combine(
                 Path.GetDirectoryName(outputFilepath),
 				Path.GetFileNameWithoutExtension(inputFilepath) + ".wav");
 
-			AILAPI.SetRedistDirectory(ApplicationScope.AppDataCacher.CacheDirectory.Replace('\\', '/'));
+			AILAPI.SetRedistDirectory(ApplicationScope.DataCacher.CacheDirectory.Replace('\\', '/'));
 			
 			RIBAPI.LoadApplicationProviders("*.asi");
             

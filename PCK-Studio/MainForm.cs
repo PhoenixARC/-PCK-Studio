@@ -2225,7 +2225,7 @@ namespace PckStudio
 
                 string songName = string.Join("_", a);
 				songName = System.Text.RegularExpressions.Regex.Replace(songName, @"[^\u0000-\u007F]+", "_"); // Replace UTF characters
-				string cacheSongLoc = Path.Combine(ApplicationScope.AppDataCacher.CacheDirectory, songName + Path.GetExtension(waveFilepath));
+				string cacheSongLoc = Path.Combine(ApplicationScope.DataCacher.CacheDirectory, songName + Path.GetExtension(waveFilepath));
 
 				if (File.Exists(cacheSongLoc))
 					File.Delete(cacheSongLoc);
