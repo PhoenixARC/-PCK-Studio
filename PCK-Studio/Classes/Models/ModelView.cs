@@ -196,14 +196,6 @@ namespace PckStudio.Models
 			}
 		}
 
-		protected virtual void OnSkinDownloaded(EventArgs args)
-		{
-			if (SkinDowloaded != null)
-			{
-				SkinDowloaded(this, args);
-			}
-		}
-
 		private void Clear()
 		{
 			texelList.Clear();
@@ -223,11 +215,6 @@ namespace PckStudio.Models
 			graphics.CompositingMode = CompositingMode.SourceCopy;
 			graphics.FillRectangle(backgroundBrush, ClientRectangle);
 			graphics.CompositingMode = CompositingMode.SourceOver;
-			if (versionImage == null)
-			{
-				versionImage = RenderVersionText();
-			}
-			graphics.DrawImage(versionImage, 3, 3);
 		}
 
 		protected override void OnPaint(PaintEventArgs pe)
