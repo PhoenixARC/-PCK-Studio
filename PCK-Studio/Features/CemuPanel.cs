@@ -43,12 +43,21 @@ namespace PckStudio.Features
         private bool TryApplyCemuConfig(string settingsPath)
         {
             string cemuPath = Path.Combine(Path.GetDirectoryName(settingsPath), "Cemu.exe");
-            if (File.Exists(cemuPath))
+            if (File.Exists(settingsPath) && File.Exists(cemuPath))
             {
+                try
+                {
                 var xml = new XmlDocument();
                 xml.Load(settingsPath);
                 GameDirectoryTextBox.Text = xml.SelectSingleNode("content").SelectSingleNode("mlc_path").InnerText;
+                    GameDirectoryTextBox.ReadOnly = true;
                 BrowseDirectoryBtn.Enabled = false;
+            }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex, category: $"{nameof(CemuPanel)}:{nameof(TryApplyCemuConfig)}");
+            return false;
+        }
             }
             return false;
         }
@@ -70,6 +79,7 @@ namespace PckStudio.Features
                     var configNode = xml.SelectSingleNode("config");
                     var mlcpathNode = configNode.SelectSingleNode("MlcPath");
                     GameDirectoryTextBox.Text = mlcpathNode.InnerText;
+                    GameDirectoryTextBox.ReadOnly = true;
                     BrowseDirectoryBtn.Enabled = false;
                     return true;
                 }
