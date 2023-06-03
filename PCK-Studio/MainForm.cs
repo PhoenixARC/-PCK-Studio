@@ -2297,5 +2297,39 @@ namespace PckStudio
 			var appSettings = new AppBehaviorSettingsForm();
 			appSettings.ShowDialog(this);
         }
-    }
+
+		private void addBOXEntryToolStripMenuItem1_Click(object sender, EventArgs e)
+		{
+			if(treeViewMain.SelectedNode is TreeNode t && t.Tag is PckFile.FileData file)
+			{
+				using BoxEditor diag = new BoxEditor("HEAD -4 -8 -4 8 8 8 0 0 0 0 0", IsSubPCKNode(treeViewMain.SelectedNode.FullPath));
+				if (diag.ShowDialog(this) == DialogResult.OK)
+				{
+					file.Properties.Add(new KeyValuePair<string, string>("BOX", diag.Result.ToString()));
+					if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath))
+						RebuildSubPCK(treeViewMain.SelectedNode);
+					ReloadMetaTreeView();
+					wasModified = true;
+				}
+				return;
+			}
+		}
+
+		private void addANIMEntryToolStripMenuItem1_Click(object sender, EventArgs e)
+		{
+			if (treeViewMain.SelectedNode is TreeNode t && t.Tag is PckFile.FileData file)
+			{
+				using ANIMEditor diag = new ANIMEditor("0x0");
+				if (diag.ShowDialog(this) == DialogResult.OK)
+				{
+					file.Properties.Add(new KeyValuePair<string, string>("ANIM", diag.ResultAnim.ToString()));
+					if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath))
+						RebuildSubPCK(treeViewMain.SelectedNode);
+					ReloadMetaTreeView();
+					wasModified = true;
+				}
+				return;
+			}
+		}
+	}
 }
