@@ -88,9 +88,9 @@ namespace PckStudio.Extensions
 
         private static Size CalculateImageSize(IList<Image> sources, ImageLayoutDirection layoutDirection)
         {
-            if (sources.Count == 0)
+            if (sources.Count < 2)
             {
-                return Size.Empty;
+                return sources.Count < 1 ? Size.Empty : sources[0].Size;
             }
             var horizontal = layoutDirection == ImageLayoutDirection.Horizontal;
 
