@@ -17,6 +17,10 @@ namespace PckStudio.Features
     /// </summary>
     public partial class CemuPanel : UserControl
     {
+        private const string TitleId_EUR = "101d7500";
+        private const string TitleId_USA = "101d9d00";
+        private const string TitleId_JPN = "101dbe00";
+
         public CemuPanel()
         {
             InitializeComponent();
@@ -96,23 +100,28 @@ namespace PckStudio.Features
         {
             if (radioButtonEur.Checked)
             {
-                return "101d7500";
+                return TitleId_EUR;
             }
             if (radioButtonUs.Checked)
             {
-                return "101d9d00";
+                return TitleId_USA;
             }
             if (radioButtonJap.Checked)
             {
-                return "101dbe00";
+                return TitleId_JPN;
             }
             throw new Exception("how did you get here ?");
+        }
+
+        private string GetGameContentPath(string region)
+        {
+            return $"{GameDirectoryTextBox.Text}/usr/title/0005000e/{region}/content";
         }
 
         private string GetGameContentPath()
         {
             string region = GetSelectedRegionTitleId();
-            return $"{GameDirectoryTextBox.Text}/usr/title/0005000e/{region}/content";
+            return GetGameContentPath(region);
         }
 
         private string GetContentSubDirectory(params string[] subpaths)
@@ -293,6 +302,12 @@ namespace PckStudio.Features
 
         private void GameDirectoryTextBox_TextChanged(object sender, EventArgs e)
         {
+            if (IsValidInstallDirectory())
+            {
+                radioButtonEur.Enabled = Directory.Exists(GetGameContentPath(TitleId_EUR));
+                radioButtonUs.Enabled = Directory.Exists(GetGameContentPath(TitleId_USA));
+                radioButtonJap.Enabled = Directory.Exists(GetGameContentPath(TitleId_JPN));
+            }
             ListDLCs();
         }
 
