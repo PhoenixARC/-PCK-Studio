@@ -9,20 +9,23 @@ namespace PckStudio.Forms.Editor
 	{
 		public string Result;
 
-		public BoxEditor(string inBOX, bool hasInflation)
+		public BoxEditor(string box, bool hasInflation)
+			: this(SkinBOX.FromString(box), hasInflation)
+		{
+		}
+
+		public BoxEditor(SkinBOX box, bool hasInflation)
 		{
 			InitializeComponent();
 
-			closeButton.Visible =!Settings.Default.AutoSaveChanges;
+            if (string.IsNullOrEmpty(box.Type) || !parentComboBox.Items.Contains(box.Type))
+            {
+                throw new Exception("Failed to parse BOX value");
+            }
+
+            closeButton.Visible =!Settings.Default.AutoSaveChanges;
 
             inflationUpDown.Enabled = hasInflation;
-
-			var box = SkinBOX.FromString(inBOX);
-
-			if (string.IsNullOrEmpty(box.Type) || !parentComboBox.Items.Contains(box.Type))
-			{
-				throw new Exception("Failed to parse BOX value");
-			}
 
 			parentComboBox.SelectedItem = parentComboBox.Items[parentComboBox.Items.IndexOf(box.Type)];
 			PosXUpDown.Value = (decimal)box.Pos.X;

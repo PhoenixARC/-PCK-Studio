@@ -2302,10 +2302,10 @@ namespace PckStudio
 		{
 			if(treeViewMain.SelectedNode is TreeNode t && t.Tag is PckFile.FileData file)
 			{
-				using BoxEditor diag = new BoxEditor("HEAD -4 -8 -4 8 8 8 0 0 0 0 0", IsSubPCKNode(treeViewMain.SelectedNode.FullPath));
+				using BoxEditor diag = new BoxEditor(SkinBOX.Empty, IsSubPCKNode(treeViewMain.SelectedNode.FullPath));
 				if (diag.ShowDialog(this) == DialogResult.OK)
 				{
-					file.Properties.Add(new KeyValuePair<string, string>("BOX", diag.Result.ToString()));
+					file.Properties.Add("BOX", diag.Result);
 					if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath))
 						RebuildSubPCK(treeViewMain.SelectedNode);
 					ReloadMetaTreeView();
@@ -2319,10 +2319,10 @@ namespace PckStudio
 		{
 			if (treeViewMain.SelectedNode is TreeNode t && t.Tag is PckFile.FileData file)
 			{
-				using ANIMEditor diag = new ANIMEditor("0x0");
+				using ANIMEditor diag = new ANIMEditor(SkinANIM.Empty);
 				if (diag.ShowDialog(this) == DialogResult.OK)
 				{
-					file.Properties.Add(new KeyValuePair<string, string>("ANIM", diag.ResultAnim.ToString()));
+					file.Properties.Add("ANIM", diag.ResultAnim);
 					if (IsSubPCKNode(treeViewMain.SelectedNode.FullPath))
 						RebuildSubPCK(treeViewMain.SelectedNode);
 					ReloadMetaTreeView();

@@ -161,18 +161,33 @@ namespace PckStudio.Forms.Editor
             }
         }
 
-        public ANIMEditor(string ANIM)
+        private ANIMEditor()
         {
             InitializeComponent();
-
+            InitializeRuleSet();
             saveButton.Visible = !Settings.Default.AutoSaveChanges;
+        }
 
+        public ANIMEditor(string ANIM) : this()
+        {
             if (!SkinANIM.IsValidANIM(ANIM))
             {
                 DialogResult = DialogResult.Abort;
                 Close();
             }
             var anim = initialANIM = SkinANIM.FromString(ANIM);
+            setDisplayAnim(anim);
+            ruleset.ApplyAnim(anim);
+        }
+
+        public ANIMEditor(SkinANIM skinANIM) : this()
+        {
+            setDisplayAnim(skinANIM);
+            ruleset.ApplyAnim(skinANIM);
+        }
+
+        private void InitializeRuleSet()
+        {
             ruleset = new ANIMRuleSet(
                 (bobbingCheckBox, ANIM_EFFECTS.HEAD_BOBBING_DISABLED),
                 (bodyCheckBox, ANIM_EFFECTS.BODY_DISABLED),
@@ -208,8 +223,6 @@ namespace PckStudio.Forms.Editor
                 (zombieCheckBox, ANIM_EFFECTS.ZOMBIE_ARMS)
             );
             ruleset.OnCheckboxChanged = setDisplayAnim;
-            setDisplayAnim(anim);
-            ruleset.ApplyAnim(anim);
         }
 
         private void setDisplayAnim(SkinANIM anim)
