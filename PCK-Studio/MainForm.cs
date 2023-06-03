@@ -121,7 +121,6 @@ namespace PckStudio
 
 		private void Form1_Load(object sender, EventArgs e)
 		{
-			RPC.Initialize();
 			UpdateRPC();
 
 			skinToolStripMenuItem1.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.SkinFile);
@@ -148,7 +147,6 @@ namespace PckStudio
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
 		{
 			checkSaveState();
-			RPC.Deinitialize();
 		}
 
 		private void openToolStripMenuItem_Click(object sender, EventArgs e)
