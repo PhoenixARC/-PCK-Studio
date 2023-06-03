@@ -23,8 +23,6 @@ namespace PckStudio.Forms.Editor
 		private PckFile.FileData animationFile;
 		private Animation currentAnimation;
 
-		private bool isItem = false;
-
 		private string TileName = string.Empty;
 
         private bool IsSpecialTile(string tileName)

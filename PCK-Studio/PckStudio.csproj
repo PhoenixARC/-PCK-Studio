@@ -214,10 +214,6 @@
     <Compile Include="Internals\SkinANIM.cs" />
     <Compile Include="Classes\Models\DefaultModels\Steve64x32Model.cs" />
     <Compile Include="Classes\Models\DefaultModels\ModelBase.cs" />
-    <Compile Include="Classes\Models\DefaultModels\Texture.cs" />
-    <Compile Include="Classes\Models\DefaultModels\TextureSelector.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="Classes\Models\Backgrounds.cs" />
     <Compile Include="Classes\Models\BackgroundTypes.cs" />
     <Compile Include="Classes\Models\Box.cs" />

@@ -139,9 +139,6 @@ namespace PckStudio.Forms
                     //add all skins to a list
                     List<PckFile.FileData> skinsList = new List<PckFile.FileData>();
                     List<PckFile.FileData> capesList = new List<PckFile.FileData>();
-
-                    PckFile pck = null;
-
                     var reader = new PckFileReader();
                     PckFile currentPCK = reader.FromFile(Program.AppData + "/PCK-Center/myPcks/" + mod + ".pck");
                     foreach (PckFile.FileData skin in currentPCK.Files)
