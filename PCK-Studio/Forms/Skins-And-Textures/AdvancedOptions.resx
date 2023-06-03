@@ -144,22 +144,52 @@
     <value>23</value>
   </data>
   <data name="comboBox1.Items" xml:space="preserve">
-    <value>All</value>
+    <value>All Files</value>
   </data>
   <data name="comboBox1.Items1" xml:space="preserve">
-    <value>64x64</value>
+    <value>Skin Files (.png;.tga)</value>
   </data>
   <data name="comboBox1.Items2" xml:space="preserve">
-    <value>64x32</value>
+    <value>Cape Files (.png;.tga)</value>
   </data>
   <data name="comboBox1.Items3" xml:space="preserve">
-    <value>PNG Files</value>
+    <value>Texture Files (.png;.tga)</value>
+  </data>
+  <data name="comboBox1.Items4" xml:space="preserve">
+    <value>UI Data Files (?)</value>
+  </data>
+  <data name="comboBox1.Items5" xml:space="preserve">
+    <value>Info Files (0)</value>
+  </data>
+  <data name="comboBox1.Items6" xml:space="preserve">
+    <value>Texture Pack Info Files (.pck)</value>
+  </data>
+  <data name="comboBox1.Items7" xml:space="preserve">
+    <value>Localization Files (.loc)</value>
+  </data>
+  <data name="comboBox1.Items8" xml:space="preserve">
+    <value>Game Rules Files (.grf)</value>
+  </data>
+  <data name="comboBox1.Items9" xml:space="preserve">
+    <value>Audio Files (.pck)</value>
+  </data>
+  <data name="comboBox1.Items10" xml:space="preserve">
+    <value>Colour Table Files (.col)</value>
+  </data>
+  <data name="comboBox1.Items11" xml:space="preserve">
+    <value>Game Rules Header Files (.grh)</value>
+  </data>
+  <data name="comboBox1.Items12" xml:space="preserve">
+    <value>Skin Data Files (.pck)</value>
+  </data>
+  <data name="comboBox1.Items13" xml:space="preserve">
+    <value>Material Files (.bin)</value>
   </data>
   <data name="comboBox1.Location" type="System.Drawing.Point, System.Drawing">
     <value>71, 254</value>
   </data>
   <data name="comboBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>82, 29</value>
+    <value>151, 29</value>
   </data>
   <data name="comboBox1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -334,9 +364,6 @@
     <value>1</value>
   </data>
   <data name="resource.Visible1" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="entryTypeTextBox.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
   <data name="entryTypeTextBox.Location" type="System.Drawing.Point, System.Drawing">

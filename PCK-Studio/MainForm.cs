@@ -1329,8 +1329,12 @@ namespace PckStudio
 		{
 			//opens dialog for bulk minefile editing
 			using AdvancedOptions advanced = new AdvancedOptions(currentPCK);
+			advanced.littleEndian = LittleEndianCheckBox.Checked;
 			if (advanced.ShowDialog() == DialogResult.OK)
+			{
 				wasModified = true;
+				BuildMainTreeView();
+			}
 		}
 
 		private void closeToolStripMenuItem_Click(object sender, EventArgs e)
