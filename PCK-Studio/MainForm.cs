@@ -289,10 +289,9 @@ namespace PckStudio
 					file.Filename = file.Filename.Remove(0, parentPath.Length);
 				TreeNode node = BuildNodeTreeBySeperator(root, file.Filename, '/');
 				node.Tag = file;
-				switch (file.Filetype)
+				if (Settings.Default.LoadSubPcks && (file.Filetype == PckFile.FileData.FileType.SkinDataFile ||
+                    file.Filetype == PckFile.FileData.FileType.TexturePackInfoFile))
 				{
-					case PckFile.FileData.FileType.SkinDataFile:
-					case PckFile.FileData.FileType.TexturePackInfoFile:
 						if (file.Data.Length == 0)
 							break;
 						using (var stream = new MemoryStream(file.Data))
@@ -312,10 +311,6 @@ namespace PckStudio
 								Debug.WriteLine(ex.Message);
 							}
 						}
-						break;
-					default: // unknown file format
-						//throw new InvalidDataException(nameof(file.filetype));
-						break;
 				}
 				SetPckFileIcon(node, file.Filetype);
 			};

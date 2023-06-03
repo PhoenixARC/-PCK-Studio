@@ -32,6 +32,7 @@
             this.SettingToolTip = new MetroFramework.Components.MetroToolTip();
             this.endianCheckBox = new MetroFramework.Controls.MetroCheckBox();
             this.autoUpdateCheckBox = new MetroFramework.Controls.MetroCheckBox();
+            this.autoLoadPckCheckBox = new MetroFramework.Controls.MetroCheckBox();
             this.SuspendLayout();
             // 
             // autoSaveCheckBox
@@ -83,11 +84,26 @@
             this.SettingToolTip.SetToolTip(this.autoUpdateCheckBox, "Whether to automatically check for updates");
             this.autoUpdateCheckBox.UseSelectable = true;
             // 
+            // autoLoadPckCheckBox
+            // 
+            this.autoLoadPckCheckBox.AutoSize = true;
+            this.autoLoadPckCheckBox.Location = new System.Drawing.Point(23, 126);
+            this.autoLoadPckCheckBox.Name = "autoLoadPckCheckBox";
+            this.autoLoadPckCheckBox.Size = new System.Drawing.Size(184, 15);
+            this.autoLoadPckCheckBox.Style = MetroFramework.MetroColorStyle.White;
+            this.autoLoadPckCheckBox.TabIndex = 3;
+            this.autoLoadPckCheckBox.Text = "Auto Load addittional pck files";
+            this.autoLoadPckCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.SettingToolTip.SetToolTip(this.autoLoadPckCheckBox, "Whether to automatically load files inside that end in .pck");
+            this.autoLoadPckCheckBox.UseSelectable = true;
+            this.autoLoadPckCheckBox.CheckedChanged += new System.EventHandler(this.autoLoadPckCheckBox_CheckedChanged);
+            // 
             // AppBehaviorSettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(527, 270);
+            this.Controls.Add(this.autoLoadPckCheckBox);
             this.Controls.Add(this.autoUpdateCheckBox);
             this.Controls.Add(this.endianCheckBox);
             this.Controls.Add(this.autoSaveCheckBox);
@@ -111,5 +127,6 @@
         private MetroFramework.Components.MetroToolTip SettingToolTip;
         private MetroFramework.Controls.MetroCheckBox endianCheckBox;
         private MetroFramework.Controls.MetroCheckBox autoUpdateCheckBox;
+        private MetroFramework.Controls.MetroCheckBox autoLoadPckCheckBox;
     }
 }
