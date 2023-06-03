@@ -27,8 +27,11 @@ namespace PckStudio.Classes.Misc
 
         public static void Initialize()
         {
-            Client = new DiscordRpcClient(Settings.Default.RichPresenceId);
-            Client.Initialize();
+            if (Settings.Default.ShowRichPresence)
+            {
+                Client ??= new DiscordRpcClient(Settings.Default.RichPresenceId);
+                Client.Initialize();
+            }
         }
 
         public static void SetPresence(string details)

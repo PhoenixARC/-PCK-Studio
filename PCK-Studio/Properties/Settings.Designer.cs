@@ -67,5 +67,17 @@ namespace PckStudio.Properties {
                 this["LoadSubPcks"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowRichPresence {
+            get {
+                return ((bool)(this["ShowRichPresence"]));
+            }
+            set {
+                this["ShowRichPresence"] = value;
+            }
+        }
     }
 }

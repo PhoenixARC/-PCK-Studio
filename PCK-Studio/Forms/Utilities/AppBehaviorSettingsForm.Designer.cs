@@ -33,6 +33,7 @@
             this.endianCheckBox = new MetroFramework.Controls.MetroCheckBox();
             this.autoUpdateCheckBox = new MetroFramework.Controls.MetroCheckBox();
             this.autoLoadPckCheckBox = new MetroFramework.Controls.MetroCheckBox();
+            this.showPresenceCheckBox = new MetroFramework.Controls.MetroCheckBox();
             this.SuspendLayout();
             // 
             // autoSaveCheckBox
@@ -98,11 +99,26 @@
             this.autoLoadPckCheckBox.UseSelectable = true;
             this.autoLoadPckCheckBox.CheckedChanged += new System.EventHandler(this.autoLoadPckCheckBox_CheckedChanged);
             // 
+            // showPresenceCheckBox
+            // 
+            this.showPresenceCheckBox.AutoSize = true;
+            this.showPresenceCheckBox.Location = new System.Drawing.Point(23, 147);
+            this.showPresenceCheckBox.Name = "showPresenceCheckBox";
+            this.showPresenceCheckBox.Size = new System.Drawing.Size(171, 15);
+            this.showPresenceCheckBox.Style = MetroFramework.MetroColorStyle.White;
+            this.showPresenceCheckBox.TabIndex = 4;
+            this.showPresenceCheckBox.Text = "Show Discord Rich Presence";
+            this.showPresenceCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.SettingToolTip.SetToolTip(this.showPresenceCheckBox, "Whether to show a rich presence on discord");
+            this.showPresenceCheckBox.UseSelectable = true;
+            this.showPresenceCheckBox.CheckedChanged += new System.EventHandler(this.showPresenceCheckBox_CheckedChanged);
+            // 
             // AppBehaviorSettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(527, 270);
+            this.Controls.Add(this.showPresenceCheckBox);
             this.Controls.Add(this.autoLoadPckCheckBox);
             this.Controls.Add(this.autoUpdateCheckBox);
             this.Controls.Add(this.endianCheckBox);
@@ -128,5 +144,6 @@
         private MetroFramework.Controls.MetroCheckBox endianCheckBox;
         private MetroFramework.Controls.MetroCheckBox autoUpdateCheckBox;
         private MetroFramework.Controls.MetroCheckBox autoLoadPckCheckBox;
+        private MetroFramework.Controls.MetroCheckBox showPresenceCheckBox;
     }
 }

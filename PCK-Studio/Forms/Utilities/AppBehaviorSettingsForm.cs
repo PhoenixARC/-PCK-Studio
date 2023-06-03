@@ -35,11 +35,17 @@ namespace PckStudio.Forms.Utilities
             Settings.Default.LoadSubPcks = autoLoadPckCheckBox.Checked;
         }
 
+        private void showPresenceCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            Settings.Default.ShowRichPresence = showPresenceCheckBox.Checked;
+        }
+
         private void LoadSettings()
         {
             autoSaveCheckBox.Checked = Settings.Default.AutoSaveChanges;
             endianCheckBox.Checked = Settings.Default.UseLittleEndianAsDefault;
             autoLoadPckCheckBox.Checked = Settings.Default.LoadSubPcks;
+            showPresenceCheckBox.Checked = Settings.Default.ShowRichPresence;
         }
 
         private void AppBehaviorSettingsForm_FormClosing(object sender, FormClosingEventArgs e)
