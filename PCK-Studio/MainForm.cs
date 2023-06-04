@@ -135,11 +135,9 @@ namespace PckStudio
 			modelsFileBINToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.ModelsFile);
 			behavioursFileBINToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.BehavioursFile);
 			entityMaterialsFileBINToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.MaterialFile);
-
-			LoadUserSettings();
 		}
 
-        private void LoadUserSettings()
+        public void LoadUserSettings()
         {
 			LittleEndianCheckBox.Checked = Settings.Default.UseLittleEndianAsDefault;
         }

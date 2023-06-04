@@ -35,7 +35,7 @@ namespace PckStudio.Internal
             get
             {
                 // adopted Minecraft Java Edition Snapshot format (YYwWWn)
-                // to keep better track of work in progress features and builds
+                // to keep track of work in progress features and builds
                 _buildCalendar ??= new System.Globalization.CultureInfo("en-US").Calendar;
                 return _betaBuildVersion ??= string.Format("#{0}w{1}{2}",
                     date.ToString("yy"),
