@@ -31,11 +31,13 @@ using PckStudio.Features;
 using PckStudio.Extensions;
 using PckStudio.Popups;
 using PckStudio.API.Miles;
+using PckStudio.Classes.Utils;
 
 namespace PckStudio
 {
     public partial class MainForm : MetroFramework.Forms.MetroForm
 	{
+		private PckManager PckManager = null;
 		string saveLocation = string.Empty;
 		PckFile currentPCK = null;
 		bool wasModified = false;
@@ -84,7 +86,7 @@ namespace PckStudio
 			labelVersion.Text += $" (Debug build: {CommitInfo.BranchName}@{CommitInfo.CommitHash})";
 #endif
 
-			pckFileTypeHandler = new Dictionary<PckFile.FileData.FileType, Action<PckFile.FileData>>(15)
+            pckFileTypeHandler = new Dictionary<PckFile.FileData.FileType, Action<PckFile.FileData>>(15)
 			{
 				[PckFile.FileData.FileType.SkinFile]            = HandleSkinFile,
 				[PckFile.FileData.FileType.CapeFile]            = null,
@@ -109,7 +111,7 @@ namespace PckStudio
 			checkSaveState();
 			treeViewMain.Nodes.Clear();
 			currentPCK = openPck(filepath);
-			if (currentPCK == null)
+            if (currentPCK == null)
 			{
 				MessageBox.Show(string.Format("Failed to load {0}", Path.GetFileName(filepath)), "Error");
 				return;
@@ -709,9 +711,11 @@ namespace PckStudio
 						TrySetLocFile(locFile);
 					}
 				}
-				currentPCK.Files.Remove(file);
-				node.Remove();
-				wasModified = true;
+				if (currentPCK.Files.Remove(file))
+				{
+					node.Remove();
+					wasModified = true;
+				}
 			}
 			else if (MessageBox.Show("Are you sure want to delete this folder? All contents will be deleted", "Warning",
 				MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
@@ -2198,8 +2202,14 @@ namespace PckStudio
 
 		private void openPckManagerToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			PckManager installer = new PckManager();
-			installer.Show(this);
+			PckManager ??= new PckManager();
+			PckManager.BringToFront();
+			PckManager.Focus();
+			if (!PckManager.Visible)
+			{
+				PckManager.FormClosed += delegate { PckManager = null; };
+				PckManager.Show(this);
+			}
 		}
 
 		private async void wavBinkaToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2216,7 +2226,7 @@ namespace PckStudio
             InProgressPrompt waitDiag = new InProgressPrompt();
 			waitDiag.Show(this);
 			
-			int convertedCounter = 0;
+			int convertedCount = 0;
 			foreach (string waveFilepath in fileDialog.FileNames)
 			{
 				string[] a = Path.GetFileNameWithoutExtension(waveFilepath).Split(Path.GetInvalidFileNameChars());
@@ -2245,44 +2255,27 @@ namespace PckStudio
 					exitCode = Binka.FromWav(cacheSongLoc, Path.Combine(Path.GetDirectoryName(waveFilepath), Path.GetFileNameWithoutExtension(waveFilepath) + ".binka"), 4);
 				});
 
-				if (exitCode != 0)
-					continue;
-
-				convertedCounter++;
+				if (exitCode == 0)
+					convertedCount++;
 			}
 
 			int fileCount = fileDialog.FileNames.Length;
 
             waitDiag.Close();
 			waitDiag.Dispose();
-			MessageBox.Show(this, $"Successfully converted {convertedCounter}/{fileCount} file{(fileCount != 1 ? "s" : "")}", "Done!");
+			MessageBox.Show(this, $"Successfully converted {convertedCount}/{fileCount} file{(fileCount != 1 ? "s" : "")}", "Done!");
 		}
 
 		private void binkaWavToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			int success = 0;
-
             using OpenFileDialog fileDialog = new OpenFileDialog
             {
                 Multiselect = true,
                 Filter = "BINKA files (*.binka)|*.binka",
                 Title = "Please choose BINKA files to convert to WAV"
             };
-            
-			if (fileDialog.ShowDialog() != DialogResult.OK)
-				return;
-
-			InProgressPrompt waitDiag = new InProgressPrompt();
-			waitDiag.Show(this);
-			foreach (string file in fileDialog.FileNames)
-			{
-				Binka.ToWav(file, Path.Combine(Path.GetDirectoryName(file), Path.GetFileNameWithoutExtension(file) + ".binka"));
-				success++;
-			}
-
-			waitDiag.Close();
-			waitDiag.Dispose();
-			MessageBox.Show(this, $"Successfully converted {success}/{fileDialog.FileNames.Length} file{(fileDialog.FileNames.Length != 1 ? "s" : "")}", "Done!");
+            if (fileDialog.ShowDialog() == DialogResult.OK)
+				BinkaConverter.ToWav(fileDialog.FileNames, new DirectoryInfo(Path.GetDirectoryName(fileDialog.FileName)));
 		}
 
         private void fullBoxSupportToolStripMenuItem_CheckedChanged(object sender, EventArgs e)

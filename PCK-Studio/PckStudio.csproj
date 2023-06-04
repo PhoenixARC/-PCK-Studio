@@ -173,6 +173,7 @@
     <Compile Include="Classes\ToolboxItems\ToolStripRadioButtonMenuItem.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Classes\Utils\BinkaConverter.cs" />
     <Compile Include="Extensions\ImageLayoutDirection.cs" />
     <Compile Include="Extensions\ImageSection.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
