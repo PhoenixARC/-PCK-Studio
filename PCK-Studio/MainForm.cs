@@ -1944,10 +1944,16 @@ namespace PckStudio
 				// TGA is not yet supported
 				if (textureExtension == ".tga") return;
 
-				using MipMapPrompt diag = new MipMapPrompt();
-				if (diag.ShowDialog(this) == DialogResult.OK)
+				using NumericPrompt numericPrompt = new NumericPrompt(0);
+				numericPrompt.ValueUpDown.Minimum = 1;
+				numericPrompt.ValueUpDown.Maximum = 4; // 5 is the presumed max MipMap level
+				numericPrompt.ContextLabel.Text = "You can enter the amount of MipMap levels that you would like to generate. " +
+					"For example: if you enter 2, MipMapLevel1.png and MipMapLevel2.png will be generated";
+				numericPrompt.TextLabel.Text = "Levels";
+
+				if (numericPrompt.ShowDialog(this) == DialogResult.OK)
 				{
-					for (int i = 2; i < 2 + diag.Levels; i++)
+					for (int i = 2; i < 2 + numericPrompt.NewValue; i++)
 					{
 						string mippedPath = $"{textureDirectory}/{textureName}MipMapLevel{i}{textureExtension}";
 						Debug.WriteLine(mippedPath);
