@@ -178,6 +178,12 @@
     <Compile Include="Extensions\ImageSection.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="Extensions\PckFileExtensions.cs" />
+    <Compile Include="Forms\Additional-Popups\NumericPrompt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\NumericPrompt.Designer.cs">
+      <DependentUpon>NumericPrompt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Utilities\AppBehaviorSettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -268,12 +274,6 @@
     </Compile>
     <Compile Include="Forms\Additional-Popups\CreateTexturePack.Designer.cs">
       <DependentUpon>CreateTexturePack.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Additional-Popups\MipMapPrompt.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Additional-Popups\MipMapPrompt.Designer.cs">
-      <DependentUpon>MipMapPrompt.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Additional-Popups\AddFilePrompt.cs">
       <SubType>Form</SubType>
@@ -500,12 +500,12 @@
       <DependentUpon>CreateTexturePack.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Additional-Popups\MipMapPrompt.resx">
-      <DependentUpon>MipMapPrompt.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\AddFilePrompt.resx">
       <DependentUpon>AddFilePrompt.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Additional-Popups\NumericPrompt.resx">
+      <DependentUpon>NumericPrompt.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\RenamePrompt.resx">

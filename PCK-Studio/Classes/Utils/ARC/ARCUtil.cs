@@ -14,5 +14,19 @@ namespace PckStudio.Classes.Utils.ARC
             stream.Seek(0, SeekOrigin.Begin);
             writer.WriteToStream(stream);
         }
+
+        public static bool ContainsFile(Stream stream, string filepath)
+		{
+            var reader = new ARCFileReader();
+            var archive = reader.FromStream(stream);
+            return archive.ContainsKey(filepath);
+        }
+
+        public static void Remove(Stream stream, string filepath)
+		{
+            var reader = new ARCFileReader();
+            var archive = reader.FromStream(stream);
+            archive.Remove(filepath);
+        }
     }
 }
