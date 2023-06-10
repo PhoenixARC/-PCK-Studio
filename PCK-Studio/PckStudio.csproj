@@ -215,7 +215,6 @@
     <Compile Include="Classes\Models\DefaultModels\Steve64x64Model.cs" />
     <Compile Include="Internals\ApplicationScope.cs" />
     <Compile Include="Internals\SkinBOX.cs" />
-    <Compile Include="Classes\Utils\ARC\ARCUtil.cs" />
     <Compile Include="Extensions\ImageExtensions.cs" />
     <Compile Include="Internals\SkinANIM.cs" />
     <Compile Include="Classes\Models\DefaultModels\Steve64x32Model.cs" />
@@ -780,6 +779,9 @@
       <Project>{e8d0b671-3ab1-48b6-a767-58df67bd5d11}</Project>
       <Name>SharpMss32</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Classes\Utils\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

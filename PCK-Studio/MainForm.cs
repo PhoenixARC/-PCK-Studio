@@ -19,7 +19,6 @@ using OMI.Workers.Language;
 
 using PckStudio.Properties;
 using PckStudio.Classes.FileTypes;
-using PckStudio.Classes.Utils.ARC;
 using PckStudio.Forms;
 using PckStudio.Forms.Utilities;
 using PckStudio.Forms.Editor;
