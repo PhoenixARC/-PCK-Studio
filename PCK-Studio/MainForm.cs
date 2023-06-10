@@ -2031,7 +2031,7 @@ namespace PckStudio
 			if (treeViewMain.SelectedNode is TreeNode node &&
 				node.Tag is PckFile.FileData file)
 			{
-				using (var input = new TextPrompt())
+				using (var input = new MultiTextPrompt())
 				{
 					if (input.ShowDialog(this) == DialogResult.OK)
 					{
@@ -2185,7 +2185,7 @@ namespace PckStudio
 				node.Tag is PckFile.FileData file)
 			{
 				var props = file.Properties.Select(p => p.Key + " " + p.Value);
-				using (var input = new TextPrompt(props.ToArray()))
+				using (var input = new MultiTextPrompt(props.ToArray()))
 				{
 					if (input.ShowDialog(this) == DialogResult.OK)
 					{

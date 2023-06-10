@@ -1,6 +1,6 @@
 ﻿namespace PckStudio.Forms.Additional_Popups
 {
-    partial class TextPrompt
+    partial class MultiTextPrompt
     {
         /// <summary>
         /// Required designer variable.
