@@ -8,9 +8,11 @@ using System.Drawing.Drawing2D;
 using System.Diagnostics;
 using System.Drawing.Imaging;
 
+using OMI.Formats.Archive;
 using OMI.Formats.Pck;
 using OMI.Formats.GameRule;
 using OMI.Formats.Languages;
+using OMI.Workers.Archive;
 using OMI.Workers.Pck;
 using OMI.Workers.GameRule;
 using OMI.Workers.Language;
@@ -2065,29 +2067,88 @@ namespace PckStudio
 
 		private void addCustomPackIconToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (!currentPCK.TryGetFile("0", PckFile.FileData.FileType.InfoFile, out PckFile.FileData file) ||
-				string.IsNullOrEmpty(file.Properties.GetPropertyValue("PACKID"))
-				)
+			string packID = "0";
+
+			using NumericPrompt numericPrompt = new NumericPrompt(0);
+			numericPrompt.ValueUpDown.Minimum = 0; // TODO: put min pack ID value (keeping this 0 just to be safe)
+			numericPrompt.ValueUpDown.Maximum = 999999999; // TODO: put max pack ID value
+			numericPrompt.ContextLabel.Text = "Please insert the desired Pack ID";
+			numericPrompt.TextLabel.Text = "Pack ID";
+
+			if (currentPCK is not null)
 			{
-				MessageBox.Show("No PackID is present in this pack. To avoid this error, please open a PCK with a PackID before trying again.", "Operation Aborted", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				DialogResult prompt = MessageBox.Show(this, 
+					"Would you like to use the current PackID? You can enter any PackID if not.", 
+					"", 
+					MessageBoxButtons.YesNoCancel);
+
+				switch (prompt)
+				{
+					case DialogResult.Yes:
+						if (!currentPCK.TryGetFile("0", PckFile.FileData.FileType.InfoFile, out PckFile.FileData file) ||
+							string.IsNullOrEmpty(file.Properties.GetPropertyValue("PACKID")))
+						{
+							MessageBox.Show(this, 
+								"No PackID is present in this PCK. " +
+								"To avoid this error, ensure that the PCK has a proper PackID property on the \"0\" Info file before trying again.", 
+								"Operation Aborted", MessageBoxButtons.OK, MessageBoxIcon.Error);
+							return;
+						}
+
+						packID = file.Properties.GetPropertyValue("PACKID");
+						break;
+					case DialogResult.No:
+						break;
+					case DialogResult.Cancel:
+					default:
+						MessageBox.Show(this, "Operation cancelled");
+						return;
+				}
+			}
+			else if (numericPrompt.ShowDialog(this) == DialogResult.OK) packID = numericPrompt.NewValue.ToString();
+			else
+			{
+				MessageBox.Show(this, "Operation cancelled");
 				return;
 			}
 
-			OpenFileDialog dialog = new OpenFileDialog();
-			dialog.Filter = "Minecraft Archive|*.arc";
-			if (dialog.ShowDialog(this) == DialogResult.OK)
+			OpenFileDialog arcDialog = new OpenFileDialog();
+			OpenFileDialog iconDialog = new OpenFileDialog();
+			arcDialog.Filter = "Minecraft Archive|*.arc";
+			iconDialog.Filter = "Pack Icon|*.png";
+			if (arcDialog.ShowDialog(this) == DialogResult.OK)
 			{
-				string filepath = dialog.FileName;
-				dialog.Filter = "Pack Icon|*.png";
-				if (dialog.ShowDialog(this) == DialogResult.OK)
+				using (var fs = File.OpenRead(arcDialog.FileName))
 				{
-					using (var fs = File.OpenRead(filepath))
+					var reader = new ARCFileReader();
+					ConsoleArchive archive = reader.FromStream(fs);
+
+					if (iconDialog.ShowDialog(this) == DialogResult.OK)
 					{
-						ARCUtil.Inject(fs, (
-							string.Format("Graphics\\PackGraphics\\{0}.png", file.Properties.GetPropertyValue("PACKID")),
-							File.ReadAllBytes(dialog.FileName))
-							);
-						MessageBox.Show("Successfully added Pack Icon to Archive!", "Successfully Added", MessageBoxButtons.OK, MessageBoxIcon.Information);
+						string key = string.Format("Graphics\\PackGraphics\\{0}.png", packID);
+
+						if (archive.Keys.Contains(key))
+						{
+							DialogResult prompt = MessageBox.Show(this,
+								"This pack already has a pack icon present in the chosen file. Would you like to replace the pack icon?",
+								"Icon already exists",
+								MessageBoxButtons.YesNoCancel);
+							switch (prompt)
+							{
+								case DialogResult.Yes:
+									archive.Remove(key); // remove file so it can be injected
+									break;
+								case DialogResult.No:
+								case DialogResult.Cancel:
+								default:
+									MessageBox.Show(this, "Operation cancelled");
+									return;
+							}
+						}
+						archive.Add(key, File.ReadAllBytes(iconDialog.FileName));
+						var writer = new ARCFileWriter(archive);
+						writer.WriteToFile(arcDialog.FileName);
+						MessageBox.Show($"Successfully added {key} to Archive!", "Successfully Added", MessageBoxButtons.OK, MessageBoxIcon.Information);
 					}
 				}
 			}

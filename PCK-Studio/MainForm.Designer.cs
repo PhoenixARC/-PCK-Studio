@@ -117,6 +117,9 @@
 			this.settingsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenuMetaTree = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.addEntryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.addEntryToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+			this.addBOXEntryToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+			this.addANIMEntryToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			this.addMultipleEntriesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			this.deleteEntryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.editAllEntriesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -143,9 +146,6 @@
 			this.treeViewMain = new System.Windows.Forms.TreeView();
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.LittleEndianCheckBox = new MetroFramework.Controls.MetroCheckBox();
-			this.addEntryToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-			this.addBOXEntryToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-			this.addANIMEntryToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			this.pictureBoxImagePreview = new PckStudio.PictureBoxWithInterpolationMode();
 			this.contextMenuPCKEntries.SuspendLayout();
 			this.menuStrip.SuspendLayout();
@@ -559,8 +559,8 @@
 			// 
 			// addCustomPackImageToolStripMenuItem
 			// 
-			resources.ApplyResources(this.addCustomPackImageToolStripMenuItem, "addCustomPackImageToolStripMenuItem");
 			this.addCustomPackImageToolStripMenuItem.Name = "addCustomPackImageToolStripMenuItem";
+			resources.ApplyResources(this.addCustomPackImageToolStripMenuItem, "addCustomPackImageToolStripMenuItem");
 			this.addCustomPackImageToolStripMenuItem.Click += new System.EventHandler(this.addCustomPackIconToolStripMenuItem_Click);
 			// 
 			// openPckManagerToolStripMenuItem
@@ -779,6 +779,24 @@
             this.addANIMEntryToolStripMenuItem1});
 			resources.ApplyResources(this.addEntryToolStripMenuItem, "addEntryToolStripMenuItem");
 			this.addEntryToolStripMenuItem.Name = "addEntryToolStripMenuItem";
+			// 
+			// addEntryToolStripMenuItem1
+			// 
+			this.addEntryToolStripMenuItem1.Name = "addEntryToolStripMenuItem1";
+			resources.ApplyResources(this.addEntryToolStripMenuItem1, "addEntryToolStripMenuItem1");
+			this.addEntryToolStripMenuItem1.Click += new System.EventHandler(this.addEntryToolStripMenuItem_Click_1);
+			// 
+			// addBOXEntryToolStripMenuItem1
+			// 
+			this.addBOXEntryToolStripMenuItem1.Name = "addBOXEntryToolStripMenuItem1";
+			resources.ApplyResources(this.addBOXEntryToolStripMenuItem1, "addBOXEntryToolStripMenuItem1");
+			this.addBOXEntryToolStripMenuItem1.Click += new System.EventHandler(this.addBOXEntryToolStripMenuItem1_Click);
+			// 
+			// addANIMEntryToolStripMenuItem1
+			// 
+			this.addANIMEntryToolStripMenuItem1.Name = "addANIMEntryToolStripMenuItem1";
+			resources.ApplyResources(this.addANIMEntryToolStripMenuItem1, "addANIMEntryToolStripMenuItem1");
+			this.addANIMEntryToolStripMenuItem1.Click += new System.EventHandler(this.addANIMEntryToolStripMenuItem1_Click);
 			// 
 			// addMultipleEntriesToolStripMenuItem1
 			// 
@@ -1073,24 +1091,6 @@
 			this.LittleEndianCheckBox.Style = MetroFramework.MetroColorStyle.White;
 			this.LittleEndianCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.LittleEndianCheckBox.UseSelectable = true;
-			// 
-			// addEntryToolStripMenuItem1
-			// 
-			this.addEntryToolStripMenuItem1.Name = "addEntryToolStripMenuItem1";
-			resources.ApplyResources(this.addEntryToolStripMenuItem1, "addEntryToolStripMenuItem1");
-			this.addEntryToolStripMenuItem1.Click += new System.EventHandler(this.addEntryToolStripMenuItem_Click_1);
-			// 
-			// addBOXEntryToolStripMenuItem1
-			// 
-			this.addBOXEntryToolStripMenuItem1.Name = "addBOXEntryToolStripMenuItem1";
-			resources.ApplyResources(this.addBOXEntryToolStripMenuItem1, "addBOXEntryToolStripMenuItem1");
-			this.addBOXEntryToolStripMenuItem1.Click += new System.EventHandler(this.addBOXEntryToolStripMenuItem1_Click);
-			// 
-			// addANIMEntryToolStripMenuItem1
-			// 
-			this.addANIMEntryToolStripMenuItem1.Name = "addANIMEntryToolStripMenuItem1";
-			resources.ApplyResources(this.addANIMEntryToolStripMenuItem1, "addANIMEntryToolStripMenuItem1");
-			this.addANIMEntryToolStripMenuItem1.Click += new System.EventHandler(this.addANIMEntryToolStripMenuItem1_Click);
 			// 
 			// pictureBoxImagePreview
 			// 
