@@ -4,17 +4,17 @@ using MetroFramework.Forms;
 
 namespace PckStudio
 {
-    public partial class RenamePrompt : MetroForm
+    public partial class TextPrompt : MetroForm
 	{
 		/// <summary>
 		/// Text entered <c>only access when DialogResult == DialogResult.OK</c>
 		/// </summary>
 		public string NewText => InputTextBox.Text;
 
-		public RenamePrompt(string InitialText) : this(InitialText, -1)
+		public TextPrompt(string InitialText) : this(InitialText, -1)
 		{ }
 
-		public RenamePrompt(string InitialText, int maxChar)
+		public TextPrompt(string InitialText, int maxChar)
 		{
 			InitializeComponent();
 			InputTextBox.Text = InitialText;

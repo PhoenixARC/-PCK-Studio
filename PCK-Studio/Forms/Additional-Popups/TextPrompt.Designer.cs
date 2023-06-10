@@ -1,6 +1,6 @@
 ﻿namespace PckStudio
 {
-    partial class RenamePrompt
+    partial class TextPrompt
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RenamePrompt));
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TextPrompt));
 			this.TextLabel = new System.Windows.Forms.Label();
 			this.OKButton = new System.Windows.Forms.Button();
 			this.InputTextBox = new MetroFramework.Controls.MetroTextBox();

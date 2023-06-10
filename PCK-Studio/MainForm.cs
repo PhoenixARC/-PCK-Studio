@@ -731,7 +731,7 @@ namespace PckStudio
 
 			bool sub = IsSubPCKNode(path);
 
-			using RenamePrompt diag = new RenamePrompt(node.Tag is null ? Path.GetFileName(node.FullPath) : node.FullPath);
+			using TextPrompt diag = new TextPrompt(node.Tag is null ? Path.GetFileName(node.FullPath) : node.FullPath);
 
 			if (diag.ShowDialog(this) == DialogResult.OK)
 			{
@@ -1281,7 +1281,7 @@ namespace PckStudio
 		private void skinPackToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			checkSaveState();
-			RenamePrompt namePrompt = new RenamePrompt("");
+			TextPrompt namePrompt = new TextPrompt("");
 			namePrompt.OKButton.Text = "Ok";
 			if (namePrompt.ShowDialog() == DialogResult.OK)
 			{
@@ -1632,7 +1632,7 @@ namespace PckStudio
 
 		private void folderToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			RenamePrompt folderNamePrompt = new RenamePrompt("");
+			TextPrompt folderNamePrompt = new TextPrompt("");
 			if(treeViewMain.SelectedNode is not null) folderNamePrompt.contextLabel.Text = $"New folder at the location of \"{treeViewMain.SelectedNode.FullPath}\"";
 			folderNamePrompt.OKButton.Text = "Add";
 			if (folderNamePrompt.ShowDialog() == DialogResult.OK)
@@ -1905,7 +1905,7 @@ namespace PckStudio
 			fileDialog.Filter = "Texture File(*.png;*.tga)|*.png;*.tga";
 			if (fileDialog.ShowDialog() == DialogResult.OK)
 			{
-				using RenamePrompt renamePrompt = new RenamePrompt(Path.GetFileName(fileDialog.FileName));
+				using TextPrompt renamePrompt = new TextPrompt(Path.GetFileName(fileDialog.FileName));
 				renamePrompt.TextLabel.Text = "Path";
 				if (renamePrompt.ShowDialog() == DialogResult.OK && !string.IsNullOrEmpty(renamePrompt.NewText))
 				{

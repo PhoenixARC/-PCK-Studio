@@ -279,11 +279,11 @@
     <Compile Include="Forms\Additional-Popups\AddFilePrompt.Designer.cs">
       <DependentUpon>AddFilePrompt.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Additional-Popups\RenamePrompt.cs">
+    <Compile Include="Forms\Additional-Popups\TextPrompt.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Additional-Popups\RenamePrompt.Designer.cs">
-      <DependentUpon>RenamePrompt.cs</DependentUpon>
+    <Compile Include="Forms\Additional-Popups\TextPrompt.Designer.cs">
+      <DependentUpon>TextPrompt.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Additional-Popups\MultiTextPrompt.cs">
       <SubType>Form</SubType>
@@ -506,8 +506,8 @@
       <DependentUpon>NumericPrompt.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Additional-Popups\RenamePrompt.resx">
-      <DependentUpon>RenamePrompt.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Additional-Popups\TextPrompt.resx">
+      <DependentUpon>TextPrompt.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\MultiTextPrompt.resx">

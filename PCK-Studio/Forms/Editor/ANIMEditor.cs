@@ -246,7 +246,7 @@ namespace PckStudio.Forms.Editor
             while (!SkinANIM.IsValidANIM(value))
             {
                 if (!string.IsNullOrWhiteSpace(value)) MessageBox.Show($"The following value \"{value}\" is not valid. Please try again.");
-                RenamePrompt diag = new RenamePrompt(value);
+                TextPrompt diag = new TextPrompt(value);
                 diag.TextLabel.Text = "ANIM";
                 diag.OKButton.Text = "Ok";
                 if (diag.ShowDialog() == DialogResult.OK)
