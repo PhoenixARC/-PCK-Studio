@@ -20,7 +20,7 @@ namespace PckStudio.Classes.Misc
         {
             new Button()
             {
-                Label = "Check it out.",
+                Label = "Check it out!",
                 Url = Program.ProjectUrl,
             }
         };
