@@ -88,7 +88,7 @@
 			this.contextLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.contextLabel.WrapToLine = true;
 			// 
-			// RenamePrompt
+			// TextPrompt
 			// 
 			this.AcceptButton = this.OKButton;
 			resources.ApplyResources(this, "$this");
@@ -99,7 +99,7 @@
 			this.Controls.Add(this.TextLabel);
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
-			this.Name = "RenamePrompt";
+			this.Name = "TextPrompt";
 			this.Resizable = false;
 			this.ShadowType = MetroFramework.Forms.MetroFormShadowType.DropShadow;
 			this.Style = MetroFramework.MetroColorStyle.Silver;

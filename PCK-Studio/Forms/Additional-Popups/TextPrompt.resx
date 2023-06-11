@@ -232,10 +232,10 @@
     <value>Top</value>
   </data>
   <data name="contextLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>28, 39</value>
+    <value>28, 27</value>
   </data>
   <data name="contextLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>208, 39</value>
+    <value>208, 55</value>
   </data>
   <data name="contextLabel.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -2488,7 +2488,7 @@
     <value>CenterParent</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>RenamePrompt</value>
+    <value>TextPrompt</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>MetroFramework.Forms.MetroForm, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>

@@ -50,18 +50,18 @@
 			this.OKButton.UseVisualStyleBackColor = true;
 			this.OKButton.Click += new System.EventHandler(this.OKBtn_Click);
 			// 
-			// contextLabel
+			// ContextLabel
 			// 
-			resources.ApplyResources(this.ContextLabel, "contextLabel");
+			resources.ApplyResources(this.ContextLabel, "ContextLabel");
 			this.ContextLabel.FontSize = MetroFramework.MetroLabelSize.Small;
-			this.ContextLabel.Name = "contextLabel";
+			this.ContextLabel.Name = "ContextLabel";
 			this.ContextLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.ContextLabel.WrapToLine = true;
 			// 
-			// valueUpDown
+			// ValueUpDown
 			// 
-			resources.ApplyResources(this.ValueUpDown, "valueUpDown");
-			this.ValueUpDown.Name = "valueUpDown";
+			resources.ApplyResources(this.ValueUpDown, "ValueUpDown");
+			this.ValueUpDown.Name = "ValueUpDown";
 			// 
 			// NumericPrompt
 			// 

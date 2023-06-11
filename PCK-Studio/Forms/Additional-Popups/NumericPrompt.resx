@@ -186,52 +186,52 @@
   <data name="&gt;&gt;OKButton.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="contextLabel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+  <data name="ContextLabel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top</value>
   </data>
-  <data name="contextLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>28, 39</value>
+  <data name="ContextLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>28, 27</value>
   </data>
-  <data name="contextLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>208, 39</value>
+  <data name="ContextLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>208, 58</value>
   </data>
-  <data name="contextLabel.TabIndex" type="System.Int32, mscorlib">
+  <data name="ContextLabel.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
   </data>
-  <data name="contextLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+  <data name="ContextLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>TopCenter</value>
   </data>
-  <data name="&gt;&gt;contextLabel.Name" xml:space="preserve">
-    <value>contextLabel</value>
+  <data name="&gt;&gt;ContextLabel.Name" xml:space="preserve">
+    <value>ContextLabel</value>
   </data>
-  <data name="&gt;&gt;contextLabel.Type" xml:space="preserve">
+  <data name="&gt;&gt;ContextLabel.Type" xml:space="preserve">
     <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
   </data>
-  <data name="&gt;&gt;contextLabel.Parent" xml:space="preserve">
+  <data name="&gt;&gt;ContextLabel.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;contextLabel.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;ContextLabel.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="valueUpDown.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="ValueUpDown.Location" type="System.Drawing.Point, System.Drawing">
     <value>71, 88</value>
   </data>
-  <data name="valueUpDown.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="ValueUpDown.Size" type="System.Drawing.Size, System.Drawing">
     <value>164, 20</value>
   </data>
-  <data name="valueUpDown.TabIndex" type="System.Int32, mscorlib">
+  <data name="ValueUpDown.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
   </data>
-  <data name="&gt;&gt;valueUpDown.Name" xml:space="preserve">
-    <value>valueUpDown</value>
+  <data name="&gt;&gt;ValueUpDown.Name" xml:space="preserve">
+    <value>ValueUpDown</value>
   </data>
-  <data name="&gt;&gt;valueUpDown.Type" xml:space="preserve">
+  <data name="&gt;&gt;ValueUpDown.Type" xml:space="preserve">
     <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;valueUpDown.Parent" xml:space="preserve">
+  <data name="&gt;&gt;ValueUpDown.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;valueUpDown.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;ValueUpDown.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
