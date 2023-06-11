@@ -1048,43 +1048,45 @@ namespace PckStudio
 		private void cloneFileToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			TreeNode node = treeViewMain.SelectedNode;
-			PckFile.FileData mfO = node.Tag as PckFile.FileData;
+			if (node == null) return;
+			string path = node.FullPath;
 
-			// Creates new empty file entry
-			PckFile.FileData mf = new PckFile.FileData(string.Empty, mfO.Filetype);
-			mf.SetData(mfO.Data);
-			string dirName = Path.GetDirectoryName(mfO.Filename);
+			using TextPrompt diag = new TextPrompt(node.Tag is null ? Path.GetFileName(node.FullPath) : node.FullPath);
+			diag.contextLabel.Text = $"Creating a clone of \"{path}\". Ensure that the path isn't yet.";
+			diag.OKButton.Text = "Clone";
 
-			int clone_number = 0;
-			string nameWithoutExt = Path.GetFileNameWithoutExtension(mfO.Filename);
-			string newFileName = mfO.Filename;
-			do
+			if (diag.ShowDialog(this) == DialogResult.OK)
 			{
-				clone_number++;
-				string clone_str = "_clone" + clone_number.ToString();
-				bool isClone = nameWithoutExt.Contains("_clone");
-				if (isClone) newFileName = nameWithoutExt.Remove(nameWithoutExt.Length - 7) + clone_str + Path.GetExtension(mfO.Filename);
-				else newFileName = nameWithoutExt + clone_str + Path.GetExtension(mfO.Filename);
+				if (node.Tag is PckFile.FileData file)
+				{
+					TreeNode newNode = new TreeNode();
+					newNode.Text = diag.NewText;
+					var NewFile = new PckFile.FileData(newNode.Text, file.Filetype);
+					file.Properties.ForEach(p => NewFile.Properties.Add(p));
+					NewFile.SetData(file.Data);
+					NewFile.Filename = newNode.Text;
+					newNode.Tag = NewFile;
+					newNode.ImageIndex = node.ImageIndex;
+					newNode.SelectedImageIndex = node.SelectedImageIndex;
+
+					if (GetAllChildNodes(treeViewMain.Nodes).Find(n => n.FullPath == newNode.Text) != null)
+					{
+						MessageBox.Show(
+							this, 
+							$"A file with the path \"{diag.NewText}\" already exists. " +
+							$"Please try again with a different name.", 
+							"Key already exists");
+						return;
+					}
+
+					if (node.Parent == null) treeViewMain.Nodes.Insert(node.Index + 1, newNode); //adds generated file node
+					else node.Parent.Nodes.Insert(node.Index + 1, newNode);//adds generated file node to selected folder
+
+					if (!IsSubPCKNode(node.FullPath)) currentPCK.Files.Insert(node.Index + 1, NewFile);
+					else RebuildSubPCK(node.FullPath);
+					wasModified = true;
+				}
 			}
-			while (currentPCK.HasFile(dirName + (string.IsNullOrEmpty(dirName) ? "" : "/") + newFileName, mf.Filetype));
-
-			mf.Filename = dirName + (string.IsNullOrEmpty(dirName) ? "" : "/") + newFileName; //sets minfile name to file name
-			foreach (var entry in mfO.Properties)
-			{
-				mf.Properties.Add(entry);
-			}
-
-			TreeNode newNode = new TreeNode();
-			newNode.Text = newFileName;
-			newNode.Tag = mf;
-			newNode.ImageIndex = node.ImageIndex;
-			newNode.SelectedImageIndex = node.SelectedImageIndex;
-
-			if (node.Parent == null) treeViewMain.Nodes.Insert(node.Index + 1, newNode); //adds generated minefile node
-			else node.Parent.Nodes.Insert(node.Index + 1, newNode);//adds generated minefile node to selected folder
-
-			if (!IsSubPCKNode(node.FullPath)) currentPCK.Files.Insert(node.Index + 1, mf);
-			else RebuildSubPCK(node.FullPath);
 		}
 
 		private void deleteEntryToolStripMenuItem_Click(object sender, EventArgs e)
