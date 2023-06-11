@@ -190,10 +190,10 @@
     <value>Top</value>
   </data>
   <data name="ContextLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>28, 39</value>
+    <value>28, 27</value>
   </data>
   <data name="ContextLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>208, 39</value>
+    <value>208, 58</value>
   </data>
   <data name="ContextLabel.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>

@@ -251,7 +251,7 @@ namespace PckStudio.Features
 
         private void addCustomPckToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            RenamePrompt prompt = new RenamePrompt(string.Empty);
+            TextPrompt prompt = new TextPrompt(string.Empty);
             prompt.OKButton.Text = "OK";
             prompt.TextLabel.Text = "Folder:";
             

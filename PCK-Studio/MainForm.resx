@@ -673,9 +673,6 @@
   <data name="editToolStripMenuItem.Text" xml:space="preserve">
     <value>Edit</value>
   </data>
-  <data name="addCustomPackImageToolStripMenuItem.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
   <data name="addCustomPackImageToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>195, 22</value>
   </data>
@@ -24172,19 +24169,19 @@
     <value>298, 17</value>
   </metadata>
   <data name="addEntryToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>160, 22</value>
   </data>
   <data name="addEntryToolStripMenuItem1.Text" xml:space="preserve">
     <value>Add Entry</value>
   </data>
   <data name="addBOXEntryToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>160, 22</value>
   </data>
   <data name="addBOXEntryToolStripMenuItem1.Text" xml:space="preserve">
     <value>Add BOX Entry</value>
   </data>
   <data name="addANIMEntryToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>160, 22</value>
   </data>
   <data name="addANIMEntryToolStripMenuItem1.Text" xml:space="preserve">
     <value>Add ANIM Entry</value>
@@ -24239,7 +24236,7 @@
     <value>Edit All Entries</value>
   </data>
   <data name="contextMenuMetaTree.Size" type="System.Drawing.Size, System.Drawing">
-    <value>182, 114</value>
+    <value>182, 92</value>
   </data>
   <data name="&gt;&gt;contextMenuMetaTree.Name" xml:space="preserve">
     <value>contextMenuMetaTree</value>
@@ -29617,6 +29614,24 @@
   <data name="&gt;&gt;addEntryToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;addEntryToolStripMenuItem1.Name" xml:space="preserve">
+    <value>addEntryToolStripMenuItem1</value>
+  </data>
+  <data name="&gt;&gt;addEntryToolStripMenuItem1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;addBOXEntryToolStripMenuItem1.Name" xml:space="preserve">
+    <value>addBOXEntryToolStripMenuItem1</value>
+  </data>
+  <data name="&gt;&gt;addBOXEntryToolStripMenuItem1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;addANIMEntryToolStripMenuItem1.Name" xml:space="preserve">
+    <value>addANIMEntryToolStripMenuItem1</value>
+  </data>
+  <data name="&gt;&gt;addANIMEntryToolStripMenuItem1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;addMultipleEntriesToolStripMenuItem1.Name" xml:space="preserve">
     <value>addMultipleEntriesToolStripMenuItem1</value>
   </data>
@@ -29640,24 +29655,6 @@
   </data>
   <data name="&gt;&gt;imageList.Type" xml:space="preserve">
     <value>System.Windows.Forms.ImageList, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;addEntryToolStripMenuItem1.Name" xml:space="preserve">
-    <value>addEntryToolStripMenuItem1</value>
-  </data>
-  <data name="&gt;&gt;addEntryToolStripMenuItem1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;addBOXEntryToolStripMenuItem1.Name" xml:space="preserve">
-    <value>addBOXEntryToolStripMenuItem1</value>
-  </data>
-  <data name="&gt;&gt;addBOXEntryToolStripMenuItem1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;addANIMEntryToolStripMenuItem1.Name" xml:space="preserve">
-    <value>addANIMEntryToolStripMenuItem1</value>
-  </data>
-  <data name="&gt;&gt;addANIMEntryToolStripMenuItem1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>MainForm</value>
