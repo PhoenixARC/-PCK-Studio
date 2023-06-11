@@ -2119,44 +2119,40 @@ namespace PckStudio
 				return;
 			}
 
-			OpenFileDialog arcDialog = new OpenFileDialog();
-			OpenFileDialog iconDialog = new OpenFileDialog();
-			arcDialog.Filter = "Minecraft Archive|*.arc";
-			iconDialog.Filter = "Pack Icon|*.png";
-			if (arcDialog.ShowDialog(this) == DialogResult.OK)
+			OpenFileDialog fileDialog = new OpenFileDialog();
+			fileDialog.Filter = "Minecraft Archive|*.arc";
+			if (fileDialog.ShowDialog(this) == DialogResult.OK)
 			{
-				using (var fs = File.OpenRead(arcDialog.FileName))
+				var reader = new ARCFileReader();
+				ConsoleArchive archive = reader.FromFile(fileDialog.FileName);
+
+				fileDialog.Filter = "Pack Icon|*.png";
+				if (fileDialog.ShowDialog(this) == DialogResult.OK)
 				{
-					var reader = new ARCFileReader();
-					ConsoleArchive archive = reader.FromStream(fs);
+					string key = string.Format("Graphics\\PackGraphics\\{0}.png", packID);
 
-					if (iconDialog.ShowDialog(this) == DialogResult.OK)
+					if (archive.Keys.Contains(key))
 					{
-						string key = string.Format("Graphics\\PackGraphics\\{0}.png", packID);
-
-						if (archive.Keys.Contains(key))
+						DialogResult prompt = MessageBox.Show(this,
+							"This pack already has a pack icon present in the chosen file. Would you like to replace the pack icon?",
+							"Icon already exists",
+							MessageBoxButtons.YesNoCancel);
+						switch (prompt)
 						{
-							DialogResult prompt = MessageBox.Show(this,
-								"This pack already has a pack icon present in the chosen file. Would you like to replace the pack icon?",
-								"Icon already exists",
-								MessageBoxButtons.YesNoCancel);
-							switch (prompt)
-							{
-								case DialogResult.Yes:
-									archive.Remove(key); // remove file so it can be injected
-									break;
-								case DialogResult.No:
-								case DialogResult.Cancel:
-								default:
-									MessageBox.Show(this, "Operation cancelled");
-									return;
-							}
+							case DialogResult.Yes:
+								archive.Remove(key); // remove file so it can be injected
+								break;
+							case DialogResult.No:
+							case DialogResult.Cancel:
+							default:
+								MessageBox.Show(this, "Operation cancelled");
+								return;
 						}
-						archive.Add(key, File.ReadAllBytes(iconDialog.FileName));
-						var writer = new ARCFileWriter(archive);
-						writer.WriteToFile(arcDialog.FileName);
-						MessageBox.Show($"Successfully added {key} to Archive!", "Successfully Added", MessageBoxButtons.OK, MessageBoxIcon.Information);
 					}
+					archive.Add(key, File.ReadAllBytes(fileDialog.FileName));
+					var writer = new ARCFileWriter(archive);
+					writer.WriteToFile(fileDialog.FileName);
+					MessageBox.Show($"Successfully added {key} to Archive!", "Successfully Added", MessageBoxButtons.OK, MessageBoxIcon.Information);
 				}
 			}
 		}
