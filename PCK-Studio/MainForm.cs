@@ -1060,16 +1060,16 @@ namespace PckStudio
 				if (node.Tag is PckFile.FileData file)
 				{
 					TreeNode newNode = new TreeNode();
-					newNode.Text = diag.NewText;
-					var NewFile = new PckFile.FileData(newNode.Text, file.Filetype);
+					newNode.Text = Path.GetFileName(diag.NewText);
+					var NewFile = new PckFile.FileData(diag.NewText, file.Filetype);
 					file.Properties.ForEach(p => NewFile.Properties.Add(p));
 					NewFile.SetData(file.Data);
-					NewFile.Filename = newNode.Text;
+					NewFile.Filename = diag.NewText;
 					newNode.Tag = NewFile;
 					newNode.ImageIndex = node.ImageIndex;
 					newNode.SelectedImageIndex = node.SelectedImageIndex;
 
-					if (GetAllChildNodes(treeViewMain.Nodes).Find(n => n.FullPath == newNode.Text) != null)
+					if (GetAllChildNodes(treeViewMain.Nodes).Find(n => n.FullPath == diag.NewText) != null)
 					{
 						MessageBox.Show(
 							this, 
@@ -1084,6 +1084,7 @@ namespace PckStudio
 
 					if (!IsSubPCKNode(node.FullPath)) currentPCK.Files.Insert(node.Index + 1, NewFile);
 					else RebuildSubPCK(node.FullPath);
+					BuildMainTreeView();
 					wasModified = true;
 				}
 			}
