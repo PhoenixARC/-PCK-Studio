@@ -25,7 +25,6 @@ namespace PckStudio
             ApplicationScope.Initialize();
             RPC.Initialize();
             MainInstance = new MainForm();
-            MainInstance.LoadUserSettings();
             if (args.Length > 0 && File.Exists(args[0]) && args[0].EndsWith(".pck"))
                 MainInstance.LoadPckFromFile(args[0]);
             Application.Run(MainInstance);

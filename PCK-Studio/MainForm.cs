@@ -33,6 +33,7 @@ using PckStudio.Extensions;
 using PckStudio.Popups;
 using PckStudio.API.Miles;
 using PckStudio.Classes.Utils;
+using PckStudio.Internals;
 
 namespace PckStudio
 {
@@ -122,8 +123,20 @@ namespace PckStudio
 			LoadEditorTab();
 		}
 
-		private void Form1_Load(object sender, EventArgs e)
+		private void MainForm_Load(object sender, EventArgs e)
 		{
+			SettingsManager.RegisterPropertyChangedCallback<bool>(nameof(Settings.Default.UseLittleEndianAsDefault), state =>
+			{
+                LittleEndianCheckBox.Checked = state;
+            });
+			SettingsManager.RegisterPropertyChangedCallback(nameof(Settings.Default.LoadSubPcks), () =>
+			{
+				if (currentPCK is not null)
+				{
+					BuildMainTreeView();
+				}
+			});
+
 			UpdateRPC();
 
 			skinToolStripMenuItem1.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.SkinFile);
@@ -140,12 +153,7 @@ namespace PckStudio
 			entityMaterialsFileBINToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.MaterialFile);
 		}
 
-        public void LoadUserSettings()
-        {
-			LittleEndianCheckBox.Checked = Settings.Default.UseLittleEndianAsDefault;
-        }
-
-        private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
 		{
 			checkSaveState();
 		}

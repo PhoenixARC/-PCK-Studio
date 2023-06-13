@@ -215,6 +215,7 @@
     <Compile Include="Classes\Misc\OpenFolderDialog.cs" />
     <Compile Include="Classes\Models\DefaultModels\Steve64x64Model.cs" />
     <Compile Include="Internals\ApplicationScope.cs" />
+    <Compile Include="Internals\SettingsManager.cs" />
     <Compile Include="Internals\SkinBOX.cs" />
     <Compile Include="Extensions\ImageExtensions.cs" />
     <Compile Include="Internals\SkinANIM.cs" />
@@ -781,9 +782,7 @@
       <Name>SharpMss32</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Classes\Utils\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1115,8 +1115,8 @@
 			this.ShadowType = MetroFramework.Forms.MetroFormShadowType.DropShadow;
 			this.Style = MetroFramework.MetroColorStyle.Black;
 			this.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
-			this.Load += new System.EventHandler(this.Form1_Load);
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
+			this.Load += new System.EventHandler(this.MainForm_Load);
 			this.contextMenuPCKEntries.ResumeLayout(false);
 			this.menuStrip.ResumeLayout(false);
 			this.menuStrip.PerformLayout();

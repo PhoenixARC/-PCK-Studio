@@ -10,6 +10,8 @@ using PckStudio.Forms.Utilities;
 using PckStudio.Properties;
 using PckStudio.Extensions;
 using System.Globalization;
+using System.ComponentModel;
+using PckStudio.Internals;
 
 namespace PckStudio
 {
@@ -29,10 +31,11 @@ namespace PckStudio
                 _ = AnimationResources.JsonTileData;
                 _ = AnimationResources.ItemList;
                 _ = AnimationResources.BlockList;
+                SettingsManager.Initialize();
+                CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
             }
             stopwatch.Stop();
             Debug.WriteLine($"{nameof(ApplicationScope.Initialize)} took {stopwatch.ElapsedMilliseconds}ms");
-            CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
         }
     }
 }
