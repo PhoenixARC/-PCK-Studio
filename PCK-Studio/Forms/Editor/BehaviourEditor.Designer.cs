@@ -194,6 +194,11 @@
             0,
             0,
             0});
+            this.zUpDown.Minimum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            -2147483648});
             this.zUpDown.Name = "zUpDown";
             this.zUpDown.Size = new System.Drawing.Size(75, 20);
             this.zUpDown.TabIndex = 29;
@@ -211,6 +216,11 @@
             0,
             0,
             0});
+            this.yUpDown.Minimum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            -2147483648});
             this.yUpDown.Name = "yUpDown";
             this.yUpDown.Size = new System.Drawing.Size(75, 20);
             this.yUpDown.TabIndex = 28;
@@ -248,6 +258,11 @@
             0,
             0,
             0});
+            this.xUpDown.Minimum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            -2147483648});
             this.xUpDown.Name = "xUpDown";
             this.xUpDown.Size = new System.Drawing.Size(75, 20);
             this.xUpDown.TabIndex = 31;
@@ -283,6 +298,7 @@
             this.Style = MetroFramework.MetroColorStyle.Silver;
             this.Text = "Behaviour Editor";
             this.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.BehaviourEditor_FormClosing);
             this.metroContextMenu1.ResumeLayout(false);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();

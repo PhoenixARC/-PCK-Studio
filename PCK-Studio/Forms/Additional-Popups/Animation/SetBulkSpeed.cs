@@ -15,7 +15,6 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 
 		private void saveButton_Click(object sender, EventArgs e)
 		{
-			if (Ticks < 0) return;
 			DialogResult = DialogResult.OK;
 		}
 

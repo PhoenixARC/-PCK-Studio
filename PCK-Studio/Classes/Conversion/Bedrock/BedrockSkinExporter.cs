@@ -18,6 +18,7 @@ using PckStudio.Classes.Utils;
 using PckStudio.Conversion.Common.JsonDefinitions;
 using System.Diagnostics;
 using System.Linq;
+using PckStudio.Internal;
 
 namespace PckStudio.Conversion.Bedrock
 {
@@ -91,7 +92,7 @@ namespace PckStudio.Conversion.Bedrock
 
             foreach (string offsetName in OffsetNames)
             {
-                var v = skinProperties.FirstOrDefault(prop => prop.property == "OFFSET" && prop.value.Equals(offsetName)).value;
+                var v = skinProperties.FirstOrDefault(prop => prop.Key == "OFFSET" && prop.Value.Equals(offsetName)).Value;
                 if (v != default && v.Length >= 2)
                     part_offset = v.Split(' ')[2];
 
@@ -141,20 +142,20 @@ namespace PckStudio.Conversion.Bedrock
 
             float offset = TryGetOffsetValue(part, offsets);
 
-            foreach (var (name, value) in file.Properties)
+            foreach (var kv in file.Properties)
             {
-                switch (name)
+                switch (kv.Key)
                 {
                     case "ANIM":
-                        anim = SkinANIM.FromString(value);
+                        anim = SkinANIM.FromString(kv.Value);
                         break;
                     case "BOX":
-                        SkinBOX box = SkinBOX.FromString(value);
-                        if (box.Parent == part)
+                        SkinBOX box = SkinBOX.FromString(kv.Value);
+                        if (box.Type == part)
                         {
                             float y = -1 * (box.Pos.Y + offset + box.Size.Y);
                             cubes.Add(new GeometryCube(new Vector3(pivot.X + box.Pos.X, pivot.Y + y, pivot.Z + box.Pos.Z),
-                                box.Size, box.UV, box.Mirror, box.Inflation));
+                                box.Size, box.UV, box.Mirror, box.Scale));
                         }
                         break;
                     default:
@@ -342,7 +343,7 @@ namespace PckStudio.Conversion.Bedrock
                 new GeometryBone("leftBootArmorOffset", "leftLeg", new Vector3(-2f, 12f - TryGetOffsetValue("BOOT1", offsets), 0f), null, "armor_offset")
             );
 
-            string capepath = file.Properties.Find(o => o.property == "CAPEPATH").value;
+            string capepath = file.Properties.Find(o => o.Key == "CAPEPATH").Value;
 
             JToken geo = JToken.FromObject(geometry);
             if (capepath != null)

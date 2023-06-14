@@ -20,15 +20,18 @@ namespace PckStudio.Classes.Misc
         {
             new Button()
             {
-                Label = "Check it out.",
+                Label = "Check it out!",
                 Url = Program.ProjectUrl,
             }
         };
 
         public static void Initialize()
         {
-            Client = new DiscordRpcClient(Settings.Default.RichPresenceId);
-            Client.Initialize();
+            if (Settings.Default.ShowRichPresence)
+            {
+                Client ??= new DiscordRpcClient(Settings.Default.RichPresenceId);
+                Client.Initialize();
+            }
         }
 
         public static void SetPresence(string details)

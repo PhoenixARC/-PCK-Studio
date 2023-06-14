@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Numerics;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using PckStudio.Internal;
+using PckStudio.Properties;
 
 namespace PckStudio.Forms.Editor
 {
@@ -9,68 +9,36 @@ namespace PckStudio.Forms.Editor
 	{
 		public string Result;
 
-		class BOX
+		public BoxEditor(string box, bool hasInflation)
+			: this(SkinBOX.FromString(box), hasInflation)
 		{
-			public string Parent;
-			public Vector3 Pos;
-			public Vector3 Size;
-			public float U, V;
-			public bool HideWithArmor;
-			public bool Mirror;
-			public float Inflation;
-			public BOX(string input)
-			{
-				string[] arguments = Regex.Split(input, @"\s+");
-
-				try
-				{
-					Parent = arguments[0].ToUpper(); // just in case a box has all lower, the editor still parses correctly
-					Pos = new Vector3(float.Parse(arguments[1]), float.Parse(arguments[2]), float.Parse(arguments[3]));
-					Size = new Vector3(float.Parse(arguments[4]), float.Parse(arguments[5]), float.Parse(arguments[6]));
-					U = float.Parse(arguments[7]);
-					V = float.Parse(arguments[8]);
-					HideWithArmor = Convert.ToBoolean(int.Parse(arguments[9]));
-					Mirror = Convert.ToBoolean(int.Parse(arguments[10]));
-					Inflation = float.Parse(arguments[11]);
-				}
-				catch (IndexOutOfRangeException)
-				{
-					// This is normal as some box values can have less parameters but no more than 12
-					return;
-				}
-				catch (Exception ex)
-				{
-					Parent = string.Empty;
-				}
-			}
-
 		}
 
-		public BoxEditor(string inBOX, bool hasInflation)
+		public BoxEditor(SkinBOX box, bool hasInflation)
 		{
 			InitializeComponent();
 
-			inflationUpDown.Enabled = hasInflation;
+            if (string.IsNullOrEmpty(box.Type) || !parentComboBox.Items.Contains(box.Type))
+            {
+                throw new Exception("Failed to parse BOX value");
+            }
 
-			BOX box = new BOX(inBOX);
+            closeButton.Visible =!Settings.Default.AutoSaveChanges;
 
-			if (string.IsNullOrEmpty(box.Parent) || !parentComboBox.Items.Contains(box.Parent))
-			{
-				throw new Exception("Failed to parse BOX value");
-			}
+            inflationUpDown.Enabled = hasInflation;
 
-			parentComboBox.SelectedItem = parentComboBox.Items[parentComboBox.Items.IndexOf(box.Parent)];
+			parentComboBox.SelectedItem = parentComboBox.Items[parentComboBox.Items.IndexOf(box.Type)];
 			PosXUpDown.Value = (decimal)box.Pos.X;
 			PosYUpDown.Value = (decimal)box.Pos.Y;
 			PosZUpDown.Value = (decimal)box.Pos.Z;
 			SizeXUpDown.Value = (decimal)box.Size.X;
 			SizeYUpDown.Value = (decimal)box.Size.Y;
 			SizeZUpDown.Value = (decimal)box.Size.Z;
-			uvXUpDown.Value = (decimal)box.U;
-			uvYUpDown.Value = (decimal)box.V;
+			uvXUpDown.Value = (decimal)box.UV.X;
+			uvYUpDown.Value = (decimal)box.UV.Y;
 			armorCheckBox.Checked = box.HideWithArmor;
 			mirrorCheckBox.Checked = box.Mirror;
-			inflationUpDown.Value = (decimal)box.Inflation;
+			inflationUpDown.Value = (decimal)box.Scale;
 		}
 
 		private void saveButton_Click(object sender, EventArgs e)
@@ -84,7 +52,14 @@ namespace PckStudio.Forms.Editor
 				$"{Convert.ToInt32(mirrorCheckBox.Checked)} " +
 				$"{inflationUpDown.Value}";
 			DialogResult = DialogResult.OK;
-			Close();
 		}
-	}
+
+        private void BoxEditor_FormClosing(object sender, FormClosingEventArgs e)
+        {
+			if (Settings.Default.AutoSaveChanges)
+			{
+				saveButton_Click(sender, EventArgs.Empty);
+			}
+        }
+    }
 }

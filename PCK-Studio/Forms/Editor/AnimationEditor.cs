@@ -1,120 +1,110 @@
-﻿using MetroFramework.Forms;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using System.Collections.Generic;
+
+using MetroFramework.Forms;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using OMI.Formats.Pck;
+
 using PckStudio.Forms.Additional_Popups.Animation;
 using PckStudio.Forms.Utilities;
 using PckStudio.Extensions;
-using OMI.Formats.Pck;
+using PckStudio.Properties;
 
 namespace PckStudio.Forms.Editor
 {
     public partial class AnimationEditor : MetroForm
 	{
-		PckFile.FileData animationFile;
-		Animation currentAnimation;
-        AnimationPlayer player;
+		private PckFile.FileData animationFile;
+		private Animation currentAnimation;
 
-		bool isItem = false;
-        string animationSection => AnimationResources.GetAnimationSection(isItem);
-
-		public string TileName = string.Empty;
-
-		private bool IsEditingSpecial => IsSpecialTile(TileName);
+		private string TileName = string.Empty;
 
         private bool IsSpecialTile(string tileName)
         {
 			return tileName == "clock" || tileName == "compass";
         }
 
-		public AnimationEditor(PckFile.FileData file)
+        public AnimationEditor(PckFile.FileData file)
 		{
 			InitializeComponent();
-
-            isItem = file.Filename.Split('/').Contains("items");
-			TileName = Path.GetFileNameWithoutExtension(file.Filename);
-
-			InterpolationCheckbox.Visible = !IsEditingSpecial;
-			InterpolationCheckbox.Checked = InterpolationCheckbox.Visible;
-			bulkAnimationSpeedToolStripMenuItem.Enabled = InterpolationCheckbox.Visible;
-			importJavaAnimationToolStripMenuItem.Enabled = InterpolationCheckbox.Visible;
-			exportJavaAnimationToolStripMenuItem.Enabled = InterpolationCheckbox.Visible;
-
 			animationFile = file;
 
-			using MemoryStream textureMem = new MemoryStream(animationFile.Data);
-			var texture = new Bitmap(textureMem);
-            var frameTextures = texture.CreateImageList(ImageLayoutDirection.Horizontal);
+			TileName = Path.GetFileNameWithoutExtension(animationFile.Filename);
 
-            currentAnimation = animationFile.Properties.HasProperty("ANIM")
-				? new Animation(frameTextures, animationFile.Properties.GetPropertyValue("ANIM"))
-				: new Animation(frameTextures);
-			player = new AnimationPlayer(pictureBoxWithInterpolationMode1);
+			bulkAnimationSpeedToolStripMenuItem.Enabled =
+			importToolStripMenuItem.Enabled =
+			exportAsToolStripMenuItem.Enabled =
+			InterpolationCheckbox.Visible = !IsSpecialTile(TileName);
 
-			foreach (JObject content in AnimationResources.tileData[animationSection].Children())
+			toolStripSeparator1.Visible = saveToolStripMenuItem1.Visible = !Settings.Default.AutoSaveChanges;
+
+			if (animationFile.Size > 0)
 			{
-				var prop = content.Properties().FirstOrDefault(prop => prop.Name == TileName);
-				if (prop is JProperty)
-				{
-					tileLabel.Text = (string)prop.Value;
-					break;
-				}
+				using MemoryStream textureMem = new MemoryStream(animationFile.Data);
+				var texture = new Bitmap(textureMem);
+				var frameTextures = texture.CreateImageList(ImageLayoutDirection.Vertical);
+
+				currentAnimation = animationFile.Properties.HasProperty("ANIM")
+					? new Animation(frameTextures, animationFile.Properties.GetPropertyValue("ANIM"))
+					: new Animation(frameTextures);
 			}
+            currentAnimation.Category = animationFile.Filename.Split('/').Contains("items")
+				? Animation.AnimationCategory.Items
+				: Animation.AnimationCategory.Blocks;
+			SetTileLabel();
             LoadAnimationTreeView();
 		}
-		
-		private void LoadAnimationTreeView()
+
+        private void LoadAnimationTreeView()
 		{
-			InterpolationCheckbox.Checked = currentAnimation.Interpolate;
+			if (currentAnimation is null)
+			{
+                AnimationStartStopBtn.Enabled = false;
+                return;
+			}
+            AnimationStartStopBtn.Enabled = true;
+            InterpolationCheckbox.Checked = currentAnimation.Interpolate;
 			frameTreeView.Nodes.Clear();
-			// $"Frame: {i}, Frame Time: {Animation.MinimumFrameTime}"
 			TextureIcons.Images.Clear();
-			TextureIcons.Images.AddRange(currentAnimation.GetFrameTextures().ToArray());
+			TextureIcons.Images.AddRange(currentAnimation.GetTextures().ToArray());
 			foreach (var frame in currentAnimation.GetFrames())
 			{
 				var imageIndex = currentAnimation.GetTextureIndex(frame.Texture);
-				frameTreeView.Nodes.Add(new TreeNode($"for {frame.Ticks} frames")
+				frameTreeView.Nodes.Add(new TreeNode($"for {frame.Ticks} ticks")
 				{
 					ImageIndex = imageIndex,
 					SelectedImageIndex = imageIndex,
 				});
             }
-			player.SelectFrame(currentAnimation, 0);
+			animationPictureBox.SelectFrame(currentAnimation, 0);
 		}
 
 		private void frameTreeView_AfterSelect(object sender, TreeViewEventArgs e)
 		{
-			if (player.IsPlaying && !AnimationPlayBtn.Enabled)
-                AnimationPlayBtn.Enabled = !(AnimationStopBtn.Enabled = !AnimationStopBtn.Enabled);
-			player.SelectFrame(currentAnimation, frameTreeView.SelectedNode.Index);
+			if (animationPictureBox.IsPlaying)
+                AnimationStartStopBtn.Text = "Play Animation";
+            animationPictureBox.SelectFrame(currentAnimation, frameTreeView.SelectedNode.Index);
 		}
 
-		private int mix(double ratio, int val1, int val2) // Ported from Java Edition code
+		private void AnimationStartStopBtn_Click(object sender, EventArgs e)
 		{
-			return (int)(ratio * val1 + (1.0D - ratio) * val2);
-		}
-
-		private void StartAnimationBtn_Click(object sender, EventArgs e)
-		{
-			// prevent player from crashing
-			player.Stop();
-			AnimationPlayBtn.Enabled = !(AnimationStopBtn.Enabled = !AnimationStopBtn.Enabled);
-			if (currentAnimation.FrameCount > 1)
+			if (animationPictureBox.IsPlaying)
 			{
-				player.SetContext(pictureBoxWithInterpolationMode1);
-				player.Start(currentAnimation);
+				AnimationStartStopBtn.Text = "Play Animation";
+				animationPictureBox.Stop();
+				return;
 			}
-		}
-
-		private void StopAnimationBtn_Click(object sender, EventArgs e)
-		{
-            AnimationPlayBtn.Enabled = !(AnimationStopBtn.Enabled = !AnimationStopBtn.Enabled);
-            player.Stop();
+            if (currentAnimation.FrameCount > 1)
+			{
+                animationPictureBox.Start(currentAnimation);
+				AnimationStartStopBtn.Text = "Stop Animation";
+			}
 		}
 
 		private void frameTreeView_KeyDown(object sender, KeyEventArgs e)
@@ -135,18 +125,21 @@ namespace PckStudio.Forms.Editor
 
 		private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
-			string anim = currentAnimation.BuildAnim();
-
-            animationFile.Properties.SetProperty("ANIM", IsEditingSpecial ? "" : anim);
-            using (var stream = new MemoryStream())
+			if (!IsSpecialTile(TileName) && currentAnimation is not null)
 			{
-				var texture = currentAnimation.BuildTexture(IsEditingSpecial);
-                texture.Save(stream, ImageFormat.Png);
-				animationFile.SetData(stream.ToArray());
+				string anim = currentAnimation.BuildAnim();
+				animationFile.Properties.SetProperty("ANIM", anim);
+				using (var stream = new MemoryStream())
+				{
+					var texture = currentAnimation.BuildTexture();
+					texture.Save(stream, ImageFormat.Png);
+					animationFile.SetData(stream.ToArray());
+				}
+				animationFile.Filename = $"res/textures/{AnimationResources.GetAnimationSection(currentAnimation.Category)}/{TileName}.png";
+				DialogResult = DialogResult.OK;
+				return;
 			}
-			//Reusing this for the tile path
-			TileName = "res/textures/" + (isItem ? "items/" : "blocks/") + TileName + ".png" ;
-			DialogResult = DialogResult.OK;
+			DialogResult = DialogResult.Cancel;
 		}
 
 		// Most of the code below is modified code from this link: https://docs.microsoft.com/en-us/dotnet/api/system.windows.forms.treeview.itemdrag?view=windowsdesktop-6.0
@@ -232,8 +225,11 @@ namespace PckStudio.Forms.Editor
             using FrameEditor diag = new FrameEditor(frame.Ticks, currentAnimation.GetTextureIndex(frame.Texture), TextureIcons);
 			if (diag.ShowDialog(this) == DialogResult.OK)
             {
-				/* Found a bug here. When passing the frame variable, it would replace the first instance of that frame and time
-				 * rather than the actual frame that was clicked. I've just switched to passing the index to fix this for now. -Matt
+				/* Found a bug here. When passing the frame variable,
+				 * it would replace the first instance of that frame and time
+				 * rather than the actual frame that was clicked.
+				 * I've just switched to passing the index to fix this for now.
+				 * - Matt
 				*/
 
                 currentAnimation.SetFrame(frameTreeView.SelectedNode.Index, diag.FrameTextureIndex, diag.FrameTime);
@@ -277,14 +273,15 @@ namespace PckStudio.Forms.Editor
 			DialogResult query = MessageBox.Show("This feature will replace the existing animation data. It might fail if the selected animation script is invalid. Are you sure that you want to continue?", "Warning", MessageBoxButtons.YesNo);
 			if (query == DialogResult.No) return;
 
-			OpenFileDialog fileDialog = new OpenFileDialog();
-			fileDialog.Title = "Please select a valid Minecaft: Java Edition animation script";
-
-			// It's marked as .png.mcmeta just in case
-			// some weirdo tries to pass a pack.mcmeta or something
-			// -MattNL
-			fileDialog.Filter = "Animation Scripts (*.mcmeta)|*.png.mcmeta";
-			if (fileDialog.ShowDialog(this) != DialogResult.OK) return;
+            OpenFileDialog fileDialog = new OpenFileDialog
+            {
+                Title = "Please select a valid Minecaft: Java Edition animation script",
+                // It's marked as .png.mcmeta just in case
+                // some weirdo tries to pass a pack.mcmeta or something
+                // -MattNL
+                Filter = "Animation Scripts (*.mcmeta)|*.png.mcmeta"
+            };
+            if (fileDialog.ShowDialog(this) != DialogResult.OK) return;
 			Console.WriteLine("Selected Animation Script: " + fileDialog.FileName);
 
 			string textureFile = fileDialog.FileName.Substring(0, fileDialog.FileName.Length - ".mcmeta".Length);
@@ -293,8 +290,7 @@ namespace PckStudio.Forms.Editor
 				MessageBox.Show(textureFile + " was not found", "Texture not found");
 				return;
 			}
-			using MemoryStream textureMem = new MemoryStream(File.ReadAllBytes(textureFile));
-			var textures = Image.FromStream(textureMem).CreateImageList(ImageLayoutDirection.Horizontal);
+			var textures = Image.FromFile(textureFile).CreateImageList(ImageLayoutDirection.Horizontal);
             var new_animation = new Animation(textures);
 			try
 			{
@@ -349,72 +345,74 @@ namespace PckStudio.Forms.Editor
 
 		private void changeTileToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			using (ChangeTile diag = new ChangeTile())
+            using (ChangeTile diag = new ChangeTile())
 				if (diag.ShowDialog(this) == DialogResult.OK)
 				{
 					Console.WriteLine(diag.SelectedTile);
-					if (TileName != diag.SelectedTile) isItem = diag.IsItem;
+                    currentAnimation.Category = diag.Category;
 					TileName = diag.SelectedTile;
 
-					InterpolationCheckbox.Checked = 
 					bulkAnimationSpeedToolStripMenuItem.Enabled = 
-					importJavaAnimationToolStripMenuItem.Enabled = 
-					exportJavaAnimationToolStripMenuItem.Enabled = 
-					InterpolationCheckbox.Visible = !IsEditingSpecial;
+					importToolStripMenuItem.Enabled = 
+					exportAsToolStripMenuItem.Enabled = 
+					InterpolationCheckbox.Visible = !IsSpecialTile(TileName);
 
-					foreach (JObject content in AnimationResources.tileData[animationSection].Children())
-					{
-						var first = content.Properties().FirstOrDefault(p => p.Name == TileName);
-						if (first is JProperty p) tileLabel.Text = (string)p.Value;
-                    }
+					SetTileLabel();
 				}
+        }
+
+        private void SetTileLabel()
+        {
+            foreach (JObject content in AnimationResources.JsonTileData[AnimationResources.GetAnimationSection(currentAnimation.Category)].Children())
+            {
+                var first = content.Properties().FirstOrDefault(p => p.Name == TileName);
+                if (first is JProperty p)
+				{
+					tileLabel.Text = (string)p.Value;
+					return;
+				}
+            }
+			
+			switch(MessageBox.Show(this, 
+				$"{TileName} is not a valid tile for animation, and will not play in game. Would you like to choose a new tile?", 
+				"Not a valid tile", 
+				MessageBoxButtons.YesNo))
+			{
+				case DialogResult.Yes:
+					changeTileToolStripMenuItem_Click(null, null);
+					break;
+				default:
+					DialogResult = DialogResult.Abort;
+					break;
+			}
 		}
 
-		private void exportJavaAnimationToolStripMenuItem_Click(object sender, EventArgs e)
+        private void exportJavaAnimationToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			SaveFileDialog fileDialog = new SaveFileDialog();
 			fileDialog.Title = "Please choose where you want to save your new animation";
 			fileDialog.Filter = "Animation Scripts (*.mcmeta)|*.png.mcmeta";
 			if (fileDialog.ShowDialog(this) == DialogResult.OK)
             {
-                JObject mcmeta = ConvertAnimationToJava(currentAnimation);
+                JObject mcmeta = AnimationResources.ConvertAnimationToJson(currentAnimation, InterpolationCheckbox.Checked);
                 string jsondata = JsonConvert.SerializeObject(mcmeta, Formatting.Indented);
                 string filename = fileDialog.FileName;
                 File.WriteAllText(filename, jsondata);
-                var finalTexture = currentAnimation.BuildTexture(isClockOrCompass: false);
-                finalTexture.Save(Path.GetFileNameWithoutExtension(filename)); // removes ".mcmeta" from filename!
+                var finalTexture = currentAnimation.BuildTexture();
+                finalTexture.Save(Path.Combine(Path.GetDirectoryName(filename), Path.GetFileNameWithoutExtension(filename))); // removes ".mcmeta" from filename!
                 MessageBox.Show("Animation was successfully exported to " + filename, "Export successful!");
             }
         }
 
-        private JObject ConvertAnimationToJava(Animation animation)
-        {
-            JObject janimation = new JObject();
-            JObject mcmeta = new JObject();
-            mcmeta["comment"] = $"Animation converted by {ProductName}";
-            mcmeta["animation"] = janimation;
-            JArray jframes = new JArray();
-            foreach (var frame in animation.GetFrames())
-            {
-                JObject jframe = new JObject();
-                jframe["index"] = animation.GetTextureIndex(frame.Texture);
-                jframe["time"] = frame.Ticks;
-                jframes.Add(jframe);
-            };
-            janimation["interpolation"] = InterpolationCheckbox.Checked;
-            janimation["frames"] = jframes;	
-            return mcmeta;
-        }
-
         private void howToInterpolation_Click(object sender, EventArgs e)
 		{
-			MessageBox.Show("The Interpolation effect is when the animtion smoothly translates between the frames instead of simply displaying the next one. This can be seen with some vanilla Minecraft textures such as Magma and Prismarine.\n\nThe \"Interpolates\" checkbox at the bottom controls this.", "Interpolation");
+			MessageBox.Show("The Interpolation effect is when the animtion smoothly translates between the frames instead of simply displaying the next one. This can be seen with some vanilla Minecraft textures such as Magma and Prismarine.", "Interpolation");
 		}
 
 		private void editorControlsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			MessageBox.Show("Simply drag and drop frames in the tree to rearrange your animation.\n\n" +
-				"You can also preview your animation at any time by simply pressing the \"Play Animation\" button!", "Editor Controls");
+				"You can also preview your animation at any time by simply pressing the button under the animation display.", "Editor Controls");
 		}
 
 		private void setBulkSpeedToolStripMenuItem_Click(object sender, EventArgs e)
@@ -430,16 +428,108 @@ namespace PckStudio.Forms.Editor
 
 		private void InterpolationCheckbox_CheckedChanged(object sender, EventArgs e)
 		{
-			// Interpolation flag wasn't being updated when the check box changed, this fixes the issue
-			currentAnimation.Interpolate = InterpolationCheckbox.Checked;
+			if (currentAnimation is not null)
+				currentAnimation.Interpolate = InterpolationCheckbox.Checked;
 		}
 
         private void AnimationEditor_FormClosing(object sender, FormClosingEventArgs e)
         {
-			if (player.IsPlaying)
+			if (animationPictureBox.IsPlaying)
 			{
-				player.Stop();
+                animationPictureBox.Stop();
+			}
+			if (Settings.Default.AutoSaveChanges)
+			{
+				saveToolStripMenuItem1_Click(sender, EventArgs.Empty);
 			}
         }
-    }
+
+        private void importGifToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+			OpenFileDialog fileDialog = new OpenFileDialog()
+			{
+				Filter = "GIF file|*.gif"
+			};
+			if (fileDialog.ShowDialog(this) != DialogResult.OK)
+				return;
+
+			var gif = Image.FromFile(fileDialog.FileName);
+			if (!gif.RawFormat.Equals(ImageFormat.Gif))
+			{
+				MessageBox.Show("Selected file is not a gif", "Invalid file", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+
+            FrameDimension dimension = new FrameDimension(gif.FrameDimensionsList[0]);
+            int frameCount = gif.GetFrameCount(dimension);
+
+			var textures = new List<Image>(frameCount);
+
+			for (int i = 0; i < frameCount; i++)
+			{
+				gif.SelectActiveFrame(dimension, i);
+				textures.Add(new Bitmap(gif));
+			}
+			currentAnimation = new Animation(textures);
+			LoadAnimationTreeView();
+        }
+
+        private void importAnimationTextureToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using var ofd = new OpenFileDialog()
+            {
+                Filter = "PNG Files | *.png",
+                Title = "Select a PNG File",
+            };
+            if (ofd.ShowDialog() != DialogResult.OK)
+                return;
+            Image img = Image.FromFile(ofd.FileName);
+            var textures = img.CreateImageList(ImageLayoutDirection.Vertical);
+			currentAnimation = new Animation(textures);
+			LoadAnimationTreeView();
+        }
+
+        //[System.Runtime.InteropServices.DllImport("gdi32.dll")]
+        //public static extern bool DeleteObject(IntPtr hObject);
+
+        private void gifToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+			MessageBox.Show(this, "This feature is still under development", "Coming soon");
+			return;
+
+			// TODO
+			//var fileDialog = new SaveFileDialog()
+            //{
+            //    Filter = "GIF file|*.gif"
+            //};
+            //if (fileDialog.ShowDialog(this) != DialogResult.OK)
+            //    return;
+
+			//GifBitmapEncoder gifBitmapEncoder = new GifBitmapEncoder();
+
+			//foreach (Bitmap texture in currentAnimation.GetTextures())
+			//{
+			//	var bmp = texture.GetHbitmap();
+			//	var src = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(
+			//		bmp,
+			//		IntPtr.Zero,
+			//		System.Windows.Int32Rect.Empty,
+			//		BitmapSizeOptions.FromWidthAndHeight(texture.Width, texture.Height));
+			//	gifBitmapEncoder.Frames.Add(BitmapFrame.Create(src));
+			//	DeleteObject(bmp); // recommended, handle memory leak
+			//}
+
+			//using (var fs = fileDialog.OpenFile())
+			//{
+			//	gifBitmapEncoder.Save(fs);
+			//}
+		}
+
+		private void frameTimeandTicksToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			MessageBox.Show(this, "The frame time is the time that the current frame is displayed for. This unit is measured in ticks. " +
+				"All time related functions in Minecraft use ticks, notably redstone repeaters. There are 20 ticks in 1 second, so " +
+				"1 tick is 1/20 of a second. To find how long your frame is, divide the frame time by 20", "Frame Time and Ticks");
+		}
+	}
 }

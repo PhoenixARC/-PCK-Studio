@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Windows.Forms;
 using MetroFramework.Forms;
+using OMI.Formats.Pck;
 
-namespace PckStudio
+namespace PckStudio.Popups
 {
     public partial class AddFilePrompt : MetroForm
 	{
@@ -11,7 +12,7 @@ namespace PckStudio
         /// otherwise <see cref="string.Empty"/>
         /// </summary>
         public string Filepath => DialogResult == DialogResult.OK ? InputTextBox.Text : string.Empty;
-		public int Filetype => FileTypeComboBox.SelectedIndex;
+		public PckFile.FileData.FileType Filetype => (PckFile.FileData.FileType)FileTypeComboBox.SelectedIndex;
 
 		public AddFilePrompt(string initialText) : this(initialText, -1)
 		{ }

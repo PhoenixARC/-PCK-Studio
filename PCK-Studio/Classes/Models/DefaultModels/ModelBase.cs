@@ -2,6 +2,7 @@
 using PckStudio.Models;
 using System.Runtime.CompilerServices;
 using System.Threading;
+using System.Drawing;
 
 namespace PckStudio.Models
 {
@@ -10,20 +11,12 @@ namespace PckStudio.Models
 		public ModelBase()
 		{ }
 
-		public Texture[] textures;
+		protected Image[] textures;
 
 		public EventHandler OnUpdate;
         protected const float OverlayScale = 1.16f;
 
-        protected void Initialize()
-		{
-            foreach (Texture texture in textures)
-            {
-                texture.Updatedx += (object sender, EventArgs args) => OnUpdated();
-            }
-        }
-
-		public Texture[] Textures => textures;
+		public Image[] Textures => textures;
 
 		public event EventHandler Updatedx
 		{

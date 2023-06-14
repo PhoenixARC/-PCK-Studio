@@ -8,16 +8,15 @@ namespace PckStudio.Models
 {
 	internal class Steve64x32Model : ModelBase
 	{
-        public Steve64x32Model(Texture texture)
+        public Steve64x32Model(Image texture)
 		{
-			textures = new Texture[1] { texture };
-			Initialize();
+			textures = new Image[1] { texture };
 		}
 
 		public override void AddToModelView(MinecraftModelView modelView)
 		{
 			_ = Textures[0] ?? throw new NullReferenceException(nameof(Textures));
-            Image source = Textures[0].Source;
+            Image source = Textures[0];
 			Box head        = new Box(source, new Rectangle( 8, 0, 16, 8), new Rectangle( 0, 8, 32, 8), new Point3D(0f, 0f, 0f));
 			Box headOverlay = new Box(source, new Rectangle(40, 0, 16, 8), new Rectangle(32, 8, 32, 8), new Point3D(0f, 0f, 0f));
 			headOverlay.Scale = OverlayScale;

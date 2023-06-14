@@ -13,6 +13,7 @@ using PckStudio.Classes.Conversion.Legacy.JsonDefinitions;
 using PckStudio.Extensions;
 using PckStudio.Conversion.Common.JsonDefinitions;
 using PckStudio.Classes.Utils;
+using PckStudio.Internal;
 
 namespace PckStudio.Conversion.Legacy
 {

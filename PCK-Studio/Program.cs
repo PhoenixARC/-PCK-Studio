@@ -1,40 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Reflection;
 using System.Windows.Forms;
+using PckStudio.Classes.Misc;
 
 namespace PckStudio
 {
-    sealed class ProgramInfo
-    {
-        // this is to specify which build release this is. This is manually updated for now
-        // TODO: add different chars for different configurations
-        private const string BuildType = "b";
-        private System.Globalization.Calendar BuildCalendar = new System.Globalization.CultureInfo("en-US").Calendar;
-        private DateTime date = new FileInfo(Assembly.GetExecutingAssembly().Location).LastWriteTime;
-
-        public string BuildVersion
-        {
-            get
-            {
-                // adopted Minecraft Java Edition Snapshot format (YYwWWn)
-                // to keep better track of work in progress features and builds
-                return string.Format("(Debug build #{0}w{1}{2})",
-                    date.ToString("yy"),
-                    BuildCalendar.GetWeekOfYear(date, System.Globalization.CalendarWeekRule.FirstDay, DayOfWeek.Monday),
-                    BuildType);
-            }
-        }
-
-        public string LastCommitHash =>
-            Assembly
-                .GetEntryAssembly()
-                .GetCustomAttributes<AssemblyMetadataAttribute>()
-                .FirstOrDefault(attr => attr.Key == "GitHash")?.Value;
-    }
-
     static class Program
     {
         public static readonly string ProjectUrl = "https://github.com/PhoenixARC/-PCK-Studio";
@@ -43,7 +14,7 @@ namespace PckStudio
         public static readonly string AppData = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "PCK-Studio");
         public static readonly string AppDataCache = Path.Combine(AppData, "cache");
 
-        public static readonly ProgramInfo Info = new ProgramInfo();
+        public static MainForm MainInstance { get; private set; }
 
         /// <summary>
         /// The main entry point for the application.
@@ -51,12 +22,13 @@ namespace PckStudio
         [STAThread]
         static void Main(string[] args)
         {
-            System.Globalization.CultureInfo.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
-
-            var mainForm = new MainForm();
+            ApplicationScope.Initialize();
+            RPC.Initialize();
+            MainInstance = new MainForm();
             if (args.Length > 0 && File.Exists(args[0]) && args[0].EndsWith(".pck"))
-                mainForm.LoadPck(args[0]);
-            Application.Run(mainForm);
+                MainInstance.LoadPckFromFile(args[0]);
+            Application.Run(MainInstance);
+            RPC.Deinitialize();
         }
     }
 }

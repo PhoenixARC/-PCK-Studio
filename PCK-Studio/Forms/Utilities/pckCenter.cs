@@ -74,7 +74,6 @@ namespace PckStudio.Forms.Utilities
                 using (WebClient client = new WebClient())
                 {
                     string parseContent = client.DownloadString(loadDirectory);
-                    string id = "";
                     mods = parseContent.Split('\n');
 
                     int controlCount = pckLayout.Controls.Count;
