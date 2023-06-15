@@ -13,7 +13,7 @@ namespace PckStudio.Classes.Misc
         private static readonly Assets _assets = new Assets()
         {
             LargeImageKey = "pcklgo",
-            LargeImageText = "PCK-Studio",
+            LargeImageText = System.Windows.Forms.Application.ProductName,
         };
 
         private static readonly Button[] _buttons = new Button[]
