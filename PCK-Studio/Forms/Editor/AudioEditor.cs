@@ -42,7 +42,13 @@ namespace PckStudio.Forms.Editor
 			"Battle",
 			"Tumble",
 			"Glide",
-			"Unused?"
+			"Build Off (Unused)"
+
+			/* If the SetMusicID function within the game is ever set to 0x9,
+			 * it actually attempts to play a "MG04_01.binka" file in the vanilla music folder.
+			 * Therefore it's safe to assume that the last audio category was indeed 
+			 * supposed to be for the cancelled Build Off mini game (MG04). - May
+			 */
 		};
 
 		private string GetCategoryFromId(PckAudioFile.AudioCategory.EAudioType categoryId)
