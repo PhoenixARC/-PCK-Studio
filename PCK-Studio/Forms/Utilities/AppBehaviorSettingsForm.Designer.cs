@@ -46,8 +46,7 @@
 			this.autoSaveCheckBox.TabIndex = 0;
 			this.autoSaveCheckBox.Text = "Auto Save";
 			this.autoSaveCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
-			this.SettingToolTip.SetToolTip(this.autoSaveCheckBox, "Whether to automatically save changes inside of file editor such as the loc edito" +
-        "r");
+			this.SettingToolTip.SetToolTip(this.autoSaveCheckBox, "Whether to automatically save changes inside of file editor such as the loc editor");
 			this.autoSaveCheckBox.UseSelectable = true;
 			this.autoSaveCheckBox.CheckedChanged += new System.EventHandler(this.autoSaveCheckBox_CheckedChanged);
 			// 
