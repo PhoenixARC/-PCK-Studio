@@ -223,6 +223,8 @@ namespace PckStudio.Forms.Editor
 			InProgressPrompt waitDiag = new InProgressPrompt();
 			waitDiag.Show(this);
 
+			// TODO: rewrite ALL of this
+
 			Directory.CreateDirectory(ApplicationScope.DataCacher.CacheDirectory); // create directory in case it doesn't exist
 
 			foreach (string file in FileList)
@@ -231,9 +233,9 @@ namespace PckStudio.Forms.Editor
 				{
 					string songName = string.Join("_", Path.GetFileNameWithoutExtension(file).Split(Path.GetInvalidFileNameChars()));
 					songName = Regex.Replace(songName, @"[^\u0000-\u007F]+", "_"); // Replace UTF characters
-					string cacheSongLoc = Path.Combine(ApplicationScope.DataCacher.CacheDirectory, songName + Path.GetExtension(file));
+					string cacheSongFile = Path.Combine(ApplicationScope.DataCacher.CacheDirectory, songName + Path.GetExtension(file));
 
-					if(File.Exists(cacheSongLoc)) File.Delete(cacheSongLoc);
+					if(File.Exists(cacheSongFile)) File.Delete(cacheSongFile);
 
 					string new_loc = Path.Combine(parent.GetDataPath(), songName + ".binka");
 					bool is_duplicate_file = false; // To handle if a file already in the pack is dropped back in
@@ -291,7 +293,7 @@ namespace PckStudio.Forms.Editor
 							var newFormat = new WaveFormat(reader.WaveFormat.SampleRate, 16, reader.WaveFormat.Channels);
 							using (var conversionStream = new WaveFormatConversionStream(newFormat, reader))
 							{
-								WaveFileWriter.CreateWaveFile(cacheSongLoc, conversionStream); //write to new location
+								WaveFileWriter.CreateWaveFile(cacheSongFile, conversionStream); //write to new location
 							}
 							reader.Close();
 							reader.Dispose();
@@ -301,14 +303,14 @@ namespace PckStudio.Forms.Editor
 
 						await Task.Run(() =>
 						{
-                            exitCode = Binka.FromWav(cacheSongLoc, new_loc, (int)compressionUpDown.Value);
+                            exitCode = Binka.FromWav(cacheSongFile, new_loc, (int)compressionUpDown.Value);
 						});
 
-						if (!File.Exists(cacheSongLoc)) MessageBox.Show(this, $"\"{songName}.wav\" failed to convert for some reason. Please reach out to MNL#8935 on the communtiy Discord server and provide details. Thanks!", "Conversion failed");
+						if (!File.Exists(cacheSongFile)) MessageBox.Show(this, $"\"{songName}.wav\" failed to convert for some reason. Please report this on the communtiy Discord server, which can be found under \"More\" in the toolbar at the top of the program.", "Conversion failed");
 						else
 						{
 							success++;
-							File.Delete(cacheSongLoc); //cleanup song
+							File.Delete(cacheSongFile); //cleanup song
 						}
 
 						Cursor.Current = Cursors.Default;
