@@ -222,13 +222,16 @@ namespace PckStudio.Forms.Editor
 			int exitCode = 0;
 			InProgressPrompt waitDiag = new InProgressPrompt();
 			waitDiag.Show(this);
+
+			Directory.CreateDirectory(ApplicationScope.DataCacher.CacheDirectory); // create directory in case it doesn't exist
+
 			foreach (string file in FileList)
 			{
 				if (Path.GetExtension(file) == ".binka" || Path.GetExtension(file) == ".wav")
 				{
 					string songName = string.Join("_", Path.GetFileNameWithoutExtension(file).Split(Path.GetInvalidFileNameChars()));
 					songName = Regex.Replace(songName, @"[^\u0000-\u007F]+", "_"); // Replace UTF characters
-					string cacheSongLoc = Path.Combine(Program.AppDataCache, songName + Path.GetExtension(file));
+					string cacheSongLoc = Path.Combine(ApplicationScope.DataCacher.CacheDirectory, songName + Path.GetExtension(file));
 
 					if(File.Exists(cacheSongLoc)) File.Delete(cacheSongLoc);
 

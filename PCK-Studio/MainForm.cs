@@ -2291,6 +2291,9 @@ namespace PckStudio
 			waitDiag.Show(this);
 			
 			int convertedCount = 0;
+
+			Directory.CreateDirectory(ApplicationScope.DataCacher.CacheDirectory); // create directory in case it doesn't exist
+
 			foreach (string waveFilepath in fileDialog.FileNames)
 			{
 				string[] a = Path.GetFileNameWithoutExtension(waveFilepath).Split(Path.GetInvalidFileNameChars());
