@@ -2299,23 +2299,23 @@ namespace PckStudio
 			waitDiag.Show(this);
 			
 			int convertedCount = 0;
+
+			Directory.CreateDirectory(ApplicationScope.DataCacher.CacheDirectory); // create directory in case it doesn't exist
+
 			foreach (string waveFilepath in fileDialog.FileNames)
 			{
 				string[] a = Path.GetFileNameWithoutExtension(waveFilepath).Split(Path.GetInvalidFileNameChars());
 
                 string songName = string.Join("_", a);
 				songName = System.Text.RegularExpressions.Regex.Replace(songName, @"[^\u0000-\u007F]+", "_"); // Replace UTF characters
-				string cacheSongLoc = Path.Combine(ApplicationScope.DataCacher.CacheDirectory, songName + Path.GetExtension(waveFilepath));
-
-				if (File.Exists(cacheSongLoc))
-					File.Delete(cacheSongLoc);
+				string cacheSongFilepath = Path.Combine(ApplicationScope.DataCacher.CacheDirectory, songName + Path.GetExtension(waveFilepath));
 
 				using (var reader = new NAudio.Wave.WaveFileReader(waveFilepath)) //read from original location
 				{
 					var newFormat = new NAudio.Wave.WaveFormat(reader.WaveFormat.SampleRate, 16, reader.WaveFormat.Channels);
 					using (var conversionStream = new NAudio.Wave.WaveFormatConversionStream(newFormat, reader))
 					{
-						NAudio.Wave.WaveFileWriter.CreateWaveFile(cacheSongLoc, conversionStream); //write to new location
+						NAudio.Wave.WaveFileWriter.CreateWaveFile(cacheSongFilepath, conversionStream); //write to new location
 					}
 				}
 
@@ -2324,8 +2324,10 @@ namespace PckStudio
 				int exitCode = 0;
 				await System.Threading.Tasks.Task.Run(() =>
 				{
-					exitCode = Binka.FromWav(cacheSongLoc, Path.Combine(Path.GetDirectoryName(waveFilepath), Path.GetFileNameWithoutExtension(waveFilepath) + ".binka"), 4);
+					exitCode = Binka.FromWav(cacheSongFilepath, Path.Combine(Path.GetDirectoryName(waveFilepath), Path.GetFileNameWithoutExtension(waveFilepath) + ".binka"), 4);
 				});
+
+				File.Delete(cacheSongFilepath); // delete cache files
 
 				if (exitCode == 0)
 					convertedCount++;
