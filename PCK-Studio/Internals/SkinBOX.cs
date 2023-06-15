@@ -22,7 +22,7 @@ namespace PckStudio.Internal
 {
     public class SkinBOX : ICloneable, IEquatable<SkinBOX>
     {
-        public static readonly SkinBOX Empty = new SkinBOX("HEAD", new Vector3(-4, -8, -4), Vector3.One * 8, Vector2.Zero);
+        public static readonly SkinBOX Empty = new SkinBOX("HEAD", new Vector3(-4, -8, -4), new Vector3(8), Vector2.Zero);
 
         public string Type;
         public Vector3 Pos;
