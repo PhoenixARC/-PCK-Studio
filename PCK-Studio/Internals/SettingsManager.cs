@@ -21,6 +21,7 @@ namespace PckStudio.Internals
             if (_onSettingChanged.ContainsKey(e.PropertyName))
             {
                 _onSettingChanged[e.PropertyName]?.Invoke(_newValue);
+                _newValue = null;
             }
         }
 
