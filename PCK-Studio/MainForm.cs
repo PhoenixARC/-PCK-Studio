@@ -327,9 +327,9 @@ namespace PckStudio
 		private void BuildMainTreeView()
 		{
 			// In case the Rename function was just used and the selected node name no longer matches the file name
-			string filepath = string.Empty;
-			if(treeViewMain.SelectedNode is TreeNode node && node.Tag is PckFile.FileData file)
-				filepath = file.Filename;
+			string selectedNodeText = treeViewMain.SelectedNode is TreeNode node ? node.Text : string.Empty;
+			previewPictureBox.Image = Resources.NoImageFound;
+			treeMeta.Nodes.Clear();
 			treeViewMain.Nodes.Clear();
 			BuildPckTreeView(treeViewMain.Nodes, currentPCK);
 
@@ -343,12 +343,11 @@ namespace PckStudio
 					skinsNode.Nodes.Add(folderNode);
 			}
 
-			if (!string.IsNullOrEmpty(filepath))
+			TreeNode[] selectedNodes;
+            if (!string.IsNullOrEmpty(selectedNodeText) &&
+				(selectedNodes = treeViewMain.Nodes.Find(selectedNodeText, true)).Length > 0)
 			{
-				// Looks kinda nuts but this line of code is responsible for finding the correct node that was originally selected
-				treeViewMain.SelectedNode =
-					treeViewMain.Nodes.Find(Path.GetFileName(filepath), true).ToList()
-					.Find(t  => (t.Tag as PckFile.FileData).Filename == filepath);
+                treeViewMain.SelectedNode = selectedNodes[0];
 			}
 		}
 
