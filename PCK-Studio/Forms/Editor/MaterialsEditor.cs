@@ -173,5 +173,32 @@ namespace PckStudio.Forms.Editor
 				treeView1.SelectedNode.Tag = entry;
 			}
 		}
+
+		private void openToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			using (var ofd = new OpenFileDialog())
+			{
+				ofd.CheckFileExists = true;
+				ofd.Multiselect = false;
+				ofd.Filter = "entityMaterials.bin (Minecraft Entity Materials File)|*.bin";
+				if (ofd.ShowDialog() == DialogResult.OK)
+				{
+					try
+					{
+						var reader = new MaterialFileReader();
+						materialFile = reader.FromFile(ofd.FileName);
+						SetUpTree();
+					}
+					catch (Exception ex)
+					{
+						MessageBox.Show(this, $"Failed to read the selected file\nError: {ex.Message}", "Failed to read materials file");
+					}
+				}
+				else if (_file is null)
+				{
+					Close();
+				}
+			}
+		}
 	}
 }

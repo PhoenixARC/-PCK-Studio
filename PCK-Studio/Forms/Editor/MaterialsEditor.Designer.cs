@@ -40,6 +40,7 @@
 			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.xLabel = new MetroFramework.Controls.MetroLabel();
 			this.materialComboBox = new MetroFramework.Controls.MetroComboBox();
+			this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.metroContextMenu1.SuspendLayout();
 			this.menuStrip.SuspendLayout();
 			this.SuspendLayout();
@@ -99,6 +100,7 @@
 			// fileToolStripMenuItem
 			// 
 			this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openToolStripMenuItem,
             this.saveToolStripMenuItem1});
 			this.fileToolStripMenuItem.ForeColor = System.Drawing.Color.White;
 			this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
@@ -109,7 +111,7 @@
 			// 
 			this.saveToolStripMenuItem1.Image = ((System.Drawing.Image)(resources.GetObject("saveToolStripMenuItem1.Image")));
 			this.saveToolStripMenuItem1.Name = "saveToolStripMenuItem1";
-			this.saveToolStripMenuItem1.Size = new System.Drawing.Size(98, 22);
+			this.saveToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
 			this.saveToolStripMenuItem1.Text = "Save";
 			this.saveToolStripMenuItem1.Click += new System.EventHandler(this.saveToolStripMenuItem1_Click);
 			// 
@@ -149,6 +151,14 @@
 			this.materialComboBox.UseSelectable = true;
 			this.materialComboBox.SelectedIndexChanged += new System.EventHandler(this.materialComboBox_SelectedIndexChanged);
 			// 
+			// openToolStripMenuItem
+			// 
+			this.openToolStripMenuItem.Image = global::PckStudio.Properties.Resources.file_import;
+			this.openToolStripMenuItem.Name = "openToolStripMenuItem";
+			this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.openToolStripMenuItem.Text = "Open";
+			this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+			// 
 			// MaterialsEditor
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -182,5 +192,6 @@
 		private System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem removeToolStripMenuItem;
 		private MetroFramework.Controls.MetroComboBox materialComboBox;
+		private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
 	}
 }
