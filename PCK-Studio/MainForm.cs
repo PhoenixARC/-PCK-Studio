@@ -239,7 +239,7 @@ namespace PckStudio
 			wasModified = false;
 			isTemplateFile = false;
 			saveLocation = string.Empty;
-			pictureBoxImagePreview.Image = Resources.NoImageFound;
+			previewPictureBox.Image = Resources.NoImageFound;
 			treeViewMain.Nodes.Clear();
 			treeMeta.Nodes.Clear();
 			treeViewMain.Enabled = false;
@@ -474,7 +474,7 @@ namespace PckStudio
 			ReloadMetaTreeView();
 			entryTypeTextBox.Text = entryDataTextBox.Text = labelImageSize.Text = string.Empty;
 			buttonEdit.Visible = false;
-			pictureBoxImagePreview.Image = Resources.NoImageFound;
+			previewPictureBox.Image = Resources.NoImageFound;
 			var node = e.Node;
 			viewFileInfoToolStripMenuItem.Visible = false;
 			if (node is TreeNode t && t.Tag is PckFile.FileData file)
@@ -511,13 +511,13 @@ namespace PckStudio
 
                             try
 							{
-								pictureBoxImagePreview.Image = img;
-								labelImageSize.Text = $"{pictureBoxImagePreview.Image.Size.Width}x{pictureBoxImagePreview.Image.Size.Height}";
+								previewPictureBox.Image = img;
+								labelImageSize.Text = $"{previewPictureBox.Image.Size.Width}x{previewPictureBox.Image.Size.Height}";
 							}
 							catch (Exception ex)
 							{
 								labelImageSize.Text = "";
-								pictureBoxImagePreview.Image = Resources.NoImageFound;
+								previewPictureBox.Image = Resources.NoImageFound;
 								Debug.WriteLine("Not a supported image format. Setting back to default");
 								Debug.WriteLine(string.Format("An error occured of type: {0} with message: {1}", ex.GetType(), ex.Message), "Exception");
 							}

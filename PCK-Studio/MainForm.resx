@@ -24244,7 +24244,10 @@
   <data name="&gt;&gt;contextMenuMetaTree.Type" xml:space="preserve">
     <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="pictureBox2.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <metadata name="logoPictureBox.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
+  </metadata>
+  <data name="logoPictureBox.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAbYAAAB7CAYAAAAYCKWuAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
         vAAADrwBlbxySQAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xOdTWsmQAAJjWSURBVHhe7b0J
@@ -24903,31 +24906,31 @@
         rca4/zIAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="pictureBox2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="logoPictureBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="pictureBox2.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="logoPictureBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>413, 0</value>
   </data>
-  <data name="pictureBox2.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="logoPictureBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>190, 50</value>
   </data>
-  <data name="pictureBox2.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
+  <data name="logoPictureBox.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
     <value>Zoom</value>
   </data>
-  <data name="pictureBox2.TabIndex" type="System.Int32, mscorlib">
+  <data name="logoPictureBox.TabIndex" type="System.Int32, mscorlib">
     <value>14</value>
   </data>
-  <data name="&gt;&gt;pictureBox2.Name" xml:space="preserve">
-    <value>pictureBox2</value>
+  <data name="&gt;&gt;logoPictureBox.Name" xml:space="preserve">
+    <value>logoPictureBox</value>
   </data>
-  <data name="&gt;&gt;pictureBox2.Type" xml:space="preserve">
+  <data name="&gt;&gt;logoPictureBox.Type" xml:space="preserve">
     <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;pictureBox2.Parent" xml:space="preserve">
+  <data name="&gt;&gt;logoPictureBox.Parent" xml:space="preserve">
     <value>editorTab</value>
   </data>
-  <data name="&gt;&gt;pictureBox2.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;logoPictureBox.ZOrder" xml:space="preserve">
     <value>8</value>
   </data>
   <data name="pckOpen.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
@@ -26463,37 +26466,37 @@
   <data name="&gt;&gt;treeViewMain.ZOrder" xml:space="preserve">
     <value>7</value>
   </data>
-  <data name="pictureBoxImagePreview.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+  <data name="previewPictureBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
-  <data name="pictureBoxImagePreview.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+  <data name="previewPictureBox.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>None</value>
   </data>
-  <data name="pictureBoxImagePreview.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="previewPictureBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="pictureBoxImagePreview.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="previewPictureBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>345, 50</value>
   </data>
-  <data name="pictureBoxImagePreview.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="previewPictureBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>231, 218</value>
   </data>
-  <data name="pictureBoxImagePreview.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
+  <data name="previewPictureBox.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
     <value>Zoom</value>
   </data>
-  <data name="pictureBoxImagePreview.TabIndex" type="System.Int32, mscorlib">
+  <data name="previewPictureBox.TabIndex" type="System.Int32, mscorlib">
     <value>18</value>
   </data>
-  <data name="&gt;&gt;pictureBoxImagePreview.Name" xml:space="preserve">
-    <value>pictureBoxImagePreview</value>
+  <data name="&gt;&gt;previewPictureBox.Name" xml:space="preserve">
+    <value>previewPictureBox</value>
   </data>
-  <data name="&gt;&gt;pictureBoxImagePreview.Type" xml:space="preserve">
+  <data name="&gt;&gt;previewPictureBox.Type" xml:space="preserve">
     <value>PckStudio.PictureBoxWithInterpolationMode, PCK-Studio, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
-  <data name="&gt;&gt;pictureBoxImagePreview.Parent" xml:space="preserve">
+  <data name="&gt;&gt;previewPictureBox.Parent" xml:space="preserve">
     <value>editorTab</value>
   </data>
-  <data name="&gt;&gt;pictureBoxImagePreview.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;previewPictureBox.ZOrder" xml:space="preserve">
     <value>9</value>
   </data>
   <data name="editorTab.Location" type="System.Drawing.Point, System.Drawing">
@@ -29097,9 +29100,6 @@
         AP//AADgBwAA4AcAAMADAADAAwAAwAMAAMADAADAAwAAwAMAAMADAADABwAAwA8AAMAfAADgPwAA4H8A
         AP//AAA=
 </value>
-  </data>
-  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
     <value>1064, 660</value>
