@@ -269,10 +269,8 @@ namespace PckStudio.Forms.Editor
 						}
 						catch (Exception ex)
 						{
-							MessageBox.Show(this, $"Failed to read the selected file\nError: {ex.Message}", "Failed to read .col file");
+							MessageBox.Show(this, $"Failed to save the selected file\nError: {ex.Message}", "Failed to save .col file");
 						}
-
-						SetUpDefaultFile(null, EventArgs.Empty, 11, false);
 					}
 					else return;
 				}
@@ -662,13 +660,12 @@ namespace PckStudio.Forms.Editor
 					{
 						var reader = new COLFileReader();
 						colourfile = reader.FromFile(ofd.FileName);
+						SetUpDefaultFile(null, EventArgs.Empty, 11, false);
 					}
 					catch (Exception ex)
 					{
 						MessageBox.Show(this, $"Failed to read the selected file\nError: {ex.Message}", "Failed to read .col file");
 					}
-
-					SetUpDefaultFile(null, EventArgs.Empty, 11, false);
 				}
 				else if(_file is null)
 				{
