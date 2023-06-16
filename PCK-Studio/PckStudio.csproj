@@ -735,6 +735,7 @@
     <Content Include="Resources\icons\music.png" />
     <None Include="Resources\icons\ranch.png" />
     <Content Include="Resources\icons\Replace.png" />
+    <Content Include="Resources\icons\Save.png" />
     <Content Include="Resources\PCK-Studio_Logo.ico" />
     <Content Include="Resources\NoImageFound.png" />
   </ItemGroup>
