@@ -2399,5 +2399,10 @@ namespace PckStudio
 		{
 			new COLEditor().ShowDialog(this);
 		}
+
+		private void behavioursEditorToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			new BehaviourEditor().ShowDialog(this);
+		}
 	}
 }

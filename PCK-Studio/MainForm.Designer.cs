@@ -91,6 +91,8 @@
 			this.convertMusicFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.wavBinkaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.binkaWavToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.fileEditorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.cOLEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.programInfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.binkaConversionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -147,8 +149,7 @@
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
 			this.pictureBoxImagePreview = new PckStudio.PictureBoxWithInterpolationMode();
 			this.LittleEndianCheckBox = new MetroFramework.Controls.MetroCheckBox();
-			this.fileEditorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.cOLEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.behavioursEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenuPCKEntries.SuspendLayout();
 			this.menuStrip.SuspendLayout();
 			this.contextMenuMetaTree.SuspendLayout();
@@ -591,6 +592,20 @@
 			this.binkaWavToolStripMenuItem.Name = "binkaWavToolStripMenuItem";
 			resources.ApplyResources(this.binkaWavToolStripMenuItem, "binkaWavToolStripMenuItem");
 			this.binkaWavToolStripMenuItem.Click += new System.EventHandler(this.binkaWavToolStripMenuItem_Click);
+			// 
+			// fileEditorsToolStripMenuItem
+			// 
+			this.fileEditorsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.behavioursEditorToolStripMenuItem,
+            this.cOLEditorToolStripMenuItem});
+			this.fileEditorsToolStripMenuItem.Name = "fileEditorsToolStripMenuItem";
+			resources.ApplyResources(this.fileEditorsToolStripMenuItem, "fileEditorsToolStripMenuItem");
+			// 
+			// cOLEditorToolStripMenuItem
+			// 
+			this.cOLEditorToolStripMenuItem.Name = "cOLEditorToolStripMenuItem";
+			resources.ApplyResources(this.cOLEditorToolStripMenuItem, "cOLEditorToolStripMenuItem");
+			this.cOLEditorToolStripMenuItem.Click += new System.EventHandler(this.colEditorToolStripMenuItem_Click);
 			// 
 			// helpToolStripMenuItem
 			// 
@@ -1103,18 +1118,11 @@
 			this.LittleEndianCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.LittleEndianCheckBox.UseSelectable = true;
 			// 
-			// fileEditorsToolStripMenuItem
+			// behavioursEditorToolStripMenuItem
 			// 
-			this.fileEditorsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.cOLEditorToolStripMenuItem});
-			this.fileEditorsToolStripMenuItem.Name = "fileEditorsToolStripMenuItem";
-			resources.ApplyResources(this.fileEditorsToolStripMenuItem, "fileEditorsToolStripMenuItem");
-			// 
-			// cOLEditorToolStripMenuItem
-			// 
-			this.cOLEditorToolStripMenuItem.Name = "cOLEditorToolStripMenuItem";
-			resources.ApplyResources(this.cOLEditorToolStripMenuItem, "cOLEditorToolStripMenuItem");
-			this.cOLEditorToolStripMenuItem.Click += new System.EventHandler(this.colEditorToolStripMenuItem_Click);
+			this.behavioursEditorToolStripMenuItem.Name = "behavioursEditorToolStripMenuItem";
+			resources.ApplyResources(this.behavioursEditorToolStripMenuItem, "behavioursEditorToolStripMenuItem");
+			this.behavioursEditorToolStripMenuItem.Click += new System.EventHandler(this.behavioursEditorToolStripMenuItem_Click);
 			// 
 			// MainForm
 			// 
@@ -1273,6 +1281,7 @@
 		private System.Windows.Forms.ToolStripMenuItem addANIMEntryToolStripMenuItem1;
 		private System.Windows.Forms.ToolStripMenuItem fileEditorsToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem cOLEditorToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem behavioursEditorToolStripMenuItem;
 	}
 }
 

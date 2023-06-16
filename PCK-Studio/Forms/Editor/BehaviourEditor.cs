@@ -79,6 +79,17 @@ namespace PckStudio.Forms.Editor
 			SetUpTree();
 		}
 
+		public BehaviourEditor()
+		{
+			InitializeComponent();
+
+			treeView1.ImageList = new ImageList();
+			treeView1.ImageList.Images.AddRange(ApplicationScope.EntityImages);
+			treeView1.ImageList.ColorDepth = ColorDepth.Depth32Bit;
+
+			openToolStripMenuItem_Click(null, null);
+		}
+
 		private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
 		{
 			if (e.Node is null) return;
@@ -275,9 +286,32 @@ namespace PckStudio.Forms.Editor
 					}
 				}
 
-				var writer = new BehavioursWriter(behaviourFile);
-				writer.WriteToStream(stream);
-				_file.SetData(stream.ToArray());
+				if (_file is null) // if external file is being edited
+				{
+					using (var sfd = new SaveFileDialog())
+					{
+						sfd.Filter = "behaviours.bin (Minecraft Behaviour File)|*.bin";
+						if (sfd.ShowDialog() == DialogResult.OK)
+						{
+							try
+							{
+								var writer = new BehavioursWriter(behaviourFile);
+								writer.WriteToFile(sfd.FileName);
+							}
+							catch (Exception ex)
+							{
+								MessageBox.Show(this, $"Failed to save the selected file\nError: {ex.Message}", "Failed to save .col file");
+							}
+						}
+						else return;
+					}
+				}
+				else
+				{
+					var writer = new BehavioursWriter(behaviourFile);
+					writer.WriteToStream(stream);
+					_file.SetData(stream.ToArray());
+				}
 			}
 			DialogResult = DialogResult.OK;
 		}
