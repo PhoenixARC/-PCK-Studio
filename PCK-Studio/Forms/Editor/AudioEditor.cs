@@ -643,5 +643,35 @@ namespace PckStudio.Forms.Editor
 				saveToolStripMenuItem1_Click(sender, EventArgs.Empty);
 			}
         }
-    }
+
+		private void openToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			using (var ofd = new OpenFileDialog())
+			{
+				ofd.CheckFileExists = true;
+				ofd.Multiselect = false;
+				ofd.Filter = "Audio.pck (Minecraft Music Cues)|*.pck";
+				if (ofd.ShowDialog() == DialogResult.OK)
+				{
+					try
+					{
+						var reader = new PckAudioFileReader(
+							_isLittleEndian 
+							? OMI.Endianness.LittleEndian 
+							: OMI.Endianness.BigEndian);
+						audioFile = reader.FromFile(ofd.FileName);
+						SetUpTree();
+					}
+					catch (Exception ex)
+					{
+						MessageBox.Show(this, $"Failed to read the selected file\nError: {ex.Message}", "Failed to read audio file");
+					}
+				}
+				else if (audioPCK is null)
+				{
+					Close();
+				}
+			}
+		}
+	}
 }

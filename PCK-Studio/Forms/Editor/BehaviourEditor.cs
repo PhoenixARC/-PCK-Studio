@@ -300,7 +300,7 @@ namespace PckStudio.Forms.Editor
 							}
 							catch (Exception ex)
 							{
-								MessageBox.Show(this, $"Failed to save the selected file\nError: {ex.Message}", "Failed to save .col file");
+								MessageBox.Show(this, $"Failed to save the selected file\nError: {ex.Message}", "Failed to save behaviour file");
 							}
 						}
 						else return;
