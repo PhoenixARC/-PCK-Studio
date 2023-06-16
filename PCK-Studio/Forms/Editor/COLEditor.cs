@@ -39,6 +39,13 @@ namespace PckStudio.Forms.Editor
                 colourfile = reader.FromStream(stream);
 			}
 
+			SetUpMenu();
+
+			SetUpDefaultFile(null, EventArgs.Empty, 11, false);
+		}
+
+		void SetUpMenu()
+		{
 			TU12ToolStripMenuItem.Click += (sender, e) => SetUpDefaultFile(sender, e, 0);
 			TU13ToolStripMenuItem.Click += (sender, e) => SetUpDefaultFile(sender, e, 1);
 			TU14ToolStripMenuItem.Click += (sender, e) => SetUpDefaultFile(sender, e, 2);
@@ -52,8 +59,6 @@ namespace PckStudio.Forms.Editor
 			TU54ToolStripMenuItem.Click += (sender, e) => SetUpDefaultFile(sender, e, 10);
 			TU69ToolStripMenuItem.Click += (sender, e) => SetUpDefaultFile(sender, e, 11);
 			_1_9_1ToolStripMenuItem.Click += (sender, e) => SetUpDefaultFile(sender, e, 12);
-
-			SetUpDefaultFile(null, EventArgs.Empty, 11, false);
 		}
 
 		private void SetUpDefaultFile(object sender, EventArgs e, int ID, bool targetVersion = true)
@@ -607,5 +612,29 @@ namespace PckStudio.Forms.Editor
 				saveToolStripMenuItem1_Click(sender, EventArgs.Empty);
 			}
         }
-    }
+
+		private void openToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			using (var ofd = new OpenFileDialog())
+			{
+				ofd.CheckFileExists = true;
+				ofd.Multiselect = false;
+				ofd.Filter = "COL (Minecraft Color Table)|*.col";
+				if (ofd.ShowDialog() == DialogResult.OK)
+				{
+					try
+					{
+						var reader = new COLFileReader();
+						colourfile = reader.FromFile(ofd.FileName);
+					}
+					catch (Exception ex)
+					{
+						MessageBox.Show(this, $"Failed to read the selected file\nError: {ex.Message}", "Failed to read .col file");
+					}
+
+					SetUpDefaultFile(null, EventArgs.Empty, 11, false);
+				}
+			}
+		}
+	}
 }
