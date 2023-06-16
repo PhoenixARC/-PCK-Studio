@@ -2404,5 +2404,10 @@ namespace PckStudio
 		{
 			new BehaviourEditor().ShowDialog(this);
 		}
+
+		private void entityMaterialsEditorToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			new MaterialsEditor().ShowDialog(this);
+		}
 	}
 }

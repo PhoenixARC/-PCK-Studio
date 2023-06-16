@@ -65,6 +65,17 @@ namespace PckStudio.Forms.Editor
 			SetUpTree();
 		}
 
+		public MaterialsEditor()
+		{
+			InitializeComponent();
+
+			treeView1.ImageList = new ImageList();
+			ApplicationScope.EntityImages.ToList().ForEach(treeView1.ImageList.Images.Add);
+			treeView1.ImageList.ColorDepth = ColorDepth.Depth32Bit;
+
+			openToolStripMenuItem_Click(null, null);
+		}
+
 		private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
 		{
 			if (e.Node == null) return;
@@ -125,9 +136,32 @@ namespace PckStudio.Forms.Editor
 					}
 				}
 
-				var writer = new MaterialFileWriter(materialFile);
-				writer.WriteToStream(stream);
-				_file.SetData(stream.ToArray());
+				if (_file is null) // if external file is being edited
+				{
+					using (var sfd = new SaveFileDialog())
+					{
+						sfd.Filter = "behaviours.bin (Minecraft Behaviour File)|*.bin";
+						if (sfd.ShowDialog() == DialogResult.OK)
+						{
+							try
+							{
+								var writer = new MaterialFileWriter(materialFile);
+								writer.WriteToFile(sfd.FileName);
+							}
+							catch (Exception ex)
+							{
+								MessageBox.Show(this, $"Failed to save the selected file\nError: {ex.Message}", "Failed to save materials file");
+							}
+						}
+						else return;
+					}
+				}
+				else
+				{
+					var writer = new MaterialFileWriter(materialFile);
+					writer.WriteToStream(stream);
+					_file.SetData(stream.ToArray());
+				}
 			}
 			DialogResult = DialogResult.OK;
 		}

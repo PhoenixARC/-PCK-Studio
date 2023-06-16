@@ -147,9 +147,10 @@
 			this.label11 = new MetroFramework.Controls.MetroLabel();
 			this.treeViewMain = new System.Windows.Forms.TreeView();
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
-			this.pictureBoxImagePreview = new PckStudio.PictureBoxWithInterpolationMode();
 			this.LittleEndianCheckBox = new MetroFramework.Controls.MetroCheckBox();
 			this.behavioursEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.pictureBoxImagePreview = new PckStudio.PictureBoxWithInterpolationMode();
+			this.entityMaterialsEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenuPCKEntries.SuspendLayout();
 			this.menuStrip.SuspendLayout();
 			this.contextMenuMetaTree.SuspendLayout();
@@ -597,7 +598,8 @@
 			// 
 			this.fileEditorsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.behavioursEditorToolStripMenuItem,
-            this.cOLEditorToolStripMenuItem});
+            this.cOLEditorToolStripMenuItem,
+            this.entityMaterialsEditorToolStripMenuItem});
 			this.fileEditorsToolStripMenuItem.Name = "fileEditorsToolStripMenuItem";
 			resources.ApplyResources(this.fileEditorsToolStripMenuItem, "fileEditorsToolStripMenuItem");
 			// 
@@ -1101,14 +1103,6 @@
 			resources.ApplyResources(this.imageList, "imageList");
 			this.imageList.TransparentColor = System.Drawing.Color.Transparent;
 			// 
-			// pictureBoxImagePreview
-			// 
-			resources.ApplyResources(this.pictureBoxImagePreview, "pictureBoxImagePreview");
-			this.pictureBoxImagePreview.BackColor = System.Drawing.Color.Transparent;
-			this.pictureBoxImagePreview.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-			this.pictureBoxImagePreview.Name = "pictureBoxImagePreview";
-			this.pictureBoxImagePreview.TabStop = false;
-			// 
 			// LittleEndianCheckBox
 			// 
 			resources.ApplyResources(this.LittleEndianCheckBox, "LittleEndianCheckBox");
@@ -1123,6 +1117,20 @@
 			this.behavioursEditorToolStripMenuItem.Name = "behavioursEditorToolStripMenuItem";
 			resources.ApplyResources(this.behavioursEditorToolStripMenuItem, "behavioursEditorToolStripMenuItem");
 			this.behavioursEditorToolStripMenuItem.Click += new System.EventHandler(this.behavioursEditorToolStripMenuItem_Click);
+			// 
+			// pictureBoxImagePreview
+			// 
+			resources.ApplyResources(this.pictureBoxImagePreview, "pictureBoxImagePreview");
+			this.pictureBoxImagePreview.BackColor = System.Drawing.Color.Transparent;
+			this.pictureBoxImagePreview.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+			this.pictureBoxImagePreview.Name = "pictureBoxImagePreview";
+			this.pictureBoxImagePreview.TabStop = false;
+			// 
+			// entityMaterialsEditorToolStripMenuItem
+			// 
+			this.entityMaterialsEditorToolStripMenuItem.Name = "entityMaterialsEditorToolStripMenuItem";
+			resources.ApplyResources(this.entityMaterialsEditorToolStripMenuItem, "entityMaterialsEditorToolStripMenuItem");
+			this.entityMaterialsEditorToolStripMenuItem.Click += new System.EventHandler(this.entityMaterialsEditorToolStripMenuItem_Click);
 			// 
 			// MainForm
 			// 
@@ -1282,6 +1290,7 @@
 		private System.Windows.Forms.ToolStripMenuItem fileEditorsToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem cOLEditorToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem behavioursEditorToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem entityMaterialsEditorToolStripMenuItem;
 	}
 }
 

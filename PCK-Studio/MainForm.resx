@@ -686,13 +686,13 @@
     <value>Open Pck Manager</value>
   </data>
   <data name="wavBinkaToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>145, 22</value>
   </data>
   <data name="wavBinkaToolStripMenuItem.Text" xml:space="preserve">
     <value>Wav -&gt; Binka</value>
   </data>
   <data name="binkaWavToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>145, 22</value>
   </data>
   <data name="binkaWavToolStripMenuItem.Text" xml:space="preserve">
     <value>Binka -&gt; Wav</value>
@@ -704,16 +704,22 @@
     <value>Convert Music Files</value>
   </data>
   <data name="behavioursEditorToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>189, 22</value>
   </data>
   <data name="behavioursEditorToolStripMenuItem.Text" xml:space="preserve">
     <value>Behaviours Editor</value>
   </data>
   <data name="cOLEditorToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>189, 22</value>
   </data>
   <data name="cOLEditorToolStripMenuItem.Text" xml:space="preserve">
     <value>Colours Editor</value>
+  </data>
+  <data name="entityMaterialsEditorToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>189, 22</value>
+  </data>
+  <data name="entityMaterialsEditorToolStripMenuItem.Text" xml:space="preserve">
+    <value>Entity Materials Editor</value>
   </data>
   <data name="fileEditorsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>195, 22</value>
@@ -29687,6 +29693,12 @@
     <value>behavioursEditorToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;behavioursEditorToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;entityMaterialsEditorToolStripMenuItem.Name" xml:space="preserve">
+    <value>entityMaterialsEditorToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;entityMaterialsEditorToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
