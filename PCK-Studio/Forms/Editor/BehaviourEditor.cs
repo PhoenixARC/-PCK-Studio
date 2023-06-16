@@ -289,5 +289,32 @@ namespace PckStudio.Forms.Editor
 				saveToolStripMenuItem1_Click(sender, EventArgs.Empty);
 			}
         }
-    }
+
+		private void openToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			using (var ofd = new OpenFileDialog())
+			{
+				ofd.CheckFileExists = true;
+				ofd.Multiselect = false;
+				ofd.Filter = "behaviours.bin (Minecraft Behaviour File)|*.bin";
+				if (ofd.ShowDialog() == DialogResult.OK)
+				{
+					try
+					{
+						var reader = new BehavioursReader();
+						behaviourFile = reader.FromFile(ofd.FileName);
+						SetUpTree();
+					}
+					catch (Exception ex)
+					{
+						MessageBox.Show(this, $"Failed to read the selected file\nError: {ex.Message}", "Failed to read behaviour file");
+					}
+				}
+				else if (_file is null)
+				{
+					Close();
+				}
+			}
+		}
+	}
 }
