@@ -145,8 +145,10 @@
 			this.label11 = new MetroFramework.Controls.MetroLabel();
 			this.treeViewMain = new System.Windows.Forms.TreeView();
 			this.imageList = new System.Windows.Forms.ImageList(this.components);
-			this.LittleEndianCheckBox = new MetroFramework.Controls.MetroCheckBox();
 			this.pictureBoxImagePreview = new PckStudio.PictureBoxWithInterpolationMode();
+			this.LittleEndianCheckBox = new MetroFramework.Controls.MetroCheckBox();
+			this.fileEditorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.cOLEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenuPCKEntries.SuspendLayout();
 			this.menuStrip.SuspendLayout();
 			this.contextMenuMetaTree.SuspendLayout();
@@ -552,7 +554,8 @@
 			this.miscToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addCustomPackImageToolStripMenuItem,
             this.openPckManagerToolStripMenuItem,
-            this.convertMusicFilesToolStripMenuItem});
+            this.convertMusicFilesToolStripMenuItem,
+            this.fileEditorsToolStripMenuItem});
 			this.miscToolStripMenuItem.ForeColor = System.Drawing.Color.White;
 			this.miscToolStripMenuItem.Name = "miscToolStripMenuItem";
 			resources.ApplyResources(this.miscToolStripMenuItem, "miscToolStripMenuItem");
@@ -1083,6 +1086,14 @@
 			resources.ApplyResources(this.imageList, "imageList");
 			this.imageList.TransparentColor = System.Drawing.Color.Transparent;
 			// 
+			// pictureBoxImagePreview
+			// 
+			resources.ApplyResources(this.pictureBoxImagePreview, "pictureBoxImagePreview");
+			this.pictureBoxImagePreview.BackColor = System.Drawing.Color.Transparent;
+			this.pictureBoxImagePreview.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+			this.pictureBoxImagePreview.Name = "pictureBoxImagePreview";
+			this.pictureBoxImagePreview.TabStop = false;
+			// 
 			// LittleEndianCheckBox
 			// 
 			resources.ApplyResources(this.LittleEndianCheckBox, "LittleEndianCheckBox");
@@ -1092,13 +1103,18 @@
 			this.LittleEndianCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
 			this.LittleEndianCheckBox.UseSelectable = true;
 			// 
-			// pictureBoxImagePreview
+			// fileEditorsToolStripMenuItem
 			// 
-			resources.ApplyResources(this.pictureBoxImagePreview, "pictureBoxImagePreview");
-			this.pictureBoxImagePreview.BackColor = System.Drawing.Color.Transparent;
-			this.pictureBoxImagePreview.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-			this.pictureBoxImagePreview.Name = "pictureBoxImagePreview";
-			this.pictureBoxImagePreview.TabStop = false;
+			this.fileEditorsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cOLEditorToolStripMenuItem});
+			this.fileEditorsToolStripMenuItem.Name = "fileEditorsToolStripMenuItem";
+			resources.ApplyResources(this.fileEditorsToolStripMenuItem, "fileEditorsToolStripMenuItem");
+			// 
+			// cOLEditorToolStripMenuItem
+			// 
+			this.cOLEditorToolStripMenuItem.Name = "cOLEditorToolStripMenuItem";
+			resources.ApplyResources(this.cOLEditorToolStripMenuItem, "cOLEditorToolStripMenuItem");
+			this.cOLEditorToolStripMenuItem.Click += new System.EventHandler(this.colEditorToolStripMenuItem_Click);
 			// 
 			// MainForm
 			// 
@@ -1255,6 +1271,8 @@
 		private System.Windows.Forms.ToolStripMenuItem addEntryToolStripMenuItem1;
 		private System.Windows.Forms.ToolStripMenuItem addBOXEntryToolStripMenuItem1;
 		private System.Windows.Forms.ToolStripMenuItem addANIMEntryToolStripMenuItem1;
+		private System.Windows.Forms.ToolStripMenuItem fileEditorsToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem cOLEditorToolStripMenuItem;
 	}
 }
 

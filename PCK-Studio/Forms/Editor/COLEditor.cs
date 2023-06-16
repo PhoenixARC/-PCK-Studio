@@ -44,6 +44,15 @@ namespace PckStudio.Forms.Editor
 			SetUpDefaultFile(null, EventArgs.Empty, 11, false);
 		}
 
+		public COLEditor() // for editing external files
+		{
+			InitializeComponent();
+
+			SetUpMenu();
+
+			openToolStripMenuItem_Click(null, null);
+		}
+
 		void SetUpMenu()
 		{
 			TU12ToolStripMenuItem.Click += (sender, e) => SetUpDefaultFile(sender, e, 0);
@@ -245,12 +254,39 @@ namespace PckStudio.Forms.Editor
 						return;
 				}
 			}
-			using (var stream = new MemoryStream())
+
+			if(_file is null) // if external file is being edited
 			{
-				var writer = new COLFileWriter(colourfile);
-                writer.WriteToStream(stream);
-				_file.SetData(stream.ToArray());
+				using (var sfd = new SaveFileDialog())
+				{
+					sfd.Filter = "COL (Minecraft Color Table)|*.col";
+					if (sfd.ShowDialog() == DialogResult.OK)
+					{
+						try
+						{
+							var writer = new COLFileWriter(colourfile);
+							writer.WriteToFile(sfd.FileName);
+						}
+						catch (Exception ex)
+						{
+							MessageBox.Show(this, $"Failed to read the selected file\nError: {ex.Message}", "Failed to read .col file");
+						}
+
+						SetUpDefaultFile(null, EventArgs.Empty, 11, false);
+					}
+					else return;
+				}
 			}
+			else
+			{
+				using (var stream = new MemoryStream())
+				{
+					var writer = new COLFileWriter(colourfile);
+					writer.WriteToStream(stream);
+					_file.SetData(stream.ToArray());
+				}
+			}
+
             DialogResult = DialogResult.OK;
         }
 
@@ -633,6 +669,10 @@ namespace PckStudio.Forms.Editor
 					}
 
 					SetUpDefaultFile(null, EventArgs.Empty, 11, false);
+				}
+				else if(_file is null)
+				{
+					Close();
 				}
 			}
 		}

@@ -522,7 +522,7 @@
 </value>
   </data>
   <data name="newToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>144, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="newToolStripMenuItem.Text" xml:space="preserve">
     <value>New</value>
@@ -536,7 +536,7 @@
 </value>
   </data>
   <data name="openToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>144, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="openToolStripMenuItem.Text" xml:space="preserve">
     <value>Open</value>
@@ -550,7 +550,7 @@
 </value>
   </data>
   <data name="extractToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>144, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="extractToolStripMenuItem1.Text" xml:space="preserve">
     <value>Extract</value>
@@ -562,7 +562,7 @@
     <value>Full box support</value>
   </data>
   <data name="packSettingsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>144, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="packSettingsToolStripMenuItem.Text" xml:space="preserve">
     <value>Pack Settings</value>
@@ -584,7 +584,7 @@
 </value>
   </data>
   <data name="saveToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>144, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="saveToolStripMenuItem1.Text" xml:space="preserve">
     <value>Save</value>
@@ -603,13 +603,13 @@
 </value>
   </data>
   <data name="saveToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>144, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="saveToolStripMenuItem.Text" xml:space="preserve">
     <value>Save As</value>
   </data>
   <data name="closeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>144, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="closeToolStripMenuItem.Text" xml:space="preserve">
     <value>Close</value>
@@ -702,6 +702,18 @@
   </data>
   <data name="convertMusicFilesToolStripMenuItem.Text" xml:space="preserve">
     <value>Convert Music Files</value>
+  </data>
+  <data name="cOLEditorToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="cOLEditorToolStripMenuItem.Text" xml:space="preserve">
+    <value>.COL Editor</value>
+  </data>
+  <data name="fileEditorsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>195, 22</value>
+  </data>
+  <data name="fileEditorsToolStripMenuItem.Text" xml:space="preserve">
+    <value>File Editors</value>
   </data>
   <data name="miscToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>46, 20</value>
@@ -29098,9 +29110,6 @@
         AP//AAA=
 </value>
   </data>
-  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
     <value>1064, 660</value>
   </data>
@@ -29655,6 +29664,18 @@
   </data>
   <data name="&gt;&gt;imageList.Type" xml:space="preserve">
     <value>System.Windows.Forms.ImageList, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;fileEditorsToolStripMenuItem.Name" xml:space="preserve">
+    <value>fileEditorsToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;fileEditorsToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cOLEditorToolStripMenuItem.Name" xml:space="preserve">
+    <value>cOLEditorToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;cOLEditorToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>MainForm</value>

@@ -2394,5 +2394,10 @@ namespace PckStudio
 				return;
 			}
 		}
+
+		private void colEditorToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			new COLEditor().ShowDialog(this);
+		}
 	}
 }
