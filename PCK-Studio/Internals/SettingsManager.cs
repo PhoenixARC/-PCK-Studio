@@ -16,23 +16,6 @@ namespace PckStudio.Internals
 
         private static object _newValue = null;
 
-        private static void PropertyChangedHandler(object sender, PropertyChangedEventArgs e)
-        {
-            if (_onSettingChanged.ContainsKey(e.PropertyName))
-            {
-                _onSettingChanged[e.PropertyName]?.Invoke(_newValue);
-                _newValue = null;
-            }
-        }
-
-        private static void SettingChangingHandler(object sender, SettingChangingEventArgs e)
-        {
-            if (_onSettingChanged.ContainsKey(e.SettingName))
-            {
-                _newValue = e.NewValue;
-            }
-        }
-
         internal static void Initialize()
         {
             Settings.Default.PropertyChanged += PropertyChangedHandler;
@@ -62,5 +45,21 @@ namespace PckStudio.Internals
             return true;
         }
 
+        private static void PropertyChangedHandler(object sender, PropertyChangedEventArgs e)
+        {
+            if (_onSettingChanged.ContainsKey(e.PropertyName))
+            {
+                _onSettingChanged[e.PropertyName]?.Invoke(_newValue);
+                _newValue = null;
+            }
+        }
+
+        private static void SettingChangingHandler(object sender, SettingChangingEventArgs e)
+        {
+            if (_onSettingChanged.ContainsKey(e.SettingName))
+            {
+                _newValue = e.NewValue;
+            }
+        }
     }
 }
