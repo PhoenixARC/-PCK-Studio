@@ -160,5 +160,35 @@ namespace PckStudio.Forms.Editor
 				saveToolStripMenuItem_Click(sender, EventArgs.Empty);
 			}
         }
-    }
+
+		private void openToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			using (var ofd = new OpenFileDialog())
+			{
+				ofd.CheckFileExists = true;
+				ofd.Multiselect = false;
+				ofd.Filter = "LOC (Minecraft Localization File)|*.loc";
+				if (ofd.ShowDialog() == DialogResult.OK)
+				{
+					try
+					{
+						var reader = new LOCFileReader();
+						currentLoc = reader.FromFile(ofd.FileName);
+
+						treeViewLocKeys.Nodes.Clear();
+						foreach (string locKey in currentLoc.LocKeys.Keys)
+							treeViewLocKeys.Nodes.Add(locKey);
+					}
+					catch (Exception ex)
+					{
+						MessageBox.Show(this, $"Failed to read the selected file\nError: {ex.Message}", "Failed to read materials file");
+					}
+				}
+				else if (_file is null)
+				{
+					Close();
+				}
+			}
+		}
+	}
 }
