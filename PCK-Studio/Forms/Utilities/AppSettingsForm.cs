@@ -12,9 +12,9 @@ using PckStudio.Properties;
 
 namespace PckStudio.Forms.Utilities
 {
-    public partial class AppBehaviorSettingsForm : MetroForm
+    public partial class AppSettingsForm : MetroForm
     {
-        public AppBehaviorSettingsForm()
+        public AppSettingsForm()
         {
             InitializeComponent();
             LoadSettings();

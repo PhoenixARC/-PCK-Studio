@@ -2358,7 +2358,7 @@ namespace PckStudio
 
         private void settingsToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-			var appSettings = new AppBehaviorSettingsForm();
+			var appSettings = new AppSettingsForm();
 			appSettings.ShowDialog(this);
         }
 

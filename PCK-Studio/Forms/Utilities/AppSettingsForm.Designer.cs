@@ -1,6 +1,6 @@
 ﻿namespace PckStudio.Forms.Utilities
 {
-    partial class AppBehaviorSettingsForm
+    partial class AppSettingsForm
     {
         /// <summary>
         /// Required designer variable.

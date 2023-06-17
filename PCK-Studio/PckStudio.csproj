@@ -184,11 +184,11 @@
     <Compile Include="Forms\Additional-Popups\NumericPrompt.Designer.cs">
       <DependentUpon>NumericPrompt.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Utilities\AppBehaviorSettingsForm.cs">
+    <Compile Include="Forms\Utilities\AppSettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Utilities\AppBehaviorSettingsForm.Designer.cs">
-      <DependentUpon>AppBehaviorSettingsForm.cs</DependentUpon>
+    <Compile Include="Forms\Utilities\AppSettingsForm.Designer.cs">
+      <DependentUpon>AppSettingsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Internals\ApplicationBuildInfo.cs" />
     <Compile Include="Classes\API\PCKCenter\model\PCKCenterJSON.cs" />
@@ -584,8 +584,8 @@
     <EmbeddedResource Include="Forms\Editor\ANIMEditor.resx">
       <DependentUpon>ANIMEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\AppBehaviorSettingsForm.resx">
-      <DependentUpon>AppBehaviorSettingsForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Utilities\AppSettingsForm.resx">
+      <DependentUpon>AppSettingsForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.ja.resx">
