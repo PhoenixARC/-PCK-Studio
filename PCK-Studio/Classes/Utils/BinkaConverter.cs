@@ -12,12 +12,6 @@ namespace PckStudio.Classes.Utils
 {
     internal static class BinkaConverter
     {
-
-        public static void ToWav(Stream source, Stream destination)
-        {
-            throw new NotImplementedException();
-        }
-
         public static void ToWav(string[] filenames, DirectoryInfo destination)
         {
             int convertedCount = 0;

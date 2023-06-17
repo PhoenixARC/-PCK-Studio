@@ -23,34 +23,58 @@ namespace PckStudio.API.Miles
 			return process.ExitCode;
 		}
 
-		public static void ToWav(string inputFilepath, string outputFilepath)
-		{
-			if (!inputFilepath.EndsWith(".binka"))
+        public static void ToWav(Stream source, Stream destination)
+        {
+            string sourceFilepath = Path.GetTempFileName();
+            using (var sourceFs = File.OpenWrite(sourceFilepath))
+            {
+                source.CopyTo(sourceFs);
+            }
+            byte[] buffer = ToWav(sourceFilepath);
+            File.Delete(sourceFilepath);
+
+			using(var ms = new MemoryStream(buffer))
 			{
-				throw new Exception("Not a Bink Audio file.");
+				ms.CopyTo(destination);
 			}
 
+        }
+
+        public static void ToWav(string inputFilepath, string outputFilepath)
+		{
+			byte[] buffer = ToWav(inputFilepath);
+            string destinationFilepath = Path.Combine(
+                Path.GetDirectoryName(outputFilepath),
+                Path.GetFileNameWithoutExtension(inputFilepath) + ".wav");
+            File.WriteAllBytes(destinationFilepath, buffer);
+        }
+
+        public static byte[] ToWav(string inputFilepath)
+		{
+            if (!inputFilepath.EndsWith(".binka"))
+            {
+                throw new Exception("Not a Bink Audio file.");
+            }
+            return ToWav(File.ReadAllBytes(inputFilepath));
+        }
+
+        public static byte[] ToWav(byte[] input)
+		{
 			ApplicationScope.DataCacher.Cache(Properties.Resources.mss32, "mss32.dll");
             ApplicationScope.DataCacher.Cache(Properties.Resources.binkawin, "binkawin.asi");
 
 			LibHandle mss32LibHandle = new LibHandle(ApplicationScope.DataCacher.GetCachedFilepath("mss32.dll"));
 
-			string destinationFilepath = Path.Combine(
-                Path.GetDirectoryName(outputFilepath),
-				Path.GetFileNameWithoutExtension(inputFilepath) + ".wav");
-
 			AILAPI.SetRedistDirectory(ApplicationScope.DataCacher.CacheDirectory.Replace('\\', '/'));
 			
 			RIBAPI.LoadApplicationProviders("*.asi");
-            
-            byte[] inputFiledata = File.ReadAllBytes(inputFilepath);
 
 			int resultBufferSize = 0;
 			IntPtr resultBuffer = new IntPtr();
-            if (AILAPI.DecompressASI(inputFiledata, inputFiledata.Length, ".binka", ref resultBuffer, ref resultBufferSize, null) == 0)
+            if (AILAPI.DecompressASI(input, input.Length, ".binka", ref resultBuffer, ref resultBufferSize, null) == 0)
 			{
 				Console.WriteLine(AILAPI.GetLastError());
-				return;
+				return Array.Empty<byte>();
 			}
 
 			byte[] buffer = new byte[resultBufferSize];
@@ -59,9 +83,7 @@ namespace PckStudio.API.Miles
 			AILAPI.MemFreeLock(resultBuffer);
 			RIBAPI.FreeProviderLibrary(0); // free all loaded providers
             AILAPI.Shutdown();
-
-            File.WriteAllBytes(destinationFilepath, buffer);
-
+			return buffer;
         }
     }
 }
