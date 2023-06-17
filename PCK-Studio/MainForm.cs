@@ -137,7 +137,7 @@ namespace PckStudio
 				}
 			});
 
-			UpdateRPC();
+			UpdateRichPresence();
 
 			skinToolStripMenuItem1.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.SkinFile);
 			capeToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.CapeFile);
@@ -227,7 +227,7 @@ namespace PckStudio
 			isSelectingTab = true;
 			tabControl.SelectTab(1);
 			isSelectingTab = false;
-            UpdateRPC();
+            UpdateRichPresence();
 		}
 
 		private void CloseEditorTab()
@@ -253,7 +253,7 @@ namespace PckStudio
 			addCustomPackImageToolStripMenuItem.Enabled = false;
 			fileEntryCountLabel.Text = string.Empty;
 			pckFileLabel.Text = string.Empty;
-			UpdateRPC();
+			UpdateRichPresence();
 
 		}
 
@@ -297,11 +297,10 @@ namespace PckStudio
 					file.Filename = file.Filename.Remove(0, parentPath.Length);
 				TreeNode node = BuildNodeTreeBySeperator(root, file.Filename, '/');
 				node.Tag = file;
-				if (Settings.Default.LoadSubPcks && (file.Filetype == PckFile.FileData.FileType.SkinDataFile ||
-                    file.Filetype == PckFile.FileData.FileType.TexturePackInfoFile))
+				if (Settings.Default.LoadSubPcks &&
+					(file.Filetype == PckFile.FileData.FileType.SkinDataFile || file.Filetype == PckFile.FileData.FileType.TexturePackInfoFile) &&
+                    file.Data.Length > 0)
 				{
-						if (file.Data.Length == 0)
-							break;
 						using (var stream = new MemoryStream(file.Data))
 						{
 							try
@@ -375,20 +374,15 @@ namespace PckStudio
 		{
 			using GameRuleFileEditor grfEditor = new GameRuleFileEditor(file);
 			wasModified = grfEditor.ShowDialog(this) == DialogResult.OK;
-			UpdateRPC();
+			UpdateRichPresence();
 		}
 
-		private void UpdateRPC()
+		private void UpdateRichPresence()
 		{
-			if (currentPCK == null)
-			{
-				RPC.SetPresence("An Open Source .PCK File Editor");
-				return;
-			};
-
-			if (TryGetLocFile(out LOCFile locfile) &&
-					locfile.HasLocEntry("IDS_DISPLAY_NAME") &&
-					locfile.Languages.Contains("en-EN"))
+			if (currentPCK is not null &&
+				TryGetLocFile(out LOCFile locfile) &&
+				locfile.HasLocEntry("IDS_DISPLAY_NAME") &&
+				locfile.Languages.Contains("en-EN"))	
 			{
 				RPC.SetPresence($"Editing a Pack: {locfile.GetLocEntry("IDS_DISPLAY_NAME", "en-EN")}");
 				return;
@@ -410,7 +404,7 @@ namespace PckStudio
 		{
 			using LOCEditor locedit = new LOCEditor(file);
 			wasModified = locedit.ShowDialog(this) == DialogResult.OK;
-			UpdateRPC();
+			UpdateRichPresence();
 		}
 
 		private void HandleColourFile(PckFile.FileData file)
