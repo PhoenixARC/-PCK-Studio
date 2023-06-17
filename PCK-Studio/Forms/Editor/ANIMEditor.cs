@@ -247,8 +247,8 @@ namespace PckStudio.Forms.Editor
             {
                 if (!string.IsNullOrWhiteSpace(value)) MessageBox.Show($"The following value \"{value}\" is not valid. Please try again.");
                 TextPrompt diag = new TextPrompt(value);
-                diag.TextLabel.Text = "ANIM";
-                diag.OKButton.Text = "Ok";
+                diag.LabelText = "ANIM";
+                diag.OKButtonText = "Ok";
                 if (diag.ShowDialog() == DialogResult.OK)
                 {
                     value = diag.NewText;

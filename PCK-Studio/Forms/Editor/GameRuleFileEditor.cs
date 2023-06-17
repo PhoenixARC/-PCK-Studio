@@ -205,9 +205,9 @@ namespace PckStudio.Forms.Editor
                 ? GrfTreeView.SelectedNode.Nodes
                 : GrfTreeView.Nodes;
 
-            using (TextPrompt prompt = new TextPrompt(""))
+            using (TextPrompt prompt = new TextPrompt())
             {
-                prompt.OKButton.Text = "Add";
+                prompt.OKButtonText = "Add";
                 if (MessageBox.Show($"Add Game Rule to {parentRule.Name}", "Attention",
                     MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes &&
                     prompt.ShowDialog() == DialogResult.OK &&

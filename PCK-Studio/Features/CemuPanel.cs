@@ -251,9 +251,9 @@ namespace PckStudio.Features
 
         private void addCustomPckToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            TextPrompt prompt = new TextPrompt(string.Empty);
-            prompt.OKButton.Text = "OK";
-            prompt.TextLabel.Text = "Folder:";
+            TextPrompt prompt = new TextPrompt();
+            prompt.OKButtonText = "OK";
+            prompt.LabelText = "Folder:";
             
             if (prompt.ShowDialog(this) != DialogResult.OK)
                 return;

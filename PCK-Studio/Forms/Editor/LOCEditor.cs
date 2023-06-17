@@ -61,9 +61,9 @@ namespace PckStudio.Forms.Editor
 		private void addDisplayIDToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			if (treeViewLocKeys.SelectedNode is TreeNode)
-				using (TextPrompt prompt = new TextPrompt(""))
+				using (TextPrompt prompt = new TextPrompt())
 				{
-					prompt.OKButton.Text = "Add";
+					prompt.OKButtonText = "Add";
 					if (prompt.ShowDialog() == DialogResult.OK && 
 						!currentLoc.LocKeys.ContainsKey(prompt.NewText) &&
 						currentLoc.AddLocKey(prompt.NewText, ""))

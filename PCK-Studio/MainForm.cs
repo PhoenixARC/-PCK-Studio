@@ -1064,7 +1064,7 @@ namespace PckStudio
 
 			using TextPrompt diag = new TextPrompt(node.Tag is null ? Path.GetFileName(node.FullPath) : node.FullPath);
 			diag.contextLabel.Text = $"Creating a clone of \"{path}\". Ensure that the path isn't yet.";
-			diag.OKButton.Text = "Clone";
+			diag.OKButtonText = "Clone";
 
 			if (diag.ShowDialog(this) == DialogResult.OK)
 			{
@@ -1296,8 +1296,8 @@ namespace PckStudio
 		private void skinPackToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			checkSaveState();
-			TextPrompt namePrompt = new TextPrompt("");
-			namePrompt.OKButton.Text = "Ok";
+			TextPrompt namePrompt = new TextPrompt();
+			namePrompt.OKButtonText = "Ok";
 			if (namePrompt.ShowDialog() == DialogResult.OK)
 			{
 				currentPCK = InitializePack(new Random().Next(8000, int.MaxValue), 0, namePrompt.NewText, true);
@@ -1647,9 +1647,9 @@ namespace PckStudio
 
 		private void folderToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			TextPrompt folderNamePrompt = new TextPrompt("");
+			TextPrompt folderNamePrompt = new TextPrompt();
 			if(treeViewMain.SelectedNode is not null) folderNamePrompt.contextLabel.Text = $"New folder at the location of \"{treeViewMain.SelectedNode.FullPath}\"";
-			folderNamePrompt.OKButton.Text = "Add";
+			folderNamePrompt.OKButtonText = "Add";
 			if (folderNamePrompt.ShowDialog() == DialogResult.OK)
 			{
 				TreeNode folerNode = CreateNode(folderNamePrompt.NewText);
@@ -1921,7 +1921,7 @@ namespace PckStudio
 			if (fileDialog.ShowDialog() == DialogResult.OK)
 			{
 				using TextPrompt renamePrompt = new TextPrompt(Path.GetFileName(fileDialog.FileName));
-				renamePrompt.TextLabel.Text = "Path";
+				renamePrompt.LabelText = "Path";
 				if (renamePrompt.ShowDialog() == DialogResult.OK && !string.IsNullOrEmpty(renamePrompt.NewText))
 				{
 					var file = currentPCK.CreateNewFile(renamePrompt.NewText, PckFile.FileData.FileType.TextureFile);

@@ -11,19 +11,32 @@ namespace PckStudio
 		/// </summary>
 		public string NewText => InputTextBox.Text;
 
-		public TextPrompt(string InitialText) : this(InitialText, -1)
+		public string OKButtonText
+		{
+			set => OKButton.Text = value;
+		}
+
+		public string LabelText
+		{
+			set => TextLabel.Text = value;
+		}
+
+		public TextPrompt() : this(string.Empty, -1)
 		{ }
 
-		public TextPrompt(string InitialText, int maxChar)
+		public TextPrompt(string initialText) : this(initialText, -1)
+		{ }
+
+		public TextPrompt(string initialText, int maxTextLength)
 		{
 			InitializeComponent();
-			InputTextBox.Text = InitialText;
-			InputTextBox.MaxLength = maxChar < 0 ? short.MaxValue : maxChar;
+			InputTextBox.Text = initialText;
+			InputTextBox.MaxLength = maxTextLength < 0 ? short.MaxValue : maxTextLength;
 		}
 
         private void OKBtn_Click(object sender, EventArgs e)
         {
-			if (String.IsNullOrEmpty(InputTextBox.Text))
+			if (string.IsNullOrEmpty(InputTextBox.Text))
 			{
 				MessageBox.Show(this, "Please insert a value in the text box.", "Empty string");
 			}
@@ -32,7 +45,7 @@ namespace PckStudio
 
 		private void RenamePrompt_Load(object sender, EventArgs e)
 		{
-			if(String.IsNullOrEmpty(contextLabel.Text))
+			if(string.IsNullOrEmpty(contextLabel.Text))
 			{
 				contextLabel.Visible = false;
 				Size = new System.Drawing.Size(264, 85);
