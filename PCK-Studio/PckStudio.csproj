@@ -174,6 +174,16 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Classes\Utils\BinkaConverter.cs" />
+    <Compile Include="Controls\CustomTabControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\PageClosingEventArgs.cs" />
+    <Compile Include="Controls\PckEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PckEditor.Designer.cs">
+      <DependentUpon>PckEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\ImageLayoutDirection.cs" />
     <Compile Include="Extensions\ImageSection.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
@@ -190,6 +200,7 @@
     <Compile Include="Forms\Utilities\AppSettingsForm.Designer.cs">
       <DependentUpon>AppSettingsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\IPckEditor.cs" />
     <Compile Include="Internals\ApplicationBuildInfo.cs" />
     <Compile Include="Classes\API\PCKCenter\model\PCKCenterJSON.cs" />
     <Compile Include="Classes\API\PCKCenter\PCKCollections.cs" />
@@ -484,6 +495,9 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Classes\IO\3DST\TextureCodec.cs" />
+    <EmbeddedResource Include="Controls\PckEditor.resx">
+      <DependentUpon>PckEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Features\CemuPanel.resx">
       <DependentUpon>CemuPanel.cs</DependentUpon>
     </EmbeddedResource>
