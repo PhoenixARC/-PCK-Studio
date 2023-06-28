@@ -61,7 +61,7 @@ namespace PckStudio
 #endif
 		}
 
-		public void LoadPckFromFile(string[] filepaths)
+		public void LoadPckFromFile(IEnumerable<string> filepaths)
 		{
 			foreach (string filepath in filepaths)
 			{
