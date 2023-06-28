@@ -1625,6 +1625,7 @@ namespace PckStudio.Controls
         public bool Open(string filepath, OMI.Endianness endianness)
         {
             SetEndianess(endianness);
+            saveLocation = filepath;
             try
             {
                 var reader = new PckFileReader(endianness);
