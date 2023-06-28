@@ -1655,5 +1655,10 @@ namespace PckStudio.Controls
             isTemplateFile = true;
             return true;
         }
+
+        public void UpdateView()
+        {
+            BuildMainTreeView();
+        }
     }
 }

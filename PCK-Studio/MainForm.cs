@@ -131,12 +131,9 @@ namespace PckStudio
 			{
 				if (TryGetEditor(out IPckEditor editor))
 				{
-					//TODO
-                    //editor.BuildMainTreeView();
+					editor.UpdateView();
 				}
 			});
-
-			//UpdateRichPresence();
 		}
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)

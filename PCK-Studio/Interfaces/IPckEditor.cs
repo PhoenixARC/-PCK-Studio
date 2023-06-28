@@ -22,5 +22,7 @@ namespace PckStudio.Interfaces
         void SaveTo(string filepath);
 
         void Close();
+
+        void UpdateView();
     }
 }
