@@ -13,8 +13,8 @@ namespace PckStudio.Controls
 {
     internal class CustomTabControl : MetroTabControl
     {
-        private const string CloseText = "×";
-
+        private const string CloseChar = "×";
+        private Size CloseButtonSize = new Size(8, 8);
         private const int StartIndex = 1;
 
         [Browsable(true)]
@@ -25,20 +25,22 @@ namespace PckStudio.Controls
         {
         }
 
-        protected override void OnMouseDown(MouseEventArgs e)
+        private Rectangle GetCloseButtonArea(Rectangle tabArea)
         {
-            base.OnMouseDown(e);
-            var closeBtnSize = TextRenderer.MeasureText(CloseText, Font);
+            var closeBtnSz = CloseButtonSize;
+            var closeBtnPt = new Point(
+                tabArea.Right - closeBtnSz.Width,
+                tabArea.Top + (tabArea.Height - closeBtnSz.Height) / 2);
+            return new Rectangle(closeBtnPt, closeBtnSz);
+        }
+
+        protected override void OnMouseClick(MouseEventArgs e)
+        {
             for (var i = StartIndex; i < TabPages.Count; i++)
             {
-                var tabRect = GetTabRect(i);
-                tabRect.Inflate(-2, -2);
-                var closeRect = new Rectangle(
-                    (tabRect.Right - closeBtnSize.Width),
-                    tabRect.Top + (tabRect.Height - closeBtnSize.Height) / 2,
-                    10,
-                    10);
-                if (closeRect.Contains(e.Location))
+                var tabArea = GetTabRect(i);
+                var buttonArea = GetCloseButtonArea(tabArea);
+                if (buttonArea.Contains(e.Location))
                 {
                     var eventArg = new PageClosingEventArgs(TabPages[i]);
                     PageClosing?.Invoke(this, eventArg);
@@ -46,9 +48,10 @@ namespace PckStudio.Controls
                     {
                         TabPages.RemoveAt(i);
                     }
-                    break;
+                    return;
                 }
             }
+            base.OnMouseClick(e);
         }
 
         protected override void OnPaintForeground(PaintEventArgs e)
@@ -57,11 +60,16 @@ namespace PckStudio.Controls
             for (int i = StartIndex; i < TabPages.Count; i++)
             {
                 // Draw Close button
-                var tabRect = GetTabRect(i);
-                Point closePt = new Point(15, 5);
-                e.Graphics.DrawRectangle(MetroPaint.GetStylePen(Style), tabRect.Right - closePt.X, tabRect.Top + closePt.Y, 10, 10);
-                e.Graphics.FillRectangle(MetroPaint.GetStyleBrush(Style), tabRect.Right - closePt.X, tabRect.Top + closePt.Y, 10, 10);
-                e.Graphics.DrawString(CloseText, Font, new SolidBrush(MetroPaint.ForeColor.Title(Theme)), tabRect.Right - (closePt.X), tabRect.Top + closePt.Y - 2);
+                var tabArea = GetTabRect(i);
+
+                var buttonArea = GetCloseButtonArea(tabArea);
+
+                e.Graphics.FillRectangle(MetroPaint.GetStyleBrush(Style), buttonArea);
+                e.Graphics.DrawString(
+                    CloseChar,
+                    Font,
+                    new SolidBrush(MetroPaint.ForeColor.Title(Theme)),
+                    buttonArea.Right - buttonArea.Width - 1, buttonArea.Top - 3);
             }
         }
     }
