@@ -143,6 +143,7 @@ namespace PckStudio
 				if (TryGetEditor(tab, out IPckEditor editor))
 				{
 					editor.Close();
+                    tabControl.TabPages.Remove(tab);
 				}
 			}
 		}
