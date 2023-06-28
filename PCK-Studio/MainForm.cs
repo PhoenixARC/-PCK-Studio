@@ -365,6 +365,7 @@ namespace PckStudio
 			if (TryGetEditor(out IPckEditor editor))
 			{
 				editor.Close();
+				tabControl.TabPages.Remove(tabControl.SelectedTab);
 			}
 		}
 
