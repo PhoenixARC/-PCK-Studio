@@ -440,7 +440,7 @@ namespace PckStudio.Controls
                 locfile.HasLocEntry("IDS_DISPLAY_NAME") &&
                 locfile.Languages.Contains("en-EN"))
             {
-                RPC.SetPresence($"Editing a Pack: {locfile.GetLocEntry("IDS_DISPLAY_NAME", "en-EN")}");
+                RPC.SetPresence("Editing a Pack:", $" > {locfile.GetLocEntry("IDS_DISPLAY_NAME", "en-EN")}");
                 return;
             }
             // default
