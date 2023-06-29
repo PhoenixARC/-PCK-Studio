@@ -33,7 +33,6 @@ using PckStudio.Extensions;
 using PckStudio.Popups;
 using PckStudio.API.Miles;
 using PckStudio.Classes.Utils;
-using PckStudio.Internals;
 
 namespace PckStudio
 {

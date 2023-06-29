@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using PckStudio.Properties;
 
-namespace PckStudio.Internals
+namespace PckStudio.Internal
 {
     internal static class SettingsManager
     {
