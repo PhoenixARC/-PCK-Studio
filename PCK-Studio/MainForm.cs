@@ -797,8 +797,10 @@ namespace PckStudio
         {
 			closeToolStripMenuItem.Visible = tabControl.SelectedIndex > 0;
 
-
-
+			if (tabControl.TabPages.Count == 1)
+			{
+                RPC.SetPresence("An Open Source .PCK File Editor");
+            }
         }
     }
 }
