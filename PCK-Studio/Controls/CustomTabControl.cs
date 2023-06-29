@@ -14,7 +14,7 @@ namespace PckStudio.Controls
     internal class CustomTabControl : MetroTabControl
     {
         private const string CloseChar = "×";
-        private Size CloseButtonSize = new Size(8, 8);
+        private Size CloseButtonSize = new Size(7, 7);
         private const int StartIndex = 1;
 
         [Browsable(true)]
@@ -30,7 +30,7 @@ namespace PckStudio.Controls
             var closeBtnSz = CloseButtonSize;
             var closeBtnPt = new Point(
                 tabArea.Right - closeBtnSz.Width,
-                tabArea.Top + (tabArea.Height - closeBtnSz.Height) / 2);
+                tabArea.Top + 2 + (tabArea.Height - closeBtnSz.Height) / 2);
             return new Rectangle(closeBtnPt, closeBtnSz);
         }
 
@@ -69,7 +69,7 @@ namespace PckStudio.Controls
                     CloseChar,
                     Font,
                     new SolidBrush(MetroPaint.ForeColor.Title(Theme)),
-                    buttonArea.Right - buttonArea.Width - 1, buttonArea.Top - 3);
+                    buttonArea.Right - buttonArea.Width - 2, buttonArea.Top - 4);
             }
         }
     }
