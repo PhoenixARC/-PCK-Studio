@@ -43,6 +43,8 @@ namespace PckStudio
 	{
 		private PckManager PckManager = null;
 
+		private Dictionary<string, TabPage> openFiles = new Dictionary<string, TabPage>();
+
         IComparer NodeSorter = new PckNodeSorter();
 
         public MainForm()
@@ -74,13 +76,14 @@ namespace PckStudio
 			AddEditorPage(filepath);
 		}
 
-		private void AddPage(string caption, Control control)
+		private TabPage AddPage(string caption, Control control)
 		{
 			control.Dock = DockStyle.Fill;
             var page = new TabPage(caption);
             page.Controls.Add(control);
             tabControl.TabPages.Add(page);
             tabControl.SelectTab(page);
+			return page;
         }
 
         private void AddEditorPage(PckFile pck)
@@ -92,10 +95,17 @@ namespace PckStudio
 
         private void AddEditorPage(string filepath)
         {
+			if (openFiles.ContainsKey(filepath))
+			{
+				tabControl.SelectTab(openFiles[filepath]);
+				return;
+			}
+
 			var editor = new PckEditor();
 			if (editor.Open(filepath, Settings.Default.UseLittleEndianAsDefault ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian))
 			{
-				AddPage(Path.GetFileName(filepath), editor);
+				var page = AddPage(Path.GetFileName(filepath), editor);
+                openFiles.Add(filepath, page);
 				return;
 			}
             MessageBox.Show(string.Format("Failed to load {0}", Path.GetFileName(filepath)), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -366,9 +376,19 @@ namespace PckStudio
 			if (TryGetEditor(out IPckEditor editor))
 			{
 				editor.Close();
+                RemoveOpenFile();
 				tabControl.TabPages.Remove(tabControl.SelectedTab);
 			}
 		}
+
+        private void RemoveOpenFile()
+        {
+            var kv = openFiles.First((kv) => kv.Value == tabControl.SelectedTab);
+            if (kv.Key != default && kv.Value != default)
+            {
+                openFiles.Remove(kv.Key);
+            }
+        }
 
 		private void programInfoToolStripMenuItem_Click(object sender, EventArgs e)
 		{
@@ -790,6 +810,7 @@ namespace PckStudio
             if (TryGetEditor(e.Page, out IPckEditor editor))
 			{
 				editor.Close();
+				RemoveOpenFile();
             }
         }
 
