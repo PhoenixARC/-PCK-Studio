@@ -33,7 +33,6 @@ using PckStudio.Extensions;
 using PckStudio.Popups;
 using PckStudio.API.Miles;
 using PckStudio.Classes.Utils;
-using PckStudio.Internals;
 using PckStudio.Controls;
 using PckStudio.Interfaces;
 
@@ -56,7 +55,7 @@ namespace PckStudio
             labelVersion.Text = $"{Application.ProductName}: {Application.ProductVersion}";
 
 #if BETA
-			labelVersion.Text += $"{ApplicationBuildInfo.BetaBuildVersion}";
+			labelVersion.Text += $"{ApplicationBuildInfo.BetaBuildVersion}@{CommitInfo.BranchName}";
 #endif
 #if DEBUG
 			labelVersion.Text += $" (Debug build: {CommitInfo.BranchName}@{CommitInfo.CommitHash})";
@@ -230,8 +229,8 @@ namespace PckStudio
 			var newPck = new PckFile(3);
 			
 			var zeroFile = newPck.CreateNewFile("0", PckFile.FileData.FileType.InfoFile);
-			zeroFile.Properties.Add(("PACKID", packId.ToString()));
-			zeroFile.Properties.Add(("PACKVERSION", packVersion.ToString()));
+			zeroFile.Properties.Add("PACKID", packId.ToString());
+			zeroFile.Properties.Add("PACKVERSION", packVersion.ToString());
 
 			var loc = newPck.CreateNewFile("localisation.loc", PckFile.FileData.FileType.LocalisationFile, () =>
 			{
@@ -273,8 +272,8 @@ namespace PckStudio
 					writer.WriteToStream(ms);
 					return ms.ToArray();
 				});
-			texturepackInfo.Properties.Add(("PACKID", "0"));
-			texturepackInfo.Properties.Add(("DATAPATH", $"{res}Data.pck"));
+			texturepackInfo.Properties.Add("PACKID", "0");
+			texturepackInfo.Properties.Add("DATAPATH", $"{res}Data.pck");
 
 			PckFile infoPCK = new PckFile(3);
 
@@ -354,7 +353,7 @@ namespace PckStudio
 			}
 		}
 
-		private void advancedMetaAddingToolStripMenuItem_Click(object sender, EventArgs e)
+		private void quickChangeToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			if (TryGetEditor(out IPckEditor editor))
 			{
@@ -390,7 +389,7 @@ namespace PckStudio
             }
         }
 
-		private void programInfoToolStripMenuItem_Click(object sender, EventArgs e)
+		private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			using CreditsForm info = new CreditsForm();
 			info.ShowDialog();
@@ -488,7 +487,8 @@ namespace PckStudio
 
         private void openPckCenterToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-#if BETA || DEBUG
+            MessageBox.Show("This feature is currently being reworked.", "Currently unavailable", MessageBoxButtons.OK, MessageBoxIcon.Information);
+#if false
 			DateTime Begin = DateTime.Now;
 			//pckCenter open = new pckCenter();
 			PckCenterBeta open = new PckCenterBeta();
@@ -524,7 +524,7 @@ namespace PckStudio
 			Process.Start("https://www.youtube.com/watch?v=hRQagnEplec");
 		}
 
-		private void pCKCenterReleaseToolStripMenuItem_Click(object sender, EventArgs e)
+		private void pckCenterReleaseToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			Process.Start("https://www.youtube.com/watch?v=E_6bXSh6yqw");
 		}
@@ -534,7 +534,7 @@ namespace PckStudio
 			Process.Start("https://www.youtube.com/watch?v=hTlImrRrCKQ");
 		}
 
-		private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+		private void preferencesToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			Pref setting = new Pref();
 			setting.Show();
@@ -554,6 +554,11 @@ namespace PckStudio
 		private void toNobledezJackToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			Process.Start("https://www.paypal.me/realnobledez");
+		}
+
+		private void forMattNLContributorToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			Process.Start("https://ko-fi.com/mattnl");
 		}
 
 		private void joinDevelopmentDiscordToolStripMenuItem_Click(object sender, EventArgs e)
@@ -614,11 +619,6 @@ namespace PckStudio
 			{
 				editor.SaveAs();
 			}
-		}
-
-		private void forMattNLContributorToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			Process.Start("https://ko-fi.com/mattnl");
 		}
 
 		private void addCustomPackIconToolStripMenuItem_Click(object sender, EventArgs e)
@@ -799,7 +799,7 @@ namespace PckStudio
 			}
         }
 
-        private void settingsToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
 			var appSettings = new AppSettingsForm();
 			appSettings.ShowDialog(this);

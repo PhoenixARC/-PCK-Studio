@@ -11,7 +11,7 @@ using PckStudio.Properties;
 using PckStudio.Extensions;
 using System.Globalization;
 using System.ComponentModel;
-using PckStudio.Internals;
+using PckStudio.Internal;
 
 namespace PckStudio
 {
