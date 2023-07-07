@@ -18,20 +18,20 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
-  <Target Name="GetGitHash" BeforeTargets="WriteGitInfo" Condition="'$(Configuration)' == 'Debug' AND '$(BuildHash)' == ''">
+  <Target Name="GetGitInfo" BeforeTargets="WriteGitInfo" Condition="'$(BuildHash)' == ''">
     <!-- write hash and branch to console.-->
-    <Exec Command="git -C $(ProjectDir) describe --always" ConsoleToMsBuild="true">
+    <Exec Condition="'$(Configuration)' == 'Debug'" Command="git -C $(ProjectDir) describe --always" ConsoleToMsBuild="true">
       <Output TaskParameter="ConsoleOutput" PropertyName="GitHash" />
     </Exec>
     <Exec Command="git -C $(ProjectDir) branch --show-current" ConsoleToMsBuild="true">
       <Output TaskParameter="ConsoleOutput" PropertyName="GitBranch" />
     </Exec>
     <PropertyGroup>
-      <BuildHash>$(GitHash)</BuildHash>
+      <BuildHash Condition="'$(Configuration)' == 'Debug'">$(GitHash)</BuildHash>
       <BuildBranch>$(GitBranch)</BuildBranch>
     </PropertyGroup>
   </Target>
-  <Target Name="WriteGitInfo" BeforeTargets="CoreCompile" Condition="'$(Configuration)' == 'Debug'">
+  <Target Name="WriteGitInfo" BeforeTargets="CoreCompile">
     <!-- names the obj/.../GitAssemblyInfo.cs file -->
     <PropertyGroup>
       <GitAssemblyInfoFile>$(IntermediateOutputPath)GitAssemblyInfo.cs</GitAssemblyInfoFile>
@@ -42,7 +42,7 @@
     </ItemGroup>
     <!-- defines the AssemblyMetadata attribute that will be written -->
     <ItemGroup>
-      <AssemblyAttributes Include="AssemblyMetadata">
+      <AssemblyAttributes Include="AssemblyMetadata" Condition="'$(Configuration)' == 'Debug'">
         <_Parameter1>GitHash</_Parameter1>
         <_Parameter2>$(BuildHash)</_Parameter2>
       </AssemblyAttributes>

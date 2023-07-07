@@ -81,7 +81,7 @@ namespace PckStudio
 			ChangelogRichTextBox.Text = Resources.CHANGELOG;
 
 #if BETA
-			labelVersion.Text += $"{ApplicationBuildInfo.BetaBuildVersion}";
+			labelVersion.Text += $"{ApplicationBuildInfo.BetaBuildVersion}@{CommitInfo.BranchName}";
 #endif
 #if DEBUG
 			labelVersion.Text += $" (Debug build: {CommitInfo.BranchName}@{CommitInfo.CommitHash})";
