@@ -1662,11 +1662,6 @@ namespace PckStudio
 			}
 		}
 
-		private void binkaConversionToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			Process.Start("https://www.youtube.com/watch?v=v6EYr4zc7rI");
-		}
-
 		private void fAQToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
 			//System.Diagnostics.Process.Start(hosturl + "pckStudio#faq");

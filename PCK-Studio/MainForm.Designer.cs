@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             System.Windows.Forms.PictureBox logoPictureBox;
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.contextMenuPCKEntries = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.createToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.folderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -94,7 +94,6 @@
             this.binkaWavToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.programInfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.binkaConversionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.videosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.howToMakeABasicSkinPackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.howToMakeACustomSkinModelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -148,10 +147,10 @@
             this.previewPictureBox = new PckStudio.PictureBoxWithInterpolationMode();
             this.LittleEndianCheckBox = new MetroFramework.Controls.MetroCheckBox();
             logoPictureBox = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(logoPictureBox)).BeginInit();
             this.contextMenuPCKEntries.SuspendLayout();
             this.menuStrip.SuspendLayout();
             this.contextMenuMetaTree.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(logoPictureBox)).BeginInit();
             this.tabControl.SuspendLayout();
             this.openTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pckOpen)).BeginInit();
@@ -160,6 +159,12 @@
             this.MetaTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.previewPictureBox)).BeginInit();
             this.SuspendLayout();
+            // 
+            // logoPictureBox
+            // 
+            resources.ApplyResources(logoPictureBox, "logoPictureBox");
+            logoPictureBox.Name = "logoPictureBox";
+            logoPictureBox.TabStop = false;
             // 
             // contextMenuPCKEntries
             // 
@@ -594,7 +599,6 @@
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.programInfoToolStripMenuItem,
-            this.binkaConversionToolStripMenuItem,
             this.videosToolStripMenuItem,
             this.installationToolStripMenuItem,
             this.fAQToolStripMenuItem1,
@@ -610,12 +614,6 @@
             resources.ApplyResources(this.programInfoToolStripMenuItem, "programInfoToolStripMenuItem");
             this.programInfoToolStripMenuItem.Name = "programInfoToolStripMenuItem";
             this.programInfoToolStripMenuItem.Click += new System.EventHandler(this.programInfoToolStripMenuItem_Click);
-            // 
-            // binkaConversionToolStripMenuItem
-            // 
-            resources.ApplyResources(this.binkaConversionToolStripMenuItem, "binkaConversionToolStripMenuItem");
-            this.binkaConversionToolStripMenuItem.Name = "binkaConversionToolStripMenuItem";
-            this.binkaConversionToolStripMenuItem.Click += new System.EventHandler(this.binkaConversionToolStripMenuItem_Click);
             // 
             // videosToolStripMenuItem
             // 
@@ -719,9 +717,9 @@
             // 
             // administrativeToolsToolStripMenuItem
             // 
+            resources.ApplyResources(this.administrativeToolsToolStripMenuItem, "administrativeToolsToolStripMenuItem");
             this.administrativeToolsToolStripMenuItem.Image = global::PckStudio.Properties.Resources.pckCenterHeader;
             this.administrativeToolsToolStripMenuItem.Name = "administrativeToolsToolStripMenuItem";
-            resources.ApplyResources(this.administrativeToolsToolStripMenuItem, "administrativeToolsToolStripMenuItem");
             this.administrativeToolsToolStripMenuItem.Click += new System.EventHandler(this.administrativeToolsToolStripMenuItem_Click);
             // 
             // storeToolStripMenuItem
@@ -817,19 +815,13 @@
             resources.ApplyResources(this.editAllEntriesToolStripMenuItem, "editAllEntriesToolStripMenuItem");
             this.editAllEntriesToolStripMenuItem.Click += new System.EventHandler(this.editAllEntriesToolStripMenuItem_Click);
             // 
-            // logoPictureBox
-            // 
-            resources.ApplyResources(logoPictureBox, "logoPictureBox");
-            logoPictureBox.Name = "logoPictureBox";
-            logoPictureBox.TabStop = false;
-            // 
             // tabControl
             // 
             this.tabControl.Controls.Add(this.openTab);
             this.tabControl.Controls.Add(this.editorTab);
             resources.ApplyResources(this.tabControl, "tabControl");
             this.tabControl.Name = "tabControl";
-			this.tabControl.SelectedIndex = 0;
+            this.tabControl.SelectedIndex = 0;
             this.tabControl.Style = MetroFramework.MetroColorStyle.Silver;
             this.tabControl.TabStop = false;
             this.tabControl.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -1118,11 +1110,11 @@
             this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
+            ((System.ComponentModel.ISupportInitialize)(logoPictureBox)).EndInit();
             this.contextMenuPCKEntries.ResumeLayout(false);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.contextMenuMetaTree.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(logoPictureBox)).EndInit();
             this.tabControl.ResumeLayout(false);
             this.openTab.ResumeLayout(false);
             this.openTab.PerformLayout();
@@ -1168,7 +1160,6 @@
         private System.Windows.Forms.ToolStripMenuItem skinToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem createAnimatedTextureToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem installationToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem binkaConversionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fAQToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem donateToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem convertToBedrockToolStripMenuItem;
