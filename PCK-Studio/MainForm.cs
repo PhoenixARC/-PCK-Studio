@@ -253,16 +253,29 @@ namespace PckStudio
 			fileEntryCountLabel.Text = string.Empty;
 			pckFileLabel.Text = string.Empty;
 			UpdateRichPresence();
-
 		}
 
-		/// <summary>
-		/// wrapper that allows the use of <paramref name="name"/> in <code>TreeNode.Nodes.Find(<paramref name="name"/>, ...)</code> and <code>TreeNode.Nodes.ContainsKey(<paramref name="name"/>)</code>
-		/// </summary>
-		/// <param name="name"></param>
-		/// <param name="tag"></param>
-		/// <returns>new Created TreeNode</returns>
-		public static TreeNode CreateNode(string name, object tag = null)
+        private void UpdateRichPresence()
+        {
+            if (currentPCK is not null &&
+                TryGetLocFile(out LOCFile locfile) &&
+                locfile.HasLocEntry("IDS_DISPLAY_NAME") &&
+                locfile.Languages.Contains("en-EN"))
+            {
+                RPC.SetPresence($"Editing a Pack: {locfile.GetLocEntry("IDS_DISPLAY_NAME", "en-EN")}");
+                return;
+            }
+            // default
+            RPC.SetPresence("An Open Source .PCK File Editor");
+        }
+
+        /// <summary>
+        /// wrapper that allows the use of <paramref name="name"/> in <code>TreeNode.Nodes.Find(<paramref name="name"/>, ...)</code> and <code>TreeNode.Nodes.ContainsKey(<paramref name="name"/>)</code>
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="tag"></param>
+        /// <returns>new Created TreeNode</returns>
+        public static TreeNode CreateNode(string name, object tag = null)
 		{
 			TreeNode node = new TreeNode(name);
 			node.Name = name;
@@ -376,27 +389,10 @@ namespace PckStudio
 			UpdateRichPresence();
 		}
 
-		private void UpdateRichPresence()
-		{
-			if (currentPCK is not null &&
-				TryGetLocFile(out LOCFile locfile) &&
-				locfile.HasLocEntry("IDS_DISPLAY_NAME") &&
-				locfile.Languages.Contains("en-EN"))	
-			{
-				RPC.SetPresence($"Editing a Pack: {locfile.GetLocEntry("IDS_DISPLAY_NAME", "en-EN")}");
-				return;
-			}
-			// default
-			RPC.SetPresence("An Open Source .PCK File Editor");
-		}
-
 		private void HandleAudioFile(PckFile.FileData file)
 		{
 			using AudioEditor audioEditor = new AudioEditor(file, LittleEndianCheckBox.Checked);
-			if (audioEditor.ShowDialog(this) == DialogResult.OK)
-			{
-				wasModified = true;
-			}
+			wasModified = audioEditor.ShowDialog(this) == DialogResult.OK;
 		}
 
 		private void HandleLocalisationFile(PckFile.FileData file)
@@ -427,20 +423,19 @@ namespace PckStudio
 				var texture = Image.FromStream(ms);
 				if (file.Properties.HasProperty("BOX"))
 				{
-						using generateModel generate = new generateModel(file.Properties, texture);
-						if (generate.ShowDialog() == DialogResult.OK)
-						{
-							entryDataTextBox.Text = entryTypeTextBox.Text = string.Empty;
-							wasModified = true;
-							ReloadMetaTreeView();
-						}
+					using generateModel generate = new generateModel(file.Properties, texture);
+					if (generate.ShowDialog() == DialogResult.OK)
+					{
+						entryDataTextBox.Text = entryTypeTextBox.Text = string.Empty;
+						wasModified = true;
+						ReloadMetaTreeView();
+					}
+					return;
 				}
-				else
-				{
-					SkinPreview frm = new SkinPreview(texture, file.Properties.GetPropertyValue("ANIM", SkinANIM.FromString));
-					frm.ShowDialog(this);
-					frm.Dispose();
-				}
+				
+				var skinViewer = new SkinPreview(texture, file.Properties.GetPropertyValue("ANIM", SkinANIM.FromString));
+				skinViewer.ShowDialog(this);
+				skinViewer.Dispose();
 			}
 		}
 
@@ -577,46 +572,46 @@ namespace PckStudio
 			}
 
 			string selectedFolder = node.FullPath;
-			using (FolderBrowserDialog dialog = new FolderBrowserDialog())
+			OpenFolderDialog dialog = new OpenFolderDialog();
+			dialog.Title = @"Select destination folder";
+
+			if (dialog.ShowDialog() == true)
 			{
-				dialog.Description = @"Select destination folder";
-				if (dialog.ShowDialog() == DialogResult.OK)
+				string extractPath = dialog.ResultPath;
+				if (IsSubPCKNode(node.FullPath) && node.Tag == null)
 				{
-					if(IsSubPCKNode(node.FullPath) && node.Tag == null)
+					GetAllChildNodes(node.Nodes).ForEach(fileNode =>
 					{
-						GetAllChildNodes(node.Nodes).ForEach(fileNode =>
+						if (fileNode.Tag is PckFile.FileData file)
 						{
-							if(fileNode.Tag is PckFile.FileData file)
+							Directory.CreateDirectory($"{extractPath}/{Path.GetDirectoryName(file.Filename)}");
+							File.WriteAllBytes($"{extractPath}/{file.Filename}", file.Data);
+							if (file.Properties.Count > 0)
 							{
-								Directory.CreateDirectory($"{dialog.SelectedPath}/{Path.GetDirectoryName(file.Filename)}");
-								File.WriteAllBytes($"{dialog.SelectedPath}/{file.Filename}", file.Data);
-								if (file.Properties.Count > 0)
-								{
-									using var fs = File.CreateText($"{dialog.SelectedPath}/{file.Filename}.txt");
-									file.Properties.ForEach(property => fs.WriteLine($"{property.Key}: {property.Value}"));
-								}
+								using var fs = File.CreateText($"{extractPath}/{file.Filename}.txt");
+								file.Properties.ForEach(property => fs.WriteLine($"{property.Key}: {property.Value}"));
 							}
 						}
-						);
 					}
-					else
-					{
-						foreach (var _file in currentPCK.Files)
-						{
-							if (_file.Filename.StartsWith(selectedFolder))
-							{
-								Directory.CreateDirectory($"{dialog.SelectedPath}/{Path.GetDirectoryName(_file.Filename)}");
-								File.WriteAllBytes($"{dialog.SelectedPath}/{_file.Filename}", _file.Data);
-								if (_file.Properties.Count > 0)
-								{
-									using var fs = File.CreateText($"{dialog.SelectedPath}/{_file.Filename}.txt");
-									_file.Properties.ForEach(property => fs.WriteLine($"{property.Key}: {property.Value}"));
-								}
-							}
-						};
-					}
-					MessageBox.Show("Folder Extracted");
+					);
 				}
+				else
+				{
+					foreach (var _file in currentPCK.Files)
+					{
+						if (_file.Filename.StartsWith(selectedFolder))
+						{
+							Directory.CreateDirectory($"{extractPath}/{Path.GetDirectoryName(_file.Filename)}");
+							File.WriteAllBytes($"{extractPath}/{_file.Filename}", _file.Data);
+							if (_file.Properties.Count > 0)
+							{
+								using var fs = File.CreateText($"{extractPath}/{_file.Filename}.txt");
+								_file.Properties.ForEach(property => fs.WriteLine($"{property.Key}: {property.Value}"));
+							}
+						}
+					};
+				}
+				MessageBox.Show("Folder Extracted");
 			}
 		}
 
@@ -888,7 +883,7 @@ namespace PckStudio
 
 			bool isSubFile = subpaths.Any(s => Path.GetExtension(s).Equals(extention));
 
-			if(isSubFile) Console.WriteLine($"{nodePath} is a Sub-PCK File");
+			Debug.WriteLineIf(isSubFile, $"{nodePath} is a Sub-PCK File", category: nameof(IsSubPCKNode));
 
 			return isSubFile;
 		}
@@ -910,9 +905,9 @@ namespace PckStudio
 		TreeNode GetSubPCK(string childPath)
 		{
 			string parentPath = childPath.Replace('\\', '/');
-			Console.WriteLine(parentPath);
+			Debug.WriteLine(parentPath);
 			string[] s = parentPath.Split('/');
-			Console.WriteLine(s.Length);
+            Debug.WriteLine(s.Length);
 			foreach (var node in s)
 			{
 				TreeNode parent = treeViewMain.Nodes.Find(node, true)[0];
@@ -932,13 +927,13 @@ namespace PckStudio
 			if(!IsSubPCKNode(childPath)) return;
 
 			TreeNode parent = GetSubPCK(childPath);
-			Console.WriteLine(parent.Name);
+            Debug.WriteLine(parent.Name);
 			if (parent == null) return;
 
 			PckFile.FileData parent_file = parent.Tag as PckFile.FileData;
 			if (parent_file.Filetype is PckFile.FileData.FileType.TexturePackInfoFile || parent_file.Filetype is PckFile.FileData.FileType.SkinDataFile)
 			{
-				Console.WriteLine("Rebuilding " + parent_file.Filename);
+                Debug.WriteLine("Rebuilding " + parent_file.Filename);
 				PckFile newPCKFile = new PckFile(3, parent_file.Filetype is PckFile.FileData.FileType.SkinDataFile);
 
 				foreach (TreeNode node in GetAllChildNodes(parent.Nodes))
@@ -1065,11 +1060,11 @@ namespace PckStudio
 				{
 					TreeNode newNode = new TreeNode();
 					newNode.Text = Path.GetFileName(diag.NewText);
-					var NewFile = new PckFile.FileData(diag.NewText, file.Filetype);
-					file.Properties.ForEach(p => NewFile.Properties.Add(p));
-					NewFile.SetData(file.Data);
-					NewFile.Filename = diag.NewText;
-					newNode.Tag = NewFile;
+					var newFile = new PckFile.FileData(diag.NewText, file.Filetype);
+					file.Properties.ForEach(newFile.Properties.Add);
+					newFile.SetData(file.Data);
+					newFile.Filename = diag.NewText;
+					newNode.Tag = newFile;
 					newNode.ImageIndex = node.ImageIndex;
 					newNode.SelectedImageIndex = node.SelectedImageIndex;
 
@@ -1086,7 +1081,7 @@ namespace PckStudio
 					if (node.Parent == null) treeViewMain.Nodes.Insert(node.Index + 1, newNode); //adds generated file node
 					else node.Parent.Nodes.Insert(node.Index + 1, newNode);//adds generated file node to selected folder
 
-					if (!IsSubPCKNode(node.FullPath)) currentPCK.Files.Insert(node.Index + 1, NewFile);
+					if (!IsSubPCKNode(node.FullPath)) currentPCK.Files.Insert(node.Index + 1, newFile);
 					else RebuildSubPCK(node.FullPath);
 					BuildMainTreeView();
 					wasModified = true;
@@ -1193,8 +1188,8 @@ namespace PckStudio
 			var newPck = new PckFile(3);
 			
 			var zeroFile = newPck.CreateNewFile("0", PckFile.FileData.FileType.InfoFile);
-			zeroFile.Properties.Add(("PACKID", packId.ToString()));
-			zeroFile.Properties.Add(("PACKVERSION", packVersion.ToString()));
+			zeroFile.Properties.Add("PACKID", packId.ToString());
+			zeroFile.Properties.Add("PACKVERSION", packVersion.ToString());
 
 			var loc = newPck.CreateNewFile("localisation.loc", PckFile.FileData.FileType.LocalisationFile, () =>
 			{
@@ -1236,8 +1231,8 @@ namespace PckStudio
 					writer.WriteToStream(ms);
 					return ms.ToArray();
 				});
-			texturepackInfo.Properties.Add(("PACKID", "0"));
-			texturepackInfo.Properties.Add(("DATAPATH", $"{res}Data.pck"));
+			texturepackInfo.Properties.Add("PACKID", "0");
+			texturepackInfo.Properties.Add("DATAPATH", $"{res}Data.pck");
 
 			PckFile infoPCK = new PckFile(3);
 
@@ -1684,7 +1679,8 @@ namespace PckStudio
 
         private void openPckCenterToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-#if BETA || DEBUG
+            MessageBox.Show("This feature is currently being reworked.", "Currently unavailable", MessageBoxButtons.OK, MessageBoxIcon.Information);
+#if false
 			DateTime Begin = DateTime.Now;
 			//pckCenter open = new pckCenter();
 			PckCenterBeta open = new PckCenterBeta();
