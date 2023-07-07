@@ -51,29 +51,23 @@ namespace PckStudio
 		public MainForm()
 		{
 			InitializeComponent();
-			treeViewMain.TreeViewNodeSorter = new PckNodeSorter();
-			imageList.Images.Add(Resources.ZZFolder); // Icon for folders
-			imageList.Images.Add(Resources.BINKA_ICON); // Icon for music cue file (audio.pck)
-			imageList.Images.Add(Resources.IMAGE_ICON); // Icon for images (unused for now)
-			imageList.Images.Add(Resources.LOC_ICON); // Icon for string localization files (languages.loc;localisation.loc)
-			imageList.Images.Add(Resources.PCK_ICON); // Icon for generic PCK files (*.pck)
-			imageList.Images.Add(Resources.ZUnknown); // Icon for Unknown formats
-			imageList.Images.Add(Resources.COL_ICON); // Icon for color palette files (colours.col)
-			imageList.Images.Add(Resources.SKINS_ICON); // Icon for Skin.pck archives (skins.pck)
-			imageList.Images.Add(Resources.MODELS_ICON); // Icon for Model files (models.bin)
-			imageList.Images.Add(Resources.GRF_ICON); // Icon for Game Rule files (*.grf)
-			imageList.Images.Add(Resources.GRH_ICON); // Icon for Game Rule Header files (*.grh)
-			imageList.Images.Add(Resources.INFO_ICON); // Icon for Info files (0)
-			imageList.Images.Add(Resources.SKIN_ICON); // Icon for Skin files (*.png)
-			imageList.Images.Add(Resources.CAPE_ICON); // Icon for Cape files (*.png)
-			imageList.Images.Add(Resources.TEXTURE_ICON); // Icon for Texture files (*.png;*.tga)
-			imageList.Images.Add(Resources.BEHAVIOURS_ICON); // Icon for Behaviour files (behaviours.bin)
-			imageList.Images.Add(Resources.ENTITY_MATERIALS_ICON); // Icon for Entity Material files (entityMaterials.bin)
-			pckOpen.AllowDrop = true;
 
-			isSelectingTab = true;
-			tabControl.SelectTab(0);
-			isSelectingTab = false;
+            skinToolStripMenuItem1.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.SkinFile);
+            capeToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.CapeFile);
+            textureToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.TextureFile);
+            languagesFileLOCToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.LocalisationFile);
+            gameRulesFileGRFToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.GameRulesFile);
+            audioPCKFileToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.AudioFile);
+            coloursCOLFileToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.ColourTableFile);
+            gameRulesHeaderGRHToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.GameRulesHeader);
+            skinsPCKToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.SkinDataFile);
+            modelsFileBINToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.ModelsFile);
+            behavioursFileBINToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.BehavioursFile);
+            entityMaterialsFileBINToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.MaterialFile);
+
+            treeViewMain.TreeViewNodeSorter = new PckNodeSorter();
+
+			pckOpen.AllowDrop = true;
 
 			Text = Application.ProductName;
 
@@ -136,20 +130,29 @@ namespace PckStudio
 				}
 			});
 
-			UpdateRichPresence();
+            imageList.Images.Add(Resources.ZZFolder); // Icon for folders
+            imageList.Images.Add(Resources.BINKA_ICON); // Icon for music cue file (audio.pck)
+            imageList.Images.Add(Resources.IMAGE_ICON); // Icon for images (unused for now)
+            imageList.Images.Add(Resources.LOC_ICON); // Icon for string localization files (languages.loc;localisation.loc)
+            imageList.Images.Add(Resources.PCK_ICON); // Icon for generic PCK files (*.pck)
+            imageList.Images.Add(Resources.ZUnknown); // Icon for Unknown formats
+            imageList.Images.Add(Resources.COL_ICON); // Icon for color palette files (colours.col)
+            imageList.Images.Add(Resources.SKINS_ICON); // Icon for Skin.pck archives (skins.pck)
+            imageList.Images.Add(Resources.MODELS_ICON); // Icon for Model files (models.bin)
+            imageList.Images.Add(Resources.GRF_ICON); // Icon for Game Rule files (*.grf)
+            imageList.Images.Add(Resources.GRH_ICON); // Icon for Game Rule Header files (*.grh)
+            imageList.Images.Add(Resources.INFO_ICON); // Icon for Info files (0)
+            imageList.Images.Add(Resources.SKIN_ICON); // Icon for Skin files (*.png)
+            imageList.Images.Add(Resources.CAPE_ICON); // Icon for Cape files (*.png)
+            imageList.Images.Add(Resources.TEXTURE_ICON); // Icon for Texture files (*.png;*.tga)
+            imageList.Images.Add(Resources.BEHAVIOURS_ICON); // Icon for Behaviour files (behaviours.bin)
+            imageList.Images.Add(Resources.ENTITY_MATERIALS_ICON); // Icon for Entity Material files (entityMaterials.bin)
 
-			skinToolStripMenuItem1.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.SkinFile);
-			capeToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.CapeFile);
-			textureToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.TextureFile);
-			languagesFileLOCToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.LocalisationFile);
-			gameRulesFileGRFToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.GameRulesFile);
-			audioPCKFileToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.AudioFile);
-			coloursCOLFileToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.ColourTableFile);
-			gameRulesHeaderGRHToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.GameRulesHeader);
-			skinsPCKToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.SkinDataFile);
-			modelsFileBINToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.ModelsFile);
-			behavioursFileBINToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.BehavioursFile);
-			entityMaterialsFileBINToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.MaterialFile);
+            isSelectingTab = true;
+            tabControl.SelectTab(0);
+            isSelectingTab = false;
+
+            UpdateRichPresence();
 		}
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -219,7 +222,7 @@ namespace PckStudio
 
 			saveToolStripMenuItem.Enabled = true;
 			saveToolStripMenuItem1.Enabled = true;
-			advancedMetaAddingToolStripMenuItem.Enabled = true;
+			quickChangeToolStripMenuItem.Enabled = true;
 			convertToBedrockToolStripMenuItem.Enabled = true;
 			addCustomPackImageToolStripMenuItem.Enabled = true;
 			BuildMainTreeView();
@@ -245,7 +248,7 @@ namespace PckStudio
 			treeMeta.Enabled = false;
 			saveToolStripMenuItem.Enabled = false;
 			saveToolStripMenuItem1.Enabled = false;
-			advancedMetaAddingToolStripMenuItem.Enabled = false;
+			quickChangeToolStripMenuItem.Enabled = false;
 			closeToolStripMenuItem.Visible = false;
             packSettingsToolStripMenuItem.Visible = false;
             convertToBedrockToolStripMenuItem.Enabled = false;
@@ -311,7 +314,7 @@ namespace PckStudio
 				node.Tag = file;
 				if (Settings.Default.LoadSubPcks &&
 					(file.Filetype == PckFile.FileData.FileType.SkinDataFile || file.Filetype == PckFile.FileData.FileType.TexturePackInfoFile) &&
-                    file.Data.Length > 0)
+                    file.Size > 0)
 				{
 						using (var stream = new MemoryStream(file.Data))
 						{
@@ -1321,9 +1324,8 @@ namespace PckStudio
 			}
 		}
 
-		private void advancedMetaAddingToolStripMenuItem_Click(object sender, EventArgs e)
+		private void quickChangeToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			//opens dialog for bulk minefile editing
 			using AdvancedOptions advanced = new AdvancedOptions(currentPCK);
 			advanced.littleEndian = LittleEndianCheckBox.Checked;
 			if (advanced.ShowDialog() == DialogResult.OK)
@@ -1339,7 +1341,7 @@ namespace PckStudio
 			CloseEditorTab();
 		}
 
-		private void programInfoToolStripMenuItem_Click(object sender, EventArgs e)
+		private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			using CreditsForm info = new CreditsForm();
 			info.ShowDialog();
@@ -1711,7 +1713,7 @@ namespace PckStudio
 			Process.Start("https://www.youtube.com/watch?v=hRQagnEplec");
 		}
 
-		private void pCKCenterReleaseToolStripMenuItem_Click(object sender, EventArgs e)
+		private void pckCenterReleaseToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			Process.Start("https://www.youtube.com/watch?v=E_6bXSh6yqw");
 		}
@@ -1721,7 +1723,7 @@ namespace PckStudio
 			Process.Start("https://www.youtube.com/watch?v=hTlImrRrCKQ");
 		}
 
-		private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+		private void preferencesToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			Pref setting = new Pref();
 			setting.Show();
@@ -1741,6 +1743,11 @@ namespace PckStudio
 		private void toNobledezJackToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			Process.Start("https://www.paypal.me/realnobledez");
+		}
+
+		private void forMattNLContributorToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			Process.Start("https://ko-fi.com/mattnl");
 		}
 
 		private void joinDevelopmentDiscordToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1813,11 +1820,6 @@ namespace PckStudio
 		private void saveAsPCK(object sender, EventArgs e)
 		{
 			SaveTemplate();
-		}
-
-		private void forMattNLContributorToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			Process.Start("https://ko-fi.com/mattnl");
 		}
 
 		private void SetPckFileIcon(TreeNode node, PckFile.FileData.FileType type)
@@ -2340,7 +2342,7 @@ namespace PckStudio
 			currentPCK.SetVersion(fullBoxSupportToolStripMenuItem.Checked);
         }
 
-        private void settingsToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
 			var appSettings = new AppSettingsForm();
 			appSettings.ShowDialog(this);
