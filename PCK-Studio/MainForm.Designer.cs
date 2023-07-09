@@ -83,6 +83,7 @@
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.closeAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.quickChangeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.convertToBedrockToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -418,7 +419,8 @@
             this.packSettingsToolStripMenuItem,
             this.saveToolStripMenuItem,
             this.saveAsToolStripMenuItem,
-            this.closeToolStripMenuItem});
+            this.closeToolStripMenuItem,
+            this.closeAllToolStripMenuItem});
             this.fileToolStripMenuItem.ForeColor = System.Drawing.Color.Silver;
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             resources.ApplyResources(this.fileToolStripMenuItem, "fileToolStripMenuItem");
@@ -494,6 +496,12 @@
             this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
             resources.ApplyResources(this.closeToolStripMenuItem, "closeToolStripMenuItem");
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
+            // 
+            // closeAllToolStripMenuItem
+            // 
+            this.closeAllToolStripMenuItem.Name = "closeAllToolStripMenuItem";
+            resources.ApplyResources(this.closeAllToolStripMenuItem, "closeAllToolStripMenuItem");
+            this.closeAllToolStripMenuItem.Click += new System.EventHandler(this.closeAllToolStripMenuItem_Click);
             // 
             // editToolStripMenuItem
             // 
@@ -1023,6 +1031,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.PictureBox logoPictureBox;
+        private System.Windows.Forms.ToolStripMenuItem closeAllToolStripMenuItem;
     }
 }
 

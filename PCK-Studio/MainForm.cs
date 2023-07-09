@@ -147,14 +147,7 @@ namespace PckStudio
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			foreach (TabPage tab in tabControl.TabPages)
-			{
-				if (TryGetEditor(tab, out IPckEditor editor))
-				{
-					editor.Close();
-                    tabControl.TabPages.Remove(tab);
-				}
-			}
+			closeAllToolStripMenuItem_Click(sender, e);
 		}
 
 		private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -370,19 +363,29 @@ namespace PckStudio
 			}
 		}
 
+		private void CloseTab(TabControl.TabPageCollection collection, TabPage page)
+		{
+            if (TryGetEditor(page, out IPckEditor editor))
+            {
+                editor.Close();
+                RemoveOpenFile(page);
+                collection.Remove(page);
+            }
+        }
+
 		private void closeToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (TryGetEditor(out IPckEditor editor))
-			{
-				editor.Close();
-                RemoveOpenFile();
-				tabControl.TabPages.Remove(tabControl.SelectedTab);
-			}
-		}
+			CloseTab(tabControl.TabPages, tabControl.SelectedTab);
+        }
 
         private void RemoveOpenFile()
+		{
+			RemoveOpenFile(tabControl.SelectedTab);
+        }
+
+        private void RemoveOpenFile(TabPage page)
         {
-            var kv = openFiles.First((kv) => kv.Value == tabControl.SelectedTab);
+            var kv = openFiles.First((kv) => kv.Value == page);
             if (kv.Key != default && kv.Value != default)
             {
                 openFiles.Remove(kv.Key);
@@ -817,11 +820,21 @@ namespace PckStudio
         private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
 			closeToolStripMenuItem.Visible = tabControl.SelectedIndex > 0;
+            closeAllToolStripMenuItem.Visible = tabControl.SelectedIndex == 0 && tabControl.TabCount > 1;
 
-			if (tabControl.TabPages.Count == 1)
+            if (tabControl.TabPages.Count == 1)
 			{
                 RPC.SetPresence("An Open Source .PCK File Editor");
             }
+        }
+
+        private void closeAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (TabPage tab in tabControl.TabPages)
+            {
+				CloseTab(tabControl.TabPages, tab);
+            }
+            closeAllToolStripMenuItem.Visible = false;
         }
     }
 }
