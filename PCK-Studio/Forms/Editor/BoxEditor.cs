@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using PckStudio.Internal;
+using PckStudio.Properties;
 
 namespace PckStudio.Forms.Editor
 {
@@ -8,18 +9,23 @@ namespace PckStudio.Forms.Editor
 	{
 		public string Result;
 
-		public BoxEditor(string inBOX, bool hasInflation)
+		public BoxEditor(string box, bool hasInflation)
+			: this(SkinBOX.FromString(box), hasInflation)
+		{
+		}
+
+		public BoxEditor(SkinBOX box, bool hasInflation)
 		{
 			InitializeComponent();
 
-			inflationUpDown.Enabled = hasInflation;
+            if (string.IsNullOrEmpty(box.Type) || !parentComboBox.Items.Contains(box.Type))
+            {
+                throw new Exception("Failed to parse BOX value");
+            }
 
-			var box = SkinBOX.FromString(inBOX);
+            closeButton.Visible =!Settings.Default.AutoSaveChanges;
 
-			if (string.IsNullOrEmpty(box.Type) || !parentComboBox.Items.Contains(box.Type))
-			{
-				throw new Exception("Failed to parse BOX value");
-			}
+            inflationUpDown.Enabled = hasInflation;
 
 			parentComboBox.SelectedItem = parentComboBox.Items[parentComboBox.Items.IndexOf(box.Type)];
 			PosXUpDown.Value = (decimal)box.Pos.X;
@@ -46,7 +52,14 @@ namespace PckStudio.Forms.Editor
 				$"{Convert.ToInt32(mirrorCheckBox.Checked)} " +
 				$"{inflationUpDown.Value}";
 			DialogResult = DialogResult.OK;
-			Close();
 		}
-	}
+
+        private void BoxEditor_FormClosing(object sender, FormClosingEventArgs e)
+        {
+			if (Settings.Default.AutoSaveChanges)
+			{
+				saveButton_Click(sender, EventArgs.Empty);
+			}
+        }
+    }
 }

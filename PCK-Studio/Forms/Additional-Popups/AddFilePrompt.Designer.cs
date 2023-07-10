@@ -1,4 +1,4 @@
-﻿namespace PckStudio
+﻿namespace PckStudio.Popups
 {
     partial class AddFilePrompt
     {

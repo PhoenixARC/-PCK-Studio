@@ -4,6 +4,7 @@ using MetroFramework.Forms;
 
 namespace PckStudio.Forms
 {
+    [Obsolete]
     public partial class Pref : MetroForm
     {
         public Pref()

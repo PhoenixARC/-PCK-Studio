@@ -10,6 +10,7 @@ using PckStudio.Forms.Additional_Popups.Loc;
 using OMI.Formats.Languages;
 using OMI.Workers.Language;
 using OMI.Formats.Pck;
+using PckStudio.Properties;
 
 namespace PckStudio.Forms.Editor
 {
@@ -34,6 +35,8 @@ namespace PckStudio.Forms.Editor
 			dataGridViewLocEntryData.DataSource = tbl;
             DataGridViewColumn column = dataGridViewLocEntryData.Columns[1];
             column.Width = dataGridViewLocEntryData.Width;
+
+			saveToolStripMenuItem.Visible = !Settings.Default.AutoSaveChanges;
         }
 
 		private void LOCEditor_Load(object sender, EventArgs e)
@@ -58,9 +61,9 @@ namespace PckStudio.Forms.Editor
 		private void addDisplayIDToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			if (treeViewLocKeys.SelectedNode is TreeNode)
-				using (RenamePrompt prompt = new RenamePrompt(""))
+				using (TextPrompt prompt = new TextPrompt())
 				{
-					prompt.OKButton.Text = "Add";
+					prompt.OKButtonText = "Add";
 					if (prompt.ShowDialog() == DialogResult.OK && 
 						!currentLoc.LocKeys.ContainsKey(prompt.NewText) &&
 						currentLoc.AddLocKey(prompt.NewText, ""))
@@ -149,5 +152,13 @@ namespace PckStudio.Forms.Editor
             }
 			DialogResult = DialogResult.OK;
         }
-	}
+
+        private void LOCEditor_FormClosing(object sender, FormClosingEventArgs e)
+        {
+			if (Settings.Default.AutoSaveChanges)
+			{
+				saveToolStripMenuItem_Click(sender, EventArgs.Empty);
+			}
+        }
+    }
 }

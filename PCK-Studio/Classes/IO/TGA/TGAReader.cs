@@ -67,30 +67,31 @@ namespace PckStudio.IO.TGA
         private static void TGA_HandleRLERGB(EndiannessAwareBinaryReader reader, TGAHeader header, BitmapData bitmapData)
         {
             int bytesPerPixel = header.BitsPerPixel / 8;
-            Debug.WriteLine($"bytesPerPixel={bytesPerPixel}");
-            int dataOffset = 0;
-
-            byte[] dataBuffer = new byte[header.Width * header.Height * bytesPerPixel];
-            do
+            var dataStream = new MemoryStream(header.Width * header.Height * bytesPerPixel);
+            while (true)
             {
-                var packetheader = PacketHeader.ReadHeader(reader);
-                if (!packetheader.IsCompressed)
+                try
                 {
-                    int bytesRead = packetheader.Count * bytesPerPixel;
-                    reader.ReadBytes(bytesRead).CopyTo(dataBuffer, dataOffset);
-                    dataOffset += bytesRead;
-                }
-                else
-                {
+                    var packetheader = PacketHeader.FromByte(reader.ReadByte());
+                    if (!packetheader.IsCompressed)
+                    {
+                        int bytesRead = packetheader.Count * bytesPerPixel;
+                        reader.BaseStream.CopyTo(dataStream, bytesRead);
+                        continue;
+                    }
                     byte[] rleColor = reader.ReadBytes(bytesPerPixel);
                     for (int i = 0; i < packetheader.Count; i++)
                     {
-                        rleColor.CopyTo(dataBuffer, dataOffset);
-                        dataOffset += bytesPerPixel;
+                        dataStream.Write(rleColor, 0, bytesPerPixel);
                     }
                 }
-            } while (dataOffset <= dataBuffer.Length);
-            Marshal.Copy(dataBuffer, 0, bitmapData.Scan0, dataBuffer.Length);
+                catch
+                {
+                    break;
+                }
+            }
+            var data = dataStream.ToArray();
+            Marshal.Copy(data, 0, bitmapData.Scan0, data.Length);
         }
 
         private struct PacketHeader
@@ -104,13 +105,10 @@ namespace PckStudio.IO.TGA
                 Count = count;
             }
 
-            public static PacketHeader ReadHeader(EndiannessAwareBinaryReader reader)
+            public static PacketHeader FromByte(byte header)
             {
-                byte chunkHeader = reader.ReadByte();
-                bool isCompressed = (chunkHeader & 0x80) != 0;
-                int count = (chunkHeader & 0x7f) + 1;
-                //Debug.WriteLine($"count={count}");
-                //Debug.WriteLine($"isCompressed={isCompressed}");
+                bool isCompressed = (header & 0x80) != 0;
+                int count = (header & 0x7f) + 1;
                 return new PacketHeader(isCompressed, count);
             }
         }
@@ -145,7 +143,7 @@ namespace PckStudio.IO.TGA
             header.BitsPerPixel = reader.ReadByte();
             header.ImageDescriptor = reader.ReadByte();
             header.Id = reader.ReadBytes(headerIdLength);
-            Debug.WriteLineIf(headerIdLength > 0, $"Image ID: {header.Id}");
+            DebugLogHeader(header);
             return header;
         }
 
@@ -162,7 +160,6 @@ namespace PckStudio.IO.TGA
 
         private static Image LoadImage(EndiannessAwareBinaryReader reader, TGAHeader header)
         {
-            DebugLogHeader(header);
 
             //if (header.DataTypeCode == TGADataTypeCode.NO_DATA)
             //    return null;
@@ -190,14 +187,11 @@ namespace PckStudio.IO.TGA
 
             footer.ExtensionDataOffset = reader.ReadInt32(); // optional
             footer.DeveloperAreaDataOffset = reader.ReadInt32(); // optional
-            Debug.WriteLine("Extension Data Offset:         {0:x}", footer.ExtensionDataOffset);
-            Debug.WriteLine("Developer Area Data Offset:    {0:x}", footer.DeveloperAreaDataOffset);
-
             string signature = reader.ReadString(16);
-            Debug.WriteLineIf(!signature.Equals(TGAFooter.Signature) || reader.ReadInt16() != 0x002E,
-                "Footer end invalid");
-
+            Debug.Assert(signature.Equals(TGAFooter.Signature) || reader.ReadInt16() != 0x002E,
+                "Footer signature invalid");
             reader.BaseStream.Seek(origin, SeekOrigin.Begin);
+            DebugLogFooter(footer);
             return footer;
         }
 
@@ -234,7 +228,6 @@ namespace PckStudio.IO.TGA
                     extentionData.ScanLineOffset = reader.ReadInt32();
                     extentionData.AttributesType = reader.ReadByte();
                     DebugLogExtentionData(extentionData);
-
                     return extentionData;
                 }
             }
@@ -271,6 +264,7 @@ namespace PckStudio.IO.TGA
         {
             Debug.WriteLine("------Header Data------", category: nameof(TGAReader));
             Debug.WriteLine(string.Format("ID length:         {0}", args: header.Id.Length), category: nameof(TGAReader));
+            Debug.WriteLineIf(header.Id.Length > 0, $"ID:                {header.Id}", category: nameof(TGAReader));
             Debug.WriteLine(string.Format("Colourmap type:    {0}", args: header.Colormap.Type), category: nameof(TGAReader));
             Debug.WriteLine(string.Format("Image type:        {0}", args: header.DataTypeCode), category: nameof(TGAReader));
             Debug.WriteLine(string.Format("Colour map offset: {0}", args: header.Colormap.Origin), category: nameof(TGAReader));
@@ -283,6 +277,15 @@ namespace PckStudio.IO.TGA
             Debug.WriteLine(string.Format("Bits per pixel:    {0}", args: header.BitsPerPixel), category: nameof(TGAReader));
             Debug.WriteLine(string.Format("Descriptor:        {0}", args: header.ImageDescriptor), category: nameof(TGAReader));
             Debug.WriteLine("-----------------------", category: nameof(TGAReader));
+        }
+
+        [Conditional("DEBUG")]
+        [DebuggerHidden]
+        [DebuggerStepThrough]
+        private static void DebugLogFooter(TGAFooter footer)
+        {
+            Debug.WriteLine("Extension Data Offset:         {0:x}", footer.ExtensionDataOffset);
+            Debug.WriteLine("Developer Area Data Offset:    {0:x}", footer.DeveloperAreaDataOffset);
         }
     }
 }

@@ -53,19 +53,18 @@ namespace PckStudio
             "WAIST",
             "PANTS0",
             "PANTS1",
-            "SOCK0",
-            "SOCK1",
 
             // Armor Parts
-            "HELMET",
-            "CHEST", "BODYARMOR",
-            "SHOULDER0", "ARMARMOR0",
-            "SHOULDER1", "ARMARMOR0",
+            "BODYARMOR",
+            "ARMARMOR0",
+            "ARMARMOR1",
             "BELT",
             "LEGGING0",
             "LEGGING1",
+            "SOCK0",
+            "SOCK1",
             "BOOT0",
-            "BOOT1",
+            "BOOT1"
         };
 
         private static readonly string[] ValidModelOffsetTypes = new string[]
@@ -86,8 +85,8 @@ namespace PckStudio
             "BELT",
             "LEGGING0",
             "LEGGING1",
-            "BOOT0",
-            "BOOT1",
+            "SOCK0", "BOOT0",
+            "SOCK1", "BOOT1",
 
             "TOOL0",
             "TOOL1",
@@ -115,6 +114,7 @@ namespace PckStudio
 
         public generateModel(PckFile.PCKProperties skinProperties, Image texture)
         {
+            MessageBox.Show(this, "This feature is now considered deprecated and will no longer recieve updates. A better alternative is currently under development. Use at your own risk.", "Deprecated Feature", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             InitializeComponent();
             boxes = skinProperties;
             texturePreview.Image = texture;
@@ -133,11 +133,11 @@ namespace PckStudio
         {
             foreach (var property in boxes)
             {
-                switch (property.Item1)
+                switch (property.Key)
                 {
                     case "BOX":
                         {
-                            var box = SkinBOX.FromString(property.Item2);
+                            var box = SkinBOX.FromString(property.Value);
 
                             string name = box.Type;
                             if (ValidModelBoxTypes.Contains(name))
@@ -151,7 +151,7 @@ namespace PckStudio
 
                     case "OFFSET":
                         {
-                            string[] offset = ReplaceWhitespace(property.Item2, ",").TrimEnd('\n', '\r', ' ').Split(',');
+                            string[] offset = ReplaceWhitespace(property.Value, ",").TrimEnd('\n', '\r', ' ').Split(',');
                             if (offset.Length < 3) continue;
                             string name = offset[0];
                             string dimension = offset[1]; // "Y"
@@ -1099,7 +1099,7 @@ namespace PckStudio
             Bitmap bitmap1 = new Bitmap(displayBox.Width, displayBox.Height);
             foreach (var part in modelBoxes)
             {
-                boxes.Add(part.ToProperty());
+                boxes.Add("BOX", part);
             }
 
             Bitmap bitmap2 = new Bitmap(64, 64);

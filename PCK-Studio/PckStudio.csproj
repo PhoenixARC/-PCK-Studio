@@ -18,20 +18,20 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
-  <Target Name="GetGitHash" BeforeTargets="WriteGitInfo" Condition="'$(Configuration)' == 'Debug' AND '$(BuildHash)' == ''">
+  <Target Name="GetGitInfo" BeforeTargets="WriteGitInfo" Condition="'$(BuildHash)' == ''">
     <!-- write hash and branch to console.-->
-    <Exec Command="git -C $(ProjectDir) describe --always" ConsoleToMsBuild="true">
+    <Exec Condition="'$(Configuration)' == 'Debug'" Command="git -C $(ProjectDir) describe --always" ConsoleToMsBuild="true">
       <Output TaskParameter="ConsoleOutput" PropertyName="GitHash" />
     </Exec>
     <Exec Command="git -C $(ProjectDir) branch --show-current" ConsoleToMsBuild="true">
       <Output TaskParameter="ConsoleOutput" PropertyName="GitBranch" />
     </Exec>
     <PropertyGroup>
-      <BuildHash>$(GitHash)</BuildHash>
+      <BuildHash Condition="'$(Configuration)' == 'Debug'">$(GitHash)</BuildHash>
       <BuildBranch>$(GitBranch)</BuildBranch>
     </PropertyGroup>
   </Target>
-  <Target Name="WriteGitInfo" BeforeTargets="CoreCompile" Condition="'$(Configuration)' == 'Debug'">
+  <Target Name="WriteGitInfo" BeforeTargets="CoreCompile">
     <!-- names the obj/.../GitAssemblyInfo.cs file -->
     <PropertyGroup>
       <GitAssemblyInfoFile>$(IntermediateOutputPath)GitAssemblyInfo.cs</GitAssemblyInfoFile>
@@ -42,7 +42,7 @@
     </ItemGroup>
     <!-- defines the AssemblyMetadata attribute that will be written -->
     <ItemGroup>
-      <AssemblyAttributes Include="AssemblyMetadata">
+      <AssemblyAttributes Include="AssemblyMetadata" Condition="'$(Configuration)' == 'Debug'">
         <_Parameter1>GitHash</_Parameter1>
         <_Parameter2>$(BuildHash)</_Parameter2>
       </AssemblyAttributes>
@@ -167,6 +167,29 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\ToolboxItems\PictureBoxWithInterpolationMode.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\ToolboxItems\ToolStripRadioButtonMenuItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Utils\BinkaConverter.cs" />
+    <Compile Include="Extensions\ImageLayoutDirection.cs" />
+    <Compile Include="Extensions\ImageSection.cs" />
+    <Compile Include="Extensions\ListExtensions.cs" />
+    <Compile Include="Extensions\PckFileExtensions.cs" />
+    <Compile Include="Forms\Additional-Popups\NumericPrompt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\NumericPrompt.Designer.cs">
+      <DependentUpon>NumericPrompt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Utilities\AppSettingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Utilities\AppSettingsForm.Designer.cs">
+      <DependentUpon>AppSettingsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Internals\ApplicationBuildInfo.cs" />
     <Compile Include="Classes\API\PCKCenter\model\PCKCenterJSON.cs" />
     <Compile Include="Classes\API\PCKCenter\PCKCollections.cs" />
@@ -178,7 +201,7 @@
     <Compile Include="Extensions\GraphicsExtensions.cs" />
     <Compile Include="Classes\FileTypes\CSMBFile.cs" />
     <Compile Include="Classes\FileTypes\PckAudioFile.cs" />
-    <Compile Include="Classes\FileTypes\Binka.cs" />
+    <Compile Include="Classes\API\Miles\Binka.cs" />
     <Compile Include="Classes\IO\3DST\3DSTextureReader.cs" />
     <Compile Include="Classes\IO\3DST\3DSTextureWriter.cs" />
     <Compile Include="Classes\IO\CSMB\CSMBFileReader.cs" />
@@ -189,17 +212,15 @@
     <Compile Include="Classes\IO\Sounds\Sounds.cs" />
     <Compile Include="Classes\Misc\FTPClient.cs" />
     <Compile Include="Classes\Misc\FileCacher.cs" />
+    <Compile Include="Classes\Misc\OpenFolderDialog.cs" />
     <Compile Include="Classes\Models\DefaultModels\Steve64x64Model.cs" />
+    <Compile Include="Internals\ApplicationScope.cs" />
+    <Compile Include="Internals\SettingsManager.cs" />
     <Compile Include="Internals\SkinBOX.cs" />
-    <Compile Include="Classes\Utils\ARC\ARCUtil.cs" />
     <Compile Include="Extensions\ImageExtensions.cs" />
     <Compile Include="Internals\SkinANIM.cs" />
     <Compile Include="Classes\Models\DefaultModels\Steve64x32Model.cs" />
     <Compile Include="Classes\Models\DefaultModels\ModelBase.cs" />
-    <Compile Include="Classes\Models\DefaultModels\Texture.cs" />
-    <Compile Include="Classes\Models\DefaultModels\TextureSelector.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="Classes\Models\Backgrounds.cs" />
     <Compile Include="Classes\Models\BackgroundTypes.cs" />
     <Compile Include="Classes\Models\Box.cs" />
@@ -223,6 +244,18 @@
     <Compile Include="Classes\Networking\Network.cs" />
     <Compile Include="Classes\Misc\RichPresenceClient.cs" />
     <Compile Include="Classes\Networking\Update.cs" />
+    <Compile Include="Features\CemuPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Features\CemuPanel.Designer.cs">
+      <DependentUpon>CemuPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Features\WiiUPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Features\WiiUPanel.Designer.cs">
+      <DependentUpon>WiiUPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Classes\IO\TGA\TGAImage.cs" />
     <Compile Include="Classes\IO\TGA\TGADataTypeCode.cs" />
     <Compile Include="Classes\IO\TGA\TGAException.cs" />
@@ -250,23 +283,11 @@
     <Compile Include="Forms\Additional-Popups\CreateTexturePack.Designer.cs">
       <DependentUpon>CreateTexturePack.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Additional-Popups\MipMapPrompt.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Additional-Popups\MipMapPrompt.Designer.cs">
-      <DependentUpon>MipMapPrompt.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\Additional-Popups\AddFilePrompt.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\Additional-Popups\AddFilePrompt.Designer.cs">
       <DependentUpon>AddFilePrompt.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Additional-Popups\RenamePrompt.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Additional-Popups\RenamePrompt.Designer.cs">
-      <DependentUpon>RenamePrompt.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Additional-Popups\TextPrompt.cs">
       <SubType>Form</SubType>
@@ -274,8 +295,16 @@
     <Compile Include="Forms\Additional-Popups\TextPrompt.Designer.cs">
       <DependentUpon>TextPrompt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Additional-Popups\MultiTextPrompt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\MultiTextPrompt.Designer.cs">
+      <DependentUpon>MultiTextPrompt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Editor\Animation.cs" />
-    <Compile Include="Forms\Editor\AnimationPlayer.cs" />
+    <Compile Include="Forms\Editor\AnimationPictureBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Forms\Editor\MaterialsEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -324,11 +353,11 @@
     <Compile Include="Forms\Additional-Popups\ItemSelectionPopUp.Designer.cs">
       <DependentUpon>ItemSelectionPopUp.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Skins-And-Textures\addMeta.cs">
+    <Compile Include="Forms\Additional-Popups\AddPropertyPrompt.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Skins-And-Textures\addMeta.Designer.cs">
-      <DependentUpon>addMeta.cs</DependentUpon>
+    <Compile Include="Forms\Additional-Popups\AddPropertyPrompt.Designer.cs">
+      <DependentUpon>AddPropertyPrompt.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Skins-And-Textures\addNewSkin.cs">
       <SubType>Form</SubType>
@@ -360,12 +389,17 @@
     <Compile Include="Forms\Additional-Popups\InProgressPrompt.Designer.cs">
       <DependentUpon>InProgressPrompt.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Utilities\ModelsResources.cs" />
     <Compile Include="Forms\Utilities\MaterialResources.cs" />
     <Compile Include="Forms\Utilities\BehaviourResources.cs" />
     <Compile Include="Forms\Utilities\AnimationResources.cs" />
     <Compile Include="Forms\Editor\BoxEditor.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Features\PckManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Features\PckManager.Designer.cs">
+      <DependentUpon>PckManager.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Editor\BoxEditor.Designer.cs">
       <DependentUpon>BoxEditor.cs</DependentUpon>
@@ -412,25 +446,6 @@
     <Compile Include="Forms\Editor\AudioEditor.Designer.cs">
       <DependentUpon>AudioEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Utilities\installPS3.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Utilities\installPS3.Designer.cs">
-      <DependentUpon>installPS3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Utilities\installVita.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Utilities\installVita.Designer.cs">
-      <DependentUpon>installVita.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Utilities\installWiiU.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Utilities\installWiiU.Designer.cs">
-      <DependentUpon>installWiiU.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="Forms\Utilities\PCK Manager.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -467,9 +482,6 @@
     <Compile Include="Forms\Utilities\TextureConverterUtility.Designer.cs">
       <DependentUpon>TextureConverterUtility.cs</DependentUpon>
     </Compile>
-    <Compile Include="Classes\ToolboxItems\InterpolationPictureBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="PckNodeSorter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Forms\Additional-Popups\CreditsForm.cs">
@@ -480,6 +492,12 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Classes\IO\3DST\TextureCodec.cs" />
+    <EmbeddedResource Include="Features\CemuPanel.resx">
+      <DependentUpon>CemuPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Features\WiiUPanel.resx">
+      <DependentUpon>WiiUPanel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\EntityForms\AddEntry.resx">
       <DependentUpon>AddEntry.cs</DependentUpon>
     </EmbeddedResource>
@@ -490,20 +508,20 @@
       <DependentUpon>CreateTexturePack.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Additional-Popups\MipMapPrompt.resx">
-      <DependentUpon>MipMapPrompt.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\AddFilePrompt.resx">
       <DependentUpon>AddFilePrompt.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Additional-Popups\RenamePrompt.resx">
-      <DependentUpon>RenamePrompt.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Additional-Popups\NumericPrompt.resx">
+      <DependentUpon>NumericPrompt.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\TextPrompt.resx">
       <DependentUpon>TextPrompt.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Additional-Popups\MultiTextPrompt.resx">
+      <DependentUpon>MultiTextPrompt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Editor\MaterialsEditor.resx">
       <DependentUpon>MaterialsEditor.cs</DependentUpon>
@@ -536,11 +554,11 @@
     <EmbeddedResource Include="Forms\Additional-Popups\ItemSelectionPopUp.resx">
       <DependentUpon>ItemSelectionPopUp.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Skins-And-Textures\addMeta.ja.resx">
-      <DependentUpon>addMeta.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Additional-Popups\AddPropertyPrompt.ja.resx">
+      <DependentUpon>AddPropertyPrompt.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Skins-And-Textures\addMeta.resx">
-      <DependentUpon>addMeta.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Additional-Popups\AddPropertyPrompt.resx">
+      <DependentUpon>AddPropertyPrompt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Skins-And-Textures\addNewSkin.ja.resx">
       <DependentUpon>addNewSkin.cs</DependentUpon>
@@ -565,11 +583,18 @@
     <EmbeddedResource Include="Forms\Additional-Popups\InProgressPrompt.resx">
       <DependentUpon>InProgressPrompt.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Features\PckManager.resx">
+      <DependentUpon>PckManager.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Editor\BoxEditor.resx">
       <DependentUpon>BoxEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Editor\ANIMEditor.resx">
       <DependentUpon>ANIMEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Utilities\AppSettingsForm.resx">
+      <DependentUpon>AppSettingsForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.ja.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -598,18 +623,6 @@
       <DependentUpon>AudioEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\installPS3.resx">
-      <DependentUpon>installPS3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\installVita.resx">
-      <DependentUpon>installVita.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\installWiiU.ja.resx">
-      <DependentUpon>installWiiU.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\installWiiU.resx">
-      <DependentUpon>installWiiU.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Utilities\PCK Manager.ja.resx">
       <DependentUpon>PCK Manager.cs</DependentUpon>
     </EmbeddedResource>
@@ -630,6 +643,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Utilities\pckCenterOpen.resx">
       <DependentUpon>pckCenterOpen.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Utilities\Pref.ja.resx">
       <DependentUpon>Pref.cs</DependentUpon>
@@ -671,7 +685,6 @@
   <ItemGroup>
     <None Include="Resources\entityData.json" />
     <None Include="Resources\TexturePackIcon.png" />
-    <None Include="Resources\apps.zip" />
     <None Include="Resources\binka\binkawin.asi" />
     <None Include="Resources\fileTemplates\1.91_colours.col" />
     <None Include="Resources\fileTemplates\tu12colours.col" />
@@ -687,28 +700,18 @@
     <None Include="Resources\fileTemplates\tu54colours.col" />
     <None Include="Resources\fileTemplates\tu69colours.col" />
     <None Include="Resources\tileData.json" />
-    <None Include="Resources\Del.png" />
-    <None Include="Resources\ExportFile.png" />
-    <None Include="Resources\power3.png" />
-    <None Include="Resources\power.png" />
-    <None Include="Resources\youtube_PNG15.png" />
+    <None Include="Resources\external\Youtube.png" />
     <None Include="Resources\pckClosed.png" />
-    <None Include="Resources\pckClosed.bmp" />
-    <None Include="Resources\wii-u-games-tool.png" />
-    <None Include="Resources\turn-off %281%291.png" />
-    <None Include="Resources\discord.png" />
-    <None Include="Resources\external-content.duckduckgo.png" />
-    <None Include="Resources\clock.png" />
+    <None Include="Resources\external\Discord.png" />
+    <None Include="Resources\icons\clock.png" />
     <None Include="Resources\changeTile.png" />
     <None Include="Resources\items.png" />
-    <None Include="Resources\MROE.png" />
-    <None Include="Resources\sdDownload.png" />
-    <None Include="Resources\Replace.png" />
+    <None Include="Resources\HamburgerMenuIcon.png" />
     <None Include="Resources\pack.png" />
     <None Include="Resources\terrain.png" />
-    <None Include="Resources\xbox.png" />
-    <None Include="Resources\ps3.png" />
-    <None Include="Resources\wiiu.png" />
+    <None Include="Resources\external\Xbox.png" />
+    <None Include="Resources\external\PS3.png" />
+    <None Include="Resources\external\WiiU.png" />
     <None Include="Resources\Splash.png" />
     <None Include="Resources\pckOpen.png" />
     <None Include="Resources\pckDrop.png" />
@@ -732,8 +735,16 @@
     <None Include="Resources\iconImageList\ENTITY MATERIALS ICON.png" />
     <None Include="Resources\iconImageList\blank.png" />
     <None Include="Resources\entities.png" />
+    <Content Include="Resources\icons\file_delete.png" />
+    <Content Include="Resources\icons\file_empty.png" />
+    <None Include="Resources\icons\file_export.png" />
+    <None Include="Resources\icons\file_import.png" />
+    <Content Include="Resources\icons\file_new.png" />
+    <Content Include="Resources\icons\music.png" />
+    <None Include="Resources\icons\ranch.png" />
+    <Content Include="Resources\icons\Replace.png" />
+    <Content Include="Resources\icons\Save.png" />
     <Content Include="Resources\PCK-Studio_Logo.ico" />
-    <None Include="Resources\bg1.png" />
     <Content Include="Resources\NoImageFound.png" />
   </ItemGroup>
   <ItemGroup>
@@ -780,6 +791,7 @@
       <Name>SharpMss32</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -41,11 +41,7 @@ namespace PckStudio.Models
 
         private System.Drawing.Brush backgroundBrush = new System.Drawing.SolidBrush(System.Drawing.Color.SkyBlue);
 
-        private System.EventHandler SkinDowloaded;
-
         private System.ComponentModel.BackgroundWorker downloader = new System.ComponentModel.BackgroundWorker();
-
-        private System.Drawing.Image webSkin;
 
         private System.Drawing.Point mouseLastLocation;
 
@@ -62,8 +58,6 @@ namespace PckStudio.Models
         private System.Drawing.Image backgroundTexture;
 
         private System.Drawing.Image usernameImage;
-
-        private System.Drawing.Image versionImage;
 
         internal PckStudio.Models.Matrix3D GlobalTransformation = PckStudio.Models.Matrix3D.Identity;
 
