@@ -28,66 +28,72 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-            this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AnimationEditor));
-            this.frameTreeView = new System.Windows.Forms.TreeView();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.addFrameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.removeFrameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.TextureIcons = new System.Windows.Forms.ImageList(this.components);
-            this.menuStrip = new System.Windows.Forms.MenuStrip();
-            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.bulkAnimationSpeedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.importJavaAnimationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportJavaAnimationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.changeTileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.howToInterpolation = new System.Windows.Forms.ToolStripMenuItem();
-            this.editorControlsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.setBulkSpedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.javaAnimationSupportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.InterpolationCheckbox = new MetroFramework.Controls.MetroCheckBox();
-            this.AnimationStartStopBtn = new MetroFramework.Controls.MetroButton();
-            this.tileLabel = new MetroFramework.Controls.MetroLabel();
-            this.animationPictureBox = new PckStudio.Forms.Editor.AnimationPictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.importGifToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextMenuStrip1.SuspendLayout();
-            this.menuStrip.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.animationPictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.SuspendLayout();
-            // 
-            // frameTreeView
-            // 
-            this.frameTreeView.AllowDrop = true;
-            this.frameTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.components = new System.ComponentModel.Container();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AnimationEditor));
+			this.frameTreeView = new System.Windows.Forms.TreeView();
+			this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.addFrameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.removeFrameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.TextureIcons = new System.Windows.Forms.ImageList(this.components);
+			this.menuStrip = new System.Windows.Forms.MenuStrip();
+			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.saveToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.importAnimationTextureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.importJavaAnimationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.importGifToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.exportAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.exportJavaAnimationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.gifToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.bulkAnimationSpeedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.changeTileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.howToInterpolation = new System.Windows.Forms.ToolStripMenuItem();
+			this.editorControlsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.setBulkSpedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.javaAnimationSupportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.InterpolationCheckbox = new MetroFramework.Controls.MetroCheckBox();
+			this.AnimationStartStopBtn = new MetroFramework.Controls.MetroButton();
+			this.tileLabel = new MetroFramework.Controls.MetroLabel();
+			this.pictureBox1 = new System.Windows.Forms.PictureBox();
+			this.animationPictureBox = new PckStudio.Forms.Editor.AnimationPictureBox();
+			this.frameTimeandTicksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.contextMenuStrip1.SuspendLayout();
+			this.menuStrip.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.animationPictureBox)).BeginInit();
+			this.SuspendLayout();
+			// 
+			// frameTreeView
+			// 
+			this.frameTreeView.AllowDrop = true;
+			this.frameTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.frameTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.frameTreeView.ContextMenuStrip = this.contextMenuStrip1;
-            this.frameTreeView.ForeColor = System.Drawing.Color.White;
-            this.frameTreeView.ImageIndex = 0;
-            this.frameTreeView.ImageList = this.TextureIcons;
-            this.frameTreeView.Location = new System.Drawing.Point(20, 88);
-            this.frameTreeView.Margin = new System.Windows.Forms.Padding(0);
-            this.frameTreeView.Name = "frameTreeView";
-            this.frameTreeView.SelectedImageIndex = 0;
-            this.frameTreeView.ShowLines = false;
-            this.frameTreeView.ShowRootLines = false;
-            this.frameTreeView.Size = new System.Drawing.Size(134, 253);
-            this.frameTreeView.TabIndex = 15;
-            this.frameTreeView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.frameTreeView_ItemDrag);
-            this.frameTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.frameTreeView_AfterSelect);
-            this.frameTreeView.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_doubleClick);
-            this.frameTreeView.DragDrop += new System.Windows.Forms.DragEventHandler(this.frameTreeView_DragDrop);
-            this.frameTreeView.DragEnter += new System.Windows.Forms.DragEventHandler(this.frameTreeView_DragEnter);
-            this.frameTreeView.DragOver += new System.Windows.Forms.DragEventHandler(this.frameTreeView_DragOver);
-            // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.frameTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+			this.frameTreeView.ContextMenuStrip = this.contextMenuStrip1;
+			this.frameTreeView.ForeColor = System.Drawing.Color.White;
+			this.frameTreeView.ImageIndex = 0;
+			this.frameTreeView.ImageList = this.TextureIcons;
+			this.frameTreeView.Location = new System.Drawing.Point(20, 88);
+			this.frameTreeView.Margin = new System.Windows.Forms.Padding(0);
+			this.frameTreeView.Name = "frameTreeView";
+			this.frameTreeView.SelectedImageIndex = 0;
+			this.frameTreeView.ShowLines = false;
+			this.frameTreeView.ShowRootLines = false;
+			this.frameTreeView.Size = new System.Drawing.Size(134, 253);
+			this.frameTreeView.TabIndex = 15;
+			this.frameTreeView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.frameTreeView_ItemDrag);
+			this.frameTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.frameTreeView_AfterSelect);
+			this.frameTreeView.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_doubleClick);
+			this.frameTreeView.DragDrop += new System.Windows.Forms.DragEventHandler(this.frameTreeView_DragDrop);
+			this.frameTreeView.DragEnter += new System.Windows.Forms.DragEventHandler(this.frameTreeView_DragEnter);
+			this.frameTreeView.DragOver += new System.Windows.Forms.DragEventHandler(this.frameTreeView_DragOver);
+			// 
+			// contextMenuStrip1
+			// 
+			this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addFrameToolStripMenuItem,
             this.removeFrameToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
@@ -194,78 +200,90 @@
             this.editorControlsToolStripMenuItem,
             this.setBulkSpedToolStripMenuItem,
             this.javaAnimationSupportToolStripMenuItem});
-            this.helpToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.helpToolStripMenuItem.Text = "Help";
-            // 
-            // howToInterpolation
-            // 
-            this.howToInterpolation.Name = "howToInterpolation";
-            this.howToInterpolation.Size = new System.Drawing.Size(200, 22);
-            this.howToInterpolation.Text = "Interpolation";
-            this.howToInterpolation.Click += new System.EventHandler(this.howToInterpolation_Click);
-            // 
-            // editorControlsToolStripMenuItem
-            // 
-            this.editorControlsToolStripMenuItem.Name = "editorControlsToolStripMenuItem";
-            this.editorControlsToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
-            this.editorControlsToolStripMenuItem.Text = "Editor Controls";
-            this.editorControlsToolStripMenuItem.Click += new System.EventHandler(this.editorControlsToolStripMenuItem_Click);
-            // 
-            // setBulkSpedToolStripMenuItem
-            // 
-            this.setBulkSpedToolStripMenuItem.Name = "setBulkSpedToolStripMenuItem";
-            this.setBulkSpedToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
-            this.setBulkSpedToolStripMenuItem.Text = "Set Bulk Speed";
-            this.setBulkSpedToolStripMenuItem.Click += new System.EventHandler(this.setBulkSpeedToolStripMenuItem_Click);
-            // 
-            // javaAnimationSupportToolStripMenuItem
-            // 
-            this.javaAnimationSupportToolStripMenuItem.Name = "javaAnimationSupportToolStripMenuItem";
-            this.javaAnimationSupportToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
-            this.javaAnimationSupportToolStripMenuItem.Text = "Java Animation Support";
-            this.javaAnimationSupportToolStripMenuItem.Click += new System.EventHandler(this.javaAnimationSupportToolStripMenuItem_Click);
-            // 
-            // InterpolationCheckbox
-            // 
-            this.InterpolationCheckbox.AutoSize = true;
-            this.InterpolationCheckbox.Location = new System.Drawing.Point(161, 63);
-            this.InterpolationCheckbox.Name = "InterpolationCheckbox";
-            this.InterpolationCheckbox.Size = new System.Drawing.Size(129, 15);
-            this.InterpolationCheckbox.TabIndex = 17;
-            this.InterpolationCheckbox.Text = "Enable Interpolation";
-            this.InterpolationCheckbox.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.InterpolationCheckbox.UseSelectable = true;
-            this.InterpolationCheckbox.CheckedChanged += new System.EventHandler(this.InterpolationCheckbox_CheckedChanged);
-            // 
-            // AnimationStartStopBtn
-            // 
-            this.AnimationStartStopBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.AnimationStartStopBtn.Location = new System.Drawing.Point(157, 317);
-            this.AnimationStartStopBtn.Name = "AnimationStartStopBtn";
-            this.AnimationStartStopBtn.Size = new System.Drawing.Size(232, 24);
-            this.AnimationStartStopBtn.TabIndex = 18;
-            this.AnimationStartStopBtn.Text = "Play Animation";
-            this.AnimationStartStopBtn.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.AnimationStartStopBtn.UseSelectable = true;
-            this.AnimationStartStopBtn.Click += new System.EventHandler(this.AnimationStartStopBtn_Click);
-            // 
-            // tileLabel
-            // 
-            this.tileLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.tileLabel.AutoSize = true;
-            this.tileLabel.Location = new System.Drawing.Point(20, 341);
-            this.tileLabel.MinimumSize = new System.Drawing.Size(170, 19);
-            this.tileLabel.Name = "tileLabel";
-            this.tileLabel.Size = new System.Drawing.Size(57, 19);
-            this.tileLabel.TabIndex = 20;
-            this.tileLabel.Text = "tileLabel";
-            this.tileLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
-            // 
-            // animationPictureBox
-            // 
-            this.animationPictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.helpToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+			this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+			this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+			this.helpToolStripMenuItem.Text = "Help";
+			// 
+			// howToInterpolation
+			// 
+			this.howToInterpolation.Name = "howToInterpolation";
+			this.howToInterpolation.Size = new System.Drawing.Size(200, 22);
+			this.howToInterpolation.Text = "Interpolation";
+			this.howToInterpolation.Click += new System.EventHandler(this.howToInterpolation_Click);
+			// 
+			// editorControlsToolStripMenuItem
+			// 
+			this.editorControlsToolStripMenuItem.Name = "editorControlsToolStripMenuItem";
+			this.editorControlsToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+			this.editorControlsToolStripMenuItem.Text = "Editor Controls";
+			this.editorControlsToolStripMenuItem.Click += new System.EventHandler(this.editorControlsToolStripMenuItem_Click);
+			// 
+			// setBulkSpedToolStripMenuItem
+			// 
+			this.setBulkSpedToolStripMenuItem.Name = "setBulkSpedToolStripMenuItem";
+			this.setBulkSpedToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+			this.setBulkSpedToolStripMenuItem.Text = "Set Bulk Speed";
+			this.setBulkSpedToolStripMenuItem.Click += new System.EventHandler(this.setBulkSpeedToolStripMenuItem_Click);
+			// 
+			// javaAnimationSupportToolStripMenuItem
+			// 
+			this.javaAnimationSupportToolStripMenuItem.Name = "javaAnimationSupportToolStripMenuItem";
+			this.javaAnimationSupportToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+			this.javaAnimationSupportToolStripMenuItem.Text = "Java Animation Support";
+			this.javaAnimationSupportToolStripMenuItem.Click += new System.EventHandler(this.javaAnimationSupportToolStripMenuItem_Click);
+			// 
+			// InterpolationCheckbox
+			// 
+			this.InterpolationCheckbox.AutoSize = true;
+			this.InterpolationCheckbox.Location = new System.Drawing.Point(161, 63);
+			this.InterpolationCheckbox.Name = "InterpolationCheckbox";
+			this.InterpolationCheckbox.Size = new System.Drawing.Size(129, 15);
+			this.InterpolationCheckbox.TabIndex = 17;
+			this.InterpolationCheckbox.Text = "Enable Interpolation";
+			this.InterpolationCheckbox.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.InterpolationCheckbox.UseSelectable = true;
+			this.InterpolationCheckbox.CheckedChanged += new System.EventHandler(this.InterpolationCheckbox_CheckedChanged);
+			// 
+			// AnimationStartStopBtn
+			// 
+			this.AnimationStartStopBtn.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.AnimationStartStopBtn.Location = new System.Drawing.Point(157, 317);
+			this.AnimationStartStopBtn.Name = "AnimationStartStopBtn";
+			this.AnimationStartStopBtn.Size = new System.Drawing.Size(232, 24);
+			this.AnimationStartStopBtn.Style = MetroFramework.MetroColorStyle.White;
+			this.AnimationStartStopBtn.TabIndex = 18;
+			this.AnimationStartStopBtn.Text = "Play Animation";
+			this.AnimationStartStopBtn.Theme = MetroFramework.MetroThemeStyle.Dark;
+			this.AnimationStartStopBtn.UseSelectable = true;
+			this.AnimationStartStopBtn.Click += new System.EventHandler(this.AnimationStartStopBtn_Click);
+			// 
+			// tileLabel
+			// 
+			this.tileLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.tileLabel.AutoSize = true;
+			this.tileLabel.Location = new System.Drawing.Point(20, 341);
+			this.tileLabel.MinimumSize = new System.Drawing.Size(170, 19);
+			this.tileLabel.Name = "tileLabel";
+			this.tileLabel.Size = new System.Drawing.Size(57, 19);
+			this.tileLabel.TabIndex = 20;
+			this.tileLabel.Text = "tileLabel";
+			this.tileLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
+			// 
+			// pictureBox1
+			// 
+			this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.pictureBox1.Location = new System.Drawing.Point(154, 60);
+			this.pictureBox1.Name = "pictureBox1";
+			this.pictureBox1.Size = new System.Drawing.Size(238, 24);
+			this.pictureBox1.TabIndex = 21;
+			this.pictureBox1.TabStop = false;
+			// 
+			// animationPictureBox
+			// 
+			this.animationPictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.animationPictureBox.Location = new System.Drawing.Point(157, 88);
@@ -337,17 +355,23 @@
 		private System.Windows.Forms.ToolStripMenuItem removeFrameToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem bulkAnimationSpeedToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem importJavaAnimationToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem changeTileToolStripMenuItem;
 		private MetroFramework.Controls.MetroLabel tileLabel;
-		private System.Windows.Forms.ToolStripMenuItem exportJavaAnimationToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem howToInterpolation;
 		private System.Windows.Forms.ToolStripMenuItem editorControlsToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem setBulkSpedToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem javaAnimationSupportToolStripMenuItem;
 		private System.Windows.Forms.ImageList TextureIcons;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.ToolStripMenuItem importToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem importJavaAnimationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem importGifToolStripMenuItem;
-    }
+        private System.Windows.Forms.ToolStripMenuItem exportAsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exportJavaAnimationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem importAnimationTextureToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem gifToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem frameTimeandTicksToolStripMenuItem;
+	}
 }

@@ -1,4 +1,4 @@
-﻿namespace PckStudio.Forms.Additional_Popups
+﻿namespace PckStudio
 {
     partial class TextPrompt
     {
@@ -29,130 +29,121 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TextPrompt));
-            this.PromptTextBox = new MetroFramework.Controls.MetroTextBox();
+            this.InputTextBox = new MetroFramework.Controls.MetroTextBox();
             this.CancelButton = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
-            this.SaveButton = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
+            this.OKButton = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
             this.SuspendLayout();
             // 
-            // PromptTextBox
+            // TextLabel
             // 
+            resources.ApplyResources(this.TextLabel, "TextLabel");
+            this.TextLabel.ForeColor = System.Drawing.Color.White;
+            this.TextLabel.Name = "TextLabel";
             // 
+            // OKButton
             // 
+            resources.ApplyResources(this.OKButton, "OKButton");
+            this.OKButton.ForeColor = System.Drawing.Color.White;
+            this.OKButton.Name = "OKButton";
+            this.OKButton.UseVisualStyleBackColor = true;
+            this.OKButton.Click += new System.EventHandler(this.OKBtn_Click);
             // 
-            this.PromptTextBox.CustomButton.Image = null;
-            this.PromptTextBox.CustomButton.Location = new System.Drawing.Point(61, 1);
-            this.PromptTextBox.CustomButton.Name = "";
-            this.PromptTextBox.CustomButton.Size = new System.Drawing.Size(283, 283);
-            this.PromptTextBox.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-            this.PromptTextBox.CustomButton.TabIndex = 1;
-            this.PromptTextBox.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.PromptTextBox.CustomButton.UseSelectable = true;
-            this.PromptTextBox.CustomButton.Visible = false;
-            this.PromptTextBox.Lines = new string[0];
-            this.PromptTextBox.Location = new System.Drawing.Point(7, 9);
-            this.PromptTextBox.MaxLength = 32767;
-            this.PromptTextBox.Multiline = true;
-            this.PromptTextBox.Name = "PromptTextBox";
-            this.PromptTextBox.PasswordChar = '\0';
-            this.PromptTextBox.PromptText = "Paste Multi-line text here...";
-            this.PromptTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.PromptTextBox.SelectedText = "";
-            this.PromptTextBox.SelectionLength = 0;
-            this.PromptTextBox.SelectionStart = 0;
-            this.PromptTextBox.ShortcutsEnabled = true;
-            this.PromptTextBox.ShowClearButton = true;
-            this.PromptTextBox.Size = new System.Drawing.Size(345, 285);
-            this.PromptTextBox.Style = MetroFramework.MetroColorStyle.Black;
-            this.PromptTextBox.TabIndex = 0;
-            this.PromptTextBox.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.PromptTextBox.UseSelectable = true;
-            this.PromptTextBox.WaterMark = "Paste Multi-line text here...";
-            this.PromptTextBox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-            this.PromptTextBox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
-            // 
-            // CancelButton
-            // 
-            this.CancelButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.CancelButton.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.CancelButton.BorderRadius = 10;
-            this.CancelButton.BorderSize = 1;
-            this.CancelButton.ClickedColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.CancelButton.FlatAppearance.BorderSize = 0;
-            this.CancelButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.CancelButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(36)))), ((int)(((byte)(38)))));
-            this.CancelButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.CancelButton.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.CancelButton.ForeColor = System.Drawing.Color.White;
-            this.CancelButton.GradientColorPrimary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
-            this.CancelButton.GradientColorSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
-            this.CancelButton.HoverOverColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(36)))), ((int)(((byte)(38)))));
-            this.CancelButton.Image = ((System.Drawing.Image)(resources.GetObject("CancelButton.Image")));
-            this.CancelButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.CancelButton.Location = new System.Drawing.Point(182, 300);
-            this.CancelButton.Name = "CancelButton";
-            this.CancelButton.Size = new System.Drawing.Size(120, 40);
-            this.CancelButton.TabIndex = 22;
-            this.CancelButton.Text = "Cancel";
-            this.CancelButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.CancelButton.TextColor = System.Drawing.Color.White;
-            this.CancelButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.CancelButton.UseVisualStyleBackColor = false;
-            this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
+            this.InputTextBox.CustomButton.Image = null;
+            this.InputTextBox.CustomButton.Location = new System.Drawing.Point(61, 1);
+            this.InputTextBox.CustomButton.Name = "";
+            this.InputTextBox.CustomButton.Size = new System.Drawing.Size(283, 283);
+            this.InputTextBox.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.InputTextBox.CustomButton.TabIndex = 1;
+            this.InputTextBox.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.InputTextBox.CustomButton.UseSelectable = true;
+            this.InputTextBox.CustomButton.Visible = false;
+            this.InputTextBox.Lines = new string[0];
+            this.InputTextBox.Location = new System.Drawing.Point(7, 9);
+            this.InputTextBox.MaxLength = 32767;
+            this.InputTextBox.Multiline = true;
+            this.InputTextBox.Name = "PromptTextBox";
+            this.InputTextBox.PasswordChar = '\0';
+            this.InputTextBox.PromptText = "Paste Multi-line text here...";
+            this.InputTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.InputTextBox.SelectedText = "";
+            this.InputTextBox.SelectionLength = 0;
+            this.InputTextBox.SelectionStart = 0;
+            this.InputTextBox.ShortcutsEnabled = true;
+            this.InputTextBox.ShowClearButton = true;
+            this.InputTextBox.Size = new System.Drawing.Size(345, 285);
+            this.InputTextBox.Style = MetroFramework.MetroColorStyle.Black;
+            this.InputTextBox.TabIndex = 0;
+            this.InputTextBox.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.InputTextBox.UseSelectable = true;
+            this.InputTextBox.WaterMark = "Paste Multi-line text here...";
+            this.InputTextBox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.InputTextBox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
             // 
             // SaveButton
             // 
-            this.SaveButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.SaveButton.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.SaveButton.BorderRadius = 10;
-            this.SaveButton.BorderSize = 1;
-            this.SaveButton.ClickedColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.SaveButton.FlatAppearance.BorderSize = 0;
-            this.SaveButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.SaveButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(250)))), ((int)(((byte)(165)))));
-            this.SaveButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.SaveButton.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.SaveButton.ForeColor = System.Drawing.Color.White;
-            this.SaveButton.GradientColorPrimary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
-            this.SaveButton.GradientColorSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
-            this.SaveButton.HoverOverColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(250)))), ((int)(((byte)(165)))));
-            this.SaveButton.Image = ((System.Drawing.Image)(resources.GetObject("SaveButton.Image")));
-            this.SaveButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.SaveButton.Location = new System.Drawing.Point(56, 300);
-            this.SaveButton.Name = "SaveButton";
-            this.SaveButton.Size = new System.Drawing.Size(120, 40);
-            this.SaveButton.TabIndex = 21;
-            this.SaveButton.Text = "Save";
-            this.SaveButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.SaveButton.TextColor = System.Drawing.Color.White;
-            this.SaveButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.SaveButton.UseVisualStyleBackColor = false;
-            this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
+            this.OKButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.OKButton.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.OKButton.BorderRadius = 10;
+            this.OKButton.BorderSize = 1;
+            this.OKButton.ClickedColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.OKButton.FlatAppearance.BorderSize = 0;
+            this.OKButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.OKButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(250)))), ((int)(((byte)(165)))));
+            this.OKButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.OKButton.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.OKButton.ForeColor = System.Drawing.Color.White;
+            this.OKButton.GradientColorPrimary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.OKButton.GradientColorSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.OKButton.HoverOverColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(250)))), ((int)(((byte)(165)))));
+            this.OKButton.Image = ((System.Drawing.Image)(resources.GetObject("SaveButton.Image")));
+            this.OKButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.OKButton.Location = new System.Drawing.Point(56, 300);
+            this.OKButton.Name = "SaveButton";
+            this.OKButton.Size = new System.Drawing.Size(120, 40);
+            this.OKButton.TabIndex = 21;
+            this.OKButton.Text = "Save";
+            this.OKButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.OKButton.TextColor = System.Drawing.Color.White;
+            this.OKButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.OKButton.UseVisualStyleBackColor = false;
+            this.OKButton.Click += new System.EventHandler(this.OKBtn_Click);
+            // 
+            // contextLabel
+            // 
+            resources.ApplyResources(this.contextLabel, "contextLabel");
+            this.contextLabel.FontSize = MetroFramework.MetroLabelSize.Small;
+            this.contextLabel.Name = "contextLabel";
+            this.contextLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.contextLabel.WrapToLine = true;
             // 
             // TextPrompt
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AcceptButton = this.OKButton;
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.ClientSize = new System.Drawing.Size(358, 348);
-            this.Controls.Add(this.CancelButton);
-            this.Controls.Add(this.SaveButton);
-            this.Controls.Add(this.PromptTextBox);
+            this.Controls.Add(this.contextLabel);
+            this.Controls.Add(this.OKButton);
+            this.Controls.Add(this.InputTextBox);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.ForeColor = System.Drawing.Color.White;
             this.Location = new System.Drawing.Point(0, 0);
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(270, 335);
             this.Name = "TextPrompt";
             this.Padding = new System.Windows.Forms.Padding(20, 60, 20, 40);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Load += new System.EventHandler(this.RenamePrompt_Load);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
-        private MetroFramework.Controls.MetroTextBox PromptTextBox;
-        private CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton CancelButton;
-        private CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton SaveButton;
+        private MetroFramework.Controls.MetroTextBox InputTextBox;
+        private CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton OKButton;
+        private System.Windows.Forms.Label TextLabel;
+        private MetroFramework.Controls.MetroLabel contextLabel;
     }
 }

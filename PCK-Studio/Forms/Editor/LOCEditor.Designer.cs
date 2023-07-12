@@ -198,6 +198,7 @@
             this.Controls.Add(this.locSort);
             this.ForeColor = System.Drawing.Color.White;
             this.Name = "LOCEditor";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LOCEditor_FormClosing);
             this.Load += new System.EventHandler(this.LOCEditor_Load);
             this.Resize += new System.EventHandler(this.LOCEditor_Resize);
             this.contextMenuStrip1.ResumeLayout(false);

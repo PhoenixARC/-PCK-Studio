@@ -217,8 +217,7 @@ namespace PckStudio
 
         private void CreateButton_Click(object sender, EventArgs e)
         {
-            int _skinId = -1;
-            if (!int.TryParse(textSkinID.Text, out _skinId))
+            if (!int.TryParse(textSkinID.Text, out int _skinId))
             {
                 MessageBox.Show("The Skin ID Must be a Unique 8 Digit Number Thats Not Already in Use", "Invalid Skin ID", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -227,24 +226,24 @@ namespace PckStudio
             skin.Filename = $"dlcskin{skinId}.png";
             string skinDisplayNameLocKey = $"IDS_dlcskin{skinId}_DISPLAYNAME";
             currentLoc.AddLocKey(skinDisplayNameLocKey, textSkinName.Text);
-            skin.Properties.Add(("DISPLAYNAME", textSkinName.Text));
-            skin.Properties.Add(("DISPLAYNAMEID", skinDisplayNameLocKey));
+            skin.Properties.Add("DISPLAYNAME", textSkinName.Text);
+            skin.Properties.Add("DISPLAYNAMEID", skinDisplayNameLocKey);
             if (!string.IsNullOrEmpty(textThemeName.Text))
             {
-                skin.Properties.Add(("THEMENAME", textThemeName.Text));
-                skin.Properties.Add(("THEMENAMEID", $"IDS_dlcskin{skinId}_THEMENAME"));
+                skin.Properties.Add("THEMENAME", textThemeName.Text);
+                skin.Properties.Add("THEMENAMEID", $"IDS_dlcskin{skinId}_THEMENAME");
                 currentLoc.AddLocKey($"IDS_dlcskin{skinId}_THEMENAME", textThemeName.Text);
             }
-            skin.Properties.Add(("ANIM", anim.ToString()));
-            skin.Properties.Add(("GAME_FLAGS", "0x18"));
-            skin.Properties.Add(("FREE", "1"));
+            skin.Properties.Add("ANIM", anim);
+            skin.Properties.Add("GAME_FLAGS", "0x18");
+            skin.Properties.Add("FREE", "1");
 
             if (HasCape)
             {
                 try
                 {
                     cape.Filename = $"dlccape{skinId}.png";
-                    skin.Properties.Add(("CAPEPATH", cape.Filename));
+                    skin.Properties.Add("CAPEPATH", cape.Filename);
                 }
                 catch (Exception)
                 {

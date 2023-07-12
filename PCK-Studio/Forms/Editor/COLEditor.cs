@@ -9,6 +9,7 @@ using OMI.Formats.Color;
 using OMI.Formats.Pck;
 using OMI.Workers.Color;
 using PckStudio.ToolboxItems;
+using PckStudio.Properties;
 
 namespace PckStudio.Forms.Editor
 {
@@ -54,7 +55,10 @@ namespace PckStudio.Forms.Editor
         public COLEditor(PckFile.FileData file)
 		{
 			InitializeComponent();
-			_file = file;
+
+			saveToolStripMenuItem1.Visible = !Settings.Default.AutoSaveChanges;
+
+            _file = file;
 
 			using(var stream = new MemoryStream(file.Data))
 			{

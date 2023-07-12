@@ -36,8 +36,8 @@
             this.metroTabControl1 = new MetroFramework.Controls.MetroTabControl();
             this.Blocks = new System.Windows.Forms.TabPage();
             this.Items = new System.Windows.Forms.TabPage();
-            this.SaveButton = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
-            this.CancelButton = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
+            this.acceptBtn = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
+            this.CancelBtn = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
             this.metroTabControl1.SuspendLayout();
             this.Blocks.SuspendLayout();
             this.Items.SuspendLayout();
@@ -147,61 +147,61 @@
             // 
             // SaveButton
             // 
-            this.SaveButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.SaveButton.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.SaveButton.BorderRadius = 10;
-            this.SaveButton.BorderSize = 1;
-            this.SaveButton.ClickedColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.SaveButton.FlatAppearance.BorderSize = 0;
-            this.SaveButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.SaveButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(250)))), ((int)(((byte)(165)))));
-            this.SaveButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.SaveButton.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.SaveButton.ForeColor = System.Drawing.Color.White;
-            this.SaveButton.GradientColorPrimary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
-            this.SaveButton.GradientColorSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
-            this.SaveButton.HoverOverColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(250)))), ((int)(((byte)(165)))));
-            this.SaveButton.Image = ((System.Drawing.Image)(resources.GetObject("SaveButton.Image")));
-            this.SaveButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.SaveButton.Location = new System.Drawing.Point(46, 198);
-            this.SaveButton.Name = "SaveButton";
-            this.SaveButton.Size = new System.Drawing.Size(120, 40);
-            this.SaveButton.TabIndex = 19;
-            this.SaveButton.Text = "Save";
-            this.SaveButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.SaveButton.TextColor = System.Drawing.Color.White;
-            this.SaveButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.SaveButton.UseVisualStyleBackColor = false;
-            this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
+            this.acceptBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.acceptBtn.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.acceptBtn.BorderRadius = 10;
+            this.acceptBtn.BorderSize = 1;
+            this.acceptBtn.ClickedColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.acceptBtn.FlatAppearance.BorderSize = 0;
+            this.acceptBtn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.acceptBtn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(250)))), ((int)(((byte)(165)))));
+            this.acceptBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.acceptBtn.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.acceptBtn.ForeColor = System.Drawing.Color.White;
+            this.acceptBtn.GradientColorPrimary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.acceptBtn.GradientColorSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.acceptBtn.HoverOverColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(250)))), ((int)(((byte)(165)))));
+            this.acceptBtn.Image = ((System.Drawing.Image)(resources.GetObject("SaveButton.Image")));
+            this.acceptBtn.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.acceptBtn.Location = new System.Drawing.Point(46, 198);
+            this.acceptBtn.Name = "SaveButton";
+            this.acceptBtn.Size = new System.Drawing.Size(120, 40);
+            this.acceptBtn.TabIndex = 19;
+            this.acceptBtn.Text = "Save";
+            this.acceptBtn.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.acceptBtn.TextColor = System.Drawing.Color.White;
+            this.acceptBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.acceptBtn.UseVisualStyleBackColor = false;
+            this.acceptBtn.Click += new System.EventHandler(this.AcceptBtn_Click);
             // 
             // CancelButton
             // 
-            this.CancelButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.CancelButton.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.CancelButton.BorderRadius = 10;
-            this.CancelButton.BorderSize = 1;
-            this.CancelButton.ClickedColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.CancelButton.FlatAppearance.BorderSize = 0;
-            this.CancelButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.CancelButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(36)))), ((int)(((byte)(38)))));
-            this.CancelButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.CancelButton.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.CancelButton.ForeColor = System.Drawing.Color.White;
-            this.CancelButton.GradientColorPrimary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
-            this.CancelButton.GradientColorSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
-            this.CancelButton.HoverOverColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(36)))), ((int)(((byte)(38)))));
-            this.CancelButton.Image = ((System.Drawing.Image)(resources.GetObject("CancelButton.Image")));
-            this.CancelButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.CancelButton.Location = new System.Drawing.Point(172, 198);
-            this.CancelButton.Name = "CancelButton";
-            this.CancelButton.Size = new System.Drawing.Size(120, 40);
-            this.CancelButton.TabIndex = 20;
-            this.CancelButton.Text = "Cancel";
-            this.CancelButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.CancelButton.TextColor = System.Drawing.Color.White;
-            this.CancelButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.CancelButton.UseVisualStyleBackColor = false;
-            this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
+            this.CancelBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.CancelBtn.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.CancelBtn.BorderRadius = 10;
+            this.CancelBtn.BorderSize = 1;
+            this.CancelBtn.ClickedColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.CancelBtn.FlatAppearance.BorderSize = 0;
+            this.CancelBtn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.CancelBtn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(36)))), ((int)(((byte)(38)))));
+            this.CancelBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.CancelBtn.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.CancelBtn.ForeColor = System.Drawing.Color.White;
+            this.CancelBtn.GradientColorPrimary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.CancelBtn.GradientColorSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.CancelBtn.HoverOverColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(36)))), ((int)(((byte)(38)))));
+            this.CancelBtn.Image = ((System.Drawing.Image)(resources.GetObject("CancelButton.Image")));
+            this.CancelBtn.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.CancelBtn.Location = new System.Drawing.Point(172, 198);
+            this.CancelBtn.Name = "CancelButton";
+            this.CancelBtn.Size = new System.Drawing.Size(120, 40);
+            this.CancelBtn.TabIndex = 20;
+            this.CancelBtn.Text = "Cancel";
+            this.CancelBtn.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.CancelBtn.TextColor = System.Drawing.Color.White;
+            this.CancelBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.CancelBtn.UseVisualStyleBackColor = false;
+            this.CancelBtn.Click += new System.EventHandler(this.CancelBtn_Click);
             // 
             // ChangeTile
             // 
@@ -210,8 +210,8 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.ClientSize = new System.Drawing.Size(338, 246);
             this.ControlBox = false;
-            this.Controls.Add(this.CancelButton);
-            this.Controls.Add(this.SaveButton);
+            this.Controls.Add(this.CancelBtn);
+            this.Controls.Add(this.acceptBtn);
             this.Controls.Add(this.metroTextBox1);
             this.Controls.Add(this.metroLabel2);
             this.Controls.Add(this.metroTabControl1);
@@ -222,7 +222,6 @@
             this.MinimizeBox = false;
             this.Name = "ChangeTile";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Load += new System.EventHandler(this.ChangeTile_Load);
             this.metroTabControl1.ResumeLayout(false);
             this.Blocks.ResumeLayout(false);
             this.Items.ResumeLayout(false);
@@ -244,7 +243,7 @@
 		private MetroFramework.Controls.MetroTabControl metroTabControl1;
 		private System.Windows.Forms.TabPage Blocks;
 		private System.Windows.Forms.TabPage Items;
-        private CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton SaveButton;
-        private CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton CancelButton;
+        private CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton acceptBtn;
+        private CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton CancelBtn;
     }
 }

@@ -8,7 +8,7 @@ namespace PckStudio.Forms.Additional_Popups
 	{
 		public string SelectedItem => DialogResult == DialogResult.OK ? ComboBox.Text : string.Empty;
 
-        public ItemSelectionPopUp(string[] items)
+        public ItemSelectionPopUp(params string[] items)
 		{
 			InitializeComponent();
 			ComboBox.Items.AddRange(items);

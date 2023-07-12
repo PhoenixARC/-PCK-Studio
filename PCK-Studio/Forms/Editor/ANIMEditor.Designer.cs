@@ -343,6 +343,7 @@
             // rightLeggingCheckBox
             // 
             this.rightLeggingCheckBox.AutoSize = true;
+            this.rightLeggingCheckBox.Enabled = false;
             this.rightLeggingCheckBox.FontSize = MetroFramework.MetroCheckBoxSize.Medium;
             this.rightLeggingCheckBox.Location = new System.Drawing.Point(6, 174);
             this.rightLeggingCheckBox.Name = "rightLeggingCheckBox";
@@ -356,6 +357,7 @@
             // helmetCheckBox
             // 
             this.helmetCheckBox.AutoSize = true;
+            this.helmetCheckBox.Enabled = false;
             this.helmetCheckBox.FontSize = MetroFramework.MetroCheckBoxSize.Medium;
             this.helmetCheckBox.Location = new System.Drawing.Point(6, 19);
             this.helmetCheckBox.Name = "helmetCheckBox";
@@ -369,6 +371,7 @@
             // leftLeggingCheckBox
             // 
             this.leftLeggingCheckBox.AutoSize = true;
+            this.leftLeggingCheckBox.Enabled = false;
             this.leftLeggingCheckBox.FontSize = MetroFramework.MetroCheckBoxSize.Medium;
             this.leftLeggingCheckBox.Location = new System.Drawing.Point(6, 143);
             this.leftLeggingCheckBox.Name = "leftLeggingCheckBox";
@@ -382,6 +385,7 @@
             // rightArmorCheckBox
             // 
             this.rightArmorCheckBox.AutoSize = true;
+            this.rightArmorCheckBox.Enabled = false;
             this.rightArmorCheckBox.FontSize = MetroFramework.MetroCheckBoxSize.Medium;
             this.rightArmorCheckBox.Location = new System.Drawing.Point(6, 112);
             this.rightArmorCheckBox.Name = "rightArmorCheckBox";
@@ -395,6 +399,7 @@
             // leftArmorCheckBox
             // 
             this.leftArmorCheckBox.AutoSize = true;
+            this.leftArmorCheckBox.Enabled = false;
             this.leftArmorCheckBox.FontSize = MetroFramework.MetroCheckBoxSize.Medium;
             this.leftArmorCheckBox.Location = new System.Drawing.Point(6, 81);
             this.leftArmorCheckBox.Name = "leftArmorCheckBox";
@@ -408,6 +413,7 @@
             // chestplateCheckBox
             // 
             this.chestplateCheckBox.AutoSize = true;
+            this.chestplateCheckBox.Enabled = false;
             this.chestplateCheckBox.FontSize = MetroFramework.MetroCheckBoxSize.Medium;
             this.chestplateCheckBox.Location = new System.Drawing.Point(6, 50);
             this.chestplateCheckBox.Name = "chestplateCheckBox";
@@ -724,6 +730,7 @@
             this.MinimumSize = new System.Drawing.Size(630, 554);
             this.Name = "ANIMEditor";
             this.Text = "ANIM Editor";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ANIMEditor_FormClosing);
             this.effectsGroup.ResumeLayout(false);
             this.effectsGroup.PerformLayout();
             this.effectsGroup2.ResumeLayout(false);

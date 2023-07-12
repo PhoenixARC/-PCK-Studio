@@ -76,7 +76,7 @@
             this.supportedPlatformComboBox.TabIndex = 0;
             this.supportedPlatformComboBox.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.supportedPlatformComboBox.UseSelectable = true;
-            this.supportedPlatformComboBox.SelectedIndexChanged += new System.EventHandler(this.supportedPlatformComboBox_SelectedIndexChanged);
+            this.supportedPlatformComboBox.SelectionChangeCommitted += new System.EventHandler(this.supportedPlatformComboBox_SelectionChangeCommitted);
             // 
             // mainPanel
             // 

@@ -5,6 +5,8 @@ using System.Linq;
 using System.Windows.Forms;
 using PckStudio.Extensions;
 using PckStudio.Classes.Misc;
+using System.Xml.Serialization;
+using System.Diagnostics;
 
 namespace PckStudio.Features
 {
@@ -15,6 +17,10 @@ namespace PckStudio.Features
     /// </summary>
     public partial class CemuPanel : UserControl
     {
+        private const string TitleId_EUR = "101d7500";
+        private const string TitleId_USA = "101d9d00";
+        private const string TitleId_JPN = "101dbe00";
+
         public CemuPanel()
         {
             InitializeComponent();
@@ -41,12 +47,21 @@ namespace PckStudio.Features
         private bool TryApplyCemuConfig(string settingsPath)
         {
             string cemuPath = Path.Combine(Path.GetDirectoryName(settingsPath), "Cemu.exe");
-            if (File.Exists(cemuPath))
+            if (File.Exists(settingsPath) && File.Exists(cemuPath))
             {
-                var xml = new XmlDocument();
-                xml.Load(settingsPath);
-                GameDirectoryTextBox.Text = xml.SelectSingleNode("content").SelectSingleNode("mlc_path").InnerText;
-                BrowseDirectoryBtn.Enabled = false;
+                try
+                {
+                    var xml = new XmlDocument();
+                    xml.Load(settingsPath);
+                    GameDirectoryTextBox.Text = xml.SelectSingleNode("content").SelectSingleNode("mlc_path").InnerText;
+                    GameDirectoryTextBox.ReadOnly = true;
+                    BrowseDirectoryBtn.Enabled = false;
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex, category: $"{nameof(CemuPanel)}:{nameof(TryApplyCemuConfig)}");
+                    return false;
+                }
             }
             return false;
         }
@@ -60,15 +75,21 @@ namespace PckStudio.Features
                 try
                 {
                     var xml = new XmlDocument();
-                    xml.Load(filepath);
+                    using (var reader = new StreamReader(filepath))
+                    {
+                        reader.ReadLine();
+                        xml.Load(reader);
+                    }
                     var configNode = xml.SelectSingleNode("config");
                     var mlcpathNode = configNode.SelectSingleNode("MlcPath");
                     GameDirectoryTextBox.Text = mlcpathNode.InnerText;
+                    GameDirectoryTextBox.ReadOnly = true;
                     BrowseDirectoryBtn.Enabled = false;
                     return true;
                 }
-                catch
+                catch (Exception ex)
                 {
+                    Debug.WriteLine(ex, category: $"{nameof(CemuPanel)}:{nameof(TryApplyPermanentCemuConfig)}");
                     return false;
                 }
             }
@@ -79,23 +100,28 @@ namespace PckStudio.Features
         {
             if (radioButtonEur.Checked)
             {
-                return "101d7500";
+                return TitleId_EUR;
             }
             if (radioButtonUs.Checked)
             {
-                return "101d9d00";
+                return TitleId_USA;
             }
             if (radioButtonJap.Checked)
             {
-                return "101dbe00";
+                return TitleId_JPN;
             }
             throw new Exception("how did you get here ?");
+        }
+
+        private string GetGameContentPath(string region)
+        {
+            return $"{GameDirectoryTextBox.Text}/usr/title/0005000e/{region}/content";
         }
 
         private string GetGameContentPath()
         {
             string region = GetSelectedRegionTitleId();
-            return $"{GameDirectoryTextBox.Text}/usr/title/0005000e/{region}/content";
+            return GetGameContentPath(region);
         }
 
         private string GetContentSubDirectory(params string[] subpaths)
@@ -225,9 +251,9 @@ namespace PckStudio.Features
 
         private void addCustomPckToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            RenamePrompt prompt = new RenamePrompt(string.Empty);
-            prompt.OKButton.Text = "OK";
-            prompt.TextLabel.Text = "Folder:";
+            TextPrompt prompt = new TextPrompt();
+            prompt.OKButtonText = "OK";
+            prompt.LabelText = "Folder:";
             
             if (prompt.ShowDialog(this) != DialogResult.OK)
                 return;
@@ -276,7 +302,35 @@ namespace PckStudio.Features
 
         private void GameDirectoryTextBox_TextChanged(object sender, EventArgs e)
         {
+            if (IsValidInstallDirectory())
+            {
+                radioButtonEur.Enabled = Directory.Exists(GetGameContentPath(TitleId_EUR));
+                radioButtonUs.Enabled = Directory.Exists(GetGameContentPath(TitleId_USA));
+                radioButtonJap.Enabled = Directory.Exists(GetGameContentPath(TitleId_JPN));
+            }
             ListDLCs();
+        }
+
+        private void GameDirectoryTextBox_Click(object sender, EventArgs e)
+        {
+            if (GameDirectoryTextBox.ReadOnly)
+            {
+                Process.Start(GetContentSubDirectory("WiiU", "DLC"));
+            }
+        }
+
+        private void DLCTreeView_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter && DLCTreeView.SelectedNode is not null)
+            {
+                openSkinPackToolStripMenuItem_Click(sender, EventArgs.Empty);
+            }
+            base.OnPreviewKeyDown(e);
+        }
+
+        private void DLCTreeView_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = true;
         }
     }
 }

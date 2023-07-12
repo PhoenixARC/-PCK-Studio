@@ -13,22 +13,25 @@ namespace PckStudio.Classes.Misc
         private static readonly Assets _assets = new Assets()
         {
             LargeImageKey = "pcklgo",
-            LargeImageText = "PCK-Studio",
+            LargeImageText = System.Windows.Forms.Application.ProductName,
         };
 
         private static readonly Button[] _buttons = new Button[]
         {
             new Button()
             {
-                Label = "Check it out.",
+                Label = "Check it out!",
                 Url = Program.ProjectUrl,
             }
         };
 
         public static void Initialize()
         {
-            Client = new DiscordRpcClient(Settings.Default.RichPresenceId);
-            Client.Initialize();
+            if (Settings.Default.ShowRichPresence)
+            {
+                Client ??= new DiscordRpcClient(Settings.Default.RichPresenceId);
+                Client.Initialize();
+            }
         }
 
         public static void SetPresence(string details)

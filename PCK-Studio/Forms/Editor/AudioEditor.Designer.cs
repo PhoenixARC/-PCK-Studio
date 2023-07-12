@@ -111,12 +111,12 @@ namespace PckStudio.Forms.Editor
 			this.catImages.Images.SetKeyName(0, "0_overworld.png");
 			this.catImages.Images.SetKeyName(1, "1_nether.png");
 			this.catImages.Images.SetKeyName(2, "2_end.png");
-			this.catImages.Images.SetKeyName(3, "4_creative.png");
-			this.catImages.Images.SetKeyName(4, "3_menu.png");
+			this.catImages.Images.SetKeyName(3, "3_creative.png");
+			this.catImages.Images.SetKeyName(4, "4_menu.png");
 			this.catImages.Images.SetKeyName(5, "5_mg01.png");
 			this.catImages.Images.SetKeyName(6, "6_mg02.png");
 			this.catImages.Images.SetKeyName(7, "7_mg03.png");
-			this.catImages.Images.SetKeyName(8, "8_unused.png");
+			this.catImages.Images.SetKeyName(8, "8_mg04.png");
 			// 
 			// menuStrip
 			// 
@@ -312,9 +312,11 @@ namespace PckStudio.Forms.Editor
 			this.Controls.Add(this.treeView1);
 			this.Controls.Add(this.treeView2);
 			this.Controls.Add(this.menuStrip);
+			this.MaximizeBox = false;
+			this.MinimizeBox = false;
 			this.Name = "AudioEditor";
-			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.AudioEditor_FormClosed);
-			this.Shown += new System.EventHandler(this.AudioEditor_Shown);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AudioEditor_FormClosing);
+            this.Shown += new System.EventHandler(this.AudioEditor_Shown);
 			this.contextMenuStrip1.ResumeLayout(false);
 			this.menuStrip.ResumeLayout(false);
 			this.menuStrip.PerformLayout();
@@ -322,18 +324,6 @@ namespace PckStudio.Forms.Editor
 			((System.ComponentModel.ISupportInitialize)(this.compressionUpDown)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
-            this.Controls.Add(this.menuStrip);
-            this.Name = "AudioEditor";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.AudioEditor_FormClosed);
-            this.Shown += new System.EventHandler(this.AudioEditor_Shown);
-            this.contextMenuStrip1.ResumeLayout(false);
-            this.menuStrip.ResumeLayout(false);
-            this.menuStrip.PerformLayout();
-            this.contextMenuStrip2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.compressionUpDown)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
 		}
 
 		#endregion

@@ -74,7 +74,7 @@ namespace PckStudio.Forms.Additional_Popups.Animation
             0,
             0,
             0});
-            this.FrameTimeUpDown.Minimum = new decimal(new int[] {
+			this.FrameTimeUpDown.Minimum = new decimal(new int[] {
             1,
             0,
             0,

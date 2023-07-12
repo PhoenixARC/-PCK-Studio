@@ -72,14 +72,14 @@
 			// addToolStripMenuItem
 			// 
 			this.addToolStripMenuItem.Name = "addToolStripMenuItem";
-			this.addToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.addToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
 			this.addToolStripMenuItem.Text = "Add Entry";
 			this.addToolStripMenuItem.Click += new System.EventHandler(this.addToolStripMenuItem_Click);
 			// 
 			// removeToolStripMenuItem
 			// 
 			this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
-			this.removeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.removeToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
 			this.removeToolStripMenuItem.Text = "Remove";
 			this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
 			// 
@@ -135,6 +135,7 @@
 			this.materialComboBox.FormattingEnabled = true;
 			this.materialComboBox.ItemHeight = 23;
 			this.materialComboBox.Items.AddRange(new object[] {
+            "entity",
             "entity_alphatest",
             "entity_emissive_alpha",
             "entity_emissive_alpha_only",

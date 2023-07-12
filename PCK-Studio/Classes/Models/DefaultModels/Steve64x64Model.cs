@@ -13,17 +13,16 @@ namespace PckStudio.Classes.Models.DefaultModels
     internal class Steve64x64Model : ModelBase
     {
         SkinANIM _skinANIM;
-        public Steve64x64Model(Texture texture, SkinANIM anim)
+        public Steve64x64Model(Image texture, SkinANIM anim)
         {
-            textures = new Texture[1] { texture };
+            textures = new Image[1] { texture };
             _skinANIM = anim;
-            Initialize();
         }
 
         public override void AddToModelView(MinecraftModelView modelView)
         {
             _ = Textures[0] ?? throw new NullReferenceException(nameof(Textures));
-            Image source = Textures[0].Source;
+            Image source = Textures[0];
 
             (int top, int side) armWidth = _skinANIM.GetFlag(ANIM_EFFECTS.SLIM_MODEL) ? (6, 14) : (8, 16);
 

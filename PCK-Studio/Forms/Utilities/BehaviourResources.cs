@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Linq;
 using System.IO;
 
@@ -12,10 +11,6 @@ namespace PckStudio.Forms.Utilities
 {
     public static class BehaviourResources
     {
-        private static Image[] _entityImages;
-        
-        public static Image[] entityImages => _entityImages ??= Resources.entities_sheet.CreateImageList(32).ToArray();
-
         internal static byte[] BehaviourFileInitializer()
         {
             using var stream = new MemoryStream();

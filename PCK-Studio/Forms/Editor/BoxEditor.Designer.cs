@@ -163,13 +163,7 @@
             "ARMARMOR1",
             "ARMARMOR0",
             "BODYARMOR",
-            "BELT",
-            "TOOL0",
-            "TOOL1",
-            "HELMET",
-            "SHOULDER0",
-            "SHOULDER1",
-            "CHEST"});
+            "BELT"});
             this.parentComboBox.Location = new System.Drawing.Point(417, 72);
             this.parentComboBox.Name = "parentComboBox";
             this.parentComboBox.Size = new System.Drawing.Size(163, 29);

@@ -343,7 +343,7 @@
     <value>locSort</value>
   </data>
   <data name="&gt;&gt;locSort.Type" xml:space="preserve">
-    <value>PckStudio.Forms.MyTablePanel, PCK-Studio, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;locSort.Parent" xml:space="preserve">
     <value>$this</value>
@@ -2090,9 +2090,6 @@
         G+hjDW20iAiLRHOFixxnkP0cZJRpF1U/QwpVsgOg8KFHYQQTM7dSnLR5QRAEQRAE+D85YJDPCXlFCwAA
         AABJRU5ErkJggg==
 </value>
-  </data>
-  <data name="$this.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
   </data>
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
     <value>900, 650</value>

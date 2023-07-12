@@ -8,14 +8,15 @@ using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
 using PckStudio.ToolboxItems;
-using MetroFramework.Forms;
 using NAudio.Wave;
-using PckStudio.Classes;
+
+using OMI.Formats.Pck;
+
 using PckStudio.Classes.FileTypes;
 using PckStudio.Classes.IO.PCK;
-using OMI.Formats.Languages;
-using OMI.Formats.Pck;
 using PckStudio.Forms.Additional_Popups;
+using PckStudio.Properties;
+using PckStudio.API.Miles;
 
 // Audio Editor by MattNL and Miku-666
 
@@ -39,7 +40,13 @@ namespace PckStudio.Forms.Editor
 			"Battle",
 			"Tumble",
 			"Glide",
-			"Unused?"
+			"Build Off (Unused)"
+
+			/* If the SetMusicID function within the game is ever set to 0x9,
+			 * it actually attempts to play a "MG04_01.binka" file in the vanilla music folder.
+			 * Therefore it's safe to assume that the last audio category was indeed 
+			 * supposed to be for the cancelled Build Off mini game (MG04). - May
+			 */
 		};
 
 		private string GetCategoryFromId(PckAudioFile.AudioCategory.EAudioType categoryId)
@@ -56,7 +63,10 @@ namespace PckStudio.Forms.Editor
 		public AudioEditor(PckFile.FileData file, bool isLittleEndian)
 		{
 			InitializeComponent();
-			_isLittleEndian = isLittleEndian;
+
+			saveToolStripMenuItem1.Visible = !Settings.Default.AutoSaveChanges;
+
+            _isLittleEndian = isLittleEndian;
 
 			audioPCK = file;
 			using (var stream = new MemoryStream(file.Data))
@@ -103,18 +113,13 @@ namespace PckStudio.Forms.Editor
 			treeView1.EndUpdate();
 		}
 
-		private void AudioEditor_FormClosed(object sender, FormClosedEventArgs e)
-		{
-			// Clean up is throwing an error of some kind? FreeLibrary maybe??
-			//BINK.CleanUpBinka();
-		}
-
 		private void verifyFileLocationToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			if (treeView1.SelectedNode == null || treeView2.SelectedNode == null) return;
 			var entry = treeView2.SelectedNode;
 
-			if (!parent.CreateDataFolder()) return;
+			if (!parent.CreateDataFolder())
+				return;
 			string FileName = Path.Combine(parent.GetDataPath(), entry.Text + ".binka");
 
 			if (File.Exists(FileName)) MessageBox.Show("\"" + entry.Text + ".binka\" exists in the \"Data\" folder", "File found");
@@ -222,15 +227,20 @@ namespace PckStudio.Forms.Editor
 			int exitCode = 0;
 			InProgressPrompt waitDiag = new InProgressPrompt();
 			waitDiag.Show(this);
+
+			// TODO: rewrite ALL of this
+
+			Directory.CreateDirectory(ApplicationScope.DataCacher.CacheDirectory); // create directory in case it doesn't exist
+
 			foreach (string file in FileList)
 			{
 				if (Path.GetExtension(file) == ".binka" || Path.GetExtension(file) == ".wav")
 				{
 					string songName = string.Join("_", Path.GetFileNameWithoutExtension(file).Split(Path.GetInvalidFileNameChars()));
 					songName = Regex.Replace(songName, @"[^\u0000-\u007F]+", "_"); // Replace UTF characters
-					string cacheSongLoc = Path.Combine(Program.AppDataCache, songName + Path.GetExtension(file));
+					string cacheSongFile = Path.Combine(ApplicationScope.DataCacher.CacheDirectory, songName + Path.GetExtension(file));
 
-					if(File.Exists(cacheSongLoc)) File.Delete(cacheSongLoc);
+					if(File.Exists(cacheSongFile)) File.Delete(cacheSongFile);
 
 					string new_loc = Path.Combine(parent.GetDataPath(), songName + ".binka");
 					bool is_duplicate_file = false; // To handle if a file already in the pack is dropped back in
@@ -288,7 +298,7 @@ namespace PckStudio.Forms.Editor
 							var newFormat = new WaveFormat(reader.WaveFormat.SampleRate, 16, reader.WaveFormat.Channels);
 							using (var conversionStream = new WaveFormatConversionStream(newFormat, reader))
 							{
-								WaveFileWriter.CreateWaveFile(cacheSongLoc, conversionStream); //write to new location
+								WaveFileWriter.CreateWaveFile(cacheSongFile, conversionStream); //write to new location
 							}
 							reader.Close();
 							reader.Dispose();
@@ -298,14 +308,14 @@ namespace PckStudio.Forms.Editor
 
 						await Task.Run(() =>
 						{
-                            exitCode = Binka.FromWav(cacheSongLoc, new_loc, (int)compressionUpDown.Value);
+                            exitCode = Binka.FromWav(cacheSongFile, new_loc, (int)compressionUpDown.Value);
 						});
 
-						if (!File.Exists(cacheSongLoc)) MessageBox.Show(this, $"\"{songName}.wav\" failed to convert for some reason. Please reach out to MNL#8935 on the communtiy Discord server and provide details. Thanks!", "Conversion failed");
+						if (!File.Exists(cacheSongFile)) MessageBox.Show(this, $"\"{songName}.wav\" failed to convert for some reason. Please report this on the communtiy Discord server, which can be found under \"More\" in the toolbar at the top of the program.", "Conversion failed");
 						else
 						{
 							success++;
-							File.Delete(cacheSongLoc); //cleanup song
+							File.Delete(cacheSongFile); //cleanup song
 						}
 
 						Cursor.Current = Cursors.Default;
@@ -618,5 +628,13 @@ namespace PckStudio.Forms.Editor
 				treeView1.SelectedNode = null;
 			}
 		}
-	}
+
+        private void AudioEditor_FormClosing(object sender, FormClosingEventArgs e)
+        {
+			if (Settings.Default.AutoSaveChanges)
+			{
+				saveToolStripMenuItem1_Click(sender, EventArgs.Empty);
+			}
+        }
+    }
 }

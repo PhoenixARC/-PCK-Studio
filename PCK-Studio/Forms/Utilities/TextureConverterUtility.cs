@@ -411,10 +411,6 @@ namespace PckStudio.Forms.Utilities
                 }
                 bm.Dispose();
             }
-            catch (OutOfMemoryException err)
-            {
-
-            }
             catch (Exception err)
             {
                 MessageBox.Show("Error!\n" + err.Message + "\nStacktrace:\n" + err.StackTrace);

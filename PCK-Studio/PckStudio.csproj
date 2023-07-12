@@ -18,20 +18,20 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
-  <Target Name="GetGitHash" BeforeTargets="WriteGitInfo" Condition="'$(Configuration)' == 'Debug' AND '$(BuildHash)' == ''">
+  <Target Name="GetGitInfo" BeforeTargets="WriteGitInfo" Condition="'$(BuildHash)' == ''">
     <!-- write hash and branch to console.-->
-    <Exec Command="git -C $(ProjectDir) describe --always" ConsoleToMsBuild="true">
+    <Exec Condition="'$(Configuration)' == 'Debug'" Command="git -C $(ProjectDir) describe --always" ConsoleToMsBuild="true">
       <Output TaskParameter="ConsoleOutput" PropertyName="GitHash" />
     </Exec>
     <Exec Command="git -C $(ProjectDir) branch --show-current" ConsoleToMsBuild="true">
       <Output TaskParameter="ConsoleOutput" PropertyName="GitBranch" />
     </Exec>
     <PropertyGroup>
-      <BuildHash>$(GitHash)</BuildHash>
+      <BuildHash Condition="'$(Configuration)' == 'Debug'">$(GitHash)</BuildHash>
       <BuildBranch>$(GitBranch)</BuildBranch>
     </PropertyGroup>
   </Target>
-  <Target Name="WriteGitInfo" BeforeTargets="CoreCompile" Condition="'$(Configuration)' == 'Debug'">
+  <Target Name="WriteGitInfo" BeforeTargets="CoreCompile">
     <!-- names the obj/.../GitAssemblyInfo.cs file -->
     <PropertyGroup>
       <GitAssemblyInfoFile>$(IntermediateOutputPath)GitAssemblyInfo.cs</GitAssemblyInfoFile>
@@ -42,7 +42,7 @@
     </ItemGroup>
     <!-- defines the AssemblyMetadata attribute that will be written -->
     <ItemGroup>
-      <AssemblyAttributes Include="AssemblyMetadata">
+      <AssemblyAttributes Include="AssemblyMetadata" Condition="'$(Configuration)' == 'Debug'">
         <_Parameter1>GitHash</_Parameter1>
         <_Parameter2>$(BuildHash)</_Parameter2>
       </AssemblyAttributes>
@@ -170,9 +170,26 @@
     <Compile Include="Classes\ToolboxItems\PictureBoxWithInterpolationMode.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Classes\ToolboxItems\ToolStripRadioButtonMenuItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Utils\BinkaConverter.cs" />
     <Compile Include="Extensions\ImageLayoutDirection.cs" />
     <Compile Include="Extensions\ImageSection.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
+    <Compile Include="Extensions\PckFileExtensions.cs" />
+    <Compile Include="Forms\Additional-Popups\NumericPrompt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\NumericPrompt.Designer.cs">
+      <DependentUpon>NumericPrompt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Utilities\AppSettingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Utilities\AppSettingsForm.Designer.cs">
+      <DependentUpon>AppSettingsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\ControlExtensions.cs" />
     <Compile Include="Internals\ApplicationBuildInfo.cs" />
     <Compile Include="Classes\API\PCKCenter\model\PCKCenterJSON.cs" />
@@ -185,7 +202,7 @@
     <Compile Include="Extensions\GraphicsExtensions.cs" />
     <Compile Include="Classes\FileTypes\CSMBFile.cs" />
     <Compile Include="Classes\FileTypes\PckAudioFile.cs" />
-    <Compile Include="Classes\FileTypes\Binka.cs" />
+    <Compile Include="Classes\API\Miles\Binka.cs" />
     <Compile Include="Classes\IO\3DST\3DSTextureReader.cs" />
     <Compile Include="Classes\IO\3DST\3DSTextureWriter.cs" />
     <Compile Include="Classes\IO\CSMB\CSMBFileReader.cs" />
@@ -202,16 +219,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Internals\ApplicationScope.cs" />
+    <Compile Include="Internals\SettingsManager.cs" />
     <Compile Include="Internals\SkinBOX.cs" />
-    <Compile Include="Classes\Utils\ARC\ARCUtil.cs" />
     <Compile Include="Extensions\ImageExtensions.cs" />
     <Compile Include="Internals\SkinANIM.cs" />
     <Compile Include="Classes\Models\DefaultModels\Steve64x32Model.cs" />
     <Compile Include="Classes\Models\DefaultModels\ModelBase.cs" />
-    <Compile Include="Classes\Models\DefaultModels\Texture.cs" />
-    <Compile Include="Classes\Models\DefaultModels\TextureSelector.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="Classes\Models\Backgrounds.cs" />
     <Compile Include="Classes\Models\BackgroundTypes.cs" />
     <Compile Include="Classes\Models\Box.cs" />
@@ -278,29 +291,23 @@
     <Compile Include="Forms\Additional-Popups\CreateTexturePack.Designer.cs">
       <DependentUpon>CreateTexturePack.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Additional-Popups\MipMapPrompt.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Additional-Popups\MipMapPrompt.Designer.cs">
-      <DependentUpon>MipMapPrompt.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\Additional-Popups\AddFilePrompt.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\Additional-Popups\AddFilePrompt.Designer.cs">
       <DependentUpon>AddFilePrompt.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Additional-Popups\RenamePrompt.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Additional-Popups\RenamePrompt.Designer.cs">
-      <DependentUpon>RenamePrompt.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\Additional-Popups\TextPrompt.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\Additional-Popups\TextPrompt.Designer.cs">
       <DependentUpon>TextPrompt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\MultiTextPrompt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\MultiTextPrompt.Designer.cs">
+      <DependentUpon>MultiTextPrompt.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Editor\Animation.cs" />
     <Compile Include="Forms\Editor\AnimationPictureBox.cs">
@@ -348,11 +355,11 @@
     <Compile Include="Forms\Additional-Popups\ItemSelectionPopUp.Designer.cs">
       <DependentUpon>ItemSelectionPopUp.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Skins-And-Textures\AddMeta.cs">
+    <Compile Include="Forms\Additional-Popups\AddPropertyPrompt.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Skins-And-Textures\AddMeta.Designer.cs">
-      <DependentUpon>AddMeta.cs</DependentUpon>
+    <Compile Include="Forms\Additional-Popups\AddPropertyPrompt.Designer.cs">
+      <DependentUpon>AddPropertyPrompt.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Skins-And-Textures\AddNewSkin.cs">
       <SubType>Form</SubType>
@@ -506,20 +513,20 @@
       <DependentUpon>CreateTexturePack.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Additional-Popups\MipMapPrompt.resx">
-      <DependentUpon>MipMapPrompt.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\AddFilePrompt.resx">
       <DependentUpon>AddFilePrompt.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Additional-Popups\RenamePrompt.resx">
-      <DependentUpon>RenamePrompt.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Additional-Popups\NumericPrompt.resx">
+      <DependentUpon>NumericPrompt.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\TextPrompt.resx">
       <DependentUpon>TextPrompt.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Additional-Popups\MultiTextPrompt.resx">
+      <DependentUpon>MultiTextPrompt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Editor\MaterialsEditor.resx">
       <DependentUpon>MaterialsEditor.cs</DependentUpon>
@@ -550,11 +557,11 @@
       <DependentUpon>ItemSelectionPopUp.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Skins-And-Textures\AddMeta.ja.resx">
-      <DependentUpon>AddMeta.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Additional-Popups\AddPropertyPrompt.ja.resx">
+      <DependentUpon>AddPropertyPrompt.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Skins-And-Textures\AddMeta.resx">
-      <DependentUpon>AddMeta.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Additional-Popups\AddPropertyPrompt.resx">
+      <DependentUpon>AddPropertyPrompt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Skins-And-Textures\AddNewSkin.ja.resx">
       <DependentUpon>AddNewSkin.cs</DependentUpon>
@@ -588,6 +595,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Editor\ANIMEditor.resx">
       <DependentUpon>ANIMEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Utilities\AppSettingsForm.resx">
+      <DependentUpon>AppSettingsForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.ja.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -731,6 +742,7 @@
     <Content Include="Resources\icons\music.png" />
     <None Include="Resources\icons\ranch.png" />
     <Content Include="Resources\icons\Replace.png" />
+    <Content Include="Resources\icons\Save.png" />
     <None Include="Resources\help_30px.png" />
     <None Include="Resources\menu_50px.png" />
     <None Include="Resources\check_all_480px.png" />
@@ -795,6 +807,7 @@
       <Name>SharpMss32</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

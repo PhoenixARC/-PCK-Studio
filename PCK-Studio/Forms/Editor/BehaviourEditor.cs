@@ -11,6 +11,7 @@ using Newtonsoft.Json.Linq;
 using OMI.Formats.Behaviour;
 using OMI.Workers.Behaviour;
 using OMI.Formats.Pck;
+using PckStudio.Properties;
 
 namespace PckStudio.Forms.Editor
 {
@@ -61,7 +62,10 @@ namespace PckStudio.Forms.Editor
 		public BehaviourEditor(PckFile.FileData file)
 		{
 			InitializeComponent();
-			_file = file;
+
+			saveToolStripMenuItem1.Visible = !Settings.Default.AutoSaveChanges;
+
+            _file = file;
 
 			using (var stream = new MemoryStream(file.Data))
 			{
@@ -70,7 +74,7 @@ namespace PckStudio.Forms.Editor
 			}
 
 			treeView1.ImageList = new ImageList();
-            treeView1.ImageList.Images.AddRange(Utilities.BehaviourResources.entityImages);
+            treeView1.ImageList.Images.AddRange(ApplicationScope.EntityImages);
 			treeView1.ImageList.ColorDepth = ColorDepth.Depth32Bit;
 			SetUpTree();
 		}
@@ -151,7 +155,7 @@ namespace PckStudio.Forms.Editor
 			if (treeView1.SelectedNode == null) return;
 			if (!(treeView1.SelectedNode.Tag is BehaviourFile.RiderPositionOverride entry)) return;
 
-			var diag = new AddEntry("behaviours", Utilities.BehaviourResources.entityImages);
+			var diag = new AddEntry("behaviours", ApplicationScope.EntityImages);
 			diag.acceptBtn.Text = "Save";
 
 			if (diag.ShowDialog() == DialogResult.OK)
@@ -205,7 +209,7 @@ namespace PckStudio.Forms.Editor
 
 		private void addNewEntryToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			var diag = new AddEntry("behaviours", Utilities.BehaviourResources.entityImages);
+			var diag = new AddEntry("behaviours", ApplicationScope.EntityImages);
 
 			if(diag.ShowDialog() == DialogResult.OK)
 			{
@@ -277,5 +281,13 @@ namespace PckStudio.Forms.Editor
 			}
 			DialogResult = DialogResult.OK;
 		}
-	}
+
+        private void BehaviourEditor_FormClosing(object sender, FormClosingEventArgs e)
+        {
+			if (Settings.Default.AutoSaveChanges)
+			{
+				saveToolStripMenuItem1_Click(sender, EventArgs.Empty);
+			}
+        }
+    }
 }
