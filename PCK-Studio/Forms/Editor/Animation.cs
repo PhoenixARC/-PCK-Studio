@@ -43,6 +43,18 @@ namespace PckStudio.Forms.Editor
 
 		public AnimationCategory Category { get; set; }
 
+        public string CategoryString => GetCategoryName(Category);
+
+		public static string GetCategoryName(AnimationCategory category)
+		{
+			return category switch
+			{
+				AnimationCategory.Items => "items",
+				AnimationCategory.Blocks => "blocks",
+				_ => throw new ArgumentOutOfRangeException(category.ToString())
+			};
+        }
+
         private readonly List<Image> textures;
 
 		private readonly List<Frame> frames = new List<Frame>();

@@ -23,8 +23,8 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 		public ChangeTile()
 		{
 			InitializeComponent();
-			treeViewBlocks.ImageList = AnimationResources.BlockList;
-			treeViewItems.ImageList = AnimationResources.ItemList;
+			treeViewBlocks.ImageList = AnimationResources.BlockImageList;
+			treeViewItems.ImageList = AnimationResources.ItemImageList;
 			InitializeTreeviews();
         }
 
@@ -42,7 +42,7 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 			if (e.Node.Tag is string tileData)
 			{
 				selectedTile = tileData;
-				Console.WriteLine(selectedTile);
+				Debug.WriteLine(selectedTile);
                 category = e.Node.TreeView == treeViewItems
 					? Editor.Animation.AnimationCategory.Items
 					: Editor.Animation.AnimationCategory.Blocks;
@@ -51,27 +51,31 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 
 		private void GetTileDataToView(string key, TreeNodeCollection collection, Action<TreeNode> additinalAction)
 		{
+			List<AnimationResources.TileInfo> textureInfos = key switch
+			{
+				"blocks" => AnimationResources.BlockTileInfos,
+				"items" => AnimationResources.ItemTileInfos,
+				_ => throw new InvalidOperationException(key)
+			};
+            Stopwatch stopwatch = Stopwatch.StartNew();
             try
             {
-                if (AnimationResources.JsonTileData[key] is not null)
+                if (textureInfos is not null)
                 {
-                    foreach ( (int i, JToken content) in AnimationResources.JsonTileData[key].Children().enumerate())
-                    {
-                        foreach (JProperty prop in ((JObject)content).Properties())
-                        {
-                            if (!string.IsNullOrEmpty((string)prop.Value))
-                            {
-                                TreeNode tileNode = new TreeNode((string)prop.Value)
-                                {
-                                    Tag = prop.Name,
-                                    ImageIndex = i,
-                                    SelectedImageIndex = i,
-                                };
-                                collection.Add(tileNode);
-                                additinalAction(tileNode);
-                            }
-                        }
-                    }
+					foreach ((int i, var content) in textureInfos.enumerate())
+					{
+						if (!string.IsNullOrEmpty(content.DisplayName))
+						{
+							TreeNode tileNode = new TreeNode(content.DisplayName)
+							{
+								Tag = content.DisplayName,
+								ImageIndex = i,
+								SelectedImageIndex = i,
+							};
+							collection.Add(tileNode);
+							additinalAction(tileNode);
+						}
+					}
                 }
             }
             catch (Newtonsoft.Json.JsonException j_ex)
@@ -79,6 +83,8 @@ namespace PckStudio.Forms.Additional_Popups.Animation
                 MessageBox.Show(j_ex.Message, "Error");
                 return;
             }
+            stopwatch.Stop();
+            Debug.WriteLine($"{nameof(GetTileDataToView)} took {stopwatch.ElapsedMilliseconds}ms", category: nameof(ChangeTile));
         }
 
 		void filter_TextChanged(object sender, EventArgs e)

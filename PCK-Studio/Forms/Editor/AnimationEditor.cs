@@ -15,6 +15,7 @@ using PckStudio.Forms.Additional_Popups.Animation;
 using PckStudio.Forms.Utilities;
 using PckStudio.Extensions;
 using PckStudio.Properties;
+using System.Diagnostics;
 
 namespace PckStudio.Forms.Editor
 {
@@ -96,8 +97,8 @@ namespace PckStudio.Forms.Editor
 		{
 			if (animationPictureBox.IsPlaying)
 			{
-				AnimationStartStopBtn.Text = "Play Animation";
 				animationPictureBox.Stop();
+				AnimationStartStopBtn.Text = "Play Animation";
 				return;
 			}
             if (currentAnimation.FrameCount > 1)
@@ -135,7 +136,7 @@ namespace PckStudio.Forms.Editor
 					texture.Save(stream, ImageFormat.Png);
 					animationFile.SetData(stream.ToArray());
 				}
-				animationFile.Filename = $"res/textures/{AnimationResources.GetAnimationSection(currentAnimation.Category)}/{TileName}.png";
+				animationFile.Filename = $"res/textures/{currentAnimation.CategoryString}/{TileName}.png";
 				DialogResult = DialogResult.OK;
 				return;
 			}
@@ -270,8 +271,13 @@ namespace PckStudio.Forms.Editor
 		// Reworked import tool with new Animation classes by Miku
 		private void importJavaAnimationToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			DialogResult query = MessageBox.Show("This feature will replace the existing animation data. It might fail if the selected animation script is invalid. Are you sure that you want to continue?", "Warning", MessageBoxButtons.YesNo);
-			if (query == DialogResult.No) return;
+			if (MessageBox.Show(
+				"This feature will replace the existing animation data. " +
+				"It might fail if the selected animation script is invalid. " +
+				"Are you sure that you want to continue?",
+				"Warning",
+				MessageBoxButtons.YesNo) == DialogResult.No)
+				return;
 
             OpenFileDialog fileDialog = new OpenFileDialog
             {
@@ -282,7 +288,7 @@ namespace PckStudio.Forms.Editor
                 Filter = "Animation Scripts (*.mcmeta)|*.png.mcmeta"
             };
             if (fileDialog.ShowDialog(this) != DialogResult.OK) return;
-			Console.WriteLine("Selected Animation Script: " + fileDialog.FileName);
+			Debug.WriteLine("Selected Animation Script: " + fileDialog.FileName);
 
 			string textureFile = fileDialog.FileName.Substring(0, fileDialog.FileName.Length - ".mcmeta".Length);
             if (!File.Exists(textureFile))
@@ -313,13 +319,13 @@ namespace PckStudio.Forms.Editor
 								if (frame["index"] is JToken frame_index && frame_index.Type == JTokenType.Integer &&
 									frame["time"] is JToken frame_time && frame_time.Type == JTokenType.Integer)
 								{
-									Console.WriteLine("{0}*{1}", (int)frame["index"], (int)frame["time"]);
+                                    Debug.WriteLine("{0}*{1}", (int)frame["index"], (int)frame["time"]);
 									new_animation.AddFrame((int)frame["index"], (int)frame["time"]);
 								}
 							}
 							else if (frame.Type == JTokenType.Integer)
 							{
-								Console.WriteLine("{0}*{1}", (int)frame, frameTime);
+								Debug.WriteLine("{0}*{1}", (int)frame, frameTime);
 								new_animation.AddFrame((int)frame, frameTime);
 							}
 						}
@@ -348,7 +354,7 @@ namespace PckStudio.Forms.Editor
             using (ChangeTile diag = new ChangeTile())
 				if (diag.ShowDialog(this) == DialogResult.OK)
 				{
-					Console.WriteLine(diag.SelectedTile);
+					Debug.WriteLine(diag.SelectedTile);
                     currentAnimation.Category = diag.Category;
 					TileName = diag.SelectedTile;
 
@@ -363,23 +369,26 @@ namespace PckStudio.Forms.Editor
 
         private void SetTileLabel()
         {
-            foreach (JObject content in AnimationResources.JsonTileData[AnimationResources.GetAnimationSection(currentAnimation.Category)].Children())
-            {
-                var first = content.Properties().FirstOrDefault(p => p.Name == TileName);
-                if (first is JProperty p)
-				{
-					tileLabel.Text = (string)p.Value;
-					return;
-				}
+			var textureInfos = currentAnimation.Category switch
+			{
+				Animation.AnimationCategory.Blocks => AnimationResources.BlockTileInfos,
+				Animation.AnimationCategory.Items => AnimationResources.ItemTileInfos,
+				_ => throw new ArgumentOutOfRangeException(currentAnimation.Category.ToString())
+			};
+
+			if (textureInfos.FirstOrDefault(p => p.InternalName == TileName) is AnimationResources.TileInfo textureInfo)
+			{
+				tileLabel.Text = textureInfo.DisplayName;
+				return;
             }
-			
-			switch(MessageBox.Show(this, 
+
+            switch (MessageBox.Show(this, 
 				$"{TileName} is not a valid tile for animation, and will not play in game. Would you like to choose a new tile?", 
 				"Not a valid tile", 
 				MessageBoxButtons.YesNo))
 			{
 				case DialogResult.Yes:
-					changeTileToolStripMenuItem_Click(null, null);
+					changeTileToolStripMenuItem_Click(null, EventArgs.Empty);
 					break;
 				default:
 					DialogResult = DialogResult.Abort;
@@ -394,7 +403,7 @@ namespace PckStudio.Forms.Editor
 			fileDialog.Filter = "Animation Scripts (*.mcmeta)|*.png.mcmeta";
 			if (fileDialog.ShowDialog(this) == DialogResult.OK)
             {
-                JObject mcmeta = AnimationResources.ConvertAnimationToJson(currentAnimation, InterpolationCheckbox.Checked);
+                JObject mcmeta = AnimationResources.ConvertAnimationToJson(currentAnimation);
                 string jsondata = JsonConvert.SerializeObject(mcmeta, Formatting.Indented);
                 string filename = fileDialog.FileName;
                 File.WriteAllText(filename, jsondata);

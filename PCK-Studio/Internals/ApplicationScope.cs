@@ -29,8 +29,8 @@ namespace PckStudio
                 _entityImages ??= Resources.entities_sheet.CreateImageList(32).ToArray();
                 DataCacher ??= new FileCacher(Program.AppDataCache);
                 _ = AnimationResources.JsonTileData;
-                _ = AnimationResources.ItemList;
-                _ = AnimationResources.BlockList;
+                _ = AnimationResources.ItemImageList;
+                _ = AnimationResources.BlockImageList;
                 SettingsManager.Initialize();
                 CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
             }

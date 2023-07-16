@@ -8,64 +8,80 @@ using Newtonsoft.Json.Linq;
 using PckStudio.Properties;
 using PckStudio.Extensions;
 using PckStudio.Forms.Editor;
+using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace PckStudio.Forms.Utilities
 {
     public static class AnimationResources
     {
-        private const string __blocks = "blocks";
-        private const string __items = "items";
-
-        internal static string GetAnimationSection(Animation.AnimationCategory category)
+        internal class TileJson
         {
-            return category switch
-            {
-                Animation.AnimationCategory.Items => __items,
-                Animation.AnimationCategory.Blocks => __blocks,
-                _ => throw new ArgumentOutOfRangeException(category.ToString())
-            };
+            [JsonProperty("blocks")]
+            public List<TileInfo> Blocks { get; set; }
+            [JsonProperty("items")]
+            public List<TileInfo> Items { get; set; }
         }
 
-        private static JObject _jsonData = JObject.Parse(Resources.tileData);
-        public static JObject JsonTileData => _jsonData ??= JObject.Parse(Resources.tileData);
-        
+        private static TileJson _jsonData;
+        internal static TileJson JsonTileData => _jsonData ??= JsonConvert.DeserializeObject<TileJson>(Resources.tileData);
+
+        public class TileInfo
+        {
+            [JsonProperty("displayName")]
+            public string DisplayName { get; set; }
+
+            [JsonProperty("internalName")]
+            public string InternalName { get; set; }
+
+            public TileInfo(string displayName, string internalName)
+            {
+                DisplayName = displayName;
+                InternalName = internalName;
+            }
+        }
+
+        public static List<TileInfo> ItemTileInfos => JsonTileData.Items;
+
+        public static List<TileInfo> BlockTileInfos => JsonTileData.Blocks;
+
         private static Image[] _itemImages;
         public static Image[] ItemImages => _itemImages ??= Resources.items_sheet.CreateImageList(16).ToArray();
 
         private static Image[] _blockImages;
         public static Image[] BlockImages => _blockImages ??= Resources.terrain_sheet.CreateImageList(16).ToArray();
 
-        private static ImageList _itemList;
-        public static ImageList ItemList
+        private static ImageList _itemImageList;
+        public static ImageList ItemImageList
         {
             get
             {
-                if (_itemList is null)
+                if (_itemImageList is null)
                 {
-                    _itemList = new ImageList();
-                    _itemList.ColorDepth = ColorDepth.Depth32Bit;
-                    _itemList.Images.AddRange(ItemImages);
+                    _itemImageList = new ImageList();
+                    _itemImageList.ColorDepth = ColorDepth.Depth32Bit;
+                    _itemImageList.Images.AddRange(ItemImages);
                 }
-                return _itemList;
+                return _itemImageList;
             }
         }
 
-        private static ImageList _blockList;
-        public static ImageList BlockList
+        private static ImageList _blockImageList;
+        public static ImageList BlockImageList
         {
             get
             {
-                if (_blockList is null)
+                if (_blockImageList is null)
                 {
-                    _blockList = new ImageList();
-                    _blockList.ColorDepth = ColorDepth.Depth32Bit;
-                    _blockList.Images.AddRange(BlockImages);
+                    _blockImageList = new ImageList();
+                    _blockImageList.ColorDepth = ColorDepth.Depth32Bit;
+                    _blockImageList.Images.AddRange(BlockImages);
                 }
-                return _blockList;
+                return _blockImageList;
             }
         }
 
-        internal static JObject ConvertAnimationToJson(Animation animation, bool interpolation)
+        internal static JObject ConvertAnimationToJson(Animation animation)
         {
             JObject janimation = new JObject();
             JObject mcmeta = new JObject();
@@ -79,7 +95,7 @@ namespace PckStudio.Forms.Utilities
                 jframe["time"] = frame.Ticks;
                 jframes.Add(jframe);
             };
-            janimation["interpolation"] = interpolation;
+            janimation["interpolation"] = animation.Interpolate;
             janimation["frames"] = jframes;
             return mcmeta;
         }
