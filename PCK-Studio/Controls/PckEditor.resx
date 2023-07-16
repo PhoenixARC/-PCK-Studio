@@ -891,7 +891,7 @@
     <value>True</value>
   </data>
   <data name="metroLabel2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>204, 171</value>
+    <value>204, 168</value>
   </data>
   <data name="metroLabel2.Size" type="System.Drawing.Size, System.Drawing">
     <value>0, 0</value>
@@ -936,7 +936,7 @@
     <value>False</value>
   </data>
   <data name="entryTypeTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>199, 134</value>
+    <value>215, 138</value>
   </data>
   <data name="entryTypeTextBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>146, 20</value>
@@ -981,7 +981,7 @@
     <value>False</value>
   </data>
   <data name="entryDataTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>199, 166</value>
+    <value>215, 170</value>
   </data>
   <data name="entryDataTextBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>146, 20</value>
@@ -1005,7 +1005,7 @@
     <value>Bottom, Right</value>
   </data>
   <data name="buttonEdit.Location" type="System.Drawing.Point, System.Drawing">
-    <value>199, 192</value>
+    <value>215, 196</value>
   </data>
   <data name="buttonEdit.Size" type="System.Drawing.Size, System.Drawing">
     <value>146, 33</value>
@@ -1038,7 +1038,7 @@
     <value>True</value>
   </data>
   <data name="metroLabel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>266, 64</value>
+    <value>266, 61</value>
   </data>
   <data name="metroLabel1.Size" type="System.Drawing.Size, System.Drawing">
     <value>0, 0</value>

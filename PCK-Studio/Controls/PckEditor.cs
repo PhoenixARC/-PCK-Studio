@@ -1660,5 +1660,10 @@ namespace PckStudio.Controls
         {
             BuildMainTreeView();
         }
+
+        private void buttonEdit_Click(object sender, EventArgs e)
+        {
+            treeViewMain_DoubleClick(sender, e);
+        }
     }
 }

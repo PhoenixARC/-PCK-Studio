@@ -230,6 +230,7 @@
             this.buttonEdit.Name = "buttonEdit";
             this.buttonEdit.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.buttonEdit.UseSelectable = true;
+            this.buttonEdit.Click += new System.EventHandler(this.buttonEdit_Click);
             // 
             // metroLabel1
             // 
