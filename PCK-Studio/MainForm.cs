@@ -385,8 +385,8 @@ namespace PckStudio
 
         private void RemoveOpenFile(TabPage page)
         {
-            var kv = openFiles.First((kv) => kv.Value == page);
-            if (kv.Key != default && kv.Value != default)
+            var kv = openFiles.FirstOrDefault((kv) => kv.Value == page);
+            if (kv.Key != null && kv.Value != null)
             {
                 openFiles.Remove(kv.Key);
             }
@@ -610,7 +610,7 @@ namespace PckStudio
 
 		private void saveToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-            if (tabControl.SelectedTab is IPckEditor editor)
+            if (TryGetEditor(out var editor))
 			{
 				editor.Save();
 			}
@@ -618,7 +618,7 @@ namespace PckStudio
 
 		private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (tabControl.SelectedTab is IPckEditor editor)
+			if (TryGetEditor(out var editor))
 			{
 				editor.SaveAs();
 			}
@@ -821,6 +821,9 @@ namespace PckStudio
         {
 			closeToolStripMenuItem.Visible = tabControl.SelectedIndex > 0;
             closeAllToolStripMenuItem.Visible = tabControl.SelectedIndex == 0 && tabControl.TabCount > 1;
+			saveAsToolStripMenuItem.Visible = tabControl.SelectedIndex > 0;
+			saveToolStripMenuItem.Visible = tabControl.SelectedIndex > 0;
+
 
             if (tabControl.TabPages.Count == 1)
 			{

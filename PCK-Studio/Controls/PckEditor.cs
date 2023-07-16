@@ -1580,7 +1580,7 @@ namespace PckStudio.Controls
 
         public void Close()
         {
-            if (_wasModified &&
+            if ((_wasModified || _isTemplateFile) &&
                 MessageBox.Show("Save PCK?", _isTemplateFile ? "Unsaved PCK" : "Modified PCK",
                     MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {

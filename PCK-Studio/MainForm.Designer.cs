@@ -841,10 +841,10 @@
             // StartPage
             // 
             this.StartPage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.StartPage.Controls.Add(this.label5);
-            this.StartPage.Controls.Add(this.pckOpen);
             this.StartPage.Controls.Add(this.labelVersion);
+            this.StartPage.Controls.Add(this.label5);
             this.StartPage.Controls.Add(this.ChangelogRichTextBox);
+            this.StartPage.Controls.Add(this.pckOpen);
             this.StartPage.ForeColor = System.Drawing.Color.Transparent;
             this.StartPage.HorizontalScrollbarBarColor = true;
             this.StartPage.HorizontalScrollbarHighlightOnWheel = false;
