@@ -210,7 +210,7 @@ namespace PckStudio.Extensions
 
         internal static Image Interpolate(this Image image1, Image image2, double delta)
         {
-            delta = ColorExtensions.Clamp(delta, 0.0, 1.0);
+            delta = MathExtensions.Clamp(delta, 0.0, 1.0);
             if (image1 is not Bitmap baseImage || image2 is not Bitmap overlayImage ||
                 image1.Width != image2.Width || image1.Height != image2.Height)
                 return image1;
