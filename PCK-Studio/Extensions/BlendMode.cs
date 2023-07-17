@@ -1,6 +1,6 @@
 ﻿namespace PckStudio.Extensions
 {
-    public enum BlendMode
+    internal enum BlendMode
     {
         Add,
         Subtract,

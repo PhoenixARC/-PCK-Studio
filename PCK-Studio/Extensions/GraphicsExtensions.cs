@@ -7,7 +7,7 @@ using System.Text;
 
 namespace PckStudio.Extensions
 {
-    public struct GraphicsConfig
+    internal struct GraphicsConfig
     {
         public GraphicsConfig()
         {

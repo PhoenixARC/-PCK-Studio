@@ -34,6 +34,5 @@ namespace PckStudio.Extensions
             string ext = Path.GetExtension(file.Filename);
             return file.Filename.Remove(file.Filename.Length - (MipMap.Length + 1) - ext.Length) + ext;
         }
-
     }
 }

@@ -2,7 +2,7 @@
 
 namespace PckStudio.Extensions
 {
-    public static class ListExtensions
+    internal static class ListExtensions
     {
         public static IList<T> Swap<T>(this IList<T> list, int index1, int index2)
         {
