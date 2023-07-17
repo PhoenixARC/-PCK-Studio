@@ -54,6 +54,9 @@
     <!-- writes the attribute to the GitAssemblyInfo file -->
     <WriteCodeFragment Language="C#" OutputFile="$(GitAssemblyInfoFile)" AssemblyAttributes="@(AssemblyAttributes)" />
   </Target>
+  <Target Name="Delete PDBs" AfterTargets="Build" Condition=" '$(Configuration)' != 'Debug' ">
+    <Exec Command="del $(OutputPath)*.pdb" />
+  </Target>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
