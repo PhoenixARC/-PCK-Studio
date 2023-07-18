@@ -12,7 +12,7 @@ namespace PckStudio.Internal
 {
     internal static class SettingsManager
     {
-        private static Dictionary<string, Action<object>> _onSettingChanged = new Dictionary<string, Action<object>>();
+        private static Dictionary<string, Action<object>> _registery = new Dictionary<string, Action<object>>();
 
         private static object _newValue = null;
 
@@ -39,24 +39,24 @@ namespace PckStudio.Internal
 
         private static bool RegisterPropertyChangedCallback(string propertyName, Action<object> callback)
         {
-            if (_onSettingChanged.ContainsKey(propertyName))
+            if (_registery.ContainsKey(propertyName))
                 return false;
-            _onSettingChanged.Add(propertyName, callback);
+            _registery.Add(propertyName, callback);
             return true;
         }
 
         private static void PropertyChangedHandler(object sender, PropertyChangedEventArgs e)
         {
-            if (_onSettingChanged.ContainsKey(e.PropertyName))
+            if (_registery.ContainsKey(e.PropertyName))
             {
-                _onSettingChanged[e.PropertyName]?.Invoke(_newValue);
+                _registery[e.PropertyName]?.Invoke(_newValue);
                 _newValue = null;
             }
         }
 
         private static void SettingChangingHandler(object sender, SettingChangingEventArgs e)
         {
-            if (_onSettingChanged.ContainsKey(e.SettingName))
+            if (_registery.ContainsKey(e.SettingName))
             {
                 _newValue = e.NewValue;
             }
