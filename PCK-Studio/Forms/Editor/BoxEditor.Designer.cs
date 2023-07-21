@@ -33,6 +33,7 @@
             MetroFramework.Controls.MetroLabel sizeLabel;
             MetroFramework.Controls.MetroLabel uvLabel;
             MetroFramework.Controls.MetroLabel inflationLabel;
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BoxEditor));
             this.closeButton = new MetroFramework.Controls.MetroButton();
             this.toolTip = new MetroFramework.Components.MetroToolTip();
             this.parentComboBox = new MetroFramework.Controls.MetroComboBox();
@@ -425,6 +426,7 @@
             this.Controls.Add(positionLabel);
             this.Controls.Add(parentLabel);
             this.Controls.Add(this.closeButton);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(630, 554);
             this.MinimizeBox = false;

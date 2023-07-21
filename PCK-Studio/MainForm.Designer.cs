@@ -147,8 +147,8 @@
             this.label11 = new MetroFramework.Controls.MetroLabel();
             this.treeViewMain = new System.Windows.Forms.TreeView();
             this.imageList = new System.Windows.Forms.ImageList(this.components);
-            this.LittleEndianCheckBox = new MetroFramework.Controls.MetroCheckBox();
             this.previewPictureBox = new PckStudio.PictureBoxWithInterpolationMode();
+            this.LittleEndianCheckBox = new MetroFramework.Controls.MetroCheckBox();
             logoPictureBox = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(logoPictureBox)).BeginInit();
             this.contextMenuPCKEntries.SuspendLayout();
@@ -1104,6 +1104,14 @@
             resources.ApplyResources(this.imageList, "imageList");
             this.imageList.TransparentColor = System.Drawing.Color.Transparent;
             // 
+            // previewPictureBox
+            // 
+            resources.ApplyResources(this.previewPictureBox, "previewPictureBox");
+            this.previewPictureBox.BackColor = System.Drawing.Color.Transparent;
+            this.previewPictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+            this.previewPictureBox.Name = "previewPictureBox";
+            this.previewPictureBox.TabStop = false;
+            // 
             // LittleEndianCheckBox
             // 
             resources.ApplyResources(this.LittleEndianCheckBox, "LittleEndianCheckBox");
@@ -1112,14 +1120,6 @@
             this.LittleEndianCheckBox.Style = MetroFramework.MetroColorStyle.White;
             this.LittleEndianCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.LittleEndianCheckBox.UseSelectable = true;
-            // 
-            // previewPictureBox
-            // 
-            resources.ApplyResources(this.previewPictureBox, "previewPictureBox");
-            this.previewPictureBox.BackColor = System.Drawing.Color.Transparent;
-            this.previewPictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-            this.previewPictureBox.Name = "previewPictureBox";
-            this.previewPictureBox.TabStop = false;
             // 
             // MainForm
             // 
