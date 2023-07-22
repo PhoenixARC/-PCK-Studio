@@ -48,7 +48,7 @@ namespace PckStudio
             switch (img.Height) // 64x64
             {
                 case 64:
-                    anim.SetFlag(ANIM_EFFECTS.RESOLUTION_64x64, true);
+                    anim.SetFlag(SkinAnimFlag.RESOLUTION_64x64, true);
                     MessageBox.Show("64x64 Skin Detected");
                     skinPictureBoxTexture.Width = skinPictureBoxTexture.Height;
                     if (skinType != eSkinType._64x64 && skinType != eSkinType._64x64HD)
@@ -59,8 +59,8 @@ namespace PckStudio
                     skinType = eSkinType._64x64;
                     break;
                 case 32:
-                    anim.SetFlag(ANIM_EFFECTS.RESOLUTION_64x64, false);
-                    anim.SetFlag(ANIM_EFFECTS.SLIM_MODEL, false);
+                    anim.SetFlag(SkinAnimFlag.RESOLUTION_64x64, false);
+                    anim.SetFlag(SkinAnimFlag.SLIM_MODEL, false);
                     MessageBox.Show("64x32 Skin Detected");
                     skinPictureBoxTexture.Width = skinPictureBoxTexture.Height * 2;
                     if (skinType == eSkinType._64x64)
@@ -77,7 +77,7 @@ namespace PckStudio
                 default:
                     if (img.Width == img.Height) // 64x64 HD
                     {
-                        anim.SetFlag(ANIM_EFFECTS.RESOLUTION_64x64, true);
+                        anim.SetFlag(SkinAnimFlag.RESOLUTION_64x64, true);
                         MessageBox.Show("64x64 HD Skin Detected");
                         skinPictureBoxTexture.Width = skinPictureBoxTexture.Height;
                         if (skinType != eSkinType._64x64 && skinType != eSkinType._64x64HD)
@@ -89,8 +89,8 @@ namespace PckStudio
                     }
                     else if (img.Height == img.Width / 2) // 64x32 HD
                     {
-                        anim.SetFlag(ANIM_EFFECTS.RESOLUTION_64x64, false);
-                        anim.SetFlag(ANIM_EFFECTS.SLIM_MODEL, false);
+                        anim.SetFlag(SkinAnimFlag.RESOLUTION_64x64, false);
+                        anim.SetFlag(SkinAnimFlag.SLIM_MODEL, false);
                         MessageBox.Show("64x32 HD Skin Detected");
                         skinPictureBoxTexture.Width = skinPictureBoxTexture.Height * 2;
                         if (skinType == eSkinType._64x64)
@@ -121,40 +121,40 @@ namespace PckStudio
         private void DrawModel()
 		{
             Bitmap bmp = new Bitmap(displayBox.Width, displayBox.Height);
-            bool isSlim = anim.GetFlag(ANIM_EFFECTS.SLIM_MODEL);
+            bool isSlim = anim.GetFlag(SkinAnimFlag.SLIM_MODEL);
             using (Graphics g = Graphics.FromImage(bmp))
             {
-                if(!anim.GetFlag(ANIM_EFFECTS.HEAD_DISABLED))
+                if(!anim.GetFlag(SkinAnimFlag.HEAD_DISABLED))
 				{
                     //Head
                     g.DrawRectangle(Pens.Black, 70, 15, 40, 40);
                     g.FillRectangle(Brushes.Gray, 71, 16, 39, 39);
                 }
-                if (!anim.GetFlag(ANIM_EFFECTS.BODY_DISABLED))
+                if (!anim.GetFlag(SkinAnimFlag.BODY_DISABLED))
                 {
                     //Body
                     g.DrawRectangle(Pens.Black, 70, 55, 40, 60);
                     g.FillRectangle(Brushes.Gray, 71, 56, 39, 59);
                 }
-                if (!anim.GetFlag(ANIM_EFFECTS.RIGHT_ARM_DISABLED))
+                if (!anim.GetFlag(SkinAnimFlag.RIGHT_ARM_DISABLED))
                 {
                     //Arm0
                     g.DrawRectangle(Pens.Black  , isSlim ? 55 : 50, 55, isSlim ? 15 : 20, 60);
                     g.FillRectangle(Brushes.Gray, isSlim ? 56 : 51, 56, isSlim ? 14 : 19, 59);
                 }
-                if (!anim.GetFlag(ANIM_EFFECTS.LEFT_ARM_DISABLED))
+                if (!anim.GetFlag(SkinAnimFlag.LEFT_ARM_DISABLED))
                 {
                     //Arm1
                     g.DrawRectangle(Pens.Black, 110, 55, isSlim ? 15 : 20, 60);
                     g.FillRectangle(Brushes.Gray, 111, 56, isSlim ? 14 : 19, 59);
                 }
-                if (!anim.GetFlag(ANIM_EFFECTS.RIGHT_LEG_DISABLED))
+                if (!anim.GetFlag(SkinAnimFlag.RIGHT_LEG_DISABLED))
                 {
                     //Leg0
                     g.DrawRectangle(Pens.Black, 70, 115, 20, 60);
                     g.FillRectangle(Brushes.Gray, 71, 116, 19, 59);
                 }
-                if (!anim.GetFlag(ANIM_EFFECTS.LEFT_LEG_DISABLED))
+                if (!anim.GetFlag(SkinAnimFlag.LEFT_LEG_DISABLED))
                 {
                     //Leg1
                     g.DrawRectangle(Pens.Black, 90, 115, 20, 60);
