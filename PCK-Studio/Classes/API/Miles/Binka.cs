@@ -25,13 +25,9 @@ namespace PckStudio.API.Miles
 
         public static void ToWav(Stream source, Stream destination)
         {
-            string sourceFilepath = Path.GetTempFileName();
-            using (var sourceFs = File.OpenWrite(sourceFilepath))
-            {
-                source.CopyTo(sourceFs);
-            }
-            byte[] buffer = ToWav(sourceFilepath);
-            File.Delete(sourceFilepath);
+			using var sourceFs = new MemoryStream();
+            source.CopyTo(sourceFs);
+            byte[] buffer = ToWav(sourceFs.ToArray());
 
 			using(var ms = new MemoryStream(buffer))
 			{
