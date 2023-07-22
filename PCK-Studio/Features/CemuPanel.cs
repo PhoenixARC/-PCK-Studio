@@ -54,7 +54,7 @@ namespace PckStudio.Features
                     var xml = new XmlDocument();
                     xml.Load(settingsPath);
                     GameDirectoryTextBox.Text = xml.SelectSingleNode("content").SelectSingleNode("mlc_path").InnerText;
-                    GameDirectoryTextBox.ReadOnly = true;
+                    GameDirectoryTextBox.Enabled = false;
                     BrowseDirectoryBtn.Enabled = false;
                 }
                 catch (Exception ex)
@@ -83,7 +83,7 @@ namespace PckStudio.Features
                     var configNode = xml.SelectSingleNode("config");
                     var mlcpathNode = configNode.SelectSingleNode("MlcPath");
                     GameDirectoryTextBox.Text = mlcpathNode.InnerText;
-                    GameDirectoryTextBox.ReadOnly = true;
+                    GameDirectoryTextBox.Enabled = false;
                     BrowseDirectoryBtn.Enabled = false;
                     return true;
                 }
@@ -311,14 +311,6 @@ namespace PckStudio.Features
             ListDLCs();
         }
 
-        private void GameDirectoryTextBox_Click(object sender, EventArgs e)
-        {
-            if (GameDirectoryTextBox.ReadOnly)
-            {
-                Process.Start(GetContentSubDirectory("WiiU", "DLC"));
-            }
-        }
-
         private void DLCTreeView_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
             if (e.KeyCode == Keys.Enter && DLCTreeView.SelectedNode is not null)
@@ -331,6 +323,16 @@ namespace PckStudio.Features
         private void DLCTreeView_KeyPress(object sender, KeyPressEventArgs e)
         {
             e.Handled = true;
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Process.Start(GetContentSubDirectory("WiiU", "DLC"));
+        }
+
+        private void copyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(GameDirectoryTextBox.Text);
         }
     }
 }
