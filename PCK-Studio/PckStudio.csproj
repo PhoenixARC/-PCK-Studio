@@ -195,7 +195,7 @@
     <Compile Include="Forms\Utilities\AppSettingsForm.Designer.cs">
       <DependentUpon>AppSettingsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Internals\ApplicationBuildInfo.cs" />
+    <Compile Include="Internal\ApplicationBuildInfo.cs" />
     <Compile Include="Classes\API\PCKCenter\model\PCKCenterJSON.cs" />
     <Compile Include="Classes\API\PCKCenter\PCKCollections.cs" />
     <Compile Include="Classes\API\PCKCenter\PCKCollectionsLocal.cs" />
@@ -219,11 +219,12 @@
     <Compile Include="Classes\Misc\FileCacher.cs" />
     <Compile Include="Classes\Misc\OpenFolderDialog.cs" />
     <Compile Include="Classes\Models\DefaultModels\Steve64x64Model.cs" />
-    <Compile Include="Internals\ApplicationScope.cs" />
-    <Compile Include="Internals\SettingsManager.cs" />
-    <Compile Include="Internals\SkinBOX.cs" />
+    <Compile Include="Internal\ApplicationScope.cs" />
+    <Compile Include="Internal\Profiler.cs" />
+    <Compile Include="Internal\SettingsManager.cs" />
+    <Compile Include="Internal\SkinBOX.cs" />
     <Compile Include="Extensions\ImageExtensions.cs" />
-    <Compile Include="Internals\SkinANIM.cs" />
+    <Compile Include="Internal\SkinANIM.cs" />
     <Compile Include="Classes\Models\DefaultModels\Steve64x32Model.cs" />
     <Compile Include="Classes\Models\DefaultModels\ModelBase.cs" />
     <Compile Include="Classes\Models\Backgrounds.cs" />
@@ -261,7 +262,7 @@
     <Compile Include="Features\WiiUPanel.Designer.cs">
       <DependentUpon>WiiUPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Internals\CommitInfo.cs" />
+    <Compile Include="Internal\CommitInfo.cs" />
     <Compile Include="Forms\Additional-Popups\EntityForms\AddEntry.cs">
       <SubType>Form</SubType>
     </Compile>

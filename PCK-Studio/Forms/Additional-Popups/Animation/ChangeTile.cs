@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
 using MetroFramework.Forms;
-using Newtonsoft.Json.Linq;
 using PckStudio.Extensions;
 using PckStudio.Forms.Utilities;
+using PckStudio.Internal;
 
 namespace PckStudio.Forms.Additional_Popups.Animation
 {
@@ -30,11 +30,10 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 
 		private void InitializeTreeviews()
 		{
-            Stopwatch stopwatch = Stopwatch.StartNew();
+            Profiler.Start();
             GetTileDataToView("blocks", treeViewBlocks.Nodes, treeViewBlockCache.Add);
             GetTileDataToView("items", treeViewItems.Nodes, treeViewItemCache.Add);
-            stopwatch.Stop();
-            Debug.WriteLine($"{nameof(InitializeTreeviews)} took {stopwatch.ElapsedMilliseconds}ms");
+            Profiler.Stop();
         }
 
 		private void treeViews_AfterSelect(object sender, TreeViewEventArgs e)
@@ -57,7 +56,7 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 				"items" => AnimationResources.ItemTileInfos,
 				_ => throw new InvalidOperationException(key)
 			};
-            Stopwatch stopwatch = Stopwatch.StartNew();
+			Profiler.Start();
             try
             {
                 if (textureInfos is not null)
@@ -83,8 +82,7 @@ namespace PckStudio.Forms.Additional_Popups.Animation
                 MessageBox.Show(j_ex.Message, "Error");
                 return;
             }
-            stopwatch.Stop();
-            Debug.WriteLine($"{nameof(GetTileDataToView)} took {stopwatch.ElapsedMilliseconds}ms", category: nameof(ChangeTile));
+            Profiler.Stop();
         }
 
 		void filter_TextChanged(object sender, EventArgs e)

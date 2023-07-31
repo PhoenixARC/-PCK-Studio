@@ -24,7 +24,8 @@ namespace PckStudio
 
         internal static void Initialize()
         {
-            Stopwatch stopwatch = Stopwatch.StartNew();
+            Profiler.Configure(Debug.Listeners[0]);
+            Profiler.Start();
             {
                 _entityImages ??= Resources.entities_sheet.CreateImageList(32).ToArray();
                 DataCacher ??= new FileCacher(Program.AppDataCache);
@@ -34,8 +35,7 @@ namespace PckStudio
                 SettingsManager.Initialize();
                 CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
             }
-            stopwatch.Stop();
-            Debug.WriteLine($"{nameof(ApplicationScope.Initialize)} took {stopwatch.ElapsedMilliseconds}ms");
+            Profiler.Stop();
         }
     }
 }
