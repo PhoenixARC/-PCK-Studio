@@ -407,20 +407,12 @@ namespace PckStudio
 
 		private void HandleColourFile(PckFile.FileData file)
 		{
-			if (file.Size == 0)
-			{
-				MessageBox.Show("No Color data found.", "Error", MessageBoxButtons.OK,
-					MessageBoxIcon.Error);
-				return;
-			}
 			using COLEditor diag = new COLEditor(file);
 			wasModified = diag.ShowDialog(this) == DialogResult.OK;
 		}
 
 		public void HandleSkinFile(PckFile.FileData file)
 		{
-			if (file.Size <= 0)
-				return;
 			using (var ms = new MemoryStream(file.Data))
 			{
 				var texture = Image.FromStream(ms);
@@ -965,6 +957,11 @@ namespace PckStudio
 		{
 			if (treeViewMain.SelectedNode is TreeNode t && t.Tag is PckFile.FileData file)
 			{
+                if (file.Size <= 0)
+                {
+                    Debug.WriteLine($"'{file.Filename}' has no data attached.", category: nameof(HandleTextureFile));
+                    return;
+                }
 				pckFileTypeHandler[file.Filetype]?.Invoke(file);
 			}
 		}
