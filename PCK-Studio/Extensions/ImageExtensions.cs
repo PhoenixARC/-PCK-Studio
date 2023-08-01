@@ -15,7 +15,7 @@
  *    misrepresented as being the original software.
  * 3. This notice may not be removed or altered from any source distribution.
 **/
-﻿using System;
+using System;
 using System.Drawing;
 using System.Diagnostics;
 using System.Drawing.Imaging;
@@ -125,6 +125,11 @@ namespace PckStudio.Extensions
             return new Size(width, height);
         }
 
+        internal static Image ResizeImage(this Image image, Size size, GraphicsConfig graphicsConfig)
+        {
+            return image.ResizeImage(size.Width, size.Height, graphicsConfig);
+        }
+
         internal static Image ResizeImage(this Image image, int width, int height, GraphicsConfig graphicsConfig)
         {
             var destRect = new Rectangle(0, 0, width, height);
@@ -142,18 +147,6 @@ namespace PckStudio.Extensions
                 }
             }
             return destImage;
-        }
-
-        internal static Image Fill(this Image image, Color color)
-        {
-            using (var g = Graphics.FromImage(image))
-            {
-                using (SolidBrush brush = new SolidBrush(color))
-                {
-                    g.FillRectangle(brush, new Rectangle(Point.Empty, image.Size));
-                }
-            }
-            return image;
         }
 
         internal static Image Blend(this Image image, Color overlayColor, BlendMode mode)

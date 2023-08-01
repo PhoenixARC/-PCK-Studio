@@ -367,14 +367,35 @@ namespace PckStudio
 
 		private void HandleTextureFile(PckFile.FileData file)
 		{
-			if (!(file.Filename.StartsWith("res/textures/blocks/") || file.Filename.StartsWith("res/textures/items/")))
-				return;
+			_ = file.IsMipmappedFile() && currentPCK.Files.TryGetValue(file.GetNormalPath(), PckFile.FileData.FileType.TextureFile, out file);
 
-			if (file.IsMipmappedFile() && currentPCK.Files.TryGetValue(file.GetNormalPath(), PckFile.FileData.FileType.TextureFile, out PckFile.FileData originalAnimationFile))
+			if (file.Size <= 0)
 			{
-				file = originalAnimationFile;
+				Debug.WriteLine($"'{file.Filename}' size is 0.", category: nameof(HandleTextureFile));
+				return;
 			}
 
+			if (file.Filename == "res/terrain.png" || file.Filename == "res/items.png")
+			{
+				using var ms = new MemoryStream(file.Data);
+
+				var img = Image.FromStream(ms);
+				var res = img.Width / 16; // texture count on X axes
+                var size = new Size(res, res);
+                var viewer = new TextureAtlasEditor(currentPCK, file.Filename, img, size);
+				if (viewer.ShowDialog() == DialogResult.OK)
+				{
+					using (var result = new MemoryStream())
+					{
+						viewer.FinalTexture.Save(result, ImageFormat.Png);
+						file.SetData(result.ToArray());
+			}
+				}
+				return;
+			}
+
+			if (file.Filename.StartsWith("res/textures/blocks/") || file.Filename.StartsWith("res/textures/items/"))
+			{
 			using (AnimationEditor animationEditor = new AnimationEditor(file))
 			{
 				if (animationEditor.ShowDialog(this) == DialogResult.OK)
@@ -383,6 +404,8 @@ namespace PckStudio
 					BuildMainTreeView();
 				}
 			}
+				return;
+		}
 		}
 
 		private void HandleGameRuleFile(PckFile.FileData file)

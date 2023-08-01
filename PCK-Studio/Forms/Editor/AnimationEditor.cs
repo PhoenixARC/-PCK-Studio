@@ -45,7 +45,8 @@ namespace PckStudio.Forms.Editor
 
 			toolStripSeparator1.Visible = saveToolStripMenuItem1.Visible = !Settings.Default.AutoSaveChanges;
 
-			if (animationFile.Size > 0)
+			currentAnimation = new Animation(Array.Empty<Image>());
+            if (animationFile.Size > 0)
 			{
 				using MemoryStream textureMem = new MemoryStream(animationFile.Data);
 				var texture = new Bitmap(textureMem);
@@ -53,9 +54,9 @@ namespace PckStudio.Forms.Editor
 
 				currentAnimation = animationFile.Properties.HasProperty("ANIM")
 					? new Animation(frameTextures, animationFile.Properties.GetPropertyValue("ANIM"))
-					: new Animation(frameTextures);
+					: new Animation(frameTextures, string.Empty);
 			}
-            currentAnimation.Category = animationFile.Filename.Split('/').Contains("items")
+			currentAnimation.Category = animationFile.Filename.Split('/').Contains("items")
 				? Animation.AnimationCategory.Items
 				: Animation.AnimationCategory.Blocks;
 			SetTileLabel();
@@ -83,7 +84,10 @@ namespace PckStudio.Forms.Editor
 					SelectedImageIndex = imageIndex,
 				});
             }
-			animationPictureBox.SelectFrame(currentAnimation, 0);
+			if (currentAnimation.FrameCount > 0)
+			{
+				animationPictureBox.SelectFrame(currentAnimation, 0);
+			}
 		}
 
 		private void frameTreeView_AfterSelect(object sender, TreeViewEventArgs e)
@@ -296,9 +300,10 @@ namespace PckStudio.Forms.Editor
 				MessageBox.Show(textureFile + " was not found", "Texture not found");
 				return;
 			}
-			var textures = Image.FromFile(textureFile).CreateImageList(ImageLayoutDirection.Horizontal);
+			var textures = Image.FromFile(textureFile).CreateImageList(ImageLayoutDirection.Vertical);
             var new_animation = new Animation(textures);
-			try
+			new_animation.Category = currentAnimation.Category;
+            try
 			{
 				JObject mcmeta = JObject.Parse(File.ReadAllText(fileDialog.FileName));
 				if (mcmeta["animation"] is JToken animation)
@@ -479,7 +484,7 @@ namespace PckStudio.Forms.Editor
 				gif.SelectActiveFrame(dimension, i);
 				textures.Add(new Bitmap(gif));
 			}
-			currentAnimation = new Animation(textures);
+			currentAnimation = new Animation(textures, string.Empty);
 			LoadAnimationTreeView();
         }
 
@@ -494,7 +499,7 @@ namespace PckStudio.Forms.Editor
                 return;
             Image img = Image.FromFile(ofd.FileName);
             var textures = img.CreateImageList(ImageLayoutDirection.Vertical);
-			currentAnimation = new Animation(textures);
+			currentAnimation = new Animation(textures, string.Empty);
 			LoadAnimationTreeView();
         }
 

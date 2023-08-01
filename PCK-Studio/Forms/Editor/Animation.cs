@@ -63,12 +63,11 @@ namespace PckStudio.Forms.Editor
 		public Animation(IEnumerable<Image> textures)
 		{
 			this.textures = new List<Image>(textures);
-            AddSingleFrames();
         }
 
 		public Animation(IEnumerable<Image> textures, string ANIM)
+			: this(textures)
 		{
-            this.textures = new List<Image>(textures);
             ParseAnim(ANIM);
 		}
 
@@ -89,7 +88,11 @@ namespace PckStudio.Forms.Editor
 
 		private void ParseAnim(string anim)
 		{
-			_ = anim ?? throw new ArgumentNullException(nameof(anim));
+			if (string.IsNullOrEmpty(anim))
+			{
+				AddSingleFrames();
+				return;
+			}
 			anim = anim.Trim();
 			anim = (Interpolate = anim.StartsWith("#")) ? anim.Substring(1) : anim;
 			string[] animData = anim.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
@@ -119,7 +122,7 @@ namespace PckStudio.Forms.Editor
 
 		private void CheckTextureIndex(int index)
 		{
-            if ((index < 0 || index >= textures.Count))
+            if (!textures.IndexInRange(index))
                 throw new ArgumentOutOfRangeException(nameof(index));
         }
 

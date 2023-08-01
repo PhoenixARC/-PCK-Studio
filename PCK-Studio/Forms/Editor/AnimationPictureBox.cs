@@ -106,12 +106,11 @@ namespace PckStudio.Forms.Editor
             for (int tick = 0; tick < currentFrame.Ticks && !cts.IsCancellationRequested; tick++)
             {
                 double delta = 1.0f - tick / (double)currentFrame.Ticks;
-				if (!IsDisposed)
-					Invoke(() =>
-					{
-                        if (!IsDisposed)
-                            Image = currentFrame.Texture.Interpolate(nextFrame.Texture, delta);
-					});
+				Invoke(() =>
+				{
+                    if (!Disposing)
+                        Image = currentFrame.Texture.Interpolate(nextFrame.Texture, delta);
+				});
                 await Task.Delay(TickInMillisecond);
             }
         }

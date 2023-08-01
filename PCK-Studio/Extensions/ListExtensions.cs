@@ -11,5 +11,10 @@ namespace PckStudio.Extensions
             list[index2] = temp;
             return list;
         }
+        
+        public static bool IndexInRange<T>(this IList<T> list, int index)
+        {
+            return index >= 0 && index < list.Count;
+        }
     }
 }

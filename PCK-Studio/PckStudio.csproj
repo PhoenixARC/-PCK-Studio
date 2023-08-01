@@ -196,6 +196,12 @@
       <DependentUpon>AppSettingsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Internal\ApplicationBuildInfo.cs" />
+    <Compile Include="Forms\Editor\TextureAtlasEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Editor\TextureAtlasEditor.Designer.cs">
+      <DependentUpon>TextureAtlasEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Classes\API\PCKCenter\model\PCKCenterJSON.cs" />
     <Compile Include="Classes\API\PCKCenter\PCKCollections.cs" />
     <Compile Include="Classes\API\PCKCenter\PCKCollectionsLocal.cs" />
@@ -593,6 +599,9 @@
     <EmbeddedResource Include="Forms\Utilities\AppSettingsForm.resx">
       <DependentUpon>AppSettingsForm.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Editor\TextureAtlasEditor.resx">
+      <DependentUpon>TextureAtlasEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.ja.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
