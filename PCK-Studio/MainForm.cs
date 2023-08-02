@@ -157,6 +157,7 @@ namespace PckStudio
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
 		{
+			PckManager?.Close();
 			checkSaveState();
 		}
 
@@ -962,7 +963,7 @@ namespace PckStudio
                     Debug.WriteLine($"'{file.Filename}' has no data attached.", category: nameof(HandleTextureFile));
                     return;
                 }
-				pckFileTypeHandler[file.Filetype]?.Invoke(file);
+                pckFileTypeHandler[file.Filetype]?.Invoke(file);
 			}
 		}
 
@@ -2257,13 +2258,15 @@ namespace PckStudio
 		private void openPckManagerToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			PckManager ??= new PckManager();
-			PckManager.BringToFront();
-			PckManager.Focus();
-			if (!PckManager.Visible)
+			PckManager.FormClosing += (s, e) =>
 			{
-				PckManager.FormClosed += delegate { PckManager = null; };
-				PckManager.Show(this);
-			}
+				PckManager.Hide();
+				e.Cancel = true;
+			};
+			if (!PckManager.Visible)
+				PckManager.Show();
+			if (PckManager.Focus())
+				PckManager.BringToFront();
 		}
 
 		private async void wavBinkaToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2313,7 +2316,7 @@ namespace PckStudio
 
 				if (exitCode == 0)
 					convertedCount++;
-			}
+				}
 
 			int fileCount = fileDialog.FileNames.Length;
 
