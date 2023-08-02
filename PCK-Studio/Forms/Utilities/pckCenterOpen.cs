@@ -15,7 +15,6 @@ using System.Windows.Media.Imaging;
 using System.IO.Packaging;
 using PckStudio;
 using System.IO.Compression;
-using PckStudio.Classes.FileTypes;
 using PckStudio.Classes.IO.PCK;
 using OMI.Formats.Pck;
 using OMI.Workers.Pck;
