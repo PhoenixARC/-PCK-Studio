@@ -21,11 +21,9 @@ using System.Drawing;
 using PckStudio.Extensions;
 using System.Text;
 
-
-// TODO: change namespace
-namespace PckStudio.Forms.Editor
+namespace PckStudio.Internal
 {
-	sealed class Animation
+	internal sealed class Animation
 	{
 		public const int MinimumFrameTime = 1;
 

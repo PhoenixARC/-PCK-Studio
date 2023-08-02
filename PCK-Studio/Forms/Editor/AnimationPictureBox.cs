@@ -24,6 +24,7 @@ using System.Drawing.Drawing2D;
 using System.Runtime.CompilerServices;
 
 using PckStudio.Extensions;
+using PckStudio.Internal;
 
 namespace PckStudio.Forms.Editor
 {

@@ -299,7 +299,7 @@
     <Compile Include="Forms\Additional-Popups\MultiTextPrompt.Designer.cs">
       <DependentUpon>MultiTextPrompt.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Editor\Animation.cs" />
+    <Compile Include="Internal\Animation.cs" />
     <Compile Include="Forms\Editor\AnimationPictureBox.cs">
       <SubType>Component</SubType>
     </Compile>

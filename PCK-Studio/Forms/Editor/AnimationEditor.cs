@@ -16,6 +16,7 @@ using PckStudio.Forms.Utilities;
 using PckStudio.Extensions;
 using PckStudio.Properties;
 using System.Diagnostics;
+using PckStudio.Internal;
 
 namespace PckStudio.Forms.Editor
 {
