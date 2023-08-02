@@ -1324,7 +1324,7 @@ namespace PckStudio
 		private void quickChangeToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			using AdvancedOptions advanced = new AdvancedOptions(currentPCK);
-			advanced.littleEndian = LittleEndianCheckBox.Checked;
+			advanced.IsLittleEndian = LittleEndianCheckBox.Checked;
 			if (advanced.ShowDialog() == DialogResult.OK)
 			{
 				wasModified = true;

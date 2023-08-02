@@ -118,99 +118,102 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="treeMeta.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="propertyTreeview.Location" type="System.Drawing.Point, System.Drawing">
     <value>23, 63</value>
   </data>
-  <data name="treeMeta.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="propertyTreeview.Size" type="System.Drawing.Size, System.Drawing">
     <value>272, 142</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="treeMeta.TabIndex" type="System.Int32, mscorlib">
+  <data name="propertyTreeview.TabIndex" type="System.Int32, mscorlib">
     <value>13</value>
   </data>
-  <data name="&gt;&gt;treeMeta.Name" xml:space="preserve">
-    <value>treeMeta</value>
+  <data name="&gt;&gt;propertyTreeview.Name" xml:space="preserve">
+    <value>propertyTreeview</value>
   </data>
-  <data name="&gt;&gt;treeMeta.Type" xml:space="preserve">
+  <data name="&gt;&gt;propertyTreeview.Type" xml:space="preserve">
     <value>System.Windows.Forms.TreeView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;treeMeta.Parent" xml:space="preserve">
+  <data name="&gt;&gt;propertyTreeview.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;treeMeta.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;propertyTreeview.ZOrder" xml:space="preserve">
     <value>7</value>
   </data>
-  <data name="comboBox1.ItemHeight" type="System.Int32, mscorlib">
+  <data name="fileTypeComboBox.ItemHeight" type="System.Int32, mscorlib">
     <value>23</value>
   </data>
-  <data name="comboBox1.Items" xml:space="preserve">
+  <data name="fileTypeComboBox.Items" xml:space="preserve">
     <value>All Files</value>
   </data>
-  <data name="comboBox1.Items1" xml:space="preserve">
+  <data name="fileTypeComboBox.Items1" xml:space="preserve">
     <value>Skin Files (.png;.tga)</value>
   </data>
-  <data name="comboBox1.Items2" xml:space="preserve">
+  <data name="fileTypeComboBox.Items2" xml:space="preserve">
     <value>Cape Files (.png;.tga)</value>
   </data>
-  <data name="comboBox1.Items3" xml:space="preserve">
+  <data name="fileTypeComboBox.Items3" xml:space="preserve">
     <value>Texture Files (.png;.tga)</value>
   </data>
-  <data name="comboBox1.Items4" xml:space="preserve">
+  <data name="fileTypeComboBox.Items4" xml:space="preserve">
     <value>UI Data Files (?)</value>
   </data>
-  <data name="comboBox1.Items5" xml:space="preserve">
+  <data name="fileTypeComboBox.Items5" xml:space="preserve">
     <value>Info Files (0)</value>
   </data>
-  <data name="comboBox1.Items6" xml:space="preserve">
+  <data name="fileTypeComboBox.Items6" xml:space="preserve">
     <value>Texture Pack Info Files (.pck)</value>
   </data>
-  <data name="comboBox1.Items7" xml:space="preserve">
+  <data name="fileTypeComboBox.Items7" xml:space="preserve">
     <value>Localization Files (.loc)</value>
   </data>
-  <data name="comboBox1.Items8" xml:space="preserve">
+  <data name="fileTypeComboBox.Items8" xml:space="preserve">
     <value>Game Rules Files (.grf)</value>
   </data>
-  <data name="comboBox1.Items9" xml:space="preserve">
+  <data name="fileTypeComboBox.Items9" xml:space="preserve">
     <value>Audio Files (.pck)</value>
   </data>
-  <data name="comboBox1.Items10" xml:space="preserve">
+  <data name="fileTypeComboBox.Items10" xml:space="preserve">
     <value>Colour Table Files (.col)</value>
   </data>
-  <data name="comboBox1.Items11" xml:space="preserve">
+  <data name="fileTypeComboBox.Items11" xml:space="preserve">
     <value>Game Rules Header Files (.grh)</value>
   </data>
-  <data name="comboBox1.Items12" xml:space="preserve">
+  <data name="fileTypeComboBox.Items12" xml:space="preserve">
     <value>Skin Data Files (.pck)</value>
   </data>
-  <data name="comboBox1.Items13" xml:space="preserve">
+  <data name="fileTypeComboBox.Items13" xml:space="preserve">
     <value>Material Files (.bin)</value>
   </data>
-  <data name="comboBox1.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="fileTypeComboBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>65, 254</value>
   </data>
-  <data name="comboBox1.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="fileTypeComboBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>157, 29</value>
   </data>
-  <data name="comboBox1.TabIndex" type="System.Int32, mscorlib">
+  <data name="fileTypeComboBox.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="&gt;&gt;comboBox1.Name" xml:space="preserve">
-    <value>comboBox1</value>
+  <data name="&gt;&gt;fileTypeComboBox.Name" xml:space="preserve">
+    <value>fileTypeComboBox</value>
   </data>
-  <data name="&gt;&gt;comboBox1.Type" xml:space="preserve">
+  <data name="&gt;&gt;fileTypeComboBox.Type" xml:space="preserve">
     <value>MetroFramework.Controls.MetroComboBox, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
   </data>
-  <data name="&gt;&gt;comboBox1.Parent" xml:space="preserve">
+  <data name="&gt;&gt;fileTypeComboBox.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;comboBox1.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;fileTypeComboBox.ZOrder" xml:space="preserve">
     <value>6</value>
   </data>
+  <metadata name="label1.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
+  </metadata>
   <data name="label1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>20, 260</value>
+    <value>20, 261</value>
   </data>
   <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
     <value>45, 13</value>
@@ -234,7 +237,7 @@
     <value>5</value>
   </data>
   <data name="applyButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>228, 260</value>
+    <value>228, 257</value>
   </data>
   <data name="applyButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
@@ -257,6 +260,9 @@
   <data name="&gt;&gt;applyButton.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
+  <metadata name="label2.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
+  </metadata>
   <data name="label2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -284,6 +290,9 @@
   <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
+  <metadata name="label3.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
+  </metadata>
   <data name="label3.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -327,25 +336,25 @@
   <data name="resource.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
-  <data name="entryDataTextBox.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="propertyValueTextBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>164, 224</value>
   </data>
-  <data name="entryDataTextBox.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="propertyValueTextBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>139, 20</value>
   </data>
-  <data name="entryDataTextBox.TabIndex" type="System.Int32, mscorlib">
+  <data name="propertyValueTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
   </data>
-  <data name="&gt;&gt;entryDataTextBox.Name" xml:space="preserve">
-    <value>entryDataTextBox</value>
+  <data name="&gt;&gt;propertyValueTextBox.Name" xml:space="preserve">
+    <value>propertyValueTextBox</value>
   </data>
-  <data name="&gt;&gt;entryDataTextBox.Type" xml:space="preserve">
+  <data name="&gt;&gt;propertyValueTextBox.Type" xml:space="preserve">
     <value>MetroFramework.Controls.MetroTextBox, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
   </data>
-  <data name="&gt;&gt;entryDataTextBox.Parent" xml:space="preserve">
+  <data name="&gt;&gt;propertyValueTextBox.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;entryDataTextBox.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;propertyValueTextBox.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
   <data name="resource.Image1" type="System.Resources.ResXNullRef, System.Windows.Forms">
@@ -366,25 +375,25 @@
   <data name="resource.Visible1" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
-  <data name="entryTypeTextBox.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="propertyKeyTextBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>19, 224</value>
   </data>
-  <data name="entryTypeTextBox.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="propertyKeyTextBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>139, 20</value>
   </data>
-  <data name="entryTypeTextBox.TabIndex" type="System.Int32, mscorlib">
+  <data name="propertyKeyTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>14</value>
   </data>
-  <data name="&gt;&gt;entryTypeTextBox.Name" xml:space="preserve">
-    <value>entryTypeTextBox</value>
+  <data name="&gt;&gt;propertyKeyTextBox.Name" xml:space="preserve">
+    <value>propertyKeyTextBox</value>
   </data>
-  <data name="&gt;&gt;entryTypeTextBox.Type" xml:space="preserve">
+  <data name="&gt;&gt;propertyKeyTextBox.Type" xml:space="preserve">
     <value>MetroFramework.Controls.MetroTextBox, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
   </data>
-  <data name="&gt;&gt;entryTypeTextBox.Parent" xml:space="preserve">
+  <data name="&gt;&gt;propertyKeyTextBox.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;entryTypeTextBox.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;propertyKeyTextBox.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
