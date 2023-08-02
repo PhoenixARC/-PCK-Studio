@@ -116,7 +116,7 @@ namespace PckStudio
 
             if (_textures.IndexInRange(index))
             {
-                selectImagePictureBox.Image = _textures[index];
+                selectTilePictureBox.Image = _textures[index];
             }
 
         }
@@ -261,7 +261,7 @@ namespace PckStudio
         {
             var graphicsConfig = new GraphicsConfig()
             {
-                InterpolationMode = selectImagePictureBox.InterpolationMode,
+                InterpolationMode = selectTilePictureBox.InterpolationMode,
                 PixelOffsetMode = PixelOffsetMode.HighQuality
             };
             if (texture.Size != _areaSize)
@@ -273,7 +273,7 @@ namespace PckStudio
                 g.DrawImage(texture, _selectedItem.Area);
             }
             _textures[_selectedItem.Index] = texture;
-            selectImagePictureBox.Image = texture;
+            selectTilePictureBox.Image = texture;
             originalPictureBox.Invalidate();
         }
 
@@ -308,7 +308,7 @@ namespace PckStudio
             };
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                selectImagePictureBox.Image.Save(saveFileDialog.FileName, ImageFormat.Png);
+                selectTilePictureBox.Image.Save(saveFileDialog.FileName, ImageFormat.Png);
             }
         }
 
@@ -327,6 +327,21 @@ namespace PckStudio
                     if (nextButton.Enabled)
                     {
                         nextButton_Click(this, EventArgs.Empty);
+                        return true;
+                    }
+                    break;
+                case Keys.Up:
+                    if (_textures.IndexInRange(_selectedItem.Index - _rowCount))
+                    {
+                        SelectedIndex = _selectedItem.Index - _rowCount;
+                        return true;
+                    }
+                    break;
+
+                case Keys.Down:
+                    if (_textures.IndexInRange(_selectedItem.Index + _rowCount))
+                    {
+                        SelectedIndex = _selectedItem.Index + _rowCount;
                         return true;
                     }
                     break;

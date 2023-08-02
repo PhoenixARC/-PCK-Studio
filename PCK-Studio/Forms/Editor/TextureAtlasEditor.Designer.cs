@@ -37,14 +37,14 @@
             this.extractTileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.originalPictureBox = new PckStudio.PictureBoxWithInterpolationMode();
-            this.selectImagePictureBox = new PckStudio.PictureBoxWithInterpolationMode();
+            this.selectTilePictureBox = new PckStudio.PictureBoxWithInterpolationMode();
             this.infoTextBox = new System.Windows.Forms.RichTextBox();
             this.replaceButton = new MetroFramework.Controls.MetroButton();
             this.animationButton = new MetroFramework.Controls.MetroButton();
             this.menuStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.originalPictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.selectImagePictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.selectTilePictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // prevButton
@@ -100,14 +100,14 @@
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // extractTileToolStripMenuItem
             // 
             this.extractTileToolStripMenuItem.Name = "extractTileToolStripMenuItem";
-            this.extractTileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.extractTileToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
             this.extractTileToolStripMenuItem.Text = "Extract Tile";
             this.extractTileToolStripMenuItem.Click += new System.EventHandler(this.extractTileToolStripMenuItem_Click);
             // 
@@ -122,7 +122,7 @@
             this.tableLayoutPanel1.Controls.Add(this.prevButton, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.nextButton, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.originalPictureBox, 2, 0);
-            this.tableLayoutPanel1.Controls.Add(this.selectImagePictureBox, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.selectTilePictureBox, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.infoTextBox, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.replaceButton, 0, 4);
             this.tableLayoutPanel1.Controls.Add(this.animationButton, 0, 3);
@@ -153,20 +153,20 @@
             this.originalPictureBox.TabStop = false;
             this.originalPictureBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.originalPictureBox_MouseClick);
             // 
-            // selectImagePictureBox
+            // selectTilePictureBox
             // 
-            this.selectImagePictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.selectTilePictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.selectImagePictureBox.BackColor = System.Drawing.Color.Transparent;
-            this.tableLayoutPanel1.SetColumnSpan(this.selectImagePictureBox, 2);
-            this.selectImagePictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-            this.selectImagePictureBox.Location = new System.Drawing.Point(3, 3);
-            this.selectImagePictureBox.Name = "selectImagePictureBox";
-            this.selectImagePictureBox.Size = new System.Drawing.Size(296, 201);
-            this.selectImagePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.selectImagePictureBox.TabIndex = 0;
-            this.selectImagePictureBox.TabStop = false;
+            this.selectTilePictureBox.BackColor = System.Drawing.Color.Transparent;
+            this.tableLayoutPanel1.SetColumnSpan(this.selectTilePictureBox, 2);
+            this.selectTilePictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+            this.selectTilePictureBox.Location = new System.Drawing.Point(3, 3);
+            this.selectTilePictureBox.Name = "selectTilePictureBox";
+            this.selectTilePictureBox.Size = new System.Drawing.Size(296, 201);
+            this.selectTilePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.selectTilePictureBox.TabIndex = 0;
+            this.selectTilePictureBox.TabStop = false;
             // 
             // infoTextBox
             // 
@@ -235,7 +235,7 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.originalPictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.selectImagePictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.selectTilePictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -243,7 +243,7 @@
 
         #endregion
 
-        private PictureBoxWithInterpolationMode selectImagePictureBox;
+        private PictureBoxWithInterpolationMode selectTilePictureBox;
         private MetroFramework.Controls.MetroButton prevButton;
         private MetroFramework.Controls.MetroButton nextButton;
         private System.Windows.Forms.MenuStrip menuStrip1;
