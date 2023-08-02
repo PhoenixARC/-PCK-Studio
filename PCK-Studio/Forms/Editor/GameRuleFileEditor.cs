@@ -282,15 +282,6 @@ namespace PckStudio.Forms.Editor
             }
         }
 
-        private void metroPanel1_Resize(object sender, EventArgs e)
-        {
-            int padding = 2;
-            GrfTreeView.Size = new Size(metroPanel1.Size.Width / 2 - padding, metroPanel1.Size.Height);
-            GrfParametersTreeView.Size = new Size(metroPanel1.Size.Width / 2 - padding, metroPanel1.Size.Height);
-            // good enough
-            metroLabel2.Location = new Point(metroPanel1.Size.Width / 2 + 25, metroLabel2.Location.Y);
-        }
-
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog dialog = new OpenFileDialog();

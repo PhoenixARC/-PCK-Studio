@@ -12,10 +12,10 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 	internal partial class ChangeTile : MetroForm
 	{
         string selectedTile = "";
-        Editor.Animation.AnimationCategory category = Editor.Animation.AnimationCategory.Blocks;
+        Internal.Animation.AnimationCategory category = Internal.Animation.AnimationCategory.Blocks;
 
 		public string SelectedTile => selectedTile;
-		public Editor.Animation.AnimationCategory Category => category;
+		public Internal.Animation.AnimationCategory Category => category;
 
         List<TreeNode> treeViewBlockCache = new List<TreeNode>();
 		List<TreeNode> treeViewItemCache = new List<TreeNode>();
@@ -43,8 +43,8 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 				selectedTile = tileData;
 				Debug.WriteLine(selectedTile);
                 category = e.Node.TreeView == treeViewItems
-					? Editor.Animation.AnimationCategory.Items
-					: Editor.Animation.AnimationCategory.Blocks;
+					? Internal.Animation.AnimationCategory.Items
+					: Internal.Animation.AnimationCategory.Blocks;
             }
 		}
 

@@ -1,6 +1,6 @@
 ﻿namespace PckStudio
 {
-    partial class CreateTexturePack
+    partial class CreateTexturePackPrompt
     {
         /// <summary>
         /// Required designer variable.
@@ -28,11 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CreateTexturePack));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CreateTexturePackPrompt));
             this.TextLabel = new System.Windows.Forms.Label();
             this.OKButton = new System.Windows.Forms.Button();
             this.InputTextBox = new MetroFramework.Controls.MetroTextBox();
-            this.metroComboBox1 = new MetroFramework.Controls.MetroComboBox();
+            this.resolutionComboBox = new MetroFramework.Controls.MetroComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -80,24 +80,24 @@
             this.InputTextBox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.InputTextBox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
             // 
-            // metroComboBox1
+            // resolutionComboBox
             // 
-            this.metroComboBox1.FormattingEnabled = true;
-            resources.ApplyResources(this.metroComboBox1, "metroComboBox1");
-            this.metroComboBox1.Items.AddRange(new object[] {
-            resources.GetString("metroComboBox1.Items"),
-            resources.GetString("metroComboBox1.Items1"),
-            resources.GetString("metroComboBox1.Items2"),
-            resources.GetString("metroComboBox1.Items3"),
-            resources.GetString("metroComboBox1.Items4"),
-            resources.GetString("metroComboBox1.Items5"),
-            resources.GetString("metroComboBox1.Items6"),
-            resources.GetString("metroComboBox1.Items7"),
-            resources.GetString("metroComboBox1.Items8")});
-            this.metroComboBox1.Name = "metroComboBox1";
-            this.metroComboBox1.Style = MetroFramework.MetroColorStyle.Silver;
-            this.metroComboBox1.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.metroComboBox1.UseSelectable = true;
+            this.resolutionComboBox.FormattingEnabled = true;
+            resources.ApplyResources(this.resolutionComboBox, "resolutionComboBox");
+            this.resolutionComboBox.Items.AddRange(new object[] {
+            resources.GetString("resolutionComboBox.Items"),
+            resources.GetString("resolutionComboBox.Items1"),
+            resources.GetString("resolutionComboBox.Items2"),
+            resources.GetString("resolutionComboBox.Items3"),
+            resources.GetString("resolutionComboBox.Items4"),
+            resources.GetString("resolutionComboBox.Items5"),
+            resources.GetString("resolutionComboBox.Items6"),
+            resources.GetString("resolutionComboBox.Items7"),
+            resources.GetString("resolutionComboBox.Items8")});
+            this.resolutionComboBox.Name = "resolutionComboBox";
+            this.resolutionComboBox.Style = MetroFramework.MetroColorStyle.Silver;
+            this.resolutionComboBox.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.resolutionComboBox.UseSelectable = true;
             // 
             // label1
             // 
@@ -112,11 +112,10 @@
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.metroComboBox1);
+            this.Controls.Add(this.resolutionComboBox);
             this.Controls.Add(this.InputTextBox);
             this.Controls.Add(this.OKButton);
             this.Controls.Add(this.TextLabel);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "CreateTexturePack";
@@ -133,7 +132,7 @@
         public System.Windows.Forms.Button OKButton;
         public System.Windows.Forms.Label TextLabel;
         private MetroFramework.Controls.MetroTextBox InputTextBox;
-		private MetroFramework.Controls.MetroComboBox metroComboBox1;
+		private MetroFramework.Controls.MetroComboBox resolutionComboBox;
 		public System.Windows.Forms.Label label1;
 	}
 }

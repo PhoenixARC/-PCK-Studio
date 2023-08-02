@@ -213,55 +213,55 @@
   <data name="&gt;&gt;InputTextBox.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="metroComboBox1.ItemHeight" type="System.Int32, mscorlib">
+  <data name="resolutionComboBox.ItemHeight" type="System.Int32, mscorlib">
     <value>23</value>
   </data>
-  <data name="metroComboBox1.Items" xml:space="preserve">
+  <data name="resolutionComboBox.Items" xml:space="preserve">
     <value>x8</value>
   </data>
-  <data name="metroComboBox1.Items1" xml:space="preserve">
+  <data name="resolutionComboBox.Items1" xml:space="preserve">
     <value>x16</value>
   </data>
-  <data name="metroComboBox1.Items2" xml:space="preserve">
+  <data name="resolutionComboBox.Items2" xml:space="preserve">
     <value>x32</value>
   </data>
-  <data name="metroComboBox1.Items3" xml:space="preserve">
+  <data name="resolutionComboBox.Items3" xml:space="preserve">
     <value>x48</value>
   </data>
-  <data name="metroComboBox1.Items4" xml:space="preserve">
+  <data name="resolutionComboBox.Items4" xml:space="preserve">
     <value>x64</value>
   </data>
-  <data name="metroComboBox1.Items5" xml:space="preserve">
+  <data name="resolutionComboBox.Items5" xml:space="preserve">
     <value>x80</value>
   </data>
-  <data name="metroComboBox1.Items6" xml:space="preserve">
+  <data name="resolutionComboBox.Items6" xml:space="preserve">
     <value>x96</value>
   </data>
-  <data name="metroComboBox1.Items7" xml:space="preserve">
+  <data name="resolutionComboBox.Items7" xml:space="preserve">
     <value>x112</value>
   </data>
-  <data name="metroComboBox1.Items8" xml:space="preserve">
+  <data name="resolutionComboBox.Items8" xml:space="preserve">
     <value>x128</value>
   </data>
-  <data name="metroComboBox1.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="resolutionComboBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>60, 39</value>
   </data>
-  <data name="metroComboBox1.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="resolutionComboBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>165, 29</value>
   </data>
-  <data name="metroComboBox1.TabIndex" type="System.Int32, mscorlib">
+  <data name="resolutionComboBox.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
   </data>
-  <data name="&gt;&gt;metroComboBox1.Name" xml:space="preserve">
-    <value>metroComboBox1</value>
+  <data name="&gt;&gt;resolutionComboBox.Name" xml:space="preserve">
+    <value>resolutionComboBox</value>
   </data>
-  <data name="&gt;&gt;metroComboBox1.Type" xml:space="preserve">
+  <data name="&gt;&gt;resolutionComboBox.Type" xml:space="preserve">
     <value>MetroFramework.Controls.MetroComboBox, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
   </data>
-  <data name="&gt;&gt;metroComboBox1.Parent" xml:space="preserve">
+  <data name="&gt;&gt;resolutionComboBox.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;metroComboBox1.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;resolutionComboBox.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
   <data name="label1.AutoSize" type="System.Boolean, mscorlib">

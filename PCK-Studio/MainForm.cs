@@ -18,7 +18,7 @@ using OMI.Workers.GameRule;
 using OMI.Workers.Language;
 
 using PckStudio.Properties;
-using PckStudio.Classes.FileTypes;
+using PckStudio.FileFormats;
 using PckStudio.Forms;
 using PckStudio.Forms.Utilities;
 using PckStudio.Forms.Editor;
@@ -157,6 +157,7 @@ namespace PckStudio
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
 		{
+			PckManager?.Close();
 			checkSaveState();
 		}
 
@@ -430,20 +431,12 @@ namespace PckStudio
 
 		private void HandleColourFile(PckFile.FileData file)
 		{
-			if (file.Size == 0)
-			{
-				MessageBox.Show("No Color data found.", "Error", MessageBoxButtons.OK,
-					MessageBoxIcon.Error);
-				return;
-			}
 			using COLEditor diag = new COLEditor(file);
 			wasModified = diag.ShowDialog(this) == DialogResult.OK;
 		}
 
 		public void HandleSkinFile(PckFile.FileData file)
 		{
-			if (file.Size <= 0)
-				return;
 			using (var ms = new MemoryStream(file.Data))
 			{
 				var texture = Image.FromStream(ms);
@@ -988,7 +981,12 @@ namespace PckStudio
 		{
 			if (treeViewMain.SelectedNode is TreeNode t && t.Tag is PckFile.FileData file)
 			{
-				pckFileTypeHandler[file.Filetype]?.Invoke(file);
+                if (file.Size <= 0)
+                {
+                    Debug.WriteLine($"'{file.Filename}' has no data attached.", category: nameof(HandleTextureFile));
+                    return;
+                }
+                pckFileTypeHandler[file.Filetype]?.Invoke(file);
 			}
 		}
 
@@ -1324,7 +1322,7 @@ namespace PckStudio
 		private void texturePackToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			checkSaveState();
-			CreateTexturePack packPrompt = new CreateTexturePack();
+			CreateTexturePackPrompt packPrompt = new CreateTexturePackPrompt();
 			if (packPrompt.ShowDialog() == DialogResult.OK)
 			{
 				currentPCK = InitializeTexturePack(new Random().Next(8000, int.MaxValue), 0, packPrompt.PackName, packPrompt.PackRes);
@@ -1337,7 +1335,7 @@ namespace PckStudio
 		private void mashUpPackToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			checkSaveState();
-			CreateTexturePack packPrompt = new CreateTexturePack();
+			CreateTexturePackPrompt packPrompt = new CreateTexturePackPrompt();
 			if (packPrompt.ShowDialog() == DialogResult.OK)
 			{
 				currentPCK = InitializeMashUpPack(new Random().Next(8000, int.MaxValue), 0, packPrompt.PackName, packPrompt.PackRes);
@@ -1350,7 +1348,7 @@ namespace PckStudio
 		private void quickChangeToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			using AdvancedOptions advanced = new AdvancedOptions(currentPCK);
-			advanced.littleEndian = LittleEndianCheckBox.Checked;
+			advanced.IsLittleEndian = LittleEndianCheckBox.Checked;
 			if (advanced.ShowDialog() == DialogResult.OK)
 			{
 				wasModified = true;
@@ -2283,13 +2281,15 @@ namespace PckStudio
 		private void openPckManagerToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			PckManager ??= new PckManager();
-			PckManager.BringToFront();
-			PckManager.Focus();
-			if (!PckManager.Visible)
+			PckManager.FormClosing += (s, e) =>
 			{
-				PckManager.FormClosed += delegate { PckManager = null; };
-				PckManager.Show(this);
-			}
+				PckManager.Hide();
+				e.Cancel = true;
+			};
+			if (!PckManager.Visible)
+				PckManager.Show();
+			if (PckManager.Focus())
+				PckManager.BringToFront();
 		}
 
 		private async void wavBinkaToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2339,7 +2339,7 @@ namespace PckStudio
 
 				if (exitCode == 0)
 					convertedCount++;
-			}
+				}
 
 			int fileCount = fileDialog.FileNames.Length;
 
