@@ -80,24 +80,5 @@ namespace PckStudio.Forms.Utilities
                 return _blockImageList;
             }
         }
-
-        internal static JObject ConvertAnimationToJson(Animation animation)
-        {
-            JObject janimation = new JObject();
-            JObject mcmeta = new JObject();
-            mcmeta["comment"] = $"Animation converted by {Application.ProductName}";
-            mcmeta["animation"] = janimation;
-            JArray jframes = new JArray();
-            foreach (var frame in animation.GetFrames())
-            {
-                JObject jframe = new JObject();
-                jframe["index"] = animation.GetTextureIndex(frame.Texture);
-                jframe["time"] = frame.Ticks;
-                jframes.Add(jframe);
-            };
-            janimation["interpolation"] = animation.Interpolate;
-            janimation["frames"] = jframes;
-            return mcmeta;
-        }
     }
 }

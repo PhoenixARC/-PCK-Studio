@@ -404,7 +404,7 @@ namespace PckStudio.Forms.Editor
 			fileDialog.Filter = "Animation Scripts (*.mcmeta)|*.png.mcmeta";
 			if (fileDialog.ShowDialog(this) == DialogResult.OK)
             {
-                JObject mcmeta = AnimationResources.ConvertAnimationToJson(currentAnimation);
+                JObject mcmeta = currentAnimation.ConvertToJavaAnimation();
                 string jsondata = JsonConvert.SerializeObject(mcmeta, Formatting.Indented);
                 string filename = fileDialog.FileName;
                 File.WriteAllText(filename, jsondata);
