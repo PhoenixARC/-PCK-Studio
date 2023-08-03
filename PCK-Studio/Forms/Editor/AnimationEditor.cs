@@ -27,42 +27,75 @@ namespace PckStudio.Forms.Editor
 
 		private string TileName = string.Empty;
 
+		private readonly bool hasBlendColor = false;
+		private Color blendColor;
         private bool IsSpecialTile(string tileName)
         {
 			return tileName == "clock" || tileName == "compass";
         }
 
-        public AnimationEditor(PckFile.FileData file)
+		private AnimationEditor()
 		{
-			InitializeComponent();
-			animationFile = file;
+            InitializeComponent();
+            toolStripSeparator1.Visible = saveToolStripMenuItem1.Visible = !Settings.Default.AutoSaveChanges;
+        }
 
-			TileName = Path.GetFileNameWithoutExtension(animationFile.Filename);
+        internal AnimationEditor(Animation animation, string tileName)
+			: this()
+		{
+			currentAnimation = animation;
+			TileName = tileName;
+        }
 
-			bulkAnimationSpeedToolStripMenuItem.Enabled =
-			importToolStripMenuItem.Enabled =
-			exportAsToolStripMenuItem.Enabled =
-			InterpolationCheckbox.Visible = !IsSpecialTile(TileName);
+        public AnimationEditor(PckFile.FileData file)
+			: this()
+        {
+            animationFile = file;
+            TileName = Path.GetFileNameWithoutExtension(animationFile.Filename);
+        }
 
-			toolStripSeparator1.Visible = saveToolStripMenuItem1.Visible = !Settings.Default.AutoSaveChanges;
+        public AnimationEditor(PckFile.FileData file, Color blendColor)
+			: this(file)
+		{
+			hasBlendColor = true;
+			this.blendColor = blendColor;
+		}
 
-			currentAnimation = new Animation(Array.Empty<Image>());
-            if (animationFile.Size > 0)
-			{
-				using MemoryStream textureMem = new MemoryStream(animationFile.Data);
-				var texture = new Bitmap(textureMem);
-				var frameTextures = texture.CreateImageList(ImageLayoutDirection.Vertical);
 
-				currentAnimation = animationFile.Properties.HasProperty("ANIM")
-					? new Animation(frameTextures, animationFile.Properties.GetPropertyValue("ANIM"))
-					: new Animation(frameTextures, string.Empty);
-			}
+        private void AnimationEditor_Load(object sender, EventArgs e)
+        {
+            bulkAnimationSpeedToolStripMenuItem.Enabled =
+            importToolStripMenuItem.Enabled =
+            exportAsToolStripMenuItem.Enabled =
+            InterpolationCheckbox.Visible = !IsSpecialTile(TileName);
+
+			if (currentAnimation is null)
+				CreateAnimation();
+            SetTileLabel();
+            LoadAnimationTreeView();
+        }
+
+        private void CreateAnimation()
+        {
+            currentAnimation = new Animation(Array.Empty<Image>());
+            if (animationFile is not null && animationFile.Size > 0)
+            {
+                using MemoryStream textureMem = new MemoryStream(animationFile.Data);
+                var texture = new Bitmap(textureMem);
+                var frameTextures = texture.CreateImageList(ImageLayoutDirection.Vertical);
+                if (hasBlendColor)
+                {
+                    frameTextures = frameTextures.Select(frameTexture => frameTexture.Blend(blendColor, BlendMode.Multiply));
+                }
+
+                currentAnimation = animationFile.Properties.HasProperty("ANIM")
+                    ? new Animation(frameTextures, animationFile.Properties.GetPropertyValue("ANIM"))
+                    : new Animation(frameTextures, string.Empty);
+            }
 			currentAnimation.Category = animationFile.Filename.Split('/').Contains("items")
 				? Animation.AnimationCategory.Items
 				: Animation.AnimationCategory.Blocks;
-			SetTileLabel();
-            LoadAnimationTreeView();
-		}
+        }
 
         private void LoadAnimationTreeView()
 		{
@@ -131,7 +164,7 @@ namespace PckStudio.Forms.Editor
 
 		private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
-			if (!IsSpecialTile(TileName) && currentAnimation is not null)
+			if (!IsSpecialTile(TileName) && currentAnimation is not null && animationFile is not null)
 			{
 				string anim = currentAnimation.BuildAnim();
 				animationFile.Properties.SetProperty("ANIM", anim);
@@ -546,5 +579,5 @@ namespace PckStudio.Forms.Editor
 				"All time related functions in Minecraft use ticks, notably redstone repeaters. There are 20 ticks in 1 second, so " +
 				"1 tick is 1/20 of a second. To find how long your frame is, divide the frame time by 20", "Frame Time and Ticks");
 		}
-	}
+    }
 }

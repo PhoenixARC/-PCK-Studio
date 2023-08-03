@@ -4,7 +4,10 @@
 	"blocks": [
 		{
 			"internalName": "grass_top",
-			"displayName": "Grass Block (Top)"
+			"displayName": "Grass Block (Top)",
+			"hasColourEntry": true,
+			"isWaterColour": false,
+			"colourEntryName": "Grass_Common"
 		},
 		{
 			"internalName": "stone",
@@ -156,7 +159,10 @@
 		},
 		{
 			"internalName": "grass_side_overlay",
-			"displayName": "Grass Side (Overlay)"
+			"displayName": "Grass Side (Overlay)",
+			"hasColourEntry": true,
+			"isWaterColour": false,
+			"colourEntryName": "Grass_Common"
 		},
 		{
 			"internalName": "tallgrass",
@@ -824,11 +830,17 @@
 		},
 		{
 			"internalName": "water",
-			"displayName": "Water"
+			"displayName": "Water",
+			"hasColourEntry": true,
+			"isWaterColour": true,
+			"colourEntryName": "default"
 		},
 		{
 			"internalName": "water_flow",
-			"displayName": "Flowing Water"
+			"displayName": "Flowing Water",
+			"hasColourEntry": true,
+			"isWaterColour": true,
+			"colourEntryName": "default"
 		},
 		{
 			"internalName": "",

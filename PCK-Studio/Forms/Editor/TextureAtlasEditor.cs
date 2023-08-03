@@ -22,9 +22,12 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using MetroFramework.Forms;
+using OMI.Formats.Color;
 using OMI.Formats.Pck;
+using OMI.Workers.Color;
 using PckStudio.Extensions;
 using PckStudio.Forms.Editor;
 using PckStudio.Forms.Utilities;
@@ -49,13 +52,15 @@ namespace PckStudio
             internal readonly string Name;
             internal readonly string TextureName;
             internal readonly Rectangle Area;
+            internal readonly AnimationResources.TileInfo Tile;
 
-            public SelectedTile(int index, string name, string textureName, Rectangle area)
+            public SelectedTile(int index, string name, string textureName, Rectangle area, AnimationResources.TileInfo tile)
             {
                 Index = index;
                 Name = name;
                 TextureName = textureName;
                 Area = area;
+                Tile = tile;
             }
         }
 
@@ -68,6 +73,8 @@ namespace PckStudio
         private readonly List<AnimationResources.TileInfo> _textureInfos;
 
         private SelectedTile _selectedItem = new SelectedTile();
+        private ColorContainer _colourTable;
+
         private int SelectedIndex
         {
             set => SetImageDisplayed(value);
@@ -78,6 +85,8 @@ namespace PckStudio
         public TextureAtlasEditor(PckFile pckFile, string path, Image atlas, Size areaSize)
         {
             InitializeComponent();
+
+            AcquireColorTable(pckFile);
             _areaSize = areaSize;
             _pckFile = pckFile;
             _rowCount = atlas.Width / areaSize.Width;
@@ -94,8 +103,24 @@ namespace PckStudio
             SelectedIndex = 0;
         }
 
+        private bool AcquireColorTable(PckFile pckFile)
+        {
+            if (pckFile.TryGetFile("colours.col", PckFile.FileData.FileType.ColourTableFile, out var colFile) &&
+                colFile.Size > 0)
+            {
+                using var ms = new MemoryStream(colFile.Data);
+                var reader = new COLFileReader();
+                _colourTable = reader.FromStream(ms);
+                return true;
+            }
+            _colourTable = null;
+            return false;
+        }
+
         private void SetImageDisplayed(int index)
         {
+            if (selectTilePictureBox.IsPlaying)
+                selectTilePictureBox.Stop();
             prevButton.Enabled = index > 0;
             nextButton.Enabled = index < _textures.Count - 1;
             infoTextBox.Text = string.Empty;
@@ -105,20 +130,33 @@ namespace PckStudio
                 var info = _textureInfos[index];
                 var pos = GetSelectedPoint(index, _rowCount, _columnCount, _imageLayout);
                 var selectedArea = new Rectangle(pos.X * _areaSize.Width, pos.Y * _areaSize.Height, _areaSize.Width, _areaSize.Height);
-                _selectedItem = new SelectedTile(index, info.DisplayName, info.InternalName, selectedArea);
+                _selectedItem = new SelectedTile(index, info.DisplayName, info.InternalName, selectedArea, info);
                 
                 infoTextBox.Text = $"{_selectedItem.Name}\n{_selectedItem.TextureName}";
-                animationButton.Text =
-                    _pckFile.Files.Contains($"res/textures/{_atlasType}/{_selectedItem.TextureName}.png", PckFile.FileData.FileType.TextureFile)
-                    ? "Open Animation"
-                    : "Create Animation";
+                bool hasAnimation = _pckFile.Files.TryGetValue($"res/textures/{_atlasType}/{_selectedItem.TextureName}.png", PckFile.FileData.FileType.TextureFile, out var animationFile);
+                animationButton.Text = hasAnimation ? "Edit Animation" : "Create Animation";
+                if (hasAnimation && animationFile.Size > 0)
+                {
+                    using var ms = new MemoryStream(animationFile.Data);
+                    var img = Image.FromStream(ms);
+                    var textures = img.CreateImageList(ImageLayoutDirection.Vertical);
+                    selectTilePictureBox.Start(new Internal.Animation(textures, animationFile.Properties.GetPropertyValue("ANIM")));
+                    return;
+                }
             }
 
             if (_textures.IndexInRange(index))
             {
-                selectTilePictureBox.Image = _textures[index];
+                var img = _textures[index];
+                if (_selectedItem.Tile.HasColourEntry &&
+                    !string.IsNullOrWhiteSpace(_selectedItem.Tile.ColourEntryName) &&
+                    _colourTable is not null &&
+                    _colourTable.Colors.FirstOrDefault(entry => entry.Name == _selectedItem.Tile.ColourEntryName) is ColorContainer.Color color)
+                {
+                    img = img.Blend(color.ColorPallette, BlendMode.Multiply);
+                }
+                selectTilePictureBox.Image = img;
             }
-
         }
 
         private void prevButton_Click(object sender, EventArgs e)
@@ -292,7 +330,29 @@ namespace PckStudio
             {
                 file = new PckFile.FileData($"res/textures/{_atlasType}/{_selectedItem.TextureName}.png", PckFile.FileData.FileType.TextureFile);
             }
-            var animationEditor = new AnimationEditor(file);
+
+            AnimationEditor animationEditor;
+            if (_selectedItem.Tile.HasColourEntry &&
+                !string.IsNullOrWhiteSpace(_selectedItem.Tile.ColourEntryName) &&
+                _colourTable is not null)
+            {
+                Color blenColor = Color.White;
+                if (_selectedItem.Tile.IsWaterColour &&
+                    _colourTable.WaterColors.FirstOrDefault(entry => entry.Name == _selectedItem.Tile.ColourEntryName) is ColorContainer.WaterColor waterColor)
+                {
+                    blenColor = waterColor.SurfaceColor;
+                }
+                else if (_colourTable.Colors.FirstOrDefault(entry => entry.Name == _selectedItem.Tile.ColourEntryName) is ColorContainer.Color color)
+                {
+                    blenColor = color.ColorPallette;
+                }
+                animationEditor = new AnimationEditor(file, blenColor);
+            }
+            else
+            {
+                animationEditor = new AnimationEditor(file);
+            }
+
             if (animationEditor.ShowDialog() == DialogResult.OK && isNewFile)
             {
                 _pckFile.Files.Add(file);

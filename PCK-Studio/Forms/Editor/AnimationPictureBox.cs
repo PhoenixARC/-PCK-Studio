@@ -28,7 +28,7 @@ using PckStudio.Internal;
 
 namespace PckStudio.Forms.Editor
 {
-	internal class AnimationPictureBox : PictureBox
+	internal class AnimationPictureBox : PictureBoxWithInterpolationMode
     {
 		public bool IsPlaying => _isPlaying;
 
@@ -39,6 +39,7 @@ namespace PckStudio.Forms.Editor
 		private Animation.Frame currentFrame;
 		private Animation _animation;
 		private CancellationTokenSource cts = new CancellationTokenSource();
+		private object l_dispose = new object();
 
         public void Start(Animation animation)
 		{
@@ -97,7 +98,8 @@ namespace PckStudio.Forms.Editor
 					continue;
 				}
 				SetAnimationFrame(currentFrame);
-                await Task.Delay(TickInMillisecond * currentFrame.Ticks);
+                if (!await DelayAsync(TickInMillisecond * currentFrame.Ticks, cts.Token))
+                    break;
             }
             _isPlaying = false;
 		}
@@ -107,13 +109,33 @@ namespace PckStudio.Forms.Editor
             for (int tick = 0; tick < currentFrame.Ticks && !cts.IsCancellationRequested; tick++)
             {
                 double delta = 1.0f - tick / (double)currentFrame.Ticks;
-				Invoke(() =>
-				{
-                    if (!Disposing)
-                        Image = currentFrame.Texture.Interpolate(nextFrame.Texture, delta);
-				});
-                await Task.Delay(TickInMillisecond);
+				if (!IsHandleCreated)
+					break;
+                lock (l_dispose)
+                {
+					Invoke(() =>
+					{
+						Image = currentFrame.Texture.Interpolate(nextFrame.Texture, delta);
+					});
+                }
+
+				if (!await DelayAsync(TickInMillisecond, cts.Token))
+					break;
             }
+        }
+
+		private async Task<bool> DelayAsync(int millisecondsDelay, CancellationToken cancellationToken, [CallerMemberName] string caller = default!)
+		{
+            try
+            {
+                await Task.Delay(millisecondsDelay, cancellationToken);
+            }
+            catch
+            {
+                Debug.WriteLine($"Stoping {caller}");
+				return false;
+            }
+			return true;
         }
 
 		private Animation.Frame SetAnimationFrame(int frameIndex)
@@ -125,7 +147,23 @@ namespace PckStudio.Forms.Editor
 
 		private void SetAnimationFrame(Animation.Frame frame)
 		{
-            Invoke(() => Image = frame.Texture);
+			if (!IsHandleCreated)
+				return;
+            lock (l_dispose)
+            {
+				Invoke(() =>
+				{
+					Image = frame.Texture;
+				});
+            }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+			lock(l_dispose)
+			{
+				base.Dispose(disposing);
+			}
         }
 	}
 }

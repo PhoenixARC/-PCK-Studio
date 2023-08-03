@@ -37,7 +37,7 @@
             this.extractTileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.originalPictureBox = new PckStudio.PictureBoxWithInterpolationMode();
-            this.selectTilePictureBox = new PckStudio.PictureBoxWithInterpolationMode();
+            this.selectTilePictureBox = new PckStudio.Forms.Editor.AnimationPictureBox();
             this.infoTextBox = new System.Windows.Forms.RichTextBox();
             this.replaceButton = new MetroFramework.Controls.MetroButton();
             this.animationButton = new MetroFramework.Controls.MetroButton();
@@ -243,7 +243,7 @@
 
         #endregion
 
-        private PictureBoxWithInterpolationMode selectTilePictureBox;
+        private PckStudio.Forms.Editor.AnimationPictureBox selectTilePictureBox;
         private MetroFramework.Controls.MetroButton prevButton;
         private MetroFramework.Controls.MetroButton nextButton;
         private System.Windows.Forms.MenuStrip menuStrip1;

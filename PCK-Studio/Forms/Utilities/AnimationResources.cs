@@ -34,6 +34,15 @@ namespace PckStudio.Forms.Utilities
             [JsonProperty("internalName")]
             public string InternalName { get; set; }
 
+            [JsonProperty("hasColourEntry", DefaultValueHandling = DefaultValueHandling.Populate)]
+            public bool HasColourEntry { get; set; }
+
+            [JsonProperty("isWaterColour", DefaultValueHandling = DefaultValueHandling.Populate)]
+            public bool IsWaterColour { get; set; }
+
+            [JsonProperty("colourEntryName", DefaultValueHandling = DefaultValueHandling.Populate)]
+            public string ColourEntryName { get; set; }
+
             public TileInfo(string displayName, string internalName)
             {
                 DisplayName = displayName;
