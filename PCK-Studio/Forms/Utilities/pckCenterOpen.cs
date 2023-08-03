@@ -1034,15 +1034,15 @@ namespace PckStudio.Forms
 
                         if (saveSkin.Width == saveSkin.Height)
                         {
-                            saveSkin.ResizeImage(64, 64, config);
+                            saveSkin.Resize(64, 64, config);
                         }
                         else if (saveSkin.Height == saveSkin.Width / 2)
                         {
-                            saveSkin.ResizeImage(64, 32, config);
+                            saveSkin.Resize(64, 32, config);
                         }
                         else
                         {
-                            saveSkin.ResizeImage(64, 64, config);
+                            saveSkin.Resize(64, 64, config);
                         }
                         saveSkin.Save(root + "/" + skinTexture.Filename, ImageFormat.Png);
                     }

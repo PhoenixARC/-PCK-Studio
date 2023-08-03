@@ -265,7 +265,7 @@ namespace PckStudio
                 PixelOffsetMode = PixelOffsetMode.HighQuality
             };
             if (texture.Size != _areaSize)
-                texture = texture.ResizeImage(_areaSize, graphicsConfig);
+                texture = texture.Resize(_areaSize, graphicsConfig);
             using (var g = Graphics.FromImage(originalPictureBox.Image))
             {
                 g.ApplyConfig(graphicsConfig);
@@ -348,7 +348,6 @@ namespace PckStudio
             }
 
             return false;
-            // return base.ProcessDialogKey(keyData);
         }
     }
 }

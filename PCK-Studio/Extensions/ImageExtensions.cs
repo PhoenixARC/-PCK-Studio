@@ -125,12 +125,12 @@ namespace PckStudio.Extensions
             return new Size(width, height);
         }
 
-        internal static Image ResizeImage(this Image image, Size size, GraphicsConfig graphicsConfig)
+        internal static Image Resize(this Image image, Size size, GraphicsConfig graphicsConfig)
         {
-            return image.ResizeImage(size.Width, size.Height, graphicsConfig);
+            return image.Resize(size.Width, size.Height, graphicsConfig);
         }
 
-        internal static Image ResizeImage(this Image image, int width, int height, GraphicsConfig graphicsConfig)
+        internal static Image Resize(this Image image, int width, int height, GraphicsConfig graphicsConfig)
         {
             var destRect = new Rectangle(0, 0, width, height);
             var destImage = new Bitmap(width, height);
