@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="16.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <LangVersion>preview</LangVersion>
@@ -18,45 +18,6 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
-  <Target Name="GetGitInfo" BeforeTargets="WriteGitInfo" Condition="'$(BuildHash)' == ''">
-    <!-- write hash and branch to console.-->
-    <Exec Condition="'$(Configuration)' == 'Debug'" Command="git -C $(ProjectDir) describe --always" ConsoleToMsBuild="true">
-      <Output TaskParameter="ConsoleOutput" PropertyName="GitHash" />
-    </Exec>
-    <Exec Command="git -C $(ProjectDir) branch --show-current" ConsoleToMsBuild="true">
-      <Output TaskParameter="ConsoleOutput" PropertyName="GitBranch" />
-    </Exec>
-    <PropertyGroup>
-      <BuildHash Condition="'$(Configuration)' == 'Debug'">$(GitHash)</BuildHash>
-      <BuildBranch>$(GitBranch)</BuildBranch>
-    </PropertyGroup>
-  </Target>
-  <Target Name="WriteGitInfo" BeforeTargets="CoreCompile">
-    <!-- names the obj/.../GitAssemblyInfo.cs file -->
-    <PropertyGroup>
-      <GitAssemblyInfoFile>$(IntermediateOutputPath)GitAssemblyInfo.cs</GitAssemblyInfoFile>
-    </PropertyGroup>
-    <!-- includes the GitAssemblyInfo for compilation into your project -->
-    <ItemGroup>
-      <Compile Include="$(GitAssemblyInfoFile)" />
-    </ItemGroup>
-    <!-- defines the AssemblyMetadata attribute that will be written -->
-    <ItemGroup>
-      <AssemblyAttributes Include="AssemblyMetadata" Condition="'$(Configuration)' == 'Debug'">
-        <_Parameter1>GitHash</_Parameter1>
-        <_Parameter2>$(BuildHash)</_Parameter2>
-      </AssemblyAttributes>
-      <AssemblyAttributes Include="AssemblyMetadata">
-        <_Parameter1>GitBranch</_Parameter1>
-        <_Parameter2>$(BuildBranch)</_Parameter2>
-      </AssemblyAttributes>
-    </ItemGroup>
-    <!-- writes the attribute to the GitAssemblyInfo file -->
-    <WriteCodeFragment Language="C#" OutputFile="$(GitAssemblyInfoFile)" AssemblyAttributes="@(AssemblyAttributes)" />
-  </Target>
-  <Target Name="Delete PDBs" AfterTargets="Build" Condition=" '$(Configuration)' != 'Debug' ">
-    <Exec Command="del $(OutputPath)*.pdb" />
-  </Target>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -798,4 +759,57 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+
+
+    <Target Name="GetGitInfo" BeforeTargets="WriteGitInfo" Condition="'$(BuildHash)' == ''">
+	    <!-- write hash and branch to console.-->
+	    <Exec Condition="'$(Configuration)' == 'Debug'" Command="git -C $(ProjectDir) describe --always" ConsoleToMsBuild="true">
+		    <Output TaskParameter="ConsoleOutput" PropertyName="GitHash" />
+	    </Exec>
+	    <Exec Command="git -C $(ProjectDir) branch --show-current" ConsoleToMsBuild="true">
+		    <Output TaskParameter="ConsoleOutput" PropertyName="GitBranch" />
+	    </Exec>
+	    <PropertyGroup>
+		    <BuildHash Condition="'$(Configuration)' == 'Debug'">$(GitHash)</BuildHash>
+		    <BuildBranch>$(GitBranch)</BuildBranch>
+	    </PropertyGroup>
+    </Target>
+    <Target Name="WriteGitInfo" BeforeTargets="CoreCompile">
+	    <!-- names the obj/.../GitAssemblyInfo.cs file -->
+	    <PropertyGroup>
+		    <GitAssemblyInfoFile>$(IntermediateOutputPath)GitAssemblyInfo.cs</GitAssemblyInfoFile>
+	    </PropertyGroup>
+	    <!-- includes the GitAssemblyInfo for compilation into your project -->
+	    <ItemGroup>
+		    <Compile Include="$(GitAssemblyInfoFile)" />
+	    </ItemGroup>
+	    <!-- defines the AssemblyMetadata attribute that will be written -->
+	    <ItemGroup>
+		    <AssemblyAttributes Include="AssemblyMetadata" Condition="'$(Configuration)' == 'Debug'">
+			    <_Parameter1>GitHash</_Parameter1>
+			    <_Parameter2>$(BuildHash)</_Parameter2>
+		    </AssemblyAttributes>
+		    <AssemblyAttributes Include="AssemblyMetadata">
+			    <_Parameter1>GitBranch</_Parameter1>
+			    <_Parameter2>$(BuildBranch)</_Parameter2>
+		    </AssemblyAttributes>
+	    </ItemGroup>
+	    <!-- writes the attribute to the GitAssemblyInfo file -->
+	    <WriteCodeFragment Language="C#" OutputFile="$(GitAssemblyInfoFile)" AssemblyAttributes="@(AssemblyAttributes)" />
+    </Target>
+
+	<Target Name="Delete PDBs" AfterTargets="Build" Condition=" '$(Configuration)' != 'Debug' ">
+		<Exec Command="del $(OutputPath)*.pdb" />
+	</Target>
+
+	<Target Name="ZipOutputPath" AfterTargets="Build" Condition="'$(Configuration)' == 'Beta'">
+		<PropertyGroup>
+			<StringDate>$([System.DateTime]::Now.ToString('yyyy-MM-dd'))</StringDate>
+		</PropertyGroup>
+		<ZipDirectory
+            SourceDirectory="$(OutputPath)"
+            DestinationFile="$(OutputPath)\..\$(AssemblyName)_$(Configuration)_$(StringDate).zip"
+            Overwrite="true" />
+	</Target>
+	
 </Project>
