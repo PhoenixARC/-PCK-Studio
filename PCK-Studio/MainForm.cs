@@ -74,13 +74,6 @@ namespace PckStudio
             labelVersion.Text = $"{Application.ProductName}: {Application.ProductVersion}";
 			ChangelogRichTextBox.Text = Resources.CHANGELOG;
 
-#if BETA
-			labelVersion.Text += $"{ApplicationBuildInfo.BetaBuildVersion}@{CommitInfo.BranchName}";
-#endif
-#if DEBUG
-			labelVersion.Text += $" (Debug build: {CommitInfo.BranchName}@{CommitInfo.CommitHash})";
-#endif
-
             pckFileTypeHandler = new Dictionary<PckFile.FileData.FileType, Action<PckFile.FileData>>(15)
 			{
 				[PckFile.FileData.FileType.SkinFile]            = HandleSkinFile,
