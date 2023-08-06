@@ -9,6 +9,7 @@ using OMI.Formats.Pck;
 using PckStudio.Internal;
 using PckStudio.Forms.Editor;
 using PckStudio.Classes.IO._3DST;
+using PckStudio.Properties;
 
 namespace PckStudio
 {
@@ -24,7 +25,6 @@ namespace PckStudio
         SkinANIM anim = new SkinANIM();
 
         eSkinType skinType;
-        PckFile.PCKProperties generatedModel = new PckFile.PCKProperties();
 
         enum eSkinType : int
         {
@@ -281,28 +281,22 @@ namespace PckStudio
             //Prompt for skin model generator
             if (MessageBox.Show("Create your own custom skin model?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1) != DialogResult.Yes)
                 return;
-            
-            generateModel generate = new generateModel(generatedModel, Properties.Resources.classic_template);
 
-            if (generate.ShowDialog() == DialogResult.OK) //Opens Model Generator Dialog
+            using var ms = new MemoryStream();
+            Resources.classic_template.Save(ms, ImageFormat.Png);
+            skin.SetData(ms.ToArray());
+
+            generateModel generate = new generateModel(skin);
+
+            if (generate.ShowDialog() == DialogResult.OK)
             {
-                try
+                displayBox.Image = generate.PreviewImage;
+                buttonDone.Enabled = true;
+                labelSelectTexture.Visible = false;
+                if (skinType != eSkinType._64x64 && skinType != eSkinType._64x64HD)
                 {
-                    using (FileStream stream = File.OpenRead(Application.StartupPath + "\\temp.png"))
-                    {
-                        skinPictureBoxTexture.Image = Image.FromStream(stream);
-                    }
-                    buttonDone.Enabled = true;
-                    labelSelectTexture.Visible = false;
-                    if (skinType != eSkinType._64x64 && skinType != eSkinType._64x64HD)
-                    {
-                        buttonSkin.Location = new Point(buttonSkin.Location.X - skinPictureBoxTexture.Width, buttonSkin.Location.Y);
-                        skinType = eSkinType._64x64;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.ToString());
+                    buttonSkin.Location = new Point(buttonSkin.Location.X - skinPictureBoxTexture.Width, buttonSkin.Location.Y);
+                    skinType = eSkinType._64x64;
                 }
             }
         }

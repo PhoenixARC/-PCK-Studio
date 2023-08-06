@@ -407,22 +407,22 @@ namespace PckStudio
 
 		public void HandleSkinFile(PckFile.FileData file)
 		{
-			using (var ms = new MemoryStream(file.Data))
+			if (file.Properties.HasProperty("BOX"))
 			{
-				var texture = Image.FromStream(ms);
-				if (file.Properties.HasProperty("BOX"))
+				using generateModel generate = new generateModel(file);
+				if (generate.ShowDialog() == DialogResult.OK)
 				{
-					using generateModel generate = new generateModel(file.Properties, texture);
-					if (generate.ShowDialog() == DialogResult.OK)
-					{
-						entryDataTextBox.Text = entryTypeTextBox.Text = string.Empty;
-						wasModified = true;
-						ReloadMetaTreeView();
-					}
-					return;
+					entryDataTextBox.Text = entryTypeTextBox.Text = string.Empty;
+					wasModified = true;
+					ReloadMetaTreeView();
 				}
-				
-				var skinViewer = new SkinPreview(texture, file.Properties.GetPropertyValue("ANIM", SkinANIM.FromString));
+				return;
+			}
+			
+			using(var ms = new MemoryStream(file.Data))
+			{
+				var img = Image.FromStream(ms);
+				var skinViewer = new SkinPreview(img, file.Properties.GetPropertyValue("ANIM", SkinANIM.FromString));
 				skinViewer.ShowDialog(this);
 				skinViewer.Dispose();
 			}

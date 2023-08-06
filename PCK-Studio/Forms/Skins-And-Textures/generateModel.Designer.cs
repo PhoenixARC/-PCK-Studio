@@ -29,7 +29,12 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.Label label6;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(generateModel));
+            System.Windows.Forms.Label label5;
+            System.Windows.Forms.Label label3;
+            System.Windows.Forms.Label label7;
+            System.Windows.Forms.Label labelTextureMappingPreview;
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.createToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cloneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -52,21 +57,16 @@
             this.label13 = new System.Windows.Forms.Label();
             this.offsetHead = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
             this.comboParent = new System.Windows.Forms.ComboBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.buttonEXPORT = new System.Windows.Forms.Button();
-            this.label7 = new System.Windows.Forms.Label();
             this.buttonIMPORT = new System.Windows.Forms.Button();
-            this.texturePreview = new System.Windows.Forms.PictureBox();
-            this.labelTextureMappingPreview = new System.Windows.Forms.Label();
+            this.uvPictureBox = new PckStudio.PictureBoxWithInterpolationMode();
             this.buttonImportModel = new System.Windows.Forms.Button();
             this.displayBox = new System.Windows.Forms.PictureBox();
             this.buttonExportModel = new System.Windows.Forms.Button();
             this.OpenJSONButton = new System.Windows.Forms.Button();
             this.buttonTemplate = new MetroFramework.Controls.MetroButton();
-            this.checkTextureGenerate = new MetroFramework.Controls.MetroCheckBox();
+            this.generateTextureCheckBox = new MetroFramework.Controls.MetroCheckBox();
             this.checkGuide = new MetroFramework.Controls.MetroCheckBox();
             this.checkBoxArmor = new MetroFramework.Controls.MetroCheckBox();
             this.SizeXUpDown = new System.Windows.Forms.NumericUpDown();
@@ -87,12 +87,17 @@
             this.U = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.V = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.listViewBoxes = new System.Windows.Forms.ListView();
+            label6 = new System.Windows.Forms.Label();
+            label5 = new System.Windows.Forms.Label();
+            label3 = new System.Windows.Forms.Label();
+            label7 = new System.Windows.Forms.Label();
+            labelTextureMappingPreview = new System.Windows.Forms.Label();
             this.contextMenuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabBody.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.myTablePanel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.texturePreview)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.uvPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.displayBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SizeXUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SizeYUpDown)).BeginInit();
@@ -103,6 +108,36 @@
             ((System.ComponentModel.ISupportInitialize)(this.PosYUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PosXUpDown)).BeginInit();
             this.SuspendLayout();
+            // 
+            // label6
+            // 
+            resources.ApplyResources(label6, "label6");
+            label6.ForeColor = System.Drawing.Color.White;
+            label6.Name = "label6";
+            // 
+            // label5
+            // 
+            resources.ApplyResources(label5, "label5");
+            label5.ForeColor = System.Drawing.Color.White;
+            label5.Name = "label5";
+            // 
+            // label3
+            // 
+            resources.ApplyResources(label3, "label3");
+            label3.ForeColor = System.Drawing.Color.White;
+            label3.Name = "label3";
+            // 
+            // label7
+            // 
+            resources.ApplyResources(label7, "label7");
+            label7.ForeColor = System.Drawing.Color.White;
+            label7.Name = "label7";
+            // 
+            // labelTextureMappingPreview
+            // 
+            resources.ApplyResources(labelTextureMappingPreview, "labelTextureMappingPreview");
+            labelTextureMappingPreview.ForeColor = System.Drawing.Color.White;
+            labelTextureMappingPreview.Name = "labelTextureMappingPreview";
             // 
             // contextMenuStrip1
             // 
@@ -260,12 +295,6 @@
             this.label12.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
             this.label12.Name = "label12";
             // 
-            // label6
-            // 
-            resources.ApplyResources(this.label6, "label6");
-            this.label6.ForeColor = System.Drawing.Color.White;
-            this.label6.Name = "label6";
-            // 
             // comboParent
             // 
             this.comboParent.FormattingEnabled = true;
@@ -280,18 +309,6 @@
             this.comboParent.Name = "comboParent";
             this.comboParent.SelectedValueChanged += new System.EventHandler(this.comboParent_SelectedIndexChanged);
             // 
-            // label5
-            // 
-            resources.ApplyResources(this.label5, "label5");
-            this.label5.ForeColor = System.Drawing.Color.White;
-            this.label5.Name = "label5";
-            // 
-            // label3
-            // 
-            resources.ApplyResources(this.label3, "label3");
-            this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Name = "label3";
-            // 
             // buttonEXPORT
             // 
             resources.ApplyResources(this.buttonEXPORT, "buttonEXPORT");
@@ -299,12 +316,6 @@
             this.buttonEXPORT.Name = "buttonEXPORT";
             this.buttonEXPORT.UseVisualStyleBackColor = true;
             this.buttonEXPORT.Click += new System.EventHandler(this.buttonEXPORT_Click);
-            // 
-            // label7
-            // 
-            resources.ApplyResources(this.label7, "label7");
-            this.label7.ForeColor = System.Drawing.Color.White;
-            this.label7.Name = "label7";
             // 
             // buttonIMPORT
             // 
@@ -314,18 +325,13 @@
             this.buttonIMPORT.UseVisualStyleBackColor = true;
             this.buttonIMPORT.Click += new System.EventHandler(this.buttonIMPORT_Click);
             // 
-            // texturePreview
+            // uvPictureBox
             // 
-            this.texturePreview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            resources.ApplyResources(this.texturePreview, "texturePreview");
-            this.texturePreview.Name = "texturePreview";
-            this.texturePreview.TabStop = false;
-            // 
-            // labelTextureMappingPreview
-            // 
-            resources.ApplyResources(this.labelTextureMappingPreview, "labelTextureMappingPreview");
-            this.labelTextureMappingPreview.ForeColor = System.Drawing.Color.White;
-            this.labelTextureMappingPreview.Name = "labelTextureMappingPreview";
+            this.uvPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            resources.ApplyResources(this.uvPictureBox, "uvPictureBox");
+            this.uvPictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+            this.uvPictureBox.Name = "uvPictureBox";
+            this.uvPictureBox.TabStop = false;
             // 
             // buttonImportModel
             // 
@@ -367,12 +373,12 @@
             this.buttonTemplate.UseSelectable = true;
             this.buttonTemplate.Click += new System.EventHandler(this.buttonTemplate_Click);
             // 
-            // checkTextureGenerate
+            // generateTextureCheckBox
             // 
-            resources.ApplyResources(this.checkTextureGenerate, "checkTextureGenerate");
-            this.checkTextureGenerate.Name = "checkTextureGenerate";
-            this.checkTextureGenerate.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.checkTextureGenerate.UseSelectable = true;
+            resources.ApplyResources(this.generateTextureCheckBox, "generateTextureCheckBox");
+            this.generateTextureCheckBox.Name = "generateTextureCheckBox";
+            this.generateTextureCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.generateTextureCheckBox.UseSelectable = true;
             // 
             // checkGuide
             // 
@@ -380,7 +386,7 @@
             this.checkGuide.Name = "checkGuide";
             this.checkGuide.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.checkGuide.UseSelectable = true;
-            this.checkGuide.CheckedChanged += new System.EventHandler(this.render);
+            this.checkGuide.CheckedChanged += new System.EventHandler(this.Render);
             // 
             // checkBoxArmor
             // 
@@ -388,7 +394,7 @@
             this.checkBoxArmor.Name = "checkBoxArmor";
             this.checkBoxArmor.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.checkBoxArmor.UseSelectable = true;
-            this.checkBoxArmor.CheckedChanged += new System.EventHandler(this.render);
+            this.checkBoxArmor.CheckedChanged += new System.EventHandler(this.Render);
             // 
             // SizeXUpDown
             // 
@@ -523,7 +529,7 @@
             // 
             // listViewBoxes
             // 
-            this.listViewBoxes.Activation = System.Windows.Forms.ItemActivation.OneClick;
+            this.listViewBoxes.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.listViewBoxes.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.Part,
             this.X,
@@ -563,7 +569,7 @@
             this.Controls.Add(this.SizeXUpDown);
             this.Controls.Add(this.checkBoxArmor);
             this.Controls.Add(this.checkGuide);
-            this.Controls.Add(this.checkTextureGenerate);
+            this.Controls.Add(this.generateTextureCheckBox);
             this.Controls.Add(this.buttonTemplate);
             this.Controls.Add(this.displayBox);
             this.Controls.Add(this.listViewBoxes);
@@ -571,19 +577,19 @@
             this.Controls.Add(this.buttonExportModel);
             this.Controls.Add(this.buttonImportModel);
             this.Controls.Add(this.buttonEXPORT);
-            this.Controls.Add(this.labelTextureMappingPreview);
-            this.Controls.Add(this.texturePreview);
+            this.Controls.Add(labelTextureMappingPreview);
+            this.Controls.Add(this.uvPictureBox);
             this.Controls.Add(this.comboParent);
-            this.Controls.Add(this.label6);
+            this.Controls.Add(label6);
             this.Controls.Add(this.buttonIMPORT);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.label7);
+            this.Controls.Add(label7);
             this.Controls.Add(this.rotateLeftBtn);
             this.Controls.Add(this.rotateRightBtn);
             this.Controls.Add(this.labelView);
             this.Controls.Add(this.buttonDone);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label5);
+            this.Controls.Add(label3);
+            this.Controls.Add(label5);
             this.MaximizeBox = false;
             this.Name = "generateModel";
             this.Style = MetroFramework.MetroColorStyle.Silver;
@@ -597,7 +603,7 @@
             this.tabPage1.ResumeLayout(false);
             this.myTablePanel2.ResumeLayout(false);
             this.myTablePanel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.texturePreview)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.uvPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.displayBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SizeXUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SizeYUpDown)).EndInit();
@@ -623,15 +629,10 @@
         private System.Windows.Forms.Button buttonExportModel;
         private System.Windows.Forms.PictureBox displayBox;
         private System.Windows.Forms.Button buttonImportModel;
-        private System.Windows.Forms.Label labelTextureMappingPreview;
-        private System.Windows.Forms.PictureBox texturePreview;
+        private PckStudio.PictureBoxWithInterpolationMode uvPictureBox;
         private System.Windows.Forms.Button buttonIMPORT;
-        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button buttonEXPORT;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox comboParent;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TabControl tabBody;
         private System.Windows.Forms.TabPage tabPage1;
@@ -649,7 +650,7 @@
         private System.Windows.Forms.Button rotateRightBtn;
         private System.Windows.Forms.Label labelView;
         private MetroFramework.Controls.MetroButton buttonTemplate;
-        private MetroFramework.Controls.MetroCheckBox checkTextureGenerate;
+        private MetroFramework.Controls.MetroCheckBox generateTextureCheckBox;
         private MetroFramework.Controls.MetroCheckBox checkGuide;
         private MetroFramework.Controls.MetroCheckBox checkBoxArmor;
         private System.Windows.Forms.NumericUpDown SizeXUpDown;
