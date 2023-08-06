@@ -50,7 +50,7 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 
 		private void GetTileDataToView(string key, TreeNodeCollection collection, Action<TreeNode> additinalAction)
 		{
-			List<AnimationResources.TileInfo> textureInfos = key switch
+			List<AnimationResources.JsonTileInfo> textureInfos = key switch
 			{
 				"blocks" => AnimationResources.BlockTileInfos,
 				"items" => AnimationResources.ItemTileInfos,

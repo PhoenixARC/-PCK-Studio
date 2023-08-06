@@ -18,15 +18,15 @@ namespace PckStudio.Forms.Utilities
         internal class TileJson
         {
             [JsonProperty("blocks")]
-            public List<TileInfo> Blocks { get; set; }
+            public List<JsonTileInfo> Blocks { get; set; }
             [JsonProperty("items")]
-            public List<TileInfo> Items { get; set; }
+            public List<JsonTileInfo> Items { get; set; }
         }
 
         private static TileJson _jsonData;
         internal static TileJson JsonTileData => _jsonData ??= JsonConvert.DeserializeObject<TileJson>(Resources.tileData);
 
-        public class TileInfo
+        internal class JsonTileInfo
         {
             [JsonProperty("displayName")]
             public string DisplayName { get; set; }
@@ -37,22 +37,31 @@ namespace PckStudio.Forms.Utilities
             [JsonProperty("hasColourEntry", DefaultValueHandling = DefaultValueHandling.Populate)]
             public bool HasColourEntry { get; set; }
 
-            [JsonProperty("isWaterColour", DefaultValueHandling = DefaultValueHandling.Populate)]
-            public bool IsWaterColour { get; set; }
+            [JsonProperty("colourEntry", DefaultValueHandling = DefaultValueHandling.Populate)]
+            public JsonColorEntry ColourEntry { get; set; }
 
-            [JsonProperty("colourEntryName", DefaultValueHandling = DefaultValueHandling.Populate)]
-            public string ColourEntryName { get; set; }
-
-            public TileInfo(string displayName, string internalName)
+            public JsonTileInfo(string displayName, string internalName)
             {
                 DisplayName = displayName;
                 InternalName = internalName;
             }
         }
 
-        public static List<TileInfo> ItemTileInfos => JsonTileData.Items;
+        internal class JsonColorEntry
+        {
+            [JsonProperty("defaultName", Required = Required.Always)]
+            public string DefaultName { get; set; }
 
-        public static List<TileInfo> BlockTileInfos => JsonTileData.Blocks;
+            [JsonProperty("isWaterColour", DefaultValueHandling = DefaultValueHandling.Populate)]
+            public bool IsWaterColour { get; set; }
+
+            [JsonProperty("variants", DefaultValueHandling = DefaultValueHandling.Populate)]
+            public string[] Variants { get; set; }
+        }
+
+        internal static List<JsonTileInfo> ItemTileInfos => JsonTileData.Items;
+
+        internal static List<JsonTileInfo> BlockTileInfos => JsonTileData.Blocks;
 
         private static Image[] _itemImages;
         public static Image[] ItemImages => _itemImages ??= Resources.items_sheet.CreateImageList(16).ToArray();

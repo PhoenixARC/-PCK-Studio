@@ -52,9 +52,9 @@ namespace PckStudio
             internal readonly string Name;
             internal readonly string TextureName;
             internal readonly Rectangle Area;
-            internal readonly AnimationResources.TileInfo Tile;
+            internal readonly AnimationResources.JsonTileInfo Tile;
 
-            public SelectedTile(int index, string name, string textureName, Rectangle area, AnimationResources.TileInfo tile)
+            public SelectedTile(int index, string name, string textureName, Rectangle area, AnimationResources.JsonTileInfo tile)
             {
                 Index = index;
                 Name = name;
@@ -70,7 +70,7 @@ namespace PckStudio
         private readonly int _columnCount;
         private readonly string _atlasType;
         private readonly List<Image> _textures;
-        private readonly List<AnimationResources.TileInfo> _textureInfos;
+        private readonly List<AnimationResources.JsonTileInfo> _textureInfos;
 
         private SelectedTile _selectedItem = new SelectedTile();
         private ColorContainer _colourTable;
@@ -149,9 +149,10 @@ namespace PckStudio
             {
                 var img = _textures[index];
                 if (_selectedItem.Tile.HasColourEntry &&
-                    !string.IsNullOrWhiteSpace(_selectedItem.Tile.ColourEntryName) &&
+                    _selectedItem.Tile.HasColourEntry &&
+                    !string.IsNullOrWhiteSpace(_selectedItem.Tile.ColourEntry.DefaultName) &&
                     _colourTable is not null &&
-                    _colourTable.Colors.FirstOrDefault(entry => entry.Name == _selectedItem.Tile.ColourEntryName) is ColorContainer.Color color)
+                    _colourTable.Colors.FirstOrDefault(entry => entry.Name == _selectedItem.Tile.ColourEntry.DefaultName) is ColorContainer.Color color)
                 {
                     img = img.Blend(color.ColorPallette, BlendMode.Multiply);
                 }
@@ -333,16 +334,16 @@ namespace PckStudio
 
             AnimationEditor animationEditor;
             if (_selectedItem.Tile.HasColourEntry &&
-                !string.IsNullOrWhiteSpace(_selectedItem.Tile.ColourEntryName) &&
+                !string.IsNullOrWhiteSpace(_selectedItem.Tile.ColourEntry.DefaultName) &&
                 _colourTable is not null)
             {
                 Color blenColor = Color.White;
-                if (_selectedItem.Tile.IsWaterColour &&
-                    _colourTable.WaterColors.FirstOrDefault(entry => entry.Name == _selectedItem.Tile.ColourEntryName) is ColorContainer.WaterColor waterColor)
+                if (_selectedItem.Tile.ColourEntry.IsWaterColour &&
+                    _colourTable.WaterColors.FirstOrDefault(entry => entry.Name == _selectedItem.Tile.ColourEntry.DefaultName) is ColorContainer.WaterColor waterColor)
                 {
                     blenColor = waterColor.SurfaceColor;
                 }
-                else if (_colourTable.Colors.FirstOrDefault(entry => entry.Name == _selectedItem.Tile.ColourEntryName) is ColorContainer.Color color)
+                else if (_colourTable.Colors.FirstOrDefault(entry => entry.Name == _selectedItem.Tile.ColourEntry.DefaultName) is ColorContainer.Color color)
                 {
                     blenColor = color.ColorPallette;
                 }

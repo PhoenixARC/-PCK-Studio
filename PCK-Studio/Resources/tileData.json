@@ -6,8 +6,16 @@
 			"internalName": "grass_top",
 			"displayName": "Grass Block (Top)",
 			"hasColourEntry": true,
-			"isWaterColour": false,
-			"colourEntryName": "Grass_Common"
+			"colourEntry": {
+				"isWaterColour": false,
+				"defaultName": "Grass_Common",
+				"variants": [
+					"Grass_Common",
+					"Grass_Mesa",
+					"Grass_Swamp1",
+					"Grass_Swamp2"
+				]
+			}
 		},
 		{
 			"internalName": "stone",
@@ -161,8 +169,16 @@
 			"internalName": "grass_side_overlay",
 			"displayName": "Grass Side (Overlay)",
 			"hasColourEntry": true,
-			"isWaterColour": false,
-			"colourEntryName": "Grass_Common"
+			"colourEntry": {
+				"isWaterColour": false,
+				"defaultName": "Grass_Common",
+				"variants": [
+					"Grass_Common",
+					"Grass_Mesa",
+					"Grass_Swamp1",
+					"Grass_Swamp2"
+				]
+			}
 		},
 		{
 			"internalName": "tallgrass",
@@ -314,7 +330,12 @@
 		},
 		{
 			"internalName": "waterlily",
-			"displayName": "Lily Pad"
+			"displayName": "Lily Pad",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"defaultName": "Tile_WaterLily",
+				"variants": [ "Tile_WaterLily" ]
+			}
 		},
 		{
 			"internalName": "mycel_side",
@@ -832,15 +853,21 @@
 			"internalName": "water",
 			"displayName": "Water",
 			"hasColourEntry": true,
-			"isWaterColour": true,
-			"colourEntryName": "default"
+			"colourEntry": {
+				"isWaterColour": true,
+				"defaultName": "default",
+				"variants": [ "default" ]
+			}
 		},
 		{
 			"internalName": "water_flow",
 			"displayName": "Flowing Water",
 			"hasColourEntry": true,
-			"isWaterColour": true,
-			"colourEntryName": "default"
+			"colourEntry": {
+				"isWaterColour": true,
+				"defaultName": "default",
+				"variants": [ "default" ]
+			}
 		},
 		{
 			"internalName": "",
@@ -2514,7 +2541,13 @@
 	"items": [
 		{
 			"internalName": "helmetCloth",
-			"displayName": "Leather Cap"
+			"displayName": "Leather Cap",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"isWaterColour": false,
+				"defaultName": "Armour_Default_Leather_Colour",
+				"variants": [ "Armour_Default_Leather_Colour" ]
+			}
 		},
 		{
 			"internalName": "helmetChain",
@@ -2578,7 +2611,13 @@
 		},
 		{
 			"internalName": "chestplateCloth",
-			"displayName": "Leather Tunic"
+			"displayName": "Leather Tunic",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"isWaterColour": false,
+				"defaultName": "Armour_Default_Leather_Colour",
+				"variants": [ "Armour_Default_Leather_Colour" ]
+			}
 		},
 		{
 			"internalName": "chestplateChain",
@@ -2642,7 +2681,13 @@
 		},
 		{
 			"internalName": "leggingsCloth",
-			"displayName": "Leather Pants"
+			"displayName": "Leather Pants",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"isWaterColour": false,
+				"defaultName": "Armour_Default_Leather_Colour",
+				"variants": [ "Armour_Default_Leather_Colour" ]
+			}
 		},
 		{
 			"internalName": "leggingsChain",
@@ -2706,7 +2751,13 @@
 		},
 		{
 			"internalName": "bootsCloth",
-			"displayName": "Leather Boots"
+			"displayName": "Leather Boots",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"isWaterColour": false,
+				"defaultName": "Armour_Default_Leather_Colour",
+				"variants": [ "Armour_Default_Leather_Colour" ]
+			}
 		},
 		{
 			"internalName": "bootsChain",
@@ -2729,8 +2780,8 @@
 			"displayName": "Stick"
 		},
 		{
-			"internalName": "",
-			"displayName": ""
+			"internalName": "compass",
+			"displayName": "Compass"
 		},
 		{
 			"internalName": "diamond",
@@ -2793,8 +2844,8 @@
 			"displayName": "Fishing Rod"
 		},
 		{
-			"internalName": "",
-			"displayName": ""
+			"internalName": "clock",
+			"displayName": "Clock"
 		},
 		{
 			"internalName": "bowl",

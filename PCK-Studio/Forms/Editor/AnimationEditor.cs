@@ -415,7 +415,7 @@ namespace PckStudio.Forms.Editor
 				_ => throw new ArgumentOutOfRangeException(currentAnimation.Category.ToString())
 			};
 
-			if (textureInfos.FirstOrDefault(p => p.InternalName == TileName) is AnimationResources.TileInfo textureInfo)
+			if (textureInfos.FirstOrDefault(p => p.InternalName == TileName) is AnimationResources.JsonTileInfo textureInfo)
 			{
 				tileLabel.Text = textureInfo.DisplayName;
 				return;
