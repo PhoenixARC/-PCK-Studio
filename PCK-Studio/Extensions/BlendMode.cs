@@ -8,6 +8,7 @@
         Average,
         DescendingOrder,
         AscendingOrder,
-        Screen
+        Screen,
+        Overlay
     }
 }
