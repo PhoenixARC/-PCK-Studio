@@ -121,9 +121,11 @@ namespace PckStudio
         {
             if (selectTilePictureBox.IsPlaying)
                 selectTilePictureBox.Stop();
-            prevButton.Enabled = index > 0;
-            nextButton.Enabled = index < _textures.Count - 1;
+            selectTilePictureBox.Image = null;
             infoTextBox.Text = string.Empty;
+            variantComboBox.Items.Clear();
+            variantComboBox.SelectedItem = null;
+            variantComboBox.Enabled = false;
 
             if (_textureInfos is not null && _textureInfos.IndexInRange(index))
             {
@@ -133,41 +135,44 @@ namespace PckStudio
                 _selectedItem = new SelectedTile(index, info.DisplayName, info.InternalName, selectedArea, info);
                 
                 infoTextBox.Text = $"{_selectedItem.Name}\n{_selectedItem.TextureName}";
-                bool hasAnimation = _pckFile.Files.TryGetValue($"res/textures/{_atlasType}/{_selectedItem.TextureName}.png", PckFile.FileData.FileType.TextureFile, out var animationFile);
-                animationButton.Text = hasAnimation ? "Edit Animation" : "Create Animation";
-                if (hasAnimation && animationFile.Size > 0)
-                {
-                    using var ms = new MemoryStream(animationFile.Data);
-                    var img = Image.FromStream(ms);
-                    var textures = img.CreateImageList(ImageLayoutDirection.Vertical);
-                    selectTilePictureBox.Start(new Internal.Animation(textures, animationFile.Properties.GetPropertyValue("ANIM")));
-                    return;
-                }
+            }
+
+            bool hasAnimation =
+                _pckFile.Files.TryGetValue($"res/textures/{_atlasType}/{_selectedItem.TextureName}.png", PckFile.FileData.FileType.TextureFile, out var animationFile);
+            animationButton.Text = hasAnimation ? "Edit Animation" : "Create Animation";
+            replaceButton.Enabled = !hasAnimation;
+
+            if (playAnimationsToolStripMenuItem.Checked &&
+                hasAnimation &&
+                animationFile.Size > 0)
+            {
+                using var ms = new MemoryStream(animationFile.Data);
+                var img = Image.FromStream(ms);
+                var textures = img.CreateImageList(ImageLayoutDirection.Vertical);
+                var animation = new Internal.Animation(textures, animationFile.Properties.GetPropertyValue("ANIM"));
+                selectTilePictureBox.Start(animation);
+                return;
             }
 
             if (_textures.IndexInRange(index))
             {
                 var img = _textures[index];
-                if (_selectedItem.Tile.HasColourEntry &&
+                if (applyColorMaskToolStripMenuItem.Checked &&
                     _selectedItem.Tile.HasColourEntry &&
                     !string.IsNullOrWhiteSpace(_selectedItem.Tile.ColourEntry.DefaultName) &&
                     _colourTable is not null &&
                     _colourTable.Colors.FirstOrDefault(entry => entry.Name == _selectedItem.Tile.ColourEntry.DefaultName) is ColorContainer.Color color)
                 {
                     img = img.Blend(color.ColorPallette, BlendMode.Multiply);
+                    if (variantComboBox.Enabled = _selectedItem.Tile.ColourEntry.Variants.Length > 1)
+                    {
+                        variantComboBox.Items.Clear();
+                        variantComboBox.Items.AddRange(_selectedItem.Tile.ColourEntry.Variants);
+                        variantComboBox.SelectedItem = _selectedItem.Tile.ColourEntry.DefaultName;
+                    }
                 }
                 selectTilePictureBox.Image = img;
             }
-        }
-
-        private void prevButton_Click(object sender, EventArgs e)
-        {
-            SelectedIndex = _selectedItem.Index - 1;
-        }
-
-        private void nextButton_Click(object sender, EventArgs e)
-        {
-            SelectedIndex = _selectedItem.Index + 1;
         }
 
         private void originalPictureBox_MouseClick(object sender, MouseEventArgs e)
@@ -175,7 +180,7 @@ namespace PckStudio
             if (e.Button != MouseButtons.Left)
                 return;
 
-            var index = GetSelectedImageIndex(
+            int index = GetSelectedImageIndex(
                 originalPictureBox.Size,
                 originalPictureBox.Image.Size,
                 _areaSize,
@@ -183,7 +188,6 @@ namespace PckStudio
                 originalPictureBox.SizeMode,
                 _imageLayout);
 
-            Debug.WriteLine(index);
             if (index != -1)
             {
                 SelectedIndex = index;
@@ -378,16 +382,16 @@ namespace PckStudio
             switch (keyData)
             {
                 case Keys.Left:
-                    if (prevButton.Enabled)
+                    if (_textures.IndexInRange(_selectedItem.Index - 1))
                     {
-                        prevButton_Click(this, EventArgs.Empty);
+                        SelectedIndex = _selectedItem.Index - 1;
                         return true;
                     }
                     break;
                 case Keys.Right:
-                    if (nextButton.Enabled)
+                    if (_textures.IndexInRange(_selectedItem.Index + 1))
                     {
-                        nextButton_Click(this, EventArgs.Empty);
+                        SelectedIndex = _selectedItem.Index + 1;
                         return true;
                     }
                     break;
@@ -409,6 +413,45 @@ namespace PckStudio
             }
 
             return false;
+        }
+
+        private void ApplyBlend(string colorKey, Image image)
+        {
+            Color blendColor = Color.White;
+            if (_selectedItem.Tile.HasColourEntry &&
+                _colourTable is not null)
+            {
+                if (_selectedItem.Tile.ColourEntry.IsWaterColour &&
+                    _colourTable.WaterColors.FirstOrDefault(entry => entry.Name == colorKey) is ColorContainer.WaterColor waterColor)
+                {
+                    blendColor = waterColor.SurfaceColor;
+                }
+                else if (_colourTable.Colors.FirstOrDefault(entry => entry.Name == colorKey) is ColorContainer.Color color)
+                {
+                    blendColor = color.ColorPallette;
+                }
+
+                if (variantComboBox.Enabled = _selectedItem.Tile.ColourEntry.Variants.Length > 1)
+                {
+                    selectTilePictureBox.Image = image.Blend(blendColor, BlendMode.Multiply);
+                }
+            }
+        }
+
+        private void variantComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (_selectedItem.Tile.ColourEntry.Variants.IndexInRange(variantComboBox.SelectedIndex))
+                ApplyBlend(_selectedItem.Tile.ColourEntry.Variants[variantComboBox.SelectedIndex], _textures[_selectedItem.Index]);
+        }
+
+        private void applyColorMaskToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+            SelectedIndex = _selectedItem.Index;
+        }
+
+        private void playAnimationsToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+            SelectedIndex = _selectedItem.Index;
         }
     }
 }
