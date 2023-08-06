@@ -33,6 +33,7 @@ namespace PckStudio.Extensions
                 BlendMode.AscendingOrder => source > overlay ? overlay : source,
                 BlendMode.DescendingOrder => source < overlay ? overlay : source,
                 BlendMode.Screen => 1f - (1f - source) * (1f - overlay),
+                BlendMode.Overlay => source < 0.5f ? 2f * source * overlay : 1f - 2f * (1f - source) * (1f - overlay),
                 _ => 0.0f
             };
             return MathExtensions.Clamp(resultValue, 0.0f, 1.0f);

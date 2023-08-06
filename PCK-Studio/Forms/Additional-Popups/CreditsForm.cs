@@ -1,24 +1,22 @@
 ﻿using System;
 using System.Windows.Forms;
 using MetroFramework.Forms;
+using PckStudio.Internal;
 
 namespace PckStudio
 {
     public partial class CreditsForm : MetroForm
     {
-        int count = 0;
         public CreditsForm()
         {
             InitializeComponent();
+#if BETA
+            buildLabel.Text = $"[Beta] {ApplicationBuildInfo.BetaBuildVersion}@{CommitInfo.BranchName}";
+#elif DEBUG
+            buildLabel.Text = $"[Debug] {CommitInfo.BranchName}@{CommitInfo.CommitHash}";
+#else
+            buildLabel.Text = string.Empty;
+#endif
         }
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-            if (++count == 5)
-            {
-                MessageBox.Show("🌸Miku🌸 was here!");
-                count = 0;
-            }
-        }
-	}
+    }
 }
