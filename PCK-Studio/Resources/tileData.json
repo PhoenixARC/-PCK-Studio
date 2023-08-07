@@ -234,11 +234,35 @@
 		},
 		{
 			"internalName": "leaves",
-			"displayName": "Oak Leaves"
+			"displayName": "Oak Leaves",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"isWaterColour": false,
+				"defaultName": "Foliage_Default",
+				"variants": [
+					"Foliage_Default",
+					"Foliage_Evergreen",
+					"Foliage_Birch",
+					"Foliage_Mesa",
+					"Foliage_Swampland"
+				]
+			}
 		},
 		{
 			"internalName": "leaves_opaque",
-			"displayName": "Oak Leaves (Opaque)"
+			"displayName": "Oak Leaves (Opaque)",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"isWaterColour": false,
+				"defaultName": "Foliage_Default",
+				"variants": [
+					"Foliage_Default",
+					"Foliage_Evergreen",
+					"Foliage_Birch",
+					"Foliage_Mesa",
+					"Foliage_Swampland"
+				]
+			}
 		},
 		{
 			"internalName": "stonebrick",
@@ -559,11 +583,35 @@
 		},
 		{
 			"internalName": "leaves_spruce",
-			"displayName": "Spruce Leaves"
+			"displayName": "Spruce Leaves",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"isWaterColour": false,
+				"defaultName": "Foliage_Default",
+				"variants": [
+					"Foliage_Default",
+					"Foliage_Evergreen",
+					"Foliage_Birch",
+					"Foliage_Mesa",
+					"Foliage_Swampland"
+				]
+			}
 		},
 		{
 			"internalName": "leaves_spruce_opaque",
-			"displayName": "Spruce Leaves (Opaque)"
+			"displayName": "Spruce Leaves (Opaque)",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"isWaterColour": false,
+				"defaultName": "Foliage_Default",
+				"variants": [
+					"Foliage_Default",
+					"Foliage_Evergreen",
+					"Foliage_Birch",
+					"Foliage_Mesa",
+					"Foliage_Swampland"
+				]
+			}
 		},
 		{
 			"internalName": "conduit_top",
@@ -687,11 +735,33 @@
 		},
 		{
 			"internalName": "redstone_dust_cross",
-			"displayName": "Redstone Dust (Cross)"
+			"displayName": "Redstone Dust (Cross)",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"isWaterColour": false,
+				"defaultName": "Tile_RedstoneDust",
+				"variants": [
+					"Tile_RedstoneDust",
+					"Tile_RedstoneDustUnlit",
+					"Tile_RedstoneDustLitMin",
+					"Tile_RedstoneDustLitMax"
+				]
+			}
 		},
 		{
 			"internalName": "redstone_dust_line",
-			"displayName": "Redstone Dust (Line)"
+			"displayName": "Redstone Dust (Line)",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"isWaterColour": false,
+				"defaultName": "Tile_RedstoneDust",
+				"variants": [
+					"Tile_RedstoneDust",
+					"Tile_RedstoneDustUnlit",
+					"Tile_RedstoneDustLitMin",
+					"Tile_RedstoneDustLitMax"
+				]
+			}
 		},
 		{
 			"internalName": "enchantment_top",
@@ -815,11 +885,35 @@
 		},
 		{
 			"internalName": "leaves_jungle",
-			"displayName": "Jungle Leaves"
+			"displayName": "Jungle Leaves",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"isWaterColour": false,
+				"defaultName": "Foliage_Default",
+				"variants": [
+					"Foliage_Default",
+					"Foliage_Evergreen",
+					"Foliage_Birch",
+					"Foliage_Mesa",
+					"Foliage_Swampland"
+				]
+			}
 		},
 		{
 			"internalName": "leaves_jungle_opaque",
-			"displayName": "Jungle Leaves (Opaque)"
+			"displayName": "Jungle Leaves (Opaque)",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"isWaterColour": false,
+				"defaultName": "Foliage_Default",
+				"variants": [
+					"Foliage_Default",
+					"Foliage_Evergreen",
+					"Foliage_Birch",
+					"Foliage_Mesa",
+					"Foliage_Swampland"
+				]
+			}
 		},
 		{
 			"internalName": "planks_spruce",
@@ -1367,11 +1461,35 @@
 		},
 		{
 			"internalName": "leaves_acacia",
-			"displayName": "Acacia Leaves"
+			"displayName": "Acacia Leaves",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"isWaterColour": false,
+				"defaultName": "Foliage_Default",
+				"variants": [
+					"Foliage_Default",
+					"Foliage_Evergreen",
+					"Foliage_Birch",
+					"Foliage_Mesa",
+					"Foliage_Swampland"
+				]
+			}
 		},
 		{
 			"internalName": "leaves_acacia_fast",
-			"displayName": "Acacia Leaves (Opaque)"
+			"displayName": "Acacia Leaves (Opaque)",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"isWaterColour": false,
+				"defaultName": "Foliage_Default",
+				"variants": [
+					"Foliage_Default",
+					"Foliage_Evergreen",
+					"Foliage_Birch",
+					"Foliage_Mesa",
+					"Foliage_Swampland"
+				]
+			}
 		},
 		{
 			"internalName": "prismarine_bricks",
@@ -1431,11 +1549,35 @@
 		},
 		{
 			"internalName": "leaves_big_oak",
-			"displayName": "Dark Oak Leaves"
+			"displayName": "Dark Oak Leaves",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"isWaterColour": false,
+				"defaultName": "Foliage_Default",
+				"variants": [
+					"Foliage_Default",
+					"Foliage_Evergreen",
+					"Foliage_Birch",
+					"Foliage_Mesa",
+					"Foliage_Swampland"
+				]
+			}
 		},
 		{
 			"internalName": "leaves_big_oak_fast",
-			"displayName": "Dark Oak Leaves (Opaque)"
+			"displayName": "Dark Oak Leaves (Opaque)",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"isWaterColour": false,
+				"defaultName": "Foliage_Default",
+				"variants": [
+					"Foliage_Default",
+					"Foliage_Evergreen",
+					"Foliage_Birch",
+					"Foliage_Mesa",
+					"Foliage_Swampland"
+				]
+			}
 		},
 		{
 			"internalName": "prismarine_dark",
@@ -1495,11 +1637,35 @@
 		},
 		{
 			"internalName": "leaves_birch",
-			"displayName": "Birch Leaves"
+			"displayName": "Birch Leaves",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"isWaterColour": false,
+				"defaultName": "Foliage_Birch",
+				"variants": [
+					"Foliage_Default",
+					"Foliage_Evergreen",
+					"Foliage_Birch",
+					"Foliage_Mesa",
+					"Foliage_Swampland"
+				]
+			}
 		},
 		{
 			"internalName": "leaves_birch_fast",
-			"displayName": "Birch Leaves (Opaque)"
+			"displayName": "Birch Leaves (Opaque)",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"isWaterColour": false,
+				"defaultName": "Foliage_Birch",
+				"variants": [
+					"Foliage_Default",
+					"Foliage_Evergreen",
+					"Foliage_Birch",
+					"Foliage_Mesa",
+					"Foliage_Swampland"
+				]
+			}
 		},
 		{
 			"internalName": "prismarine_rough",
@@ -1971,7 +2137,13 @@
 		},
 		{
 			"internalName": "cauldron_water",
-			"displayName": "Cauldron Water"
+			"displayName": "Cauldron Water",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"isWaterColour": true,
+				"defaultName": "default",
+				"variants": [ "default" ]
+			}
 		},
 		{
 			"internalName": "seagrass_doubletall_top",
@@ -3129,7 +3301,13 @@
 		},
 		{
 			"internalName": "potion_contents",
-			"displayName": "Potion (Overlay)"
+			"displayName": "Potion (Overlay)",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"isWaterColour": false,
+				"defaultName": "Potion_BaseColour",
+				"variants": [ "Potion_BaseColour" ]
+			}
 		},
 		{
 			"internalName": "dyePowder_blue",
@@ -3457,7 +3635,13 @@
 		},
 		{
 			"internalName": "leather_horse_armor_base",
-			"displayName": "Leather Horse Armor"
+			"displayName": "Leather Horse Armor",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"isWaterColour": false,
+				"defaultName": "Armour_Default_Leather_Colour",
+				"variants": [ "Armour_Default_Leather_Colour" ]
+			}
 		},
 		{
 			"internalName": "structure_void",
