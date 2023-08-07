@@ -25,10 +25,11 @@ using System.Runtime.CompilerServices;
 
 using PckStudio.Extensions;
 using PckStudio.Internal;
+using PckStudio.ToolboxItems;
 
 namespace PckStudio.Forms.Editor
 {
-	internal class AnimationPictureBox : PictureBoxWithInterpolationMode
+	internal class AnimationPictureBox : BlendPictureBox
     {
 		public bool IsPlaying => _isPlaying;
 
