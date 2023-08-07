@@ -58,11 +58,9 @@
             this.InterpolationCheckbox = new MetroFramework.Controls.MetroCheckBox();
             this.AnimationStartStopBtn = new MetroFramework.Controls.MetroButton();
             this.tileLabel = new MetroFramework.Controls.MetroLabel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.animationPictureBox = new PckStudio.Forms.Editor.AnimationPictureBox();
             this.contextMenuStrip1.SuspendLayout();
             this.menuStrip.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.animationPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -123,6 +121,7 @@
             // 
             this.menuStrip.AutoSize = false;
             this.menuStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.menuStrip.Dock = System.Windows.Forms.DockStyle.None;
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.editToolStripMenuItem,
@@ -130,7 +129,7 @@
             this.menuStrip.Location = new System.Drawing.Point(20, 60);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.menuStrip.Size = new System.Drawing.Size(372, 24);
+            this.menuStrip.Size = new System.Drawing.Size(134, 24);
             this.menuStrip.TabIndex = 14;
             this.menuStrip.Text = "menuStrip1";
             // 
@@ -323,21 +322,14 @@
             this.tileLabel.Text = "tileLabel";
             this.tileLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox1.Location = new System.Drawing.Point(154, 60);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(238, 24);
-            this.pictureBox1.TabIndex = 21;
-            this.pictureBox1.TabStop = false;
-            // 
             // animationPictureBox
             // 
             this.animationPictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.animationPictureBox.BlendColor = System.Drawing.Color.White;
+            this.animationPictureBox.BlendMode = PckStudio.Extensions.BlendMode.Multiply;
+            this.animationPictureBox.Image = null;
             this.animationPictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             this.animationPictureBox.Location = new System.Drawing.Point(157, 88);
             this.animationPictureBox.Name = "animationPictureBox";
@@ -345,6 +337,7 @@
             this.animationPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.animationPictureBox.TabIndex = 16;
             this.animationPictureBox.TabStop = false;
+            this.animationPictureBox.UseBlendColor = false;
             // 
             // AnimationEditor
             // 
@@ -352,7 +345,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(412, 362);
             this.Controls.Add(this.InterpolationCheckbox);
-            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.AnimationStartStopBtn);
             this.Controls.Add(this.tileLabel);
             this.Controls.Add(this.animationPictureBox);
@@ -369,7 +361,6 @@
             this.contextMenuStrip1.ResumeLayout(false);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.animationPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -398,7 +389,6 @@
 		private System.Windows.Forms.ToolStripMenuItem setBulkSpedToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem javaAnimationSupportToolStripMenuItem;
 		private System.Windows.Forms.ImageList TextureIcons;
-        private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.ToolStripMenuItem importToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem importJavaAnimationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem importGifToolStripMenuItem;

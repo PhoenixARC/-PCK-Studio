@@ -27,8 +27,6 @@ namespace PckStudio.Forms.Editor
 
 		private string TileName = string.Empty;
 
-		private readonly bool hasBlendColor = false;
-		private Color blendColor;
         private bool IsSpecialTile(string tileName)
         {
 			return tileName == "clock" || tileName == "compass";
@@ -57,8 +55,7 @@ namespace PckStudio.Forms.Editor
         public AnimationEditor(PckFile.FileData file, Color blendColor)
 			: this(file)
 		{
-			hasBlendColor = true;
-			this.blendColor = blendColor;
+			animationPictureBox.BlendColor = blendColor;
 		}
 
 
@@ -83,11 +80,6 @@ namespace PckStudio.Forms.Editor
                 using MemoryStream textureMem = new MemoryStream(animationFile.Data);
                 var texture = new Bitmap(textureMem);
                 var frameTextures = texture.CreateImageList(ImageLayoutDirection.Vertical);
-                if (hasBlendColor)
-                {
-                    frameTextures = frameTextures.Select(frameTexture => frameTexture.Blend(blendColor, BlendMode.Multiply));
-                }
-
                 currentAnimation = animationFile.Properties.HasProperty("ANIM")
                     ? new Animation(frameTextures, animationFile.Properties.GetPropertyValue("ANIM"))
                     : new Animation(frameTextures, string.Empty);
