@@ -31,7 +31,16 @@ namespace PckStudio.Forms.Editor
 {
 	internal class AnimationPictureBox : BlendPictureBox
     {
-		public bool IsPlaying => _isPlaying;
+		public bool IsPlaying
+		{
+			get
+			{
+				lock(l_playing)
+				{
+					return _isPlaying;
+				}
+			}
+		}
 
 		private const int TickInMillisecond = 50; // 1 InGame tick
 
@@ -41,6 +50,7 @@ namespace PckStudio.Forms.Editor
 		private Animation _animation;
 		private CancellationTokenSource cts = new CancellationTokenSource();
 		private object l_dispose = new object();
+		private object l_playing = new object();
 
         public void Start(Animation animation)
 		{
@@ -74,8 +84,11 @@ namespace PckStudio.Forms.Editor
         private async void DoAnimate()
 		{
 			_ = _animation ?? throw new ArgumentNullException(nameof(_animation));
-			_isPlaying = true;
-			Animation.Frame nextFrame;
+            lock (l_playing)
+            {
+                _isPlaying = true;
+            }
+            Animation.Frame nextFrame;
 			while (!cts.IsCancellationRequested)
 			{
 				if (currentAnimationFrameIndex >= _animation.FrameCount)
@@ -102,8 +115,11 @@ namespace PckStudio.Forms.Editor
                 if (!await DelayAsync(TickInMillisecond * currentFrame.Ticks, cts.Token))
                     break;
             }
-            _isPlaying = false;
-		}
+            lock (l_playing)
+            {
+                _isPlaying = false;
+            }
+        }
 
         private async Task InterpolateFrame(Animation.Frame currentFrame, Animation.Frame nextFrame)
         {
