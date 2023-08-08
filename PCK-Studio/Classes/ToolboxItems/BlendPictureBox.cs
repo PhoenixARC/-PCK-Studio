@@ -24,11 +24,7 @@ namespace PckStudio.ToolboxItems
         public Color BlendColor
         {
             get => _blendColor;
-            set
-            {
-                UseBlendColor = value != Color.White;
-                _blendColor = value;
-            }
+            set => _blendColor = value;
         }
 
         [DefaultValue(typeof(BlendMode), "BlendMode.Add")]
@@ -46,7 +42,11 @@ namespace PckStudio.ToolboxItems
         public new Image Image
         {
             get => base.Image;
-            set => base.Image = UseBlendColor ? value.Blend(BlendColor, BlendMode) : value;
+            set {
+                if (value is null)
+                    return;
+                base.Image = UseBlendColor && BlendColor != Color.White ? value.Blend(BlendColor, BlendMode) : value;
+            }
         }
     }
 }
