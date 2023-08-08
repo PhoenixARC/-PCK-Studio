@@ -74,13 +74,6 @@ namespace PckStudio.Forms.Editor
             currentFrame = SetAnimationFrame(index);
 		}
 
-		protected override void OnPaint(PaintEventArgs pe)
-        {
-			pe.Graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
-			pe.Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
-            base.OnPaint(pe);
-        }
-
         private async void DoAnimate()
 		{
 			_ = _animation ?? throw new ArgumentNullException(nameof(_animation));
