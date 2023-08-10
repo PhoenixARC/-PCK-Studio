@@ -3423,7 +3423,30 @@
 		},
 		{
 			"internalName": "bed_overlay",
-			"displayName": "Bed (Overlay)"
+			"displayName": "Bed (Overlay)",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"isWaterColour": false,
+				"defaultName": "Bed_White",
+				"variants": [
+					"Bed_Black",
+					"Bed_Blue",
+					"Bed_Brown",
+					"Bed_Cyan",
+					"Bed_Grey",
+					"Bed_Green",
+					"Bed_Light_Blue",
+					"Bed_Lime",
+					"Bed_Magenta",
+					"Bed_Orange",
+					"Bed_Pink",
+					"Bed_Purple",
+					"Bed_Red",
+					"Bed_Silver",
+					"Bed_White",
+					"Bed_Yellow"
+				]
+			}
 		},
 		{
 			"internalName": "expBottle",
