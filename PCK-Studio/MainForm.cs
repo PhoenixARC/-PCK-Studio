@@ -384,6 +384,8 @@ namespace PckStudio
 						viewer.FinalTexture.Save(result, ImageFormat.Png);
 						file.SetData(result.ToArray());
 			}
+					wasModified = true;
+					BuildMainTreeView();
 				}
 				return;
 			}
