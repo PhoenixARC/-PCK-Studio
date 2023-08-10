@@ -23,6 +23,9 @@ using System.Drawing.Drawing2D;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Linq;
+using PckStudio.Internal;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 
 namespace PckStudio.Extensions
 {
@@ -154,28 +157,37 @@ namespace PckStudio.Extensions
             if (image is not Bitmap baseImage)
                 return image;
 
+            Bitmap bitmapResult = new Bitmap(baseImage.Width, baseImage.Height, PixelFormat.Format32bppArgb);
+
             BitmapData baseImageData = baseImage.LockBits(new Rectangle(Point.Empty, baseImage.Size),
                         ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
-            byte[] baseImageBuffer = new byte[baseImageData.Stride * baseImageData.Height];
-
-            Marshal.Copy(baseImageData.Scan0, baseImageBuffer, 0, baseImageBuffer.Length);
-
-            for (int k = 0; k < baseImageBuffer.Length; k += 4)
-            {
-                baseImageBuffer[k + 0] = ColorExtensions.BlendValues(baseImageBuffer[k + 0], overlayColor.B, mode);
-                baseImageBuffer[k + 1] = ColorExtensions.BlendValues(baseImageBuffer[k + 1], overlayColor.G, mode);
-                baseImageBuffer[k + 2] = ColorExtensions.BlendValues(baseImageBuffer[k + 2], overlayColor.R, mode);
-            }
-
-            Bitmap bitmapResult = new Bitmap(baseImage.Width, baseImage.Height, PixelFormat.Format32bppArgb);
             BitmapData resultImageData = bitmapResult.LockBits(new Rectangle(Point.Empty, bitmapResult.Size),
-                ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+                        ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
 
-            Marshal.Copy(baseImageBuffer, 0, resultImageData.Scan0, baseImageBuffer.Length);
+            Profiler.Start();
+            Parallel.For(0, baseImageData.Stride * baseImageData.Height / 4, (i) =>
+            {
+                int k = i * 4;
+                unsafe
+                {
+                    int color = Unsafe.Read<int>((baseImageData.Scan0 + k).ToPointer());
+                    byte a = (byte)(color >> 24 & 0xff);
+                    if (a == 0)
+                    {
+                        Unsafe.Write((resultImageData.Scan0 + k).ToPointer(), 0);
+                        return;
+                    }
+                    var b = ColorExtensions.BlendValues((byte)(color >> 0 & 0xff), overlayColor.B, mode);
+                    var g = ColorExtensions.BlendValues((byte)(color >> 8 & 0xff), overlayColor.G, mode);
+                    var r = ColorExtensions.BlendValues((byte)(color >> 16 & 0xff), overlayColor.R, mode);
+                    int blendedValue = a << 24 | r << 16 | g << 8 | b;
+                    Unsafe.Write((resultImageData.Scan0 + k).ToPointer(), blendedValue);
+                }
+            });
+            Profiler.Stop();
 
             bitmapResult.UnlockBits(resultImageData);
             baseImage.UnlockBits(baseImageData);
-
             return bitmapResult;
         }
 
