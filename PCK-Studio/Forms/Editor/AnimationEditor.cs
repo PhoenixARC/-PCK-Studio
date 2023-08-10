@@ -55,6 +55,7 @@ namespace PckStudio.Forms.Editor
         public AnimationEditor(PckFile.FileData file, Color blendColor)
 			: this(file)
 		{
+			animationPictureBox.UseBlendColor = true;
 			animationPictureBox.BlendColor = blendColor;
 		}
 
