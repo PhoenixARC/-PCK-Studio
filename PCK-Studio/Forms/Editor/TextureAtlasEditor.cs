@@ -444,5 +444,11 @@ namespace PckStudio
         {
             SelectedIndex = _selectedTile.Index;
         }
+
+        private void TextureAtlasEditor_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (selectTilePictureBox.IsPlaying)
+                selectTilePictureBox.Stop();
+        }
     }
 }

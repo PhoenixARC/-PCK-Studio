@@ -265,6 +265,7 @@
             this.Style = MetroFramework.MetroColorStyle.Silver;
             this.Text = "Texture Atlas Editor";
             this.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TextureAtlasEditor_FormClosing);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
