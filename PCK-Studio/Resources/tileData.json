@@ -609,7 +609,7 @@
 			"hasColourEntry": true,
 			"colourEntry": {
 				"isWaterColour": false,
-				"defaultName": "Foliage_Default",
+				"defaultName": "Foliage_Evergreen",
 				"variants": [
 					"Foliage_Default",
 					"Foliage_Evergreen",
@@ -625,7 +625,7 @@
 			"hasColourEntry": true,
 			"colourEntry": {
 				"isWaterColour": false,
-				"defaultName": "Foliage_Default",
+				"defaultName": "Foliage_Evergreen",
 				"variants": [
 					"Foliage_Default",
 					"Foliage_Evergreen",
