@@ -30,6 +30,7 @@ namespace PckStudio.Forms
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SkinPreview));
             this.ModelView = new PckStudio.Models.MinecraftModelView(this.components);
             this.SuspendLayout();
             // 
@@ -58,6 +59,7 @@ namespace PckStudio.Forms
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(418, 568);
             this.Controls.Add(this.ModelView);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "SkinPreview";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "SkinPreview";

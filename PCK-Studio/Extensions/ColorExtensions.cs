@@ -15,17 +15,10 @@ namespace PckStudio.Extensions
             return new Vector4(color.R / 255f, color.G / 255f, color.B / 255f, color.A / 255f);
         }
 
-        internal static T Clamp<T>(T value, T min, T max) where T : IComparable<T>
-        {
-            if (value.CompareTo(min) < 0) return min;
-            if (value.CompareTo(max) > 0) return max;
-            return value;
-        }
-
         internal static byte BlendValues(float source, float overlay, BlendMode blendType)
         {
-            source = Clamp(source, 0.0f, 1.0f);
-            overlay = Clamp(overlay, 0.0f, 1.0f);
+            source = MathExtensions.Clamp(source, 0.0f, 1.0f);
+            overlay = MathExtensions.Clamp(overlay, 0.0f, 1.0f);
             float resultValue = blendType switch
             {
                 BlendMode.Add => source + overlay,
@@ -35,20 +28,21 @@ namespace PckStudio.Extensions
                 BlendMode.AscendingOrder => source > overlay ? overlay : source,
                 BlendMode.DescendingOrder => source < overlay ? overlay : source,
                 BlendMode.Screen => 1f - (1f - source) * (1f - overlay),
+                BlendMode.Overlay => source < 0.5f ? 2f * source * overlay : 1f - 2f * (1f - source) * (1f - overlay),
                 _ => 0.0f
             };
-            return (byte)Clamp(resultValue * 255, 0, 255);
+            return (byte)MathExtensions.Clamp(resultValue * 255, 0, 255);
         }
 
         internal static byte Mix(double ratio, byte val1, byte val2)
         {
-            ratio = Clamp(ratio, 0.0, 1.0);
+            ratio = MathExtensions.Clamp(ratio, 0.0, 1.0);
             return (byte)(ratio * val1 + (1.0 - ratio) * val2);
         }
 
         internal static Color Mix(this Color c1, Color c2, double ratio)
         {
-            ratio = Clamp(ratio, 0.0, 1.0);
+            ratio = MathExtensions.Clamp(ratio, 0.0, 1.0);
             return Color.FromArgb(c1.A,
                 Mix(ratio, c1.R, c2.R),
                 Mix(ratio, c1.G, c2.G),

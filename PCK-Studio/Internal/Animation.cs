@@ -21,11 +21,9 @@ using System.Drawing;
 using PckStudio.Extensions;
 using System.Text;
 
-
-// TODO: change namespace
-namespace PckStudio.Forms.Editor
+namespace PckStudio.Internal
 {
-	sealed class Animation
+	internal sealed class Animation
 	{
 		public const int MinimumFrameTime = 1;
 
@@ -42,6 +40,18 @@ namespace PckStudio.Forms.Editor
         }
 
 		public AnimationCategory Category { get; set; }
+
+        public string CategoryString => GetCategoryName(Category);
+
+		public static string GetCategoryName(AnimationCategory category)
+		{
+			return category switch
+			{
+				AnimationCategory.Items => "items",
+				AnimationCategory.Blocks => "blocks",
+				_ => throw new ArgumentOutOfRangeException(category.ToString())
+			};
+        }
 
         private readonly List<Image> textures;
 

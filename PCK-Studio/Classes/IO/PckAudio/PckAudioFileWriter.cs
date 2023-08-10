@@ -1,6 +1,6 @@
 ﻿using OMI;
 using OMI.Workers;
-using PckStudio.Classes.FileTypes;
+using PckStudio.FileFormats;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;

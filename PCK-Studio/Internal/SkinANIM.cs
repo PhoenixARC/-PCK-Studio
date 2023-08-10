@@ -24,7 +24,7 @@ namespace PckStudio.Internal
 	/// For usage see <see cref="SkinANIM"/>
 	/// </summary>
 	[Flags]
-	public enum ANIM_EFFECTS : int
+	public enum SkinAnimFlag : int
 	{
 		NONE                  = 0,       // 0x00
 		STATIC_ARMS           = 1 << 0,  // 0x01
@@ -68,63 +68,76 @@ namespace PckStudio.Internal
 		DINNERBONE            = 1 << 31, // 0x80000000
     }
 
-	public class SkinANIM : ICloneable, IEquatable<SkinANIM>
+    /// <summary>
+    /// Represents a Skin Anim value where flags can be set
+    /// </summary>
+    public class SkinANIM : ICloneable, IEquatable<SkinANIM>, IEquatable<SkinAnimFlag>
     {
-		private ANIM_EFFECTS _ANIM;
-		public static readonly Regex animRegex = new Regex(@"^0x[0-9a-f]{1,8}\b", RegexOptions.IgnoreCase);
-
 		public static readonly SkinANIM Empty = new SkinANIM();
 
+		private SkinAnimFlag _flags;
+		private static readonly Regex _validator = new Regex(@"^0x[0-9a-f]{1,8}\b", RegexOptions.IgnoreCase);
+
 		public SkinANIM()
-			: this(ANIM_EFFECTS.NONE)
+			: this(SkinAnimFlag.NONE)
 		{
 		}
 
-		public SkinANIM(ANIM_EFFECTS anim)
+		public SkinANIM(SkinAnimFlag mask)
 		{
-			_ANIM = anim;
+			_flags = mask;
 		}
 
-		public override string ToString() => "0x" + ((int)_ANIM).ToString("x8");
+		public override string ToString() => "0x" + ((int)_flags).ToString("x8");
 
-		public static bool IsValidANIM(string anim) => animRegex.IsMatch(anim ?? string.Empty);
+		public static bool IsValidANIM(string anim)
+		{
+			if (anim is not null)
+				return _validator.IsMatch(anim);
+			return false;
+		}
 
 		public static SkinANIM FromString(string value)
 			=> IsValidANIM(value)
-				? new SkinANIM((ANIM_EFFECTS)Convert.ToInt32(value.TrimEnd(' ', '\n', '\r'), 16))
+				? new SkinANIM((SkinAnimFlag)Convert.ToInt32(value.TrimEnd(' ', '\n', '\r'), 16))
 				: new SkinANIM();
 
-		public void SetANIM(ANIM_EFFECTS anim) => _ANIM = anim;
+		public void SetMask(SkinAnimFlag mask) => _flags = mask;
 
-		public static SkinANIM operator |(SkinANIM a, SkinANIM b) => new SkinANIM(a._ANIM | b._ANIM);
+		public static SkinANIM operator |(SkinANIM _this, SkinANIM other) => new SkinANIM(_this._flags | other._flags);
 		
-		public static SkinANIM operator |(SkinANIM a, ANIM_EFFECTS anim) => new SkinANIM(a._ANIM | anim);
+		public static SkinANIM operator |(SkinANIM _this, SkinAnimFlag mask) => new SkinANIM(_this._flags | mask);
 
-		public static implicit operator SkinANIM(ANIM_EFFECTS anim) => new SkinANIM(anim);
+		public static implicit operator SkinANIM(SkinAnimFlag mask) => new SkinANIM(mask);
 
-		public static bool operator ==(SkinANIM a, ANIM_EFFECTS b) => a._ANIM == b;		
-		public static bool operator !=(SkinANIM a, ANIM_EFFECTS b) => !(a == b);
-		public static bool operator ==(SkinANIM a, SkinANIM b) => a.Equals(b);
-		public static bool operator !=(SkinANIM a, SkinANIM b) => !a.Equals(b);
+		public static bool operator ==(SkinANIM _this, SkinAnimFlag mask) => _this.Equals(mask);
+		public static bool operator !=(SkinANIM _this, SkinAnimFlag mask) => !_this.Equals(mask);
+		public static bool operator ==(SkinANIM _this, SkinANIM other) => _this.Equals(other);
+		public static bool operator !=(SkinANIM _this, SkinANIM other) => !_this.Equals(other);
 
         public bool Equals(SkinANIM other)
         {
-            return _ANIM == other._ANIM;
+            return _flags == other._flags;
+        }
+
+        public bool Equals(SkinAnimFlag other)
+        {
+            return _flags == other;
         }
 
 		public override bool Equals(object obj) => obj is SkinANIM a && Equals(a);
 
-		public override int GetHashCode() => (int)_ANIM;
+		public override int GetHashCode() => (int)_flags;
 		
 		/// <summary>
 		/// Sets the desired flag in the bitfield
 		/// </summary>
 		/// <param name="flag">ANIM Flag to set</param>
 		/// <param name="state">State of the flag</param>
-		public void SetFlag(ANIM_EFFECTS flag, bool state)
+		public void SetFlag(SkinAnimFlag flag, bool state)
 		{
-			if (state) _ANIM |= flag;
-			else _ANIM &= ~flag;
+			if (state) _flags |= flag;
+			else _flags &= ~flag;
 		}
 
 		/// <summary>
@@ -132,9 +145,9 @@ namespace PckStudio.Internal
 		/// </summary>
 		/// <param name="flag">Flag to check</param>
 		/// <returns>True if flag is set, otherwise false</returns>
-		public bool GetFlag(ANIM_EFFECTS flag)
+		public bool GetFlag(SkinAnimFlag flag)
 		{
-			return (_ANIM & flag) != 0;
+			return (_flags & flag) != 0;
 		}
 
         public object Clone()

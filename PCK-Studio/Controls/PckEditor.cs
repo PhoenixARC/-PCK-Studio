@@ -21,7 +21,6 @@ using PckStudio.Forms.Additional_Popups.Animation;
 using PckStudio.Forms.Utilities;
 using PckStudio.Classes.IO._3DST;
 using PckStudio.Forms.Additional_Popups;
-using PckStudio.Classes.FileTypes;
 using PckStudio.Classes.IO.PCK;
 using PckStudio.Classes.Misc;
 
@@ -29,6 +28,7 @@ using OMI.Formats.Languages;
 using OMI.Formats.Pck;
 using OMI.Workers.Language;
 using OMI.Workers.Pck;
+using PckStudio.FileFormats;
 
 namespace PckStudio.Controls
 {
@@ -603,7 +603,7 @@ namespace PckStudio.Controls
                     buttonEdit.Visible = true;
                 }
                 else if (file.Properties.HasProperty("ANIM") &&
-                        file.Properties.GetPropertyValue("ANIM", s => SkinANIM.FromString(s) == (ANIM_EFFECTS.RESOLUTION_64x64 | ANIM_EFFECTS.SLIM_MODEL)))
+                        file.Properties.GetPropertyValue("ANIM", s => SkinANIM.FromString(s) == (SkinAnimFlag.RESOLUTION_64x64 | SkinAnimFlag.SLIM_MODEL)))
                 {
                     buttonEdit.Text = "View Skin";
                     buttonEdit.Visible = true;
@@ -744,7 +744,7 @@ namespace PckStudio.Controls
                 return;
 
             var file = new PckFile.FileData(
-                $"res/textures/{AnimationResources.GetAnimationSection(diag.Category)}/{diag.SelectedTile}.png",
+                $"res/textures/{Animation.GetCategoryName(diag.Category)}/{diag.SelectedTile}.png",
                 PckFile.FileData.FileType.TextureFile);
 
             using AnimationEditor animationEditor = new AnimationEditor(file);
@@ -1537,7 +1537,7 @@ namespace PckStudio.Controls
                 var texture = Image.FromStream(ms);
                 if (file.Properties.HasProperty("BOX"))
                 {
-                    using generateModel generate = new generateModel(file.Properties, texture);
+                    using generateModel generate = new generateModel(file);
                     if (generate.ShowDialog() == DialogResult.OK)
                     {
                         entryDataTextBox.Text = entryTypeTextBox.Text = string.Empty;

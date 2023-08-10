@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OMI.Formats.Languages;
 
-namespace PckStudio.Classes.FileTypes
+namespace PckStudio.FileFormats
 {
     public class PckAudioFile
     {

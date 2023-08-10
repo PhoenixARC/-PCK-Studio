@@ -132,10 +132,10 @@
             this.LittleEndianCheckBox = new MetroFramework.Controls.MetroCheckBox();
             this.tabControl = new PckStudio.Controls.CustomTabControl();
             this.StartPage = new MetroFramework.Controls.MetroTabPage();
-            this.label5 = new MetroFramework.Controls.MetroLabel();
-            this.pckOpen = new System.Windows.Forms.PictureBox();
             this.labelVersion = new MetroFramework.Controls.MetroLabel();
+            this.label5 = new MetroFramework.Controls.MetroLabel();
             this.ChangelogRichTextBox = new System.Windows.Forms.RichTextBox();
+            this.pckOpen = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).BeginInit();
             this.contextMenuPCKEntries.SuspendLayout();
             this.menuStrip.SuspendLayout();
@@ -399,8 +399,8 @@
             // 
             // menuStrip
             // 
-            resources.ApplyResources(this.menuStrip, "menuStrip");
             this.menuStrip.BackColor = System.Drawing.Color.Transparent;
+            resources.ApplyResources(this.menuStrip, "menuStrip");
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.editToolStripMenuItem,
@@ -801,10 +801,10 @@
             // 
             // editorTab
             // 
+            resources.ApplyResources(this.editorTab, "editorTab");
             this.editorTab.HorizontalScrollbarBarColor = true;
             this.editorTab.HorizontalScrollbarHighlightOnWheel = false;
             this.editorTab.HorizontalScrollbarSize = 10;
-            resources.ApplyResources(this.editorTab, "editorTab");
             this.editorTab.Name = "editorTab";
             this.editorTab.VerticalScrollbarBarColor = true;
             this.editorTab.VerticalScrollbarHighlightOnWheel = false;
@@ -817,8 +817,8 @@
             // 
             // LittleEndianCheckBox
             // 
-            this.LittleEndianCheckBox.BackColor = System.Drawing.Color.Transparent;
             resources.ApplyResources(this.LittleEndianCheckBox, "LittleEndianCheckBox");
+            this.LittleEndianCheckBox.BackColor = System.Drawing.Color.Transparent;
             this.LittleEndianCheckBox.Name = "LittleEndianCheckBox";
             this.LittleEndianCheckBox.Style = MetroFramework.MetroColorStyle.White;
             this.LittleEndianCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -858,6 +858,13 @@
             this.StartPage.VerticalScrollbarHighlightOnWheel = false;
             this.StartPage.VerticalScrollbarSize = 10;
             // 
+            // labelVersion
+            // 
+            resources.ApplyResources(this.labelVersion, "labelVersion");
+            this.labelVersion.ForeColor = System.Drawing.Color.White;
+            this.labelVersion.Name = "labelVersion";
+            this.labelVersion.Theme = MetroFramework.MetroThemeStyle.Dark;
+            // 
             // label5
             // 
             resources.ApplyResources(this.label5, "label5");
@@ -865,6 +872,15 @@
             this.label5.ForeColor = System.Drawing.Color.White;
             this.label5.Name = "label5";
             this.label5.Theme = MetroFramework.MetroThemeStyle.Dark;
+            // 
+            // ChangelogRichTextBox
+            // 
+            this.ChangelogRichTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
+            this.ChangelogRichTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            resources.ApplyResources(this.ChangelogRichTextBox, "ChangelogRichTextBox");
+            this.ChangelogRichTextBox.ForeColor = System.Drawing.Color.White;
+            this.ChangelogRichTextBox.Name = "ChangelogRichTextBox";
+            this.ChangelogRichTextBox.ReadOnly = true;
             // 
             // pckOpen
             // 
@@ -878,22 +894,6 @@
             this.pckOpen.DragLeave += new System.EventHandler(this.OpenPck_DragLeave);
             this.pckOpen.MouseEnter += new System.EventHandler(this.OpenPck_MouseEnter);
             this.pckOpen.MouseLeave += new System.EventHandler(this.OpenPck_MouseLeave);
-            // 
-            // labelVersion
-            // 
-            resources.ApplyResources(this.labelVersion, "labelVersion");
-            this.labelVersion.ForeColor = System.Drawing.Color.White;
-            this.labelVersion.Name = "labelVersion";
-            this.labelVersion.Theme = MetroFramework.MetroThemeStyle.Dark;
-            // 
-            // ChangelogRichTextBox
-            // 
-            this.ChangelogRichTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.ChangelogRichTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            resources.ApplyResources(this.ChangelogRichTextBox, "ChangelogRichTextBox");
-            this.ChangelogRichTextBox.ForeColor = System.Drawing.Color.White;
-            this.ChangelogRichTextBox.Name = "ChangelogRichTextBox";
-            this.ChangelogRichTextBox.ReadOnly = true;
             // 
             // MainForm
             // 

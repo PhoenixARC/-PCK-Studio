@@ -13,7 +13,7 @@ using NAudio.Wave;
 
 using OMI.Formats.Pck;
 
-using PckStudio.Classes.FileTypes;
+using PckStudio.FileFormats;
 using PckStudio.Classes.IO.PCK;
 using PckStudio.Forms.Additional_Popups.Audio;
 using PckStudio.Forms.Additional_Popups;

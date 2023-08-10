@@ -38,28 +38,21 @@ using PckStudio.Interfaces;
 
 namespace PckStudio
 {
-    public partial class MainForm : MetroFramework.Forms.MetroForm
+	public partial class MainForm : MetroFramework.Forms.MetroForm
 	{
 		private PckManager PckManager = null;
 
 		private Dictionary<string, TabPage> openFiles = new Dictionary<string, TabPage>();
 
-        IComparer NodeSorter = new PckNodeSorter();
+		IComparer NodeSorter = new PckNodeSorter();
 
-        public MainForm()
+		public MainForm()
 		{
 			InitializeComponent();
 			pckOpen.AllowDrop = true;
 			Text = Application.ProductName;
 			ChangelogRichTextBox.Text = Resources.CHANGELOG;
-            labelVersion.Text = $"{Application.ProductName}: {Application.ProductVersion}";
-
-#if BETA
-			labelVersion.Text += $"{ApplicationBuildInfo.BetaBuildVersion}@{CommitInfo.BranchName}";
-#endif
-#if DEBUG
-			labelVersion.Text += $" (Debug build: {CommitInfo.BranchName}@{CommitInfo.CommitHash})";
-#endif
+			labelVersion.Text = $"{Application.ProductName}: {Application.ProductVersion}";
 		}
 
 		public void LoadPckFromFile(IEnumerable<string> filepaths)
@@ -78,22 +71,22 @@ namespace PckStudio
 		private TabPage AddPage(string caption, Control control)
 		{
 			control.Dock = DockStyle.Fill;
-            var page = new TabPage(caption);
-            page.Controls.Add(control);
-            tabControl.TabPages.Add(page);
-            tabControl.SelectTab(page);
+			var page = new TabPage(caption);
+			page.Controls.Add(control);
+			tabControl.TabPages.Add(page);
+			tabControl.SelectTab(page);
 			return page;
-        }
+		}
 
-        private void AddEditorPage(PckFile pck)
+		private void AddEditorPage(PckFile pck)
 		{
 			var editor = new PckEditor();
 			editor.Open(pck);
-            AddPage("Unsaved pck", editor);
-        }
+			AddPage("Unsaved pck", editor);
+		}
 
-        private void AddEditorPage(string filepath)
-        {
+		private void AddEditorPage(string filepath)
+		{
 			if (openFiles.ContainsKey(filepath))
 			{
 				tabControl.SelectTab(openFiles[filepath]);
@@ -104,11 +97,11 @@ namespace PckStudio
 			if (editor.Open(filepath, Settings.Default.UseLittleEndianAsDefault ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian))
 			{
 				var page = AddPage(Path.GetFileName(filepath), editor);
-                openFiles.Add(filepath, page);
+				openFiles.Add(filepath, page);
 				return;
 			}
-            MessageBox.Show(string.Format("Failed to load {0}", Path.GetFileName(filepath)), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
+			MessageBox.Show(string.Format("Failed to load {0}", Path.GetFileName(filepath)), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+		}
 
 		private bool TryGetEditor(TabPage page, out IPckEditor editor)
 		{
@@ -121,47 +114,9 @@ namespace PckStudio
 			return false;
 		}
 
-        private bool TryGetEditor(out IPckEditor editor)
+		private bool TryGetEditor(out IPckEditor editor)
 		{
 			return TryGetEditor(tabControl.SelectedTab, out editor);
-        }
-
-        private void MainForm_Load(object sender, EventArgs e)
-		{
-			SettingsManager.RegisterPropertyChangedCallback<bool>(nameof(Settings.Default.UseLittleEndianAsDefault), state =>
-			{
-				if (TryGetEditor(out IPckEditor editor))
-				{
-                    //TODO
-                    //editor.SetEndianness();	
-                }
-            });
-			SettingsManager.RegisterPropertyChangedCallback(nameof(Settings.Default.LoadSubPcks), () =>
-			{
-				if (TryGetEditor(out IPckEditor editor))
-				{
-					editor.UpdateView();
-				}
-			});
-		}
-
-        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
-		{
-			closeAllToolStripMenuItem_Click(sender, e);
-		}
-
-		private void openToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			using (var ofd = new OpenFileDialog())
-			{
-				ofd.CheckFileExists = true;
-				ofd.Multiselect = true;
-				ofd.Filter = "PCK (Minecraft Console Package)|*.pck";
-				if (ofd.ShowDialog() == DialogResult.OK)
-				{
-					LoadPckFromFile(ofd.FileNames);
-				}
-			}
 		}
 
 		#region drag and drop for main tree node
@@ -220,7 +175,7 @@ namespace PckStudio
 		private PckFile InitializePack(int packId, int packVersion, string packName, bool createSkinsPCK)
 		{
 			var newPck = new PckFile(3);
-			
+
 			var zeroFile = newPck.CreateNewFile("0", PckFile.FileData.FileType.InfoFile);
 			zeroFile.Properties.Add("PACKID", packId.ToString());
 			zeroFile.Properties.Add("PACKVERSION", packVersion.ToString());
@@ -259,8 +214,8 @@ namespace PckStudio
 				{
 					using var ms = new MemoryStream();
 					var writer = new PckFileWriter(new PckFile(3),
-                        Settings.Default.UseLittleEndianAsDefault
-                            ? OMI.Endianness.LittleEndian
+						Settings.Default.UseLittleEndianAsDefault
+							? OMI.Endianness.LittleEndian
 							: OMI.Endianness.BigEndian);
 					writer.WriteToStream(ms);
 					return ms.ToArray();
@@ -307,7 +262,7 @@ namespace PckStudio
 				new KeyValuePair<string, string>("spawnZ", "0")
 				);
 			using (var stream = new MemoryStream())
-			{	
+			{
 				var writer = new GameRuleFileWriter(grfFile);
 				writer.WriteToStream(stream);
 				gameRuleFile.SetData(stream.ToArray());
@@ -321,76 +276,85 @@ namespace PckStudio
 			namePrompt.OKButtonText = "Ok";
 			if (namePrompt.ShowDialog() == DialogResult.OK)
 			{
-				var currentPCK = InitializePack(new Random().Next(8000, int.MaxValue), 0, namePrompt.NewText, true);
-				AddEditorPage(currentPCK);
-			}
+                var currentPCK = InitializePack(new Random().Next(8000, int.MaxValue), 0, namePrompt.NewText, true);
+                AddEditorPage(currentPCK);
+            }
 		}
 
 		private void texturePackToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			CreateTexturePack packPrompt = new CreateTexturePack();
+			var packPrompt = new CreateTexturePackPrompt();
 			if (packPrompt.ShowDialog() == DialogResult.OK)
 			{
-				var currentPCK = InitializeTexturePack(new Random().Next(8000, int.MaxValue), 0, packPrompt.PackName, packPrompt.PackRes);
-				AddEditorPage(currentPCK);
-			}
+                var currentPCK = InitializeTexturePack(new Random().Next(8000, int.MaxValue), 0, packPrompt.PackName, packPrompt.PackRes);
+                AddEditorPage(currentPCK);
+            }
 		}
 
 		private void mashUpPackToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			CreateTexturePack packPrompt = new CreateTexturePack();
+			var packPrompt = new CreateTexturePackPrompt();
 			if (packPrompt.ShowDialog() == DialogResult.OK)
 			{
-				var newPck = InitializeMashUpPack(new Random().Next(8000, int.MaxValue), 0, packPrompt.PackName, packPrompt.PackRes);
-				AddEditorPage(newPck);
+                var currentPCK = InitializeMashUpPack(new Random().Next(8000, int.MaxValue), 0, packPrompt.PackName, packPrompt.PackRes);
+				AddEditorPage(currentPCK);
+            }
+		}
+
+		private void CloseTab(TabControl.TabPageCollection collection, TabPage page)
+		{
+			if (TryGetEditor(page, out IPckEditor editor))
+			{
+				editor.Close();
+				RemoveOpenFile(page);
+				collection.Remove(page);
+			}
+		}
+
+		private void openToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			using (var ofd = new OpenFileDialog())
+			{
+				ofd.CheckFileExists = true;
+				ofd.Filter = "PCK (Minecraft Console Package)|*.pck";
+				if (ofd.ShowDialog() == DialogResult.OK)
+				{
+					LoadPckFromFile(ofd.FileName);
+				}
 			}
 		}
 
 		private void quickChangeToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (TryGetEditor(out IPckEditor editor))
+			if (TryGetEditor(out var editor))
 			{
-
 				using AdvancedOptions advanced = new AdvancedOptions(editor.Pck);
-				//TODO
-				//advanced.littleEndian = LittleEndianCheckBox.Checked;
+				advanced.IsLittleEndian = LittleEndianCheckBox.Checked;
 				if (advanced.ShowDialog() == DialogResult.OK)
 				{
-					// TODO
-					//wasModified = true;
-					//BuildMainTreeView();
+					editor.UpdateView();
 				}
 			}
 		}
 
-		private void CloseTab(TabControl.TabPageCollection collection, TabPage page)
-		{
-            if (TryGetEditor(page, out IPckEditor editor))
-            {
-                editor.Close();
-                RemoveOpenFile(page);
-                collection.Remove(page);
-            }
-        }
-
 		private void closeToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			CloseTab(tabControl.TabPages, tabControl.SelectedTab);
-        }
+		}
 
-        private void RemoveOpenFile()
+		private void RemoveOpenFile()
 		{
 			RemoveOpenFile(tabControl.SelectedTab);
-        }
+		}
 
-        private void RemoveOpenFile(TabPage page)
-        {
-            var kv = openFiles.FirstOrDefault((kv) => kv.Value == page);
-            if (kv.Key != null && kv.Value != null)
-            {
-                openFiles.Remove(kv.Key);
-            }
-        }
+		private void RemoveOpenFile(TabPage page)
+		{
+			var kv = openFiles.FirstOrDefault((kv) => kv.Value == page);
+			if (kv.Key != null && kv.Value != null)
+			{
+				openFiles.Remove(kv.Key);
+			}
+		}
 
 		private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
 		{
@@ -433,7 +397,7 @@ namespace PckStudio
 						string filepath = $"{sfd.SelectedPath}/{file.Filename}";
 						Directory.CreateDirectory(filepath);
 						File.WriteAllBytes(filepath, file.Data); // writes data to file
-						//attempts to generate reimportable metadata file out of minefiles metadata
+																 //attempts to generate reimportable metadata file out of minefiles metadata
 						string metaData = "";
 
 						foreach (var entry in file.Properties)
@@ -488,9 +452,9 @@ namespace PckStudio
 			MessageBox.Show("This feature is currently being reworked.", "Currently unavailable", MessageBoxButtons.OK, MessageBoxIcon.Information);
 		}
 
-        private void openPckCenterToolStripMenuItem_Click(object sender, EventArgs e)
+		private void openPckCenterToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-            MessageBox.Show("This feature is currently being reworked.", "Currently unavailable", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			MessageBox.Show("This feature is currently being reworked.", "Currently unavailable", MessageBoxButtons.OK, MessageBoxIcon.Information);
 #if false
 			DateTime Begin = DateTime.Now;
 			//pckCenter open = new pckCenter();
@@ -610,11 +574,11 @@ namespace PckStudio
 
 		private void saveToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-            if (TryGetEditor(out var editor))
+			if (TryGetEditor(out var editor))
 			{
 				editor.Save();
 			}
-        }
+		}
 
 		private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
@@ -634,11 +598,11 @@ namespace PckStudio
 			numericPrompt.ContextLabel.Text = "Please insert the desired Pack ID";
 			numericPrompt.TextLabel.Text = "Pack ID";
 
-            if (TryGetEditor(out IPckEditor editor))
+			if (TryGetEditor(out IPckEditor editor))
 			{
-				DialogResult prompt = MessageBox.Show(this, 
-					"Would you like to use the current PackID? You can enter any PackID if not.", 
-					"", 
+				DialogResult prompt = MessageBox.Show(this,
+					"Would you like to use the current PackID? You can enter any PackID if not.",
+					"",
 					MessageBoxButtons.YesNoCancel);
 
 				switch (prompt)
@@ -647,9 +611,9 @@ namespace PckStudio
 						if (!editor.Pck.TryGetFile("0", PckFile.FileData.FileType.InfoFile, out PckFile.FileData file) ||
 							string.IsNullOrEmpty(file.Properties.GetPropertyValue("PACKID")))
 						{
-							MessageBox.Show(this, 
+							MessageBox.Show(this,
 								"No PackID is present in this PCK. " +
-								"To avoid this error, ensure that the PCK has a proper PackID property on the \"0\" Info file before trying again.", 
+								"To avoid this error, ensure that the PCK has a proper PackID property on the \"0\" Info file before trying again.",
 								"Operation Aborted", MessageBoxButtons.OK, MessageBoxIcon.Error);
 							return;
 						}
@@ -717,29 +681,31 @@ namespace PckStudio
 		private void openPckManagerToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			PckManager ??= new PckManager();
-			PckManager.BringToFront();
-			PckManager.Focus();
-			if (!PckManager.Visible)
+			PckManager.FormClosing += (s, e) =>
 			{
-				PckManager.FormClosed += delegate { PckManager = null; };
-				PckManager.Show(this);
-			}
+				PckManager.Hide();
+				e.Cancel = true;
+			};
+			if (!PckManager.Visible)
+				PckManager.Show();
+			if (PckManager.Focus())
+				PckManager.BringToFront();
 		}
 
 		private async void wavBinkaToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-            using OpenFileDialog fileDialog = new OpenFileDialog
-            {
-                Multiselect = true,
-                Filter = "WAV files (*.wav)|*.wav",
-                Title = "Please choose WAV files to convert to BINKA"
-            };
-            if (fileDialog.ShowDialog() != DialogResult.OK)
+			using OpenFileDialog fileDialog = new OpenFileDialog
+			{
+				Multiselect = true,
+				Filter = "WAV files (*.wav)|*.wav",
+				Title = "Please choose WAV files to convert to BINKA"
+			};
+			if (fileDialog.ShowDialog() != DialogResult.OK)
 				return;
 
-            InProgressPrompt waitDiag = new InProgressPrompt();
+			InProgressPrompt waitDiag = new InProgressPrompt();
 			waitDiag.Show(this);
-			
+
 			int convertedCount = 0;
 
 			Directory.CreateDirectory(ApplicationScope.DataCacher.CacheDirectory); // create directory in case it doesn't exist
@@ -748,7 +714,7 @@ namespace PckStudio
 			{
 				string[] a = Path.GetFileNameWithoutExtension(waveFilepath).Split(Path.GetInvalidFileNameChars());
 
-                string songName = string.Join("_", a);
+				string songName = string.Join("_", a);
 				songName = System.Text.RegularExpressions.Regex.Replace(songName, @"[^\u0000-\u007F]+", "_"); // Replace UTF characters
 				string cacheSongFilepath = Path.Combine(ApplicationScope.DataCacher.CacheDirectory, songName + Path.GetExtension(waveFilepath));
 
@@ -777,67 +743,89 @@ namespace PckStudio
 
 			int fileCount = fileDialog.FileNames.Length;
 
-            waitDiag.Close();
+			waitDiag.Close();
 			waitDiag.Dispose();
 			MessageBox.Show(this, $"Successfully converted {convertedCount}/{fileCount} file{(fileCount != 1 ? "s" : "")}", "Done!");
 		}
 
 		private void binkaWavToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-            using OpenFileDialog fileDialog = new OpenFileDialog
-            {
-                Multiselect = true,
-                Filter = "BINKA files (*.binka)|*.binka",
-                Title = "Please choose BINKA files to convert to WAV"
-            };
-            if (fileDialog.ShowDialog() == DialogResult.OK)
+			using OpenFileDialog fileDialog = new OpenFileDialog
+			{
+				Multiselect = true,
+				Filter = "BINKA files (*.binka)|*.binka",
+				Title = "Please choose BINKA files to convert to WAV"
+			};
+			if (fileDialog.ShowDialog() == DialogResult.OK)
 				BinkaConverter.ToWav(fileDialog.FileNames, new DirectoryInfo(Path.GetDirectoryName(fileDialog.FileName)));
 		}
 
-        private void fullBoxSupportToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
-        {
+		private void fullBoxSupportToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+		{
 			if (TryGetEditor(out var editor))
 			{
 				editor.Pck.SetVersion(fullBoxSupportToolStripMenuItem.Checked);
 			}
-        }
+		}
 
-        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
+		private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+		{
 			var appSettings = new AppSettingsForm();
 			appSettings.ShowDialog(this);
-        }
+		}
 
-        private void tabControl_PageClosing(object sender, PageClosingEventArgs e)
-        {
-            if (TryGetEditor(e.Page, out IPckEditor editor))
+		private void tabControl_PageClosing(object sender, PageClosingEventArgs e)
+		{
+			if (TryGetEditor(e.Page, out IPckEditor editor))
 			{
 				editor.Close();
 				RemoveOpenFile();
-            }
-        }
+			}
+		}
 
-        private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
-        {
+		private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
+		{
 			closeToolStripMenuItem.Visible = tabControl.SelectedIndex > 0;
-            closeAllToolStripMenuItem.Visible = tabControl.SelectedIndex == 0 && tabControl.TabCount > 1;
+			closeAllToolStripMenuItem.Visible = tabControl.SelectedIndex == 0 && tabControl.TabCount > 1;
 			saveAsToolStripMenuItem.Visible = tabControl.SelectedIndex > 0;
 			saveToolStripMenuItem.Visible = tabControl.SelectedIndex > 0;
 
 
-            if (tabControl.TabPages.Count == 1)
+			if (tabControl.TabPages.Count == 1)
 			{
-                RPC.SetPresence("An Open Source .PCK File Editor");
-            }
+				RPC.SetPresence("An Open Source .PCK File Editor");
+			}
+		}
+
+		private void closeAllToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			foreach (TabPage tab in tabControl.TabPages)
+			{
+				CloseTab(tabControl.TabPages, tab);
+			}
+			closeAllToolStripMenuItem.Visible = false;
+		}
+
+		private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			PckManager?.Close();
+			closeAllToolStripMenuItem_Click(sender, e);
         }
 
-        private void closeAllToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            foreach (TabPage tab in tabControl.TabPages)
-            {
-				CloseTab(tabControl.TabPages, tab);
-            }
-            closeAllToolStripMenuItem.Visible = false;
-        }
-    }
+		private void MainForm_Load(object sender, EventArgs e)
+		{
+			// TODO
+			//SettingsManager.RegisterPropertyChangedCallback<bool>(nameof(Settings.Default.UseLittleEndianAsDefault), state =>
+			//{
+			//	LittleEndianCheckBox.Checked = state;
+			//});
+			SettingsManager.RegisterPropertyChangedCallback(nameof(Settings.Default.LoadSubPcks), () =>
+			{
+				if (TryGetEditor(out var editor))
+				{
+					editor.UpdateView();
+				}
+			});
+		}
+	}
 }

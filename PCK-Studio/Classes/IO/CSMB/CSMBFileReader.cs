@@ -2,7 +2,7 @@
 using System.Text;
 using OMI;
 using OMI.Workers;
-using PckStudio.Classes.FileTypes;
+using PckStudio.FileFormats;
 
 namespace PckStudio.Classes.IO.CSMB
 {

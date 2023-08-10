@@ -30,6 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.TableLayoutPanel layoutPanel;
+            this.gameDirectoryContextMenu = new MetroFramework.Controls.MetroContextMenu(this.components);
+            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.radioButtonEur = new System.Windows.Forms.RadioButton();
             this.radioButtonUs = new System.Windows.Forms.RadioButton();
             this.radioButtonJap = new System.Windows.Forms.RadioButton();
@@ -43,6 +46,7 @@
             this.removePckToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             layoutPanel = new System.Windows.Forms.TableLayoutPanel();
             layoutPanel.SuspendLayout();
+            this.gameDirectoryContextMenu.SuspendLayout();
             this.DLCContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -53,6 +57,7 @@
             layoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33332F));
             layoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
             layoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
+            layoutPanel.ContextMenuStrip = this.gameDirectoryContextMenu;
             layoutPanel.Controls.Add(this.radioButtonEur, 0, 1);
             layoutPanel.Controls.Add(this.radioButtonUs, 1, 1);
             layoutPanel.Controls.Add(this.radioButtonJap, 2, 1);
@@ -70,6 +75,28 @@
             layoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             layoutPanel.Size = new System.Drawing.Size(430, 550);
             layoutPanel.TabIndex = 4;
+            // 
+            // gameDirectoryContextMenu
+            // 
+            this.gameDirectoryContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openToolStripMenuItem,
+            this.copyToolStripMenuItem});
+            this.gameDirectoryContextMenu.Name = "gameDirectoryContextMenu";
+            this.gameDirectoryContextMenu.Size = new System.Drawing.Size(155, 48);
+            // 
+            // openToolStripMenuItem
+            // 
+            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.openToolStripMenuItem.Text = "Open Directory";
+            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+            // 
+            // copyToolStripMenuItem
+            // 
+            this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.copyToolStripMenuItem.Text = "Copy Path";
+            this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
             // 
             // radioButtonEur
             // 
@@ -180,7 +207,6 @@
             this.GameDirectoryTextBox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.GameDirectoryTextBox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
             this.GameDirectoryTextBox.TextChanged += new System.EventHandler(this.GameDirectoryTextBox_TextChanged);
-            this.GameDirectoryTextBox.Click += new System.EventHandler(this.GameDirectoryTextBox_Click);
             // 
             // BrowseDirectoryBtn
             // 
@@ -265,6 +291,7 @@
             this.Size = new System.Drawing.Size(430, 550);
             layoutPanel.ResumeLayout(false);
             layoutPanel.PerformLayout();
+            this.gameDirectoryContextMenu.ResumeLayout(false);
             this.DLCContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -283,5 +310,8 @@
         private System.Windows.Forms.ToolStripMenuItem openTexturePackToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addCustomPckToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem removePckToolStripMenuItem;
+        private MetroFramework.Controls.MetroContextMenu gameDirectoryContextMenu;
+        private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
     }
 }
