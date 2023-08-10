@@ -182,7 +182,18 @@
 		},
 		{
 			"internalName": "tallgrass",
-			"displayName": "Tall Grass"
+			"displayName": "Tall Grass",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"isWaterColour": false,
+				"defaultName": "Grass_Common",
+				"variants": [
+					"Grass_Common",
+					"Grass_Mesa",
+					"Grass_Swamp1",
+					"Grass_Swamp2"
+				]
+			}
 		},
 		{
 			"internalName": "dispenser_front_vertical",
@@ -274,7 +285,18 @@
 		},
 		{
 			"internalName": "fern",
-			"displayName": "Fern"
+			"displayName": "Fern",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"isWaterColour": false,
+				"defaultName": "Grass_Common",
+				"variants": [
+					"Grass_Common",
+					"Grass_Mesa",
+					"Grass_Swamp1",
+					"Grass_Swamp2"
+				]
+			}
 		},
 		{
 			"internalName": "daylight_detector_top",
