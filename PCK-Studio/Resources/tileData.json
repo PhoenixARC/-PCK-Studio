@@ -986,7 +986,7 @@
 			}
 		},
 		{
-			"internalName": "",
+			"internalName": "water_flow",
 			"displayName": ""
 		},
 		{
@@ -1046,11 +1046,11 @@
 			"displayName": "Detector Rail (On)"
 		},
 		{
-			"internalName": "",
+			"internalName": "water_flow",
 			"displayName": ""
 		},
 		{
-			"internalName": "",
+			"internalName": "water_flow",
 			"displayName": ""
 		},
 		{
@@ -1114,8 +1114,8 @@
 			"displayName": "Flowing Lava"
 		},
 		{
-			"internalName": "",
-			"displayName": ""
+			"internalName": "lava_flow",
+			"displayName": "",
 		},
 		{
 			"internalName": "destroy_0",
@@ -1174,12 +1174,12 @@
 			"displayName": "Hay Bale (Top)"
 		},
 		{
-			"internalName": "",
-			"displayName": ""
+			"internalName": "lava_flow",
+			"displayName": "",
 		},
 		{
-			"internalName": "",
-			"displayName": ""
+			"internalName": "lava_flow",
+			"displayName": "",
 		},
 		{
 			"internalName": "coal_block",
