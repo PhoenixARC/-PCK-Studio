@@ -1,6 +1,6 @@
 {
 	"COMMENT_1": "Tile data research by MattNL",
-	"COMMENT_2": "JSON conversion by PhoenixARC",
+	"COMMENT_2": "JSON by PhoenixARC, MattNL, and NessieHax (Miku-666)",
 	"blocks": [
 		{
 			"internalName": "grass_top",
@@ -2162,9 +2162,39 @@
 			"displayName": "Cauldron Water",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": true,
-				"defaultName": "default",
-				"variants": [ "default" ]
+				"isWaterColour": false,
+				"defaultName": "Cauldron_Water",
+				"variants": [ 
+					"Cauldron_Water",
+					"Effect_MovementSpeed",
+					"Effect_MovementSlowDown",
+					"Effect_DigSpeed",
+					"Effect_DigSlowdown",
+					"Effect_DamageBoost",
+					"Effect_Heal",
+					"Effect_Harm",
+					"Effect_Jump",
+					"Effect_Confusion",
+					"Effect_Regeneration",
+					"Effect_DamageResistance",
+					"Effect_FireResistance",
+					"Effect_WaterBreathing",
+					"Effect_Invisibility",
+					"Effect_Blindness",
+					"Effect_NightVision",
+					"Effect_Hunger",
+					"Effect_Weakness",
+					"Effect_Poison",
+					"Effect_Wither",
+					"Effect_HealthBoost",
+					"Effect_Absorption",
+					"Effect_Saturation",
+					"Effect_Levitation",
+					"Effect_Luck",
+					"Effect_BadLuck",
+					"Effect_TurtleMaster",
+					"Effect_SlowFall"
+				]
 			}
 		},
 		{
@@ -3328,7 +3358,37 @@
 			"colourEntry": {
 				"isWaterColour": false,
 				"defaultName": "Potion_BaseColour",
-				"variants": [ "Potion_BaseColour" ]
+				"variants": [ 
+					"Potion_BaseColour",
+					"Effect_MovementSpeed",
+					"Effect_MovementSlowDown",
+					"Effect_DigSpeed",
+					"Effect_DigSlowdown",
+					"Effect_DamageBoost",
+					"Effect_Heal",
+					"Effect_Harm",
+					"Effect_Jump",
+					"Effect_Confusion",
+					"Effect_Regeneration",
+					"Effect_DamageResistance",
+					"Effect_FireResistance",
+					"Effect_WaterBreathing",
+					"Effect_Invisibility",
+					"Effect_Blindness",
+					"Effect_NightVision",
+					"Effect_Hunger",
+					"Effect_Weakness",
+					"Effect_Poison",
+					"Effect_Wither",
+					"Effect_HealthBoost",
+					"Effect_Absorption",
+					"Effect_Saturation",
+					"Effect_Levitation",
+					"Effect_Luck",
+					"Effect_BadLuck",
+					"Effect_TurtleMaster",
+					"Effect_SlowFall"
+				]
 			}
 		},
 		{
