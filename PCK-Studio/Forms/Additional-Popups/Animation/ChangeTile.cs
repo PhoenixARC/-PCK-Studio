@@ -63,10 +63,11 @@ namespace PckStudio.Forms.Additional_Popups.Animation
                 {
 					foreach ((int i, var content) in textureInfos.enumerate())
 					{
-						if (!string.IsNullOrEmpty(content.DisplayName))
+						if (!string.IsNullOrEmpty(content.DisplayName) && !collection.ContainsKey(content.DisplayName))
 						{
 							TreeNode tileNode = new TreeNode(content.DisplayName)
 							{
+								Name = content.DisplayName,
 								Tag = content.DisplayName,
 								ImageIndex = i,
 								SelectedImageIndex = i,
