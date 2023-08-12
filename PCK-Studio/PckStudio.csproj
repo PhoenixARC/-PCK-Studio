@@ -313,12 +313,6 @@
     <Compile Include="Forms\Additional-Popups\Animation\SetBulkSpeed.Designer.cs">
       <DependentUpon>SetBulkSpeed.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Additional-Popups\Audio\creditsEditor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Additional-Popups\Audio\creditsEditor.Designer.cs">
-      <DependentUpon>creditsEditor.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\Additional-Popups\ItemSelectionPopUp.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -506,10 +500,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\Animation\SetBulkSpeed.resx">
       <DependentUpon>SetBulkSpeed.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Additional-Popups\Audio\creditsEditor.resx">
-      <DependentUpon>creditsEditor.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\ItemSelectionPopUp.resx">
       <DependentUpon>ItemSelectionPopUp.cs</DependentUpon>

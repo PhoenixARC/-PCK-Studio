@@ -15,7 +15,6 @@ using OMI.Formats.Pck;
 
 using PckStudio.FileFormats;
 using PckStudio.IO.PckAudio;
-using PckStudio.Forms.Additional_Popups.Audio;
 using PckStudio.Forms.Additional_Popups;
 using PckStudio.Properties;
 using PckStudio.API.Miles;
@@ -431,14 +430,6 @@ namespace PckStudio.Forms.Editor
 				"The \"Creative\" category will only play songs listed in that category, and unlike other editions of Minecraft, will NOT play songs from the Overworld category. You can fix this by clicking the checkbox found at the top of the form.\n\n" +
 				"The mini game categories will only play if you have your pack loaded in those mini games.\n\n" +
 				"You can edit the credits for the PCK in the Credits editor! No more managing credit IDs!\n\n", "Help");
-		}
-
-		private void creditsEditorToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			var credits = audioFile.GetCreditsString();
-			using (creditsEditor prompt = new creditsEditor(credits))
-				if (prompt.ShowDialog() == DialogResult.OK)
-					audioFile.SetCredits(prompt.Credits.Split('\n'));
 		}
 
 		private void deleteUnusedBINKAsToolStripMenuItem_Click(object sender, EventArgs e)
