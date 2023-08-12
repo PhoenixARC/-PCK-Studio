@@ -4,7 +4,7 @@ using PckStudio.FileFormats;
 using OMI.Workers;
 using OMI;
 
-namespace PckStudio.Classes.IO.CSMB
+namespace PckStudio.IO.CSMB
 {
     internal class CSMBFileWriter : IDataFormatWriter
     {
