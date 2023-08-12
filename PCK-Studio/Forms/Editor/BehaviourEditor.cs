@@ -12,6 +12,7 @@ using OMI.Formats.Behaviour;
 using OMI.Workers.Behaviour;
 using OMI.Formats.Pck;
 using PckStudio.Properties;
+using PckStudio.Internal;
 
 namespace PckStudio.Forms.Editor
 {

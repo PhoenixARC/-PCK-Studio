@@ -6,10 +6,9 @@ using PckStudio.Classes.Misc;
 using PckStudio.Properties;
 using PckStudio.Extensions;
 using System.Globalization;
-using PckStudio.Internal;
 using PckStudio.Helper;
 
-namespace PckStudio
+namespace PckStudio.Internal
 {
     internal static class ApplicationScope
     {

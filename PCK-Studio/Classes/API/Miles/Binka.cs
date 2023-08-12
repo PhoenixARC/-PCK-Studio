@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
+using PckStudio.Internal;
 using SharpMSS;
 
 namespace PckStudio.API.Miles

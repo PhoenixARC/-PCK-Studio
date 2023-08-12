@@ -19,6 +19,7 @@ using PckStudio.Forms.Additional_Popups.Audio;
 using PckStudio.Forms.Additional_Popups;
 using PckStudio.Properties;
 using PckStudio.API.Miles;
+using PckStudio.Internal;
 
 // Audio Editor by MattNL and Miku-666
 
