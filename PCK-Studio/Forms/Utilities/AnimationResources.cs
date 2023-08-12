@@ -10,54 +10,15 @@ using PckStudio.Extensions;
 using PckStudio.Forms.Editor;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using PckStudio.Internal.Json;
 
 namespace PckStudio.Forms.Utilities
 {
     public static class AnimationResources
     {
-        internal class TileJson
-        {
-            [JsonProperty("blocks")]
-            public List<JsonTileInfo> Blocks { get; set; }
-            [JsonProperty("items")]
-            public List<JsonTileInfo> Items { get; set; }
-        }
 
-        private static TileJson _jsonData;
-        internal static TileJson JsonTileData => _jsonData ??= JsonConvert.DeserializeObject<TileJson>(Resources.tileData);
-
-        internal class JsonTileInfo
-        {
-            [JsonProperty("displayName")]
-            public string DisplayName { get; set; }
-
-            [JsonProperty("internalName")]
-            public string InternalName { get; set; }
-
-            [JsonProperty("hasColourEntry", DefaultValueHandling = DefaultValueHandling.Populate)]
-            public bool HasColourEntry { get; set; }
-
-            [JsonProperty("colourEntry", DefaultValueHandling = DefaultValueHandling.Populate)]
-            public JsonColorEntry ColourEntry { get; set; }
-
-            public JsonTileInfo(string displayName, string internalName)
-            {
-                DisplayName = displayName;
-                InternalName = internalName;
-            }
-        }
-
-        internal class JsonColorEntry
-        {
-            [JsonProperty("defaultName", Required = Required.Always)]
-            public string DefaultName { get; set; }
-
-            [JsonProperty("isWaterColour", DefaultValueHandling = DefaultValueHandling.Populate)]
-            public bool IsWaterColour { get; set; }
-
-            [JsonProperty("variants", DefaultValueHandling = DefaultValueHandling.Populate)]
-            public string[] Variants { get; set; }
-        }
+        private static JsonTiles _jsonData;
+        internal static JsonTiles JsonTileData => _jsonData ??= JsonConvert.DeserializeObject<JsonTiles>(Resources.tileData);
 
         internal static List<JsonTileInfo> ItemTileInfos => JsonTileData.Items;
 

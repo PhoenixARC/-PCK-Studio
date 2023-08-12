@@ -191,6 +191,9 @@
     <Compile Include="Classes\Misc\OpenFolderDialog.cs" />
     <Compile Include="Classes\Models\DefaultModels\Steve64x64Model.cs" />
     <Compile Include="Internal\ApplicationScope.cs" />
+    <Compile Include="Internal\Json\ColorEntry.cs" />
+    <Compile Include="Internal\Json\TileInfo.cs" />
+    <Compile Include="Internal\Json\Tiles.cs" />
     <Compile Include="Internal\Profiler.cs" />
     <Compile Include="Internal\SettingsManager.cs" />
     <Compile Include="Internal\SkinBOX.cs" />
@@ -814,6 +817,6 @@
     <PropertyGroup>
       <StringDate>$([System.DateTime]::Now.ToString('yyyy-MM-dd'))</StringDate>
     </PropertyGroup>
-    <ZipDirectory SourceDirectory="$(OutputPath)" DestinationFile="$(OutputPath)\..\$(AssemblyName)_$(Configuration)_$(StringDate).zip" Overwrite="true" />
+    <ZipDirectory SourceDirectory="$(OutputPath)" DestinationFile="$(OutputPath)\..\$(AssemblyName)_$(Configuration)@$(BuildBranch)_$(StringDate).zip" Overwrite="true" />
   </Target>
 </Project>

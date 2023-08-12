@@ -31,6 +31,7 @@ using OMI.Workers.Color;
 using PckStudio.Extensions;
 using PckStudio.Forms.Editor;
 using PckStudio.Forms.Utilities;
+using PckStudio.Internal.Json;
 
 namespace PckStudio
 {
@@ -55,14 +56,14 @@ namespace PckStudio
         private readonly List<AtlasTile> _tiles;
 
         private AtlasTile _selectedTile;
-        private class AtlasTile
+        private sealed class AtlasTile
         {
             internal readonly int Index;
             internal readonly Rectangle Area;
-            internal readonly AnimationResources.JsonTileInfo Tile;
+            internal readonly JsonTileInfo Tile;
             internal readonly Image Texture;
 
-            public AtlasTile(int index, Rectangle area, AnimationResources.JsonTileInfo tile, Image texture)
+            public AtlasTile(int index, Rectangle area, JsonTileInfo tile, Image texture)
             {
                 Index = index;
                 Area = area;

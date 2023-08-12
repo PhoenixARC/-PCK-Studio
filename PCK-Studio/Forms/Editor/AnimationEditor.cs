@@ -17,6 +17,7 @@ using PckStudio.Extensions;
 using PckStudio.Properties;
 using System.Diagnostics;
 using PckStudio.Internal;
+using PckStudio.Internal.Json;
 
 namespace PckStudio.Forms.Editor
 {
@@ -408,7 +409,7 @@ namespace PckStudio.Forms.Editor
 				_ => throw new ArgumentOutOfRangeException(currentAnimation.Category.ToString())
 			};
 
-			if (textureInfos.FirstOrDefault(p => p.InternalName == TileName) is AnimationResources.JsonTileInfo textureInfo)
+			if (textureInfos.FirstOrDefault(p => p.InternalName == TileName) is JsonTileInfo textureInfo)
 			{
 				tileLabel.Text = textureInfo.DisplayName;
 				return;

@@ -6,6 +6,7 @@ using MetroFramework.Forms;
 using PckStudio.Extensions;
 using PckStudio.Forms.Utilities;
 using PckStudio.Internal;
+using PckStudio.Internal.Json;
 
 namespace PckStudio.Forms.Additional_Popups.Animation
 {
@@ -50,7 +51,7 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 
 		private void GetTileDataToView(string key, TreeNodeCollection collection, Action<TreeNode> additinalAction)
 		{
-			List<AnimationResources.JsonTileInfo> textureInfos = key switch
+			List<JsonTileInfo> textureInfos = key switch
 			{
 				"blocks" => AnimationResources.BlockTileInfos,
 				"items" => AnimationResources.ItemTileInfos,
