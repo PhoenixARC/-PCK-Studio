@@ -8,7 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace PckStudio.Classes.IO.PCK
+namespace PckStudio.IO.PckAudio
 {
 
     public class InvalidAudioPckException : Exception

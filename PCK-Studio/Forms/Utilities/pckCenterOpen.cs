@@ -13,11 +13,12 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Media.Imaging;
 using System.IO.Packaging;
-using PckStudio;
 using System.IO.Compression;
-using PckStudio.Classes.IO.PCK;
+
 using OMI.Formats.Pck;
 using OMI.Workers.Pck;
+
+using PckStudio;
 using PckStudio.Extensions;
 
 namespace PckStudio.Forms
