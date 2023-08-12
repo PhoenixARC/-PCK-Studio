@@ -132,13 +132,13 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\ToolboxItems\BlendPictureBox.cs">
+    <Compile Include="ToolboxItems\BlendPictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Classes\ToolboxItems\PictureBoxWithInterpolationMode.cs">
+    <Compile Include="ToolboxItems\InterpolationPictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Classes\ToolboxItems\ToolStripRadioButtonMenuItem.cs">
+    <Compile Include="ToolboxItems\ToolStripRadioButtonMenuItem.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Classes\Utils\BinkaConverter.cs" />
@@ -274,7 +274,7 @@
       <DependentUpon>MultiTextPrompt.cs</DependentUpon>
     </Compile>
     <Compile Include="Internal\Animation.cs" />
-    <Compile Include="Forms\Editor\AnimationPictureBox.cs">
+    <Compile Include="ToolboxItems\AnimationPictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Forms\Editor\MaterialsEditor.cs">

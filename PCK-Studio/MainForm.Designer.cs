@@ -147,7 +147,7 @@
             this.label11 = new MetroFramework.Controls.MetroLabel();
             this.treeViewMain = new System.Windows.Forms.TreeView();
             this.imageList = new System.Windows.Forms.ImageList(this.components);
-            this.previewPictureBox = new PckStudio.PictureBoxWithInterpolationMode();
+            this.previewPictureBox = new PckStudio.ToolboxItems.InterpolationPictureBox();
             this.LittleEndianCheckBox = new MetroFramework.Controls.MetroCheckBox();
             logoPictureBox = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(logoPictureBox)).BeginInit();
@@ -1219,7 +1219,7 @@
         private MetroFramework.Controls.MetroLabel metroLabel2;
         private MetroFramework.Controls.MetroTextBox entryDataTextBox;
         private MetroFramework.Controls.MetroLabel fileEntryCountLabel;
-        private PictureBoxWithInterpolationMode previewPictureBox;
+        private PckStudio.ToolboxItems.InterpolationPictureBox previewPictureBox;
         private MetroFramework.Controls.MetroLabel labelImageSize;
         private MetroFramework.Controls.MetroButton buttonEdit;
         private System.Windows.Forms.ToolStripMenuItem skinPackToolStripMenuItem;

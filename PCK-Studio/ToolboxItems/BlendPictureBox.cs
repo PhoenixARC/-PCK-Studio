@@ -9,7 +9,7 @@ using PckStudio.Extensions;
 
 namespace PckStudio.ToolboxItems
 {
-    internal class BlendPictureBox : PictureBoxWithInterpolationMode
+    internal class BlendPictureBox : InterpolationPictureBox
     {
         [DefaultValue(false)]
         [Category("Blending")]

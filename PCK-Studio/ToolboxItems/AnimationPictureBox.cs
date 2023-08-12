@@ -25,9 +25,8 @@ using System.Runtime.CompilerServices;
 
 using PckStudio.Extensions;
 using PckStudio.Internal;
-using PckStudio.ToolboxItems;
 
-namespace PckStudio.Forms.Editor
+namespace PckStudio.ToolboxItems
 {
 	internal class AnimationPictureBox : BlendPictureBox
     {

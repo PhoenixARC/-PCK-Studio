@@ -38,8 +38,8 @@
             this.applyColorMaskToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.playAnimationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.originalPictureBox = new PckStudio.PictureBoxWithInterpolationMode();
-            this.selectTilePictureBox = new PckStudio.Forms.Editor.AnimationPictureBox();
+            this.originalPictureBox = new PckStudio.ToolboxItems.InterpolationPictureBox();
+            this.selectTilePictureBox = new PckStudio.ToolboxItems.AnimationPictureBox();
             this.replaceButton = new MetroFramework.Controls.MetroButton();
             this.animationButton = new MetroFramework.Controls.MetroButton();
             this.tileNameLabel = new MetroFramework.Controls.MetroLabel();
@@ -279,12 +279,12 @@
 
         #endregion
 
-        private PckStudio.Forms.Editor.AnimationPictureBox selectTilePictureBox;
+        private PckStudio.ToolboxItems.AnimationPictureBox selectTilePictureBox;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private MetroFramework.Controls.MetroButton replaceButton;
-        private PictureBoxWithInterpolationMode originalPictureBox;
+        private PckStudio.ToolboxItems.InterpolationPictureBox originalPictureBox;
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
         private MetroFramework.Controls.MetroButton animationButton;
         private System.Windows.Forms.ToolStripMenuItem extractTileToolStripMenuItem;
