@@ -2276,7 +2276,7 @@ namespace PckStudio
 				PckManager.BringToFront();
 		}
 
-		private async void wavBinkaToolStripMenuItem_Click(object sender, EventArgs e)
+		private void wavBinkaToolStripMenuItem_Click(object sender, EventArgs e)
 		{
             using OpenFileDialog fileDialog = new OpenFileDialog
             {
@@ -2284,52 +2284,10 @@ namespace PckStudio
                 Filter = "WAV files (*.wav)|*.wav",
                 Title = "Please choose WAV files to convert to BINKA"
             };
-            if (fileDialog.ShowDialog() != DialogResult.OK)
-				return;
-
-            InProgressPrompt waitDiag = new InProgressPrompt();
-			waitDiag.Show(this);
-			
-			int convertedCount = 0;
-
-			Directory.CreateDirectory(ApplicationScope.DataCacher.CacheDirectory); // create directory in case it doesn't exist
-
-			foreach (string waveFilepath in fileDialog.FileNames)
+            if (fileDialog.ShowDialog() == DialogResult.OK)
 			{
-				string[] a = Path.GetFileNameWithoutExtension(waveFilepath).Split(Path.GetInvalidFileNameChars());
-
-                string songName = string.Join("_", a);
-				songName = System.Text.RegularExpressions.Regex.Replace(songName, @"[^\u0000-\u007F]+", "_"); // Replace UTF characters
-				string cacheSongFilepath = Path.Combine(ApplicationScope.DataCacher.CacheDirectory, songName + Path.GetExtension(waveFilepath));
-
-				using (var reader = new NAudio.Wave.WaveFileReader(waveFilepath)) //read from original location
-				{
-					var newFormat = new NAudio.Wave.WaveFormat(reader.WaveFormat.SampleRate, 16, reader.WaveFormat.Channels);
-					using (var conversionStream = new NAudio.Wave.WaveFormatConversionStream(newFormat, reader))
-					{
-						NAudio.Wave.WaveFileWriter.CreateWaveFile(cacheSongFilepath, conversionStream); //write to new location
-					}
-				}
-
-				Cursor.Current = Cursors.WaitCursor;
-
-				int exitCode = 0;
-				await System.Threading.Tasks.Task.Run(() =>
-				{
-					exitCode = Binka.FromWav(cacheSongFilepath, Path.Combine(Path.GetDirectoryName(waveFilepath), Path.GetFileNameWithoutExtension(waveFilepath) + ".binka"), 4);
-				});
-
-				File.Delete(cacheSongFilepath); // delete cache files
-
-				if (exitCode == 0)
-					convertedCount++;
-				}
-
-			int fileCount = fileDialog.FileNames.Length;
-
-            waitDiag.Close();
-			waitDiag.Dispose();
-			MessageBox.Show(this, $"Successfully converted {convertedCount}/{fileCount} file{(fileCount != 1 ? "s" : "")}", "Done!");
+				BinkaConverter.ToBinka(fileDialog.FileNames, new DirectoryInfo(Path.GetDirectoryName(fileDialog.FileName)));
+			}
 		}
 
 		private void binkaWavToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2341,7 +2299,9 @@ namespace PckStudio
                 Title = "Please choose BINKA files to convert to WAV"
             };
             if (fileDialog.ShowDialog() == DialogResult.OK)
+			{
 				BinkaConverter.ToWav(fileDialog.FileNames, new DirectoryInfo(Path.GetDirectoryName(fileDialog.FileName)));
+			}
 		}
 
         private void fullBoxSupportToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
