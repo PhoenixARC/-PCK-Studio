@@ -3,7 +3,7 @@ using System.Windows.Forms;
 using MetroFramework.Forms;
 using PckStudio.Internal;
 
-namespace PckStudio
+namespace PckStudio.Forms
 {
     public partial class CreditsForm : MetroForm
     {

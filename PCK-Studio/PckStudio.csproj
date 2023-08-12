@@ -154,10 +154,10 @@
     <Compile Include="Forms\Additional-Popups\NumericPrompt.Designer.cs">
       <DependentUpon>NumericPrompt.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Utilities\AppSettingsForm.cs">
+    <Compile Include="Forms\AppSettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Utilities\AppSettingsForm.Designer.cs">
+    <Compile Include="Forms\AppSettingsForm.Designer.cs">
       <DependentUpon>AppSettingsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Internal\ApplicationBuildInfo.cs" />
@@ -438,10 +438,10 @@
     </Compile>
     <Compile Include="PckNodeSorter.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Forms\Additional-Popups\CreditsForm.cs">
+    <Compile Include="Forms\CreditsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Additional-Popups\CreditsForm.Designer.cs">
+    <Compile Include="Forms\CreditsForm.Designer.cs">
       <DependentUpon>CreditsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -542,7 +542,7 @@
     <EmbeddedResource Include="Forms\Editor\ANIMEditor.resx">
       <DependentUpon>ANIMEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\AppSettingsForm.resx">
+    <EmbeddedResource Include="Forms\AppSettingsForm.resx">
       <DependentUpon>AppSettingsForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -595,7 +595,7 @@
     <EmbeddedResource Include="Forms\Utilities\TextureConverterUtility.resx">
       <DependentUpon>TextureConverterUtility.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Additional-Popups\CreditsForm.resx">
+    <EmbeddedResource Include="Forms\CreditsForm.resx">
       <DependentUpon>CreditsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
