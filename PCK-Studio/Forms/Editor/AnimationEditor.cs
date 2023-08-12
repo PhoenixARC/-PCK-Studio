@@ -5,19 +5,20 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using System.Collections.Generic;
-
+using System.Diagnostics;
 using MetroFramework.Forms;
+
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+
 using OMI.Formats.Pck;
 
 using PckStudio.Forms.Additional_Popups.Animation;
-using PckStudio.Forms.Utilities;
 using PckStudio.Extensions;
 using PckStudio.Properties;
-using System.Diagnostics;
 using PckStudio.Internal;
 using PckStudio.Internal.Json;
+using PckStudio.Helper;
 
 namespace PckStudio.Forms.Editor
 {

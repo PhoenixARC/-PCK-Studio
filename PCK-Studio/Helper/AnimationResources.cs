@@ -1,18 +1,16 @@
 ﻿using System;
-using System.Drawing;
 using System.Linq;
+using System.Drawing;
 using System.Windows.Forms;
+using System.Collections.Generic;
 
-using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 using PckStudio.Properties;
 using PckStudio.Extensions;
-using PckStudio.Forms.Editor;
-using System.Collections.Generic;
-using Newtonsoft.Json;
 using PckStudio.Internal.Json;
 
-namespace PckStudio.Forms.Utilities
+namespace PckStudio.Helper
 {
     public static class AnimationResources
     {

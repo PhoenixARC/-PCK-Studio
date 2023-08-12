@@ -17,7 +17,6 @@
 **/
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
@@ -25,12 +24,13 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using MetroFramework.Forms;
+
 using OMI.Formats.Color;
 using OMI.Formats.Pck;
 using OMI.Workers.Color;
+
 using PckStudio.Extensions;
-using PckStudio.Forms.Editor;
-using PckStudio.Forms.Utilities;
+using PckStudio.Helper;
 using PckStudio.Internal.Json;
 
 namespace PckStudio.Forms.Editor

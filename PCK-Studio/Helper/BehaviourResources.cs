@@ -1,13 +1,9 @@
-﻿using System.Drawing;
-using System.Linq;
-using System.IO;
+﻿using System.IO;
 
-using PckStudio.Properties;
-using PckStudio.Extensions;
 using OMI.Formats.Behaviour;
 using OMI.Workers.Behaviour;
 
-namespace PckStudio.Forms.Utilities
+namespace PckStudio.Helper
 {
     public static class BehaviourResources
     {

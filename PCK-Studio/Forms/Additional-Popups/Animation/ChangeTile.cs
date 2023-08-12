@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using MetroFramework.Forms;
 using PckStudio.Extensions;
-using PckStudio.Forms.Utilities;
+using PckStudio.Helper;
 using PckStudio.Internal;
 using PckStudio.Internal.Json;
 

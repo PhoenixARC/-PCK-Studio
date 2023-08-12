@@ -361,9 +361,9 @@
     <Compile Include="Forms\Additional-Popups\InProgressPrompt.Designer.cs">
       <DependentUpon>InProgressPrompt.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Utilities\MaterialResources.cs" />
-    <Compile Include="Forms\Utilities\BehaviourResources.cs" />
-    <Compile Include="Forms\Utilities\AnimationResources.cs" />
+    <Compile Include="Helper\MaterialResources.cs" />
+    <Compile Include="Helper\BehaviourResources.cs" />
+    <Compile Include="Helper\AnimationResources.cs" />
     <Compile Include="Forms\Editor\BoxEditor.cs">
       <SubType>Form</SubType>
     </Compile>
