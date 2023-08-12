@@ -33,7 +33,7 @@ using PckStudio.Forms.Editor;
 using PckStudio.Forms.Utilities;
 using PckStudio.Internal.Json;
 
-namespace PckStudio
+namespace PckStudio.Forms.Editor
 {
     internal partial class TextureAtlasEditor : MetroForm
     {
