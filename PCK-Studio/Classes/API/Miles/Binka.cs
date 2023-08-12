@@ -17,7 +17,7 @@ namespace PckStudio.API.Miles
 			WindowStyle = ProcessWindowStyle.Hidden
 		};
 
-		public static int FromWav(string inputFilepath, string outputFilepath, int compressionLevel)
+		public static int ToBinka(string inputFilepath, string outputFilepath, int compressionLevel)
 		{
 			compressionLevel = MathExtensions.Clamp(compressionLevel, 1, 9);
 			ApplicationScope.DataCacher.Cache(Properties.Resources.binka_encode, "binka_encode.exe");

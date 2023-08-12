@@ -310,7 +310,7 @@ namespace PckStudio.Forms.Editor
 
 						await Task.Run(() =>
 						{
-                            exitCode = Binka.FromWav(cacheSongFile, new_loc, (int)compressionUpDown.Value);
+                            exitCode = Binka.ToBinka(cacheSongFile, new_loc, (int)compressionUpDown.Value);
 						});
 
 						if (!File.Exists(cacheSongFile)) MessageBox.Show(this, $"\"{songName}.wav\" failed to convert for some reason. Please report this on the communtiy Discord server, which can be found under \"More\" in the toolbar at the top of the program.", "Conversion failed");
@@ -561,7 +561,7 @@ namespace PckStudio.Forms.Editor
 
 					await Task.Run(() =>
 					{
-                        exitCode = Binka.FromWav(file, new_loc, (int)compressionUpDown.Value);
+                        exitCode = Binka.ToBinka(file, new_loc, (int)compressionUpDown.Value);
 					});
 
 					waitDiag.Close();
