@@ -9,24 +9,38 @@ namespace PckStudio.API.Miles
 {
 	internal static class Binka
 	{
+		private static ProcessStartInfo WavProcessStartInfo = new ProcessStartInfo
+		{
+			UseShellExecute = true,
+			CreateNoWindow = true,
+			WindowStyle = ProcessWindowStyle.Hidden
+		};
+
 		public static int FromWav(string inputFilepath, string outputFilepath, int compressionLevel)
 		{
 			ApplicationScope.DataCacher.Cache(Properties.Resources.binka_encode, "binka_encode.exe");
-            var process = Process.Start(new ProcessStartInfo
-			{
-				FileName = ApplicationScope.DataCacher.GetCachedFilepath("binka_encode.exe"),
-				Arguments = $"\"{inputFilepath}\" \"{outputFilepath}\" -s -b{compressionLevel}",
-				UseShellExecute = true,
-				CreateNoWindow = true,
-				WindowStyle = ProcessWindowStyle.Hidden
-			});
+			WavProcessStartInfo.FileName = ApplicationScope.DataCacher.GetCachedFilepath("binka_encode.exe");
+			WavProcessStartInfo.Arguments = $"\"{inputFilepath}\" \"{outputFilepath}\" -s -b{compressionLevel}";
+            var process = Process.Start(WavProcessStartInfo);
 			process.WaitForExit();
 			return process.ExitCode;
 		}
 
         public static void ToWav(Stream source, Stream destination)
         {
-			using var sourceFs = new MemoryStream();
+			_ = source ?? throw new ArgumentNullException(nameof(source));
+			_ = destination ?? throw new ArgumentNullException(nameof(destination));
+			if (!source.CanRead)
+			{
+                throw new NotSupportedException("Can not read from source stream");
+            }
+
+            if (!destination.CanWrite)
+            {
+                throw new NotSupportedException("Can not read to destination stream");
+            }
+
+            using var sourceFs = new MemoryStream();
             source.CopyTo(sourceFs);
             byte[] buffer = ToWav(sourceFs.ToArray());
 
@@ -34,7 +48,6 @@ namespace PckStudio.API.Miles
 			{
 				ms.CopyTo(destination);
 			}
-
         }
 
         public static void ToWav(string inputFilepath, string outputFilepath)
@@ -48,9 +61,13 @@ namespace PckStudio.API.Miles
 
         public static byte[] ToWav(string inputFilepath)
 		{
+			if (!File.Exists(inputFilepath))
+			{
+				throw new FileNotFoundException(nameof(inputFilepath));
+			}
             if (!inputFilepath.EndsWith(".binka"))
             {
-                throw new Exception("Not a Bink Audio file.");
+                throw new ArgumentException("Not a Bink Audio file.");
             }
             return ToWav(File.ReadAllBytes(inputFilepath));
         }
@@ -80,7 +97,8 @@ namespace PckStudio.API.Miles
 			AILAPI.MemFreeLock(resultBuffer);
 			RIBAPI.FreeProviderLibrary(0); // free all loaded providers
             AILAPI.Shutdown();
-			return buffer;
+			mss32LibHandle.Release();
+            return buffer;
         }
     }
 }
