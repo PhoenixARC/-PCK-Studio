@@ -46,14 +46,14 @@
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.compressionLvlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.levelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.noneToolStripMenuItem = new PckStudio.ToolStripRadioButtonMenuItem();
-            this.compressedToolStripMenuItem = new PckStudio.ToolStripRadioButtonMenuItem();
-            this.compressedRLEToolStripMenuItem = new PckStudio.ToolStripRadioButtonMenuItem();
-            this.compressedRLECRCToolStripMenuItem = new PckStudio.ToolStripRadioButtonMenuItem();
+            this.noneToolStripMenuItem = new PckStudio.ToolboxItems.ToolStripRadioButtonMenuItem();
+            this.compressedToolStripMenuItem = new PckStudio.ToolboxItems.ToolStripRadioButtonMenuItem();
+            this.compressedRLEToolStripMenuItem = new PckStudio.ToolboxItems.ToolStripRadioButtonMenuItem();
+            this.compressedRLECRCToolStripMenuItem = new PckStudio.ToolboxItems.ToolStripRadioButtonMenuItem();
             this.typeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.wiiUPSVitaToolStripMenuItem = new PckStudio.ToolStripRadioButtonMenuItem();
-            this.pS3ToolStripMenuItem = new PckStudio.ToolStripRadioButtonMenuItem();
-            this.xbox360ToolStripMenuItem = new PckStudio.ToolStripRadioButtonMenuItem();
+            this.wiiUPSVitaToolStripMenuItem = new PckStudio.ToolboxItems.ToolStripRadioButtonMenuItem();
+            this.pS3ToolStripMenuItem = new PckStudio.ToolboxItems.ToolStripRadioButtonMenuItem();
+            this.xbox360ToolStripMenuItem = new PckStudio.ToolboxItems.ToolStripRadioButtonMenuItem();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.MessageContextMenu.SuspendLayout();
             this.DetailContextMenu.SuspendLayout();
@@ -360,15 +360,15 @@
         private System.Windows.Forms.ToolStripMenuItem compressionLvlToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem levelToolStripMenuItem;
 
-        private PckStudio.ToolStripRadioButtonMenuItem noneToolStripMenuItem;
-        private PckStudio.ToolStripRadioButtonMenuItem compressedToolStripMenuItem;
-        private PckStudio.ToolStripRadioButtonMenuItem compressedRLEToolStripMenuItem;
-        private PckStudio.ToolStripRadioButtonMenuItem compressedRLECRCToolStripMenuItem;
+        private PckStudio.ToolboxItems.ToolStripRadioButtonMenuItem noneToolStripMenuItem;
+        private PckStudio.ToolboxItems.ToolStripRadioButtonMenuItem compressedToolStripMenuItem;
+        private PckStudio.ToolboxItems.ToolStripRadioButtonMenuItem compressedRLEToolStripMenuItem;
+        private PckStudio.ToolboxItems.ToolStripRadioButtonMenuItem compressedRLECRCToolStripMenuItem;
 
         private System.Windows.Forms.ToolStripMenuItem typeToolStripMenuItem;
 
-        private PckStudio.ToolStripRadioButtonMenuItem wiiUPSVitaToolStripMenuItem;
-        private PckStudio.ToolStripRadioButtonMenuItem pS3ToolStripMenuItem;
-        private PckStudio.ToolStripRadioButtonMenuItem xbox360ToolStripMenuItem;
+        private PckStudio.ToolboxItems.ToolStripRadioButtonMenuItem wiiUPSVitaToolStripMenuItem;
+        private PckStudio.ToolboxItems.ToolStripRadioButtonMenuItem pS3ToolStripMenuItem;
+        private PckStudio.ToolboxItems.ToolStripRadioButtonMenuItem xbox360ToolStripMenuItem;
     }
 }

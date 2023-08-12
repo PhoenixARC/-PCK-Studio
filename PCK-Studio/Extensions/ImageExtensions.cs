@@ -15,7 +15,7 @@
  *    misrepresented as being the original software.
  * 3. This notice may not be removed or altered from any source distribution.
 **/
-﻿using System;
+using System;
 using System.Drawing;
 using System.Diagnostics;
 using System.Drawing.Imaging;
@@ -23,6 +23,9 @@ using System.Drawing.Drawing2D;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Linq;
+using PckStudio.Internal;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 
 namespace PckStudio.Extensions
 {
@@ -125,7 +128,12 @@ namespace PckStudio.Extensions
             return new Size(width, height);
         }
 
-        internal static Image ResizeImage(this Image image, int width, int height, GraphicsConfig graphicsConfig)
+        internal static Image Resize(this Image image, Size size, GraphicsConfig graphicsConfig)
+        {
+            return image.Resize(size.Width, size.Height, graphicsConfig);
+        }
+
+        internal static Image Resize(this Image image, int width, int height, GraphicsConfig graphicsConfig)
         {
             var destRect = new Rectangle(0, 0, width, height);
             var destImage = new Bitmap(width, height);
@@ -144,47 +152,42 @@ namespace PckStudio.Extensions
             return destImage;
         }
 
-        internal static Image Fill(this Image image, Color color)
-        {
-            using (var g = Graphics.FromImage(image))
-            {
-                using (SolidBrush brush = new SolidBrush(color))
-                {
-                    g.FillRectangle(brush, new Rectangle(Point.Empty, image.Size));
-                }
-            }
-            return image;
-        }
-
         internal static Image Blend(this Image image, Color overlayColor, BlendMode mode)
         {
             if (image is not Bitmap baseImage)
                 return image;
 
+            Bitmap bitmapResult = new Bitmap(baseImage.Width, baseImage.Height, PixelFormat.Format32bppArgb);
+
             BitmapData baseImageData = baseImage.LockBits(new Rectangle(Point.Empty, baseImage.Size),
                         ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
-            byte[] baseImageBuffer = new byte[baseImageData.Stride * baseImageData.Height];
-
-            Marshal.Copy(baseImageData.Scan0, baseImageBuffer, 0, baseImageBuffer.Length);
-            
-            var normalized = overlayColor.Normalize();
-
-            for (int k = 0; k < baseImageBuffer.Length; k += 4)
-            {
-                baseImageBuffer[k + 0] = ColorExtensions.BlendValues(baseImageBuffer[k + 0] / 255f, normalized.X, mode);
-                baseImageBuffer[k + 1] = ColorExtensions.BlendValues(baseImageBuffer[k + 1] / 255f, normalized.Y, mode);
-                baseImageBuffer[k + 2] = ColorExtensions.BlendValues(baseImageBuffer[k + 2] / 255f, normalized.Z, mode);
-            }
-
-            Bitmap bitmapResult = new Bitmap(baseImage.Width, baseImage.Height, PixelFormat.Format32bppArgb);
             BitmapData resultImageData = bitmapResult.LockBits(new Rectangle(Point.Empty, bitmapResult.Size),
-                ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+                        ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
 
-            Marshal.Copy(baseImageBuffer, 0, resultImageData.Scan0, baseImageBuffer.Length);
+            Profiler.Start();
+            Parallel.For(0, baseImageData.Stride * baseImageData.Height / 4, (i) =>
+            {
+                int k = i * 4;
+                unsafe
+                {
+                    int color = Unsafe.Read<int>((baseImageData.Scan0 + k).ToPointer());
+                    byte a = (byte)(color >> 24 & 0xff);
+                    if (a == 0)
+                    {
+                        Unsafe.Write((resultImageData.Scan0 + k).ToPointer(), 0);
+                        return;
+                    }
+                    var b = ColorExtensions.BlendValues((byte)(color >> 0 & 0xff), overlayColor.B, mode);
+                    var g = ColorExtensions.BlendValues((byte)(color >> 8 & 0xff), overlayColor.G, mode);
+                    var r = ColorExtensions.BlendValues((byte)(color >> 16 & 0xff), overlayColor.R, mode);
+                    int blendedValue = a << 24 | r << 16 | g << 8 | b;
+                    Unsafe.Write((resultImageData.Scan0 + k).ToPointer(), blendedValue);
+                }
+            });
+            Profiler.Stop();
 
             bitmapResult.UnlockBits(resultImageData);
             baseImage.UnlockBits(baseImageData);
-
             return bitmapResult;
         }
 
@@ -208,9 +211,9 @@ namespace PckStudio.Extensions
 
             for (int k = 0; k < baseImageBuffer.Length && k < overlayImageBuffer.Length; k += 4)
             {
-                baseImageBuffer[k + 0] = ColorExtensions.BlendValues(baseImageBuffer[k + 0] / 255f, overlayImageBuffer[k + 0] / 255f, mode);
-                baseImageBuffer[k + 1] = ColorExtensions.BlendValues(baseImageBuffer[k + 1] / 255f, overlayImageBuffer[k + 1] / 255f, mode);
-                baseImageBuffer[k + 2] = ColorExtensions.BlendValues(baseImageBuffer[k + 2] / 255f, overlayImageBuffer[k + 2] / 255f, mode);
+                baseImageBuffer[k + 0] = ColorExtensions.BlendValues(baseImageBuffer[k + 0], overlayImageBuffer[k + 0], mode);
+                baseImageBuffer[k + 1] = ColorExtensions.BlendValues(baseImageBuffer[k + 1], overlayImageBuffer[k + 1], mode);
+                baseImageBuffer[k + 2] = ColorExtensions.BlendValues(baseImageBuffer[k + 2], overlayImageBuffer[k + 2], mode);
             }
 
             Bitmap bitmapResult = new Bitmap(baseImage.Width, baseImage.Height, PixelFormat.Format32bppArgb);

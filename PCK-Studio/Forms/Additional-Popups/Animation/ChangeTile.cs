@@ -4,8 +4,9 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using MetroFramework.Forms;
 using PckStudio.Extensions;
-using PckStudio.Forms.Utilities;
+using PckStudio.Helper;
 using PckStudio.Internal;
+using PckStudio.Internal.Json;
 
 namespace PckStudio.Forms.Additional_Popups.Animation
 {
@@ -50,7 +51,7 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 
 		private void GetTileDataToView(string key, TreeNodeCollection collection, Action<TreeNode> additinalAction)
 		{
-			List<AnimationResources.TileInfo> textureInfos = key switch
+			List<JsonTileInfo> textureInfos = key switch
 			{
 				"blocks" => AnimationResources.BlockTileInfos,
 				"items" => AnimationResources.ItemTileInfos,
@@ -63,10 +64,11 @@ namespace PckStudio.Forms.Additional_Popups.Animation
                 {
 					foreach ((int i, var content) in textureInfos.enumerate())
 					{
-						if (!string.IsNullOrEmpty(content.DisplayName))
+						if (!string.IsNullOrEmpty(content.InternalName) && !collection.ContainsKey(content.InternalName))
 						{
 							TreeNode tileNode = new TreeNode(content.DisplayName)
 							{
+								Name = content.InternalName,
 								Tag = content.DisplayName,
 								ImageIndex = i,
 								SelectedImageIndex = i,

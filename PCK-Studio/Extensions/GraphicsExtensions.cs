@@ -11,11 +11,11 @@ namespace PckStudio.Extensions
     {
         public GraphicsConfig()
         {
-            CompositingQuality = CompositingQuality.Default;
-            InterpolationMode = InterpolationMode.Default;
-            SmoothingMode = SmoothingMode.Default;
-            PixelOffsetMode = PixelOffsetMode.Default;
-            CompositingMode = CompositingMode.SourceOver;
+            CompositingQuality = default;
+            InterpolationMode = default;
+            SmoothingMode = default;
+            PixelOffsetMode = default;
+            CompositingMode = default;
         }
 
         public CompositingMode CompositingMode { get; set; }
@@ -34,6 +34,15 @@ namespace PckStudio.Extensions
             graphics.InterpolationMode = config.InterpolationMode;
             graphics.SmoothingMode = config.SmoothingMode;
             graphics.PixelOffsetMode = config.PixelOffsetMode;
+        }
+
+        internal static Graphics Fill(this Graphics graphics, Rectangle area, Color color)
+        {
+            var clip = graphics.Clip;
+            graphics.SetClip(area, CombineMode.Replace);
+            graphics.Clear(color);
+            graphics.SetClip(clip, CombineMode.Replace);
+            return graphics;
         }
     }
 }

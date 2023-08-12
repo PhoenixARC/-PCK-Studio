@@ -94,7 +94,7 @@
             this.imageList = new System.Windows.Forms.ImageList(this.components);
             this.addMultipleEntriesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.LittleEndianCheckBox = new MetroFramework.Controls.MetroCheckBox();
-            this.previewPictureBox = new PckStudio.PictureBoxWithInterpolationMode();
+            this.previewPictureBox = new PckStudio.ToolboxItems.InterpolationPictureBox();
             logoPictureBox = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(logoPictureBox)).BeginInit();
             this.PropertiesTabControl.SuspendLayout();
@@ -676,7 +676,7 @@
         private System.Windows.Forms.TreeView treeMeta;
         private MetroFramework.Controls.MetroLabel label11;
         private System.Windows.Forms.TreeView treeViewMain;
-        private PictureBoxWithInterpolationMode previewPictureBox;
+        private PckStudio.ToolboxItems.InterpolationPictureBox previewPictureBox;
         private System.Windows.Forms.ContextMenuStrip contextMenuMetaTree;
         private System.Windows.Forms.ToolStripMenuItem addEntryToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addEntryToolStripMenuItem1;

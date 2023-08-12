@@ -18,7 +18,7 @@ using System.Runtime.CompilerServices;
 using System.Diagnostics;
 using System.Text;
 
-namespace PckStudio
+namespace PckStudio.Forms
 {
     [Obsolete]
     public partial class generateModel : MetroForm

@@ -132,10 +132,13 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\ToolboxItems\PictureBoxWithInterpolationMode.cs">
+    <Compile Include="ToolboxItems\BlendPictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Classes\ToolboxItems\ToolStripRadioButtonMenuItem.cs">
+    <Compile Include="ToolboxItems\InterpolationPictureBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ToolboxItems\ToolStripRadioButtonMenuItem.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Classes\Utils\BinkaConverter.cs" />
@@ -168,6 +171,12 @@
       <DependentUpon>AppSettingsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Internal\ApplicationBuildInfo.cs" />
+    <Compile Include="Forms\Editor\TextureAtlasEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Editor\TextureAtlasEditor.Designer.cs">
+      <DependentUpon>TextureAtlasEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Interfaces\IPckEditor.cs" />
     <Compile Include="Classes\API\PCKCenter\model\PCKCenterJSON.cs" />
     <Compile Include="Classes\API\PCKCenter\PCKCollections.cs" />
@@ -193,6 +202,9 @@
     <Compile Include="Classes\Misc\OpenFolderDialog.cs" />
     <Compile Include="Classes\Models\DefaultModels\Steve64x64Model.cs" />
     <Compile Include="Internal\ApplicationScope.cs" />
+    <Compile Include="Internal\Json\ColorEntry.cs" />
+    <Compile Include="Internal\Json\TileInfo.cs" />
+    <Compile Include="Internal\Json\Tiles.cs" />
     <Compile Include="Internal\Profiler.cs" />
     <Compile Include="Internal\SettingsManager.cs" />
     <Compile Include="Internal\SkinBOX.cs" />
@@ -273,7 +285,7 @@
       <DependentUpon>MultiTextPrompt.cs</DependentUpon>
     </Compile>
     <Compile Include="Internal\Animation.cs" />
-    <Compile Include="Forms\Editor\AnimationPictureBox.cs">
+    <Compile Include="ToolboxItems\AnimationPictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Forms\Editor\MaterialsEditor.cs">
@@ -330,11 +342,11 @@
     <Compile Include="Forms\Additional-Popups\AddPropertyPrompt.Designer.cs">
       <DependentUpon>AddPropertyPrompt.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Skins-And-Textures\addNewSkin.cs">
+    <Compile Include="Forms\Skins-And-Textures\AddNewSkin.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Skins-And-Textures\addNewSkin.Designer.cs">
-      <DependentUpon>addNewSkin.cs</DependentUpon>
+    <Compile Include="Forms\Skins-And-Textures\AddNewSkin.Designer.cs">
+      <DependentUpon>AddNewSkin.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Skins-And-Textures\AdvancedOptions.cs">
       <SubType>Form</SubType>
@@ -360,9 +372,9 @@
     <Compile Include="Forms\Additional-Popups\InProgressPrompt.Designer.cs">
       <DependentUpon>InProgressPrompt.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Utilities\MaterialResources.cs" />
-    <Compile Include="Forms\Utilities\BehaviourResources.cs" />
-    <Compile Include="Forms\Utilities\AnimationResources.cs" />
+    <Compile Include="Helper\MaterialResources.cs" />
+    <Compile Include="Helper\BehaviourResources.cs" />
+    <Compile Include="Helper\AnimationResources.cs" />
     <Compile Include="Forms\Editor\BoxEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -417,12 +429,6 @@
     <Compile Include="Forms\Editor\AudioEditor.Designer.cs">
       <DependentUpon>AudioEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Utilities\PCK Manager.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Utilities\PCK Manager.Designer.cs">
-      <DependentUpon>PCK Manager.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\Utilities\pckCenter.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -440,12 +446,6 @@
     </Compile>
     <Compile Include="Forms\Utilities\pckCenterOpen.Designer.cs">
       <DependentUpon>pckCenterOpen.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Utilities\Pref.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Utilities\Pref.Designer.cs">
-      <DependentUpon>Pref.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Utilities\TextureConverterUtility.cs">
       <SubType>Form</SubType>
@@ -534,11 +534,11 @@
     <EmbeddedResource Include="Forms\Additional-Popups\AddPropertyPrompt.resx">
       <DependentUpon>AddPropertyPrompt.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Skins-And-Textures\addNewSkin.ja.resx">
-      <DependentUpon>addNewSkin.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Skins-And-Textures\AddNewSkin.ja.resx">
+      <DependentUpon>AddNewSkin.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Skins-And-Textures\addNewSkin.resx">
-      <DependentUpon>addNewSkin.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Skins-And-Textures\AddNewSkin.resx">
+      <DependentUpon>AddNewSkin.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Skins-And-Textures\AdvancedOptions.ja.resx">
@@ -570,6 +570,9 @@
       <DependentUpon>AppSettingsForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Editor\TextureAtlasEditor.resx">
+      <DependentUpon>TextureAtlasEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.ja.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -597,12 +600,6 @@
       <DependentUpon>AudioEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\PCK Manager.ja.resx">
-      <DependentUpon>PCK Manager.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\PCK Manager.resx">
-      <DependentUpon>PCK Manager.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Utilities\pckCenter.ja.resx">
       <DependentUpon>pckCenter.cs</DependentUpon>
     </EmbeddedResource>
@@ -618,12 +615,6 @@
     <EmbeddedResource Include="Forms\Utilities\pckCenterOpen.resx">
       <DependentUpon>pckCenterOpen.cs</DependentUpon>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\Pref.ja.resx">
-      <DependentUpon>Pref.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\Pref.resx">
-      <DependentUpon>Pref.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Utilities\TextureConverterUtility.resx">
       <DependentUpon>TextureConverterUtility.cs</DependentUpon>
@@ -816,6 +807,6 @@
     <PropertyGroup>
       <StringDate>$([System.DateTime]::Now.ToString('yyyy-MM-dd'))</StringDate>
     </PropertyGroup>
-    <ZipDirectory SourceDirectory="$(OutputPath)" DestinationFile="$(OutputPath)\..\$(AssemblyName)_$(Configuration)_$(StringDate).zip" Overwrite="true" />
+    <ZipDirectory SourceDirectory="$(OutputPath)" DestinationFile="$(OutputPath)\..\$(AssemblyName)_$(Configuration)@$(BuildBranch)_$(StringDate).zip" Overwrite="true" />
   </Target>
 </Project>

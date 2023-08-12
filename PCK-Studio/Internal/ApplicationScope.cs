@@ -1,19 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using PckStudio.Classes.Misc;
-using PckStudio.Forms.Utilities;
 using PckStudio.Properties;
 using PckStudio.Extensions;
 using System.Globalization;
-using System.ComponentModel;
-using PckStudio.Internal;
+using PckStudio.Helper;
 
-namespace PckStudio
+namespace PckStudio.Internal
 {
     internal static class ApplicationScope
     {

@@ -14,11 +14,12 @@ using NAudio.Wave;
 using OMI.Formats.Pck;
 
 using PckStudio.FileFormats;
-using PckStudio.Classes.IO.PCK;
+using PckStudio.IO.PckAudio;
 using PckStudio.Forms.Additional_Popups.Audio;
 using PckStudio.Forms.Additional_Popups;
 using PckStudio.Properties;
 using PckStudio.API.Miles;
+using PckStudio.Internal;
 
 // Audio Editor by MattNL and Miku-666
 
@@ -309,7 +310,7 @@ namespace PckStudio.Forms.Editor
 
 						await Task.Run(() =>
 						{
-                            exitCode = Binka.FromWav(cacheSongFile, new_loc, (int)compressionUpDown.Value);
+                            exitCode = Binka.ToBinka(cacheSongFile, new_loc, (int)compressionUpDown.Value);
 						});
 
 						if (!File.Exists(cacheSongFile)) MessageBox.Show(this, $"\"{songName}.wav\" failed to convert for some reason. Please report this on the communtiy Discord server, which can be found under \"More\" in the toolbar at the top of the program.", "Conversion failed");
@@ -560,7 +561,7 @@ namespace PckStudio.Forms.Editor
 
 					await Task.Run(() =>
 					{
-                        exitCode = Binka.FromWav(file, new_loc, (int)compressionUpDown.Value);
+                        exitCode = Binka.ToBinka(file, new_loc, (int)compressionUpDown.Value);
 					});
 
 					waitDiag.Close();

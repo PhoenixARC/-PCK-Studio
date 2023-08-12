@@ -13,11 +13,12 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Media.Imaging;
 using System.IO.Packaging;
-using PckStudio;
 using System.IO.Compression;
-using PckStudio.Classes.IO.PCK;
+
 using OMI.Formats.Pck;
 using OMI.Workers.Pck;
+
+using PckStudio;
 using PckStudio.Extensions;
 
 namespace PckStudio.Forms
@@ -1034,15 +1035,15 @@ namespace PckStudio.Forms
 
                         if (saveSkin.Width == saveSkin.Height)
                         {
-                            saveSkin.ResizeImage(64, 64, config);
+                            saveSkin.Resize(64, 64, config);
                         }
                         else if (saveSkin.Height == saveSkin.Width / 2)
                         {
-                            saveSkin.ResizeImage(64, 32, config);
+                            saveSkin.Resize(64, 32, config);
                         }
                         else
                         {
-                            saveSkin.ResizeImage(64, 64, config);
+                            saveSkin.Resize(64, 64, config);
                         }
                         saveSkin.Save(root + "/" + skinTexture.Filename, ImageFormat.Png);
                     }

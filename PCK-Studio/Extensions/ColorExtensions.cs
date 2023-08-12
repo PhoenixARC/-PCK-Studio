@@ -15,7 +15,12 @@ namespace PckStudio.Extensions
             return new Vector4(color.R / 255f, color.G / 255f, color.B / 255f, color.A / 255f);
         }
 
-        internal static byte BlendValues(float source, float overlay, BlendMode blendType)
+        internal static byte BlendValues(byte source, byte overlay, BlendMode blendType)
+        {
+            return (byte)MathExtensions.Clamp(BlendValues(source / 255f, overlay / 255f, blendType) * 255, 0, 255);
+        }
+
+        internal static float BlendValues(float source, float overlay, BlendMode blendType)
         {
             source = MathExtensions.Clamp(source, 0.0f, 1.0f);
             overlay = MathExtensions.Clamp(overlay, 0.0f, 1.0f);
@@ -31,7 +36,7 @@ namespace PckStudio.Extensions
                 BlendMode.Overlay => source < 0.5f ? 2f * source * overlay : 1f - 2f * (1f - source) * (1f - overlay),
                 _ => 0.0f
             };
-            return (byte)MathExtensions.Clamp(resultValue * 255, 0, 255);
+            return MathExtensions.Clamp(resultValue, 0.0f, 1.0f);
         }
 
         internal static byte Mix(double ratio, byte val1, byte val2)

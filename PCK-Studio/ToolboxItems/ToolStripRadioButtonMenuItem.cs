@@ -4,7 +4,7 @@ using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 
 // source: <https://learn.microsoft.com/en-us/dotnet/desktop/winforms/controls/how-to-display-option-buttons-in-a-menustrip-windows-forms?view=netframeworkdesktop-4.8>
-namespace PckStudio
+namespace PckStudio.ToolboxItems
 {
     public class ToolStripRadioButtonMenuItem : ToolStripMenuItem
     {

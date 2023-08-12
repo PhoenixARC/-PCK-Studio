@@ -1,15 +1,10 @@
-﻿using System.Drawing;
-using System.Linq;
+﻿using System;
 using System.IO;
 
-using PckStudio.Properties;
-using PckStudio.Extensions;
-using OMI.Formats.Pck;
 using OMI.Formats.Material;
 using OMI.Workers.Material;
-using System;
 
-namespace PckStudio.Forms.Utilities
+namespace PckStudio.Helper
 {
     public static class MaterialResources
     {

@@ -1,4 +1,4 @@
-﻿namespace PckStudio
+﻿namespace PckStudio.Forms
 {
     partial class generateModel
     {
@@ -60,7 +60,7 @@
             this.comboParent = new System.Windows.Forms.ComboBox();
             this.buttonEXPORT = new System.Windows.Forms.Button();
             this.buttonIMPORT = new System.Windows.Forms.Button();
-            this.uvPictureBox = new PckStudio.PictureBoxWithInterpolationMode();
+            this.uvPictureBox = new PckStudio.ToolboxItems.InterpolationPictureBox();
             this.buttonImportModel = new System.Windows.Forms.Button();
             this.displayBox = new System.Windows.Forms.PictureBox();
             this.buttonExportModel = new System.Windows.Forms.Button();
@@ -629,7 +629,7 @@
         private System.Windows.Forms.Button buttonExportModel;
         private System.Windows.Forms.PictureBox displayBox;
         private System.Windows.Forms.Button buttonImportModel;
-        private PckStudio.PictureBoxWithInterpolationMode uvPictureBox;
+        private PckStudio.ToolboxItems.InterpolationPictureBox uvPictureBox;
         private System.Windows.Forms.Button buttonIMPORT;
         private System.Windows.Forms.Button buttonEXPORT;
         private System.Windows.Forms.ComboBox comboParent;

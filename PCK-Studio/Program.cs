@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using PckStudio.Classes.Misc;
+using PckStudio.Internal;
 
 namespace PckStudio
 {

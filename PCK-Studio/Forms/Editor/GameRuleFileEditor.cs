@@ -29,6 +29,7 @@ using System.Diagnostics;
 using OMI.Formats.Pck;
 using PckStudio.Forms.Additional_Popups;
 using PckStudio.Properties;
+using PckStudio.ToolboxItems;
 
 namespace PckStudio.Forms.Editor
 {

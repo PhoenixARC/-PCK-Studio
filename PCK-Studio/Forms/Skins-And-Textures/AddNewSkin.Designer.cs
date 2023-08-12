@@ -1,6 +1,6 @@
-﻿namespace PckStudio
+﻿namespace PckStudio.Popups
 {
-    partial class addNewSkin
+    partial class AddNewSkin
     {
         /// <summary>
         /// Required designer variable.
@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.Label label3;
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(addNewSkin));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddNewSkin));
             System.Windows.Forms.Label label2;
             System.Windows.Forms.Label label1;
             this.textTheme = new System.Windows.Forms.TextBox();
@@ -52,8 +52,8 @@
             this.textThemeName = new MetroFramework.Controls.MetroTextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.buttonAnimGen = new System.Windows.Forms.Button();
-            this.capePictureBox = new PckStudio.PictureBoxWithInterpolationMode();
-            this.skinPictureBoxTexture = new PckStudio.PictureBoxWithInterpolationMode();
+            this.capePictureBox = new PckStudio.ToolboxItems.InterpolationPictureBox();
+            this.skinPictureBoxTexture = new PckStudio.ToolboxItems.InterpolationPictureBox();
             label3 = new System.Windows.Forms.Label();
             label2 = new System.Windows.Forms.Label();
             label1 = new System.Windows.Forms.Label();
@@ -111,7 +111,7 @@
             // 
             resources.ApplyResources(this.replaceToolStripMenuItem1, "replaceToolStripMenuItem1");
             this.replaceToolStripMenuItem1.Name = "replaceToolStripMenuItem1";
-            this.replaceToolStripMenuItem1.Click += new System.EventHandler(this.replaceToolStripMenuItem1_Click);
+            this.replaceToolStripMenuItem1.Click += new System.EventHandler(this.capePictureBox_Click);
             // 
             // buttonDone
             // 
@@ -173,7 +173,6 @@
             resources.ApplyResources(this.labelSelectTexture, "labelSelectTexture");
             this.labelSelectTexture.ForeColor = System.Drawing.Color.White;
             this.labelSelectTexture.Name = "labelSelectTexture";
-            this.labelSelectTexture.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // radioSERVER
             // 
@@ -282,7 +281,6 @@
             resources.ApplyResources(this.label4, "label4");
             this.label4.ForeColor = System.Drawing.Color.White;
             this.label4.Name = "label4";
-            this.label4.Click += new System.EventHandler(this.replaceToolStripMenuItem1_Click);
             // 
             // buttonAnimGen
             // 
@@ -299,7 +297,7 @@
             this.capePictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
             this.capePictureBox.Name = "capePictureBox";
             this.capePictureBox.TabStop = false;
-            this.capePictureBox.Click += new System.EventHandler(this.replaceToolStripMenuItem1_Click);
+            this.capePictureBox.Click += new System.EventHandler(this.capePictureBox_Click);
             // 
             // skinPictureBoxTexture
             // 
@@ -308,7 +306,7 @@
             this.skinPictureBoxTexture.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             this.skinPictureBoxTexture.Name = "skinPictureBoxTexture";
             this.skinPictureBoxTexture.TabStop = false;
-            this.skinPictureBoxTexture.Click += new System.EventHandler(this.pictureBox1_Click);
+            this.skinPictureBoxTexture.Click += new System.EventHandler(this.skinPictureBoxTexture_Click);
             // 
             // addNewSkin
             // 
@@ -359,17 +357,17 @@
         private System.Windows.Forms.Button buttonModelGen;
         private System.Windows.Forms.Button buttonCape;
         private System.Windows.Forms.Button buttonSkin;
-        private PictureBoxWithInterpolationMode capePictureBox;
+        private PckStudio.ToolboxItems.InterpolationPictureBox capePictureBox;
         private System.Windows.Forms.PictureBox displayBox;
         private System.Windows.Forms.RadioButton radioAUTO;
         private System.Windows.Forms.RadioButton radioLOCAL;
-        private System.Windows.Forms.Label labelSelectTexture;
         private System.Windows.Forms.RadioButton radioSERVER;
 		private MetroFramework.Controls.MetroTextBox textSkinID;
 		private MetroFramework.Controls.MetroTextBox textSkinName;
 		private MetroFramework.Controls.MetroTextBox textThemeName;
-		private System.Windows.Forms.Label label4;
-		private PictureBoxWithInterpolationMode skinPictureBoxTexture;
+		private PckStudio.ToolboxItems.InterpolationPictureBox skinPictureBoxTexture;
 		private System.Windows.Forms.Button buttonAnimGen;
-	}
+        private System.Windows.Forms.Label labelSelectTexture;
+        private System.Windows.Forms.Label label4;
+    }
 }

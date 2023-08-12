@@ -1,49 +1,26 @@
 ﻿using System;
-using System.Drawing;
 using System.Linq;
+using System.Drawing;
 using System.Windows.Forms;
+using System.Collections.Generic;
 
-using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 using PckStudio.Properties;
 using PckStudio.Extensions;
-using PckStudio.Forms.Editor;
-using System.Collections.Generic;
-using Newtonsoft.Json;
+using PckStudio.Internal.Json;
 
-namespace PckStudio.Forms.Utilities
+namespace PckStudio.Helper
 {
     public static class AnimationResources
     {
-        internal class TileJson
-        {
-            [JsonProperty("blocks")]
-            public List<TileInfo> Blocks { get; set; }
-            [JsonProperty("items")]
-            public List<TileInfo> Items { get; set; }
-        }
 
-        private static TileJson _jsonData;
-        internal static TileJson JsonTileData => _jsonData ??= JsonConvert.DeserializeObject<TileJson>(Resources.tileData);
+        private static JsonTiles _jsonData;
+        internal static JsonTiles JsonTileData => _jsonData ??= JsonConvert.DeserializeObject<JsonTiles>(Resources.tileData);
 
-        public class TileInfo
-        {
-            [JsonProperty("displayName")]
-            public string DisplayName { get; set; }
+        internal static List<JsonTileInfo> ItemTileInfos => JsonTileData.Items;
 
-            [JsonProperty("internalName")]
-            public string InternalName { get; set; }
-
-            public TileInfo(string displayName, string internalName)
-            {
-                DisplayName = displayName;
-                InternalName = internalName;
-            }
-        }
-
-        public static List<TileInfo> ItemTileInfos => JsonTileData.Items;
-
-        public static List<TileInfo> BlockTileInfos => JsonTileData.Blocks;
+        internal static List<JsonTileInfo> BlockTileInfos => JsonTileData.Blocks;
 
         private static Image[] _itemImages;
         public static Image[] ItemImages => _itemImages ??= Resources.items_sheet.CreateImageList(16).ToArray();

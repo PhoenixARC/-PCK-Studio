@@ -8,25 +8,26 @@ using OMI.Formats.Languages;
 using OMI.Formats.Pck;
 using PckStudio.Internal;
 using PckStudio.Forms.Editor;
-using PckStudio.Classes.IO._3DST;
+using PckStudio.IO._3DST;
 using PckStudio.Properties;
+using PckStudio.Forms;
 
-namespace PckStudio
+namespace PckStudio.Popups
 {
-    public partial class addNewSkin : MetroFramework.Forms.MetroForm
+    public partial class AddNewSkin : MetroFramework.Forms.MetroForm
     {
         public PckFile.FileData SkinFile => skin;
         public PckFile.FileData CapeFile => cape;
-        public bool HasCape = false;
+        public bool HasCape { get; private set; } = false;
 
-        LOCFile currentLoc;
-        PckFile.FileData skin = new PckFile.FileData("dlcskinXYXYXYXY", PckFile.FileData.FileType.SkinFile);
-        PckFile.FileData cape = new PckFile.FileData("dlccapeXYXYXYXY", PckFile.FileData.FileType.CapeFile);
-        SkinANIM anim = new SkinANIM();
+        private LOCFile currentLoc;
+        private PckFile.FileData skin = new PckFile.FileData("dlcskinXYXYXYXY", PckFile.FileData.FileType.SkinFile);
+        private PckFile.FileData cape = new PckFile.FileData("dlccapeXYXYXYXY", PckFile.FileData.FileType.CapeFile);
+        private SkinANIM anim = new SkinANIM();
 
-        eSkinType skinType;
+        private eSkinType skinType;
 
-        enum eSkinType : int
+        private enum eSkinType
         {
             Invalid = -1,
             _64x64,
@@ -36,7 +37,7 @@ namespace PckStudio
             Custom,
         }
 
-        public addNewSkin(LOCFile loc)
+        public AddNewSkin(LOCFile loc)
         {
             InitializeComponent();
             currentLoc = loc;
@@ -50,67 +51,33 @@ namespace PckStudio
                 case 64:
                     anim.SetFlag(SkinAnimFlag.RESOLUTION_64x64, true);
                     MessageBox.Show("64x64 Skin Detected");
-                    skinPictureBoxTexture.Width = skinPictureBoxTexture.Height;
-                    if (skinType != eSkinType._64x64 && skinType != eSkinType._64x64HD)
-                    {
-                        buttonSkin.Location = new Point(buttonSkin.Location.X - skinPictureBoxTexture.Width, buttonSkin.Location.Y);
-                    }
-                    //comboBoxSkinType.Text = "Steve (64x64)";
                     skinType = eSkinType._64x64;
                     break;
                 case 32:
-                    anim.SetFlag(SkinAnimFlag.RESOLUTION_64x64, false);
-                    anim.SetFlag(SkinAnimFlag.SLIM_MODEL, false);
+                    anim.SetFlag(SkinAnimFlag.RESOLUTION_64x64 | SkinAnimFlag.SLIM_MODEL, false);
                     MessageBox.Show("64x32 Skin Detected");
-                    skinPictureBoxTexture.Width = skinPictureBoxTexture.Height * 2;
-                    if (skinType == eSkinType._64x64)
-                    {
-                        buttonSkin.Location = new Point(buttonSkin.Location.X + skinPictureBoxTexture.Width / 2, buttonSkin.Location.Y);
-                    }
-                    if (skinType == eSkinType._64x64HD)
-                    {
-                        buttonSkin.Location = new Point(buttonSkin.Location.X + skinPictureBoxTexture.Width / 2, buttonSkin.Location.Y);
-                    }
-                    //comboBoxSkinType.Text = "Default (64x32)";
                     skinType = eSkinType._64x32;
                     break;
                 default:
-                    if (img.Width == img.Height) // 64x64 HD
+                    if (img.Width == img.Height)
                     {
                         anim.SetFlag(SkinAnimFlag.RESOLUTION_64x64, true);
                         MessageBox.Show("64x64 HD Skin Detected");
-                        skinPictureBoxTexture.Width = skinPictureBoxTexture.Height;
-                        if (skinType != eSkinType._64x64 && skinType != eSkinType._64x64HD)
-                        {
-                            buttonSkin.Location = new Point(buttonSkin.Location.X - skinPictureBoxTexture.Width, buttonSkin.Location.Y);
-                        }
-                        //comboBoxSkinType.Text = "Steve (64x64)";
                         skinType = eSkinType._64x64HD;
-                    }
-                    else if (img.Height == img.Width / 2) // 64x32 HD
-                    {
-                        anim.SetFlag(SkinAnimFlag.RESOLUTION_64x64, false);
-                        anim.SetFlag(SkinAnimFlag.SLIM_MODEL, false);
-                        MessageBox.Show("64x32 HD Skin Detected");
-                        skinPictureBoxTexture.Width = skinPictureBoxTexture.Height * 2;
-                        if (skinType == eSkinType._64x64)
-                        {
-                            buttonSkin.Location = new Point(buttonSkin.Location.X + skinPictureBoxTexture.Width / 2, buttonSkin.Location.Y);
-                        }
-                        if (skinType == eSkinType._64x64HD)
-                        {
-                            buttonSkin.Location = new Point(buttonSkin.Location.X + skinPictureBoxTexture.Width / 2, buttonSkin.Location.Y);
-                        }
-                        //comboBoxSkinType.Text = "Default (64x32)";
-                        skinType = eSkinType._64x32HD;
-                    }
-                    else //If dimensions don't fit any skin type //Invalid
-                    {
-                        MessageBox.Show("Not a Valid Skin File");
-                        skinType = eSkinType.Invalid;
                         return;
                     }
-                    break;
+
+                    if (img.Height == img.Width / 2)
+                    {
+                        anim.SetFlag(SkinAnimFlag.RESOLUTION_64x64 | SkinAnimFlag.SLIM_MODEL, false);
+                        MessageBox.Show("64x32 HD Skin Detected");
+                        skinType = eSkinType._64x32HD;
+                        return;
+                    }
+                    
+                    MessageBox.Show("Not a Valid Skin File");
+                    skinType = eSkinType.Invalid;
+                    return;
             }
 
             skinPictureBoxTexture.Image = img;
@@ -120,48 +87,49 @@ namespace PckStudio
 
         private void DrawModel()
 		{
-            Bitmap bmp = new Bitmap(displayBox.Width, displayBox.Height);
             bool isSlim = anim.GetFlag(SkinAnimFlag.SLIM_MODEL);
-            using (Graphics g = Graphics.FromImage(bmp))
+            Pen outlineColor = Pens.Black;
+            Brush fillColor = Brushes.Gray;
+            using (Graphics g = Graphics.FromImage(displayBox.Image))
             {
                 if(!anim.GetFlag(SkinAnimFlag.HEAD_DISABLED))
 				{
                     //Head
-                    g.DrawRectangle(Pens.Black, 70, 15, 40, 40);
-                    g.FillRectangle(Brushes.Gray, 71, 16, 39, 39);
+                    g.DrawRectangle(outlineColor, 70, 15, 40, 40);
+                    g.FillRectangle(fillColor, 71, 16, 39, 39);
                 }
                 if (!anim.GetFlag(SkinAnimFlag.BODY_DISABLED))
                 {
                     //Body
-                    g.DrawRectangle(Pens.Black, 70, 55, 40, 60);
-                    g.FillRectangle(Brushes.Gray, 71, 56, 39, 59);
+                    g.DrawRectangle(outlineColor, 70, 55, 40, 60);
+                    g.FillRectangle(fillColor, 71, 56, 39, 59);
                 }
                 if (!anim.GetFlag(SkinAnimFlag.RIGHT_ARM_DISABLED))
                 {
                     //Arm0
-                    g.DrawRectangle(Pens.Black  , isSlim ? 55 : 50, 55, isSlim ? 15 : 20, 60);
-                    g.FillRectangle(Brushes.Gray, isSlim ? 56 : 51, 56, isSlim ? 14 : 19, 59);
+                    g.DrawRectangle(outlineColor, isSlim ? 55 : 50, 55, isSlim ? 15 : 20, 60);
+                    g.FillRectangle(fillColor   , isSlim ? 56 : 51, 56, isSlim ? 14 : 19, 59);
                 }
                 if (!anim.GetFlag(SkinAnimFlag.LEFT_ARM_DISABLED))
                 {
                     //Arm1
-                    g.DrawRectangle(Pens.Black, 110, 55, isSlim ? 15 : 20, 60);
-                    g.FillRectangle(Brushes.Gray, 111, 56, isSlim ? 14 : 19, 59);
+                    g.DrawRectangle(outlineColor, 110, 55, isSlim ? 15 : 20, 60);
+                    g.FillRectangle(fillColor, 111, 56, isSlim ? 14 : 19, 59);
                 }
                 if (!anim.GetFlag(SkinAnimFlag.RIGHT_LEG_DISABLED))
                 {
                     //Leg0
-                    g.DrawRectangle(Pens.Black, 70, 115, 20, 60);
-                    g.FillRectangle(Brushes.Gray, 71, 116, 19, 59);
+                    g.DrawRectangle(outlineColor, 70, 115, 20, 60);
+                    g.FillRectangle(fillColor, 71, 116, 19, 59);
                 }
                 if (!anim.GetFlag(SkinAnimFlag.LEFT_LEG_DISABLED))
                 {
                     //Leg1
-                    g.DrawRectangle(Pens.Black, 90, 115, 20, 60);
-                    g.FillRectangle(Brushes.Gray, 91, 116, 19, 59);
+                    g.DrawRectangle(outlineColor, 90, 115, 20, 60);
+                    g.FillRectangle(fillColor, 91, 116, 19, 59);
                 }
             }
-            displayBox.Image = bmp;
+            displayBox.Invalidate();
         }
 
         private void addnewskin_Load(object sender, EventArgs e)
@@ -188,22 +156,22 @@ namespace PckStudio
             }
         }
 
-        private void replaceToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void capePictureBox_Click(object sender, EventArgs e)
         {
-            using (var ofd1 = new OpenFileDialog())
+            using (var ofd = new OpenFileDialog())
             {
-                ofd1.Filter = "PNG Files|*.png";
-                ofd1.Title = "Select a PNG File";
-                if (ofd1.ShowDialog() == DialogResult.OK)
+                ofd.Filter = "PNG Files|*.png";
+                ofd.Title = "Select a PNG File";
+                if (ofd.ShowDialog() == DialogResult.OK)
                 {
-                    var img = Image.FromFile(ofd1.FileName);
+                    var img = Image.FromFile(ofd.FileName);
                     if (img.Width == img.Height * 2)
                     {
                         HasCape = true;
                         capePictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
                         capePictureBox.InterpolationMode = InterpolationMode.NearestNeighbor;
-                        capePictureBox.Image = Image.FromFile(ofd1.FileName);
-                        cape.SetData(File.ReadAllBytes(ofd1.FileName));
+                        capePictureBox.Image = Image.FromFile(ofd.FileName);
+                        cape.SetData(File.ReadAllBytes(ofd.FileName));
                         contextMenuCape.Items[0].Text = "Replace";
                     }
                     else
@@ -324,25 +292,25 @@ namespace PckStudio
             textSkinID.Enabled = radioLOCAL.Checked;
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
+        private void skinPictureBoxTexture_Click(object sender, EventArgs e)
         {
-            using (var ofdd = new OpenFileDialog())
+            using (var ofd = new OpenFileDialog())
             {
-                ofdd.Filter = "PNG Files|*.png|3DS Texture|*.3dst";
-                ofdd.Title = "Select a Skin Texture File";
-                if (ofdd.ShowDialog() == DialogResult.OK)
+                ofd.Filter = "PNG Files|*.png|3DS Texture|*.3dst";
+                ofd.Title = "Select a Skin Texture File";
+                if (ofd.ShowDialog() == DialogResult.OK)
                 {
-                    if (ofdd.FileName.EndsWith(".3dst"))
+                    if (ofd.FileName.EndsWith(".3dst"))
                     {
-                        using (var fs = File.OpenRead(ofdd.FileName))
+                        using (var fs = File.OpenRead(ofd.FileName))
                         {
                             var reader = new _3DSTextureReader();
                             CheckImage(reader.FromStream(fs));
-                            textSkinName.Text = Path.GetFileNameWithoutExtension(ofdd.FileName);
+                            textSkinName.Text = Path.GetFileNameWithoutExtension(ofd.FileName);
                         }
                         return;
                     }
-                    CheckImage(Image.FromFile(ofdd.FileName));
+                    CheckImage(Image.FromFile(ofd.FileName));
                 }
             }
         }

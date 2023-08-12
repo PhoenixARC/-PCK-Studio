@@ -25,14 +25,15 @@ using PckStudio.Forms.Editor;
 using PckStudio.Forms.Additional_Popups.Animation;
 using PckStudio.Forms.Additional_Popups;
 using PckStudio.Classes.Misc;
-using PckStudio.Classes.IO.PCK;
-using PckStudio.Classes.IO._3DST;
+using PckStudio.IO.PckAudio;
+using PckStudio.IO._3DST;
 using PckStudio.Internal;
 using PckStudio.Features;
 using PckStudio.Extensions;
 using PckStudio.Popups;
 using PckStudio.API.Miles;
 using PckStudio.Classes.Utils;
+using PckStudio.Helper;
 using PckStudio.Controls;
 using PckStudio.Interfaces;
 
@@ -501,18 +502,6 @@ namespace PckStudio
 			Process.Start("https://www.youtube.com/watch?v=hTlImrRrCKQ");
 		}
 
-		private void preferencesToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			Pref setting = new Pref();
-			setting.Show();
-		}
-
-		private void administrativeToolsToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			PCK_Manager pckm = new PCK_Manager();
-			pckm.Show();
-		}
-
 		private void toPhoenixARCDeveloperToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			Process.Start("https://cash.app/$PhoenixARC");
@@ -692,72 +681,32 @@ namespace PckStudio
 				PckManager.BringToFront();
 		}
 
-		private async void wavBinkaToolStripMenuItem_Click(object sender, EventArgs e)
+		private void wavBinkaToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			using OpenFileDialog fileDialog = new OpenFileDialog
+            using OpenFileDialog fileDialog = new OpenFileDialog
+            {
+                Multiselect = true,
+                Filter = "WAV files (*.wav)|*.wav",
+                Title = "Please choose WAV files to convert to BINKA"
+            };
+            if (fileDialog.ShowDialog() == DialogResult.OK)
 			{
-				Multiselect = true,
-				Filter = "WAV files (*.wav)|*.wav",
-				Title = "Please choose WAV files to convert to BINKA"
-			};
-			if (fileDialog.ShowDialog() != DialogResult.OK)
-				return;
-
-			InProgressPrompt waitDiag = new InProgressPrompt();
-			waitDiag.Show(this);
-
-			int convertedCount = 0;
-
-			Directory.CreateDirectory(ApplicationScope.DataCacher.CacheDirectory); // create directory in case it doesn't exist
-
-			foreach (string waveFilepath in fileDialog.FileNames)
-			{
-				string[] a = Path.GetFileNameWithoutExtension(waveFilepath).Split(Path.GetInvalidFileNameChars());
-
-				string songName = string.Join("_", a);
-				songName = System.Text.RegularExpressions.Regex.Replace(songName, @"[^\u0000-\u007F]+", "_"); // Replace UTF characters
-				string cacheSongFilepath = Path.Combine(ApplicationScope.DataCacher.CacheDirectory, songName + Path.GetExtension(waveFilepath));
-
-				using (var reader = new NAudio.Wave.WaveFileReader(waveFilepath)) //read from original location
-				{
-					var newFormat = new NAudio.Wave.WaveFormat(reader.WaveFormat.SampleRate, 16, reader.WaveFormat.Channels);
-					using (var conversionStream = new NAudio.Wave.WaveFormatConversionStream(newFormat, reader))
-					{
-						NAudio.Wave.WaveFileWriter.CreateWaveFile(cacheSongFilepath, conversionStream); //write to new location
-					}
-				}
-
-				Cursor.Current = Cursors.WaitCursor;
-
-				int exitCode = 0;
-				await System.Threading.Tasks.Task.Run(() =>
-				{
-					exitCode = Binka.FromWav(cacheSongFilepath, Path.Combine(Path.GetDirectoryName(waveFilepath), Path.GetFileNameWithoutExtension(waveFilepath) + ".binka"), 4);
-				});
-
-				File.Delete(cacheSongFilepath); // delete cache files
-
-				if (exitCode == 0)
-					convertedCount++;
+				BinkaConverter.ToBinka(fileDialog.FileNames, new DirectoryInfo(Path.GetDirectoryName(fileDialog.FileName)));
 			}
-
-			int fileCount = fileDialog.FileNames.Length;
-
-			waitDiag.Close();
-			waitDiag.Dispose();
-			MessageBox.Show(this, $"Successfully converted {convertedCount}/{fileCount} file{(fileCount != 1 ? "s" : "")}", "Done!");
 		}
 
 		private void binkaWavToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			using OpenFileDialog fileDialog = new OpenFileDialog
+            using OpenFileDialog fileDialog = new OpenFileDialog
+            {
+                Multiselect = true,
+                Filter = "BINKA files (*.binka)|*.binka",
+                Title = "Please choose BINKA files to convert to WAV"
+            };
+            if (fileDialog.ShowDialog() == DialogResult.OK)
 			{
-				Multiselect = true,
-				Filter = "BINKA files (*.binka)|*.binka",
-				Title = "Please choose BINKA files to convert to WAV"
-			};
-			if (fileDialog.ShowDialog() == DialogResult.OK)
 				BinkaConverter.ToWav(fileDialog.FileNames, new DirectoryInfo(Path.GetDirectoryName(fileDialog.FileName)));
+			}
 		}
 
 		private void fullBoxSupportToolStripMenuItem_CheckedChanged(object sender, EventArgs e)

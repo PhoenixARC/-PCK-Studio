@@ -10,6 +10,7 @@ using Newtonsoft.Json.Linq;
 using OMI.Formats.Pck;
 using OMI.Formats.Material;
 using OMI.Workers.Material;
+using PckStudio.Internal;
 
 namespace PckStudio.Forms.Editor
 {

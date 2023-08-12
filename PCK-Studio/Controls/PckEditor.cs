@@ -18,10 +18,9 @@ using PckStudio.Internal;
 using PckStudio.Popups;
 using PckStudio.Properties;
 using PckStudio.Forms.Additional_Popups.Animation;
-using PckStudio.Forms.Utilities;
-using PckStudio.Classes.IO._3DST;
+using PckStudio.IO._3DST;
 using PckStudio.Forms.Additional_Popups;
-using PckStudio.Classes.IO.PCK;
+using PckStudio.IO.PckAudio;
 using PckStudio.Classes.Misc;
 
 using OMI.Formats.Languages;
@@ -29,6 +28,7 @@ using OMI.Formats.Pck;
 using OMI.Workers.Language;
 using OMI.Workers.Pck;
 using PckStudio.FileFormats;
+using PckStudio.Helper;
 
 namespace PckStudio.Controls
 {
@@ -691,7 +691,7 @@ namespace PckStudio.Controls
                 MessageBox.Show("No .loc file found", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            using (addNewSkin add = new addNewSkin(locFile))
+            using (AddNewSkin add = new AddNewSkin(locFile))
                 if (add.ShowDialog() == DialogResult.OK)
                 {
 
@@ -1477,21 +1477,46 @@ namespace PckStudio.Controls
 
         private void HandleTextureFile(PckFile.FileData file)
         {
-            if (!(file.Filename.StartsWith("res/textures/blocks/") || file.Filename.StartsWith("res/textures/items/")))
-                return;
+            _ = file.IsMipmappedFile() && _pck.Files.TryGetValue(file.GetNormalPath(), PckFile.FileData.FileType.TextureFile, out file);
 
-            if (file.IsMipmappedFile() && _pck.Files.TryGetValue(file.GetNormalPath(), PckFile.FileData.FileType.TextureFile, out PckFile.FileData originalAnimationFile))
+            if (file.Size <= 0)
             {
-                file = originalAnimationFile;
+                Debug.WriteLine($"'{file.Filename}' size is 0.", category: nameof(HandleTextureFile));
+                return;
             }
 
-            using (AnimationEditor animationEditor = new AnimationEditor(file))
+            if (file.Filename == "res/terrain.png" || file.Filename == "res/items.png")
             {
-                if (animationEditor.ShowDialog(this) == DialogResult.OK)
+                using var ms = new MemoryStream(file.Data);
+
+                var img = Image.FromStream(ms);
+                var res = img.Width / 16; // texture count on X axes
+                var size = new Size(res, res);
+                var viewer = new TextureAtlasEditor(_pck, file.Filename, img, size);
+                if (viewer.ShowDialog() == DialogResult.OK)
                 {
+                    using (var result = new MemoryStream())
+                    {
+                        viewer.FinalTexture.Save(result, ImageFormat.Png);
+                        file.SetData(result.ToArray());
+                    }
                     _wasModified = true;
                     BuildMainTreeView();
                 }
+                return;
+            }
+
+            if (file.Filename.StartsWith("res/textures/blocks/") || file.Filename.StartsWith("res/textures/items/"))
+            {
+                using (AnimationEditor animationEditor = new AnimationEditor(file))
+                {
+                    if (animationEditor.ShowDialog(this) == DialogResult.OK)
+                    {
+                        _wasModified = true;
+                        BuildMainTreeView();
+                    }
+                }
+                return;
             }
         }
 
