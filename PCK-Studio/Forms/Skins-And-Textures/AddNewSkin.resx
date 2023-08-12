@@ -502,6 +502,9 @@
   <data name="labelSelectTexture.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="labelSelectTexture.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
   <data name="labelSelectTexture.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 8.25pt, style=Underline</value>
   </data>
@@ -687,6 +690,9 @@
   </data>
   <data name="label4.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
+  </data>
+  <data name="label4.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="label4.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 8.25pt, style=Underline</value>

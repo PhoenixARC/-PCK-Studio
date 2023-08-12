@@ -774,7 +774,7 @@ namespace PckStudio
 				MessageBox.Show("No .loc file found", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
-			using (addNewSkin add = new addNewSkin(locFile))
+			using (AddNewSkin add = new AddNewSkin(locFile))
 				if (add.ShowDialog() == DialogResult.OK)
 				{
 
