@@ -10,7 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace PckStudio
+namespace PckStudio.Popups
 {
     public partial class AdvancedOptions : MetroFramework.Forms.MetroForm
     {

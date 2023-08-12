@@ -1,4 +1,4 @@
-﻿namespace PckStudio
+﻿namespace PckStudio.Forms
 {
     partial class generateModel
     {
