@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
+using PckStudio.Extensions;
 using PckStudio.Internal;
 using SharpMSS;
 
@@ -18,6 +19,7 @@ namespace PckStudio.API.Miles
 
 		public static int FromWav(string inputFilepath, string outputFilepath, int compressionLevel)
 		{
+			compressionLevel = MathExtensions.Clamp(compressionLevel, 1, 9);
 			ApplicationScope.DataCacher.Cache(Properties.Resources.binka_encode, "binka_encode.exe");
 			WavProcessStartInfo.FileName = ApplicationScope.DataCacher.GetCachedFilepath("binka_encode.exe");
 			WavProcessStartInfo.Arguments = $"\"{inputFilepath}\" \"{outputFilepath}\" -s -b{compressionLevel}";
