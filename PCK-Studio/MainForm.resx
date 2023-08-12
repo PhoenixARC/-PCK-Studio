@@ -2016,13 +2016,13 @@
 </value>
   </data>
   <data name="aboutToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>181, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="aboutToolStripMenuItem.Text" xml:space="preserve">
     <value>About</value>
   </data>
   <data name="toolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>178, 6</value>
+    <value>177, 6</value>
   </data>
   <data name="howToMakeABasicSkinPackToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>312, 22</value>
@@ -2075,7 +2075,7 @@
 </value>
   </data>
   <data name="videosToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>181, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="videosToolStripMenuItem.Text" xml:space="preserve">
     <value>Tutorials</value>
@@ -2099,13 +2099,13 @@
     <value>For MattNL (Other Developer)</value>
   </data>
   <data name="donateToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>181, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="donateToolStripMenuItem.Text" xml:space="preserve">
     <value>Buy a coffee</value>
   </data>
   <data name="toolStripSeparator2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>178, 6</value>
+    <value>177, 6</value>
   </data>
   <data name="installationToolStripMenuItem.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
@@ -2714,7 +2714,7 @@
 </value>
   </data>
   <data name="installationToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>181, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="installationToolStripMenuItem.Text" xml:space="preserve">
     <value>Installation</value>
@@ -4111,37 +4111,19 @@
 </value>
   </data>
   <data name="fAQToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>181, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="fAQToolStripMenuItem1.Text" xml:space="preserve">
     <value>FAQ</value>
   </data>
-  <data name="preferencesToolStripMenuItem.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="preferencesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>181, 22</value>
-  </data>
-  <data name="preferencesToolStripMenuItem.Text" xml:space="preserve">
-    <value>Preference</value>
-  </data>
-  <data name="administrativeToolsToolStripMenuItem.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="administrativeToolsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>181, 22</value>
-  </data>
-  <data name="administrativeToolsToolStripMenuItem.Text" xml:space="preserve">
-    <value>Administrative Tools</value>
-  </data>
   <data name="toolStripSeparator3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>178, 6</value>
+    <value>177, 6</value>
   </data>
   <data name="settingsToolStripMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
     <value>Alt+S</value>
   </data>
   <data name="settingsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>181, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="settingsToolStripMenuItem.Text" xml:space="preserve">
     <value>Settings</value>
@@ -5813,7 +5795,7 @@
     <value>previewPictureBox</value>
   </data>
   <data name="&gt;&gt;previewPictureBox.Type" xml:space="preserve">
-    <value>PckStudio.PictureBoxWithInterpolationMode, PCK-Studio, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>PckStudio.ToolboxItems.InterpolationPictureBox, PCK-Studio, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;previewPictureBox.Parent" xml:space="preserve">
     <value>editorTab</value>
@@ -8810,11 +8792,53 @@
   <data name="&gt;&gt;trelloBoardToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;helpToolStripMenuItem.Name" xml:space="preserve">
-    <value>helpToolStripMenuItem</value>
+  <data name="&gt;&gt;addEntryToolStripMenuItem.Name" xml:space="preserve">
+    <value>addEntryToolStripMenuItem</value>
   </data>
-  <data name="&gt;&gt;helpToolStripMenuItem.Type" xml:space="preserve">
+  <data name="&gt;&gt;addEntryToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;addEntryToolStripMenuItem1.Name" xml:space="preserve">
+    <value>addEntryToolStripMenuItem1</value>
+  </data>
+  <data name="&gt;&gt;addEntryToolStripMenuItem1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;addBOXEntryToolStripMenuItem1.Name" xml:space="preserve">
+    <value>addBOXEntryToolStripMenuItem1</value>
+  </data>
+  <data name="&gt;&gt;addBOXEntryToolStripMenuItem1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;addANIMEntryToolStripMenuItem1.Name" xml:space="preserve">
+    <value>addANIMEntryToolStripMenuItem1</value>
+  </data>
+  <data name="&gt;&gt;addANIMEntryToolStripMenuItem1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;addMultipleEntriesToolStripMenuItem1.Name" xml:space="preserve">
+    <value>addMultipleEntriesToolStripMenuItem1</value>
+  </data>
+  <data name="&gt;&gt;addMultipleEntriesToolStripMenuItem1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;deleteEntryToolStripMenuItem.Name" xml:space="preserve">
+    <value>deleteEntryToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;deleteEntryToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;editAllEntriesToolStripMenuItem.Name" xml:space="preserve">
+    <value>editAllEntriesToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;editAllEntriesToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;imageList.Name" xml:space="preserve">
+    <value>imageList</value>
+  </data>
+  <data name="&gt;&gt;imageList.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ImageList, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;aboutToolStripMenuItem.Name" xml:space="preserve">
     <value>aboutToolStripMenuItem</value>
@@ -8918,18 +8942,6 @@
   <data name="&gt;&gt;fAQToolStripMenuItem1.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;preferencesToolStripMenuItem.Name" xml:space="preserve">
-    <value>preferencesToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;preferencesToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;administrativeToolsToolStripMenuItem.Name" xml:space="preserve">
-    <value>administrativeToolsToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;administrativeToolsToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;toolStripSeparator3.Name" xml:space="preserve">
     <value>toolStripSeparator3</value>
   </data>
@@ -8942,53 +8954,11 @@
   <data name="&gt;&gt;settingsToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;addEntryToolStripMenuItem.Name" xml:space="preserve">
-    <value>addEntryToolStripMenuItem</value>
+  <data name="&gt;&gt;helpToolStripMenuItem.Name" xml:space="preserve">
+    <value>helpToolStripMenuItem</value>
   </data>
-  <data name="&gt;&gt;addEntryToolStripMenuItem.Type" xml:space="preserve">
+  <data name="&gt;&gt;helpToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;addEntryToolStripMenuItem1.Name" xml:space="preserve">
-    <value>addEntryToolStripMenuItem1</value>
-  </data>
-  <data name="&gt;&gt;addEntryToolStripMenuItem1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;addBOXEntryToolStripMenuItem1.Name" xml:space="preserve">
-    <value>addBOXEntryToolStripMenuItem1</value>
-  </data>
-  <data name="&gt;&gt;addBOXEntryToolStripMenuItem1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;addANIMEntryToolStripMenuItem1.Name" xml:space="preserve">
-    <value>addANIMEntryToolStripMenuItem1</value>
-  </data>
-  <data name="&gt;&gt;addANIMEntryToolStripMenuItem1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;addMultipleEntriesToolStripMenuItem1.Name" xml:space="preserve">
-    <value>addMultipleEntriesToolStripMenuItem1</value>
-  </data>
-  <data name="&gt;&gt;addMultipleEntriesToolStripMenuItem1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;deleteEntryToolStripMenuItem.Name" xml:space="preserve">
-    <value>deleteEntryToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;deleteEntryToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;editAllEntriesToolStripMenuItem.Name" xml:space="preserve">
-    <value>editAllEntriesToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;editAllEntriesToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;imageList.Name" xml:space="preserve">
-    <value>imageList</value>
-  </data>
-  <data name="&gt;&gt;imageList.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ImageList, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>MainForm</value>

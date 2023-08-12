@@ -1739,18 +1739,6 @@ namespace PckStudio
 			Process.Start("https://www.youtube.com/watch?v=hTlImrRrCKQ");
 		}
 
-		private void preferencesToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			Pref setting = new Pref();
-			setting.Show();
-		}
-
-		private void administrativeToolsToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			PCK_Manager pckm = new PCK_Manager();
-			pckm.Show();
-		}
-
 		private void toPhoenixARCDeveloperToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			Process.Start("https://cash.app/$PhoenixARC");
