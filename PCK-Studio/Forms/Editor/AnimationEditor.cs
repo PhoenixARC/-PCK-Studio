@@ -405,8 +405,8 @@ namespace PckStudio.Forms.Editor
         {
 			var textureInfos = currentAnimation.Category switch
 			{
-				Animation.AnimationCategory.Blocks => AnimationResources.BlockTileInfos,
-				Animation.AnimationCategory.Items => AnimationResources.ItemTileInfos,
+				Animation.AnimationCategory.Blocks => Tiles.BlockTileInfos,
+				Animation.AnimationCategory.Items => Tiles.ItemTileInfos,
 				_ => throw new ArgumentOutOfRangeException(currentAnimation.Category.ToString())
 			};
 

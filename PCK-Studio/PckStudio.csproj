@@ -357,7 +357,6 @@
     </Compile>
     <Compile Include="Helper\MaterialResources.cs" />
     <Compile Include="Helper\BehaviourResources.cs" />
-    <Compile Include="Helper\AnimationResources.cs" />
     <Compile Include="Forms\Editor\BoxEditor.cs">
       <SubType>Form</SubType>
     </Compile>

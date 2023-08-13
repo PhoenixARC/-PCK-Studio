@@ -6,7 +6,7 @@ using PckStudio.Classes.Misc;
 using PckStudio.Properties;
 using PckStudio.Extensions;
 using System.Globalization;
-using PckStudio.Helper;
+using PckStudio.Internal.Json;
 
 namespace PckStudio.Internal
 {
@@ -24,9 +24,9 @@ namespace PckStudio.Internal
             {
                 _entityImages ??= Resources.entities_sheet.SplitHorizontal(32).ToArray();
                 DataCacher ??= new FileCacher(Program.AppDataCache);
-                _ = AnimationResources.JsonTileData;
-                _ = AnimationResources.ItemImageList;
-                _ = AnimationResources.BlockImageList;
+                _ = Tiles.JsonTileData;
+                _ = Tiles.ItemImageList;
+                _ = Tiles.BlockImageList;
                 SettingsManager.Initialize();
                 CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
             }

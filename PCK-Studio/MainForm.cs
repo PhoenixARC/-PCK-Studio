@@ -20,7 +20,6 @@ using OMI.Workers.Language;
 using PckStudio.Properties;
 using PckStudio.FileFormats;
 using PckStudio.Forms;
-using PckStudio.Forms.Utilities;
 using PckStudio.Forms.Editor;
 using PckStudio.Forms.Additional_Popups.Animation;
 using PckStudio.Forms.Additional_Popups;
@@ -31,7 +30,6 @@ using PckStudio.Internal;
 using PckStudio.Features;
 using PckStudio.Extensions;
 using PckStudio.Popups;
-using PckStudio.API.Miles;
 using PckStudio.Classes.Utils;
 using PckStudio.Helper;
 

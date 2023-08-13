@@ -90,8 +90,8 @@ namespace PckStudio.Forms.Editor
             _columnCount = atlas.Height / areaSize.Height;
             (var tileInfos, _atlasType) = Path.GetFileNameWithoutExtension(path) switch
             {
-                "terrain" => (AnimationResources.BlockTileInfos, "blocks"),
-                "items" => (AnimationResources.ItemTileInfos, "items"),
+                "terrain" => (Tiles.BlockTileInfos, "blocks"),
+                "items" => (Tiles.ItemTileInfos, "items"),
                 _ => (null, null),
             };
             originalPictureBox.Image = atlas;

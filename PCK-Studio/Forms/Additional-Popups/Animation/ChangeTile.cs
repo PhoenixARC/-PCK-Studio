@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using MetroFramework.Forms;
 using PckStudio.Extensions;
-using PckStudio.Helper;
 using PckStudio.Internal;
 using PckStudio.Internal.Json;
 
@@ -24,8 +23,8 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 		public ChangeTile()
 		{
 			InitializeComponent();
-			treeViewBlocks.ImageList = AnimationResources.BlockImageList;
-			treeViewItems.ImageList = AnimationResources.ItemImageList;
+			treeViewBlocks.ImageList = Tiles.BlockImageList;
+			treeViewItems.ImageList = Tiles.ItemImageList;
 			InitializeTreeviews();
         }
 
@@ -53,8 +52,8 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 		{
 			List<JsonTileInfo> textureInfos = key switch
 			{
-				"blocks" => AnimationResources.BlockTileInfos,
-				"items" => AnimationResources.ItemTileInfos,
+				"blocks" => Tiles.BlockTileInfos,
+				"items" => Tiles.ItemTileInfos,
 				_ => throw new InvalidOperationException(key)
 			};
 			Profiler.Start();
