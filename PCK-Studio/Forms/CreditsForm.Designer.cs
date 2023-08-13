@@ -139,6 +139,7 @@
             this.buildLabel.Text = "Build Information";
             this.buildLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.buildLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.buildLabel.WrapToLine = true;
             // 
             // CreditsForm
             // 
