@@ -98,7 +98,7 @@ namespace PckStudio.Forms.Editor
             var images = atlas.CreateImageList(_areaSize, _imageLayout);
 
             var tiles = images.enumerate().Select(
-                v => new AtlasTile(v.index, GetAtlasArea(v.index, _rowCount, _columnCount, _areaSize, _imageLayout), tileInfos.IndexInRange(v.index) ? tileInfos[v.index] : null, v.type)
+                p => new AtlasTile(p.index, GetAtlasArea(p.index, _rowCount, _columnCount, _areaSize, _imageLayout), tileInfos.IndexInRange(p.index) ? tileInfos[p.index] : null, p.value)
                 );
             _tiles = new List<AtlasTile>(tiles);
 
