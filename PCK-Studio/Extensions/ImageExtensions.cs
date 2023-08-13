@@ -45,30 +45,26 @@ namespace PckStudio.Extensions
         }
 
         /// <summary>
-        /// Creates an image array by reading in horizontal order
+        /// Creates an IEnumerable by reading in horizontal order
         /// </summary>
-        /// <param name="source"></param>
-        /// <param name="size">Size of individual image inside of <paramref name="source"/></param>
-        internal static IEnumerable<Image> CreateImageList(this Image source, Size size)
+        /// <param name="source">this image</param>
+        /// <param name="scalar">Indecates width and height of image sub section</param>
+        /// <returns><see cref="IEnumerable{Image}"/> of type <see cref="Image"/></returns>
+        internal static IEnumerable<Image> SplitHorizontal(this Image source, int scalar)
         {
-            return source.CreateImageList(size, ImageLayoutDirection.Horizontal);
+            return source.Split(scalar, ImageLayoutDirection.Horizontal);
         }
 
-        internal static IEnumerable<Image> CreateImageList(this Image source, int scalar)
+        internal static IEnumerable<Image> Split(this Image source, int scalar, ImageLayoutDirection layoutDirection)
         {
-            return source.CreateImageList(scalar, ImageLayoutDirection.Horizontal);
+            return Split(source, new Size(scalar, scalar), layoutDirection);
         }
 
-        internal static IEnumerable<Image> CreateImageList(this Image source, int scalar, ImageLayoutDirection layoutDirection)
-        {
-            return CreateImageList(source, new Size(scalar, scalar), layoutDirection);
-        }
-
-        internal static IEnumerable<Image> CreateImageList(this Image source, Size size, ImageLayoutDirection imageLayout)
+        internal static IEnumerable<Image> Split(this Image source, Size size, ImageLayoutDirection imageLayout)
         {
             int rowCount = source.Width / size.Width;
             int columnCount = source.Height / size.Height;
-            Debug.WriteLine($"{nameof(source.Size)}={source.Size}, {nameof(size)}={size}, {columnCount} {rowCount}");
+            Debug.WriteLine($"Image size: {source.Size}, Area size: {size}, col num: {columnCount}, row num: {rowCount}");
             for (int i = 0; i < columnCount * rowCount; i++)
             {
                 int row = Math.DivRem(i, rowCount, out int column);
@@ -80,7 +76,7 @@ namespace PckStudio.Extensions
             yield break;
         }
 
-        internal static IEnumerable<Image> CreateImageList(this Image source, ImageLayoutDirection layoutDirection)
+        internal static IEnumerable<Image> Split(this Image source, ImageLayoutDirection layoutDirection)
         {
             for (int i = 0; i < source.Height / source.Width; i++)
             {
@@ -90,7 +86,7 @@ namespace PckStudio.Extensions
             yield break;
         }
 
-        internal static Image CombineImages(this IList<Image> sources, ImageLayoutDirection layoutDirection)
+        internal static Image Combine(this IList<Image> sources, ImageLayoutDirection layoutDirection)
         {
             Size imageSize = CalculateImageSize(sources, layoutDirection);
             var image = new Bitmap(imageSize.Width, imageSize.Height);

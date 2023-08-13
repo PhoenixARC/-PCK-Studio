@@ -189,7 +189,7 @@ namespace PckStudio.Internal
 			if (textures[0].Width != textures[0].Height)
 				throw new Exception("Invalid size");
 
-            return textures.CombineImages(ImageLayoutDirection.Vertical);
+            return textures.Combine(ImageLayoutDirection.Vertical);
 		}
 	}
 }

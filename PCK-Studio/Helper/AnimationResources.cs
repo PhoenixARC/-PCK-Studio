@@ -23,10 +23,10 @@ namespace PckStudio.Helper
         internal static List<JsonTileInfo> BlockTileInfos => JsonTileData.Blocks;
 
         private static Image[] _itemImages;
-        public static Image[] ItemImages => _itemImages ??= Resources.items_sheet.CreateImageList(16).ToArray();
+        public static Image[] ItemImages => _itemImages ??= Resources.items_sheet.SplitHorizontal(16).ToArray();
 
         private static Image[] _blockImages;
-        public static Image[] BlockImages => _blockImages ??= Resources.terrain_sheet.CreateImageList(16).ToArray();
+        public static Image[] BlockImages => _blockImages ??= Resources.terrain_sheet.SplitHorizontal(16).ToArray();
 
         private static ImageList _itemImageList;
         public static ImageList ItemImageList

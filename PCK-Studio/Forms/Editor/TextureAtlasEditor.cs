@@ -95,7 +95,7 @@ namespace PckStudio.Forms.Editor
                 _ => (null, null),
             };
             originalPictureBox.Image = atlas;
-            var images = atlas.CreateImageList(_areaSize, _imageLayout);
+            var images = atlas.Split(_areaSize, _imageLayout);
 
             var tiles = images.enumerate().Select(
                 p => new AtlasTile(p.index, GetAtlasArea(p.index, _rowCount, _columnCount, _areaSize, _imageLayout), tileInfos.IndexInRange(p.index) ? tileInfos[p.index] : null, p.value)
@@ -158,7 +158,7 @@ namespace PckStudio.Forms.Editor
             {
                 using var ms = new MemoryStream(animationFile.Data);
                 var img = Image.FromStream(ms);
-                var textures = img.CreateImageList(ImageLayoutDirection.Vertical);
+                var textures = img.Split(ImageLayoutDirection.Vertical);
                 var animation = new Internal.Animation(textures, animationFile.Properties.GetPropertyValue("ANIM"));
                 selectTilePictureBox.Start(animation);
                 return;

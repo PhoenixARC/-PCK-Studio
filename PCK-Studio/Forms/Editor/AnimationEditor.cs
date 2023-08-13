@@ -82,7 +82,7 @@ namespace PckStudio.Forms.Editor
             {
                 using MemoryStream textureMem = new MemoryStream(animationFile.Data);
                 var texture = new Bitmap(textureMem);
-                var frameTextures = texture.CreateImageList(ImageLayoutDirection.Vertical);
+                var frameTextures = texture.Split(ImageLayoutDirection.Vertical);
                 currentAnimation = animationFile.Properties.HasProperty("ANIM")
                     ? new Animation(frameTextures, animationFile.Properties.GetPropertyValue("ANIM"))
                     : new Animation(frameTextures, string.Empty);
@@ -329,7 +329,7 @@ namespace PckStudio.Forms.Editor
 				MessageBox.Show(textureFile + " was not found", "Texture not found");
 				return;
 			}
-			var textures = Image.FromFile(textureFile).CreateImageList(ImageLayoutDirection.Vertical);
+			var textures = Image.FromFile(textureFile).Split(ImageLayoutDirection.Vertical);
             var new_animation = new Animation(textures);
 			new_animation.Category = currentAnimation.Category;
             try
@@ -527,7 +527,7 @@ namespace PckStudio.Forms.Editor
             if (ofd.ShowDialog() != DialogResult.OK)
                 return;
             Image img = Image.FromFile(ofd.FileName);
-            var textures = img.CreateImageList(ImageLayoutDirection.Vertical);
+            var textures = img.Split(ImageLayoutDirection.Vertical);
 			currentAnimation = new Animation(textures, string.Empty);
 			LoadAnimationTreeView();
         }
