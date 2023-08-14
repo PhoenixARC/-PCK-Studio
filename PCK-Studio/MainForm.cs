@@ -370,9 +370,7 @@ namespace PckStudio
 
 			if (file.Filename == "res/terrain.png" || file.Filename == "res/items.png")
 			{
-				using var ms = new MemoryStream(file.Data);
-
-				var img = Image.FromStream(ms);
+				var img = file.GetTexture();
 				var res = img.Width / 16; // texture count on X axes
                 var size = new Size(res, res);
                 var viewer = new TextureAtlasEditor(currentPCK, file.Filename, img, size);
@@ -395,7 +393,6 @@ namespace PckStudio
 					BuildMainTreeView();
 				}
 			}
-				return;
 		}
 		}
 
@@ -439,14 +436,10 @@ namespace PckStudio
 				return;
 			}
 			
-			using(var ms = new MemoryStream(file.Data))
-			{
-				var img = Image.FromStream(ms);
-				var skinViewer = new SkinPreview(img, file.Properties.GetPropertyValue("ANIM", SkinANIM.FromString));
+			var img = file.GetTexture();
+			using var skinViewer = new SkinPreview(img, file.Properties.GetPropertyValue("ANIM", SkinANIM.FromString));
 				skinViewer.ShowDialog(this);
-				skinViewer.Dispose();
 			}
-		}
 
 		public void HandleModelsFile(PckFile.FileData file)
 		{

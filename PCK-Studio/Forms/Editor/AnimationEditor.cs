@@ -80,8 +80,7 @@ namespace PckStudio.Forms.Editor
             currentAnimation = new Animation(Array.Empty<Image>());
             if (animationFile is not null && animationFile.Size > 0)
             {
-                using MemoryStream textureMem = new MemoryStream(animationFile.Data);
-                var texture = new Bitmap(textureMem);
+                var texture = animationFile.GetTexture();
                 var frameTextures = texture.Split(ImageLayoutDirection.Vertical);
                 currentAnimation = animationFile.Properties.HasProperty("ANIM")
                     ? new Animation(frameTextures, animationFile.Properties.GetPropertyValue("ANIM"))

@@ -16,6 +16,29 @@ namespace PckStudio.Extensions
     {
         private const string MipMap = "MipMapLevel";
 
+        internal static Image GetTexture(this PckFile.FileData file)
+        {
+            if (file.Filetype != PckFile.FileData.FileType.SkinFile &&
+                file.Filetype != PckFile.FileData.FileType.CapeFile &&
+                file.Filetype != PckFile.FileData.FileType.TextureFile)
+            {
+                return null;
+            }
+            Image image = null;
+            using (var stream = new MemoryStream(file.Data))
+            {
+                try
+                {
+                    image = Image.FromStream(stream);
+                }
+                catch(Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                }
+            }
+            return image;
+        }
+
         internal static void SetData(this PckFile.FileData file, IDataFormatWriter writer)
         {
             using (var stream = new MemoryStream())
@@ -31,7 +54,7 @@ namespace PckStudio.Extensions
                 file.Filetype != PckFile.FileData.FileType.CapeFile &&
                 file.Filetype != PckFile.FileData.FileType.TextureFile)
             {
-                Debug.WriteLine($"{file.Filename} is can't contain image data");
+                Debug.WriteLine($"{file.Filename} can't contain image data");
                 return;
             }
 
