@@ -545,32 +545,29 @@ namespace PckStudio.Forms
 
         private void GenerateUVTextureMap()
         {
-            if (generateTextureCheckBox.Checked)
+            Random rng = new Random();
+            using (Graphics graphics = Graphics.FromImage(uvPictureBox.Image))
             {
-                Random rng = new Random();
-                using (Graphics graphics = Graphics.FromImage(uvPictureBox.Image))
+                graphics.ApplyConfig(_graphicsConfig);
+                foreach (var part in modelBoxes)
                 {
-                    graphics.ApplyConfig(_graphicsConfig);
-                    foreach (var part in modelBoxes)
-                    {
-                        float width = part.Size.X * 2;
-                        float height = part.Size.Y * 2;
-                        float length = part.Size.Z * 2;
-                        float u = part.UV.X * 2;
-                        float v = part.UV.Y * 2;
-                        int argb = rng.Next(-16777216, -1); // 0xFF000000 - 0xFFFFFFFF
-                        var color = Color.FromArgb(argb);
-                        Brush brush = new SolidBrush(color);
-                        graphics.FillRectangle(brush, u + length, v, width, length);
-                        graphics.FillRectangle(brush, u + length + width, v, width, length);
-                        graphics.FillRectangle(brush, u, length + v, length, height);
-                        graphics.FillRectangle(brush, u + length, v + length, width, height);
-                        graphics.FillRectangle(brush, u + length + width, v + length, width, height);
-                        graphics.FillRectangle(brush, u + length + width * 2, v + length, length, height);
-                    }
+                    float width = part.Size.X * 2;
+                    float height = part.Size.Y * 2;
+                    float length = part.Size.Z * 2;
+                    float u = part.UV.X * 2;
+                    float v = part.UV.Y * 2;
+                    int argb = rng.Next(-16777216, -1); // 0xFF000000 - 0xFFFFFFFF
+                    var color = Color.FromArgb(argb);
+                    Brush brush = new SolidBrush(color);
+                    graphics.FillRectangle(brush, u + length, v, width, length);
+                    graphics.FillRectangle(brush, u + length + width, v, width, length);
+                    graphics.FillRectangle(brush, u, length + v, length, height);
+                    graphics.FillRectangle(brush, u + length, v + length, width, height);
+                    graphics.FillRectangle(brush, u + length + width, v + length, width, height);
+                    graphics.FillRectangle(brush, u + length + width * 2, v + length, length, height);
                 }
-                uvPictureBox.Invalidate();
             }
+            uvPictureBox.Invalidate();
         }
 
         // Checks and sets Z layering
@@ -1205,28 +1202,24 @@ namespace PckStudio.Forms
             if (MessageBox.Show("Import custom model project file? Your current work will be lost!", "", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1) == DialogResult.Yes && openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 listViewBoxes.Items.Clear();
-                string str1 = File.ReadAllText(openFileDialog.FileName);
-
                 modelBoxes.Clear();
-                List<string> lines = str1.Split(new[] { "\n\r", "\n" }, StringSplitOptions.None).ToList();
-                if (string.IsNullOrEmpty(lines[lines.Count - 1]))
-                    lines.RemoveAt(lines.Count - 1);
-                for (int i = 0; i < lines.Count; i += 11)
+                StreamReader reader = new StreamReader(openFileDialog.FileName);
+                while (!reader.EndOfStream)
                 {
-                    string name =    lines[0 + i];
-                    string parent = lines[1 + i];
-                    float PosX = float.Parse(lines[3 + i]);
-                    float PosY = float.Parse(lines[4 + i]);
-                    float PosZ = float.Parse(lines[5 + i]);
-                    float SizeX = float.Parse(lines[6 + i]);
-                    float SizeY = float.Parse(lines[7 + i]);
-                    float SizeZ = float.Parse(lines[8 + i]);
-                    float UvX = float.Parse(lines[9 + i]);
-                    float UvY = float.Parse(lines[10 + i]);
-
-                    // CSM doesn't support armor, mirror, or scale values as far as I know of - May
-                    modelBoxes.Add(SkinBOX.FromString($"{parent} {PosX} {PosY} {PosZ} {SizeX} {SizeY} {SizeZ} {UvX} {UvY} {false} {false} {0}"));
+                    reader.ReadLine();
+                    string part = reader.ReadLine();
+                    reader.ReadLine();
+                    var PosX = reader.ReadLine();
+                    var PosY = reader.ReadLine();
+                    var PosZ = reader.ReadLine();
+                    var SizeX = reader.ReadLine();
+                    var SizeY = reader.ReadLine();
+                    var SizeZ = reader.ReadLine();
+                    var UvX = reader.ReadLine();
+                    var UvY = reader.ReadLine();
+                    modelBoxes.Add(SkinBOX.FromString($"{part} {PosX} {PosY} {PosZ} {SizeX} {SizeY} {SizeZ} {UvX} {UvY}"));
                 }
+
             }
             comboParent.Enabled = true;
             UpdateListView();
