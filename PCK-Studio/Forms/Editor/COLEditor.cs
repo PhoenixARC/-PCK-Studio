@@ -8,6 +8,7 @@ using MetroFramework.Forms;
 using OMI.Formats.Color;
 using OMI.Formats.Pck;
 using OMI.Workers.Color;
+using PckStudio.Extensions;
 using PckStudio.Properties;
 
 namespace PckStudio.Forms.Editor
@@ -240,12 +241,9 @@ namespace PckStudio.Forms.Editor
 						return;
 				}
 			}
-			using (var stream = new MemoryStream())
-			{
-				var writer = new COLFileWriter(colourfile);
-                writer.WriteToStream(stream);
-				_file.SetData(stream.ToArray());
-			}
+			
+			_file.SetData(new COLFileWriter(colourfile));
+			
             DialogResult = DialogResult.OK;
         }
 

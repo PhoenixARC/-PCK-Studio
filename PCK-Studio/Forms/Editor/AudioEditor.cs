@@ -19,6 +19,7 @@ using PckStudio.Forms.Additional_Popups;
 using PckStudio.Properties;
 using PckStudio.API.Miles;
 using PckStudio.Internal;
+using PckStudio.Extensions;
 
 // Audio Editor by MattNL and Miku-666
 
@@ -409,12 +410,7 @@ namespace PckStudio.Forms.Editor
 				return;
 			}
 
-			using (var stream = new MemoryStream())
-			{
-				var writer = new PckAudioFileWriter(audioFile, _isLittleEndian ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
-                writer.WriteToStream(stream);
-				audioPCK.SetData(stream.ToArray());
-			}
+			audioPCK.SetData(new PckAudioFileWriter(audioFile, _isLittleEndian ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian));
 			DialogResult = DialogResult.OK;
 		}
 

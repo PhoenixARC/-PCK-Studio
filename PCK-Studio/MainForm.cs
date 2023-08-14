@@ -378,11 +378,7 @@ namespace PckStudio
                 var viewer = new TextureAtlasEditor(currentPCK, file.Filename, img, size);
 				if (viewer.ShowDialog() == DialogResult.OK)
 				{
-					using (var result = new MemoryStream())
-					{
-						viewer.FinalTexture.Save(result, ImageFormat.Png);
-						file.SetData(result.ToArray());
-			}
+					file.SetData(viewer.FinalTexture, ImageFormat.Png);
 					wasModified = true;
 					BuildMainTreeView();
 				}
@@ -826,15 +822,8 @@ namespace PckStudio
 			audioPck.AddCategory(PckAudioFile.AudioCategory.EAudioType.Overworld);
 			audioPck.AddCategory(PckAudioFile.AudioCategory.EAudioType.Nether);
 			audioPck.AddCategory(PckAudioFile.AudioCategory.EAudioType.End);
-			PckFile.FileData pckFileData = currentPCK.CreateNewFile("audio.pck", PckFile.FileData.FileType.AudioFile, () =>
-			{
-				using (var stream = new MemoryStream())
-				{
-					var writer = new PckAudioFileWriter(audioPck, isLittle ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
-					writer.WriteToStream(stream);
-					return stream.ToArray();
-				}
-			});
+			PckFile.FileData pckFileData = currentPCK.CreateNewFile("audio.pck", PckFile.FileData.FileType.AudioFile, 
+				new PckAudioFileWriter(audioPck, isLittle ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian));
 			return pckFileData;
 		}
 
@@ -959,13 +948,8 @@ namespace PckStudio
 					}
 				}
 
-				using (MemoryStream ms = new MemoryStream())
-				{
-					var writer = new PckFileWriter(newPCKFile, LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
-					writer.WriteToStream(ms);
-					parent_file.SetData(ms.ToArray());
+				parent_file.SetData(new PckFileWriter(newPCKFile, LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian));
 					parent.Tag = parent_file;
-				}
 
 				BuildMainTreeView();
 			}
@@ -1203,78 +1187,50 @@ namespace PckStudio
 
 		private PckFile InitializePack(int packId, int packVersion, string packName, bool createSkinsPCK)
 		{
-			var newPck = new PckFile(3);
+			var pack = new PckFile(3);
 			
-			var zeroFile = newPck.CreateNewFile("0", PckFile.FileData.FileType.InfoFile);
+			var zeroFile = pack.CreateNewFile("0", PckFile.FileData.FileType.InfoFile);
 			zeroFile.Properties.Add("PACKID", packId.ToString());
 			zeroFile.Properties.Add("PACKVERSION", packVersion.ToString());
 
-			var loc = newPck.CreateNewFile("localisation.loc", PckFile.FileData.FileType.LocalisationFile, () =>
-			{
 				var locFile = new LOCFile();
 				locFile.InitializeDefault(packName);
-				using var stream = new MemoryStream();
-				var writer = new LOCFileWriter(locFile, 2);
-				writer.WriteToStream(stream);
-				return stream.ToArray();
-			});
+			pack.CreateNewFile("localisation.loc", PckFile.FileData.FileType.LocalisationFile, new LOCFileWriter(locFile, 2));
 
-			if (createSkinsPCK)
-			{
-				PckFile.FileData skinsPCKFile = newPck.CreateNewFile("Skins.pck", PckFile.FileData.FileType.SkinDataFile, () =>
-				{
-					using var stream = new MemoryStream();
-					var writer = new PckFileWriter(new PckFile(3, true),
+			pack.CreateNewFileIf(createSkinsPCK, "Skins.pck", PckFile.FileData.FileType.SkinDataFile, new PckFileWriter(new PckFile(3, true),
 					LittleEndianCheckBox.Checked
 						? OMI.Endianness.LittleEndian
-						: OMI.Endianness.BigEndian);
-					writer.WriteToStream(stream);
-					return stream.ToArray();
-				});
+					: OMI.Endianness.BigEndian));
+			
+			return pack;
 			}
-			return newPck;
-		}
 
 		private PckFile InitializeTexturePack(int packId, int packVersion, string packName, string res, bool createSkinsPCK = false)
 		{
-			var newPck = InitializePack(packId, packVersion, packName, createSkinsPCK);
-			var texturepackInfo = newPck.CreateNewFile($"{res}/{res}Info.pck", PckFile.FileData.FileType.TexturePackInfoFile,
-				() =>
-				{
-					using var ms = new MemoryStream();
-					var writer = new PckFileWriter(new PckFile(3),
-						LittleEndianCheckBox.Checked
-							? OMI.Endianness.LittleEndian
-							: OMI.Endianness.BigEndian);
-					writer.WriteToStream(ms);
-					return ms.ToArray();
-				});
-			texturepackInfo.Properties.Add("PACKID", "0");
-			texturepackInfo.Properties.Add("DATAPATH", $"{res}Data.pck");
+			var pack = InitializePack(packId, packVersion, packName, createSkinsPCK);
 
 			PckFile infoPCK = new PckFile(3);
 
-			using (var ms = new MemoryStream())
-			{
 				var icon = infoPCK.CreateNewFile("icon.png", PckFile.FileData.FileType.TextureFile);
-				Resources.TexturePackIcon.Save(ms, ImageFormat.Png);
-				icon.SetData(ms.ToArray());
-			}
+			icon.SetData(Resources.TexturePackIcon, ImageFormat.Png);
 
-			using (var ms = new MemoryStream())
-			{
 				var comparison = infoPCK.CreateNewFile("comparison.png", PckFile.FileData.FileType.TextureFile);
-				Resources.Comparison.Save(ms, ImageFormat.Png);
-				comparison.SetData(ms.ToArray());
-			}
+			comparison.SetData(Resources.Comparison, ImageFormat.Png);
 
-			return newPck;
+			var texturepackInfo = pack.CreateNewFile($"{res}/{res}Info.pck", PckFile.FileData.FileType.TexturePackInfoFile);
+
+			texturepackInfo.Properties.Add("PACKID", "0");
+			texturepackInfo.Properties.Add("DATAPATH", $"{res}Data.pck");
+
+			texturepackInfo.SetData(new PckFileWriter(infoPCK, LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian));
+
+			return pack;
 		}
 
 		private PckFile InitializeMashUpPack(int packId, int packVersion, string packName, string res)
 		{
-			var newPck = InitializeTexturePack(packId, packVersion, packName, res, true);
-			var gameRuleFile = newPck.CreateNewFile("GameRules.grf", PckFile.FileData.FileType.GameRulesFile);
+			var pack = InitializeTexturePack(packId, packVersion, packName, res, true);
+			var gameRuleFile = pack.CreateNewFile("GameRules.grf", PckFile.FileData.FileType.GameRulesFile);
 			var grfFile = new GameRuleFile();
 			grfFile.AddRule("MapOptions",
 				new KeyValuePair<string, string>("seed", "0"),
@@ -1290,14 +1246,11 @@ namespace PckStudio
 				new KeyValuePair<string, string>("spawnY", "0"),
 				new KeyValuePair<string, string>("spawnZ", "0")
 				);
-			using (var stream = new MemoryStream())
-			{	
-				var writer = new GameRuleFileWriter(grfFile);
-				writer.WriteToStream(stream);
-				gameRuleFile.SetData(stream.ToArray());
+			
+			gameRuleFile.SetData(new GameRuleFileWriter(grfFile));
+			
+			return pack;
 			}
-			return newPck;
-		}
 
 		private void skinPackToolStripMenuItem_Click(object sender, EventArgs e)
 		{
@@ -1579,12 +1532,7 @@ namespace PckStudio
 
 			try
 			{
-				using (var stream = new MemoryStream())
-				{
-					var writer = new LOCFileWriter(locFile, 2);
-					writer.WriteToStream(stream);
-					locdata.SetData(stream.ToArray());
-				}
+				locdata.SetData(new LOCFileWriter(locFile, 2));
 				return true;
 			}
 			catch (Exception ex)
@@ -1980,10 +1928,8 @@ namespace PckStudio
 							gfx.PixelOffsetMode = PixelOffsetMode.HighQuality;
 							gfx.DrawImage(originalTexture, tileArea);
 						}
-						MemoryStream texStream = new MemoryStream();
-						mippedTexture.Save(texStream, ImageFormat.Png);
-						MipMappedFile.SetData(texStream.ToArray());
-						texStream.Dispose();
+
+						MipMappedFile.SetData(mippedTexture, ImageFormat.Png);
 
 						currentPCK.Files.Insert(currentPCK.Files.IndexOf(file) + i - 1, MipMappedFile);
 					}
@@ -2161,14 +2107,8 @@ namespace PckStudio
 				return;
 			}
 
-			currentPCK.CreateNewFile("Skins.pck", PckFile.FileData.FileType.SkinDataFile, () =>
-			{
-				using var stream = new MemoryStream();
-				var writer = new PckFileWriter(new PckFile(3, true),
-					LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
-				writer.WriteToStream(stream);
-				return stream.ToArray();
-			});
+			currentPCK.CreateNewFile("Skins.pck", PckFile.FileData.FileType.SkinDataFile, new PckFileWriter(new PckFile(3, true),
+					LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian));
 
 			BuildMainTreeView();
 

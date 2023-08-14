@@ -11,6 +11,7 @@ using OMI.Formats.Languages;
 using OMI.Workers.Language;
 using OMI.Formats.Pck;
 using PckStudio.Properties;
+using PckStudio.Extensions;
 
 namespace PckStudio.Forms.Editor
 {
@@ -144,12 +145,7 @@ namespace PckStudio.Forms.Editor
 
 		private void saveToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-            using (var ms = new MemoryStream())
-            {
-				var writer = new LOCFileWriter(currentLoc, 2);
-                writer.WriteToStream(ms);
-                _file.SetData(ms.ToArray());
-            }
+            _file.SetData(new LOCFileWriter(currentLoc, 2));
 			DialogResult = DialogResult.OK;
         }
 

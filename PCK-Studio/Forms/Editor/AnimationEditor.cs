@@ -163,12 +163,8 @@ namespace PckStudio.Forms.Editor
 			{
 				string anim = currentAnimation.BuildAnim();
 				animationFile.Properties.SetProperty("ANIM", anim);
-				using (var stream = new MemoryStream())
-				{
-					var texture = currentAnimation.BuildTexture();
-					texture.Save(stream, ImageFormat.Png);
-					animationFile.SetData(stream.ToArray());
-				}
+				var texture = currentAnimation.BuildTexture();
+				animationFile.SetData(texture, ImageFormat.Png);
 				animationFile.Filename = $"res/textures/{currentAnimation.CategoryString}/{TileName}.png";
 				DialogResult = DialogResult.OK;
 				return;
