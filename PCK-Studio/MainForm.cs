@@ -808,25 +808,19 @@ namespace PckStudio
 				}
 		}
 
-		private PckFile.FileData CreateNewAudioFile(bool isLittle)
+		private static PckFile.FileData CreateNewAudioFile(bool isLittle)
 		{
-			// create actual valid pck file structure
 			PckAudioFile audioPck = new PckAudioFile();
 			audioPck.AddCategory(PckAudioFile.AudioCategory.EAudioType.Overworld);
 			audioPck.AddCategory(PckAudioFile.AudioCategory.EAudioType.Nether);
 			audioPck.AddCategory(PckAudioFile.AudioCategory.EAudioType.End);
-			PckFile.FileData pckFileData = currentPCK.CreateNewFile("audio.pck", PckFile.FileData.FileType.AudioFile, 
-				new PckAudioFileWriter(audioPck, isLittle ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian));
+			PckFile.FileData pckFileData = new PckFile.FileData("audio.pck", PckFile.FileData.FileType.AudioFile);
+            pckFileData .SetData(new PckAudioFileWriter(audioPck, isLittle ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian));
 			return pckFileData;
 		}
 
 		private void audiopckToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			//if (currentPCK.Files.Contains(file => file.Filetype == PckFile.FileData.FileType.AudioFile) != -1)
-			//{
-			//	MessageBox.Show("There is already an music cues PCK present in this PCK!", "Can't create audio.pck");
-			//	return;
-			//}
 			if (currentPCK.Files.Contains("audio.pck", PckFile.FileData.FileType.AudioFile))
 			{
 				// the chance of this happening is really really slim but just in case
@@ -841,9 +835,9 @@ namespace PckStudio
 
 			var file = CreateNewAudioFile(LittleEndianCheckBox.Checked);
 			AudioEditor diag = new AudioEditor(file, LittleEndianCheckBox.Checked);
-			if(diag.ShowDialog(this) != DialogResult.OK)
+			if(diag.ShowDialog(this) == DialogResult.OK)
 			{
-				currentPCK.Files.Remove(file); //delete file if not saved
+				currentPCK.Files.Add(file);
 			}
 			diag.Dispose();
 			BuildMainTreeView();
