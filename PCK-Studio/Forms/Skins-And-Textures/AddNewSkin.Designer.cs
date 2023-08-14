@@ -38,22 +38,21 @@
             this.replaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuCape = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.replaceToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.buttonDone = new System.Windows.Forms.Button();
-            this.buttonModelGen = new System.Windows.Forms.Button();
-            this.buttonCape = new System.Windows.Forms.Button();
-            this.buttonSkin = new System.Windows.Forms.Button();
+            this.buttonDone = new MetroFramework.Controls.MetroButton();
+            this.buttonModelGen = new MetroFramework.Controls.MetroButton();
+            this.buttonCape = new MetroFramework.Controls.MetroButton();
+            this.buttonSkin = new MetroFramework.Controls.MetroButton();
             this.displayBox = new System.Windows.Forms.PictureBox();
-            this.radioAUTO = new System.Windows.Forms.RadioButton();
-            this.radioLOCAL = new System.Windows.Forms.RadioButton();
-            this.labelSelectTexture = new System.Windows.Forms.Label();
-            this.radioSERVER = new System.Windows.Forms.RadioButton();
+            this.radioButtonAuto = new MetroFramework.Controls.MetroRadioButton();
+            this.radioButtonManual = new MetroFramework.Controls.MetroRadioButton();
             this.textSkinID = new MetroFramework.Controls.MetroTextBox();
             this.textSkinName = new MetroFramework.Controls.MetroTextBox();
             this.textThemeName = new MetroFramework.Controls.MetroTextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.buttonAnimGen = new System.Windows.Forms.Button();
+            this.labelSelectTexture = new MetroFramework.Controls.MetroLabel();
+            this.capeLabel = new MetroFramework.Controls.MetroLabel();
+            this.buttonAnimGen = new MetroFramework.Controls.MetroButton();
             this.capePictureBox = new PckStudio.ToolboxItems.InterpolationPictureBox();
-            this.skinPictureBoxTexture = new PckStudio.ToolboxItems.InterpolationPictureBox();
+            this.skinPictureBox = new PckStudio.ToolboxItems.InterpolationPictureBox();
             label3 = new System.Windows.Forms.Label();
             label2 = new System.Windows.Forms.Label();
             label1 = new System.Windows.Forms.Label();
@@ -61,7 +60,7 @@
             this.contextMenuCape.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.displayBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.capePictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.skinPictureBoxTexture)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.skinPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // label3
@@ -111,36 +110,39 @@
             // 
             resources.ApplyResources(this.replaceToolStripMenuItem1, "replaceToolStripMenuItem1");
             this.replaceToolStripMenuItem1.Name = "replaceToolStripMenuItem1";
-            this.replaceToolStripMenuItem1.Click += new System.EventHandler(this.capePictureBox_Click);
             // 
             // buttonDone
             // 
             resources.ApplyResources(this.buttonDone, "buttonDone");
-            this.buttonDone.ForeColor = System.Drawing.Color.White;
             this.buttonDone.Name = "buttonDone";
-            this.buttonDone.UseVisualStyleBackColor = true;
+            this.buttonDone.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.buttonDone.UseSelectable = true;
             this.buttonDone.Click += new System.EventHandler(this.CreateButton_Click);
             // 
             // buttonModelGen
             // 
             resources.ApplyResources(this.buttonModelGen, "buttonModelGen");
-            this.buttonModelGen.ForeColor = System.Drawing.Color.White;
             this.buttonModelGen.Name = "buttonModelGen";
-            this.buttonModelGen.UseVisualStyleBackColor = true;
+            this.buttonModelGen.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.buttonModelGen.UseSelectable = true;
             this.buttonModelGen.Click += new System.EventHandler(this.CreateCustomModel_Click);
             // 
             // buttonCape
             // 
+            this.buttonCape.BackgroundImage = global::PckStudio.Properties.Resources.HamburgerMenuIcon;
             resources.ApplyResources(this.buttonCape, "buttonCape");
             this.buttonCape.Name = "buttonCape";
-            this.buttonCape.UseVisualStyleBackColor = true;
+            this.buttonCape.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.buttonCape.UseSelectable = true;
             this.buttonCape.Click += new System.EventHandler(this.buttonCape_Click);
             // 
             // buttonSkin
             // 
+            this.buttonSkin.BackgroundImage = global::PckStudio.Properties.Resources.HamburgerMenuIcon;
             resources.ApplyResources(this.buttonSkin, "buttonSkin");
             this.buttonSkin.Name = "buttonSkin";
-            this.buttonSkin.UseVisualStyleBackColor = true;
+            this.buttonSkin.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.buttonSkin.UseSelectable = true;
             this.buttonSkin.Click += new System.EventHandler(this.buttonSkin_Click);
             // 
             // displayBox
@@ -150,37 +152,25 @@
             this.displayBox.Name = "displayBox";
             this.displayBox.TabStop = false;
             // 
-            // radioAUTO
+            // radioButtonAuto
             // 
-            resources.ApplyResources(this.radioAUTO, "radioAUTO");
-            this.radioAUTO.ForeColor = System.Drawing.Color.White;
-            this.radioAUTO.Name = "radioAUTO";
-            this.radioAUTO.UseVisualStyleBackColor = true;
-            this.radioAUTO.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
+            resources.ApplyResources(this.radioButtonAuto, "radioButtonAuto");
+            this.radioButtonAuto.Name = "radioButtonAuto";
+            this.radioButtonAuto.Style = MetroFramework.MetroColorStyle.White;
+            this.radioButtonAuto.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.radioButtonAuto.UseSelectable = true;
+            this.radioButtonAuto.CheckedChanged += new System.EventHandler(this.radioButtonAuto_CheckedChanged);
             // 
-            // radioLOCAL
+            // radioButtonManual
             // 
-            resources.ApplyResources(this.radioLOCAL, "radioLOCAL");
-            this.radioLOCAL.Checked = true;
-            this.radioLOCAL.ForeColor = System.Drawing.Color.White;
-            this.radioLOCAL.Name = "radioLOCAL";
-            this.radioLOCAL.TabStop = true;
-            this.radioLOCAL.UseVisualStyleBackColor = true;
-            this.radioLOCAL.CheckedChanged += new System.EventHandler(this.radioLOCAL_CheckedChanged);
-            // 
-            // labelSelectTexture
-            // 
-            resources.ApplyResources(this.labelSelectTexture, "labelSelectTexture");
-            this.labelSelectTexture.ForeColor = System.Drawing.Color.White;
-            this.labelSelectTexture.Name = "labelSelectTexture";
-            // 
-            // radioSERVER
-            // 
-            resources.ApplyResources(this.radioSERVER, "radioSERVER");
-            this.radioSERVER.ForeColor = System.Drawing.Color.White;
-            this.radioSERVER.Name = "radioSERVER";
-            this.radioSERVER.UseVisualStyleBackColor = true;
-            this.radioSERVER.CheckedChanged += new System.EventHandler(this.radioSERVER_CheckedChanged);
+            resources.ApplyResources(this.radioButtonManual, "radioButtonManual");
+            this.radioButtonManual.Checked = true;
+            this.radioButtonManual.Name = "radioButtonManual";
+            this.radioButtonManual.Style = MetroFramework.MetroColorStyle.White;
+            this.radioButtonManual.TabStop = true;
+            this.radioButtonManual.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.radioButtonManual.UseSelectable = true;
+            this.radioButtonManual.CheckedChanged += new System.EventHandler(this.radioButtonManual_CheckedChanged);
             // 
             // textSkinID
             // 
@@ -200,7 +190,7 @@
             this.textSkinID.ForeColor = System.Drawing.Color.White;
             this.textSkinID.Lines = new string[0];
             resources.ApplyResources(this.textSkinID, "textSkinID");
-            this.textSkinID.MaxLength = 32767;
+            this.textSkinID.MaxLength = 8;
             this.textSkinID.Name = "textSkinID";
             this.textSkinID.PasswordChar = '\0';
             this.textSkinID.ScrollBars = System.Windows.Forms.ScrollBars.None;
@@ -276,72 +266,77 @@
             this.textThemeName.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.textThemeName.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
             // 
-            // label4
+            // labelSelectTexture
             // 
-            resources.ApplyResources(this.label4, "label4");
-            this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Name = "label4";
+            resources.ApplyResources(this.labelSelectTexture, "labelSelectTexture");
+            this.labelSelectTexture.Name = "labelSelectTexture";
+            this.labelSelectTexture.Theme = MetroFramework.MetroThemeStyle.Dark;
+            // 
+            // capeLabel
+            // 
+            resources.ApplyResources(this.capeLabel, "capeLabel");
+            this.capeLabel.Name = "capeLabel";
+            this.capeLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
             // 
             // buttonAnimGen
             // 
             resources.ApplyResources(this.buttonAnimGen, "buttonAnimGen");
-            this.buttonAnimGen.ForeColor = System.Drawing.Color.White;
             this.buttonAnimGen.Name = "buttonAnimGen";
-            this.buttonAnimGen.UseVisualStyleBackColor = true;
+            this.buttonAnimGen.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.buttonAnimGen.UseSelectable = true;
             this.buttonAnimGen.Click += new System.EventHandler(this.buttonAnimGen_Click);
             // 
             // capePictureBox
             // 
             resources.ApplyResources(this.capePictureBox, "capePictureBox");
             this.capePictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.capePictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
+            this.capePictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             this.capePictureBox.Name = "capePictureBox";
             this.capePictureBox.TabStop = false;
-            this.capePictureBox.Click += new System.EventHandler(this.capePictureBox_Click);
+            this.capePictureBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.capePictureBox_MouseClick);
             // 
-            // skinPictureBoxTexture
+            // skinPictureBox
             // 
-            resources.ApplyResources(this.skinPictureBoxTexture, "skinPictureBoxTexture");
-            this.skinPictureBoxTexture.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.skinPictureBoxTexture.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-            this.skinPictureBoxTexture.Name = "skinPictureBoxTexture";
-            this.skinPictureBoxTexture.TabStop = false;
-            this.skinPictureBoxTexture.Click += new System.EventHandler(this.skinPictureBoxTexture_Click);
+            resources.ApplyResources(this.skinPictureBox, "skinPictureBox");
+            this.skinPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.skinPictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+            this.skinPictureBox.Name = "skinPictureBox";
+            this.skinPictureBox.TabStop = false;
+            this.skinPictureBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.skinPictureBox_MouseClick);
             // 
-            // addNewSkin
+            // AddNewSkin
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.buttonAnimGen);
-            this.Controls.Add(this.label4);
+            this.Controls.Add(this.capeLabel);
             this.Controls.Add(this.textThemeName);
             this.Controls.Add(this.textSkinName);
             this.Controls.Add(this.textSkinID);
-            this.Controls.Add(this.radioSERVER);
             this.Controls.Add(this.labelSelectTexture);
-            this.Controls.Add(this.radioLOCAL);
-            this.Controls.Add(this.radioAUTO);
+            this.Controls.Add(this.radioButtonManual);
+            this.Controls.Add(this.radioButtonAuto);
             this.Controls.Add(this.buttonDone);
             this.Controls.Add(this.buttonModelGen);
             this.Controls.Add(this.buttonCape);
             this.Controls.Add(this.buttonSkin);
             this.Controls.Add(this.capePictureBox);
-            this.Controls.Add(this.skinPictureBoxTexture);
+            this.Controls.Add(this.skinPictureBox);
             this.Controls.Add(this.displayBox);
             this.Controls.Add(label3);
             this.Controls.Add(label2);
             this.Controls.Add(label1);
             this.MaximizeBox = false;
-            this.Name = "addNewSkin";
+            this.Name = "AddNewSkin";
             this.Resizable = false;
             this.Style = MetroFramework.MetroColorStyle.Silver;
             this.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.Load += new System.EventHandler(this.addnewskin_Load);
+            this.Load += new System.EventHandler(this.AddNewSkin_Load);
             this.contextMenuSkin.ResumeLayout(false);
             this.contextMenuCape.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.displayBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.capePictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.skinPictureBoxTexture)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.skinPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -353,21 +348,20 @@
         private System.Windows.Forms.ToolStripMenuItem replaceToolStripMenuItem;
         private System.Windows.Forms.ContextMenuStrip contextMenuCape;
         private System.Windows.Forms.ToolStripMenuItem replaceToolStripMenuItem1;
-        private System.Windows.Forms.Button buttonDone;
-        private System.Windows.Forms.Button buttonModelGen;
-        private System.Windows.Forms.Button buttonCape;
-        private System.Windows.Forms.Button buttonSkin;
-        private PckStudio.ToolboxItems.InterpolationPictureBox capePictureBox;
+        private MetroFramework.Controls.MetroButton buttonDone;
+        private MetroFramework.Controls.MetroButton buttonModelGen;
+        private MetroFramework.Controls.MetroButton buttonCape;
+        private MetroFramework.Controls.MetroButton buttonSkin;
         private System.Windows.Forms.PictureBox displayBox;
-        private System.Windows.Forms.RadioButton radioAUTO;
-        private System.Windows.Forms.RadioButton radioLOCAL;
-        private System.Windows.Forms.RadioButton radioSERVER;
+        private MetroFramework.Controls.MetroRadioButton radioButtonAuto;
+        private MetroFramework.Controls.MetroRadioButton radioButtonManual;
 		private MetroFramework.Controls.MetroTextBox textSkinID;
 		private MetroFramework.Controls.MetroTextBox textSkinName;
 		private MetroFramework.Controls.MetroTextBox textThemeName;
-		private PckStudio.ToolboxItems.InterpolationPictureBox skinPictureBoxTexture;
-		private System.Windows.Forms.Button buttonAnimGen;
-        private System.Windows.Forms.Label labelSelectTexture;
-        private System.Windows.Forms.Label label4;
+		private PckStudio.ToolboxItems.InterpolationPictureBox skinPictureBox;
+        private PckStudio.ToolboxItems.InterpolationPictureBox capePictureBox;
+		private MetroFramework.Controls.MetroButton buttonAnimGen;
+        private MetroFramework.Controls.MetroLabel labelSelectTexture;
+        private MetroFramework.Controls.MetroLabel capeLabel;
     }
 }
