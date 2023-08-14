@@ -29,11 +29,12 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CreateTexturePackPrompt));
-            this.TextLabel = new System.Windows.Forms.Label();
-            this.OKButton = new System.Windows.Forms.Button();
+            this.TextLabel = new MetroFramework.Controls.MetroLabel();
+            this.OKButton = new MetroFramework.Controls.MetroButton();
             this.InputTextBox = new MetroFramework.Controls.MetroTextBox();
             this.resolutionComboBox = new MetroFramework.Controls.MetroComboBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.label1 = new MetroFramework.Controls.MetroLabel();
+            this.createSkinsPckCheckBox = new MetroFramework.Controls.MetroCheckBox();
             this.SuspendLayout();
             // 
             // TextLabel
@@ -41,13 +42,14 @@
             resources.ApplyResources(this.TextLabel, "TextLabel");
             this.TextLabel.ForeColor = System.Drawing.Color.White;
             this.TextLabel.Name = "TextLabel";
+            this.TextLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
             // 
             // OKButton
             // 
             resources.ApplyResources(this.OKButton, "OKButton");
-            this.OKButton.ForeColor = System.Drawing.Color.White;
             this.OKButton.Name = "OKButton";
-            this.OKButton.UseVisualStyleBackColor = true;
+            this.OKButton.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.OKButton.UseSelectable = true;
             this.OKButton.Click += new System.EventHandler(this.OKBtn_Click);
             // 
             // InputTextBox
@@ -105,12 +107,22 @@
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Name = "label1";
+            this.label1.Theme = MetroFramework.MetroThemeStyle.Dark;
             // 
-            // CreateTexturePack
+            // createSkinsPckCheckBox
+            // 
+            resources.ApplyResources(this.createSkinsPckCheckBox, "createSkinsPckCheckBox");
+            this.createSkinsPckCheckBox.Name = "createSkinsPckCheckBox";
+            this.createSkinsPckCheckBox.Style = MetroFramework.MetroColorStyle.White;
+            this.createSkinsPckCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.createSkinsPckCheckBox.UseSelectable = true;
+            // 
+            // CreateTexturePackPrompt
             // 
             this.AcceptButton = this.OKButton;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.createSkinsPckCheckBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.resolutionComboBox);
             this.Controls.Add(this.InputTextBox);
@@ -118,7 +130,7 @@
             this.Controls.Add(this.TextLabel);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "CreateTexturePack";
+            this.Name = "CreateTexturePackPrompt";
             this.Resizable = false;
             this.ShadowType = MetroFramework.Forms.MetroFormShadowType.DropShadow;
             this.Style = MetroFramework.MetroColorStyle.Silver;
@@ -129,10 +141,11 @@
         }
 
         #endregion
-        public System.Windows.Forms.Button OKButton;
-        public System.Windows.Forms.Label TextLabel;
+        public MetroFramework.Controls.MetroButton OKButton;
+        public MetroFramework.Controls.MetroLabel TextLabel;
         private MetroFramework.Controls.MetroTextBox InputTextBox;
 		private MetroFramework.Controls.MetroComboBox resolutionComboBox;
-		public System.Windows.Forms.Label label1;
-	}
+		public MetroFramework.Controls.MetroLabel label1;
+        private MetroFramework.Controls.MetroCheckBox createSkinsPckCheckBox;
+    }
 }

@@ -9,6 +9,7 @@ namespace PckStudio
 		/// <summary>
 		/// Text entered <c>only access when DialogResult == DialogResult.OK</c>
 		/// </summary>
+		public bool CreateSkinsPck => createSkinsPckCheckBox.Checked;
 		public string PackName => InputTextBox.Text;
 		public string PackRes => resolutionComboBox.Text;
 

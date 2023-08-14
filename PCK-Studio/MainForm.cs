@@ -949,7 +949,7 @@ namespace PckStudio
 				}
 
 				parent_file.SetData(new PckFileWriter(newPCKFile, LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian));
-					parent.Tag = parent_file;
+				parent.Tag = parent_file;
 
 				BuildMainTreeView();
 			}
@@ -1193,28 +1193,28 @@ namespace PckStudio
 			zeroFile.Properties.Add("PACKID", packId.ToString());
 			zeroFile.Properties.Add("PACKVERSION", packVersion.ToString());
 
-				var locFile = new LOCFile();
-				locFile.InitializeDefault(packName);
+			var locFile = new LOCFile();
+			locFile.InitializeDefault(packName);
 			pack.CreateNewFile("localisation.loc", PckFile.FileData.FileType.LocalisationFile, new LOCFileWriter(locFile, 2));
 
 			pack.CreateNewFileIf(createSkinsPCK, "Skins.pck", PckFile.FileData.FileType.SkinDataFile, new PckFileWriter(new PckFile(3, true),
-					LittleEndianCheckBox.Checked
-						? OMI.Endianness.LittleEndian
+				LittleEndianCheckBox.Checked
+					? OMI.Endianness.LittleEndian
 					: OMI.Endianness.BigEndian));
 			
 			return pack;
-			}
+		}
 
-		private PckFile InitializeTexturePack(int packId, int packVersion, string packName, string res, bool createSkinsPCK = false)
+		private PckFile InitializeTexturePack(int packId, int packVersion, string packName, string res, bool createSkinsPCK)
 		{
 			var pack = InitializePack(packId, packVersion, packName, createSkinsPCK);
 
 			PckFile infoPCK = new PckFile(3);
 
-				var icon = infoPCK.CreateNewFile("icon.png", PckFile.FileData.FileType.TextureFile);
+			var icon = infoPCK.CreateNewFile("icon.png", PckFile.FileData.FileType.TextureFile);
 			icon.SetData(Resources.TexturePackIcon, ImageFormat.Png);
 
-				var comparison = infoPCK.CreateNewFile("comparison.png", PckFile.FileData.FileType.TextureFile);
+			var comparison = infoPCK.CreateNewFile("comparison.png", PckFile.FileData.FileType.TextureFile);
 			comparison.SetData(Resources.Comparison, ImageFormat.Png);
 
 			var texturepackInfo = pack.CreateNewFile($"{res}/{res}Info.pck", PckFile.FileData.FileType.TexturePackInfoFile);
@@ -1250,7 +1250,7 @@ namespace PckStudio
 			gameRuleFile.SetData(new GameRuleFileWriter(grfFile));
 			
 			return pack;
-			}
+		}
 
 		private void skinPackToolStripMenuItem_Click(object sender, EventArgs e)
 		{
@@ -1272,7 +1272,7 @@ namespace PckStudio
 			CreateTexturePackPrompt packPrompt = new CreateTexturePackPrompt();
 			if (packPrompt.ShowDialog() == DialogResult.OK)
 			{
-				currentPCK = InitializeTexturePack(new Random().Next(8000, int.MaxValue), 0, packPrompt.PackName, packPrompt.PackRes);
+				currentPCK = InitializeTexturePack(new Random().Next(8000, int.MaxValue), 0, packPrompt.PackName, packPrompt.PackRes, packPrompt.CreateSkinsPck);
 				isTemplateFile = true;
 				wasModified = true;
 				LoadEditorTab();
@@ -1928,7 +1928,7 @@ namespace PckStudio
 							gfx.PixelOffsetMode = PixelOffsetMode.HighQuality;
 							gfx.DrawImage(originalTexture, tileArea);
 						}
-
+						
 						MipMappedFile.SetData(mippedTexture, ImageFormat.Png);
 
 						currentPCK.Files.Insert(currentPCK.Files.IndexOf(file) + i - 1, MipMappedFile);
