@@ -80,9 +80,8 @@ namespace PckStudio.Forms.Editor
             currentAnimation = new Animation(Array.Empty<Image>());
             if (animationFile is not null && animationFile.Size > 0)
             {
-                using MemoryStream textureMem = new MemoryStream(animationFile.Data);
-                var texture = new Bitmap(textureMem);
-                var frameTextures = texture.CreateImageList(ImageLayoutDirection.Vertical);
+                var texture = animationFile.GetTexture();
+                var frameTextures = texture.Split(ImageLayoutDirection.Vertical);
                 currentAnimation = animationFile.Properties.HasProperty("ANIM")
                     ? new Animation(frameTextures, animationFile.Properties.GetPropertyValue("ANIM"))
                     : new Animation(frameTextures, string.Empty);
@@ -163,12 +162,8 @@ namespace PckStudio.Forms.Editor
 			{
 				string anim = currentAnimation.BuildAnim();
 				animationFile.Properties.SetProperty("ANIM", anim);
-				using (var stream = new MemoryStream())
-				{
-					var texture = currentAnimation.BuildTexture();
-					texture.Save(stream, ImageFormat.Png);
-					animationFile.SetData(stream.ToArray());
-				}
+				var texture = currentAnimation.BuildTexture();
+				animationFile.SetData(texture, ImageFormat.Png);
 				animationFile.Filename = $"res/textures/{currentAnimation.CategoryString}/{TileName}.png";
 				DialogResult = DialogResult.OK;
 				return;
@@ -329,7 +324,7 @@ namespace PckStudio.Forms.Editor
 				MessageBox.Show(textureFile + " was not found", "Texture not found");
 				return;
 			}
-			var textures = Image.FromFile(textureFile).CreateImageList(ImageLayoutDirection.Vertical);
+			var textures = Image.FromFile(textureFile).Split(ImageLayoutDirection.Vertical);
             var new_animation = new Animation(textures);
 			new_animation.Category = currentAnimation.Category;
             try
@@ -405,8 +400,8 @@ namespace PckStudio.Forms.Editor
         {
 			var textureInfos = currentAnimation.Category switch
 			{
-				Animation.AnimationCategory.Blocks => AnimationResources.BlockTileInfos,
-				Animation.AnimationCategory.Items => AnimationResources.ItemTileInfos,
+				Animation.AnimationCategory.Blocks => Tiles.BlockTileInfos,
+				Animation.AnimationCategory.Items => Tiles.ItemTileInfos,
 				_ => throw new ArgumentOutOfRangeException(currentAnimation.Category.ToString())
 			};
 
@@ -527,7 +522,7 @@ namespace PckStudio.Forms.Editor
             if (ofd.ShowDialog() != DialogResult.OK)
                 return;
             Image img = Image.FromFile(ofd.FileName);
-            var textures = img.CreateImageList(ImageLayoutDirection.Vertical);
+            var textures = img.Split(ImageLayoutDirection.Vertical);
 			currentAnimation = new Animation(textures, string.Empty);
 			LoadAnimationTreeView();
         }

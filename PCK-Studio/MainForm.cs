@@ -20,7 +20,6 @@ using OMI.Workers.Language;
 
 using PckStudio.Properties;
 using PckStudio.Forms;
-using PckStudio.Forms.Utilities;
 using PckStudio.Forms.Editor;
 using PckStudio.Forms.Additional_Popups.Animation;
 using PckStudio.Forms.Additional_Popups;
@@ -31,7 +30,6 @@ using PckStudio.Internal;
 using PckStudio.Features;
 using PckStudio.Extensions;
 using PckStudio.Popups;
-using PckStudio.API.Miles;
 using PckStudio.Classes.Utils;
 using PckStudio.Helper;
 using PckStudio.Controls;
@@ -175,78 +173,49 @@ namespace PckStudio
 
 		private PckFile InitializePack(int packId, int packVersion, string packName, bool createSkinsPCK)
 		{
-			var newPck = new PckFile(3);
+			var pack = new PckFile(3);
 
-			var zeroFile = newPck.CreateNewFile("0", PckFile.FileData.FileType.InfoFile);
+			var zeroFile = pack.CreateNewFile("0", PckFile.FileData.FileType.InfoFile);
 			zeroFile.Properties.Add("PACKID", packId.ToString());
 			zeroFile.Properties.Add("PACKVERSION", packVersion.ToString());
 
-			var loc = newPck.CreateNewFile("localisation.loc", PckFile.FileData.FileType.LocalisationFile, () =>
-			{
-				var locFile = new LOCFile();
-				locFile.InitializeDefault(packName);
-				using var stream = new MemoryStream();
-				var writer = new LOCFileWriter(locFile, 2);
-				writer.WriteToStream(stream);
-				return stream.ToArray();
-			});
+			var locFile = new LOCFile();
+			locFile.InitializeDefault(packName);
+			pack.CreateNewFile("localisation.loc", PckFile.FileData.FileType.LocalisationFile, new LOCFileWriter(locFile, 2));
 
-			if (createSkinsPCK)
-			{
-				PckFile.FileData skinsPCKFile = newPck.CreateNewFile("Skins.pck", PckFile.FileData.FileType.SkinDataFile, () =>
-				{
-					using var stream = new MemoryStream();
-					var writer = new PckFileWriter(new PckFile(3, true),
-					Settings.Default.UseLittleEndianAsDefault
-						? OMI.Endianness.LittleEndian
-						: OMI.Endianness.BigEndian);
-					writer.WriteToStream(stream);
-					return stream.ToArray();
-				});
-			}
-			return newPck;
+			PckFile.FileData skinsPCKFile = pack.CreateNewFileIf(createSkinsPCK, "Skins.pck", PckFile.FileData.FileType.SkinDataFile, new PckFileWriter(new PckFile(3, true),
+				Settings.Default.UseLittleEndianAsDefault
+					? OMI.Endianness.LittleEndian
+					: OMI.Endianness.BigEndian));
+			
+			return pack;
 		}
 
-		private PckFile InitializeTexturePack(int packId, int packVersion, string packName, string res, bool createSkinsPCK = false)
+		private PckFile InitializeTexturePack(int packId, int packVersion, string packName, string res, bool createSkinsPCK)
 		{
-			var newPck = InitializePack(packId, packVersion, packName, createSkinsPCK);
-			var texturepackInfo = newPck.CreateNewFile($"{res}/{res}Info.pck", PckFile.FileData.FileType.TexturePackInfoFile,
-				() =>
-				{
-					using var ms = new MemoryStream();
-					var writer = new PckFileWriter(new PckFile(3),
-						Settings.Default.UseLittleEndianAsDefault
-							? OMI.Endianness.LittleEndian
-							: OMI.Endianness.BigEndian);
-					writer.WriteToStream(ms);
-					return ms.ToArray();
-				});
+			var pack = InitializePack(packId, packVersion, packName, createSkinsPCK);
+			PckFile infoPCK = new PckFile(3);
+
+			var icon = infoPCK.CreateNewFile("icon.png", PckFile.FileData.FileType.TextureFile);
+			icon.SetData(Resources.TexturePackIcon, ImageFormat.Png);
+
+			var comparison = infoPCK.CreateNewFile("comparison.png", PckFile.FileData.FileType.TextureFile);
+			comparison.SetData(Resources.Comparison, ImageFormat.Png);
+
+			var texturepackInfo = pack.CreateNewFile($"{res}/{res}Info.pck", PckFile.FileData.FileType.TexturePackInfoFile);
+
 			texturepackInfo.Properties.Add("PACKID", "0");
 			texturepackInfo.Properties.Add("DATAPATH", $"{res}Data.pck");
 
-			PckFile infoPCK = new PckFile(3);
+			texturepackInfo.SetData(new PckFileWriter(infoPCK, LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian));
 
-			using (var ms = new MemoryStream())
-			{
-				var icon = infoPCK.CreateNewFile("icon.png", PckFile.FileData.FileType.TextureFile);
-				Resources.TexturePackIcon.Save(ms, ImageFormat.Png);
-				icon.SetData(ms.ToArray());
-			}
-
-			using (var ms = new MemoryStream())
-			{
-				var comparison = infoPCK.CreateNewFile("comparison.png", PckFile.FileData.FileType.TextureFile);
-				Resources.Comparison.Save(ms, ImageFormat.Png);
-				comparison.SetData(ms.ToArray());
-			}
-
-			return newPck;
+			return pack;
 		}
 
 		private PckFile InitializeMashUpPack(int packId, int packVersion, string packName, string res)
 		{
-			var newPck = InitializeTexturePack(packId, packVersion, packName, res, true);
-			var gameRuleFile = newPck.CreateNewFile("GameRules.grf", PckFile.FileData.FileType.GameRulesFile);
+			var pack = InitializeTexturePack(packId, packVersion, packName, res, true);
+			var gameRuleFile = pack.CreateNewFile("GameRules.grf", PckFile.FileData.FileType.GameRulesFile);
 			var grfFile = new GameRuleFile();
 			grfFile.AddRule("MapOptions",
 				new KeyValuePair<string, string>("seed", "0"),
@@ -268,7 +237,7 @@ namespace PckStudio
 				writer.WriteToStream(stream);
 				gameRuleFile.SetData(stream.ToArray());
 			}
-			return newPck;
+			return pack;
 		}
 
 		private void skinPackToolStripMenuItem_Click(object sender, EventArgs e)
@@ -287,7 +256,7 @@ namespace PckStudio
 			var packPrompt = new CreateTexturePackPrompt();
 			if (packPrompt.ShowDialog() == DialogResult.OK)
 			{
-                var currentPCK = InitializeTexturePack(new Random().Next(8000, int.MaxValue), 0, packPrompt.PackName, packPrompt.PackRes);
+                var currentPCK = InitializeTexturePack(new Random().Next(8000, int.MaxValue), 0, packPrompt.PackName, packPrompt.PackRes, packPrompt.CreateSkinsPck);
                 AddEditorPage(currentPCK);
             }
 		}

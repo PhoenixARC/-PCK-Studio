@@ -151,7 +151,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
-    <value>18</value>
+    <value>17</value>
   </data>
   <metadata name="label2.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>False</value>
@@ -184,7 +184,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
-    <value>19</value>
+    <value>18</value>
   </data>
   <metadata name="label1.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>False</value>
@@ -217,7 +217,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>20</value>
+    <value>19</value>
   </data>
   <data name="textTheme.Location" type="System.Drawing.Point, System.Drawing">
     <value>102, 78</value>
@@ -291,12 +291,6 @@
   <data name="buttonDone.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
-  <data name="buttonDone.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="buttonDone.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <data name="buttonDone.Location" type="System.Drawing.Point, System.Drawing">
     <value>394, 260</value>
   </data>
@@ -313,19 +307,13 @@
     <value>buttonDone</value>
   </data>
   <data name="&gt;&gt;buttonDone.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>MetroFramework.Controls.MetroButton, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
   </data>
   <data name="&gt;&gt;buttonDone.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
   <data name="&gt;&gt;buttonDone.ZOrder" xml:space="preserve">
-    <value>11</value>
-  </data>
-  <data name="buttonModelGen.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="buttonModelGen.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+    <value>10</value>
   </data>
   <data name="buttonModelGen.Location" type="System.Drawing.Point, System.Drawing">
     <value>14, 259</value>
@@ -343,24 +331,16 @@
     <value>buttonModelGen</value>
   </data>
   <data name="&gt;&gt;buttonModelGen.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>MetroFramework.Controls.MetroButton, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
   </data>
   <data name="&gt;&gt;buttonModelGen.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
   <data name="&gt;&gt;buttonModelGen.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>11</value>
   </data>
-  <data name="buttonCape.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vAAADrwBlbxySQAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xMkMEa+wAAAA2SURBVDhPY/j/
-        /z8DEIAIkjFY7/AxgCxAVRegSBCLB5cBZAGqugBFglg8iAygBGMVJB7/ZwAAaXFatLhxTd8AAAAASUVO
-        RK5CYII=
-</value>
-  </data>
-  <data name="buttonCape.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="buttonCape.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Center</value>
   </data>
   <data name="buttonCape.Location" type="System.Drawing.Point, System.Drawing">
     <value>443, 212</value>
@@ -371,28 +351,23 @@
   <data name="buttonCape.TabIndex" type="System.Int32, mscorlib">
     <value>111</value>
   </data>
+  <data name="buttonCape.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
   <data name="&gt;&gt;buttonCape.Name" xml:space="preserve">
     <value>buttonCape</value>
   </data>
   <data name="&gt;&gt;buttonCape.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>MetroFramework.Controls.MetroButton, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
   </data>
   <data name="&gt;&gt;buttonCape.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
   <data name="&gt;&gt;buttonCape.ZOrder" xml:space="preserve">
-    <value>13</value>
+    <value>12</value>
   </data>
-  <data name="buttonSkin.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vAAADrwBlbxySQAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xMkMEa+wAAAA2SURBVDhPY/j/
-        /z8DEIAIkjFY7/AxgCxAVRegSBCLB5cBZAGqugBFglg8iAygBGMVJB7/ZwAAaXFatLhxTd8AAAAASUVO
-        RK5CYII=
-</value>
-  </data>
-  <data name="buttonSkin.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="buttonSkin.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Center</value>
   </data>
   <data name="buttonSkin.Location" type="System.Drawing.Point, System.Drawing">
     <value>351, 212</value>
@@ -407,13 +382,13 @@
     <value>buttonSkin</value>
   </data>
   <data name="&gt;&gt;buttonSkin.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>MetroFramework.Controls.MetroButton, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
   </data>
   <data name="&gt;&gt;buttonSkin.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
   <data name="&gt;&gt;buttonSkin.ZOrder" xml:space="preserve">
-    <value>14</value>
+    <value>13</value>
   </data>
   <data name="displayBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -437,139 +412,61 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;displayBox.ZOrder" xml:space="preserve">
-    <value>17</value>
+    <value>16</value>
   </data>
-  <data name="radioAUTO.AutoSize" type="System.Boolean, mscorlib">
+  <data name="radioButtonAuto.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="radioAUTO.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="radioAUTO.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="radioButtonAuto.Location" type="System.Drawing.Point, System.Drawing">
     <value>388, 51</value>
   </data>
-  <data name="radioAUTO.Size" type="System.Drawing.Size, System.Drawing">
-    <value>81, 17</value>
+  <data name="radioButtonAuto.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 15</value>
   </data>
-  <data name="radioAUTO.TabIndex" type="System.Int32, mscorlib">
+  <data name="radioButtonAuto.TabIndex" type="System.Int32, mscorlib">
     <value>117</value>
   </data>
-  <data name="radioAUTO.Text" xml:space="preserve">
-    <value>AUTO-GEN</value>
+  <data name="radioButtonAuto.Text" xml:space="preserve">
+    <value>Auto-Gen</value>
   </data>
-  <data name="&gt;&gt;radioAUTO.Name" xml:space="preserve">
-    <value>radioAUTO</value>
+  <data name="&gt;&gt;radioButtonAuto.Name" xml:space="preserve">
+    <value>radioButtonAuto</value>
   </data>
-  <data name="&gt;&gt;radioAUTO.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;radioButtonAuto.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroRadioButton, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
   </data>
-  <data name="&gt;&gt;radioAUTO.Parent" xml:space="preserve">
+  <data name="&gt;&gt;radioButtonAuto.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;radioAUTO.ZOrder" xml:space="preserve">
-    <value>10</value>
-  </data>
-  <data name="radioLOCAL.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="radioLOCAL.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="radioLOCAL.Location" type="System.Drawing.Point, System.Drawing">
-    <value>388, 71</value>
-  </data>
-  <data name="radioLOCAL.Size" type="System.Drawing.Size, System.Drawing">
-    <value>59, 17</value>
-  </data>
-  <data name="radioLOCAL.TabIndex" type="System.Int32, mscorlib">
-    <value>118</value>
-  </data>
-  <data name="radioLOCAL.Text" xml:space="preserve">
-    <value>LOCAL</value>
-  </data>
-  <data name="&gt;&gt;radioLOCAL.Name" xml:space="preserve">
-    <value>radioLOCAL</value>
-  </data>
-  <data name="&gt;&gt;radioLOCAL.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;radioLOCAL.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;radioLOCAL.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;radioButtonAuto.ZOrder" xml:space="preserve">
     <value>9</value>
   </data>
-  <data name="labelSelectTexture.AutoSize" type="System.Boolean, mscorlib">
+  <data name="radioButtonManual.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="labelSelectTexture.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
+  <data name="radioButtonManual.Location" type="System.Drawing.Point, System.Drawing">
+    <value>388, 71</value>
   </data>
-  <data name="labelSelectTexture.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 8.25pt, style=Underline</value>
+  <data name="radioButtonManual.Size" type="System.Drawing.Size, System.Drawing">
+    <value>63, 15</value>
   </data>
-  <data name="labelSelectTexture.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="radioButtonManual.TabIndex" type="System.Int32, mscorlib">
+    <value>118</value>
   </data>
-  <data name="labelSelectTexture.Location" type="System.Drawing.Point, System.Drawing">
-    <value>308, 186</value>
+  <data name="radioButtonManual.Text" xml:space="preserve">
+    <value>Manual</value>
   </data>
-  <data name="labelSelectTexture.Size" type="System.Drawing.Size, System.Drawing">
-    <value>50, 13</value>
+  <data name="&gt;&gt;radioButtonManual.Name" xml:space="preserve">
+    <value>radioButtonManual</value>
   </data>
-  <data name="labelSelectTexture.TabIndex" type="System.Int32, mscorlib">
-    <value>119</value>
+  <data name="&gt;&gt;radioButtonManual.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroRadioButton, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
   </data>
-  <data name="labelSelectTexture.Text" xml:space="preserve">
-    <value>Add Skin</value>
-  </data>
-  <data name="&gt;&gt;labelSelectTexture.Name" xml:space="preserve">
-    <value>labelSelectTexture</value>
-  </data>
-  <data name="&gt;&gt;labelSelectTexture.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;labelSelectTexture.Parent" xml:space="preserve">
+  <data name="&gt;&gt;radioButtonManual.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;labelSelectTexture.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;radioButtonManual.ZOrder" xml:space="preserve">
     <value>8</value>
-  </data>
-  <data name="radioSERVER.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="radioSERVER.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="radioSERVER.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="radioSERVER.Location" type="System.Drawing.Point, System.Drawing">
-    <value>388, 28</value>
-  </data>
-  <data name="radioSERVER.Size" type="System.Drawing.Size, System.Drawing">
-    <value>69, 17</value>
-  </data>
-  <data name="radioSERVER.TabIndex" type="System.Int32, mscorlib">
-    <value>120</value>
-  </data>
-  <data name="radioSERVER.Text" xml:space="preserve">
-    <value>SERVER</value>
-  </data>
-  <data name="radioSERVER.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;radioSERVER.Name" xml:space="preserve">
-    <value>radioSERVER</value>
-  </data>
-  <data name="&gt;&gt;radioSERVER.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;radioSERVER.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;radioSERVER.ZOrder" xml:space="preserve">
-    <value>7</value>
   </data>
   <data name="resource.Image" type="System.Resources.ResXNullRef, System.Windows.Forms">
     <value />
@@ -688,47 +585,77 @@
   <data name="&gt;&gt;textThemeName.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
-  <data name="label4.AutoSize" type="System.Boolean, mscorlib">
+  <data name="labelSelectTexture.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="label4.Enabled" type="System.Boolean, mscorlib">
+  <data name="labelSelectTexture.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
-  <data name="label4.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 8.25pt, style=Underline</value>
+  <data name="labelSelectTexture.Location" type="System.Drawing.Point, System.Drawing">
+    <value>303, 185</value>
   </data>
-  <data name="label4.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="labelSelectTexture.Size" type="System.Drawing.Size, System.Drawing">
+    <value>61, 19</value>
   </data>
-  <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>400, 186</value>
+  <data name="labelSelectTexture.TabIndex" type="System.Int32, mscorlib">
+    <value>119</value>
   </data>
-  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>54, 13</value>
+  <data name="labelSelectTexture.Text" xml:space="preserve">
+    <value>Add Skin</value>
   </data>
-  <data name="label4.TabIndex" type="System.Int32, mscorlib">
-    <value>124</value>
+  <data name="labelSelectTexture.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
   </data>
-  <data name="label4.Text" xml:space="preserve">
-    <value>Add Cape</value>
+  <data name="&gt;&gt;labelSelectTexture.Name" xml:space="preserve">
+    <value>labelSelectTexture</value>
   </data>
-  <data name="&gt;&gt;label4.Name" xml:space="preserve">
-    <value>label4</value>
+  <data name="&gt;&gt;labelSelectTexture.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
   </data>
-  <data name="&gt;&gt;label4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label4.Parent" xml:space="preserve">
+  <data name="&gt;&gt;labelSelectTexture.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;labelSelectTexture.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="capeLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="capeLabel.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="capeLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>391, 186</value>
+  </data>
+  <data name="capeLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>69, 19</value>
+  </data>
+  <data name="capeLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>124</value>
+  </data>
+  <data name="capeLabel.Text" xml:space="preserve">
+    <value>Add Cape</value>
+  </data>
+  <data name="capeLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="capeLabel.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;capeLabel.Name" xml:space="preserve">
+    <value>capeLabel</value>
+  </data>
+  <data name="&gt;&gt;capeLabel.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;capeLabel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;capeLabel.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="buttonAnimGen.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="buttonAnimGen.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="buttonAnimGen.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="buttonAnimGen.Location" type="System.Drawing.Point, System.Drawing">
     <value>108, 259</value>
@@ -746,7 +673,7 @@
     <value>buttonAnimGen</value>
   </data>
   <data name="&gt;&gt;buttonAnimGen.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>MetroFramework.Controls.MetroButton, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
   </data>
   <data name="&gt;&gt;buttonAnimGen.Parent" xml:space="preserve">
     <value>$this</value>
@@ -766,50 +693,56 @@
   <data name="capePictureBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>82, 82</value>
   </data>
+  <data name="capePictureBox.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
+    <value>StretchImage</value>
+  </data>
   <data name="capePictureBox.TabIndex" type="System.Int32, mscorlib">
     <value>109</value>
+  </data>
+  <data name="capePictureBox.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="&gt;&gt;capePictureBox.Name" xml:space="preserve">
     <value>capePictureBox</value>
   </data>
   <data name="&gt;&gt;capePictureBox.Type" xml:space="preserve">
-    <value>PckStudio.PictureBoxWithInterpolationMode, PCK-Studio, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>PckStudio.ToolboxItems.InterpolationPictureBox, PCK-Studio, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;capePictureBox.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
   <data name="&gt;&gt;capePictureBox.ZOrder" xml:space="preserve">
-    <value>15</value>
+    <value>14</value>
   </data>
-  <data name="skinPictureBoxTexture.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+  <data name="skinPictureBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>None</value>
   </data>
-  <data name="skinPictureBoxTexture.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="skinPictureBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="skinPictureBoxTexture.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="skinPictureBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>292, 152</value>
   </data>
-  <data name="skinPictureBoxTexture.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="skinPictureBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>82, 82</value>
   </data>
-  <data name="skinPictureBoxTexture.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
+  <data name="skinPictureBox.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
     <value>Zoom</value>
   </data>
-  <data name="skinPictureBoxTexture.TabIndex" type="System.Int32, mscorlib">
+  <data name="skinPictureBox.TabIndex" type="System.Int32, mscorlib">
     <value>108</value>
   </data>
-  <data name="&gt;&gt;skinPictureBoxTexture.Name" xml:space="preserve">
-    <value>skinPictureBoxTexture</value>
+  <data name="&gt;&gt;skinPictureBox.Name" xml:space="preserve">
+    <value>skinPictureBox</value>
   </data>
-  <data name="&gt;&gt;skinPictureBoxTexture.Type" xml:space="preserve">
-    <value>PckStudio.PictureBoxWithInterpolationMode, PCK-Studio, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  <data name="&gt;&gt;skinPictureBox.Type" xml:space="preserve">
+    <value>PckStudio.ToolboxItems.InterpolationPictureBox, PCK-Studio, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
-  <data name="&gt;&gt;skinPictureBoxTexture.Parent" xml:space="preserve">
+  <data name="&gt;&gt;skinPictureBox.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;skinPictureBoxTexture.ZOrder" xml:space="preserve">
-    <value>16</value>
+  <data name="&gt;&gt;skinPictureBox.ZOrder" xml:space="preserve">
+    <value>15</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -3348,7 +3281,7 @@
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>addNewSkin</value>
+    <value>AddNewSkin</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>MetroFramework.Forms.MetroForm, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>

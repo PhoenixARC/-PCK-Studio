@@ -11,6 +11,7 @@ using OMI.Formats.Pck;
 using OMI.Formats.Material;
 using OMI.Workers.Material;
 using PckStudio.Internal;
+using PckStudio.Extensions;
 
 namespace PckStudio.Forms.Editor
 {
@@ -114,22 +115,18 @@ namespace PckStudio.Forms.Editor
 
 		private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
-			using (var stream = new MemoryStream())
+			materialFile = new MaterialContainer();
+
+			foreach (TreeNode node in treeView1.Nodes)
 			{
-				materialFile = new MaterialContainer();
-
-				foreach (TreeNode node in treeView1.Nodes)
+				if(node.Tag is MaterialContainer.Material entry)
 				{
-					if(node.Tag is MaterialContainer.Material entry)
-					{
-						materialFile.Add(entry);
-					}
+					materialFile.Add(entry);
 				}
-
-				var writer = new MaterialFileWriter(materialFile);
-				writer.WriteToStream(stream);
-				_file.SetData(stream.ToArray());
 			}
+
+			_file.SetData(new MaterialFileWriter(materialFile));
+			
 			DialogResult = DialogResult.OK;
 		}
 

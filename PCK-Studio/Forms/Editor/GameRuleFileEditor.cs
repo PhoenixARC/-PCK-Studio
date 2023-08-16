@@ -30,6 +30,7 @@ using OMI.Formats.Pck;
 using PckStudio.Forms.Additional_Popups;
 using PckStudio.Properties;
 using PckStudio.ToolboxItems;
+using PckStudio.Extensions;
 
 namespace PckStudio.Forms.Editor
 {
@@ -266,12 +267,7 @@ namespace PckStudio.Forms.Editor
             {
                 try
                 {
-                    var writer = new GameRuleFileWriter(
-                        _file,
-                        compressionLevel,
-                        compressionType);
-                    writer.WriteToStream(stream);
-                    _pckfile?.SetData(stream.ToArray());
+                    _pckfile?.SetData(new GameRuleFileWriter(_file, compressionLevel, compressionType));
                     DialogResult = DialogResult.OK;
                     MessageBox.Show("Saved!");
                 }

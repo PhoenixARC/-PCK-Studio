@@ -415,21 +415,14 @@ namespace PckStudio.Controls
             }
         }
 
-        private PckFile.FileData CreateNewAudioFile(bool isLittle)
+        private static PckFile.FileData CreateNewAudioFile(bool isLittle)
         {
             PckAudioFile audioPck = new PckAudioFile();
             audioPck.AddCategory(PckAudioFile.AudioCategory.EAudioType.Overworld);
             audioPck.AddCategory(PckAudioFile.AudioCategory.EAudioType.Nether);
             audioPck.AddCategory(PckAudioFile.AudioCategory.EAudioType.End);
-            PckFile.FileData pckFileData = _pck.CreateNewFile("audio.pck", PckFile.FileData.FileType.AudioFile, () =>
-            {
-                using (var stream = new MemoryStream())
-                {
-                    var writer = new PckAudioFileWriter(audioPck, isLittle ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
-                    writer.WriteToStream(stream);
-                    return stream.ToArray();
-                }
-            });
+            PckFile.FileData pckFileData = new PckFile.FileData("audio.pck", PckFile.FileData.FileType.AudioFile);
+            pckFileData.SetData(new PckAudioFileWriter(audioPck, isLittle ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian));
             return pckFileData;
         }
 
@@ -778,9 +771,9 @@ namespace PckStudio.Controls
 
             var file = CreateNewAudioFile(LittleEndianCheckBox.Checked);
             AudioEditor diag = new AudioEditor(file, LittleEndianCheckBox.Checked);
-            if (diag.ShowDialog(this) != DialogResult.OK)
+            if (diag.ShowDialog(this) == DialogResult.OK)
             {
-                _pck.Files.Remove(file); // delete file if not saved
+                _pck.Files.Add(file);
             }
             diag.Dispose();
             BuildMainTreeView();

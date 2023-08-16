@@ -11,6 +11,7 @@ using PckStudio.Forms.Editor;
 using PckStudio.IO._3DST;
 using PckStudio.Properties;
 using PckStudio.Forms;
+using PckStudio.Extensions;
 
 namespace PckStudio.Popups
 {
@@ -18,12 +19,13 @@ namespace PckStudio.Popups
     {
         public PckFile.FileData SkinFile => skin;
         public PckFile.FileData CapeFile => cape;
-        public bool HasCape { get; private set; } = false;
+        public bool HasCape => cape is not null;
 
         private LOCFile currentLoc;
         private PckFile.FileData skin = new PckFile.FileData("dlcskinXYXYXYXY", PckFile.FileData.FileType.SkinFile);
-        private PckFile.FileData cape = new PckFile.FileData("dlccapeXYXYXYXY", PckFile.FileData.FileType.CapeFile);
+        private PckFile.FileData cape;
         private SkinANIM anim = new SkinANIM();
+        private Random rng = new Random();
 
         private eSkinType skinType;
 
@@ -45,8 +47,7 @@ namespace PckStudio.Popups
 
         private void CheckImage(Image img)
         {
-            //Checks image dimensions and sets things accordingly
-            switch (img.Height) // 64x64
+            switch (img.Height)
             {
                 case 64:
                     anim.SetFlag(SkinAnimFlag.RESOLUTION_64x64, true);
@@ -64,7 +65,7 @@ namespace PckStudio.Popups
                         anim.SetFlag(SkinAnimFlag.RESOLUTION_64x64, true);
                         MessageBox.Show("64x64 HD Skin Detected");
                         skinType = eSkinType._64x64HD;
-                        return;
+                        break;
                     }
 
                     if (img.Height == img.Width / 2)
@@ -72,7 +73,7 @@ namespace PckStudio.Popups
                         anim.SetFlag(SkinAnimFlag.RESOLUTION_64x64 | SkinAnimFlag.SLIM_MODEL, false);
                         MessageBox.Show("64x32 HD Skin Detected");
                         skinType = eSkinType._64x32HD;
-                        return;
+                        break;
                     }
                     
                     MessageBox.Show("Not a Valid Skin File");
@@ -80,17 +81,22 @@ namespace PckStudio.Popups
                     return;
             }
 
-            skinPictureBoxTexture.Image = img;
+            skinPictureBox.Image = img;
+            capePictureBox.Visible = true;
+            buttonCape.Visible = true;
+            capeLabel.Visible = true;
             buttonDone.Enabled = true;
+            buttonAnimGen.Enabled = true;
             labelSelectTexture.Visible = false;
         }
 
         private void DrawModel()
 		{
             bool isSlim = anim.GetFlag(SkinAnimFlag.SLIM_MODEL);
-            Pen outlineColor = Pens.Black;
+            Pen outlineColor = Pens.LightGray;
             Brush fillColor = Brushes.Gray;
-            using (Graphics g = Graphics.FromImage(displayBox.Image))
+            Image previewTexture = new Bitmap(displayBox.Width, displayBox.Height);
+            using (Graphics g = Graphics.FromImage(previewTexture))
             {
                 if(!anim.GetFlag(SkinAnimFlag.HEAD_DISABLED))
 				{
@@ -129,22 +135,22 @@ namespace PckStudio.Popups
                     g.FillRectangle(fillColor, 91, 116, 19, 59);
                 }
             }
-            displayBox.Invalidate();
+            displayBox.Image = previewTexture;
         }
 
-        private void addnewskin_Load(object sender, EventArgs e)
+        private void AddNewSkin_Load(object sender, EventArgs e)
         {
             DrawModel();
         }
 
         private void buttonSkin_Click(object sender, EventArgs e)
         {
-            contextMenuSkin.Show(ActiveForm.Location.X + buttonSkin.Location.X + 2, ActiveForm.Location.Y + buttonSkin.Location.Y + 23);
+            contextMenuSkin.Show(Location.X + buttonSkin.Location.X + 2, Location.Y + buttonSkin.Location.Y + buttonSkin.Size.Height);
         }
 
         private void buttonCape_Click(object sender, EventArgs e)
         {
-            contextMenuCape.Show(ActiveForm.Location.X + buttonCape.Location.X + 2, ActiveForm.Location.Y + buttonCape.Location.Y + 23);
+            contextMenuCape.Show(Location.X + buttonCape.Location.X + 2, Location.Y + buttonCape.Location.Y + buttonCape.Size.Height);
         }
 
         private void replaceToolStripMenuItem_Click(object sender, EventArgs e)
@@ -156,28 +162,73 @@ namespace PckStudio.Popups
             }
         }
 
-        private void capePictureBox_Click(object sender, EventArgs e)
+        private void skinPictureBox_MouseClick(object sender, MouseEventArgs e)
         {
+            if (e.Button != MouseButtons.Left && e.Button != MouseButtons.Right)
+                return;
+
+            if (e.Button == MouseButtons.Right)
+            {
+                contextMenuSkin.Show(
+                    x: Location.X + skinPictureBox.Location.X,
+                    y: Location.Y + skinPictureBox.Location.Y + skinPictureBox.Size.Height
+                    );
+                return;
+            }
+
             using (var ofd = new OpenFileDialog())
             {
-                ofd.Filter = "PNG Files|*.png";
+                ofd.Filter = "Skin File|*.png|3DS Texture|*.3dst";
+                ofd.Title = "Select a Skin Texture File";
+                if (ofd.ShowDialog() == DialogResult.OK)
+                {
+                    if (ofd.FileName.EndsWith(".3dst"))
+                    {
+                        using (var fs = File.OpenRead(ofd.FileName))
+                        {
+                            var reader = new _3DSTextureReader();
+                            CheckImage(reader.FromStream(fs));
+                        }
+                        textSkinName.Text = Path.GetFileNameWithoutExtension(ofd.FileName);
+                        return;
+                    }
+                    CheckImage(Image.FromFile(ofd.FileName));
+                }
+            }
+        }
+
+        private void capePictureBox_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left && e.Button != MouseButtons.Right)
+                return;
+
+            if (e.Button == MouseButtons.Right)
+            {
+                contextMenuCape.Show(
+                    x: Location.X + capePictureBox.Location.X,
+                    y: Location.Y + capePictureBox.Location.Y + capePictureBox.Size.Height
+                    );
+                return;
+            }
+
+            using (var ofd = new OpenFileDialog())
+            {
+                ofd.Filter = "Cape File|*.png";
                 ofd.Title = "Select a PNG File";
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
                     var img = Image.FromFile(ofd.FileName);
-                    if (img.Width == img.Height * 2)
-                    {
-                        HasCape = true;
-                        capePictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
-                        capePictureBox.InterpolationMode = InterpolationMode.NearestNeighbor;
-                        capePictureBox.Image = Image.FromFile(ofd.FileName);
-                        cape.SetData(File.ReadAllBytes(ofd.FileName));
-                        contextMenuCape.Items[0].Text = "Replace";
-                    }
-                    else
+                    if (img.RawFormat != ImageFormat.Png && img.Width != img.Height * 2)
                     {
                         MessageBox.Show("Not a Valid Cape File");
+                        return;
                     }
+                    capePictureBox.Image = Image.FromFile(ofd.FileName);
+                    cape ??= new PckFile.FileData("dlccapeXYXYXYXY", PckFile.FileData.FileType.CapeFile);
+                    cape.SetData(File.ReadAllBytes(ofd.FileName));
+                    contextMenuCape.Items[0].Text = "Replace";
+                    capeLabel.Visible = false;
+                    contextMenuCape.Visible = true;
                 }
             }
         }
@@ -207,33 +258,10 @@ namespace PckStudio.Popups
 
             if (HasCape)
             {
-                try
-                {
-                    cape.Filename = $"dlccape{skinId}.png";
-                    skin.Properties.Add("CAPEPATH", cape.Filename);
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("Cape could not be added.");
-                }
+                cape.Filename = $"dlccape{skinId}.png";
+                skin.Properties.Add("CAPEPATH", cape.Filename);
             }
-            using (var stream = new MemoryStream())
-            {
-                skinPictureBoxTexture.Image.Save(stream, ImageFormat.Png);
-                skin.SetData(stream.ToArray());
-            }
-
-            //if (generatedModel != null)
-            //{
-            //    foreach (var item in generatedModel)
-            //    {
-            //        skin.properties.Add(item);
-            //    }
-
-            //    generatedModel.Clear();
-            //}
-
-
+            skin.SetData(skinPictureBox.Image, ImageFormat.Png);
             DialogResult = DialogResult.OK;
             Close();
         }
@@ -250,11 +278,9 @@ namespace PckStudio.Popups
             if (MessageBox.Show("Create your own custom skin model?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1) != DialogResult.Yes)
                 return;
 
-            using var ms = new MemoryStream();
-            Resources.classic_template.Save(ms, ImageFormat.Png);
-            skin.SetData(ms.ToArray());
+            skin.SetData(Resources.classic_template, ImageFormat.Png);
 
-            generateModel generate = new generateModel(skin);
+            using generateModel generate = new generateModel(skin);
 
             if (generate.ShowDialog() == DialogResult.OK)
             {
@@ -263,63 +289,25 @@ namespace PckStudio.Popups
                 labelSelectTexture.Visible = false;
                 if (skinType != eSkinType._64x64 && skinType != eSkinType._64x64HD)
                 {
-                    buttonSkin.Location = new Point(buttonSkin.Location.X - skinPictureBoxTexture.Width, buttonSkin.Location.Y);
+                    buttonSkin.Location = new Point(buttonSkin.Location.X - skinPictureBox.Width, buttonSkin.Location.Y);
                     skinType = eSkinType._64x64;
                 }
             }
         }
 
-        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        private void radioButtonAuto_CheckedChanged(object sender, EventArgs e)
         {
-            if (radioAUTO.Checked)
+            if (radioButtonAuto.Checked)
             {
-                try
-                {
-                    Random random = new Random();
-                    int num = random.Next(100000, 99999999);
-                    textSkinID.Text = num.ToString();
-                    textSkinID.Enabled = false;
-                }
-                catch(Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
+                int num = rng.Next(100000, 99999999);
+                textSkinID.Text = num.ToString();
+                textSkinID.Enabled = false;
             }
         }
 
-        private void radioLOCAL_CheckedChanged(object sender, EventArgs e)
+        private void radioButtonManual_CheckedChanged(object sender, EventArgs e)
         {
-            textSkinID.Enabled = radioLOCAL.Checked;
-        }
-
-        private void skinPictureBoxTexture_Click(object sender, EventArgs e)
-        {
-            using (var ofd = new OpenFileDialog())
-            {
-                ofd.Filter = "PNG Files|*.png|3DS Texture|*.3dst";
-                ofd.Title = "Select a Skin Texture File";
-                if (ofd.ShowDialog() == DialogResult.OK)
-                {
-                    if (ofd.FileName.EndsWith(".3dst"))
-                    {
-                        using (var fs = File.OpenRead(ofd.FileName))
-                        {
-                            var reader = new _3DSTextureReader();
-                            CheckImage(reader.FromStream(fs));
-                            textSkinName.Text = Path.GetFileNameWithoutExtension(ofd.FileName);
-                        }
-                        return;
-                    }
-                    CheckImage(Image.FromFile(ofd.FileName));
-                }
-            }
-        }
-
-        private void radioSERVER_CheckedChanged(object sender, EventArgs e)
-        {
-            if (radioSERVER.Checked)
-            {
-            }
+            textSkinID.Enabled = radioButtonManual.Checked;
         }
 
 		private void buttonAnimGen_Click(object sender, EventArgs e)
@@ -331,5 +319,5 @@ namespace PckStudio.Popups
                 DrawModel();
             }
         }
-	}
+    }
 }

@@ -1,6 +1,7 @@
 ﻿using OMI;
 using OMI.Formats.Pck;
 using OMI.Workers.Pck;
+using PckStudio.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -56,12 +57,7 @@ namespace PckStudio.Popups
                         using var ms = new MemoryStream(file.Data);
                         PckFile subPCK = reader.FromStream(ms);
                         applyBulkProperties(subPCK.Files, index);
-                        var writer = new PckFileWriter(subPCK, _endianness);
-                        using (var stream = new MemoryStream())
-                        {
-                            writer.WriteToStream(stream);
-                            file.SetData(stream.ToArray());
-                        }
+                        file.SetData(new PckFileWriter(subPCK, _endianness));
                     }
                     catch (OverflowException ex)
                     {

@@ -90,15 +90,15 @@ namespace PckStudio.Forms.Editor
             _columnCount = atlas.Height / areaSize.Height;
             (var tileInfos, _atlasType) = Path.GetFileNameWithoutExtension(path) switch
             {
-                "terrain" => (AnimationResources.BlockTileInfos, "blocks"),
-                "items" => (AnimationResources.ItemTileInfos, "items"),
+                "terrain" => (Tiles.BlockTileInfos, "blocks"),
+                "items" => (Tiles.ItemTileInfos, "items"),
                 _ => (null, null),
             };
             originalPictureBox.Image = atlas;
-            var images = atlas.CreateImageList(_areaSize, _imageLayout);
+            var images = atlas.Split(_areaSize, _imageLayout);
 
             var tiles = images.enumerate().Select(
-                v => new AtlasTile(v.index, GetAtlasArea(v.index, _rowCount, _columnCount, _areaSize, _imageLayout), tileInfos.IndexInRange(v.index) ? tileInfos[v.index] : null, v.type)
+                p => new AtlasTile(p.index, GetAtlasArea(p.index, _rowCount, _columnCount, _areaSize, _imageLayout), tileInfos.IndexInRange(p.index) ? tileInfos[p.index] : null, p.value)
                 );
             _tiles = new List<AtlasTile>(tiles);
 
@@ -158,7 +158,7 @@ namespace PckStudio.Forms.Editor
             {
                 using var ms = new MemoryStream(animationFile.Data);
                 var img = Image.FromStream(ms);
-                var textures = img.CreateImageList(ImageLayoutDirection.Vertical);
+                var textures = img.Split(ImageLayoutDirection.Vertical);
                 var animation = new Internal.Animation(textures, animationFile.Properties.GetPropertyValue("ANIM"));
                 selectTilePictureBox.Start(animation);
                 return;

@@ -132,6 +132,7 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\PckFileDataExtensions.cs" />
     <Compile Include="ToolboxItems\BlendPictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -164,10 +165,10 @@
     <Compile Include="Forms\Additional-Popups\NumericPrompt.Designer.cs">
       <DependentUpon>NumericPrompt.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Utilities\AppSettingsForm.cs">
+    <Compile Include="Forms\AppSettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Utilities\AppSettingsForm.Designer.cs">
+    <Compile Include="Forms\AppSettingsForm.Designer.cs">
       <DependentUpon>AppSettingsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Internal\ApplicationBuildInfo.cs" />
@@ -324,12 +325,6 @@
     <Compile Include="Forms\Additional-Popups\Animation\SetBulkSpeed.Designer.cs">
       <DependentUpon>SetBulkSpeed.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Additional-Popups\Audio\creditsEditor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Additional-Popups\Audio\creditsEditor.Designer.cs">
-      <DependentUpon>creditsEditor.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\Additional-Popups\ItemSelectionPopUp.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -374,7 +369,6 @@
     </Compile>
     <Compile Include="Helper\MaterialResources.cs" />
     <Compile Include="Helper\BehaviourResources.cs" />
-    <Compile Include="Helper\AnimationResources.cs" />
     <Compile Include="Forms\Editor\BoxEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -455,10 +449,10 @@
     </Compile>
     <Compile Include="PckNodeSorter.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Forms\Additional-Popups\CreditsForm.cs">
+    <Compile Include="Forms\CreditsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Additional-Popups\CreditsForm.Designer.cs">
+    <Compile Include="Forms\CreditsForm.Designer.cs">
       <DependentUpon>CreditsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -521,10 +515,6 @@
     <EmbeddedResource Include="Forms\Additional-Popups\Animation\SetBulkSpeed.resx">
       <DependentUpon>SetBulkSpeed.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Additional-Popups\Audio\creditsEditor.resx">
-      <DependentUpon>creditsEditor.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\ItemSelectionPopUp.resx">
       <DependentUpon>ItemSelectionPopUp.cs</DependentUpon>
     </EmbeddedResource>
@@ -566,7 +556,7 @@
     <EmbeddedResource Include="Forms\Editor\ANIMEditor.resx">
       <DependentUpon>ANIMEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\AppSettingsForm.resx">
+    <EmbeddedResource Include="Forms\AppSettingsForm.resx">
       <DependentUpon>AppSettingsForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -619,7 +609,7 @@
     <EmbeddedResource Include="Forms\Utilities\TextureConverterUtility.resx">
       <DependentUpon>TextureConverterUtility.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Additional-Popups\CreditsForm.resx">
+    <EmbeddedResource Include="Forms\CreditsForm.resx">
       <DependentUpon>CreditsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

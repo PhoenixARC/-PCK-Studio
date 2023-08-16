@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using MetroFramework.Forms;
 using PckStudio.Properties;
 
-namespace PckStudio.Forms.Utilities
+namespace PckStudio.Forms
 {
     public partial class AppSettingsForm : MetroForm
     {
