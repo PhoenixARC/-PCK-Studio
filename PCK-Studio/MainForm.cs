@@ -732,12 +732,8 @@ namespace PckStudio
 
 		private void MainForm_Load(object sender, EventArgs e)
 		{
-			// TODO
-			//SettingsManager.RegisterPropertyChangedCallback<bool>(nameof(Settings.Default.UseLittleEndianAsDefault), state =>
-			//{
-			//	LittleEndianCheckBox.Checked = state;
-			//});
-			SettingsManager.RegisterPropertyChangedCallback(nameof(Settings.Default.LoadSubPcks), () =>
+			RPC.SetPresence("An Open Source .PCK File Editor");
+            SettingsManager.RegisterPropertyChangedCallback(nameof(Settings.Default.LoadSubPcks), () =>
 			{
 				if (TryGetEditor(out var editor))
 				{
