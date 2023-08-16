@@ -75,7 +75,6 @@
             // autoUpdateCheckBox
             // 
             this.autoUpdateCheckBox.AutoSize = true;
-            this.autoUpdateCheckBox.Enabled = false;
             this.autoUpdateCheckBox.Location = new System.Drawing.Point(23, 105);
             this.autoUpdateCheckBox.Name = "autoUpdateCheckBox";
             this.autoUpdateCheckBox.Size = new System.Drawing.Size(90, 15);
@@ -85,6 +84,7 @@
             this.autoUpdateCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.SettingToolTip.SetToolTip(this.autoUpdateCheckBox, "Whether to automatically check for updates");
             this.autoUpdateCheckBox.UseSelectable = true;
+            this.autoUpdateCheckBox.CheckedChanged += new System.EventHandler(this.autoUpdateCheckBox_CheckedChanged);
             // 
             // autoLoadPckCheckBox
             // 

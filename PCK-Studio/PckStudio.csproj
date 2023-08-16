@@ -222,9 +222,7 @@
     <Compile Include="Classes\Models\Texel.cs" />
     <Compile Include="Classes\Models\TexelComparer.cs" />
     <Compile Include="Classes\Models\TexturePlane.cs" />
-    <Compile Include="Classes\Networking\Network.cs" />
     <Compile Include="Classes\Misc\RichPresenceClient.cs" />
-    <Compile Include="Classes\Networking\Update.cs" />
     <Compile Include="Features\CemuPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -722,6 +720,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\PCK-Studio-Updater\PCK-Studio-Updater.csproj">
+      <Project>{5B223556-15B9-41DA-AA0B-5E7F45E743BF}</Project>
+      <Name>PCK-Studio-Updater</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Vendor\OMI-Lib\OMI Filetypes Library\OMI Filetype Library.csproj">
       <Project>{693AEBC1-293D-4DF0-BCAE-26A1099FE7BB}</Project>
       <Name>OMI Filetype Library</Name>

@@ -40,6 +40,11 @@ namespace PckStudio.Forms
             Settings.Default.ShowRichPresence = showPresenceCheckBox.Checked;
         }
 
+        private void autoUpdateCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            Settings.Default.AutoUpdate = autoUpdateCheckBox.Checked;
+        }
+
         private void LoadCheckboxState(CheckBox checkBox, EventHandler eventHandler, bool state)
         {
             checkBox.CheckedChanged -= eventHandler;
@@ -53,6 +58,7 @@ namespace PckStudio.Forms
             LoadCheckboxState(endianCheckBox, endianCheckBox_CheckedChanged, Settings.Default.UseLittleEndianAsDefault);
             LoadCheckboxState(autoLoadPckCheckBox, autoLoadPckCheckBox_CheckedChanged, Settings.Default.LoadSubPcks);
             LoadCheckboxState(showPresenceCheckBox, showPresenceCheckBox_CheckedChanged, Settings.Default.ShowRichPresence);
+            LoadCheckboxState(autoUpdateCheckBox, autoUpdateCheckBox_CheckedChanged, Settings.Default.AutoUpdate);
         }
 
         private void AppBehaviorSettingsForm_FormClosing(object sender, FormClosingEventArgs e)

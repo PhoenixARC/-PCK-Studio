@@ -32,6 +32,7 @@ using PckStudio.Extensions;
 using PckStudio.Popups;
 using PckStudio.Classes.Utils;
 using PckStudio.Helper;
+using PCKStudio_Updater;
 
 namespace PckStudio
 {
@@ -2271,5 +2272,10 @@ namespace PckStudio
 				return;
 			}
 		}
-	}
+
+        private void checkForUpdatesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+			Program.UpdateToLatest("Would you like to download it?", MessageBoxButtons.YesNo, MessageBoxIcon.Question, DialogResult.Yes);
+        }
+    }
 }
