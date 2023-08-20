@@ -38,7 +38,7 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 
 		private void treeViews_AfterSelect(object sender, TreeViewEventArgs e)
 		{
-			if (e.Node.Tag is string tileData)
+			if (e.Node.Name is string tileData)
 			{
 				selectedTile = tileData;
 				Debug.WriteLine(selectedTile);
