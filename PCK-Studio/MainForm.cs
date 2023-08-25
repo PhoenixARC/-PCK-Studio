@@ -383,17 +383,18 @@ namespace PckStudio
 				return;
 			}
 
-			if (file.Filename.StartsWith("res/textures/blocks/") || file.Filename.StartsWith("res/textures/items/"))
-			{
-			using (AnimationEditor animationEditor = new AnimationEditor(file))
+			if (!file.Filename.StartsWith("res/textures/blocks/") && !file.Filename.StartsWith("res/textures/items/"))
+				return;
+			var animation = AnimationHelper.GetAnimationFromFile(file);
+			using (AnimationEditor animationEditor = new AnimationEditor(animation, Path.GetFileNameWithoutExtension(file.Filename)))
 			{
 				if (animationEditor.ShowDialog(this) == DialogResult.OK)
 				{
 					wasModified = true;
+					AnimationHelper.SaveAnimationToFile(file, animation);
 					BuildMainTreeView();
 				}
 			}
-		}
 		}
 
 		private void HandleGameRuleFile(PckFile.FileData file)
@@ -565,7 +566,7 @@ namespace PckStudio
 				File.WriteAllBytes(extractFilePath, file.Data);
 				if (file.Properties.Count > 0)
 				{
-					using var fs = File.CreateText($"{extractFilePath}.txt");
+                    using var fs = File.CreateText($"{extractFilePath}.txt");
 					file.Properties.ForEach(property => fs.WriteLine($"{property.Key}: {property.Value}"));
 				}
 				// Verification that file extraction path was successful
@@ -853,11 +854,14 @@ namespace PckStudio
 				$"res/textures/{Animation.GetCategoryName(diag.Category)}/{diag.SelectedTile}.png",
 				PckFile.FileData.FileType.TextureFile);
 
-			using AnimationEditor animationEditor = new AnimationEditor(file);
+			var animation = AnimationHelper.GetAnimationFromFile(file);
+
+			using AnimationEditor animationEditor = new AnimationEditor(animation, diag.SelectedTile);
 			if (animationEditor.ShowDialog() == DialogResult.OK)
 			{
 				wasModified = true;
-				currentPCK.Files.Add(file);
+				AnimationHelper.SaveAnimationToFile(file, animation);
+                currentPCK.Files.Add(file);
 				BuildMainTreeView();
 				ReloadMetaTreeView();
 			}

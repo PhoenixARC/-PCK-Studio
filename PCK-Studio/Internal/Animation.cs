@@ -20,12 +20,20 @@ using System.Collections.Generic;
 using System.Drawing;
 using PckStudio.Extensions;
 using System.Text;
+using System.Collections.ObjectModel;
 
 namespace PckStudio.Internal
 {
 	internal sealed class Animation
 	{
 		public const int MinimumFrameTime = 1;
+
+		public static Animation Empty(AnimationCategory category)
+		{
+            var animation = new Animation(Array.Empty<Image>(), string.Empty);
+			animation.Category = category;
+			return animation;
+		}
 
 		public int FrameCount => frames.Count;
 
@@ -55,8 +63,7 @@ namespace PckStudio.Internal
 
         private readonly List<Image> textures;
 
-		private readonly List<Frame> frames = new List<Frame>();
-
+		private readonly IList<Frame> frames = new List<Frame>();
 
 		public Animation(IEnumerable<Image> textures)
 		{
@@ -149,12 +156,12 @@ namespace PckStudio.Internal
 
 		public Frame GetFrame(int index) => frames[index];
 
-		public List<Frame> GetFrames()
+		public IReadOnlyCollection<Frame> GetFrames()
 		{
-			return frames;
+			return new ReadOnlyCollection<Frame>(frames);
 		}
 
-		public List<Image> GetTextures()
+		public IReadOnlyCollection<Image> GetTextures()
 		{
 			return textures;
 		}
@@ -191,5 +198,18 @@ namespace PckStudio.Internal
 
             return textures.Combine(ImageLayoutDirection.Vertical);
 		}
-	}
+
+        internal void SetFrameTicks(int ticks)
+        {
+			foreach (var frame in frames)
+			{
+				frame.Ticks = ticks;
+			}
+        }
+
+        internal void SwapFrames(int sourceIndex, int destinationIndex)
+        {
+            frames.Swap(sourceIndex, destinationIndex);
+        }
+    }
 }
