@@ -16,27 +16,29 @@ namespace PckStudio.Extensions
     {
         private const string MipMap = "MipMapLevel";
 
+        private static Image EmptyImage = new Bitmap(1, 1, PixelFormat.Format32bppArgb);
+
         internal static Image GetTexture(this PckFile.FileData file)
         {
             if (file.Filetype != PckFile.FileData.FileType.SkinFile &&
                 file.Filetype != PckFile.FileData.FileType.CapeFile &&
                 file.Filetype != PckFile.FileData.FileType.TextureFile)
             {
-                return null;
+                throw new Exception("File is not suitable to contain image data.");
             }
-            Image image = null;
             using (var stream = new MemoryStream(file.Data))
             {
                 try
                 {
-                    image = Image.FromStream(stream);
+                    return Image.FromStream(stream);
                 }
                 catch(Exception ex)
                 {
+                    Trace.WriteLine($"Failed to read image from pck file data({file.Filename}).", category: nameof(PckFileDataExtensions) + "." + nameof(GetTexture));
                     Debug.WriteLine(ex.Message);
+                    return EmptyImage;
                 }
             }
-            return image;
         }
 
         internal static void SetData(this PckFile.FileData file, IDataFormatWriter writer)
@@ -54,8 +56,7 @@ namespace PckStudio.Extensions
                 file.Filetype != PckFile.FileData.FileType.CapeFile &&
                 file.Filetype != PckFile.FileData.FileType.TextureFile)
             {
-                Debug.WriteLine($"{file.Filename} can't contain image data");
-                return;
+                throw new Exception("File is not suitable to contain image data.");
             }
 
             using (var stream = new MemoryStream())
