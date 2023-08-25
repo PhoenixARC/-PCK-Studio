@@ -31,16 +31,16 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 		private void InitializeTreeviews()
 		{
             Profiler.Start();
-            GetTileDataToView("blocks", treeViewBlocks.Nodes, treeViewBlockCache.Add);
-            GetTileDataToView("items", treeViewItems.Nodes, treeViewItemCache.Add);
+            GetTileDataToView(Internal.Animation.AnimationCategory.Blocks, treeViewBlocks.Nodes, treeViewBlockCache.Add);
+            GetTileDataToView(Internal.Animation.AnimationCategory.Items, treeViewItems.Nodes, treeViewItemCache.Add);
             Profiler.Stop();
         }
 
 		private void treeViews_AfterSelect(object sender, TreeViewEventArgs e)
 		{
-			if (e.Node.Name is string tileData)
+			if (e.Node.Tag is JsonTileInfo tileData)
 			{
-				selectedTile = tileData;
+				selectedTile = tileData.InternalName;
 				Debug.WriteLine(selectedTile);
                 category = e.Node.TreeView == treeViewItems
 					? Internal.Animation.AnimationCategory.Items
@@ -48,40 +48,29 @@ namespace PckStudio.Forms.Additional_Popups.Animation
             }
 		}
 
-		private void GetTileDataToView(string key, TreeNodeCollection collection, Action<TreeNode> additinalAction)
+		private void GetTileDataToView(Internal.Animation.AnimationCategory key, TreeNodeCollection collection, Action<TreeNode> additinalAction)
 		{
 			List<JsonTileInfo> textureInfos = key switch
 			{
-				"blocks" => Tiles.BlockTileInfos,
-				"items" => Tiles.ItemTileInfos,
-				_ => throw new InvalidOperationException(key)
+                Internal.Animation.AnimationCategory.Blocks => Tiles.BlockTileInfos,
+                Internal.Animation.AnimationCategory.Items => Tiles.ItemTileInfos,
+				_ => throw new InvalidOperationException(nameof(key))
 			};
 			Profiler.Start();
-            try
+            if (textureInfos is not null)
             {
-                if (textureInfos is not null)
-                {
-					foreach ((int i, var content) in textureInfos.enumerate())
+				foreach ((int i, var content) in textureInfos.enumerate())
+				{
+					if (string.IsNullOrEmpty(content.InternalName) || collection.ContainsKey(content.InternalName))
+						continue;
+					TreeNode tileNode = new TreeNode(content.DisplayName, i, i)
 					{
-						if (!string.IsNullOrEmpty(content.InternalName) && !collection.ContainsKey(content.InternalName))
-						{
-							TreeNode tileNode = new TreeNode(content.DisplayName)
-							{
-								Name = content.InternalName,
-								Tag = content.DisplayName,
-								ImageIndex = i,
-								SelectedImageIndex = i,
-							};
-							collection.Add(tileNode);
-							additinalAction(tileNode);
-						}
-					}
-                }
-            }
-            catch (Newtonsoft.Json.JsonException j_ex)
-            {
-                MessageBox.Show(j_ex.Message, "Error");
-                return;
+						Name = content.InternalName,
+						Tag = content
+					};
+					collection.Add(tileNode);
+					additinalAction(tileNode);
+				}
             }
             Profiler.Stop();
         }
