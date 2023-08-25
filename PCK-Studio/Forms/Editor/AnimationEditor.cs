@@ -43,9 +43,11 @@ namespace PckStudio.Forms.Editor
 
 		private string _tileName = string.Empty;
 
-        private bool IsSpecialTile(string tileName)
+		private static readonly string[] specialTileNames = { "clock", "compass" };
+
+        private static bool IsSpecialTile(string name)
         {
-			return tileName == "clock" || tileName == "compass";
+			return name.ToLower().EqualsAny(specialTileNames);
         }
 
 		private AnimationEditor()

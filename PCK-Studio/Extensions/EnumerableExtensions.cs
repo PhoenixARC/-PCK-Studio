@@ -15,6 +15,16 @@ namespace PckStudio.Extensions
             yield break;
         }
 
+        public static bool EqualsAny<T>(this T type, params T[] items)
+        {
+            foreach (var item in items)
+            {
+                if (item.Equals(type))
+                    return true;
+            }
+            return false;
+        }
+
         public static bool ContainsAny<T>(this IEnumerable<T> array, params T[] items)
         {
             foreach (var item in array)
