@@ -32,13 +32,13 @@ namespace PckStudio.Helper
                 var frameTextures = texture.Split(ImageLayoutDirection.Vertical);
                 var _animation = new Animation(frameTextures, file.Properties.GetPropertyValue("ANIM"));
                 _animation.Category = file.Filename.Split('/').Contains("items")
-                    ? Animation.AnimationCategory.Items
-                    : Animation.AnimationCategory.Blocks;
+                    ? AnimationCategory.Items
+                    : AnimationCategory.Blocks;
                 return _animation;
             }
             return Animation.Empty(file.Filename.Split('/').Contains("items")
-                    ? Animation.AnimationCategory.Items
-                    : Animation.AnimationCategory.Blocks);
+                    ? AnimationCategory.Items
+                    : AnimationCategory.Blocks);
         }
 
         internal static Animation GetAnimationFromJavaAnimation(JObject jsonObject, Image texture)

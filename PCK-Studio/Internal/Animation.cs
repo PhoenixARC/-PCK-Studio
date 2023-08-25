@@ -24,7 +24,7 @@ using System.Collections.ObjectModel;
 
 namespace PckStudio.Internal
 {
-	internal sealed class Animation
+    internal sealed class Animation
 	{
 		public const int MinimumFrameTime = 1;
 
@@ -41,11 +41,6 @@ namespace PckStudio.Internal
 
 		public bool Interpolate { get; set; } = false;
 
-		public enum AnimationCategory
-        {
-            Items,
-            Blocks
-        }
 
 		public AnimationCategory Category { get; set; }
 

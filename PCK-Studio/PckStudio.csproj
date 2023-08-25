@@ -134,6 +134,7 @@
   <ItemGroup>
     <Compile Include="Extensions\PckFileDataExtensions.cs" />
     <Compile Include="Helper\AnimationHelper.cs" />
+    <Compile Include="Internal\AnimationCategory.cs" />
     <Compile Include="ToolboxItems\BlendPictureBox.cs">
       <SubType>Component</SubType>
     </Compile>

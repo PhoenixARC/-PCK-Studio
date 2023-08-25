@@ -352,8 +352,8 @@ namespace PckStudio.Forms.Editor
         {
 			var textureInfos = _animation.Category switch
 			{
-				Animation.AnimationCategory.Blocks => Tiles.BlockTileInfos,
-				Animation.AnimationCategory.Items => Tiles.ItemTileInfos,
+				AnimationCategory.Blocks => Tiles.BlockTileInfos,
+				AnimationCategory.Items => Tiles.ItemTileInfos,
 				_ => throw new ArgumentOutOfRangeException(_animation.Category.ToString())
 			};
 			tileLabel.Text = textureInfos.FirstOrDefault(p => p.InternalName == _tileName)?.DisplayName ?? _tileName;

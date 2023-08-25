@@ -12,10 +12,10 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 	internal partial class ChangeTile : MetroForm
 	{
         string selectedTile = "";
-        Internal.Animation.AnimationCategory category = Internal.Animation.AnimationCategory.Blocks;
+        Internal.AnimationCategory category = Internal.AnimationCategory.Blocks;
 
 		public string SelectedTile => selectedTile;
-		public Internal.Animation.AnimationCategory Category => category;
+		public Internal.AnimationCategory Category => category;
 
         List<TreeNode> treeViewBlockCache = new List<TreeNode>();
 		List<TreeNode> treeViewItemCache = new List<TreeNode>();
@@ -31,8 +31,8 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 		private void InitializeTreeviews()
 		{
             Profiler.Start();
-            GetTileDataToView(Internal.Animation.AnimationCategory.Blocks, treeViewBlocks.Nodes, treeViewBlockCache.Add);
-            GetTileDataToView(Internal.Animation.AnimationCategory.Items, treeViewItems.Nodes, treeViewItemCache.Add);
+            GetTileDataToView(Internal.AnimationCategory.Blocks, treeViewBlocks.Nodes, treeViewBlockCache.Add);
+            GetTileDataToView(Internal.AnimationCategory.Items, treeViewItems.Nodes, treeViewItemCache.Add);
             Profiler.Stop();
         }
 
@@ -43,17 +43,17 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 				selectedTile = tileData.InternalName;
 				Debug.WriteLine(selectedTile);
                 category = e.Node.TreeView == treeViewItems
-					? Internal.Animation.AnimationCategory.Items
-					: Internal.Animation.AnimationCategory.Blocks;
+					? Internal.AnimationCategory.Items
+					: Internal.AnimationCategory.Blocks;
             }
 		}
 
-		private void GetTileDataToView(Internal.Animation.AnimationCategory key, TreeNodeCollection collection, Action<TreeNode> additinalAction)
+		private void GetTileDataToView(Internal.AnimationCategory key, TreeNodeCollection collection, Action<TreeNode> additinalAction)
 		{
 			List<JsonTileInfo> textureInfos = key switch
 			{
-                Internal.Animation.AnimationCategory.Blocks => Tiles.BlockTileInfos,
-                Internal.Animation.AnimationCategory.Items => Tiles.ItemTileInfos,
+                Internal.AnimationCategory.Blocks => Tiles.BlockTileInfos,
+                Internal.AnimationCategory.Items => Tiles.ItemTileInfos,
 				_ => throw new InvalidOperationException(nameof(key))
 			};
 			Profiler.Start();
