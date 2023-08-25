@@ -23,6 +23,8 @@ namespace PckStudio
         [STAThread]
         static void Main(string[] args)
         {
+            using var traceFile = File.OpenWrite(Path.Combine(Application.StartupPath, "tarce.log"));
+            Trace.Listeners.Add(new TextWriterTraceListener(traceFile));
             ApplicationScope.Initialize();
             RPC.Initialize();
             MainInstance = new MainForm();
