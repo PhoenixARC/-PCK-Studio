@@ -36,7 +36,7 @@ namespace PckStudio.Forms.Editor
 {
     public partial class GameRuleFileEditor : MetroFramework.Forms.MetroForm
     {
-        private PckFile.FileData _pckfile;
+        private PckFileData _pckfile;
         private GameRuleFile _file;
         private GameRuleFile.CompressionType compressionType;
         private GameRuleFile.CompressionLevel compressionLevel;
@@ -69,7 +69,7 @@ namespace PckStudio.Forms.Editor
             }
         }
 
-        public GameRuleFileEditor(PckFile.FileData file) : this()
+        public GameRuleFileEditor(PckFileData file) : this()
         {
             _pckfile = file;
             using (var stream = new MemoryStream(file.Data))

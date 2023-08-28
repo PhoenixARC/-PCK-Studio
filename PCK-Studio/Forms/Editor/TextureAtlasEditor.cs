@@ -107,7 +107,7 @@ namespace PckStudio.Forms.Editor
 
         private bool AcquireColorTable(PckFile pckFile)
         {
-            if (pckFile.TryGetFile("colours.col", PckFile.FileData.FileType.ColourTableFile, out var colFile) &&
+            if (pckFile.TryGetFile("colours.col", PckFileType.ColourTableFile, out var colFile) &&
                 colFile.Size > 0)
             {
                 using var ms = new MemoryStream(colFile.Data);
@@ -148,7 +148,7 @@ namespace PckStudio.Forms.Editor
             selectTilePictureBox.UseBlendColor = applyColorMaskToolStripMenuItem.Checked;
 
             bool hasAnimation =
-                _pckFile.Files.TryGetValue($"res/textures/{_atlasType}/{_selectedTile.Tile.InternalName}.png", PckFile.FileData.FileType.TextureFile, out var animationFile);
+                _pckFile.Files.TryGetValue($"res/textures/{_atlasType}/{_selectedTile.Tile.InternalName}.png", PckFileType.TextureFile, out var animationFile);
             animationButton.Text = hasAnimation ? "Edit Animation" : "Create Animation";
             replaceButton.Enabled = !hasAnimation;
 
@@ -397,10 +397,10 @@ namespace PckStudio.Forms.Editor
             bool isNewFile;
             if (isNewFile = !_pckFile.Files.TryGetValue(
                     $"res/textures/{_atlasType}/{_selectedTile.Tile.InternalName}.png",
-                    PckFile.FileData.FileType.TextureFile, out var file
+                    PckFileType.TextureFile, out var file
                 ))
             {
-                file = new PckFile.FileData($"res/textures/{_atlasType}/{_selectedTile.Tile.InternalName}.png", PckFile.FileData.FileType.TextureFile);
+                file = new PckFileData($"res/textures/{_atlasType}/{_selectedTile.Tile.InternalName}.png", PckFileType.TextureFile);
             }
 
             var animation = AnimationHelper.GetAnimationFromFile(file);

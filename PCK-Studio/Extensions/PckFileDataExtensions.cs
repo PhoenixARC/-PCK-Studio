@@ -18,11 +18,11 @@ namespace PckStudio.Extensions
 
         private static Image EmptyImage = new Bitmap(1, 1, PixelFormat.Format32bppArgb);
 
-        internal static Image GetTexture(this PckFile.FileData file)
+        internal static Image GetTexture(this PckFileData file)
         {
-            if (file.Filetype != PckFile.FileData.FileType.SkinFile &&
-                file.Filetype != PckFile.FileData.FileType.CapeFile &&
-                file.Filetype != PckFile.FileData.FileType.TextureFile)
+            if (file.Filetype != PckFileType.SkinFile &&
+                file.Filetype != PckFileType.CapeFile &&
+                file.Filetype != PckFileType.TextureFile)
             {
                 throw new Exception("File is not suitable to contain image data.");
             }
@@ -41,7 +41,7 @@ namespace PckStudio.Extensions
             }
         }
 
-        internal static void SetData(this PckFile.FileData file, IDataFormatWriter writer)
+        internal static void SetData(this PckFileData file, IDataFormatWriter writer)
         {
             using (var stream = new MemoryStream())
             {
@@ -50,11 +50,11 @@ namespace PckStudio.Extensions
             }
         }
 
-        internal static void SetData(this PckFile.FileData file, Image image, ImageFormat imageFormat)
+        internal static void SetData(this PckFileData file, Image image, ImageFormat imageFormat)
         {
-            if (file.Filetype != PckFile.FileData.FileType.SkinFile &&
-                file.Filetype != PckFile.FileData.FileType.CapeFile &&
-                file.Filetype != PckFile.FileData.FileType.TextureFile)
+            if (file.Filetype != PckFileType.SkinFile &&
+                file.Filetype != PckFileType.CapeFile &&
+                file.Filetype != PckFileType.TextureFile)
             {
                 throw new Exception("File is not suitable to contain image data.");
             }
@@ -66,7 +66,7 @@ namespace PckStudio.Extensions
             }
         }
 
-        internal static bool IsMipmappedFile(this PckFile.FileData file)
+        internal static bool IsMipmappedFile(this PckFileData file)
         {
             // We only want to test the file name itself. ex: "terrainMipMapLevel2"
             string name = Path.GetFileNameWithoutExtension(file.Filename);
@@ -81,7 +81,7 @@ namespace PckStudio.Extensions
             return true;
         }
 
-        internal static string GetNormalPath(this PckFile.FileData file)
+        internal static string GetNormalPath(this PckFileData file)
         {
             if (!file.IsMipmappedFile())
                 return file.Filename;

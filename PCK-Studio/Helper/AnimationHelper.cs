@@ -15,7 +15,7 @@ namespace PckStudio.Helper
 {
     internal static class AnimationHelper
     {
-        internal static void SaveAnimationToFile(PckFile.FileData file, Animation animation)
+        internal static void SaveAnimationToFile(PckFileData file, Animation animation)
         {
             string anim = animation.BuildAnim();
             file.Properties.SetProperty("ANIM", anim);
@@ -23,7 +23,7 @@ namespace PckStudio.Helper
             file.SetData(texture, ImageFormat.Png);
         }
 
-        internal static Animation GetAnimationFromFile(PckFile.FileData file)
+        internal static Animation GetAnimationFromFile(PckFileData file)
         {
             _ = file ?? throw new ArgumentNullException(nameof(file));
             if (file.Size > 0)
