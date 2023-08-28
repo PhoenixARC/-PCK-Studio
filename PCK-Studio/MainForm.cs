@@ -51,18 +51,18 @@ namespace PckStudio
 		{
 			InitializeComponent();
 
-            skinToolStripMenuItem1.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.SkinFile);
-            capeToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.CapeFile);
-            textureToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.TextureFile);
-            languagesFileLOCToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.LocalisationFile);
-            gameRulesFileGRFToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.GameRulesFile);
-            audioPCKFileToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.AudioFile);
-            coloursCOLFileToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.ColourTableFile);
-            gameRulesHeaderGRHToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.GameRulesHeader);
-            skinsPCKToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.SkinDataFile);
-            modelsFileBINToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.ModelsFile);
-            behavioursFileBINToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.BehavioursFile);
-            entityMaterialsFileBINToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.MaterialFile);
+            skinToolStripMenuItem1.Click += (sender, e) => SetFileType(PckFile.FileData.FileType.SkinFile);
+            capeToolStripMenuItem.Click += (sender, e) => SetFileType(PckFile.FileData.FileType.CapeFile);
+            textureToolStripMenuItem.Click += (sender, e) => SetFileType(PckFile.FileData.FileType.TextureFile);
+            languagesFileLOCToolStripMenuItem.Click += (sender, e) => SetFileType(PckFile.FileData.FileType.LocalisationFile);
+            gameRulesFileGRFToolStripMenuItem.Click += (sender, e) => SetFileType(PckFile.FileData.FileType.GameRulesFile);
+            audioPCKFileToolStripMenuItem.Click += (sender, e) => SetFileType(PckFile.FileData.FileType.AudioFile);
+            coloursCOLFileToolStripMenuItem.Click += (sender, e) => SetFileType(PckFile.FileData.FileType.ColourTableFile);
+            gameRulesHeaderGRHToolStripMenuItem.Click += (sender, e) => SetFileType(PckFile.FileData.FileType.GameRulesHeader);
+            skinsPCKToolStripMenuItem.Click += (sender, e) => SetFileType(PckFile.FileData.FileType.SkinDataFile);
+            modelsFileBINToolStripMenuItem.Click += (sender, e) => SetFileType(PckFile.FileData.FileType.ModelsFile);
+            behavioursFileBINToolStripMenuItem.Click += (sender, e) => SetFileType(PckFile.FileData.FileType.BehavioursFile);
+            entityMaterialsFileBINToolStripMenuItem.Click += (sender, e) => SetFileType(PckFile.FileData.FileType.MaterialFile);
 
             treeViewMain.TreeViewNodeSorter = new PckNodeSorter();
 
@@ -1831,7 +1831,7 @@ namespace PckStudio
 			}
 		}
 
-		private void setFileType_Click(object sender, EventArgs e, PckFile.FileData.FileType type)
+		private void SetFileType(PckFile.FileData.FileType type)
 		{
 			if (treeViewMain.SelectedNode is TreeNode t && t.Tag is PckFile.FileData file)
 			{
