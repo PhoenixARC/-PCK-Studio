@@ -465,9 +465,8 @@ namespace PckStudio
 			entryTypeTextBox.Text = entryDataTextBox.Text = labelImageSize.Text = string.Empty;
 			buttonEdit.Visible = false;
 			previewPictureBox.Image = Resources.NoImageFound;
-			var node = e.Node;
 			viewFileInfoToolStripMenuItem.Visible = false;
-			if (node is TreeNode t && t.Tag is PckFile.FileData file)
+			if (e.Node.TryGetTagData(out PckFile.FileData file))
 			{
 				viewFileInfoToolStripMenuItem.Visible = true;
 				if (file.Properties.HasProperty("BOX"))
@@ -552,8 +551,9 @@ namespace PckStudio
 		private void extractToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			var node = treeViewMain.SelectedNode;
-			if (node == null) return;
-			if (node.Tag is PckFile.FileData file)
+			if (node == null)
+				return;
+			if (node.TryGetTagData(out PckFile.FileData file))
 			{
 				using SaveFileDialog exFile = new SaveFileDialog();
 				exFile.FileName = Path.GetFileName(file.Filename);
@@ -585,7 +585,7 @@ namespace PckStudio
 				{
 					GetAllChildNodes(node.Nodes).ForEach(fileNode =>
 					{
-						if (fileNode.Tag is PckFile.FileData file)
+						if (fileNode.TryGetTagData(out PckFile.FileData file))
 						{
 							Directory.CreateDirectory($"{extractPath}/{Path.GetDirectoryName(file.Filename)}");
 							File.WriteAllBytes($"{extractPath}/{file.Filename}", file.Data);
@@ -904,7 +904,7 @@ namespace PckStudio
 			foreach (var node in s)
 			{
 				TreeNode parent = treeViewMain.Nodes.Find(node, true)[0];
-				if (parent.Tag is PckFile.FileData f &&
+				if (parent.TryGetTagData(out PckFile.FileData f) &&
 					(f.Filetype is PckFile.FileData.FileType.TexturePackInfoFile ||
 					 f.Filetype is PckFile.FileData.FileType.SkinDataFile))
 					return parent;
@@ -948,7 +948,7 @@ namespace PckStudio
 
 		private void treeViewMain_DoubleClick(object sender, EventArgs e)
 		{
-			if (treeViewMain.SelectedNode is TreeNode t && t.Tag is PckFile.FileData file)
+			if (treeViewMain.SelectedNode.TryGetTagData(out PckFile.FileData file))
 			{
                 if (file.Size <= 0)
                 {
@@ -1125,15 +1125,6 @@ namespace PckStudio
 
 		#region drag and drop for main tree node
 
-		public static void getChildren(List<TreeNode> Nodes, TreeNode Node)
-		{
-			foreach (TreeNode thisNode in Node.Nodes)
-			{
-				Nodes.Add(thisNode);
-				getChildren(Nodes, thisNode);
-			}
-		}
-
 		// Most of the code below is modified code from this link: https://docs.microsoft.com/en-us/dotnet/api/system.windows.forms.treeview.itemdrag?view=windowsdesktop-6.0
 		// - MattNL
 
@@ -1159,19 +1150,6 @@ namespace PckStudio
 		private void treeViewMain_DragDrop(object sender, DragEventArgs e)
 		{
 
-		}
-
-		// Determine whether one node is a parent 
-		// or ancestor of a second node.
-		private bool ContainsNode(TreeNode node1, TreeNode node2)
-		{
-			// Check the parent node of the second node.
-			if (node2.Parent == null) return false;
-			if (node2.Parent.Equals(node1)) return true;
-			// If the parent node is not null or equal to the first node, 
-			// call the ContainsNode method recursively using the parent of 
-			// the second node.
-			return ContainsNode(node1, node2.Parent);
 		}
 
 		#endregion
@@ -1833,7 +1811,7 @@ namespace PckStudio
 
 		private void SetFileType(PckFile.FileData.FileType type)
 		{
-			if (treeViewMain.SelectedNode is TreeNode t && t.Tag is PckFile.FileData file)
+			if (treeViewMain.SelectedNode.TryGetTagData(out PckFile.FileData file))
 			{
 				Debug.WriteLine($"Setting {file.Filetype} to {type}");
 				file.Filetype = type;
@@ -1948,8 +1926,7 @@ namespace PckStudio
 
 		private void as3DSTextureFileToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (treeViewMain.SelectedNode is TreeNode node &&
-				node.Tag is PckFile.FileData file &&
+			if (treeViewMain.SelectedNode.TryGetTagData(out PckFile.FileData file) &&
 				file.Filetype == PckFile.FileData.FileType.SkinFile)
 			{
 				SaveFileDialog saveFileDialog = new SaveFileDialog();
@@ -1969,8 +1946,7 @@ namespace PckStudio
 
 		private void addMultipleEntriesToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
-			if (treeViewMain.SelectedNode is TreeNode node &&
-				node.Tag is PckFile.FileData file)
+			if (treeViewMain.SelectedNode.TryGetTagData(out PckFile.FileData file))
 			{
 				using (var input = new MultiTextPrompt())
 				{
@@ -1984,7 +1960,7 @@ namespace PckStudio
 							file.Properties.Add((line.Substring(0, idx), line.Substring(idx + 1)));
 						}
 						ReloadMetaTreeView();
-						RebuildSubPCK(node.FullPath);
+						RebuildSubPCK(treeViewMain.SelectedNode.FullPath);
 						wasModified = true;
 					}
 				}
@@ -1993,14 +1969,15 @@ namespace PckStudio
 
 		private void correctSkinDecimalsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (treeViewMain.SelectedNode is TreeNode node && node.Tag is PckFile.FileData file && file.Filetype == PckFile.FileData.FileType.SkinFile)
+			if (treeViewMain.SelectedNode.TryGetTagData(out PckFile.FileData file) &&
+				file.Filetype == PckFile.FileData.FileType.SkinFile)
 			{
 				foreach(var p in file.Properties.FindAll(s => s.Key == "BOX" || s.Key == "OFFSET"))
 				{
 					file.Properties[file.Properties.IndexOf(p)] = new KeyValuePair<string, string>(p.Key, p.Value.Replace(',','.'));
 				}
 				ReloadMetaTreeView();
-				RebuildSubPCK(node.FullPath);
+				RebuildSubPCK(treeViewMain.SelectedNode.FullPath);
 				wasModified = true;
 			}
 		}
@@ -2112,8 +2089,7 @@ namespace PckStudio
 
 		private void editAllEntriesToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (treeViewMain.SelectedNode is TreeNode node &&
-				node.Tag is PckFile.FileData file)
+			if (treeViewMain.SelectedNode.TryGetTagData(out PckFile.FileData file))
 			{
 				var props = file.Properties.Select(p => p.Key + " " + p.Value);
 				using (var input = new MultiTextPrompt(props.ToArray()))
@@ -2129,7 +2105,7 @@ namespace PckStudio
 							file.Properties.Add((line.Substring(0, idx).Replace(":", string.Empty), line.Substring(idx + 1)));
 						}
 						ReloadMetaTreeView();
-						RebuildSubPCK(node.FullPath);
+						RebuildSubPCK(treeViewMain.SelectedNode.FullPath);
 						wasModified = true;
 					}
 				}
@@ -2262,7 +2238,7 @@ namespace PckStudio
 
 		private void addANIMEntryToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
-			if (treeViewMain.SelectedNode is TreeNode t && t.Tag is PckFile.FileData file)
+			if (treeViewMain.SelectedNode.TryGetTagData(out PckFile.FileData file))
 			{
 				using ANIMEditor diag = new ANIMEditor(SkinANIM.Empty);
 				if (diag.ShowDialog(this) == DialogResult.OK)
