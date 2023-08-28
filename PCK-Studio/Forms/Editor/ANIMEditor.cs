@@ -328,18 +328,18 @@ namespace PckStudio.Forms.Editor
             setDisplayAnim((SkinANIM)initialANIM.Clone());
         }
 
-        static readonly Dictionary<string, SkinAnimFlag> Templates = new Dictionary<string, SkinAnimFlag>()
+        static readonly Dictionary<string, SkinAnimMask> Templates = new Dictionary<string, SkinAnimMask>()
         {
-                { "Steve (64x32)",           SkinAnimFlag.NONE },
-                { "Steve (64x64)",           SkinAnimFlag.RESOLUTION_64x64 },
-                { "Alex (64x64)",            SkinAnimFlag.SLIM_MODEL },
-                { "Zombie Skins",            SkinAnimFlag.ZOMBIE_ARMS },
-                { "Cetacean Skins",          SkinAnimFlag.SYNCED_ARMS | SkinAnimFlag.SYNCED_LEGS },
-                { "Ski Skins",               SkinAnimFlag.SYNCED_ARMS | SkinAnimFlag.STATIC_LEGS },
-                { "Ghost Skins",             SkinAnimFlag.STATIC_LEGS | SkinAnimFlag.ZOMBIE_ARMS },
-                { "Medusa (Greek Myth.)",    SkinAnimFlag.SYNCED_LEGS },
-                { "Librarian (Halo)",        SkinAnimFlag.STATIC_LEGS },
-                { "Grim Reaper (Halloween)", SkinAnimFlag.STATIC_LEGS | SkinAnimFlag.STATIC_ARMS }
+                { "Steve (64x32)",           SkinAnimMask.NONE },
+                { "Steve (64x64)",           SkinAnimMask.RESOLUTION_64x64 },
+                { "Alex (64x64)",            SkinAnimMask.SLIM_MODEL },
+                { "Zombie Skins",            SkinAnimMask.ZOMBIE_ARMS },
+                { "Cetacean Skins",          SkinAnimMask.SYNCED_ARMS | SkinAnimMask.SYNCED_LEGS },
+                { "Ski Skins",               SkinAnimMask.SYNCED_ARMS | SkinAnimMask.STATIC_LEGS },
+                { "Ghost Skins",             SkinAnimMask.STATIC_LEGS | SkinAnimMask.ZOMBIE_ARMS },
+                { "Medusa (Greek Myth.)",    SkinAnimMask.SYNCED_LEGS },
+                { "Librarian (Halo)",        SkinAnimMask.STATIC_LEGS },
+                { "Grim Reaper (Halloween)", SkinAnimMask.STATIC_LEGS | SkinAnimMask.STATIC_ARMS }
         };
 
         private void templateButton_Click(object sender, EventArgs e)

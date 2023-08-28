@@ -16,118 +16,72 @@
  * 3. This notice may not be removed or altered from any source distribution.
 **/
 using System;
+using System.Collections.Specialized;
 using System.Text.RegularExpressions;
 
 namespace PckStudio.Internal
 {
-	/// <summary>
-	/// For usage see <see cref="SkinANIM"/>
-	/// </summary>
-	[Flags]
-	public enum SkinAnimFlag : int
-	{
-		NONE                  = 0,       // 0x00
-		STATIC_ARMS           = 1 << 0,  // 0x01
-		ZOMBIE_ARMS           = 1 << 1,  // 0x02
-		STATIC_LEGS           = 1 << 2,  // 0x04
-		BAD_SANTA             = 1 << 3,  // 0x08
-										 //
-		__BIT_4               = 1 << 4,  // 0x10 - Unused??
-		SYNCED_LEGS           = 1 << 5,  // 0x20
-        SYNCED_ARMS           = 1 << 6,  // 0x40
-        STATUE_OF_LIBERTY     = 1 << 7,  // 0x80
-
-        ALL_ARMOR_DISABLED    = 1 << 8,  // 0x100
-		HEAD_BOBBING_DISABLED = 1 << 9,  // 0x200
-		HEAD_DISABLED         = 1 << 10, // 0x400
-		RIGHT_ARM_DISABLED    = 1 << 11, // 0x800
-
-        LEFT_ARM_DISABLED     = 1 << 12, // 0x1000
-		BODY_DISABLED         = 1 << 13, // 0x2000
-		RIGHT_LEG_DISABLED    = 1 << 14, // 0x4000
-		LEFT_LEG_DISABLED     = 1 << 15, // 0x8000
-
-        HEAD_OVERLAY_DISABLED = 1 << 16, // 0x10000
-		DO_BACKWARDS_CROUCH   = 1 << 17, // 0x20000
-		RESOLUTION_64x64      = 1 << 18, // 0x40000
-		SLIM_MODEL            = 1 << 19, // 0x80000
-
-        LEFT_ARM_OVERLAY_DISABLED  = 1 << 20, // 0x100000
-		RIGHT_ARM_OVERLAY_DISABLED = 1 << 21, // 0x200000
-		LEFT_LEG_OVERLAY_DISABLED  = 1 << 22, // 0x400000
-		RIGHT_LEG_OVERLAY_DISABLED = 1 << 23, // 0x800000
-
-        BODY_OVERLAY_DISABLED = 1 << 24, // 0x1000000
-		FORCE_HEAD_ARMOR      = 1 << 25, // 0x2000000
-		FORCE_RIGHT_ARM_ARMOR = 1 << 26, // 0x4000000
-		FORCE_LEFT_ARM_ARMOR  = 1 << 27, // 0x8000000
-
-        FORCE_BODY_ARMOR      = 1 << 28, // 0x10000000
-		FORCE_RIGHT_LEG_ARMOR = 1 << 29, // 0x20000000
-		FORCE_LEFT_LEG_ARMOR  = 1 << 30, // 0x40000000
-		DINNERBONE            = 1 << 31, // 0x80000000
-    }
-
     /// <summary>
     /// Represents a Skin Anim value where flags can be set
     /// </summary>
-    public class SkinANIM : ICloneable, IEquatable<SkinANIM>, IEquatable<SkinAnimFlag>
+    public class SkinANIM : ICloneable, IEquatable<SkinANIM>, IEquatable<SkinAnimMask>
     {
 		public static readonly SkinANIM Empty = new SkinANIM();
 
-		private SkinAnimFlag _flags;
+		private BitVector32 _flags;
 		private static readonly Regex _validator = new Regex(@"^0x[0-9a-f]{1,8}\b", RegexOptions.IgnoreCase);
 
 		public SkinANIM()
-			: this(SkinAnimFlag.NONE)
+			: this(SkinAnimMask.NONE)
 		{
 		}
 
-		public SkinANIM(SkinAnimFlag mask)
+		public SkinANIM(SkinAnimMask mask)
+			: this((int)mask)
 		{
-			_flags = mask;
 		}
 
-		public override string ToString() => "0x" + ((int)_flags).ToString("x8");
+		private SkinANIM(int mask)
+		{
+			_flags = new BitVector32(mask);
+		}
+
+		public override string ToString() => "0x" + _flags.Data.ToString("x8");
 
 		public static bool IsValidANIM(string anim)
 		{
-			if (anim is not null)
-				return _validator.IsMatch(anim);
-			return false;
+			return !string.IsNullOrWhiteSpace(anim) && _validator.IsMatch(anim);
 		}
 
 		public static SkinANIM FromString(string value)
 			=> IsValidANIM(value)
-				? new SkinANIM((SkinAnimFlag)Convert.ToInt32(value.TrimEnd(' ', '\n', '\r'), 16))
+				? new SkinANIM(Convert.ToInt32(value.TrimEnd(' ', '\n', '\r'), 16))
 				: new SkinANIM();
 
-		public void SetMask(SkinAnimFlag mask) => _flags = mask;
-
-		public static SkinANIM operator |(SkinANIM _this, SkinANIM other) => new SkinANIM(_this._flags | other._flags);
+		public static SkinANIM operator |(SkinANIM _this, SkinANIM other) => new SkinANIM(_this._flags.Data | other._flags.Data);
 		
-		public static SkinANIM operator |(SkinANIM _this, SkinAnimFlag mask) => new SkinANIM(_this._flags | mask);
+		public static SkinANIM operator |(SkinANIM _this, SkinAnimMask mask) => new SkinANIM(_this._flags.Data | (int)mask);
 
-		public static implicit operator SkinANIM(SkinAnimFlag mask) => new SkinANIM(mask);
+		public static implicit operator SkinANIM(SkinAnimMask mask) => new SkinANIM(mask);
 
-		public static bool operator ==(SkinANIM _this, SkinAnimFlag mask) => _this.Equals(mask);
-		public static bool operator !=(SkinANIM _this, SkinAnimFlag mask) => !_this.Equals(mask);
+		public static bool operator ==(SkinANIM _this, SkinAnimMask mask) => _this.Equals(mask);
+		public static bool operator !=(SkinANIM _this, SkinAnimMask mask) => !_this.Equals(mask);
 		public static bool operator ==(SkinANIM _this, SkinANIM other) => _this.Equals(other);
 		public static bool operator !=(SkinANIM _this, SkinANIM other) => !_this.Equals(other);
 
         public bool Equals(SkinANIM other)
         {
-            return _flags == other._flags;
+            return _flags.Data == other._flags.Data;
         }
 
-        public bool Equals(SkinAnimFlag other)
+        public bool Equals(SkinAnimMask other)
         {
-            return _flags == other;
+            return _flags.Data == (int)other;
         }
 
 		public override bool Equals(object obj) => obj is SkinANIM a && Equals(a);
 
-		public override int GetHashCode() => (int)_flags;
+		public override int GetHashCode() => _flags.Data;
 		
 		/// <summary>
 		/// Sets the desired flag in the bitfield
@@ -136,18 +90,21 @@ namespace PckStudio.Internal
 		/// <param name="state">State of the flag</param>
 		public void SetFlag(SkinAnimFlag flag, bool state)
 		{
-			if (state) _flags |= flag;
-			else _flags &= ~flag;
+			if (!Enum.IsDefined(typeof(SkinAnimFlag), flag))
+				throw new ArgumentOutOfRangeException(nameof(flag));
+			_flags[1 << (int)flag] = state;
 		}
 
 		/// <summary>
-		/// Gets a desired flags state
+		/// Gets flag state
 		/// </summary>
 		/// <param name="flag">Flag to check</param>
 		/// <returns>True if flag is set, otherwise false</returns>
 		public bool GetFlag(SkinAnimFlag flag)
 		{
-			return (_flags & flag) != 0;
+            if (!Enum.IsDefined(typeof(SkinAnimFlag), flag))
+                throw new ArgumentOutOfRangeException(nameof(flag));
+            return _flags[1 << (int)flag];
 		}
 
         public object Clone()
