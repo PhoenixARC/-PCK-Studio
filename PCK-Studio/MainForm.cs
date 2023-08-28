@@ -1523,6 +1523,7 @@ namespace PckStudio
 		}
 
 
+		[Obsolete("Refactor or remove this")]
 		private void importSkinToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			using (OpenFileDialog contents = new OpenFileDialog())
