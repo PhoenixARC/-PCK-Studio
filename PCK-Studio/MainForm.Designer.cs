@@ -31,6 +31,8 @@
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.PictureBox logoPictureBox;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+            System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
             this.contextMenuPCKEntries = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.createToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.folderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -96,6 +98,21 @@
             this.openPckCenterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.joinDevelopmentDiscordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.trelloBoardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.videosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.howToMakeABasicSkinPackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.howToMakeACustomSkinModelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.howToMakeCustomSkinModelsbedrockToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.howToMakeCustomMusicToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.howToInstallPcksDirectlyToWiiUToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pckCenterReleaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.howPCKsWorkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.donateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toNobledezJackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toPhoenixARCDeveloperToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.forMattNLContributorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuMetaTree = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addEntryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addEntryToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -127,27 +144,9 @@
             this.imageList = new System.Windows.Forms.ImageList(this.components);
             this.previewPictureBox = new PckStudio.ToolboxItems.InterpolationPictureBox();
             this.LittleEndianCheckBox = new MetroFramework.Controls.MetroCheckBox();
-            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.videosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.howToMakeABasicSkinPackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.howToMakeACustomSkinModelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.howToMakeCustomSkinModelsbedrockToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.howToMakeCustomMusicToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.howToInstallPcksDirectlyToWiiUToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pckCenterReleaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.howPCKsWorkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.donateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toNobledezJackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toPhoenixARCDeveloperToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.forMattNLContributorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.installationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.fAQToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             logoPictureBox = new System.Windows.Forms.PictureBox();
+            toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             ((System.ComponentModel.ISupportInitialize)(logoPictureBox)).BeginInit();
             this.contextMenuPCKEntries.SuspendLayout();
             this.menuStrip.SuspendLayout();
@@ -626,6 +625,132 @@
             resources.ApplyResources(this.trelloBoardToolStripMenuItem, "trelloBoardToolStripMenuItem");
             this.trelloBoardToolStripMenuItem.Click += new System.EventHandler(this.trelloBoardToolStripMenuItem_Click);
             // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aboutToolStripMenuItem,
+            toolStripSeparator1,
+            this.videosToolStripMenuItem,
+            this.donateToolStripMenuItem,
+            toolStripSeparator3,
+            this.settingsToolStripMenuItem});
+            this.helpToolStripMenuItem.ForeColor = System.Drawing.Color.Silver;
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            resources.ApplyResources(this.helpToolStripMenuItem, "helpToolStripMenuItem");
+            // 
+            // aboutToolStripMenuItem
+            // 
+            resources.ApplyResources(this.aboutToolStripMenuItem, "aboutToolStripMenuItem");
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            toolStripSeparator1.Name = "toolStripSeparator1";
+            resources.ApplyResources(toolStripSeparator1, "toolStripSeparator1");
+            // 
+            // videosToolStripMenuItem
+            // 
+            this.videosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.howToMakeABasicSkinPackToolStripMenuItem,
+            this.howToMakeACustomSkinModelToolStripMenuItem,
+            this.howToMakeCustomSkinModelsbedrockToolStripMenuItem,
+            this.howToMakeCustomMusicToolStripMenuItem,
+            this.howToInstallPcksDirectlyToWiiUToolStripMenuItem,
+            this.pckCenterReleaseToolStripMenuItem,
+            this.howPCKsWorkToolStripMenuItem});
+            this.videosToolStripMenuItem.ForeColor = System.Drawing.Color.Black;
+            resources.ApplyResources(this.videosToolStripMenuItem, "videosToolStripMenuItem");
+            this.videosToolStripMenuItem.Name = "videosToolStripMenuItem";
+            // 
+            // howToMakeABasicSkinPackToolStripMenuItem
+            // 
+            this.howToMakeABasicSkinPackToolStripMenuItem.Image = global::PckStudio.Properties.Resources.Youtube;
+            this.howToMakeABasicSkinPackToolStripMenuItem.Name = "howToMakeABasicSkinPackToolStripMenuItem";
+            resources.ApplyResources(this.howToMakeABasicSkinPackToolStripMenuItem, "howToMakeABasicSkinPackToolStripMenuItem");
+            this.howToMakeABasicSkinPackToolStripMenuItem.Click += new System.EventHandler(this.howToMakeABasicSkinPackToolStripMenuItem_Click);
+            // 
+            // howToMakeACustomSkinModelToolStripMenuItem
+            // 
+            this.howToMakeACustomSkinModelToolStripMenuItem.Image = global::PckStudio.Properties.Resources.Youtube;
+            this.howToMakeACustomSkinModelToolStripMenuItem.Name = "howToMakeACustomSkinModelToolStripMenuItem";
+            resources.ApplyResources(this.howToMakeACustomSkinModelToolStripMenuItem, "howToMakeACustomSkinModelToolStripMenuItem");
+            this.howToMakeACustomSkinModelToolStripMenuItem.Click += new System.EventHandler(this.howToMakeACustomSkinModelToolStripMenuItem_Click);
+            // 
+            // howToMakeCustomSkinModelsbedrockToolStripMenuItem
+            // 
+            this.howToMakeCustomSkinModelsbedrockToolStripMenuItem.Image = global::PckStudio.Properties.Resources.Youtube;
+            this.howToMakeCustomSkinModelsbedrockToolStripMenuItem.Name = "howToMakeCustomSkinModelsbedrockToolStripMenuItem";
+            resources.ApplyResources(this.howToMakeCustomSkinModelsbedrockToolStripMenuItem, "howToMakeCustomSkinModelsbedrockToolStripMenuItem");
+            this.howToMakeCustomSkinModelsbedrockToolStripMenuItem.Click += new System.EventHandler(this.howToMakeCustomSkinModelsbedrockToolStripMenuItem_Click);
+            // 
+            // howToMakeCustomMusicToolStripMenuItem
+            // 
+            this.howToMakeCustomMusicToolStripMenuItem.Image = global::PckStudio.Properties.Resources.Youtube;
+            this.howToMakeCustomMusicToolStripMenuItem.Name = "howToMakeCustomMusicToolStripMenuItem";
+            resources.ApplyResources(this.howToMakeCustomMusicToolStripMenuItem, "howToMakeCustomMusicToolStripMenuItem");
+            this.howToMakeCustomMusicToolStripMenuItem.Click += new System.EventHandler(this.howToMakeCustomMusicToolStripMenuItem_Click);
+            // 
+            // howToInstallPcksDirectlyToWiiUToolStripMenuItem
+            // 
+            this.howToInstallPcksDirectlyToWiiUToolStripMenuItem.Image = global::PckStudio.Properties.Resources.Youtube;
+            this.howToInstallPcksDirectlyToWiiUToolStripMenuItem.Name = "howToInstallPcksDirectlyToWiiUToolStripMenuItem";
+            resources.ApplyResources(this.howToInstallPcksDirectlyToWiiUToolStripMenuItem, "howToInstallPcksDirectlyToWiiUToolStripMenuItem");
+            this.howToInstallPcksDirectlyToWiiUToolStripMenuItem.Click += new System.EventHandler(this.howToInstallPcksDirectlyToWiiUToolStripMenuItem_Click);
+            // 
+            // pckCenterReleaseToolStripMenuItem
+            // 
+            this.pckCenterReleaseToolStripMenuItem.Image = global::PckStudio.Properties.Resources.Youtube;
+            this.pckCenterReleaseToolStripMenuItem.Name = "pckCenterReleaseToolStripMenuItem";
+            resources.ApplyResources(this.pckCenterReleaseToolStripMenuItem, "pckCenterReleaseToolStripMenuItem");
+            this.pckCenterReleaseToolStripMenuItem.Click += new System.EventHandler(this.pckCenterReleaseToolStripMenuItem_Click);
+            // 
+            // howPCKsWorkToolStripMenuItem
+            // 
+            this.howPCKsWorkToolStripMenuItem.Image = global::PckStudio.Properties.Resources.Youtube;
+            this.howPCKsWorkToolStripMenuItem.Name = "howPCKsWorkToolStripMenuItem";
+            resources.ApplyResources(this.howPCKsWorkToolStripMenuItem, "howPCKsWorkToolStripMenuItem");
+            this.howPCKsWorkToolStripMenuItem.Click += new System.EventHandler(this.howPCKsWorkToolStripMenuItem_Click);
+            // 
+            // donateToolStripMenuItem
+            // 
+            this.donateToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toNobledezJackToolStripMenuItem,
+            this.toPhoenixARCDeveloperToolStripMenuItem,
+            this.forMattNLContributorToolStripMenuItem});
+            this.donateToolStripMenuItem.Name = "donateToolStripMenuItem";
+            resources.ApplyResources(this.donateToolStripMenuItem, "donateToolStripMenuItem");
+            // 
+            // toNobledezJackToolStripMenuItem
+            // 
+            this.toNobledezJackToolStripMenuItem.Name = "toNobledezJackToolStripMenuItem";
+            resources.ApplyResources(this.toNobledezJackToolStripMenuItem, "toNobledezJackToolStripMenuItem");
+            this.toNobledezJackToolStripMenuItem.Click += new System.EventHandler(this.toNobledezJackToolStripMenuItem_Click);
+            // 
+            // toPhoenixARCDeveloperToolStripMenuItem
+            // 
+            this.toPhoenixARCDeveloperToolStripMenuItem.Name = "toPhoenixARCDeveloperToolStripMenuItem";
+            resources.ApplyResources(this.toPhoenixARCDeveloperToolStripMenuItem, "toPhoenixARCDeveloperToolStripMenuItem");
+            this.toPhoenixARCDeveloperToolStripMenuItem.Click += new System.EventHandler(this.toPhoenixARCDeveloperToolStripMenuItem_Click);
+            // 
+            // forMattNLContributorToolStripMenuItem
+            // 
+            this.forMattNLContributorToolStripMenuItem.Name = "forMattNLContributorToolStripMenuItem";
+            resources.ApplyResources(this.forMattNLContributorToolStripMenuItem, "forMattNLContributorToolStripMenuItem");
+            this.forMattNLContributorToolStripMenuItem.Click += new System.EventHandler(this.forMattNLContributorToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            toolStripSeparator3.Name = "toolStripSeparator3";
+            resources.ApplyResources(toolStripSeparator3, "toolStripSeparator3");
+            // 
+            // settingsToolStripMenuItem
+            // 
+            this.settingsToolStripMenuItem.Image = global::PckStudio.Properties.Resources.ranch;
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            resources.ApplyResources(this.settingsToolStripMenuItem, "settingsToolStripMenuItem");
+            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
+            // 
             // contextMenuMetaTree
             // 
             this.contextMenuMetaTree.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -959,151 +1084,6 @@
             this.LittleEndianCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.LittleEndianCheckBox.UseSelectable = true;
             // 
-            // aboutToolStripMenuItem
-            // 
-            resources.ApplyResources(this.aboutToolStripMenuItem, "aboutToolStripMenuItem");
-            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            resources.ApplyResources(this.toolStripSeparator1, "toolStripSeparator1");
-            // 
-            // videosToolStripMenuItem
-            // 
-            this.videosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.howToMakeABasicSkinPackToolStripMenuItem,
-            this.howToMakeACustomSkinModelToolStripMenuItem,
-            this.howToMakeCustomSkinModelsbedrockToolStripMenuItem,
-            this.howToMakeCustomMusicToolStripMenuItem,
-            this.howToInstallPcksDirectlyToWiiUToolStripMenuItem,
-            this.pckCenterReleaseToolStripMenuItem,
-            this.howPCKsWorkToolStripMenuItem});
-            this.videosToolStripMenuItem.ForeColor = System.Drawing.Color.Black;
-            resources.ApplyResources(this.videosToolStripMenuItem, "videosToolStripMenuItem");
-            this.videosToolStripMenuItem.Name = "videosToolStripMenuItem";
-            // 
-            // howToMakeABasicSkinPackToolStripMenuItem
-            // 
-            this.howToMakeABasicSkinPackToolStripMenuItem.Image = global::PckStudio.Properties.Resources.Youtube;
-            this.howToMakeABasicSkinPackToolStripMenuItem.Name = "howToMakeABasicSkinPackToolStripMenuItem";
-            resources.ApplyResources(this.howToMakeABasicSkinPackToolStripMenuItem, "howToMakeABasicSkinPackToolStripMenuItem");
-            this.howToMakeABasicSkinPackToolStripMenuItem.Click += new System.EventHandler(this.howToMakeABasicSkinPackToolStripMenuItem_Click);
-            // 
-            // howToMakeACustomSkinModelToolStripMenuItem
-            // 
-            this.howToMakeACustomSkinModelToolStripMenuItem.Image = global::PckStudio.Properties.Resources.Youtube;
-            this.howToMakeACustomSkinModelToolStripMenuItem.Name = "howToMakeACustomSkinModelToolStripMenuItem";
-            resources.ApplyResources(this.howToMakeACustomSkinModelToolStripMenuItem, "howToMakeACustomSkinModelToolStripMenuItem");
-            this.howToMakeACustomSkinModelToolStripMenuItem.Click += new System.EventHandler(this.howToMakeACustomSkinModelToolStripMenuItem_Click);
-            // 
-            // howToMakeCustomSkinModelsbedrockToolStripMenuItem
-            // 
-            this.howToMakeCustomSkinModelsbedrockToolStripMenuItem.Image = global::PckStudio.Properties.Resources.Youtube;
-            this.howToMakeCustomSkinModelsbedrockToolStripMenuItem.Name = "howToMakeCustomSkinModelsbedrockToolStripMenuItem";
-            resources.ApplyResources(this.howToMakeCustomSkinModelsbedrockToolStripMenuItem, "howToMakeCustomSkinModelsbedrockToolStripMenuItem");
-            this.howToMakeCustomSkinModelsbedrockToolStripMenuItem.Click += new System.EventHandler(this.howToMakeCustomSkinModelsbedrockToolStripMenuItem_Click);
-            // 
-            // howToMakeCustomMusicToolStripMenuItem
-            // 
-            this.howToMakeCustomMusicToolStripMenuItem.Image = global::PckStudio.Properties.Resources.Youtube;
-            this.howToMakeCustomMusicToolStripMenuItem.Name = "howToMakeCustomMusicToolStripMenuItem";
-            resources.ApplyResources(this.howToMakeCustomMusicToolStripMenuItem, "howToMakeCustomMusicToolStripMenuItem");
-            this.howToMakeCustomMusicToolStripMenuItem.Click += new System.EventHandler(this.howToMakeCustomMusicToolStripMenuItem_Click);
-            // 
-            // howToInstallPcksDirectlyToWiiUToolStripMenuItem
-            // 
-            this.howToInstallPcksDirectlyToWiiUToolStripMenuItem.Image = global::PckStudio.Properties.Resources.Youtube;
-            this.howToInstallPcksDirectlyToWiiUToolStripMenuItem.Name = "howToInstallPcksDirectlyToWiiUToolStripMenuItem";
-            resources.ApplyResources(this.howToInstallPcksDirectlyToWiiUToolStripMenuItem, "howToInstallPcksDirectlyToWiiUToolStripMenuItem");
-            this.howToInstallPcksDirectlyToWiiUToolStripMenuItem.Click += new System.EventHandler(this.howToInstallPcksDirectlyToWiiUToolStripMenuItem_Click);
-            // 
-            // pckCenterReleaseToolStripMenuItem
-            // 
-            this.pckCenterReleaseToolStripMenuItem.Image = global::PckStudio.Properties.Resources.Youtube;
-            this.pckCenterReleaseToolStripMenuItem.Name = "pckCenterReleaseToolStripMenuItem";
-            resources.ApplyResources(this.pckCenterReleaseToolStripMenuItem, "pckCenterReleaseToolStripMenuItem");
-            this.pckCenterReleaseToolStripMenuItem.Click += new System.EventHandler(this.pckCenterReleaseToolStripMenuItem_Click);
-            // 
-            // howPCKsWorkToolStripMenuItem
-            // 
-            this.howPCKsWorkToolStripMenuItem.Image = global::PckStudio.Properties.Resources.Youtube;
-            this.howPCKsWorkToolStripMenuItem.Name = "howPCKsWorkToolStripMenuItem";
-            resources.ApplyResources(this.howPCKsWorkToolStripMenuItem, "howPCKsWorkToolStripMenuItem");
-            this.howPCKsWorkToolStripMenuItem.Click += new System.EventHandler(this.howPCKsWorkToolStripMenuItem_Click);
-            // 
-            // donateToolStripMenuItem
-            // 
-            this.donateToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toNobledezJackToolStripMenuItem,
-            this.toPhoenixARCDeveloperToolStripMenuItem,
-            this.forMattNLContributorToolStripMenuItem});
-            this.donateToolStripMenuItem.Name = "donateToolStripMenuItem";
-            resources.ApplyResources(this.donateToolStripMenuItem, "donateToolStripMenuItem");
-            // 
-            // toNobledezJackToolStripMenuItem
-            // 
-            this.toNobledezJackToolStripMenuItem.Name = "toNobledezJackToolStripMenuItem";
-            resources.ApplyResources(this.toNobledezJackToolStripMenuItem, "toNobledezJackToolStripMenuItem");
-            this.toNobledezJackToolStripMenuItem.Click += new System.EventHandler(this.toNobledezJackToolStripMenuItem_Click);
-            // 
-            // toPhoenixARCDeveloperToolStripMenuItem
-            // 
-            this.toPhoenixARCDeveloperToolStripMenuItem.Name = "toPhoenixARCDeveloperToolStripMenuItem";
-            resources.ApplyResources(this.toPhoenixARCDeveloperToolStripMenuItem, "toPhoenixARCDeveloperToolStripMenuItem");
-            this.toPhoenixARCDeveloperToolStripMenuItem.Click += new System.EventHandler(this.toPhoenixARCDeveloperToolStripMenuItem_Click);
-            // 
-            // forMattNLContributorToolStripMenuItem
-            // 
-            this.forMattNLContributorToolStripMenuItem.Name = "forMattNLContributorToolStripMenuItem";
-            resources.ApplyResources(this.forMattNLContributorToolStripMenuItem, "forMattNLContributorToolStripMenuItem");
-            this.forMattNLContributorToolStripMenuItem.Click += new System.EventHandler(this.forMattNLContributorToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            resources.ApplyResources(this.toolStripSeparator2, "toolStripSeparator2");
-            // 
-            // installationToolStripMenuItem
-            // 
-            resources.ApplyResources(this.installationToolStripMenuItem, "installationToolStripMenuItem");
-            this.installationToolStripMenuItem.Name = "installationToolStripMenuItem";
-            // 
-            // fAQToolStripMenuItem1
-            // 
-            resources.ApplyResources(this.fAQToolStripMenuItem1, "fAQToolStripMenuItem1");
-            this.fAQToolStripMenuItem1.Name = "fAQToolStripMenuItem1";
-            this.fAQToolStripMenuItem1.Click += new System.EventHandler(this.fAQToolStripMenuItem1_Click);
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            resources.ApplyResources(this.toolStripSeparator3, "toolStripSeparator3");
-            // 
-            // settingsToolStripMenuItem
-            // 
-            this.settingsToolStripMenuItem.Image = global::PckStudio.Properties.Resources.ranch;
-            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            resources.ApplyResources(this.settingsToolStripMenuItem, "settingsToolStripMenuItem");
-            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
-            // 
-            // helpToolStripMenuItem
-            // 
-            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.aboutToolStripMenuItem,
-            this.toolStripSeparator1,
-            this.videosToolStripMenuItem,
-            this.donateToolStripMenuItem,
-            this.toolStripSeparator2,
-            this.installationToolStripMenuItem,
-            this.fAQToolStripMenuItem1,
-            this.toolStripSeparator3,
-            this.settingsToolStripMenuItem});
-            this.helpToolStripMenuItem.ForeColor = System.Drawing.Color.Silver;
-            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            resources.ApplyResources(this.helpToolStripMenuItem, "helpToolStripMenuItem");
-            // 
             // MainForm
             // 
             this.ApplyImageInvert = true;
@@ -1240,7 +1220,6 @@
 		private System.Windows.Forms.ToolStripMenuItem addANIMEntryToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem videosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem howToMakeABasicSkinPackToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem howToMakeACustomSkinModelToolStripMenuItem;
@@ -1253,10 +1232,6 @@
         private System.Windows.Forms.ToolStripMenuItem toNobledezJackToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toPhoenixARCDeveloperToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem forMattNLContributorToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripMenuItem installationToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem fAQToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
     }
 }
