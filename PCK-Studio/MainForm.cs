@@ -682,32 +682,32 @@ namespace PckStudio
 		/// <returns>True if the remove should be canceled, otherwise False</returns>
 		private bool BeforeFileRemove(PckFile.FileData file)
 		{
-				string itemPath = "res/textures/items/";
+            string itemPath = "res/textures/items/";
 
-				// warn the user about deleting compass.png and clock.png
-				if (file.Filetype == PckFile.FileData.FileType.TextureFile && 
-					(file.Filename == itemPath + "compass.png" || file.Filename == itemPath + "clock.png"))
-				{
+            // warn the user about deleting compass.png and clock.png
+            if (file.Filetype == PckFile.FileData.FileType.TextureFile &&
+                (file.Filename == itemPath + "compass.png" || file.Filename == itemPath + "clock.png"))
+            {
                 if (MessageBox.Show("Are you sure want to delete this file? If \"compass.png\" or \"clock.png\" are missing, your game will crash upon loading this pack.", "Warning",
 					MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
 					return true;
-				}
+            }
 
-				// remove loc key if its a skin/cape
-				if (file.Filetype == PckFile.FileData.FileType.SkinFile || file.Filetype == PckFile.FileData.FileType.CapeFile)
-				{
-					if (TryGetLocFile(out LOCFile locFile))
-					{
+            // remove loc key if its a skin/cape
+            if (file.Filetype == PckFile.FileData.FileType.SkinFile || file.Filetype == PckFile.FileData.FileType.CapeFile)
+            {
+                if (TryGetLocFile(out LOCFile locFile))
+                {
 					locFile.RemoveLocKey(file.Properties.GetPropertyValue("THEMENAMEID"));
 					locFile.RemoveLocKey(file.Properties.GetPropertyValue("DISPLAYNAMEID"));
-						TrySetLocFile(locFile);
-					}
-				}
+                    TrySetLocFile(locFile);
+                }
+            }
 			return false;
         }
 
 		private void deleteFileToolStripMenuItem_Click(object sender, EventArgs e)
-				{
+		{
 			var node = treeViewMain.SelectedNode;
 			if (node == null)
 				return;
@@ -2183,7 +2183,10 @@ namespace PckStudio
 				e.Cancel = true;
 			};
 			if (!PckManager.Visible)
+			{
 				PckManager.Show();
+                PckManager.BringToFront();
+            }
 			if (PckManager.Focus())
 				PckManager.BringToFront();
 		}
