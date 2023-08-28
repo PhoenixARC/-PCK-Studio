@@ -959,7 +959,7 @@ namespace PckStudio
 			{
                 if (file.Size <= 0)
                 {
-                    Debug.WriteLine($"'{file.Filename}' has no data attached.", category: nameof(HandleTextureFile));
+                    Trace.WriteLine($"'{file.Filename}' has no data attached.", category: nameof(HandleTextureFile));
                     return;
                 }
                 pckFileTypeHandler[file.Filetype]?.Invoke(file);
@@ -1001,6 +1001,7 @@ namespace PckStudio
 							catch (Exception ex)
 							{
 								Debug.WriteLine(ex.Message);
+								Trace.WriteLine("Invalid ANIM value: " + property.Value);
 								MessageBox.Show("Failed to parse ANIM value, aborting to normal functionality. Please make sure the value only includes hexadecimal characters (0-9,A-F) and has no more than 8 characters.");
 							}
 							break;
@@ -1021,6 +1022,7 @@ namespace PckStudio
 							catch (Exception ex)
 							{
 								Debug.WriteLine(ex.Message);
+								Trace.WriteLine("Invalid BOX value: " + property.Value);
 								MessageBox.Show("Failed to parse BOX value, aborting to normal functionality.");
 							}
 							break;
@@ -1336,9 +1338,10 @@ namespace PckStudio
 						}
 						catch (OverflowException ex)
 						{
+							Debug.WriteLine(ex.Message);
+							Trace.WriteLine("Failed to open " + ofd.FileName);
 							MessageBox.Show("Error", "Failed to open pck\nTry checking the 'Open/Save as Switch/Vita/PS4 pck' check box in the upper right corner.",
 								MessageBoxButtons.OK, MessageBoxIcon.Error);
-							Debug.WriteLine(ex.Message);
 						}
 					}
 					foreach (PckFile.FileData file in pckfile.Files)
@@ -2062,7 +2065,7 @@ namespace PckStudio
 							case DialogResult.No:
 							case DialogResult.Cancel:
 							default:
-								MessageBox.Show(this, "Operation cancelled");
+								Trace.WriteLine("Operation cancelled", category: nameof(addCustomPackIconToolStripMenuItem_Click));
 								return;
 						}
 					}
