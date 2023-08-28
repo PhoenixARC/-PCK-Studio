@@ -19,7 +19,6 @@ namespace PckStudio.Internal
 
         internal static void Initialize()
         {
-            Profiler.Configure(Debug.Listeners[0]);
             Profiler.Start();
             {
                 _entityImages ??= Resources.entities_sheet.SplitHorizontal(32).ToArray();
