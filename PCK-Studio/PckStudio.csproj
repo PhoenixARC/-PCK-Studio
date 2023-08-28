@@ -439,7 +439,7 @@
     <Compile Include="Forms\Utilities\TextureConverterUtility.Designer.cs">
       <DependentUpon>TextureConverterUtility.cs</DependentUpon>
     </Compile>
-    <Compile Include="PckNodeSorter.cs" />
+    <Compile Include="Internal\PckNodeSorter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Forms\CreditsForm.cs">
       <SubType>Form</SubType>
