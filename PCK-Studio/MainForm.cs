@@ -1608,11 +1608,6 @@ namespace PckStudio
 			}
 		}
 
-		private void fAQToolStripMenuItem1_Click(object sender, EventArgs e)
-		{
-			//System.Diagnostics.Process.Start(hosturl + "pckStudio#faq");
-		}
-
 		private void convertToBedrockToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			MessageBox.Show("This feature is currently being reworked.", "Currently unavailable", MessageBoxButtons.OK, MessageBoxIcon.Information);
