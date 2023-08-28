@@ -327,7 +327,7 @@ namespace PckStudio
 							}
 						}
 				}
-				SetPckFileIcon(node, file.Filetype);
+				SetNodeIcon(node, file.Filetype);
 			};
 		}
 
@@ -774,7 +774,7 @@ namespace PckStudio
 						add.SkinFile.Filename = add.SkinFile.Filename.Insert(0, "Skins.pck/");
 						TreeNode newNode = new TreeNode(Path.GetFileName(add.SkinFile.Filename));
 						newNode.Tag = add.SkinFile;
-						SetPckFileIcon(newNode, PckFile.FileData.FileType.SkinFile);
+						SetNodeIcon(newNode, PckFile.FileData.FileType.SkinFile);
 						subPCK.Nodes.Add(newNode);
 						RebuildSubPCK(newNode.FullPath);
 					}
@@ -792,7 +792,7 @@ namespace PckStudio
 							add.CapeFile.Filename = add.CapeFile.Filename.Insert(0, "Skins.pck/");
 							TreeNode newNode = new TreeNode(Path.GetFileName(add.CapeFile.Filename));
 							newNode.Tag = add.CapeFile;
-							SetPckFileIcon(newNode, PckFile.FileData.FileType.SkinFile);
+							SetNodeIcon(newNode, PckFile.FileData.FileType.SkinFile);
 							subPCK.Nodes.Add(newNode);
 							RebuildSubPCK(newNode.FullPath);
 						}
@@ -1764,7 +1764,7 @@ namespace PckStudio
 			SaveTemplate();
 		}
 
-		private void SetPckFileIcon(TreeNode node, PckFile.FileData.FileType type)
+		private void SetNodeIcon(TreeNode node, PckFile.FileData.FileType type)
 		{
 			switch (type)
 			{
@@ -1837,7 +1837,7 @@ namespace PckStudio
 			{
 				Debug.WriteLine($"Setting {file.Filetype} to {type}");
 				file.Filetype = type;
-				SetPckFileIcon(t, type);
+				SetNodeIcon(treeViewMain.SelectedNode, type);
 				RebuildSubPCK(treeViewMain.SelectedNode.FullPath);
 			}
 		}
