@@ -349,6 +349,7 @@ namespace PckStudio
 				if (!skinsNode.Nodes.ContainsKey("Skins"))
 					skinsNode.Nodes.Add(folderNode);
 			}
+			treeViewMain.Sort();
 
 			TreeNode[] selectedNodes;
             if (!string.IsNullOrEmpty(selectedNodeText) &&
