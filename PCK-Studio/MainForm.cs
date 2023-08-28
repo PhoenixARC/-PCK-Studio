@@ -674,25 +674,22 @@ namespace PckStudio
 			MessageBox.Show("Can't replace a folder.");
 		}
 
-		private void deleteFileToolStripMenuItem_Click(object sender, EventArgs e)
+		/// <summary>
+		/// Action to run before a file will be deleted
+		/// </summary>
+		/// <param name="file">File to remove</param>
+		/// <returns>True if the remove should be canceled, otherwise False</returns>
+		private bool BeforeFileRemove(PckFile.FileData file)
 		{
-			var node = treeViewMain.SelectedNode;
-			if (node == null) return;
-
-			string path = node.FullPath;
-
-			if (node.Tag is PckFile.FileData)
-			{
-				PckFile.FileData file = node.Tag as PckFile.FileData;
-
 				string itemPath = "res/textures/items/";
 
 				// warn the user about deleting compass.png and clock.png
 				if (file.Filetype == PckFile.FileData.FileType.TextureFile && 
 					(file.Filename == itemPath + "compass.png" || file.Filename == itemPath + "clock.png"))
 				{
-					if(MessageBox.Show("Are you sure want to delete this file? If \"compass.png\" or \"clock.png\" are missing, your game will crash upon loading this pack.", "Warning",
-				MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No) return;
+                if (MessageBox.Show("Are you sure want to delete this file? If \"compass.png\" or \"clock.png\" are missing, your game will crash upon loading this pack.", "Warning",
+					MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
+					return true;
 				}
 
 				// remove loc key if its a skin/cape
@@ -700,15 +697,25 @@ namespace PckStudio
 				{
 					if (TryGetLocFile(out LOCFile locFile))
 					{
-						foreach (var property in file.Properties)
-						{
-							if (property.Key == "THEMENAMEID" || property.Key == "DISPLAYNAMEID")
-								locFile.RemoveLocKey(property.Value);
-						}
+					locFile.RemoveLocKey(file.Properties.GetPropertyValue("THEMENAMEID"));
+					locFile.RemoveLocKey(file.Properties.GetPropertyValue("DISPLAYNAMEID"));
 						TrySetLocFile(locFile);
 					}
 				}
-				if (currentPCK.Files.Remove(file))
+			return false;
+        }
+
+		private void deleteFileToolStripMenuItem_Click(object sender, EventArgs e)
+				{
+			var node = treeViewMain.SelectedNode;
+			if (node == null)
+				return;
+
+			string path = node.FullPath;
+
+			if (node.TryGetTagData(out PckFile.FileData file))
+			{
+                if (!BeforeFileRemove(file) && currentPCK.Files.Remove(file))
 				{
 					node.Remove();
 					wasModified = true;
@@ -718,7 +725,7 @@ namespace PckStudio
 				MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
 			{
 				string pckFolderDir = node.FullPath;
-				currentPCK.Files.RemoveAll(file => file.Filename.StartsWith(pckFolderDir));
+				currentPCK.Files.RemoveAll(file => !BeforeFileRemove(file) && file.Filename.StartsWith(pckFolderDir));
 				node.Remove();
 				wasModified = true;
 			}
