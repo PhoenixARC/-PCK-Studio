@@ -34,6 +34,7 @@ using PckStudio.Properties;
 using PckStudio.Internal;
 using PckStudio.Internal.Json;
 using PckStudio.Helper;
+using AnimatedGif;
 
 namespace PckStudio.Forms.Editor
 {
@@ -291,7 +292,6 @@ namespace PckStudio.Forms.Editor
 			diag.Dispose();
 		}
 
-		// Reworked import tool with new Animation classes by Miku
 		private void importJavaAnimationToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			if (MessageBox.Show(
@@ -483,40 +483,23 @@ namespace PckStudio.Forms.Editor
 			LoadAnimationTreeView();
         }
 
-        //[System.Runtime.InteropServices.DllImport("gdi32.dll")]
-        //public static extern bool DeleteObject(IntPtr hObject);
-
-        private void gifToolStripMenuItem_Click(object sender, EventArgs e)
+		private void gifToolStripMenuItem_Click(object sender, EventArgs e)
         {
-			MessageBox.Show(this, "This feature is still under development", "Coming soon");
-			return;
+			var fileDialog = new SaveFileDialog()
+			{
+				FileName = _tileName,
+				Filter = "GIF file|*.gif"
+			};
+			if (fileDialog.ShowDialog(this) != DialogResult.OK)
+				return;
 
-			// TODO
-			//var fileDialog = new SaveFileDialog()
-            //{
-            //    Filter = "GIF file|*.gif"
-            //};
-            //if (fileDialog.ShowDialog(this) != DialogResult.OK)
-            //    return;
-
-			//GifBitmapEncoder gifBitmapEncoder = new GifBitmapEncoder();
-
-			//foreach (Bitmap texture in currentAnimation.GetTextures())
-			//{
-			//	var bmp = texture.GetHbitmap();
-			//	var src = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(
-			//		bmp,
-			//		IntPtr.Zero,
-			//		System.Windows.Int32Rect.Empty,
-			//		BitmapSizeOptions.FromWidthAndHeight(texture.Width, texture.Height));
-			//	gifBitmapEncoder.Frames.Add(BitmapFrame.Create(src));
-			//	DeleteObject(bmp); // recommended, handle memory leak
-			//}
-
-			//using (var fs = fileDialog.OpenFile())
-			//{
-			//	gifBitmapEncoder.Save(fs);
-			//}
+            using (var gifWriter = AnimatedGif.AnimatedGif.Create(fileDialog.FileName, Animation.GameTickInMilliseconds, repeat: 0))
+			{
+				foreach (var frame in _animation.GetInterpolatedFrames())
+				{
+					gifWriter.AddFrame(frame.Texture, frame.Ticks * Animation.GameTickInMilliseconds, GifQuality.Bit8);
+				}
+			}
 		}
 
 		private void frameTimeandTicksToolStripMenuItem_Click(object sender, EventArgs e)

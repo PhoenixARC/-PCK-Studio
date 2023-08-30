@@ -21,12 +21,15 @@ using System.Drawing;
 using PckStudio.Extensions;
 using System.Text;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace PckStudio.Internal
 {
     internal sealed class Animation
 	{
 		public const int MinimumFrameTime = 1;
+
+		public const int GameTickInMilliseconds = 50;
 
 		public static Animation Empty(AnimationCategory category)
 		{
@@ -172,7 +175,34 @@ namespace PckStudio.Internal
 			return new ReadOnlyCollection<Frame>(frames);
 		}
 
-		public IReadOnlyCollection<Image> GetTextures()
+		public IReadOnlyCollection<Frame> GetInterpolatedFrames()
+		{
+            if (Interpolate)
+            {
+                return new ReadOnlyCollection<Frame>(InternalGetInterpolatedFrames().ToList());
+            }
+			return GetFrames();
+        }
+
+		private IEnumerable<Frame> InternalGetInterpolatedFrames()
+		{
+			for (int i = 0; i < FrameCount; i++)
+			{
+				Frame currentFrame = frames[i];
+				Frame nextFrame = frames[0];
+				if (i + 1 < FrameCount)
+					nextFrame = frames[i + 1];
+				for (int tick = 0; tick < currentFrame.Ticks; tick++)
+				{
+					double delta = 1.0f - tick / (double)currentFrame.Ticks;
+					yield return new Frame(currentFrame.Texture.Interpolate(nextFrame.Texture, delta));
+				}
+			}
+			yield break;
+		}
+
+
+        public IReadOnlyCollection<Image> GetTextures()
 		{
 			return textures;
 		}

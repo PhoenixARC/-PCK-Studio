@@ -691,6 +691,9 @@
     <Content Include="Resources\NoImageFound.png" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="AnimatedGif">
+      <Version>1.0.5</Version>
+    </PackageReference>
     <PackageReference Include="Costura.Fody">
       <Version>5.8.0-alpha0098</Version>
       <IncludeAssets>compile; runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
