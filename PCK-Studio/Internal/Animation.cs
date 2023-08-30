@@ -74,7 +74,23 @@ namespace PckStudio.Internal
 		public class Frame
 		{
 			public readonly Image Texture;
-			public int Ticks;
+			public int Ticks
+			{
+				get
+				{
+					return _ticks;
+				}
+				set
+				{
+					lock(l_ticks)
+					{
+						_ticks = value;
+					}
+				}
+			}
+
+			private int _ticks;
+			private object l_ticks = new object();
 
 			public Frame(Image texture) : this(texture, MinimumFrameTime)
 			{ }
@@ -169,7 +185,10 @@ namespace PckStudio.Internal
 
 		public void SetFrame(int frameIndex, Frame frame)
 		{
-			frames[frameIndex] = frame;
+			lock(frames)
+			{
+				frames[frameIndex] = frame;
+			}
         }
 
 		public void SetFrame(int frameIndex, int textureIndex, int frameTime = MinimumFrameTime)
@@ -196,15 +215,21 @@ namespace PckStudio.Internal
 
         internal void SetFrameTicks(int ticks)
         {
-			foreach (var frame in frames)
+			lock(frames)
 			{
-				frame.Ticks = ticks;
+				foreach (var frame in frames)
+				{
+					frame.Ticks = ticks;
+				}
 			}
         }
 
         internal void SwapFrames(int sourceIndex, int destinationIndex)
         {
-            frames.Swap(sourceIndex, destinationIndex);
+			lock(frames)
+			{
+				frames.Swap(sourceIndex, destinationIndex);
+			}
         }
     }
 }
