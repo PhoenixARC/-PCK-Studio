@@ -45,6 +45,11 @@ namespace PckStudio.Forms
             Settings.Default.AutoUpdate = autoUpdateCheckBox.Checked;
         }
 
+        private void grf_paramKeyComboBoxCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            Settings.Default.UseComboBoxForGRFParameter = grf_paramKeyComboBoxCheckBox.Checked;
+        }
+
         private void LoadCheckboxState(CheckBox checkBox, EventHandler eventHandler, bool state)
         {
             checkBox.CheckedChanged -= eventHandler;
@@ -59,6 +64,7 @@ namespace PckStudio.Forms
             LoadCheckboxState(autoLoadPckCheckBox, autoLoadPckCheckBox_CheckedChanged, Settings.Default.LoadSubPcks);
             LoadCheckboxState(showPresenceCheckBox, showPresenceCheckBox_CheckedChanged, Settings.Default.ShowRichPresence);
             LoadCheckboxState(autoUpdateCheckBox, autoUpdateCheckBox_CheckedChanged, Settings.Default.AutoUpdate);
+            LoadCheckboxState(grf_paramKeyComboBoxCheckBox, grf_paramKeyComboBoxCheckBox_CheckedChanged, Settings.Default.UseComboBoxForGRFParameter);
         }
 
         private void AppBehaviorSettingsForm_FormClosing(object sender, FormClosingEventArgs e)

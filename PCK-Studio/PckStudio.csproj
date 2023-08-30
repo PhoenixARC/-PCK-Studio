@@ -133,6 +133,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\PckFileDataExtensions.cs" />
+    <Compile Include="Extensions\TreeNodeExtensions.cs" />
+    <Compile Include="Helper\AnimationHelper.cs" />
+    <Compile Include="Internal\AnimationCategory.cs" />
+    <Compile Include="Internal\SkinAnimFlag.cs" />
+    <Compile Include="Internal\SkinAnimMask.cs" />
     <Compile Include="ToolboxItems\BlendPictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -185,8 +190,6 @@
     <Compile Include="Classes\IO\CSMB\CSMBFileWriter.cs" />
     <Compile Include="Classes\IO\PckAudio\PckAudioFileReader.cs" />
     <Compile Include="Classes\IO\PckAudio\PckAudioFileWriter.cs" />
-    <Compile Include="Classes\IO\Sounds\SoundIO.cs" />
-    <Compile Include="Classes\IO\Sounds\Sounds.cs" />
     <Compile Include="Classes\Misc\FTPClient.cs" />
     <Compile Include="Classes\Misc\FileCacher.cs" />
     <Compile Include="Classes\Misc\OpenFolderDialog.cs" />
@@ -434,7 +437,7 @@
     <Compile Include="Forms\Utilities\TextureConverterUtility.Designer.cs">
       <DependentUpon>TextureConverterUtility.cs</DependentUpon>
     </Compile>
-    <Compile Include="PckNodeSorter.cs" />
+    <Compile Include="Internal\PckNodeSorter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Forms\CreditsForm.cs">
       <SubType>Form</SubType>
@@ -686,6 +689,9 @@
     <Content Include="Resources\NoImageFound.png" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="AnimatedGif">
+      <Version>1.0.5</Version>
+    </PackageReference>
     <PackageReference Include="Costura.Fody">
       <Version>5.8.0-alpha0098</Version>
       <IncludeAssets>compile; runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

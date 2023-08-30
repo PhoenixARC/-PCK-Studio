@@ -36,10 +36,15 @@ namespace PckStudio.Forms.Editor
 {
     public partial class GameRuleFileEditor : MetroFramework.Forms.MetroForm
     {
-        private PckFile.FileData _pckfile;
+        private PckFileData _pckfile;
         private GameRuleFile _file;
         private GameRuleFile.CompressionType compressionType;
         private GameRuleFile.CompressionLevel compressionLevel;
+
+        private const string use_zlib = "Wii U, PS Vita";
+        private const string use_deflate = "PS3";
+        private const string use_xmem = "Xbox 360";
+
         public GameRuleFileEditor()
         {
             InitializeComponent();
@@ -49,27 +54,27 @@ namespace PckStudio.Forms.Editor
 
         private void PromptForCompressionType()
         {
-            ItemSelectionPopUp dialog = new ItemSelectionPopUp("Wii U, PS Vita", "PS3", "Xbox 360");
-            dialog.label2.Text = "Type";
-            dialog.okBtn.Text = "Ok";
+            ItemSelectionPopUp dialog = new ItemSelectionPopUp(use_zlib, use_deflate, use_xmem);
+            dialog.LabelText = "Type";
+            dialog.ButtonText = "Ok";
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 switch(dialog.SelectedItem)
                 {
-                    case "Wii U, PS Vita":
+                    case use_zlib:
                         wiiUPSVitaToolStripMenuItem.Checked = true;
                         break;
-                    case "PS3":
+                    case use_deflate:
                         pS3ToolStripMenuItem.Checked = true;
                             break;
-                    case "Xbox 360":
+                    case use_xmem:
                         xbox360ToolStripMenuItem.Checked = true;
                         break;
                 }
             }
         }
 
-        public GameRuleFileEditor(PckFile.FileData file) : this()
+        public GameRuleFileEditor(PckFileData file) : this()
         {
             _pckfile = file;
             using (var stream = new MemoryStream(file.Data))

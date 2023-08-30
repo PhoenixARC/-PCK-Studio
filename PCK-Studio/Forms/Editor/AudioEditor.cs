@@ -29,7 +29,7 @@ namespace PckStudio.Forms.Editor
 	{
 		public string defaultType = "yes";
 		PckAudioFile audioFile = null;
-		PckFile.FileData audioPCK;
+		PckFileData audioPCK;
 		bool _isLittleEndian = false;
         MainForm parent = null;
 
@@ -63,7 +63,7 @@ namespace PckStudio.Forms.Editor
 			return (PckAudioFile.AudioCategory.EAudioType)Categories.IndexOf(category);
 		}
 
-		public AudioEditor(PckFile.FileData file, bool isLittleEndian)
+		public AudioEditor(PckFileData file, bool isLittleEndian)
 		{
 			InitializeComponent();
 
@@ -577,7 +577,7 @@ namespace PckStudio.Forms.Editor
 			if (available.Length > 0)
 			{
 				using ItemSelectionPopUp add = new ItemSelectionPopUp(available);
-				add.okBtn.Text = "Save";
+				add.ButtonText = "Save";
 				if (add.ShowDialog() != DialogResult.OK) return;
 
 				audioFile.RemoveCategory(category.audioType);

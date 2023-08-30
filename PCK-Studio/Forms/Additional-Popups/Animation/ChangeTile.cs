@@ -12,10 +12,10 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 	internal partial class ChangeTile : MetroForm
 	{
         string selectedTile = "";
-        Internal.Animation.AnimationCategory category = Internal.Animation.AnimationCategory.Blocks;
+        Internal.AnimationCategory category = Internal.AnimationCategory.Blocks;
 
 		public string SelectedTile => selectedTile;
-		public Internal.Animation.AnimationCategory Category => category;
+		public Internal.AnimationCategory Category => category;
 
         List<TreeNode> treeViewBlockCache = new List<TreeNode>();
 		List<TreeNode> treeViewItemCache = new List<TreeNode>();
@@ -31,57 +31,46 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 		private void InitializeTreeviews()
 		{
             Profiler.Start();
-            GetTileDataToView("blocks", treeViewBlocks.Nodes, treeViewBlockCache.Add);
-            GetTileDataToView("items", treeViewItems.Nodes, treeViewItemCache.Add);
+            GetTileDataToView(Internal.AnimationCategory.Blocks, treeViewBlocks.Nodes, treeViewBlockCache.Add);
+            GetTileDataToView(Internal.AnimationCategory.Items, treeViewItems.Nodes, treeViewItemCache.Add);
             Profiler.Stop();
         }
 
 		private void treeViews_AfterSelect(object sender, TreeViewEventArgs e)
 		{
-			if (e.Node.Tag is string tileData)
+			if (e.Node.Tag is JsonTileInfo tileData)
 			{
-				selectedTile = tileData;
+				selectedTile = tileData.InternalName;
 				Debug.WriteLine(selectedTile);
                 category = e.Node.TreeView == treeViewItems
-					? Internal.Animation.AnimationCategory.Items
-					: Internal.Animation.AnimationCategory.Blocks;
+					? Internal.AnimationCategory.Items
+					: Internal.AnimationCategory.Blocks;
             }
 		}
 
-		private void GetTileDataToView(string key, TreeNodeCollection collection, Action<TreeNode> additinalAction)
+		private void GetTileDataToView(Internal.AnimationCategory key, TreeNodeCollection collection, Action<TreeNode> additinalAction)
 		{
 			List<JsonTileInfo> textureInfos = key switch
 			{
-				"blocks" => Tiles.BlockTileInfos,
-				"items" => Tiles.ItemTileInfos,
-				_ => throw new InvalidOperationException(key)
+                Internal.AnimationCategory.Blocks => Tiles.BlockTileInfos,
+                Internal.AnimationCategory.Items => Tiles.ItemTileInfos,
+				_ => throw new InvalidOperationException(nameof(key))
 			};
 			Profiler.Start();
-            try
+            if (textureInfos is not null)
             {
-                if (textureInfos is not null)
-                {
-					foreach ((int i, var content) in textureInfos.enumerate())
+				foreach ((int i, var content) in textureInfos.enumerate())
+				{
+					if (string.IsNullOrEmpty(content.InternalName) || collection.ContainsKey(content.InternalName))
+						continue;
+					TreeNode tileNode = new TreeNode(content.DisplayName, i, i)
 					{
-						if (!string.IsNullOrEmpty(content.InternalName) && !collection.ContainsKey(content.InternalName))
-						{
-							TreeNode tileNode = new TreeNode(content.DisplayName)
-							{
-								Name = content.InternalName,
-								Tag = content.DisplayName,
-								ImageIndex = i,
-								SelectedImageIndex = i,
-							};
-							collection.Add(tileNode);
-							additinalAction(tileNode);
-						}
-					}
-                }
-            }
-            catch (Newtonsoft.Json.JsonException j_ex)
-            {
-                MessageBox.Show(j_ex.Message, "Error");
-                return;
+						Name = content.InternalName,
+						Tag = content
+					};
+					collection.Add(tileNode);
+					additinalAction(tileNode);
+				}
             }
             Profiler.Stop();
         }

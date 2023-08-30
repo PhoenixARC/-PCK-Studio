@@ -47,6 +47,7 @@ namespace PckStudio
             }
 
             ApplicationScope.Initialize();
+            Trace.TraceInformation("Startup");
             RPC.Initialize();
             MainInstance = new MainForm();
             if (args.Length > 0 && File.Exists(args[0]) && args[0].EndsWith(".pck"))

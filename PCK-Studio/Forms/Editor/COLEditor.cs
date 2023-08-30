@@ -19,14 +19,14 @@ namespace PckStudio.Forms.Editor
         ColorContainer colourfile;
         ColorContainer.Color clipboard_color;
 
-		private readonly PckFile.FileData _file;
+		private readonly PckFileData _file;
 
 		List<TreeNode> colorCache = new List<TreeNode>();
 		List<TreeNode> waterCache = new List<TreeNode>();
 		List<TreeNode> underwaterCache = new List<TreeNode>();
 		List<TreeNode> fogCache = new List<TreeNode>();
 
-		public COLEditor(PckFile.FileData file)
+		public COLEditor(PckFileData file)
 		{
 			InitializeComponent();
 
