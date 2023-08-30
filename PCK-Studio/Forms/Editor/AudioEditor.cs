@@ -577,7 +577,7 @@ namespace PckStudio.Forms.Editor
 			if (available.Length > 0)
 			{
 				using ItemSelectionPopUp add = new ItemSelectionPopUp(available);
-				add.okBtn.Text = "Save";
+				add.ButtonText = "Save";
 				if (add.ShowDialog() != DialogResult.OK) return;
 
 				audioFile.RemoveCategory(category.audioType);

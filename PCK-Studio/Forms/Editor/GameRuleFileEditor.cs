@@ -50,8 +50,8 @@ namespace PckStudio.Forms.Editor
         private void PromptForCompressionType()
         {
             ItemSelectionPopUp dialog = new ItemSelectionPopUp("Wii U, PS Vita", "PS3", "Xbox 360");
-            dialog.label2.Text = "Type";
-            dialog.okBtn.Text = "Ok";
+            dialog.LabelText = "Type";
+            dialog.ButtonText = "Ok";
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 switch(dialog.SelectedItem)

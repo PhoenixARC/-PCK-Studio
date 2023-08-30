@@ -182,6 +182,7 @@ namespace PckStudio.Forms.Editor
 
         public ANIMEditor(SkinANIM skinANIM) : this()
         {
+            initialANIM = skinANIM;
             setDisplayAnim(skinANIM);
             ruleset.ApplyAnim(skinANIM);
         }
@@ -345,8 +346,8 @@ namespace PckStudio.Forms.Editor
         private void templateButton_Click(object sender, EventArgs e)
         {
             var diag = new ItemSelectionPopUp(Templates.Keys.ToArray());
-            diag.label2.Text = "Presets";
-            diag.okBtn.Text = "Load";
+            diag.ButtonText = "Presets";
+            diag.ButtonText = "Load";
 
             if (diag.ShowDialog() != DialogResult.OK)
                 return;
