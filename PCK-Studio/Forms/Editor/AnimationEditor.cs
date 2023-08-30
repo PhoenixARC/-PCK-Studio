@@ -83,33 +83,40 @@ namespace PckStudio.Forms.Editor
         }
 
         private void LoadAnimationTreeView()
-		{
-			if (_animation is null)
-			{
+        {
+            if (_animation is null)
+            {
                 AnimationStartStopBtn.Enabled = false;
                 return;
-			}
+            }
             AnimationStartStopBtn.Enabled = true;
             InterpolationCheckbox.Checked = _animation.Interpolate;
-			frameTreeView.Nodes.Clear();
-			TextureIcons.Images.Clear();
-			TextureIcons.Images.AddRange(_animation.GetTextures().ToArray());
-			foreach (var frame in _animation.GetFrames())
-			{
-				var imageIndex = _animation.GetTextureIndex(frame.Texture);
-				frameTreeView.Nodes.Add(new TreeNode($"for {frame.Ticks} ticks")
-				{
-					ImageIndex = imageIndex,
-					SelectedImageIndex = imageIndex,
-				});
-            }
-			if (_animation.FrameCount > 0)
-			{
-				animationPictureBox.SelectFrame(_animation, 0);
-			}
-		}
+            TextureIcons.Images.Clear();
+            TextureIcons.Images.AddRange(_animation.GetTextures().ToArray());
 
-		private void frameTreeView_AfterSelect(object sender, TreeViewEventArgs e)
+            UpdateTreeView();
+
+            if (_animation.FrameCount > 0)
+            {
+                animationPictureBox.SelectFrame(_animation, 0);
+            }
+        }
+
+        private void UpdateTreeView()
+        {
+            frameTreeView.Nodes.Clear();
+            frameTreeView.Nodes.AddRange(
+                _animation.GetFrames()
+                .Select(frame =>
+                {
+                    var imageIndex = _animation.GetTextureIndex(frame.Texture);
+                    return new TreeNode($"for {frame.Ticks} ticks", imageIndex, imageIndex);
+                })
+                .ToArray()
+                );
+        }
+
+        private void frameTreeView_AfterSelect(object sender, TreeViewEventArgs e)
 		{
 			if (animationPictureBox.IsPlaying)
                 AnimationStartStopBtn.Text = "Play Animation";
@@ -215,7 +222,7 @@ namespace PckStudio.Forms.Editor
 					int draggedIndex = draggedNode.Index;
 					int targetIndex = targetNode.Index;
 					_animation.SwapFrames(draggedIndex, targetIndex);
-					LoadAnimationTreeView();
+					UpdateTreeView();
 				}
 			}
 		}
@@ -248,7 +255,7 @@ namespace PckStudio.Forms.Editor
 				*/
 
                 _animation.SetFrame(frameTreeView.SelectedNode.Index, diag.FrameTextureIndex, diag.FrameTime);
-                LoadAnimationTreeView();
+                UpdateTreeView();
             }
         }
 
@@ -259,16 +266,16 @@ namespace PckStudio.Forms.Editor
 			if (diag.ShowDialog(this) == DialogResult.OK)
 			{
                 _animation.AddFrame(diag.FrameTextureIndex, IsSpecialTile(_tileName) ? Animation.MinimumFrameTime : diag.FrameTime);
-                LoadAnimationTreeView();
+                UpdateTreeView();
 			}
 		}
 
 		private void removeFrameToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (frameTreeView.SelectedNode is TreeNode t &&
-				_animation.RemoveFrame(t.Index))
+			if (frameTreeView.SelectedNode is TreeNode t && _animation.RemoveFrame(t.Index))
+			{
 				frameTreeView.SelectedNode.Remove();
-
+			}
 		}
 
 		private void bulkAnimationSpeedToolStripMenuItem_Click(object sender, EventArgs e)
@@ -279,7 +286,7 @@ namespace PckStudio.Forms.Editor
 				if (animationPictureBox.IsPlaying)
 					animationPictureBox.Stop();
                 _animation.SetFrameTicks(diag.Ticks);
-				LoadAnimationTreeView();
+				UpdateTreeView();
 			}
 			diag.Dispose();
 		}
@@ -331,21 +338,21 @@ namespace PckStudio.Forms.Editor
 		private void changeTileToolStripMenuItem_Click(object sender, EventArgs e)
 		{
             using (ChangeTile diag = new ChangeTile())
-				{
+			{
 				if (diag.ShowDialog(this) != DialogResult.OK)
 					return;
 				
-					Debug.WriteLine(diag.SelectedTile);
+				Debug.WriteLine(diag.SelectedTile);
                 _animation.Category = diag.Category;
 				_tileName = diag.SelectedTile;
 
-					bulkAnimationSpeedToolStripMenuItem.Enabled = 
-					importToolStripMenuItem.Enabled = 
-					exportAsToolStripMenuItem.Enabled = 
+				bulkAnimationSpeedToolStripMenuItem.Enabled = 
+				importToolStripMenuItem.Enabled = 
+				exportAsToolStripMenuItem.Enabled = 
 				InterpolationCheckbox.Visible = !IsSpecialTile(_tileName);
 
-					SetTileLabel();
-				}
+				SetTileLabel();
+			}
         }
 
         private void SetTileLabel()
