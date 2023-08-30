@@ -9,12 +9,12 @@ namespace PckStudio.Extensions
 {
     internal static class TreeNodeExtensions
     {
-        internal static bool IsTagOfType<T>(this TreeNode node)
+        internal static bool IsTagOfType<T>(this TreeNode node) where T : class
         {
             return node.Tag is T;
         }
 
-        internal static bool TryGetTagData<TOut>(this TreeNode node, out TOut tagData)
+        internal static bool TryGetTagData<TOut>(this TreeNode node, out TOut tagData) where TOut : class
         {
             if (node?.Tag is TOut _data)
             {
