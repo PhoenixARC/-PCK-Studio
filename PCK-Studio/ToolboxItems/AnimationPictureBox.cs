@@ -49,8 +49,6 @@ namespace PckStudio.ToolboxItems
             }
 		}
 
-		private const int TickInMillisecond = 50; // 1 InGame tick
-
         private bool _isPlaying = false;
 		private int currentAnimationFrameIndex = 0;
 		private Animation.Frame currentFrame;
@@ -111,7 +109,7 @@ namespace PckStudio.ToolboxItems
 					continue;
 				}
 				SetAnimationFrame(currentFrame);
-                if (cts.Token.WaitHandle.WaitOne(TickInMillisecond * currentFrame.Ticks))
+                if (cts.Token.WaitHandle.WaitOne(Animation.GameTickInMilliseconds * currentFrame.Ticks))
 				{
 					IsPlaying = false;
                     break;
@@ -125,7 +123,7 @@ namespace PckStudio.ToolboxItems
             {
                 double delta = 1.0f - tick / (double)currentFrame.Ticks;
 				SetTexture(currentFrame.Texture.Interpolate(nextFrame.Texture, delta));
-				if (cts.Token.WaitHandle.WaitOne(TickInMillisecond))
+				if (cts.Token.WaitHandle.WaitOne(Animation.GameTickInMilliseconds))
 					break;
             }
         }
