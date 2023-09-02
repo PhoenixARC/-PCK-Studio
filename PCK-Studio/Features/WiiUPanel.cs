@@ -273,7 +273,7 @@ namespace PckStudio.Features
                     client.UploadFile(ms, GetGameContentPath() + "/Common/Media/MediaWiiU.arc");
                 }
                 archive.Clear();
-                currentPCK?.Files.Clear();
+                //currentPCK?.Files.Clear();
                 currentPCK = null;
             }
             GC.Collect();
