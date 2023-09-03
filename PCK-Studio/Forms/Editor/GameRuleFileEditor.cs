@@ -132,7 +132,7 @@ namespace PckStudio.Forms.Editor
 
         private void SetCompressionLevel()
         {
-            switch (_file.FileHeader.CompressionLevel)
+            switch (_file.Header.CompressionLevel)
             {
                 case GameRuleFile.CompressionLevel.None:
                     noneToolStripMenuItem.Checked = true;
@@ -263,7 +263,7 @@ namespace PckStudio.Forms.Editor
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (_file.FileHeader.unknownData[3] != 0)
+            if (_file.Header.unknownData[3] != 0)
             {
                 MessageBox.Show("World grf saving is currently unsupported");
                 return;
