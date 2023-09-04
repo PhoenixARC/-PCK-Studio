@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using OMI.Formats.Color;
 using OMI.Formats.Pck;
 using OMI.Workers.Color;
+using PckStudio.Extensions;
 using PckStudio.ToolboxItems;
 using PckStudio.Properties;
 
@@ -19,7 +20,7 @@ namespace PckStudio.Forms.Editor
         ColorContainer colourfile;
         ColorContainer.Color clipboard_color;
 
-		private readonly PckFile.FileData _file;
+		private readonly PckFileData _file;
 
 		List<TreeNode> colorCache = new List<TreeNode>();
 		List<TreeNode> waterCache = new List<TreeNode>();
@@ -52,7 +53,7 @@ namespace PckStudio.Forms.Editor
             _1_91_,
         }
 
-        public COLEditor(PckFile.FileData file)
+        public COLEditor(PckFileData file)
 		{
 			InitializeComponent();
 
@@ -287,14 +288,9 @@ namespace PckStudio.Forms.Editor
 					}
 				}
 			}
-
-			using (var stream = new MemoryStream())
-			{
-				var writer = new COLFileWriter(colourfile);
-                writer.WriteToStream(stream);
-				_file.SetData(stream.ToArray());
-			}
-
+			
+			_file.SetData(new COLFileWriter(colourfile));
+			
             DialogResult = DialogResult.OK;
         }
 

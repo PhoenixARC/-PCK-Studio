@@ -1,4 +1,4 @@
-﻿namespace PckStudio
+﻿namespace PckStudio.Forms
 {
     partial class GenerateModel
     {
@@ -382,7 +382,7 @@
             this.checkGuide.Name = "checkGuide";
             this.checkGuide.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.checkGuide.UseSelectable = true;
-            this.checkGuide.CheckedChanged += new System.EventHandler(this.render);
+            this.checkGuide.CheckedChanged += new System.EventHandler(this.Render);
             // 
             // checkBoxArmor
             // 
@@ -390,7 +390,7 @@
             this.checkBoxArmor.Name = "checkBoxArmor";
             this.checkBoxArmor.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.checkBoxArmor.UseSelectable = true;
-            this.checkBoxArmor.CheckedChanged += new System.EventHandler(this.render);
+            this.checkBoxArmor.CheckedChanged += new System.EventHandler(this.Render);
             // 
             // SizeXUpDown
             // 

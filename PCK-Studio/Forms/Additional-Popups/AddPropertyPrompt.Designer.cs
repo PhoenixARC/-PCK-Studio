@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddPropertyPrompt));
             System.Windows.Forms.Label label1;
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddPropertyPrompt));
             System.Windows.Forms.Label label2;
             this.keyTextBox = new System.Windows.Forms.TextBox();
             this.valueTextBox = new System.Windows.Forms.TextBox();
@@ -37,6 +37,18 @@
             label1 = new System.Windows.Forms.Label();
             label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
+            // 
+            // label1
+            // 
+            resources.ApplyResources(label1, "label1");
+            label1.ForeColor = System.Drawing.Color.White;
+            label1.Name = "label1";
+            // 
+            // label2
+            // 
+            resources.ApplyResources(label2, "label2");
+            label2.ForeColor = System.Drawing.Color.White;
+            label2.Name = "label2";
             // 
             // keyTextBox
             // 
@@ -53,18 +65,6 @@
             this.valueTextBox.ForeColor = System.Drawing.SystemColors.Window;
             resources.ApplyResources(this.valueTextBox, "valueTextBox");
             this.valueTextBox.Name = "valueTextBox";
-            // 
-            // label1
-            // 
-            resources.ApplyResources(label1, "label1");
-            label1.ForeColor = System.Drawing.Color.White;
-            label1.Name = "label1";
-            // 
-            // label2
-            // 
-            resources.ApplyResources(label2, "label2");
-            label2.ForeColor = System.Drawing.Color.White;
-            label2.Name = "label2";
             // 
             // saveButton
             // 

@@ -565,6 +565,16 @@ namespace PckStudio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        public static System.Drawing.Icon ProjectLogo {
+            get {
+                object obj = ResourceManager.GetObject("ProjectLogo", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap PS3 {
@@ -709,18 +719,28 @@ namespace PckStudio.Properties {
         ///	&quot;COMMENT_1&quot;: &quot;Tile data research by MattNL&quot;,
         ///	&quot;COMMENT_2&quot;: &quot;JSON conversion by PhoenixARC&quot;,
         ///	&quot;blocks&quot;: [
-        ///		{ &quot;grass_top&quot;: &quot;Grass Block (Top)&quot; },
-        ///		{ &quot;stone&quot;: &quot;Stone&quot; },
-        ///		{ &quot;dirt&quot;: &quot;Dirt&quot; },
-        ///		{ &quot;grass_side&quot;: &quot;Grass Block (Side)&quot; },
-        ///		{ &quot;planks_oak&quot;: &quot;Oak Planks&quot; },
-        ///		{ &quot;stoneslab_side&quot;: &quot;Stone Slab (Side)&quot; },
-        ///		{ &quot;stoneslab_top&quot;: &quot;Stone Slab (Top)&quot; },
-        ///		{ &quot;brick&quot;: &quot;Bricks&quot; },
-        ///		{ &quot;tnt_side&quot;: &quot;TNT (Side)&quot; },
-        ///		{ &quot;tnt_top&quot;: &quot;TNT (Top)&quot; },
-        ///		{ &quot;tnt_bottom&quot;: &quot;TNT (Bottom)&quot; },
-        ///		{ &quot;web&quot;: &quot;Cobw [rest of string was truncated]&quot;;.
+        ///		{
+        ///			&quot;internalName&quot;: &quot;grass_top&quot;,
+        ///			&quot;displayName&quot;: &quot;Grass Block (Top)&quot;
+        ///		},
+        ///		{
+        ///			&quot;internalName&quot;: &quot;stone&quot;,
+        ///			&quot;displayName&quot;: &quot;Stone&quot;
+        ///		},
+        ///		{
+        ///			&quot;internalName&quot;: &quot;dirt&quot;,
+        ///			&quot;displayName&quot;: &quot;Dirt&quot;
+        ///		},
+        ///		{
+        ///			&quot;internalName&quot;: &quot;grass_side&quot;,
+        ///			&quot;displayName&quot;: &quot;Grass Block (Side)&quot;
+        ///		},
+        ///		{
+        ///			&quot;internalName&quot;: &quot;planks_oak&quot;,
+        ///			&quot;displayName&quot;: &quot;Oak Planks&quot;
+        ///		},
+        ///		{
+        ///			&quot;internalName&quot;: [rest of string was truncated]&quot;;.
         /// </summary>
         public static string tileData {
             get {

@@ -58,7 +58,7 @@
 			this.AnimationStartStopBtn = new MetroFramework.Controls.MetroButton();
 			this.tileLabel = new MetroFramework.Controls.MetroLabel();
 			this.pictureBox1 = new System.Windows.Forms.PictureBox();
-			this.animationPictureBox = new PckStudio.Forms.Editor.AnimationPictureBox();
+			this.animationPictureBox = new PckStudio.ToolboxItems.AnimationPictureBox();
 			this.frameTimeandTicksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenuStrip1.SuspendLayout();
 			this.menuStrip.SuspendLayout();
@@ -347,7 +347,7 @@
 		private System.Windows.Forms.MenuStrip menuStrip;
 		private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem1;
-		private PckStudio.Forms.Editor.AnimationPictureBox animationPictureBox;
+		private PckStudio.ToolboxItems.AnimationPictureBox animationPictureBox;
 		private MetroFramework.Controls.MetroCheckBox InterpolationCheckbox;
 		private MetroFramework.Controls.MetroButton AnimationStartStopBtn;
 		private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;

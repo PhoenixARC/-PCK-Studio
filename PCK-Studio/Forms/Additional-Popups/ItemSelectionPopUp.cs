@@ -8,6 +8,17 @@ namespace PckStudio.Forms.Additional_Popups
 	{
 		public string SelectedItem => DialogResult == DialogResult.OK ? ComboBox.Text : string.Empty;
 
+		public string LabelText
+        {
+            get => label2.Text;
+            set => label2.Text = value;
+        }
+		public string ButtonText
+        {
+            get => okBtn.Text;
+            set => okBtn.Text = value;
+        }
+
         public ItemSelectionPopUp(params string[] items)
 		{
 			InitializeComponent();

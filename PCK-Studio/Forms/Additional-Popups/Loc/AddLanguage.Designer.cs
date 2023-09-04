@@ -82,10 +82,6 @@
             this.ClientSize = new System.Drawing.Size(289, 101);
             this.Controls.Add(this.AddButton);
             this.Controls.Add(this.LanguageComboBox);
-            this.Font = new System.Drawing.Font("Segoe UI", 8.25F);
-            this.ForeColor = System.Drawing.Color.White;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.Location = new System.Drawing.Point(0, 0);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(289, 140);

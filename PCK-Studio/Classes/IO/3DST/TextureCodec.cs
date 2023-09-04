@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 
-namespace PckStudio.Classes._3ds
+namespace PckStudio.IO._3DST
 {
     /// <summary>
     ///     Format of the texture used on the PICA200.

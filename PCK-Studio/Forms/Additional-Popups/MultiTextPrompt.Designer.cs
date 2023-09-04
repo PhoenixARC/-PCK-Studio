@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MultiTextPrompt));
             this.PromptTextBox = new MetroFramework.Controls.MetroTextBox();
             this.okBtn = new MetroFramework.Controls.MetroButton();
             this.cancelBtn = new MetroFramework.Controls.MetroButton();
@@ -94,7 +95,7 @@
             this.cancelBtn.UseSelectable = true;
             this.cancelBtn.Click += new System.EventHandler(this.cancelBtn_Click);
             // 
-            // TextPrompt
+            // MultiTextPrompt
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -102,9 +103,10 @@
             this.Controls.Add(this.cancelBtn);
             this.Controls.Add(this.okBtn);
             this.Controls.Add(this.PromptTextBox);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(270, 335);
-            this.Name = "TextPrompt";
+            this.Name = "MultiTextPrompt";
             this.Padding = new System.Windows.Forms.Padding(20, 60, 20, 40);
             this.Style = MetroFramework.MetroColorStyle.Black;
             this.Theme = MetroFramework.MetroThemeStyle.Dark;

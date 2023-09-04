@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="16.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <LangVersion>preview</LangVersion>
@@ -18,42 +18,6 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
-  <Target Name="GetGitInfo" BeforeTargets="WriteGitInfo" Condition="'$(BuildHash)' == ''">
-    <!-- write hash and branch to console.-->
-    <Exec Condition="'$(Configuration)' == 'Debug'" Command="git -C $(ProjectDir) describe --always" ConsoleToMsBuild="true">
-      <Output TaskParameter="ConsoleOutput" PropertyName="GitHash" />
-    </Exec>
-    <Exec Command="git -C $(ProjectDir) branch --show-current" ConsoleToMsBuild="true">
-      <Output TaskParameter="ConsoleOutput" PropertyName="GitBranch" />
-    </Exec>
-    <PropertyGroup>
-      <BuildHash Condition="'$(Configuration)' == 'Debug'">$(GitHash)</BuildHash>
-      <BuildBranch>$(GitBranch)</BuildBranch>
-    </PropertyGroup>
-  </Target>
-  <Target Name="WriteGitInfo" BeforeTargets="CoreCompile">
-    <!-- names the obj/.../GitAssemblyInfo.cs file -->
-    <PropertyGroup>
-      <GitAssemblyInfoFile>$(IntermediateOutputPath)GitAssemblyInfo.cs</GitAssemblyInfoFile>
-    </PropertyGroup>
-    <!-- includes the GitAssemblyInfo for compilation into your project -->
-    <ItemGroup>
-      <Compile Include="$(GitAssemblyInfoFile)" />
-    </ItemGroup>
-    <!-- defines the AssemblyMetadata attribute that will be written -->
-    <ItemGroup>
-      <AssemblyAttributes Include="AssemblyMetadata" Condition="'$(Configuration)' == 'Debug'">
-        <_Parameter1>GitHash</_Parameter1>
-        <_Parameter2>$(BuildHash)</_Parameter2>
-      </AssemblyAttributes>
-      <AssemblyAttributes Include="AssemblyMetadata">
-        <_Parameter1>GitBranch</_Parameter1>
-        <_Parameter2>$(BuildBranch)</_Parameter2>
-      </AssemblyAttributes>
-    </ItemGroup>
-    <!-- writes the attribute to the GitAssemblyInfo file -->
-    <WriteCodeFragment Language="C#" OutputFile="$(GitAssemblyInfoFile)" AssemblyAttributes="@(AssemblyAttributes)" />
-  </Target>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -102,7 +66,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Resources\PCK-Studio_Logo.ico</ApplicationIcon>
+    <ApplicationIcon>../ProjectLogo.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>
@@ -136,6 +100,7 @@
     </ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup />
+  <PropertyGroup />
   <PropertyGroup>
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
@@ -167,16 +132,30 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\ToolboxItems\PictureBoxWithInterpolationMode.cs">
+    <Compile Include="Extensions\PckFileDataExtensions.cs" />
+    <Compile Include="Extensions\TreeNodeExtensions.cs" />
+    <Compile Include="Helper\AnimationHelper.cs" />
+    <Compile Include="Internal\AnimationCategory.cs" />
+    <Compile Include="Internal\SkinAnimFlag.cs" />
+    <Compile Include="Internal\SkinAnimMask.cs" />
+    <Compile Include="ToolboxItems\BlendPictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Classes\ToolboxItems\ToolStripRadioButtonMenuItem.cs">
+    <Compile Include="ToolboxItems\InterpolationPictureBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ToolboxItems\ThemeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ToolboxItems\ToolStripRadioButtonMenuItem.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Classes\Utils\BinkaConverter.cs" />
+    <Compile Include="Extensions\AnimationExtensions.cs" />
     <Compile Include="Extensions\ImageLayoutDirection.cs" />
     <Compile Include="Extensions\ImageSection.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
+    <Compile Include="Extensions\MathExtensions.cs" />
     <Compile Include="Extensions\PckFileExtensions.cs" />
     <Compile Include="Forms\Additional-Popups\NumericPrompt.cs">
       <SubType>Form</SubType>
@@ -184,14 +163,20 @@
     <Compile Include="Forms\Additional-Popups\NumericPrompt.Designer.cs">
       <DependentUpon>NumericPrompt.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Utilities\AppSettingsForm.cs">
+    <Compile Include="Forms\AppSettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Utilities\AppSettingsForm.Designer.cs">
+    <Compile Include="Forms\AppSettingsForm.Designer.cs">
       <DependentUpon>AppSettingsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Internal\ApplicationBuildInfo.cs" />
+    <Compile Include="Forms\Editor\TextureAtlasEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Editor\TextureAtlasEditor.Designer.cs">
+      <DependentUpon>TextureAtlasEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\ControlExtensions.cs" />
-    <Compile Include="Internals\ApplicationBuildInfo.cs" />
     <Compile Include="Classes\API\PCKCenter\model\PCKCenterJSON.cs" />
     <Compile Include="Classes\API\PCKCenter\PCKCollections.cs" />
     <Compile Include="Classes\API\PCKCenter\PCKCollectionsLocal.cs" />
@@ -200,8 +185,8 @@
     <Compile Include="Extensions\ColorExtensions.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="Extensions\GraphicsExtensions.cs" />
-    <Compile Include="Classes\FileTypes\CSMBFile.cs" />
-    <Compile Include="Classes\FileTypes\PckAudioFile.cs" />
+    <Compile Include="FileFormats\CSMBFile.cs" />
+    <Compile Include="FileFormats\PckAudioFile.cs" />
     <Compile Include="Classes\API\Miles\Binka.cs" />
     <Compile Include="Classes\IO\3DST\3DSTextureReader.cs" />
     <Compile Include="Classes\IO\3DST\3DSTextureWriter.cs" />
@@ -209,20 +194,19 @@
     <Compile Include="Classes\IO\CSMB\CSMBFileWriter.cs" />
     <Compile Include="Classes\IO\PckAudio\PckAudioFileReader.cs" />
     <Compile Include="Classes\IO\PckAudio\PckAudioFileWriter.cs" />
-    <Compile Include="Classes\IO\Sounds\SoundIO.cs" />
-    <Compile Include="Classes\IO\Sounds\Sounds.cs" />
     <Compile Include="Classes\Misc\FTPClient.cs" />
     <Compile Include="Classes\Misc\FileCacher.cs" />
     <Compile Include="Classes\Misc\OpenFolderDialog.cs" />
     <Compile Include="Classes\Models\DefaultModels\Steve64x64Model.cs" />
-    <Compile Include="Classes\ToolboxItems\ThemeForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Internals\ApplicationScope.cs" />
-    <Compile Include="Internals\SettingsManager.cs" />
-    <Compile Include="Internals\SkinBOX.cs" />
+    <Compile Include="Internal\ApplicationScope.cs" />
+    <Compile Include="Internal\Json\ColorEntry.cs" />
+    <Compile Include="Internal\Json\TileInfo.cs" />
+    <Compile Include="Internal\Json\Tiles.cs" />
+    <Compile Include="Internal\Profiler.cs" />
+    <Compile Include="Internal\SettingsManager.cs" />
+    <Compile Include="Internal\SkinBOX.cs" />
     <Compile Include="Extensions\ImageExtensions.cs" />
-    <Compile Include="Internals\SkinANIM.cs" />
+    <Compile Include="Internal\SkinANIM.cs" />
     <Compile Include="Classes\Models\DefaultModels\Steve64x32Model.cs" />
     <Compile Include="Classes\Models\DefaultModels\ModelBase.cs" />
     <Compile Include="Classes\Models\Backgrounds.cs" />
@@ -260,7 +244,7 @@
     <Compile Include="Features\WiiUPanel.Designer.cs">
       <DependentUpon>WiiUPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Internals\CommitInfo.cs" />
+    <Compile Include="Internal\CommitInfo.cs" />
     <Compile Include="Forms\Additional-Popups\EntityForms\AddEntry.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -285,11 +269,11 @@
     <Compile Include="Forms\Additional-Popups\Loc\AddLanguage.Designer.cs">
       <DependentUpon>AddLanguage.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Additional-Popups\CreateTexturePack.cs">
+    <Compile Include="Forms\Additional-Popups\CreateTexturePackPrompt.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Additional-Popups\CreateTexturePack.Designer.cs">
-      <DependentUpon>CreateTexturePack.cs</DependentUpon>
+    <Compile Include="Forms\Additional-Popups\CreateTexturePackPrompt.Designer.cs">
+      <DependentUpon>CreateTexturePackPrompt.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Additional-Popups\AddFilePrompt.cs">
       <SubType>Form</SubType>
@@ -309,8 +293,8 @@
     <Compile Include="Forms\Additional-Popups\MultiTextPrompt.Designer.cs">
       <DependentUpon>MultiTextPrompt.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Editor\Animation.cs" />
-    <Compile Include="Forms\Editor\AnimationPictureBox.cs">
+    <Compile Include="Internal\Animation.cs" />
+    <Compile Include="ToolboxItems\AnimationPictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Forms\Editor\MaterialsEditor.cs">
@@ -391,9 +375,8 @@
     <Compile Include="Forms\Additional-Popups\InProgressPrompt.Designer.cs">
       <DependentUpon>InProgressPrompt.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Utilities\MaterialResources.cs" />
-    <Compile Include="Forms\Utilities\BehaviourResources.cs" />
-    <Compile Include="Forms\Utilities\AnimationResources.cs" />
+    <Compile Include="Helper\MaterialResources.cs" />
+    <Compile Include="Helper\BehaviourResources.cs" />
     <Compile Include="Forms\Editor\BoxEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -411,12 +394,6 @@
     </Compile>
     <Compile Include="Forms\Editor\ANIMEditor.Designer.cs">
       <DependentUpon>ANIMEditor.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Utilities\Preferences.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Utilities\Preferences.Designer.cs">
-      <DependentUpon>Preferences.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -454,12 +431,6 @@
     <Compile Include="Forms\Editor\AudioEditor.Designer.cs">
       <DependentUpon>AudioEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Utilities\PCK Manager.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Utilities\PCK Manager.Designer.cs">
-      <DependentUpon>PCK Manager.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\Utilities\pckCenter.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -484,12 +455,9 @@
     <Compile Include="Forms\Utilities\TextureConverterUtility.Designer.cs">
       <DependentUpon>TextureConverterUtility.cs</DependentUpon>
     </Compile>
-    <Compile Include="PckNodeSorter.cs" />
+    <Compile Include="Internal\PckNodeSorter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Forms\Additional-Popups\Audio\creditsEditor.resx">
-      <DependentUpon>creditsEditor.cs</DependentUpon>
-    </EmbeddedResource>
     <Compile Include="Classes\IO\3DST\TextureCodec.cs" />
     <EmbeddedResource Include="Features\CemuPanel.resx">
       <DependentUpon>CemuPanel.cs</DependentUpon>
@@ -509,8 +477,8 @@
     <EmbeddedResource Include="Forms\Additional-Popups\Loc\AddLanguage.resx">
       <DependentUpon>AddLanguage.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Additional-Popups\CreateTexturePack.resx">
-      <DependentUpon>CreateTexturePack.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Additional-Popups\CreateTexturePackPrompt.resx">
+      <DependentUpon>CreateTexturePackPrompt.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\AddFilePrompt.resx">
@@ -596,9 +564,12 @@
     <EmbeddedResource Include="Forms\Editor\ANIMEditor.resx">
       <DependentUpon>ANIMEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\AppSettingsForm.resx">
+    <EmbeddedResource Include="Forms\AppSettingsForm.resx">
       <DependentUpon>AppSettingsForm.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Editor\TextureAtlasEditor.resx">
+      <DependentUpon>TextureAtlasEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.ja.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -626,12 +597,6 @@
     <EmbeddedResource Include="Forms\Editor\AudioEditor.resx">
       <DependentUpon>AudioEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\PCK Manager.ja.resx">
-      <DependentUpon>PCK Manager.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\PCK Manager.resx">
-      <DependentUpon>PCK Manager.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Utilities\pckCenter.ja.resx">
       <DependentUpon>pckCenter.cs</DependentUpon>
@@ -750,17 +715,19 @@
     <None Include="Resources\edit_26px.png" />
     <None Include="Resources\file_32px.png" />
     <None Include="Resources\generated_photos_30px.png" />
-    <Content Include="Resources\PCK-Studio_Logo.ico" />
     <Content Include="Resources\NoImageFound.png" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="AnimatedGif">
+      <Version>1.0.5</Version>
+    </PackageReference>
     <PackageReference Include="Costura.Fody">
       <Version>5.8.0-alpha0098</Version>
       <IncludeAssets>compile; runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="DiscordRichPresence">
-      <Version>1.1.3.18</Version>
+      <Version>1.1.4.20</Version>
     </PackageReference>
     <PackageReference Include="MetroFramework">
       <Version>1.2.0.3</Version>
@@ -816,4 +783,49 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <Target Name="GetGitInfo" BeforeTargets="WriteGitInfo" Condition="'$(BuildHash)' == ''">
+    <!-- write hash and branch to console.-->
+    <Exec Condition="'$(Configuration)' == 'Debug'" Command="git -C $(ProjectDir) describe --always" ConsoleToMsBuild="true">
+      <Output TaskParameter="ConsoleOutput" PropertyName="GitHash" />
+    </Exec>
+    <Exec Command="git -C $(ProjectDir) branch --show-current" ConsoleToMsBuild="true">
+      <Output TaskParameter="ConsoleOutput" PropertyName="GitBranch" />
+    </Exec>
+    <PropertyGroup>
+      <BuildHash Condition="'$(Configuration)' == 'Debug'">$(GitHash)</BuildHash>
+      <BuildBranch>$(GitBranch)</BuildBranch>
+    </PropertyGroup>
+  </Target>
+  <Target Name="WriteGitInfo" BeforeTargets="CoreCompile">
+    <!-- names the obj/.../GitAssemblyInfo.cs file -->
+    <PropertyGroup>
+      <GitAssemblyInfoFile>$(IntermediateOutputPath)GitAssemblyInfo.cs</GitAssemblyInfoFile>
+    </PropertyGroup>
+    <!-- includes the GitAssemblyInfo for compilation into your project -->
+    <ItemGroup>
+      <Compile Include="$(GitAssemblyInfoFile)" />
+    </ItemGroup>
+    <!-- defines the AssemblyMetadata attribute that will be written -->
+    <ItemGroup>
+      <AssemblyAttributes Include="AssemblyMetadata" Condition="'$(Configuration)' == 'Debug'">
+        <_Parameter1>GitHash</_Parameter1>
+        <_Parameter2>$(BuildHash)</_Parameter2>
+      </AssemblyAttributes>
+      <AssemblyAttributes Include="AssemblyMetadata">
+        <_Parameter1>GitBranch</_Parameter1>
+        <_Parameter2>$(BuildBranch)</_Parameter2>
+      </AssemblyAttributes>
+    </ItemGroup>
+    <!-- writes the attribute to the GitAssemblyInfo file -->
+    <WriteCodeFragment Language="C#" OutputFile="$(GitAssemblyInfoFile)" AssemblyAttributes="@(AssemblyAttributes)" />
+  </Target>
+  <Target Name="Delete PDBs" AfterTargets="Build" Condition=" '$(Configuration)' != 'Debug' ">
+    <Exec Command="del $(OutputPath)*.pdb" />
+  </Target>
+  <Target Name="ZipOutputPath" AfterTargets="Build" Condition="'$(Configuration)' == 'Beta'">
+    <PropertyGroup>
+      <StringDate>$([System.DateTime]::Now.ToString('yyyy-MM-dd'))</StringDate>
+    </PropertyGroup>
+    <ZipDirectory SourceDirectory="$(OutputPath)" DestinationFile="$(OutputPath)\..\$(AssemblyName)_$(Configuration)@$(BuildBranch)_$(StringDate).zip" Overwrite="true" />
+  </Target>
 </Project>

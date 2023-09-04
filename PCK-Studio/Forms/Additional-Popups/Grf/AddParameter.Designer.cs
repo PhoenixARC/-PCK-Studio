@@ -34,6 +34,8 @@
             this.CancelButton = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
             this.CreateButton = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
             this.ValueTextBox = new MetroFramework.Controls.MetroTextBox();
+            this.availableComboBox = new MetroFramework.Controls.MetroComboBox();
+            metroLabel1 = new MetroFramework.Controls.MetroLabel();
             this.NameTextBox = new MetroFramework.Controls.MetroTextBox();
             metroLabel2 = new MetroFramework.Controls.MetroLabel();
             metroLabel1 = new MetroFramework.Controls.MetroLabel();
@@ -181,6 +183,20 @@
             this.NameTextBox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.NameTextBox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
             // 
+            // availableComboBox
+            // 
+            this.availableComboBox.FormattingEnabled = true;
+            this.availableComboBox.ItemHeight = 23;
+            this.availableComboBox.Location = new System.Drawing.Point(72, 21);
+            this.availableComboBox.Name = "availableComboBox";
+            this.availableComboBox.Size = new System.Drawing.Size(165, 29);
+            this.availableComboBox.Style = MetroFramework.MetroColorStyle.Silver;
+            this.availableComboBox.TabIndex = 6;
+            this.availableComboBox.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.availableComboBox.UseSelectable = true;
+            this.availableComboBox.Visible = false;
+            this.availableComboBox.SelectedIndexChanged += new System.EventHandler(this.availableComboBox_SelectedIndexChanged);
+            // 
             // AddParameter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -213,5 +229,6 @@
         private MetroFramework.Controls.MetroTextBox NameTextBox;
         private CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton CancelButton;
         private CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton CreateButton;
+        private MetroFramework.Controls.MetroComboBox availableComboBox;
     }
 }

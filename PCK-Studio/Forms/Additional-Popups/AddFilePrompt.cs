@@ -13,7 +13,7 @@ namespace PckStudio.Popups
         /// otherwise <see cref="string.Empty"/>
         /// </summary>
         public string Filepath => DialogResult == DialogResult.OK ? InputTextBox.Text : string.Empty;
-		public PckFile.FileData.FileType Filetype => (PckFile.FileData.FileType)FileTypeComboBox.SelectedIndex;
+		public PckFileType Filetype => (PckFileType)FileTypeComboBox.SelectedIndex;
 
 		public AddFilePrompt(string initialText) : this(initialText, -1)
 		{ }

@@ -46,19 +46,19 @@
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.compressionLvlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.levelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.noneToolStripMenuItem = new PckStudio.ToolStripRadioButtonMenuItem();
-            this.compressedToolStripMenuItem = new PckStudio.ToolStripRadioButtonMenuItem();
-            this.compressedRLEToolStripMenuItem = new PckStudio.ToolStripRadioButtonMenuItem();
-            this.compressedRLECRCToolStripMenuItem = new PckStudio.ToolStripRadioButtonMenuItem();
+            this.noneToolStripMenuItem = new PckStudio.ToolboxItems.ToolStripRadioButtonMenuItem();
+            this.compressedToolStripMenuItem = new PckStudio.ToolboxItems.ToolStripRadioButtonMenuItem();
+            this.compressedRLEToolStripMenuItem = new PckStudio.ToolboxItems.ToolStripRadioButtonMenuItem();
+            this.compressedRLECRCToolStripMenuItem = new PckStudio.ToolboxItems.ToolStripRadioButtonMenuItem();
             this.typeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.wiiUPSVitaToolStripMenuItem = new PckStudio.ToolStripRadioButtonMenuItem();
-            this.pS3ToolStripMenuItem = new PckStudio.ToolStripRadioButtonMenuItem();
-            this.xbox360ToolStripMenuItem = new PckStudio.ToolStripRadioButtonMenuItem();
-            this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
+            this.wiiUPSVitaToolStripMenuItem = new PckStudio.ToolboxItems.ToolStripRadioButtonMenuItem();
+            this.pS3ToolStripMenuItem = new PckStudio.ToolboxItems.ToolStripRadioButtonMenuItem();
+            this.xbox360ToolStripMenuItem = new PckStudio.ToolboxItems.ToolStripRadioButtonMenuItem();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.MessageContextMenu.SuspendLayout();
             this.DetailContextMenu.SuspendLayout();
             this.menuStrip1.SuspendLayout();
-            this.metroPanel1.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // GrfTreeView
@@ -66,11 +66,11 @@
             this.GrfTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.GrfTreeView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.GrfTreeView.ContextMenuStrip = this.MessageContextMenu;
-            this.GrfTreeView.Dock = System.Windows.Forms.DockStyle.Left;
+            this.GrfTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GrfTreeView.ForeColor = System.Drawing.SystemColors.MenuBar;
-            this.GrfTreeView.Location = new System.Drawing.Point(0, 0);
+            this.GrfTreeView.Location = new System.Drawing.Point(3, 23);
             this.GrfTreeView.Name = "GrfTreeView";
-            this.GrfTreeView.Size = new System.Drawing.Size(223, 312);
+            this.GrfTreeView.Size = new System.Drawing.Size(219, 312);
             this.GrfTreeView.TabIndex = 0;
             this.GrfTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.GrfTreeView_AfterSelect);
             this.GrfTreeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GrfTreeView_KeyDown);
@@ -102,11 +102,11 @@
             this.GrfParametersTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.GrfParametersTreeView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.GrfParametersTreeView.ContextMenuStrip = this.DetailContextMenu;
-            this.GrfParametersTreeView.Dock = System.Windows.Forms.DockStyle.Right;
+            this.GrfParametersTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GrfParametersTreeView.ForeColor = System.Drawing.SystemColors.MenuBar;
-            this.GrfParametersTreeView.Location = new System.Drawing.Point(227, 0);
+            this.GrfParametersTreeView.Location = new System.Drawing.Point(228, 23);
             this.GrfParametersTreeView.Name = "GrfParametersTreeView";
-            this.GrfParametersTreeView.Size = new System.Drawing.Size(223, 312);
+            this.GrfParametersTreeView.Size = new System.Drawing.Size(219, 312);
             this.GrfParametersTreeView.TabIndex = 1;
             this.GrfParametersTreeView.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.GrfDetailsTreeView_NodeMouseDoubleClick);
             this.GrfParametersTreeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GrfDetailsTreeView_KeyDown);
@@ -136,7 +136,7 @@
             // metroLabel1
             // 
             this.metroLabel1.AutoSize = true;
-            this.metroLabel1.Location = new System.Drawing.Point(25, 88);
+            this.metroLabel1.Location = new System.Drawing.Point(3, 0);
             this.metroLabel1.Name = "metroLabel1";
             this.metroLabel1.Size = new System.Drawing.Size(73, 19);
             this.metroLabel1.TabIndex = 2;
@@ -146,9 +146,8 @@
             // 
             // metroLabel2
             // 
-            this.metroLabel2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.metroLabel2.AutoSize = true;
-            this.metroLabel2.Location = new System.Drawing.Point(252, 88);
+            this.metroLabel2.Location = new System.Drawing.Point(228, 0);
             this.metroLabel2.Name = "metroLabel2";
             this.metroLabel2.Size = new System.Drawing.Size(75, 19);
             this.metroLabel2.TabIndex = 0;
@@ -292,35 +291,32 @@
             this.xbox360ToolStripMenuItem.Text = "Xbox 360";
             this.xbox360ToolStripMenuItem.CheckedChanged += new System.EventHandler(this.xbox360ToolStripMenuItem_CheckedChanged);
             // 
-            // metroPanel1
+            // tableLayoutPanel1
             // 
-            this.metroPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.metroPanel1.Controls.Add(this.GrfParametersTreeView);
-            this.metroPanel1.Controls.Add(this.GrfTreeView);
-            this.metroPanel1.HorizontalScrollbarBarColor = true;
-            this.metroPanel1.HorizontalScrollbarHighlightOnWheel = false;
-            this.metroPanel1.HorizontalScrollbarSize = 10;
-            this.metroPanel1.Location = new System.Drawing.Point(25, 110);
-            this.metroPanel1.Name = "metroPanel1";
-            this.metroPanel1.Size = new System.Drawing.Size(450, 312);
-            this.metroPanel1.TabIndex = 4;
-            this.metroPanel1.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.metroPanel1.VerticalScrollbarBarColor = true;
-            this.metroPanel1.VerticalScrollbarHighlightOnWheel = false;
-            this.metroPanel1.VerticalScrollbarSize = 10;
-            this.metroPanel1.Resize += new System.EventHandler(this.metroPanel1_Resize);
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Controls.Add(this.metroLabel1, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.GrfParametersTreeView, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.GrfTreeView, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.metroLabel2, 1, 0);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(25, 110);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(450, 312);
+            this.tableLayoutPanel1.TabIndex = 4;
             // 
             // GameRuleFileEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(500, 450);
-            this.Controls.Add(this.metroPanel1);
+            this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.menuStrip1);
-            this.Controls.Add(this.metroLabel2);
-            this.Controls.Add(this.metroLabel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
@@ -337,7 +333,8 @@
             this.DetailContextMenu.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.metroPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -359,19 +356,19 @@
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
-        private MetroFramework.Controls.MetroPanel metroPanel1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.ToolStripMenuItem compressionLvlToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem levelToolStripMenuItem;
 
-        private PckStudio.ToolStripRadioButtonMenuItem noneToolStripMenuItem;
-        private PckStudio.ToolStripRadioButtonMenuItem compressedToolStripMenuItem;
-        private PckStudio.ToolStripRadioButtonMenuItem compressedRLEToolStripMenuItem;
-        private PckStudio.ToolStripRadioButtonMenuItem compressedRLECRCToolStripMenuItem;
+        private PckStudio.ToolboxItems.ToolStripRadioButtonMenuItem noneToolStripMenuItem;
+        private PckStudio.ToolboxItems.ToolStripRadioButtonMenuItem compressedToolStripMenuItem;
+        private PckStudio.ToolboxItems.ToolStripRadioButtonMenuItem compressedRLEToolStripMenuItem;
+        private PckStudio.ToolboxItems.ToolStripRadioButtonMenuItem compressedRLECRCToolStripMenuItem;
 
         private System.Windows.Forms.ToolStripMenuItem typeToolStripMenuItem;
 
-        private PckStudio.ToolStripRadioButtonMenuItem wiiUPSVitaToolStripMenuItem;
-        private PckStudio.ToolStripRadioButtonMenuItem pS3ToolStripMenuItem;
-        private PckStudio.ToolStripRadioButtonMenuItem xbox360ToolStripMenuItem;
+        private PckStudio.ToolboxItems.ToolStripRadioButtonMenuItem wiiUPSVitaToolStripMenuItem;
+        private PckStudio.ToolboxItems.ToolStripRadioButtonMenuItem pS3ToolStripMenuItem;
+        private PckStudio.ToolboxItems.ToolStripRadioButtonMenuItem xbox360ToolStripMenuItem;
     }
 }

@@ -10,31 +10,43 @@ using System.IO;
 using System.Text.RegularExpressions;
 
 using Newtonsoft.Json;
-using PckStudio.Classes.FileTypes;
-using System.Text.RegularExpressions;
 using PckStudio.ToolboxItems;
 using OMI.Formats.Pck;
 using PckStudio.Internal;
+using PckStudio.Extensions;
+using System.Runtime.CompilerServices;
+using System.Diagnostics;
+using System.Text;
 
-namespace PckStudio
+namespace PckStudio.Forms
 {
     public partial class GenerateModel : ThemeForm
     {
-        PictureBox skinPreview = new PictureBox();
+        [Obsolete("We don't need a full control to get an image")]
+        private PictureBox skinPreview = new PictureBox();
 
-        eViewDirection direction = eViewDirection.front;
+        private Image _previewImage;
+        public Image PreviewImage => _previewImage;
 
-        enum eViewDirection
+        private ViewDirection direction = ViewDirection.front;
+
+        private enum ViewDirection
         {
             front,
+            right,
             back,
             left,
-            right
         }
 
-        PckFile.PCKProperties boxes;
+        private PckFileData _file;
+        private SkinANIM _ANIM;
 
-        Color backgroundColor = Color.FromArgb(0xff, 0x50, 0x50, 0x50);
+        private static Color _backgroundColor = Color.FromArgb(0xff, 0x50, 0x50, 0x50);
+        private static GraphicsConfig _graphicsConfig = new GraphicsConfig()
+        {
+            InterpolationMode = InterpolationMode.NearestNeighbor,
+            PixelOffsetMode = PixelOffsetMode.HighQuality,
+        };
 
         private static readonly string[] ValidModelBoxTypes = new string[]
         {
@@ -96,7 +108,7 @@ namespace PckStudio
         List<SkinBOX> modelBoxes = new List<SkinBOX>();
         List<ModelOffset> modelOffsets = new List<ModelOffset>();
 
-        class ModelOffset
+        private class ModelOffset
         {
             public string Name;
             public float YOffset;
@@ -106,23 +118,29 @@ namespace PckStudio
                 Name = name;
                 YOffset = yOffset;
             }
-            public ValueTuple<string, string> ToProperty()
+            public (string, string) ToProperty()
             {
                 string value = $"{Name} Y {YOffset}";
-                return new ValueTuple<string, string>("OFFSET", value.Replace(',','.'));
+                return ("OFFSET", value.Replace(',','.'));
             }
         }
 
-
-        public GenerateModel(PckFile.PCKProperties skinProperties, Image texture)
+        public GenerateModel(PckFileData file)
         {
             MessageBox.Show(this, "This feature is now considered deprecated and will no longer recieve updates. A better alternative is currently under development. Use at your own risk.", "Deprecated Feature", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             InitializeComponent();
-            boxes = skinProperties;
-            texturePreview.Image = texture;
+
+            _file = file;
+            if (file.Size > 0)
+            {
+                using (var ms = new MemoryStream(file.Data))
+                {
+                    texturePreview.Image = Image.FromStream(ms);
+                }
+            }
             comboParent.Items.Clear();
-            ValidModelBoxTypes.ToList().ForEach(p => comboParent.Items.Add(p));
-            loadData();
+            comboParent.Items.AddRange(ValidModelBoxTypes);
+            LoadData(file.Properties);
         }
         private static readonly Regex sWhitespace = new Regex(@"\s+");
         public static string ReplaceWhitespace(string input, string replacement)
@@ -130,55 +148,36 @@ namespace PckStudio
             return sWhitespace.Replace(input, replacement);
         }
 
-        //loads data from mode list
-        private void loadData()
+        private void LoadData(PckFileProperties properties)
         {
-            foreach (var property in boxes)
-            {
-                switch (property.Key)
+            comboParent.Enabled = properties.GetProperties("BOX").All(kv => {
+                var box = SkinBOX.FromString(kv.Value);
+                if (ValidModelBoxTypes.Contains(box.Type))
                 {
-                    case "BOX":
-                        {
-                            var box = SkinBOX.FromString(property.Value);
-
-                            string name = box.Type;
-                            if (ValidModelBoxTypes.Contains(name))
-                            {
-                                modelBoxes.Add(box);
-                            }
-
-                            comboParent.Enabled = true;
-                            break;
-                        }
-
-                    case "OFFSET":
-                        {
-                            string[] offset = ReplaceWhitespace(property.Value, ",").TrimEnd('\n', '\r', ' ').Split(',');
-                            if (offset.Length < 3) continue;
-                            string name = offset[0];
-                            string dimension = offset[1]; // "Y"
-                            if (dimension != "Y") continue;
-                            float value = float.Parse(offset[2]);
-                            if (ValidModelOffsetTypes.Contains(name))
-                                modelOffsets.Add(new ModelOffset(name, value));
-                            break;
-                        }
-                    case "ANIM":
-                        {
-                            try
-                            {
-                                //ANIM = (eANIMFlags)int.Parse(property.Item2, System.Globalization.NumberStyles.HexNumber);
-                            }
-                            catch (Exception ex)
-                            {
-                                Console.WriteLine(ex.Message);
-                            }
-                            break;
-                        }
+                    modelBoxes.Add(box);
+                    return true;
                 }
-            }
-            updateListView();
-            render();
+                return false;
+            });
+            properties.GetProperties("OFFSET").All(kv => {
+                string[] offset = ReplaceWhitespace(kv.Value, ",").TrimEnd('\n', '\r', ' ').Split(',');
+                if (offset.Length < 3)
+                    return false;
+                string name = offset[0];
+                if (offset[1] != "Y")
+                    return false;
+                float value = float.Parse(offset[2]);
+                if (ValidModelOffsetTypes.Contains(name))
+                {
+                    modelOffsets.Add(new ModelOffset(name, value));
+                    return true;
+                }
+                return false;
+            });
+
+            _ANIM = properties.GetPropertyValue("ANIM", SkinANIM.FromString);
+            UpdateListView();
+            Rerender();
         }
 
         //Rename model part/item
@@ -187,25 +186,32 @@ namespace PckStudio
             listViewBoxes.SelectedItems[0].BeginEdit();
         }
 
+        private void Rerender([CallerMemberName] string caller = default!)
+        {
+            Debug.WriteLine($"Call from {caller}", category: nameof(Rerender));
+            Render(this, EventArgs.Empty);
+            if (checkTextureGenerate.Checked)
+                GenerateUVTextureMap();
+        }
+
         // Graphic Rendering
         // Builds an image based on the view
-        private void render(object sender = null, EventArgs e = null)
+        private void Render(object sender, EventArgs e)
         {
-            //buttonTemplate.Enabled = listViewBoxes.Items.Count == 0;
-            //setZ(); //Organizes Z layers
-            Bitmap bitmapModelPreview = new Bitmap(displayBox.Width, displayBox.Height); //Creates Model Display layer
+            buttonTemplate.Enabled = listViewBoxes.Items.Count == 0;
+            OrganizesZLayer();
+            Bitmap bitmapModelPreview = new Bitmap(displayBox.Width, displayBox.Height); // Creates Model Display layer
             using (Graphics graphics = Graphics.FromImage(bitmapModelPreview))
             {
-                graphics.Clear(backgroundColor);
-                graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
-                // makes sure it reders/draws the full pixel in top left corner
-                graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                graphics.ApplyConfig(_graphicsConfig);
+                graphics.Clear(_backgroundColor);
+
                 float headbodyY = (displayBox.Height / 2) + 25; //  25
                 float armY = (displayBox.Height / 2) + 35; // -60;
                 float legY = (displayBox.Height / 2) + 85; // -80;
                 float groundLevel = (displayBox.Height / 2) + 145;
                 graphics.DrawLine(Pens.White, 0, groundLevel, displayBox.Width, groundLevel);
-                float gfx_scale = texturePreview.Image.Width / 64; // used for displaying larger graphics properly; 64 is the base skin width for all models
+                float renderScale = texturePreview.Image.Width / 64; // used for displaying larger graphics properly; 64 is the base skin width for all models
 
                 // Chooses Render settings based on current direction
                 foreach (ListViewItem listViewItem in listViewBoxes.Items)
@@ -217,7 +223,7 @@ namespace PckStudio
 
                     switch (direction)
                     {
-                        case eViewDirection.front:
+                        case ViewDirection.front:
                             {
                                 //Sets X & Y based on model part class
                                 // listViewItem.Text -> part.Type
@@ -280,7 +286,7 @@ namespace PckStudio
                                         break;
                                 }
 
-                                //Maps imported Texture if auto texture is disabled
+                                // Maps imported Texture if texture generation is disabled
                                 if (!checkTextureGenerate.Checked)
                                 {
                                     RectangleF destRect = new RectangleF(
@@ -289,10 +295,10 @@ namespace PckStudio
                                         part.Size.X * 5,
                                         part.Size.Y * 5);
                                     RectangleF srcRect = new RectangleF(
-                                        (part.UV.X + part.Size.Z) * gfx_scale,
-                                        (part.UV.Y + part.Size.Z) * gfx_scale,
-                                        part.Size.X * gfx_scale,
-                                        part.Size.Y * gfx_scale);
+                                        (part.UV.X + part.Size.Z) * renderScale,
+                                        (part.UV.Y + part.Size.Z) * renderScale,
+                                        part.Size.X * renderScale,
+                                        part.Size.Y * renderScale);
                                     graphics.DrawImage(texturePreview.Image, destRect, srcRect, GraphicsUnit.Pixel);
                                 }
                                 else
@@ -303,7 +309,7 @@ namespace PckStudio
                                 break;
                             }
 
-                        case eViewDirection.left:
+                        case ViewDirection.left:
                             {
                                 //Sets X & Y based on model part class
                                 switch (part.Type)
@@ -353,7 +359,7 @@ namespace PckStudio
                                         break;
                                 }
 
-                                //Maps imported Texture if auto texture is disabled
+                                // Maps imported Texture if auto texture is disabled
                                 if (!checkTextureGenerate.Checked)
                                 {
                                     RectangleF destRect = new RectangleF(
@@ -362,10 +368,10 @@ namespace PckStudio
                                         part.Size.Z * 5,
                                         part.Size.Y * 5);
                                     RectangleF srcRect = new RectangleF(
-                                        (part.UV.X + part.Size.Z + part.Size.X) * gfx_scale,
-                                        (part.UV.Y + part.Size.Z) * gfx_scale,
-                                        part.Size.Z * gfx_scale,
-                                        part.Size.Y * gfx_scale);
+                                        (part.UV.X + part.Size.Z + part.Size.X) * renderScale,
+                                        (part.UV.Y + part.Size.Z) * renderScale,
+                                        part.Size.Z * renderScale,
+                                        part.Size.Y * renderScale);
                                     graphics.DrawImage(texturePreview.Image, destRect, srcRect, GraphicsUnit.Pixel);
                                 }
                                 else
@@ -377,7 +383,7 @@ namespace PckStudio
                                 break;
                             }
 
-                        case eViewDirection.back:
+                        case ViewDirection.back:
                             {
                                 //Sets X & Y based on model part class
                                 switch (part.Type)
@@ -440,10 +446,10 @@ namespace PckStudio
                                         part.Size.X * 5,
                                         part.Size.Y * 5);
                                     RectangleF srcRect = new RectangleF(
-                                        (part.UV.X + part.Size.Z * 2 + part.Size.X) * gfx_scale,
-                                        (part.UV.Y + part.Size.Z) * gfx_scale,
-                                        part.Size.X * gfx_scale,
-                                        part.Size.Y * gfx_scale);
+                                        (part.UV.X + part.Size.Z * 2 + part.Size.X) * renderScale,
+                                        (part.UV.Y + part.Size.Z) * renderScale,
+                                        part.Size.X * renderScale,
+                                        part.Size.Y * renderScale);
                                     graphics.DrawImage(texturePreview.Image, destRect, srcRect, GraphicsUnit.Pixel);
                                 }
                                 else
@@ -455,7 +461,7 @@ namespace PckStudio
                                 break;
                             }
 
-                        case eViewDirection.right:
+                        case ViewDirection.right:
                             //Sets X & Y based on model part class
                             switch (part.Type)
                             {
@@ -512,10 +518,10 @@ namespace PckStudio
                                     part.Size.Z * 5,
                                     part.Size.Y * 5);
                                 RectangleF srcRect = new RectangleF(
-                                    (part.UV.X + part.Size.Z + part.Size.X) * gfx_scale,
-                                    (part.UV.Y + part.Size.Z) * gfx_scale,
-                                    part.Size.Z * gfx_scale,
-                                    part.Size.Y * gfx_scale);
+                                    (part.UV.X + part.Size.Z + part.Size.X) * renderScale,
+                                    (part.UV.Y + part.Size.Z) * renderScale,
+                                    part.Size.Z * renderScale,
+                                    part.Size.Y * renderScale);
                                 graphics.DrawImage(texturePreview.Image, destRect, srcRect, GraphicsUnit.Pixel);
                             }
                             else
@@ -533,290 +539,294 @@ namespace PckStudio
                 if (checkGuide.Checked)
                     DrawGuideLines(graphics);
             }
-            displayBox.Image = bitmapModelPreview; // Sets created preview graphics to display box
+            displayBox.Image = bitmapModelPreview;
         }
 
-        private void MapTexture()
+        private void GenerateUVTextureMap()
         {
-            if (checkTextureGenerate.Checked)
+            Random rng = new Random();
+            using (Graphics graphics = Graphics.FromImage(texturePreview.Image))
             {
-                Bitmap bitmapAutoTexture = new Bitmap(texturePreview.Width, texturePreview.Height);
-                using (Graphics graphics = Graphics.FromImage(bitmapAutoTexture))
+                graphics.ApplyConfig(_graphicsConfig);
+                foreach (var part in modelBoxes)
                 {
-                    foreach (var part in modelBoxes)
-                    {
-                        float width = part.Size.X * 2;
-                        float height = part.Size.Y * 2;
-                        float length = part.Size.Z * 2;
-                        float u = part.UV.X * 2;
-                        float v = part.UV.Y * 2;
-                        Random r = new Random();
-                        Brush brush = new SolidBrush(Color.FromArgb(r.Next(int.MinValue, int.MaxValue)));
-                        graphics.FillRectangle(brush, u + length, v, width, length);
-                        graphics.FillRectangle(brush, u + length + width, v, width, length);
-                        graphics.FillRectangle(brush, u, length + v, length, height);
-                        graphics.FillRectangle(brush, u + length, v + length, width, height);
-                        graphics.FillRectangle(brush, u + length + width, v + length, width, height);
-                        graphics.FillRectangle(brush, u + length + width * 2, v + length, length, height);
-                    }
+                    float width = part.Size.X * 2;
+                    float height = part.Size.Y * 2;
+                    float length = part.Size.Z * 2;
+                    float u = part.UV.X * 2;
+                    float v = part.UV.Y * 2;
+                    int argb = rng.Next(-16777216, -1); // 0xFF000000 - 0xFFFFFFFF
+                    var color = Color.FromArgb(argb);
+                    Brush brush = new SolidBrush(color);
+                    graphics.FillRectangle(brush, u + length, v, width, length);
+                    graphics.FillRectangle(brush, u + length + width, v, width, length);
+                    graphics.FillRectangle(brush, u, length + v, length, height);
+                    graphics.FillRectangle(brush, u + length, v + length, width, height);
+                    graphics.FillRectangle(brush, u + length + width, v + length, width, height);
+                    graphics.FillRectangle(brush, u + length + width * 2, v + length, length, height);
                 }
-                texturePreview.Image = bitmapAutoTexture;
             }
+            texturePreview.Invalidate();
         }
 
-        //Checks and sets Z layering
-        private void setZ()
+        // Checks and sets Z layering
+        private void OrganizesZLayer()
         {
             foreach (ListViewItem listViewItem in listViewBoxes.Items)
                 listViewItem.SubItems.Add("unchecked");
 
-            if (direction == eViewDirection.front)
+            float surfaceCenter = displayBox.Width / 2;
+
+            switch (direction)
             {
-                int checkedItems = 0;
-                do
-                {
-                    foreach (ListViewItem listViewItemCurrent in listViewBoxes.Items)
+                case ViewDirection.front:
                     {
-                        if (listViewItemCurrent.SubItems[9].Text == "unchecked")
+                        foreach (ListViewItem listViewItemCurrent in listViewBoxes.Items)
                         {
-                            float x = 0;
-                            if (listViewItemCurrent.Tag.ToString() == "HEAD")
-                                x = displayBox.Width / 2;
-                            else if (listViewItemCurrent.Tag.ToString() == "BODY")
-                                x = displayBox.Width / 2;
-                            else if (listViewItemCurrent.Tag.ToString() == "ARM0")
-                                x = 178;
-                            else if (listViewItemCurrent.Tag.ToString() == "ARM1")
-                                x = 228;
-                            else if (listViewItemCurrent.Tag.ToString() == "LEG0")
-                                x = 193;
-                            else if (listViewItemCurrent.Tag.ToString() == "LEG1")
-                                x = 213;
-                            bool flag = false;
-                            int index = listViewItemCurrent.Index;
-                            foreach (ListViewItem listViewItemComparing in listViewBoxes.Items)
+                            if (listViewItemCurrent.SubItems[9].Text == "unchecked")
                             {
-                                if (listViewItemComparing.SubItems[9].Text == "unchecked" && (int)double.Parse(listViewItemCurrent.SubItems[3].Text) + (int)double.Parse(listViewItemCurrent.SubItems[6].Text) < (int)double.Parse(listViewItemComparing.SubItems[3].Text) + (int)double.Parse(listViewItemComparing.SubItems[6].Text))
+                                float x = 0;
+                                if (listViewItemCurrent.Text == "HEAD")
+                                    x = surfaceCenter;
+                                else if (listViewItemCurrent.Text == "BODY")
+                                    x = surfaceCenter;
+                                else if (listViewItemCurrent.Text == "ARM0")
+                                    x = 178;
+                                else if (listViewItemCurrent.Text == "ARM1")
+                                    x = 228;
+                                else if (listViewItemCurrent.Text == "LEG0")
+                                    x = 193;
+                                else if (listViewItemCurrent.Text == "LEG1")
+                                    x = 213;
+
+                                bool flag = false;
+                                int index = listViewItemCurrent.Index;
+                                foreach (ListViewItem listViewItemComparing in listViewBoxes.Items)
                                 {
-                                    if (listViewItemComparing.Index < listViewBoxes.Items.Count + 1)
+                                    var val1 = double.Parse(listViewItemCurrent.SubItems[3].Text) + double.Parse(listViewItemCurrent.SubItems[6].Text);
+                                    var val2 = double.Parse(listViewItemComparing.SubItems[3].Text) + double.Parse(listViewItemComparing.SubItems[6].Text);
+                                    if (listViewItemComparing.SubItems[9].Text == "unchecked" &&
+                                        val1 < val2)
                                     {
-                                        index = listViewItemComparing.Index + 1;
-                                        flag = true;
+                                        if (listViewItemComparing.Index < listViewBoxes.Items.Count + 1)
+                                        {
+                                            index = listViewItemComparing.Index + 1;
+                                            flag = true;
+                                        }
                                     }
                                 }
+                                listViewItemCurrent.SubItems[9].Text = "checked";
+                                if (flag)
+                                {
+                                    ListViewItem listViewItem2 = (ListViewItem)listViewItemCurrent.Clone();
+                                    listViewBoxes.Items.Insert(index, listViewItem2);
+                                    listViewItemCurrent.Remove();
+                                }
                             }
-                            listViewItemCurrent.SubItems[9].Text = "checked";
-                            checkedItems += 1;
-                            if (flag == true)
-                            {
-                                ListViewItem listViewItem2 = (ListViewItem)listViewItemCurrent.Clone();
-                                listViewBoxes.Items.Insert(index, listViewItem2);
-                                listViewItemCurrent.Remove();
-                            }
-                        }
-                        else
-                        {
-                            checkedItems += 1;
                         }
                     }
-                } while (checkedItems < listViewBoxes.Items.Count);
-            }
-            else if (direction == eViewDirection.left)
-            {
-                int checkedItems = 0;
-                do
-                {
-                    foreach (ListViewItem listViewItem1 in listViewBoxes.Items)
+                    break;
+                case ViewDirection.right:
                     {
-                        if (listViewItem1.SubItems[listViewItem1.SubItems.Count - 1].Text == "unchecked")
+                        int checkedItems = 0;
+                        do
                         {
-                            float x = 0;
-                            if (listViewItem1.Tag.ToString() == "HEAD")
-                                x = displayBox.Width / 2;
-                            else if (listViewItem1.Tag.ToString() == "BODY")
-                                x = displayBox.Width / 2;
-                            else if (listViewItem1.Tag.ToString() == "ARM0")
-                                x = 178;
-                            else if (listViewItem1.Tag.ToString() == "ARM1")
-                                x = 228;
-                            else if (listViewItem1.Tag.ToString() == "LEG0")
-                                x = 193;
-                            else if (listViewItem1.Tag.ToString() == "LEG1")
-                                x = 213;
-                            bool flag = false;
-                            int index = listViewItem1.Index;
-                            foreach (ListViewItem listViewItem2 in listViewBoxes.Items)
+                            foreach (ListViewItem listViewItemCurrent in listViewBoxes.Items)
                             {
-                                if (listViewItem2.SubItems[9].Text == "unchecked")
+                                if (listViewItemCurrent.SubItems[listViewItemCurrent.SubItems.Count - 1].Text == "unchecked")
                                 {
-                                    int y = 0;
-                                    if (listViewItem2.Tag.ToString() == "HEAD")
-                                        y = displayBox.Width / 2;
-                                    else if (listViewItem2.Tag.ToString() == "BODY")
-                                        y = displayBox.Width / 2;
-                                    else if (listViewItem2.Tag.ToString() == "ARM0")
-                                        y = 178;
-                                    else if (listViewItem2.Tag.ToString() == "ARM1")
-                                        y = 228;
-                                    else if (listViewItem2.Tag.ToString() == "LEG0")
-                                        y = 193;
-                                    else if (listViewItem2.Tag.ToString() == "LEG1")
-                                        y = 213;
-                                    if ((int)double.Parse(listViewItem1.SubItems[1].Text) + (int)double.Parse(listViewItem1.SubItems[4].Text) + x < (int)double.Parse(listViewItem2.SubItems[1].Text) + (int)double.Parse(listViewItem2.SubItems[4].Text) + y && listViewItem2.Index + 1 < this.listViewBoxes.Items.Count + 1)
+                                    float x = 0;
+                                    if (listViewItemCurrent.Text == "HEAD")
+                                        x = surfaceCenter;
+                                    else if (listViewItemCurrent.Text == "BODY")
+                                        x = surfaceCenter;
+                                    else if (listViewItemCurrent.Text == "ARM0")
+                                        x = 178;
+                                    else if (listViewItemCurrent.Text == "ARM1")
+                                        x = 228;
+                                    else if (listViewItemCurrent.Text == "LEG0")
+                                        x = 193;
+                                    else if (listViewItemCurrent.Text == "LEG1")
+                                        x = 213;
+                                    bool flag = false;
+                                    int index = listViewItemCurrent.Index;
+                                    foreach (ListViewItem listViewItem2 in listViewBoxes.Items)
                                     {
-                                        index = listViewItem2.Index + 1;
-                                        flag = true;
+                                        if (listViewItem2.SubItems[9].Text == "unchecked")
+                                        {
+                                            int y = 0;
+                                            if (listViewItem2.Text == "HEAD")
+                                                y = (int)surfaceCenter;
+                                            else if (listViewItem2.Text == "BODY")
+                                                y = (int)surfaceCenter;
+                                            else if (listViewItem2.Text == "ARM0")
+                                                y = 178;
+                                            else if (listViewItem2.Text == "ARM1")
+                                                y = 228;
+                                            else if (listViewItem2.Text == "LEG0")
+                                                y = 193;
+                                            else if (listViewItem2.Text == "LEG1")
+                                                y = 213;
+                                            if ((int)double.Parse(listViewItemCurrent.SubItems[1].Text) + (int)double.Parse(listViewItemCurrent.SubItems[4].Text) - x > (int)double.Parse(listViewItem2.SubItems[1].Text) + (int)double.Parse(listViewItem2.SubItems[4].Text) + y && listViewItem2.Index + 1 < this.listViewBoxes.Items.Count + 1)
+                                            {
+                                                index = listViewItem2.Index + 1;
+                                                flag = true;
+                                            }
+                                        }
+                                    }
+                                    listViewItemCurrent.SubItems[9].Text = "checked";
+                                    checkedItems += 1;
+                                    if (flag)
+                                    {
+                                        ListViewItem listViewItem2 = (ListViewItem)listViewItemCurrent.Clone();
+                                        listViewBoxes.Items.Insert(index, listViewItem2);
+                                        if (listViewBoxes.SelectedItems.Count != 0)
+                                        {
+                                            //if (selected.Index == listViewItem1.Index)
+                                            //{
+                                            //    selected = listViewItem2;
+                                            //}
+                                        }
+                                        listViewItemCurrent.Remove();
                                     }
                                 }
-                            }
-                            listViewItem1.SubItems[9].Text = "checked";
-                            checkedItems += 1;
-                            if (flag == true)
-                            {
-                                ListViewItem listViewItem2 = (ListViewItem)listViewItem1.Clone();
-                                listViewBoxes.Items.Insert(index, listViewItem2);
-                                if (listViewBoxes.SelectedItems.Count != 0)
+                                else
                                 {
-                                    //if (selected.Index == listViewItem1.Index)
-                                    //{
-                                    //    selected = listViewItem2;
-                                    //}
+                                    checkedItems += 1;
                                 }
-                                listViewItem1.Remove();
                             }
-                        }
-                        else
-                        {
-                            checkedItems += 1;
-                        }
+                        } while (checkedItems < listViewBoxes.Items.Count);
                     }
-                } while (checkedItems < listViewBoxes.Items.Count);
-            }
-            else if (direction == eViewDirection.back)
-            {
-                int checkedItems = 0;
-                do
-                {
-                    foreach (ListViewItem listViewItemCurrent in this.listViewBoxes.Items)
+                    break;
+                case ViewDirection.back:
                     {
-                        if (listViewItemCurrent.SubItems[listViewItemCurrent.SubItems.Count - 1].Text == "unchecked")
+                        int checkedItems = 0;
+                        do
                         {
-                            bool flag = false;
-                            int index = listViewItemCurrent.Index;
-                            foreach (ListViewItem listViewItemComparing in this.listViewBoxes.Items)
+                            foreach (ListViewItem listViewItemCurrent in listViewBoxes.Items)
                             {
-                                if (listViewItemComparing.SubItems[9].Text == "unchecked" && (int)double.Parse(listViewItemCurrent.SubItems[3].Text) + (int)double.Parse(listViewItemCurrent.SubItems[6].Text) > (int)double.Parse(listViewItemComparing.SubItems[3].Text) + (int)double.Parse(listViewItemComparing.SubItems[6].Text))
+                                if (listViewItemCurrent.SubItems[listViewItemCurrent.SubItems.Count - 1].Text == "unchecked")
                                 {
-                                    if (listViewItemComparing.Index < this.listViewBoxes.Items.Count + 1)
+                                    bool flag = false;
+                                    int index = listViewItemCurrent.Index;
+                                    foreach (ListViewItem listViewItemComparing in listViewBoxes.Items)
                                     {
-                                        index = listViewItemComparing.Index + 1;
-                                        flag = true;
+                                        if (listViewItemComparing.SubItems[9].Text == "unchecked" && (int)double.Parse(listViewItemCurrent.SubItems[3].Text) + (int)double.Parse(listViewItemCurrent.SubItems[6].Text) > (int)double.Parse(listViewItemComparing.SubItems[3].Text) + (int)double.Parse(listViewItemComparing.SubItems[6].Text))
+                                        {
+                                            if (listViewItemComparing.Index < listViewBoxes.Items.Count + 1)
+                                            {
+                                                index = listViewItemComparing.Index + 1;
+                                                flag = true;
+                                            }
+                                        }
+                                    }
+                                    listViewItemCurrent.SubItems[9].Text = "checked";
+                                    checkedItems += 1;
+                                    if (flag)
+                                    {
+                                        ListViewItem listViewItem2 = (ListViewItem)listViewItemCurrent.Clone();
+                                        listViewBoxes.Items.Insert(index, listViewItem2);
+                                        if (listViewBoxes.SelectedItems.Count != 0)
+                                        {
+                                            //if (selected.Index == listViewItemCurrent.Index)
+                                            //{
+                                            //    selected = listViewItem2;
+                                            //}
+                                        }
+                                        listViewItemCurrent.Remove();
                                     }
                                 }
-                            }
-                            listViewItemCurrent.SubItems[9].Text = "checked";
-                            checkedItems += 1;
-                            if (flag == true)
-                            {
-                                ListViewItem listViewItem2 = (ListViewItem)listViewItemCurrent.Clone();
-                                listViewBoxes.Items.Insert(index, listViewItem2);
-                                if (listViewBoxes.SelectedItems.Count != 0)
+                                else
                                 {
-                                    //if (selected.Index == listViewItemCurrent.Index)
-                                    //{
-                                    //    selected = listViewItem2;
-                                    //}
+                                    checkedItems += 1;
                                 }
-                                listViewItemCurrent.Remove();
                             }
-                        }
-                        else
-                        {
-                            checkedItems += 1;
-                        }
+                        } while (checkedItems < listViewBoxes.Items.Count);
                     }
-                } while (checkedItems < listViewBoxes.Items.Count);
-            }
-            else if (direction == eViewDirection.right)
-            {
-                int checkedItems = 0;
-                do
-                {
-                    foreach (ListViewItem listViewItem1 in listViewBoxes.Items)
+                    break;
+                case ViewDirection.left:
                     {
-                        if (listViewItem1.SubItems[listViewItem1.SubItems.Count - 1].Text == "unchecked")
+                        int checkedItems = 0;
+                        do
                         {
-                            float x = 0;
-                            if (listViewItem1.Tag.ToString() == "HEAD")
-                                x = displayBox.Width / 2;
-                            else if (listViewItem1.Tag.ToString() == "BODY")
-                                x = displayBox.Width / 2;
-                            else if (listViewItem1.Tag.ToString() == "ARM0")
-                                x = 178;
-                            else if (listViewItem1.Tag.ToString() == "ARM1")
-                                x = 228;
-                            else if (listViewItem1.Tag.ToString() == "LEG0")
-                                x = 193;
-                            else if (listViewItem1.Tag.ToString() == "LEG1")
-                                x = 213;
-                            bool flag = false;
-                            int index = listViewItem1.Index;
-                            foreach (ListViewItem listViewItem2 in listViewBoxes.Items)
+                            foreach (ListViewItem listViewItemCurrent in listViewBoxes.Items)
                             {
-                                if (listViewItem2.SubItems[9].Text == "unchecked")
+                                if (listViewItemCurrent.SubItems[listViewItemCurrent.SubItems.Count - 1].Text == "unchecked")
                                 {
-                                    int y = 0;
-                                    if (listViewItem2.Tag.ToString() == "HEAD")
-                                        y = displayBox.Width / 2;
-                                    else if (listViewItem2.Tag.ToString() == "BODY")
-                                        y = displayBox.Width / 2;
-                                    else if (listViewItem2.Tag.ToString() == "ARM0")
-                                        y = 178;
-                                    else if (listViewItem2.Tag.ToString() == "ARM1")
-                                        y = 228;
-                                    else if (listViewItem2.Tag.ToString() == "LEG0")
-                                        y = 193;
-                                    else if (listViewItem2.Tag.ToString() == "LEG1")
-                                        y = 213;
-                                    if ((int)double.Parse(listViewItem1.SubItems[1].Text) + (int)double.Parse(listViewItem1.SubItems[4].Text) - x > (int)double.Parse(listViewItem2.SubItems[1].Text) + (int)double.Parse(listViewItem2.SubItems[4].Text) + y && listViewItem2.Index + 1 < this.listViewBoxes.Items.Count + 1)
+                                    float x = 0;
+                                    if (listViewItemCurrent.Text == "HEAD")
+                                        x = surfaceCenter;
+                                    else if (listViewItemCurrent.Text == "BODY")
+                                        x = surfaceCenter;
+                                    else if (listViewItemCurrent.Text == "ARM0")
+                                        x = 178;
+                                    else if (listViewItemCurrent.Text == "ARM1")
+                                        x = 228;
+                                    else if (listViewItemCurrent.Text == "LEG0")
+                                        x = 193;
+                                    else if (listViewItemCurrent.Text == "LEG1")
+                                        x = 213;
+                                    bool flag = false;
+                                    int index = listViewItemCurrent.Index;
+                                    foreach (ListViewItem listViewItem2 in listViewBoxes.Items)
                                     {
-                                        index = listViewItem2.Index + 1;
-                                        flag = true;
+                                        if (listViewItem2.SubItems[9].Text == "unchecked")
+                                        {
+                                            int y = 0;
+                                            if (listViewItem2.Text == "HEAD")
+                                                y = (int)surfaceCenter;
+                                            else if (listViewItem2.Text == "BODY")
+                                                y = (int)surfaceCenter;
+                                            else if (listViewItem2.Text == "ARM0")
+                                                y = 178;
+                                            else if (listViewItem2.Text == "ARM1")
+                                                y = 228;
+                                            else if (listViewItem2.Text == "LEG0")
+                                                y = 193;
+                                            else if (listViewItem2.Text == "LEG1")
+                                                y = 213;
+                                            if ((int)double.Parse(listViewItemCurrent.SubItems[1].Text) + (int)double.Parse(listViewItemCurrent.SubItems[4].Text) + x < (int)double.Parse(listViewItem2.SubItems[1].Text) + (int)double.Parse(listViewItem2.SubItems[4].Text) + y && listViewItem2.Index + 1 < this.listViewBoxes.Items.Count + 1)
+                                            {
+                                                index = listViewItem2.Index + 1;
+                                                flag = true;
+                                            }
+                                        }
+                                    }
+                                    listViewItemCurrent.SubItems[9].Text = "checked";
+                                    checkedItems += 1;
+                                    if (flag == true)
+                                    {
+                                        ListViewItem listViewItem2 = (ListViewItem)listViewItemCurrent.Clone();
+                                        listViewBoxes.Items.Insert(index, listViewItem2);
+                                        if (listViewBoxes.SelectedItems.Count != 0)
+                                        {
+                                            //if (selected.Index == listViewItem1.Index)
+                                            //{
+                                            //    selected = listViewItem2;
+                                            //}
+                                        }
+                                        listViewItemCurrent.Remove();
                                     }
                                 }
-                            }
-                            listViewItem1.SubItems[9].Text = "checked";
-                            checkedItems += 1;
-                            if (flag == true)
-                            {
-                                ListViewItem listViewItem2 = (ListViewItem)listViewItem1.Clone();
-                                listViewBoxes.Items.Insert(index, listViewItem2);
-                                if (listViewBoxes.SelectedItems.Count != 0)
+                                else
                                 {
-                                    //if (selected.Index == listViewItem1.Index)
-                                    //{
-                                    //    selected = listViewItem2;
-                                    //}
+                                    checkedItems += 1;
                                 }
-                                listViewItem1.Remove();
                             }
-                        }
-                        else
-                        {
-                            checkedItems += 1;
-                        }
+                        } while (checkedItems < listViewBoxes.Items.Count);
                     }
-                } while (checkedItems < listViewBoxes.Items.Count);
+                    break;
+                default:
+                    break;
             }
         }
 
         private void DrawGuideLines(Graphics g)
         {
-            int centerHeightPoint = displayBox.Height / 2;
-            int centerWidthPoint = displayBox.Width / 2;
-            int headbodyY = centerHeightPoint + 25; //25
-            int legY = centerHeightPoint + 85; // - 80;
-            bool isSide = direction == eViewDirection.left || direction == eViewDirection.right;
+            Point center = new Point(displayBox.Height / 2, displayBox.Width / 2);
+            int headbodyY = center.Y + 25; //25
+            int legY = center.Y + 85; // - 80;
+            bool isSide = direction == ViewDirection.left || direction == ViewDirection.right;
             if (!isSide)
             {
                 g.DrawLine(Pens.Red, 0, headbodyY + float.Parse(offsetHead.Text) * 5, displayBox.Width, headbodyY + float.Parse(offsetHead.Text) * 5);
@@ -824,11 +834,11 @@ namespace PckStudio
                 g.DrawLine(Pens.Blue, 0, headbodyY + float.Parse(offsetArms.Text) * 5, displayBox.Width, headbodyY + float.Parse(offsetArms.Text) * 5);
                 g.DrawLine(Pens.Purple, 0, legY + float.Parse(offsetLegs.Text) * 5, displayBox.Width, legY + float.Parse(offsetLegs.Text) * 5);
             }
-            g.DrawLine(Pens.Red, centerWidthPoint, 0, centerWidthPoint, displayBox.Height);
-            g.DrawLine(Pens.Blue, centerWidthPoint + 30, 0, centerWidthPoint + 30, displayBox.Height);
-            g.DrawLine(Pens.Blue, centerWidthPoint - 30, 0, centerWidthPoint - 30, displayBox.Height);
-            g.DrawLine(Pens.Purple, centerWidthPoint - 10, 0, centerWidthPoint - 10, displayBox.Height);
-            g.DrawLine(Pens.Purple, centerWidthPoint + 10, 0, centerWidthPoint + 10, displayBox.Height);
+            g.DrawLine(Pens.Red, center.X, 0, center.X, displayBox.Height);
+            g.DrawLine(Pens.Blue, center.X + 30, 0, center.X + 30, displayBox.Height);
+            g.DrawLine(Pens.Blue, center.X - 30, 0, center.X - 30, displayBox.Height);
+            g.DrawLine(Pens.Purple, center.X - 10, 0, center.X - 10, displayBox.Height);
+            g.DrawLine(Pens.Purple, center.X + 10, 0, center .X + 10, displayBox.Height);
         }
 
         private void DrawArmorOffsets(Graphics g)
@@ -840,7 +850,7 @@ namespace PckStudio
             int legY = centerPointHeight + 85; // - 80;
             SolidBrush semiTransBrush = new SolidBrush(Color.FromArgb(80, 50, 50, 75));
             g.FillRectangle(semiTransBrush, centerPointWidth, (float)(headbodyY - 40 /*+ offsetHelmet.Value * 5*/), 40, 40); // Helmet
-            bool isSide = direction == eViewDirection.left || direction == eViewDirection.right;
+            bool isSide = direction == ViewDirection.left || direction == ViewDirection.right;
             if (isSide)
             {
                 g.FillRectangle(semiTransBrush, centerPointWidth - 10, headbodyY, 20, 60); // Chest
@@ -861,27 +871,21 @@ namespace PckStudio
 
         }
 
-
-        //Loads Columns
         private void generateModel_Load(object sender, EventArgs e)
         {
             if (Screen.PrimaryScreen.Bounds.Height >= 780 && Screen.PrimaryScreen.Bounds.Width >= 1080) {
                 return;
             }
-            render();
+            Rerender();
         }
 
-
-        //Creates Item
         private void createToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            modelBoxes.Add(SkinBOX.FromString("NEW_BOX 0 0 0 1 1 1 0 0 0 0 0"));
-            updateListView();
-            render();
+            modelBoxes.Add(SkinBOX.Empty);
+            UpdateListView();
+            Rerender();
         }
 
-
-        //Manages the selection of a item
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
             changeColorToolStripMenuItem.Visible = false;
@@ -900,7 +904,7 @@ namespace PckStudio
                 SizeZUpDown.Value = (decimal)part.Size.Z;
                 TextureXUpDown.Value = (decimal)part.UV.X;
                 TextureYUpDown.Value = (decimal)part.UV.Y;
-                render();
+                Rerender();
             }
         }
 
@@ -923,7 +927,7 @@ namespace PckStudio
                 TextureXUpDown.Enabled = true;
                 TextureYUpDown.Enabled = true;
             }
-            //render();
+            Rerender();
         }
 
         private void SizeXUpDown_ValueChanged(object sender, EventArgs e)
@@ -933,8 +937,8 @@ namespace PckStudio
             {
                 part.Size.X = (float)SizeXUpDown.Value;
             }
-            updateListView();
-            render();
+            UpdateListView();
+            Rerender();
         }
 
         private void SizeYUpDown_ValueChanged(object sender, EventArgs e)
@@ -944,8 +948,8 @@ namespace PckStudio
             {
                 part.Size.Y = (float)SizeYUpDown.Value;
             }
-            updateListView();
-            render();
+            UpdateListView();
+            Rerender();
         }
 
         private void SizeZUpDown_ValueChanged(object sender, EventArgs e)
@@ -955,8 +959,8 @@ namespace PckStudio
             {
                 part.Size.Z = (float)SizeZUpDown.Value;
             }
-            updateListView();
-            render();
+            UpdateListView();
+            Rerender();
         }
 
         private void PosXUpDown_ValueChanged(object sender, EventArgs e)
@@ -966,8 +970,8 @@ namespace PckStudio
             {
                 part.Pos.X = (float)PosXUpDown.Value;
             }
-            updateListView();
-            render();
+            UpdateListView();
+            Rerender();
         }
 
 
@@ -978,8 +982,8 @@ namespace PckStudio
             {
                 part.Pos.Y = (float)PosYUpDown.Value;
             }
-            updateListView();
-            render();
+            UpdateListView();
+            Rerender();
         }
 
 
@@ -990,36 +994,28 @@ namespace PckStudio
             {
                 part.Pos.Z = (float)PosZUpDown.Value;
             }
-            updateListView();
-            render();
+            UpdateListView();
+            Rerender();
         }
 
         private void rotateRightBtn_Click(object sender, EventArgs e)
         {
-            if (direction == eViewDirection.front)
-                direction = eViewDirection.left;
-            else if (direction == eViewDirection.left)
-                direction = eViewDirection.back;
-            else if (direction == eViewDirection.back)
-                direction = eViewDirection.right;
-            else if (direction == eViewDirection.right)
-                direction = eViewDirection.front;
+            if (direction == ViewDirection.front)
+                direction = ViewDirection.left;
+            else
+                --direction;
             labelView.Text = $"View: {direction}";
-            render();
+            Rerender();
         }
 
         private void rotateLeftBtn_Click(object sender, EventArgs e)
         {
-            if (direction == eViewDirection.front)
-                direction = eViewDirection.right;
-            else if (direction == eViewDirection.right)
-                direction = eViewDirection.back;
-            else if (direction == eViewDirection.back)
-                direction = eViewDirection.left;
-            else if (direction == eViewDirection.left)
-                direction = eViewDirection.front;
+            if (direction == ViewDirection.left)
+                direction = ViewDirection.front;
+            else
+                ++direction;
             labelView.Text = $"View: {direction}";
-            render();
+            Rerender();
         }
 
 
@@ -1031,8 +1027,8 @@ namespace PckStudio
             {
                 part.UV.X = (int)TextureXUpDown.Value;
             }
-            updateListView();
-            render();
+            UpdateListView();
+            Rerender();
         }
 
 
@@ -1044,8 +1040,8 @@ namespace PckStudio
             {
                 part.UV.Y = (int)TextureYUpDown.Value;
             }
-            updateListView();
-            render();
+            UpdateListView();
+            Rerender();
         }
 
 
@@ -1053,19 +1049,18 @@ namespace PckStudio
         private void buttonEXPORT_Click(object sender, EventArgs e)
         {
             Bitmap bitmap = new Bitmap(texturePreview.Image, 64, 64);
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            using SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "PNG Image Files | *.png";
-            if (saveFileDialog.ShowDialog() != DialogResult.OK)
-                return;
-            bitmap.Save(saveFileDialog.FileName, ImageFormat.Png);
-            saveFileDialog.Dispose();
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                bitmap.Save(saveFileDialog.FileName, ImageFormat.Png);
+            }
         }
 
 
         //Imports Skin Texture
         private void buttonIMPORT_Click(object sender, EventArgs e)
         {
-
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "PNG Image Files | *.png";
             openFileDialog.Title = "Select Skin Texture";
@@ -1077,14 +1072,14 @@ namespace PckStudio
                     if ((img.Width == img.Height || img.Height == img.Width / 2))
                     {
                         checkTextureGenerate.Checked = false;
-                        Bitmap bitmap = new Bitmap(img.Width, img.Width);
-                        using (Graphics graphics = Graphics.FromImage(bitmap))
+                        texturePreview.Image ??= new Bitmap(img);
+                        using (Graphics graphics = Graphics.FromImage(texturePreview.Image))
                         {
+                            graphics.ApplyConfig(_graphicsConfig);
                             graphics.DrawImage(img, 0, 0, img.Width, img.Height);
-                            graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
                         }
-                        texturePreview.Image = bitmap;
-                        render();
+                        texturePreview.Invalidate();
+                        Rerender();
                     }
                     else
 					{
@@ -1094,54 +1089,51 @@ namespace PckStudio
             }
         }
 
-
-        //Creates Model Data and Finalizes
+        // Creates Model Data and Finalizes
         private void buttonDone_Click(object sender, EventArgs e)
         {
-            Bitmap bitmap1 = new Bitmap(displayBox.Width, displayBox.Height);
             foreach (var part in modelBoxes)
             {
-                boxes.Add("BOX", part);
+                _file.Properties.Add("BOX", part);
             }
 
-            Bitmap bitmap2 = new Bitmap(64, 64);
-            using (Graphics graphics = Graphics.FromImage(bitmap2))
-            {
-                graphics.DrawImage(texturePreview.Image, 0, 0, 64, 64);
-                graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
-            }
-            skinPreview.Image = bitmap1;
-            texturePreview.Image.Save(Application.StartupPath + "\\temp.png");
+            //Bitmap bitmap2 = new Bitmap(64, 64);
+            //using (Graphics graphics = Graphics.FromImage(bitmap2))
+            //{
+            //    graphics.ApplyConfig(_graphicsConfig);
+            //    graphics.DrawImage(uvPictureBox.Image, 0, 0, 64, 64);
+            //}
+            _previewImage = new Bitmap(displayBox.Width, displayBox.Height);
             Close();
         }
 
-        //Renders model after texture change
+        // Renders model after texture change
         private void texturePreview_BackgroundImageChanged(object sender, EventArgs e)
         {
-            render();
+            Rerender();
         }
 
-        //Trigger Dialog to select model part/item color
+        // Trigger Dialog to select model part/item color
         private void listView1_DoubleClick(object sender, EventArgs e)
         {
             ColorDialog colorDialog = new ColorDialog();
             if (colorDialog.ShowDialog() == DialogResult.OK)
                 listViewBoxes.SelectedItems[0].ForeColor = colorDialog.Color;
-            render();
+            Rerender();
         }
 
 
         //Re-renders head with updated x-offset
         private void offsetHead_TextChanged(object sender, EventArgs e)
         {
-            render();
+            Rerender();
         }
 
 
         //Re-renders body with updated x-offset
         private void offsetBody_TextAlignChanged(object sender, EventArgs e)
         {
-            render();
+            Rerender();
         }
 
 
@@ -1155,11 +1147,11 @@ namespace PckStudio
             modelBoxes.Add(SkinBOX.FromString("LEG0 -2 0 -2 4 12 4 0 16 0 0 0"));
             modelBoxes.Add(SkinBOX.FromString("LEG1 -2 0 -2 4 12 4 0 16 0 1 0"));
             comboParent.Enabled = true;
-            updateListView();
-            render();
+            UpdateListView();
+            Rerender();
         }
 
-        private void updateListView()
+        private void UpdateListView()
         {
             listViewBoxes.Items.Clear();
             foreach (var part in modelBoxes)
@@ -1178,7 +1170,7 @@ namespace PckStudio
             }
         }
 
-        //Exports model (int)doubleo reusable project file
+        // Exports model as csm file
         private void buttonExportModel_Click(object sender, EventArgs e)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
@@ -1201,7 +1193,7 @@ namespace PckStudio
         }
 
 
-        //Imports model from reusable project file
+        // Imports model from csm file
         private void buttonImportModel_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -1210,36 +1202,30 @@ namespace PckStudio
             if (MessageBox.Show("Import custom model project file? Your current work will be lost!", "", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1) == DialogResult.Yes && openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 listViewBoxes.Items.Clear();
-                string str1 = File.ReadAllText(openFileDialog.FileName);
-
                 modelBoxes.Clear();
-                List<string> lines = str1.Split(new[] { "\n\r", "\n" }, StringSplitOptions.None).ToList();
-                if (string.IsNullOrEmpty(lines[lines.Count - 1]))
-                    lines.RemoveAt(lines.Count - 1);
-                for (int i = 0; i < lines.Count; i += 11)
+                StreamReader reader = new StreamReader(openFileDialog.FileName);
+                while (!reader.EndOfStream)
                 {
-                    string name =    lines[0 + i];
-                    string parent = lines[1 + i];
-                    float PosX = float.Parse(lines[3 + i]);
-                    float PosY = float.Parse(lines[4 + i]);
-                    float PosZ = float.Parse(lines[5 + i]);
-                    float SizeX = float.Parse(lines[6 + i]);
-                    float SizeY = float.Parse(lines[7 + i]);
-                    float SizeZ = float.Parse(lines[8 + i]);
-                    float UvX = float.Parse(lines[9 + i]);
-                    float UvY = float.Parse(lines[10 + i]);
-
-                    // CSM doesn't support armor, mirror, or scale values as far as I know of - May
-                    modelBoxes.Add(SkinBOX.FromString($"{parent} {PosX} {PosY} {PosZ} {SizeX} {SizeY} {SizeZ} {UvX} {UvY} {false} {false} {0}"));
+                    reader.ReadLine();
+                    string part = reader.ReadLine();
+                    reader.ReadLine();
+                    var PosX = reader.ReadLine();
+                    var PosY = reader.ReadLine();
+                    var PosZ = reader.ReadLine();
+                    var SizeX = reader.ReadLine();
+                    var SizeY = reader.ReadLine();
+                    var SizeZ = reader.ReadLine();
+                    var UvX = reader.ReadLine();
+                    var UvY = reader.ReadLine();
+                    modelBoxes.Add(SkinBOX.FromString($"{part} {PosX} {PosY} {PosZ} {SizeX} {SizeY} {SizeZ} {UvX} {UvY}"));
                 }
+
             }
             comboParent.Enabled = true;
-            updateListView();
-            render();
+            UpdateListView();
+            Rerender();
         }
 
-
-        //Clones Item
         private void cloneToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
@@ -1264,53 +1250,50 @@ namespace PckStudio
             }
         }
 
-
-        //Deletes Item
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (listViewBoxes.SelectedItems[0] == null)
                 return;
             listViewBoxes.SelectedItems[0].Remove();
-            render();
+            Rerender();
         }
 
-        //Changes item color
         private void changeColorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ColorDialog colorDialog = new ColorDialog();
             if (colorDialog.ShowDialog() == DialogResult.OK)
                 listViewBoxes.SelectedItems[0].ForeColor = colorDialog.Color;
-            render();
+            Rerender();
         }
 
         //Re-renders tool with updated x-offset
         private void offsetTool_TextChanged(object sender, EventArgs e)
         {
-            render();
+            Rerender();
         }
 
         //Re-renders helmet with updated x-offset
         private void offsetHelmet_TextChanged(object sender, EventArgs e)
         {
-            render();
+            Rerender();
         }
 
         //Re-renders pants with updated x-offset
         private void offsetPants_TextChanged(object sender, EventArgs e)
         {
-            render();
+            Rerender();
         }
 
         //Re-renders leggings with updated x-offset
         private void offsetLeggings_TextChanged(object sender, EventArgs e)
         {
-            render();
+            Rerender();
         }
 
         //Re-renders boots with updated x-offset
         private void offsetBoots_TextChanged(object sender, EventArgs e)
         {
-            render();
+            Rerender();
         }
 
         //Item Selection
@@ -1348,7 +1331,7 @@ namespace PckStudio
             TextureXUpDown.Enabled = false;
             TextureYUpDown.Enabled = false;
             comboParent.Enabled = false;
-            render();
+            Rerender();
         }
 
         //currently scrapped
@@ -1370,16 +1353,16 @@ namespace PckStudio
             {
                 if (modelBoxes.Remove(part))
                     listViewBoxes.SelectedItems[0].Remove();
-                render();
+                Rerender();
             }
         }
 
         private void generateModel_SizeChanged(object sender, EventArgs e)
         {
-            render();
+            Rerender();
         }
 
-
+        // TODO
         private void OpenJSONButton_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -1401,101 +1384,100 @@ namespace PckStudio
                     ++num3;
                 }
                 while (num3 < y);
-                IEnumerator enumerator = listView.Items.GetEnumerator();
-                try
+
+
+                foreach (ListViewItem current in listView.Items)
                 {
-                label_33:
-                    if (enumerator.MoveNext())
-                    {
-                        ListViewItem current = (ListViewItem)enumerator.Current;
-                        ListViewItem listViewItem = new ListViewItem();
-                        int num4 = 0;
-                        do
+                    ListViewItem listViewItem = new ListViewItem();
+                    int num4 = 0;
+                        foreach (string text in str1.Split("\n\r".ToCharArray(), StringSplitOptions.RemoveEmptyEntries))
                         {
-                            foreach (string text in str1.Split("\n\r".ToCharArray(), StringSplitOptions.RemoveEmptyEntries))
+                            ++num4;
+                            if (num4 == 1 + 11 * current.Index)
+                                listViewItem.Text = text;
+                            else if (num4 == 2 + 11 * current.Index)
+                                listViewItem.Tag = text;
+                            else if (num4 == 4 + 11 * current.Index)
+                                listViewItem.SubItems.Add(text);
+                            else if (num4 == 5 + 11 * current.Index)
+                                listViewItem.SubItems.Add(text);
+                            else if (num4 == 6 + 11 * current.Index)
+                                listViewItem.SubItems.Add(text);
+                            else if (num4 == 7 + 11 * current.Index)
+                                listViewItem.SubItems.Add(text);
+                            else if (num4 == 8 + 11 * current.Index)
+                                listViewItem.SubItems.Add(text);
+                            else if (num4 == 9 + 11 * current.Index)
+                                listViewItem.SubItems.Add(text);
+                            else if (num4 == 10 + 11 * current.Index)
+                                listViewItem.SubItems.Add(text);
+                            else if (num4 == 11 + 11 * current.Index)
                             {
-                                ++num4;
-                                if (num4 == 1 + 11 * current.Index)
-                                    listViewItem.Text = text;
-                                else if (num4 == 2 + 11 * current.Index)
-                                    listViewItem.Tag = (object)text;
-                                else if (num4 == 4 + 11 * current.Index)
-                                    listViewItem.SubItems.Add(text);
-                                else if (num4 == 5 + 11 * current.Index)
-                                    listViewItem.SubItems.Add(text);
-                                else if (num4 == 6 + 11 * current.Index)
-                                    listViewItem.SubItems.Add(text);
-                                else if (num4 == 7 + 11 * current.Index)
-                                    listViewItem.SubItems.Add(text);
-                                else if (num4 == 8 + 11 * current.Index)
-                                    listViewItem.SubItems.Add(text);
-                                else if (num4 == 9 + 11 * current.Index)
-                                    listViewItem.SubItems.Add(text);
-                                else if (num4 == 10 + 11 * current.Index)
-                                    listViewItem.SubItems.Add(text);
-                                else if (num4 == 11 + 11 * current.Index)
-                                {
-                                    listViewItem.SubItems.Add(text);
-                                    this.listViewBoxes.Items.Add(listViewItem);
-                                }
+                                listViewItem.SubItems.Add(text);
+                                listViewBoxes.Items.Add(listViewItem);
                             }
                         }
-                        while (num4 < x);
-                        goto label_33;
-                    }
-                }
-                finally
-                {
-                    IDisposable disposable = enumerator as IDisposable;
-                    if (disposable != null)
-                        disposable.Dispose();
                 }
             }
-            render();
+            Rerender();
         }
 
+        [Obsolete("Just whyyyyy")]
         public string JSONToCSM(string InputFilePath)
         {
-            dynamic jsonDe = JsonConvert.DeserializeObject<CSMJObject>(File.ReadAllText(InputFilePath));
-            string CSMData = "";
-            foreach (CSMJObjectGroup group in jsonDe.groups)
+            CSMJObject jsonDe = JsonConvert.DeserializeObject<CSMJObject>(File.ReadAllText(InputFilePath));
+            StringBuilder sb = new StringBuilder();
+            foreach (CSMJObjectGroup group in jsonDe.Groups)
             {
-                string PARENT = group.name;
+                string PARENT = group.Name;
                 foreach (int i in group.children)
                 {
-                    string name = jsonDe.elements[i].name;
-                    float PosX = jsonDe.elements[i].from[0] + group.origin[0];
-                    float PosY = jsonDe.elements[i].from[1] + group.origin[1];
-                    float PosZ = jsonDe.elements[i].from[2] + group.origin[2];
-                    float SizeX = jsonDe.elements[i].to[0] - jsonDe.elements[i].from[0];
-                    float SizeY = jsonDe.elements[i].to[1] - jsonDe.elements[i].from[1];
-                    float SizeZ = jsonDe.elements[i].to[2] - jsonDe.elements[i].from[2];
+                    string name = jsonDe.Elements[i].Name;
+                    float PosX = jsonDe.Elements[i].from[0] + group.origin[0];
+                    float PosY = jsonDe.Elements[i].from[1] + group.origin[1];
+                    float PosZ = jsonDe.Elements[i].from[2] + group.origin[2];
+                    float SizeX = jsonDe.Elements[i].to[0] - jsonDe.Elements[i].from[0];
+                    float SizeY = jsonDe.Elements[i].to[1] - jsonDe.Elements[i].from[1];
+                    float SizeZ = jsonDe.Elements[i].to[2] - jsonDe.Elements[i].from[2];
                     float U = 0;
                     float V = 0;
 
-                    CSMData += name + "\n" + PARENT + "\n" + name + "\n" + PosX + "\n" + PosY + "\n" + PosZ + "\n" + SizeX + "\n" + SizeY + "\n" + SizeZ + "\n" + U + "\n" + V + "\n";
+                    sb.AppendLine(name + "\n" + PARENT + "\n" + name + "\n" + PosX + "\n" + PosY + "\n" + PosZ + "\n" + SizeX + "\n" + SizeY + "\n" + SizeZ + "\n" + U + "\n" + V);
                 }
             }
-            return CSMData;
+            return sb.ToString();
         }
     }
 
     class CSMJObject
     {
-        public string credit;
-        public int[] texture_size;
-        public CSMJObjectElement[] elements;
-        public CSMJObjectGroup[] groups;
+        [JsonProperty("credit")]
+        public string Credit { get; set; }
+
+        [JsonProperty("texture_size")]
+        public int[] TextureSize;
+
+        [JsonProperty("elements")]
+        public CSMJObjectElement[] Elements;
+
+        [JsonProperty("groups")]
+        public CSMJObjectGroup[] Groups;
     }
+    
     class CSMJObjectElement
     {
-        public string name;
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
         public float[] from;
         public float[] to;
     }
+
     class CSMJObjectGroup
     {
-        public string name;
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
         public float[] origin;
         public int[] children;
     }

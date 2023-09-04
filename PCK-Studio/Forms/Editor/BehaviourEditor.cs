@@ -12,13 +12,15 @@ using OMI.Formats.Behaviour;
 using OMI.Workers.Behaviour;
 using OMI.Formats.Pck;
 using PckStudio.Properties;
+using PckStudio.Internal;
+using PckStudio.Extensions;
 
 namespace PckStudio.Forms.Editor
 {
 	public partial class BehaviourEditor : MetroForm
 	{
 		// Behaviours File Format research by Miku and MattNL
-		private readonly PckFile.FileData _file;
+		private readonly PckFileData _file;
 		BehaviourFile behaviourFile;
 
 		private readonly JObject EntityJSONData = JObject.Parse(Properties.Resources.entityData);
@@ -59,7 +61,7 @@ namespace PckStudio.Forms.Editor
 			treeView1.EndUpdate();
 		}
 
-		public BehaviourEditor(PckFile.FileData file)
+		public BehaviourEditor(PckFileData file)
 		{
 			InitializeComponent();
 
@@ -253,32 +255,27 @@ namespace PckStudio.Forms.Editor
 
 		private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
-			using (var stream = new MemoryStream())
+			behaviourFile = new BehaviourFile();
+			foreach (TreeNode node in treeView1.Nodes)
 			{
-				behaviourFile = new BehaviourFile();
-
-				foreach (TreeNode node in treeView1.Nodes)
+				if(node.Tag is BehaviourFile.RiderPositionOverride entry)
 				{
-					if(node.Tag is BehaviourFile.RiderPositionOverride entry)
+					entry.overrides.Clear();
+					Console.WriteLine();
+					foreach (TreeNode overrideNode in node.Nodes)
 					{
-						entry.overrides.Clear();
-						Console.WriteLine();
-						foreach (TreeNode overrideNode in node.Nodes)
+						if(overrideNode.Tag is BehaviourFile.RiderPositionOverride.PositionOverride overrideEntry)
 						{
-							if(overrideNode.Tag is BehaviourFile.RiderPositionOverride.PositionOverride overrideEntry)
-							{
-								entry.overrides.Add(overrideEntry);
-							}
+							entry.overrides.Add(overrideEntry);
 						}
-
-						behaviourFile.entries.Add(entry);
 					}
-				}
 
-				var writer = new BehavioursWriter(behaviourFile);
-				writer.WriteToStream(stream);
-				_file.SetData(stream.ToArray());
+					behaviourFile.entries.Add(entry);
+				}
 			}
+
+			_file.SetData(new BehavioursWriter(behaviourFile));
+
 			DialogResult = DialogResult.OK;
 		}
 

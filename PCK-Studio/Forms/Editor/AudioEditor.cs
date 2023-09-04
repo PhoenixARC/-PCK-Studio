@@ -12,11 +12,13 @@ using NAudio.Wave;
 
 using OMI.Formats.Pck;
 
-using PckStudio.Classes.FileTypes;
-using PckStudio.Classes.IO.PCK;
+using PckStudio.FileFormats;
+using PckStudio.IO.PckAudio;
 using PckStudio.Forms.Additional_Popups;
 using PckStudio.Properties;
 using PckStudio.API.Miles;
+using PckStudio.Internal;
+using PckStudio.Extensions;
 
 // Audio Editor by MattNL and Miku-666
 
@@ -26,7 +28,7 @@ namespace PckStudio.Forms.Editor
 	{
 		public string defaultType = "yes";
 		PckAudioFile audioFile = null;
-		PckFile.FileData audioPCK;
+		PckFileData audioPCK;
 		bool _isLittleEndian = false;
         MainForm parent = null;
 
@@ -60,7 +62,7 @@ namespace PckStudio.Forms.Editor
 			return (PckAudioFile.AudioCategory.EAudioType)Categories.IndexOf(category);
 		}
 
-		public AudioEditor(PckFile.FileData file, bool isLittleEndian)
+		public AudioEditor(PckFileData file, bool isLittleEndian)
 		{
 			InitializeComponent();
 
@@ -308,7 +310,7 @@ namespace PckStudio.Forms.Editor
 
 						await Task.Run(() =>
 						{
-                            exitCode = Binka.FromWav(cacheSongFile, new_loc, (int)compressionUpDown.Value);
+                            exitCode = Binka.ToBinka(cacheSongFile, new_loc, (int)compressionUpDown.Value);
 						});
 
 						if (!File.Exists(cacheSongFile)) MessageBox.Show(this, $"\"{songName}.wav\" failed to convert for some reason. Please report this on the communtiy Discord server, which can be found under \"More\" in the toolbar at the top of the program.", "Conversion failed");
@@ -408,12 +410,7 @@ namespace PckStudio.Forms.Editor
 				return;
 			}
 
-			using (var stream = new MemoryStream())
-			{
-				var writer = new PckAudioFileWriter(audioFile, _isLittleEndian ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
-                writer.WriteToStream(stream);
-				audioPCK.SetData(stream.ToArray());
-			}
+			audioPCK.SetData(new PckAudioFileWriter(audioFile, _isLittleEndian ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian));
 			DialogResult = DialogResult.OK;
 		}
 
@@ -553,7 +550,7 @@ namespace PckStudio.Forms.Editor
 
 					await Task.Run(() =>
 					{
-                        exitCode = Binka.FromWav(file, new_loc, (int)compressionUpDown.Value);
+                        exitCode = Binka.ToBinka(file, new_loc, (int)compressionUpDown.Value);
 					});
 
 					waitDiag.Close();
@@ -582,7 +579,7 @@ namespace PckStudio.Forms.Editor
 			if (available.Length > 0)
 			{
 				using ItemSelectionPopUp add = new ItemSelectionPopUp(available);
-				add.okBtn.Text = "Save";
+				add.ButtonText = "Save";
 				if (add.ShowDialog() != DialogResult.OK) return;
 
 				audioFile.RemoveCategory(category.audioType);
