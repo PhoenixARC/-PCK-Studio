@@ -37,14 +37,14 @@ namespace PckStudio.Popups
         {
             if (fileTypeComboBox.SelectedIndex >= 0 && fileTypeComboBox.SelectedIndex <= 13)
             {
-                applyBulkProperties(_pckFile.Files, fileTypeComboBox.SelectedIndex - 1);
+                applyBulkProperties(_pckFile.GetFiles(), fileTypeComboBox.SelectedIndex - 1);
                 DialogResult = DialogResult.OK;
                 return;
             }
             MessageBox.Show("Please select a filetype before applying");
         }
 
-        private void applyBulkProperties(FileCollection files, int index)
+        private void applyBulkProperties(IReadOnlyCollection<PckFileData> files, int index)
 		{
             foreach (PckFileData file in files)
             {
@@ -56,7 +56,7 @@ namespace PckStudio.Popups
                         var reader = new PckFileReader(_endianness);
                         using var ms = new MemoryStream(file.Data);
                         PckFile subPCK = reader.FromStream(ms);
-                        applyBulkProperties(subPCK.Files, index);
+                        applyBulkProperties(subPCK.GetFiles(), index);
                         file.SetData(new PckFileWriter(subPCK, _endianness));
                     }
                     catch (OverflowException ex)

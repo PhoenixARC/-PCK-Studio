@@ -141,7 +141,7 @@ namespace PckStudio.Forms
                     List<PckFileData> capesList = new List<PckFileData>();
                     var reader = new PckFileReader();
                     PckFile currentPCK = reader.FromFile(Program.AppData + "/PCK-Center/myPcks/" + mod + ".pck");
-                    foreach (PckFileData skin in currentPCK.Files)
+                    foreach (PckFileData skin in currentPCK.GetFiles())
                     {
                         if (skin.Filename.Count() == 19)
                         {

@@ -148,7 +148,7 @@ namespace PckStudio.Forms.Editor
             selectTilePictureBox.UseBlendColor = applyColorMaskToolStripMenuItem.Checked;
 
             bool hasAnimation =
-                _pckFile.Files.TryGetValue($"res/textures/{_atlasType}/{_selectedTile.Tile.InternalName}.png", PckFileType.TextureFile, out var animationFile);
+                _pckFile.TryGetValue($"res/textures/{_atlasType}/{_selectedTile.Tile.InternalName}.png", PckFileType.TextureFile, out var animationFile);
             animationButton.Text = hasAnimation ? "Edit Animation" : "Create Animation";
             replaceButton.Enabled = !hasAnimation;
 
@@ -394,14 +394,10 @@ namespace PckStudio.Forms.Editor
 
         private void animationButton_Click(object sender, EventArgs e)
         {
-            bool isNewFile;
-            if (isNewFile = !_pckFile.Files.TryGetValue(
+            var file = _pckFile.GetOrCreate(
                     $"res/textures/{_atlasType}/{_selectedTile.Tile.InternalName}.png",
-                    PckFileType.TextureFile, out var file
-                ))
-            {
-                file = new PckFileData($"res/textures/{_atlasType}/{_selectedTile.Tile.InternalName}.png", PckFileType.TextureFile);
-            }
+                    PckFileType.TextureFile
+                );
 
             var animation = AnimationHelper.GetAnimationFromFile(file);
 
@@ -412,11 +408,6 @@ namespace PckStudio.Forms.Editor
             }
 
             AnimationHelper.SaveAnimationToFile(file, animation);
-            
-            if (isNewFile)
-            {
-                _pckFile.Files.Add(file);
-            }
         }
 
         private void extractTileToolStripMenuItem_Click(object sender, EventArgs e)
