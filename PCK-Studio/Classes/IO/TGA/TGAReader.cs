@@ -64,55 +64,6 @@ namespace PckStudio.IO.TGA
             Marshal.Copy(data, 0, bitmapData.Scan0, data.Length);
         }
 
-        private static void TGA_HandleRLERGB(EndiannessAwareBinaryReader reader, TGAHeader header, BitmapData bitmapData)
-        {
-            int bytesPerPixel = header.BitsPerPixel / 8;
-            var dataStream = new MemoryStream(header.Width * header.Height * bytesPerPixel);
-            while (true)
-            {
-                try
-                {
-                    var packetheader = PacketHeader.FromByte(reader.ReadByte());
-                    if (!packetheader.IsCompressed)
-                    {
-                        int bytesRead = packetheader.Count * bytesPerPixel;
-                        reader.BaseStream.CopyTo(dataStream, bytesRead);
-                        continue;
-                    }
-                    byte[] rleColor = reader.ReadBytes(bytesPerPixel);
-                    for (int i = 0; i < packetheader.Count; i++)
-                    {
-                        dataStream.Write(rleColor, 0, bytesPerPixel);
-                    }
-                }
-                catch
-                {
-                    break;
-                }
-            }
-            var data = dataStream.ToArray();
-            Marshal.Copy(data, 0, bitmapData.Scan0, data.Length);
-        }
-
-        private struct PacketHeader
-        {
-            public readonly bool IsCompressed;
-            public readonly int Count;
-
-            private PacketHeader(bool isCompressed, int count)
-            {
-                IsCompressed = isCompressed;
-                Count = count;
-            }
-
-            public static PacketHeader FromByte(byte header)
-            {
-                bool isCompressed = (header & 0x80) != 0;
-                int count = (header & 0x7f) + 1;
-                return new PacketHeader(isCompressed, count);
-            }
-        }
-
         private static void TGA_HandleNoData(EndiannessAwareBinaryReader reader, TGAHeader header, BitmapData bitmapData)
         {
             Random r = new Random();
@@ -120,13 +71,6 @@ namespace PckStudio.IO.TGA
             r.NextBytes(bytes);
             Marshal.Copy(bytes, 0, bitmapData.Scan0, bytes.Length);
         }
-
-        private static readonly Dictionary<TGADataTypeCode, Action<EndiannessAwareBinaryReader, TGAHeader, BitmapData>> TGADataTypeHandler = new()
-        {
-            [TGADataTypeCode.RGB] = TGA_HandleRGB,
-            [TGADataTypeCode.RLE_RGB] = TGA_HandleRLERGB,
-            [TGADataTypeCode.NO_DATA] = TGA_HandleNoData,
-        };
         
         private static TGAHeader LoadHeader(EndiannessAwareBinaryReader reader)
         {
@@ -160,9 +104,8 @@ namespace PckStudio.IO.TGA
 
         private static Image LoadImage(EndiannessAwareBinaryReader reader, TGAHeader header)
         {
-
-            //if (header.DataTypeCode == TGADataTypeCode.NO_DATA)
-            //    return null;
+            if (header.DataTypeCode != TGADataTypeCode.RGB)
+                throw new NotSupportedException(nameof(header.DataTypeCode));
 
             Bitmap bitmap = new Bitmap(header.Width, header.Height);
             BitmapData bitmapData = bitmap.LockBits(
@@ -170,9 +113,14 @@ namespace PckStudio.IO.TGA
                 ImageLockMode.WriteOnly,
                 GetPixelFormat(header.BitsPerPixel >> 3));
 
-            if (!TGADataTypeHandler.TryGetValue(header.DataTypeCode, out var handleFunction))
-                throw new NotSupportedException(nameof(header.DataTypeCode));
-            handleFunction?.Invoke(reader, header, bitmapData);
+            if (header.DataTypeCode == TGADataTypeCode.NO_DATA)
+            {
+                TGA_HandleNoData(reader, header, bitmapData);
+                bitmap.UnlockBits(bitmapData);
+                return bitmap;
+            }
+
+            TGA_HandleRGB(reader, header, bitmapData);
             bitmap.UnlockBits(bitmapData);
             bitmap.RotateFlip(RotateFlipType.RotateNoneFlipY);
             return bitmap;

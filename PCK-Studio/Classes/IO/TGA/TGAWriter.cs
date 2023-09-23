@@ -30,71 +30,53 @@ namespace PckStudio.IO.TGA
     internal class TGAWriter : IDataFormatWriter
     {
         private Bitmap _bitmap;
-        private TGADataTypeCode _format;
 
-        public TGAWriter(Bitmap bitmap, TGADataTypeCode format)
+        public TGAWriter(Bitmap bitmap)
         {
-            _format = format;
             _bitmap = bitmap;
         }
 
-        private void SaveHeader(EndiannessAwareBinaryWriter writer, TGAHeader header)
+        private void WriteHeader(EndiannessAwareBinaryWriter writer)
         {
-            writer.Write(header.Id);
             writer.Write(new byte[]
             {
-                header.Colormap.Type,
-                (byte)header.DataTypeCode
+                0, // header.Id.Length
+                0, // colormap type
+                (byte)TGADataTypeCode.RGB
             });
-            writer.Write(header.Colormap.Origin);
-            writer.Write(header.Colormap.Length);
-            writer.Write(header.Colormap.Depth);
-            writer.Write(header.Origin.X);
-            writer.Write(header.Origin.Y);
-            writer.Write(header.Width);
-            writer.Write(header.Height);
-            writer.Write(new byte[]
-            {
-                header.BitsPerPixel,
-                header.ImageDescriptor,
-            });
+            writer.Write(0); // Colormap.Origin
+            writer.Write(0); // Colormap.Length
+            writer.Write(0); // Colormap.Depth
+            writer.Write(0); // Origin.X
+            writer.Write(0); // Origin.Y
+            writer.Write(_bitmap.Width);
+            writer.Write(_bitmap.Height);
+            writer.Write(32); // BitsPerPixel
+            writer.Write(8);  // ImageDescriptor
         }
 
-        private void SaveImage(EndiannessAwareBinaryWriter writer, Bitmap bitmap, TGAHeader header)
+        private void WriteImage(EndiannessAwareBinaryWriter writer)
         {
-            Debug.Assert(bitmap.Width == header.Width || bitmap.Height == header.Height,
-                "Header resolution doesn't match Image resolution");
-
-            bitmap.RotateFlip(RotateFlipType.RotateNoneFlipY);
-            BitmapData bitmapData = bitmap.LockBits(
-                new Rectangle(0, 0, header.Width, header.Height),
+            _bitmap.RotateFlip(RotateFlipType.RotateNoneFlipY);
+            BitmapData bitmapData = _bitmap.LockBits(
+                new Rectangle(0, 0, _bitmap.Width, _bitmap.Height),
                 ImageLockMode.ReadOnly,
                 PixelFormat.Format32bppArgb);
 
             byte[] pixel = new byte[4];
-            for (int y = 0; y < header.Height; y++)
+            for (int y = 0; y < _bitmap.Height; y++)
             {
-                for (int x = 0; x < header.Width; x++)
+                for (int x = 0; x < _bitmap.Width; x++)
                 {
                     IntPtr pixelOffset = bitmapData.Scan0 + 4 * x + bitmapData.Stride * y;
                     Marshal.Copy(pixelOffset, pixel, 0, 4);
-                    switch (header.DataTypeCode)
-                    {
-                        case TGADataTypeCode.RGB:
-                            if (header.BitsPerPixel == 32)
-                            {
-                                writer.Write(pixel);
-                            }
-                            break;
-                        default:
-                            throw new NotImplementedException(nameof(header.DataTypeCode));
-                    }
+                    writer.Write(pixel);
                 }
             }
 
         }
 
-        private void SaveFooter(EndiannessAwareBinaryWriter writer)
+        private void WriteFooter(EndiannessAwareBinaryWriter writer)
         {
             writer.Write(0); // extensionDataOffset
             writer.Write(0); // developerAreaDataOffset
@@ -108,7 +90,9 @@ namespace PckStudio.IO.TGA
         {
             using (var writer = new EndiannessAwareBinaryWriter(stream, Encoding.ASCII, leaveOpen: true, Endianness.LittleEndian))
             {
-                SaveHeader(writer, default);
+                WriteHeader(writer);
+                WriteImage(writer);
+                WriteFooter(writer);
             }
         }
 

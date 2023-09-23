@@ -32,7 +32,6 @@ using PckStudio.Extensions;
 using PckStudio.Popups;
 using PckStudio.Classes.Utils;
 using PckStudio.Helper;
-using PckStudio.IO.TGA;
 
 namespace PckStudio
 {
@@ -489,13 +488,7 @@ namespace PckStudio
 					case PckFileType.CapeFile:
 					case PckFileType.TextureFile:
 						{
-							using MemoryStream stream = new MemoryStream(file.Data);
-							Image img = null;
-							// TODO: Add tga support
-							if (Path.GetExtension(file.Filename) == ".tga")
-								img = TGAImage.FromStream(stream);
-							else
-								img = Image.FromStream(stream);
+							Image img = file.GetTexture();
 
 							if (img.RawFormat != ImageFormat.Jpeg || img.RawFormat != ImageFormat.Png)
 							{
@@ -1878,9 +1871,6 @@ namespace PckStudio
 
 				string textureExtension = Path.GetExtension(file.Filename);
 
-				// TGA is not yet supported
-				if (textureExtension == ".tga") return;
-
 				using NumericPrompt numericPrompt = new NumericPrompt(0);
 				numericPrompt.Minimum = 1;
 				numericPrompt.Maximum = 4; // 5 is the presumed max MipMap level
@@ -1898,10 +1888,7 @@ namespace PckStudio
 							currentPCK.RemoveFile(currentPCK.GetFile(mippedPath, PckFileType.TextureFile));
 						PckFileData MipMappedFile = new PckFileData(mippedPath, PckFileType.TextureFile);
 
-						using var stream = new MemoryStream(file.Data);
-                        Image originalTexture = textureExtension == ".tga"
-							? TGAImage.FromStream(stream)
-							: Image.FromStream(stream);
+						Image originalTexture = file.GetTexture();
 						int NewWidth = originalTexture.Width / (int)Math.Pow(2,i - 1);
 						int NewHeight = originalTexture.Height / (int)Math.Pow(2, i - 1);
 						Rectangle tileArea = new Rectangle(0, 0,
