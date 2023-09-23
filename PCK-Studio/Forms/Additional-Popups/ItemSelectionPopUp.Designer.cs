@@ -89,8 +89,8 @@
 
         #endregion
 		private System.Windows.Forms.Button cancelButton;
-		public System.Windows.Forms.Label label2;
-		public System.Windows.Forms.Button okBtn;
         private MetroFramework.Controls.MetroComboBox ComboBox;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button okBtn;
     }
 }

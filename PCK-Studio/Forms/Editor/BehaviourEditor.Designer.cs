@@ -293,6 +293,7 @@
             this.Controls.Add(this.MobIsTamedCheckbox);
             this.Controls.Add(this.menuStrip);
             this.Controls.Add(this.treeView1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "BehaviourEditor";
             this.Resizable = false;
             this.Style = MetroFramework.MetroColorStyle.Silver;

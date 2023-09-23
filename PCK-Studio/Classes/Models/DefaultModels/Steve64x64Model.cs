@@ -24,7 +24,7 @@ namespace PckStudio.Classes.Models.DefaultModels
             _ = Textures[0] ?? throw new NullReferenceException(nameof(Textures));
             Image source = Textures[0];
 
-            (int top, int side) armWidth = _skinANIM.GetFlag(ANIM_EFFECTS.SLIM_MODEL) ? (6, 14) : (8, 16);
+            (int top, int side) armWidth = _skinANIM.GetFlag(SkinAnimFlag.SLIM_MODEL) ? (6, 14) : (8, 16);
 
             Box head        = new Box(source, new Rectangle(8, 0, 16, 8),  new Rectangle(0, 8, 32, 8), new Point3D(0f, 0f, 0f));
             Box headOverlay = new Box(source, new Rectangle(40, 0, 16, 8), new Rectangle(32, 8, 32, 8), new Point3D(0f, 0f, 0f));

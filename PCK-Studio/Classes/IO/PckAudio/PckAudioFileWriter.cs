@@ -1,11 +1,11 @@
 ﻿using OMI;
 using OMI.Workers;
-using PckStudio.Classes.FileTypes;
+using PckStudio.FileFormats;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace PckStudio.Classes.IO.PCK
+namespace PckStudio.IO.PckAudio
 {
     internal class PckAudioFileWriter : IDataFormatWriter
     {

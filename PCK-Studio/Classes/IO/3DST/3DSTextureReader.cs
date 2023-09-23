@@ -6,10 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OMI.Workers;
-using PckStudio.Classes._3ds;
 using OMI;
 
-namespace PckStudio.Classes.IO._3DST
+namespace PckStudio.IO._3DST
 {
     internal class _3DSTextureReader : IDataFormatReader<Image>, IDataFormatReader
     {

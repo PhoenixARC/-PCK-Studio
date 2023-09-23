@@ -1,6 +1,6 @@
 ﻿namespace PckStudio.Extensions
 {
-    public enum BlendMode
+    internal enum BlendMode
     {
         Add,
         Subtract,
@@ -8,6 +8,7 @@
         Average,
         DescendingOrder,
         AscendingOrder,
-        Screen
+        Screen,
+        Overlay
     }
 }

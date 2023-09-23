@@ -2,27 +2,27 @@
 
 namespace PckStudio.Extensions
 {
-    struct ImageSection
+    internal struct ImageSection
     {
         public readonly Size Size;
         public readonly Point Point;
         public readonly Rectangle Area;
 
-        internal ImageSection(Size sectionSize, int index, ImageLayoutDirection layoutDirection)
+        internal ImageSection(Size originalSize, int index, ImageLayoutDirection layoutDirection)
         {
             switch(layoutDirection)
             {
                 case ImageLayoutDirection.Horizontal:
                     {
-                        Size = new Size(sectionSize.Height, sectionSize.Height);
-                        Point = new Point(index * sectionSize.Height, 0);
+                        Size = new Size(originalSize.Height, originalSize.Height);
+                        Point = new Point(index * originalSize.Height, 0);
                     }
                     break;
 
                 case ImageLayoutDirection.Vertical:
                     {
-                        Size = new Size(sectionSize.Width, sectionSize.Width);
-                        Point = new Point(0, index * sectionSize.Width);
+                        Size = new Size(originalSize.Width, originalSize.Width);
+                        Point = new Point(0, index * originalSize.Width);
                     }
                     break;
 
