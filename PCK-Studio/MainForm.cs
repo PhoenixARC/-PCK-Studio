@@ -2271,7 +2271,12 @@ namespace PckStudio
 
         private void checkForUpdatesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-			Program.UpdateToLatest("Would you like to download it?", MessageBoxButtons.YesNo, MessageBoxIcon.Question, DialogResult.Yes);
+            if (Program.Updater.IsUpdateAvailable(Application.ProductVersion))
+			{
+				Program.UpdateToLatest("Would you like to download it?", MessageBoxButtons.YesNo, MessageBoxIcon.Question, DialogResult.Yes);
+				return;
+			}
+			MessageBox.Show("Already up to date.", "No update available");
         }
     }
 }

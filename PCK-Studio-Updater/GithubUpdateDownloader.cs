@@ -37,6 +37,8 @@ namespace PCKStudio_Updater
 
         public bool IsUpdateAvailable(Assembly currentAssembly)
         {
+            if (!File.Exists(currentAssembly.Location))
+                return false;
             FileVersionInfo fileVersionInfo = FileVersionInfo.GetVersionInfo(currentAssembly.Location);
             return IsUpdateAvailable(fileVersionInfo.ProductVersion);
         }
