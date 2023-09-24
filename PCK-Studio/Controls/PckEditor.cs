@@ -42,24 +42,24 @@ namespace PckStudio.Controls
         private bool _isTemplateFile = false;
         private int _timesSaved = 0;
 
-        private readonly Dictionary<PckFile.FileData.FileType, Action<PckFile.FileData>> pckFileTypeHandler;
+        private readonly Dictionary<PckFileType, Action<PckFileData>> pckFileTypeHandler;
 
         public PckEditor()
         {
             InitializeComponent();
 
-            skinToolStripMenuItem1.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.SkinFile);
-            capeToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.CapeFile);
-            textureToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.TextureFile);
-            languagesFileLOCToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.LocalisationFile);
-            gameRulesFileGRFToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.GameRulesFile);
-            audioPCKFileToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.AudioFile);
-            coloursCOLFileToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.ColourTableFile);
-            gameRulesHeaderGRHToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.GameRulesHeader);
-            skinsPCKToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.SkinDataFile);
-            modelsFileBINToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.ModelsFile);
-            behavioursFileBINToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.BehavioursFile);
-            entityMaterialsFileBINToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFile.FileData.FileType.MaterialFile);
+            skinToolStripMenuItem1.Click += (sender, e) => setFileType_Click(sender, e, PckFileType.SkinFile);
+            capeToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFileType.CapeFile);
+            textureToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFileType.TextureFile);
+            languagesFileLOCToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFileType.LocalisationFile);
+            gameRulesFileGRFToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFileType.GameRulesFile);
+            audioPCKFileToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFileType.AudioFile);
+            coloursCOLFileToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFileType.ColourTableFile);
+            gameRulesHeaderGRHToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFileType.GameRulesHeader);
+            skinsPCKToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFileType.SkinDataFile);
+            modelsFileBINToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFileType.ModelsFile);
+            behavioursFileBINToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFileType.BehavioursFile);
+            entityMaterialsFileBINToolStripMenuItem.Click += (sender, e) => setFileType_Click(sender, e, PckFileType.MaterialFile);
 
             imageList.Images.Add(Resources.ZZFolder); // Icon for folders
             imageList.Images.Add(Resources.BINKA_ICON); // Icon for music cue file (audio.pck)
@@ -79,23 +79,23 @@ namespace PckStudio.Controls
             imageList.Images.Add(Resources.BEHAVIOURS_ICON); // Icon for Behaviour files (behaviours.bin)
             imageList.Images.Add(Resources.ENTITY_MATERIALS_ICON); // Icon for Entity Material files (entityMaterials.bin)
 
-            pckFileTypeHandler = new Dictionary<PckFile.FileData.FileType, Action<PckFile.FileData>>(15)
+            pckFileTypeHandler = new Dictionary<PckFileType, Action<PckFileData>>(15)
             {
-                [PckFile.FileData.FileType.SkinFile] = HandleSkinFile,
-                [PckFile.FileData.FileType.CapeFile] = null,
-                [PckFile.FileData.FileType.TextureFile] = HandleTextureFile,
-                [PckFile.FileData.FileType.UIDataFile] = _ => throw new NotSupportedException("unused in-game"),
-                [PckFile.FileData.FileType.InfoFile] = null,
-                [PckFile.FileData.FileType.TexturePackInfoFile] = null,
-                [PckFile.FileData.FileType.LocalisationFile] = HandleLocalisationFile,
-                [PckFile.FileData.FileType.GameRulesFile] = HandleGameRuleFile,
-                [PckFile.FileData.FileType.AudioFile] = HandleAudioFile,
-                [PckFile.FileData.FileType.ColourTableFile] = HandleColourFile,
-                [PckFile.FileData.FileType.GameRulesHeader] = HandleGameRuleFile,
-                [PckFile.FileData.FileType.SkinDataFile] = null,
-                [PckFile.FileData.FileType.ModelsFile] = HandleModelsFile,
-                [PckFile.FileData.FileType.BehavioursFile] = HandleBehavioursFile,
-                [PckFile.FileData.FileType.MaterialFile] = HandleMaterialFile,
+                [PckFileType.SkinFile] = HandleSkinFile,
+                [PckFileType.CapeFile] = null,
+                [PckFileType.TextureFile] = HandleTextureFile,
+                [PckFileType.UIDataFile] = _ => throw new NotSupportedException("unused in-game"),
+                [PckFileType.InfoFile] = null,
+                [PckFileType.TexturePackInfoFile] = null,
+                [PckFileType.LocalisationFile] = HandleLocalisationFile,
+                [PckFileType.GameRulesFile] = HandleGameRuleFile,
+                [PckFileType.AudioFile] = HandleAudioFile,
+                [PckFileType.ColourTableFile] = HandleColourFile,
+                [PckFileType.GameRulesHeader] = HandleGameRuleFile,
+                [PckFileType.SkinDataFile] = null,
+                [PckFileType.ModelsFile] = HandleModelsFile,
+                [PckFileType.BehavioursFile] = HandleBehavioursFile,
+                [PckFileType.MaterialFile] = HandleMaterialFile,
             };
         }
 
@@ -115,7 +115,7 @@ namespace PckStudio.Controls
 
         private void CheckForPasswordAndRemove()
         {
-            if (_pck.TryGetFile("0", PckFile.FileData.FileType.InfoFile, out PckFile.FileData file))
+            if (_pck.TryGetFile("0", PckFileType.InfoFile, out PckFileData file))
             {
                 file.Properties.RemoveAll(t => t.Key.Equals("LOCK"));
             }
@@ -140,15 +140,15 @@ namespace PckStudio.Controls
 
         private void BuildPckTreeView(TreeNodeCollection root, PckFile pckFile, string parentPath = "")
         {
-            foreach (var file in pckFile.Files)
+            foreach (var file in pckFile.GetFiles())
             {
                 // fix any file paths that may be incorrect
-                if (file.Filename.StartsWith(parentPath))
-                    file.Filename = file.Filename.Remove(0, parentPath.Length);
+                //if (file.Filename.StartsWith(parentPath))
+                //    file.Filename = file.Filename.Remove(0, parentPath.Length);
                 TreeNode node = BuildNodeTreeBySeperator(root, file.Filename, '/');
                 node.Tag = file;
                 if (Settings.Default.LoadSubPcks &&
-                    (file.Filetype == PckFile.FileData.FileType.SkinDataFile || file.Filetype == PckFile.FileData.FileType.TexturePackInfoFile) &&
+                    (file.Filetype == PckFileType.SkinDataFile || file.Filetype == PckFileType.TexturePackInfoFile) &&
                     file.Data.Length > 0)
                 {
                     using (var stream = new MemoryStream(file.Data))
@@ -173,63 +173,63 @@ namespace PckStudio.Controls
             };
         }
 
-        private void SetPckFileIcon(TreeNode node, PckFile.FileData.FileType type)
+        private void SetPckFileIcon(TreeNode node, PckFileType type)
         {
             switch (type)
             {
-                case PckFile.FileData.FileType.AudioFile:
+                case PckFileType.AudioFile:
                     node.ImageIndex = 1;
                     node.SelectedImageIndex = 1;
                     break;
-                case PckFile.FileData.FileType.LocalisationFile:
+                case PckFileType.LocalisationFile:
                     node.ImageIndex = 3;
                     node.SelectedImageIndex = 3;
                     break;
-                case PckFile.FileData.FileType.TexturePackInfoFile:
+                case PckFileType.TexturePackInfoFile:
                     node.ImageIndex = 4;
                     node.SelectedImageIndex = 4;
                     break;
-                case PckFile.FileData.FileType.ColourTableFile:
+                case PckFileType.ColourTableFile:
                     node.ImageIndex = 6;
                     node.SelectedImageIndex = 6;
                     break;
-                case PckFile.FileData.FileType.ModelsFile:
+                case PckFileType.ModelsFile:
                     node.ImageIndex = 8;
                     node.SelectedImageIndex = 8;
                     break;
-                case PckFile.FileData.FileType.SkinDataFile:
+                case PckFileType.SkinDataFile:
                     node.ImageIndex = 7;
                     node.SelectedImageIndex = 7;
                     break;
-                case PckFile.FileData.FileType.GameRulesFile:
+                case PckFileType.GameRulesFile:
                     node.ImageIndex = 9;
                     node.SelectedImageIndex = 9;
                     break;
-                case PckFile.FileData.FileType.GameRulesHeader:
+                case PckFileType.GameRulesHeader:
                     node.ImageIndex = 10;
                     node.SelectedImageIndex = 10;
                     break;
-                case PckFile.FileData.FileType.InfoFile:
+                case PckFileType.InfoFile:
                     node.ImageIndex = 11;
                     node.SelectedImageIndex = 11;
                     break;
-                case PckFile.FileData.FileType.SkinFile:
+                case PckFileType.SkinFile:
                     node.ImageIndex = 12;
                     node.SelectedImageIndex = 12;
                     break;
-                case PckFile.FileData.FileType.CapeFile:
+                case PckFileType.CapeFile:
                     node.ImageIndex = 13;
                     node.SelectedImageIndex = 13;
                     break;
-                case PckFile.FileData.FileType.TextureFile:
+                case PckFileType.TextureFile:
                     node.ImageIndex = 14;
                     node.SelectedImageIndex = 14;
                     break;
-                case PckFile.FileData.FileType.BehavioursFile:
+                case PckFileType.BehavioursFile:
                     node.ImageIndex = 15;
                     node.SelectedImageIndex = 15;
                     break;
-                case PckFile.FileData.FileType.MaterialFile:
+                case PckFileType.MaterialFile:
                     node.ImageIndex = 16;
                     node.SelectedImageIndex = 16;
                     break;
@@ -249,7 +249,7 @@ namespace PckStudio.Controls
             treeViewMain.Nodes.Clear();
             BuildPckTreeView(treeViewMain.Nodes, _pck);
 
-            if (_isTemplateFile && _pck.HasFile("Skins.pck", PckFile.FileData.FileType.SkinDataFile))
+            if (_isTemplateFile && _pck.HasFile("Skins.pck", PckFileType.SkinDataFile))
             {
                 TreeNode skinsNode = treeViewMain.Nodes.Find("Skins.pck", false).FirstOrDefault();
                 TreeNode folderNode = CreateNode("Skins");
@@ -304,9 +304,9 @@ namespace PckStudio.Controls
             foreach (var node in s)
             {
                 TreeNode parent = treeViewMain.Nodes.Find(node, true)[0];
-                if (parent.Tag is PckFile.FileData f &&
-                    (f.Filetype is PckFile.FileData.FileType.TexturePackInfoFile ||
-                     f.Filetype is PckFile.FileData.FileType.SkinDataFile))
+                if (parent.Tag is PckFileData f &&
+                    (f.Filetype is PckFileType.TexturePackInfoFile ||
+                     f.Filetype is PckFileType.SkinDataFile))
                     return parent;
             }
 
@@ -323,17 +323,17 @@ namespace PckStudio.Controls
             Console.WriteLine(parent.Name);
             if (parent == null) return;
 
-            PckFile.FileData parent_file = parent.Tag as PckFile.FileData;
-            if (parent_file.Filetype is PckFile.FileData.FileType.TexturePackInfoFile || parent_file.Filetype is PckFile.FileData.FileType.SkinDataFile)
+            PckFileData parent_file = parent.Tag as PckFileData;
+            if (parent_file.Filetype is PckFileType.TexturePackInfoFile || parent_file.Filetype is PckFileType.SkinDataFile)
             {
                 Console.WriteLine("Rebuilding " + parent_file.Filename);
-                PckFile newPCKFile = new PckFile(3, parent_file.Filetype is PckFile.FileData.FileType.SkinDataFile);
+                PckFile newPCKFile = new PckFile(3, parent_file.Filetype is PckFileType.SkinDataFile);
 
                 foreach (TreeNode node in GetAllChildNodes(parent.Nodes))
                 {
-                    if (node.Tag is PckFile.FileData node_file)
+                    if (node.Tag is PckFileData node_file)
                     {
-                        PckFile.FileData new_file = newPCKFile.CreateNewFile(node_file.Filename.Replace(parent_file.Filename + "/", String.Empty), node_file.Filetype);
+                        PckFileData new_file = newPCKFile.CreateNewFile(node_file.Filename.Replace(parent_file.Filename + "/", String.Empty), node_file.Filetype);
                         foreach (var prop in node_file.Properties) new_file.Properties.Add(prop);
                         new_file.SetData(node_file.Data);
                     }
@@ -353,8 +353,8 @@ namespace PckStudio.Controls
 
         private bool TryGetLocFile(out LOCFile locFile)
         {
-            if (!_pck.TryGetFile("localisation.loc", PckFile.FileData.FileType.LocalisationFile, out PckFile.FileData locdata) &&
-                !_pck.TryGetFile("languages.loc", PckFile.FileData.FileType.LocalisationFile, out locdata))
+            if (!_pck.TryGetFile("localisation.loc", PckFileType.LocalisationFile, out PckFileData locdata) &&
+                !_pck.TryGetFile("languages.loc", PckFileType.LocalisationFile, out locdata))
             {
                 locFile = null;
                 return false;
@@ -379,8 +379,8 @@ namespace PckStudio.Controls
 
         private bool TrySetLocFile(in LOCFile locFile)
         {
-            if (!_pck.TryGetFile("localisation.loc", PckFile.FileData.FileType.LocalisationFile, out PckFile.FileData locdata) &&
-                !_pck.TryGetFile("languages.loc", PckFile.FileData.FileType.LocalisationFile, out locdata))
+            if (!_pck.TryGetFile("localisation.loc", PckFileType.LocalisationFile, out PckFileData locdata) &&
+                !_pck.TryGetFile("languages.loc", PckFileType.LocalisationFile, out locdata))
             {
                 return false;
             }
@@ -406,7 +406,7 @@ namespace PckStudio.Controls
         {
             treeMeta.Nodes.Clear();
             if (treeViewMain.SelectedNode is TreeNode node &&
-                node.Tag is PckFile.FileData file)
+                node.Tag is PckFileData file)
             {
                 foreach (var property in file.Properties)
                 {
@@ -415,13 +415,13 @@ namespace PckStudio.Controls
             }
         }
 
-        private static PckFile.FileData CreateNewAudioFile(bool isLittle)
+        private static PckFileData CreateNewAudioFile(bool isLittle)
         {
             PckAudioFile audioPck = new PckAudioFile();
             audioPck.AddCategory(PckAudioFile.AudioCategory.EAudioType.Overworld);
             audioPck.AddCategory(PckAudioFile.AudioCategory.EAudioType.Nether);
             audioPck.AddCategory(PckAudioFile.AudioCategory.EAudioType.End);
-            PckFile.FileData pckFileData = new PckFile.FileData("audio.pck", PckFile.FileData.FileType.AudioFile);
+            PckFileData pckFileData = new PckFileData("audio.pck", PckFileType.AudioFile);
             pckFileData.SetData(new PckAudioFileWriter(audioPck, isLittle ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian));
             return pckFileData;
         }
@@ -452,7 +452,7 @@ namespace PckStudio.Controls
                 using AddFilePrompt diag = new AddFilePrompt("res/" + Path.GetFileName(ofd.FileName));
                 if (diag.ShowDialog(this) == DialogResult.OK)
                 {
-                    PckFile.FileData file = _pck.CreateNewFile(
+                    PckFileData file = _pck.CreateNewFile(
                         diag.Filepath,
                         diag.Filetype,
                         () => File.ReadAllBytes(ofd.FileName));
@@ -477,7 +477,7 @@ namespace PckStudio.Controls
                 renamePrompt.LabelText = "Path";
                 if (renamePrompt.ShowDialog() == DialogResult.OK && !string.IsNullOrEmpty(renamePrompt.NewText))
                 {
-                    var file = _pck.CreateNewFile(renamePrompt.NewText, PckFile.FileData.FileType.TextureFile);
+                    var file = _pck.CreateNewFile(renamePrompt.NewText, PckFileType.TextureFile);
                     file.SetData(File.ReadAllBytes(fileDialog.FileName));
                     BuildMainTreeView();
                     _wasModified = true;
@@ -496,7 +496,7 @@ namespace PckStudio.Controls
                 {
                     string skinNameImport = Path.GetFileName(contents.FileName);
                     byte[] data = File.ReadAllBytes(contents.FileName);
-                    PckFile.FileData mfNew = _pck.CreateNewFile(skinNameImport, PckFile.FileData.FileType.SkinFile);
+                    PckFileData mfNew = _pck.CreateNewFile(skinNameImport, PckFileType.SkinFile);
                     mfNew.SetData(data);
                     string propertyFile = Path.GetFileNameWithoutExtension(contents.FileName) + ".txt";
                     if (File.Exists(propertyFile))
@@ -554,9 +554,9 @@ namespace PckStudio.Controls
                 TreeNodeCollection nodeCollection = treeViewMain.Nodes;
                 if (treeViewMain.SelectedNode is TreeNode node)
                 {
-                    if (node.Tag is PckFile.FileData fd &&
-                        (fd.Filetype != PckFile.FileData.FileType.TexturePackInfoFile &&
-                        fd.Filetype != PckFile.FileData.FileType.SkinDataFile))
+                    if (node.Tag is PckFileData fd &&
+                        (fd.Filetype != PckFileType.TexturePackInfoFile &&
+                        fd.Filetype != PckFileType.SkinDataFile))
                     {
                         if (node.Parent is TreeNode parentNode)
                         {
@@ -569,9 +569,9 @@ namespace PckStudio.Controls
             }
         }
 
-        private void setFileType_Click(object sender, EventArgs e, PckFile.FileData.FileType type)
+        private void setFileType_Click(object sender, EventArgs e, PckFileType type)
         {
-            if (treeViewMain.SelectedNode is TreeNode t && t.Tag is PckFile.FileData file)
+            if (treeViewMain.SelectedNode is TreeNode t && t.Tag is PckFileData file)
             {
                 Debug.WriteLine($"Setting {file.Filetype} to {type}");
                 file.Filetype = type;
@@ -587,7 +587,7 @@ namespace PckStudio.Controls
             buttonEdit.Visible = false;
             previewPictureBox.Image = Resources.NoImageFound;
             viewFileInfoToolStripMenuItem.Visible = false;
-            if (e.Node is TreeNode t && t.Tag is PckFile.FileData file)
+            if (e.Node is TreeNode t && t.Tag is PckFileData file)
             {
                 viewFileInfoToolStripMenuItem.Visible = true;
                 if (file.Properties.HasProperty("BOX"))
@@ -596,7 +596,7 @@ namespace PckStudio.Controls
                     buttonEdit.Visible = true;
                 }
                 else if (file.Properties.HasProperty("ANIM") &&
-                        file.Properties.GetPropertyValue("ANIM", s => SkinANIM.FromString(s) == (SkinAnimFlag.RESOLUTION_64x64 | SkinAnimFlag.SLIM_MODEL)))
+                        file.Properties.GetPropertyValue("ANIM", s => SkinANIM.FromString(s) == (SkinAnimMask.RESOLUTION_64x64 | SkinAnimMask.SLIM_MODEL)))
                 {
                     buttonEdit.Text = "View Skin";
                     buttonEdit.Visible = true;
@@ -604,9 +604,9 @@ namespace PckStudio.Controls
 
                 switch (file.Filetype)
                 {
-                    case PckFile.FileData.FileType.SkinFile:
-                    case PckFile.FileData.FileType.CapeFile:
-                    case PckFile.FileData.FileType.TextureFile:
+                    case PckFileType.SkinFile:
+                    case PckFileType.CapeFile:
+                    case PckFileType.TextureFile:
                         {
                             // TODO: Add tga support
                             if (Path.GetExtension(file.Filename) == ".tga") break;
@@ -634,7 +634,7 @@ namespace PckStudio.Controls
 
 
                             if ((file.Filename.StartsWith("res/textures/blocks/") || file.Filename.StartsWith("res/textures/items/")) &&
-                                file.Filetype == PckFile.FileData.FileType.TextureFile
+                                file.Filetype == PckFileType.TextureFile
                                 && !file.IsMipmappedFile())
                             {
                                 buttonEdit.Text = "EDIT TILE ANIMATION";
@@ -643,22 +643,22 @@ namespace PckStudio.Controls
                         }
                         break;
 
-                    case PckFile.FileData.FileType.LocalisationFile:
+                    case PckFileType.LocalisationFile:
                         buttonEdit.Text = "EDIT LOC";
                         buttonEdit.Visible = true;
                         break;
 
-                    case PckFile.FileData.FileType.AudioFile:
+                    case PckFileType.AudioFile:
                         buttonEdit.Text = "EDIT MUSIC CUES";
                         buttonEdit.Visible = true;
                         break;
 
-                    case PckFile.FileData.FileType.ColourTableFile when file.Filename == "colours.col":
+                    case PckFileType.ColourTableFile when file.Filename == "colours.col":
                         buttonEdit.Text = "EDIT COLORS";
                         buttonEdit.Visible = true;
                         break;
 
-                    case PckFile.FileData.FileType.BehavioursFile when file.Filename == "behaviours.bin":
+                    case PckFileType.BehavioursFile when file.Filename == "behaviours.bin":
                         buttonEdit.Text = "EDIT BEHAVIOURS";
                         buttonEdit.Visible = true;
                         break;
@@ -671,7 +671,7 @@ namespace PckStudio.Controls
 
         private void treeViewMain_DoubleClick(object sender, EventArgs e)
         {
-            if (treeViewMain.SelectedNode is TreeNode t && t.Tag is PckFile.FileData file)
+            if (treeViewMain.SelectedNode is TreeNode t && t.Tag is PckFileData file)
             {
                 pckFileTypeHandler[file.Filetype]?.Invoke(file);
             }
@@ -688,39 +688,39 @@ namespace PckStudio.Controls
                 if (add.ShowDialog() == DialogResult.OK)
                 {
 
-                    if (_pck.HasFile("Skins.pck", PckFile.FileData.FileType.SkinDataFile)) // Prioritize Skins.pck
+                    if (_pck.HasFile("Skins.pck", PckFileType.SkinDataFile)) // Prioritize Skins.pck
                     {
                         TreeNode subPCK = treeViewMain.Nodes.Find("Skins.pck", false).FirstOrDefault();
                         if (subPCK.Nodes.ContainsKey("Skins")) add.SkinFile.Filename = add.SkinFile.Filename.Insert(0, "Skins/");
                         add.SkinFile.Filename = add.SkinFile.Filename.Insert(0, "Skins.pck/");
                         TreeNode newNode = new TreeNode(Path.GetFileName(add.SkinFile.Filename));
                         newNode.Tag = add.SkinFile;
-                        SetPckFileIcon(newNode, PckFile.FileData.FileType.SkinFile);
+                        SetPckFileIcon(newNode, PckFileType.SkinFile);
                         subPCK.Nodes.Add(newNode);
                         RebuildSubPCK(newNode.FullPath);
                     }
                     else
                     {
                         if (treeViewMain.Nodes.ContainsKey("Skins")) add.SkinFile.Filename = add.SkinFile.Filename.Insert(0, "Skins/"); // Then Skins folder
-                        _pck.Files.Add(add.SkinFile);
+                        _pck.AddFile(add.SkinFile);
                     }
                     if (add.HasCape)
                     {
-                        if (_pck.HasFile("Skins.pck", PckFile.FileData.FileType.SkinDataFile)) // Prioritize Skins.pck
+                        if (_pck.HasFile("Skins.pck", PckFileType.SkinDataFile)) // Prioritize Skins.pck
                         {
                             TreeNode subPCK = treeViewMain.Nodes.Find("Skins.pck", false).FirstOrDefault();
                             if (subPCK.Nodes.ContainsKey("Skins")) add.CapeFile.Filename = add.CapeFile.Filename.Insert(0, "Skins/");
                             add.CapeFile.Filename = add.CapeFile.Filename.Insert(0, "Skins.pck/");
                             TreeNode newNode = new TreeNode(Path.GetFileName(add.CapeFile.Filename));
                             newNode.Tag = add.CapeFile;
-                            SetPckFileIcon(newNode, PckFile.FileData.FileType.SkinFile);
+                            SetPckFileIcon(newNode, PckFileType.SkinFile);
                             subPCK.Nodes.Add(newNode);
                             RebuildSubPCK(newNode.FullPath);
                         }
                         else
                         {
                             if (treeViewMain.Nodes.ContainsKey("Skins")) add.CapeFile.Filename = add.CapeFile.Filename.Insert(0, "Skins/"); // Then Skins folder
-                            _pck.Files.Add(add.CapeFile);
+                            _pck.AddFile(add.CapeFile);
                         }
                     }
 
@@ -736,15 +736,16 @@ namespace PckStudio.Controls
             if (diag.ShowDialog(this) != DialogResult.OK)
                 return;
 
-            var file = new PckFile.FileData(
+            var file = new PckFileData(
                 $"res/textures/{Animation.GetCategoryName(diag.Category)}/{diag.SelectedTile}.png",
-                PckFile.FileData.FileType.TextureFile);
+                PckFileType.TextureFile);
 
-            using AnimationEditor animationEditor = new AnimationEditor(file);
+            var animation = AnimationHelper.GetAnimationFromFile(file);
+            using AnimationEditor animationEditor = new AnimationEditor(animation, Path.GetFileNameWithoutExtension(file.Filename));
             if (animationEditor.ShowDialog() == DialogResult.OK)
             {
                 _wasModified = true;
-                _pck.Files.Add(file);
+                _pck.AddFile(file);
                 BuildMainTreeView();
                 ReloadMetaTreeView();
             }
@@ -752,15 +753,10 @@ namespace PckStudio.Controls
 
         private void audiopckToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //if (pck.Files.Contains(file => file.Filetype == PckFile.FileData.FileType.AudioFile) != -1)
-            //{
-            //	MessageBox.Show("There is already an music cues PCK present in this PCK!", "Can't create audio.pck");
-            //	return;
-            //}
-            if (_pck.Files.Contains("audio.pck", PckFile.FileData.FileType.AudioFile))
+            if (_pck.Contains("audio.pck", PckFileType.AudioFile))
             {
                 // the chance of this happening is really really slim but just in case
-                MessageBox.Show($"There is already a file of type \"{nameof(PckFile.FileData.FileType.AudioFile)}\" and name \"audio.pck\" in this PCK!", "Can't create audio.pck");
+                MessageBox.Show($"There is already a file of type \"{nameof(PckFileType.AudioFile)}\" and name \"audio.pck\" in this PCK!", "Can't create audio.pck");
                 return;
             }
             if (string.IsNullOrEmpty(_location))
@@ -773,7 +769,7 @@ namespace PckStudio.Controls
             AudioEditor diag = new AudioEditor(file, LittleEndianCheckBox.Checked);
             if (diag.ShowDialog(this) == DialogResult.OK)
             {
-                _pck.Files.Add(file);
+                _pck.AddFile(file);
             }
             diag.Dispose();
             BuildMainTreeView();
@@ -781,25 +777,25 @@ namespace PckStudio.Controls
 
         private void colourscolToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (_pck.TryGetFile("colours.col", PckFile.FileData.FileType.ColourTableFile, out _))
+            if (_pck.TryGetFile("colours.col", PckFileType.ColourTableFile, out _))
             {
                 MessageBox.Show("A color table file already exists in this PCK and a new one cannot be created.", "Operation aborted");
                 return;
             }
-            var newColorFile = _pck.CreateNewFile("colours.col", PckFile.FileData.FileType.ColourTableFile);
+            var newColorFile = _pck.CreateNewFile("colours.col", PckFileType.ColourTableFile);
             newColorFile.SetData(Resources.tu69colours);
             BuildMainTreeView();
         }
 
         private void CreateSkinsPCKToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            if (_pck.TryGetFile("Skins.pck", PckFile.FileData.FileType.SkinDataFile, out _))
+            if (_pck.TryGetFile("Skins.pck", PckFileType.SkinDataFile, out _))
             {
                 MessageBox.Show("A Skins.pck file already exists in this PCK and a new one cannot be created.", "Operation aborted");
                 return;
             }
 
-            _pck.CreateNewFile("Skins.pck", PckFile.FileData.FileType.SkinDataFile, () =>
+            _pck.CreateNewFile("Skins.pck", PckFileType.SkinDataFile, () =>
             {
                 using var stream = new MemoryStream();
                 var writer = new PckFileWriter(new PckFile(3, true), GetEndianess());
@@ -818,24 +814,24 @@ namespace PckStudio.Controls
 
         private void behavioursbinToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (_pck.TryGetFile("behaviours.bin", PckFile.FileData.FileType.BehavioursFile, out _))
+            if (_pck.TryGetFile("behaviours.bin", PckFileType.BehavioursFile, out _))
             {
                 MessageBox.Show("A behaviours file already exists in this PCK and a new one cannot be created.", "Operation aborted");
                 return;
             }
 
-            _pck.CreateNewFile("behaviours.bin", PckFile.FileData.FileType.BehavioursFile, BehaviourResources.BehaviourFileInitializer);
+            _pck.CreateNewFile("behaviours.bin", PckFileType.BehavioursFile, BehaviourResources.BehaviourFileInitializer);
             BuildMainTreeView();
         }
 
         private void entityMaterialsbinToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (_pck.TryGetFile("entityMaterials.bin", PckFile.FileData.FileType.MaterialFile, out _))
+            if (_pck.TryGetFile("entityMaterials.bin", PckFileType.MaterialFile, out _))
             {
                 MessageBox.Show("A behaviours file already exists in this PCK and a new one cannot be created.", "Operation aborted");
                 return;
             }
-            _pck.CreateNewFile("entityMaterials.bin", PckFile.FileData.FileType.MaterialFile, MaterialResources.MaterialsFileInitializer);
+            _pck.CreateNewFile("entityMaterials.bin", PckFileType.MaterialFile, MaterialResources.MaterialsFileInitializer);
             BuildMainTreeView();
         }
 
@@ -851,19 +847,19 @@ namespace PckStudio.Controls
                     return;
                 }
                 // creates variable to indicate wether current pck skin structure is mashup or regular skin
-                bool hasSkinsPck = _pck.HasFile("Skins.pck", PckFile.FileData.FileType.SkinDataFile);
+                bool hasSkinsPck = _pck.HasFile("Skins.pck", PckFileType.SkinDataFile);
 
                 foreach (var fullfilename in Directory.GetFiles(contents.SelectedPath, "*.png"))
                 {
                     string filename = Path.GetFileNameWithoutExtension(fullfilename);
                     // sets file type based on wether its a cape or skin
-                    PckFile.FileData.FileType pckfiletype = filename.StartsWith("dlccape", StringComparison.OrdinalIgnoreCase)
-                        ? PckFile.FileData.FileType.CapeFile
-                        : PckFile.FileData.FileType.SkinFile;
+                    PckFileType pckfiletype = filename.StartsWith("dlccape", StringComparison.OrdinalIgnoreCase)
+                        ? PckFileType.CapeFile
+                        : PckFileType.SkinFile;
                     string pckfilepath = (hasSkinsPck ? "Skins/" : string.Empty) + filename + ".png";
 
 
-                    PckFile.FileData newFile = new PckFile.FileData(pckfilepath, pckfiletype);
+                    PckFileData newFile = new PckFileData(pckfilepath, pckfiletype);
                     byte[] filedata = File.ReadAllBytes(fullfilename);
                     newFile.SetData(filedata);
 
@@ -897,7 +893,7 @@ namespace PckStudio.Controls
                     }
                     if (hasSkinsPck)
                     {
-                        var skinsfile = _pck.GetFile("Skins.pck", PckFile.FileData.FileType.SkinDataFile);
+                        var skinsfile = _pck.GetFile("Skins.pck", PckFileType.SkinDataFile);
                         using (var ms = new MemoryStream(skinsfile.Data))
                         {
                             //var reader = new PckFileReader(LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
@@ -910,7 +906,7 @@ namespace PckStudio.Controls
                         }
                         continue;
                     }
-                    _pck.Files.Add(newFile);
+                    _pck.AddFile(newFile);
                 }
                 BuildMainTreeView();
                 _wasModified = true;
@@ -920,8 +916,8 @@ namespace PckStudio.Controls
         private void as3DSTextureFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (treeViewMain.SelectedNode is TreeNode node &&
-                node.Tag is PckFile.FileData file &&
-                file.Filetype == PckFile.FileData.FileType.SkinFile)
+                node.Tag is PckFileData file &&
+                file.Filetype == PckFileType.SkinFile)
             {
                 SaveFileDialog saveFileDialog = new SaveFileDialog();
                 saveFileDialog.Filter = "3DS Texture|*.3dst";
@@ -940,7 +936,7 @@ namespace PckStudio.Controls
 
         private void generateMipMapTextureToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (treeViewMain.SelectedNode.Tag is PckFile.FileData file && file.Filetype == PckFile.FileData.FileType.TextureFile)
+            if (treeViewMain.SelectedNode.Tag is PckFileData file && file.Filetype == PckFileType.TextureFile)
             {
                 string textureDirectory = Path.GetDirectoryName(file.Filename);
                 string textureName = Path.GetFileNameWithoutExtension(file.Filename);
@@ -966,9 +962,9 @@ namespace PckStudio.Controls
                     {
                         string mippedPath = $"{textureDirectory}/{textureName}MipMapLevel{i}{textureExtension}";
                         Debug.WriteLine(mippedPath);
-                        if (_pck.HasFile(mippedPath, PckFile.FileData.FileType.TextureFile))
-                            _pck.Files.Remove(_pck.GetFile(mippedPath, PckFile.FileData.FileType.TextureFile));
-                        PckFile.FileData MipMappedFile = new PckFile.FileData(mippedPath, PckFile.FileData.FileType.TextureFile);
+                        if (_pck.HasFile(mippedPath, PckFileType.TextureFile))
+                            _pck.RemoveFile(_pck.GetFile(mippedPath, PckFileType.TextureFile));
+                        PckFileData MipMappedFile = new PckFileData(mippedPath, PckFileType.TextureFile);
 
 
                         Image originalTexture = Image.FromStream(new MemoryStream(file.Data));
@@ -989,7 +985,7 @@ namespace PckStudio.Controls
                         MipMappedFile.SetData(texStream.ToArray());
                         texStream.Dispose();
 
-                        _pck.Files.Insert(_pck.Files.IndexOf(file) + i - 1, MipMappedFile);
+                        _pck.InsertFile(_pck.IndexOfFile(file) + i - 1, MipMappedFile);
                     }
                     BuildMainTreeView();
                 }
@@ -998,7 +994,7 @@ namespace PckStudio.Controls
 
         private void viewFileInfoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (treeViewMain.SelectedNode.Tag is PckFile.FileData file)
+            if (treeViewMain.SelectedNode.Tag is PckFileData file)
             {
                 MessageBox.Show(
                     "File path: " + file.Filename +
@@ -1011,7 +1007,7 @@ namespace PckStudio.Controls
 
         private void correctSkinDecimalsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (treeViewMain.SelectedNode is TreeNode node && node.Tag is PckFile.FileData file && file.Filetype == PckFile.FileData.FileType.SkinFile)
+            if (treeViewMain.SelectedNode is TreeNode node && node.Tag is PckFileData file && file.Filetype == PckFileType.SkinFile)
             {
                 foreach (var p in file.Properties.FindAll(s => s.Key == "BOX" || s.Key == "OFFSET"))
                 {
@@ -1027,7 +1023,7 @@ namespace PckStudio.Controls
         {
             var node = treeViewMain.SelectedNode;
             if (node == null) return;
-            if (node.Tag is PckFile.FileData file)
+            if (node.Tag is PckFileData file)
             {
                 using SaveFileDialog exFile = new SaveFileDialog();
                 exFile.FileName = Path.GetFileName(file.Filename);
@@ -1058,7 +1054,7 @@ namespace PckStudio.Controls
                     {
                         GetAllChildNodes(node.Nodes).ForEach(fileNode =>
                         {
-                            if (fileNode.Tag is PckFile.FileData file)
+                            if (fileNode.Tag is PckFileData file)
                             {
                                 Directory.CreateDirectory($"{dialog.SelectedPath}/{Path.GetDirectoryName(file.Filename)}");
                                 File.WriteAllBytes($"{dialog.SelectedPath}/{file.Filename}", file.Data);
@@ -1073,7 +1069,7 @@ namespace PckStudio.Controls
                     }
                     else
                     {
-                        foreach (var _file in _pck.Files)
+                        foreach (var _file in _pck.GetFiles())
                         {
                             if (_file.Filename.StartsWith(selectedFolder))
                             {
@@ -1104,11 +1100,11 @@ namespace PckStudio.Controls
 
             if (diag.ShowDialog(this) == DialogResult.OK)
             {
-                if (node.Tag is PckFile.FileData file)
+                if (node.Tag is PckFileData file)
                 {
                     TreeNode newNode = new TreeNode();
                     newNode.Text = Path.GetFileName(diag.NewText);
-                    var NewFile = new PckFile.FileData(diag.NewText, file.Filetype);
+                    var NewFile = new PckFileData(diag.NewText, file.Filetype);
                     file.Properties.ForEach(p => NewFile.Properties.Add(p));
                     NewFile.SetData(file.Data);
                     NewFile.Filename = diag.NewText;
@@ -1129,7 +1125,7 @@ namespace PckStudio.Controls
                     if (node.Parent == null) treeViewMain.Nodes.Insert(node.Index + 1, newNode); //adds generated file node
                     else node.Parent.Nodes.Insert(node.Index + 1, newNode);//adds generated file node to selected folder
 
-                    if (!IsSubPCKNode(node.FullPath)) _pck.Files.Insert(node.Index + 1, NewFile);
+                    if (!IsSubPCKNode(node.FullPath)) _pck.InsertFile(node.Index + 1, NewFile);
                     else RebuildSubPCK(node.FullPath);
                     BuildMainTreeView();
                     _wasModified = true;
@@ -1147,7 +1143,7 @@ namespace PckStudio.Controls
 
             if (diag.ShowDialog(this) == DialogResult.OK)
             {
-                if (node.Tag is PckFile.FileData file)
+                if (node.Tag is PckFileData file)
                 {
                     file.Filename = diag.NewText;
                 }
@@ -1156,7 +1152,7 @@ namespace PckStudio.Controls
                     node.Text = diag.NewText;
                     foreach (var childNode in GetAllChildNodes(node.Nodes))
                     {
-                        if (childNode.Tag is PckFile.FileData folderFile)
+                        if (childNode.Tag is PckFileData folderFile)
                         {
                             folderFile.Filename = childNode.FullPath;
                         }
@@ -1170,7 +1166,7 @@ namespace PckStudio.Controls
 
         private void replaceToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (treeViewMain.SelectedNode.Tag is PckFile.FileData file)
+            if (treeViewMain.SelectedNode.Tag is PckFileData file)
             {
                 using var ofd = new OpenFileDialog();
                 // Suddenly, and randomly, this started throwing an exception because it wasn't formatted correctly? So now it's formatted correctly and now displays the file type name in the dialog.
@@ -1179,7 +1175,7 @@ namespace PckStudio.Controls
 
                 switch (file.Filetype)
                 {
-                    case PckFile.FileData.FileType.TextureFile:
+                    case PckFileType.TextureFile:
                         if (Path.GetExtension(file.Filename) == ".png") extra_extensions = ";*.tga";
                         else if (Path.GetExtension(file.Filename) == ".tga") extra_extensions = ";*.png";
                         break;
@@ -1209,14 +1205,14 @@ namespace PckStudio.Controls
 
             string path = node.FullPath;
 
-            if (node.Tag is PckFile.FileData)
+            if (node.Tag is PckFileData)
             {
-                PckFile.FileData file = node.Tag as PckFile.FileData;
+                PckFileData file = node.Tag as PckFileData;
 
                 string itemPath = "res/textures/items/";
 
                 // warn the user about deleting compass.png and clock.png
-                if (file.Filetype == PckFile.FileData.FileType.TextureFile &&
+                if (file.Filetype == PckFileType.TextureFile &&
                     (file.Filename == itemPath + "compass.png" || file.Filename == itemPath + "clock.png"))
                 {
                     if (MessageBox.Show("Are you sure want to delete this file? If \"compass.png\" or \"clock.png\" are missing, your game will crash upon loading this pack.", "Warning",
@@ -1224,7 +1220,7 @@ namespace PckStudio.Controls
                 }
 
                 // remove loc key if its a skin/cape
-                if (file.Filetype == PckFile.FileData.FileType.SkinFile || file.Filetype == PckFile.FileData.FileType.CapeFile)
+                if (file.Filetype == PckFileType.SkinFile || file.Filetype == PckFileType.CapeFile)
                 {
                     if (TryGetLocFile(out LOCFile locFile))
                     {
@@ -1236,7 +1232,7 @@ namespace PckStudio.Controls
                         TrySetLocFile(locFile);
                     }
                 }
-                if (_pck.Files.Remove(file))
+                if (_pck.RemoveFile(file))
                 {
                     node.Remove();
                     _wasModified = true;
@@ -1246,7 +1242,7 @@ namespace PckStudio.Controls
                 MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
                 string pckFolderDir = node.FullPath;
-                _pck.Files.RemoveAll(file => file.Filename.StartsWith(pckFolderDir));
+                _pck.RemoveAll(file => file.Filename.StartsWith(pckFolderDir));
                 node.Remove();
                 _wasModified = true;
             }
@@ -1279,14 +1275,14 @@ namespace PckStudio.Controls
         {
             // for now name edits are done through the 'rename' context menu item
             // TODO: add folder renaming
-            //e.CancelEdit = e.Node.Tag is PckFile.FileData;
+            //e.CancelEdit = e.Node.Tag is PckFileData;
             e.CancelEdit = true;
         }
 
         private void editAllEntriesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (treeViewMain.SelectedNode is TreeNode node &&
-                node.Tag is PckFile.FileData file)
+                node.Tag is PckFileData file)
             {
                 var props = file.Properties.Select(p => p.Key + " " + p.Value);
                 using (var input = new MultiTextPrompt(props.ToArray()))
@@ -1312,14 +1308,14 @@ namespace PckStudio.Controls
         private void treeMeta_DoubleClick(object sender, EventArgs e)
         {
             if (treeMeta.SelectedNode is TreeNode subnode && subnode.Tag is KeyValuePair<string, string> property &&
-                treeViewMain.SelectedNode is TreeNode node && node.Tag is PckFile.FileData file)
+                treeViewMain.SelectedNode is TreeNode node && node.Tag is PckFileData file)
             {
                 int i = file.Properties.IndexOf(property);
                 if (i != -1)
                 {
                     switch (property.Key)
                     {
-                        case "ANIM" when file.Filetype == PckFile.FileData.FileType.SkinFile:
+                        case "ANIM" when file.Filetype == PckFileType.SkinFile:
                             try
                             {
                                 using ANIMEditor diag = new ANIMEditor(property.Value);
@@ -1339,7 +1335,7 @@ namespace PckStudio.Controls
                             }
                             break;
 
-                        case "BOX" when file.Filetype == PckFile.FileData.FileType.SkinFile:
+                        case "BOX" when file.Filetype == PckFileType.SkinFile:
                             try
                             {
                                 using BoxEditor diag = new BoxEditor(property.Value, IsSubPCKNode(treeViewMain.SelectedNode.FullPath));
@@ -1387,7 +1383,7 @@ namespace PckStudio.Controls
         private void addMultipleEntriesToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             if (treeViewMain.SelectedNode is TreeNode node &&
-                node.Tag is PckFile.FileData file)
+                node.Tag is PckFileData file)
             {
                 using (var input = new MultiTextPrompt())
                 {
@@ -1410,7 +1406,7 @@ namespace PckStudio.Controls
 
         private void addBOXEntryToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            if (treeViewMain.SelectedNode is TreeNode t && t.Tag is PckFile.FileData file)
+            if (treeViewMain.SelectedNode is TreeNode t && t.Tag is PckFileData file)
             {
                 using BoxEditor diag = new BoxEditor(SkinBOX.Empty, IsSubPCKNode(treeViewMain.SelectedNode.FullPath));
                 if (diag.ShowDialog(this) == DialogResult.OK)
@@ -1426,7 +1422,7 @@ namespace PckStudio.Controls
 
         private void addANIMEntryToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            if (treeViewMain.SelectedNode is TreeNode t && t.Tag is PckFile.FileData file)
+            if (treeViewMain.SelectedNode is TreeNode t && t.Tag is PckFileData file)
             {
                 using ANIMEditor diag = new ANIMEditor(SkinANIM.Empty);
                 if (diag.ShowDialog(this) == DialogResult.OK)
@@ -1443,7 +1439,7 @@ namespace PckStudio.Controls
         private void deleteEntryToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (treeMeta.SelectedNode is TreeNode t && t.Tag is KeyValuePair<string, string> property &&
-                treeViewMain.SelectedNode is TreeNode main && main.Tag is PckFile.FileData file &&
+                treeViewMain.SelectedNode is TreeNode main && main.Tag is PckFileData file &&
                 file.Properties.Remove(property))
             {
                 treeMeta.SelectedNode.Remove();
@@ -1455,7 +1451,7 @@ namespace PckStudio.Controls
         private void addEntryToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (treeViewMain.SelectedNode is TreeNode t &&
-                t.Tag is PckFile.FileData file)
+                t.Tag is PckFileData file)
             {
                 using AddPropertyPrompt addProperty = new AddPropertyPrompt();
                 if (addProperty.ShowDialog() == DialogResult.OK)
@@ -1468,9 +1464,9 @@ namespace PckStudio.Controls
             }
         }
 
-        private void HandleTextureFile(PckFile.FileData file)
+        private void HandleTextureFile(PckFileData file)
         {
-            _ = file.IsMipmappedFile() && _pck.Files.TryGetValue(file.GetNormalPath(), PckFile.FileData.FileType.TextureFile, out file);
+            _ = file.IsMipmappedFile() && _pck.TryGetValue(file.GetNormalPath(), PckFileType.TextureFile, out file);
 
             if (file.Size <= 0)
             {
@@ -1501,7 +1497,8 @@ namespace PckStudio.Controls
 
             if (file.Filename.StartsWith("res/textures/blocks/") || file.Filename.StartsWith("res/textures/items/"))
             {
-                using (AnimationEditor animationEditor = new AnimationEditor(file))
+                var animation = AnimationHelper.GetAnimationFromFile(file);
+                using (AnimationEditor animationEditor = new AnimationEditor(animation, Path.GetFileNameWithoutExtension(file.Filename)))
                 {
                     if (animationEditor.ShowDialog(this) == DialogResult.OK)
                     {
@@ -1513,28 +1510,28 @@ namespace PckStudio.Controls
             }
         }
 
-        private void HandleGameRuleFile(PckFile.FileData file)
+        private void HandleGameRuleFile(PckFileData file)
         {
             using GameRuleFileEditor grfEditor = new GameRuleFileEditor(file);
             _wasModified = grfEditor.ShowDialog(this) == DialogResult.OK;
             UpdateRichPresence();
         }
 
-        private void HandleAudioFile(PckFile.FileData file)
+        private void HandleAudioFile(PckFileData file)
         {
             using AudioEditor audioEditor = new AudioEditor(file, LittleEndianCheckBox.Checked);
             _wasModified = audioEditor.ShowDialog(this) == DialogResult.OK;
             UpdateRichPresence();
         }
 
-        private void HandleLocalisationFile(PckFile.FileData file)
+        private void HandleLocalisationFile(PckFileData file)
         {
             using LOCEditor locedit = new LOCEditor(file);
             _wasModified = locedit.ShowDialog(this) == DialogResult.OK;
             UpdateRichPresence();
         }
 
-        private void HandleColourFile(PckFile.FileData file)
+        private void HandleColourFile(PckFileData file)
         {
             if (file.Size == 0)
             {
@@ -1546,7 +1543,7 @@ namespace PckStudio.Controls
             _wasModified = diag.ShowDialog(this) == DialogResult.OK;
         }
 
-        public void HandleSkinFile(PckFile.FileData file)
+        public void HandleSkinFile(PckFileData file)
         {
             if (file.Size <= 0)
                 return;
@@ -1572,18 +1569,18 @@ namespace PckStudio.Controls
             }
         }
 
-        public void HandleModelsFile(PckFile.FileData file)
+        public void HandleModelsFile(PckFileData file)
         {
             MessageBox.Show("Models.bin support has not been implemented. You can use the Spark Editor for the time being to edit these files.", "Not implemented yet.");
         }
 
-        public void HandleBehavioursFile(PckFile.FileData file)
+        public void HandleBehavioursFile(PckFileData file)
         {
             using BehaviourEditor edit = new BehaviourEditor(file);
             _wasModified = edit.ShowDialog(this) == DialogResult.OK;
         }
 
-        public void HandleMaterialFile(PckFile.FileData file)
+        public void HandleMaterialFile(PckFileData file)
         {
             using MaterialsEditor edit = new MaterialsEditor(file);
             _wasModified = edit.ShowDialog(this) == DialogResult.OK;

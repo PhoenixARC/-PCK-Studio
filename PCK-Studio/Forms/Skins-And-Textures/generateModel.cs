@@ -39,7 +39,7 @@ namespace PckStudio.Forms
             left,
         }
 
-        private PckFile.FileData _file;
+        private PckFileData _file;
         private SkinANIM _ANIM;
 
         private static Color _backgroundColor = Color.FromArgb(0xff, 0x50, 0x50, 0x50);
@@ -126,7 +126,7 @@ namespace PckStudio.Forms
             }
         }
 
-        public generateModel(PckFile.FileData file)
+        public generateModel(PckFileData file)
         {
             MessageBox.Show(this, "This feature is now considered deprecated and will no longer recieve updates. A better alternative is currently under development. Use at your own risk.", "Deprecated Feature", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             InitializeComponent();
@@ -149,7 +149,7 @@ namespace PckStudio.Forms
             return sWhitespace.Replace(input, replacement);
         }
 
-        private void LoadData(PckFile.PCKProperties properties)
+        private void LoadData(PckFileProperties properties)
         {
             comboParent.Enabled = properties.GetProperties("BOX").All(kv => {
                 var box = SkinBOX.FromString(kv.Value);

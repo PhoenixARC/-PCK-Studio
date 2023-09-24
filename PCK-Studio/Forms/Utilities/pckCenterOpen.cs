@@ -137,11 +137,11 @@ namespace PckStudio.Forms
                     //MessageBox.Show(root);//debug thingy to make sure filepath is correct
 
                     //add all skins to a list
-                    List<PckFile.FileData> skinsList = new List<PckFile.FileData>();
-                    List<PckFile.FileData> capesList = new List<PckFile.FileData>();
+                    List<PckFileData> skinsList = new List<PckFileData>();
+                    List<PckFileData> capesList = new List<PckFileData>();
                     var reader = new PckFileReader();
                     PckFile currentPCK = reader.FromFile(Program.AppData + "/PCK-Center/myPcks/" + mod + ".pck");
-                    foreach (PckFile.FileData skin in currentPCK.Files)
+                    foreach (PckFileData skin in currentPCK.GetFiles())
                     {
                         if (skin.Filename.Count() == 19)
                         {
@@ -175,7 +175,7 @@ namespace PckStudio.Forms
                         writeSkins.WriteLine("  \"skins\": [");
 
                         int skinAmount = 0;
-                        foreach (PckFile.FileData newSkin in skinsList)
+                        foreach (PckFileData newSkin in skinsList)
                         {
                             skinAmount += 1;
                             string skinName = "skinName";
@@ -232,7 +232,7 @@ namespace PckStudio.Forms
                     {
                         writeSkins.WriteLine("{");
                         int newSkinCount = 0;
-                        foreach (PckFile.FileData newSkin in skinsList)
+                        foreach (PckFileData newSkin in skinsList)
                         {
 
                             newSkinCount += 1;
@@ -1020,7 +1020,7 @@ namespace PckStudio.Forms
                     }
 
                     //adds skin textures
-                    foreach (PckFile.FileData skinTexture in skinsList)
+                    foreach (PckFileData skinTexture in skinsList)
                     {
                         var ms = new MemoryStream(skinTexture.Data);
                         Bitmap saveSkin = new Bitmap(Image.FromStream(ms));
@@ -1049,7 +1049,7 @@ namespace PckStudio.Forms
                     }
 
                     //adds cape textures
-                    foreach (PckFile.FileData capeTexture in capesList)
+                    foreach (PckFileData capeTexture in capesList)
                     {
                         File.WriteAllBytes(root + "/" + capeTexture.Filename, capeTexture.Data);
                     }

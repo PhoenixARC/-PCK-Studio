@@ -37,26 +37,26 @@ namespace PckStudio.Popups
         {
             if (fileTypeComboBox.SelectedIndex >= 0 && fileTypeComboBox.SelectedIndex <= 13)
             {
-                applyBulkProperties(_pckFile.Files, fileTypeComboBox.SelectedIndex - 1);
+                applyBulkProperties(_pckFile.GetFiles(), fileTypeComboBox.SelectedIndex - 1);
                 DialogResult = DialogResult.OK;
                 return;
             }
             MessageBox.Show("Please select a filetype before applying");
         }
 
-        private void applyBulkProperties(FileCollection files, int index)
+        private void applyBulkProperties(IReadOnlyCollection<PckFileData> files, int index)
 		{
-            foreach (PckFile.FileData file in files)
+            foreach (PckFileData file in files)
             {
-                if (file.Filetype == PckFile.FileData.FileType.TexturePackInfoFile ||
-                file.Filetype == PckFile.FileData.FileType.SkinDataFile)
+                if (file.Filetype == PckFileType.TexturePackInfoFile ||
+                file.Filetype == PckFileType.SkinDataFile)
                 {
                     try
                     {
                         var reader = new PckFileReader(_endianness);
                         using var ms = new MemoryStream(file.Data);
                         PckFile subPCK = reader.FromStream(ms);
-                        applyBulkProperties(subPCK.Files, index);
+                        applyBulkProperties(subPCK.GetFiles(), index);
                         file.SetData(new PckFileWriter(subPCK, _endianness));
                     }
                     catch (OverflowException ex)
@@ -65,15 +65,15 @@ namespace PckStudio.Popups
                     }
                 }
 
-                if (index == -1 || (Enum.IsDefined(typeof(PckFile.FileData.FileType), index) && (int)file.Filetype == index))
+                if (index == -1 || (Enum.IsDefined(typeof(PckFileType), index) && (int)file.Filetype == index))
                 {
                     file.Properties.Add(propertyKeyTextBox.Text, propertyValueTextBox.Text);
                 }
             }
 
-            if (Enum.IsDefined(typeof(PckFile.FileData.FileType), index))
+            if (Enum.IsDefined(typeof(PckFileType), index))
             {
-                MessageBox.Show($"Data added to {(PckFile.FileData.FileType)index} entries");
+                MessageBox.Show($"Data added to {(PckFileType)index} entries");
                 return;
             }
             MessageBox.Show("Data added to all entries");

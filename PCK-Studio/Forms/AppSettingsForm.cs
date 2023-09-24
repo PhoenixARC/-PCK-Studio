@@ -40,6 +40,11 @@ namespace PckStudio.Forms
             Settings.Default.ShowRichPresence = showPresenceCheckBox.Checked;
         }
 
+        private void grf_paramKeyComboBoxCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            Settings.Default.UseComboBoxForGRFParameter = grf_paramKeyComboBoxCheckBox.Checked;
+        }
+
         private void LoadCheckboxState(CheckBox checkBox, EventHandler eventHandler, bool state)
         {
             checkBox.CheckedChanged -= eventHandler;
@@ -53,6 +58,7 @@ namespace PckStudio.Forms
             LoadCheckboxState(endianCheckBox, endianCheckBox_CheckedChanged, Settings.Default.UseLittleEndianAsDefault);
             LoadCheckboxState(autoLoadPckCheckBox, autoLoadPckCheckBox_CheckedChanged, Settings.Default.LoadSubPcks);
             LoadCheckboxState(showPresenceCheckBox, showPresenceCheckBox_CheckedChanged, Settings.Default.ShowRichPresence);
+            LoadCheckboxState(grf_paramKeyComboBoxCheckBox, grf_paramKeyComboBoxCheckBox_CheckedChanged, Settings.Default.UseComboBoxForGRFParameter);
         }
 
         private void AppBehaviorSettingsForm_FormClosing(object sender, FormClosingEventArgs e)

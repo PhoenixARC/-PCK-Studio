@@ -107,7 +107,7 @@ namespace PckStudio.Forms.Editor
 
         private bool AcquireColorTable(PckFile pckFile)
         {
-            if (pckFile.TryGetFile("colours.col", PckFile.FileData.FileType.ColourTableFile, out var colFile) &&
+            if (pckFile.TryGetFile("colours.col", PckFileType.ColourTableFile, out var colFile) &&
                 colFile.Size > 0)
             {
                 using var ms = new MemoryStream(colFile.Data);
@@ -137,7 +137,7 @@ namespace PckStudio.Forms.Editor
             if (_tiles is null || !_tiles.IndexInRange(index) || (_selectedTile = _tiles[index]) is null)
                 return;
 
-            if(String.IsNullOrEmpty(_selectedTile.Tile.DisplayName))
+            if(string.IsNullOrEmpty(_selectedTile.Tile.DisplayName))
 			{
                 // changes the selected tile to the base flowing tile (carries all properties over) - Matt
                 _selectedTile = _tiles.Find(t => t.Tile.InternalName == _selectedTile.Tile.InternalName);
@@ -148,7 +148,7 @@ namespace PckStudio.Forms.Editor
             selectTilePictureBox.UseBlendColor = applyColorMaskToolStripMenuItem.Checked;
 
             bool hasAnimation =
-                _pckFile.Files.TryGetValue($"res/textures/{_atlasType}/{_selectedTile.Tile.InternalName}.png", PckFile.FileData.FileType.TextureFile, out var animationFile);
+                _pckFile.TryGetValue($"res/textures/{_atlasType}/{_selectedTile.Tile.InternalName}.png", PckFileType.TextureFile, out var animationFile);
             animationButton.Text = hasAnimation ? "Edit Animation" : "Create Animation";
             replaceButton.Enabled = !hasAnimation;
 
@@ -156,15 +156,12 @@ namespace PckStudio.Forms.Editor
                 hasAnimation &&
                 animationFile.Size > 0)
             {
-                using var ms = new MemoryStream(animationFile.Data);
-                var img = Image.FromStream(ms);
-                var textures = img.Split(ImageLayoutDirection.Vertical);
-                var animation = new Internal.Animation(textures, animationFile.Properties.GetPropertyValue("ANIM"));
+                var animation = AnimationHelper.GetAnimationFromFile(animationFile);
                 selectTilePictureBox.Start(animation);
                 return;
             }
 
-            if (variantLabel.Visible = variantComboBox.Visible = _selectedTile.Tile.HasColourEntry && _selectedTile.Tile.ColourEntry.Variants.Length > 1)
+            if (variantComboBox.Enabled = variantLabel.Visible = variantComboBox.Visible = _selectedTile.Tile.HasColourEntry && _selectedTile.Tile.ColourEntry.Variants.Length > 1)
             {
                 variantComboBox.Items.AddRange(_selectedTile.Tile.ColourEntry.Variants);
                 variantComboBox.SelectedItem = _selectedTile.Tile.ColourEntry.DefaultName;
@@ -292,15 +289,6 @@ namespace PckStudio.Forms.Editor
             originalPictureBox.Invalidate();
         }
 
-        private void ApplyBlend(string colorKey, Image image)
-        {
-            if (variantComboBox.Enabled = _selectedTile.Tile.ColourEntry.Variants.Length > 1)
-            {
-                selectTilePictureBox.BlendColor = FindBlendColorByKey(colorKey);
-                selectTilePictureBox.Image = image;
-            }
-        }
-
         private Color GetBlendColor()
         {
             if (_selectedTile.Tile.HasColourEntry && _selectedTile.Tile.ColourEntry is not null)
@@ -406,20 +394,20 @@ namespace PckStudio.Forms.Editor
 
         private void animationButton_Click(object sender, EventArgs e)
         {
-            bool isNewFile;
-            if (isNewFile = !_pckFile.Files.TryGetValue(
+            var file = _pckFile.GetOrCreate(
                     $"res/textures/{_atlasType}/{_selectedTile.Tile.InternalName}.png",
-                    PckFile.FileData.FileType.TextureFile, out var file
-                ))
+                    PckFileType.TextureFile
+                );
+
+            var animation = AnimationHelper.GetAnimationFromFile(file);
+
+            var animationEditor = new AnimationEditor(animation, _selectedTile.Tile.InternalName, GetBlendColor());
+            if (animationEditor.ShowDialog() != DialogResult.OK)
             {
-                file = new PckFile.FileData($"res/textures/{_atlasType}/{_selectedTile.Tile.InternalName}.png", PckFile.FileData.FileType.TextureFile);
+                return;
             }
 
-            var animationEditor = new AnimationEditor(file, GetBlendColor());
-            if (animationEditor.ShowDialog() == DialogResult.OK && isNewFile)
-            {
-                _pckFile.Files.Add(file);
-            }
+            AnimationHelper.SaveAnimationToFile(file, animation);
         }
 
         private void extractTileToolStripMenuItem_Click(object sender, EventArgs e)
@@ -440,7 +428,9 @@ namespace PckStudio.Forms.Editor
             if (_selectedTile.Tile.ColourEntry is not null &&
                 _selectedTile.Tile.ColourEntry.Variants.IndexInRange(variantComboBox.SelectedIndex))
             {
-                ApplyBlend(_selectedTile.Tile.ColourEntry.Variants[variantComboBox.SelectedIndex], _selectedTile.Texture);
+                string colorKey = _selectedTile.Tile.ColourEntry.Variants[variantComboBox.SelectedIndex];
+                selectTilePictureBox.BlendColor = FindBlendColorByKey(colorKey);
+                selectTilePictureBox.Image = _selectedTile.Texture;
             }
         }
 

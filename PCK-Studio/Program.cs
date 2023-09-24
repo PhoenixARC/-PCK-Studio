@@ -25,6 +25,7 @@ namespace PckStudio
         static void Main(string[] args)
         {
             ApplicationScope.Initialize();
+            Trace.TraceInformation("Startup");
             RPC.Initialize();
             MainInstance = new MainForm();
             if (args.Length > 0)

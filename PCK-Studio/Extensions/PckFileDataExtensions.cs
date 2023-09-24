@@ -16,30 +16,32 @@ namespace PckStudio.Extensions
     {
         private const string MipMap = "MipMapLevel";
 
-        internal static Image GetTexture(this PckFile.FileData file)
+        private static Image EmptyImage = new Bitmap(1, 1, PixelFormat.Format32bppArgb);
+
+        internal static Image GetTexture(this PckFileData file)
         {
-            if (file.Filetype != PckFile.FileData.FileType.SkinFile &&
-                file.Filetype != PckFile.FileData.FileType.CapeFile &&
-                file.Filetype != PckFile.FileData.FileType.TextureFile)
+            if (file.Filetype != PckFileType.SkinFile &&
+                file.Filetype != PckFileType.CapeFile &&
+                file.Filetype != PckFileType.TextureFile)
             {
-                return null;
+                throw new Exception("File is not suitable to contain image data.");
             }
-            Image image = null;
             using (var stream = new MemoryStream(file.Data))
             {
                 try
                 {
-                    image = Image.FromStream(stream);
+                    return Image.FromStream(stream);
                 }
                 catch(Exception ex)
                 {
+                    Trace.WriteLine($"Failed to read image from pck file data({file.Filename}).", category: nameof(PckFileDataExtensions) + "." + nameof(GetTexture));
                     Debug.WriteLine(ex.Message);
+                    return EmptyImage;
                 }
             }
-            return image;
         }
 
-        internal static void SetData(this PckFile.FileData file, IDataFormatWriter writer)
+        internal static void SetData(this PckFileData file, IDataFormatWriter writer)
         {
             using (var stream = new MemoryStream())
             {
@@ -48,14 +50,13 @@ namespace PckStudio.Extensions
             }
         }
 
-        internal static void SetData(this PckFile.FileData file, Image image, ImageFormat imageFormat)
+        internal static void SetData(this PckFileData file, Image image, ImageFormat imageFormat)
         {
-            if (file.Filetype != PckFile.FileData.FileType.SkinFile &&
-                file.Filetype != PckFile.FileData.FileType.CapeFile &&
-                file.Filetype != PckFile.FileData.FileType.TextureFile)
+            if (file.Filetype != PckFileType.SkinFile &&
+                file.Filetype != PckFileType.CapeFile &&
+                file.Filetype != PckFileType.TextureFile)
             {
-                Debug.WriteLine($"{file.Filename} can't contain image data");
-                return;
+                throw new Exception("File is not suitable to contain image data.");
             }
 
             using (var stream = new MemoryStream())
@@ -65,7 +66,7 @@ namespace PckStudio.Extensions
             }
         }
 
-        internal static bool IsMipmappedFile(this PckFile.FileData file)
+        internal static bool IsMipmappedFile(this PckFileData file)
         {
             // We only want to test the file name itself. ex: "terrainMipMapLevel2"
             string name = Path.GetFileNameWithoutExtension(file.Filename);
@@ -80,7 +81,7 @@ namespace PckStudio.Extensions
             return true;
         }
 
-        internal static string GetNormalPath(this PckFile.FileData file)
+        internal static string GetNormalPath(this PckFileData file)
         {
             if (!file.IsMipmappedFile())
                 return file.Filename;

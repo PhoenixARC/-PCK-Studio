@@ -35,6 +35,7 @@
             this.autoUpdateCheckBox = new MetroFramework.Controls.MetroCheckBox();
             this.autoLoadPckCheckBox = new MetroFramework.Controls.MetroCheckBox();
             this.showPresenceCheckBox = new MetroFramework.Controls.MetroCheckBox();
+            this.grf_paramKeyComboBoxCheckBox = new MetroFramework.Controls.MetroCheckBox();
             this.SuspendLayout();
             // 
             // autoSaveCheckBox
@@ -114,11 +115,26 @@
             this.showPresenceCheckBox.UseSelectable = true;
             this.showPresenceCheckBox.CheckedChanged += new System.EventHandler(this.showPresenceCheckBox_CheckedChanged);
             // 
+            // grf_paramKeyComboBoxCheckBox
+            // 
+            this.grf_paramKeyComboBoxCheckBox.AutoSize = true;
+            this.grf_paramKeyComboBoxCheckBox.Location = new System.Drawing.Point(23, 169);
+            this.grf_paramKeyComboBoxCheckBox.Name = "grf_paramKeyComboBoxCheckBox";
+            this.grf_paramKeyComboBoxCheckBox.Size = new System.Drawing.Size(100, 15);
+            this.grf_paramKeyComboBoxCheckBox.Style = MetroFramework.MetroColorStyle.White;
+            this.grf_paramKeyComboBoxCheckBox.TabIndex = 5;
+            this.grf_paramKeyComboBoxCheckBox.Text = "Select GRF Key";
+            this.grf_paramKeyComboBoxCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.SettingToolTip.SetToolTip(this.grf_paramKeyComboBoxCheckBox, "Use a combobox instead of typing the parameter key name");
+            this.grf_paramKeyComboBoxCheckBox.UseSelectable = true;
+            this.grf_paramKeyComboBoxCheckBox.CheckedChanged += new System.EventHandler(this.grf_paramKeyComboBoxCheckBox_CheckedChanged);
+            // 
             // AppSettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(527, 270);
+            this.Controls.Add(this.grf_paramKeyComboBoxCheckBox);
             this.Controls.Add(this.showPresenceCheckBox);
             this.Controls.Add(this.autoLoadPckCheckBox);
             this.Controls.Add(this.autoUpdateCheckBox);
@@ -147,5 +163,6 @@
         private MetroFramework.Controls.MetroCheckBox autoUpdateCheckBox;
         private MetroFramework.Controls.MetroCheckBox autoLoadPckCheckBox;
         private MetroFramework.Controls.MetroCheckBox showPresenceCheckBox;
+        private MetroFramework.Controls.MetroCheckBox grf_paramKeyComboBoxCheckBox;
     }
 }

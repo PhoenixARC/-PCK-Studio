@@ -120,15 +120,6 @@ namespace PckStudio
 
 		#region drag and drop for main tree node
 
-		public static void getChildren(List<TreeNode> Nodes, TreeNode Node)
-		{
-			foreach (TreeNode thisNode in Node.Nodes)
-			{
-				Nodes.Add(thisNode);
-				getChildren(Nodes, thisNode);
-			}
-		}
-
 		// Most of the code below is modified code from this link: https://docs.microsoft.com/en-us/dotnet/api/system.windows.forms.treeview.itemdrag?view=windowsdesktop-6.0
 		// - MattNL
 
@@ -156,35 +147,22 @@ namespace PckStudio
 
 		}
 
-		// Determine whether one node is a parent 
-		// or ancestor of a second node.
-		private bool ContainsNode(TreeNode node1, TreeNode node2)
-		{
-			// Check the parent node of the second node.
-			if (node2.Parent == null) return false;
-			if (node2.Parent.Equals(node1)) return true;
-			// If the parent node is not null or equal to the first node, 
-			// call the ContainsNode method recursively using the parent of 
-			// the second node.
-			return ContainsNode(node1, node2.Parent);
-		}
-
 		#endregion
 
 		private PckFile InitializePack(int packId, int packVersion, string packName, bool createSkinsPCK)
 		{
 			var pack = new PckFile(3);
-
-			var zeroFile = pack.CreateNewFile("0", PckFile.FileData.FileType.InfoFile);
+			
+			var zeroFile = pack.CreateNewFile("0", PckFileType.InfoFile);
 			zeroFile.Properties.Add("PACKID", packId.ToString());
 			zeroFile.Properties.Add("PACKVERSION", packVersion.ToString());
 
 			var locFile = new LOCFile();
 			locFile.InitializeDefault(packName);
-			pack.CreateNewFile("localisation.loc", PckFile.FileData.FileType.LocalisationFile, new LOCFileWriter(locFile, 2));
+			pack.CreateNewFile("localisation.loc", PckFileType.LocalisationFile, new LOCFileWriter(locFile, 2));
 
-			PckFile.FileData skinsPCKFile = pack.CreateNewFileIf(createSkinsPCK, "Skins.pck", PckFile.FileData.FileType.SkinDataFile, new PckFileWriter(new PckFile(3, true),
-				Settings.Default.UseLittleEndianAsDefault
+			pack.CreateNewFileIf(createSkinsPCK, "Skins.pck", PckFileType.SkinDataFile, new PckFileWriter(new PckFile(3, true),
+				LittleEndianCheckBox.Checked
 					? OMI.Endianness.LittleEndian
 					: OMI.Endianness.BigEndian));
 			
@@ -196,13 +174,13 @@ namespace PckStudio
 			var pack = InitializePack(packId, packVersion, packName, createSkinsPCK);
 			PckFile infoPCK = new PckFile(3);
 
-			var icon = infoPCK.CreateNewFile("icon.png", PckFile.FileData.FileType.TextureFile);
+			var icon = infoPCK.CreateNewFile("icon.png", PckFileType.TextureFile);
 			icon.SetData(Resources.TexturePackIcon, ImageFormat.Png);
 
-			var comparison = infoPCK.CreateNewFile("comparison.png", PckFile.FileData.FileType.TextureFile);
+			var comparison = infoPCK.CreateNewFile("comparison.png", PckFileType.TextureFile);
 			comparison.SetData(Resources.Comparison, ImageFormat.Png);
 
-			var texturepackInfo = pack.CreateNewFile($"{res}/{res}Info.pck", PckFile.FileData.FileType.TexturePackInfoFile);
+			var texturepackInfo = pack.CreateNewFile($"{res}/{res}Info.pck", PckFileType.TexturePackInfoFile);
 
 			texturepackInfo.Properties.Add("PACKID", "0");
 			texturepackInfo.Properties.Add("DATAPATH", $"{res}Data.pck");
@@ -215,7 +193,7 @@ namespace PckStudio
 		private PckFile InitializeMashUpPack(int packId, int packVersion, string packName, string res)
 		{
 			var pack = InitializeTexturePack(packId, packVersion, packName, res, true);
-			var gameRuleFile = pack.CreateNewFile("GameRules.grf", PckFile.FileData.FileType.GameRulesFile);
+			var gameRuleFile = pack.CreateNewFile("GameRules.grf", PckFileType.GameRulesFile);
 			var grfFile = new GameRuleFile();
 			grfFile.AddRule("MapOptions",
 				new KeyValuePair<string, string>("seed", "0"),
@@ -286,10 +264,11 @@ namespace PckStudio
 			using (var ofd = new OpenFileDialog())
 			{
 				ofd.CheckFileExists = true;
+				ofd.Multiselect = true;
 				ofd.Filter = "PCK (Minecraft Console Package)|*.pck";
 				if (ofd.ShowDialog() == DialogResult.OK)
 				{
-					LoadPckFromFile(ofd.FileName);
+					LoadPckFromFile(ofd.FileNames);
 				}
 			}
 		}
@@ -357,12 +336,13 @@ namespace PckStudio
 						}
 						catch (OverflowException ex)
 						{
+							Debug.WriteLine(ex.Message);
+							Trace.WriteLine("Failed to open " + ofd.FileName);
 							MessageBox.Show("Error", "Failed to open pck\nTry checking the 'Open/Save as Switch/Vita/PS4 pck' check box in the upper right corner.",
 								MessageBoxButtons.OK, MessageBoxIcon.Error);
-							Debug.WriteLine(ex.Message);
 						}
 					}
-					foreach (PckFile.FileData file in pckfile.Files)
+					foreach (PckFileData file in pckfile.GetFiles())
 					{
 						string filepath = $"{sfd.SelectedPath}/{file.Filename}";
 						Directory.CreateDirectory(filepath);
@@ -566,7 +546,7 @@ namespace PckStudio
 				switch (prompt)
 				{
 					case DialogResult.Yes:
-						if (!editor.Pck.TryGetFile("0", PckFile.FileData.FileType.InfoFile, out PckFile.FileData file) ||
+						if (!editor.Pck.TryGetFile("0", PckFileType.InfoFile, out PckFileData file) ||
 							string.IsNullOrEmpty(file.Properties.GetPropertyValue("PACKID")))
 						{
 							MessageBox.Show(this,
@@ -619,7 +599,7 @@ namespace PckStudio
 							case DialogResult.No:
 							case DialogResult.Cancel:
 							default:
-								MessageBox.Show(this, "Operation cancelled");
+								Trace.WriteLine("Operation cancelled", category: nameof(addCustomPackIconToolStripMenuItem_Click));
 								return;
 						}
 					}
@@ -645,7 +625,10 @@ namespace PckStudio
 				e.Cancel = true;
 			};
 			if (!PckManager.Visible)
+			{
 				PckManager.Show();
+                PckManager.BringToFront();
+            }
 			if (PckManager.Focus())
 				PckManager.BringToFront();
 		}

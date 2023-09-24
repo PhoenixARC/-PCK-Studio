@@ -20,7 +20,7 @@ namespace PckStudio.Forms.Editor
 	public partial class BehaviourEditor : MetroForm
 	{
 		// Behaviours File Format research by Miku and MattNL
-		private readonly PckFile.FileData _file;
+		private readonly PckFileData _file;
 		BehaviourFile behaviourFile;
 
 		private readonly JObject EntityJSONData = JObject.Parse(Properties.Resources.entityData);
@@ -61,7 +61,7 @@ namespace PckStudio.Forms.Editor
 			treeView1.EndUpdate();
 		}
 
-		public BehaviourEditor(PckFile.FileData file)
+		public BehaviourEditor(PckFileData file)
 		{
 			InitializeComponent();
 

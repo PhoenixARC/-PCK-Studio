@@ -20,12 +20,23 @@ using System.Collections.Generic;
 using System.Drawing;
 using PckStudio.Extensions;
 using System.Text;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace PckStudio.Internal
 {
-	internal sealed class Animation
+    internal sealed class Animation
 	{
 		public const int MinimumFrameTime = 1;
+
+		public const int GameTickInMilliseconds = 50;
+
+		public static Animation Empty(AnimationCategory category)
+		{
+            var animation = new Animation(Array.Empty<Image>(), string.Empty);
+			animation.Category = category;
+			return animation;
+		}
 
 		public int FrameCount => frames.Count;
 
@@ -33,11 +44,6 @@ namespace PckStudio.Internal
 
 		public bool Interpolate { get; set; } = false;
 
-		public enum AnimationCategory
-        {
-            Items,
-            Blocks
-        }
 
 		public AnimationCategory Category { get; set; }
 
@@ -55,8 +61,7 @@ namespace PckStudio.Internal
 
         private readonly List<Image> textures;
 
-		private readonly List<Frame> frames = new List<Frame>();
-
+		private readonly IList<Frame> frames = new List<Frame>();
 
 		public Animation(IEnumerable<Image> textures)
 		{
@@ -72,7 +77,23 @@ namespace PckStudio.Internal
 		public class Frame
 		{
 			public readonly Image Texture;
-			public int Ticks;
+			public int Ticks
+			{
+				get
+				{
+					return _ticks;
+				}
+				set
+				{
+					lock(l_ticks)
+					{
+						_ticks = value;
+					}
+				}
+			}
+
+			private int _ticks;
+			private object l_ticks = new object();
 
 			public Frame(Image texture) : this(texture, MinimumFrameTime)
 			{ }
@@ -149,12 +170,39 @@ namespace PckStudio.Internal
 
 		public Frame GetFrame(int index) => frames[index];
 
-		public List<Frame> GetFrames()
+		public IReadOnlyCollection<Frame> GetFrames()
 		{
-			return frames;
+			return new ReadOnlyCollection<Frame>(frames);
 		}
 
-		public List<Image> GetTextures()
+		public IReadOnlyCollection<Frame> GetInterpolatedFrames()
+		{
+            if (Interpolate)
+            {
+                return new ReadOnlyCollection<Frame>(InternalGetInterpolatedFrames().ToList());
+            }
+			return GetFrames();
+        }
+
+		private IEnumerable<Frame> InternalGetInterpolatedFrames()
+		{
+			for (int i = 0; i < FrameCount; i++)
+			{
+				Frame currentFrame = frames[i];
+				Frame nextFrame = frames[0];
+				if (i + 1 < FrameCount)
+					nextFrame = frames[i + 1];
+				for (int tick = 0; tick < currentFrame.Ticks; tick++)
+				{
+					double delta = 1.0f - tick / (double)currentFrame.Ticks;
+					yield return new Frame(currentFrame.Texture.Interpolate(nextFrame.Texture, delta));
+				}
+			}
+			yield break;
+		}
+
+
+        public IReadOnlyCollection<Image> GetTextures()
 		{
 			return textures;
 		}
@@ -167,7 +215,10 @@ namespace PckStudio.Internal
 
 		public void SetFrame(int frameIndex, Frame frame)
 		{
-			frames[frameIndex] = frame;
+			lock(frames)
+			{
+				frames[frameIndex] = frame;
+			}
         }
 
 		public void SetFrame(int frameIndex, int textureIndex, int frameTime = MinimumFrameTime)
@@ -191,5 +242,24 @@ namespace PckStudio.Internal
 
             return textures.Combine(ImageLayoutDirection.Vertical);
 		}
-	}
+
+        internal void SetFrameTicks(int ticks)
+        {
+			lock(frames)
+			{
+				foreach (var frame in frames)
+				{
+					frame.Ticks = ticks;
+				}
+			}
+        }
+
+        internal void SwapFrames(int sourceIndex, int destinationIndex)
+        {
+			lock(frames)
+			{
+				frames.Swap(sourceIndex, destinationIndex);
+			}
+        }
+    }
 }

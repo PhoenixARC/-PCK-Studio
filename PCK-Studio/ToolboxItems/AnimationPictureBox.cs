@@ -25,6 +25,7 @@ using System.Runtime.CompilerServices;
 
 using PckStudio.Extensions;
 using PckStudio.Internal;
+using System.Drawing;
 
 namespace PckStudio.ToolboxItems
 {
@@ -39,9 +40,14 @@ namespace PckStudio.ToolboxItems
 					return _isPlaying;
 				}
 			}
+			private set
+			{
+                lock (l_playing)
+                {
+                    _isPlaying = value;
+                }
+            }
 		}
-
-		private const int TickInMillisecond = 50; // 1 InGame tick
 
         private bool _isPlaying = false;
 		private int currentAnimationFrameIndex = 0;
@@ -55,14 +61,17 @@ namespace PckStudio.ToolboxItems
 		{
 			_animation = animation;
 			cts = new CancellationTokenSource();
-			Task.Run(DoAnimate, cts.Token);
+			IsPlaying = true;
+            Task.Run(DoAnimate, cts.Token);
 		}
 
 		public void Stop([CallerMemberName] string callerName = default!)
 		{
 			Debug.WriteLine($"{nameof(AnimationPictureBox.Stop)} called from {callerName}!");
+			IsPlaying = false;
 			cts.Cancel();
-		}
+            cts.Token.WaitHandle.WaitOne(500);
+        }
 
 		public void SelectFrame(Animation animation, int index)
 		{
@@ -73,15 +82,11 @@ namespace PckStudio.ToolboxItems
             currentFrame = SetAnimationFrame(index);
 		}
 
-        private async void DoAnimate()
+        private void DoAnimate()
 		{
 			_ = _animation ?? throw new ArgumentNullException(nameof(_animation));
-            lock (l_playing)
-            {
-                _isPlaying = true;
-            }
             Animation.Frame nextFrame;
-			while (!cts.IsCancellationRequested)
+			while (!cts.IsCancellationRequested && IsPlaying)
 			{
 				if (currentAnimationFrameIndex >= _animation.FrameCount)
 				{
@@ -100,51 +105,27 @@ namespace PckStudio.ToolboxItems
                 currentFrame = _animation.GetFrame(currentAnimationFrameIndex++);
 				if (_animation.Interpolate)
 				{
-                    await InterpolateFrame(currentFrame, nextFrame);
+                    InterpolateFrame(currentFrame, nextFrame);
 					continue;
 				}
 				SetAnimationFrame(currentFrame);
-                if (!await DelayAsync(TickInMillisecond * currentFrame.Ticks, cts.Token))
+                if (cts.Token.WaitHandle.WaitOne(Animation.GameTickInMilliseconds * currentFrame.Ticks))
+				{
+					IsPlaying = false;
                     break;
-            }
-            lock (l_playing)
-            {
-                _isPlaying = false;
+				}
             }
         }
 
-        private async Task InterpolateFrame(Animation.Frame currentFrame, Animation.Frame nextFrame)
+        private void InterpolateFrame(Animation.Frame currentFrame, Animation.Frame nextFrame)
         {
             for (int tick = 0; tick < currentFrame.Ticks && !cts.IsCancellationRequested; tick++)
             {
                 double delta = 1.0f - tick / (double)currentFrame.Ticks;
-				if (!IsHandleCreated)
-					break;
-                lock (l_dispose)
-                {
-					Invoke(() =>
-					{
-						Image = currentFrame.Texture.Interpolate(nextFrame.Texture, delta);
-					});
-                }
-
-				if (!await DelayAsync(TickInMillisecond, cts.Token))
+				SetTexture(currentFrame.Texture.Interpolate(nextFrame.Texture, delta));
+				if (cts.Token.WaitHandle.WaitOne(Animation.GameTickInMilliseconds))
 					break;
             }
-        }
-
-		private async Task<bool> DelayAsync(int millisecondsDelay, CancellationToken cancellationToken, [CallerMemberName] string caller = default!)
-		{
-            try
-            {
-                await Task.Delay(millisecondsDelay, cancellationToken);
-            }
-            catch
-            {
-                Debug.WriteLine($"Stoping {caller}");
-				return false;
-            }
-			return true;
         }
 
 		private Animation.Frame SetAnimationFrame(int frameIndex)
@@ -154,25 +135,23 @@ namespace PckStudio.ToolboxItems
 			return frame;
 		}
 
+		private void SetTexture(Image texture)
+		{
+			if (!IsHandleCreated || Disposing)
+				return;
+			Invoke(() => Image = texture);
+		}
+
 		private void SetAnimationFrame(Animation.Frame frame)
 		{
-			if (!IsHandleCreated)
-				return;
-            lock (l_dispose)
-            {
-				Invoke(() =>
-				{
-					Image = frame.Texture;
-				});
-            }
+			SetTexture(frame.Texture);
         }
 
         protected override void Dispose(bool disposing)
         {
-			lock(l_dispose)
-			{
-				base.Dispose(disposing);
-			}
+			Stop();
+			cts.Token.WaitHandle.WaitOne(500);
+			base.Dispose(disposing);
         }
 	}
 }
