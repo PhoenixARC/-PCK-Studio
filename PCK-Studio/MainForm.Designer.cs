@@ -144,6 +144,7 @@
             this.imageList = new System.Windows.Forms.ImageList(this.components);
             this.previewPictureBox = new PckStudio.ToolboxItems.InterpolationPictureBox();
             this.LittleEndianCheckBox = new MetroFramework.Controls.MetroCheckBox();
+            this.skinRenderer3DToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             logoPictureBox = new System.Windows.Forms.PictureBox();
             toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
@@ -165,6 +166,16 @@
             resources.ApplyResources(logoPictureBox, "logoPictureBox");
             logoPictureBox.Name = "logoPictureBox";
             logoPictureBox.TabStop = false;
+            // 
+            // toolStripSeparator1
+            // 
+            toolStripSeparator1.Name = "toolStripSeparator1";
+            resources.ApplyResources(toolStripSeparator1, "toolStripSeparator1");
+            // 
+            // toolStripSeparator3
+            // 
+            toolStripSeparator3.Name = "toolStripSeparator3";
+            resources.ApplyResources(toolStripSeparator3, "toolStripSeparator3");
             // 
             // contextMenuPCKEntries
             // 
@@ -558,7 +569,8 @@
             this.miscToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addCustomPackImageToolStripMenuItem,
             this.openPckManagerToolStripMenuItem,
-            this.convertMusicFilesToolStripMenuItem});
+            this.convertMusicFilesToolStripMenuItem,
+            this.skinRenderer3DToolStripMenuItem});
             this.miscToolStripMenuItem.ForeColor = System.Drawing.Color.Silver;
             this.miscToolStripMenuItem.Name = "miscToolStripMenuItem";
             resources.ApplyResources(this.miscToolStripMenuItem, "miscToolStripMenuItem");
@@ -643,11 +655,6 @@
             resources.ApplyResources(this.aboutToolStripMenuItem, "aboutToolStripMenuItem");
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            toolStripSeparator1.Name = "toolStripSeparator1";
-            resources.ApplyResources(toolStripSeparator1, "toolStripSeparator1");
             // 
             // videosToolStripMenuItem
             // 
@@ -738,11 +745,6 @@
             this.forMattNLContributorToolStripMenuItem.Name = "forMattNLContributorToolStripMenuItem";
             resources.ApplyResources(this.forMattNLContributorToolStripMenuItem, "forMattNLContributorToolStripMenuItem");
             this.forMattNLContributorToolStripMenuItem.Click += new System.EventHandler(this.forMattNLContributorToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator3
-            // 
-            toolStripSeparator3.Name = "toolStripSeparator3";
-            resources.ApplyResources(toolStripSeparator3, "toolStripSeparator3");
             // 
             // settingsToolStripMenuItem
             // 
@@ -1084,6 +1086,12 @@
             this.LittleEndianCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.LittleEndianCheckBox.UseSelectable = true;
             // 
+            // skinRenderer3DToolStripMenuItem
+            // 
+            this.skinRenderer3DToolStripMenuItem.Name = "skinRenderer3DToolStripMenuItem";
+            resources.ApplyResources(this.skinRenderer3DToolStripMenuItem, "skinRenderer3DToolStripMenuItem");
+            this.skinRenderer3DToolStripMenuItem.Click += new System.EventHandler(this.skinRenderer3DToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.ApplyImageInvert = true;
@@ -1233,6 +1241,7 @@
         private System.Windows.Forms.ToolStripMenuItem toPhoenixARCDeveloperToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem forMattNLContributorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem skinRenderer3DToolStripMenuItem;
     }
 }
 

@@ -2267,5 +2267,11 @@ namespace PckStudio
 				return;
 			}
 		}
-	}
+
+        private void skinRenderer3DToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+			TestGL gl = new TestGL();
+			gl.Show();
+        }
+    }
 }
