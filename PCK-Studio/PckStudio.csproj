@@ -183,7 +183,7 @@
     <Compile Include="Forms\Editor\TextureAtlasEditor.Designer.cs">
       <DependentUpon>TextureAtlasEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Interfaces\IPckEditor.cs" />
+    <Compile Include="Interfaces\IEditor.cs" />
     <Compile Include="Classes\API\PCKCenter\model\PCKCenterJSON.cs" />
     <Compile Include="Classes\API\PCKCenter\PCKCollections.cs" />
     <Compile Include="Classes\API\PCKCenter\PCKCollectionsLocal.cs" />

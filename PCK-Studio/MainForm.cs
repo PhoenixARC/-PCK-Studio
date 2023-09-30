@@ -102,9 +102,9 @@ namespace PckStudio
 			MessageBox.Show(string.Format("Failed to load {0}", Path.GetFileName(filepath)), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 		}
 
-		private bool TryGetEditor(TabPage page, out IPckEditor editor)
+		private bool TryGetEditor(TabPage page, out IEditor<PckFile> editor)
 		{
-			if (page.Controls[0] is IPckEditor _editor)
+			if (page.Controls[0] is IEditor<PckFile> _editor)
 			{
 				editor = _editor;
 				return true;
@@ -113,7 +113,7 @@ namespace PckStudio
 			return false;
 		}
 
-		private bool TryGetEditor(out IPckEditor editor)
+		private bool TryGetEditor(out IEditor<PckFile> editor)
 		{
 			return TryGetEditor(tabControl.SelectedTab, out editor);
 		}
@@ -251,7 +251,7 @@ namespace PckStudio
 
 		private void CloseTab(TabControl.TabPageCollection collection, TabPage page)
 		{
-			if (TryGetEditor(page, out IPckEditor editor))
+			if (TryGetEditor(page, out var editor))
 			{
 				editor.Close();
 				RemoveOpenFile(page);
@@ -277,7 +277,7 @@ namespace PckStudio
 		{
 			if (TryGetEditor(out var editor))
 			{
-				using AdvancedOptions advanced = new AdvancedOptions(editor.Pck);
+				using AdvancedOptions advanced = new AdvancedOptions(editor.Value);
 				advanced.IsLittleEndian = LittleEndianCheckBox.Checked;
 				if (advanced.ShowDialog() == DialogResult.OK)
 				{
@@ -536,7 +536,7 @@ namespace PckStudio
 			numericPrompt.ContextLabel.Text = "Please insert the desired Pack ID";
 			numericPrompt.TextLabel.Text = "Pack ID";
 
-			if (TryGetEditor(out IPckEditor editor))
+			if (TryGetEditor(out var editor))
 			{
 				DialogResult prompt = MessageBox.Show(this,
 					"Would you like to use the current PackID? You can enter any PackID if not.",
@@ -546,7 +546,7 @@ namespace PckStudio
 				switch (prompt)
 				{
 					case DialogResult.Yes:
-						if (!editor.Pck.TryGetFile("0", PckFileType.InfoFile, out PckFileData file) ||
+						if (!editor.Value.TryGetFile("0", PckFileType.InfoFile, out PckFileData file) ||
 							string.IsNullOrEmpty(file.Properties.GetPropertyValue("PACKID")))
 						{
 							MessageBox.Show(this,
@@ -665,7 +665,7 @@ namespace PckStudio
 		{
 			if (TryGetEditor(out var editor))
 			{
-				editor.Pck.SetVersion(fullBoxSupportToolStripMenuItem.Checked);
+				editor.Value.SetVersion(fullBoxSupportToolStripMenuItem.Checked);
 			}
 		}
 
@@ -677,7 +677,7 @@ namespace PckStudio
 
 		private void tabControl_PageClosing(object sender, PageClosingEventArgs e)
 		{
-			if (TryGetEditor(e.Page, out IPckEditor editor))
+			if (TryGetEditor(e.Page, out var editor))
 			{
 				editor.Close();
 				RemoveOpenFile();

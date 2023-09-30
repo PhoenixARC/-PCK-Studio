@@ -7,13 +7,13 @@ using OMI.Formats.Pck;
 
 namespace PckStudio.Interfaces
 {
-    internal interface IPckEditor
+    internal interface IEditor<T> where T : class
     {
-        PckFile Pck { get; }
+        T Value { get; }
 
         bool Open(string filepath, OMI.Endianness endianness);
 
-        bool Open(PckFile pck);
+        bool Open(T value);
 
         void Save();
 

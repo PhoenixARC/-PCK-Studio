@@ -32,9 +32,9 @@ using PckStudio.Helper;
 
 namespace PckStudio.Controls
 {
-    public partial class PckEditor : UserControl, IPckEditor
+    public partial class PckEditor : UserControl, IEditor<PckFile>
     {
-        public PckFile Pck => _pck;
+        public PckFile Value => _pck;
 
         private PckFile _pck;
         private string _location = string.Empty;
