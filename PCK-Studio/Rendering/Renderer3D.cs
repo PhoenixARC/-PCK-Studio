@@ -328,7 +328,6 @@ namespace PckStudio.Rendering
         }
 
         private Vector2 _lookAngle = Vector2.Zero;
-
         [Description("The offset from the orignal point (for zoom)")]
         [Category("Appearance")]
         public Vector2 LookAngle
@@ -336,24 +335,8 @@ namespace PckStudio.Rendering
             get => _lookAngle;
             set
             {
-                if (value.X < -8f)
-                {
-                    value.X = -8f;
-                }
-                else if (value.X > 8f)
-                {
-                    value.X = 8f;
-                }
-
-                if (value.Y < -16f)
-                {
-                    value.Y = -16f;
-                }
-                else if (value.Y > 16f)
-                {
-                    value.Y = 16f;
-                }
-
+                value.X = MathHelper.Clamp(value.X, -8f, 8f);
+                value.Y = MathHelper.Clamp(value.Y, -16f, 16f);
                 _lookAngle = value;
             }
         }
