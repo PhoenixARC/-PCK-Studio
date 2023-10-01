@@ -42,7 +42,6 @@ using PckStudio.Properties;
 
 namespace PckStudio.Rendering
 {
-
     public partial class Renderer3D : GLControl
     {
         //private Bitmap _Skin;
@@ -297,23 +296,26 @@ namespace PckStudio.Rendering
         [Category("Appearance")]
         public Models Model { get; set; }
 
-        /// <summary>
-        /// X rotation
-        /// </summary>
-        /// <returns>X rotattion</returns>
-        [Description("The X rotation of the model")]
-        [Category("Appearance")]
-        public int RotationX { get; set; }
 
+        private Vector2 _rotation = new Vector2();
         /// <summary>
-        /// Y rotation
+        /// Rotation
         /// </summary>
-        /// <returns>Y rotation</returns>
-        [Description("The Y rotation of the model")]
+        /// <returns>Rotation</returns>
+        [Description("The rotation of the model")]
         [Category("Appearance")]
-        public int RotationY { get; set; }
+        public Vector2 Rotation
+        {
+            get => _rotation;
+            set
+            {
+                value.X = MathHelper.Clamp(value.X, -90f, 90f);
+                value.Y = MathHelper.Clamp(value.Y, -180f, 180f);
+                _rotation = value;
+            }
+        }
 
-        private double _Zoom = MinZoomLevel;
+        private double _zoom = MinZoomLevel;
         private const double MinZoomLevel = 1d;
         private const double MaxZoomLevel = 10d;
 
@@ -321,15 +323,15 @@ namespace PckStudio.Rendering
         [Category("Appearance")]
         public double Zoom
         {
-            get => _Zoom;
-            set => _Zoom = MathHelper.Clamp(value, MinZoomLevel, MaxZoomLevel);
+            get => _zoom;
+            set => _zoom = MathHelper.Clamp(value, MinZoomLevel, MaxZoomLevel);
         }
 
-        private PointF _lookAngle = PointF.Empty;
+        private Vector2 _lookAngle = Vector2.Zero;
 
         [Description("The offset from the orignal point (for zoom)")]
         [Category("Appearance")]
-        public PointF LookAngle
+        public Vector2 LookAngle
         {
             get => _lookAngle;
             set
@@ -356,6 +358,8 @@ namespace PckStudio.Rendering
             }
         }
 
+        public float CameraDistance { get; set; } = 36f;
+
         private Matrix4 perspective; // Perspective
         private Matrix4 camera; // Camera
 
@@ -372,7 +376,7 @@ namespace PckStudio.Rendering
 
         private void UpdateCamera()
         {
-            camera = Matrix4.LookAt(LookAngle.X, LookAngle.Y, 72f, LookAngle.X, LookAngle.Y, 0f, 0f, 1f, 1f);
+            camera = Matrix4.LookAt(LookAngle.X, LookAngle.Y, CameraDistance, LookAngle.X, LookAngle.Y, 0f, 0f, 1f, 1f);
         }
 
         private void UpdatePerspective()
@@ -475,7 +479,7 @@ namespace PckStudio.Rendering
 
             MakeCurrent();
 #if DEBUG
-            debugLabel.Text = $"Rotation: {RotationX}, {RotationY}\nZoom: {_Zoom}\nLookAt:\n{camera}\nPerspective:\n{perspective}";
+            debugLabel.Text = $"Rotation: {Rotation}\nZoom: {_zoom}\nLookAt:\n{camera}\nPerspective:\n{perspective}";
 #endif
 
             GL.PushMatrix();
@@ -504,24 +508,24 @@ namespace PckStudio.Rendering
             // Load the textures
             int texID = GL.GenTexture();
             GL.BindTexture(TextureTarget.Texture2D, texID);
-            var data = Texture.LockBits(new Rectangle(0, 0, 64, 64), ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
 
-            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, 64, 64, 0, OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, data.Scan0);
-            Texture.UnlockBits(data);
             GL.GenerateMipmap(GenerateMipmapTarget.Texture2D);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Nearest);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)TextureWrapMode.Clamp);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.Clamp);
+            var data = Texture.LockBits(new Rectangle(0, 0, 64, 64), ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
+            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, 64, 64, 0, OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, data.Scan0);
+            Texture.UnlockBits(data);
 
             // Rotating
-            GL.Rotate(RotationX, -1, 0f, 0f);
-            GL.Rotate(RotationY, 0f, 1f, 0f);
+            GL.Rotate(Rotation.X, -1, 0f, 0f);
+            GL.Rotate(Rotation.Y, 0f, 1f, 0f);
 
             GL.BindTexture(TextureTarget.ProxyTexture2D, texID);
             // Vertex goes (X,Y,Z)
             GL.Begin(PrimitiveType.Quads);
             // Body
-
-            
             if (ShowBody)
             {
                 // Face 1
@@ -1557,8 +1561,9 @@ namespace PckStudio.Rendering
         {
             if (IsMouseDown) // Rotate the model
             {
-                RotationY = (int)Math.Round(RotationY + (Cursor.Position.X - MouseLoc.X) * 0.5d);
-                RotationX = (int)Math.Round(RotationX - (Cursor.Position.Y - MouseLoc.Y) * 0.5d);
+                float rotationYDelta = (float)Math.Round((Cursor.Position.X - MouseLoc.X) * 0.5f);
+                float rotationXDelta = (float)Math.Round(-(Cursor.Position.Y - MouseLoc.Y) * 0.5f);
+                Rotation += new Vector2(rotationXDelta, rotationYDelta);
                 Refresh();
                 Cursor.Position = new Point((int)Math.Round(Screen.PrimaryScreen.Bounds.Width / 2d), (int)Math.Round(Screen.PrimaryScreen.Bounds.Height / 2d));
                 MouseLoc = Cursor.Position;
@@ -1567,7 +1572,7 @@ namespace PckStudio.Rendering
             {
                 float deltaX = -(Cursor.Position.X - MouseLoc.X) * 0.5f / (float)Zoom;
                 float deltaY = (Cursor.Position.Y - MouseLoc.Y) * 0.5f / (float)Zoom;
-                LookAngle = new PointF(LookAngle.X + deltaX, LookAngle.Y + deltaY);
+                LookAngle += new Vector2(deltaX, deltaY);
                 Refresh();
                 Cursor.Position = new Point((int)Math.Round(Screen.PrimaryScreen.Bounds.Height / 2d), (int)Math.Round(Screen.PrimaryScreen.Bounds.Height / 2d));
                 MouseLoc = Cursor.Position;
@@ -2273,859 +2278,6 @@ namespace PckStudio.Rendering
             LArm2,
             RLeg2,
             LLeg2
-        }
-
-        public void FloodFill(int x, int y, Color new_color)
-        {
-            // Get the old and new colors.
-            var old_color = Texture.GetPixel(x, y);
-
-            if (old_color.ToArgb() != new_color.ToArgb())
-            {
-                var CurrentPlace = default(SkinPlace);
-
-                // Get the current section of the skin
-                if (x < 32 && y < 16)
-                {
-                    CurrentPlace = SkinPlace.Head;
-                }
-                else if (x > 31 && y < 16)
-                {
-                    CurrentPlace = SkinPlace.Head2;
-                }
-                else if (x < 40 && x > 15 && y < 32 && y > 15)
-                {
-                    CurrentPlace = SkinPlace.Body;
-                }
-                else if (x < 40 && x > 15 && y < 48 && y > 31)
-                {
-                    CurrentPlace = SkinPlace.Body2;
-                }
-                else if (x < 56 && x > 39 && y < 32 && y > 15)
-                {
-                    CurrentPlace = SkinPlace.RArm;
-                }
-                else if (x < 56 && x > 39 && y < 48 && y > 31)
-                {
-                    CurrentPlace = SkinPlace.RArm2;
-                }
-                else if (x < 48 && x > 31 && y > 47)
-                {
-                    CurrentPlace = SkinPlace.LArm;
-                }
-                else if (x > 47 && y > 47)
-                {
-                    CurrentPlace = SkinPlace.LArm2;
-                }
-                else if (x < 16 && y < 32 && y > 15)
-                {
-                    CurrentPlace = SkinPlace.RLeg;
-                }
-                else if (x < 16 && y < 48 && y > 31)
-                {
-                    CurrentPlace = SkinPlace.RLeg2;
-                }
-                else if (x < 32 && x > 15 && y > 47)
-                {
-                    CurrentPlace = SkinPlace.LLeg;
-                }
-                else if (x < 16 && y > 47)
-                {
-                    CurrentPlace = SkinPlace.LLeg2;
-                }
-
-                var SkinSection = new Bitmap(16, 16);
-                switch (CurrentPlace)
-                {
-                    case SkinPlace.Head:
-                        {
-                            SkinSection = Texture.Clone(new Rectangle(0, 0, 32, 16), Texture.PixelFormat);
-                            break;
-                        }
-                    case SkinPlace.Head2:
-                        {
-                            SkinSection = Texture.Clone(new Rectangle(32, 0, 32, 16), Texture.PixelFormat);
-                            x -= 32;
-                            break;
-                        }
-                    case SkinPlace.Body:
-                        {
-                            SkinSection = Texture.Clone(new Rectangle(16, 16, 24, 16), Texture.PixelFormat);
-                            x -= 16;
-                            y -= 16;
-                            break;
-                        }
-                    case SkinPlace.Body2:
-                        {
-                            SkinSection = Texture.Clone(new Rectangle(16, 32, 24, 16), Texture.PixelFormat);
-                            x -= 16;
-                            y -= 32;
-                            break;
-                        }
-                    case SkinPlace.RArm:
-                        {
-                            if (Model == Models.Steve)
-                            {
-                                SkinSection = Texture.Clone(new Rectangle(40, 16, 16, 16), Texture.PixelFormat);
-                            }
-                            else
-                            {
-                                SkinSection = Texture.Clone(new Rectangle(40, 16, 14, 16), Texture.PixelFormat);
-                            }
-                            x -= 40;
-                            y -= 16;
-                            break;
-                        }
-                    case SkinPlace.RArm2:
-                        {
-                            if (Model == Models.Steve)
-                            {
-                                SkinSection = Texture.Clone(new Rectangle(40, 32, 16, 16), Texture.PixelFormat);
-                            }
-                            else
-                            {
-                                SkinSection = Texture.Clone(new Rectangle(40, 32, 14, 16), Texture.PixelFormat);
-                            }
-                            x -= 40;
-                            y -= 32;
-                            break;
-                        }
-                    case SkinPlace.LArm:
-                        {
-                            if (Model == Models.Steve)
-                            {
-                                SkinSection = Texture.Clone(new Rectangle(32, 48, 16, 16), Texture.PixelFormat);
-                            }
-                            else
-                            {
-                                SkinSection = Texture.Clone(new Rectangle(32, 48, 14, 16), Texture.PixelFormat);
-                            }
-                            x -= 32;
-                            y -= 48;
-                            break;
-                        }
-                    case SkinPlace.LArm2:
-                        {
-                            if (Model == Models.Steve)
-                            {
-                                SkinSection = Texture.Clone(new Rectangle(48, 48, 16, 16), Texture.PixelFormat);
-                            }
-                            else
-                            {
-                                SkinSection = Texture.Clone(new Rectangle(48, 48, 14, 16), Texture.PixelFormat);
-                            }
-                            x -= 48;
-                            y -= 48;
-                            break;
-                        }
-                    case SkinPlace.RLeg:
-                        {
-                            SkinSection = Texture.Clone(new Rectangle(0, 16, 16, 16), Texture.PixelFormat);
-                            y -= 16;
-                            break;
-                        }
-                    case SkinPlace.RLeg2:
-                        {
-                            SkinSection = Texture.Clone(new Rectangle(0, 32, 16, 16), Texture.PixelFormat);
-                            y -= 32;
-                            break;
-                        }
-                    case SkinPlace.LLeg:
-                        {
-                            SkinSection = Texture.Clone(new Rectangle(16, 48, 16, 16), Texture.PixelFormat);
-                            x -= 16;
-                            y -= 48;
-                            break;
-                        }
-                    case SkinPlace.LLeg2:
-                        {
-                            SkinSection = Texture.Clone(new Rectangle(0, 48, 16, 16), Texture.PixelFormat);
-                            y -= 48;
-                            break;
-                        }
-                }
-
-                var tmpSS = SkinSection;
-                Graphics tmpG;
-                switch (CurrentPlace)
-                {
-                    case SkinPlace.Head:
-                    case SkinPlace.Head2:
-                        {
-
-                            tmpSS = new Bitmap(32, 24);
-                            tmpG = Graphics.FromImage(tmpSS);
-                            tmpG.DrawImage(SkinSection, 0, 0);
-                            tmpG.FillRectangle(new SolidBrush(Color.Transparent), 16, 0, 8, 8);
-                            tmpG.DrawImage(SkinSection, new Rectangle(8, 16, 8, 8), new Rectangle(16, 8, 8, -8), GraphicsUnit.Pixel);
-                            if (x < 24 && x >= 16 && y < 8)
-                            {
-                                x -= 8;
-                                y = Math.Abs(y - 7) + 16;
-                            }
-
-                            break;
-                        }
-
-                    case SkinPlace.Body:
-                    case SkinPlace.Body2:
-                        {
-
-                            tmpSS = new Bitmap(24, 20);
-                            tmpG = Graphics.FromImage(tmpSS);
-                            tmpG.DrawImage(SkinSection, 0, 0);
-                            tmpG.FillRectangle(new SolidBrush(Color.Transparent), 12, 0, 8, 4);
-                            tmpG.DrawImage(SkinSection, new Rectangle(4, 16, 8, 4), new Rectangle(12, 4, 8, -4), GraphicsUnit.Pixel);
-                            if (x < 20 && x >= 12 && y < 4)
-                            {
-                                x -= 8;
-                                y = Math.Abs(y - 3) + 16;
-                            }
-
-                            break;
-                        }
-
-                    case SkinPlace.LArm:
-                    case SkinPlace.LArm2:
-                    case SkinPlace.RArm:
-                    case SkinPlace.RArm2:
-                    case SkinPlace.LLeg:
-                    case SkinPlace.LLeg2:
-                    case SkinPlace.RLeg:
-                    case SkinPlace.RLeg2:
-                        {
-
-                            if (Model == Models.Alex && (CurrentPlace == SkinPlace.LArm || CurrentPlace == SkinPlace.LArm2 || CurrentPlace == SkinPlace.RArm || CurrentPlace == SkinPlace.RArm2))
-                            {
-                                tmpSS = new Bitmap(14, 20);
-                                tmpG = Graphics.FromImage(tmpSS);
-                                tmpG.DrawImage(SkinSection, 0, 0);
-                                tmpG.FillRectangle(new SolidBrush(Color.Transparent), 7, 0, 3, 4);
-                                tmpG.DrawImage(SkinSection, new Rectangle(4, 16, 3, 4), new Rectangle(7, 4, 3, -4), GraphicsUnit.Pixel);
-                                if (x < 10 && x >= 7 && y < 4)
-                                {
-                                    x -= 3;
-                                    y = Math.Abs(y - 3) + 16;
-                                }
-                            }
-                            else
-                            {
-                                tmpSS = new Bitmap(16, 20);
-                                tmpG = Graphics.FromImage(tmpSS);
-                                tmpG.DrawImage(SkinSection, 0, 0);
-                                tmpG.FillRectangle(new SolidBrush(Color.Transparent), 8, 0, 4, 4);
-                                tmpG.DrawImage(SkinSection, new Rectangle(4, 16, 4, 4), new Rectangle(8, 4, 4, -4), GraphicsUnit.Pixel);
-                                if (x < 12 && x >= 8 && y < 4)
-                                {
-                                    x -= 4;
-                                    y = Math.Abs(y - 3) + 16;
-                                }
-                            }
-
-                            break;
-                        }
-
-                }
-
-                SkinSection = tmpSS;
-
-                // Start with the original point in the stack.
-                var pts = new Stack();
-                pts.Push(new Point(x, y));
-                SkinSection.SetPixel(x, y, new_color);
-
-                // While the stack is not empty, process a point.
-                while (pts.Count > 0)
-                {
-                    Point pt = (Point)pts.Pop();
-                    CheckPoint(ref SkinSection, CurrentPlace, pts, pt.X - 1, pt.Y, old_color, new_color);
-                    CheckPoint(ref SkinSection, CurrentPlace, pts, pt.X, pt.Y - 1, old_color, new_color);
-                    CheckPoint(ref SkinSection, CurrentPlace, pts, pt.X + 1, pt.Y, old_color, new_color);
-                    CheckPoint(ref SkinSection, CurrentPlace, pts, pt.X, pt.Y + 1, old_color, new_color);
-                }
-
-                switch (CurrentPlace)
-                {
-                    case SkinPlace.Head:
-                    case SkinPlace.Head2:
-                        {
-
-                            tmpSS = new Bitmap(32, 16);
-                            tmpG = Graphics.FromImage(tmpSS);
-                            tmpG.DrawImage(SkinSection, 0, 0);
-                            tmpG.DrawImage(SkinSection, new Rectangle(16, 8, 8, -8), new Rectangle(8, 16, 8, 8), GraphicsUnit.Pixel);
-                            break;
-                        }
-
-                    case SkinPlace.Body:
-                    case SkinPlace.Body2:
-                        {
-
-                            tmpSS = new Bitmap(24, 16);
-                            tmpG = Graphics.FromImage(tmpSS);
-                            tmpG.DrawImage(SkinSection, 0, 0);
-                            tmpG.DrawImage(SkinSection, new Rectangle(12, 4, 8, -4), new Rectangle(4, 16, 8, 4), GraphicsUnit.Pixel);
-                            break;
-                        }
-
-                    case SkinPlace.LArm:
-                    case SkinPlace.LArm2:
-                    case SkinPlace.RArm:
-                    case SkinPlace.RArm2:
-                    case SkinPlace.LLeg:
-                    case SkinPlace.LLeg2:
-                    case SkinPlace.RLeg:
-                    case SkinPlace.RLeg2:
-                        {
-
-                            if (Model == Models.Alex && (CurrentPlace == SkinPlace.LArm || CurrentPlace == SkinPlace.LArm2 || CurrentPlace == SkinPlace.RArm || CurrentPlace == SkinPlace.RArm2))
-                            {
-                                tmpSS = new Bitmap(14, 16);
-                                tmpG = Graphics.FromImage(tmpSS);
-                                tmpG.DrawImage(SkinSection, 0, 0);
-                                tmpG.DrawImage(SkinSection, new Rectangle(7, 4, 3, -4), new Rectangle(4, 16, 3, 4), GraphicsUnit.Pixel);
-                            }
-                            else
-                            {
-                                tmpSS = new Bitmap(16, 16);
-                                tmpG = Graphics.FromImage(tmpSS);
-                                tmpG.DrawImage(SkinSection, 0, 0);
-                                tmpG.DrawImage(SkinSection, new Rectangle(8, 4, 4, -4), new Rectangle(4, 16, 4, 4), GraphicsUnit.Pixel);
-                            }
-
-                            break;
-                        }
-
-                }
-
-                tmpG = Graphics.FromImage(Texture);
-                switch (CurrentPlace)
-                {
-                    case SkinPlace.Head:
-                        {
-                            TransparentFill(Texture, new Rectangle(0, 0, 32, 16));
-                            tmpG.DrawImage(tmpSS, 0, 0, 32, 16);
-                            break;
-                        }
-                    case SkinPlace.Head2:
-                        {
-                            TransparentFill(Texture, new Rectangle(32, 0, 32, 16));
-                            tmpG.DrawImage(tmpSS, 32, 0, 32, 16);
-                            break;
-                        }
-                    case SkinPlace.Body:
-                        {
-                            TransparentFill(Texture, new Rectangle(16, 16, 24, 16));
-                            tmpG.DrawImage(tmpSS, 16, 16, 24, 16);
-                            break;
-                        }
-                    case SkinPlace.Body2:
-                        {
-                            TransparentFill(Texture, new Rectangle(16, 32, 24, 16));
-                            tmpG.DrawImage(tmpSS, 16, 32, 24, 16);
-                            break;
-                        }
-                    case SkinPlace.RArm:
-                        {
-                            if (Model == Models.Steve)
-                            {
-                                TransparentFill(Texture, new Rectangle(40, 16, 16, 16));
-                                tmpG.DrawImage(tmpSS, 40, 16, 16, 16);
-                            }
-                            else
-                            {
-                                TransparentFill(Texture, new Rectangle(40, 16, 14, 16));
-                                tmpG.DrawImage(tmpSS, 40, 16, 14, 16);
-                            }
-
-                            break;
-                        }
-                    case SkinPlace.RArm2:
-                        {
-                            if (Model == Models.Steve)
-                            {
-                                TransparentFill(Texture, new Rectangle(40, 32, 16, 16));
-                                tmpG.DrawImage(tmpSS, 40, 32, 16, 16);
-                            }
-                            else
-                            {
-                                TransparentFill(Texture, new Rectangle(40, 32, 14, 16));
-                                tmpG.DrawImage(tmpSS, 40, 32, 14, 16);
-                            }
-
-                            break;
-                        }
-                    case SkinPlace.LArm:
-                        {
-                            if (Model == Models.Steve)
-                            {
-                                TransparentFill(Texture, new Rectangle(32, 48, 16, 16));
-                                tmpG.DrawImage(tmpSS, 32, 48, 16, 16);
-                            }
-                            else
-                            {
-                                TransparentFill(Texture, new Rectangle(32, 48, 14, 16));
-                                tmpG.DrawImage(tmpSS, 32, 48, 14, 16);
-                            }
-
-                            break;
-                        }
-                    case SkinPlace.LArm2:
-                        {
-                            if (Model == Models.Steve)
-                            {
-                                TransparentFill(Texture, new Rectangle(48, 48, 16, 16));
-                                tmpG.DrawImage(tmpSS, 48, 48, 16, 16);
-                            }
-                            else
-                            {
-                                TransparentFill(Texture, new Rectangle(48, 48, 14, 16));
-                                tmpG.DrawImage(tmpSS, 48, 48, 14, 16);
-                            }
-
-                            break;
-                        }
-                    case SkinPlace.RLeg:
-                        {
-                            TransparentFill(Texture, new Rectangle(0, 16, 16, 16));
-                            tmpG.DrawImage(tmpSS, 0, 16, 16, 16);
-                            break;
-                        }
-                    case SkinPlace.RLeg2:
-                        {
-                            TransparentFill(Texture, new Rectangle(0, 32, 16, 16));
-                            tmpG.DrawImage(tmpSS, 0, 32, 16, 16);
-                            break;
-                        }
-                    case SkinPlace.LLeg:
-                        {
-                            TransparentFill(Texture, new Rectangle(16, 48, 16, 16));
-                            tmpG.DrawImage(tmpSS, 16, 48, 16, 16);
-                            break;
-                        }
-                    case SkinPlace.LLeg2:
-                        {
-                            TransparentFill(Texture, new Rectangle(0, 48, 16, 16));
-                            tmpG.DrawImage(tmpSS, 0, 48, 16, 16);
-                            break;
-                        }
-                }
-                tmpG.Dispose();
-                tmpSS.Dispose();
-            }
-        }
-        private Random _CheckPoint_rNumber = new Random();
-
-        // See if this point should be added to the stack.
-        public void CheckPoint(ref Bitmap SkinSection, SkinPlace SkinPlace, Stack pts, int x, int y, Color old_color, Color new_color)
-        {
-            // Correct the point
-            switch (SkinPlace)
-            {
-                case SkinPlace.Head:
-                case SkinPlace.Head2:
-                    {
-                        if (x == -1)
-                            x = 31;
-                        if (x == 32)
-                            x = 0;
-
-                        if (y == -1)
-                        {
-                            x = Math.Abs(x - 16) + 23;
-                            y = 8;
-                        }
-                        else if (y == 24)
-                        {
-                            x = Math.Abs(x - 16) + 23;
-                            y = 15;
-                        }
-
-                        if (y == 7)
-                        {
-
-                            if (x > 23)
-                            {
-                                x = Math.Abs(x - 32) + 7;
-                                y = 0;
-                            }
-                            else if (x > 15 && x < 24)
-                            {
-                                y = Math.Abs(x - 23);
-                                x = 15;
-                            }
-                            else if (x < 8)
-                            {
-                                y = x;
-                                x = 8;
-                            }
-                        }
-
-                        else if (y == 16)
-                        {
-
-                            if (x > 23)
-                            {
-                                x = Math.Abs(x - 32) + 7;
-                                y = 23;
-                            }
-                            else if (x > 15 && x < 24)
-                            {
-                                y = x;
-                                x = 15;
-                            }
-                            else if (x < 8)
-                            {
-                                y = Math.Abs(x - 7) + 16;
-                                x = 8;
-                            }
-
-                        }
-
-                        if (x == 16)
-                        {
-
-                            if (y < 8)
-                            {
-                                x = Math.Abs(y - 7) + 16;
-                                y = 8;
-                            }
-                            else if (y > 15)
-                            {
-                                x = y;
-                                y = 15;
-                            }
-                        }
-
-                        else if (x == 7)
-                        {
-
-                            if (y < 8)
-                            {
-                                x = y;
-                                y = 8;
-                            }
-                            else if (y > 15)
-                            {
-                                x = Math.Abs(y - 23);
-                                y = 15;
-                            }
-
-                        }
-
-                        break;
-                    }
-
-                case SkinPlace.Body:
-                case SkinPlace.Body2:
-                    {
-                        if (x == -1)
-                            x = 23;
-                        if (x == 24)
-                            x = 0;
-
-                        if (y == -1)
-                        {
-                            x = Math.Abs(x - 12) + 15;
-                            y = 4;
-                        }
-                        else if (y == 20)
-                        {
-                            x = Math.Abs(x - 12) + 15;
-                            y = 15;
-                        }
-
-                        if (y == 3)
-                        {
-
-                            if (x > 15)
-                            {
-                                x = Math.Abs(x - 24) + 3;
-                                y = 0;
-                            }
-                            else if (x > 11 && x < 16)
-                            {
-                                y = Math.Abs(x - 15);
-                                x = 11;
-                            }
-                            else if (x < 4)
-                            {
-                                y = x;
-                                x = 4;
-                            }
-                        }
-
-                        else if (y == 16)
-                        {
-
-                            if (x > 15)
-                            {
-                                x = Math.Abs(x - 24) + 3;
-                                y = 19;
-                            }
-                            else if (x > 11 && x < 16)
-                            {
-                                y = x + 4;
-                                x = 11;
-                            }
-                            else if (x < 4)
-                            {
-                                y = Math.Abs(x - 3) + 16;
-                                x = 4;
-                            }
-
-                        }
-
-                        if (x == 12)
-                        {
-
-                            if (y < 4)
-                            {
-                                x = Math.Abs(y - 3) + 12;
-                                y = 4;
-                            }
-                            else if (y > 15)
-                            {
-                                x = y - 4;
-                                y = 15;
-                            }
-                        }
-
-                        else if (x == 3)
-                        {
-
-                            if (y < 4)
-                            {
-                                x = y;
-                                y = 4;
-                            }
-                            else if (y > 15)
-                            {
-                                x = Math.Abs(y - 19);
-                                y = 15;
-                            }
-
-                        }
-
-                        break;
-                    }
-
-                case SkinPlace.LArm:
-                case SkinPlace.LArm2:
-                case SkinPlace.RArm:
-                case SkinPlace.RArm2:
-                case SkinPlace.LLeg:
-                case SkinPlace.LLeg2:
-                case SkinPlace.RLeg:
-                case SkinPlace.RLeg2:
-                    {
-
-                        if (Model == Models.Alex && (SkinPlace == SkinPlace.LArm || SkinPlace == SkinPlace.LArm2 || SkinPlace == SkinPlace.RArm || SkinPlace == SkinPlace.RArm2))
-                        {
-                            if (x == -1)
-                                x = 13;
-                            if (x == 14)
-                                x = 0;
-
-                            if (y == -1)
-                            {
-                                x = Math.Abs(x - 6) + 11;
-                                y = 4;
-                            }
-                            else if (y == 20)
-                            {
-                                x = Math.Abs(x - 6) + 11;
-                                y = 15;
-                            }
-
-                            if (y == 3)
-                            {
-
-                                if (x > 10)
-                                {
-                                    x = Math.Abs(x - 14) + 3;
-                                    y = 0;
-                                }
-                                else if (x > 6 && x < 11)
-                                {
-                                    y = Math.Abs(x - 10);
-                                    x = 6;
-                                }
-                                else if (x < 4)
-                                {
-                                    y = x;
-                                    x = 4;
-                                }
-                            }
-
-                            else if (y == 16)
-                            {
-
-                                if (x > 10)
-                                {
-                                    x = Math.Abs(x - 13) + 4;
-                                    y = 19;
-                                }
-                                else if (x > 6 && x < 11)
-                                {
-                                    y = x + 9;
-                                    x = 6;
-                                }
-                                else if (x < 4)
-                                {
-                                    y = Math.Abs(x - 3) + 16;
-                                    x = 4;
-                                }
-
-                            }
-
-                            if (x == 7)
-                            {
-
-                                if (y < 4)
-                                {
-                                    x = Math.Abs(y - 3) + 7;
-                                    y = 4;
-                                }
-                                else if (y > 15)
-                                {
-                                    x = y - 9;
-                                    y = 15;
-                                }
-                            }
-
-                            else if (x == 3)
-                            {
-
-                                if (y < 4)
-                                {
-                                    x = y;
-                                    y = 4;
-                                }
-                                else if (y > 15)
-                                {
-                                    x = Math.Abs(y - 19);
-                                    y = 15;
-                                }
-
-                            }
-                        }
-                        else
-                        {
-                            if (x == -1)
-                                x = 15;
-                            if (x == 16)
-                                x = 0;
-
-                            if (y == -1)
-                            {
-                                x = Math.Abs(x - 7) + 12;
-                                y = 4;
-                            }
-                            else if (y == 20)
-                            {
-                                x = Math.Abs(x - 7) + 12;
-                                y = 15;
-                            }
-
-                            if (y == 3)
-                            {
-
-                                if (x > 11)
-                                {
-                                    x = Math.Abs(x - 16) + 3;
-                                    y = 0;
-                                }
-                                else if (x > 7 && x < 12)
-                                {
-                                    y = Math.Abs(x - 11);
-                                    x = 7;
-                                }
-                                else if (x < 4)
-                                {
-                                    y = x;
-                                    x = 4;
-                                }
-                            }
-
-                            else if (y == 16)
-                            {
-
-                                if (x > 10)
-                                {
-                                    x = Math.Abs(x - 16) + 3;
-                                    y = 19;
-                                }
-                                else if (x > 7 && x < 12)
-                                {
-                                    y = x + 8;
-                                    x = 7;
-                                }
-                                else if (x < 4)
-                                {
-                                    y = Math.Abs(x - 3) + 16;
-                                    x = 4;
-                                }
-
-                            }
-
-                            if (x == 8)
-                            {
-
-                                if (y < 4)
-                                {
-                                    x = Math.Abs(y - 3) + 8;
-                                    y = 4;
-                                }
-                                else if (y > 15)
-                                {
-                                    x = y - 8;
-                                    y = 15;
-                                }
-                            }
-
-                            else if (x == 3)
-                            {
-
-                                if (y < 4)
-                                {
-                                    x = y;
-                                    y = 4;
-                                }
-                                else if (y > 15)
-                                {
-                                    x = Math.Abs(y - 19);
-                                    y = 15;
-                                }
-
-                            }
-                        }
-
-                        break;
-                    }
-
-            }
-
-            var clr = SkinSection.GetPixel(x, y);
-            if (clr.Equals(old_color))
-            {
-                pts.Push(new Point(x, y));
-
-                var Color = new_color;
-
-                SkinSection.SetPixel(x, y, Color);
-            }
-        }
-
-        public void TransparentFill(Bitmap B, Rectangle R)
-        {
-            using (var g = Graphics.FromImage(B))
-            {
-                var originClip = g.Clip;
-                g.Clip = new Region(R);
-                g.FillRectangle(new SolidBrush(Color.Transparent), R);
-                g.Clip = originClip;
-            }
         }
     }
 }
