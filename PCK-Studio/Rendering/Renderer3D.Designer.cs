@@ -3,12 +3,10 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace PckStudio.ToolboxItems
+namespace PckStudio.Rendering
 {
-    public partial class Renderer3D : UserControl
+    public partial class Renderer3D
     {
-
-        // UserControl overrides dispose to clean up the component list.
         [DebuggerNonUserCode()]
         protected override void Dispose(bool disposing)
         {
@@ -35,50 +33,46 @@ namespace PckStudio.ToolboxItems
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            GlControl = new OpenTK.GLControl();
-            GlControl.Paint += new PaintEventHandler(GlControl_Paint);
-            GlControl.MouseDown += new MouseEventHandler(GlControl_MouseDown);
-            GlControl.MouseUp += new MouseEventHandler(GlControl_MouseUp);
             timMove = new Timer(components);
             timMove.Tick += new EventHandler(Move_Tick);
-            timPaint = new Timer(components);
-            timPaint.Tick += new EventHandler(Paint_Tick);
             SuspendLayout();
-            // 
-            // GlControl
-            // 
-            GlControl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-
-            GlControl.BackColor = Color.Black;
-            GlControl.Location = new Point(0, 0);
-            GlControl.Name = "GlControl";
-            GlControl.Size = new Size(150, 150);
-            GlControl.TabIndex = 0;
-            GlControl.VSync = true;
             // 
             // timMove
             // 
             timMove.Enabled = true;
             timMove.Interval = 20;
+#if DEBUG
             // 
-            // timPaint
+            // debugLabel
             // 
-            timPaint.Enabled = true;
-            timPaint.Interval = 1;
+            debugLabel = new System.Windows.Forms.Label();
+            debugLabel.Enabled = true;
+            debugLabel.Visible = true;
+            debugLabel.AutoSize = true;
+            debugLabel.Location = new Point(0, 0);
+            debugLabel.BackColor = Color.Transparent;
+            Controls.Add(debugLabel);
+#endif
             // 
             // Renderer3D
             // 
+            Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            BackColor = Color.Transparent;
+            Location = new Point(0, 0);
+            Size = new Size(150, 150);
+            TabIndex = 0;
+            VSync = true;
             AutoScaleDimensions = new SizeF(6.0f, 13.0f);
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(GlControl);
             Name = "Renderer3D";
-            MouseWheel += new MouseEventHandler(Renderer3D_MouseWheel);
             ResumeLayout(false);
 
         }
 
-        internal OpenTK.GLControl GlControl;
-        internal Timer timMove;
-        internal Timer timPaint;
+        private Timer timMove;
+#if DEBUG
+        private System.Windows.Forms.Label debugLabel;
+#endif
+        
     }
 }

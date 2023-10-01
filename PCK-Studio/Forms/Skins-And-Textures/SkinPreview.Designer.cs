@@ -31,24 +31,17 @@ namespace PckStudio.Forms
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SkinPreview));
-            this.ModelView = new PckStudio.Models.MinecraftModelView(this.components);
+            this.ModelView = new PckStudio.Rendering.Renderer3D();
             this.SuspendLayout();
             // 
             // ModelView
             // 
             this.ModelView.BackColor = System.Drawing.Color.DarkGray;
-            this.ModelView.BackGradientColor1 = System.Drawing.SystemColors.ActiveCaptionText;
-            this.ModelView.BackGradientColor2 = System.Drawing.SystemColors.ActiveCaptionText;
-            this.ModelView.BackgroundType = PckStudio.Models.BackgroundTypes.Color;
-            this.ModelView.DegreesX = 0;
-            this.ModelView.DegreesY = 0;
             this.ModelView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ModelView.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ModelView.ForeColor = System.Drawing.Color.Black;
-            this.ModelView.FOV = 90;
             this.ModelView.Location = new System.Drawing.Point(0, 0);
             this.ModelView.Name = "ModelView";
-            this.ModelView.Projection = PckStudio.Models.ProjectionTypes.Perspective;
             this.ModelView.Size = new System.Drawing.Size(418, 568);
             this.ModelView.TabIndex = 1;
             this.ModelView.Text = "PCK Model View";
@@ -70,6 +63,6 @@ namespace PckStudio.Forms
 
         #endregion
 
-        private PckStudio.Models.MinecraftModelView ModelView;
+        private PckStudio.Rendering.Renderer3D ModelView;
     }
 }

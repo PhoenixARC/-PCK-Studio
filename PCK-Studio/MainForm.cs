@@ -2270,7 +2270,7 @@ namespace PckStudio
 
         private void skinRenderer3DToolStripMenuItem_Click(object sender, EventArgs e)
         {
-			TestGL gl = new TestGL();
+			var gl = new TestGL();
 			gl.Show();
         }
     }

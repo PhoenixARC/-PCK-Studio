@@ -22,6 +22,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 https://github.com/KareemMAX/Minecraft-Skiner
+https://github.com/KareemMAX/Minecraft-Skiner/blob/master/src/Minecraft%20skiner/UserControls/Renderer3D.vb
  */
 
 using System;
@@ -33,23 +34,25 @@ using System.Drawing.Imaging;
 using System.Linq;
 using System.Windows.Forms;
 using PckStudio.Classes.Utils;
+using Microsoft.VisualBasic;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
-using Microsoft.VisualBasic;
+using System.Diagnostics;
+using PckStudio.Properties;
 
-namespace PckStudio.ToolboxItems
+namespace PckStudio.Rendering
 {
 
-    public partial class Renderer3D
+    public partial class Renderer3D : GLControl
     {
-        private Bitmap _Skin;
+        //private Bitmap _Skin;
         /// <summary>
         /// The visible skin on the renderer
         /// </summary>
         /// <returns>The visible skin</returns>
         [Description("The current skin")]
         [Category("Appearance")]
-        public Bitmap Skin { get; set; }
+        public Bitmap Texture { get; set; }
 
         private bool _showhead = true;
         /// <summary>
@@ -70,23 +73,23 @@ namespace PckStudio.ToolboxItems
                 return _showhead;
             }
         }
-        private bool _show2ndhead = true;
+        private bool _showHeadOverlay = true;
         /// <summary>
         /// Show the second head layer or not
         /// </summary>
         /// <returns>Show the second head layer or not</returns>
         [Description("Shows the second head layer or not")]
         [Category("Appearance")]
-        public bool Show2ndHead
+        public bool ShowHeadOverlay
         {
             set
             {
                 Refresh();
-                _show2ndhead = value;
+                _showHeadOverlay = value;
             }
             get
             {
-                return _show2ndhead;
+                return _showHeadOverlay;
             }
         }
         private bool _showbody = true;
@@ -108,26 +111,26 @@ namespace PckStudio.ToolboxItems
                 return _showbody;
             }
         }
-        private bool _show2ndbody = true;
+        private bool _showBodyOverlay = true;
         /// <summary>
         /// Show the second body layer or not
         /// </summary>
         /// <returns>Show the second body layer or not</returns>
         [Description("Shows the second body layer or not")]
         [Category("Appearance")]
-        public bool Show2ndBody
+        public bool ShowBodyOverlay
         {
             set
             {
                 Refresh();
-                _show2ndbody = value;
+                _showBodyOverlay = value;
             }
             get
             {
-                return _show2ndbody;
+                return _showBodyOverlay;
             }
         }
-        private bool _showra = true;
+        private bool _showRightArm = true;
         /// <summary>
         /// Show the right arm or not
         /// </summary>
@@ -139,33 +142,33 @@ namespace PckStudio.ToolboxItems
             set
             {
                 Refresh();
-                _showra = value;
+                _showRightArm = value;
             }
             get
             {
-                return _showra;
+                return _showRightArm;
             }
         }
-        private bool _show2ndra = true;
+        private bool _showRightArmOverlay = true;
         /// <summary>
         /// Show the second right arm layer or not
         /// </summary>
         /// <returns>Show the second right arm layer or not</returns>
         [Description("Shows the second right arm layer or not")]
         [Category("Appearance")]
-        public bool Show2ndRightArm
+        public bool ShowRightArmOverlay
         {
             set
             {
                 Refresh();
-                _show2ndra = value;
+                _showRightArmOverlay = value;
             }
             get
             {
-                return _show2ndra;
+                return _showRightArmOverlay;
             }
         }
-        private bool _showla = true;
+        private bool _showLeftArm = true;
         /// <summary>
         /// Show the left arm or not
         /// </summary>
@@ -177,33 +180,33 @@ namespace PckStudio.ToolboxItems
             set
             {
                 Refresh();
-                _showla = value;
+                _showLeftArm = value;
             }
             get
             {
-                return _showla;
+                return _showLeftArm;
             }
         }
-        private bool _show2ndla = true;
+        private bool _showLeftArmOverlay = true;
         /// <summary>
         /// Show the second left arm layer or not
         /// </summary>
         /// <returns>Show the second left arm layer or not</returns>
         [Description("Shows the second left arm layer or not")]
         [Category("Appearance")]
-        public bool Show2ndLeftArm
+        public bool ShowLeftArmOverlay
         {
             set
             {
                 Refresh();
-                _show2ndla = value;
+                _showLeftArmOverlay = value;
             }
             get
             {
-                return _show2ndla;
+                return _showLeftArmOverlay;
             }
         }
-        private bool _showrl = true;
+        private bool _showRightLeg = true;
         /// <summary>
         /// Show the right leg or not
         /// </summary>
@@ -215,33 +218,33 @@ namespace PckStudio.ToolboxItems
             set
             {
                 Refresh();
-                _showrl = value;
+                _showRightLeg = value;
             }
             get
             {
-                return _showrl;
+                return _showRightLeg;
             }
         }
-        private bool _show2ndrl = true;
+        private bool _showRightLegOverlay = true;
         /// <summary>
         /// Show the second right leg layer or not
         /// </summary>
         /// <returns>Show the second right leg layer or not</returns>
         [Description("Shows the second right leg layer or not")]
         [Category("Appearance")]
-        public bool Show2ndRightLeg
+        public bool ShowRightLegOverlay
         {
             set
             {
                 Refresh();
-                _show2ndrl = value;
+                _showRightLegOverlay = value;
             }
             get
             {
-                return _show2ndrl;
+                return _showRightLegOverlay;
             }
         }
-        private bool _showll = true;
+        private bool _showLeftLeg = true;
         /// <summary>
         /// Show the left leg or not
         /// </summary>
@@ -253,30 +256,30 @@ namespace PckStudio.ToolboxItems
             set
             {
                 Refresh();
-                _showll = value;
+                _showLeftLeg = value;
             }
             get
             {
-                return _showll;
+                return _showLeftLeg;
             }
         }
-        private bool _show2ndll = true;
+        private bool _showLeftLegOverlay = true;
         /// <summary>
         /// Show the second left leg layer or not
         /// </summary>
         /// <returns>Show the second left leg layer or not</returns>
         [Description("Shows the second left leg layer or not")]
         [Category("Appearance")]
-        public bool Show2ndLeftLeg
+        public bool ShowLeftLegOverlay
         {
             set
             {
                 Refresh();
-                _show2ndll = value;
+                _showLeftLegOverlay = value;
             }
             get
             {
-                return _show2ndll;
+                return _showLeftLegOverlay;
             }
         }
 
@@ -310,119 +313,86 @@ namespace PckStudio.ToolboxItems
         [Category("Appearance")]
         public int RotationY { get; set; }
 
-        private double _Zoom = 1d;
+        private double _Zoom = MinZoomLevel;
+        private const double MinZoomLevel = 1d;
+        private const double MaxZoomLevel = 10d;
+
         [Description("The zoom value")]
         [Category("Appearance")]
         public double Zoom
         {
-            set
-            {
-                if (value < 1d)
-                {
-                    value = 1d;
-                }
-                else if (value > 10d)
-                {
-                    value = 10d;
-                }
-
-                _Zoom = value;
-            }
-            get
-            {
-                return _Zoom;
-            }
+            get => _Zoom;
+            set => _Zoom = MathHelper.Clamp(value, MinZoomLevel, MaxZoomLevel);
         }
 
-        private double _LookX = 0d;
-        [Description("The X axis offset from the orignal point (for zoom)")]
+        private PointF _lookAngle = PointF.Empty;
+
+        [Description("The offset from the orignal point (for zoom)")]
         [Category("Appearance")]
-        public double LookX
+        public PointF LookAngle
         {
+            get => _lookAngle;
             set
             {
-                if (value < -8)
+                if (value.X < -8f)
                 {
-                    value = -8;
+                    value.X = -8f;
                 }
-                else if (value > 8d)
+                else if (value.X > 8f)
                 {
-                    value = 8d;
+                    value.X = 8f;
                 }
 
-                _LookX = value;
-            }
-            get
-            {
-                return _LookX;
+                if (value.Y < -16f)
+                {
+                    value.Y = -16f;
+                }
+                else if (value.Y > 16f)
+                {
+                    value.Y = 16f;
+                }
+
+                _lookAngle = value;
             }
         }
 
+        private Matrix4 perspective; // Perspective
+        private Matrix4 camera; // Camera
 
-        private double _LookY = 0d;
-        [Description("The Y axis offset from the orignal point (for zoom)")]
-        [Category("Appearance")]
-        public double LookY
-        {
-            set
-            {
-                if (value < -16)
-                {
-                    value = -16;
-                }
-                else if (value > 16d)
-                {
-                    value = 16d;
-                }
-
-                _LookY = value;
-            }
-            get
-            {
-                return _LookY;
-            }
-        }
-
-
-        [Description("Can paint on the skin")]
-        [Category("Behavior")]
-        public bool Paintable { get; set; } = true;
-
-        /// <summary>
-        /// Stop the paint faction
-        /// </summary>
-        /// <returns>Is stopped or not</returns>
-        [Description("Render it or not (only used when design because when it became false in design mode it crashs VS and can be removed in the release)")]
-        [Category("Behavior")]
-        public bool InDesignMode { get; set; } = true;
-
-        private Matrix4 perspective; // Setup Perspective
-        private Matrix4 lookat; // Setup camera
+        private const double TexVal = 1d / 64d;
 
         public Renderer3D()
         {
-            perspective = Matrix4.CreatePerspectiveFieldOfView((float)Math.Pow(Zoom, -1), (float)(Width / (double)Height), 1f, 100f);
-            lookat = Matrix4.LookAt((float)LookX, (float)LookY, 36f, (float)LookX, (float)LookY, 0f, 0f, 1f, 1f);
-            PaintThread = new System.Threading.Thread(PaintCommander);
             InitializeComponent();
+            UpdateCamera();
+            UpdatePerspective();
+            //MakeCurrent();
+            //int program = CreateShader(Resources.vertexShader, Resources.fragment);
         }
 
-
-        private void DrawBox(float sizeX, float SizeY, float SizeZ, float X, float Y, float Z, float uvX, float uvY)
+        private void UpdateCamera()
         {
-            const double TexVal = 1d / 64d;
+            camera = Matrix4.LookAt(LookAngle.X, LookAngle.Y, 72f, LookAngle.X, LookAngle.Y, 0f, 0f, 1f, 1f);
+        }
 
+        private void UpdatePerspective()
+        {
+            perspective = Matrix4.CreatePerspectiveFieldOfView((float)Math.Pow(Zoom, -1), (float)(Width / (double)Height), 0.1f, 1000f);
+        }
 
+        // Only call when a context is present
+        private static void DrawBox(Image texture, Vector3 size, float X, float Y, float Z, float uvX, float uvY)
+        {
             float[] Corner1 = { X, Y, Z };
-            float[] Corner2 = { X + sizeX, Y, Z };
-            float[] Corner3 = { X, Y + SizeY, Z };
-            float[] Corner4 = { X, Y, Z + SizeZ };
-            float[] Corner5 = { X + sizeX, Y + SizeY, Z };
-            float[] Corner6 = { X, Y + SizeY, Z + SizeZ };
-            float[] Corner7 = { X + sizeX, Y, Z + SizeZ };
-            float[] Corner8 = { X + sizeX, Y + SizeY, Z + SizeZ };
+            float[] Corner2 = { X + size.X, Y, Z };
+            float[] Corner3 = { X, Y + size.Y, Z };
+            float[] Corner4 = { X, Y, Z + size.Z };
+            float[] Corner5 = { X + size.X, Y + size.Y, Z };
+            float[] Corner6 = { X, Y + size.Y, Z + size.Z };
+            float[] Corner7 = { X + size.X, Y, Z + size.Z };
+            float[] Corner8 = { X + size.X, Y + size.Y, Z + size.Z };
 
-
+            GL.Color3(Color.Red);
             // Face 1
             GL.Vertex3(Corner1);
             GL.Vertex3(Corner3);
@@ -439,7 +409,7 @@ namespace PckStudio.ToolboxItems
             GL.Vertex3(Corner6);
             GL.Vertex3(Corner3);
             // Face 4
-            GL.TexCoord2(uvX + sizeX, TexVal * 8d);
+            GL.TexCoord2(uvX, TexVal * 8d);
             GL.Vertex3(Corner4);
             GL.TexCoord2(TexVal * 16d, TexVal * 8d);
             GL.Vertex3(Corner7);
@@ -460,12 +430,55 @@ namespace PckStudio.ToolboxItems
         }
 
 
-        private void GlControl_Paint(object sender, PaintEventArgs e)
+        private static int CompileShader(ShaderType type, string shaderSource)
         {
-            if (InDesignMode)
-                return;
+            int shaderId = GL.CreateShader(type);
+            GL.ShaderSource(shaderId, shaderSource);
+            GL.CompileShader(shaderId);
 
-            GlControl.MakeCurrent();
+            GL.GetShader(shaderId, ShaderParameter.CompileStatus, out int status);
+
+            if (status == 0)
+            { 
+                GL.GetShader(shaderId, ShaderParameter.InfoLogLength, out int length);
+                GL.GetShaderInfoLog(shaderId, length, out length, out string infoLog);
+                Trace.TraceError(infoLog);
+                GL.DeleteShader(shaderId);
+                return 0;
+            }
+            return shaderId;
+        }
+
+        private static int CreateShader(string vertexSource, string fragmentSource)
+        {
+            int programId = GL.CreateProgram();
+            
+            int vertexShader = CompileShader(ShaderType.VertexShader, vertexSource);
+            int fragmentShader = CompileShader(ShaderType.FragmentShader, fragmentSource);
+
+            GL.AttachShader(programId, vertexShader);
+            GL.AttachShader(programId, fragmentShader);
+            
+            GL.LinkProgram(programId);
+            GL.ValidateProgram(programId);
+
+            GL.DeleteShader(vertexShader);
+            GL.DeleteShader(fragmentShader);
+            return programId;
+        }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            if (DesignMode)
+                return;
+            //base.OnPaint(e);
+
+            MakeCurrent();
+#if DEBUG
+            debugLabel.Text = $"Rotation: {RotationX}, {RotationY}\nZoom: {_Zoom}\nLookAt:\n{camera}\nPerspective:\n{perspective}";
+#endif
+
+            GL.PushMatrix();
 
             GL.ClearColor(BackColor);
             // First Clear Buffers
@@ -473,15 +486,15 @@ namespace PckStudio.ToolboxItems
             GL.Clear(ClearBufferMask.DepthBufferBit);
 
             // Basic Setup for viewing
-            perspective = Matrix4.CreatePerspectiveFieldOfView((float)Math.Pow(Zoom, -1), (float)(Width / (double)Height), 1f, 100f); // Setup Perspective
-            lookat = Matrix4.LookAt((float)LookX, (float)LookY, 36f, (float)LookX, (float)LookY, 0f, 0f, 1f, 1f); // Setup camera
+            UpdatePerspective();
+            UpdateCamera();
             GL.MatrixMode(MatrixMode.Projection); // Load Perspective
             GL.LoadIdentity();
             GL.LoadMatrix(ref perspective);
             GL.MatrixMode(MatrixMode.Modelview); // Load Camera
             GL.LoadIdentity();
-            GL.LoadMatrix(ref lookat);
-            GL.Viewport(0, 0, GlControl.Width, GlControl.Height); // Size of window
+            GL.LoadMatrix(ref camera);
+            GL.Viewport(0, 0, Width, Height); // Size of window
             GL.Enable(EnableCap.DepthTest); // Enable correct Z Drawings
             GL.Enable(EnableCap.Texture2D); // Enable textures
             GL.DepthFunc(DepthFunction.Less); // Enable correct Z Drawings
@@ -489,16 +502,15 @@ namespace PckStudio.ToolboxItems
             GL.Disable(EnableCap.AlphaTest); // Disable transparent
 
             // Load the textures
-            int texID = 1;
+            int texID = GL.GenTexture();
             GL.BindTexture(TextureTarget.Texture2D, texID);
-            var data = Skin.LockBits(new Rectangle(0, 0, 64, 64), ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
+            var data = Texture.LockBits(new Rectangle(0, 0, 64, 64), ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
+
             GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, 64, 64, 0, OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, data.Scan0);
-            Skin.UnlockBits(data);
+            Texture.UnlockBits(data);
             GL.GenerateMipmap(GenerateMipmapTarget.Texture2D);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Nearest);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
-
-            const double TexVal = 1d / 64d;
 
             // Rotating
             GL.Rotate(RotationX, -1, 0f, 0f);
@@ -506,10 +518,8 @@ namespace PckStudio.ToolboxItems
 
             GL.BindTexture(TextureTarget.ProxyTexture2D, texID);
             // Vertex goes (X,Y,Z)
-            GL.Begin(BeginMode.Quads);
+            GL.Begin(PrimitiveType.Quads);
             // Body
-
-            DrawBox(8, 8, 8, -4, 0, -2, 0, 0);
 
             
             if (ShowBody)
@@ -990,18 +1000,17 @@ namespace PckStudio.ToolboxItems
                 GL.Vertex3(4, -16, -2);
                 GL.TexCoord2(TexVal * 24d, TexVal * 48d);
                 GL.Vertex3(0, -16, -2);
-            }/*
-            */
+            }
             GL.End();
 
             GL.Enable(EnableCap.AlphaTest); // Enable transparent
-            GL.AlphaFunc(AlphaFunction.Greater, 0.4f);
-            // GL.Enable(EnableCap.Blend) 'Enable transparent
-            // GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.DstAlpha)
+            GL.AlphaFunc(AlphaFunction.Greater, 0.7f);
+            //GL.Enable(EnableCap.Blend); // Enable transparent
+            //GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.DstAlpha);
 
-            GL.Begin(BeginMode.Quads);
-            /*
-            if (Show2ndBody)
+            GL.Begin(PrimitiveType.Quads);
+            
+            if (ShowBodyOverlay)
             {
                 // Face 1
                 GL.TexCoord2(TexVal * 20d, TexVal * 36d);
@@ -1059,7 +1068,7 @@ namespace PckStudio.ToolboxItems
                 GL.Vertex3(-4.24d, -4.36d, -2.12d);
             }
 
-            if (Show2ndHead)
+            if (ShowHeadOverlay)
             {
                 // Head
                 // Face 1
@@ -1121,7 +1130,7 @@ namespace PckStudio.ToolboxItems
             if (Model == Models.Steve)
             {
 
-                if (Show2ndLeftArm)
+                if (ShowLeftArmOverlay)
                 {
                     // LeftArm
                     // Face 1
@@ -1180,7 +1189,7 @@ namespace PckStudio.ToolboxItems
                     GL.Vertex3(3.88d, -4.36d, -2.12d);
                 }
 
-                if (Show2ndRightArm)
+                if (ShowRightArmOverlay)
                 {
                     // RightArm
                     // Face 1
@@ -1243,7 +1252,7 @@ namespace PckStudio.ToolboxItems
             else
             {
 
-                if (Show2ndLeftArm)
+                if (ShowLeftArmOverlay)
                 {
                     // LefttArm
                     // Face 1
@@ -1302,7 +1311,7 @@ namespace PckStudio.ToolboxItems
                     GL.Vertex3(3.91d, -4.36d, -2.12d);
                 }
 
-                if (Show2ndRightArm)
+                if (ShowRightArmOverlay)
                 {
                     // RightArm
                     // Face 1
@@ -1363,7 +1372,7 @@ namespace PckStudio.ToolboxItems
 
             }
 
-            if (Show2ndRightLeg)
+            if (ShowRightLegOverlay)
             {
                 // RightLeg
                 // Face 1
@@ -1422,7 +1431,7 @@ namespace PckStudio.ToolboxItems
                 GL.Vertex3(-4.12d, -16.36d, -2.12d);
             }
 
-            if (Show2ndLeftLeg)
+            if (ShowLeftLegOverlay)
             {
                 // LeftLeg
                 // Face 1
@@ -1480,12 +1489,14 @@ namespace PckStudio.ToolboxItems
                 GL.TexCoord2(TexVal * 8d, TexVal * 48d);
                 GL.Vertex3(-0.12d, -16.36d, -2.12d);
             }
-            */
+
+            GL.DeleteTexture(texID);
+
             // Finish the begin mode with "end"
             GL.End();
-
+            GL.PopMatrix();
             // Finally...
-            GlControl.SwapBuffers(); // Takes from the 'GL' and puts into control
+            SwapBuffers(); // Takes from the 'GL' and puts into control
         }
 
         private bool IsMouseDown;
@@ -1499,39 +1510,13 @@ namespace PckStudio.ToolboxItems
 
         public delegate void BeginChangedEventHandler(object sender, Bitmap LastSkin);
 
-        private MouseRay GlobalMouseRay; // To use the var golbaly in the code
+        private Ray GlobalMouseRay; // To use the var golbaly in the code
         private Vector3 GlobalCameraPos;
 
-        private void GlControl_MouseDown(object sender, MouseEventArgs e)
+        protected override void OnMouseDown(MouseEventArgs e)
         {
             if (!IsMouseDown && e.Button == MouseButtons.Left) // Left mouse button
             {
-                if (Paintable) // Check if the Skin editor is paintable
-                {
-                    GlControl.MakeCurrent();
-                    Matrix4 promatrix;
-                    Matrix4 viewmatrix;
-                    GL.GetFloat(GetPName.ModelviewMatrix, out viewmatrix);
-                    GL.GetFloat(GetPName.ProjectionMatrix, out promatrix);
-                    // Get the current mouse ray
-                    var m = new MouseRay(ref viewmatrix, ref promatrix, GlControl.Size, GetCameraPos(viewmatrix), this);
-                    m.Pos = e.Location;
-                    if (m.Mouse2ndHit != new Vector3(100f, 100f, 100f) || m.MouseHit != new Vector3(0f, 0f, 0f)) // Check if the mouse hit the model or no
-                    {
-                        Bitmap tmp = (Bitmap)Skin.Clone();
-                        BeginChanged?.Invoke(this, tmp); // Fire the event
-                        IsMouseHit = true;
-
-                        var CameraPos = GetCameraPos(viewmatrix);
-                        GlobalMouseRay = m;
-                        GlobalCameraPos = CameraPos;
-
-                        PaintThread = new System.Threading.Thread(PaintCommander);
-                        PaintThread.Start();
-
-                        return;
-                    }
-                }
                 // If the ray didn't hit the model then rotate the model
                 OldLoc = Cursor.Position; // Store the old mouse position to reset it when the action is over
                 if (!IsMouseHidden) // Hide the mouse
@@ -1555,7 +1540,7 @@ namespace PckStudio.ToolboxItems
             }
         }
 
-        private void GlControl_MouseUp(object sender, MouseEventArgs e)
+        protected override void OnMouseUp(MouseEventArgs e)
         {
             if (IsMouseHidden)
             {
@@ -1580,103 +1565,29 @@ namespace PckStudio.ToolboxItems
             }
             else if (IsRightMouseDown) // Move the model
             {
-                LookX += -(Cursor.Position.X - MouseLoc.X) * 0.5d;
-                LookY += (Cursor.Position.Y - MouseLoc.Y) * 0.5d;
+                float deltaX = -(Cursor.Position.X - MouseLoc.X) * 0.5f / (float)Zoom;
+                float deltaY = (Cursor.Position.Y - MouseLoc.Y) * 0.5f / (float)Zoom;
+                LookAngle = new PointF(LookAngle.X + deltaX, LookAngle.Y + deltaY);
                 Refresh();
                 Cursor.Position = new Point((int)Math.Round(Screen.PrimaryScreen.Bounds.Height / 2d), (int)Math.Round(Screen.PrimaryScreen.Bounds.Height / 2d));
                 MouseLoc = Cursor.Position;
             }
         }
 
-        private void Renderer3D_MouseWheel(object sender, MouseEventArgs e) // Zoom
+        protected override void OnMouseWheel(MouseEventArgs e)
         {
             Zoom += e.Delta * 0.005d;
             Refresh();
+            base.OnMouseWheel(e);
         }
 
-        private Vector3 GetCameraPos(Matrix4 modelview)
+        private Vector3 GetCameraPosition(Matrix4 modelview)
         {
-            GlControl.MakeCurrent();
             return Matrix4.Invert(modelview).ExtractTranslation();
         }
-        private System.Threading.Thread PaintThread;
+
         private List<Point> MousePoints = new List<Point>();
         private List<Point> tmpMousePoints = new List<Point>();
-        private bool PaintThreadSwitcher;
-        private bool EndThreadFlag; // To make sure that the thread is done
-
-        public void PaintCommander()
-        {
-            do
-            {
-                if (PaintThreadSwitcher)
-                {
-                    if (tmpMousePoints.Count == 0)
-                    {
-                        tmpMousePoints.Add(Cursor.Position);
-                    }
-                    else if (!(tmpMousePoints.Last() == Cursor.Position))
-                    {
-                        tmpMousePoints.Add(Cursor.Position);
-                    }
-                }
-                else
-                {
-                    MousePoints.AddRange(tmpMousePoints);
-                    tmpMousePoints.Clear();
-                    if (MousePoints.Count == 0)
-                    {
-                        MousePoints.Add(Cursor.Position);
-                    }
-                    else if (!(MousePoints.Last() == Cursor.Position))
-                    {
-                        MousePoints.Add(Cursor.Position);
-                    }
-                }
-                EndThreadFlag = false;
-
-                if (IsMouseHit == false)
-                {
-                    tmpMousePoints.Clear();
-                    MousePoints.Clear();
-                    PaintThread.Abort();
-                }
-            }
-            while (true);
-        }
-
-        private void Paint_Tick(object sender, EventArgs e)
-        {
-            if (IsMouseHit)
-            {
-                PaintThreadSwitcher = true;
-                EndThreadFlag = true;
-                while (EndThreadFlag)
-                {
-                    // Do nothing untill 'EndThreadFlag = False' then move on
-                }
-                foreach (Point P in MousePoints)
-                {
-                    GlControl.Invoke(new Action(() => GlobalMouseRay.Pos = GlControl.PointToClient(P)));
-                    var Mouse2ndHit = GlobalMouseRay.Mouse2ndHit;
-                    var MouseHit = GlobalMouseRay.MouseHit;
-                    double MouseHitDis = Math.Sqrt(Math.Pow((double)(GlobalCameraPos.X - MouseHit.X), 2.0d) + Math.Pow((double)(GlobalCameraPos.Y - MouseHit.Y), 2.0d) + Math.Pow((double)(GlobalCameraPos.Z - MouseHit.Z), 2.0d));
-                    double Mouse2ndHitDis = Math.Sqrt(Math.Pow((double)(GlobalCameraPos.X - Mouse2ndHit.X), 2.0d) + Math.Pow((double)(GlobalCameraPos.Y - Mouse2ndHit.Y), 2.0d) + Math.Pow((double)(GlobalCameraPos.Z - Mouse2ndHit.Z), 2.0d));
-                    if (MouseHitDis > Mouse2ndHitDis)
-                    {
-                        PaintPixel(Mouse2ndHit, true);
-                    }
-
-                    else if (MouseHit != new Vector3(0f, 0f, 0f))
-                    {
-                        PaintPixel(MouseHit);
-                    }
-                }
-                MousePoints.Clear();
-                PaintThreadSwitcher = false;
-
-            }
-        }
 
         public event SkinChangedEventHandler SkinChanged;
 
@@ -1685,7 +1596,7 @@ namespace PckStudio.ToolboxItems
 
         public void PaintPixel(Vector3 Vector, bool Second = false)
         {
-            Bitmap tmpSkin = (Bitmap)Skin.Clone();
+            Bitmap tmpSkin = (Bitmap)Texture.Clone();
             Point Point;
             var XUp = default(Vector3);
             var YUp = default(Vector3);
@@ -2023,35 +1934,35 @@ namespace PckStudio.ToolboxItems
         public Point Get2nd2DFrom3D(Vector3 Vector, ref Vector3 XUp, ref Vector3 YUp)
         {
             var Result = default(Point);
-            if (Show2ndHead && Vector.X < 4.24d && Vector.X > -4.24d && Vector.Y < 16.24d && Vector.Y > 7.76d && Vector.Z == 4.24f)
+            if (ShowHeadOverlay && Vector.X < 4.24d && Vector.X > -4.24d && Vector.Y < 16.24d && Vector.Y > 7.76d && Vector.Z == 4.24f)
             {
                 // ZHead
                 Result = new Point((int)Math.Round(Conversion.Int((Vector.X + 4.24d) / 1.06d + 40d)), (int)Math.Round(Conversion.Int(((double)-Vector.Y + 16.24d) / 1.06d + 8d)));
                 XUp.X = 1f;
                 YUp.Y = 1f;
             }
-            else if (Show2ndHead && Vector.X < 4.24d && Vector.X > -4.24d && Vector.Y < 16.24d && Vector.Y > 7.76d && Vector.Z == -4.24f)
+            else if (ShowHeadOverlay && Vector.X < 4.24d && Vector.X > -4.24d && Vector.Y < 16.24d && Vector.Y > 7.76d && Vector.Z == -4.24f)
             {
                 // ZHead
                 Result = new Point((int)Math.Round(Conversion.Int(((double)-Vector.X + 4.24d) / 1.06d + 56d)), (int)Math.Round(Conversion.Int(((double)-Vector.Y + 16.24d) / 1.06d + 8d)));
                 XUp.X = 1f;
                 YUp.Y = 1f;
             }
-            else if (Show2ndBody && Vector.X < 4.24d && Vector.X > -4.24d && Vector.Y < 8.36d && Vector.Y > -4.36d && Vector.Z == 2.12f)
+            else if (ShowBodyOverlay && Vector.X < 4.24d && Vector.X > -4.24d && Vector.Y < 8.36d && Vector.Y > -4.36d && Vector.Z == 2.12f)
             {
                 // ZBody
                 Result = new Point((int)Math.Round(Conversion.Int((Vector.X + 4.24d) / 1.06d + 20d)), (int)Math.Round(Conversion.Int(((double)-Vector.Y + 8.36d) / 1.06d + 36d)));
                 XUp.X = 1f;
                 YUp.Y = 1f;
             }
-            else if (Show2ndBody && Vector.X < 4.24d && Vector.X > -4.24d && Vector.Y < 8.36d && Vector.Y > -4.36d && Vector.Z == -2.12f)
+            else if (ShowBodyOverlay && Vector.X < 4.24d && Vector.X > -4.24d && Vector.Y < 8.36d && Vector.Y > -4.36d && Vector.Z == -2.12f)
             {
                 // ZBody
                 Result = new Point((int)Math.Round(Conversion.Int(((double)-Vector.X + 4.24d) / 1.06d + 32d)), (int)Math.Round(Conversion.Int(((double)-Vector.Y + 8.36d) / 1.06d + 36d)));
                 XUp.X = 1f;
                 YUp.Y = 1f;
             }
-            else if (Show2ndRightArm && Vector.X < -3.88d && Vector.X > -8.12d && Vector.Y < 8.36d && Vector.Y > -4.36d && Vector.Z == 2.12f)
+            else if (ShowRightArmOverlay && Vector.X < -3.88d && Vector.X > -8.12d && Vector.Y < 8.36d && Vector.Y > -4.36d && Vector.Z == 2.12f)
             {
                 // ZArms
                 if (Model == Models.Steve)
@@ -2065,7 +1976,7 @@ namespace PckStudio.ToolboxItems
                 XUp.X = 1f;
                 YUp.Y = 1f;
             }
-            else if (Show2ndRightArm && Vector.X < -3.88d && Vector.X > -8.12d && Vector.Y < 8.36d && Vector.Y > -4.36d && Vector.Z == -2.12f)
+            else if (ShowRightArmOverlay && Vector.X < -3.88d && Vector.X > -8.12d && Vector.Y < 8.36d && Vector.Y > -4.36d && Vector.Z == -2.12f)
             {
                 // ZArms
                 if (Model == Models.Steve)
@@ -2079,14 +1990,14 @@ namespace PckStudio.ToolboxItems
                 XUp.X = 1f;
                 YUp.Y = 1f;
             }
-            else if (Show2ndLeftArm && Vector.X < 8.12d && Vector.X > 3.88d && Vector.Y < 8.36d && Vector.Y > -4.36d && Vector.Z == 2.12f)
+            else if (ShowLeftArmOverlay && Vector.X < 8.12d && Vector.X > 3.88d && Vector.Y < 8.36d && Vector.Y > -4.36d && Vector.Z == 2.12f)
             {
                 // ZArms
                 Result = new Point((int)Math.Round(Conversion.Int((Vector.X + 3.88d) / 1.06d + 45d)), (int)Math.Round(Conversion.Int(((double)-Vector.Y + 8.36d) / 1.06d + 52d)));
                 XUp.X = 1f;
                 YUp.Y = 1f;
             }
-            else if (Show2ndLeftArm && Vector.X < 8.12d && Vector.X > 3.88d && Vector.Y < 8.36d && Vector.Y > -4.36d && Vector.Z == -2.12f)
+            else if (ShowLeftArmOverlay && Vector.X < 8.12d && Vector.X > 3.88d && Vector.Y < 8.36d && Vector.Y > -4.36d && Vector.Z == -2.12f)
             {
                 // ZArms
                 if (Model == Models.Steve)
@@ -2100,63 +2011,63 @@ namespace PckStudio.ToolboxItems
                 XUp.X = 1f;
                 YUp.Y = 1f;
             }
-            else if (Show2ndRightLeg && Vector.X < 0.12d && Vector.X > -4.12d && Vector.Y < -3.64d && Vector.Y > -16.36d && Vector.Z == 2.12f)
+            else if (ShowRightLegOverlay && Vector.X < 0.12d && Vector.X > -4.12d && Vector.Y < -3.64d && Vector.Y > -16.36d && Vector.Z == 2.12f)
             {
                 // ZLegs
                 Result = new Point((int)Math.Round(Conversion.Int((Vector.X + 4.12d) / 1.06d + 4d)), (int)Math.Round(Conversion.Int(((double)-Vector.Y - 16.36d) / 1.06d + 48d)));
                 XUp.X = 1f;
                 YUp.Y = 1f;
             }
-            else if (Show2ndRightLeg && Vector.X < 0.12d && Vector.X > -4.12d && Vector.Y < -3.64d && Vector.Y > -16.36d && Vector.Z == -2.12f)
+            else if (ShowRightLegOverlay && Vector.X < 0.12d && Vector.X > -4.12d && Vector.Y < -3.64d && Vector.Y > -16.36d && Vector.Z == -2.12f)
             {
                 // ZLegs
                 Result = new Point((int)Math.Round(Conversion.Int(((double)-Vector.X + 4.12d) / 1.06d + 8d)), (int)Math.Round(Conversion.Int(((double)-Vector.Y - 16.36d) / 1.06d + 48d)));
                 XUp.X = 1f;
                 YUp.Y = 1f;
             }
-            else if (Show2ndLeftLeg && Vector.X < 4.12d && Vector.X > -0.12d && Vector.Y < -3.64d && Vector.Y > -16.36d && Vector.Z == 2.12f)
+            else if (ShowLeftLegOverlay && Vector.X < 4.12d && Vector.X > -0.12d && Vector.Y < -3.64d && Vector.Y > -16.36d && Vector.Z == 2.12f)
             {
                 // ZLegs
                 Result = new Point((int)Math.Round(Conversion.Int((Vector.X + 0.12d) / 1.06d + 4d)), (int)Math.Round(Conversion.Int(((double)-Vector.Y - 3.64d) / 1.06d + 52d)));
                 XUp.X = 1f;
                 YUp.Y = 1f;
             }
-            else if (Show2ndLeftLeg && Vector.X < 4.12d && Vector.X > -0.12d && Vector.Y < -3.64d && Vector.Y > -16.36d && Vector.Z == -2.12f)
+            else if (ShowLeftLegOverlay && Vector.X < 4.12d && Vector.X > -0.12d && Vector.Y < -3.64d && Vector.Y > -16.36d && Vector.Z == -2.12f)
             {
                 // ZLegs
                 Result = new Point((int)Math.Round(Conversion.Int(((double)-Vector.X + 0.12d) / 1.06d + 16d)), (int)Math.Round(Conversion.Int(((double)-Vector.Y - 3.64d) / 1.06d + 52d)));
                 XUp.X = 1f;
                 YUp.Y = 1f;
             }
-            else if (Show2ndHead && Vector.Z < 4.24d && Vector.Z > -4.24d && Vector.Y < 16.24d && Vector.Y > 7.76d && Vector.X == 4.24f)
+            else if (ShowHeadOverlay && Vector.Z < 4.24d && Vector.Z > -4.24d && Vector.Y < 16.24d && Vector.Y > 7.76d && Vector.X == 4.24f)
             {
                 // XHead
                 Result = new Point((int)Math.Round(Conversion.Int(((double)-Vector.Z + 4.24d) / 1.06d + 48d)), (int)Math.Round(Conversion.Int(((double)-Vector.Y + 16.24d) / 1.06d + 8d)));
                 XUp.Z = 1f;
                 YUp.Y = 1f;
             }
-            else if (Show2ndHead && Vector.Z < 4.24d && Vector.Z > -4.24d && Vector.Y < 16.24d && Vector.Y > 7.76d && Vector.X == -4.24f)
+            else if (ShowHeadOverlay && Vector.Z < 4.24d && Vector.Z > -4.24d && Vector.Y < 16.24d && Vector.Y > 7.76d && Vector.X == -4.24f)
             {
                 // XHead
                 Result = new Point((int)Math.Round(Conversion.Int((Vector.Z + 4.24d) / 1.06d + 32d)), (int)Math.Round(Conversion.Int(((double)-Vector.Y + 16.24d) / 1.06d + 8d)));
                 XUp.Z = 1f;
                 YUp.Y = 1f;
             }
-            else if (Show2ndBody && Vector.Z < 2.12d && Vector.Z > -2.12d && Vector.Y < 8.36d && Vector.Y > -4.36d && Vector.X == 4.24f)
+            else if (ShowBodyOverlay && Vector.Z < 2.12d && Vector.Z > -2.12d && Vector.Y < 8.36d && Vector.Y > -4.36d && Vector.X == 4.24f)
             {
                 // XBody
                 Result = new Point((int)Math.Round(Conversion.Int(((double)-Vector.Z + 2.12d) / 1.06d + 28d)), (int)Math.Round(Conversion.Int(((double)-Vector.Y + 8.36d) / 1.06d + 36d)));
                 XUp.Z = 1f;
                 YUp.Y = 1f;
             }
-            else if (Show2ndBody && Vector.Z < 2.12d && Vector.Z > -2.12d && Vector.Y < 8.36d && Vector.Y > -4.36d && Vector.X == -4.24f)
+            else if (ShowBodyOverlay && Vector.Z < 2.12d && Vector.Z > -2.12d && Vector.Y < 8.36d && Vector.Y > -4.36d && Vector.X == -4.24f)
             {
                 // XBody
                 Result = new Point((int)Math.Round(Conversion.Int((Vector.Z + 2.12d) / 1.06d + 16d)), (int)Math.Round(Conversion.Int(((double)-Vector.Y + 8.36d) / 1.06d + 36d)));
                 XUp.Z = 1f;
                 YUp.Y = 1f;
             }
-            else if (Show2ndLeftArm && Vector.Z < 2.12d && Vector.Z > -2.12d && Vector.Y < 8.36d && Vector.Y > -4.36d && (Vector.X == 8.12f || Vector.X == 7.09f))
+            else if (ShowLeftArmOverlay && Vector.Z < 2.12d && Vector.Z > -2.12d && Vector.Y < 8.36d && Vector.Y > -4.36d && (Vector.X == 8.12f || Vector.X == 7.09f))
             {
                 // XArms
                 if (Model == Models.Steve)
@@ -2170,21 +2081,21 @@ namespace PckStudio.ToolboxItems
                 XUp.Z = 1f;
                 YUp.Y = 1f;
             }
-            else if (Show2ndRightArm && Vector.Z < 2.12d && Vector.Z > -2.12d && Vector.Y < 8.36d && Vector.Y > -4.36d && (Vector.X == -8.12f || Vector.X == -7.09f))
+            else if (ShowRightArmOverlay && Vector.Z < 2.12d && Vector.Z > -2.12d && Vector.Y < 8.36d && Vector.Y > -4.36d && (Vector.X == -8.12f || Vector.X == -7.09f))
             {
                 // XArms
                 Result = new Point((int)Math.Round(Conversion.Int((Vector.Z + 2.12d) / 1.06d + 40d)), (int)Math.Round(Conversion.Int(((double)-Vector.Y + 8.36d) / 1.06d + 36d)));
                 XUp.Z = 1f;
                 YUp.Y = 1f;
             }
-            else if (Show2ndLeftArm && Vector.Z < 2.12d && Vector.Z > -2.12d && Vector.Y < 8.36d && Vector.Y > -4.36d && (Vector.X == 3.88f || Vector.X == 3.91f))
+            else if (ShowLeftArmOverlay && Vector.Z < 2.12d && Vector.Z > -2.12d && Vector.Y < 8.36d && Vector.Y > -4.36d && (Vector.X == 3.88f || Vector.X == 3.91f))
             {
                 // XArms
                 Result = new Point((int)Math.Round(Conversion.Int((Vector.Z + 2.12d) / 1.06d + 48d)), (int)Math.Round(Conversion.Int(((double)-Vector.Y + 8.36d) / 1.06d + 52d)));
                 XUp.Z = 1f;
                 YUp.Y = 1f;
             }
-            else if (Show2ndRightArm && Vector.Z < 2.12d && Vector.Z > -2.12d && Vector.Y < 8.36d && Vector.Y > -4.36d && (Vector.X == -3.88f || Vector.X == -3.91f))
+            else if (ShowRightArmOverlay && Vector.Z < 2.12d && Vector.Z > -2.12d && Vector.Y < 8.36d && Vector.Y > -4.36d && (Vector.X == -3.88f || Vector.X == -3.91f))
             {
                 // XArms
                 if (Model == Models.Steve)
@@ -2198,70 +2109,70 @@ namespace PckStudio.ToolboxItems
                 XUp.Z = 1f;
                 YUp.Y = 1f;
             }
-            else if (Show2ndLeftLeg && Vector.Z < 2.12d && Vector.Z > -2.12d && Vector.Y < -3.64d && Vector.Y > -16.36d && Vector.X == 4.24f)
+            else if (ShowLeftLegOverlay && Vector.Z < 2.12d && Vector.Z > -2.12d && Vector.Y < -3.64d && Vector.Y > -16.36d && Vector.X == 4.24f)
             {
                 // XLeg
                 Result = new Point((int)Math.Round(Conversion.Int(((double)-Vector.Z + 2.12d) / 1.06d + 8d)), (int)Math.Round(Conversion.Int(((double)-Vector.Y - 3.64d) / 1.06d + 52d)));
                 XUp.Z = 1f;
                 YUp.Y = 1f;
             }
-            else if (Show2ndRightLeg && Vector.Z < 2.12d && Vector.Z > -2.12d && Vector.Y < -3.64d && Vector.Y > -16.36d && Vector.X == -4.24f)
+            else if (ShowRightLegOverlay && Vector.Z < 2.12d && Vector.Z > -2.12d && Vector.Y < -3.64d && Vector.Y > -16.36d && Vector.X == -4.24f)
             {
                 // XLeg
                 Result = new Point((int)Math.Round(Conversion.Int((Vector.Z + 2.12d) / 1.06d)), (int)Math.Round(Conversion.Int(((double)-Vector.Y - 3.64d) / 1.06d + 36d)));
                 XUp.Z = 1f;
                 YUp.Y = 1f;
             }
-            else if (Show2ndRightLeg && Vector.Z < 2.12d && Vector.Z > -2.12d && Vector.Y < -3.64d && Vector.Y > -16.36d && Vector.X == 0.12f)
+            else if (ShowRightLegOverlay && Vector.Z < 2.12d && Vector.Z > -2.12d && Vector.Y < -3.64d && Vector.Y > -16.36d && Vector.X == 0.12f)
             {
                 // XLeg
                 Result = new Point((int)Math.Round(Conversion.Int(((double)-Vector.Z + 2.12d) / 1.06d + 8d)), (int)Math.Round(Conversion.Int(((double)-Vector.Y - 3.64d) / 1.06d + 36d)));
                 XUp.Z = 1f;
                 YUp.Y = 1f;
             }
-            else if (Show2ndLeftLeg && Vector.Z < 2.12d && Vector.Z > -2.12d && Vector.Y < -3.64d && Vector.Y > -16.36d && Vector.X == -0.12f)
+            else if (ShowLeftLegOverlay && Vector.Z < 2.12d && Vector.Z > -2.12d && Vector.Y < -3.64d && Vector.Y > -16.36d && Vector.X == -0.12f)
             {
                 // XLeg
                 Result = new Point((int)Math.Round(Conversion.Int((Vector.Z + 2.12d) / 1.06d)), (int)Math.Round(Conversion.Int(((double)-Vector.Y - 3.64d) / 1.06d + 52d)));
                 XUp.Z = 1f;
                 YUp.Y = 1f;
             }
-            else if (Show2ndHead && Vector.Z < 4.24d && Vector.Z > -4.24d && Vector.X < 4.24d && Vector.X > -4.24d && Vector.Y == 16.24f)
+            else if (ShowHeadOverlay && Vector.Z < 4.24d && Vector.Z > -4.24d && Vector.X < 4.24d && Vector.X > -4.24d && Vector.Y == 16.24f)
             {
                 // YHead
                 Result = new Point((int)Math.Round(Conversion.Int((Vector.X + 4.24d) / 1.06d + 40d)), (int)Math.Round(Conversion.Int((Vector.Z + 4.24d) / 1.06d)));
                 XUp.X = 1f;
                 YUp.Z = 1f;
             }
-            else if (Show2ndHead && Vector.Z < 4.24d && Vector.Z > -4.24d && Vector.X < 4.24d && Vector.X > -4.24d && Vector.Y == 7.76f)
+            else if (ShowHeadOverlay && Vector.Z < 4.24d && Vector.Z > -4.24d && Vector.X < 4.24d && Vector.X > -4.24d && Vector.Y == 7.76f)
             {
                 // YHead
                 Result = new Point((int)Math.Round(Conversion.Int((Vector.X + 4.24d) / 1.06d + 48d)), (int)Math.Round(Conversion.Int((Vector.Z + 4.24d) / 1.06d)));
                 XUp.X = 1f;
                 YUp.Z = 1f;
             }
-            else if (Show2ndBody && Vector.Z < 2.12d && Vector.Z > -2.12d && Vector.X < 4.24d && Vector.X > -4.24d && Vector.Y == 8.36f)
+            else if (ShowBodyOverlay && Vector.Z < 2.12d && Vector.Z > -2.12d && Vector.X < 4.24d && Vector.X > -4.24d && Vector.Y == 8.36f)
             {
                 // YBody
                 Result = new Point((int)Math.Round(Conversion.Int((Vector.X + 4.24d) / 1.06d + 20d)), (int)Math.Round(Conversion.Int((Vector.Z + 2.12d) / 1.06d + 32d)));
                 XUp.X = 1f;
                 YUp.Z = 1f;
             }
-            else if (Show2ndBody && Vector.Z < 2.12d && Vector.Z > -2.12d && Vector.X < 4.24d && Vector.X > -4.24d && Vector.Y == -4.36f)
+            else if (ShowBodyOverlay && Vector.Z < 2.12d && Vector.Z > -2.12d && Vector.X < 4.24d && Vector.X > -4.24d && Vector.Y == -4.36f)
             {
                 // YBody
                 Result = new Point((int)Math.Round(Conversion.Int((Vector.X + 4.24d) / 1.06d + 28d)), (int)Math.Round(Conversion.Int((Vector.Z + 2.12d) / 1.06d + 32d)));
                 XUp.X = 1f;
                 YUp.Z = 1f;
             }
-            else if (Show2ndLeftArm && Vector.Z < 2.12d && Vector.Z > -2.12d && Vector.X < 8.12d && Vector.X > 3.88d && Vector.Y == 8.36f)
+            else if (ShowLeftArmOverlay && Vector.Z < 2.12d && Vector.Z > -2.12d && Vector.X < 8.12d && Vector.X > 3.88d && Vector.Y == 8.36f)
             {
                 // YArms
                 Result = new Point((int)Math.Round(Conversion.Int((Vector.X - 3.88d) / 1.06d + 52d)), (int)Math.Round(Conversion.Int((Vector.Z + 2.12d) / 1.06d + 48d)));
                 XUp.X = 1f;
                 YUp.Z = 1f;
             }
-            else if (Show2ndLeftArm && Vector.Z < 2.12d && Vector.Z > -2.12d && Vector.X < 8.12d && Vector.X > 3.88d && Vector.Y == -4.36f)
+            else if (ShowLeftArmOverlay && Vector.Z < 2.12d && Vector.Z > -2.12d && Vector.X < 8.12d && Vector.X > 3.88d && Vector.Y == -4.36f)
             {
                 // YArms
                 if (Model == Models.Steve)
@@ -2275,7 +2186,7 @@ namespace PckStudio.ToolboxItems
                 XUp.X = 1f;
                 YUp.Z = 1f;
             }
-            else if (Show2ndRightArm && Vector.Z < 2.12d && Vector.Z > -2.12d && Vector.X < -3.88d && Vector.X > -8.12d && Vector.Y == 8.36f)
+            else if (ShowRightArmOverlay && Vector.Z < 2.12d && Vector.Z > -2.12d && Vector.X < -3.88d && Vector.X > -8.12d && Vector.Y == 8.36f)
             {
                 // YArms
                 if (Model == Models.Steve)
@@ -2289,7 +2200,7 @@ namespace PckStudio.ToolboxItems
                 XUp.X = 1f;
                 YUp.Z = 1f;
             }
-            else if (Show2ndRightArm && Vector.Z < 2.12d && Vector.Z > -2.12d && Vector.X < -3.88d && Vector.X > -8.12d && Vector.Y == -4.36f)
+            else if (ShowRightArmOverlay && Vector.Z < 2.12d && Vector.Z > -2.12d && Vector.X < -3.88d && Vector.X > -8.12d && Vector.Y == -4.36f)
             {
                 // YArms
                 if (Model == Models.Steve)
@@ -2303,28 +2214,28 @@ namespace PckStudio.ToolboxItems
                 XUp.X = 1f;
                 YUp.Z = 1f;
             }
-            else if (Show2ndLeftLeg && Vector.Z < 2.12d && Vector.Z > -2.12d && Vector.X < 4.24d && Vector.X > -0.12d && Vector.Y == -3.64f)
+            else if (ShowLeftLegOverlay && Vector.Z < 2.12d && Vector.Z > -2.12d && Vector.X < 4.24d && Vector.X > -0.12d && Vector.Y == -3.64f)
             {
                 // YLeg
                 Result = new Point((int)Math.Round(Conversion.Int((Vector.X + 0.12d) / 1.06d + 4d)), (int)Math.Round(Conversion.Int((Vector.Z + 2.12d) / 1.06d + 48d)));
                 XUp.X = 1f;
                 YUp.Z = 1f;
             }
-            else if (Show2ndRightLeg && Vector.Z < 2.12d && Vector.Z > -2.12d && Vector.X < 0.12d && Vector.X > -4.24d && Vector.Y == -3.64f)
+            else if (ShowRightLegOverlay && Vector.Z < 2.12d && Vector.Z > -2.12d && Vector.X < 0.12d && Vector.X > -4.24d && Vector.Y == -3.64f)
             {
                 // YLeg
                 Result = new Point((int)Math.Round(Conversion.Int((Vector.X + 4.24d) / 1.06d + 4d)), (int)Math.Round(Conversion.Int((Vector.Z + 2.12d) / 1.06d + 32d)));
                 XUp.X = 1f;
                 YUp.Z = 1f;
             }
-            else if (Show2ndLeftLeg && Vector.Z < 2.12d && Vector.Z > -2.12d && Vector.X < 4.24d && Vector.X > -0.12d && Vector.Y == -16.36f)
+            else if (ShowLeftLegOverlay && Vector.Z < 2.12d && Vector.Z > -2.12d && Vector.X < 4.24d && Vector.X > -0.12d && Vector.Y == -16.36f)
             {
                 // YLeg
                 Result = new Point((int)Math.Round(Conversion.Int((Vector.X + 0.12d) / 1.06d + 8d)), (int)Math.Round(Conversion.Int((Vector.Z + 2.12d) / 1.06d + 48d)));
                 XUp.X = 1f;
                 YUp.Z = 1f;
             }
-            else if (Show2ndRightLeg && Vector.Z < 2.12d && Vector.Z > -2.12d && Vector.X < 0.12d && Vector.X > -4.24d && Vector.Y == -16.36f)
+            else if (ShowRightLegOverlay && Vector.Z < 2.12d && Vector.Z > -2.12d && Vector.X < 0.12d && Vector.X > -4.24d && Vector.Y == -16.36f)
             {
                 // YLeg
                 Result = new Point((int)Math.Round(Conversion.Int((Vector.X + 4.24d) / 1.06d + 8d)), (int)Math.Round(Conversion.Int((Vector.Z + 2.12d) / 1.06d + 32d)));
@@ -2367,7 +2278,7 @@ namespace PckStudio.ToolboxItems
         public void FloodFill(int x, int y, Color new_color)
         {
             // Get the old and new colors.
-            var old_color = Skin.GetPixel(x, y);
+            var old_color = Texture.GetPixel(x, y);
 
             if (old_color.ToArgb() != new_color.ToArgb())
             {
@@ -2428,25 +2339,25 @@ namespace PckStudio.ToolboxItems
                 {
                     case SkinPlace.Head:
                         {
-                            SkinSection = Skin.Clone(new Rectangle(0, 0, 32, 16), Skin.PixelFormat);
+                            SkinSection = Texture.Clone(new Rectangle(0, 0, 32, 16), Texture.PixelFormat);
                             break;
                         }
                     case SkinPlace.Head2:
                         {
-                            SkinSection = Skin.Clone(new Rectangle(32, 0, 32, 16), Skin.PixelFormat);
+                            SkinSection = Texture.Clone(new Rectangle(32, 0, 32, 16), Texture.PixelFormat);
                             x -= 32;
                             break;
                         }
                     case SkinPlace.Body:
                         {
-                            SkinSection = Skin.Clone(new Rectangle(16, 16, 24, 16), Skin.PixelFormat);
+                            SkinSection = Texture.Clone(new Rectangle(16, 16, 24, 16), Texture.PixelFormat);
                             x -= 16;
                             y -= 16;
                             break;
                         }
                     case SkinPlace.Body2:
                         {
-                            SkinSection = Skin.Clone(new Rectangle(16, 32, 24, 16), Skin.PixelFormat);
+                            SkinSection = Texture.Clone(new Rectangle(16, 32, 24, 16), Texture.PixelFormat);
                             x -= 16;
                             y -= 32;
                             break;
@@ -2455,11 +2366,11 @@ namespace PckStudio.ToolboxItems
                         {
                             if (Model == Models.Steve)
                             {
-                                SkinSection = Skin.Clone(new Rectangle(40, 16, 16, 16), Skin.PixelFormat);
+                                SkinSection = Texture.Clone(new Rectangle(40, 16, 16, 16), Texture.PixelFormat);
                             }
                             else
                             {
-                                SkinSection = Skin.Clone(new Rectangle(40, 16, 14, 16), Skin.PixelFormat);
+                                SkinSection = Texture.Clone(new Rectangle(40, 16, 14, 16), Texture.PixelFormat);
                             }
                             x -= 40;
                             y -= 16;
@@ -2469,11 +2380,11 @@ namespace PckStudio.ToolboxItems
                         {
                             if (Model == Models.Steve)
                             {
-                                SkinSection = Skin.Clone(new Rectangle(40, 32, 16, 16), Skin.PixelFormat);
+                                SkinSection = Texture.Clone(new Rectangle(40, 32, 16, 16), Texture.PixelFormat);
                             }
                             else
                             {
-                                SkinSection = Skin.Clone(new Rectangle(40, 32, 14, 16), Skin.PixelFormat);
+                                SkinSection = Texture.Clone(new Rectangle(40, 32, 14, 16), Texture.PixelFormat);
                             }
                             x -= 40;
                             y -= 32;
@@ -2483,11 +2394,11 @@ namespace PckStudio.ToolboxItems
                         {
                             if (Model == Models.Steve)
                             {
-                                SkinSection = Skin.Clone(new Rectangle(32, 48, 16, 16), Skin.PixelFormat);
+                                SkinSection = Texture.Clone(new Rectangle(32, 48, 16, 16), Texture.PixelFormat);
                             }
                             else
                             {
-                                SkinSection = Skin.Clone(new Rectangle(32, 48, 14, 16), Skin.PixelFormat);
+                                SkinSection = Texture.Clone(new Rectangle(32, 48, 14, 16), Texture.PixelFormat);
                             }
                             x -= 32;
                             y -= 48;
@@ -2497,11 +2408,11 @@ namespace PckStudio.ToolboxItems
                         {
                             if (Model == Models.Steve)
                             {
-                                SkinSection = Skin.Clone(new Rectangle(48, 48, 16, 16), Skin.PixelFormat);
+                                SkinSection = Texture.Clone(new Rectangle(48, 48, 16, 16), Texture.PixelFormat);
                             }
                             else
                             {
-                                SkinSection = Skin.Clone(new Rectangle(48, 48, 14, 16), Skin.PixelFormat);
+                                SkinSection = Texture.Clone(new Rectangle(48, 48, 14, 16), Texture.PixelFormat);
                             }
                             x -= 48;
                             y -= 48;
@@ -2509,26 +2420,26 @@ namespace PckStudio.ToolboxItems
                         }
                     case SkinPlace.RLeg:
                         {
-                            SkinSection = Skin.Clone(new Rectangle(0, 16, 16, 16), Skin.PixelFormat);
+                            SkinSection = Texture.Clone(new Rectangle(0, 16, 16, 16), Texture.PixelFormat);
                             y -= 16;
                             break;
                         }
                     case SkinPlace.RLeg2:
                         {
-                            SkinSection = Skin.Clone(new Rectangle(0, 32, 16, 16), Skin.PixelFormat);
+                            SkinSection = Texture.Clone(new Rectangle(0, 32, 16, 16), Texture.PixelFormat);
                             y -= 32;
                             break;
                         }
                     case SkinPlace.LLeg:
                         {
-                            SkinSection = Skin.Clone(new Rectangle(16, 48, 16, 16), Skin.PixelFormat);
+                            SkinSection = Texture.Clone(new Rectangle(16, 48, 16, 16), Texture.PixelFormat);
                             x -= 16;
                             y -= 48;
                             break;
                         }
                     case SkinPlace.LLeg2:
                         {
-                            SkinSection = Skin.Clone(new Rectangle(0, 48, 16, 16), Skin.PixelFormat);
+                            SkinSection = Texture.Clone(new Rectangle(0, 48, 16, 16), Texture.PixelFormat);
                             y -= 48;
                             break;
                         }
@@ -2687,30 +2598,30 @@ namespace PckStudio.ToolboxItems
 
                 }
 
-                tmpG = Graphics.FromImage(Skin);
+                tmpG = Graphics.FromImage(Texture);
                 switch (CurrentPlace)
                 {
                     case SkinPlace.Head:
                         {
-                            TransparentFill(Skin, new Rectangle(0, 0, 32, 16));
+                            TransparentFill(Texture, new Rectangle(0, 0, 32, 16));
                             tmpG.DrawImage(tmpSS, 0, 0, 32, 16);
                             break;
                         }
                     case SkinPlace.Head2:
                         {
-                            TransparentFill(Skin, new Rectangle(32, 0, 32, 16));
+                            TransparentFill(Texture, new Rectangle(32, 0, 32, 16));
                             tmpG.DrawImage(tmpSS, 32, 0, 32, 16);
                             break;
                         }
                     case SkinPlace.Body:
                         {
-                            TransparentFill(Skin, new Rectangle(16, 16, 24, 16));
+                            TransparentFill(Texture, new Rectangle(16, 16, 24, 16));
                             tmpG.DrawImage(tmpSS, 16, 16, 24, 16);
                             break;
                         }
                     case SkinPlace.Body2:
                         {
-                            TransparentFill(Skin, new Rectangle(16, 32, 24, 16));
+                            TransparentFill(Texture, new Rectangle(16, 32, 24, 16));
                             tmpG.DrawImage(tmpSS, 16, 32, 24, 16);
                             break;
                         }
@@ -2718,12 +2629,12 @@ namespace PckStudio.ToolboxItems
                         {
                             if (Model == Models.Steve)
                             {
-                                TransparentFill(Skin, new Rectangle(40, 16, 16, 16));
+                                TransparentFill(Texture, new Rectangle(40, 16, 16, 16));
                                 tmpG.DrawImage(tmpSS, 40, 16, 16, 16);
                             }
                             else
                             {
-                                TransparentFill(Skin, new Rectangle(40, 16, 14, 16));
+                                TransparentFill(Texture, new Rectangle(40, 16, 14, 16));
                                 tmpG.DrawImage(tmpSS, 40, 16, 14, 16);
                             }
 
@@ -2733,12 +2644,12 @@ namespace PckStudio.ToolboxItems
                         {
                             if (Model == Models.Steve)
                             {
-                                TransparentFill(Skin, new Rectangle(40, 32, 16, 16));
+                                TransparentFill(Texture, new Rectangle(40, 32, 16, 16));
                                 tmpG.DrawImage(tmpSS, 40, 32, 16, 16);
                             }
                             else
                             {
-                                TransparentFill(Skin, new Rectangle(40, 32, 14, 16));
+                                TransparentFill(Texture, new Rectangle(40, 32, 14, 16));
                                 tmpG.DrawImage(tmpSS, 40, 32, 14, 16);
                             }
 
@@ -2748,12 +2659,12 @@ namespace PckStudio.ToolboxItems
                         {
                             if (Model == Models.Steve)
                             {
-                                TransparentFill(Skin, new Rectangle(32, 48, 16, 16));
+                                TransparentFill(Texture, new Rectangle(32, 48, 16, 16));
                                 tmpG.DrawImage(tmpSS, 32, 48, 16, 16);
                             }
                             else
                             {
-                                TransparentFill(Skin, new Rectangle(32, 48, 14, 16));
+                                TransparentFill(Texture, new Rectangle(32, 48, 14, 16));
                                 tmpG.DrawImage(tmpSS, 32, 48, 14, 16);
                             }
 
@@ -2763,12 +2674,12 @@ namespace PckStudio.ToolboxItems
                         {
                             if (Model == Models.Steve)
                             {
-                                TransparentFill(Skin, new Rectangle(48, 48, 16, 16));
+                                TransparentFill(Texture, new Rectangle(48, 48, 16, 16));
                                 tmpG.DrawImage(tmpSS, 48, 48, 16, 16);
                             }
                             else
                             {
-                                TransparentFill(Skin, new Rectangle(48, 48, 14, 16));
+                                TransparentFill(Texture, new Rectangle(48, 48, 14, 16));
                                 tmpG.DrawImage(tmpSS, 48, 48, 14, 16);
                             }
 
@@ -2776,25 +2687,25 @@ namespace PckStudio.ToolboxItems
                         }
                     case SkinPlace.RLeg:
                         {
-                            TransparentFill(Skin, new Rectangle(0, 16, 16, 16));
+                            TransparentFill(Texture, new Rectangle(0, 16, 16, 16));
                             tmpG.DrawImage(tmpSS, 0, 16, 16, 16);
                             break;
                         }
                     case SkinPlace.RLeg2:
                         {
-                            TransparentFill(Skin, new Rectangle(0, 32, 16, 16));
+                            TransparentFill(Texture, new Rectangle(0, 32, 16, 16));
                             tmpG.DrawImage(tmpSS, 0, 32, 16, 16);
                             break;
                         }
                     case SkinPlace.LLeg:
                         {
-                            TransparentFill(Skin, new Rectangle(16, 48, 16, 16));
+                            TransparentFill(Texture, new Rectangle(16, 48, 16, 16));
                             tmpG.DrawImage(tmpSS, 16, 48, 16, 16);
                             break;
                         }
                     case SkinPlace.LLeg2:
                         {
-                            TransparentFill(Skin, new Rectangle(0, 48, 16, 16));
+                            TransparentFill(Texture, new Rectangle(0, 48, 16, 16));
                             tmpG.DrawImage(tmpSS, 0, 48, 16, 16);
                             break;
                         }
@@ -3208,10 +3119,12 @@ namespace PckStudio.ToolboxItems
 
         public void TransparentFill(Bitmap B, Rectangle R)
         {
-            for (int X = R.Left, loopTo = R.Right - 1; X <= loopTo; X++)
+            using (var g = Graphics.FromImage(B))
             {
-                for (int Y = R.Top, loopTo1 = R.Bottom - 1; Y <= loopTo1; Y++)
-                    B.SetPixel(X, Y, Color.Transparent);
+                var originClip = g.Clip;
+                g.Clip = new Region(R);
+                g.FillRectangle(new SolidBrush(Color.Transparent), R);
+                g.Clip = originClip;
             }
         }
     }

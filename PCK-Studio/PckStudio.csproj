@@ -133,7 +133,7 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\Utils\MouseRay.cs" />
+    <Compile Include="Classes\Utils\Ray.cs" />
     <Compile Include="Extensions\PckFileDataExtensions.cs" />
     <Compile Include="Extensions\TreeNodeExtensions.cs" />
     <Compile Include="Forms\TestGL.cs">
@@ -146,16 +146,21 @@
     <Compile Include="Internal\AnimationCategory.cs" />
     <Compile Include="Internal\SkinAnimFlag.cs" />
     <Compile Include="Internal\SkinAnimMask.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="ToolboxItems\BlendPictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ToolboxItems\InterpolationPictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ToolboxItems\Renderer3D.cs">
+    <Compile Include="Rendering\Renderer3D.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ToolboxItems\Renderer3D.Designer.cs">
+    <Compile Include="Rendering\Renderer3D.Designer.cs">
       <DependentUpon>Renderer3D.cs</DependentUpon>
     </Compile>
     <Compile Include="ToolboxItems\ToolStripRadioButtonMenuItem.cs">
@@ -207,7 +212,6 @@
     <Compile Include="Classes\Misc\FTPClient.cs" />
     <Compile Include="Classes\Misc\FileCacher.cs" />
     <Compile Include="Classes\Misc\OpenFolderDialog.cs" />
-    <Compile Include="Classes\Models\DefaultModels\Steve64x64Model.cs" />
     <Compile Include="Internal\ApplicationScope.cs" />
     <Compile Include="Internal\Json\ColorEntry.cs" />
     <Compile Include="Internal\Json\TileInfo.cs" />
@@ -217,28 +221,6 @@
     <Compile Include="Internal\SkinBOX.cs" />
     <Compile Include="Extensions\ImageExtensions.cs" />
     <Compile Include="Internal\SkinANIM.cs" />
-    <Compile Include="Classes\Models\DefaultModels\Steve64x32Model.cs" />
-    <Compile Include="Classes\Models\DefaultModels\ModelBase.cs" />
-    <Compile Include="Classes\Models\Backgrounds.cs" />
-    <Compile Include="Classes\Models\BackgroundTypes.cs" />
-    <Compile Include="Classes\Models\Box.cs" />
-    <Compile Include="Classes\Models\Effects.cs" />
-    <Compile Include="Classes\Models\Matrix3D.cs" />
-    <Compile Include="Classes\Models\ModelView.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Classes\Models\ModelView.Designer.cs">
-      <DependentUpon>ModelView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Classes\Models\Object3D.cs" />
-    <Compile Include="Classes\Models\Object3DGroup.cs" />
-    <Compile Include="Classes\Models\Point3D.cs" />
-    <Compile Include="Classes\Models\Positions.cs" />
-    <Compile Include="Classes\Models\ProjectionTypes.cs" />
-    <Compile Include="Classes\Models\RotationOrders.cs" />
-    <Compile Include="Classes\Models\Texel.cs" />
-    <Compile Include="Classes\Models\TexelComparer.cs" />
-    <Compile Include="Classes\Models\TexturePlane.cs" />
     <Compile Include="Classes\Networking\Network.cs" />
     <Compile Include="Classes\Misc\RichPresenceClient.cs" />
     <Compile Include="Classes\Networking\Update.cs" />
@@ -629,11 +611,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
