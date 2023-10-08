@@ -161,7 +161,7 @@ namespace PckStudio.Forms.Editor
                 return;
             }
 
-            if (variantLabel.Visible = variantComboBox.Visible = _selectedTile.Tile.HasColourEntry && _selectedTile.Tile.ColourEntry.Variants.Length > 1)
+            if (variantComboBox.Enabled = variantLabel.Visible = variantComboBox.Visible = _selectedTile.Tile.HasColourEntry && _selectedTile.Tile.ColourEntry.Variants.Length > 1)
             {
                 variantComboBox.Items.AddRange(_selectedTile.Tile.ColourEntry.Variants);
                 variantComboBox.SelectedItem = _selectedTile.Tile.ColourEntry.DefaultName;
