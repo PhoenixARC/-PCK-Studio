@@ -42,12 +42,17 @@ namespace PckStudio.Forms
 
         private void autoUpdateCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            Settings.Default.AutoUpdate = autoUpdateCheckBox.Checked;
+            usePrereleaseCheckBox.Visible = Settings.Default.AutoUpdate = autoUpdateCheckBox.Checked;
         }
 
         private void grf_paramKeyComboBoxCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             Settings.Default.UseComboBoxForGRFParameter = grf_paramKeyComboBoxCheckBox.Checked;
+        }
+
+        private void usePrereleaseCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            Settings.Default.UsePrerelease = usePrereleaseCheckBox.Checked;
         }
 
         private void LoadCheckboxState(CheckBox checkBox, EventHandler eventHandler, bool state)
@@ -64,6 +69,7 @@ namespace PckStudio.Forms
             LoadCheckboxState(autoLoadPckCheckBox, autoLoadPckCheckBox_CheckedChanged, Settings.Default.LoadSubPcks);
             LoadCheckboxState(showPresenceCheckBox, showPresenceCheckBox_CheckedChanged, Settings.Default.ShowRichPresence);
             LoadCheckboxState(autoUpdateCheckBox, autoUpdateCheckBox_CheckedChanged, Settings.Default.AutoUpdate);
+            LoadCheckboxState(usePrereleaseCheckBox, usePrereleaseCheckBox_CheckedChanged, Settings.Default.UsePrerelease);
             LoadCheckboxState(grf_paramKeyComboBoxCheckBox, grf_paramKeyComboBoxCheckBox_CheckedChanged, Settings.Default.UseComboBoxForGRFParameter);
         }
 

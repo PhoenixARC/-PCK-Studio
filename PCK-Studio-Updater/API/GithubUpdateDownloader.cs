@@ -101,9 +101,12 @@ namespace PCKStudio_Updater
 
         private void EmptyDirectory(DirectoryInfo directory)
         {
+            string appname = Assembly.GetExecutingAssembly().GetName().Name;
             foreach (FileInfo file in directory.GetFiles())
-                if (file.Name != _updateParams.TargetExecutableName + ".exe")
-                file.Delete();
+            {
+                if (Path.GetFileNameWithoutExtension(file.Name) != appname && file.Name != "update.zip")
+                    file.Delete();
+            }
             foreach (DirectoryInfo subDirectory in directory.GetDirectories())
                 subDirectory.Delete(true);
         }

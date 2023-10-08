@@ -36,6 +36,7 @@
             this.autoLoadPckCheckBox = new MetroFramework.Controls.MetroCheckBox();
             this.showPresenceCheckBox = new MetroFramework.Controls.MetroCheckBox();
             this.grf_paramKeyComboBoxCheckBox = new MetroFramework.Controls.MetroCheckBox();
+            this.usePrereleaseCheckBox = new MetroFramework.Controls.MetroCheckBox();
             this.SuspendLayout();
             // 
             // autoSaveCheckBox
@@ -129,11 +130,26 @@
             this.grf_paramKeyComboBoxCheckBox.UseSelectable = true;
             this.grf_paramKeyComboBoxCheckBox.CheckedChanged += new System.EventHandler(this.grf_paramKeyComboBoxCheckBox_CheckedChanged);
             // 
+            // usePrereleaseCheckBox
+            // 
+            this.usePrereleaseCheckBox.AutoSize = true;
+            this.usePrereleaseCheckBox.Location = new System.Drawing.Point(119, 105);
+            this.usePrereleaseCheckBox.Name = "usePrereleaseCheckBox";
+            this.usePrereleaseCheckBox.Size = new System.Drawing.Size(98, 15);
+            this.usePrereleaseCheckBox.Style = MetroFramework.MetroColorStyle.White;
+            this.usePrereleaseCheckBox.TabIndex = 6;
+            this.usePrereleaseCheckBox.Text = "Use Beta Build";
+            this.usePrereleaseCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.SettingToolTip.SetToolTip(this.usePrereleaseCheckBox, "Whether to automatically check for updates");
+            this.usePrereleaseCheckBox.UseSelectable = true;
+            this.usePrereleaseCheckBox.Visible = false;
+            // 
             // AppSettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(527, 270);
+            this.Controls.Add(this.usePrereleaseCheckBox);
             this.Controls.Add(this.grf_paramKeyComboBoxCheckBox);
             this.Controls.Add(this.showPresenceCheckBox);
             this.Controls.Add(this.autoLoadPckCheckBox);
@@ -164,5 +180,6 @@
         private MetroFramework.Controls.MetroCheckBox autoLoadPckCheckBox;
         private MetroFramework.Controls.MetroCheckBox showPresenceCheckBox;
         private MetroFramework.Controls.MetroCheckBox grf_paramKeyComboBoxCheckBox;
+        private MetroFramework.Controls.MetroCheckBox usePrereleaseCheckBox;
     }
 }
