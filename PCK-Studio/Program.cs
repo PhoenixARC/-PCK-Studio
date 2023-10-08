@@ -1,7 +1,4 @@
-﻿#if !DEBUG
-#define _NOT_DEBUG
-#endif
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -56,7 +53,7 @@ namespace PckStudio
             Application.Run(MainInstance);
         }
 
-        [Conditional("_NOT_DEBUG")]
+        [Conditional("NDEBUG")]
         internal static void UpdateToLatest(string message, MessageBoxButtons buttons, MessageBoxIcon icon, DialogResult dialogResult)
         {
             bool updateAvailable = Updater.IsUpdateAvailable(Application.ProductVersion);
