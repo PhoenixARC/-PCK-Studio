@@ -39,19 +39,35 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System.Diagnostics;
 using PckStudio.Properties;
+using System.Runtime.InteropServices;
 
 namespace PckStudio.Rendering
 {
     public partial class Renderer3D : GLControl
     {
-        //private Bitmap _Skin;
+        private Bitmap _texture;
         /// <summary>
-        /// The visible skin on the renderer
+        /// The visible Texture on the renderer
         /// </summary>
-        /// <returns>The visible skin</returns>
-        [Description("The current skin")]
+        /// <returns>The visible Texture</returns>
+        [Description("The current Texture")]
         [Category("Appearance")]
-        public Bitmap Texture { get; set; }
+        public Bitmap Texture
+        {
+            get => _texture;
+            set
+            {
+                if (shader is not null)
+                {
+                    var texture = new Texture2D(value);
+                    texture.Bind(1);
+                    shader.SetUniform1("u_Texture", 1);
+                    Refresh();
+                }
+                TextureScaleValue = new Vector2d(1d / value.Width, 1d / value.Height);
+                _texture = value;
+            }
+        }
 
         private bool _showhead = true;
         /// <summary>
@@ -282,7 +298,6 @@ namespace PckStudio.Rendering
             }
         }
 
-
         public enum Models
         {
             Steve,
@@ -315,16 +330,16 @@ namespace PckStudio.Rendering
             }
         }
 
-        private double _zoom = MinZoomLevel;
-        private const double MinZoomLevel = 1d;
-        private const double MaxZoomLevel = 10d;
+        private double _fieldOfView = MinFOV;
+        private const double MinFOV = 30d;
+        private const double MaxFOV = 90d;
 
         [Description("The zoom value")]
         [Category("Appearance")]
-        public double Zoom
+        public double FieldOfView
         {
-            get => _zoom;
-            set => _zoom = MathHelper.Clamp(value, MinZoomLevel, MaxZoomLevel);
+            get => _fieldOfView;
+            set => _fieldOfView = MathHelper.Clamp(value, MinFOV, MaxFOV);
         }
 
         private Vector2 _lookAngle = Vector2.Zero;
@@ -343,41 +358,118 @@ namespace PckStudio.Rendering
 
         public float CameraDistance { get; set; } = 36f;
 
-        private Matrix4 perspective; // Perspective
-        private Matrix4 camera; // Camera
+        private Matrix4 projection;
 
-        private const double TexVal = 1d / 64d;
+        private Matrix4 view;
+
+        private Vector2d TextureScaleValue = new Vector2d(1d / 64d);
+
+        private void GLDebugMessage(DebugSource source, DebugType type, int id, DebugSeverity severity, int length, IntPtr message, IntPtr userParam)
+        {
+            string msg = Marshal.PtrToStringAnsi(message, length);
+            Debug.WriteLine(source);
+            Debug.WriteLine(type);
+            Debug.WriteLine(severity);
+            Debug.WriteLine(id);
+            Debug.WriteLine(msg);
+        }
+
+        private Shader shader;
+
+        private VertexArray vertexArray;
+        private IndexBuffer indexBuffer;
+        private Matrix4 mvp;
+
+        private bool IsMouseDown;
+        private bool IsRightMouseDown;
+        private bool IsMouseHidden;
+        private Point PreviousMouseLocation;
+        private Point MouseLoc;
+
+        private Ray LastRay;
+        private Vector3 GlobalCameraPos;
 
         public Renderer3D()
         {
             InitializeComponent();
-            UpdateCamera();
-            UpdatePerspective();
-            //MakeCurrent();
-            //int program = CreateShader(Resources.vertexShader, Resources.fragment);
         }
 
-        private void UpdateCamera()
+        protected override void OnLoad(EventArgs e)
         {
-            camera = Matrix4.LookAt(LookAngle.X, LookAngle.Y, CameraDistance, LookAngle.X, LookAngle.Y, 0f, 0f, 1f, 1f);
+            base.OnLoad(e);
+            if (DesignMode)
+                return;
+
+            MakeCurrent();
+
+            GL.DebugMessageCallback(GLDebugMessage, IntPtr.Zero);
+
+            Trace.TraceInformation(GL.GetString(StringName.Version));
+
+            shader = Shader.Create(Resources.vertexShader, Resources.fragmentShader);
+            shader.Bind();
+
+            Texture = Resources.slim_template;
+
+            shader.SetUniform4("u_Color", Color.Blue);
+
+            var data = new float[]
+            {
+                 0.0f,  0.0f, 0.0f, 0.0f, 1.0f,
+                10.0f,  0.0f, 0.0f, 1.0f, 1.0f,
+                10.0f, 10.0f, 10.0f, 1.0f, 0.0f,
+                 0.0f, 10.0f, 0.0f, 0.0f, 0.0f,
+            };
+
+            vertexArray = new VertexArray();
+
+            var buffer = new VertexBuffer<float>(data, data.Length * sizeof(float));
+            var layout = new VertexBufferLayout();
+            layout.Add<float>(3);
+            layout.Add<float>(2);
+
+            vertexArray.AddBuffer(buffer, layout);
+
+            indexBuffer = new IndexBuffer(
+                0, 1, 2,
+                2, 3, 0
+                );
+
+
+            var error = GL.GetError();
+            while (error != ErrorCode.NoError)
+            {
+                Debug.WriteLine(error);
+                error = GL.GetError();
+            }
         }
 
-        private void UpdatePerspective()
+        private void UpdateView()
         {
-            perspective = Matrix4.CreatePerspectiveFieldOfView((float)Math.Pow(Zoom, -1), (float)(Width / (double)Height), 0.1f, 1000f);
+            var camera = new Vector3(LookAngle) { Z = CameraDistance };
+            
+            var target = new Vector3(LookAngle);
+
+            var up = Vector3.UnitY + Vector3.UnitZ;
+
+            view = Matrix4.LookAt(camera, target, up);
         }
 
-        // Only call when a context is present
-        private static void DrawBox(Image texture, Vector3 size, float X, float Y, float Z, float uvX, float uvY)
+        private void UpdateProjection()
         {
-            float[] Corner1 = { X, Y, Z };
-            float[] Corner2 = { X + size.X, Y, Z };
-            float[] Corner3 = { X, Y + size.Y, Z };
-            float[] Corner4 = { X, Y, Z + size.Z };
-            float[] Corner5 = { X + size.X, Y + size.Y, Z };
-            float[] Corner6 = { X, Y + size.Y, Z + size.Z };
-            float[] Corner7 = { X + size.X, Y, Z + size.Z };
-            float[] Corner8 = { X + size.X, Y + size.Y, Z + size.Z };
+            projection = Matrix4.CreatePerspectiveFieldOfView((float)Math.Pow(FieldOfView, -1), Width / (float)Height, 0.1f, 1000f);
+        }
+
+        private void DrawBox(Vector3 scale, Vector3 position, Vector2 uv)
+        {
+            float[] Corner1 = { position.X,          position.Y,          position.Z };
+            float[] Corner2 = { position.X + scale.X, position.Y,          position.Z };
+            float[] Corner3 = { position.X,          position.Y + scale.Y, position.Z };
+            float[] Corner4 = { position.X,          position.Y,          position.Z + scale.Z };
+            float[] Corner5 = { position.X + scale.X, position.Y + scale.Y, position.Z };
+            float[] Corner6 = { position.X,          position.Y + scale.Y, position.Z + scale.Z };
+            float[] Corner7 = { position.X + scale.X, position.Y,          position.Z + scale.Z };
+            float[] Corner8 = { position.X + scale.X, position.Y + scale.Y, position.Z + scale.Z };
 
             GL.Color3(Color.Red);
             // Face 1
@@ -396,13 +488,13 @@ namespace PckStudio.Rendering
             GL.Vertex3(Corner6);
             GL.Vertex3(Corner3);
             // Face 4
-            GL.TexCoord2(uvX, TexVal * 8d);
+            GL.TexCoord2(uv.X, TextureScaleValue.Y * 8d);
             GL.Vertex3(Corner4);
-            GL.TexCoord2(TexVal * 16d, TexVal * 8d);
+            GL.TexCoord2(TextureScaleValue.X * 16d, TextureScaleValue.Y * 8d);
             GL.Vertex3(Corner7);
-            GL.TexCoord2(TexVal * 16d, TexVal * 16d);
+            GL.TexCoord2(TextureScaleValue.X * 16d, TextureScaleValue.Y * 16d);
             GL.Vertex3(Corner8);
-            GL.TexCoord2(TexVal * 8d, TexVal * 16d);
+            GL.TexCoord2(TextureScaleValue.X * 8d, TextureScaleValue.Y * 16d);
             GL.Vertex3(Corner6);
             // Face 5
             GL.Vertex3(Corner8);
@@ -416,54 +508,42 @@ namespace PckStudio.Rendering
             GL.Vertex3(Corner5);
         }
 
-
-        private static int CompileShader(ShaderType type, string shaderSource)
-        {
-            int shaderId = GL.CreateShader(type);
-            GL.ShaderSource(shaderId, shaderSource);
-            GL.CompileShader(shaderId);
-
-            GL.GetShader(shaderId, ShaderParameter.CompileStatus, out int status);
-
-            if (status == 0)
-            { 
-                GL.GetShader(shaderId, ShaderParameter.InfoLogLength, out int length);
-                GL.GetShaderInfoLog(shaderId, length, out length, out string infoLog);
-                Trace.TraceError(infoLog);
-                GL.DeleteShader(shaderId);
-                return 0;
-            }
-            return shaderId;
-        }
-
-        private static int CreateShader(string vertexSource, string fragmentSource)
-        {
-            int programId = GL.CreateProgram();
-            
-            int vertexShader = CompileShader(ShaderType.VertexShader, vertexSource);
-            int fragmentShader = CompileShader(ShaderType.FragmentShader, fragmentSource);
-
-            GL.AttachShader(programId, vertexShader);
-            GL.AttachShader(programId, fragmentShader);
-            
-            GL.LinkProgram(programId);
-            GL.ValidateProgram(programId);
-
-            GL.DeleteShader(vertexShader);
-            GL.DeleteShader(fragmentShader);
-            return programId;
-        }
-
         protected override void OnPaint(PaintEventArgs e)
         {
             if (DesignMode)
+            {
+                base.OnPaint(e);
                 return;
-            //base.OnPaint(e);
+            }
+
+            UpdateProjection();
+            UpdateView();
 
             MakeCurrent();
+
+            GL.Viewport(Size);
+
+            var rot = Matrix4.CreateFromAxisAngle(new Vector3(-0.5f, 0f, 0f), Rotation.X)
+                    + Matrix4.CreateFromAxisAngle(new Vector3(0f, 0.5f, 0f), Rotation.Y);
+
+            mvp = view * projection * rot;
+
 #if DEBUG
-            debugLabel.Text = $"Rotation: {Rotation}\nZoom: {_zoom}\nLookAt:\n{camera}\nPerspective:\n{perspective}";
+            debugLabel.Text = $"Rotation: {Rotation}\nZoom: {_fieldOfView}\nLookAt:\n{view}\nProjection:\n{projection}\nMVP:\n{mvp}";
 #endif
+
+            shader.SetUniformMat4("u_MVP", ref mvp);
+
+            GL.ClearColor(BackColor);
+            GL.Clear(ClearBufferMask.ColorBufferBit);
+
+            GL.Enable(EnableCap.Blend);
+            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
+
+            Renderer.Draw(vertexArray, indexBuffer, shader);
+
+            SwapBuffers();
+            return;
 
             GL.PushMatrix();
 
@@ -471,1041 +551,53 @@ namespace PckStudio.Rendering
             // First Clear Buffers
             GL.Clear(ClearBufferMask.ColorBufferBit);
             GL.Clear(ClearBufferMask.DepthBufferBit);
-
+            
             // Basic Setup for viewing
-            UpdatePerspective();
-            UpdateCamera();
+            UpdateProjection();
+            UpdateView();
             GL.MatrixMode(MatrixMode.Projection); // Load Perspective
             GL.LoadIdentity();
-            GL.LoadMatrix(ref perspective);
+            GL.LoadMatrix(ref projection);
             GL.MatrixMode(MatrixMode.Modelview); // Load Camera
             GL.LoadIdentity();
-            GL.LoadMatrix(ref camera);
+            GL.LoadMatrix(ref view);
             GL.Viewport(0, 0, Width, Height); // Size of window
             GL.Enable(EnableCap.DepthTest); // Enable correct Z Drawings
             GL.Enable(EnableCap.Texture2D); // Enable textures
-            GL.DepthFunc(DepthFunction.Less); // Enable correct Z Drawings
+            GL.DepthFunc(DepthFunction.Lequal); // Enable correct Z Drawings
                                               // GL.Disable(EnableCap.Blend) 'Disable transparent
             GL.Disable(EnableCap.AlphaTest); // Disable transparent
-
-            // Load the textures
-            int texID = GL.GenTexture();
-            GL.BindTexture(TextureTarget.Texture2D, texID);
-
-            GL.GenerateMipmap(GenerateMipmapTarget.Texture2D);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Nearest);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)TextureWrapMode.Clamp);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.Clamp);
-            var data = Texture.LockBits(new Rectangle(0, 0, 64, 64), ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
-            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, 64, 64, 0, OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, data.Scan0);
-            Texture.UnlockBits(data);
-
-            // Rotating
-            GL.Rotate(Rotation.X, -1, 0f, 0f);
-            GL.Rotate(Rotation.Y, 0f, 1f, 0f);
-
-            GL.BindTexture(TextureTarget.ProxyTexture2D, texID);
-            // Vertex goes (X,Y,Z)
-            GL.Begin(PrimitiveType.Quads);
-            // Body
-            if (ShowBody)
-            {
-                // Face 1
-                GL.TexCoord2(TexVal * 20d, TexVal * 20d);
-                GL.Vertex3(-4, 8, 2);
-                GL.TexCoord2(TexVal * 28d, TexVal * 20d);
-                GL.Vertex3(4, 8, 2);
-                GL.TexCoord2(TexVal * 28d, TexVal * 32d);
-                GL.Vertex3(4, -4, 2);
-                GL.TexCoord2(TexVal * 20d, TexVal * 32d);
-                GL.Vertex3(-4, -4, 2);
-                // Face 2
-                GL.TexCoord2(TexVal * 40d, TexVal * 20d);
-                GL.Vertex3(-4, 8, -2);
-                GL.TexCoord2(TexVal * 32d, TexVal * 20d);
-                GL.Vertex3(4, 8, -2);
-                GL.TexCoord2(TexVal * 32d, TexVal * 32d);
-                GL.Vertex3(4, -4, -2);
-                GL.TexCoord2(TexVal * 40d, TexVal * 32d);
-                GL.Vertex3(-4, -4, -2);
-                // Face 3
-                GL.TexCoord2(TexVal * 20d, TexVal * 20d);
-                GL.Vertex3(-4, 8, 2);
-                GL.TexCoord2(TexVal * 16d, TexVal * 20d);
-                GL.Vertex3(-4, 8, -2);
-                GL.TexCoord2(TexVal * 16d, TexVal * 32d);
-                GL.Vertex3(-4, -4, -2);
-                GL.TexCoord2(TexVal * 20d, TexVal * 32d);
-                GL.Vertex3(-4, -4, 2);
-                // Face 4
-                GL.TexCoord2(TexVal * 28d, TexVal * 20d);
-                GL.Vertex3(4, 8, 2);
-                GL.TexCoord2(TexVal * 32d, TexVal * 20d);
-                GL.Vertex3(4, 8, -2);
-                GL.TexCoord2(TexVal * 32d, TexVal * 32d);
-                GL.Vertex3(4, -4, -2);
-                GL.TexCoord2(TexVal * 28d, TexVal * 32d);
-                GL.Vertex3(4, -4, 2);
-                // Face 5
-                GL.TexCoord2(TexVal * 20d, TexVal * 20d);
-                GL.Vertex3(-4, 8, 2);
-                GL.TexCoord2(TexVal * 28d, TexVal * 20d);
-                GL.Vertex3(4, 8, 2);
-                GL.TexCoord2(TexVal * 28d, TexVal * 16d);
-                GL.Vertex3(4, 8, -2);
-                GL.TexCoord2(TexVal * 20d, TexVal * 16d);
-                GL.Vertex3(-4, 8, -2);
-                // Face 6
-                GL.TexCoord2(TexVal * 28d, TexVal * 16d);
-                GL.Vertex3(-4, -4, -2);
-                GL.TexCoord2(TexVal * 36d, TexVal * 16d);
-                GL.Vertex3(4, -4, -2);
-                GL.TexCoord2(TexVal * 36d, TexVal * 20d);
-                GL.Vertex3(4, -4, 2);
-                GL.TexCoord2(TexVal * 28d, TexVal * 20d);
-                GL.Vertex3(-4, -4, 2);
-            }
-
-            if (ShowHead)
-            {
-                // Head
-                // Face 1
-                GL.TexCoord2(TexVal * 8d, TexVal * 8d);
-                GL.Vertex3(-4, 16, 4);
-                GL.TexCoord2(TexVal * 16d, TexVal * 8d);
-                GL.Vertex3(4, 16, 4);
-                GL.TexCoord2(TexVal * 16d, TexVal * 16d);
-                GL.Vertex3(4, 8, 4);
-                GL.TexCoord2(TexVal * 8d, TexVal * 16d);
-                GL.Vertex3(-4, 8, 4);
-                // Face 2
-                GL.TexCoord2(TexVal * 32d, TexVal * 8d);
-                GL.Vertex3(-4, 16, -4);
-                GL.TexCoord2(TexVal * 24d, TexVal * 8d);
-                GL.Vertex3(4, 16, -4);
-                GL.TexCoord2(TexVal * 24d, TexVal * 16d);
-                GL.Vertex3(4, 8, -4);
-                GL.TexCoord2(TexVal * 32d, TexVal * 16d);
-                GL.Vertex3(-4, 8, -4);
-                // Face 3
-                GL.TexCoord2(TexVal * 8d, TexVal * 8d);
-                GL.Vertex3(-4, 16, 4);
-                GL.TexCoord2(TexVal * 0d, TexVal * 8d);
-                GL.Vertex3(-4, 16, -4);
-                GL.TexCoord2(TexVal * 0d, TexVal * 16d);
-                GL.Vertex3(-4, 8, -4);
-                GL.TexCoord2(TexVal * 8d, TexVal * 16d);
-                GL.Vertex3(-4, 8, 4);
-                // Face 4
-                GL.TexCoord2(TexVal * 16d, TexVal * 8d);
-                GL.Vertex3(4, 16, 4);
-                GL.TexCoord2(TexVal * 24d, TexVal * 8d);
-                GL.Vertex3(4, 16, -4);
-                GL.TexCoord2(TexVal * 24d, TexVal * 16d);
-                GL.Vertex3(4, 8, -4);
-                GL.TexCoord2(TexVal * 16d, TexVal * 16d);
-                GL.Vertex3(4, 8, 4);
-                // Face 5
-                GL.TexCoord2(TexVal * 8d, TexVal * 8d);
-                GL.Vertex3(-4, 16, 4);
-                GL.TexCoord2(TexVal * 16d, TexVal * 8d);
-                GL.Vertex3(4, 16, 4);
-                GL.TexCoord2(TexVal * 16d, TexVal * 0d);
-                GL.Vertex3(4, 16, -4);
-                GL.TexCoord2(TexVal * 8d, TexVal * 0d);
-                GL.Vertex3(-4, 16, -4);
-                // Face 6
-                GL.TexCoord2(TexVal * 16d, TexVal * 8d);
-                GL.Vertex3(-4, 8, 4);
-                GL.TexCoord2(TexVal * 24d, TexVal * 8d);
-                GL.Vertex3(4, 8, 4);
-                GL.TexCoord2(TexVal * 24d, TexVal * 0d);
-                GL.Vertex3(4, 8, -4);
-                GL.TexCoord2(TexVal * 16d, TexVal * 0d);
-                GL.Vertex3(-4, 8, -4);
-            }
-
-            if (Model == Models.Steve)
-            {
-
-                if (ShowLeftArm)
-                {
-                    // LefttArm
-                    // Face 1
-                    GL.TexCoord2(TexVal * 36d, TexVal * 52d);
-                    GL.Vertex3(4, 8, 2);
-                    GL.TexCoord2(TexVal * 40d, TexVal * 52d);
-                    GL.Vertex3(8, 8, 2);
-                    GL.TexCoord2(TexVal * 40d, TexVal * 64d);
-                    GL.Vertex3(8, -4, 2);
-                    GL.TexCoord2(TexVal * 36d, TexVal * 64d);
-                    GL.Vertex3(4, -4, 2);
-                    // Face 2
-                    GL.TexCoord2(TexVal * 48d, TexVal * 52d);
-                    GL.Vertex3(4, 8, -2);
-                    GL.TexCoord2(TexVal * 44d, TexVal * 52d);
-                    GL.Vertex3(8, 8, -2);
-                    GL.TexCoord2(TexVal * 44d, TexVal * 64d);
-                    GL.Vertex3(8, -4, -2);
-                    GL.TexCoord2(TexVal * 48d, TexVal * 64d);
-                    GL.Vertex3(4, -4, -2);
-                    // Face 3
-                    GL.TexCoord2(TexVal * 32d, TexVal * 52d);
-                    GL.Vertex3(4, 8, -2);
-                    GL.TexCoord2(TexVal * 36d, TexVal * 52d);
-                    GL.Vertex3(4, 8, 2);
-                    GL.TexCoord2(TexVal * 36d, TexVal * 64d);
-                    GL.Vertex3(4, -4, 2);
-                    GL.TexCoord2(TexVal * 32d, TexVal * 64d);
-                    GL.Vertex3(4, -4, -2);
-                    // Face 4
-                    GL.TexCoord2(TexVal * 44d, TexVal * 52d);
-                    GL.Vertex3(8, 8, -2);
-                    GL.TexCoord2(TexVal * 40d, TexVal * 52d);
-                    GL.Vertex3(8, 8, 2);
-                    GL.TexCoord2(TexVal * 40d, TexVal * 64d);
-                    GL.Vertex3(8, -4, 2);
-                    GL.TexCoord2(TexVal * 44d, TexVal * 64d);
-                    GL.Vertex3(8, -4, -2);
-                    // Face 5
-                    GL.TexCoord2(TexVal * 36d, TexVal * 52d);
-                    GL.Vertex3(4, 8, 2);
-                    GL.TexCoord2(TexVal * 40d, TexVal * 52d);
-                    GL.Vertex3(8, 8, 2);
-                    GL.TexCoord2(TexVal * 40d, TexVal * 48d);
-                    GL.Vertex3(8, 8, -2);
-                    GL.TexCoord2(TexVal * 36d, TexVal * 48d);
-                    GL.Vertex3(4, 8, -2);
-                    // Face 6
-                    GL.TexCoord2(TexVal * 40d, TexVal * 52d);
-                    GL.Vertex3(4, -4, 2);
-                    GL.TexCoord2(TexVal * 44d, TexVal * 52d);
-                    GL.Vertex3(8, -4, 2);
-                    GL.TexCoord2(TexVal * 44d, TexVal * 48d);
-                    GL.Vertex3(8, -4, -2);
-                    GL.TexCoord2(TexVal * 40d, TexVal * 48d);
-                    GL.Vertex3(4, -4, -2);
-                }
-
-                if (ShowRightArm)
-                {
-                    // RightArm
-                    // Face 1
-                    GL.TexCoord2(TexVal * 44d, TexVal * 20d);
-                    GL.Vertex3(-8, 8, 2);
-                    GL.TexCoord2(TexVal * 48d, TexVal * 20d);
-                    GL.Vertex3(-4, 8, 2);
-                    GL.TexCoord2(TexVal * 48d, TexVal * 32d);
-                    GL.Vertex3(-4, -4, 2);
-                    GL.TexCoord2(TexVal * 44d, TexVal * 32d);
-                    GL.Vertex3(-8, -4, 2);
-                    // Face 2
-                    GL.TexCoord2(TexVal * 56d, TexVal * 20d);
-                    GL.Vertex3(-8, 8, -2);
-                    GL.TexCoord2(TexVal * 52d, TexVal * 20d);
-                    GL.Vertex3(-4, 8, -2);
-                    GL.TexCoord2(TexVal * 52d, TexVal * 32d);
-                    GL.Vertex3(-4, -4, -2);
-                    GL.TexCoord2(TexVal * 56d, TexVal * 32d);
-                    GL.Vertex3(-8, -4, -2);
-                    // Face 3
-                    GL.TexCoord2(TexVal * 40d, TexVal * 20d);
-                    GL.Vertex3(-8, 8, -2);
-                    GL.TexCoord2(TexVal * 44d, TexVal * 20d);
-                    GL.Vertex3(-8, 8, 2);
-                    GL.TexCoord2(TexVal * 44d, TexVal * 32d);
-                    GL.Vertex3(-8, -4, 2);
-                    GL.TexCoord2(TexVal * 40d, TexVal * 32d);
-                    GL.Vertex3(-8, -4, -2);
-                    // Face 4
-                    GL.TexCoord2(TexVal * 52d, TexVal * 20d);
-                    GL.Vertex3(-4, 8, -2);
-                    GL.TexCoord2(TexVal * 48d, TexVal * 20d);
-                    GL.Vertex3(-4, 8, 2);
-                    GL.TexCoord2(TexVal * 48d, TexVal * 32d);
-                    GL.Vertex3(-4, -4, 2);
-                    GL.TexCoord2(TexVal * 52d, TexVal * 32d);
-                    GL.Vertex3(-4, -4, -2);
-                    // Face 5
-                    GL.TexCoord2(TexVal * 44d, TexVal * 20d);
-                    GL.Vertex3(-8, 8, 2);
-                    GL.TexCoord2(TexVal * 48d, TexVal * 20d);
-                    GL.Vertex3(-4, 8, 2);
-                    GL.TexCoord2(TexVal * 48d, TexVal * 16d);
-                    GL.Vertex3(-4, 8, -2);
-                    GL.TexCoord2(TexVal * 44d, TexVal * 16d);
-                    GL.Vertex3(-8, 8, -2);
-                    // Face 6
-                    GL.TexCoord2(TexVal * 48d, TexVal * 20d);
-                    GL.Vertex3(-8, -4, 2);
-                    GL.TexCoord2(TexVal * 52d, TexVal * 20d);
-                    GL.Vertex3(-4, -4, 2);
-                    GL.TexCoord2(TexVal * 52d, TexVal * 16d);
-                    GL.Vertex3(-4, -4, -2);
-                    GL.TexCoord2(TexVal * 48d, TexVal * 16d);
-                    GL.Vertex3(-8, -4, -2);
-                }
-            }
-
-            else
-            {
-
-                if (ShowLeftArm)
-                {
-                    // LefttArm
-                    // Face 1
-                    GL.TexCoord2(TexVal * 36d, TexVal * 52d);
-                    GL.Vertex3(4, 8, 2);
-                    GL.TexCoord2(TexVal * 39d, TexVal * 52d);
-                    GL.Vertex3(7, 8, 2);
-                    GL.TexCoord2(TexVal * 39d, TexVal * 64d);
-                    GL.Vertex3(7, -4, 2);
-                    GL.TexCoord2(TexVal * 36d, TexVal * 64d);
-                    GL.Vertex3(4, -4, 2);
-                    // Face 2
-                    GL.TexCoord2(TexVal * 46d, TexVal * 52d);
-                    GL.Vertex3(4, 8, -2);
-                    GL.TexCoord2(TexVal * 43d, TexVal * 52d);
-                    GL.Vertex3(7, 8, -2);
-                    GL.TexCoord2(TexVal * 43d, TexVal * 64d);
-                    GL.Vertex3(7, -4, -2);
-                    GL.TexCoord2(TexVal * 46d, TexVal * 64d);
-                    GL.Vertex3(4, -4, -2);
-                    // Face 3
-                    GL.TexCoord2(TexVal * 32d, TexVal * 52d);
-                    GL.Vertex3(4, 8, -2);
-                    GL.TexCoord2(TexVal * 36d, TexVal * 52d);
-                    GL.Vertex3(4, 8, 2);
-                    GL.TexCoord2(TexVal * 36d, TexVal * 64d);
-                    GL.Vertex3(4, -4, 2);
-                    GL.TexCoord2(TexVal * 32d, TexVal * 64d);
-                    GL.Vertex3(4, -4, -2);
-                    // Face 4
-                    GL.TexCoord2(TexVal * 43d, TexVal * 52d);
-                    GL.Vertex3(7, 8, -2);
-                    GL.TexCoord2(TexVal * 39d, TexVal * 52d);
-                    GL.Vertex3(7, 8, 2);
-                    GL.TexCoord2(TexVal * 39d, TexVal * 64d);
-                    GL.Vertex3(7, -4, 2);
-                    GL.TexCoord2(TexVal * 43d, TexVal * 64d);
-                    GL.Vertex3(7, -4, -2);
-                    // Face 5
-                    GL.TexCoord2(TexVal * 36d, TexVal * 52d);
-                    GL.Vertex3(4, 8, 2);
-                    GL.TexCoord2(TexVal * 39d, TexVal * 52d);
-                    GL.Vertex3(7, 8, 2);
-                    GL.TexCoord2(TexVal * 39d, TexVal * 48d);
-                    GL.Vertex3(7, 8, -2);
-                    GL.TexCoord2(TexVal * 36d, TexVal * 48d);
-                    GL.Vertex3(4, 8, -2);
-                    // Face 6
-                    GL.TexCoord2(TexVal * 39d, TexVal * 52d);
-                    GL.Vertex3(4, -4, 2);
-                    GL.TexCoord2(TexVal * 42d, TexVal * 52d);
-                    GL.Vertex3(7, -4, 2);
-                    GL.TexCoord2(TexVal * 42d, TexVal * 48d);
-                    GL.Vertex3(7, -4, -2);
-                    GL.TexCoord2(TexVal * 39d, TexVal * 48d);
-                    GL.Vertex3(4, -4, -2);
-                }
-
-                if (ShowRightArm)
-                {
-                    // RightArm
-                    // Face 1
-                    GL.TexCoord2(TexVal * 44d, TexVal * 20d);
-                    GL.Vertex3(-7, 8, 2);
-                    GL.TexCoord2(TexVal * 47d, TexVal * 20d);
-                    GL.Vertex3(-4, 8, 2);
-                    GL.TexCoord2(TexVal * 47d, TexVal * 32d);
-                    GL.Vertex3(-4, -4, 2);
-                    GL.TexCoord2(TexVal * 44d, TexVal * 32d);
-                    GL.Vertex3(-7, -4, 2);
-                    // Face 2
-                    GL.TexCoord2(TexVal * 54d, TexVal * 20d);
-                    GL.Vertex3(-7, 8, -2);
-                    GL.TexCoord2(TexVal * 51d, TexVal * 20d);
-                    GL.Vertex3(-4, 8, -2);
-                    GL.TexCoord2(TexVal * 51d, TexVal * 32d);
-                    GL.Vertex3(-4, -4, -2);
-                    GL.TexCoord2(TexVal * 54d, TexVal * 32d);
-                    GL.Vertex3(-7, -4, -2);
-                    // Face 3
-                    GL.TexCoord2(TexVal * 40d, TexVal * 20d);
-                    GL.Vertex3(-7, 8, -2);
-                    GL.TexCoord2(TexVal * 44d, TexVal * 20d);
-                    GL.Vertex3(-7, 8, 2);
-                    GL.TexCoord2(TexVal * 44d, TexVal * 32d);
-                    GL.Vertex3(-7, -4, 2);
-                    GL.TexCoord2(TexVal * 40d, TexVal * 32d);
-                    GL.Vertex3(-7, -4, -2);
-                    // Face 4
-                    GL.TexCoord2(TexVal * 51d, TexVal * 20d);
-                    GL.Vertex3(-4, 8, -2);
-                    GL.TexCoord2(TexVal * 47d, TexVal * 20d);
-                    GL.Vertex3(-4, 8, 2);
-                    GL.TexCoord2(TexVal * 47d, TexVal * 32d);
-                    GL.Vertex3(-4, -4, 2);
-                    GL.TexCoord2(TexVal * 51d, TexVal * 32d);
-                    GL.Vertex3(-4, -4, -2);
-                    // Face 5
-                    GL.TexCoord2(TexVal * 44d, TexVal * 20d);
-                    GL.Vertex3(-7, 8, 2);
-                    GL.TexCoord2(TexVal * 47d, TexVal * 20d);
-                    GL.Vertex3(-4, 8, 2);
-                    GL.TexCoord2(TexVal * 47d, TexVal * 16d);
-                    GL.Vertex3(-4, 8, -2);
-                    GL.TexCoord2(TexVal * 44d, TexVal * 16d);
-                    GL.Vertex3(-7, 8, -2);
-                    // Face 6
-                    GL.TexCoord2(TexVal * 47d, TexVal * 20d);
-                    GL.Vertex3(-7, -4, 2);
-                    GL.TexCoord2(TexVal * 50d, TexVal * 20d);
-                    GL.Vertex3(-4, -4, 2);
-                    GL.TexCoord2(TexVal * 50d, TexVal * 16d);
-                    GL.Vertex3(-4, -4, -2);
-                    GL.TexCoord2(TexVal * 47d, TexVal * 16d);
-                    GL.Vertex3(-7, -4, -2);
-                }
-
-            }
-
-            if (ShowRightLeg)
-            {
-                // RightLeg
-                // Face 1
-                GL.TexCoord2(TexVal * 4d, TexVal * 20d);
-                GL.Vertex3(-4, -4, 2);
-                GL.TexCoord2(TexVal * 8d, TexVal * 20d);
-                GL.Vertex3(0, -4, 2);
-                GL.TexCoord2(TexVal * 8d, TexVal * 32d);
-                GL.Vertex3(0, -16, 2);
-                GL.TexCoord2(TexVal * 4d, TexVal * 32d);
-                GL.Vertex3(-4, -16, 2);
-                // Face 2
-                GL.TexCoord2(TexVal * 16d, TexVal * 20d);
-                GL.Vertex3(-4, -4, -2);
-                GL.TexCoord2(TexVal * 12d, TexVal * 20d);
-                GL.Vertex3(0, -4, -2);
-                GL.TexCoord2(TexVal * 12d, TexVal * 32d);
-                GL.Vertex3(0, -16, -2);
-                GL.TexCoord2(TexVal * 16d, TexVal * 32d);
-                GL.Vertex3(-4, -16, -2);
-                // Face 3
-                GL.TexCoord2(TexVal * 4d, TexVal * 20d);
-                GL.Vertex3(-4, -4, 2);
-                GL.TexCoord2(TexVal * 0d, TexVal * 20d);
-                GL.Vertex3(-4, -4, -2);
-                GL.TexCoord2(TexVal * 0d, TexVal * 32d);
-                GL.Vertex3(-4, -16, -2);
-                GL.TexCoord2(TexVal * 4d, TexVal * 32d);
-                GL.Vertex3(-4, -16, 2);
-                // Face 4
-                GL.TexCoord2(TexVal * 8d, TexVal * 20d);
-                GL.Vertex3(0, -4, 2);
-                GL.TexCoord2(TexVal * 12d, TexVal * 20d);
-                GL.Vertex3(0, -4, -2);
-                GL.TexCoord2(TexVal * 12d, TexVal * 32d);
-                GL.Vertex3(0, -16, -2);
-                GL.TexCoord2(TexVal * 8d, TexVal * 32d);
-                GL.Vertex3(0, -16, 2);
-                // Face 5
-                GL.TexCoord2(TexVal * 4d, TexVal * 20d);
-                GL.Vertex3(-4, -4, 2);
-                GL.TexCoord2(TexVal * 8d, TexVal * 20d);
-                GL.Vertex3(0, -4, 2);
-                GL.TexCoord2(TexVal * 8d, TexVal * 16d);
-                GL.Vertex3(0, -4, -2);
-                GL.TexCoord2(TexVal * 4d, TexVal * 16d);
-                GL.Vertex3(-4, -4, -2);
-                // Face 6
-                GL.TexCoord2(TexVal * 8d, TexVal * 20d);
-                GL.Vertex3(-4, -16, 2);
-                GL.TexCoord2(TexVal * 12d, TexVal * 20d);
-                GL.Vertex3(0, -16, 2);
-                GL.TexCoord2(TexVal * 12d, TexVal * 16d);
-                GL.Vertex3(0, -16, -2);
-                GL.TexCoord2(TexVal * 8d, TexVal * 16d);
-                GL.Vertex3(-4, -16, -2);
-            }
-
-            if (ShowLeftLeg)
-            {
-                // LeftLeg
-                // Face 1
-                GL.TexCoord2(TexVal * 20d, TexVal * 52d);
-                GL.Vertex3(0, -4, 2);
-                GL.TexCoord2(TexVal * 24d, TexVal * 52d);
-                GL.Vertex3(4, -4, 2);
-                GL.TexCoord2(TexVal * 24d, TexVal * 64d);
-                GL.Vertex3(4, -16, 2);
-                GL.TexCoord2(TexVal * 20d, TexVal * 64d);
-                GL.Vertex3(0, -16, 2);
-                // Face 2
-                GL.TexCoord2(TexVal * 32d, TexVal * 52d);
-                GL.Vertex3(0, -4, -2);
-                GL.TexCoord2(TexVal * 28d, TexVal * 52d);
-                GL.Vertex3(4, -4, -2);
-                GL.TexCoord2(TexVal * 28d, TexVal * 64d);
-                GL.Vertex3(4, -16, -2);
-                GL.TexCoord2(TexVal * 32d, TexVal * 64d);
-                GL.Vertex3(0, -16, -2);
-                // Face 3
-                GL.TexCoord2(TexVal * 20d, TexVal * 52d);
-                GL.Vertex3(0, -4, 2);
-                GL.TexCoord2(TexVal * 16d, TexVal * 52d);
-                GL.Vertex3(0, -4, -2);
-                GL.TexCoord2(TexVal * 16d, TexVal * 64d);
-                GL.Vertex3(0, -16, -2);
-                GL.TexCoord2(TexVal * 20d, TexVal * 64d);
-                GL.Vertex3(0, -16, 2);
-                // Face 4
-                GL.TexCoord2(TexVal * 24d, TexVal * 52d);
-                GL.Vertex3(4, -4, 2);
-                GL.TexCoord2(TexVal * 28d, TexVal * 52d);
-                GL.Vertex3(4, -4, -2);
-                GL.TexCoord2(TexVal * 28d, TexVal * 64d);
-                GL.Vertex3(4, -16, -2);
-                GL.TexCoord2(TexVal * 24d, TexVal * 64d);
-                GL.Vertex3(4, -16, 2);
-                // Face 5
-                GL.TexCoord2(TexVal * 20d, TexVal * 52d);
-                GL.Vertex3(0, -4, 2);
-                GL.TexCoord2(TexVal * 24d, TexVal * 52d);
-                GL.Vertex3(4, -4, 2);
-                GL.TexCoord2(TexVal * 24d, TexVal * 48d);
-                GL.Vertex3(4, -4, -2);
-                GL.TexCoord2(TexVal * 20d, TexVal * 48d);
-                GL.Vertex3(0, -4, -2);
-                // Face 6
-                GL.TexCoord2(TexVal * 24d, TexVal * 52d);
-                GL.Vertex3(0, -16, 2);
-                GL.TexCoord2(TexVal * 28d, TexVal * 52d);
-                GL.Vertex3(4, -16, 2);
-                GL.TexCoord2(TexVal * 28d, TexVal * 48d);
-                GL.Vertex3(4, -16, -2);
-                GL.TexCoord2(TexVal * 24d, TexVal * 48d);
-                GL.Vertex3(0, -16, -2);
-            }
-            GL.End();
-
-            GL.Enable(EnableCap.AlphaTest); // Enable transparent
-            GL.AlphaFunc(AlphaFunction.Greater, 0.7f);
-            //GL.Enable(EnableCap.Blend); // Enable transparent
-            //GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.DstAlpha);
-
-            GL.Begin(PrimitiveType.Quads);
-            
-            if (ShowBodyOverlay)
-            {
-                // Face 1
-                GL.TexCoord2(TexVal * 20d, TexVal * 36d);
-                GL.Vertex3(-4.24d, 8.36d, 2.12d);
-                GL.TexCoord2(TexVal * 28d, TexVal * 36d);
-                GL.Vertex3(4.24d, 8.36d, 2.12d);
-                GL.TexCoord2(TexVal * 28d, TexVal * 48d);
-                GL.Vertex3(4.24d, -4.36d, 2.12d);
-                GL.TexCoord2(TexVal * 20d, TexVal * 48d);
-                GL.Vertex3(-4.24d, -4.36d, 2.12d);
-                // Face 2
-                GL.TexCoord2(TexVal * 40d, TexVal * 36d);
-                GL.Vertex3(-4.24d, 8.36d, -2.12d);
-                GL.TexCoord2(TexVal * 32d, TexVal * 36d);
-                GL.Vertex3(4.24d, 8.36d, -2.12d);
-                GL.TexCoord2(TexVal * 32d, TexVal * 48d);
-                GL.Vertex3(4.24d, -4.36d, -2.12d);
-                GL.TexCoord2(TexVal * 40d, TexVal * 48d);
-                GL.Vertex3(-4.24d, -4.36d, -2.12d);
-                // Face 3
-                GL.TexCoord2(TexVal * 16d, TexVal * 36d);
-                GL.Vertex3(-4.24d, 8.36d, -2.12d);
-                GL.TexCoord2(TexVal * 20d, TexVal * 36d);
-                GL.Vertex3(-4.24d, 8.36d, 2.12d);
-                GL.TexCoord2(TexVal * 20d, TexVal * 48d);
-                GL.Vertex3(-4.24d, -4.36d, 2.12d);
-                GL.TexCoord2(TexVal * 16d, TexVal * 48d);
-                GL.Vertex3(-4.24d, -4.36d, -2.12d);
-                // Face 4
-                GL.TexCoord2(TexVal * 32d, TexVal * 36d);
-                GL.Vertex3(4.24d, 8.36d, -2.12d);
-                GL.TexCoord2(TexVal * 28d, TexVal * 36d);
-                GL.Vertex3(4.24d, 8.36d, 2.12d);
-                GL.TexCoord2(TexVal * 28d, TexVal * 48d);
-                GL.Vertex3(4.24d, -4.36d, 2.12d);
-                GL.TexCoord2(TexVal * 32d, TexVal * 48d);
-                GL.Vertex3(4.24d, -4.36d, -2.12d);
-                // Face 5
-                GL.TexCoord2(TexVal * 20d, TexVal * 36d);
-                GL.Vertex3(-4.24d, 8.36d, 2.12d);
-                GL.TexCoord2(TexVal * 28d, TexVal * 36d);
-                GL.Vertex3(4.24d, 8.36d, 2.12d);
-                GL.TexCoord2(TexVal * 28d, TexVal * 32d);
-                GL.Vertex3(4.24d, 8.36d, -2.12d);
-                GL.TexCoord2(TexVal * 20d, TexVal * 32d);
-                GL.Vertex3(-4.24d, 8.36d, -2.12d);
-                // Face 6
-                GL.TexCoord2(TexVal * 28d, TexVal * 36d);
-                GL.Vertex3(-4.24d, -4.36d, 2.12d);
-                GL.TexCoord2(TexVal * 36d, TexVal * 36d);
-                GL.Vertex3(4.24d, -4.36d, 2.12d);
-                GL.TexCoord2(TexVal * 36d, TexVal * 32d);
-                GL.Vertex3(4.24d, -4.36d, -2.12d);
-                GL.TexCoord2(TexVal * 28d, TexVal * 32d);
-                GL.Vertex3(-4.24d, -4.36d, -2.12d);
-            }
-
-            if (ShowHeadOverlay)
-            {
-                // Head
-                // Face 1
-                GL.TexCoord2(TexVal * 40d, TexVal * 8d);
-                GL.Vertex3(-4.24d, 16.24d, 4.24d);
-                GL.TexCoord2(TexVal * 48d, TexVal * 8d);
-                GL.Vertex3(4.24d, 16.24d, 4.24d);
-                GL.TexCoord2(TexVal * 48d, TexVal * 16d);
-                GL.Vertex3(4.24d, 7.76d, 4.24d);
-                GL.TexCoord2(TexVal * 40d, TexVal * 16d);
-                GL.Vertex3(-4.24d, 7.76d, 4.24d);
-                // Face 2
-                GL.TexCoord2(TexVal * 64d, TexVal * 8d);
-                GL.Vertex3(-4.24d, 16.24d, -4.24d);
-                GL.TexCoord2(TexVal * 56d, TexVal * 8d);
-                GL.Vertex3(4.24d, 16.24d, -4.24d);
-                GL.TexCoord2(TexVal * 56d, TexVal * 16d);
-                GL.Vertex3(4.24d, 7.76d, -4.24d);
-                GL.TexCoord2(TexVal * 64d, TexVal * 16d);
-                GL.Vertex3(-4.24d, 7.76d, -4.24d);
-                // Face 3
-                GL.TexCoord2(TexVal * 40d, TexVal * 8d);
-                GL.Vertex3(-4.24d, 16.24d, 4.24d);
-                GL.TexCoord2(TexVal * 32d, TexVal * 8d);
-                GL.Vertex3(-4.24d, 16.24d, -4.24d);
-                GL.TexCoord2(TexVal * 32d, TexVal * 16d);
-                GL.Vertex3(-4.24d, 7.76d, -4.24d);
-                GL.TexCoord2(TexVal * 40d, TexVal * 16d);
-                GL.Vertex3(-4.24d, 7.76d, 4.24d);
-                // Face 4
-                GL.TexCoord2(TexVal * 48d, TexVal * 8d);
-                GL.Vertex3(4.24d, 16.24d, 4.24d);
-                GL.TexCoord2(TexVal * 56d, TexVal * 8d);
-                GL.Vertex3(4.24d, 16.24d, -4.24d);
-                GL.TexCoord2(TexVal * 56d, TexVal * 16d);
-                GL.Vertex3(4.24d, 7.76d, -4.24d);
-                GL.TexCoord2(TexVal * 48d, TexVal * 16d);
-                GL.Vertex3(4.24d, 7.76d, 4.24d);
-                // Face 5
-                GL.TexCoord2(TexVal * 40d, TexVal * 8d);
-                GL.Vertex3(-4.24d, 16.24d, 4.24d);
-                GL.TexCoord2(TexVal * 48d, TexVal * 8d);
-                GL.Vertex3(4.24d, 16.24d, 4.24d);
-                GL.TexCoord2(TexVal * 48d, 0d);
-                GL.Vertex3(4.24d, 16.24d, -4.24d);
-                GL.TexCoord2(TexVal * 40d, 0d);
-                GL.Vertex3(-4.24d, 16.24d, -4.24d);
-                // Face 6
-                GL.TexCoord2(TexVal * 48d, TexVal * 8d);
-                GL.Vertex3(-4.24d, 7.76d, 4.24d);
-                GL.TexCoord2(TexVal * 56d, TexVal * 8d);
-                GL.Vertex3(4.24d, 7.76d, 4.24d);
-                GL.TexCoord2(TexVal * 56d, 0d);
-                GL.Vertex3(4.24d, 7.76d, -4.24d);
-                GL.TexCoord2(TexVal * 48d, 0d);
-                GL.Vertex3(-4.24d, 7.76d, -4.24d);
-            }
-
-            if (Model == Models.Steve)
-            {
-
-                if (ShowLeftArmOverlay)
-                {
-                    // LeftArm
-                    // Face 1
-                    GL.TexCoord2(TexVal * 52d, TexVal * 52d);
-                    GL.Vertex3(3.88d, 8.36d, 2.12d);
-                    GL.TexCoord2(TexVal * 56d, TexVal * 52d);
-                    GL.Vertex3(8.12d, 8.36d, 2.12d);
-                    GL.TexCoord2(TexVal * 56d, TexVal * 64d);
-                    GL.Vertex3(8.12d, -4.36d, 2.12d);
-                    GL.TexCoord2(TexVal * 52d, TexVal * 64d);
-                    GL.Vertex3(3.88d, -4.36d, 2.12d);
-                    // Face 2
-                    GL.TexCoord2(TexVal * 64d, TexVal * 52d);
-                    GL.Vertex3(3.88d, 8.36d, -2.12d);
-                    GL.TexCoord2(TexVal * 60d, TexVal * 52d);
-                    GL.Vertex3(8.12d, 8.36d, -2.12d);
-                    GL.TexCoord2(TexVal * 60d, TexVal * 64d);
-                    GL.Vertex3(8.12d, -4.36d, -2.12d);
-                    GL.TexCoord2(TexVal * 64d, TexVal * 64d);
-                    GL.Vertex3(3.88d, -4.36d, -2.12d);
-                    // Face 3
-                    GL.TexCoord2(TexVal * 48d, TexVal * 52d);
-                    GL.Vertex3(3.88d, 8.36d, -2.12d);
-                    GL.TexCoord2(TexVal * 52d, TexVal * 52d);
-                    GL.Vertex3(3.88d, 8.36d, 2.12d);
-                    GL.TexCoord2(TexVal * 52d, TexVal * 64d);
-                    GL.Vertex3(3.88d, -4.36d, 2.12d);
-                    GL.TexCoord2(TexVal * 48d, TexVal * 64d);
-                    GL.Vertex3(3.88d, -4.36d, -2.12d);
-                    // Face 4
-                    GL.TexCoord2(TexVal * 60d, TexVal * 52d);
-                    GL.Vertex3(8.12d, 8.36d, -2.12d);
-                    GL.TexCoord2(TexVal * 56d, TexVal * 52d);
-                    GL.Vertex3(8.12d, 8.36d, 2.12d);
-                    GL.TexCoord2(TexVal * 56d, TexVal * 64d);
-                    GL.Vertex3(8.12d, -4.36d, 2.12d);
-                    GL.TexCoord2(TexVal * 60d, TexVal * 64d);
-                    GL.Vertex3(8.12d, -4.36d, -2.12d);
-                    // Face 5
-                    GL.TexCoord2(TexVal * 52d, TexVal * 52d);
-                    GL.Vertex3(3.88d, 8.36d, 2.12d);
-                    GL.TexCoord2(TexVal * 56d, TexVal * 52d);
-                    GL.Vertex3(8.12d, 8.36d, 2.12d);
-                    GL.TexCoord2(TexVal * 56d, TexVal * 48d);
-                    GL.Vertex3(8.12d, 8.36d, -2.12d);
-                    GL.TexCoord2(TexVal * 52d, TexVal * 48d);
-                    GL.Vertex3(3.88d, 8.36d, -2.12d);
-                    // Face 6
-                    GL.TexCoord2(TexVal * 56d, TexVal * 52d);
-                    GL.Vertex3(3.88d, -4.36d, 2.12d);
-                    GL.TexCoord2(TexVal * 60d, TexVal * 52d);
-                    GL.Vertex3(8.12d, -4.36d, 2.12d);
-                    GL.TexCoord2(TexVal * 60d, TexVal * 48d);
-                    GL.Vertex3(8.12d, -4.36d, -2.12d);
-                    GL.TexCoord2(TexVal * 56d, TexVal * 48d);
-                    GL.Vertex3(3.88d, -4.36d, -2.12d);
-                }
-
-                if (ShowRightArmOverlay)
-                {
-                    // RightArm
-                    // Face 1
-                    GL.TexCoord2(TexVal * 44d, TexVal * 36d);
-                    GL.Vertex3(-8.12d, 8.36d, 2.12d);
-                    GL.TexCoord2(TexVal * 48d, TexVal * 36d);
-                    GL.Vertex3(-3.88d, 8.36d, 2.12d);
-                    GL.TexCoord2(TexVal * 48d, TexVal * 48d);
-                    GL.Vertex3(-3.88d, -4.36d, 2.12d);
-                    GL.TexCoord2(TexVal * 44d, TexVal * 48d);
-                    GL.Vertex3(-8.12d, -4.36d, 2.12d);
-                    // Face 2
-                    GL.TexCoord2(TexVal * 56d, TexVal * 36d);
-                    GL.Vertex3(-8.12d, 8.36d, -2.12d);
-                    GL.TexCoord2(TexVal * 52d, TexVal * 36d);
-                    GL.Vertex3(-3.88d, 8.36d, -2.12d);
-                    GL.TexCoord2(TexVal * 52d, TexVal * 48d);
-                    GL.Vertex3(-3.88d, -4.36d, -2.12d);
-                    GL.TexCoord2(TexVal * 56d, TexVal * 48d);
-                    GL.Vertex3(-8.12d, -4.36d, -2.12d);
-                    // Face 3
-                    GL.TexCoord2(TexVal * 40d, TexVal * 36d);
-                    GL.Vertex3(-8.12d, 8.36d, -2.12d);
-                    GL.TexCoord2(TexVal * 44d, TexVal * 36d);
-                    GL.Vertex3(-8.12d, 8.36d, 2.12d);
-                    GL.TexCoord2(TexVal * 44d, TexVal * 48d);
-                    GL.Vertex3(-8.12d, -4.36d, 2.12d);
-                    GL.TexCoord2(TexVal * 40d, TexVal * 48d);
-                    GL.Vertex3(-8.12d, -4.36d, -2.12d);
-                    // Face 4
-                    GL.TexCoord2(TexVal * 52d, TexVal * 36d);
-                    GL.Vertex3(-3.88d, 8.36d, -2.12d);
-                    GL.TexCoord2(TexVal * 48d, TexVal * 36d);
-                    GL.Vertex3(-3.88d, 8.36d, 2.12d);
-                    GL.TexCoord2(TexVal * 48d, TexVal * 48d);
-                    GL.Vertex3(-3.88d, -4.36d, 2.12d);
-                    GL.TexCoord2(TexVal * 52d, TexVal * 48d);
-                    GL.Vertex3(-3.88d, -4.36d, -2.12d);
-                    // Face 5
-                    GL.TexCoord2(TexVal * 44d, TexVal * 36d);
-                    GL.Vertex3(-8.12d, 8.36d, 2.12d);
-                    GL.TexCoord2(TexVal * 48d, TexVal * 36d);
-                    GL.Vertex3(-3.88d, 8.36d, 2.12d);
-                    GL.TexCoord2(TexVal * 48d, TexVal * 32d);
-                    GL.Vertex3(-3.88d, 8.36d, -2.12d);
-                    GL.TexCoord2(TexVal * 44d, TexVal * 32d);
-                    GL.Vertex3(-8.12d, 8.36d, -2.12d);
-                    // Face 6
-                    GL.TexCoord2(TexVal * 48d, TexVal * 36d);
-                    GL.Vertex3(-8.12d, -4.36d, 2.12d);
-                    GL.TexCoord2(TexVal * 52d, TexVal * 36d);
-                    GL.Vertex3(-3.88d, -4.36d, 2.12d);
-                    GL.TexCoord2(TexVal * 52d, TexVal * 32d);
-                    GL.Vertex3(-3.88d, -4.36d, -2.12d);
-                    GL.TexCoord2(TexVal * 48d, TexVal * 32d);
-                    GL.Vertex3(-8.12d, -4.36d, -2.12d);
-                }
-            }
-
-            else
-            {
-
-                if (ShowLeftArmOverlay)
-                {
-                    // LefttArm
-                    // Face 1
-                    GL.TexCoord2(TexVal * 52d, TexVal * 52d);
-                    GL.Vertex3(3.91d, 8.36d, 2.12d);
-                    GL.TexCoord2(TexVal * 55d, TexVal * 52d);
-                    GL.Vertex3(7.09d, 8.36d, 2.12d);
-                    GL.TexCoord2(TexVal * 55d, TexVal * 64d);
-                    GL.Vertex3(7.09d, -4.36d, 2.12d);
-                    GL.TexCoord2(TexVal * 52d, TexVal * 64d);
-                    GL.Vertex3(3.91d, -4.36d, 2.12d);
-                    // Face 2
-                    GL.TexCoord2(TexVal * 62d, TexVal * 52d);
-                    GL.Vertex3(3.91d, 8.36d, -2.12d);
-                    GL.TexCoord2(TexVal * 59d, TexVal * 52d);
-                    GL.Vertex3(7.09d, 8.36d, -2.12d);
-                    GL.TexCoord2(TexVal * 59d, TexVal * 64d);
-                    GL.Vertex3(7.09d, -4.36d, -2.12d);
-                    GL.TexCoord2(TexVal * 62d, TexVal * 64d);
-                    GL.Vertex3(3.91d, -4.36d, -2.12d);
-                    // Face 3
-                    GL.TexCoord2(TexVal * 48d, TexVal * 52d);
-                    GL.Vertex3(3.91d, 8.36d, -2.12d);
-                    GL.TexCoord2(TexVal * 52d, TexVal * 52d);
-                    GL.Vertex3(3.91d, 8.36d, 2.12d);
-                    GL.TexCoord2(TexVal * 52d, TexVal * 64d);
-                    GL.Vertex3(3.91d, -4.36d, 2.12d);
-                    GL.TexCoord2(TexVal * 48d, TexVal * 64d);
-                    GL.Vertex3(3.91d, -4.36d, -2.12d);
-                    // Face 4
-                    GL.TexCoord2(TexVal * 59d, TexVal * 52d);
-                    GL.Vertex3(7.09d, 8.36d, -2.12d);
-                    GL.TexCoord2(TexVal * 55d, TexVal * 52d);
-                    GL.Vertex3(7.09d, 8.36d, 2.12d);
-                    GL.TexCoord2(TexVal * 55d, TexVal * 64d);
-                    GL.Vertex3(7.09d, -4.36d, 2.12d);
-                    GL.TexCoord2(TexVal * 59d, TexVal * 64d);
-                    GL.Vertex3(7.09d, -4.36d, -2.12d);
-                    // Face 5
-                    GL.TexCoord2(TexVal * 52d, TexVal * 52d);
-                    GL.Vertex3(3.91d, 8.36d, 2.12d);
-                    GL.TexCoord2(TexVal * 55d, TexVal * 52d);
-                    GL.Vertex3(7.09d, 8.36d, 2.12d);
-                    GL.TexCoord2(TexVal * 55d, TexVal * 48d);
-                    GL.Vertex3(7.09d, 8.36d, -2.12d);
-                    GL.TexCoord2(TexVal * 52d, TexVal * 48d);
-                    GL.Vertex3(3.91d, 8.36d, -2.12d);
-                    // Face 6
-                    GL.TexCoord2(TexVal * 55d, TexVal * 52d);
-                    GL.Vertex3(3.91d, -4.36d, 2.12d);
-                    GL.TexCoord2(TexVal * 58d, TexVal * 52d);
-                    GL.Vertex3(7.09d, -4.36d, 2.12d);
-                    GL.TexCoord2(TexVal * 58d, TexVal * 48d);
-                    GL.Vertex3(7.09d, -4.36d, -2.12d);
-                    GL.TexCoord2(TexVal * 55d, TexVal * 48d);
-                    GL.Vertex3(3.91d, -4.36d, -2.12d);
-                }
-
-                if (ShowRightArmOverlay)
-                {
-                    // RightArm
-                    // Face 1
-                    GL.TexCoord2(TexVal * 44d, TexVal * 36d);
-                    GL.Vertex3(-7.09d, 8.36d, 2.12d);
-                    GL.TexCoord2(TexVal * 47d, TexVal * 36d);
-                    GL.Vertex3(-3.91d, 8.36d, 2.12d);
-                    GL.TexCoord2(TexVal * 47d, TexVal * 48d);
-                    GL.Vertex3(-3.91d, -4.36d, 2.12d);
-                    GL.TexCoord2(TexVal * 44d, TexVal * 48d);
-                    GL.Vertex3(-7.09d, -4.36d, 2.12d);
-                    // Face 2
-                    GL.TexCoord2(TexVal * 54d, TexVal * 36d);
-                    GL.Vertex3(-7.09d, 8.36d, -2.12d);
-                    GL.TexCoord2(TexVal * 51d, TexVal * 36d);
-                    GL.Vertex3(-3.91d, 8.36d, -2.12d);
-                    GL.TexCoord2(TexVal * 51d, TexVal * 48d);
-                    GL.Vertex3(-3.91d, -4.36d, -2.12d);
-                    GL.TexCoord2(TexVal * 54d, TexVal * 48d);
-                    GL.Vertex3(-7.09d, -4.36d, -2.12d);
-                    // Face 3
-                    GL.TexCoord2(TexVal * 40d, TexVal * 36d);
-                    GL.Vertex3(-7.09d, 8.36d, -2.12d);
-                    GL.TexCoord2(TexVal * 44d, TexVal * 36d);
-                    GL.Vertex3(-7.09d, 8.36d, 2.12d);
-                    GL.TexCoord2(TexVal * 44d, TexVal * 48d);
-                    GL.Vertex3(-7.09d, -4.36d, 2.12d);
-                    GL.TexCoord2(TexVal * 40d, TexVal * 48d);
-                    GL.Vertex3(-7.09d, -4.36d, -2.12d);
-                    // Face 4
-                    GL.TexCoord2(TexVal * 51d, TexVal * 36d);
-                    GL.Vertex3(-3.91d, 8.36d, -2.12d);
-                    GL.TexCoord2(TexVal * 47d, TexVal * 36d);
-                    GL.Vertex3(-3.91d, 8.36d, 2.12d);
-                    GL.TexCoord2(TexVal * 47d, TexVal * 48d);
-                    GL.Vertex3(-3.91d, -4.36d, 2.12d);
-                    GL.TexCoord2(TexVal * 51d, TexVal * 48d);
-                    GL.Vertex3(-3.91d, -4.36d, -2.12d);
-                    // Face 5
-                    GL.TexCoord2(TexVal * 44d, TexVal * 36d);
-                    GL.Vertex3(-7.09d, 8.36d, 2.12d);
-                    GL.TexCoord2(TexVal * 47d, TexVal * 36d);
-                    GL.Vertex3(-3.91d, 8.36d, 2.12d);
-                    GL.TexCoord2(TexVal * 47d, TexVal * 32d);
-                    GL.Vertex3(-3.91d, 8.36d, -2.12d);
-                    GL.TexCoord2(TexVal * 44d, TexVal * 32d);
-                    GL.Vertex3(-7.09d, 8.36d, -2.12d);
-                    // Face 6
-                    GL.TexCoord2(TexVal * 47d, TexVal * 36d);
-                    GL.Vertex3(-7.09d, -4.36d, 2.12d);
-                    GL.TexCoord2(TexVal * 50d, TexVal * 36d);
-                    GL.Vertex3(-3.91d, -4.36d, 2.12d);
-                    GL.TexCoord2(TexVal * 50d, TexVal * 32d);
-                    GL.Vertex3(-3.91d, -4.36d, -2.12d);
-                    GL.TexCoord2(TexVal * 47d, TexVal * 32d);
-                    GL.Vertex3(-7.09d, -4.36d, -2.12d);
-                }
-
-            }
-
-            if (ShowRightLegOverlay)
-            {
-                // RightLeg
-                // Face 1
-                GL.TexCoord2(TexVal * 4d, TexVal * 36d);
-                GL.Vertex3(-4.12d, -3.64d, 2.12d);
-                GL.TexCoord2(TexVal * 8d, TexVal * 36d);
-                GL.Vertex3(0.12d, -3.64d, 2.12d);
-                GL.TexCoord2(TexVal * 8d, TexVal * 48d);
-                GL.Vertex3(0.12d, -16.36d, 2.12d);
-                GL.TexCoord2(TexVal * 4d, TexVal * 48d);
-                GL.Vertex3(-4.12d, -16.36d, 2.12d);
-                // Face 2
-                GL.TexCoord2(TexVal * 16d, TexVal * 36d);
-                GL.Vertex3(-4.12d, -3.64d, -2.12d);
-                GL.TexCoord2(TexVal * 12d, TexVal * 36d);
-                GL.Vertex3(0.12d, -3.64d, -2.12d);
-                GL.TexCoord2(TexVal * 12d, TexVal * 48d);
-                GL.Vertex3(0.12d, -16.36d, -2.12d);
-                GL.TexCoord2(TexVal * 16d, TexVal * 48d);
-                GL.Vertex3(-4.12d, -16.36d, -2.12d);
-                // Face 3
-                GL.TexCoord2(TexVal * 0d, TexVal * 36d);
-                GL.Vertex3(-4.12d, -3.64d, -2.12d);
-                GL.TexCoord2(TexVal * 4d, TexVal * 36d);
-                GL.Vertex3(-4.12d, -3.64d, 2.12d);
-                GL.TexCoord2(TexVal * 4d, TexVal * 48d);
-                GL.Vertex3(-4.12d, -16.36d, 2.12d);
-                GL.TexCoord2(TexVal * 0d, TexVal * 48d);
-                GL.Vertex3(-4.12d, -16.36d, -2.12d);
-                // Face 4
-                GL.TexCoord2(TexVal * 12d, TexVal * 36d);
-                GL.Vertex3(0.12d, -3.64d, -2.12d);
-                GL.TexCoord2(TexVal * 8d, TexVal * 36d);
-                GL.Vertex3(0.12d, -3.64d, 2.12d);
-                GL.TexCoord2(TexVal * 8d, TexVal * 48d);
-                GL.Vertex3(0.12d, -16.36d, 2.12d);
-                GL.TexCoord2(TexVal * 12d, TexVal * 48d);
-                GL.Vertex3(0.12d, -16.36d, -2.12d);
-                // Face 5
-                GL.TexCoord2(TexVal * 4d, TexVal * 36d);
-                GL.Vertex3(-4.12d, -3.64d, 2.12d);
-                GL.TexCoord2(TexVal * 8d, TexVal * 36d);
-                GL.Vertex3(0.12d, -3.64d, 2.12d);
-                GL.TexCoord2(TexVal * 8d, TexVal * 32d);
-                GL.Vertex3(0.12d, -3.64d, -2.12d);
-                GL.TexCoord2(TexVal * 4d, TexVal * 32d);
-                GL.Vertex3(-4.12d, -3.64d, -2.12d);
-                // Face 6
-                GL.TexCoord2(TexVal * 8d, TexVal * 36d);
-                GL.Vertex3(-4.12d, -16.36d, 2.12d);
-                GL.TexCoord2(TexVal * 12d, TexVal * 36d);
-                GL.Vertex3(0.12d, -16.36d, 2.12d);
-                GL.TexCoord2(TexVal * 12d, TexVal * 32d);
-                GL.Vertex3(0.12d, -16.36d, -2.12d);
-                GL.TexCoord2(TexVal * 8d, TexVal * 32d);
-                GL.Vertex3(-4.12d, -16.36d, -2.12d);
-            }
-
-            if (ShowLeftLegOverlay)
-            {
-                // LeftLeg
-                // Face 1
-                GL.TexCoord2(TexVal * 4d, TexVal * 52d);
-                GL.Vertex3(-0.12d, -3.64d, 2.12d);
-                GL.TexCoord2(TexVal * 8d, TexVal * 52d);
-                GL.Vertex3(4.12d, -3.64d, 2.12d);
-                GL.TexCoord2(TexVal * 8d, TexVal * 64d);
-                GL.Vertex3(4.12d, -16.36d, 2.12d);
-                GL.TexCoord2(TexVal * 4d, TexVal * 64d);
-                GL.Vertex3(-0.12d, -16.36d, 2.12d);
-                // Face 2
-                GL.TexCoord2(TexVal * 16d, TexVal * 52d);
-                GL.Vertex3(-0.12d, -3.64d, -2.12d);
-                GL.TexCoord2(TexVal * 12d, TexVal * 52d);
-                GL.Vertex3(4.12d, -3.64d, -2.12d);
-                GL.TexCoord2(TexVal * 12d, TexVal * 64d);
-                GL.Vertex3(4.12d, -16.36d, -2.12d);
-                GL.TexCoord2(TexVal * 16d, TexVal * 64d);
-                GL.Vertex3(-0.12d, -16.36d, -2.12d);
-                // Face 3
-                GL.TexCoord2(TexVal * 0d, TexVal * 52d);
-                GL.Vertex3(-0.12d, -3.64d, -2.12d);
-                GL.TexCoord2(TexVal * 4d, TexVal * 52d);
-                GL.Vertex3(-0.12d, -3.64d, 2.12d);
-                GL.TexCoord2(TexVal * 4d, TexVal * 64d);
-                GL.Vertex3(-0.12d, -16.36d, 2.12d);
-                GL.TexCoord2(TexVal * 0d, TexVal * 64d);
-                GL.Vertex3(-0.12d, -16.36d, -2.12d);
-                // Face 4
-                GL.TexCoord2(TexVal * 12d, TexVal * 52d);
-                GL.Vertex3(4.12d, -3.64d, -2.12d);
-                GL.TexCoord2(TexVal * 8d, TexVal * 52d);
-                GL.Vertex3(4.12d, -3.64d, 2.12d);
-                GL.TexCoord2(TexVal * 8d, TexVal * 64d);
-                GL.Vertex3(4.12d, -16.36d, 2.12d);
-                GL.TexCoord2(TexVal * 12d, TexVal * 64d);
-                GL.Vertex3(4.12d, -16.36d, -2.12d);
-                // Face 5
-                GL.TexCoord2(TexVal * 4d, TexVal * 52d);
-                GL.Vertex3(-0.12d, -3.64d, 2.12d);
-                GL.TexCoord2(TexVal * 8d, TexVal * 52d);
-                GL.Vertex3(4.12d, -3.64d, 2.12d);
-                GL.TexCoord2(TexVal * 8d, TexVal * 48d);
-                GL.Vertex3(4.12d, -3.64d, -2.12d);
-                GL.TexCoord2(TexVal * 4d, TexVal * 48d);
-                GL.Vertex3(-0.12d, -3.64d, -2.12d);
-                // Face 6
-                GL.TexCoord2(TexVal * 8d, TexVal * 52d);
-                GL.Vertex3(-0.12d, -16.36d, 2.12d);
-                GL.TexCoord2(TexVal * 12d, TexVal * 52d);
-                GL.Vertex3(4.12d, -16.36d, 2.12d);
-                GL.TexCoord2(TexVal * 12d, TexVal * 48d);
-                GL.Vertex3(4.12d, -16.36d, -2.12d);
-                GL.TexCoord2(TexVal * 8d, TexVal * 48d);
-                GL.Vertex3(-0.12d, -16.36d, -2.12d);
-            }
-
-            GL.DeleteTexture(texID);
-
-            // Finish the begin mode with "end"
-            GL.End();
-            GL.PopMatrix();
-            // Finally...
-            SwapBuffers(); // Takes from the 'GL' and puts into control
         }
 
-        private bool IsMouseDown;
-        private bool IsRightMouseDown;
-        private bool IsMouseHidden;
-        private bool IsMouseHit;
-        private Point OldLoc;
-        private Point MouseLoc;
-
-        public event BeginChangedEventHandler BeginChanged;
-
-        public delegate void BeginChangedEventHandler(object sender, Bitmap LastSkin);
-
-        private Ray GlobalMouseRay; // To use the var golbaly in the code
-        private Vector3 GlobalCameraPos;
+        protected override bool ProcessDialogKey(Keys keyData)
+        {
+#if DEBUG
+            switch (keyData)
+            {
+                case Keys.Escape:
+                    debugLabel.Visible = !debugLabel.Visible;
+                    return true;
+                case Keys.F1:
+                    var fileDialog = new OpenFileDialog()
+                    {
+                        Filter = "texture|*.png",
+                    };
+                    if (fileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        Texture = Image.FromFile(fileDialog.FileName) as Bitmap;
+                    }
+                    return true;
+            }
+#endif
+            return base.ProcessDialogKey(keyData);
+        }
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
-            if (!IsMouseDown && e.Button == MouseButtons.Left) // Left mouse button
+            if (!IsMouseDown && e.Button == MouseButtons.Left)
             {
                 // If the ray didn't hit the model then rotate the model
-                OldLoc = Cursor.Position; // Store the old mouse position to reset it when the action is over
+                PreviousMouseLocation = Cursor.Position; // Store the old mouse position to reset it when the action is over
                 if (!IsMouseHidden) // Hide the mouse
                 {
                     Cursor.Hide();
@@ -1514,9 +606,9 @@ namespace PckStudio.Rendering
                 MouseLoc = Cursor.Position; // Store the current mouse position to use it for the rotate action
                 IsMouseDown = true;
             }
-            else if (!IsRightMouseDown && e.Button == MouseButtons.Right) // Right mouse button
+            else if (!IsRightMouseDown && e.Button == MouseButtons.Right)
             {
-                OldLoc = Cursor.Position; // Store the old mouse position to reset it when the action is over 
+                PreviousMouseLocation = Cursor.Position; // Store the old mouse position to reset it when the action is over 
                 if (!IsMouseHidden) // Hide the mouse
                 {
                     Cursor.Hide();
@@ -1531,18 +623,16 @@ namespace PckStudio.Rendering
         {
             if (IsMouseHidden)
             {
-                Cursor.Show(); // Show the mouse
-                IsMouseHidden = false;
-                Cursor.Position = OldLoc; // Rest the mouse position
-                IsMouseDown = false; // Clear the booleans
-                IsRightMouseDown = false;
+                Cursor.Position = PreviousMouseLocation;
+                IsMouseDown = IsMouseHidden = IsRightMouseDown = false;
+                Cursor.Show();
             }
-            IsMouseHit = false;
         }
 
         private void Move_Tick(object sender, EventArgs e)
         {
-            if (IsMouseDown) // Rotate the model
+            // Rotate the model
+            if (IsMouseDown)
             {
                 float rotationYDelta = (float)Math.Round((Cursor.Position.X - MouseLoc.X) * 0.5f);
                 float rotationXDelta = (float)Math.Round(-(Cursor.Position.Y - MouseLoc.Y) * 0.5f);
@@ -1550,11 +640,13 @@ namespace PckStudio.Rendering
                 Refresh();
                 Cursor.Position = new Point((int)Math.Round(Screen.PrimaryScreen.Bounds.Width / 2d), (int)Math.Round(Screen.PrimaryScreen.Bounds.Height / 2d));
                 MouseLoc = Cursor.Position;
+                return;
             }
-            else if (IsRightMouseDown) // Move the model
+            // Move the model
+            if (IsRightMouseDown)
             {
-                float deltaX = -(Cursor.Position.X - MouseLoc.X) * 0.5f / (float)Zoom;
-                float deltaY = (Cursor.Position.Y - MouseLoc.Y) * 0.5f / (float)Zoom;
+                float deltaX = -(Cursor.Position.X - MouseLoc.X) * 0.5f / (float)FieldOfView;
+                float deltaY = (Cursor.Position.Y - MouseLoc.Y) * 0.5f / (float)FieldOfView;
                 LookAngle += new Vector2(deltaX, deltaY);
                 Refresh();
                 Cursor.Position = new Point((int)Math.Round(Screen.PrimaryScreen.Bounds.Height / 2d), (int)Math.Round(Screen.PrimaryScreen.Bounds.Height / 2d));
@@ -1564,7 +656,7 @@ namespace PckStudio.Rendering
 
         protected override void OnMouseWheel(MouseEventArgs e)
         {
-            Zoom += e.Delta * 0.005d;
+            FieldOfView += e.Delta * 0.005d;
             Refresh();
             base.OnMouseWheel(e);
         }
@@ -1577,32 +669,9 @@ namespace PckStudio.Rendering
         private List<Point> MousePoints = new List<Point>();
         private List<Point> tmpMousePoints = new List<Point>();
 
-        public event SkinChangedEventHandler SkinChanged;
+        public event TextureChangedEventHandler TextureChanged;
 
-        public delegate void SkinChangedEventHandler(object sender, bool IsLeft);
-        private Random _PaintPixel_rNumber = new Random();
-
-        public void PaintPixel(Vector3 Vector, bool Second = false)
-        {
-            Bitmap tmpSkin = (Bitmap)Texture.Clone();
-            Point Point;
-            var XUp = default(Vector3);
-            var YUp = default(Vector3);
-            var Left = default(bool);
-            if (Second)
-            {
-                Point = Get2nd2DFrom3D(Vector, ref XUp, ref YUp);
-            }
-            else
-            {
-                Point = Get2DFrom3D(Vector, ref XUp, ref YUp);
-                if (Point.Y > 31)
-                    Left = true;
-            }
-            var Points = new List<Point>();
-            tmpSkin.Dispose();
-            SkinChanged?.Invoke(this, Left);
-        }
+        public delegate void TextureChangedEventHandler(object sender, bool IsLeft);
 
         public Point Get2DFrom3D(Vector3 Vector, ref Vector3 XUp, ref Vector3 YUp)
         {

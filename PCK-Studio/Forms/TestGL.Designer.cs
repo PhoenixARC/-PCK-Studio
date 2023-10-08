@@ -38,8 +38,6 @@
             this.renderer3D1.Location = new System.Drawing.Point(0, 0);
             this.renderer3D1.Model = PckStudio.Rendering.Renderer3D.Models.Steve;
             this.renderer3D1.Name = "renderer3D1";
-            this.renderer3D1.RotationX = 0;
-            this.renderer3D1.RotationY = 0;
             this.renderer3D1.ShowBodyOverlay = true;
             this.renderer3D1.ShowHeadOverlay = true;
             this.renderer3D1.ShowLeftArmOverlay = true;
@@ -55,7 +53,7 @@
             this.renderer3D1.Size = new System.Drawing.Size(426, 428);
             this.renderer3D1.Texture = global::PckStudio.Properties.Resources.classic_template;
             this.renderer3D1.TabIndex = 8;
-            this.renderer3D1.Zoom = 1D;
+            this.renderer3D1.FieldOfView = 1D;
             // 
             // TestGL
             // 

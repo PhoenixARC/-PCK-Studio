@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -13,33 +14,23 @@ namespace PckStudio.Forms
 {
     public partial class TestGL : Form
     {
+        /// <summary>
+        /// The main entry point for the application.
+        /// </summary>
+        [STAThread]
+        static void Main()
+        {
+            Application.Run(new TestGL());
+        }
+
         public TestGL()
         {
             InitializeComponent();
         }
 
-        internal Bitmap Skin = Resources.classic_template;
-        internal void UpdateImage()
-        {
-            var Image = new Bitmap(Skin.Width, Skin.Height); // Create the skin preview bitmao
-            if (!(Skin.Width == 64 && Skin.Height == 64)) // Check the skin resolution
-            {
-                MessageBox.Show("Skin isn't valid.", "Error");
-                return;
-            }
-            // ****************Writing pixels to the preview****************
-            for (byte Y = 0, loopTo = (byte)(Skin.Height - 1); Y <= loopTo; Y++)
-            {
-                for (byte X = 0, loopTo1 = (byte)(Skin.Width - 1); X <= loopTo1; X++)
-                    Image.SetPixel(X, Y, Skin.GetPixel(X / 2, Y / 2));
-            }
-            // *************************************************************
-            renderer3D1.Texture = Skin;
-            renderer3D1.Refresh(); // Render
-        }
         private void TestGL_Load(object sender, EventArgs e)
         {
-            UpdateImage(); // Load preview
+            renderer3D1.Refresh();
         }
     }
 }

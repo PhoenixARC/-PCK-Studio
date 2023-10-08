@@ -960,33 +960,6 @@
   <data name="&gt;&gt;buttonIMPORT.ZOrder" xml:space="preserve">
     <value>23</value>
   </data>
-  <data name="uvPictureBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="uvPictureBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>655, 72</value>
-  </data>
-  <data name="uvPictureBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>128, 128</value>
-  </data>
-  <data name="uvPictureBox.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
-    <value>Zoom</value>
-  </data>
-  <data name="uvPictureBox.TabIndex" type="System.Int32, mscorlib">
-    <value>112</value>
-  </data>
-  <data name="&gt;&gt;uvPictureBox.Name" xml:space="preserve">
-    <value>uvPictureBox</value>
-  </data>
-  <data name="&gt;&gt;uvPictureBox.Type" xml:space="preserve">
-    <value>PckStudio.PictureBoxWithInterpolationMode, PCK-Studio, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;uvPictureBox.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;uvPictureBox.ZOrder" xml:space="preserve">
-    <value>20</value>
-  </data>
   <data name="buttonImportModel.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
   </data>
@@ -1016,33 +989,6 @@
   </data>
   <data name="&gt;&gt;buttonImportModel.ZOrder" xml:space="preserve">
     <value>17</value>
-  </data>
-  <data name="displayBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="displayBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>194, 56</value>
-  </data>
-  <data name="displayBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>449, 580</value>
-  </data>
-  <data name="displayBox.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
-    <value>StretchImage</value>
-  </data>
-  <data name="displayBox.TabIndex" type="System.Int32, mscorlib">
-    <value>98</value>
-  </data>
-  <data name="&gt;&gt;displayBox.Name" xml:space="preserve">
-    <value>displayBox</value>
-  </data>
-  <data name="&gt;&gt;displayBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;displayBox.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;displayBox.ZOrder" xml:space="preserve">
-    <value>13</value>
   </data>
   <data name="buttonExportModel.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
@@ -1126,7 +1072,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;buttonTemplate.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>13</value>
   </data>
   <data name="generateTextureCheckBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1153,7 +1099,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;generateTextureCheckBox.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>12</value>
   </data>
   <data name="checkGuide.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1180,7 +1126,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;checkGuide.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>11</value>
   </data>
   <data name="checkBoxArmor.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1207,7 +1153,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;checkBoxArmor.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>10</value>
   </data>
   <data name="SizeXUpDown.Location" type="System.Drawing.Point, System.Drawing">
     <value>658, 275</value>
@@ -1231,7 +1177,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;SizeXUpDown.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>9</value>
   </data>
   <data name="SizeYUpDown.Location" type="System.Drawing.Point, System.Drawing">
     <value>658, 301</value>
@@ -1255,7 +1201,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;SizeYUpDown.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="SizeZUpDown.Location" type="System.Drawing.Point, System.Drawing">
     <value>658, 327</value>
@@ -1279,7 +1225,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;SizeZUpDown.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="TextureXUpDown.Location" type="System.Drawing.Point, System.Drawing">
     <value>682, 233</value>
@@ -1300,7 +1246,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;TextureXUpDown.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="TextureYUpDown.Location" type="System.Drawing.Point, System.Drawing">
     <value>731, 234</value>
@@ -1321,7 +1267,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;TextureYUpDown.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="PosZUpDown.Location" type="System.Drawing.Point, System.Drawing">
     <value>657, 425</value>
@@ -1345,7 +1291,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;PosZUpDown.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="PosYUpDown.Location" type="System.Drawing.Point, System.Drawing">
     <value>658, 399</value>
@@ -1369,7 +1315,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;PosYUpDown.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="PosXUpDown.Location" type="System.Drawing.Point, System.Drawing">
     <value>658, 373</value>
@@ -1393,7 +1339,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;PosXUpDown.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="Part.Text" xml:space="preserve">
     <value>Part</value>
@@ -1484,6 +1430,71 @@
   </data>
   <data name="&gt;&gt;listViewBoxes.ZOrder" xml:space="preserve">
     <value>14</value>
+  </data>
+  <data name="renderer3D1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="renderer3D1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>194, 59</value>
+  </data>
+  <data name="renderer3D1.LookAngle" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAElPcGVuVEssIFZlcnNpb249My4zLjMuMCwgQ3VsdHVyZT1uZXV0
+        cmFsLCBQdWJsaWNLZXlUb2tlbj1iYWQxOTlmZTg0ZWIzZGY0BQEAAAAOT3BlblRLLlZlY3RvcjICAAAA
+        AVgBWQAACwsCAAAAAAAAAAAAAAAL
+</value>
+  </data>
+  <data name="renderer3D1.Rotation" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAElPcGVuVEssIFZlcnNpb249My4zLjMuMCwgQ3VsdHVyZT1uZXV0
+        cmFsLCBQdWJsaWNLZXlUb2tlbj1iYWQxOTlmZTg0ZWIzZGY0BQEAAAAOT3BlblRLLlZlY3RvcjICAAAA
+        AVgBWQAACwsCAAAAAAAAAAAAAAAL
+</value>
+  </data>
+  <data name="renderer3D1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>449, 574</value>
+  </data>
+  <data name="renderer3D1.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;renderer3D1.Name" xml:space="preserve">
+    <value>renderer3D1</value>
+  </data>
+  <data name="&gt;&gt;renderer3D1.Type" xml:space="preserve">
+    <value>PckStudio.Rendering.Renderer3D, PCK-Studio, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;renderer3D1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;renderer3D1.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="uvPictureBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="uvPictureBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>655, 72</value>
+  </data>
+  <data name="uvPictureBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>128, 128</value>
+  </data>
+  <data name="uvPictureBox.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
+    <value>Zoom</value>
+  </data>
+  <data name="uvPictureBox.TabIndex" type="System.Int32, mscorlib">
+    <value>112</value>
+  </data>
+  <data name="&gt;&gt;uvPictureBox.Name" xml:space="preserve">
+    <value>uvPictureBox</value>
+  </data>
+  <data name="&gt;&gt;uvPictureBox.Type" xml:space="preserve">
+    <value>PckStudio.ToolboxItems.InterpolationPictureBox, PCK-Studio, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;uvPictureBox.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;uvPictureBox.ZOrder" xml:space="preserve">
+    <value>20</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -4002,6 +4013,9 @@
         AP//AADgBwAA4AcAAMADAADAAwAAwAMAAMADAADAAwAAwAMAAMADAADABwAAwA8AAMAfAADgPwAA4H8A
         AP//AAA=
 </value>
+  </data>
+  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="$this.MaximumSize" type="System.Drawing.Size, System.Drawing">
     <value>1114, 1000</value>

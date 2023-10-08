@@ -335,6 +335,22 @@ namespace PckStudio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to #version 330 core
+        ///
+        ///layout(location = 0) out vec4 color;
+        ///
+        ///void main()
+        ///{
+        ///	color = vec4(1.0, 0.0, 0.0, 1.0);
+        ///};.
+        /// </summary>
+        public static string fragmentShader {
+            get {
+                return ResourceManager.GetString("fragmentShader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap GRF_ICON {
@@ -587,16 +603,6 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap steve {
-            get {
-                object obj = ResourceManager.GetObject("steve", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         public static System.Drawing.Bitmap terrain_sheet {
             get {
                 object obj = ResourceManager.GetObject("terrain_sheet", resourceCulture);
@@ -772,6 +778,22 @@ namespace PckStudio.Properties {
             get {
                 object obj = ResourceManager.GetObject("tu69colours", resourceCulture);
                 return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #version 330 core
+        ///
+        ///layout(location = 0) in vec2 position;
+        ///
+        ///void main()
+        ///{
+        ///	gl_Position = vec4(position.xy, 0.0, 0.0);
+        ///};.
+        /// </summary>
+        public static string vertexShader {
+            get {
+                return ResourceManager.GetString("vertexShader", resourceCulture);
             }
         }
         

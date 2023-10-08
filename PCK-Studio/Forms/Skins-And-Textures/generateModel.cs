@@ -134,10 +134,7 @@ namespace PckStudio.Forms
             _file = file;
             if (file.Size > 0)
             {
-                using (var ms = new MemoryStream(file.Data))
-                {
-                    uvPictureBox.Image = Image.FromStream(ms);
-                }
+                uvPictureBox.Image = renderer3D1.Texture = file.GetTexture() as Bitmap;
             }
             comboParent.Items.Clear();
             comboParent.Items.AddRange(ValidModelBoxTypes);
@@ -195,352 +192,350 @@ namespace PckStudio.Forms
                 GenerateUVTextureMap();
         }
 
-        // Graphic Rendering
-        // Builds an image based on the view
         private void Render(object sender, EventArgs e)
         {
-            buttonTemplate.Enabled = listViewBoxes.Items.Count == 0;
-            OrganizesZLayer();
-            Bitmap bitmapModelPreview = new Bitmap(displayBox.Width, displayBox.Height); // Creates Model Display layer
-            using (Graphics graphics = Graphics.FromImage(bitmapModelPreview))
-            {
-                graphics.ApplyConfig(_graphicsConfig);
-                graphics.Clear(_backgroundColor);
+            //buttonTemplate.Enabled = listViewBoxes.Items.Count == 0;
+            //OrganizesZLayer();
+            //Bitmap bitmapModelPreview = new Bitmap(displayBox.Width, displayBox.Height); // Creates Model Display layer
+            //using (Graphics graphics = Graphics.FromImage(bitmapModelPreview))
+            //{
+            //    graphics.ApplyConfig(_graphicsConfig);
+            //    graphics.Clear(_backgroundColor);
 
-                float headbodyY = (displayBox.Height / 2) + 25; //  25
-                float armY = (displayBox.Height / 2) + 35; // -60;
-                float legY = (displayBox.Height / 2) + 85; // -80;
-                float groundLevel = (displayBox.Height / 2) + 145;
-                graphics.DrawLine(Pens.White, 0, groundLevel, displayBox.Width, groundLevel);
-                float renderScale = uvPictureBox.Image.Width / 64; // used for displaying larger graphics properly; 64 is the base skin width for all models
+            //    float headbodyY = (displayBox.Height / 2) + 25; //  25
+            //    float armY = (displayBox.Height / 2) + 35; // -60;
+            //    float legY = (displayBox.Height / 2) + 85; // -80;
+            //    float groundLevel = (displayBox.Height / 2) + 145;
+            //    graphics.DrawLine(Pens.White, 0, groundLevel, displayBox.Width, groundLevel);
+            //    float renderScale = uvPictureBox.Image.Width / 64; // used for displaying larger graphics properly; 64 is the base skin width for all models
 
-                // Chooses Render settings based on current direction
-                foreach (ListViewItem listViewItem in listViewBoxes.Items)
-                {
-                    if (!(listViewItem.Tag is SkinBOX part))
-                        continue;
-                    float x = displayBox.Width / 2;
-                    float y = 0;
+            //    // Chooses Render settings based on current direction
+            //    foreach (ListViewItem listViewItem in listViewBoxes.Items)
+            //    {
+            //        if (!(listViewItem.Tag is SkinBOX part))
+            //            continue;
+            //        float x = displayBox.Width / 2;
+            //        float y = 0;
 
-                    switch (direction)
-                    {
-                        case ViewDirection.front:
-                            {
-                                //Sets X & Y based on model part class
-                                // listViewItem.Text -> part.Type
-                                // listViewItem.SubItems[1] -> part.Pos.X
-                                // listViewItem.SubItems[2] -> part.Pos.Y
-                                // listViewItem.SubItems[3] -> part.Pos.Z
-                                // listViewItem.SubItems[4] -> part.Size.X
-                                // listViewItem.SubItems[5] -> part.Size.Y
-                                // listViewItem.SubItems[6] -> part.Size.Z
-                                // listViewItem.SubItems[7] -> part.U
-                                // listViewItem.SubItems[8] -> part.V
-                                switch (part.Type)
-                                {
-                                    case "HEAD":
-                                    case "HEADWEAR":
-                                    case "HELMET":
-                                        y = headbodyY + int.Parse(offsetHead.Text) * 5;
-                                        break;
-                                    case "BODY":
-                                    case "JACKET":
-                                    case "CHEST":
-                                    case "BODYARMOR":
-                                    case "BELT":
-                                    case "WAIST":
-                                        y = headbodyY + int.Parse(offsetBody.Text) * 5;
-                                        break;
+            //        switch (direction)
+            //        {
+            //            case ViewDirection.front:
+            //                {
+            //                    //Sets X & Y based on model part class
+            //                    // listViewItem.Text -> part.Type
+            //                    // listViewItem.SubItems[1] -> part.Pos.X
+            //                    // listViewItem.SubItems[2] -> part.Pos.Y
+            //                    // listViewItem.SubItems[3] -> part.Pos.Z
+            //                    // listViewItem.SubItems[4] -> part.Size.X
+            //                    // listViewItem.SubItems[5] -> part.Size.Y
+            //                    // listViewItem.SubItems[6] -> part.Size.Z
+            //                    // listViewItem.SubItems[7] -> part.U
+            //                    // listViewItem.SubItems[8] -> part.V
+            //                    switch (part.Type)
+            //                    {
+            //                        case "HEAD":
+            //                        case "HEADWEAR":
+            //                        case "HELMET":
+            //                            y = headbodyY + int.Parse(offsetHead.Text) * 5;
+            //                            break;
+            //                        case "BODY":
+            //                        case "JACKET":
+            //                        case "CHEST":
+            //                        case "BODYARMOR":
+            //                        case "BELT":
+            //                        case "WAIST":
+            //                            y = headbodyY + int.Parse(offsetBody.Text) * 5;
+            //                            break;
 
-                                    case "ARM0":
-                                    case "ARMARMOR0":
-                                    case "SLEEVE0":
-                                    case "SHOULDER0":
-                                        x -= 25;
-                                        y = armY + int.Parse(offsetArms.Text) * 5;
-                                        break;
+            //                        case "ARM0":
+            //                        case "ARMARMOR0":
+            //                        case "SLEEVE0":
+            //                        case "SHOULDER0":
+            //                            x -= 25;
+            //                            y = armY + int.Parse(offsetArms.Text) * 5;
+            //                            break;
 
-                                    case "ARM1":
-                                    case "ARMARMOR1":
-                                    case "SLEEVE1":
-                                    case "SHOULDER1":
-                                        x += 25;
-                                        y = armY + int.Parse(offsetArms.Text) * 5;
-                                        break;
+            //                        case "ARM1":
+            //                        case "ARMARMOR1":
+            //                        case "SLEEVE1":
+            //                        case "SHOULDER1":
+            //                            x += 25;
+            //                            y = armY + int.Parse(offsetArms.Text) * 5;
+            //                            break;
 
-                                    case "LEG0":
-                                    case "PANTS0":
-                                    case "SOCK0":
-                                    case "LEGGING0":
-                                    case "BOOT0":
-                                        x -= 10;
-                                        y = legY + int.Parse(offsetLegs.Text) * 5;
-                                        break;
+            //                        case "LEG0":
+            //                        case "PANTS0":
+            //                        case "SOCK0":
+            //                        case "LEGGING0":
+            //                        case "BOOT0":
+            //                            x -= 10;
+            //                            y = legY + int.Parse(offsetLegs.Text) * 5;
+            //                            break;
 
-                                    case "LEG1":
-                                    case "PANTS1":
-                                    case "SOCK1":
-                                    case "LEGGING1":
-                                    case "BOOT1":
-                                        x += 10;
-                                        y = legY + int.Parse(offsetLegs.Text) * 5;
-                                        break;
-                                }
+            //                        case "LEG1":
+            //                        case "PANTS1":
+            //                        case "SOCK1":
+            //                        case "LEGGING1":
+            //                        case "BOOT1":
+            //                            x += 10;
+            //                            y = legY + int.Parse(offsetLegs.Text) * 5;
+            //                            break;
+            //                    }
 
-                                // Maps imported Texture if texture generation is disabled
-                                if (!generateTextureCheckBox.Checked)
-                                {
-                                    RectangleF destRect = new RectangleF(
-                                        x + part.Pos.X * 5,
-                                        y + part.Pos.Y * 5,
-                                        part.Size.X * 5,
-                                        part.Size.Y * 5);
-                                    RectangleF srcRect = new RectangleF(
-                                        (part.UV.X + part.Size.Z) * renderScale,
-                                        (part.UV.Y + part.Size.Z) * renderScale,
-                                        part.Size.X * renderScale,
-                                        part.Size.Y * renderScale);
-                                    graphics.DrawImage(uvPictureBox.Image, destRect, srcRect, GraphicsUnit.Pixel);
-                                }
-                                else
-                                {
-                                    graphics.FillRectangle(new SolidBrush(listViewItem.ForeColor), x + part.Pos.X * 5, y + part.Pos.Y * 5, part.Size.X * 5, part.Size.Y * 5);
-                                }
+            //                    // Maps imported Texture if texture generation is disabled
+            //                    if (!generateTextureCheckBox.Checked)
+            //                    {
+            //                        RectangleF destRect = new RectangleF(
+            //                            x + part.Pos.X * 5,
+            //                            y + part.Pos.Y * 5,
+            //                            part.Size.X * 5,
+            //                            part.Size.Y * 5);
+            //                        RectangleF srcRect = new RectangleF(
+            //                            (part.UV.X + part.Size.Z) * renderScale,
+            //                            (part.UV.Y + part.Size.Z) * renderScale,
+            //                            part.Size.X * renderScale,
+            //                            part.Size.Y * renderScale);
+            //                        graphics.DrawImage(uvPictureBox.Image, destRect, srcRect, GraphicsUnit.Pixel);
+            //                    }
+            //                    else
+            //                    {
+            //                        graphics.FillRectangle(new SolidBrush(listViewItem.ForeColor), x + part.Pos.X * 5, y + part.Pos.Y * 5, part.Size.X * 5, part.Size.Y * 5);
+            //                    }
 
-                                break;
-                            }
+            //                    break;
+            //                }
 
-                        case ViewDirection.left:
-                            {
-                                //Sets X & Y based on model part class
-                                switch (part.Type)
-                                {
-                                    case "HEAD":
-                                    case "HEADWEAR":
-                                    case "HELMET":
-                                        y = headbodyY + int.Parse(offsetHead.Text) * 5;
-                                        break;
-                                    case "BODY":
-                                    case "JACKET":
-                                    case "CHEST":
-                                    case "BODYARMOR":
-                                    case "BELT":
-                                    case "WAIST":
-                                        y = headbodyY + int.Parse(offsetBody.Text) * 5;
-                                        break;
+            //            case ViewDirection.left:
+            //                {
+            //                    //Sets X & Y based on model part class
+            //                    switch (part.Type)
+            //                    {
+            //                        case "HEAD":
+            //                        case "HEADWEAR":
+            //                        case "HELMET":
+            //                            y = headbodyY + int.Parse(offsetHead.Text) * 5;
+            //                            break;
+            //                        case "BODY":
+            //                        case "JACKET":
+            //                        case "CHEST":
+            //                        case "BODYARMOR":
+            //                        case "BELT":
+            //                        case "WAIST":
+            //                            y = headbodyY + int.Parse(offsetBody.Text) * 5;
+            //                            break;
 
-                                    case "ARM0":
-                                    case "ARMARMOR0":
-                                    case "SLEEVE0":
-                                    case "SHOULDER0":
-                                        y = armY + int.Parse(offsetArms.Text) * 5;
-                                        break;
+            //                        case "ARM0":
+            //                        case "ARMARMOR0":
+            //                        case "SLEEVE0":
+            //                        case "SHOULDER0":
+            //                            y = armY + int.Parse(offsetArms.Text) * 5;
+            //                            break;
 
-                                    case "ARM1":
-                                    case "ARMARMOR1":
-                                    case "SLEEVE1":
-                                    case "SHOULDER1":
-                                        y = armY + int.Parse(offsetArms.Text) * 5;
-                                        break;
+            //                        case "ARM1":
+            //                        case "ARMARMOR1":
+            //                        case "SLEEVE1":
+            //                        case "SHOULDER1":
+            //                            y = armY + int.Parse(offsetArms.Text) * 5;
+            //                            break;
 
-                                    case "LEG0":
-                                    case "PANTS0":
-                                    case "SOCK0":
-                                    case "LEGGING0":
-                                    case "BOOT0":
-                                        y = legY + int.Parse(offsetLegs.Text) * 5;
-                                        break;
+            //                        case "LEG0":
+            //                        case "PANTS0":
+            //                        case "SOCK0":
+            //                        case "LEGGING0":
+            //                        case "BOOT0":
+            //                            y = legY + int.Parse(offsetLegs.Text) * 5;
+            //                            break;
 
-                                    case "LEG1":
-                                    case "PANTS1":
-                                    case "SOCK1":
-                                    case "LEGGING1":
-                                    case "BOOT1":
-                                        y = legY + int.Parse(offsetLegs.Text) * 5;
-                                        break;
-                                }
+            //                        case "LEG1":
+            //                        case "PANTS1":
+            //                        case "SOCK1":
+            //                        case "LEGGING1":
+            //                        case "BOOT1":
+            //                            y = legY + int.Parse(offsetLegs.Text) * 5;
+            //                            break;
+            //                    }
 
-                                // Maps imported Texture if auto texture is disabled
-                                if (!generateTextureCheckBox.Checked)
-                                {
-                                    RectangleF destRect = new RectangleF(
-                                        x + part.Pos.Z * 5,
-                                        y + part.Pos.Y * 5,
-                                        part.Size.Z * 5,
-                                        part.Size.Y * 5);
-                                    RectangleF srcRect = new RectangleF(
-                                        (part.UV.X + part.Size.Z + part.Size.X) * renderScale,
-                                        (part.UV.Y + part.Size.Z) * renderScale,
-                                        part.Size.Z * renderScale,
-                                        part.Size.Y * renderScale);
-                                    graphics.DrawImage(uvPictureBox.Image, destRect, srcRect, GraphicsUnit.Pixel);
-                                }
-                                else
-                                {
-                                    //Draws Part
-                                    graphics.FillRectangle(new SolidBrush(listViewItem.ForeColor), x + part.Pos.Z * 5, y + part.Pos.Y * 5, part.Size.Z * 5, part.Size.Y * 5);
-                                }
-                                bitmapModelPreview.RotateFlip(RotateFlipType.RotateNoneFlipX);
-                                break;
-                            }
+            //                    // Maps imported Texture if auto texture is disabled
+            //                    if (!generateTextureCheckBox.Checked)
+            //                    {
+            //                        RectangleF destRect = new RectangleF(
+            //                            x + part.Pos.Z * 5,
+            //                            y + part.Pos.Y * 5,
+            //                            part.Size.Z * 5,
+            //                            part.Size.Y * 5);
+            //                        RectangleF srcRect = new RectangleF(
+            //                            (part.UV.X + part.Size.Z + part.Size.X) * renderScale,
+            //                            (part.UV.Y + part.Size.Z) * renderScale,
+            //                            part.Size.Z * renderScale,
+            //                            part.Size.Y * renderScale);
+            //                        graphics.DrawImage(uvPictureBox.Image, destRect, srcRect, GraphicsUnit.Pixel);
+            //                    }
+            //                    else
+            //                    {
+            //                        //Draws Part
+            //                        graphics.FillRectangle(new SolidBrush(listViewItem.ForeColor), x + part.Pos.Z * 5, y + part.Pos.Y * 5, part.Size.Z * 5, part.Size.Y * 5);
+            //                    }
+            //                    bitmapModelPreview.RotateFlip(RotateFlipType.RotateNoneFlipX);
+            //                    break;
+            //                }
 
-                        case ViewDirection.back:
-                            {
-                                //Sets X & Y based on model part class
-                                switch (part.Type)
-                                {
-                                    case "HEAD":
-                                    case "HEADWEAR":
-                                    case "HELMET":
-                                        y = headbodyY + int.Parse(offsetHead.Text) * 5;
-                                        break;
-                                    case "BODY":
-                                    case "JACKET":
-                                    case "CHEST":
-                                    case "BODYARMOR":
-                                    case "BELT":
-                                    case "WAIST":
-                                        y = headbodyY + int.Parse(offsetBody.Text) * 5;
-                                        break;
+            //            case ViewDirection.back:
+            //                {
+            //                    //Sets X & Y based on model part class
+            //                    switch (part.Type)
+            //                    {
+            //                        case "HEAD":
+            //                        case "HEADWEAR":
+            //                        case "HELMET":
+            //                            y = headbodyY + int.Parse(offsetHead.Text) * 5;
+            //                            break;
+            //                        case "BODY":
+            //                        case "JACKET":
+            //                        case "CHEST":
+            //                        case "BODYARMOR":
+            //                        case "BELT":
+            //                        case "WAIST":
+            //                            y = headbodyY + int.Parse(offsetBody.Text) * 5;
+            //                            break;
 
-                                    case "ARM0":
-                                    case "ARMARMOR0":
-                                    case "SLEEVE0":
-                                    case "SHOULDER0":
-                                        x -= 25;
-                                        y = armY + int.Parse(offsetArms.Text) * 5;
-                                        break;
+            //                        case "ARM0":
+            //                        case "ARMARMOR0":
+            //                        case "SLEEVE0":
+            //                        case "SHOULDER0":
+            //                            x -= 25;
+            //                            y = armY + int.Parse(offsetArms.Text) * 5;
+            //                            break;
 
-                                    case "ARM1":
-                                    case "ARMARMOR1":
-                                    case "SLEEVE1":
-                                    case "SHOULDER1":
-                                        x += 25;
-                                        y = armY + int.Parse(offsetArms.Text) * 5;
-                                        break;
+            //                        case "ARM1":
+            //                        case "ARMARMOR1":
+            //                        case "SLEEVE1":
+            //                        case "SHOULDER1":
+            //                            x += 25;
+            //                            y = armY + int.Parse(offsetArms.Text) * 5;
+            //                            break;
 
-                                    case "LEG0":
-                                    case "PANTS0":
-                                    case "SOCK0":
-                                    case "LEGGING0":
-                                    case "BOOT0":
-                                        x -= 10;
-                                        y = legY + int.Parse(offsetLegs.Text) * 5;
-                                        break;
+            //                        case "LEG0":
+            //                        case "PANTS0":
+            //                        case "SOCK0":
+            //                        case "LEGGING0":
+            //                        case "BOOT0":
+            //                            x -= 10;
+            //                            y = legY + int.Parse(offsetLegs.Text) * 5;
+            //                            break;
 
-                                    case "LEG1":
-                                    case "PANTS1":
-                                    case "SOCK1":
-                                    case "LEGGING1":
-                                    case "BOOT1":
-                                        x += 10;
-                                        y = legY + int.Parse(offsetLegs.Text) * 5;
-                                        break;
-                                }
+            //                        case "LEG1":
+            //                        case "PANTS1":
+            //                        case "SOCK1":
+            //                        case "LEGGING1":
+            //                        case "BOOT1":
+            //                            x += 10;
+            //                            y = legY + int.Parse(offsetLegs.Text) * 5;
+            //                            break;
+            //                    }
 
-                                //Maps imported Texture if auto texture is disabled
-                                if (!generateTextureCheckBox.Checked)
-                                {
-                                    RectangleF destRect = new RectangleF(
-                                        x + part.Pos.X * 5,
-                                        y + part.Pos.Y * 5,
-                                        part.Size.X * 5,
-                                        part.Size.Y * 5);
-                                    RectangleF srcRect = new RectangleF(
-                                        (part.UV.X + part.Size.Z * 2 + part.Size.X) * renderScale,
-                                        (part.UV.Y + part.Size.Z) * renderScale,
-                                        part.Size.X * renderScale,
-                                        part.Size.Y * renderScale);
-                                    graphics.DrawImage(uvPictureBox.Image, destRect, srcRect, GraphicsUnit.Pixel);
-                                }
-                                else
-                                {
-                                    //Draws Part
-                                    graphics.FillRectangle(new SolidBrush(listViewItem.ForeColor), x + part.Pos.X * 5, y + part.Pos.Y * 5, part.Size.X * 5, part.Size.Y * 5);
-                                }
-                                bitmapModelPreview.RotateFlip(RotateFlipType.RotateNoneFlipX);
-                                break;
-                            }
+            //                    //Maps imported Texture if auto texture is disabled
+            //                    if (!generateTextureCheckBox.Checked)
+            //                    {
+            //                        RectangleF destRect = new RectangleF(
+            //                            x + part.Pos.X * 5,
+            //                            y + part.Pos.Y * 5,
+            //                            part.Size.X * 5,
+            //                            part.Size.Y * 5);
+            //                        RectangleF srcRect = new RectangleF(
+            //                            (part.UV.X + part.Size.Z * 2 + part.Size.X) * renderScale,
+            //                            (part.UV.Y + part.Size.Z) * renderScale,
+            //                            part.Size.X * renderScale,
+            //                            part.Size.Y * renderScale);
+            //                        graphics.DrawImage(uvPictureBox.Image, destRect, srcRect, GraphicsUnit.Pixel);
+            //                    }
+            //                    else
+            //                    {
+            //                        //Draws Part
+            //                        graphics.FillRectangle(new SolidBrush(listViewItem.ForeColor), x + part.Pos.X * 5, y + part.Pos.Y * 5, part.Size.X * 5, part.Size.Y * 5);
+            //                    }
+            //                    bitmapModelPreview.RotateFlip(RotateFlipType.RotateNoneFlipX);
+            //                    break;
+            //                }
 
-                        case ViewDirection.right:
-                            //Sets X & Y based on model part class
-                            switch (part.Type)
-                            {
-                                case "HEAD":
-                                case "HEADWEAR":
-                                case "HELMET":
-                                    y = headbodyY + int.Parse(offsetHead.Text) * 5;
-                                    break;
-                                case "BODY":
-                                case "JACKET":
-                                case "CHEST":
-                                case "BODYARMOR":
-                                case "BELT":
-                                case "WAIST":
-                                    y = headbodyY + int.Parse(offsetBody.Text) * 5;
-                                    break;
+            //            case ViewDirection.right:
+            //                //Sets X & Y based on model part class
+            //                switch (part.Type)
+            //                {
+            //                    case "HEAD":
+            //                    case "HEADWEAR":
+            //                    case "HELMET":
+            //                        y = headbodyY + int.Parse(offsetHead.Text) * 5;
+            //                        break;
+            //                    case "BODY":
+            //                    case "JACKET":
+            //                    case "CHEST":
+            //                    case "BODYARMOR":
+            //                    case "BELT":
+            //                    case "WAIST":
+            //                        y = headbodyY + int.Parse(offsetBody.Text) * 5;
+            //                        break;
 
-                                case "ARM0":
-                                case "ARMARMOR0":
-                                case "SLEEVE0":
-                                case "SHOULDER0":
-                                    y = armY + int.Parse(offsetArms.Text) * 5;
-                                    break;
+            //                    case "ARM0":
+            //                    case "ARMARMOR0":
+            //                    case "SLEEVE0":
+            //                    case "SHOULDER0":
+            //                        y = armY + int.Parse(offsetArms.Text) * 5;
+            //                        break;
 
-                                case "ARM1":
-                                case "ARMARMOR1":
-                                case "SLEEVE1":
-                                case "SHOULDER1":
-                                    y = armY + int.Parse(offsetArms.Text) * 5;
-                                    break;
+            //                    case "ARM1":
+            //                    case "ARMARMOR1":
+            //                    case "SLEEVE1":
+            //                    case "SHOULDER1":
+            //                        y = armY + int.Parse(offsetArms.Text) * 5;
+            //                        break;
 
-                                case "LEG0":
-                                case "PANTS0":
-                                case "SOCK0":
-                                case "LEGGING0":
-                                case "BOOT0":
-                                    y = legY + int.Parse(offsetLegs.Text) * 5;
-                                    break;
+            //                    case "LEG0":
+            //                    case "PANTS0":
+            //                    case "SOCK0":
+            //                    case "LEGGING0":
+            //                    case "BOOT0":
+            //                        y = legY + int.Parse(offsetLegs.Text) * 5;
+            //                        break;
 
-                                case "LEG1":
-                                case "PANTS1":
-                                case "SOCK1":
-                                case "LEGGING1":
-                                case "BOOT1":
-                                    y = legY + int.Parse(offsetLegs.Text) * 5;
-                                    break;
-                            }
-                            //Maps imported Texture if auto texture is disabled
-                            if (!generateTextureCheckBox.Checked)
-                            {
-                                RectangleF destRect = new RectangleF(
-                                    x + part.Pos.Z * 5,
-                                    y + part.Pos.Y * 5,
-                                    part.Size.Z * 5,
-                                    part.Size.Y * 5);
-                                RectangleF srcRect = new RectangleF(
-                                    (part.UV.X + part.Size.Z + part.Size.X) * renderScale,
-                                    (part.UV.Y + part.Size.Z) * renderScale,
-                                    part.Size.Z * renderScale,
-                                    part.Size.Y * renderScale);
-                                graphics.DrawImage(uvPictureBox.Image, destRect, srcRect, GraphicsUnit.Pixel);
-                            }
-                            else
-                            {
-                                //Draws Part
-                                graphics.FillRectangle(new SolidBrush(listViewItem.ForeColor), x + part.Pos.Z * 5, y + part.Pos.Y * 5, part.Size.Z * 5, part.Size.Y * 5);
-                            }
-                            break;
-                    }
-                }
+            //                    case "LEG1":
+            //                    case "PANTS1":
+            //                    case "SOCK1":
+            //                    case "LEGGING1":
+            //                    case "BOOT1":
+            //                        y = legY + int.Parse(offsetLegs.Text) * 5;
+            //                        break;
+            //                }
+            //                //Maps imported Texture if auto texture is disabled
+            //                if (!generateTextureCheckBox.Checked)
+            //                {
+            //                    RectangleF destRect = new RectangleF(
+            //                        x + part.Pos.Z * 5,
+            //                        y + part.Pos.Y * 5,
+            //                        part.Size.Z * 5,
+            //                        part.Size.Y * 5);
+            //                    RectangleF srcRect = new RectangleF(
+            //                        (part.UV.X + part.Size.Z + part.Size.X) * renderScale,
+            //                        (part.UV.Y + part.Size.Z) * renderScale,
+            //                        part.Size.Z * renderScale,
+            //                        part.Size.Y * renderScale);
+            //                    graphics.DrawImage(uvPictureBox.Image, destRect, srcRect, GraphicsUnit.Pixel);
+            //                }
+            //                else
+            //                {
+            //                    //Draws Part
+            //                    graphics.FillRectangle(new SolidBrush(listViewItem.ForeColor), x + part.Pos.Z * 5, y + part.Pos.Y * 5, part.Size.Z * 5, part.Size.Y * 5);
+            //                }
+            //                break;
+            //        }
+            //    }
 
-                if (checkBoxArmor.Checked)
-                    DrawArmorOffsets(graphics);
-                // draw last to be on top
-                if (checkGuide.Checked)
-                    DrawGuideLines(graphics);
-            }
-            displayBox.Image = bitmapModelPreview;
+            //    if (checkBoxArmor.Checked)
+            //        DrawArmorOffsets(graphics);
+            //    // draw last to be on top
+            //    if (checkGuide.Checked)
+            //        DrawGuideLines(graphics);
+            //}
+            //displayBox.Image = bitmapModelPreview;
         }
 
         private void GenerateUVTextureMap()
@@ -573,302 +568,305 @@ namespace PckStudio.Forms
         // Checks and sets Z layering
         private void OrganizesZLayer()
         {
-            foreach (ListViewItem listViewItem in listViewBoxes.Items)
-                listViewItem.SubItems.Add("unchecked");
+            throw new NotImplementedException();
+            //foreach (ListViewItem listViewItem in listViewBoxes.Items)
+            //    listViewItem.SubItems.Add("unchecked");
 
-            float surfaceCenter = displayBox.Width / 2;
+            //float surfaceCenter = displayBox.Width / 2;
 
-            switch (direction)
-            {
-                case ViewDirection.front:
-                    {
-                        foreach (ListViewItem listViewItemCurrent in listViewBoxes.Items)
-                        {
-                            if (listViewItemCurrent.SubItems[9].Text == "unchecked")
-                            {
-                                float x = 0;
-                                if (listViewItemCurrent.Text == "HEAD")
-                                    x = surfaceCenter;
-                                else if (listViewItemCurrent.Text == "BODY")
-                                    x = surfaceCenter;
-                                else if (listViewItemCurrent.Text == "ARM0")
-                                    x = 178;
-                                else if (listViewItemCurrent.Text == "ARM1")
-                                    x = 228;
-                                else if (listViewItemCurrent.Text == "LEG0")
-                                    x = 193;
-                                else if (listViewItemCurrent.Text == "LEG1")
-                                    x = 213;
+            //switch (direction)
+            //{
+            //    case ViewDirection.front:
+            //        {
+            //            foreach (ListViewItem listViewItemCurrent in listViewBoxes.Items)
+            //            {
+            //                if (listViewItemCurrent.SubItems[9].Text == "unchecked")
+            //                {
+            //                    float x = 0;
+            //                    if (listViewItemCurrent.Text == "HEAD")
+            //                        x = surfaceCenter;
+            //                    else if (listViewItemCurrent.Text == "BODY")
+            //                        x = surfaceCenter;
+            //                    else if (listViewItemCurrent.Text == "ARM0")
+            //                        x = 178;
+            //                    else if (listViewItemCurrent.Text == "ARM1")
+            //                        x = 228;
+            //                    else if (listViewItemCurrent.Text == "LEG0")
+            //                        x = 193;
+            //                    else if (listViewItemCurrent.Text == "LEG1")
+            //                        x = 213;
 
-                                bool flag = false;
-                                int index = listViewItemCurrent.Index;
-                                foreach (ListViewItem listViewItemComparing in listViewBoxes.Items)
-                                {
-                                    var val1 = double.Parse(listViewItemCurrent.SubItems[3].Text) + double.Parse(listViewItemCurrent.SubItems[6].Text);
-                                    var val2 = double.Parse(listViewItemComparing.SubItems[3].Text) + double.Parse(listViewItemComparing.SubItems[6].Text);
-                                    if (listViewItemComparing.SubItems[9].Text == "unchecked" &&
-                                        val1 < val2)
-                                    {
-                                        if (listViewItemComparing.Index < listViewBoxes.Items.Count + 1)
-                                        {
-                                            index = listViewItemComparing.Index + 1;
-                                            flag = true;
-                                        }
-                                    }
-                                }
-                                listViewItemCurrent.SubItems[9].Text = "checked";
-                                if (flag)
-                                {
-                                    ListViewItem listViewItem2 = (ListViewItem)listViewItemCurrent.Clone();
-                                    listViewBoxes.Items.Insert(index, listViewItem2);
-                                    listViewItemCurrent.Remove();
-                                }
-                            }
-                        }
-                    }
-                    break;
-                case ViewDirection.right:
-                    {
-                        int checkedItems = 0;
-                        do
-                        {
-                            foreach (ListViewItem listViewItemCurrent in listViewBoxes.Items)
-                            {
-                                if (listViewItemCurrent.SubItems[listViewItemCurrent.SubItems.Count - 1].Text == "unchecked")
-                                {
-                                    float x = 0;
-                                    if (listViewItemCurrent.Text == "HEAD")
-                                        x = surfaceCenter;
-                                    else if (listViewItemCurrent.Text == "BODY")
-                                        x = surfaceCenter;
-                                    else if (listViewItemCurrent.Text == "ARM0")
-                                        x = 178;
-                                    else if (listViewItemCurrent.Text == "ARM1")
-                                        x = 228;
-                                    else if (listViewItemCurrent.Text == "LEG0")
-                                        x = 193;
-                                    else if (listViewItemCurrent.Text == "LEG1")
-                                        x = 213;
-                                    bool flag = false;
-                                    int index = listViewItemCurrent.Index;
-                                    foreach (ListViewItem listViewItem2 in listViewBoxes.Items)
-                                    {
-                                        if (listViewItem2.SubItems[9].Text == "unchecked")
-                                        {
-                                            int y = 0;
-                                            if (listViewItem2.Text == "HEAD")
-                                                y = (int)surfaceCenter;
-                                            else if (listViewItem2.Text == "BODY")
-                                                y = (int)surfaceCenter;
-                                            else if (listViewItem2.Text == "ARM0")
-                                                y = 178;
-                                            else if (listViewItem2.Text == "ARM1")
-                                                y = 228;
-                                            else if (listViewItem2.Text == "LEG0")
-                                                y = 193;
-                                            else if (listViewItem2.Text == "LEG1")
-                                                y = 213;
-                                            if ((int)double.Parse(listViewItemCurrent.SubItems[1].Text) + (int)double.Parse(listViewItemCurrent.SubItems[4].Text) - x > (int)double.Parse(listViewItem2.SubItems[1].Text) + (int)double.Parse(listViewItem2.SubItems[4].Text) + y && listViewItem2.Index + 1 < this.listViewBoxes.Items.Count + 1)
-                                            {
-                                                index = listViewItem2.Index + 1;
-                                                flag = true;
-                                            }
-                                        }
-                                    }
-                                    listViewItemCurrent.SubItems[9].Text = "checked";
-                                    checkedItems += 1;
-                                    if (flag)
-                                    {
-                                        ListViewItem listViewItem2 = (ListViewItem)listViewItemCurrent.Clone();
-                                        listViewBoxes.Items.Insert(index, listViewItem2);
-                                        if (listViewBoxes.SelectedItems.Count != 0)
-                                        {
-                                            //if (selected.Index == listViewItem1.Index)
-                                            //{
-                                            //    selected = listViewItem2;
-                                            //}
-                                        }
-                                        listViewItemCurrent.Remove();
-                                    }
-                                }
-                                else
-                                {
-                                    checkedItems += 1;
-                                }
-                            }
-                        } while (checkedItems < listViewBoxes.Items.Count);
-                    }
-                    break;
-                case ViewDirection.back:
-                    {
-                        int checkedItems = 0;
-                        do
-                        {
-                            foreach (ListViewItem listViewItemCurrent in listViewBoxes.Items)
-                            {
-                                if (listViewItemCurrent.SubItems[listViewItemCurrent.SubItems.Count - 1].Text == "unchecked")
-                                {
-                                    bool flag = false;
-                                    int index = listViewItemCurrent.Index;
-                                    foreach (ListViewItem listViewItemComparing in listViewBoxes.Items)
-                                    {
-                                        if (listViewItemComparing.SubItems[9].Text == "unchecked" && (int)double.Parse(listViewItemCurrent.SubItems[3].Text) + (int)double.Parse(listViewItemCurrent.SubItems[6].Text) > (int)double.Parse(listViewItemComparing.SubItems[3].Text) + (int)double.Parse(listViewItemComparing.SubItems[6].Text))
-                                        {
-                                            if (listViewItemComparing.Index < listViewBoxes.Items.Count + 1)
-                                            {
-                                                index = listViewItemComparing.Index + 1;
-                                                flag = true;
-                                            }
-                                        }
-                                    }
-                                    listViewItemCurrent.SubItems[9].Text = "checked";
-                                    checkedItems += 1;
-                                    if (flag)
-                                    {
-                                        ListViewItem listViewItem2 = (ListViewItem)listViewItemCurrent.Clone();
-                                        listViewBoxes.Items.Insert(index, listViewItem2);
-                                        if (listViewBoxes.SelectedItems.Count != 0)
-                                        {
-                                            //if (selected.Index == listViewItemCurrent.Index)
-                                            //{
-                                            //    selected = listViewItem2;
-                                            //}
-                                        }
-                                        listViewItemCurrent.Remove();
-                                    }
-                                }
-                                else
-                                {
-                                    checkedItems += 1;
-                                }
-                            }
-                        } while (checkedItems < listViewBoxes.Items.Count);
-                    }
-                    break;
-                case ViewDirection.left:
-                    {
-                        int checkedItems = 0;
-                        do
-                        {
-                            foreach (ListViewItem listViewItemCurrent in listViewBoxes.Items)
-                            {
-                                if (listViewItemCurrent.SubItems[listViewItemCurrent.SubItems.Count - 1].Text == "unchecked")
-                                {
-                                    float x = 0;
-                                    if (listViewItemCurrent.Text == "HEAD")
-                                        x = surfaceCenter;
-                                    else if (listViewItemCurrent.Text == "BODY")
-                                        x = surfaceCenter;
-                                    else if (listViewItemCurrent.Text == "ARM0")
-                                        x = 178;
-                                    else if (listViewItemCurrent.Text == "ARM1")
-                                        x = 228;
-                                    else if (listViewItemCurrent.Text == "LEG0")
-                                        x = 193;
-                                    else if (listViewItemCurrent.Text == "LEG1")
-                                        x = 213;
-                                    bool flag = false;
-                                    int index = listViewItemCurrent.Index;
-                                    foreach (ListViewItem listViewItem2 in listViewBoxes.Items)
-                                    {
-                                        if (listViewItem2.SubItems[9].Text == "unchecked")
-                                        {
-                                            int y = 0;
-                                            if (listViewItem2.Text == "HEAD")
-                                                y = (int)surfaceCenter;
-                                            else if (listViewItem2.Text == "BODY")
-                                                y = (int)surfaceCenter;
-                                            else if (listViewItem2.Text == "ARM0")
-                                                y = 178;
-                                            else if (listViewItem2.Text == "ARM1")
-                                                y = 228;
-                                            else if (listViewItem2.Text == "LEG0")
-                                                y = 193;
-                                            else if (listViewItem2.Text == "LEG1")
-                                                y = 213;
-                                            if ((int)double.Parse(listViewItemCurrent.SubItems[1].Text) + (int)double.Parse(listViewItemCurrent.SubItems[4].Text) + x < (int)double.Parse(listViewItem2.SubItems[1].Text) + (int)double.Parse(listViewItem2.SubItems[4].Text) + y && listViewItem2.Index + 1 < this.listViewBoxes.Items.Count + 1)
-                                            {
-                                                index = listViewItem2.Index + 1;
-                                                flag = true;
-                                            }
-                                        }
-                                    }
-                                    listViewItemCurrent.SubItems[9].Text = "checked";
-                                    checkedItems += 1;
-                                    if (flag == true)
-                                    {
-                                        ListViewItem listViewItem2 = (ListViewItem)listViewItemCurrent.Clone();
-                                        listViewBoxes.Items.Insert(index, listViewItem2);
-                                        if (listViewBoxes.SelectedItems.Count != 0)
-                                        {
-                                            //if (selected.Index == listViewItem1.Index)
-                                            //{
-                                            //    selected = listViewItem2;
-                                            //}
-                                        }
-                                        listViewItemCurrent.Remove();
-                                    }
-                                }
-                                else
-                                {
-                                    checkedItems += 1;
-                                }
-                            }
-                        } while (checkedItems < listViewBoxes.Items.Count);
-                    }
-                    break;
-                default:
-                    break;
-            }
+            //                    bool flag = false;
+            //                    int index = listViewItemCurrent.Index;
+            //                    foreach (ListViewItem listViewItemComparing in listViewBoxes.Items)
+            //                    {
+            //                        var val1 = double.Parse(listViewItemCurrent.SubItems[3].Text) + double.Parse(listViewItemCurrent.SubItems[6].Text);
+            //                        var val2 = double.Parse(listViewItemComparing.SubItems[3].Text) + double.Parse(listViewItemComparing.SubItems[6].Text);
+            //                        if (listViewItemComparing.SubItems[9].Text == "unchecked" &&
+            //                            val1 < val2)
+            //                        {
+            //                            if (listViewItemComparing.Index < listViewBoxes.Items.Count + 1)
+            //                            {
+            //                                index = listViewItemComparing.Index + 1;
+            //                                flag = true;
+            //                            }
+            //                        }
+            //                    }
+            //                    listViewItemCurrent.SubItems[9].Text = "checked";
+            //                    if (flag)
+            //                    {
+            //                        ListViewItem listViewItem2 = (ListViewItem)listViewItemCurrent.Clone();
+            //                        listViewBoxes.Items.Insert(index, listViewItem2);
+            //                        listViewItemCurrent.Remove();
+            //                    }
+            //                }
+            //            }
+            //        }
+            //        break;
+            //    case ViewDirection.right:
+            //        {
+            //            int checkedItems = 0;
+            //            do
+            //            {
+            //                foreach (ListViewItem listViewItemCurrent in listViewBoxes.Items)
+            //                {
+            //                    if (listViewItemCurrent.SubItems[listViewItemCurrent.SubItems.Count - 1].Text == "unchecked")
+            //                    {
+            //                        float x = 0;
+            //                        if (listViewItemCurrent.Text == "HEAD")
+            //                            x = surfaceCenter;
+            //                        else if (listViewItemCurrent.Text == "BODY")
+            //                            x = surfaceCenter;
+            //                        else if (listViewItemCurrent.Text == "ARM0")
+            //                            x = 178;
+            //                        else if (listViewItemCurrent.Text == "ARM1")
+            //                            x = 228;
+            //                        else if (listViewItemCurrent.Text == "LEG0")
+            //                            x = 193;
+            //                        else if (listViewItemCurrent.Text == "LEG1")
+            //                            x = 213;
+            //                        bool flag = false;
+            //                        int index = listViewItemCurrent.Index;
+            //                        foreach (ListViewItem listViewItem2 in listViewBoxes.Items)
+            //                        {
+            //                            if (listViewItem2.SubItems[9].Text == "unchecked")
+            //                            {
+            //                                int y = 0;
+            //                                if (listViewItem2.Text == "HEAD")
+            //                                    y = (int)surfaceCenter;
+            //                                else if (listViewItem2.Text == "BODY")
+            //                                    y = (int)surfaceCenter;
+            //                                else if (listViewItem2.Text == "ARM0")
+            //                                    y = 178;
+            //                                else if (listViewItem2.Text == "ARM1")
+            //                                    y = 228;
+            //                                else if (listViewItem2.Text == "LEG0")
+            //                                    y = 193;
+            //                                else if (listViewItem2.Text == "LEG1")
+            //                                    y = 213;
+            //                                if ((int)double.Parse(listViewItemCurrent.SubItems[1].Text) + (int)double.Parse(listViewItemCurrent.SubItems[4].Text) - x > (int)double.Parse(listViewItem2.SubItems[1].Text) + (int)double.Parse(listViewItem2.SubItems[4].Text) + y && listViewItem2.Index + 1 < this.listViewBoxes.Items.Count + 1)
+            //                                {
+            //                                    index = listViewItem2.Index + 1;
+            //                                    flag = true;
+            //                                }
+            //                            }
+            //                        }
+            //                        listViewItemCurrent.SubItems[9].Text = "checked";
+            //                        checkedItems += 1;
+            //                        if (flag)
+            //                        {
+            //                            ListViewItem listViewItem2 = (ListViewItem)listViewItemCurrent.Clone();
+            //                            listViewBoxes.Items.Insert(index, listViewItem2);
+            //                            if (listViewBoxes.SelectedItems.Count != 0)
+            //                            {
+            //                                //if (selected.Index == listViewItem1.Index)
+            //                                //{
+            //                                //    selected = listViewItem2;
+            //                                //}
+            //                            }
+            //                            listViewItemCurrent.Remove();
+            //                        }
+            //                    }
+            //                    else
+            //                    {
+            //                        checkedItems += 1;
+            //                    }
+            //                }
+            //            } while (checkedItems < listViewBoxes.Items.Count);
+            //        }
+            //        break;
+            //    case ViewDirection.back:
+            //        {
+            //            int checkedItems = 0;
+            //            do
+            //            {
+            //                foreach (ListViewItem listViewItemCurrent in listViewBoxes.Items)
+            //                {
+            //                    if (listViewItemCurrent.SubItems[listViewItemCurrent.SubItems.Count - 1].Text == "unchecked")
+            //                    {
+            //                        bool flag = false;
+            //                        int index = listViewItemCurrent.Index;
+            //                        foreach (ListViewItem listViewItemComparing in listViewBoxes.Items)
+            //                        {
+            //                            if (listViewItemComparing.SubItems[9].Text == "unchecked" && (int)double.Parse(listViewItemCurrent.SubItems[3].Text) + (int)double.Parse(listViewItemCurrent.SubItems[6].Text) > (int)double.Parse(listViewItemComparing.SubItems[3].Text) + (int)double.Parse(listViewItemComparing.SubItems[6].Text))
+            //                            {
+            //                                if (listViewItemComparing.Index < listViewBoxes.Items.Count + 1)
+            //                                {
+            //                                    index = listViewItemComparing.Index + 1;
+            //                                    flag = true;
+            //                                }
+            //                            }
+            //                        }
+            //                        listViewItemCurrent.SubItems[9].Text = "checked";
+            //                        checkedItems += 1;
+            //                        if (flag)
+            //                        {
+            //                            ListViewItem listViewItem2 = (ListViewItem)listViewItemCurrent.Clone();
+            //                            listViewBoxes.Items.Insert(index, listViewItem2);
+            //                            if (listViewBoxes.SelectedItems.Count != 0)
+            //                            {
+            //                                //if (selected.Index == listViewItemCurrent.Index)
+            //                                //{
+            //                                //    selected = listViewItem2;
+            //                                //}
+            //                            }
+            //                            listViewItemCurrent.Remove();
+            //                        }
+            //                    }
+            //                    else
+            //                    {
+            //                        checkedItems += 1;
+            //                    }
+            //                }
+            //            } while (checkedItems < listViewBoxes.Items.Count);
+            //        }
+            //        break;
+            //    case ViewDirection.left:
+            //        {
+            //            int checkedItems = 0;
+            //            do
+            //            {
+            //                foreach (ListViewItem listViewItemCurrent in listViewBoxes.Items)
+            //                {
+            //                    if (listViewItemCurrent.SubItems[listViewItemCurrent.SubItems.Count - 1].Text == "unchecked")
+            //                    {
+            //                        float x = 0;
+            //                        if (listViewItemCurrent.Text == "HEAD")
+            //                            x = surfaceCenter;
+            //                        else if (listViewItemCurrent.Text == "BODY")
+            //                            x = surfaceCenter;
+            //                        else if (listViewItemCurrent.Text == "ARM0")
+            //                            x = 178;
+            //                        else if (listViewItemCurrent.Text == "ARM1")
+            //                            x = 228;
+            //                        else if (listViewItemCurrent.Text == "LEG0")
+            //                            x = 193;
+            //                        else if (listViewItemCurrent.Text == "LEG1")
+            //                            x = 213;
+            //                        bool flag = false;
+            //                        int index = listViewItemCurrent.Index;
+            //                        foreach (ListViewItem listViewItem2 in listViewBoxes.Items)
+            //                        {
+            //                            if (listViewItem2.SubItems[9].Text == "unchecked")
+            //                            {
+            //                                int y = 0;
+            //                                if (listViewItem2.Text == "HEAD")
+            //                                    y = (int)surfaceCenter;
+            //                                else if (listViewItem2.Text == "BODY")
+            //                                    y = (int)surfaceCenter;
+            //                                else if (listViewItem2.Text == "ARM0")
+            //                                    y = 178;
+            //                                else if (listViewItem2.Text == "ARM1")
+            //                                    y = 228;
+            //                                else if (listViewItem2.Text == "LEG0")
+            //                                    y = 193;
+            //                                else if (listViewItem2.Text == "LEG1")
+            //                                    y = 213;
+            //                                if ((int)double.Parse(listViewItemCurrent.SubItems[1].Text) + (int)double.Parse(listViewItemCurrent.SubItems[4].Text) + x < (int)double.Parse(listViewItem2.SubItems[1].Text) + (int)double.Parse(listViewItem2.SubItems[4].Text) + y && listViewItem2.Index + 1 < this.listViewBoxes.Items.Count + 1)
+            //                                {
+            //                                    index = listViewItem2.Index + 1;
+            //                                    flag = true;
+            //                                }
+            //                            }
+            //                        }
+            //                        listViewItemCurrent.SubItems[9].Text = "checked";
+            //                        checkedItems += 1;
+            //                        if (flag == true)
+            //                        {
+            //                            ListViewItem listViewItem2 = (ListViewItem)listViewItemCurrent.Clone();
+            //                            listViewBoxes.Items.Insert(index, listViewItem2);
+            //                            if (listViewBoxes.SelectedItems.Count != 0)
+            //                            {
+            //                                //if (selected.Index == listViewItem1.Index)
+            //                                //{
+            //                                //    selected = listViewItem2;
+            //                                //}
+            //                            }
+            //                            listViewItemCurrent.Remove();
+            //                        }
+            //                    }
+            //                    else
+            //                    {
+            //                        checkedItems += 1;
+            //                    }
+            //                }
+            //            } while (checkedItems < listViewBoxes.Items.Count);
+            //        }
+            //        break;
+            //    default:
+            //        break;
+            //}
         }
 
         private void DrawGuideLines(Graphics g)
         {
-            Point center = new Point(displayBox.Height / 2, displayBox.Width / 2);
-            int headbodyY = center.Y + 25; //25
-            int legY = center.Y + 85; // - 80;
-            bool isSide = direction == ViewDirection.left || direction == ViewDirection.right;
-            if (!isSide)
-            {
-                g.DrawLine(Pens.Red, 0, headbodyY + float.Parse(offsetHead.Text) * 5, displayBox.Width, headbodyY + float.Parse(offsetHead.Text) * 5);
-                g.DrawLine(Pens.Green, 0, headbodyY + float.Parse(offsetBody.Text) * 5, displayBox.Width, headbodyY + float.Parse(offsetBody.Text) * 5);
-                g.DrawLine(Pens.Blue, 0, headbodyY + float.Parse(offsetArms.Text) * 5, displayBox.Width, headbodyY + float.Parse(offsetArms.Text) * 5);
-                g.DrawLine(Pens.Purple, 0, legY + float.Parse(offsetLegs.Text) * 5, displayBox.Width, legY + float.Parse(offsetLegs.Text) * 5);
-            }
-            g.DrawLine(Pens.Red, center.X, 0, center.X, displayBox.Height);
-            g.DrawLine(Pens.Blue, center.X + 30, 0, center.X + 30, displayBox.Height);
-            g.DrawLine(Pens.Blue, center.X - 30, 0, center.X - 30, displayBox.Height);
-            g.DrawLine(Pens.Purple, center.X - 10, 0, center.X - 10, displayBox.Height);
-            g.DrawLine(Pens.Purple, center.X + 10, 0, center .X + 10, displayBox.Height);
+            throw new NotImplementedException();
+            //Point center = new Point(displayBox.Height / 2, displayBox.Width / 2);
+            //int headbodyY = center.Y + 25; //25
+            //int legY = center.Y + 85; // - 80;
+            //bool isSide = direction == ViewDirection.left || direction == ViewDirection.right;
+            //if (!isSide)
+            //{
+            //    g.DrawLine(Pens.Red, 0, headbodyY + float.Parse(offsetHead.Text) * 5, displayBox.Width, headbodyY + float.Parse(offsetHead.Text) * 5);
+            //    g.DrawLine(Pens.Green, 0, headbodyY + float.Parse(offsetBody.Text) * 5, displayBox.Width, headbodyY + float.Parse(offsetBody.Text) * 5);
+            //    g.DrawLine(Pens.Blue, 0, headbodyY + float.Parse(offsetArms.Text) * 5, displayBox.Width, headbodyY + float.Parse(offsetArms.Text) * 5);
+            //    g.DrawLine(Pens.Purple, 0, legY + float.Parse(offsetLegs.Text) * 5, displayBox.Width, legY + float.Parse(offsetLegs.Text) * 5);
+            //}
+            //g.DrawLine(Pens.Red, center.X, 0, center.X, displayBox.Height);
+            //g.DrawLine(Pens.Blue, center.X + 30, 0, center.X + 30, displayBox.Height);
+            //g.DrawLine(Pens.Blue, center.X - 30, 0, center.X - 30, displayBox.Height);
+            //g.DrawLine(Pens.Purple, center.X - 10, 0, center.X - 10, displayBox.Height);
+            //g.DrawLine(Pens.Purple, center.X + 10, 0, center .X + 10, displayBox.Height);
         }
 
         private void DrawArmorOffsets(Graphics g)
         {
-            int centerPointHeight = displayBox.Height / 2;
-            int centerPointWidth = displayBox.Width / 2;
-            int headbodyY = centerPointHeight + 25; //25
-            int armY = centerPointHeight + 35; // - 60;
-            int legY = centerPointHeight + 85; // - 80;
-            SolidBrush semiTransBrush = new SolidBrush(Color.FromArgb(80, 50, 50, 75));
-            g.FillRectangle(semiTransBrush, centerPointWidth, (float)(headbodyY - 40 /*+ offsetHelmet.Value * 5*/), 40, 40); // Helmet
-            bool isSide = direction == ViewDirection.left || direction == ViewDirection.right;
-            if (isSide)
-            {
-                g.FillRectangle(semiTransBrush, centerPointWidth - 10, headbodyY, 20, 60); // Chest
-                g.FillRectangle(semiTransBrush, centerPointWidth - 10, (float)(legY + 40 /*+ offsetBoots.Value * 5*/), 20, 20); // Boots
-                g.FillRectangle(semiTransBrush, centerPointWidth - 10, (float)(legY /*+ offsetPants.Value * 5*/), 20, 40); // Pants
-                g.FillRectangle(semiTransBrush, centerPointWidth - 5, (float)(armY + 45 /*+ offsetTool.Value * 5*/), 10, 10); // Tools
-            }
-            else
-            {
-                g.FillRectangle(semiTransBrush, centerPointWidth - 20, headbodyY, 40, 60); // Chest
-                g.FillRectangle(semiTransBrush, centerPointWidth - 35, (float)(armY + 45 /*+ offsetTool.Value * 5*/), 10, 10); // Tool0
-                g.FillRectangle(semiTransBrush, centerPointWidth + 25, (float)(armY + 45 /*+ offsetTool.Value * 5*/), 10, 10); // Tool1
-                g.FillRectangle(semiTransBrush, centerPointWidth - 20, (float)(legY /*+ offsetPants.Value * 5*/), 20, 40); // Pants0
-                g.FillRectangle(semiTransBrush, centerPointWidth, (float)(legY /*+ offsetPants.Value * 5*/), 20, 40); // Pants1
-                g.FillRectangle(semiTransBrush, centerPointWidth - 20, (float)(legY + 40 /*+ offsetBoots.Value * 5*/), 20, 20); // Boot0
-                g.FillRectangle(semiTransBrush, centerPointWidth, (float)(legY + 40 /*+ offsetBoots.Value * 5*/), 20, 20); // Boot1
-            }
+            throw new NotImplementedException();
+            //int centerPointHeight = displayBox.Height / 2;
+            //int centerPointWidth = displayBox.Width / 2;
+            //int headbodyY = centerPointHeight + 25; //25
+            //int armY = centerPointHeight + 35; // - 60;
+            //int legY = centerPointHeight + 85; // - 80;
+            //SolidBrush semiTransBrush = new SolidBrush(Color.FromArgb(80, 50, 50, 75));
+            //g.FillRectangle(semiTransBrush, centerPointWidth, (float)(headbodyY - 40 /*+ offsetHelmet.Value * 5*/), 40, 40); // Helmet
+            //bool isSide = direction == ViewDirection.left || direction == ViewDirection.right;
+            //if (isSide)
+            //{
+            //    g.FillRectangle(semiTransBrush, centerPointWidth - 10, headbodyY, 20, 60); // Chest
+            //    g.FillRectangle(semiTransBrush, centerPointWidth - 10, (float)(legY + 40 /*+ offsetBoots.Value * 5*/), 20, 20); // Boots
+            //    g.FillRectangle(semiTransBrush, centerPointWidth - 10, (float)(legY /*+ offsetPants.Value * 5*/), 20, 40); // Pants
+            //    g.FillRectangle(semiTransBrush, centerPointWidth - 5, (float)(armY + 45 /*+ offsetTool.Value * 5*/), 10, 10); // Tools
+            //}
+            //else
+            //{
+            //    g.FillRectangle(semiTransBrush, centerPointWidth - 20, headbodyY, 40, 60); // Chest
+            //    g.FillRectangle(semiTransBrush, centerPointWidth - 35, (float)(armY + 45 /*+ offsetTool.Value * 5*/), 10, 10); // Tool0
+            //    g.FillRectangle(semiTransBrush, centerPointWidth + 25, (float)(armY + 45 /*+ offsetTool.Value * 5*/), 10, 10); // Tool1
+            //    g.FillRectangle(semiTransBrush, centerPointWidth - 20, (float)(legY /*+ offsetPants.Value * 5*/), 20, 40); // Pants0
+            //    g.FillRectangle(semiTransBrush, centerPointWidth, (float)(legY /*+ offsetPants.Value * 5*/), 20, 40); // Pants1
+            //    g.FillRectangle(semiTransBrush, centerPointWidth - 20, (float)(legY + 40 /*+ offsetBoots.Value * 5*/), 20, 20); // Boot0
+            //    g.FillRectangle(semiTransBrush, centerPointWidth, (float)(legY + 40 /*+ offsetBoots.Value * 5*/), 20, 20); // Boot1
+            //}
 
         }
 
@@ -1103,7 +1101,6 @@ namespace PckStudio.Forms
             //    graphics.ApplyConfig(_graphicsConfig);
             //    graphics.DrawImage(uvPictureBox.Image, 0, 0, 64, 64);
             //}
-            _previewImage = new Bitmap(displayBox.Width, displayBox.Height);
             Close();
         }
 

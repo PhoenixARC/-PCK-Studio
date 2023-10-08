@@ -60,9 +60,7 @@
             this.comboParent = new System.Windows.Forms.ComboBox();
             this.buttonEXPORT = new System.Windows.Forms.Button();
             this.buttonIMPORT = new System.Windows.Forms.Button();
-            this.uvPictureBox = new PckStudio.ToolboxItems.InterpolationPictureBox();
             this.buttonImportModel = new System.Windows.Forms.Button();
-            this.displayBox = new System.Windows.Forms.PictureBox();
             this.buttonExportModel = new System.Windows.Forms.Button();
             this.OpenJSONButton = new System.Windows.Forms.Button();
             this.buttonTemplate = new MetroFramework.Controls.MetroButton();
@@ -87,6 +85,8 @@
             this.U = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.V = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.listViewBoxes = new System.Windows.Forms.ListView();
+            this.renderer3D1 = new PckStudio.Rendering.Renderer3D();
+            this.uvPictureBox = new PckStudio.ToolboxItems.InterpolationPictureBox();
             label6 = new System.Windows.Forms.Label();
             label5 = new System.Windows.Forms.Label();
             label3 = new System.Windows.Forms.Label();
@@ -97,8 +97,6 @@
             this.tabBody.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.myTablePanel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.uvPictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.displayBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SizeXUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SizeYUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SizeZUpDown)).BeginInit();
@@ -107,6 +105,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.PosZUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PosYUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PosXUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.uvPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // label6
@@ -325,14 +324,6 @@
             this.buttonIMPORT.UseVisualStyleBackColor = true;
             this.buttonIMPORT.Click += new System.EventHandler(this.buttonIMPORT_Click);
             // 
-            // uvPictureBox
-            // 
-            this.uvPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            resources.ApplyResources(this.uvPictureBox, "uvPictureBox");
-            this.uvPictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-            this.uvPictureBox.Name = "uvPictureBox";
-            this.uvPictureBox.TabStop = false;
-            // 
             // buttonImportModel
             // 
             resources.ApplyResources(this.buttonImportModel, "buttonImportModel");
@@ -340,14 +331,6 @@
             this.buttonImportModel.Name = "buttonImportModel";
             this.buttonImportModel.UseVisualStyleBackColor = true;
             this.buttonImportModel.Click += new System.EventHandler(this.buttonImportModel_Click);
-            // 
-            // displayBox
-            // 
-            this.displayBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.displayBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            resources.ApplyResources(this.displayBox, "displayBox");
-            this.displayBox.Name = "displayBox";
-            this.displayBox.TabStop = false;
             // 
             // buttonExportModel
             // 
@@ -555,10 +538,44 @@
             this.listViewBoxes.DoubleClick += new System.EventHandler(this.listView1_DoubleClick);
             this.listViewBoxes.KeyDown += new System.Windows.Forms.KeyEventHandler(this.delStuffUsingDelKey);
             // 
+            // renderer3D1
+            // 
+            resources.ApplyResources(this.renderer3D1, "renderer3D1");
+            this.renderer3D1.BackColor = System.Drawing.Color.DarkGray;
+            this.renderer3D1.CameraDistance = 72F;
+            this.renderer3D1.LookAngle = ((OpenTK.Vector2)(resources.GetObject("renderer3D1.LookAngle")));
+            this.renderer3D1.Model = PckStudio.Rendering.Renderer3D.Models.Steve;
+            this.renderer3D1.Name = "renderer3D1";
+            this.renderer3D1.Rotation = ((OpenTK.Vector2)(resources.GetObject("renderer3D1.Rotation")));
+            this.renderer3D1.ShowBody = true;
+            this.renderer3D1.ShowBodyOverlay = true;
+            this.renderer3D1.ShowHead = true;
+            this.renderer3D1.ShowHeadOverlay = true;
+            this.renderer3D1.ShowLeftArm = true;
+            this.renderer3D1.ShowLeftArmOverlay = true;
+            this.renderer3D1.ShowLeftLeg = true;
+            this.renderer3D1.ShowLeftLegOverlay = true;
+            this.renderer3D1.ShowRightArm = true;
+            this.renderer3D1.ShowRightArmOverlay = true;
+            this.renderer3D1.ShowRightLeg = true;
+            this.renderer3D1.ShowRightLegOverlay = true;
+            this.renderer3D1.Texture = null;
+            this.renderer3D1.VSync = true;
+            this.renderer3D1.FieldOfView = 1D;
+            // 
+            // uvPictureBox
+            // 
+            this.uvPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            resources.ApplyResources(this.uvPictureBox, "uvPictureBox");
+            this.uvPictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+            this.uvPictureBox.Name = "uvPictureBox";
+            this.uvPictureBox.TabStop = false;
+            // 
             // generateModel
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.renderer3D1);
             this.Controls.Add(this.PosZUpDown);
             this.Controls.Add(this.PosYUpDown);
             this.Controls.Add(this.PosXUpDown);
@@ -571,7 +588,6 @@
             this.Controls.Add(this.checkGuide);
             this.Controls.Add(this.generateTextureCheckBox);
             this.Controls.Add(this.buttonTemplate);
-            this.Controls.Add(this.displayBox);
             this.Controls.Add(this.listViewBoxes);
             this.Controls.Add(this.OpenJSONButton);
             this.Controls.Add(this.buttonExportModel);
@@ -603,8 +619,6 @@
             this.tabPage1.ResumeLayout(false);
             this.myTablePanel2.ResumeLayout(false);
             this.myTablePanel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.uvPictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.displayBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SizeXUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SizeYUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SizeZUpDown)).EndInit();
@@ -613,6 +627,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.PosZUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PosYUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PosXUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.uvPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -627,7 +642,6 @@
         private System.Windows.Forms.Button buttonDone;
         private System.Windows.Forms.Button OpenJSONButton;
         private System.Windows.Forms.Button buttonExportModel;
-        private System.Windows.Forms.PictureBox displayBox;
         private System.Windows.Forms.Button buttonImportModel;
         private PckStudio.ToolboxItems.InterpolationPictureBox uvPictureBox;
         private System.Windows.Forms.Button buttonIMPORT;
@@ -671,5 +685,6 @@
         private System.Windows.Forms.ColumnHeader U;
         private System.Windows.Forms.ColumnHeader V;
         private System.Windows.Forms.ListView listViewBoxes;
+        private Rendering.Renderer3D renderer3D1;
     }
 }

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Drawing;
-using System.Windows.Forms;
 
 namespace PckStudio.Rendering
 {
@@ -33,43 +31,43 @@ namespace PckStudio.Rendering
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            timMove = new Timer(components);
-            timMove.Tick += new EventHandler(Move_Tick);
+            moveTimer = new System.Windows.Forms.Timer(components);
+            moveTimer.Tick += new EventHandler(Move_Tick);
             SuspendLayout();
             // 
             // timMove
             // 
-            timMove.Enabled = true;
-            timMove.Interval = 20;
+            moveTimer.Enabled = true;
+            moveTimer.Interval = 20;
 #if DEBUG
             // 
             // debugLabel
             // 
             debugLabel = new System.Windows.Forms.Label();
             debugLabel.Enabled = true;
-            debugLabel.Visible = true;
+            debugLabel.Visible = false;
             debugLabel.AutoSize = true;
-            debugLabel.Location = new Point(0, 0);
-            debugLabel.BackColor = Color.Transparent;
-            Controls.Add(debugLabel);
+            debugLabel.Location = new System.Drawing.Point(0, 0);
+            debugLabel.BackColor = System.Drawing.Color.Transparent;
+            Controls.Add(debugLabel);;
 #endif
             // 
             // Renderer3D
             // 
-            Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            BackColor = Color.Transparent;
-            Location = new Point(0, 0);
-            Size = new Size(150, 150);
+            Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            BackColor = System.Drawing.Color.LightGray;
+            Location = new System.Drawing.Point(0, 0);
+            Size = new System.Drawing.Size(150, 150);
             TabIndex = 0;
             VSync = true;
-            AutoScaleDimensions = new SizeF(6.0f, 13.0f);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleDimensions = new System.Drawing.SizeF(6.0f, 13.0f);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             Name = "Renderer3D";
             ResumeLayout(false);
 
         }
 
-        private Timer timMove;
+        private System.Windows.Forms.Timer moveTimer;
 #if DEBUG
         private System.Windows.Forms.Label debugLabel;
 #endif
