@@ -813,10 +813,10 @@
     <value>False</value>
   </metadata>
   <data name="toolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>177, 6</value>
+    <value>167, 6</value>
   </data>
   <data name="toolStripSeparator3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>177, 6</value>
+    <value>167, 6</value>
   </data>
   <metadata name="contextMenuPCKEntries.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>116, 17</value>
@@ -918,7 +918,7 @@
 </value>
   </data>
   <data name="createToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="createToolStripMenuItem.Text" xml:space="preserve">
     <value>Create</value>
@@ -985,7 +985,7 @@
 </value>
   </data>
   <data name="importSkinsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="importSkinsToolStripMenuItem.Text" xml:space="preserve">
     <value>Import</value>
@@ -997,7 +997,7 @@
     <value>Export as 3DS Texture</value>
   </data>
   <data name="exportToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="exportToolStripMenuItem.Text" xml:space="preserve">
     <value>Export</value>
@@ -1075,7 +1075,7 @@
     <value>Entity Materials File (.BIN)</value>
   </data>
   <data name="setFileTypeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="setFileTypeToolStripMenuItem.Text" xml:space="preserve">
     <value>Set File Type</value>
@@ -1099,10 +1099,22 @@
     <value>Correct Skin Decimals</value>
   </data>
   <data name="miscFunctionsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="miscFunctionsToolStripMenuItem.Text" xml:space="preserve">
     <value>Misc. Functions</value>
+  </data>
+  <data name="moveUpToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="moveUpToolStripMenuItem.Text" xml:space="preserve">
+    <value>Move Up</value>
+  </data>
+  <data name="moveDownToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="moveDownToolStripMenuItem.Text" xml:space="preserve">
+    <value>Move Down</value>
   </data>
   <data name="extractToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1114,13 +1126,13 @@
 </value>
   </data>
   <data name="extractToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="extractToolStripMenuItem.Text" xml:space="preserve">
     <value>Extract</value>
   </data>
   <data name="cloneFileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="cloneFileToolStripMenuItem.Text" xml:space="preserve">
     <value>Clone</value>
@@ -1133,7 +1145,7 @@
 </value>
   </data>
   <data name="renameFileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="renameFileToolStripMenuItem.Text" xml:space="preserve">
     <value>Rename</value>
@@ -1149,7 +1161,7 @@
 </value>
   </data>
   <data name="replaceToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="replaceToolStripMenuItem.Text" xml:space="preserve">
     <value>Replace</value>
@@ -1164,13 +1176,13 @@
 </value>
   </data>
   <data name="deleteFileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="deleteFileToolStripMenuItem.Text" xml:space="preserve">
     <value>Delete</value>
   </data>
   <data name="contextMenuPCKEntries.Size" type="System.Drawing.Size, System.Drawing">
-    <value>158, 224</value>
+    <value>181, 290</value>
   </data>
   <data name="&gt;&gt;contextMenuPCKEntries.Name" xml:space="preserve">
     <value>contextMenuPCKEntries</value>
@@ -1562,7 +1574,7 @@
     <value>More</value>
   </data>
   <data name="checkForUpdatesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>170, 22</value>
   </data>
   <data name="checkForUpdatesToolStripMenuItem.Text" xml:space="preserve">
     <value>Check for updates</value>
@@ -2031,7 +2043,7 @@
 </value>
   </data>
   <data name="aboutToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>170, 22</value>
   </data>
   <data name="aboutToolStripMenuItem.Text" xml:space="preserve">
     <value>About</value>
@@ -2087,7 +2099,7 @@
 </value>
   </data>
   <data name="videosToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>170, 22</value>
   </data>
   <data name="videosToolStripMenuItem.Text" xml:space="preserve">
     <value>Tutorials</value>
@@ -2111,7 +2123,7 @@
     <value>For MattNL (Other Developer)</value>
   </data>
   <data name="donateToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>170, 22</value>
   </data>
   <data name="donateToolStripMenuItem.Text" xml:space="preserve">
     <value>Buy a coffee</value>
@@ -2120,7 +2132,7 @@
     <value>Alt+S</value>
   </data>
   <data name="settingsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>170, 22</value>
   </data>
   <data name="settingsToolStripMenuItem.Text" xml:space="preserve">
     <value>Settings</value>
@@ -6619,6 +6631,18 @@
     <value>correctSkinDecimalsToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;correctSkinDecimalsToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;moveUpToolStripMenuItem.Name" xml:space="preserve">
+    <value>moveUpToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;moveUpToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;moveDownToolStripMenuItem.Name" xml:space="preserve">
+    <value>moveDownToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;moveDownToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;extractToolStripMenuItem.Name" xml:space="preserve">
