@@ -33,7 +33,7 @@ namespace PckStudio.Rendering
         }
     }
 
-    internal class VertexBufferLayout
+    internal struct VertexBufferLayout
     {
         private List<VertexBufferElement> elements;
         private int stride;

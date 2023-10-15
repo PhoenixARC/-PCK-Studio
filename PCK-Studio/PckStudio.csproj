@@ -156,6 +156,7 @@
     <Compile Include="Rendering\Renderer.cs" />
     <Compile Include="Rendering\Shader.cs" />
     <Compile Include="Rendering\Texture2D.cs" />
+    <Compile Include="Rendering\Vertex.cs" />
     <Compile Include="Rendering\VertexArray.cs" />
     <Compile Include="Rendering\VertexBuffer.cs" />
     <Compile Include="Rendering\VertexBufferLayout.cs" />

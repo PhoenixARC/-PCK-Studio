@@ -10,15 +10,22 @@ using OpenTK.Graphics.OpenGL;
 
 namespace PckStudio.Rendering
 {
-    internal class VertexBuffer<T> : IDisposable where T : struct
+    internal struct VertexBuffer<T> : IDisposable where T : struct
     {
         private int _id;
+
+#if DEBUG
+        private T[] __data;
+#endif
 
         public VertexBuffer(T[] data, int size)
         {
             _id = GL.GenBuffer();
             Bind();
             GL.BufferData(BufferTarget.ArrayBuffer, size, data, BufferUsageHint.StaticDraw);
+#if DEBUG
+            __data = data;
+#endif
         }
 
         public void Bind()

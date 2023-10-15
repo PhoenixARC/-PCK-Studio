@@ -28,7 +28,7 @@ namespace PckStudio.Rendering
                 var element = elements[i];
                 GL.EnableVertexAttribArray(i);
                 GL.VertexAttribPointer(i, element.Count, element.Type, element.Normalize, layout.GetStride(), offset);
-                offset += layout.GetStride();
+                offset += element.Count * VertexBufferElement.GetStrideSize(element.Type);
             }
         }
 
