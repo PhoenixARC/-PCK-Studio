@@ -328,10 +328,10 @@
   <data name="ProjectLogo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\ProjectLogo.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="vertexShader" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\vertexShader.glsl;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="skinFragment" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\shader\skinFragment.glsl;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="fragmentShader" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\fragment.glsl;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="skinVertexShader" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\shader\skinVertexShader.glsl;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
 </root>

@@ -96,7 +96,7 @@ namespace PckStudio.Rendering
             GL.LinkProgram(programId);
             GL.ValidateProgram(programId);
 
-            Trace.TraceInformation(GL.GetProgramInfoLog(programId));
+            Debug.WriteLine(GL.GetProgramInfoLog(programId), category: nameof(Shader));
 
             GL.DeleteShader(vertexShader);
             GL.DeleteShader(fragmentShader);

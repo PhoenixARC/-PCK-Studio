@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.renderer3D1 = new PckStudio.Rendering.Renderer3D();
+            this.renderer3D1 = new PckStudio.Rendering.SkinRenderer();
             this.SuspendLayout();
             // 
             // renderer3D1
@@ -36,12 +36,9 @@
             this.renderer3D1.BackColor = System.Drawing.Color.Gray;
             this.renderer3D1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.renderer3D1.Location = new System.Drawing.Point(0, 0);
-            this.renderer3D1.Model = PckStudio.Rendering.Renderer3D.Models.Steve;
             this.renderer3D1.Name = "renderer3D1";
             this.renderer3D1.Size = new System.Drawing.Size(426, 428);
-            this.renderer3D1.Texture = global::PckStudio.Properties.Resources.classic_template;
             this.renderer3D1.TabIndex = 8;
-            this.renderer3D1.FieldOfView = 1D;
             // 
             // TestGL
             // 
@@ -58,6 +55,6 @@
 
         #endregion
 
-        private PckStudio.Rendering.Renderer3D renderer3D1;
+        private PckStudio.Rendering.SkinRenderer renderer3D1;
     }
 }

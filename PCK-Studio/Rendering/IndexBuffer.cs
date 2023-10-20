@@ -16,8 +16,8 @@ namespace PckStudio.Rendering
         public IndexBuffer(params uint[] indecies)
         {
             _id = GL.GenBuffer();
-            Bind();
             _count = indecies.Length;
+            Bind();
             GL.BufferData(BufferTarget.ElementArrayBuffer, indecies.Length * sizeof(uint), indecies, BufferUsageHint.StaticDraw);
         }
 

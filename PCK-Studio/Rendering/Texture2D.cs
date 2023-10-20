@@ -51,11 +51,6 @@ namespace PckStudio.Rendering
             GL.BindTexture(TextureTarget.Texture2D, _id);
         }
 
-        public void Bind()
-        {
-            Bind(0);
-        }
-
         [Conditional("DEBUG")]
         public void Unbind()
         {

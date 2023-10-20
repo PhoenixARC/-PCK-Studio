@@ -542,14 +542,8 @@
             // 
             resources.ApplyResources(this.renderer3D1, "renderer3D1");
             this.renderer3D1.BackColor = System.Drawing.Color.DarkGray;
-            this.renderer3D1.CameraDistance = 72F;
-            this.renderer3D1.LookAngle = ((OpenTK.Vector2)(resources.GetObject("renderer3D1.LookAngle")));
-            this.renderer3D1.Model = PckStudio.Rendering.Renderer3D.Models.Steve;
             this.renderer3D1.Name = "renderer3D1";
-            this.renderer3D1.Rotation = ((OpenTK.Vector2)(resources.GetObject("renderer3D1.Rotation")));
-            this.renderer3D1.Texture = null;
             this.renderer3D1.VSync = true;
-            this.renderer3D1.FieldOfView = 1D;
             // 
             // uvPictureBox
             // 

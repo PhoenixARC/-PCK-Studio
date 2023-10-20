@@ -9,12 +9,12 @@ namespace PckStudio.Rendering
 {
     internal static class Renderer
     {
-        public static void Draw(Shader shader, VertexArray va, IndexBuffer ib, PrimitiveType type)
+        public static void Draw(Shader shader, RenderBuffer renderBuffer)
         {
             shader.Bind();
-            va.Bind();
-            ib.Bind();
-            GL.DrawElements(type, ib.GetCount(), DrawElementsType.UnsignedInt, 0);
+            renderBuffer.VertexArray.Bind();
+            renderBuffer.IndexBuffer.Bind();
+            GL.DrawElements(renderBuffer.PrimitiveType, renderBuffer.IndexBuffer.GetCount(), DrawElementsType.UnsignedInt, 0);
         }
     }
 }

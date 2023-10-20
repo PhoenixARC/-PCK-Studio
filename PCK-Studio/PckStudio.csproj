@@ -136,6 +136,7 @@
   <ItemGroup>
     <Compile Include="Classes\Utils\Ray.cs" />
     <Compile Include="Extensions\PckFileDataExtensions.cs" />
+    <Compile Include="Extensions\System.Numerics.cs" />
     <Compile Include="Extensions\TreeNodeExtensions.cs" />
     <Compile Include="Forms\TestGL.cs">
       <SubType>Form</SubType>
@@ -152,11 +153,20 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Rendering\Camera.cs" />
     <Compile Include="Rendering\IndexBuffer.cs" />
+    <Compile Include="Rendering\RenderBuffer.cs" />
     <Compile Include="Rendering\Renderer.cs" />
+    <Compile Include="Rendering\RenderGroup.cs" />
     <Compile Include="Rendering\Shader.cs" />
+    <Compile Include="Rendering\SkinRenderer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Rendering\SkinRenderer.Designer.cs">
+      <DependentUpon>SkinRenderer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Rendering\Texture2D.cs" />
-    <Compile Include="Rendering\Vertex.cs" />
+    <Compile Include="Rendering\TextureVertex.cs" />
     <Compile Include="Rendering\VertexArray.cs" />
     <Compile Include="Rendering\VertexBuffer.cs" />
     <Compile Include="Rendering\VertexBufferLayout.cs" />
@@ -168,9 +178,6 @@
     </Compile>
     <Compile Include="Rendering\Renderer3D.cs">
       <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Rendering\Renderer3D.Designer.cs">
-      <DependentUpon>Renderer3D.cs</DependentUpon>
     </Compile>
     <Compile Include="ToolboxItems\ToolStripRadioButtonMenuItem.cs">
       <SubType>Component</SubType>
@@ -629,7 +636,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\vertexShader.glsl" />
+    <None Include="Resources\shader\skinVertexShader.glsl" />
     <None Include="Resources\entityData.json" />
     <None Include="Resources\TexturePackIcon.png" />
     <None Include="Resources\binka\binkawin.asi" />
@@ -682,7 +689,7 @@
     <None Include="Resources\iconImageList\ENTITY MATERIALS ICON.png" />
     <None Include="Resources\iconImageList\blank.png" />
     <None Include="Resources\entities.png" />
-    <None Include="Resources\fragment.glsl" />
+    <None Include="Resources\shader\skinFragment.glsl" />
     <Content Include="Resources\icons\file_delete.png" />
     <Content Include="Resources\icons\file_empty.png" />
     <None Include="Resources\icons\file_export.png" />

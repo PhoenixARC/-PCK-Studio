@@ -1,9 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace PckStudio.Rendering
 {
-    public partial class Renderer3D
+    internal partial class SkinRenderer
     {
         [DebuggerNonUserCode()]
         protected override void Dispose(bool disposing)
@@ -35,42 +39,14 @@ namespace PckStudio.Rendering
             moveTimer.Tick += new EventHandler(Move_Tick);
             SuspendLayout();
             // 
-            // timMove
+            // moveTimer
             // 
             moveTimer.Enabled = true;
-            moveTimer.Interval = 20;
-#if DEBUG
-            // 
-            // debugLabel
-            // 
-            debugLabel = new System.Windows.Forms.Label();
-            debugLabel.Enabled = true;
-            debugLabel.Visible = false;
-            debugLabel.AutoSize = true;
-            debugLabel.Location = new System.Drawing.Point(0, 0);
-            debugLabel.BackColor = System.Drawing.Color.Transparent;
-            Controls.Add(debugLabel);;
-#endif
-            // 
-            // Renderer3D
-            // 
-            Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            BackColor = System.Drawing.Color.LightGray;
-            Location = new System.Drawing.Point(0, 0);
-            Size = new System.Drawing.Size(150, 150);
-            TabIndex = 0;
-            VSync = true;
-            AutoScaleDimensions = new System.Drawing.SizeF(6.0f, 13.0f);
-            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            moveTimer.Interval = 10;
             Name = "Renderer3D";
             ResumeLayout(false);
-
         }
 
         private System.Windows.Forms.Timer moveTimer;
-#if DEBUG
-        private System.Windows.Forms.Label debugLabel;
-#endif
-        
     }
 }

@@ -45,7 +45,7 @@ namespace PckStudio.Internal
         }
 
         public static SkinBOX FromString(string value)
-        {
+         {
             var arguments = value.Split(' ');
             if (arguments.Length < 9)
             {

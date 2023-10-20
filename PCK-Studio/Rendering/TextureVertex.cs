@@ -11,17 +11,17 @@ using OpenTK.Graphics;
 namespace PckStudio.Rendering
 {
     [StructLayout(LayoutKind.Sequential, Pack = 4)]
-    internal struct Vertex
+    internal struct TextureVertex
     {
-        public Vertex(Vector3 position, Color4 color, Vector2 texPosition)
+        public static int SizeInBytes = Marshal.SizeOf(typeof(TextureVertex));
+
+        public TextureVertex(Vector3 position, Vector2 texPosition)
         {
             Position = position;
-            Color = color;
             TexPosition = texPosition;
         }
 
         internal Vector3 Position { get; set; }
-        internal Color4 Color { get; set; }
         internal Vector2 TexPosition { get; set; }
     }
 }

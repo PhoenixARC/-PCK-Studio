@@ -14,7 +14,6 @@ namespace PckStudio.Forms
         {
             InitializeComponent();
             Texture = texture;
-            ModelView.Model = anim.GetFlag(SkinAnimFlag.SLIM_MODEL) ? Renderer3D.Models.Alex : Renderer3D.Models.Steve;
 
             //ModelView.ShowHead = !anim.GetFlag(SkinAnimFlag.HEAD_DISABLED);
             //ModelView.ShowHeadOverlay = !anim.GetFlag(SkinAnimFlag.HEAD_OVERLAY_DISABLED);
@@ -36,7 +35,7 @@ namespace PckStudio.Forms
         
         public void RenderModel(Image source)
         {
-            ModelView.Texture = source as Bitmap;
+            //ModelView.Texture = source as Bitmap;
 		}
     }
 }

@@ -134,7 +134,7 @@ namespace PckStudio.Forms
             _file = file;
             if (file.Size > 0)
             {
-                uvPictureBox.Image = renderer3D1.Texture = file.GetTexture() as Bitmap;
+                uvPictureBox.Image = file.GetTexture();
             }
             comboParent.Items.Clear();
             comboParent.Items.AddRange(ValidModelBoxTypes);
