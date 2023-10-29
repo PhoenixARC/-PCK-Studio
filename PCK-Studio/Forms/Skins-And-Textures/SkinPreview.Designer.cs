@@ -31,7 +31,7 @@ namespace PckStudio.Forms
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SkinPreview));
-            this.ModelView = new PckStudio.Rendering.Renderer3D();
+            this.ModelView = new PckStudio.Rendering.SkinRenderer();
             this.SuspendLayout();
             // 
             // ModelView
@@ -63,6 +63,6 @@ namespace PckStudio.Forms
 
         #endregion
 
-        private PckStudio.Rendering.Renderer3D ModelView;
+        private PckStudio.Rendering.SkinRenderer ModelView;
     }
 }

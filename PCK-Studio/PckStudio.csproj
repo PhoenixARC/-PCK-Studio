@@ -87,7 +87,7 @@
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup>
-    <StartupObject>PckStudio.Forms.TestGL</StartupObject>
+    <StartupObject>PckStudio.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup>
@@ -557,9 +557,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Editor\TextureAtlasEditor.resx">
       <DependentUpon>TextureAtlasEditor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\TestGL.resx">
-      <DependentUpon>TestGL.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.ja.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

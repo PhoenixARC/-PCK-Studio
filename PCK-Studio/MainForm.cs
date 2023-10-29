@@ -427,6 +427,11 @@ namespace PckStudio
 
 		public void HandleSkinFile(PckFileData file)
 		{
+			var renderForm = new SkinPreview(file.GetTexture(), file.Properties.GetProperties("BOX").Select(kv => SkinBOX.FromString(kv.Value)));
+			renderForm.ANIM = file.Properties.GetPropertyValue("ANIM", SkinANIM.FromString);
+			renderForm.ShowDialog();
+			return;
+
 			if (file.Properties.HasProperty("BOX"))
 			{
 				using generateModel generate = new generateModel(file);
@@ -439,10 +444,10 @@ namespace PckStudio
 				return;
 			}
 
-			var img = file.GetTexture();
-			using var skinViewer = new SkinPreview(img, file.Properties.GetPropertyValue("ANIM", SkinANIM.FromString));
-			skinViewer.ShowDialog(this);
-		}
+            var skinPreview = new SkinPreview(file.GetTexture(), file.Properties.GetProperties("BOX").Select(kv => SkinBOX.FromString(kv.Value)));
+            skinPreview.ANIM = file.Properties.GetPropertyValue("ANIM", SkinANIM.FromString);
+            skinPreview.ShowDialog();
+        }
 
 		public void HandleModelsFile(PckFileData file)
 		{
@@ -2277,12 +2282,6 @@ namespace PckStudio
 				return;
 			}
 			MessageBox.Show("Already up to date.", "No update available");
-		}
-
-		private void skinRenderer3DToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			var gl = new TestGL();
-			gl.Show();
 		}
 	}
 }
