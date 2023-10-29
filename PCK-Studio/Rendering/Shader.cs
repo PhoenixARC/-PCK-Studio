@@ -37,6 +37,12 @@ namespace PckStudio.Rendering
             GL.Uniform1(location, value);
         }
 
+        public void SetUniform2(string name, Vector2 value)
+        {
+            int location = GetUniformLocation(name);
+            GL.Uniform2(location, value);
+        }
+
         public void SetUniform4(string name, Vector4 value)
         {
             int location = GetUniformLocation(name);
@@ -76,8 +82,8 @@ namespace PckStudio.Rendering
             {
                 GL.GetShader(shaderId, ShaderParameter.InfoLogLength, out int length);
                 GL.GetShaderInfoLog(shaderId, length, out _, out string infoLog);
-                Trace.TraceError(infoLog);
                 GL.DeleteShader(shaderId);
+                Trace.Fail(infoLog);
                 return 0;
             }
             return shaderId;
@@ -85,21 +91,33 @@ namespace PckStudio.Rendering
 
         public static Shader Create(string vertexSource, string fragmentSource)
         {
+            return Create(
+                new KeyValuePair<ShaderType, string>(ShaderType.VertexShader, vertexSource),
+                new KeyValuePair<ShaderType, string>(ShaderType.FragmentShader, fragmentSource)
+                );
+        }
+
+        public static Shader Create(params KeyValuePair<ShaderType, string>[] shaderSources)
+        {
             int programId = GL.CreateProgram();
 
-            int vertexShader = CompileShader(ShaderType.VertexShader, vertexSource);
-            int fragmentShader = CompileShader(ShaderType.FragmentShader, fragmentSource);
+            var shaderIds = new List<int>(shaderSources.Length);
 
-            GL.AttachShader(programId, vertexShader);
-            GL.AttachShader(programId, fragmentShader);
-
+            foreach (var shaderSource in shaderSources)
+            {
+                int shaderId = CompileShader(shaderSource.Key, shaderSource.Value);
+                GL.AttachShader(programId, shaderId);
+                shaderIds.Add(shaderId);
+            }
             GL.LinkProgram(programId);
             GL.ValidateProgram(programId);
 
             Debug.WriteLine(GL.GetProgramInfoLog(programId), category: nameof(Shader));
 
-            GL.DeleteShader(vertexShader);
-            GL.DeleteShader(fragmentShader);
+            foreach (var shaderId in shaderIds)
+            {
+                GL.DeleteShader(shaderId);
+            }
             return new Shader(programId);
         }
 
