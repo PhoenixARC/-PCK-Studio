@@ -138,12 +138,6 @@
     <Compile Include="Extensions\PckFileDataExtensions.cs" />
     <Compile Include="Extensions\System.Numerics.cs" />
     <Compile Include="Extensions\TreeNodeExtensions.cs" />
-    <Compile Include="Forms\TestGL.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\TestGL.Designer.cs">
-      <DependentUpon>TestGL.cs</DependentUpon>
-    </Compile>
     <Compile Include="Helper\AnimationHelper.cs" />
     <Compile Include="Internal\AnimationCategory.cs" />
     <Compile Include="Internal\SkinAnimFlag.cs" />
