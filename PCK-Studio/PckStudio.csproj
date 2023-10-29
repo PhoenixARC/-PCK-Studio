@@ -155,6 +155,7 @@
     </Compile>
     <Compile Include="Rendering\Camera.cs" />
     <Compile Include="Rendering\IndexBuffer.cs" />
+    <Compile Include="Rendering\PerspectiveCamera.cs" />
     <Compile Include="Rendering\RenderBuffer.cs" />
     <Compile Include="Rendering\Renderer.cs" />
     <Compile Include="Rendering\RenderGroup.cs" />

@@ -33,12 +33,12 @@ namespace PckStudio.Rendering
 {
     internal class Renderer3D : GLControl
     {
-        protected Camera camera;
+        protected PerspectiveCamera camera;
 
         public Renderer3D()
         {
             VSync = true;
-            camera = new Camera(Vector2.Zero, 1f, Vector2.Zero, 30f);
+            camera = new PerspectiveCamera(Vector2.Zero, 1f, Vector2.Zero, 30f);
         }
     }
 }

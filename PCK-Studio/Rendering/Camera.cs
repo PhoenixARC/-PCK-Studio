@@ -8,91 +8,19 @@ using OpenTK;
 
 namespace PckStudio.Rendering
 {
-    internal class Camera
+    internal abstract class Camera
     {
-        public float Distance
-        {
-            get => _position.Z;
-            set
-            {
-                _position.Z = value;
-            }
-        }
+        public abstract float Distance { get; set; }
 
-        public Vector2 Position
-        {
-            get => _position.Xy;
-            set
-            {
-                _position.Xy = value;
-            }
-        }
+        public abstract Vector2 Position { get; set; }
 
-        public Vector2 Rotation
-        {
-            get => _rotation;
-            set
-            {
-                _rotation.X = MathHelper.Clamp(value.X, -180f, 180f);
-                _rotation.Y = MathHelper.Clamp(value.Y, -180f, 180f);
-            }
-        }
+        internal abstract Matrix4 GetViewProjection();
 
-        public float MinimumFov { get; set; } = 30f;
-        public float MaximumFov { get; set; } = 120f;
-        public float Fov
-        {
-            get => fov;
-            set => fov = MathHelper.Clamp(value, MinimumFov, MaximumFov);
-        }
-
-        private Matrix4 viewProjection;
-        private Matrix4 viewMatrix;
-        private float fov;
-
-        private Vector3 _position;
-        private Vector2 _rotation;
-        private Vector3 _target;
-
-        public Camera(Vector2 position, float distance, Vector2 rotation, float fov)
-        {
-            _position = new Vector3(position) { Z = distance };
-            _target = new Vector3(position);
-            Rotation = rotation;
-            Fov = fov;
-        }
-
-        internal Matrix4 GetViewProjection()
-        {
-            return viewProjection;
-        }
-
-        private void UpdateView()
-        {
-            var up = Vector3.UnitY;
-
-            Matrix4 rotation = Matrix4.CreateFromAxisAngle(new Vector3(-1f, 0f, 0f), MathHelper.DegreesToRadians(Rotation.X))
-                             * Matrix4.CreateFromAxisAngle(new Vector3(0f, 1f, 0f), MathHelper.DegreesToRadians(Rotation.Y));
-
-            viewMatrix = Matrix4.LookAt(_position, _target, up) * rotation;
-        }
-
-        internal void Update(float aspect)
-        {
-            UpdateView();
-            var projection = Matrix4.CreatePerspectiveFieldOfView((float)MathHelper.DegreesToRadians(Fov), aspect, 1f, 100f);
-            viewProjection = viewMatrix * projection;
-        }
-
-        internal void LookAt(Vector2 pos)
-        {
-            _target = new Vector3(pos);
-            Position = pos;
-        }
+        internal abstract void Update(float aspect);
 
         public override string ToString()
         {
-            return $"FOV: {Fov}\nPosition: {Position}\nRotation: {Rotation}";
+            return $"Position: {Position}\nDistance: {Distance}";
         }
     }
 }
