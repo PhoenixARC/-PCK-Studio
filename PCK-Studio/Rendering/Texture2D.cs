@@ -59,6 +59,7 @@ namespace PckStudio.Rendering
 
         public void Dispose()
         {
+            Unbind();
             GL.DeleteTexture(_id);
         }
 

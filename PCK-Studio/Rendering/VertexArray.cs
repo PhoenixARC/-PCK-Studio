@@ -45,6 +45,7 @@ namespace PckStudio.Rendering
 
         public void Dispose()
         {
+            Unbind();
             GL.DeleteVertexArray(_id);
         }
     }

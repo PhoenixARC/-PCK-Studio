@@ -36,6 +36,7 @@ namespace PckStudio.Rendering
 
         public void Dispose()
         {
+            Unbind();
             GL.DeleteBuffer(_id);
         }
     }
