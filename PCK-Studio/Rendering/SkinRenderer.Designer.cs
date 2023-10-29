@@ -36,17 +36,25 @@ namespace PckStudio.Rendering
         {
             components = new System.ComponentModel.Container();
             moveTimer = new System.Windows.Forms.Timer(components);
-            moveTimer.Tick += new EventHandler(Move_Tick);
+            animationTimer = new System.Windows.Forms.Timer(components);
+            moveTimer.Tick += new EventHandler(moveTimer_Tick);
+            animationTimer.Tick += new EventHandler(animationTimer_Tick);
             SuspendLayout();
             // 
             // moveTimer
             // 
             moveTimer.Enabled = true;
             moveTimer.Interval = 10;
+            // 
+            // animationTimer
+            // 
+            animationTimer.Enabled = false;
+            animationTimer.Interval = 50;
             Name = "Renderer3D";
             ResumeLayout(false);
         }
 
         private System.Windows.Forms.Timer moveTimer;
+        private System.Windows.Forms.Timer animationTimer;
     }
 }
