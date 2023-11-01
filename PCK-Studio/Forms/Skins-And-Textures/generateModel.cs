@@ -20,27 +20,13 @@ using System.Text;
 
 namespace PckStudio.Forms
 {
-    [Obsolete]
+    //[Obsolete]
     public partial class generateModel : MetroForm
     {
-        [Obsolete("We don't need a full control to get an image")]
-        private PictureBox skinPreview = new PictureBox();
-
         private Image _previewImage;
         public Image PreviewImage => _previewImage;
 
-        private ViewDirection direction = ViewDirection.front;
-
-        private enum ViewDirection
-        {
-            front,
-            right,
-            back,
-            left,
-        }
-
         private PckFileData _file;
-        private SkinANIM _ANIM;
 
         private static Color _backgroundColor = Color.FromArgb(0xff, 0x50, 0x50, 0x50);
         private static GraphicsConfig _graphicsConfig = new GraphicsConfig()
@@ -128,18 +114,19 @@ namespace PckStudio.Forms
 
         public generateModel(PckFileData file)
         {
-            MessageBox.Show(this, "This feature is now considered deprecated and will no longer recieve updates. A better alternative is currently under development. Use at your own risk.", "Deprecated Feature", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            //MessageBox.Show(this, "This feature is now considered deprecated and will no longer recieve updates. A better alternative is currently under development. Use at your own risk.", "Deprecated Feature", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             InitializeComponent();
 
             _file = file;
-            if (file.Size > 0)
+            if (_file.Size > 0)
             {
-                uvPictureBox.Image = file.GetTexture();
+                uvPictureBox.Image = renderer3D1.Texture = _file.GetTexture() as Bitmap;
             }
             comboParent.Items.Clear();
             comboParent.Items.AddRange(ValidModelBoxTypes);
             LoadData(file.Properties);
         }
+
         private static readonly Regex sWhitespace = new Regex(@"\s+");
         public static string ReplaceWhitespace(string input, string replacement)
         {
@@ -148,15 +135,8 @@ namespace PckStudio.Forms
 
         private void LoadData(PckFileProperties properties)
         {
-            comboParent.Enabled = properties.GetProperties("BOX").All(kv => {
-                var box = SkinBOX.FromString(kv.Value);
-                if (ValidModelBoxTypes.Contains(box.Type))
-                {
-                    modelBoxes.Add(box);
-                    return true;
-                }
-                return false;
-            });
+            renderer3D1.ANIM = properties.GetPropertyValue("ANIM", SkinANIM.FromString);
+            renderer3D1.ModelData.AddRange(properties.GetProperties("BOX").Select(kv => SkinBOX.FromString(kv.Value)));
             properties.GetProperties("OFFSET").All(kv => {
                 string[] offset = ReplaceWhitespace(kv.Value, ",").TrimEnd('\n', '\r', ' ').Split(',');
                 if (offset.Length < 3)
@@ -173,23 +153,13 @@ namespace PckStudio.Forms
                 return false;
             });
 
-            _ANIM = properties.GetPropertyValue("ANIM", SkinANIM.FromString);
             UpdateListView();
-            Rerender();
         }
 
         //Rename model part/item
         private void listView1_DoubleClick_1(object sender, EventArgs e)
         {
             listViewBoxes.SelectedItems[0].BeginEdit();
-        }
-
-        private void Rerender([CallerMemberName] string caller = default!)
-        {
-            Debug.WriteLine($"Call from {caller}", category: nameof(Rerender));
-            Render(this, EventArgs.Empty);
-            if (generateTextureCheckBox.Checked)
-                GenerateUVTextureMap();
         }
 
         private void Render(object sender, EventArgs e)
@@ -875,14 +845,12 @@ namespace PckStudio.Forms
             if (Screen.PrimaryScreen.Bounds.Height >= 780 && Screen.PrimaryScreen.Bounds.Width >= 1080) {
                 return;
             }
-            Rerender();
         }
 
         private void createToolStripMenuItem_Click(object sender, EventArgs e)
         {
             modelBoxes.Add(SkinBOX.Empty);
             UpdateListView();
-            Rerender();
         }
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
@@ -903,10 +871,8 @@ namespace PckStudio.Forms
                 SizeZUpDown.Value = (decimal)part.Size.Z;
                 TextureXUpDown.Value = (decimal)part.UV.X;
                 TextureYUpDown.Value = (decimal)part.UV.Y;
-                Rerender();
             }
         }
-
 
         //Changes Item Model Class
         private void comboParent_SelectedIndexChanged(object sender, EventArgs e)
@@ -926,7 +892,6 @@ namespace PckStudio.Forms
                 TextureXUpDown.Enabled = true;
                 TextureYUpDown.Enabled = true;
             }
-            Rerender();
         }
 
         private void SizeXUpDown_ValueChanged(object sender, EventArgs e)
@@ -937,7 +902,6 @@ namespace PckStudio.Forms
                 part.Size.X = (float)SizeXUpDown.Value;
             }
             UpdateListView();
-            Rerender();
         }
 
         private void SizeYUpDown_ValueChanged(object sender, EventArgs e)
@@ -948,7 +912,6 @@ namespace PckStudio.Forms
                 part.Size.Y = (float)SizeYUpDown.Value;
             }
             UpdateListView();
-            Rerender();
         }
 
         private void SizeZUpDown_ValueChanged(object sender, EventArgs e)
@@ -959,7 +922,6 @@ namespace PckStudio.Forms
                 part.Size.Z = (float)SizeZUpDown.Value;
             }
             UpdateListView();
-            Rerender();
         }
 
         private void PosXUpDown_ValueChanged(object sender, EventArgs e)
@@ -970,9 +932,7 @@ namespace PckStudio.Forms
                 part.Pos.X = (float)PosXUpDown.Value;
             }
             UpdateListView();
-            Rerender();
         }
-
 
         private void PosYUpDown_ValueChanged(object sender, EventArgs e)
         {
@@ -982,9 +942,7 @@ namespace PckStudio.Forms
                 part.Pos.Y = (float)PosYUpDown.Value;
             }
             UpdateListView();
-            Rerender();
         }
-
 
         private void PosZUpDown_ValueChanged(object sender, EventArgs e)
         {
@@ -994,29 +952,7 @@ namespace PckStudio.Forms
                 part.Pos.Z = (float)PosZUpDown.Value;
             }
             UpdateListView();
-            Rerender();
         }
-
-        private void rotateRightBtn_Click(object sender, EventArgs e)
-        {
-            if (direction == ViewDirection.front)
-                direction = ViewDirection.left;
-            else
-                --direction;
-            labelView.Text = $"View: {direction}";
-            Rerender();
-        }
-
-        private void rotateLeftBtn_Click(object sender, EventArgs e)
-        {
-            if (direction == ViewDirection.left)
-                direction = ViewDirection.front;
-            else
-                ++direction;
-            labelView.Text = $"View: {direction}";
-            Rerender();
-        }
-
 
         //Sets Texture X-Offset
         private void TextureXUpDown_ValueChanged(object sender, EventArgs e)
@@ -1027,9 +963,7 @@ namespace PckStudio.Forms
                 part.UV.X = (int)TextureXUpDown.Value;
             }
             UpdateListView();
-            Rerender();
         }
-
 
         //Sets texture Y-Offset
         private void TextureYUpDown_ValueChanged(object sender, EventArgs e)
@@ -1040,9 +974,7 @@ namespace PckStudio.Forms
                 part.UV.Y = (int)TextureYUpDown.Value;
             }
             UpdateListView();
-            Rerender();
         }
-
 
         //Export Current Skin Texture
         private void buttonEXPORT_Click(object sender, EventArgs e)
@@ -1055,7 +987,6 @@ namespace PckStudio.Forms
                 bitmap.Save(saveFileDialog.FileName, ImageFormat.Png);
             }
         }
-
 
         //Imports Skin Texture
         private void buttonIMPORT_Click(object sender, EventArgs e)
@@ -1077,7 +1008,6 @@ namespace PckStudio.Forms
                             graphics.DrawImage(img, 0, 0, img.Width, img.Height);
                         }
                         uvPictureBox.Invalidate();
-                        Rerender();
                     }
                     else
 					{
@@ -1094,20 +1024,7 @@ namespace PckStudio.Forms
             {
                 _file.Properties.Add("BOX", part);
             }
-
-            //Bitmap bitmap2 = new Bitmap(64, 64);
-            //using (Graphics graphics = Graphics.FromImage(bitmap2))
-            //{
-            //    graphics.ApplyConfig(_graphicsConfig);
-            //    graphics.DrawImage(uvPictureBox.Image, 0, 0, 64, 64);
-            //}
             Close();
-        }
-
-        // Renders model after texture change
-        private void texturePreview_BackgroundImageChanged(object sender, EventArgs e)
-        {
-            Rerender();
         }
 
         // Trigger Dialog to select model part/item color
@@ -1116,23 +1033,19 @@ namespace PckStudio.Forms
             ColorDialog colorDialog = new ColorDialog();
             if (colorDialog.ShowDialog() == DialogResult.OK)
                 listViewBoxes.SelectedItems[0].ForeColor = colorDialog.Color;
-            Rerender();
         }
-
 
         //Re-renders head with updated x-offset
         private void offsetHead_TextChanged(object sender, EventArgs e)
         {
-            Rerender();
+            
         }
-
 
         //Re-renders body with updated x-offset
         private void offsetBody_TextAlignChanged(object sender, EventArgs e)
         {
-            Rerender();
-        }
 
+        }
 
         //Loads in model template(Steve)
         private void buttonTemplate_Click(object sender, EventArgs e)
@@ -1145,7 +1058,6 @@ namespace PckStudio.Forms
             modelBoxes.Add(SkinBOX.FromString("LEG1 -2 0 -2 4 12 4 0 16 0 1 0"));
             comboParent.Enabled = true;
             UpdateListView();
-            Rerender();
         }
 
         private void UpdateListView()
@@ -1189,7 +1101,6 @@ namespace PckStudio.Forms
             File.WriteAllText(saveFileDialog.FileName, contents);
         }
 
-
         // Imports model from csm file
         private void buttonImportModel_Click(object sender, EventArgs e)
         {
@@ -1220,7 +1131,6 @@ namespace PckStudio.Forms
             }
             comboParent.Enabled = true;
             UpdateListView();
-            Rerender();
         }
 
         private void cloneToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1252,7 +1162,6 @@ namespace PckStudio.Forms
             if (listViewBoxes.SelectedItems[0] == null)
                 return;
             listViewBoxes.SelectedItems[0].Remove();
-            Rerender();
         }
 
         private void changeColorToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1260,37 +1169,36 @@ namespace PckStudio.Forms
             ColorDialog colorDialog = new ColorDialog();
             if (colorDialog.ShowDialog() == DialogResult.OK)
                 listViewBoxes.SelectedItems[0].ForeColor = colorDialog.Color;
-            Rerender();
         }
 
         //Re-renders tool with updated x-offset
         private void offsetTool_TextChanged(object sender, EventArgs e)
         {
-            Rerender();
+            
         }
 
         //Re-renders helmet with updated x-offset
         private void offsetHelmet_TextChanged(object sender, EventArgs e)
         {
-            Rerender();
+            
         }
 
         //Re-renders pants with updated x-offset
         private void offsetPants_TextChanged(object sender, EventArgs e)
         {
-            Rerender();
+            
         }
 
         //Re-renders leggings with updated x-offset
         private void offsetLeggings_TextChanged(object sender, EventArgs e)
         {
-            Rerender();
+            
         }
 
         //Re-renders boots with updated x-offset
         private void offsetBoots_TextChanged(object sender, EventArgs e)
         {
-            Rerender();
+            
         }
 
         //Item Selection
@@ -1328,13 +1236,13 @@ namespace PckStudio.Forms
             TextureXUpDown.Enabled = false;
             TextureYUpDown.Enabled = false;
             comboParent.Enabled = false;
-            Rerender();
+            
         }
 
         //currently scrapped
         private void generateModel_FormClosing(object sender, FormClosingEventArgs e)
-        {/*
-            if (MessageBox.Show("You done here?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
+        { 
+            /*if (MessageBox.Show("You done here?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
             {
                 e.Cancel = true;
                 return;
@@ -1350,13 +1258,13 @@ namespace PckStudio.Forms
             {
                 if (modelBoxes.Remove(part))
                     listViewBoxes.SelectedItems[0].Remove();
-                Rerender();
+                
             }
         }
 
         private void generateModel_SizeChanged(object sender, EventArgs e)
         {
-            Rerender();
+            
         }
 
         // TODO
@@ -1416,7 +1324,7 @@ namespace PckStudio.Forms
                         }
                 }
             }
-            Rerender();
+            
         }
 
         [Obsolete("Just whyyyyy")]

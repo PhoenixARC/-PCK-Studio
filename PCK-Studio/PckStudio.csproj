@@ -149,6 +149,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Rendering\Camera.cs" />
+    <Compile Include="Rendering\CubeRenderGroup.cs" />
     <Compile Include="Rendering\IndexBuffer.cs" />
     <Compile Include="Rendering\PerspectiveCamera.cs" />
     <Compile Include="Rendering\RenderBuffer.cs" />

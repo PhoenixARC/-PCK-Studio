@@ -50,7 +50,7 @@ namespace PckStudio.Rendering
             return elements.AsReadOnly();
         }
 
-        public void Add<T>(int count)
+        public VertexBufferLayout Add<T>(int count)
         {
             if (typeof(T).Equals(typeof(float)))
             {
@@ -67,6 +67,7 @@ namespace PckStudio.Rendering
                 elements.Add(new VertexBufferElement(VertexAttribPointerType.UnsignedInt, count, false));
                 stride += count * VertexBufferElement.GetStrideSize(VertexAttribPointerType.UnsignedInt);
             }
+            return this;
         }
 
         internal int GetStride()
