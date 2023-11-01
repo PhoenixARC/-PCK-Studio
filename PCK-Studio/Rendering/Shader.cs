@@ -10,7 +10,7 @@ using OpenTK.Graphics.OpenGL;
 
 namespace PckStudio.Rendering
 {
-    internal class Shader
+    internal class Shader : IDisposable
     {
         private int _programId;
         private Dictionary<string, int> locationCache = new Dictionary<string, int>();
@@ -29,6 +29,12 @@ namespace PckStudio.Rendering
         public void Unbind()
         {
             GL.UseProgram(0);
+        }
+
+        public void Dispose()
+        {
+            Unbind();
+            GL.DeleteProgram(_programId);
         }
 
         public void SetUniform1(string name, int value)
