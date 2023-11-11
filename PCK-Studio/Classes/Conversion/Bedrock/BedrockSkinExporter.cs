@@ -348,6 +348,16 @@ namespace PckStudio.Conversion.Bedrock
 
             geometry.TextureWidth = 64;
             geometry.TextureHeight = IsClassicRes ? 32 : 64;
+            geometry.AnimationArmsDown = ANIM.GetFlag(ANIM_EFFECTS.STATIC_ARMS);
+            geometry.AnimationArmsOutFront = ANIM.GetFlag(ANIM_EFFECTS.ZOMBIE_ARMS);
+            geometry.AnimationDontShowArmor = ANIM.GetFlag(ANIM_EFFECTS.ALL_ARMOR_DISABLED);
+            geometry.AnimationInvertedCrouch = ANIM.GetFlag(ANIM_EFFECTS.DO_BACKWARDS_CROUCH);
+            geometry.AnimationNoHeadBob = ANIM.GetFlag(ANIM_EFFECTS.HEAD_BOBBING_DISABLED);
+            geometry.AnimationSingleArmAnimation = ANIM.GetFlag(ANIM_EFFECTS.SYNCED_ARMS);
+            geometry.AnimationSingleLegAnimation = ANIM.GetFlag(ANIM_EFFECTS.SYNCED_LEGS);
+            geometry.AnimationStationaryLegs = ANIM.GetFlag(ANIM_EFFECTS.STATIC_LEGS);
+            geometry.AnimationStatueOfLibertyArms = ANIM.GetFlag(ANIM_EFFECTS.STATUE_OF_LIBERTY);
+            geometry.AnimationUpsideDown = ANIM.GetFlag(ANIM_EFFECTS.DINNERBONE);
 
             string capepath = file.Properties.Find(o => o.Key == "CAPEPATH").Value;
 

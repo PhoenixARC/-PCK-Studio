@@ -92,7 +92,37 @@ namespace PckStudio.Conversion.Common.JsonDefinitions
             visibleBounds.Offset.CopyTo(VisibleBoundsOffset);
         }
 
-        // yeah the property name has no space, it's annoying - Matt
+        [JsonProperty("animationArmsDown")]
+        public bool AnimationArmsDown { get; set; }
+
+        [JsonProperty("animationArmsOutFront")]
+        public bool AnimationArmsOutFront { get; set; }
+        
+        [JsonProperty("animationDontShowArmor")]
+        public bool AnimationDontShowArmor { get; set; }
+
+        [JsonProperty("animationInvertedCrouch")]
+        public bool AnimationInvertedCrouch { get; set; }
+
+        [JsonProperty("animationNoHeadBob")]
+        public bool AnimationNoHeadBob { get; set; }
+
+        [JsonProperty("animationSingleArmAnimation")]
+        public bool AnimationSingleArmAnimation { get; set; }
+
+        [JsonProperty("animationSingleLegAnimation")]
+        public bool AnimationSingleLegAnimation { get; set; }
+
+        [JsonProperty("animationStationaryLegs")]
+        public bool AnimationStationaryLegs { get; set; }
+
+        [JsonProperty("animationStatueOfLibertyArms")]
+        public bool AnimationStatueOfLibertyArms { get; set; }
+
+        [JsonProperty("animationUpsideDown")]
+        public bool AnimationUpsideDown { get; set; }
+
+        // yeah the property name has no underscore, it's annoying - Matt
         [JsonProperty("texturewidth")]
         public int TextureWidth { get; set; }
 
