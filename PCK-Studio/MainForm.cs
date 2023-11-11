@@ -1690,7 +1690,7 @@ namespace PckStudio
 		{
             SaveFileDialog sfd = new SaveFileDialog
             {
-                Filter = "Minecraft Pack File|*.mcpack"
+                Filter = "Zip file|*.zip"
             };
             if (sfd.ShowDialog() == DialogResult.OK)
             {
