@@ -343,6 +343,12 @@ namespace PckStudio.Conversion.Bedrock
                 new GeometryBone("leftBootArmorOffset", "leftLeg", new Vector3(-2f, 12f - TryGetOffsetValue("BOOT1", offsets), 0f), null, "armor_offset")
             );
 
+            var ANIM = SkinANIM.FromString(file.Properties.Find(o => o.Key == "ANIM").Value) ?? SkinANIM.Empty;
+            bool IsClassicRes = !(ANIM.GetFlag(ANIM_EFFECTS.RESOLUTION_64x64) || ANIM.GetFlag(ANIM_EFFECTS.SLIM_MODEL));
+
+            geometry.TextureWidth = 64;
+            geometry.TextureHeight = IsClassicRes ? 32 : 64;
+
             string capepath = file.Properties.Find(o => o.Key == "CAPEPATH").Value;
 
             JToken geo = JToken.FromObject(geometry);

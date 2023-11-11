@@ -92,6 +92,13 @@ namespace PckStudio.Conversion.Common.JsonDefinitions
             visibleBounds.Offset.CopyTo(VisibleBoundsOffset);
         }
 
+        // yeah the property name has no space, it's annoying - Matt
+        [JsonProperty("texturewidth")]
+        public int TextureWidth { get; set; }
+
+        [JsonProperty("textureheight")]
+        public int TextureHeight { get; set; }
+
         [JsonProperty("visible_bounds_width")]
         public int VisibleBoundsWidth { get; set; }
 
