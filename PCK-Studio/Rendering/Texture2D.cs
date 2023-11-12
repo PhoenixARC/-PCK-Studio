@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
 namespace PckStudio.Rendering
@@ -47,6 +44,8 @@ namespace PckStudio.Rendering
 
         public void Bind(int slot)
         {
+            Debug.Assert(slot >= 0 || slot < 32, "Slot is out of range");
+            slot = MathHelper.Clamp(slot, 0, 31);
             GL.ActiveTexture(TextureUnit.Texture0 + slot);
             GL.BindTexture(TextureTarget.Texture2D, _id);
         }
