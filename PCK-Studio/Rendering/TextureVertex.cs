@@ -11,7 +11,7 @@ using OpenTK.Graphics;
 namespace PckStudio.Rendering
 {
     [StructLayout(LayoutKind.Sequential, Pack = 4)]
-    internal struct TextureVertex
+    internal struct TextureVertex : IVertexLayout
     {
         public static int SizeInBytes = Marshal.SizeOf(typeof(TextureVertex));
 
@@ -23,5 +23,10 @@ namespace PckStudio.Rendering
 
         internal Vector3 Position { get; set; }
         internal Vector2 TexPosition { get; set; }
+
+        public VertexBufferLayout GetLayout()
+        {
+            return new VertexBufferLayout().Add<float>(3).Add<float>(2);
+        }
     }
 }
