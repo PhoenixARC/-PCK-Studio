@@ -112,12 +112,12 @@ namespace PckStudio.Forms.Editor
             this.catImages.Images.SetKeyName(0, "0_overworld.png");
             this.catImages.Images.SetKeyName(1, "1_nether.png");
             this.catImages.Images.SetKeyName(2, "2_end.png");
-            this.catImages.Images.SetKeyName(3, "4_creative.png");
-            this.catImages.Images.SetKeyName(4, "3_menu.png");
+            this.catImages.Images.SetKeyName(3, "3_creative.png");
+            this.catImages.Images.SetKeyName(4, "4_menu.png");
             this.catImages.Images.SetKeyName(5, "5_mg01.png");
             this.catImages.Images.SetKeyName(6, "6_mg02.png");
             this.catImages.Images.SetKeyName(7, "7_mg03.png");
-            this.catImages.Images.SetKeyName(8, "8_unused.png");
+            this.catImages.Images.SetKeyName(8, "8_mg04.png");
             // 
             // menuStrip
             // 

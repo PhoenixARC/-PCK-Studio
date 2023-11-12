@@ -39,7 +39,7 @@ namespace PckStudio.Conversion.Legacy
         /// <param name="texture">Texture for the model</param>
         /// <param name="blockbenchBedrockJsonData">Exported Bedrock Model from Blockbench</param>
         /// <returns>Legacy skin format</returns>
-        public PckFile.FileData ConvertBlockbenchModel(string blockbenchBedrockJsonData, Image texture)
+        public PckFileData ConvertBlockbenchModel(string blockbenchBedrockJsonData, Image texture)
         {
             var container = JsonConvert.DeserializeObject<BlockbenchBedrockModel>(blockbenchBedrockJsonData);
             if (container.Models.Length > 0)
@@ -48,7 +48,7 @@ namespace PckStudio.Conversion.Legacy
                 if (texture.Size != model.Description.TextureSize)
                     throw new ArgumentException("Model texture size does not match supplied Image size.");
 
-                var file = new PckFile.FileData("", PckFile.FileData.FileType.SkinFile);
+                var file = new PckFileData("", PckFileType.SkinFile);
 
                 var anim = new SkinANIM();
                 var boxes = new Stack<SkinBOX>(10);

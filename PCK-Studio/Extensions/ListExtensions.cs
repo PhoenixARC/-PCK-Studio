@@ -2,7 +2,7 @@
 
 namespace PckStudio.Extensions
 {
-    public static class ListExtensions
+    internal static class ListExtensions
     {
         public static IList<T> Swap<T>(this IList<T> list, int index1, int index2)
         {
@@ -10,6 +10,11 @@ namespace PckStudio.Extensions
             list[index1] = list[index2];
             list[index2] = temp;
             return list;
+        }
+        
+        public static bool IndexInRange<T>(this IList<T> list, int index)
+        {
+            return index >= 0 && index < list.Count;
         }
     }
 }

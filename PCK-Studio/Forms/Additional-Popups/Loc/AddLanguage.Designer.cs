@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddLanguage));
             this.LanguageComboBox = new MetroFramework.Controls.MetroComboBox();
             this.AddBtn = new MetroFramework.Controls.MetroButton();
             this.SuspendLayout();
@@ -63,6 +64,7 @@
             this.ClientSize = new System.Drawing.Size(289, 140);
             this.Controls.Add(this.AddBtn);
             this.Controls.Add(this.LanguageComboBox);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(289, 140);

@@ -1,130 +1,87 @@
-﻿using OMI.Formats.Pck;
+﻿using OMI;
+using OMI.Formats.Pck;
 using OMI.Workers.Pck;
+using PckStudio.Extensions;
 using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace PckStudio
+namespace PckStudio.Popups
 {
     public partial class AdvancedOptions : MetroFramework.Forms.MetroForm
     {
-        PckFile currentPCK;
-        public bool littleEndian;
+        public bool IsLittleEndian
+        {
+            set
+            {
+                _endianness = value ? Endianness.LittleEndian : Endianness.BigEndian;
+            }
+        }
+        private PckFile _pckFile;
+        private Endianness _endianness;
 
-        public AdvancedOptions(PckFile currentPCKIn)
+        public AdvancedOptions(PckFile pckFile)
         {
             InitializeComponent();
-            currentPCK = currentPCKIn;
-            treeMeta.Nodes.Clear();
-            treeMeta.Nodes.AddRange(currentPCK.GetPropertyList().Select((s) => new TreeNode(s)).ToArray());
+            _pckFile = pckFile;
+            propertyTreeview.Nodes.Clear();
+            propertyTreeview.Nodes.AddRange(_pckFile.GetPropertyList().Select(s => new TreeNode(s)).ToArray());
         }
 
         private void applyButton_Click(object sender, EventArgs e)
         {
-            switch (comboBox1.SelectedIndex)
+            if (fileTypeComboBox.SelectedIndex >= 0 && fileTypeComboBox.SelectedIndex <= 13)
             {
-                case 0:
-                    {
-                        applyBulkProperties();
-                        DialogResult = DialogResult.OK;
-                    }
-                    break;
-                case > 0 and <= 13:
-                    {
-                        applyBulkProperties((PckFile.FileData.FileType)(comboBox1.SelectedIndex - 1));
-                        DialogResult = DialogResult.OK;
-                    }
-                    break;
-                default:
-                    MessageBox.Show("Please select a filetype before applying");
-                    break;
+                applyBulkProperties(_pckFile.GetFiles(), fileTypeComboBox.SelectedIndex - 1);
+                DialogResult = DialogResult.OK;
+                return;
             }
+            MessageBox.Show("Please select a filetype before applying");
         }
 
-        private void applyBulkProperties()
+        private void applyBulkProperties(IReadOnlyCollection<PckFileData> files, int index)
 		{
-            foreach (PckFile.FileData file in currentPCK.Files)
+            foreach (PckFileData file in files)
             {
-                if (file.Filetype == PckFile.FileData.FileType.TexturePackInfoFile ||
-                    file.Filetype == PckFile.FileData.FileType.SkinDataFile)
+                if (file.Filetype == PckFileType.TexturePackInfoFile ||
+                file.Filetype == PckFileType.SkinDataFile)
                 {
                     try
                     {
-                        var reader = new PckFileReader(littleEndian
-                            ? OMI.Endianness.LittleEndian
-                            : OMI.Endianness.BigEndian);
-                        PckFile SubPCK = reader.FromStream(new MemoryStream(file.Data));
-                        foreach (PckFile.FileData SubFile in SubPCK.Files)
-                        {
-                            SubFile.Properties.Add(entryTypeTextBox.Text, entryDataTextBox.Text);
-                        }
-                        var writer = new PckFileWriter(SubPCK, littleEndian
-                            ? OMI.Endianness.LittleEndian
-                            : OMI.Endianness.BigEndian);
-                        var stream = new MemoryStream();
-                        writer.WriteToStream(stream);
-                        file.SetData(stream.ToArray());
-                        stream.Dispose();
+                        var reader = new PckFileReader(_endianness);
+                        using var ms = new MemoryStream(file.Data);
+                        PckFile subPCK = reader.FromStream(ms);
+                        applyBulkProperties(subPCK.GetFiles(), index);
+                        file.SetData(new PckFileWriter(subPCK, _endianness));
                     }
                     catch (OverflowException ex)
                     {
-                        System.Diagnostics.Debug.WriteLine(ex.Message);
+                        Debug.WriteLine(ex.Message);
                     }
                 }
 
-                file.Properties.Add(entryTypeTextBox.Text, entryDataTextBox.Text);
+                if (index == -1 || (Enum.IsDefined(typeof(PckFileType), index) && (int)file.Filetype == index))
+                {
+                    file.Properties.Add(propertyKeyTextBox.Text, propertyValueTextBox.Text);
+                }
+            }
+
+            if (Enum.IsDefined(typeof(PckFileType), index))
+            {
+                MessageBox.Show($"Data added to {(PckFileType)index} entries");
+                return;
             }
             MessageBox.Show("Data added to all entries");
         }
 
-        private void applyBulkProperties(PckFile.FileData.FileType filetype)
-		{
-            foreach (PckFile.FileData file in currentPCK.Files)
-            {
-                if (file.Filetype == PckFile.FileData.FileType.TexturePackInfoFile ||
-                    file.Filetype == PckFile.FileData.FileType.SkinDataFile)
-                {
-                    try
-                    {
-                        var reader = new PckFileReader(littleEndian
-                            ? OMI.Endianness.LittleEndian
-                            : OMI.Endianness.BigEndian);
-                        PckFile SubPCK = reader.FromStream(new MemoryStream(file.Data));
-                        foreach (PckFile.FileData SubFile in SubPCK.Files)
-                        {
-                            if (SubFile.Filetype == filetype)
-                            {
-                                SubFile.Properties.Add(entryTypeTextBox.Text, entryDataTextBox.Text);
-                            }
-                        }
-                        var writer = new PckFileWriter(SubPCK, littleEndian
-                            ? OMI.Endianness.LittleEndian
-                            : OMI.Endianness.BigEndian);
-                        var stream = new MemoryStream();
-                        writer.WriteToStream(stream);
-                        file.SetData(stream.ToArray());
-                        stream.Dispose();
-                    }
-                    catch (OverflowException ex)
-                    {
-                        System.Diagnostics.Debug.WriteLine(ex.Message);
-                    }
-                }
-
-                if (file.Filetype == filetype)
-                {
-                    file.Properties.Add(entryTypeTextBox.Text, entryDataTextBox.Text);
-                }
-            }
-            MessageBox.Show($"Data Added to {filetype} File Entries");
-        }
-
         private void treeMeta_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            entryTypeTextBox.Text = treeMeta.SelectedNode.Text;
+            propertyKeyTextBox.Text = propertyTreeview.SelectedNode.Text;
         }
     }
 }

@@ -13,12 +13,13 @@ using NAudio.Wave;
 
 using OMI.Formats.Pck;
 
-using PckStudio.Classes.FileTypes;
-using PckStudio.Classes.IO.PCK;
-using PckStudio.Forms.Additional_Popups.Audio;
+using PckStudio.FileFormats;
+using PckStudio.IO.PckAudio;
 using PckStudio.Forms.Additional_Popups;
 using PckStudio.Properties;
 using PckStudio.API.Miles;
+using PckStudio.Internal;
+using PckStudio.Extensions;
 
 // Audio Editor by MattNL and Miku-666
 
@@ -28,7 +29,7 @@ namespace PckStudio.Forms.Editor
 	{
 		public string defaultType = "yes";
 		PckAudioFile audioFile = null;
-		PckFile.FileData audioPCK;
+		PckFileData audioPCK;
 		bool _isLittleEndian = false;
         MainForm parent = null;
 
@@ -42,7 +43,13 @@ namespace PckStudio.Forms.Editor
 			"Battle",
 			"Tumble",
 			"Glide",
-			"Unused?"
+			"Build Off (Unused)"
+
+			/* If the SetMusicID function within the game is ever set to 0x9,
+			 * it actually attempts to play a "MG04_01.binka" file in the vanilla music folder.
+			 * Therefore it's safe to assume that the last audio category was indeed 
+			 * supposed to be for the cancelled Build Off mini game (MG04). - May
+			 */
 		};
 
 		private string GetCategoryFromId(PckAudioFile.AudioCategory.EAudioType categoryId)
@@ -56,7 +63,7 @@ namespace PckStudio.Forms.Editor
 			return (PckAudioFile.AudioCategory.EAudioType)Categories.IndexOf(category);
 		}
 
-		public AudioEditor(PckFile.FileData file, bool isLittleEndian)
+		public AudioEditor(PckFileData file, bool isLittleEndian)
 		{
 			InitializeComponent();
 
@@ -222,15 +229,20 @@ namespace PckStudio.Forms.Editor
 			int exitCode = 0;
 			InProgressPrompt waitDiag = new InProgressPrompt();
 			waitDiag.Show(this);
+
+			// TODO: rewrite ALL of this
+
+			Directory.CreateDirectory(ApplicationScope.DataCacher.CacheDirectory); // create directory in case it doesn't exist
+
 			foreach (string file in FileList)
 			{
 				if (Path.GetExtension(file) == ".binka" || Path.GetExtension(file) == ".wav")
 				{
 					string songName = string.Join("_", Path.GetFileNameWithoutExtension(file).Split(Path.GetInvalidFileNameChars()));
 					songName = Regex.Replace(songName, @"[^\u0000-\u007F]+", "_"); // Replace UTF characters
-					string cacheSongLoc = Path.Combine(Program.AppDataCache, songName + Path.GetExtension(file));
+					string cacheSongFile = Path.Combine(ApplicationScope.DataCacher.CacheDirectory, songName + Path.GetExtension(file));
 
-					if(File.Exists(cacheSongLoc)) File.Delete(cacheSongLoc);
+					if(File.Exists(cacheSongFile)) File.Delete(cacheSongFile);
 
 					string new_loc = Path.Combine(parent.GetDataPath(), songName + ".binka");
 					bool is_duplicate_file = false; // To handle if a file already in the pack is dropped back in
@@ -288,7 +300,7 @@ namespace PckStudio.Forms.Editor
 							var newFormat = new WaveFormat(reader.WaveFormat.SampleRate, 16, reader.WaveFormat.Channels);
 							using (var conversionStream = new WaveFormatConversionStream(newFormat, reader))
 							{
-								WaveFileWriter.CreateWaveFile(cacheSongLoc, conversionStream); //write to new location
+								WaveFileWriter.CreateWaveFile(cacheSongFile, conversionStream); //write to new location
 							}
 							reader.Close();
 							reader.Dispose();
@@ -298,14 +310,14 @@ namespace PckStudio.Forms.Editor
 
 						await Task.Run(() =>
 						{
-                            exitCode = Binka.FromWav(cacheSongLoc, new_loc, (int)compressionUpDown.Value);
+                            exitCode = Binka.ToBinka(cacheSongFile, new_loc, (int)compressionUpDown.Value);
 						});
 
-						if (!File.Exists(cacheSongLoc)) MessageBox.Show(this, $"\"{songName}.wav\" failed to convert for some reason. Please reach out to MNL#8935 on the communtiy Discord server and provide details. Thanks!", "Conversion failed");
+						if (!File.Exists(cacheSongFile)) MessageBox.Show(this, $"\"{songName}.wav\" failed to convert for some reason. Please report this on the communtiy Discord server, which can be found under \"More\" in the toolbar at the top of the program.", "Conversion failed");
 						else
 						{
 							success++;
-							File.Delete(cacheSongLoc); //cleanup song
+							File.Delete(cacheSongFile); //cleanup song
 						}
 
 						Cursor.Current = Cursors.Default;
@@ -398,12 +410,7 @@ namespace PckStudio.Forms.Editor
 				return;
 			}
 
-			using (var stream = new MemoryStream())
-			{
-				var writer = new PckAudioFileWriter(audioFile, _isLittleEndian ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
-                writer.WriteToStream(stream);
-				audioPCK.SetData(stream.ToArray());
-			}
+			audioPCK.SetData(new PckAudioFileWriter(audioFile, _isLittleEndian ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian));
 			DialogResult = DialogResult.OK;
 		}
 
@@ -419,14 +426,6 @@ namespace PckStudio.Forms.Editor
 				"The \"Creative\" category will only play songs listed in that category, and unlike other editions of Minecraft, will NOT play songs from the Overworld category. You can fix this by clicking the checkbox found at the top of the form.\n\n" +
 				"The mini game categories will only play if you have your pack loaded in those mini games.\n\n" +
 				"You can edit the credits for the PCK in the Credits editor! No more managing credit IDs!\n\n", "Help");
-		}
-
-		private void creditsEditorToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			var credits = audioFile.GetCreditsString();
-			using (creditsEditor prompt = new creditsEditor(credits))
-				if (prompt.ShowDialog() == DialogResult.OK)
-					audioFile.SetCredits(prompt.Credits.Split('\n'));
 		}
 
 		private void deleteUnusedBINKAsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -549,7 +548,7 @@ namespace PckStudio.Forms.Editor
 
 					await Task.Run(() =>
 					{
-                        exitCode = Binka.FromWav(file, new_loc, (int)compressionUpDown.Value);
+                        exitCode = Binka.ToBinka(file, new_loc, (int)compressionUpDown.Value);
 					});
 
 					waitDiag.Close();
@@ -578,7 +577,7 @@ namespace PckStudio.Forms.Editor
 			if (available.Length > 0)
 			{
 				using ItemSelectionPopUp add = new ItemSelectionPopUp(available);
-				add.okBtn.Text = "Save";
+				add.ButtonText = "Save";
 				if (add.ShowDialog() != DialogResult.OK) return;
 
 				audioFile.RemoveCategory(category.audioType);

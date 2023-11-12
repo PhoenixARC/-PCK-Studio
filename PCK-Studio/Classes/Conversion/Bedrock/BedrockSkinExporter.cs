@@ -84,7 +84,7 @@ namespace PckStudio.Conversion.Bedrock
             _exportContext = exportContext;
         }
 
-        private static List<(string, string)> GetSkinOffsets(PckFile.PCKProperties skinProperties)
+        private static List<(string, string)> GetSkinOffsets(PckFileProperties skinProperties)
         {
             List<(string, string)> skinOffsets = new List<(string, string)>();
 
@@ -134,7 +134,7 @@ namespace PckStudio.Conversion.Bedrock
             return skinOffsets;
         }
 
-        private GeometryCube[] ConvertBoxes(string part, PckFile.FileData file, Vector3 pivot, List<(string, string)> offsets)
+        private GeometryCube[] ConvertBoxes(string part, PckFileData file, Vector3 pivot, List<(string, string)> offsets)
         {
             List<GeometryCube> cubes = new List<GeometryCube>();
             var anim = new SkinANIM();
@@ -163,57 +163,57 @@ namespace PckStudio.Conversion.Bedrock
                 }
             }
 
-            bool slim = anim.GetFlag(ANIM_EFFECTS.SLIM_MODEL);
-            bool classic_res = !(slim && anim.GetFlag(ANIM_EFFECTS.RESOLUTION_64x64));
+            bool slim = anim.GetFlag(SkinAnimFlag.SLIM_MODEL);
+            bool classic_res = !(slim && anim.GetFlag(SkinAnimFlag.RESOLUTION_64x64));
 
             switch (part)
             {
                 case "HEAD":
-                    if (!anim.GetFlag(ANIM_EFFECTS.HEAD_DISABLED))
+                    if (!anim.GetFlag(SkinAnimFlag.HEAD_DISABLED))
                         cubes.Add(new GeometryCube(new Vector3(-4, 24 - offset, -4), new Vector3(8, 8, 8), new Vector2(0, 0)));
                     break;
                 case "BODY":
-                    if (!anim.GetFlag(ANIM_EFFECTS.BODY_DISABLED))
+                    if (!anim.GetFlag(SkinAnimFlag.BODY_DISABLED))
                         cubes.Add(new GeometryCube(new Vector3(-4, 12 - offset, -2), new Vector3(8, 12, 4), new Vector2(16, 16)));
                     break;
                 case "ARM0":
-                    if (!anim.GetFlag(ANIM_EFFECTS.RIGHT_ARM_DISABLED))
+                    if (!anim.GetFlag(SkinAnimFlag.RIGHT_ARM_DISABLED))
                         cubes.Add(new GeometryCube(new Vector3(slim ? -7 : -8, 12 - offset, -2), new Vector3(slim ? 3 : 4, 12, 4), new Vector2(40, 16)));
                     break;
                 case "ARM1":
-                    if (!anim.GetFlag(ANIM_EFFECTS.LEFT_ARM_DISABLED))
+                    if (!anim.GetFlag(SkinAnimFlag.LEFT_ARM_DISABLED))
                         cubes.Add(new GeometryCube(new Vector3(4, 12 - offset, -2), new Vector3(slim ? 3 : 4, 12, 4), classic_res ? new Vector2(40, 16) : new Vector2(32, 48), classic_res));
                     break;
                 case "LEG0":
-                    if (!anim.GetFlag(ANIM_EFFECTS.RIGHT_LEG_DISABLED))
+                    if (!anim.GetFlag(SkinAnimFlag.RIGHT_LEG_DISABLED))
                         cubes.Add(new GeometryCube(new Vector3(-3.9f, 0 - offset, -2), new Vector3(4, 12, 4), new Vector2(0, 16)));
                     break;
                 case "LEG1":
-                    if (!anim.GetFlag(ANIM_EFFECTS.LEFT_LEG_DISABLED))
+                    if (!anim.GetFlag(SkinAnimFlag.LEFT_LEG_DISABLED))
                         cubes.Add(new GeometryCube(new Vector3(0.1f, 0 - offset, -2), new Vector3(4, 12, 4), classic_res ? new Vector2(0, 16) : new Vector2(16, 48), classic_res));
                     break;
                 case "HEADWEAR":
-                    if (!anim.GetFlag(ANIM_EFFECTS.HEAD_OVERLAY_DISABLED))
+                    if (!anim.GetFlag(SkinAnimFlag.HEAD_OVERLAY_DISABLED))
                         cubes.Add(new GeometryCube(new Vector3(-4, 24 - offset, -4), new Vector3(8, 8, 8), new Vector2(32, 0), false, 0.5f));
                     break;
                 case "JACKET":
-                    if (!classic_res && !anim.GetFlag(ANIM_EFFECTS.BODY_OVERLAY_DISABLED))
+                    if (!classic_res && !anim.GetFlag(SkinAnimFlag.BODY_OVERLAY_DISABLED))
                         cubes.Add(new GeometryCube(new Vector3(0, 24 - offset, 0), new Vector3(8, 12, 4), new Vector2(16, 32), false, 0.25f));
                     break;
                 case "SLEEVE0":
-                    if (!classic_res && !anim.GetFlag(ANIM_EFFECTS.RIGHT_ARM_OVERLAY_DISABLED))
+                    if (!classic_res && !anim.GetFlag(SkinAnimFlag.RIGHT_ARM_OVERLAY_DISABLED))
                         cubes.Add(new GeometryCube(new Vector3(slim ? -7 : -8, 12 - offset, -2), new Vector3(slim ? 3 : 4, 12, 4), new Vector2(40, 32), false, 0.25f));
                     break;
                 case "SLEEVE1":
-                    if (!classic_res && !anim.GetFlag(ANIM_EFFECTS.LEFT_ARM_OVERLAY_DISABLED))
+                    if (!classic_res && !anim.GetFlag(SkinAnimFlag.LEFT_ARM_OVERLAY_DISABLED))
                         cubes.Add(new GeometryCube(new Vector3(4, 12 - offset, -2), new Vector3(slim ? 3 : 4, 12, 4), new Vector2(48, 48), false, 0.25f));
                     break;
                 case "PANTS0":
-                    if (!classic_res && !anim.GetFlag(ANIM_EFFECTS.RIGHT_LEG_OVERLAY_DISABLED))
+                    if (!classic_res && !anim.GetFlag(SkinAnimFlag.RIGHT_LEG_OVERLAY_DISABLED))
                         cubes.Add(new GeometryCube(new Vector3(-3.9f, 0 - offset, -2), new Vector3(4, 12, 4), new Vector2(0, 32), false, 0.25f));
                     break;
                 case "PANTS1":
-                    if (!classic_res && !anim.GetFlag(ANIM_EFFECTS.LEFT_LEG_OVERLAY_DISABLED))
+                    if (!classic_res && !anim.GetFlag(SkinAnimFlag.LEFT_LEG_OVERLAY_DISABLED))
                         cubes.Add(new GeometryCube(new Vector3(0.1f, 0 - offset, -2), new Vector3(4, 12, 4), new Vector2(0, 48), false, 0.25f));
                     break;
                 default:
@@ -272,18 +272,18 @@ namespace PckStudio.Conversion.Bedrock
         }
 
 
-        public void ConvertCape(PckFile.FileData file, SkinObject skin = default!)
+        public void ConvertCape(PckFileData file, SkinObject skin = default!)
         {
-            if (file.Filetype != PckFile.FileData.FileType.CapeFile)
+            if (file.Filetype != PckFileType.CapeFile)
                 return;
             string capeId = Path.GetFileNameWithoutExtension(file.Filename);
             _exportContext.PutNextEntry($"{capeId}.png");
             _exportContext.Write(file.Data, 0, file.Size);
         }
 
-        private SkinObject ConvertSkin(PckFile.FileData file, string packName, JObject geometryJson)
+        private SkinObject ConvertSkin(PckFileData file, string packName, JObject geometryJson)
         {
-            if (file.Filetype != PckFile.FileData.FileType.SkinFile)
+            if (file.Filetype != PckFileType.SkinFile)
                 return default!;
             
             SkinObject skinObj = new SkinObject();
@@ -344,20 +344,20 @@ namespace PckStudio.Conversion.Bedrock
             );
 
             var ANIM = SkinANIM.FromString(file.Properties.Find(o => o.Key == "ANIM").Value) ?? SkinANIM.Empty;
-            bool IsClassicRes = !(ANIM.GetFlag(ANIM_EFFECTS.RESOLUTION_64x64) || ANIM.GetFlag(ANIM_EFFECTS.SLIM_MODEL));
+            bool IsClassicRes = !(ANIM.GetFlag(SkinAnimFlag.RESOLUTION_64x64) || ANIM.GetFlag(SkinAnimFlag.SLIM_MODEL));
 
             geometry.TextureWidth = 64;
             geometry.TextureHeight = IsClassicRes ? 32 : 64;
-            geometry.AnimationArmsDown = ANIM.GetFlag(ANIM_EFFECTS.STATIC_ARMS);
-            geometry.AnimationArmsOutFront = ANIM.GetFlag(ANIM_EFFECTS.ZOMBIE_ARMS);
-            geometry.AnimationDontShowArmor = ANIM.GetFlag(ANIM_EFFECTS.ALL_ARMOR_DISABLED);
-            geometry.AnimationInvertedCrouch = ANIM.GetFlag(ANIM_EFFECTS.DO_BACKWARDS_CROUCH);
-            geometry.AnimationNoHeadBob = ANIM.GetFlag(ANIM_EFFECTS.HEAD_BOBBING_DISABLED);
-            geometry.AnimationSingleArmAnimation = ANIM.GetFlag(ANIM_EFFECTS.SYNCED_ARMS);
-            geometry.AnimationSingleLegAnimation = ANIM.GetFlag(ANIM_EFFECTS.SYNCED_LEGS);
-            geometry.AnimationStationaryLegs = ANIM.GetFlag(ANIM_EFFECTS.STATIC_LEGS);
-            geometry.AnimationStatueOfLibertyArms = ANIM.GetFlag(ANIM_EFFECTS.STATUE_OF_LIBERTY);
-            geometry.AnimationUpsideDown = ANIM.GetFlag(ANIM_EFFECTS.DINNERBONE);
+            geometry.AnimationArmsDown = ANIM.GetFlag(SkinAnimFlag.STATIC_ARMS);
+            geometry.AnimationArmsOutFront = ANIM.GetFlag(SkinAnimFlag.ZOMBIE_ARMS);
+            geometry.AnimationDontShowArmor = ANIM.GetFlag(SkinAnimFlag.ALL_ARMOR_DISABLED);
+            geometry.AnimationInvertedCrouch = ANIM.GetFlag(SkinAnimFlag.DO_BACKWARDS_CROUCH);
+            geometry.AnimationNoHeadBob = ANIM.GetFlag(SkinAnimFlag.HEAD_BOBBING_DISABLED);
+            geometry.AnimationSingleArmAnimation = ANIM.GetFlag(SkinAnimFlag.SYNCED_ARMS);
+            geometry.AnimationSingleLegAnimation = ANIM.GetFlag(SkinAnimFlag.SYNCED_LEGS);
+            geometry.AnimationStationaryLegs = ANIM.GetFlag(SkinAnimFlag.STATIC_LEGS);
+            geometry.AnimationStatueOfLibertyArms = ANIM.GetFlag(SkinAnimFlag.STATUE_OF_LIBERTY);
+            geometry.AnimationUpsideDown = ANIM.GetFlag(SkinAnimFlag.DINNERBONE);
 
             string capepath = file.Properties.Find(o => o.Key == "CAPEPATH").Value;
 
@@ -385,8 +385,8 @@ namespace PckStudio.Conversion.Bedrock
 
         private LOCFile AcquireLocFile(PckFile sourcePck)
         {
-            if (sourcePck.TryGetFile("localisation.loc", PckFile.FileData.FileType.LocalisationFile, out PckFile.FileData locFileData) ||
-                sourcePck.TryGetFile("languages.loc", PckFile.FileData.FileType.LocalisationFile, out locFileData))
+            if (sourcePck.TryGetFile("localisation.loc", PckFileType.LocalisationFile, out PckFileData locFileData) ||
+                sourcePck.TryGetFile("languages.loc", PckFileType.LocalisationFile, out locFileData))
             {
                 var reader = new LOCFileReader();
                 LOCFile locFile;
@@ -402,19 +402,19 @@ namespace PckStudio.Conversion.Bedrock
         private SkinObject[] ConvertSkins(PckFile sourcePck, JObject geometryJson, string packName)
         {
             List<SkinObject> skins = new List<SkinObject>();
-            foreach (PckFile.FileData file in sourcePck.Files)
+            foreach (PckFileData file in sourcePck.GetFiles())
             {
                 switch (file.Filetype)
                 {
-                    case PckFile.FileData.FileType.SkinFile:
+                    case PckFileType.SkinFile:
                         var skin = ConvertSkin(file, packName, geometryJson);
                         if (skin != null)
                             skins.Add(skin);
                         break;
-                    case PckFile.FileData.FileType.CapeFile:
+                    case PckFileType.CapeFile:
                         ConvertCape(file);
                         break;
-                    case PckFile.FileData.FileType.SkinDataFile:
+                    case PckFileType.SkinDataFile:
                         var reader = new PckFileReader();
                         using (var ms = new MemoryStream(file.Data))
                         {

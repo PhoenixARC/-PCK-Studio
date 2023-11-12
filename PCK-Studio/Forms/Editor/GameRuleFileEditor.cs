@@ -1,4 +1,21 @@
-﻿using System;
+﻿/* Copyright (c) 2023-present miku-666
+ * This software is provided 'as-is', without any express or implied
+ * warranty. In no event will the authors be held liable for any damages
+ * arising from the use of this software.
+ * 
+ * Permission is granted to anyone to use this software for any purpose,
+ * including commercial applications, and to alter it and redistribute it
+ * freely, subject to the following restrictions:
+ * 
+ * 1.The origin of this software must not be misrepresented; you must not
+ *    claim that you wrote the original software. If you use this software
+ *    in a product, an acknowledgment in the product documentation would be
+ *    appreciated but is not required.
+ * 2. Altered source versions must be plainly marked as such, and must not be
+ *    misrepresented as being the original software.
+ * 3. This notice may not be removed or altered from any source distribution.
+**/
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -11,17 +28,23 @@ using OMI.Workers.GameRule;
 using System.Diagnostics;
 using OMI.Formats.Pck;
 using PckStudio.Forms.Additional_Popups;
-using PckStudio.Models;
 using PckStudio.Properties;
+using PckStudio.ToolboxItems;
+using PckStudio.Extensions;
 
 namespace PckStudio.Forms.Editor
 {
     public partial class GameRuleFileEditor : MetroFramework.Forms.MetroForm
     {
-        private PckFile.FileData _pckfile;
+        private PckFileData _pckfile;
         private GameRuleFile _file;
         private GameRuleFile.CompressionType compressionType;
         private GameRuleFile.CompressionLevel compressionLevel;
+
+        private const string use_zlib = "Wii U, PS Vita";
+        private const string use_deflate = "PS3";
+        private const string use_xmem = "Xbox 360";
+
         public GameRuleFileEditor()
         {
             InitializeComponent();
@@ -31,35 +54,32 @@ namespace PckStudio.Forms.Editor
 
         private void PromptForCompressionType()
         {
-            ItemSelectionPopUp dialog = new ItemSelectionPopUp("Wii U, PS Vita", "PS3", "Xbox 360");
-            dialog.label2.Text = "Type";
-            dialog.okBtn.Text = "Ok";
+            ItemSelectionPopUp dialog = new ItemSelectionPopUp(use_zlib, use_deflate, use_xmem);
+            dialog.LabelText = "Type";
+            dialog.ButtonText = "Ok";
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 switch(dialog.SelectedItem)
                 {
-                    case "Wii U, PS Vita":
+                    case use_zlib:
                         wiiUPSVitaToolStripMenuItem.Checked = true;
                         break;
-                    case "PS3":
+                    case use_deflate:
                         pS3ToolStripMenuItem.Checked = true;
                             break;
-                    case "Xbox 360":
+                    case use_xmem:
                         xbox360ToolStripMenuItem.Checked = true;
                         break;
                 }
             }
         }
 
-        public GameRuleFileEditor(PckFile.FileData file) : this()
+        public GameRuleFileEditor(PckFileData file) : this()
         {
             _pckfile = file;
-            if (file.Size > 0)
+            using (var stream = new MemoryStream(file.Data))
             {
-                using (var stream = new MemoryStream(file.Data))
-                {
-                    _file = OpenGameRuleFile(stream);
-                }
+                _file = OpenGameRuleFile(stream);
             }
         }
 
@@ -112,7 +132,7 @@ namespace PckStudio.Forms.Editor
 
         private void SetCompressionLevel()
         {
-            switch (_file.FileHeader.CompressionLevel)
+            switch (_file.Header.CompressionLevel)
             {
                 case GameRuleFile.CompressionLevel.None:
                     noneToolStripMenuItem.Checked = true;
@@ -205,9 +225,9 @@ namespace PckStudio.Forms.Editor
                 ? GrfTreeView.SelectedNode.Nodes
                 : GrfTreeView.Nodes;
 
-            using (TextPrompt prompt = new TextPrompt(""))
+            using (TextPrompt prompt = new TextPrompt())
             {
-                prompt.OKButton.Text = "Add";
+                prompt.OKButtonText = "Add";
                 if (MessageBox.Show($"Add Game Rule to {parentRule.Name}", "Attention",
                     MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes &&
                     prompt.ShowDialog() == DialogResult.OK &&
@@ -243,7 +263,7 @@ namespace PckStudio.Forms.Editor
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (_file.FileHeader.unknownData[3] != 0)
+            if (_file.Header.unknownData[3] != 0)
             {
                 MessageBox.Show("World grf saving is currently unsupported");
                 return;
@@ -252,12 +272,7 @@ namespace PckStudio.Forms.Editor
             {
                 try
                 {
-                    var writer = new GameRuleFileWriter(
-                        _file,
-                        compressionLevel,
-                        compressionType);
-                    writer.WriteToStream(stream);
-                    _pckfile?.SetData(stream.ToArray());
+                    _pckfile?.SetData(new GameRuleFileWriter(_file, compressionLevel, compressionType));
                     DialogResult = DialogResult.OK;
                     MessageBox.Show("Saved!");
                 }
@@ -267,15 +282,6 @@ namespace PckStudio.Forms.Editor
                     MessageBox.Show($"Failed to save grf file\n{ex.Message}", "Save Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-        }
-
-        private void metroPanel1_Resize(object sender, EventArgs e)
-        {
-            int padding = 2;
-            GrfTreeView.Size = new Size(metroPanel1.Size.Width / 2 - padding, metroPanel1.Size.Height);
-            GrfParametersTreeView.Size = new Size(metroPanel1.Size.Width / 2 - padding, metroPanel1.Size.Height);
-            // good enough
-            metroLabel2.Location = new Point(metroPanel1.Size.Width / 2 + 25, metroLabel2.Location.Y);
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)

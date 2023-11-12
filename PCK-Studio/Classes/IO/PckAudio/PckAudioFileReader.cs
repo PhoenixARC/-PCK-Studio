@@ -1,6 +1,6 @@
 ﻿using OMI;
 using OMI.Workers;
-using PckStudio.Classes.FileTypes;
+using PckStudio.FileFormats;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -8,7 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace PckStudio.Classes.IO.PCK
+namespace PckStudio.IO.PckAudio
 {
 
     public class InvalidAudioPckException : Exception

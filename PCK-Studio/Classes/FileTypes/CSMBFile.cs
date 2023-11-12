@@ -5,11 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using PckStudio.Models;
 
-namespace PckStudio.Classes.FileTypes
+namespace PckStudio.FileFormats
 {
-    #region File Template
+    #region File Structure
     /*
 	Version - 4 bytes[int32]
 	NumberOfParts - 4 bytes[int32]

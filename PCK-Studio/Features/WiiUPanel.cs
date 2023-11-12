@@ -236,7 +236,7 @@ namespace PckStudio.Features
             var reader = new PckFileReader();
             currentPCK = reader.FromFile(filepath);
             if (currentPCK is null) return string.Empty;
-            return currentPCK.TryGetFile("0", PckFile.FileData.FileType.InfoFile, out var file)
+            return currentPCK.TryGetFile("0", PckFileType.InfoFile, out var file)
                 ? file.Properties.GetPropertyValue("PACKID")
                 : string.Empty;
         }
@@ -273,7 +273,7 @@ namespace PckStudio.Features
                     client.UploadFile(ms, GetGameContentPath() + "/Common/Media/MediaWiiU.arc");
                 }
                 archive.Clear();
-                currentPCK?.Files.Clear();
+                //currentPCK?.Files.Clear();
                 currentPCK = null;
             }
             GC.Collect();

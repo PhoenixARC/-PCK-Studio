@@ -1,11 +1,27 @@
-﻿using System;
+﻿/* Copyright (c) 2023-present miku-666
+ * This software is provided 'as-is', without any express or implied
+ * warranty. In no event will the authors be held liable for any damages
+ * arising from the use of this software.
+ * 
+ * Permission is granted to anyone to use this software for any purpose,
+ * including commercial applications, and to alter it and redistribute it
+ * freely, subject to the following restrictions:
+ * 
+ * 1.The origin of this software must not be misrepresented; you must not
+ *    claim that you wrote the original software. If you use this software
+ *    in a product, an acknowledgment in the product documentation would be
+ *    appreciated but is not required.
+ * 2. Altered source versions must be plainly marked as such, and must not be
+ *    misrepresented as being the original software.
+ * 3. This notice may not be removed or altered from any source distribution.
+**/
+using System;
 using System.Xml;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using PckStudio.Extensions;
 using PckStudio.Classes.Misc;
-using System.Xml.Serialization;
 using System.Diagnostics;
 
 namespace PckStudio.Features
@@ -54,7 +70,7 @@ namespace PckStudio.Features
                     var xml = new XmlDocument();
                     xml.Load(settingsPath);
                     GameDirectoryTextBox.Text = xml.SelectSingleNode("content").SelectSingleNode("mlc_path").InnerText;
-                    GameDirectoryTextBox.ReadOnly = true;
+                    GameDirectoryTextBox.Enabled = false;
                     BrowseDirectoryBtn.Enabled = false;
                 }
                 catch (Exception ex)
@@ -83,7 +99,7 @@ namespace PckStudio.Features
                     var configNode = xml.SelectSingleNode("config");
                     var mlcpathNode = configNode.SelectSingleNode("MlcPath");
                     GameDirectoryTextBox.Text = mlcpathNode.InnerText;
-                    GameDirectoryTextBox.ReadOnly = true;
+                    GameDirectoryTextBox.Enabled = false;
                     BrowseDirectoryBtn.Enabled = false;
                     return true;
                 }
@@ -251,9 +267,9 @@ namespace PckStudio.Features
 
         private void addCustomPckToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            TextPrompt prompt = new TextPrompt(string.Empty);
-            prompt.OKButton.Text = "OK";
-            prompt.TextLabel.Text = "Folder:";
+            TextPrompt prompt = new TextPrompt();
+            prompt.OKButtonText = "OK";
+            prompt.LabelText = "Folder:";
             
             if (prompt.ShowDialog(this) != DialogResult.OK)
                 return;
@@ -311,14 +327,6 @@ namespace PckStudio.Features
             ListDLCs();
         }
 
-        private void GameDirectoryTextBox_Click(object sender, EventArgs e)
-        {
-            if (GameDirectoryTextBox.ReadOnly)
-            {
-                Process.Start(GetContentSubDirectory("WiiU", "DLC"));
-            }
-        }
-
         private void DLCTreeView_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
             if (e.KeyCode == Keys.Enter && DLCTreeView.SelectedNode is not null)
@@ -331,6 +339,16 @@ namespace PckStudio.Features
         private void DLCTreeView_KeyPress(object sender, KeyPressEventArgs e)
         {
             e.Handled = true;
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Process.Start(GetContentSubDirectory("WiiU", "DLC"));
+        }
+
+        private void copyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(GameDirectoryTextBox.Text);
         }
     }
 }

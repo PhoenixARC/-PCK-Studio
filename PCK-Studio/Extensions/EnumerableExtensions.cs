@@ -5,7 +5,7 @@ namespace PckStudio.Extensions
 {
     internal static class EnumerableExtensions
     {
-        public static IEnumerable<(int index, T type)>enumerate<T>(this IEnumerable<T> array)
+        public static IEnumerable<(int index, T value)>enumerate<T>(this IEnumerable<T> array)
         {
             int i = 0;
             foreach (var item in array)
@@ -13,6 +13,16 @@ namespace PckStudio.Extensions
                 yield return (i++, item);
             }
             yield break;
+        }
+
+        public static bool EqualsAny<T>(this T type, params T[] items)
+        {
+            foreach (var item in items)
+            {
+                if (item.Equals(type))
+                    return true;
+            }
+            return false;
         }
 
         public static bool ContainsAny<T>(this IEnumerable<T> array, params T[] items)

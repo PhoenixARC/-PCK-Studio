@@ -1,37 +1,64 @@
 ﻿using System;
+using System.Diagnostics;
 using DiscordRPC;
+using PckStudio.Internal;
 using PckStudio.Properties;
+using DiscordRPC.Logging;
 
 namespace PckStudio.Classes.Misc
 {
-    // https://github.com/BullyWiiPlaza/Minecraft-Wii-U-Mod-Injector/blob/main/Minecraft%20Wii%20U%20Mod%20Injector/Helpers/DiscordRp.cs
+    // https://github.com/BullyWiiPlaza/Minecraft-Wii-U-Mod-Injector/blob/main/Minecraft%20Wii%20U%20Mod%20Injector/Helpers/DiscordRpc.cs
     static class RPC
     {
-        public static DiscordRpcClient Client;
-        public static readonly DateTime StartUpTime = DateTime.UtcNow;
+        private static DiscordRpcClient Client;
+        private static readonly DateTime StartUpTime = DateTime.UtcNow;
+        private static RichPresence _richPresence;
 
         private static readonly Assets _assets = new Assets()
         {
             LargeImageKey = "pcklgo",
-            LargeImageText = "PCK-Studio",
+            LargeImageText = System.Windows.Forms.Application.ProductName,
         };
+
+        private static readonly Timestamps _startTimestamp = new Timestamps(StartUpTime);
 
         private static readonly Button[] _buttons = new Button[]
         {
             new Button()
             {
                 Label = "Check it out!",
-                Url = Program.ProjectUrl,
+                Url = Program.ProjectUrl.AbsoluteUri,
             }
         };
 
+
         public static void Initialize()
         {
-            if (Settings.Default.ShowRichPresence)
+            Client ??= new DiscordRpcClient(Settings.Default.RichPresenceId);
+#if DEBUG
+            Client.Logger = new ConsoleLogger(LogLevel.Info, true);
+#endif
+            if (!Client.IsInitialized)
             {
-                Client ??= new DiscordRpcClient(Settings.Default.RichPresenceId);
                 Client.Initialize();
             }
+            SettingsManager.RegisterPropertyChangedCallback<bool>(nameof(Settings.Default.ShowRichPresence), state =>
+            {
+                if (state)
+                {
+                    Client.SetPresence(_richPresence);
+                    return;
+                }
+                Client.ClearPresence();
+            });
+        }
+
+        public static void Deinitialize()
+        {
+            if (Client.IsInitialized)
+                Client?.ClearPresence();
+            Client?.Dispose();
+            Client = null;
         }
 
         public static void SetPresence(string details)
@@ -41,21 +68,16 @@ namespace PckStudio.Classes.Misc
 
         public static void SetPresence(string details, string state)
         {
-            Client?.SetPresence(new RichPresence()
+            _richPresence = new RichPresence()
             {
                 Details = details,
                 State = state,
-                Timestamps = new Timestamps() { Start = StartUpTime },
+                Timestamps = _startTimestamp,
                 Assets = _assets,
                 Buttons = _buttons
-            });
-        }
-
-        public static void Deinitialize()
-        {
-            Client?.ClearPresence();
-            Client?.Dispose();
-            Client = null;
+            };
+            if (Settings.Default.ShowRichPresence)
+                Client?.SetPresence(_richPresence);
         }
     }
 }

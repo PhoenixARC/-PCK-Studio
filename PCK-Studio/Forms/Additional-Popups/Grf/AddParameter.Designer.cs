@@ -35,6 +35,7 @@
             this.ValueTextBox = new MetroFramework.Controls.MetroTextBox();
             this.CancelBtn = new MetroFramework.Controls.MetroButton();
             this.ConfirmBtn = new MetroFramework.Controls.MetroButton();
+            this.availableComboBox = new MetroFramework.Controls.MetroComboBox();
             metroLabel1 = new MetroFramework.Controls.MetroLabel();
             metroLabel2 = new MetroFramework.Controls.MetroLabel();
             this.SuspendLayout();
@@ -147,12 +148,27 @@
             this.ConfirmBtn.UseSelectable = true;
             this.ConfirmBtn.Click += new System.EventHandler(this.ConfirmButton_Click);
             // 
+            // availableComboBox
+            // 
+            this.availableComboBox.FormattingEnabled = true;
+            this.availableComboBox.ItemHeight = 23;
+            this.availableComboBox.Location = new System.Drawing.Point(72, 21);
+            this.availableComboBox.Name = "availableComboBox";
+            this.availableComboBox.Size = new System.Drawing.Size(165, 29);
+            this.availableComboBox.Style = MetroFramework.MetroColorStyle.Silver;
+            this.availableComboBox.TabIndex = 6;
+            this.availableComboBox.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.availableComboBox.UseSelectable = true;
+            this.availableComboBox.Visible = false;
+            this.availableComboBox.SelectedIndexChanged += new System.EventHandler(this.availableComboBox_SelectedIndexChanged);
+            // 
             // AddParameter
             // 
             this.AcceptButton = this.ConfirmBtn;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(257, 126);
+            this.ClientSize = new System.Drawing.Size(264, 126);
+            this.Controls.Add(this.availableComboBox);
             this.Controls.Add(this.ConfirmBtn);
             this.Controls.Add(this.CancelBtn);
             this.Controls.Add(this.ValueTextBox);
@@ -176,5 +192,6 @@
         private MetroFramework.Controls.MetroButton CancelBtn;
         private MetroFramework.Controls.MetroButton ConfirmBtn;
         private MetroFramework.Controls.MetroTextBox NameTextBox;
+        private MetroFramework.Controls.MetroComboBox availableComboBox;
     }
 }
