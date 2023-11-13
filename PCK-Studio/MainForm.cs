@@ -7,7 +7,6 @@ using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 using System.Diagnostics;
 using System.Drawing.Imaging;
-
 using OMI.Formats.Archive;
 using OMI.Formats.Pck;
 using OMI.Formats.GameRule;
@@ -16,7 +15,6 @@ using OMI.Workers.Archive;
 using OMI.Workers.Pck;
 using OMI.Workers.GameRule;
 using OMI.Workers.Language;
-
 using PckStudio.Properties;
 using PckStudio.FileFormats;
 using PckStudio.Forms;
@@ -94,6 +92,11 @@ namespace PckStudio
 			};
 		}
 
+		public void InitPckFromFile(string filepath)
+		{
+			saveLocation = filepath;
+		}
+
 		public void LoadPckFromFile(string filepath)
 		{
 			checkSaveState();
@@ -146,6 +149,8 @@ namespace PckStudio
 			isSelectingTab = false;
 
 			UpdateRichPresence();
+
+			if (saveLocation != String.Empty) LoadPckFromFile(saveLocation);
 		}
 
 		private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
