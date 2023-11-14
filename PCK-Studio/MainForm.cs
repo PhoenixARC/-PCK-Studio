@@ -749,6 +749,13 @@ namespace PckStudio
 
 			if (diag.ShowDialog(this) == DialogResult.OK)
 			{
+				PckFileData test;
+				if (currentPCK.TryGetFile(diag.NewText, (node.Tag as PckFileData).Filetype, out test))
+				{
+					MessageBox.Show($"{diag.NewText} already exists", "File already exists");
+					return;
+				}
+
 				if (node.Tag is PckFileData file)
 				{
 					file.Filename = diag.NewText;
@@ -760,6 +767,7 @@ namespace PckStudio
 					{
 						if (childNode.Tag is PckFileData folderFile)
 						{
+							if (folderFile.Filename == diag.NewText) continue;
 							folderFile.Filename = childNode.FullPath;
 						}
 					}
