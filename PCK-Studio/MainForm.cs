@@ -8,7 +8,6 @@ using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 using System.Diagnostics;
 using System.Drawing.Imaging;
-
 using OMI.Formats.Archive;
 using OMI.Formats.Pck;
 using OMI.Formats.GameRule;
@@ -17,7 +16,6 @@ using OMI.Workers.Archive;
 using OMI.Workers.Pck;
 using OMI.Workers.GameRule;
 using OMI.Workers.Language;
-
 using PckStudio.Properties;
 using PckStudio.Forms;
 using PckStudio.Forms.Editor;
@@ -34,6 +32,7 @@ using PckStudio.Classes.Utils;
 using PckStudio.Helper;
 using PckStudio.Controls;
 using PckStudio.Interfaces;
+using PCKStudio_Updater;
 
 namespace PckStudio
 {
@@ -152,7 +151,7 @@ namespace PckStudio
 		private PckFile InitializePack(int packId, int packVersion, string packName, bool createSkinsPCK)
 		{
 			var pack = new PckFile(3);
-			
+
 			var zeroFile = pack.CreateNewFile("0", PckFileType.InfoFile);
 			zeroFile.Properties.Add("PACKID", packId.ToString());
 			zeroFile.Properties.Add("PACKVERSION", packVersion.ToString());
@@ -165,7 +164,7 @@ namespace PckStudio
 				LittleEndianCheckBox.Checked
 					? OMI.Endianness.LittleEndian
 					: OMI.Endianness.BigEndian));
-			
+
 			return pack;
 		}
 
@@ -209,12 +208,9 @@ namespace PckStudio
 				new KeyValuePair<string, string>("spawnY", "0"),
 				new KeyValuePair<string, string>("spawnZ", "0")
 				);
-			using (var stream = new MemoryStream())
-			{
-				var writer = new GameRuleFileWriter(grfFile);
-				writer.WriteToStream(stream);
-				gameRuleFile.SetData(stream.ToArray());
-			}
+
+			gameRuleFile.SetData(new GameRuleFileWriter(grfFile));
+
 			return pack;
 		}
 
@@ -627,21 +623,21 @@ namespace PckStudio
 			if (!PckManager.Visible)
 			{
 				PckManager.Show();
-                PckManager.BringToFront();
-            }
+				PckManager.BringToFront();
+			}
 			if (PckManager.Focus())
 				PckManager.BringToFront();
 		}
 
 		private void wavBinkaToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-            using OpenFileDialog fileDialog = new OpenFileDialog
-            {
-                Multiselect = true,
-                Filter = "WAV files (*.wav)|*.wav",
-                Title = "Please choose WAV files to convert to BINKA"
-            };
-            if (fileDialog.ShowDialog() == DialogResult.OK)
+			using OpenFileDialog fileDialog = new OpenFileDialog
+			{
+				Multiselect = true,
+				Filter = "WAV files (*.wav)|*.wav",
+				Title = "Please choose WAV files to convert to BINKA"
+			};
+			if (fileDialog.ShowDialog() == DialogResult.OK)
 			{
 				BinkaConverter.ToBinka(fileDialog.FileNames, new DirectoryInfo(Path.GetDirectoryName(fileDialog.FileName)));
 			}
@@ -649,13 +645,13 @@ namespace PckStudio
 
 		private void binkaWavToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-            using OpenFileDialog fileDialog = new OpenFileDialog
-            {
-                Multiselect = true,
-                Filter = "BINKA files (*.binka)|*.binka",
-                Title = "Please choose BINKA files to convert to WAV"
-            };
-            if (fileDialog.ShowDialog() == DialogResult.OK)
+			using OpenFileDialog fileDialog = new OpenFileDialog
+			{
+				Multiselect = true,
+				Filter = "BINKA files (*.binka)|*.binka",
+				Title = "Please choose BINKA files to convert to WAV"
+			};
+			if (fileDialog.ShowDialog() == DialogResult.OK)
 			{
 				BinkaConverter.ToWav(fileDialog.FileNames, new DirectoryInfo(Path.GetDirectoryName(fileDialog.FileName)));
 			}

@@ -1680,5 +1680,15 @@ namespace PckStudio.Controls
         {
             treeViewMain_DoubleClick(sender, e);
         }
+
+        private void moveFile(int amount)
+        {
+
+        }
+
+        [Obsolete]
+        private void moveUpToolStripMenuItem_Click(object sender, EventArgs e) => moveFile(-1);
+        [Obsolete]
+        private void moveDownToolStripMenuItem_Click(object sender, EventArgs e) => moveFile(1);
     }
 }
