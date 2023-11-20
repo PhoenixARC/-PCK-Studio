@@ -749,15 +749,13 @@ namespace PckStudio
 
 			if (diag.ShowDialog(this) == DialogResult.OK)
 			{
-				PckFileData test;
-				if (currentPCK.TryGetFile(diag.NewText, (node.Tag as PckFileData).Filetype, out test))
-				{
-					MessageBox.Show($"{diag.NewText} already exists", "File already exists");
-					return;
-				}
-
 				if (node.Tag is PckFileData file)
 				{
+					if (currentPCK.TryGetFile(diag.NewText, file.Filetype, out _))
+					{
+						MessageBox.Show($"{diag.NewText} already exists", "File already exists");
+						return;
+					}
 					file.Filename = diag.NewText;
 				}
 				else // folders
