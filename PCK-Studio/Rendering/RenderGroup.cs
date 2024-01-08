@@ -15,23 +15,22 @@
  *    misrepresented as being the original software.
  * 3. This notice may not be removed or altered from any source distribution.
 **/
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using OpenTK.Graphics.OpenGL;
 
 namespace PckStudio.Rendering
 {
-    internal class RenderGroup<T> where T : struct
+    internal class RenderGroup<T> where T : struct, IVertexLayout
     {
         internal string Name { get; }
 
-        internal static int SizeInBytes = Marshal.SizeOf<T>();
+        internal readonly int SizeInBytes = Marshal.SizeOf<T>();
         
         protected List<T> vertices;
         protected List<uint> indices;
         protected uint indicesOffset;
-
 
         private VertexArray vertexArray;
         private VertexBuffer<T> vertexBuffer;
@@ -39,14 +38,21 @@ namespace PckStudio.Rendering
         private readonly VertexBufferLayout _layout;
         private readonly PrimitiveType drawType;
 
-        internal RenderGroup(string name, VertexBufferLayout layout, PrimitiveType type)
+        internal RenderGroup(string name, PrimitiveType type)
         {
             Name = name;
             drawType = type;
             indicesOffset = 0;
             vertices = new List<T>(10);
             indices = new List<uint>(10);
-            _layout = layout;
+            _layout = new T().GetLayout();
+        }
+
+        protected void ResetBuffers()
+        {
+            indicesOffset = 0;
+            vertices.Clear();
+            indices.Clear();
         }
 
         internal RenderBuffer GetRenderBuffer()

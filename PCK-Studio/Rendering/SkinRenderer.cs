@@ -15,12 +15,9 @@
  *    misrepresented as being the original software.
  * 3. This notice may not be removed or altered from any source distribution.
 **/
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using OpenTK;
 using PckStudio.Internal;
 using PckStudio.Extensions;
@@ -31,8 +28,6 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using PckStudio.Properties;
 using PckStudio.Forms.Editor;
-using System.Windows.Media.Imaging;
-using System.Xml.Linq;
 
 namespace PckStudio.Rendering
 {
@@ -44,10 +39,33 @@ namespace PckStudio.Rendering
         /// <returns>The visible Texture</returns>
         [Description("The current Texture")]
         [Category("Appearance")]
-        public Bitmap Texture { get; set; }
+        public Image Texture
+        {
+            get => _texture;
+            set
+            {
+                var args = new TextureChangingEventArgs(value);
+                Events[nameof(TextureChanging)]?.DynamicInvoke(this, args);
+                if (!args.Cancel)
+                {
+                    RenderTexture = _texture = value; 
+                }
+            }
+        }
+
+        [Description("Event that gets fired when the Texture is changing")]
+        [Category("Property Chnaged")]
+        [Browsable(true)]
+        public event EventHandler<TextureChangingEventArgs> TextureChanging
+        {
+            add => Events.AddHandler(nameof(TextureChanging), value);
+            remove => Events.RemoveHandler(nameof(TextureChanging), value);
+        }
+
 
         [Description("Anim flags for special effects applied to the skin")]
         [Category("Appearance")]
+        [Browsable(true)]
         public SkinANIM ANIM
         {
             get => _anim;
@@ -92,20 +110,21 @@ namespace PckStudio.Rendering
         }
 
         private Vector2 UvTranslation = new Vector2(1f / 64);
-        private const float OverlayScale = 0.1f;
+        private const float OverlayScale = 1.12f;
 
-        private bool IsLeftMouseDown;
-        private bool IsRightMouseDown;
+        private bool _IsLeftMouseDown;
+        private bool _IsRightMouseDown;
 
-        private Bitmap RenderTexture
+        private Image RenderTexture
         {
             set
             {
-                if (HasValidContext && skinShader is not null)
+                if (HasValidContext && _skinShader is not null)
                 {
+                    UvTranslation = value.Width == value.Height ? new Vector2(1f / 64) : new Vector2(1f / 64, 1f / 32); 
                     var texture = new Texture2D(value);
                     texture.Bind(0);
-                    skinShader.SetUniform1("u_Texture", 0);
+                    _skinShader.SetUniform1("u_Texture", 0);
                     Refresh();
                 }
             }
@@ -124,36 +143,33 @@ namespace PckStudio.Rendering
             }
         }
         private Point PreviousMouseLocation;
-        private Point MouseLoc;
+        private Point CurrentMouseLocation;
 
-        private Shader skinShader;
+        private Shader _skinShader;
         private SkinANIM _anim;
+        private Image _texture;
 
         private Dictionary<string, CubeRenderGroup> additionalModelRenderGroups;
 
-
         private CubeRenderGroup head;
-        private CubeRenderGroup headOverlay;
         private CubeRenderGroup body;
-        private CubeRenderGroup bodyOverlay;
         private CubeRenderGroup rightArm;
-        private CubeRenderGroup rightArmOverlay;
         private CubeRenderGroup leftArm;
-        private CubeRenderGroup leftArmOverlay;
         private CubeRenderGroup rightLeg;
-        private CubeRenderGroup rightLegOverlay;
         private CubeRenderGroup leftLeg;
-        private CubeRenderGroup leftLegOverlay;
 
         private float animationRot;
         private float animationRotStep = 1f;
+
+#if DEBUG
+        private bool showWireFrame = false;
+#endif
 
         public SkinRenderer() : base()
         {
             InitializeComponent();
             InitializeCamera();
             InitializeSkinData();
-            _anim = new SkinANIM(); // use backing field to not raise OnANIMUpdate
             additionalModelRenderGroups = new Dictionary<string, CubeRenderGroup>(6)
             {
                 { "HEAD",     new CubeRenderGroup("HEAD") },
@@ -184,41 +200,35 @@ namespace PckStudio.Rendering
 
         private void InitializeSkinData()
         {
-            head = new CubeRenderGroup("Head");
-            head.AddCube(new(-4, -8, -4), new(8, 8, 8), new(0, 0));
+            head ??= new CubeRenderGroup("Head");
+            head.AddCube(new(-4, -8, -4), new(8, 8, 8), new(0, 0), flipZMapping: true);
+            head.AddCube(new(-4, -8, -4), new(8, 8, 8), new(32, 0), flipZMapping: true, scale: OverlayScale);
+            head.Submit();
 
-            headOverlay = new CubeRenderGroup("Head overlay");
-            headOverlay.AddCube(new(-4, -8, -4), new(8, 8, 8), new(32, 0), scale: OverlayScale);
-
-            body = new CubeRenderGroup("Body");
+            body ??= new CubeRenderGroup("Body");
             body.AddCube(new(-4, 0, -2), new(8, 12, 4), new(16, 16));
+            body.AddCube(new(-4, 0, -2), new(8, 12, 4), new(16, 32), scale: OverlayScale);
+            body.Submit();
 
-            bodyOverlay = new CubeRenderGroup("Body overlay");
-            bodyOverlay.AddCube(new(-4, 0, -2), new(8, 12, 4), new(16, 32), scale: OverlayScale);
-
-            rightArm = new CubeRenderGroup("Right arm");
+            rightArm ??= new CubeRenderGroup("Right arm");
             rightArm.AddCube(new(-3, -2, -2), new(4, 12, 4), new(40, 16));
+            rightArm.AddCube(new(-3, -2, -2), new(4, 12, 4), new(40, 32), scale: OverlayScale);
+            rightArm.Submit();
 
-            rightArmOverlay = new CubeRenderGroup("Right arm overlay");
-            rightArmOverlay.AddCube(new(-3, -2, -2), new(4, 12, 4), new(40, 32), scale: OverlayScale);
-
-            leftArm = new CubeRenderGroup("Left arm");
+            leftArm ??= new CubeRenderGroup("Left arm");
             leftArm.AddCube(new(-1, -2, -2), new(4, 12, 4), new(32, 48));
+            leftArm.AddCube(new(-1, -2, -2), new(4, 12, 4), new(48, 48), scale: OverlayScale);
+            leftArm.Submit();
 
-            leftArmOverlay = new CubeRenderGroup("Left arm overlay");
-            leftArmOverlay.AddCube(new(-1, -2, -2), new(4, 12, 4), new(48, 48), scale: OverlayScale);
-
-            rightLeg = new CubeRenderGroup("Right leg");
+            rightLeg ??= new CubeRenderGroup("Right leg");
             rightLeg.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 16));
+            rightLeg.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 32), scale: OverlayScale);
+            rightLeg.Submit();
 
-            rightLegOverlay = new CubeRenderGroup("Right leg overlay");
-            rightLegOverlay.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 32), scale: OverlayScale);
-
-            leftLeg = new CubeRenderGroup("Left leg");
+            leftLeg ??= new CubeRenderGroup("Left leg");
             leftLeg.AddCube(new(-2, 0, -2), new(4, 12, 4), new(16, 48));
-
-            leftLegOverlay = new CubeRenderGroup("Left leg overlay");
-            leftLegOverlay.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 48), scale: OverlayScale);
+            leftLeg.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 48), scale: OverlayScale);
+            leftLeg.Submit();
         }
 
         protected override void OnLoad(EventArgs e)
@@ -226,30 +236,33 @@ namespace PckStudio.Rendering
             base.OnLoad(e);
             if (DesignMode)
                 return;
+
+            // use backing field to not raise OnANIMUpdate
+            _anim ??= new SkinANIM();
             MakeCurrent();
 
             Trace.TraceInformation(GL.GetString(StringName.Version));
 
             GL.DebugMessageCallback(GLDebugMessage, IntPtr.Zero);
 
-            skinShader = Shader.Create(Resources.skinVertexShader, Resources.skinFragment);
-            skinShader.Bind();
+            _skinShader = Shader.Create(Resources.skinVertexShader, Resources.skinFragmentShader);
+            _skinShader.Bind();
 
             Texture ??= Resources.classic_template;
 
             RenderTexture = Texture;
 
-            foreach (var item in ModelData)
-            {
-                AddCustomModelPart(item);
-            }
+            UploadModelData();
 
             GLErrorCheck();
         }
 
-        public void Reload()
+        public void UploadModelData()
         {
-            additionalModelRenderGroups.Clear();
+            foreach (var group in additionalModelRenderGroups.Values)
+            {
+                group.Clear();
+            }
             foreach (var item in ModelData)
             {
                 AddCustomModelPart(item);
@@ -277,12 +290,21 @@ namespace PckStudio.Rendering
             switch (keyData)
             {
                 case Keys.Escape:
-                    if (IsMouseHidden || IsLeftMouseDown || IsRightMouseDown)
+                    if (IsMouseHidden || _IsLeftMouseDown || _IsRightMouseDown)
                     {
-                        IsMouseHidden = IsRightMouseDown = IsLeftMouseDown = false;
+                        IsMouseHidden = _IsRightMouseDown = _IsLeftMouseDown = false;
                         Cursor.Position = PreviousMouseLocation;
                     }
-                    break;
+                    var point = new Point(Parent.Location.X + Location.X, Parent.Location.Y + Location.Y);
+                    contextMenuStrip1.Show(point);
+                    return true;
+#if DEBUG
+                case Keys.W:
+                    GL.PolygonMode(MaterialFace.FrontAndBack, showWireFrame ? PolygonMode.Line : PolygonMode.Fill);
+                    Refresh();
+                    showWireFrame = !showWireFrame;
+                    return true;
+#endif
                 case Keys.R:
                     GlobalModelRotation = Vector2.Zero;
                     CameraTarget = Vector2.Zero;
@@ -295,16 +317,15 @@ namespace PckStudio.Rendering
                     };
                     if (fileDialog.ShowDialog() == DialogResult.OK)
                     {
-                        RenderTexture = Texture = Image.FromFile(fileDialog.FileName) as Bitmap;
-                    }
-                    return true;
-                case Keys.F3:
-                    foreach (var item in ModelData)
-                    {
-                        Debug.WriteLine(item);
+                        Texture = Image.FromFile(fileDialog.FileName);
                     }
                     return true;
                 case Keys.A:
+                    if (IsMouseHidden || _IsLeftMouseDown || _IsRightMouseDown)
+                    {
+                        IsMouseHidden = _IsRightMouseDown = _IsLeftMouseDown = false;
+                        Cursor.Position = PreviousMouseLocation;
+                    }
                     {
                         using var animeditor = new ANIMEditor(ANIM);
                         if (animeditor.ShowDialog() == DialogResult.OK)
@@ -320,15 +341,29 @@ namespace PckStudio.Rendering
 
         private void OnANIMUpdate()
         {
+            head.SetEnabled(0, !ANIM.GetFlag(SkinAnimFlag.HEAD_DISABLED));
+            head.SetEnabled(1, !ANIM.GetFlag(SkinAnimFlag.HEAD_OVERLAY_DISABLED));
+            
+            body.SetEnabled(0, !ANIM.GetFlag(SkinAnimFlag.BODY_DISABLED));
+            rightArm.SetEnabled(0, !ANIM.GetFlag(SkinAnimFlag.RIGHT_ARM_DISABLED));
+            leftArm.SetEnabled(0, !ANIM.GetFlag(SkinAnimFlag.LEFT_ARM_DISABLED));
+            rightLeg.SetEnabled(0, !ANIM.GetFlag(SkinAnimFlag.RIGHT_LEG_DISABLED));
+            leftLeg.SetEnabled(0, !ANIM.GetFlag(SkinAnimFlag.LEFT_LEG_DISABLED));
+
             bool slim = ANIM.GetFlag(SkinAnimFlag.SLIM_MODEL);
             if (slim || ANIM.GetFlag(SkinAnimFlag.RESOLUTION_64x64))
             {
-                int slimValue = slim ? 3 : 4;
                 UvTranslation = new Vector2(1f / 64);
+                body.SetEnabled(1, !ANIM.GetFlag(SkinAnimFlag.BODY_OVERLAY_DISABLED));
+                rightArm.SetEnabled(1, !ANIM.GetFlag(SkinAnimFlag.RIGHT_ARM_OVERLAY_DISABLED));
+                leftArm.SetEnabled(1, !ANIM.GetFlag(SkinAnimFlag.LEFT_ARM_OVERLAY_DISABLED));
+                rightLeg.SetEnabled(1, !ANIM.GetFlag(SkinAnimFlag.RIGHT_LEG_OVERLAY_DISABLED));
+                leftLeg.SetEnabled(1, !ANIM.GetFlag(SkinAnimFlag.LEFT_LEG_OVERLAY_DISABLED));
+
+                int slimValue = slim ? 3 : 4;
                 rightArm.ReplaceCube(0, new(-3, -2, -2), new(slimValue, 12, 4), new(40, 16));
-                rightArmOverlay.ReplaceCube(0, new(-3, -2, -2), new(slimValue, 12, 4), new(40, 32), scale: OverlayScale);
                 leftArm.ReplaceCube(0, new(-1, -2, -2), new(slimValue, 12, 4), new(32, 48));
-                leftArmOverlay.ReplaceCube(0, new(-1, -2, -2), new(slimValue, 12, 4), new(48, 48), scale: OverlayScale);
+                leftArm.ReplaceCube(1, new(-1, -2, -2), new(slimValue, 12, 4), new(48, 48), scale: OverlayScale);
 
                 rightLeg.ReplaceCube(0, new(-2, 0, -2), new(4, 12, 4), new(0, 16));
                 leftLeg.ReplaceCube(0, new(-2, 0, -2), new(4, 12, 4), new(16, 48));
@@ -336,11 +371,12 @@ namespace PckStudio.Rendering
             }
             UvTranslation = new Vector2(1f / 64, 1f / 32);
             rightArm.ReplaceCube(0, new(-3, -2, -2), new(4, 12, 4), new(40, 16));
-            leftArm.ReplaceCube(0, new(-1, -2, -2), new(4, 12, 4), new(40, 16));
+            leftArm.ReplaceCube(0, new(-1, -2, -2), new(4, 12, 4), new(40, 16), mirrorTexture: true);
             rightLeg.ReplaceCube(0, new(-2, 0, -2), new(4, 12, 4), new(0, 16));
-            leftLeg.ReplaceCube(0, new(-2, 0, -2), new(4, 12, 4), new(0, 16));
-            rightArmOverlay.ReplaceCube(0, new(-3, -2, -2), new(4, 12, 4), new(40, 32), scale: OverlayScale);
-            leftArmOverlay.ReplaceCube(0, new(-1, -2, -2), new(4, 12, 4), new(40, 32), scale: OverlayScale);
+            leftLeg.ReplaceCube(0, new(-2, 0, -2), new(4, 12, 4), new(0, 16), mirrorTexture: true);
+            
+            rightArm.SetEnabled(1, false);
+            leftArm.SetEnabled(1, false);
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -356,8 +392,8 @@ namespace PckStudio.Rendering
             camera.Update(Size.Width / (float)Size.Height);
 
             var viewProjection = camera.GetViewProjection();
-            skinShader.SetUniformMat4("u_ViewProjection", ref viewProjection);
-            skinShader.SetUniform2("u_TexScale", UvTranslation);
+            _skinShader.SetUniformMat4("u_ViewProjection", ref viewProjection);
+            _skinShader.SetUniform2("u_TexScale", UvTranslation);
 
             GL.Viewport(Size);
 
@@ -375,9 +411,9 @@ namespace PckStudio.Rendering
             GL.Enable(EnableCap.AlphaTest); // Enable transparent
             GL.AlphaFunc(AlphaFunction.Greater, 0.4f);
 
-            Matrix4 modelMatrix =
-                 Matrix4.CreateFromAxisAngle(-Vector3.UnitX, MathHelper.DegreesToRadians(GlobalModelRotation.X))
-                * Matrix4.CreateFromAxisAngle(Vector3.UnitY, MathHelper.DegreesToRadians(GlobalModelRotation.Y));
+            Matrix4 modelMatrix = Matrix4.CreateTranslation(0f, 4f, 0f) 
+                * Matrix4.CreateFromAxisAngle(-Vector3.UnitX, MathHelper.DegreesToRadians(GlobalModelRotation.X))
+                * Matrix4.CreateFromAxisAngle( Vector3.UnitY, MathHelper.DegreesToRadians(GlobalModelRotation.Y));
 
             RenderSkin(modelMatrix);
 
@@ -394,96 +430,52 @@ namespace PckStudio.Rendering
 
         private void RenderSkin(Matrix4 modelMatrix)
         {
-            if (!ANIM.GetFlag(SkinAnimFlag.HEAD_DISABLED))
-            {
-                RenderSkinPart(head.GetRenderBuffer(), new Vector3(0f, 16f, 0f), modelMatrix);
-            }
-
-            if (!ANIM.GetFlag(SkinAnimFlag.HEAD_OVERLAY_DISABLED))
-            {
-                RenderSkinPart(headOverlay.GetRenderBuffer(), new Vector3(0f, 16f + OverlayScale, 0f), modelMatrix);
-            }
-            
-            if (!ANIM.GetFlag(SkinAnimFlag.BODY_DISABLED))
-            {
-                RenderSkinPart(body.GetRenderBuffer(), new Vector3(0f, -4f, 0f), modelMatrix);
-            }
-
             bool slimModel = ANIM.GetFlag(SkinAnimFlag.SLIM_MODEL);
-            var extraRightRotation = Matrix4.CreateFromAxisAngle(Vector3.UnitY, MathHelper.DegreesToRadians(animationRot));
-            var extraLeftRotation = Matrix4.CreateFromAxisAngle(Vector3.UnitY, MathHelper.DegreesToRadians(-animationRot));
-            var translationRight = new Vector3(slimModel ? -4f : -5f, -2f, 0f);
-            var translationLeft = new Vector3(5f, -2f, 0f);
+
+            const float rotationAngle = 2.5f;
+            var extraLegRightRotation = Matrix4.Identity;
+            var extraLegLeftRotation = Matrix4.Identity;
+            var extraArmRightRotation = Matrix4.Identity;
+            var extraArmLeftRotation = Matrix4.Identity;
+
+            if (!ANIM.GetFlag(SkinAnimFlag.STATIC_ARMS))
+            {
+                extraArmRightRotation = Matrix4.CreateFromAxisAngle(Vector3.UnitZ, MathHelper.DegreesToRadians(-rotationAngle));
+                extraArmLeftRotation  = Matrix4.CreateFromAxisAngle(Vector3.UnitZ, MathHelper.DegreesToRadians(rotationAngle));
+            }
+
+            if (!ANIM.GetFlag(SkinAnimFlag.STATIC_LEGS))
+            {
+                extraLegRightRotation = Matrix4.CreateFromAxisAngle(Vector3.UnitX, MathHelper.DegreesToRadians(-rotationAngle));
+                extraLegLeftRotation  = Matrix4.CreateFromAxisAngle(Vector3.UnitX, MathHelper.DegreesToRadians(rotationAngle));
+            }
+
             if (ANIM.GetFlag(SkinAnimFlag.ZOMBIE_ARMS))
             {
-                extraRightRotation *= Matrix4.CreateFromAxisAngle(Vector3.UnitX, MathHelper.DegreesToRadians(-90f));
-                extraLeftRotation *= Matrix4.CreateFromAxisAngle(Vector3.UnitX, MathHelper.DegreesToRadians(-90f));
-                translationRight.Yz = translationLeft.Yz = new Vector2(-8f, 6f);
+                var rotation = Matrix4.CreateFromAxisAngle(Vector3.UnitX, MathHelper.DegreesToRadians(-90f));
+                extraArmRightRotation *= rotation;
+                extraArmLeftRotation  *= rotation;
             }
 
-            if (!ANIM.GetFlag(SkinAnimFlag.RIGHT_ARM_DISABLED))
-            {
-                RenderSkinPart(rightArm.GetRenderBuffer(), translationRight, extraRightRotation * modelMatrix);
-            }
-
-            if (!ANIM.GetFlag(SkinAnimFlag.LEFT_ARM_DISABLED))
-            {
-                RenderSkinPart(leftArm.GetRenderBuffer(), translationLeft, extraLeftRotation * modelMatrix);
-            }
-
-            if (!ANIM.GetFlag(SkinAnimFlag.RIGHT_LEG_DISABLED))
-            {
-                RenderSkinPart(rightLeg.GetRenderBuffer(), new Vector3(-2f, -16f, 0f), modelMatrix);
-            }
-
-            if (!ANIM.GetFlag(SkinAnimFlag.LEFT_LEG_DISABLED))
-            {
-                RenderSkinPart(leftLeg.GetRenderBuffer(), new Vector3(2f, -16f, 0f), modelMatrix);
-            }
-
-            if (ANIM.GetFlag(SkinAnimFlag.RESOLUTION_64x64) || slimModel)
-            {
-                if (!ANIM.GetFlag(SkinAnimFlag.BODY_OVERLAY_DISABLED))
-                {
-                    RenderSkinPart(bodyOverlay.GetRenderBuffer(), new Vector3(0f, -4f + OverlayScale, 0f), modelMatrix);
+            RenderSkinPart(head.GetRenderBuffer()    , new Vector3(0f, 0f, 0f), modelMatrix);
+            RenderSkinPart(body.GetRenderBuffer()    , new Vector3(0f, 0f, 0f), modelMatrix);
+            RenderSkinPart(rightArm.GetRenderBuffer(), new Vector3(slimModel ? -4f : -5f, -2f, 0f), extraArmRightRotation * modelMatrix);
+            RenderSkinPart(leftArm.GetRenderBuffer() , new Vector3(5f, -2f, 0f)                   , extraArmLeftRotation  * modelMatrix);
+            RenderSkinPart(rightLeg.GetRenderBuffer(), new Vector3(-2f, -12f, 0f), extraLegRightRotation * modelMatrix);
+            RenderSkinPart(leftLeg.GetRenderBuffer() , new Vector3( 2f, -12f, 0f), extraLegLeftRotation  * modelMatrix);
                 }
-
-                if (!ANIM.GetFlag(SkinAnimFlag.RIGHT_ARM_OVERLAY_DISABLED))
-                {
-                    RenderSkinPart(rightArmOverlay.GetRenderBuffer(), translationRight, extraRightRotation * modelMatrix);
-                }
-
-                if (!ANIM.GetFlag(SkinAnimFlag.LEFT_ARM_OVERLAY_DISABLED))
-                {
-                    RenderSkinPart(leftArmOverlay.GetRenderBuffer(), translationLeft, extraLeftRotation * modelMatrix);
-                }
-
-                if (!ANIM.GetFlag(SkinAnimFlag.RIGHT_LEG_OVERLAY_DISABLED))
-                {
-                    RenderSkinPart(rightLegOverlay.GetRenderBuffer(), new Vector3(-2f, -16f, 0f), modelMatrix);
-                }
-
-                if (!ANIM.GetFlag(SkinAnimFlag.LEFT_LEG_OVERLAY_DISABLED))
-                {
-                    RenderSkinPart(leftLegOverlay.GetRenderBuffer(), new Vector3(2f, -16f, 0f), modelMatrix);
-                }
-            }
-        }
 
         private void RenderSkinPart(RenderBuffer buffer, Vector3 translation, Matrix4 rotation)
         {
             var transform = Matrix4.CreateTranslation(translation);
             var model = transform * rotation;
-            skinShader.SetUniformMat4("u_Model", ref model);
-            Renderer.Draw(skinShader, buffer);
+            _skinShader.SetUniformMat4("u_Model", ref model);
+            Renderer.Draw(_skinShader, buffer);
         }
 
         private void RenderAdditionalModelData(string name, Vector3 translation, Matrix4 rotation)
         {
-            var transform = Matrix4.CreateTranslation(translation);
-            var model = transform * rotation;
-            skinShader.SetUniformMat4("u_Model", ref model);
-            Renderer.Draw(skinShader, additionalModelRenderGroups[name].GetRenderBuffer());
+            RenderSkinPart(additionalModelRenderGroups[name].GetRenderBuffer(), translation, rotation);
         }
 
         protected override void OnMouseWheel(MouseEventArgs e)
@@ -494,7 +486,8 @@ namespace PckStudio.Rendering
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
-            if (!IsLeftMouseDown && e.Button == MouseButtons.Left)
+            base.OnMouseDown(e);
+            if (!_IsLeftMouseDown && e.Button == MouseButtons.Left)
             {
                 // If the ray didn't hit the model then rotate the model
                 PreviousMouseLocation = Cursor.Position; // Store the old mouse position to reset it when the action is over
@@ -502,18 +495,18 @@ namespace PckStudio.Rendering
                 {
                     IsMouseHidden = true;
                 }
-                MouseLoc = Cursor.Position; // Store the current mouse position to use it for the rotate action
-                IsLeftMouseDown = true;
+                CurrentMouseLocation = Cursor.Position; // Store the current mouse position to use it for the rotate action
+                _IsLeftMouseDown = true;
             }
-            else if (!IsRightMouseDown && e.Button == MouseButtons.Right)
+            else if (!_IsRightMouseDown && e.Button == MouseButtons.Right)
             {
                 PreviousMouseLocation = Cursor.Position; // Store the old mouse position to reset it when the action is over 
                 if (!IsMouseHidden) // Hide the mouse
                 {
                     IsMouseHidden = true;
                 }
-                MouseLoc = Cursor.Position; // Store the current mouse position to use it for the move action
-                IsRightMouseDown = true;
+                CurrentMouseLocation = Cursor.Position; // Store the current mouse position to use it for the move action
+                _IsRightMouseDown = true;
             }
         }
 
@@ -522,8 +515,9 @@ namespace PckStudio.Rendering
             if (IsMouseHidden)
             {
                 Cursor.Position = PreviousMouseLocation;
-                IsMouseHidden = IsLeftMouseDown = IsRightMouseDown = false;
+                IsMouseHidden = _IsLeftMouseDown = _IsRightMouseDown = false;
             }
+            base.OnMouseUp(e);
         }
 
         private void animationTimer_Tick(object sender, EventArgs e)
@@ -547,26 +541,41 @@ namespace PckStudio.Rendering
             }
 
             // Rotate the model
-            if (IsLeftMouseDown)
+            if (_IsLeftMouseDown)
             {
-                float rotationYDelta = (float)Math.Round((Cursor.Position.X - MouseLoc.X) * 0.5f);
-                float rotationXDelta = (float)Math.Round(-(Cursor.Position.Y - MouseLoc.Y) * 0.5f);
+                float rotationYDelta = (float)Math.Round((Cursor.Position.X - CurrentMouseLocation.X) * 0.5f);
+                float rotationXDelta = (float)Math.Round(-(Cursor.Position.Y - CurrentMouseLocation.Y) * 0.5f);
                 GlobalModelRotation += new Vector2(rotationXDelta, rotationYDelta);
                 Refresh();
                 Cursor.Position = new Point((int)Math.Round(Screen.PrimaryScreen.Bounds.Width / 2d), (int)Math.Round(Screen.PrimaryScreen.Bounds.Height / 2d));
-                MouseLoc = Cursor.Position;
+                CurrentMouseLocation = Cursor.Position;
                 return;
             }
             // Move the model
-            if (IsRightMouseDown)
+            if (_IsRightMouseDown)
             {
-                float deltaX = -(Cursor.Position.X - MouseLoc.X) * 0.05f / (float)MathHelper.DegreesToRadians(camera.Fov);
-                float deltaY = (Cursor.Position.Y - MouseLoc.Y) * 0.05f / (float)MathHelper.DegreesToRadians(camera.Fov);
+                float deltaX = -(Cursor.Position.X - CurrentMouseLocation.X) * 0.05f / (float)MathHelper.DegreesToRadians(camera.Fov);
+                float deltaY = (Cursor.Position.Y - CurrentMouseLocation.Y) * 0.05f / (float)MathHelper.DegreesToRadians(camera.Fov);
                 CameraTarget += new Vector2(deltaX, deltaY);
                 Refresh();
                 Cursor.Position = new Point((int)Math.Round(Screen.PrimaryScreen.Bounds.Width / 2d), (int)Math.Round(Screen.PrimaryScreen.Bounds.Height / 2d));
-                MouseLoc = Cursor.Position;
+                CurrentMouseLocation = Cursor.Position;
             }
+            }
+
+        private void reInitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            head.Clear();
+            body.Clear();
+            rightArm.Clear();
+            leftArm.Clear();
+            rightLeg.Clear();
+            leftLeg.Clear();
+
+            InitializeSkinData();
+
+            OnANIMUpdate();
+            Refresh();
         }
     }
 }

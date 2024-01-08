@@ -9,26 +9,17 @@ namespace PckStudio.Forms
 {
     public partial class SkinPreview : Form
     {
-        public SkinANIM ANIM { get; set; }
-
-        private Image _texture;
-
-        public SkinPreview()
+        public SkinANIM ANIM
         {
-            InitializeComponent();
+            get => ModelView.ANIM;
+            set => ModelView.ANIM = value;
         }
 
         public SkinPreview(Image texture, IEnumerable<SkinBOX> modelData)
-            : this()
         {
-            _texture = texture;
+            InitializeComponent();
             ModelView.ModelData.AddRange(modelData);
+            ModelView.Texture = texture;
         }
-
-        private void SkinPreview_Load(object sender, EventArgs e)
-        {
-            ModelView.ANIM = ANIM;
-            ModelView.Texture = _texture as Bitmap;
-		}
     }
 }

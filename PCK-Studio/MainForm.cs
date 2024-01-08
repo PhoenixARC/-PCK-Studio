@@ -427,11 +427,6 @@ namespace PckStudio
 
 		public void HandleSkinFile(PckFileData file)
 		{
-			var renderForm = new SkinPreview(file.GetTexture(), file.Properties.GetProperties("BOX").Select(kv => SkinBOX.FromString(kv.Value)));
-			renderForm.ANIM = file.Properties.GetPropertyValue("ANIM", SkinANIM.FromString);
-			renderForm.ShowDialog();
-			return;
-
 			if (file.Properties.HasProperty("BOX"))
 			{
 				using generateModel generate = new generateModel(file);

@@ -560,24 +560,18 @@ namespace PckStudio.Properties {
         ///layout(location = 0) out vec4 color;
         ///
         ///uniform sampler2D u_Texture;
+        ///uniform vec2 u_TexScale;
         ///
         ///in vec2 v_TexCoord;
-        ///in vec4 v_VertexPos;
-        ///in vec4 v_Color;
         ///
         ///void main()
         ///{
-        ///	vec4 texColor = texture(u_Texture, v_TexCoord);
-        ///	// color = vec4(v_VertexPos.xyz, 1.0);
-        ///	// color = vec4(v_TexCoord, 0.0, 1.0) * vec4(v_VertexPos.xyz, 1.0);
-        ///	// color = vec4(v_TexCoord, 0.0, 1.0);
-        ///	color = v_Color;
-        ///	color = texColor;
+        ///	color = texture(u_Texture, v_TexCoord * u_TexScale);
         ///};.
         /// </summary>
-        public static string skinFragment {
+        public static string skinFragmentShader {
             get {
-                return ResourceManager.GetString("skinFragment", resourceCulture);
+                return ResourceManager.GetString("skinFragmentShader", resourceCulture);
             }
         }
         
@@ -595,21 +589,16 @@ namespace PckStudio.Properties {
         ///   Looks up a localized string similar to #version 330 core
         ///
         ///layout(location = 0) in vec4 vertexPosition;
-        ///layout(location = 1) in vec4 color;
-        ///layout(location = 2) in vec2 texCoord;
+        ///layout(location = 1) in vec2 texCoord;
         ///
         ///uniform mat4 u_ViewProjection;
         ///uniform mat4 u_Model;
         ///
         ///out vec2 v_TexCoord;
-        ///out vec4 v_VertexPos;
-        ///out vec4 v_Color;
         ///
         ///void main()
         ///{
         ///	v_TexCoord = texCoord;
-        ///	v_Color = color;
-        ///	v_VertexPos = vertexPosition;
         ///	gl_Position = u_ViewProjection * u_Model * vertexPosition;
         ///};.
         /// </summary>

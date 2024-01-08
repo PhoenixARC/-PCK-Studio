@@ -10,23 +10,32 @@ using OpenTK.Graphics;
 
 namespace PckStudio.Rendering
 {
-    [StructLayout(LayoutKind.Sequential, Pack = 4)]
+    [StructLayout(LayoutKind.Sequential, Pack = 4, Size = 20)]
     internal struct TextureVertex : IVertexLayout
     {
-        public static int SizeInBytes = Marshal.SizeOf(typeof(TextureVertex));
+        internal Vector3 Position { get; set; }
+        internal Vector2 TexPosition { get; set; }
+        internal float Scale { get; set; }
 
         public TextureVertex(Vector3 position, Vector2 texPosition)
+            : this(position, texPosition, 1f)
+        {
+        }
+        
+        public TextureVertex(Vector3 position, Vector2 texPosition, float scale)
         {
             Position = position;
             TexPosition = texPosition;
-        }
-
-        internal Vector3 Position { get; set; }
-        internal Vector2 TexPosition { get; set; }
+            Scale = scale;
+        } 
 
         public VertexBufferLayout GetLayout()
         {
-            return new VertexBufferLayout().Add<float>(3).Add<float>(2);
+            var layout = new VertexBufferLayout();
+            layout.Add<float>(3);
+            layout.Add<float>(2);
+            layout.Add<float>(1);
+            return layout;
         }
     }
 }

@@ -56,7 +56,6 @@ namespace PckStudio.Forms
             this.Name = "SkinPreview";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "SkinPreview";
-            this.Load += new System.EventHandler(this.SkinPreview_Load);
             this.ResumeLayout(false);
 
         }

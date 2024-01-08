@@ -164,6 +164,7 @@
       <DependentUpon>SkinRenderer.cs</DependentUpon>
     </Compile>
     <Compile Include="Rendering\Texture2D.cs" />
+    <Compile Include="Rendering\TextureChangingEventArgs.cs" />
     <Compile Include="Rendering\TextureVertex.cs" />
     <Compile Include="Rendering\VertexArray.cs" />
     <Compile Include="Rendering\VertexBuffer.cs" />
@@ -615,6 +616,9 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Rendering\SkinRenderer.resx">
+      <DependentUpon>SkinRenderer.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="CommunityKey.snk" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
@@ -684,7 +688,7 @@
     <None Include="Resources\iconImageList\ENTITY MATERIALS ICON.png" />
     <None Include="Resources\iconImageList\blank.png" />
     <None Include="Resources\entities.png" />
-    <None Include="Resources\shader\skinFragment.glsl" />
+    <None Include="Resources\shader\skinFragmentShader.glsl" />
     <Content Include="Resources\icons\file_delete.png" />
     <Content Include="Resources\icons\file_empty.png" />
     <None Include="Resources\icons\file_export.png" />

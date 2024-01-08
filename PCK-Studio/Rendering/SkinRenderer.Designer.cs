@@ -34,27 +34,51 @@ namespace PckStudio.Rendering
         [DebuggerStepThrough()]
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
-            moveTimer = new System.Windows.Forms.Timer(components);
-            animationTimer = new System.Windows.Forms.Timer(components);
-            moveTimer.Tick += new EventHandler(moveTimer_Tick);
-            animationTimer.Tick += new EventHandler(animationTimer_Tick);
-            SuspendLayout();
+            this.components = new System.ComponentModel.Container();
+            this.moveTimer = new System.Windows.Forms.Timer(this.components);
+            this.animationTimer = new System.Windows.Forms.Timer(this.components);
+            this.reToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.contextMenuStrip1.SuspendLayout();
+            this.SuspendLayout();
             // 
             // moveTimer
             // 
-            moveTimer.Enabled = true;
-            moveTimer.Interval = 10;
+            this.moveTimer.Enabled = true;
+            this.moveTimer.Interval = 10;
+            this.moveTimer.Tick += new System.EventHandler(this.moveTimer_Tick);
             // 
             // animationTimer
             // 
-            animationTimer.Enabled = false;
-            animationTimer.Interval = 50;
-            Name = "Renderer3D";
-            ResumeLayout(false);
+            this.animationTimer.Interval = 50;
+            this.animationTimer.Tick += new System.EventHandler(this.animationTimer_Tick);
+            // 
+            // reToolStripMenuItem
+            // 
+            this.reToolStripMenuItem.Name = "reToolStripMenuItem";
+            this.reToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.reToolStripMenuItem.Text = "Re-Init";
+            this.reToolStripMenuItem.Click += new System.EventHandler(this.reInitToolStripMenuItem_Click);
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.reToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 48);
+            // 
+            // SkinRenderer
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.Name = "SkinRenderer";
+            this.contextMenuStrip1.ResumeLayout(false);
+            this.ResumeLayout(false);
+
         }
 
         private System.Windows.Forms.Timer moveTimer;
         private System.Windows.Forms.Timer animationTimer;
+        private System.Windows.Forms.ToolStripMenuItem reToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
     }
 }

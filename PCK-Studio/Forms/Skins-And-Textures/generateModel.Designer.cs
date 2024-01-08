@@ -35,6 +35,7 @@
             System.Windows.Forms.Label label3;
             System.Windows.Forms.Label label7;
             System.Windows.Forms.Label labelTextureMappingPreview;
+            PckStudio.Internal.SkinANIM skinANIM1 = new PckStudio.Internal.SkinANIM();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.createToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cloneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -351,7 +352,6 @@
             this.checkGuide.Name = "checkGuide";
             this.checkGuide.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.checkGuide.UseSelectable = true;
-            this.checkGuide.CheckedChanged += new System.EventHandler(this.Render);
             // 
             // checkBoxArmor
             // 
@@ -359,7 +359,6 @@
             this.checkBoxArmor.Name = "checkBoxArmor";
             this.checkBoxArmor.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.checkBoxArmor.UseSelectable = true;
-            this.checkBoxArmor.CheckedChanged += new System.EventHandler(this.Render);
             // 
             // SizeXUpDown
             // 
@@ -523,9 +522,13 @@
             // renderer3D1
             // 
             resources.ApplyResources(this.renderer3D1, "renderer3D1");
+            this.renderer3D1.ANIM = skinANIM1;
             this.renderer3D1.BackColor = System.Drawing.Color.DarkGray;
+            this.renderer3D1.CameraTarget = ((OpenTK.Vector2)(resources.GetObject("renderer3D1.CameraTarget")));
             this.renderer3D1.Name = "renderer3D1";
+            this.renderer3D1.Texture = null;
             this.renderer3D1.VSync = true;
+            this.renderer3D1.TextureChanging += new System.EventHandler<PckStudio.Rendering.TextureChangingEventArgs>(this.renderer3D1_TextureChanging);
             // 
             // uvPictureBox
             // 
