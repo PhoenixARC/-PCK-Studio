@@ -188,10 +188,10 @@ namespace PckStudio.Rendering
             };
         }
 
+        private const float DefaultCameraDistance = 36f;
         private void InitializeCamera()
         {
-            const float distance = 36f;
-            camera = new PerspectiveCamera(new Vector2(0f, 5f), distance, Vector2.Zero, 60f)
+            camera = new PerspectiveCamera(new Vector2(0f, 5f), DefaultCameraDistance, Vector2.Zero, 60f)
             {
                 MinimumFov = 30f,
                 MaximumFov = 90f,
@@ -304,12 +304,6 @@ namespace PckStudio.Rendering
                     Refresh();
                     showWireFrame = !showWireFrame;
                     return true;
-#endif
-                case Keys.R:
-                    GlobalModelRotation = Vector2.Zero;
-                    CameraTarget = Vector2.Zero;
-                    Refresh();
-                    return true;
                 case Keys.F1:
                     var fileDialog = new OpenFileDialog()
                     {
@@ -319,6 +313,13 @@ namespace PckStudio.Rendering
                     {
                         Texture = Image.FromFile(fileDialog.FileName);
                     }
+                    return true;
+#endif
+                case Keys.R:
+                    GlobalModelRotation = Vector2.Zero;
+                    CameraTarget = Vector2.Zero;
+                    camera.Distance = DefaultCameraDistance;
+                    Refresh();
                     return true;
                 case Keys.A:
                     if (IsMouseHidden || _IsLeftMouseDown || _IsRightMouseDown)
@@ -480,7 +481,7 @@ namespace PckStudio.Rendering
 
         protected override void OnMouseWheel(MouseEventArgs e)
         {
-            camera.Fov -= e.Delta / System.Windows.Input.Mouse.MouseWheelDeltaForOneLine;
+            camera.Distance -= e.Delta / System.Windows.Input.Mouse.MouseWheelDeltaForOneLine;
             Refresh();
         }
 
