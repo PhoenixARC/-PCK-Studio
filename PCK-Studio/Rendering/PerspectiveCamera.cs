@@ -76,7 +76,7 @@ namespace PckStudio.Rendering
         internal override void Update(float aspect)
         {
             UpdateView();
-            var projection = Matrix4.CreatePerspectiveFieldOfView((float)MathHelper.DegreesToRadians(Fov), aspect, 1f, 100f);
+            var projection = Matrix4.CreatePerspectiveFieldOfView((float)MathHelper.DegreesToRadians(Fov), aspect, 1f, 1000f);
             viewProjection = viewMatrix * projection;
         }
 
