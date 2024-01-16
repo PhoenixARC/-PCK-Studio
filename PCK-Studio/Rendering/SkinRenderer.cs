@@ -100,6 +100,7 @@ namespace PckStudio.Rendering
         }
 
         private Vector2 UvTranslation = new Vector2(1f / 64);
+        private Size TextureSize = new Size(64, 64);
         private const float OverlayScale = 1.12f;
 
         private bool _IsLeftMouseDown;
@@ -111,6 +112,7 @@ namespace PckStudio.Rendering
             {
                 if (HasValidContext && _skinShader is not null)
                 {
+                    TextureSize = value.Size;
                     UvTranslation = value.Width == value.Height ? new Vector2(1f / 64) : new Vector2(1f / 64, 1f / 32); 
                     var texture = new Texture2D(value);
                     texture.Bind(0);
@@ -263,7 +265,10 @@ namespace PckStudio.Rendering
             if (!additionalModelRenderGroups.ContainsKey(skinBox.Type))
                 throw new KeyNotFoundException(skinBox.Type);
 
-            additionalModelRenderGroups[skinBox.Type].AddSkinBox(skinBox);
+            CubeRenderGroup group = additionalModelRenderGroups[skinBox.Type];
+            group.AddSkinBox(skinBox);
+            group.Validate(TextureSize);
+            group.Submit();
         }
 
         [Conditional("DEBUG")]

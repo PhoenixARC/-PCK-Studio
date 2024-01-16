@@ -29,148 +29,6 @@ namespace PckStudio.Rendering
 {
     internal class CubeRenderGroup : RenderGroup<TextureVertex>
     {
-
-        private class CubeData
-        {
-            internal const int vertexCountPerCube = 24;
-            internal bool Enabled { get; set; } = true;
-            internal Vector3 Position { get; set; } = Vector3.Zero;
-            internal Vector3 Size { get; set; } = Vector3.One;
-            internal Vector2 Uv { get; set; } = Vector2.Zero;
-            internal float Scale { get; set; } = 1f;
-            internal bool MirrorTexture { get; set; } = false;
-            internal bool FlipZMapping { get; set; } = false;
-
-            private static uint[] indicesData = new uint[] {
-                 // Face 1 (Back)
-                  0,  1,  2,  3,
-                 // Face 2 (Front)
-                  4,  5,  6,  7,
-                 // Face 3 (Top)
-                   8,  9, 10, 11,
-                 // Face 4 (Bottom)
-                 12, 13, 14, 15,
-                 // Face 5 (Left)
-                 16, 17, 18, 19,
-                 // Face 6 (Right)
-                 20, 21, 22, 23,
-            };
-
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <param name="position"></param>
-            /// <param name="size"></param>
-            /// <param name="uv"></param>
-            /// <param name="scale"></param>
-            /// <param name="mirrorTexture"></param>
-            /// <param name="flipZMapping">Flips the bottom face mapping of the uv mapping</param>
-            public CubeData(bool enabled, Vector3 position, Vector3 size, Vector2 uv, float scale, bool mirrorTexture, bool flipZMapping)
-            {
-                Enabled = enabled;
-                Position = position;
-                Size = size;
-                Uv = uv;
-                Scale = scale;
-                MirrorTexture = mirrorTexture;
-                FlipZMapping = flipZMapping;
-            }
-
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <param name="position"></param>
-            /// <param name="size"></param>
-            /// <param name="uv"></param>
-            /// <param name="scale"></param>
-            /// <param name="mirrorTexture"></param>
-            /// <param name="flipZMapping">Flips the bottom face mapping of the uv mapping</param>
-            public CubeData(Vector3 position, Vector3 size, Vector2 uv, float scale, bool mirrorTexture, bool flipZMapping)
-                : this(true, position, size, uv, scale, mirrorTexture, flipZMapping)
-            {
-            }
-
-            internal enum CubeFace
-            {
-                Back,
-                Front,
-                Top,
-                Bottom,
-                Left,
-                Right,
-            }
-
-            internal static TextureVertex[] GetCubeVertexData(Vector3 position, Vector3 size, Vector2 uv, float scale = 1f, bool mirrorTexture = false, bool flipZMapping = false)
-            {
-                int mirror = mirrorTexture ? 1 : 0;
-                return
-                [
-                    // Back
-                    new TextureVertex(new Vector3(position.X         , size.Y + position.Y, size.Z + position.Z), new Vector2(uv.X + size.Z * 2 + size.X + size.X * (1 - mirror), uv.Y + size.Z + size.Y), scale),
-                    new TextureVertex(new Vector3(size.X + position.X, size.Y + position.Y, size.Z + position.Z), new Vector2(uv.X + size.Z * 2 + size.X + size.X *      mirror , uv.Y + size.Z + size.Y), scale),
-                    new TextureVertex(new Vector3(size.X + position.X, position.Y         , size.Z + position.Z), new Vector2(uv.X + size.Z * 2 + size.X + size.X *      mirror , uv.Y + size.Z         ), scale),
-                    new TextureVertex(new Vector3(position.X         , position.Y         , size.Z + position.Z), new Vector2(uv.X + size.Z * 2 + size.X + size.X * (1 - mirror), uv.Y + size.Z         ), scale),
-
-                    // Front
-                    new TextureVertex(new Vector3(position.X         , size.Y + position.Y, position.Z), new Vector2(uv.X + size.Z + size.X *      mirror , uv.Y + size.Z + size.Y), scale),
-                    new TextureVertex(new Vector3(size.X + position.X, size.Y + position.Y, position.Z), new Vector2(uv.X + size.Z + size.X * (1 - mirror), uv.Y + size.Z + size.Y), scale),
-                    new TextureVertex(new Vector3(size.X + position.X, position.Y         , position.Z), new Vector2(uv.X + size.Z + size.X * (1 - mirror), uv.Y + size.Z         ), scale),
-                    new TextureVertex(new Vector3(position.X         , position.Y         , position.Z), new Vector2(uv.X + size.Z + size.X *      mirror , uv.Y + size.Z         ), scale),
-
-                    // Top
-                    new TextureVertex(new Vector3(position.X         , position.Y,          position.Z), new Vector2(uv.X + size.Z + size.X *      mirror , uv.Y + size.Z), scale),
-                    new TextureVertex(new Vector3(position.X         , position.Y, size.Z + position.Z), new Vector2(uv.X + size.Z + size.X *      mirror , uv.Y         ), scale),
-                    new TextureVertex(new Vector3(size.X + position.X, position.Y, size.Z + position.Z), new Vector2(uv.X + size.Z + size.X * (1 - mirror), uv.Y         ), scale),
-                    new TextureVertex(new Vector3(size.X + position.X, position.Y,          position.Z), new Vector2(uv.X + size.Z + size.X * (1 - mirror), uv.Y + size.Z), scale),
-
-                    // Bottom
-                    new TextureVertex(new Vector3(position.X + size.X, size.Y + position.Y, position.Z         ), new Vector2(uv.X + size.Z + size.X + size.X * (1 - mirror), uv.Y + ( flipZMapping ? size.Z : 0)), scale),
-                    new TextureVertex(new Vector3(position.X + size.X, size.Y + position.Y, size.Z + position.Z), new Vector2(uv.X + size.Z + size.X + size.X * (1 - mirror), uv.Y + (!flipZMapping ? size.Z : 0)), scale),
-                    new TextureVertex(new Vector3(position.X         , size.Y + position.Y, size.Z + position.Z), new Vector2(uv.X + size.Z + size.X + size.X *      mirror , uv.Y + (!flipZMapping ? size.Z : 0)), scale),
-                    new TextureVertex(new Vector3(position.X         , size.Y + position.Y, position.Z         ), new Vector2(uv.X + size.Z + size.X + size.X *      mirror , uv.Y + ( flipZMapping ? size.Z : 0)), scale),
-
-                    // Left
-                    new TextureVertex(new Vector3((1 - mirror) * size.X + position.X, position.Y         , position.Z         ), new Vector2(uv.X + size.X + size.Z    , uv.Y + size.Z         ), scale),
-                    new TextureVertex(new Vector3((1 - mirror) * size.X + position.X, size.Y + position.Y, position.Z         ), new Vector2(uv.X + size.X + size.Z    , uv.Y + size.Z + size.Y), scale),
-                    new TextureVertex(new Vector3((1 - mirror) * size.X + position.X, size.Y + position.Y, size.Z + position.Z), new Vector2(uv.X + size.X + size.Z * 2, uv.Y + size.Z + size.Y), scale),
-                    new TextureVertex(new Vector3((1 - mirror) * size.X + position.X, position.Y         , size.Z + position.Z), new Vector2(uv.X + size.X + size.Z * 2, uv.Y + size.Z         ), scale),
-
-                    // Right
-                    new TextureVertex(new Vector3(mirror * size.X + position.X, position.Y         , position.Z         ), new Vector2(uv.X + size.Z, uv.Y + size.Z         ), scale),
-                    new TextureVertex(new Vector3(mirror * size.X + position.X, size.Y + position.Y, position.Z         ), new Vector2(uv.X + size.Z, uv.Y + size.Z + size.Y), scale),
-                    new TextureVertex(new Vector3(mirror * size.X + position.X, size.Y + position.Y, size.Z + position.Z), new Vector2(uv.X         , uv.Y + size.Z + size.Y), scale),
-                    new TextureVertex(new Vector3(mirror * size.X + position.X, position.Y         , size.Z + position.Z), new Vector2(uv.X         , uv.Y + size.Z         ), scale),
-                ];
-            }
-
-            internal TextureVertex[] GetVertices()
-            {
-                return GetCubeVertexData(Position, Size, Uv, Scale, MirrorTexture, FlipZMapping);
-            }
-            
-            [Conditional("DEBUG")]
-            internal void GetMappedTextureUv(CubeFace face)
-            {
-                var indices = GetIndices();
-                var faceInices = indices.Skip((int)face * 4).Take(4).ToArray();
-                var vertices = GetVertices();
-                var uv0 = vertices[faceInices[0]].TexPosition;
-                var uv1 = vertices[faceInices[1]].TexPosition;
-                var uv2 = vertices[faceInices[2]].TexPosition;
-                var uv3 = vertices[faceInices[3]].TexPosition;
-                Debug.WriteLine("----------");
-                Debug.WriteLine(uv0);
-                Debug.WriteLine(uv1);
-                Debug.WriteLine(uv2);
-                Debug.WriteLine(uv3);
-            }
-
-            internal uint[] GetIndices()
-            {
-                return indicesData;
-            }
-        }
-
         private List<CubeData> cubes;
 
         internal CubeRenderGroup(string name) : base(name, PrimitiveType.Quads)
@@ -197,7 +55,7 @@ namespace PckStudio.Rendering
             ResetBuffers();
             foreach (var cube in cubes)
             {
-                if (!cube.Enabled)
+                if (!cube.ShouldRender)
                     continue;
                 
                 vertices.AddRange(cube.GetVertices());
@@ -207,11 +65,24 @@ namespace PckStudio.Rendering
             }
         }
 
+        private void CheckAndFixUVFaveMapping(CubeData cube, CubeData.CubeFace face, Size textureSize)
+        {
+            if (cube.GetMappedFaceTextureUv(face).All(texVert => texVert.X >= textureSize.Width))
+            {
+                CubeData.RefAction<Vector2> fixUV = (ref Vector2 uv) =>
+                {
+                    Debug.Write($"Old: {uv}; ");
+                    uv.X %= textureSize.Width;
+                    Debug.WriteLine($"Old: {uv};");
+                };
+                cube.SetFaceUv(face, fixUV);
+            }
+        }
+
         internal void AddCube(Vector3 position, Vector3 size, Vector2 uv, float scale = 1f, bool mirrorTexture = false, bool flipZMapping = false)
         {
             var cube = new CubeData(position, size, uv, scale, mirrorTexture, flipZMapping);
             cubes.Add(cube);
-            //cube.GetMappedTextureUv(CubeData.CubeFace.Right);
         }
 
         internal void ReplaceCube(int index, Vector3 position, Vector3 size, Vector2 uv, float scale = 1f, bool mirrorTexture = false)
@@ -233,8 +104,24 @@ namespace PckStudio.Rendering
             if (!cubes.IndexInRange(index))
                 throw new IndexOutOfRangeException();
 
-            cubes[index].Enabled = enable;
+            cubes[index].ShouldRender = enable;
             Submit();
+        }
+
+        internal void Validate(Size textureSize)
+        {
+            if (!textureSize.IsEmpty)
+            {
+                foreach (var cube in cubes)
+                {
+                    CheckAndFixUVFaveMapping(cube, CubeData.CubeFace.Back, textureSize);
+                    CheckAndFixUVFaveMapping(cube, CubeData.CubeFace.Front, textureSize);
+                    CheckAndFixUVFaveMapping(cube, CubeData.CubeFace.Top, textureSize);
+                    CheckAndFixUVFaveMapping(cube, CubeData.CubeFace.Bottom, textureSize);
+                    CheckAndFixUVFaveMapping(cube, CubeData.CubeFace.Left, textureSize);
+                    CheckAndFixUVFaveMapping(cube, CubeData.CubeFace.Right, textureSize);
+                }
+            }
         }
     }
 }
