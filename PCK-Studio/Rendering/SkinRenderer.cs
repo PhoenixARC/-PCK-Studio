@@ -88,16 +88,6 @@ namespace PckStudio.Rendering
             set => camera.LookAt(value);
         }
 
-        private void GLDebugMessage(DebugSource source, DebugType type, int id, DebugSeverity severity, int length, IntPtr message, IntPtr userParam)
-        {
-            string msg = Marshal.PtrToStringAnsi(message, length);
-            Debug.WriteLine(source);
-            Debug.WriteLine(type);
-            Debug.WriteLine(severity);
-            Debug.WriteLine(id);
-            Debug.WriteLine(msg);
-        }
-
         private Vector2 _globalModelRotation;
         private Vector2 GlobalModelRotation
         {
@@ -242,8 +232,6 @@ namespace PckStudio.Rendering
             MakeCurrent();
 
             Trace.TraceInformation(GL.GetString(StringName.Version));
-
-            GL.DebugMessageCallback(GLDebugMessage, IntPtr.Zero);
 
             _skinShader = Shader.Create(Resources.skinVertexShader, Resources.skinFragmentShader);
             _skinShader.Bind();
