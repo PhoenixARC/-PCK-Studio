@@ -396,11 +396,11 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Skins-And-Textures\generateModel.cs">
+    <Compile Include="Forms\Skins-And-Textures\CustomModelEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Skins-And-Textures\generateModel.Designer.cs">
-      <DependentUpon>generateModel.cs</DependentUpon>
+    <Compile Include="Forms\Skins-And-Textures\CustomModelEditor.Designer.cs">
+      <DependentUpon>CustomModelEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Skins-And-Textures\SkinPreview.cs">
       <SubType>Form</SubType>
@@ -571,11 +571,11 @@
       <DependentUpon>MainForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Skins-And-Textures\generateModel.ja.resx">
-      <DependentUpon>generateModel.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Skins-And-Textures\CustomModelEditor.ja.resx">
+      <DependentUpon>CustomModelEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Skins-And-Textures\generateModel.resx">
-      <DependentUpon>generateModel.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Skins-And-Textures\CustomModelEditor.resx">
+      <DependentUpon>CustomModelEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Skins-And-Textures\SkinPreview.resx">
@@ -734,6 +734,9 @@
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>13.0.3</Version>
+    </PackageReference>
+    <PackageReference Include="OpenTK">
+      <Version>3.3.3</Version>
     </PackageReference>
     <PackageReference Include="OpenTK.GLControl">
       <Version>3.3.3</Version>

@@ -429,7 +429,7 @@ namespace PckStudio
 		{
 			if (file.Properties.HasProperty("BOX"))
 			{
-				using generateModel generate = new generateModel(file);
+				using CustomModelEditor generate = new CustomModelEditor(file);
 				if (generate.ShowDialog() == DialogResult.OK)
 				{
 					entryDataTextBox.Text = entryTypeTextBox.Text = string.Empty;

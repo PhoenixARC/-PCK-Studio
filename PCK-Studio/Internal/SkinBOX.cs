@@ -24,7 +24,7 @@ namespace PckStudio.Internal
     {
         public static readonly SkinBOX Empty = new SkinBOX("HEAD", new Vector3(-4, -8, -4), new Vector3(8), Vector2.Zero);
 
-        public string Type;
+        public string Type { get; set; }
         public Vector3 Pos;
         public Vector3 Size;
         public Vector2 UV;
