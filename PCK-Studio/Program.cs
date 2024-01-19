@@ -48,7 +48,7 @@ namespace PckStudio
             RPC.Initialize();
             MainInstance = new MainForm();
             if (args.Length > 0 && File.Exists(args[0]) && args[0].EndsWith(".pck"))
-                MainInstance.LoadPckFromFile(args[0]);
+                MainInstance.InitPckFromFile(args[0]);
             Application.ApplicationExit += (sender, e) => { RPC.Deinitialize(); };
             Application.Run(MainInstance);
         }

@@ -7,7 +7,6 @@ using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 using System.Diagnostics;
 using System.Drawing.Imaging;
-
 using OMI.Formats.Archive;
 using OMI.Formats.Pck;
 using OMI.Formats.GameRule;
@@ -16,7 +15,6 @@ using OMI.Workers.Archive;
 using OMI.Workers.Pck;
 using OMI.Workers.GameRule;
 using OMI.Workers.Language;
-
 using PckStudio.Properties;
 using PckStudio.FileFormats;
 using PckStudio.Forms;
@@ -94,6 +92,11 @@ namespace PckStudio
 			};
 		}
 
+		public void InitPckFromFile(string filepath)
+		{
+			saveLocation = filepath;
+		}
+
 		public void LoadPckFromFile(string filepath)
 		{
 			checkSaveState();
@@ -146,6 +149,8 @@ namespace PckStudio
 			isSelectingTab = false;
 
 			UpdateRichPresence();
+
+			if (saveLocation != String.Empty) LoadPckFromFile(saveLocation);
 		}
 
 		private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -746,6 +751,11 @@ namespace PckStudio
 			{
 				if (node.Tag is PckFileData file)
 				{
+					if (currentPCK.TryGetFile(diag.NewText, file.Filetype, out _))
+					{
+						MessageBox.Show($"{diag.NewText} already exists", "File already exists");
+						return;
+					}
 					file.Filename = diag.NewText;
 				}
 				else // folders
@@ -755,6 +765,7 @@ namespace PckStudio
 					{
 						if (childNode.Tag is PckFileData folderFile)
 						{
+							if (folderFile.Filename == diag.NewText) continue;
 							folderFile.Filename = childNode.FullPath;
 						}
 					}
@@ -2278,5 +2289,50 @@ namespace PckStudio
 			}
 			MessageBox.Show("Already up to date.", "No update available");
 		}
+
+		[Obsolete] // the move functions are to eventually be removed in favor of drag and drop
+		private void moveFile(int amount)
+		{
+			if (treeViewMain.SelectedNode is not TreeNode t || t.Tag is null) return;
+
+			var file = t.Tag as PckFileData;
+			var path = t.FullPath;
+
+			// skin and cape files only
+			if (!(file.Filetype == PckFileType.SkinFile || file.Filetype == PckFileType.CapeFile)) return;
+
+			PckFile pck = currentPCK;
+			bool IsSubPCK = IsSubPCKNode(path);
+			if (IsSubPCK)
+			{
+				using (var stream = new MemoryStream((GetSubPCK(path).Tag as PckFileData).Data))
+				{
+					var reader = new PckFileReader(LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
+					pck = reader.FromStream(stream);
+				}
+			}
+
+			int index = pck.IndexOfFile(file);
+
+			if (index + amount < 0 || index + amount > pck.FileCount) return;
+			pck.RemoveFile(file);
+			pck.InsertFile(index + amount, file);
+
+			if (IsSubPCK)
+			{
+				using (var stream = new MemoryStream())
+				{
+					var writer = new PckFileWriter(pck, LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
+					writer.WriteToStream(stream);
+					(GetSubPCK(path).Tag as PckFileData).SetData(stream.ToArray());
+				}
+			}
+			BuildMainTreeView();
+			wasModified = true;
+		}
+		[Obsolete]
+		private void moveUpToolStripMenuItem_Click(object sender, EventArgs e) => moveFile(-1);
+		[Obsolete]
+		private void moveDownToolStripMenuItem_Click(object sender, EventArgs e) => moveFile(1);
 	}
 }
