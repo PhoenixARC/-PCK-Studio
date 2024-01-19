@@ -158,6 +158,7 @@
     <Compile Include="Rendering\Renderer.cs" />
     <Compile Include="Rendering\RenderGroup.cs" />
     <Compile Include="Rendering\Shader.cs" />
+    <Compile Include="Rendering\ShaderSource.cs" />
     <Compile Include="Rendering\SkinRenderer.cs">
       <SubType>UserControl</SubType>
     </Compile>

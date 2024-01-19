@@ -98,12 +98,12 @@ namespace PckStudio.Rendering
         public static Shader Create(string vertexSource, string fragmentSource)
         {
             return Create(
-                new KeyValuePair<ShaderType, string>(ShaderType.VertexShader, vertexSource),
-                new KeyValuePair<ShaderType, string>(ShaderType.FragmentShader, fragmentSource)
+                new ShaderSource(ShaderType.VertexShader, vertexSource),
+                new ShaderSource(ShaderType.FragmentShader, fragmentSource)
                 );
         }
 
-        public static Shader Create(params KeyValuePair<ShaderType, string>[] shaderSources)
+        public static Shader Create(params ShaderSource[] shaderSources)
         {
             int programId = GL.CreateProgram();
 
@@ -111,7 +111,7 @@ namespace PckStudio.Rendering
 
             foreach (var shaderSource in shaderSources)
             {
-                int shaderId = CompileShader(shaderSource.Key, shaderSource.Value);
+                int shaderId = CompileShader(shaderSource.Type, shaderSource.Source);
                 GL.AttachShader(programId, shaderId);
                 shaderIds.Add(shaderId);
             }
