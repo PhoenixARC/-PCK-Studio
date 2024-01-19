@@ -18,7 +18,10 @@ namespace PckStudio.Forms
         public SkinPreview(Image texture, IEnumerable<SkinBOX> modelData)
         {
             InitializeComponent();
-            ModelView.ModelData.AddRange(modelData);
+            foreach (var item in modelData)
+            {
+                ModelView.ModelData.Add(item);
+            }
             ModelView.Texture = texture;
         }
     }
