@@ -71,9 +71,7 @@ namespace PckStudio.Rendering
             {
                 CubeData.RefAction<Vector2> fixUV = (ref Vector2 uv) =>
                 {
-                    Debug.Write($"Old: {uv}; ");
                     uv.X %= textureSize.Width;
-                    Debug.WriteLine($"Old: {uv};");
                 };
                 cube.SetFaceUv(face, fixUV);
             }
