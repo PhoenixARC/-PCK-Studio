@@ -56,6 +56,8 @@ namespace PckStudio.Rendering
             }
         }
 
+        public bool ClampModel { get; set; } = false;
+
         [Description("Event that gets fired when the Texture is changing")]
         [Category("Property Chnaged")]
         [Browsable(true)]
@@ -83,13 +85,14 @@ namespace PckStudio.Rendering
         [Category("Appearance")]
         public ObservableCollection<SkinBOX> ModelData { get; }
 
-        [Description("The offset from the orignal point (for zoom)")]
+        [Description("The offset from the origin point")]
         [Category("Appearance")]
         public Vector2 CameraTarget
         {
             get => camera.Position;
             set
             {
+                if (ClampModel)
                 value = Vector2.Clamp(value, new Vector2(camera.Distance / 2f * -1), new Vector2(camera.Distance / 2f));
                 camera.LookAt(value);
         }
