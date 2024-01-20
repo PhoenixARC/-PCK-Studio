@@ -229,16 +229,14 @@ namespace PckStudio.Forms
             }
         }
 
-        // Creates Model Data and Finalizes
         private void buttonDone_Click(object sender, EventArgs e)
         {
             foreach (var part in renderer3D1.ModelData)
             {
                 _file.Properties.Add("BOX", part);
             }
-            var img = new Bitmap(renderer3D1.Size.Width, renderer3D1.Size.Height);
-            renderer3D1.DrawToBitmap(img, renderer3D1.Bounds);
-            _previewImage = img;
+            _previewImage = renderer3D1.GetThumbnail();
+
             DialogResult = DialogResult.OK;
         }
 

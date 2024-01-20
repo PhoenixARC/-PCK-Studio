@@ -30,6 +30,7 @@ using PckStudio.Properties;
 using PckStudio.Forms.Editor;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Drawing.Imaging;
 
 namespace PckStudio.Rendering
 {
@@ -590,6 +591,23 @@ namespace PckStudio.Rendering
 
             OnANIMUpdate();
             Refresh();
+        }
+
+        /// <summary>
+        /// Captures the currently displayed frame
+        /// </summary>
+        /// <returns>Thumbnail of the cameras current view space</returns>
+        public Image GetThumbnail()
+        {
+            Bitmap bmp = new Bitmap(Width, Height);
+            BitmapData data = bmp.LockBits(ClientRectangle, ImageLockMode.WriteOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
+            MakeCurrent();
+            GL.Finish();
+            GL.ReadPixels(0, 0, Width, Height, OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, data.Scan0);
+            bmp.UnlockBits(data);
+            bmp.RotateFlip(RotateFlipType.RotateNoneFlipY);
+            return bmp;
         }
     }
 }
