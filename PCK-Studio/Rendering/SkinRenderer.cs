@@ -87,7 +87,11 @@ namespace PckStudio.Rendering
         public Vector2 CameraTarget
         {
             get => camera.Position;
-            set => camera.LookAt(value);
+            set
+            {
+                value = Vector2.Clamp(value, new Vector2(camera.Distance / 2f * -1), new Vector2(camera.Distance / 2f));
+                camera.LookAt(value);
+        }
         }
 
         private Vector2 _globalModelRotation;
