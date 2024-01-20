@@ -46,7 +46,7 @@ namespace PckStudio.Internal
 
         public static SkinBOX FromString(string value)
          {
-            var arguments = value.Split(' ');
+            var arguments = value.TrimEnd('\n', '\r', ' ').Split(' ');
             if (arguments.Length < 9)
             {
                 throw new ArgumentException("Arguments must have at least a length of 9");
