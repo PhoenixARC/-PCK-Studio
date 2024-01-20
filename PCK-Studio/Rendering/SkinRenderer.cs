@@ -93,9 +93,9 @@ namespace PckStudio.Rendering
             set
             {
                 if (ClampModel)
-                value = Vector2.Clamp(value, new Vector2(camera.Distance / 2f * -1), new Vector2(camera.Distance / 2f));
+                    value = Vector2.Clamp(value, new Vector2(camera.Distance / 2f * -1), new Vector2(camera.Distance / 2f));
                 camera.LookAt(value);
-        }
+            }
         }
 
         private Vector2 _globalModelRotation;
@@ -155,17 +155,30 @@ namespace PckStudio.Rendering
         private Dictionary<string, CubeRenderGroup> additionalModelRenderGroups;
 
         private CubeRenderGroup head;
+        private CubeRenderGroup headOverlay;
         private CubeRenderGroup body;
+        private CubeRenderGroup bodyOverlay;
         private CubeRenderGroup rightArm;
+        private CubeRenderGroup rightArmOverlay;
         private CubeRenderGroup leftArm;
+        private CubeRenderGroup leftArmOverlay;
         private CubeRenderGroup rightLeg;
+        private CubeRenderGroup rightLegOverlay;
         private CubeRenderGroup leftLeg;
+        private CubeRenderGroup leftLegOverlay;
 
         private float animationRot;
-        private float animationRotStep = 1f;
+        private float animationRotStep = 0.05f;
 
 #if DEBUG
         private bool showWireFrame = false;
+
+        internal Matrix4 HeadMatrix { get; set; } = Matrix4.Identity;
+        internal Matrix4 BodyMatrix { get; set; } = Matrix4.Identity;
+        internal Matrix4 RightArmMatrix { get; set; } = Matrix4.Identity;
+        internal Matrix4 LeftArmMatrix  { get; set; } = Matrix4.Identity;
+        internal Matrix4 RightLegMatrix { get; set; } = Matrix4.Identity;
+        internal Matrix4 LeftLegMatrix { get; set; } = Matrix4.Identity;
 #endif
 
         public SkinRenderer() : base()
@@ -177,21 +190,21 @@ namespace PckStudio.Rendering
             ModelData.CollectionChanged += ModelData_CollectionChanged;
             additionalModelRenderGroups = new Dictionary<string, CubeRenderGroup>(6)
             {
-                { "HEAD",     new CubeRenderGroup("HEAD") },
-                { "BODY",     new CubeRenderGroup("BODY") },
+                { "HEAD",     head },
+                { "BODY",     body },
                 { "BODYARMOR",new CubeRenderGroup("BODYARMOR") },
-                { "ARM0",     new CubeRenderGroup("ARM0") },
-                { "ARM1",     new CubeRenderGroup("ARM1") },
+                { "ARM0",     rightArm },
+                { "ARM1",     leftArm },
                 { "BELT",     new CubeRenderGroup("BELT") },
-                { "LEG0",     new CubeRenderGroup("LEG0") },
-                { "LEG1",     new CubeRenderGroup("LEG1") },
+                { "LEG0",     rightLeg },
+                { "LEG1",     leftLeg },
 
-                { "HEADWEAR", new CubeRenderGroup("HEADWEAR") },
-                { "JACKET"  , new CubeRenderGroup("JACKET") },
-                { "SLEEVE0" , new CubeRenderGroup("SLEEVE0") },
-                { "SLEEVE1" , new CubeRenderGroup("SLEEVE1") },
-                { "PANTS0"  , new CubeRenderGroup("PANTS0") },
-                { "PANTS1"  , new CubeRenderGroup("PANTS1") },
+                { "HEADWEAR", headOverlay },
+                { "JACKET"  , bodyOverlay },
+                { "SLEEVE0" , rightArmOverlay },
+                { "SLEEVE1" , leftArmOverlay },
+                { "PANTS0"  , rightLegOverlay },
+                { "PANTS1"  , leftLegOverlay },
             };
         }
 
@@ -204,6 +217,7 @@ namespace PckStudio.Rendering
             }
         }
 
+        // TODO: calculate CameraDistance based on model size
         private const float DefaultCameraDistance = 36f;
         private void InitializeCamera()
         {
@@ -218,33 +232,51 @@ namespace PckStudio.Rendering
         {
             head ??= new CubeRenderGroup("Head");
             head.AddCube(new(-4, -8, -4), new(8, 8, 8), new(0, 0), flipZMapping: true);
-            head.AddCube(new(-4, -8, -4), new(8, 8, 8), new(32, 0), flipZMapping: true, scale: OverlayScale);
             head.Submit();
+            
+            headOverlay ??= new CubeRenderGroup("Head Overlay");
+            headOverlay.AddCube(new(-4, -8, -4), new(8, 8, 8), new(32, 0), flipZMapping: true, scale: OverlayScale);
+            headOverlay.Submit();
 
             body ??= new CubeRenderGroup("Body");
             body.AddCube(new(-4, 0, -2), new(8, 12, 4), new(16, 16));
-            body.AddCube(new(-4, 0, -2), new(8, 12, 4), new(16, 32), scale: OverlayScale);
             body.Submit();
+            
+            bodyOverlay ??= new CubeRenderGroup("Body Overlay");
+            bodyOverlay.AddCube(new(-4, 0, -2), new(8, 12, 4), new(16, 32), scale: OverlayScale);
+            bodyOverlay.Submit();
 
-            rightArm ??= new CubeRenderGroup("Right arm");
+            rightArm ??= new CubeRenderGroup("Right Arm");
             rightArm.AddCube(new(-3, -2, -2), new(4, 12, 4), new(40, 16));
-            rightArm.AddCube(new(-3, -2, -2), new(4, 12, 4), new(40, 32), scale: OverlayScale);
             rightArm.Submit();
             
-            leftArm ??= new CubeRenderGroup("Left arm");
+            rightArmOverlay ??= new CubeRenderGroup("Right Arm Overlay");
+            rightArmOverlay.AddCube(new(-3, -2, -2), new(4, 12, 4), new(40, 32), scale: OverlayScale);
+            rightArmOverlay.Submit();
+            
+            leftArm ??= new CubeRenderGroup("Left Arm");
             leftArm.AddCube(new(-1, -2, -2), new(4, 12, 4), new(32, 48));
-            leftArm.AddCube(new(-1, -2, -2), new(4, 12, 4), new(48, 48), scale: OverlayScale);
             leftArm.Submit();
 
-            rightLeg ??= new CubeRenderGroup("Right leg");
+            leftArmOverlay ??= new CubeRenderGroup("Left Arm Overlay");
+            leftArmOverlay.AddCube(new(-1, -2, -2), new(4, 12, 4), new(48, 48), scale: OverlayScale);
+            leftArmOverlay.Submit();
+
+            rightLeg ??= new CubeRenderGroup("Right Leg");
             rightLeg.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 16));
-            rightLeg.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 32), scale: OverlayScale);
             rightLeg.Submit();
 
-            leftLeg ??= new CubeRenderGroup("Left leg");
+            rightLegOverlay ??= new CubeRenderGroup("Right Leg Overlay");
+            rightLegOverlay.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 32), scale: OverlayScale);
+            rightLegOverlay.Submit();
+
+            leftLeg ??= new CubeRenderGroup("Left Leg");
             leftLeg.AddCube(new(-2, 0, -2), new(4, 12, 4), new(16, 48));
-            leftLeg.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 48), scale: OverlayScale);
             leftLeg.Submit();
+
+            leftLegOverlay ??= new CubeRenderGroup("Left Leg Overlay");
+            leftLegOverlay.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 48), scale: OverlayScale);
+            leftLegOverlay.Submit();
         }
 
         protected override void OnLoad(EventArgs e)
@@ -271,14 +303,7 @@ namespace PckStudio.Rendering
 
         public void UpdateModelData()
         {
-            foreach (var group in additionalModelRenderGroups.Values)
-            {
-                group.Clear();
-            }
-            foreach (var item in ModelData)
-            {
-                AddCustomModelPart(item);
-            }
+            ReInitialzeSkinData();
             Refresh();
         }
 
@@ -359,7 +384,7 @@ namespace PckStudio.Rendering
         private void OnANIMUpdate()
         {
             head.SetEnabled(0, !ANIM.GetFlag(SkinAnimFlag.HEAD_DISABLED));
-            head.SetEnabled(1, !ANIM.GetFlag(SkinAnimFlag.HEAD_OVERLAY_DISABLED));
+            headOverlay.SetEnabled(0, !ANIM.GetFlag(SkinAnimFlag.HEAD_OVERLAY_DISABLED));
             
             body.SetEnabled(0, !ANIM.GetFlag(SkinAnimFlag.BODY_DISABLED));
             rightArm.SetEnabled(0, !ANIM.GetFlag(SkinAnimFlag.RIGHT_ARM_DISABLED));
@@ -371,30 +396,33 @@ namespace PckStudio.Rendering
             if (slim || ANIM.GetFlag(SkinAnimFlag.RESOLUTION_64x64))
             {
                 UvTranslation = new Vector2(1f / 64);
-                body.SetEnabled(1, !ANIM.GetFlag(SkinAnimFlag.BODY_OVERLAY_DISABLED));
-                rightArm.SetEnabled(1, !ANIM.GetFlag(SkinAnimFlag.RIGHT_ARM_OVERLAY_DISABLED));
-                leftArm.SetEnabled(1, !ANIM.GetFlag(SkinAnimFlag.LEFT_ARM_OVERLAY_DISABLED));
-                rightLeg.SetEnabled(1, !ANIM.GetFlag(SkinAnimFlag.RIGHT_LEG_OVERLAY_DISABLED));
-                leftLeg.SetEnabled(1, !ANIM.GetFlag(SkinAnimFlag.LEFT_LEG_OVERLAY_DISABLED));
+                bodyOverlay.SetEnabled(0, !ANIM.GetFlag(SkinAnimFlag.BODY_OVERLAY_DISABLED));
+                rightArmOverlay.SetEnabled(0, !ANIM.GetFlag(SkinAnimFlag.RIGHT_ARM_OVERLAY_DISABLED));
+                leftArmOverlay.SetEnabled(0, !ANIM.GetFlag(SkinAnimFlag.LEFT_ARM_OVERLAY_DISABLED));
+                rightLegOverlay.SetEnabled(0, !ANIM.GetFlag(SkinAnimFlag.RIGHT_LEG_OVERLAY_DISABLED));
+                leftLegOverlay.SetEnabled(0, !ANIM.GetFlag(SkinAnimFlag.LEFT_LEG_OVERLAY_DISABLED));
 
                 int slimValue = slim ? 3 : 4;
                 rightArm.ReplaceCube(0, new(-3, -2, -2), new(slimValue, 12, 4), new(40, 16));
-                rightArm.ReplaceCube(1, new(-3, -2, -2), new(slimValue, 12, 4), new(40, 32), scale: OverlayScale);
+                rightArmOverlay.ReplaceCube(0, new(-3, -2, -2), new(slimValue, 12, 4), new(40, 32), scale: OverlayScale);
                 leftArm.ReplaceCube(0, new(-1, -2, -2), new(slimValue, 12, 4), new(32, 48));
-                leftArm.ReplaceCube(1, new(-1, -2, -2), new(slimValue, 12, 4), new(48, 48), scale: OverlayScale);
+                leftArmOverlay.ReplaceCube(0, new(-1, -2, -2), new(slimValue, 12, 4), new(48, 48), scale: OverlayScale);
 
                 rightLeg.ReplaceCube(0, new(-2, 0, -2), new(4, 12, 4), new(0, 16));
                 leftLeg.ReplaceCube(0, new(-2, 0, -2), new(4, 12, 4), new(16, 48));
                 return;
             }
+            
             UvTranslation = new Vector2(1f / 64, 1f / 32);
+            
             rightArm.ReplaceCube(0, new(-3, -2, -2), new(4, 12, 4), new(40, 16));
+            rightArmOverlay.SetEnabled(0, false);
+            
             leftArm.ReplaceCube(0, new(-1, -2, -2), new(4, 12, 4), new(40, 16), mirrorTexture: true);
+            leftArmOverlay.SetEnabled(0, false);
+
             rightLeg.ReplaceCube(0, new(-2, 0, -2), new(4, 12, 4), new(0, 16));
             leftLeg.ReplaceCube(0, new(-2, 0, -2), new(4, 12, 4), new(0, 16), mirrorTexture: true);
-            
-            rightArm.SetEnabled(1, false);
-            leftArm.SetEnabled(1, false);
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -429,9 +457,9 @@ namespace PckStudio.Rendering
             GL.Enable(EnableCap.AlphaTest); // Enable transparent
             GL.AlphaFunc(AlphaFunction.Greater, 0.4f);
 
-            Matrix4 modelMatrix = Matrix4.CreateTranslation(0f, 4f, 0f) // <- model rotation pivot point
-                * Matrix4.CreateFromAxisAngle(-Vector3.UnitX, MathHelper.DegreesToRadians(GlobalModelRotation.X))
-                * Matrix4.CreateFromAxisAngle( Vector3.UnitY, MathHelper.DegreesToRadians(GlobalModelRotation.Y));
+            Matrix4 modelMatrix = Matrix4.CreateTranslation(0f, 4f, 0f) * // <- model rotation pivot point
+                Matrix4.CreateFromAxisAngle(-Vector3.UnitX, MathHelper.DegreesToRadians(GlobalModelRotation.X)) * 
+                Matrix4.CreateFromAxisAngle( Vector3.UnitY, MathHelper.DegreesToRadians(GlobalModelRotation.Y));
 
             bool slimModel = ANIM.GetFlag(SkinAnimFlag.SLIM_MODEL);
 
@@ -443,8 +471,10 @@ namespace PckStudio.Rendering
             
             if (!ANIM.GetFlag(SkinAnimFlag.STATIC_ARMS))
             {
-                extraArmRightRotation = Matrix4.CreateFromAxisAngle(Vector3.UnitZ, MathHelper.DegreesToRadians(-rotationAngle));
-                extraArmLeftRotation  = Matrix4.CreateFromAxisAngle(Vector3.UnitZ, MathHelper.DegreesToRadians(rotationAngle));
+                extraArmRightRotation = Matrix4.CreateFromAxisAngle(Vector3.UnitZ, MathHelper.DegreesToRadians(-rotationAngle)) *
+                    Matrix4.CreateFromAxisAngle(Vector3.UnitZ, MathHelper.DegreesToRadians(-animationRot));
+                extraArmLeftRotation  = Matrix4.CreateFromAxisAngle(Vector3.UnitZ, MathHelper.DegreesToRadians(rotationAngle)) *
+                    Matrix4.CreateFromAxisAngle(Vector3.UnitZ, MathHelper.DegreesToRadians(animationRot));
             }
 
             if (!ANIM.GetFlag(SkinAnimFlag.STATIC_LEGS))
@@ -465,37 +495,36 @@ namespace PckStudio.Rendering
                 extraArmRightRotation = Matrix4.CreateFromAxisAngle(Vector3.UnitX, MathHelper.DegreesToRadians(-180f));
             }
 
-            RenderBodyPart(head.GetRenderBuffer()    , Vector3.Zero, Vector3.Zero, modelMatrix, "HEAD", "HEADWEAR");
-            RenderBodyPart(body.GetRenderBuffer()    , Vector3.Zero, Vector3.Zero, modelMatrix, "BODY", "JACKET");
-            RenderBodyPart(rightArm.GetRenderBuffer(), new Vector3(0f, 0f, -2f), new Vector3(slimModel ? -4f : -5f, -2f, 2f), extraArmRightRotation * modelMatrix, "ARM0", "SLEEVE0");
-            RenderBodyPart(leftArm.GetRenderBuffer() , new Vector3(0f, 0f, -2f), new Vector3(                   5f, -2f, 2f), extraArmLeftRotation  * modelMatrix, "ARM1", "SLEEVE1");
-            RenderBodyPart(rightLeg.GetRenderBuffer(), new Vector3(0f, 0f, 0f), new Vector3(-2f, -12f, 0f), extraLegRightRotation * modelMatrix, "LEG0", "PANTS0");
-            RenderBodyPart(leftLeg.GetRenderBuffer() , new Vector3(0f, 0f, 0f), new Vector3( 2f, -12f, 0f), extraLegLeftRotation  * modelMatrix, "LEG1", "PANTS1");
+            RenderBodyPart(new Vector3(0f, 0f, 0f), Vector3.Zero, HeadMatrix, modelMatrix, "HEAD", "HEADWEAR");
+            RenderBodyPart(new Vector3(0f, 0f, 0f), Vector3.Zero, BodyMatrix, modelMatrix, "BODY", "JACKET");
+            RenderBodyPart(new Vector3(0f, 2f, 0f), new Vector3(slimModel ? -4f : -5f, -2f, 0f), RightArmMatrix * extraArmRightRotation, modelMatrix, "ARM0", "SLEEVE0");
+            RenderBodyPart(new Vector3(0f, 2f, 0f), new Vector3(                   5f, -2f, 0f), LeftArmMatrix * extraArmLeftRotation, modelMatrix, "ARM1", "SLEEVE1");
+            RenderBodyPart(new Vector3(0f, 12f, 0f), new Vector3(-2f, -12f, 0f), RightLegMatrix * extraLegRightRotation, modelMatrix, "LEG0", "PANTS0");
+            RenderBodyPart(new Vector3(0f, 12f, 0f), new Vector3( 2f, -12f, 0f), LeftLegMatrix * extraLegLeftRotation, modelMatrix, "LEG1", "PANTS1");
             
             SwapBuffers();
         }
 
-        private void RenderBodyPart(RenderBuffer baseBuffer, Vector3 pivot, Vector3 translation, Matrix4 rotation, params string[] additionalData)
+        private void RenderBodyPart(Vector3 pivot, Vector3 translation, Matrix4 rotation, Matrix4 globalMatrix, params string[] additionalData)
         {
-            RenderPart(baseBuffer, pivot, translation, rotation);
             foreach (var data in additionalData)
             {
-                RenderAdditionalModelData(data, pivot, translation, rotation);
+                RenderPart(data, pivot, translation, rotation, globalMatrix);
             }
         }
 
-        private void RenderPart(RenderBuffer buffer, Vector3 pivot, Vector3 translation, Matrix4 rotation)
+        private void RenderPart(string name, Vector3 pivot, Vector3 translation, Matrix4 rotation, Matrix4 globalMatrix)
         {
-            var model = Matrix4.CreateTranslation(translation) * Matrix4.CreateTranslation(pivot);
+            CubeRenderGroup renderGroup = additionalModelRenderGroups[name];
+            renderGroup.Submit();
+            RenderBuffer buffer = renderGroup.GetRenderBuffer();
+            var model = Matrix4.CreateTranslation(translation);
+            model *= Matrix4.CreateTranslation(pivot);
             model *= rotation;
             model *= Matrix4.CreateTranslation(pivot).Inverted();
+            model *= globalMatrix;
             _skinShader.SetUniformMat4("u_Model", ref model);
             Renderer.Draw(_skinShader, buffer);
-        }
-
-        private void RenderAdditionalModelData(string name, Vector3 pivot, Vector3 translation, Matrix4 rotation)
-        {
-            RenderPart(additionalModelRenderGroups[name].GetRenderBuffer(), pivot, translation, rotation);
         }
 
         protected override void OnMouseWheel(MouseEventArgs e)
@@ -579,19 +608,25 @@ namespace PckStudio.Rendering
             }
         }
 
-        private void reInitToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ReInitialzeSkinData()
         {
-            head.Clear();
-            body.Clear();
-            rightArm.Clear();
-            leftArm.Clear();
-            rightLeg.Clear();
-            leftLeg.Clear();
+            foreach (var renderGroup in additionalModelRenderGroups.Values)
+            {
+                renderGroup.Clear();
+            }
 
             InitializeSkinData();
-
+            foreach (var item in ModelData)
+            {
+                AddCustomModelPart(item);
+            }
             OnANIMUpdate();
             Refresh();
+        }
+
+        private void reInitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ReInitialzeSkinData();
         }
 
         /// <summary>
