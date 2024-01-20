@@ -304,11 +304,7 @@ namespace PckStudio.Rendering
             switch (keyData)
             {
                 case Keys.Escape:
-                    if (IsMouseHidden || _IsLeftMouseDown || _IsRightMouseDown)
-                    {
-                        IsMouseHidden = _IsRightMouseDown = _IsLeftMouseDown = false;
-                        Cursor.Position = PreviousMouseLocation;
-                    }
+                    ReleaseMouse();
                     var point = new Point(Parent.Location.X + Location.X, Parent.Location.Y + Location.Y);
                     contextMenuStrip1.Show(point);
                     return true;
@@ -336,11 +332,7 @@ namespace PckStudio.Rendering
                     Refresh();
                     return true;
                 case Keys.A:
-                    if (IsMouseHidden || _IsLeftMouseDown || _IsRightMouseDown)
-                    {
-                        IsMouseHidden = _IsRightMouseDown = _IsLeftMouseDown = false;
-                        Cursor.Position = PreviousMouseLocation;
-                    }
+                    ReleaseMouse();
                     {
                         using var animeditor = new ANIMEditor(ANIM);
                         if (animeditor.ShowDialog() == DialogResult.OK)
@@ -352,6 +344,15 @@ namespace PckStudio.Rendering
                     return true;
             }
             return base.ProcessDialogKey(keyData);
+        }
+
+        private void ReleaseMouse()
+        {
+            if (IsMouseHidden || _isLeftMouseDown || _isRightMouseDown)
+            {
+                IsMouseHidden = _isRightMouseDown = _isLeftMouseDown = false;
+                Cursor.Position = PreviousMouseLocation;
+            }
         }
 
         private void OnANIMUpdate()
@@ -530,11 +531,7 @@ namespace PckStudio.Rendering
 
         protected override void OnMouseUp(MouseEventArgs e)
         {
-            if (IsMouseHidden)
-            {
-                Cursor.Position = PreviousMouseLocation;
-                IsMouseHidden = _IsLeftMouseDown = _IsRightMouseDown = false;
-            }
+            ReleaseMouse();
             base.OnMouseUp(e);
         }
 
