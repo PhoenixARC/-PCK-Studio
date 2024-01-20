@@ -113,8 +113,8 @@ namespace PckStudio.Rendering
         private Size TextureSize = new Size(64, 64);
         private const float OverlayScale = 1.12f;
 
-        private bool _IsLeftMouseDown;
-        private bool _IsRightMouseDown;
+        private bool _isLeftMouseDown;
+        private bool _isRightMouseDown;
 
         private Image RenderTexture
         {
@@ -131,6 +131,7 @@ namespace PckStudio.Rendering
                 }
             }
         }
+
         private bool IsMouseHidden
         {
             get => !Cursor.IsVisible();
@@ -506,7 +507,7 @@ namespace PckStudio.Rendering
         protected override void OnMouseDown(MouseEventArgs e)
         {
             base.OnMouseDown(e);
-            if (!_IsLeftMouseDown && e.Button == MouseButtons.Left)
+            if (!_isLeftMouseDown && e.Button == MouseButtons.Left)
             {
                 // If the ray didn't hit the model then rotate the model
                 PreviousMouseLocation = Cursor.Position; // Store the old mouse position to reset it when the action is over
@@ -515,9 +516,9 @@ namespace PckStudio.Rendering
                     IsMouseHidden = true;
                 }
                 CurrentMouseLocation = Cursor.Position; // Store the current mouse position to use it for the rotate action
-                _IsLeftMouseDown = true;
+                _isLeftMouseDown = true;
             }
-            else if (!_IsRightMouseDown && e.Button == MouseButtons.Right)
+            else if (!_isRightMouseDown && e.Button == MouseButtons.Right)
             {
                 PreviousMouseLocation = Cursor.Position; // Store the old mouse position to reset it when the action is over 
                 if (!IsMouseHidden) // Hide the mouse
@@ -525,7 +526,7 @@ namespace PckStudio.Rendering
                     IsMouseHidden = true;
                 }
                 CurrentMouseLocation = Cursor.Position; // Store the current mouse position to use it for the move action
-                _IsRightMouseDown = true;
+                _isRightMouseDown = true;
             }
         }
 
@@ -556,7 +557,7 @@ namespace PckStudio.Rendering
             }
 
             // Rotate the model
-            if (_IsLeftMouseDown)
+            if (_isLeftMouseDown)
             {
                 float rotationYDelta = (float)Math.Round((Cursor.Position.X - CurrentMouseLocation.X) * 0.5f);
                 float rotationXDelta = (float)Math.Round(-(Cursor.Position.Y - CurrentMouseLocation.Y) * 0.5f);
@@ -567,7 +568,7 @@ namespace PckStudio.Rendering
                 return;
             }
             // Move the model
-            if (_IsRightMouseDown)
+            if (_isRightMouseDown)
             {
                 float deltaX = -(Cursor.Position.X - CurrentMouseLocation.X) * 0.05f / (float)MathHelper.DegreesToRadians(camera.Fov);
                 float deltaY = (Cursor.Position.Y - CurrentMouseLocation.Y) * 0.05f / (float)MathHelper.DegreesToRadians(camera.Fov);
