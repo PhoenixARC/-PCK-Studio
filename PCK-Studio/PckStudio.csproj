@@ -137,8 +137,10 @@
     <Compile Include="Classes\Utils\Ray.cs" />
     <Compile Include="Extensions\CursorExtensions.cs" />
     <Compile Include="Extensions\PckFileDataExtensions.cs" />
+    <Compile Include="Extensions\SkinBOXExtensions.cs" />
     <Compile Include="Extensions\System.Numerics.cs" />
     <Compile Include="Extensions\TreeNodeExtensions.cs" />
+    <Compile Include="Internal\ModelOffset.cs" />
     <Compile Include="Helper\AnimationHelper.cs" />
     <Compile Include="Internal\AnimationCategory.cs" />
     <Compile Include="Internal\SkinAnimFlag.cs" />

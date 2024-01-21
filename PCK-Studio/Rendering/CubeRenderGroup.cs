@@ -31,14 +31,22 @@ namespace PckStudio.Rendering
     {
         private List<CubeData> cubes;
 
+        internal float Scale { get; set; } = 1f;
+
         internal CubeRenderGroup(string name) : base(name, PrimitiveType.Quads)
         {
             cubes = new List<CubeData>(5);
         }
 
+        internal CubeRenderGroup(string name, float scale)
+            : this(name)
+        {
+            Scale = scale;
+        }
+
         internal void AddSkinBox(SkinBOX skinBox)
         {
-            AddCube(skinBox.Pos.ToOpenTKVector(), skinBox.Size.ToOpenTKVector(), skinBox.UV.ToOpenTKVector(), skinBox.Scale + 1f, skinBox.Mirror, skinBox.Type == "HEAD");
+            AddCube(skinBox.Pos.ToOpenTKVector(), skinBox.Size.ToOpenTKVector(), skinBox.UV.ToOpenTKVector(), skinBox.Scale + Scale, skinBox.Mirror, skinBox.Type == "HEAD");
         }
 
         internal void Clear()

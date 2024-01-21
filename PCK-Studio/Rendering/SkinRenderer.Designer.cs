@@ -45,11 +45,12 @@ namespace PckStudio.Rendering
             // moveTimer
             // 
             this.moveTimer.Enabled = true;
-            this.moveTimer.Interval = 10;
+            this.moveTimer.Interval = 1;
             this.moveTimer.Tick += new System.EventHandler(this.moveTimer_Tick);
             // 
             // animationTimer
             // 
+            this.animationTimer.Enabled = true;
             this.animationTimer.Interval = 50;
             this.animationTimer.Tick += new System.EventHandler(this.animationTimer_Tick);
             // 

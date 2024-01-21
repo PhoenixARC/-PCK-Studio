@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -11,11 +12,11 @@ using System.Text.RegularExpressions;
 
 using Newtonsoft.Json;
 using MetroFramework.Forms;
+
 using OMI.Formats.Pck;
+
 using PckStudio.Internal;
 using PckStudio.Extensions;
-using System.Diagnostics;
-using System.Text;
 using PckStudio.Forms.Editor;
 
 namespace PckStudio.Forms
@@ -33,81 +34,7 @@ namespace PckStudio.Forms
             PixelOffsetMode = PixelOffsetMode.HighQuality,
         };
 
-        private static readonly string[] ValidModelBoxTypes = new string[]
-        {
-            // Base 64x32 Parts
-            "HEAD",
-            "BODY",
-            "ARM0",
-            "ARM1",
-            "LEG0",
-            "LEG1",
-
-            // 64x64 Overlay Parts
-            "HEADWEAR",
-            "JACKET",
-            "SLEEVE0",
-            "SLEEVE1",
-            "WAIST",
-            "PANTS0",
-            "PANTS1",
-
-            // Armor Parts
-            "BODYARMOR",
-            "ARMARMOR0",
-            "ARMARMOR1",
-            "BELT",
-            "LEGGING0",
-            "LEGGING1",
-            "SOCK0",
-            "SOCK1",
-            "BOOT0",
-            "BOOT1"
-        };
-
-        private static readonly string[] ValidModelOffsetTypes = new string[]
-        {
-            // Body Offsets
-            "HEAD",
-            "BODY",
-            "ARM0",
-            "ARM1",
-            "LEG0",
-            "LEG1",
-
-            // Armor Offsets
-            "HELMET",
-            "CHEST", "BODYARMOR",
-            "SHOULDER0", "ARMARMOR0",
-            "SHOULDER1", "ARMARMOR0",
-            "BELT",
-            "LEGGING0",
-            "LEGGING1",
-            "SOCK0", "BOOT0",
-            "SOCK1", "BOOT1",
-
-            "TOOL0",
-            "TOOL1",
-        };
-
         List<ModelOffset> modelOffsets = new List<ModelOffset>();
-
-        private readonly struct ModelOffset
-        {
-            public readonly string Name;
-            public readonly float YOffset;
-
-            public ModelOffset(string name, float yOffset)
-            {
-                Name = name;
-                YOffset = yOffset;
-            }
-            public (string, string) ToProperty()
-            {
-                string value = $"{Name} Y {YOffset}";
-                return ("OFFSET", value.Replace(',','.'));
-            }
-        }
 
         public CustomModelEditor(PckFileData file)
         {
@@ -116,16 +43,10 @@ namespace PckStudio.Forms
             _file = file;
             if (_file.Size > 0)
             {
-                uvPictureBox.Image = renderer3D1.Texture = _file.GetTexture();
+                uvPictureBox.BackgroundImage = renderer3D1.Texture = _file.GetTexture();
             }
             //comboParent.Items.AddRange(ValidModelBoxTypes);
             LoadModelData(file.Properties);
-        }
-
-        private static readonly Regex sWhitespace = new Regex(@"\s+");
-        public static string ReplaceWhitespace(string input, string replacement)
-        {
-            return sWhitespace.Replace(input, replacement);
         }
 
         private void LoadModelData(PckFileProperties properties)
@@ -134,24 +55,10 @@ namespace PckStudio.Forms
             var boxProperties = properties.GetProperties("BOX");
 
             Array.ForEach(boxProperties, kv => renderer3D1.ModelData.Add(SkinBOX.FromString(kv.Value)));
-            listBox1.DataSource = renderer3D1.ModelData;
-            listBox1.DisplayMember = "Type";
+            modelPartListBox.DataSource = renderer3D1.ModelData;
+            modelPartListBox.DisplayMember = "Type";
 
-            properties.GetProperties("OFFSET").All(kv => {
-                string[] offset = ReplaceWhitespace(kv.Value, ",").TrimEnd('\n', '\r', ' ').Split(',');
-                if (offset.Length < 3)
-                    return false;
-                string name = offset[0];
-                if (offset[1] != "Y")
-                    return false;
-                float value = float.Parse(offset[2]);
-                if (ValidModelOffsetTypes.Contains(name))
-                {
-                    modelOffsets.Add(new ModelOffset(name, value));
-                    return true;
-                }
-                return false;
-            });
+            Array.ForEach(properties.GetProperties("OFFSET"), kv => renderer3D1.SetPartOffset(ModelOffset.FromString(kv.Value)));
         }
 
         private void GenerateUVTextureMap()
@@ -191,7 +98,7 @@ namespace PckStudio.Forms
         //Export Current Skin Texture
         private void buttonEXPORT_Click(object sender, EventArgs e)
         {
-            Bitmap bitmap = new Bitmap(uvPictureBox.Image, 64, 64);
+            Bitmap bitmap = new Bitmap(uvPictureBox.BackgroundImage, 64, 64);
             using SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "PNG Image Files | *.png";
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
@@ -214,7 +121,7 @@ namespace PckStudio.Forms
                     if ((img.Width == img.Height || img.Height == img.Width / 2))
                     {
                         generateTextureCheckBox.Checked = false;
-                        using (Graphics graphics = Graphics.FromImage(uvPictureBox.Image))
+                        using (Graphics graphics = Graphics.FromImage(uvPictureBox.BackgroundImage))
                         {
                             graphics.ApplyConfig(_graphicsConfig);
                             graphics.DrawImage(img, 0, 0, img.Width, img.Height);
@@ -231,6 +138,7 @@ namespace PckStudio.Forms
 
         private void buttonDone_Click(object sender, EventArgs e)
         {
+            _file.Properties.RemoveAll(kv => kv.Key == "BOX");
             foreach (var part in renderer3D1.ModelData)
             {
                 _file.Properties.Add("BOX", part);
@@ -240,7 +148,6 @@ namespace PckStudio.Forms
             DialogResult = DialogResult.OK;
         }
 
-        // Exports model as csm file
         private void buttonExportModel_Click(object sender, EventArgs e)
         {
             //SaveFileDialog saveFileDialog = new SaveFileDialog();
@@ -292,31 +199,15 @@ namespace PckStudio.Forms
 
         private void cloneToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //try
-            //{
-            //    ListViewItem listViewItem = new ListViewItem();
-            //    var selected = listViewBoxes.SelectedItems[0];
-            //    listViewItem.Text = selected.Text;
-            //    listViewItem.Tag = selected.Tag;
-            //    int num = 0;
-            //    foreach (ListViewItem.ListViewSubItem subItem in selected.SubItems)
-            //    {
-            //        if (num > 0)
-            //            listViewItem.SubItems.Add(subItem.Text);
-            //        ++num;
-            //    }
-            //    listViewBoxes.Items.Add(listViewItem);
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine(ex.Message);
-            //    MessageBox.Show("Please Select a Part");
-            //}
+            if (modelPartListBox.SelectedItem is SkinBOX box)
+            {
+                renderer3D1.ModelData.Add((SkinBOX)box.Clone());
+            }
         }
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (listBox1.SelectedItem is SkinBOX box)
+            if (modelPartListBox.SelectedItem is SkinBOX box)
             {
                 renderer3D1.ModelData.Remove(box);
             }
@@ -340,7 +231,6 @@ namespace PckStudio.Forms
             //{
             //    if (modelBoxes.Remove(part))
             //        listViewBoxes.SelectedItems[0].Remove();
-                
             //}
         }
 
@@ -431,25 +321,51 @@ namespace PckStudio.Forms
         private void renderer3D1_TextureChanging(object sender, Rendering.TextureChangingEventArgs e)
         {
             // TODO: add validation for 64x64 and 64x32
-            uvPictureBox.Image = e.NewTexture;
+            uvPictureBox.BackgroundImage = e.NewTexture;
         }
 
         private void listBox1_DoubleClick(object sender, EventArgs e)
         {
-            if (listBox1.SelectedItem is SkinBOX box)
+            if (modelPartListBox.SelectedItem is SkinBOX box)
             {
                 var boxEditor = new BoxEditor(box, false);
                 if (boxEditor.ShowDialog() == DialogResult.OK)
                 {
-                    renderer3D1.ModelData[listBox1.SelectedIndex] = boxEditor.Result;
-                    listBox1.Update();
+                    renderer3D1.ModelData[modelPartListBox.SelectedIndex] = boxEditor.Result;
+                    modelPartListBox.Update();
                 }
             }
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //renderer3D1.SelectedIndex = listBox1.SelectedIndex;
+            if (modelPartListBox.SelectedItem is SkinBOX box)
+            {
+                int scale = 3;
+                uvPictureBox.Image = new Bitmap(uvPictureBox.BackgroundImage.Width * scale, uvPictureBox.BackgroundImage.Height * scale);
+                using (Graphics g = Graphics.FromImage(uvPictureBox.Image))
+                {
+                    g.DrawPath(new Pen(Color.HotPink, 1f), box.GetUVGraphicsPath(new System.Numerics.Vector2(uvPictureBox.Image.Width / uvPictureBox.BackgroundImage.Width, uvPictureBox.Image.Height / uvPictureBox.BackgroundImage.Height)));
+                }
+                uvPictureBox.Invalidate();
+            }
+        }
+
+        private void clampToViewCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            renderer3D1.ClampModel = clampToViewCheckbox.Checked;
+        }
+
+        private void captureScreenshotButton_Click(object sender, EventArgs e)
+        {
+            using SaveFileDialog saveFileDialog = new SaveFileDialog()
+            {
+                Filter = "PNG|*.png"
+            };
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                renderer3D1.GetThumbnail().Save(saveFileDialog.FileName, ImageFormat.Png);
+            }
         }
     }
 
