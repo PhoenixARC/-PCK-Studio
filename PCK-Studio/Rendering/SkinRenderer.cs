@@ -396,15 +396,15 @@ namespace PckStudio.Rendering
 
             // Initialize skin shader
             {
-            _skinShader = Shader.Create(Resources.skinVertexShader, Resources.skinFragmentShader);
+                _skinShader = Shader.Create(Resources.skinVertexShader, Resources.skinFragmentShader);
                 _skinShader.Validate();
-            _skinShader.Bind();
+                _skinShader.Bind();
+            
+                Texture ??= Resources.classic_template;
+                RenderTexture = Texture;
 
-            Texture ??= Resources.classic_template;
-            RenderTexture = Texture;
-
-            GLErrorCheck();
-        }
+                GLErrorCheck();
+            }
         }
 
         public void UpdateModelData()
@@ -624,15 +624,15 @@ namespace PckStudio.Rendering
             SwapBuffers();
         }
 
-        private void RenderBodyPart(Vector3 pivot, Vector3 translation, Matrix4 rotation, Matrix4 globalMatrix, params string[] additionalData)
+        private void RenderBodyPart(Vector3 pivot, Vector3 translation, Matrix4 partMatrix, Matrix4 globalMatrix, params string[] additionalData)
         {
             foreach (var data in additionalData)
             {
-                RenderPart(data, pivot, translation, rotation, globalMatrix);
+                RenderPart(data, pivot, translation, partMatrix, globalMatrix);
             }
         }
 
-        private void RenderPart(string name, Vector3 pivot, Vector3 translation, Matrix4 rotation, Matrix4 globalMatrix)
+        private void RenderPart(string name, Vector3 pivot, Vector3 translation, Matrix4 partMatrix, Matrix4 globalMatrix)
         {
             CubeRenderGroup renderGroup = additionalModelRenderGroups[name];
             float yOffset = GetOffset(name);
@@ -640,13 +640,19 @@ namespace PckStudio.Rendering
             pivot.Y += yOffset;
             renderGroup.Submit();
             RenderBuffer buffer = renderGroup.GetRenderBuffer();
-            var model = Matrix4.CreateTranslation(translation);
-            model *= Matrix4.CreateTranslation(pivot);
-            model *= rotation;
-            model *= Matrix4.CreateTranslation(pivot).Inverted();
+            Matrix4 model = Pivot(translation, pivot, partMatrix);
             model *= globalMatrix;
             _skinShader.SetUniformMat4("u_Model", ref model);
             Renderer.Draw(_skinShader, buffer);
+        }
+
+        private static Matrix4 Pivot(Vector3 translation, Vector3 pivot, Matrix4 target)
+        {
+            var model = Matrix4.CreateTranslation(translation);
+            model *= Matrix4.CreateTranslation(pivot);
+            model *= target;
+            model *= Matrix4.CreateTranslation(pivot).Inverted();
+            return model;
         }
 
         protected override void OnMouseWheel(MouseEventArgs e)
