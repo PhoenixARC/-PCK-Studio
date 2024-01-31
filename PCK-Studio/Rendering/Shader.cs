@@ -103,6 +103,22 @@ namespace PckStudio.Rendering
                 );
         }
 
+        private bool Link()
+        {
+            GL.LinkProgram(_programId);
+            GL.GetProgram(_programId, GetProgramParameterName.LinkStatus, out int status);
+            return status != 0;
+        }
+
+        public bool Validate()
+        {
+            GL.ValidateProgram(_programId);
+            GL.GetProgram(_programId, GetProgramParameterName.ValidateStatus, out int status);
+            if (status == 0)
+                Debug.WriteLine(GL.GetProgramInfoLog(_programId), category: nameof(Shader));
+            return status != 0;
+        }
+
         public static Shader Create(params ShaderSource[] shaderSources)
         {
             int programId = GL.CreateProgram();
@@ -115,16 +131,15 @@ namespace PckStudio.Rendering
                 GL.AttachShader(programId, shaderId);
                 shaderIds.Add(shaderId);
             }
-            GL.LinkProgram(programId);
-            GL.ValidateProgram(programId);
 
-            Debug.WriteLine(GL.GetProgramInfoLog(programId), category: nameof(Shader));
-
+            var shader = new Shader(programId);
+            shader.Link();
+            
             foreach (var shaderId in shaderIds)
             {
                 GL.DeleteShader(shaderId);
             }
-            return new Shader(programId);
+            return shader;
         }
 
     }
