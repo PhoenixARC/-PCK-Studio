@@ -31,6 +31,7 @@ using PckStudio.Forms.Editor;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Drawing.Imaging;
+using System.IO;
 using PckStudio.Rendering.Camera;
 using PckStudio.Rendering.Texture;
 
@@ -99,7 +100,7 @@ namespace PckStudio.Rendering
             set
             {
                 _globalModelRotation.X = MathHelper.Clamp(value.X, -90f, 90f);
-                _globalModelRotation.Y = MathHelper.Clamp(value.Y, -180f, 180f);
+                _globalModelRotation.Y = value.Y % 360f;
             }
         }
 
@@ -114,8 +115,9 @@ namespace PckStudio.Rendering
         {
             set
             {
-                if (HasValidContext && _skinShader is not null)
+                if (value is not null && HasValidContext && _skinShader is not null)
                 {
+                    MakeCurrent();
                     TextureSize = value.Width == value.Height ? new Size(64, 64) : new Size(64, 32);
                     UvTranslation = value.Width == value.Height ? new Vector2(1f / 64) : new Vector2(1f / 64, 1f / 32);
                     var texture = new Texture2D(value);
@@ -145,6 +147,12 @@ namespace PckStudio.Rendering
         private Shader _skinShader;
         private SkinANIM _anim;
         private Image _texture;
+
+        private Shader _skyboxShader;
+        private RenderBuffer _skyboxRenderBuffer;
+        private CubeTexture _skyboxTexture;
+        private float skyboxRotation = 0f;
+        private float skyboxRotationStep = 0.5f;
 
         private Dictionary<string, CubeRenderGroup> additionalModelRenderGroups;
         private Dictionary<string, float> partOffset;
@@ -328,14 +336,75 @@ namespace PckStudio.Rendering
 
             Trace.TraceInformation(GL.GetString(StringName.Version));
 
+            // Initialize skybox shader
+            {
+                string customSkyboxFilepath = Path.Combine(Program.AppData, "cubemap.png");
+                Image skyboxImage = File.Exists(customSkyboxFilepath) 
+                    ? Image.FromFile(customSkyboxFilepath)
+                    : Resources.DefaultSkyTexture;
+
+                _skyboxShader = Shader.Create(Resources.skyboxVertexShader, Resources.skyboxFragmentShader);
+                _skyboxTexture = new CubeTexture(skyboxImage);
+                _skyboxTexture.Bind(1);
+                _skyboxShader.Bind();
+                _skyboxShader.SetUniform1("skybox", 1);
+                _skyboxShader.Validate();
+
+                Vector3[] cubeVertices = new Vector3[]
+                {
+                    // front
+                    new Vector3(-1.0f, -1.0f,  1.0f),
+                    new Vector3( 1.0f, -1.0f,  1.0f),
+                    new Vector3( 1.0f,  1.0f,  1.0f),
+                    new Vector3(-1.0f,  1.0f,  1.0f),
+                    // back
+                    new Vector3(-1.0f, -1.0f, -1.0f),
+                    new Vector3( 1.0f, -1.0f, -1.0f),
+                    new Vector3( 1.0f,  1.0f, -1.0f),
+                    new Vector3(-1.0f,  1.0f, -1.0f)
+                };
+
+                var skyboxVAO = new VertexArray();
+                var skyboxVBO = new VertexBuffer<Vector3>(cubeVertices, cubeVertices.Length * Vector3.SizeInBytes);
+                var vboLayout = new VertexBufferLayout();
+                vboLayout.Add<float>(3);
+                skyboxVAO.AddBuffer(skyboxVBO, vboLayout);
+                var skybocIBO = IndexBuffer.Create(
+                    // front
+                    0, 1, 2,
+                    2, 3, 0,
+                    // right
+                    1, 5, 6,
+                    6, 2, 1,
+                    // back
+                    7, 6, 5,
+                    5, 4, 7,
+                    // left
+                    4, 0, 3,
+                    3, 7, 4,
+                    // bottom
+                    4, 5, 1,
+                    1, 0, 4,
+                    // top
+                    3, 2, 6,
+                    6, 7, 3);
+
+                _skyboxRenderBuffer = new RenderBuffer(skyboxVAO, skybocIBO, PrimitiveType.Triangles);
+                skyboxVAO.Unbind();
+                skybocIBO.Unbind();
+            }
+
+            // Initialize skin shader
+            {
             _skinShader = Shader.Create(Resources.skinVertexShader, Resources.skinFragmentShader);
+                _skinShader.Validate();
             _skinShader.Bind();
 
             Texture ??= Resources.classic_template;
-
             RenderTexture = Texture;
 
             GLErrorCheck();
+        }
         }
 
         public void UpdateModelData()
@@ -472,9 +541,10 @@ namespace PckStudio.Rendering
 
             MakeCurrent(); 
 
-            camera.Update(ClientSize.Width / (float)ClientSize.Height);
+            camera.Update(AspectRatio);
 
             var viewProjection = camera.GetViewProjection();
+            _skinShader.Bind();
             _skinShader.SetUniformMat4("u_ViewProjection", ref viewProjection);
             _skinShader.SetUniform2("u_TexScale", UvTranslation);
 
@@ -537,6 +607,20 @@ namespace PckStudio.Rendering
             RenderBodyPart(new Vector3(0f, 12f, 0f), new Vector3(-2f, -12f, 0f), RightLegMatrix * legRightMatrix, modelMatrix, "LEG0", "PANTS0");
             RenderBodyPart(new Vector3(0f, 12f, 0f), new Vector3( 2f, -12f, 0f), LeftLegMatrix  * legLeftMatrix , modelMatrix, "LEG1", "PANTS1");
             
+            if (true)
+            {
+                GL.DepthFunc(DepthFunction.Lequal);
+                _skyboxShader.Bind();
+
+                var view = new Matrix4(new Matrix3(Matrix4.LookAt(camera.WorldPosition, camera.WorldPosition + camera.Orientation, camera.Up)))
+                    * Matrix4.CreateRotationY(MathHelper.DegreesToRadians(skyboxRotation));
+                var proj = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(camera.Fov), AspectRatio, 1f, 1000f);
+                var viewproj = view * proj;
+                _skyboxShader.SetUniformMat4("viewProjection", ref viewproj);
+                Renderer.Draw(_skyboxShader, _skyboxRenderBuffer);
+                GL.DepthFunc(DepthFunction.Less);
+            }
+
             SwapBuffers();
         }
 
@@ -605,9 +689,8 @@ namespace PckStudio.Rendering
 
         private void animationTimer_Tick(object sender, EventArgs e)
         {
-            if (!Focused)
-                return;
-
+            skyboxRotation += skyboxRotationStep;
+            skyboxRotation %= 360f;
             animationCurrentRotationAngle += animationRotationStep;
             if (animationCurrentRotationAngle >= animationMaxAngleInDegrees || animationCurrentRotationAngle <= -animationMaxAngleInDegrees)
                 animationRotationStep = -animationRotationStep;

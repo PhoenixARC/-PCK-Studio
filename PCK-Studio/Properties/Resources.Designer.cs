@@ -225,6 +225,16 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap DefaultSkyTexture {
+            get {
+                object obj = ResourceManager.GetObject("DefaultSkyTexture", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap Discord {
             get {
                 object obj = ResourceManager.GetObject("Discord", resourceCulture);
@@ -590,6 +600,7 @@ namespace PckStudio.Properties {
         ///
         ///layout(location = 0) in vec4 vertexPosition;
         ///layout(location = 1) in vec2 texCoord;
+        ///layout(location = 2) in float scale;
         ///
         ///uniform mat4 u_ViewProjection;
         ///uniform mat4 u_Model;
@@ -599,12 +610,56 @@ namespace PckStudio.Properties {
         ///void main()
         ///{
         ///	v_TexCoord = texCoord;
-        ///	gl_Position = u_ViewProjection * u_Model * vertexPosition;
+        ///	vec4 scaledVertex = scale * vertexPosition;
+        ///	vec4 invertedVertex = vec4(scaledVertex.x, scaledVertex.y * -1.0, scaledVertex.z * -1.0, 1.0);
+        ///	gl_Position = u_ViewProjection * u_Model * invertedVertex;
         ///};.
         /// </summary>
         public static string skinVertexShader {
             get {
                 return ResourceManager.GetString("skinVertexShader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #version 330 core
+        ///
+        ///layout(location = 0) out vec4 color;
+        ///
+        ///uniform samplerCube skybox;
+        ///
+        ///in vec3 texCoords;
+        ///
+        ///void main()
+        ///{
+        ///	color = texture(skybox, texCoords);
+        ///}.
+        /// </summary>
+        public static string skyboxFragmentShader {
+            get {
+                return ResourceManager.GetString("skyboxFragmentShader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #version 330 core
+        ///
+        ///layout(location = 0) in vec4 a_Pos;
+        ///
+        ///uniform mat4 viewProjection;
+        ///
+        ///out vec3 texCoords;
+        ///
+        ///void main()
+        ///{
+        ///	vec4 pos = viewProjection * a_Pos;
+        ///	gl_Position = vec4(pos.x, pos.y, pos.ww);
+        ///	texCoords = vec3(a_Pos.x, a_Pos.y, -a_Pos.z);
+        ///};.
+        /// </summary>
+        public static string skyboxVertexShader {
+            get {
+                return ResourceManager.GetString("skyboxVertexShader", resourceCulture);
             }
         }
         
