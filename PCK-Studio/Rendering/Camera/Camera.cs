@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Media.Media3D;
 using OpenTK;
 
-namespace PckStudio.Rendering
+namespace PckStudio.Rendering.Camera
 {
     internal abstract class Camera
     {

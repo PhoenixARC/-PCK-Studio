@@ -31,6 +31,8 @@ using PckStudio.Forms.Editor;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Drawing.Imaging;
+using PckStudio.Rendering.Camera;
+using PckStudio.Rendering.Texture;
 
 namespace PckStudio.Rendering
 {

@@ -150,12 +150,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Rendering\Camera.cs" />
+    <Compile Include="Rendering\Camera\Camera.cs" />
+    <Compile Include="Rendering\Camera\PerspectiveCamera.cs" />
     <Compile Include="Rendering\CubeData.cs" />
     <Compile Include="Rendering\CubeRenderGroup.cs" />
     <Compile Include="Rendering\IndexBuffer.cs" />
     <Compile Include="Rendering\IVertexLayout.cs" />
-    <Compile Include="Rendering\PerspectiveCamera.cs" />
     <Compile Include="Rendering\RenderBuffer.cs" />
     <Compile Include="Rendering\Renderer.cs" />
     <Compile Include="Rendering\RenderGroup.cs" />
@@ -167,9 +167,11 @@
     <Compile Include="Rendering\SkinRenderer.Designer.cs">
       <DependentUpon>SkinRenderer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Rendering\Texture2D.cs" />
     <Compile Include="Rendering\TextureChangingEventArgs.cs" />
     <Compile Include="Rendering\TextureVertex.cs" />
+    <Compile Include="Rendering\Texture\CubeTexture.cs" />
+    <Compile Include="Rendering\Texture\Texture.cs" />
+    <Compile Include="Rendering\Texture\Texture2D.cs" />
     <Compile Include="Rendering\VertexArray.cs" />
     <Compile Include="Rendering\VertexBuffer.cs" />
     <Compile Include="Rendering\VertexBufferLayout.cs" />

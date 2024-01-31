@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
 
-namespace PckStudio.Rendering
+namespace PckStudio.Rendering.Camera
 {
     internal class PerspectiveCamera : Camera
     {
@@ -21,6 +21,8 @@ namespace PckStudio.Rendering
             set => _position.Xy = value;
         }
 
+        public Vector3 WorldPosition => _position;
+
         public Vector2 Rotation
         {
             get => _rotation;
@@ -31,6 +33,9 @@ namespace PckStudio.Rendering
             }
         }
 
+        public Vector3 Orientation => -Vector3.UnitZ;
+
+        public Vector3 Up = Vector3.UnitY;
         public float MinimumFov { get; set; } = 30f;
         public float MaximumFov { get; set; } = 120f;
         public float Fov
@@ -55,7 +60,6 @@ namespace PckStudio.Rendering
 
         private Vector3 _position;
         private Vector2 _rotation;
-        private Vector3 _target;
 
 
         internal override Matrix4 GetViewProjection()
@@ -65,12 +69,11 @@ namespace PckStudio.Rendering
 
         private void UpdateView()
         {
-            var up = Vector3.UnitY;
 
             Matrix4 rotation = Matrix4.CreateFromAxisAngle(new Vector3(-1f, 0f, 0f), MathHelper.DegreesToRadians(Rotation.X))
                              * Matrix4.CreateFromAxisAngle(new Vector3(0f, 1f, 0f), MathHelper.DegreesToRadians(Rotation.Y));
 
-            viewMatrix = Matrix4.LookAt(_position, _target, up) * rotation;
+            viewMatrix = Matrix4.LookAt(_position, _position + Orientation, Up) * rotation;
         }
 
         internal override void Update(float aspect)
@@ -82,7 +85,6 @@ namespace PckStudio.Rendering
 
         internal void LookAt(Vector2 pos)
         {
-            _target = new Vector3(pos);
             Position = pos;
         }
 

@@ -28,6 +28,7 @@ https://github.com/KareemMAX/Minecraft-Skiner/blob/master/src/Minecraft%20skiner
 using System;
 using System.Windows.Forms;
 using OpenTK;
+using PckStudio.Rendering.Camera;
 
 namespace PckStudio.Rendering
 {
