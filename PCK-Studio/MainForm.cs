@@ -434,7 +434,7 @@ namespace PckStudio
 		{
 			if (file.Properties.HasProperty("BOX"))
 			{
-				using CustomModelEditor generate = new CustomModelEditor(file);
+				using CustomSkinEditor generate = new CustomSkinEditor(file);
 				if (generate.ShowDialog() == DialogResult.OK)
 				{
 					entryDataTextBox.Text = entryTypeTextBox.Text = string.Empty;

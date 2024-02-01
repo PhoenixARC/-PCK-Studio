@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Drawing.Imaging;
-using System.Linq;
-using System.Windows.Forms;
-using System.Collections;
 using System.IO;
-using System.Text.RegularExpressions;
+using System.Text;
+using System.Drawing;
+using System.Windows.Forms;
+using System.Drawing.Imaging;
+using System.Drawing.Drawing2D;
+using System.Collections.Generic;
 
 using Newtonsoft.Json;
 using MetroFramework.Forms;
@@ -21,7 +18,7 @@ using PckStudio.Forms.Editor;
 
 namespace PckStudio.Forms
 {
-    public partial class CustomModelEditor : MetroForm
+    public partial class CustomSkinEditor : MetroForm
     {
         private Image _previewImage;
         public Image PreviewImage => _previewImage;
@@ -36,7 +33,7 @@ namespace PckStudio.Forms
 
         List<ModelOffset> modelOffsets = new List<ModelOffset>();
 
-        public CustomModelEditor(PckFileData file)
+        public CustomSkinEditor(PckFileData file)
         {
             InitializeComponent();
 
@@ -55,6 +52,7 @@ namespace PckStudio.Forms
             var boxProperties = properties.GetProperties("BOX");
 
             Array.ForEach(boxProperties, kv => renderer3D1.ModelData.Add(SkinBOX.FromString(kv.Value)));
+
             modelPartListBox.DataSource = renderer3D1.ModelData;
             modelPartListBox.DisplayMember = "Type";
 
@@ -118,15 +116,10 @@ namespace PckStudio.Forms
             {
                 using (var img = Image.FromFile(openFileDialog.FileName))
 				{
-                    if ((img.Width == img.Height || img.Height == img.Width / 2))
+                    if (img.Width == img.Height || img.Height == img.Width / 2)
                     {
                         generateTextureCheckBox.Checked = false;
-                        using (Graphics graphics = Graphics.FromImage(uvPictureBox.BackgroundImage))
-                        {
-                            graphics.ApplyConfig(_graphicsConfig);
-                            graphics.DrawImage(img, 0, 0, img.Width, img.Height);
-                        }
-                        uvPictureBox.Invalidate();
+                        renderer3D1.Texture = img;
                     }
                     else
 					{
@@ -320,8 +313,14 @@ namespace PckStudio.Forms
 
         private void renderer3D1_TextureChanging(object sender, Rendering.TextureChangingEventArgs e)
         {
-            // TODO: add validation for 64x64 and 64x32
-            uvPictureBox.BackgroundImage = e.NewTexture;
+            var img = e.NewTexture;
+            if (img.Width != img.Height && img.Height != img.Width / 2)
+            {
+                e.Cancel = true;
+                MessageBox.Show("Invalid image dimensions.", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            uvPictureBox.BackgroundImage = img;
         }
 
         private void listBox1_DoubleClick(object sender, EventArgs e)
@@ -345,7 +344,14 @@ namespace PckStudio.Forms
                 uvPictureBox.Image = new Bitmap(uvPictureBox.BackgroundImage.Width * scale, uvPictureBox.BackgroundImage.Height * scale);
                 using (Graphics g = Graphics.FromImage(uvPictureBox.Image))
                 {
-                    g.DrawPath(new Pen(Color.HotPink, 1f), box.GetUVGraphicsPath(new System.Numerics.Vector2(uvPictureBox.Image.Width / uvPictureBox.BackgroundImage.Width, uvPictureBox.Image.Height / uvPictureBox.BackgroundImage.Height)));
+                    float penWidth = renderer3D1.UvTranslation.X * uvPictureBox.BackgroundImage.Width + renderer3D1.UvTranslation.Y * uvPictureBox.BackgroundImage.Height / 2f;
+                    GraphicsPath graphicsPath = box.GetUVGraphicsPath(
+                        new System.Numerics.Vector2(
+                            scale * renderer3D1.UvTranslation.X * uvPictureBox.BackgroundImage.Width,
+                            scale * renderer3D1.UvTranslation.Y * uvPictureBox.BackgroundImage.Height
+                            )
+                        );
+                    g.DrawPath(new Pen(Color.HotPink, penWidth), graphicsPath);
                 }
                 uvPictureBox.Invalidate();
             }

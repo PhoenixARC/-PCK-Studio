@@ -1,6 +1,6 @@
 ﻿namespace PckStudio.Forms
 {
-    partial class CustomModelEditor
+    partial class CustomSkinEditor
     {
         /// <summary>
         /// Required designer variable.
@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.Label label5;
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CustomModelEditor));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CustomSkinEditor));
             System.Windows.Forms.Label label3;
             System.Windows.Forms.Label label7;
             System.Windows.Forms.Label labelTextureMappingPreview;
@@ -384,7 +384,6 @@
             this.Controls.Add(label3);
             this.Controls.Add(label5);
             this.Controls.Add(this.uvPictureBox);
-            this.MaximizeBox = false;
             this.Name = "CustomModelEditor";
             this.Style = MetroFramework.MetroColorStyle.Silver;
             this.Theme = MetroFramework.MetroThemeStyle.Dark;

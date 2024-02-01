@@ -280,7 +280,7 @@ namespace PckStudio.Popups
 
             skin.SetData(Resources.classic_template, ImageFormat.Png);
 
-            using CustomModelEditor generate = new CustomModelEditor(skin);
+            using CustomSkinEditor generate = new CustomSkinEditor(skin);
 
             if (generate.ShowDialog() == DialogResult.OK)
             {
