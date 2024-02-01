@@ -99,7 +99,7 @@ namespace PckStudio.Rendering
             get => _globalModelRotation;
             set
             {
-                _globalModelRotation.X = MathHelper.Clamp(value.X, -90f, 90f);
+                _globalModelRotation.X = MathHelper.Clamp(value.X, -30f, 30f);
                 _globalModelRotation.Y = value.Y % 360f;
             }
         }
@@ -442,8 +442,6 @@ namespace PckStudio.Rendering
                     contextMenuStrip1.Show(point);
                     return true;
                 case Keys.F3:
-                    GL.PolygonMode(MaterialFace.FrontAndBack, showWireFrame ? PolygonMode.Line : PolygonMode.Fill);
-                    Refresh();
                     showWireFrame = !showWireFrame;
                     return true;
                 case Keys.R:
@@ -554,6 +552,8 @@ namespace PckStudio.Rendering
             GL.Enable(EnableCap.AlphaTest); // Enable transparent
             GL.AlphaFunc(AlphaFunction.Greater, 0.4f);
 
+            GL.PolygonMode(MaterialFace.FrontAndBack, showWireFrame ? PolygonMode.Line : PolygonMode.Fill);
+
             Matrix4 modelMatrix = Matrix4.CreateTranslation(0f, 4f, 0f) * // <- model rotation pivot point
                 Matrix4.CreateFromAxisAngle(-Vector3.UnitX, MathHelper.DegreesToRadians(GlobalModelRotation.X)) * 
                 Matrix4.CreateFromAxisAngle( Vector3.UnitY, MathHelper.DegreesToRadians(GlobalModelRotation.Y));
@@ -567,26 +567,27 @@ namespace PckStudio.Rendering
             
             if (!ANIM.GetFlag(SkinAnimFlag.STATIC_ARMS))
             {
-                armRightMatrix = Matrix4.CreateFromAxisAngle(Vector3.UnitX, MathHelper.DegreesToRadians(animationCurrentRotationAngle));
-                armLeftMatrix  = Matrix4.CreateFromAxisAngle(Vector3.UnitX, MathHelper.DegreesToRadians(-animationCurrentRotationAngle));
+                armRightMatrix = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(animationCurrentRotationAngle));
+                armLeftMatrix  = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(-animationCurrentRotationAngle));
             }
 
             if (!ANIM.GetFlag(SkinAnimFlag.STATIC_LEGS))
             {
-                legRightMatrix = Matrix4.CreateFromAxisAngle(Vector3.UnitX, MathHelper.DegreesToRadians(-animationCurrentRotationAngle));
-                legLeftMatrix  = Matrix4.CreateFromAxisAngle(Vector3.UnitX, MathHelper.DegreesToRadians(animationCurrentRotationAngle));
+                legRightMatrix = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(-animationCurrentRotationAngle));
+                legLeftMatrix  = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(animationCurrentRotationAngle));
             }
 
             if (ANIM.GetFlag(SkinAnimFlag.ZOMBIE_ARMS))
             {
-                var rotation = Matrix4.CreateFromAxisAngle(Vector3.UnitX, MathHelper.DegreesToRadians(-90f));
+                var rotation = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(-90f));
                 armRightMatrix = rotation;
                 armLeftMatrix  = rotation;
             }
 
             if (ANIM.GetFlag(SkinAnimFlag.STATUE_OF_LIBERTY))
             {
-                armRightMatrix = Matrix4.CreateFromAxisAngle(Vector3.UnitX, MathHelper.DegreesToRadians(-180f));
+                armRightMatrix = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(-180f));
+                armLeftMatrix = Matrix4.CreateRotationX(0f);
             }
 
             RenderBodyPart(new Vector3(0f, 0f, 0f), Vector3.Zero, HeadMatrix, modelMatrix, "HEAD", "HEADWEAR");
@@ -599,6 +600,7 @@ namespace PckStudio.Rendering
             if (true)
             {
                 GL.DepthFunc(DepthFunction.Lequal);
+                GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
                 _skyboxShader.Bind();
                 _skyboxTexture.Bind(1);
 
