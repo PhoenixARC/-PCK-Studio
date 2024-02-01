@@ -104,7 +104,7 @@ namespace PckStudio.Rendering
             }
         }
 
-        private Vector2 UvTranslation = new Vector2(1f / 64);
+        internal Vector2 UvTranslation { get; private set; } = new Vector2(1f / 64);
         private Size TextureSize = new Size(64, 64);
         private const float OverlayScale = 1.12f;
 
@@ -121,7 +121,7 @@ namespace PckStudio.Rendering
                     TextureSize = value.Width == value.Height ? new Size(64, 64) : new Size(64, 32);
                     UvTranslation = value.Width == value.Height ? new Vector2(1f / 64) : new Vector2(1f / 64, 1f / 32);
                     var texture = new Texture2D(value);
-                    texture.Bind(0);
+                    _skinShader.Bind();
                     _skinShader.SetUniform1("u_Texture", 0);
                     Refresh();
                 }
@@ -174,7 +174,6 @@ namespace PckStudio.Rendering
         private float animationRotationStep = 0.5f;
         private float animationMaxAngleInDegrees = 5f;
 
-#if DEBUG
         private bool showWireFrame = false;
 
         internal Matrix4 HeadMatrix { get; set; } = Matrix4.Identity;
@@ -183,7 +182,6 @@ namespace PckStudio.Rendering
         internal Matrix4 LeftArmMatrix  { get; set; } = Matrix4.CreateFromAxisAngle(Vector3.UnitZ, -25f);
         internal Matrix4 RightLegMatrix { get; set; } = Matrix4.Identity;
         internal Matrix4 LeftLegMatrix { get; set; } = Matrix4.Identity;
-#endif
 
         public SkinRenderer() : base()
         {
@@ -263,7 +261,7 @@ namespace PckStudio.Rendering
         }
 
         // TODO: calculate CameraDistance based on model size
-        private const float DefaultCameraDistance = 36f;
+        private const float DefaultCameraDistance = 64f;
         private void InitializeCamera()
         {
             camera = new PerspectiveCamera(new Vector2(0f, 5f), DefaultCameraDistance, Vector2.Zero, 60f)
@@ -338,18 +336,6 @@ namespace PckStudio.Rendering
 
             // Initialize skybox shader
             {
-                string customSkyboxFilepath = Path.Combine(Program.AppData, "cubemap.png");
-                Image skyboxImage = File.Exists(customSkyboxFilepath) 
-                    ? Image.FromFile(customSkyboxFilepath)
-                    : Resources.DefaultSkyTexture;
-
-                _skyboxShader = Shader.Create(Resources.skyboxVertexShader, Resources.skyboxFragmentShader);
-                _skyboxTexture = new CubeTexture(skyboxImage);
-                _skyboxTexture.Bind(1);
-                _skyboxShader.Bind();
-                _skyboxShader.SetUniform1("skybox", 1);
-                _skyboxShader.Validate();
-
                 Vector3[] cubeVertices = new Vector3[]
                 {
                     // front
@@ -390,15 +376,30 @@ namespace PckStudio.Rendering
                     6, 7, 3);
 
                 _skyboxRenderBuffer = new RenderBuffer(skyboxVAO, skybocIBO, PrimitiveType.Triangles);
+
                 skyboxVAO.Unbind();
                 skybocIBO.Unbind();
+
+                string customSkyboxFilepath = Path.Combine(Program.AppData, "cubemap.png");
+                Image skyboxImage = File.Exists(customSkyboxFilepath)
+                    ? Image.FromFile(customSkyboxFilepath)
+                    : Resources.DefaultSkyTexture;
+
+                _skyboxTexture = new CubeTexture(skyboxImage);
+
+                _skyboxShader = Shader.Create(Resources.skyboxVertexShader, Resources.skyboxFragmentShader);
+                _skyboxShader.Bind();
+                _skyboxShader.SetUniform1("skybox", 1);
+                _skyboxShader.Validate();
+
+                GLErrorCheck();
             }
 
             // Initialize skin shader
             {
                 _skinShader = Shader.Create(Resources.skinVertexShader, Resources.skinFragmentShader);
-                _skinShader.Validate();
                 _skinShader.Bind();
+                _skinShader.Validate();
             
                 Texture ??= Resources.classic_template;
                 RenderTexture = Texture;
@@ -440,23 +441,11 @@ namespace PckStudio.Rendering
                     var point = new Point(Parent.Location.X + Location.X, Parent.Location.Y + Location.Y);
                     contextMenuStrip1.Show(point);
                     return true;
-#if DEBUG
-                case Keys.W:
+                case Keys.F3:
                     GL.PolygonMode(MaterialFace.FrontAndBack, showWireFrame ? PolygonMode.Line : PolygonMode.Fill);
                     Refresh();
                     showWireFrame = !showWireFrame;
                     return true;
-                case Keys.F1:
-                    var fileDialog = new OpenFileDialog()
-                    {
-                        Filter = "texture|*.png",
-                    };
-                    if (fileDialog.ShowDialog() == DialogResult.OK)
-                    {
-                        Texture = Image.FromFile(fileDialog.FileName);
-                    }
-                    return true;
-#endif
                 case Keys.R:
                     GlobalModelRotation = Vector2.Zero;
                     CameraTarget = Vector2.Zero;
@@ -611,6 +600,7 @@ namespace PckStudio.Rendering
             {
                 GL.DepthFunc(DepthFunction.Lequal);
                 _skyboxShader.Bind();
+                _skyboxTexture.Bind(1);
 
                 var view = new Matrix4(new Matrix3(Matrix4.LookAt(camera.WorldPosition, camera.WorldPosition + camera.Orientation, camera.Up)))
                     * Matrix4.CreateRotationY(MathHelper.DegreesToRadians(skyboxRotation));
