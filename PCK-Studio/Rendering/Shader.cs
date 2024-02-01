@@ -133,7 +133,8 @@ namespace PckStudio.Rendering
             }
 
             var shader = new Shader(programId);
-            shader.Link();
+            bool success = shader.Link();
+            Debug.Assert(success, "Shader Program linking failed.");
             
             foreach (var shaderId in shaderIds)
             {
