@@ -37,7 +37,6 @@ namespace PckStudio.Rendering
             GL.BindVertexArray(_id);
         }
 
-        [Conditional("DEBUG")]
         public void Unbind()
         {
             GL.BindVertexArray(0);
