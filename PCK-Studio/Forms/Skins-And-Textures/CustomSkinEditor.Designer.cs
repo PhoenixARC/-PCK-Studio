@@ -34,7 +34,7 @@
             System.Windows.Forms.Label label3;
             System.Windows.Forms.Label label7;
             System.Windows.Forms.Label labelTextureMappingPreview;
-            PckStudio.Internal.SkinANIM skinANIM1 = new PckStudio.Internal.SkinANIM();
+            PckStudio.Internal.SkinANIM skinANIM2 = new PckStudio.Internal.SkinANIM();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.createToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cloneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -57,12 +57,17 @@
             this.PosZUpDown = new System.Windows.Forms.NumericUpDown();
             this.PosYUpDown = new System.Windows.Forms.NumericUpDown();
             this.PosXUpDown = new System.Windows.Forms.NumericUpDown();
-            this.modelPartListBox = new System.Windows.Forms.ListBox();
+            this.skinPartListBox = new System.Windows.Forms.ListBox();
             this.clampToViewCheckbox = new MetroFramework.Controls.MetroCheckBox();
             this.captureScreenshotButton = new MetroFramework.Controls.MetroButton();
             this.showToolsCheckBox = new MetroFramework.Controls.MetroCheckBox();
             this.renderer3D1 = new PckStudio.Rendering.SkinRenderer();
             this.uvPictureBox = new PckStudio.ToolboxItems.InterpolationPictureBox();
+            this.skinNameLabel = new MetroFramework.Controls.MetroLabel();
+            this.metroTabControl1 = new MetroFramework.Controls.MetroTabControl();
+            this.skinPartsTabPage = new System.Windows.Forms.TabPage();
+            this.skinOffsetsTabPage = new System.Windows.Forms.TabPage();
+            this.offsetListBox = new System.Windows.Forms.ListBox();
             label5 = new System.Windows.Forms.Label();
             label3 = new System.Windows.Forms.Label();
             label7 = new System.Windows.Forms.Label();
@@ -77,6 +82,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.PosYUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PosXUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uvPictureBox)).BeginInit();
+            this.metroTabControl1.SuspendLayout();
+            this.skinPartsTabPage.SuspendLayout();
+            this.skinOffsetsTabPage.SuspendLayout();
             this.SuspendLayout();
             // 
             // label5
@@ -300,15 +308,15 @@
             -2147483648});
             this.PosXUpDown.Name = "PosXUpDown";
             // 
-            // modelPartListBox
+            // skinPartListBox
             // 
-            this.modelPartListBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.modelPartListBox.ContextMenuStrip = this.contextMenuStrip1;
-            this.modelPartListBox.FormattingEnabled = true;
-            resources.ApplyResources(this.modelPartListBox, "modelPartListBox");
-            this.modelPartListBox.Name = "modelPartListBox";
-            this.modelPartListBox.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
-            this.modelPartListBox.DoubleClick += new System.EventHandler(this.listBox1_DoubleClick);
+            this.skinPartListBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.skinPartListBox.ContextMenuStrip = this.contextMenuStrip1;
+            resources.ApplyResources(this.skinPartListBox, "skinPartListBox");
+            this.skinPartListBox.FormattingEnabled = true;
+            this.skinPartListBox.Name = "skinPartListBox";
+            this.skinPartListBox.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
+            this.skinPartListBox.DoubleClick += new System.EventHandler(this.listBox1_DoubleClick);
             // 
             // clampToViewCheckbox
             // 
@@ -337,10 +345,11 @@
             // renderer3D1
             // 
             resources.ApplyResources(this.renderer3D1, "renderer3D1");
-            this.renderer3D1.ANIM = skinANIM1;
+            this.renderer3D1.ANIM = skinANIM2;
             this.renderer3D1.BackColor = System.Drawing.Color.DimGray;
             this.renderer3D1.ClampModel = false;
             this.renderer3D1.Name = "renderer3D1";
+            this.renderer3D1.RefreshRate = 50;
             this.renderer3D1.Texture = null;
             this.renderer3D1.VSync = true;
             this.renderer3D1.TextureChanging += new System.EventHandler<PckStudio.Rendering.TextureChangingEventArgs>(this.renderer3D1_TextureChanging);
@@ -353,14 +362,50 @@
             this.uvPictureBox.Name = "uvPictureBox";
             this.uvPictureBox.TabStop = false;
             // 
-            // CustomModelEditor
+            // skinNameLabel
+            // 
+            resources.ApplyResources(this.skinNameLabel, "skinNameLabel");
+            this.skinNameLabel.Name = "skinNameLabel";
+            this.skinNameLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
+            // 
+            // metroTabControl1
+            // 
+            resources.ApplyResources(this.metroTabControl1, "metroTabControl1");
+            this.metroTabControl1.Controls.Add(this.skinPartsTabPage);
+            this.metroTabControl1.Controls.Add(this.skinOffsetsTabPage);
+            this.metroTabControl1.Name = "metroTabControl1";
+            this.metroTabControl1.SelectedIndex = 0;
+            this.metroTabControl1.Style = MetroFramework.MetroColorStyle.Pink;
+            this.metroTabControl1.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.metroTabControl1.UseSelectable = true;
+            // 
+            // skinPartsTabPage
+            // 
+            resources.ApplyResources(this.skinPartsTabPage, "skinPartsTabPage");
+            this.skinPartsTabPage.Controls.Add(this.skinPartListBox);
+            this.skinPartsTabPage.Name = "skinPartsTabPage";
+            // 
+            // skinOffsetsTabPage
+            // 
+            this.skinOffsetsTabPage.Controls.Add(this.offsetListBox);
+            resources.ApplyResources(this.skinOffsetsTabPage, "skinOffsetsTabPage");
+            this.skinOffsetsTabPage.Name = "skinOffsetsTabPage";
+            // 
+            // offsetListBox
+            // 
+            resources.ApplyResources(this.offsetListBox, "offsetListBox");
+            this.offsetListBox.FormattingEnabled = true;
+            this.offsetListBox.Name = "offsetListBox";
+            // 
+            // CustomSkinEditor
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.metroTabControl1);
+            this.Controls.Add(this.skinNameLabel);
             this.Controls.Add(this.showToolsCheckBox);
             this.Controls.Add(this.captureScreenshotButton);
             this.Controls.Add(this.clampToViewCheckbox);
-            this.Controls.Add(this.modelPartListBox);
             this.Controls.Add(this.renderer3D1);
             this.Controls.Add(this.PosZUpDown);
             this.Controls.Add(this.PosYUpDown);
@@ -384,7 +429,7 @@
             this.Controls.Add(label3);
             this.Controls.Add(label5);
             this.Controls.Add(this.uvPictureBox);
-            this.Name = "CustomModelEditor";
+            this.Name = "CustomSkinEditor";
             this.Style = MetroFramework.MetroColorStyle.Silver;
             this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.generateModel_FormClosing);
@@ -398,6 +443,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.PosYUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PosXUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uvPictureBox)).EndInit();
+            this.metroTabControl1.ResumeLayout(false);
+            this.skinPartsTabPage.ResumeLayout(false);
+            this.skinOffsetsTabPage.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -428,9 +476,14 @@
         private System.Windows.Forms.NumericUpDown PosYUpDown;
         private System.Windows.Forms.NumericUpDown PosXUpDown;
         private Rendering.SkinRenderer renderer3D1;
-        private System.Windows.Forms.ListBox modelPartListBox;
+        private System.Windows.Forms.ListBox skinPartListBox;
         private MetroFramework.Controls.MetroCheckBox clampToViewCheckbox;
         private MetroFramework.Controls.MetroButton captureScreenshotButton;
         private MetroFramework.Controls.MetroCheckBox showToolsCheckBox;
+        private MetroFramework.Controls.MetroLabel skinNameLabel;
+        private MetroFramework.Controls.MetroTabControl metroTabControl1;
+        private System.Windows.Forms.TabPage skinPartsTabPage;
+        private System.Windows.Forms.TabPage skinOffsetsTabPage;
+        private System.Windows.Forms.ListBox offsetListBox;
     }
 }

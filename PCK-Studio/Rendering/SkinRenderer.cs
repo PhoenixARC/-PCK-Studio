@@ -80,7 +80,8 @@ namespace PckStudio.Rendering
         }
 
         public ObservableCollection<SkinBOX> ModelData { get; }
-
+        public ReadOnlyDictionary<string, float> PartOffsets => new ReadOnlyDictionary<string, float>(partOffset);
+    
         /// <summary>
         /// Captures the currently displayed frame
         /// </summary>
@@ -190,12 +191,12 @@ namespace PckStudio.Rendering
 
         private bool showWireFrame = false;
 
-        internal Matrix4 HeadMatrix { get; set; } = Matrix4.Identity;
-        internal Matrix4 BodyMatrix { get; set; } = Matrix4.Identity;
-        internal Matrix4 RightArmMatrix { get; set; } = Matrix4.CreateFromAxisAngle(Vector3.UnitZ,  25f);
-        internal Matrix4 LeftArmMatrix  { get; set; } = Matrix4.CreateFromAxisAngle(Vector3.UnitZ, -25f);
-        internal Matrix4 RightLegMatrix { get; set; } = Matrix4.Identity;
-        internal Matrix4 LeftLegMatrix { get; set; } = Matrix4.Identity;
+        private Matrix4 HeadMatrix { get; set; } = Matrix4.Identity;
+        private Matrix4 BodyMatrix { get; set; } = Matrix4.Identity;
+        private Matrix4 RightArmMatrix { get; set; } = Matrix4.CreateFromAxisAngle(Vector3.UnitZ,  25f);
+        private Matrix4 LeftArmMatrix  { get; set; } = Matrix4.CreateFromAxisAngle(Vector3.UnitZ, -25f);
+        private Matrix4 RightLegMatrix { get; set; } = Matrix4.Identity;
+        private Matrix4 LeftLegMatrix { get; set; } = Matrix4.Identity;
 
         public SkinRenderer() : base()
         {
@@ -257,7 +258,7 @@ namespace PckStudio.Rendering
             };
         }
 
-        public void SetPartOffset(ModelOffset offset)
+        public void SetPartOffset(SkinPartOffset offset)
         {
             SetPartOffset(offset.Name, offset.Value);
         }
@@ -739,7 +740,7 @@ namespace PckStudio.Rendering
             animationCurrentRotationAngle += animationRotationStep;
             if (animationCurrentRotationAngle >= animationMaxAngleInDegrees || animationCurrentRotationAngle <= -animationMaxAngleInDegrees)
                 animationRotationStep = -animationRotationStep;
-            }
+        }
 
         private void ReInitialzeSkinData()
         {

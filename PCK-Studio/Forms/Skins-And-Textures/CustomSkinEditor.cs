@@ -25,13 +25,14 @@ namespace PckStudio.Forms
 
         private PckFileData _file;
 
+        private BindingSource skinPartListBindingSource;
+        private BindingSource skinOffsetListBindingSource;
+
         private static GraphicsConfig _graphicsConfig = new GraphicsConfig()
         {
             InterpolationMode = InterpolationMode.NearestNeighbor,
             PixelOffsetMode = PixelOffsetMode.HighQuality,
         };
-
-        List<ModelOffset> modelOffsets = new List<ModelOffset>();
 
         public CustomSkinEditor(PckFileData file)
         {
@@ -50,15 +51,23 @@ namespace PckStudio.Forms
         {
             renderer3D1.ANIM = properties.GetPropertyValue("ANIM", SkinANIM.FromString);
             var boxProperties = properties.GetProperties("BOX");
+            var offsetProperties = properties.GetProperties("OFFSETS");
+
+            skinNameLabel.Text = properties.HasProperty("DISPLAYNAME") ? properties.GetPropertyValue("DISPLAYNAME") : "";
 
             Array.ForEach(boxProperties, kv => renderer3D1.ModelData.Add(SkinBOX.FromString(kv.Value)));
+            Array.ForEach(offsetProperties, kv => renderer3D1.SetPartOffset(SkinPartOffset.FromString(kv.Value)));
 
-            modelPartListBox.DataSource = renderer3D1.ModelData;
-            modelPartListBox.DisplayMember = "Type";
+            skinPartListBindingSource = new BindingSource(renderer3D1.ModelData, null);
+            skinPartListBox.DataSource = skinPartListBindingSource;
+            skinPartListBox.DisplayMember = "Type";
 
-            Array.ForEach(properties.GetProperties("OFFSET"), kv => renderer3D1.SetPartOffset(ModelOffset.FromString(kv.Value)));
+            skinOffsetListBindingSource = new BindingSource(renderer3D1.PartOffsets, null);
+            offsetListBox.DataSource = skinOffsetListBindingSource;
+            //offsetListBox.DisplayMember = ""
         }
 
+        // TODO
         private void GenerateUVTextureMap()
         {
             Random rng = new Random();
@@ -90,22 +99,22 @@ namespace PckStudio.Forms
         {
             var boxEditor = new BoxEditor(SkinBOX.Empty, false);
             if (boxEditor.ShowDialog() == DialogResult.OK)
+            {
                 renderer3D1.ModelData.Add(boxEditor.Result);
+                skinPartListBindingSource.ResetBindings(false);
+            }
         }
 
-        //Export Current Skin Texture
         private void buttonEXPORT_Click(object sender, EventArgs e)
         {
-            Bitmap bitmap = new Bitmap(uvPictureBox.BackgroundImage, 64, 64);
             using SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "PNG Image Files | *.png";
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                bitmap.Save(saveFileDialog.FileName, ImageFormat.Png);
+                uvPictureBox.BackgroundImage.Save(saveFileDialog.FileName, ImageFormat.Png);
             }
         }
 
-        //Imports Skin Texture
         private void buttonIMPORT_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -116,15 +125,7 @@ namespace PckStudio.Forms
             {
                 using (var img = Image.FromFile(openFileDialog.FileName))
 				{
-                    if (img.Width == img.Height || img.Height == img.Width / 2)
-                    {
-                        generateTextureCheckBox.Checked = false;
-                        renderer3D1.Texture = img;
-                    }
-                    else
-					{
-                        MessageBox.Show(this, "Not a valid skin file", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                    renderer3D1.Texture = img;
                 }
             }
         }
@@ -187,22 +188,25 @@ namespace PckStudio.Forms
                     var UvY = reader.ReadLine();
                     renderer3D1.ModelData.Add(SkinBOX.FromString($"{part} {PosX} {PosY} {PosZ} {SizeX} {SizeY} {SizeZ} {UvX} {UvY}"));
                 }
+                skinPartListBindingSource.ResetBindings(false);
             }
         }
 
         private void cloneToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (modelPartListBox.SelectedItem is SkinBOX box)
+            if (skinPartListBox.SelectedItem is SkinBOX box)
             {
                 renderer3D1.ModelData.Add((SkinBOX)box.Clone());
+                skinPartListBindingSource.ResetBindings(false);
             }
         }
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (modelPartListBox.SelectedItem is SkinBOX box)
+            if (skinPartListBox.SelectedItem is SkinBOX box)
             {
                 renderer3D1.ModelData.Remove(box);
+                skinPartListBindingSource.ResetBindings(false);
             }
         }
 
@@ -214,17 +218,6 @@ namespace PckStudio.Forms
                 return;
             }
             e.Cancel = false;*/
-        }
-
-        //Del stuff using key
-        private void delStuffUsingDelKey(object sender, KeyEventArgs e)
-        {
-            //if (e.KeyCode == Keys.Delete && listViewBoxes.SelectedItems.Count != 0 &&
-            //    listViewBoxes.SelectedItems[0].Tag is SkinBOX part)
-            //{
-            //    if (modelBoxes.Remove(part))
-            //        listViewBoxes.SelectedItems[0].Remove();
-            //}
         }
 
         private void OpenJSONButton_Click(object sender, EventArgs e)
@@ -320,35 +313,36 @@ namespace PckStudio.Forms
                 MessageBox.Show("Invalid image dimensions.", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            generateTextureCheckBox.Checked = false;
             uvPictureBox.BackgroundImage = img;
         }
 
         private void listBox1_DoubleClick(object sender, EventArgs e)
         {
-            if (modelPartListBox.SelectedItem is SkinBOX box)
+            if (skinPartListBox.SelectedItem is SkinBOX box)
             {
                 var boxEditor = new BoxEditor(box, false);
                 if (boxEditor.ShowDialog() == DialogResult.OK)
                 {
-                    renderer3D1.ModelData[modelPartListBox.SelectedIndex] = boxEditor.Result;
-                    modelPartListBox.Update();
+                    renderer3D1.ModelData[skinPartListBox.SelectedIndex] = boxEditor.Result;
+                    skinPartListBindingSource.ResetItem(skinPartListBox.SelectedIndex);
                 }
             }
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (modelPartListBox.SelectedItem is SkinBOX box)
+            if (skinPartListBox.SelectedItem is SkinBOX box)
             {
                 int scale = 3;
                 uvPictureBox.Image = new Bitmap(uvPictureBox.BackgroundImage.Width * scale, uvPictureBox.BackgroundImage.Height * scale);
                 using (Graphics g = Graphics.FromImage(uvPictureBox.Image))
                 {
-                    float penWidth = renderer3D1.UvTranslation.X * uvPictureBox.BackgroundImage.Width + renderer3D1.UvTranslation.Y * uvPictureBox.BackgroundImage.Height / 2f;
+                    float penWidth = uvPictureBox.BackgroundImage.Width / renderer3D1.TextureSize.Width + uvPictureBox.BackgroundImage.Height / renderer3D1.TextureSize.Height / 2f;
                     GraphicsPath graphicsPath = box.GetUVGraphicsPath(
                         new System.Numerics.Vector2(
-                            scale * renderer3D1.UvTranslation.X * uvPictureBox.BackgroundImage.Width,
-                            scale * renderer3D1.UvTranslation.Y * uvPictureBox.BackgroundImage.Height
+                            scale * (1f / renderer3D1.TextureSize.Width) * uvPictureBox.BackgroundImage.Width,
+                            scale * (1f / renderer3D1.TextureSize.Height) * uvPictureBox.BackgroundImage.Height
                             )
                         );
                     g.DrawPath(new Pen(Color.HotPink, penWidth), graphicsPath);

@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 
 namespace PckStudio.Internal
 {
-    internal readonly struct ModelOffset
+    internal readonly struct SkinPartOffset
     {
         private static readonly Regex sWhitespace = new Regex(@"\s+");
         internal static string ReplaceWhitespace(string input, string replacement)
@@ -24,12 +24,19 @@ namespace PckStudio.Internal
             "ARM1",
             "LEG0",
             "LEG1",
+            "PANTS0",
+            "PANTS1",
+            "BOOTS0",
+            "BOOTS1",
 
             // Armor Offsets
             "HELMET",
-            "CHEST", "BODYARMOR",
-            "SHOULDER0", "ARMARMOR0",
-            "SHOULDER1", "ARMARMOR1",
+            "CHEST",
+            "BODYARMOR",
+            "SHOULDER0",
+            "SHOULDER1",
+            "ARMARMOR0",
+            "ARMARMOR1",
             "BELT",
             "LEGGING0",
             "LEGGING1",
@@ -43,13 +50,13 @@ namespace PckStudio.Internal
         public readonly string Name;
         public readonly float Value;
 
-        public ModelOffset(string name, float value)
+        public SkinPartOffset(string name, float value)
         {
             Name = name;
             Value = value;
         }
 
-        public static ModelOffset FromString(string offsetFormatString)
+        public static SkinPartOffset FromString(string offsetFormatString)
         {
             string[] offset = ReplaceWhitespace(offsetFormatString.TrimEnd('\n', '\r', ' '), ",").Split(',');
             if (offset.Length < 3)
@@ -59,7 +66,7 @@ namespace PckStudio.Internal
 
             if (!ValidModelOffsetTypes.Contains(name))
             {
-                Debug.WriteLine($"'{name}' is an invalid offset type.");
+                Debug.WriteLine($"'{name}' is an invalid offset type.", category: nameof(SkinPartOffset));
             }
 
             // Ignore => Y assumed
@@ -67,9 +74,9 @@ namespace PckStudio.Internal
 
             if (!float.TryParse(offset[2], out float value))
             {
-                Debug.WriteLine($"Failed to parse y offset for: '{name}'");
+                Debug.WriteLine($"Failed to parse y offset for: '{name}'", category: nameof(SkinPartOffset));
             }
-            return new ModelOffset(name, value);
+            return new SkinPartOffset(name, value);
         }
 
         public (string, string) ToProperty()
