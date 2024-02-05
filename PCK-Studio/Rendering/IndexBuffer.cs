@@ -11,11 +11,11 @@ namespace PckStudio.Rendering
     internal class IndexBuffer : IDisposable
     {
         private int _id;
-        private List<uint> _indecies;
+        private List<int> _indecies;
 
-        public IndexBuffer(params uint[] indecies)
+        public IndexBuffer(params int[] indecies)
         {
-            _indecies = new List<uint>(indecies);
+            _indecies = new List<int>(indecies);
         }
 
         /// <summary>
@@ -23,7 +23,7 @@ namespace PckStudio.Rendering
         /// </summary>
         /// <param name="indecies"></param>
         /// <returns></returns>
-        public static IndexBuffer Create(params uint[] indecies)
+        public static IndexBuffer Create(params int[] indecies)
         {
             var ib = new IndexBuffer(indecies);
             ib.Attach();
@@ -34,7 +34,7 @@ namespace PckStudio.Rendering
         {
             _id = GL.GenBuffer();
             Bind();
-            GL.BufferData(BufferTarget.ElementArrayBuffer, _indecies.Count * sizeof(uint), _indecies.ToArray(), BufferUsageHint.StaticDraw);
+            GL.BufferData(BufferTarget.ElementArrayBuffer, _indecies.Count * sizeof(int), _indecies.ToArray(), BufferUsageHint.StaticDraw);
         }
 
         public int GetCount() => _indecies.Count;

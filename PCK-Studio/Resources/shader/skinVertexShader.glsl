@@ -7,11 +7,14 @@ layout(location = 2) in float scale;
 uniform mat4 u_ViewProjection;
 uniform mat4 u_Model;
 
-out vec2 v_TexCoord;
+out geometryData
+{
+	vec2 TexCoord;
+} dataOut;
 
 void main()
 {
-	v_TexCoord = texCoord;
+	dataOut.TexCoord = texCoord;
 	vec4 scaledVertex = scale * vertexPosition;
 	vec4 invertedVertex = vec4(scaledVertex.x, scaledVertex.y * -1.0, scaledVertex.z * -1.0, 1.0);
 	gl_Position = u_ViewProjection * u_Model * invertedVertex;

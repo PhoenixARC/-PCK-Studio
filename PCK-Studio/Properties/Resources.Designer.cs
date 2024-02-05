@@ -586,6 +586,34 @@ namespace PckStudio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to #version 330 core
+        ///
+        ///layout (triangles) in;
+        ///layout (triangle_strips, max_vertices = 3) out;
+        ///
+        ///uniform mat4 u_ViewProjection;
+        ///uniform mat4 u_Model;
+        ///
+        ///out vec2 v_TexCoord;
+        ///
+        ///in geometry_data
+        ///{
+        ///	vec2 texCoord;
+        ///	vec2 texSize;
+        ///} dataIn[];
+        ///
+        ///void main()
+        ///{
+        ///	gl_Position = gl_in.gl_Position;
+        ///};.
+        /// </summary>
+        public static string skinGeometryShader {
+            get {
+                return ResourceManager.GetString("skinGeometryShader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap SKINS_ICON {
@@ -604,16 +632,20 @@ namespace PckStudio.Properties {
         ///
         ///uniform mat4 u_ViewProjection;
         ///uniform mat4 u_Model;
+        ///uniform vec2 u_TexSize;
         ///
-        ///out vec2 v_TexCoord;
+        ///out geometry_data
+        ///{
+        ///	vec2 TexCoord;
+        ///	vec2 TexSize;
+        ///} dataOut;
         ///
         ///void main()
         ///{
-        ///	v_TexCoord = texCoord;
+        ///	dataOut.TexCoord = texCoord;
+        ///	dataOut.TexSize = u_TexSize;
         ///	vec4 scaledVertex = scale * vertexPosition;
-        ///	vec4 invertedVertex = vec4(scaledVertex.x, scaledVertex.y * -1.0, scaledVertex.z * -1.0, 1.0);
-        ///	gl_Position = u_ViewProjection * u_Model * invertedVertex;
-        ///};.
+        ///	vec4 invertedVertex = vec4(scaledVertex.x, scaledVertex.y * -1.0, scaledVertex.z * -1.0,  [rest of string was truncated]&quot;;.
         /// </summary>
         public static string skinVertexShader {
             get {

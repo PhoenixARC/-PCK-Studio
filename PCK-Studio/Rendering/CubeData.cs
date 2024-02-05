@@ -26,10 +26,6 @@ namespace PckStudio.Rendering
 {
     internal class CubeData
     {
-        internal delegate void RefAction<T>(ref T val);
-
-        internal const int vertexCountPerCube = 24;
-
         internal bool ShouldRender { get; set; } = true;
         
         internal Vector3 Position
@@ -122,19 +118,25 @@ namespace PckStudio.Rendering
         private bool _mirrorTexture = false;
         private bool _flipZMapping = false;
 
-        private static uint[] indicesData = [
+        private static int[] indicesData = [
                     // Face 1 (Back)
-                    0,  1,  2,  3,
+                     0,  1,  2,
+                     2,  3,  0,
                     // Face 2 (Front)
-                    4,  5,  6,  7,
+                     4,  5,  6,
+                     6,  7,  4,
                     // Face 3 (Top)
-                    8,  9, 10, 11,
+                     8,  9, 10,
+                    10, 11,  8,
                     // Face 4 (Bottom)
-                    12, 13, 14, 15,
+                    12, 13, 14,
+                    14, 15, 12,
                     // Face 5 (Left)
-                    16, 17, 18, 19,
+                    16, 17, 18,
+                    18, 19, 16,
                     // Face 6 (Right)
-                    20, 21, 22, 23,
+                    20, 21, 22, 
+                    22, 23, 20
             ];
 
         private TextureVertex[] vertices;
@@ -174,16 +176,6 @@ namespace PckStudio.Rendering
         {
         }
 
-        internal enum CubeFace
-        {
-            Back,
-            Front,
-            Top,
-            Bottom,
-            Left,
-            Right,
-        }
-
         private static TextureVertex[] GetCubeVertexData(Vector3 position, Vector3 size, Vector2 uv, float scale,
             bool mirrorTexture, bool flipZMapping)
         {
@@ -193,50 +185,50 @@ namespace PckStudio.Rendering
             var back = new TextureVertex[]
             {
                 // Back
-                new TextureVertex(new Vector3(position.X, size.Y + position.Y, size.Z + position.Z), new Vector2(uv.X + size.Z * 2 + size.X + size.X * (1 - mirror), uv.Y + size.Z + size.Y), scale),
+                new TextureVertex(new Vector3(         position.X, size.Y + position.Y, size.Z + position.Z), new Vector2(uv.X + size.Z * 2 + size.X + size.X * (1 - mirror), uv.Y + size.Z + size.Y), scale),
                 new TextureVertex(new Vector3(size.X + position.X, size.Y + position.Y, size.Z + position.Z), new Vector2(uv.X + size.Z * 2 + size.X + size.X * mirror, uv.Y + size.Z + size.Y), scale),
-                new TextureVertex(new Vector3(size.X + position.X, position.Y, size.Z + position.Z), new Vector2(uv.X + size.Z * 2 + size.X + size.X * mirror, uv.Y + size.Z), scale),
-                new TextureVertex(new Vector3(position.X, position.Y, size.Z + position.Z), new Vector2(uv.X + size.Z * 2 + size.X + size.X * (1 - mirror), uv.Y + size.Z), scale)
+                new TextureVertex(new Vector3(size.X + position.X,          position.Y, size.Z + position.Z), new Vector2(uv.X + size.Z * 2 + size.X + size.X * mirror, uv.Y + size.Z), scale),
+                new TextureVertex(new Vector3(         position.X,          position.Y, size.Z + position.Z), new Vector2(uv.X + size.Z * 2 + size.X + size.X * (1 - mirror), uv.Y + size.Z), scale)
             };
             var front = new TextureVertex[]
             {
                 // Front
-                new TextureVertex(new Vector3(position.X, size.Y + position.Y, position.Z), new Vector2(uv.X + size.Z + size.X * mirror, uv.Y + size.Z + size.Y), scale),
+                new TextureVertex(new Vector3(         position.X, size.Y + position.Y, position.Z), new Vector2(uv.X + size.Z + size.X * mirror, uv.Y + size.Z + size.Y), scale),
                 new TextureVertex(new Vector3(size.X + position.X, size.Y + position.Y, position.Z), new Vector2(uv.X + size.Z + size.X * (1 - mirror), uv.Y + size.Z + size.Y), scale),
-                new TextureVertex(new Vector3(size.X + position.X, position.Y, position.Z), new Vector2(uv.X + size.Z + size.X * (1 - mirror), uv.Y + size.Z), scale),
-                new TextureVertex(new Vector3(position.X, position.Y, position.Z), new Vector2(uv.X + size.Z + size.X * mirror, uv.Y + size.Z), scale),
+                new TextureVertex(new Vector3(size.X + position.X,          position.Y, position.Z), new Vector2(uv.X + size.Z + size.X * (1 - mirror), uv.Y + size.Z), scale),
+                new TextureVertex(new Vector3(         position.X,          position.Y, position.Z), new Vector2(uv.X + size.Z + size.X * mirror, uv.Y + size.Z), scale),
             };
             var top = new TextureVertex[]
             {
                 // Top
-                new TextureVertex(new Vector3(position.X, position.Y, position.Z), new Vector2(uv.X + size.Z + size.X * mirror, uv.Y + size.Z), scale),
-                new TextureVertex(new Vector3(position.X, position.Y, size.Z + position.Z), new Vector2(uv.X + size.Z + size.X * mirror, uv.Y), scale),
+                new TextureVertex(new Vector3(         position.X, position.Y,          position.Z), new Vector2(uv.X + size.Z + size.X * mirror, uv.Y + size.Z), scale),
+                new TextureVertex(new Vector3(         position.X, position.Y, size.Z + position.Z), new Vector2(uv.X + size.Z + size.X * mirror, uv.Y), scale),
                 new TextureVertex(new Vector3(size.X + position.X, position.Y, size.Z + position.Z), new Vector2(uv.X + size.Z + size.X * (1 - mirror), uv.Y), scale),
-                new TextureVertex(new Vector3(size.X + position.X, position.Y, position.Z), new Vector2(uv.X + size.Z + size.X * (1 - mirror), uv.Y + size.Z), scale),
+                new TextureVertex(new Vector3(size.X + position.X, position.Y,          position.Z), new Vector2(uv.X + size.Z + size.X * (1 - mirror), uv.Y + size.Z), scale),
             };
             var bottom = new TextureVertex[]
             {
                 // Bottom
-                new TextureVertex(new Vector3(position.X + size.X, size.Y + position.Y, position.Z), new Vector2(uv.X + size.Z + size.X + size.X * (1 - mirror), uv.Y + (flipZMapping ? size.Z : 0)), scale),
+                new TextureVertex(new Vector3(position.X + size.X, size.Y + position.Y,          position.Z), new Vector2(uv.X + size.Z + size.X + size.X * (1 - mirror), uv.Y + (flipZMapping ? size.Z : 0)), scale),
                 new TextureVertex(new Vector3(position.X + size.X, size.Y + position.Y, size.Z + position.Z), new Vector2(uv.X + size.Z + size.X + size.X * (1 - mirror), uv.Y + (!flipZMapping ? size.Z : 0)), scale),
-                new TextureVertex(new Vector3(position.X, size.Y + position.Y, size.Z + position.Z), new Vector2(uv.X + size.Z + size.X + size.X * mirror, uv.Y + (!flipZMapping ? size.Z : 0)), scale),
-                new TextureVertex(new Vector3(position.X, size.Y + position.Y, position.Z), new Vector2(uv.X + size.Z + size.X + size.X * mirror, uv.Y + (flipZMapping ? size.Z : 0)), scale),
+                new TextureVertex(new Vector3(position.X         , size.Y + position.Y, size.Z + position.Z), new Vector2(uv.X + size.Z + size.X + size.X * mirror, uv.Y + (!flipZMapping ? size.Z : 0)), scale),
+                new TextureVertex(new Vector3(position.X         , size.Y + position.Y,          position.Z), new Vector2(uv.X + size.Z + size.X + size.X * mirror, uv.Y + (flipZMapping ? size.Z : 0)), scale),
             };
             var left = new TextureVertex[]
             {
                 // Left
-                new TextureVertex(new Vector3((1 - mirror) * size.X + position.X, position.Y, position.Z), new Vector2(uv.X + size.X + size.Z, uv.Y + size.Z), scale),
-                new TextureVertex(new Vector3((1 - mirror) * size.X + position.X, size.Y + position.Y, position.Z), new Vector2(uv.X + size.X + size.Z, uv.Y + size.Z + size.Y), scale),
+                new TextureVertex(new Vector3((1 - mirror) * size.X + position.X,          position.Y,          position.Z), new Vector2(uv.X + size.X + size.Z, uv.Y + size.Z), scale),
+                new TextureVertex(new Vector3((1 - mirror) * size.X + position.X, size.Y + position.Y,          position.Z), new Vector2(uv.X + size.X + size.Z, uv.Y + size.Z + size.Y), scale),
                 new TextureVertex(new Vector3((1 - mirror) * size.X + position.X, size.Y + position.Y, size.Z + position.Z), new Vector2(uv.X + size.X + size.Z * 2, uv.Y + size.Z + size.Y), scale),
-                new TextureVertex(new Vector3((1 - mirror) * size.X + position.X, position.Y, size.Z + position.Z), new Vector2(uv.X + size.X + size.Z * 2, uv.Y + size.Z), scale),
+                new TextureVertex(new Vector3((1 - mirror) * size.X + position.X,          position.Y, size.Z + position.Z), new Vector2(uv.X + size.X + size.Z * 2, uv.Y + size.Z), scale),
             };
             var right = new TextureVertex[]
             {
                 // Right
-                new TextureVertex(new Vector3(mirror * size.X + position.X, position.Y, position.Z), new Vector2(uv.X + size.Z, uv.Y + size.Z), scale),
-                new TextureVertex(new Vector3(mirror * size.X + position.X, size.Y + position.Y, position.Z), new Vector2(uv.X + size.Z, uv.Y + size.Z + size.Y), scale),
+                new TextureVertex(new Vector3(mirror * size.X + position.X,          position.Y,          position.Z), new Vector2(uv.X + size.Z, uv.Y + size.Z), scale),
+                new TextureVertex(new Vector3(mirror * size.X + position.X, size.Y + position.Y,          position.Z), new Vector2(uv.X + size.Z, uv.Y + size.Z + size.Y), scale),
                 new TextureVertex(new Vector3(mirror * size.X + position.X, size.Y + position.Y, size.Z + position.Z), new Vector2(uv.X, uv.Y + size.Z + size.Y), scale),
-                new TextureVertex(new Vector3(mirror * size.X + position.X, position.Y, size.Z + position.Z), new Vector2(uv.X, uv.Y + size.Z), scale),
+                new TextureVertex(new Vector3(mirror * size.X + position.X,          position.Y, size.Z + position.Z), new Vector2(uv.X, uv.Y + size.Z), scale),
             };
             
             vertices.AddRange(back);
@@ -254,43 +246,9 @@ namespace PckStudio.Rendering
             return vertices;
         }
 
-        internal Vector2[] GetMappedFaceTextureUv(CubeFace face)
-        {
-            var indices = GetIndices();
-            var faceInices = indices.Skip((int)face * 4).Take(4).ToArray();
-            var vertices = GetVertices();
-            var uv0 = vertices[faceInices[0]].TexPosition;
-            var uv1 = vertices[faceInices[1]].TexPosition;
-            var uv2 = vertices[faceInices[2]].TexPosition;
-            var uv3 = vertices[faceInices[3]].TexPosition;
-            return [uv0, uv1, uv2, uv3];
-        }
-
-        internal uint[] GetIndices()
+        internal int[] GetIndices()
         {
             return indicesData;
-        }
-
-        internal void SetFaceUv(CubeFace face, RefAction<Vector2> refAction)
-        {
-            var indices = GetIndices();
-            var faceInices = indices.Skip((int)face * 4).Take(4).ToArray();
-            var vertices = GetVertices();
-            var uv0 = vertices[faceInices[0]].TexPosition;
-            refAction(ref uv0);
-            vertices[faceInices[0]].TexPosition = uv0;
-            
-            var uv1 = vertices[faceInices[1]].TexPosition;
-            refAction(ref uv1);
-            vertices[faceInices[1]].TexPosition = uv1;
-            
-            var uv2 = vertices[faceInices[2]].TexPosition;
-            refAction(ref uv2);
-            vertices[faceInices[2]].TexPosition = uv2;
-
-            var uv3 = vertices[faceInices[3]].TexPosition;
-            refAction(ref uv3);
-            vertices[faceInices[3]].TexPosition = uv3;
         }
     }
 }

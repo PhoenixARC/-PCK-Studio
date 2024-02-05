@@ -36,9 +36,9 @@ namespace PckStudio.Rendering.Texture
 
             SetTexParameter(TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Nearest);
             SetTexParameter(TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
-
-            SetTexParameter(TextureParameterName.TextureWrapS, (int)TextureWrapMode.ClampToBorder);
-            SetTexParameter(TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToBorder);
+           
+            SetTexParameter(TextureParameterName.TextureWrapS, (int)TextureWrapMode.Repeat);
+            SetTexParameter(TextureParameterName.TextureWrapT, (int)TextureWrapMode.Repeat);
             
             var data = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba8, bitmap.Width, bitmap.Height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, data.Scan0);

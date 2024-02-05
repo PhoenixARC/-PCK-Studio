@@ -35,24 +35,10 @@ namespace PckStudio.Rendering
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.moveTimer = new System.Windows.Forms.Timer(this.components);
-            this.animationTimer = new System.Windows.Forms.Timer(this.components);
             this.reToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // moveTimer
-            // 
-            this.moveTimer.Enabled = true;
-            this.moveTimer.Interval = 1;
-            this.moveTimer.Tick += new System.EventHandler(this.moveTimer_Tick);
-            // 
-            // animationTimer
-            // 
-            this.animationTimer.Enabled = true;
-            this.animationTimer.Interval = 50;
-            this.animationTimer.Tick += new System.EventHandler(this.animationTimer_Tick);
             // 
             // reToolStripMenuItem
             // 
@@ -76,9 +62,6 @@ namespace PckStudio.Rendering
             this.ResumeLayout(false);
 
         }
-
-        private System.Windows.Forms.Timer moveTimer;
-        private System.Windows.Forms.Timer animationTimer;
         private System.Windows.Forms.ToolStripMenuItem reToolStripMenuItem;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
     }

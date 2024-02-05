@@ -18,7 +18,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
 using System.Linq;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
@@ -33,7 +32,7 @@ namespace PckStudio.Rendering
 
         internal float Scale { get; set; } = 1f;
 
-        internal CubeRenderGroup(string name) : base(name, PrimitiveType.Quads)
+        internal CubeRenderGroup(string name) : base(name, PrimitiveType.Triangles)
         {
             cubes = new List<CubeData>(5);
         }
@@ -65,23 +64,12 @@ namespace PckStudio.Rendering
             {
                 if (!cube.ShouldRender)
                     continue;
-                
-                vertices.AddRange(cube.GetVertices());
+
+                TextureVertex[] cubeVertices = cube.GetVertices();
+                vertices.AddRange(cubeVertices);
                 var indexStorage = cube.GetIndices();
                 indices.AddRange(indexStorage.Select(n => n + indicesOffset));
-                indicesOffset += CubeData.vertexCountPerCube;
-            }
-        }
-
-        private void CheckAndFixUVFaveMapping(CubeData cube, CubeData.CubeFace face, Size textureSize)
-        {
-            if (cube.GetMappedFaceTextureUv(face).All(texVert => texVert.X >= textureSize.Width))
-            {
-                CubeData.RefAction<Vector2> fixUV = (ref Vector2 uv) =>
-                {
-                    uv.X %= textureSize.Width;
-                };
-                cube.SetFaceUv(face, fixUV);
+                indicesOffset += cubeVertices.Length;
             }
         }
 
@@ -112,22 +100,6 @@ namespace PckStudio.Rendering
 
             cubes[index].ShouldRender = enable;
             Submit();
-        }
-
-        internal void Validate(Size textureSize)
-        {
-            if (!textureSize.IsEmpty)
-            {
-                foreach (var cube in cubes)
-                {
-                    CheckAndFixUVFaveMapping(cube, CubeData.CubeFace.Back, textureSize);
-                    CheckAndFixUVFaveMapping(cube, CubeData.CubeFace.Front, textureSize);
-                    CheckAndFixUVFaveMapping(cube, CubeData.CubeFace.Top, textureSize);
-                    CheckAndFixUVFaveMapping(cube, CubeData.CubeFace.Bottom, textureSize);
-                    CheckAndFixUVFaveMapping(cube, CubeData.CubeFace.Left, textureSize);
-                    CheckAndFixUVFaveMapping(cube, CubeData.CubeFace.Right, textureSize);
-                }
-            }
         }
     }
 }

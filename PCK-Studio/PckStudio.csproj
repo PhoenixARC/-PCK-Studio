@@ -641,6 +641,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\shader\skinGeometryShader.glsl" />
     <None Include="Resources\shader\skyboxFragmentShader.glsl" />
     <None Include="Resources\shader\skyboxVertexShader.glsl" />
     <None Include="Resources\skybox_texture.png" />

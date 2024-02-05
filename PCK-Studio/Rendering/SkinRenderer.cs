@@ -104,8 +104,7 @@ namespace PckStudio.Rendering
             }
         }
 
-        internal Vector2 UvTranslation { get; private set; } = new Vector2(1f / 64);
-        private Size TextureSize = new Size(64, 64);
+        public Size TextureSize { get; private set; } = new Size(64, 64);
         private const float OverlayScale = 1.12f;
 
         private bool _isLeftMouseDown;
@@ -397,7 +396,11 @@ namespace PckStudio.Rendering
 
             // Initialize skin shader
             {
-                _skinShader = Shader.Create(Resources.skinVertexShader, Resources.skinFragmentShader);
+                _skinShader = Shader.Create(
+                    new ShaderSource(ShaderType.VertexShader, Resources.skinVertexShader),
+                    new ShaderSource(ShaderType.FragmentShader, Resources.skinFragmentShader),
+                    new ShaderSource(ShaderType.GeometryShader, Resources.skinGeometryShader)
+                    );
                 _skinShader.Bind();
                 _skinShader.Validate();
             
@@ -488,7 +491,7 @@ namespace PckStudio.Rendering
             bool slim = ANIM.GetFlag(SkinAnimFlag.SLIM_MODEL);
             if (slim || ANIM.GetFlag(SkinAnimFlag.RESOLUTION_64x64))
             {
-                UvTranslation = new Vector2(1f / 64);
+                TextureSize = new Size(64, 64);
                 bodyOverlay.SetEnabled(0, !ANIM.GetFlag(SkinAnimFlag.BODY_OVERLAY_DISABLED));
                 rightArmOverlay.SetEnabled(0, !ANIM.GetFlag(SkinAnimFlag.RIGHT_ARM_OVERLAY_DISABLED));
                 leftArmOverlay.SetEnabled(0, !ANIM.GetFlag(SkinAnimFlag.LEFT_ARM_OVERLAY_DISABLED));
@@ -506,7 +509,7 @@ namespace PckStudio.Rendering
                 return;
             }
             
-            UvTranslation = new Vector2(1f / 64, 1f / 32);
+            TextureSize = new Size(64, 32);
             
             rightArm.ReplaceCube(0, new(-3, -2, -2), new(4, 12, 4), new(40, 16));
             rightArmOverlay.SetEnabled(0, false);
@@ -533,7 +536,7 @@ namespace PckStudio.Rendering
             var viewProjection = camera.GetViewProjection();
             _skinShader.Bind();
             _skinShader.SetUniformMat4("u_ViewProjection", ref viewProjection);
-            _skinShader.SetUniform2("u_TexScale", UvTranslation);
+            _skinShader.SetUniform2("u_TexSize", new Vector2(TextureSize.Width, TextureSize.Height));
 
             GL.Viewport(Size);
 

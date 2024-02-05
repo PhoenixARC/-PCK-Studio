@@ -29,8 +29,8 @@ namespace PckStudio.Rendering
         internal readonly int SizeInBytes = Marshal.SizeOf<T>();
         
         protected List<T> vertices;
-        protected List<uint> indices;
-        protected uint indicesOffset;
+        protected List<int> indices;
+        protected int indicesOffset;
 
         private VertexArray vertexArray;
         private VertexBuffer<T> vertexBuffer;
@@ -44,7 +44,7 @@ namespace PckStudio.Rendering
             drawType = type;
             indicesOffset = 0;
             vertices = new List<T>(10);
-            indices = new List<uint>(10);
+            indices = new List<int>(10);
             _layout = new T().GetLayout();
         }
 

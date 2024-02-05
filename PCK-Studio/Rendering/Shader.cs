@@ -86,8 +86,7 @@ namespace PckStudio.Rendering
 
             if (status == 0)
             {
-                GL.GetShader(shaderId, ShaderParameter.InfoLogLength, out int length);
-                GL.GetShaderInfoLog(shaderId, length, out _, out string infoLog);
+                string infoLog = GL.GetShaderInfoLog(shaderId);
                 GL.DeleteShader(shaderId);
                 Trace.Fail(infoLog);
                 return 0;
@@ -107,16 +106,20 @@ namespace PckStudio.Rendering
         {
             GL.LinkProgram(_programId);
             GL.GetProgram(_programId, GetProgramParameterName.LinkStatus, out int status);
-            return status != 0;
+            bool success = status != 0;
+            if (!success)
+                Debug.WriteLine(GL.GetProgramInfoLog(_programId), category: nameof(Shader));
+            return success;
         }
 
         public bool Validate()
         {
             GL.ValidateProgram(_programId);
             GL.GetProgram(_programId, GetProgramParameterName.ValidateStatus, out int status);
-            if (status == 0)
+            bool success = status != 0;
+            if (!success)
                 Debug.WriteLine(GL.GetProgramInfoLog(_programId), category: nameof(Shader));
-            return status != 0;
+            return success;
         }
 
         public static Shader Create(params ShaderSource[] shaderSources)
