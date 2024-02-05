@@ -57,7 +57,6 @@ namespace PckStudio.Rendering.Texture
                 BitmapData data = texture.LockBits(new Rectangle(Point.Empty, texture.Size), ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
                 GL.TexImage2D(TextureTarget.TextureCubeMapPositiveX + i, 0, PixelInternalFormat.Rgb8, widthPerFace, heightPerFace, 0, OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, data.Scan0);
             }
-            Unbind();
         }
     }
 }

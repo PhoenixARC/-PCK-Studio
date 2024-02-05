@@ -114,12 +114,16 @@ namespace PckStudio.Rendering
 
         public bool Validate()
         {
+#if DEBUG
             GL.ValidateProgram(_programId);
             GL.GetProgram(_programId, GetProgramParameterName.ValidateStatus, out int status);
             bool success = status != 0;
             if (!success)
                 Debug.WriteLine(GL.GetProgramInfoLog(_programId), category: nameof(Shader));
             return success;
+#else
+            return true;
+#endif
         }
 
         public static Shader Create(params ShaderSource[] shaderSources)
