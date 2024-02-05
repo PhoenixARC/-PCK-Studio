@@ -258,35 +258,6 @@ namespace PckStudio.Rendering
             };
         }
 
-        public void SetPartOffset(SkinPartOffset offset)
-        {
-            SetPartOffset(offset.Name, offset.Value);
-        }
-
-        public void SetPartOffset(string name, float value)
-        {
-            if (!partOffset.ContainsKey(name))
-            {
-                Debug.WriteLine($"'{name}' is not inside {nameof(partOffset)}");
-                return;
-            }
-            partOffset[name] = value;
-        }
-
-        private float GetOffset(string name)
-        {
-            return partOffset.ContainsKey(name) ? partOffset[name] : 0f;
-        }
-
-        private void ModelData_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            if (e.Action != NotifyCollectionChangedAction.Move &&
-                e.Action != NotifyCollectionChangedAction.Reset)
-            {
-                UpdateModelData();
-            }
-        }
-
         // TODO: calculate CameraDistance based on model size
         private const float DefaultCameraDistance = 64f;
         private void InitializeCamera()
@@ -434,6 +405,35 @@ namespace PckStudio.Rendering
                 RenderTexture = Texture;
 
                 GLErrorCheck();
+            }
+        }
+
+        public void SetPartOffset(SkinPartOffset offset)
+        {
+            SetPartOffset(offset.Type, offset.Value);
+        }
+
+        public void SetPartOffset(string name, float value)
+        {
+            if (!partOffset.ContainsKey(name))
+            {
+                Debug.WriteLine($"'{name}' is not inside {nameof(partOffset)}");
+                return;
+            }
+            partOffset[name] = value;
+        }
+
+        private float GetOffset(string name)
+        {
+            return partOffset.ContainsKey(name) ? partOffset[name] : 0f;
+        }
+
+        private void ModelData_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action != NotifyCollectionChangedAction.Move &&
+                e.Action != NotifyCollectionChangedAction.Reset)
+            {
+                UpdateModelData();
             }
         }
 

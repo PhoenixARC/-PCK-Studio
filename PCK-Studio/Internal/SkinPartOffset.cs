@@ -47,12 +47,12 @@ namespace PckStudio.Internal
             "TOOL1",
         };
 
-        public readonly string Name;
+        public readonly string Type;
         public readonly float Value;
 
-        public SkinPartOffset(string name, float value)
+        public SkinPartOffset(string type, float value)
         {
-            Name = name;
+            Type = type;
             Value = value;
         }
 
@@ -62,11 +62,11 @@ namespace PckStudio.Internal
             if (offset.Length < 3)
                 throw new InvalidDataException("Format string does not contain enough data.");
 
-            string name = offset[0];
+            string type = offset[0];
 
-            if (!ValidModelOffsetTypes.Contains(name))
+            if (!ValidModelOffsetTypes.Contains(type))
             {
-                Debug.WriteLine($"'{name}' is an invalid offset type.", category: nameof(SkinPartOffset));
+                Debug.WriteLine($"'{type}' is an invalid offset type.", category: nameof(SkinPartOffset));
             }
 
             // Ignore => Y assumed
@@ -74,14 +74,14 @@ namespace PckStudio.Internal
 
             if (!float.TryParse(offset[2], out float value))
             {
-                Debug.WriteLine($"Failed to parse y offset for: '{name}'", category: nameof(SkinPartOffset));
+                Debug.WriteLine($"Failed to parse y offset for: '{type}'", category: nameof(SkinPartOffset));
             }
-            return new SkinPartOffset(name, value);
+            return new SkinPartOffset(type, value);
         }
 
         public (string, string) ToProperty()
         {
-            string value = $"{Name} Y {Value}";
+            string value = $"{Type} Y {Value}";
             return ("OFFSET", value.Replace(',', '.'));
         }
     }
