@@ -34,12 +34,39 @@ namespace PckStudio.Rendering
 {
     internal class Renderer3D : GLControl
     {
-        protected PerspectiveCamera camera;
-
-        public Renderer3D()
+        /// <summary>
+        /// Refresh rate at which the frame is updated. Default is 50(Hz)
+        /// </summary>
+        public int RefreshRate
         {
+            get => refreshRate;
+            set
+            {
+                refreshRate = Math.Max(value, 1);
+                timer.Interval = TimeSpan.FromSeconds(1d / refreshRate).Milliseconds;
+            }
+        }
+
+        protected PerspectiveCamera Camera;
+        protected EventHandler OnTimerTick { get; set; }
+
+        private int refreshRate = 50;
+        private Timer timer;
+
+        public Renderer3D() : base()
+        {
+            timer = new Timer();
+            RefreshRate = refreshRate;
+            timer.Tick += TimerTick;
+            timer.Start();
             VSync = true;
-            camera = new PerspectiveCamera(Vector3.UnitZ, Vector2.Zero, 30f);
+            Camera = new PerspectiveCamera(Vector3.UnitZ, Vector2.Zero, 30f);
+        }
+
+        private void TimerTick(object sender, EventArgs e)
+        {
+            OnTimerTick?.Invoke(sender, e);
+            Invalidate();
         }
     }
 }

@@ -25,7 +25,6 @@ using OpenTK.Graphics.OpenGL;
 using System.Windows.Forms;
 using System.ComponentModel;
 using System.Drawing;
-using System.Runtime.InteropServices;
 using PckStudio.Properties;
 using PckStudio.Forms.Editor;
 using System.Collections.ObjectModel;
@@ -82,14 +81,31 @@ namespace PckStudio.Rendering
 
         public ObservableCollection<SkinBOX> ModelData { get; }
 
+        /// <summary>
+        /// Captures the currently displayed frame
+        /// </summary>
+        /// <returns>Image of the cameras current view</returns>
+        public Image GetThumbnail()
+        {
+            Bitmap bmp = new Bitmap(Width, Height);
+            BitmapData data = bmp.LockBits(ClientRectangle, ImageLockMode.WriteOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
+            MakeCurrent();
+            GL.Finish();
+            GL.ReadPixels(0, 0, Width, Height, OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, data.Scan0);
+            bmp.UnlockBits(data);
+            bmp.RotateFlip(RotateFlipType.RotateNoneFlipY);
+            return bmp;
+        }
+
         private Vector2 CameraTarget
         {
-            get => camera.Position;
+            get => Camera.Position;
             set
             {
                 if (ClampModel)
-                    value = Vector2.Clamp(value, new Vector2(camera.Distance / 2f * -1), new Vector2(camera.Distance / 2f));
-                camera.LookAt(value);
+                    value = Vector2.Clamp(value, new Vector2(Camera.Distance / 2f * -1), new Vector2(Camera.Distance / 2f));
+                Camera.LookAt(value);
             }
         }
 
@@ -118,11 +134,9 @@ namespace PckStudio.Rendering
                 {
                     MakeCurrent();
                     TextureSize = value.Width == value.Height ? new Size(64, 64) : new Size(64, 32);
-                    UvTranslation = value.Width == value.Height ? new Vector2(1f / 64) : new Vector2(1f / 64, 1f / 32);
                     var texture = new Texture2D(value);
                     _skinShader.Bind();
                     _skinShader.SetUniform1("u_Texture", 0);
-                    Refresh();
                 }
             }
         }
@@ -155,6 +169,7 @@ namespace PckStudio.Rendering
 
         private Dictionary<string, CubeRenderGroup> additionalModelRenderGroups;
         private Dictionary<string, float> partOffset;
+        
         private CubeRenderGroup head;
         private CubeRenderGroup body;
         private CubeRenderGroup rightArm;
@@ -187,6 +202,8 @@ namespace PckStudio.Rendering
             InitializeComponent();
             InitializeCamera();
             InitializeSkinData();
+            ANIM ??= SkinANIM.Empty;
+            OnTimerTick = AnimationTick;
             ModelData = new ObservableCollection<SkinBOX>();
             ModelData.CollectionChanged += ModelData_CollectionChanged;
             additionalModelRenderGroups = new Dictionary<string, CubeRenderGroup>(6)
@@ -207,6 +224,8 @@ namespace PckStudio.Rendering
 
                 { "BODYARMOR", new CubeRenderGroup("BODYARMOR") },
                 { "BELT",      new CubeRenderGroup("BELT") },
+                { "ARMARMOR0",      new CubeRenderGroup("ARMARMOR0") },
+                { "ARMARMOR1",      new CubeRenderGroup("ARMARMOR1") },
             };
             
             partOffset = new Dictionary<string, float>()
@@ -227,6 +246,14 @@ namespace PckStudio.Rendering
 
                 { "BODYARMOR", 0f },
                 { "BELT"     , 0f },
+
+                { "HELMET"     , 0f },
+
+                { "BOOT0"     , 0f },
+                { "BOOT1"     , 0f },
+
+                { "TOOL0"     , 0f },
+                { "TOOL1"     , 0f },
             };
         }
 
@@ -263,10 +290,10 @@ namespace PckStudio.Rendering
         private const float DefaultCameraDistance = 64f;
         private void InitializeCamera()
         {
-            camera = new PerspectiveCamera(new Vector2(0f, 5f), DefaultCameraDistance, Vector2.Zero, 60f)
+            Camera = new PerspectiveCamera(new Vector2(0f, 5f), DefaultCameraDistance, Vector2.Zero, 60f)
             {
                 MinimumFov = 30f,
-                MaximumFov = 90f,
+                MaximumFov = 120f,
             };
         }
 
@@ -327,8 +354,6 @@ namespace PckStudio.Rendering
             if (DesignMode)
                 return;
 
-            // use backing field to not raise OnANIMUpdate
-            _anim ??= new SkinANIM();
             MakeCurrent();
 
             Trace.TraceInformation(GL.GetString(StringName.Version));
@@ -414,7 +439,6 @@ namespace PckStudio.Rendering
         public void UpdateModelData()
         {
             ReInitialzeSkinData();
-            Refresh();
         }
 
         private void AddCustomModelPart(SkinBOX skinBox)
@@ -424,7 +448,6 @@ namespace PckStudio.Rendering
 
             CubeRenderGroup group = additionalModelRenderGroups[skinBox.Type];
             group.AddSkinBox(skinBox);
-            group.Validate(TextureSize);
             group.Submit();
         }
 
@@ -450,8 +473,7 @@ namespace PckStudio.Rendering
                 case Keys.R:
                     GlobalModelRotation = Vector2.Zero;
                     CameraTarget = Vector2.Zero;
-                    camera.Distance = DefaultCameraDistance;
-                    Refresh();
+                    Camera.Distance = DefaultCameraDistance;
                     return true;
                 case Keys.A:
                     ReleaseMouse();
@@ -460,7 +482,6 @@ namespace PckStudio.Rendering
                         if (animeditor.ShowDialog() == DialogResult.OK)
                         {
                             ANIM = animeditor.ResultAnim;
-                            Refresh();
                         }
                     }
                     return true;
@@ -531,9 +552,9 @@ namespace PckStudio.Rendering
 
             MakeCurrent(); 
 
-            camera.Update(AspectRatio);
+            Camera.Update(AspectRatio);
 
-            var viewProjection = camera.GetViewProjection();
+            var viewProjection = Camera.GetViewProjection();
             _skinShader.Bind();
             _skinShader.SetUniformMat4("u_ViewProjection", ref viewProjection);
             _skinShader.SetUniform2("u_TexSize", new Vector2(TextureSize.Width, TextureSize.Height));
@@ -600,16 +621,16 @@ namespace PckStudio.Rendering
             RenderBodyPart(new Vector3(0f, 12f, 0f), new Vector3(-2f, -12f, 0f), RightLegMatrix * legRightMatrix, modelMatrix, "LEG0", "PANTS0");
             RenderBodyPart(new Vector3(0f, 12f, 0f), new Vector3( 2f, -12f, 0f), LeftLegMatrix  * legLeftMatrix , modelMatrix, "LEG1", "PANTS1");
             
-            if (true)
+            // Render Skybox
             {
                 GL.DepthFunc(DepthFunction.Lequal);
                 GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
                 _skyboxShader.Bind();
                 _skyboxTexture.Bind(1);
 
-                var view = new Matrix4(new Matrix3(Matrix4.LookAt(camera.WorldPosition, camera.WorldPosition + camera.Orientation, camera.Up)))
+                var view = new Matrix4(new Matrix3(Matrix4.LookAt(Camera.WorldPosition, Camera.WorldPosition + Camera.Orientation, Camera.Up)))
                     * Matrix4.CreateRotationY(MathHelper.DegreesToRadians(skyboxRotation));
-                var proj = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(camera.Fov), AspectRatio, 1f, 1000f);
+                var proj = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(Camera.Fov), AspectRatio, 1f, 1000f);
                 var viewproj = view * proj;
                 _skyboxShader.SetUniformMat4("viewProjection", ref viewproj);
                 Renderer.Draw(_skyboxShader, _skyboxRenderBuffer);
@@ -650,10 +671,33 @@ namespace PckStudio.Rendering
             return model;
         }
 
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            base.OnMouseMove(e);
+            // Rotate the model
+            if (_isLeftMouseDown)
+            {
+                float rotationYDelta = (float)Math.Round((Cursor.Position.X - CurrentMouseLocation.X) * 0.5f);
+                float rotationXDelta = (float)Math.Round(-(Cursor.Position.Y - CurrentMouseLocation.Y) * 0.5f);
+                GlobalModelRotation += new Vector2(rotationXDelta, rotationYDelta);
+                Cursor.Position = new Point((int)Math.Round(Screen.PrimaryScreen.Bounds.Width / 2d), (int)Math.Round(Screen.PrimaryScreen.Bounds.Height / 2d));
+                CurrentMouseLocation = Cursor.Position;
+                return;
+            }
+            // Move the model
+            if (_isRightMouseDown)
+            {
+                float deltaX = -(Cursor.Position.X - CurrentMouseLocation.X) * 0.05f / (float)MathHelper.DegreesToRadians(Camera.Fov);
+                float deltaY = (Cursor.Position.Y - CurrentMouseLocation.Y) * 0.05f / (float)MathHelper.DegreesToRadians(Camera.Fov);
+                CameraTarget += new Vector2(deltaX, deltaY);
+                Cursor.Position = new Point((int)Math.Round(Screen.PrimaryScreen.Bounds.Width / 2d), (int)Math.Round(Screen.PrimaryScreen.Bounds.Height / 2d));
+                CurrentMouseLocation = Cursor.Position;
+            }
+        }
+
         protected override void OnMouseWheel(MouseEventArgs e)
         {
-            camera.Distance -= e.Delta / System.Windows.Input.Mouse.MouseWheelDeltaForOneLine;
-            Refresh();
+            Camera.Distance -= e.Delta / System.Windows.Input.Mouse.MouseWheelDeltaForOneLine;
         }
 
         protected override void OnMouseDown(MouseEventArgs e)
@@ -688,45 +732,14 @@ namespace PckStudio.Rendering
             base.OnMouseUp(e);
         }
 
-        private void animationTimer_Tick(object sender, EventArgs e)
+        private void AnimationTick(object sender, EventArgs e)
         {
             skyboxRotation += skyboxRotationStep;
             skyboxRotation %= 360f;
             animationCurrentRotationAngle += animationRotationStep;
             if (animationCurrentRotationAngle >= animationMaxAngleInDegrees || animationCurrentRotationAngle <= -animationMaxAngleInDegrees)
                 animationRotationStep = -animationRotationStep;
-            Refresh();
-        }
-
-        private void moveTimer_Tick(object sender, EventArgs e)
-        {
-            if (!Focused)
-            {
-                return;
             }
-
-            // Rotate the model
-            if (_isLeftMouseDown)
-            {
-                float rotationYDelta = (float)Math.Round((Cursor.Position.X - CurrentMouseLocation.X) * 0.5f);
-                float rotationXDelta = (float)Math.Round(-(Cursor.Position.Y - CurrentMouseLocation.Y) * 0.5f);
-                GlobalModelRotation += new Vector2(rotationXDelta, rotationYDelta);
-                Refresh();
-                Cursor.Position = new Point((int)Math.Round(Screen.PrimaryScreen.Bounds.Width / 2d), (int)Math.Round(Screen.PrimaryScreen.Bounds.Height / 2d));
-                CurrentMouseLocation = Cursor.Position;
-                return;
-            }
-            // Move the model
-            if (_isRightMouseDown)
-            {
-                float deltaX = -(Cursor.Position.X - CurrentMouseLocation.X) * 0.05f / (float)MathHelper.DegreesToRadians(camera.Fov);
-                float deltaY = (Cursor.Position.Y - CurrentMouseLocation.Y) * 0.05f / (float)MathHelper.DegreesToRadians(camera.Fov);
-                CameraTarget += new Vector2(deltaX, deltaY);
-                Refresh();
-                Cursor.Position = new Point((int)Math.Round(Screen.PrimaryScreen.Bounds.Width / 2d), (int)Math.Round(Screen.PrimaryScreen.Bounds.Height / 2d));
-                CurrentMouseLocation = Cursor.Position;
-            }
-        }
 
         private void ReInitialzeSkinData()
         {
@@ -741,29 +754,11 @@ namespace PckStudio.Rendering
                 AddCustomModelPart(item);
             }
             OnANIMUpdate();
-            Refresh();
         }
 
         private void reInitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ReInitialzeSkinData();
-        }
-
-        /// <summary>
-        /// Captures the currently displayed frame
-        /// </summary>
-        /// <returns>Image of the cameras current view</returns>
-        public Image GetThumbnail()
-        {
-            Bitmap bmp = new Bitmap(Width, Height);
-            BitmapData data = bmp.LockBits(ClientRectangle, ImageLockMode.WriteOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-
-            MakeCurrent();
-            GL.Finish();
-            GL.ReadPixels(0, 0, Width, Height, OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, data.Scan0);
-            bmp.UnlockBits(data);
-            bmp.RotateFlip(RotateFlipType.RotateNoneFlipY);
-            return bmp;
         }
     }
 }
