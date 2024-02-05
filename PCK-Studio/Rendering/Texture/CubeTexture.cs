@@ -19,8 +19,8 @@ namespace PckStudio.Rendering.Texture
 
             GL.GenerateMipmap(GenerateMipmapTarget.TextureCubeMap);
 
-            SetTexParameter(TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Nearest);
-            SetTexParameter(TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
+            SetTexParameter(TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
+            SetTexParameter(TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
 
             SetTexParameter(TextureParameterName.TextureWrapS, (int)TextureWrapMode.ClampToEdge);
             SetTexParameter(TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToEdge);
