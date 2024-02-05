@@ -34,7 +34,6 @@
             System.Windows.Forms.Label label3;
             System.Windows.Forms.Label label7;
             System.Windows.Forms.Label labelTextureMappingPreview;
-            PckStudio.Internal.SkinANIM skinANIM2 = new PckStudio.Internal.SkinANIM();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.createToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cloneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -43,7 +42,7 @@
             this.buttonDone = new MetroFramework.Controls.MetroButton();
             this.buttonEXPORT = new MetroFramework.Controls.MetroButton();
             this.buttonIMPORT = new MetroFramework.Controls.MetroButton();
-            this.buttonImportModel = new MetroFramework.Controls.MetroButton();
+            this.importCustomSkinButton = new MetroFramework.Controls.MetroButton();
             this.buttonExportModel = new MetroFramework.Controls.MetroButton();
             this.OpenJSONButton = new MetroFramework.Controls.MetroButton();
             this.generateTextureCheckBox = new MetroFramework.Controls.MetroCheckBox();
@@ -173,14 +172,14 @@
             this.buttonIMPORT.UseSelectable = true;
             this.buttonIMPORT.Click += new System.EventHandler(this.buttonIMPORT_Click);
             // 
-            // buttonImportModel
+            // importCustomSkinButton
             // 
-            resources.ApplyResources(this.buttonImportModel, "buttonImportModel");
-            this.buttonImportModel.ForeColor = System.Drawing.Color.White;
-            this.buttonImportModel.Name = "buttonImportModel";
-            this.buttonImportModel.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.buttonImportModel.UseSelectable = true;
-            this.buttonImportModel.Click += new System.EventHandler(this.buttonImportModel_Click);
+            resources.ApplyResources(this.importCustomSkinButton, "importCustomSkinButton");
+            this.importCustomSkinButton.ForeColor = System.Drawing.Color.White;
+            this.importCustomSkinButton.Name = "importCustomSkinButton";
+            this.importCustomSkinButton.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.importCustomSkinButton.UseSelectable = true;
+            this.importCustomSkinButton.Click += new System.EventHandler(this.importCustomSkinButton_Click);
             // 
             // buttonExportModel
             // 
@@ -315,8 +314,8 @@
             resources.ApplyResources(this.skinPartListBox, "skinPartListBox");
             this.skinPartListBox.FormattingEnabled = true;
             this.skinPartListBox.Name = "skinPartListBox";
-            this.skinPartListBox.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
-            this.skinPartListBox.DoubleClick += new System.EventHandler(this.listBox1_DoubleClick);
+            this.skinPartListBox.SelectedIndexChanged += new System.EventHandler(this.skinPartListBox_SelectedIndexChanged);
+            this.skinPartListBox.DoubleClick += new System.EventHandler(this.skinPartListBox_DoubleClick);
             // 
             // clampToViewCheckbox
             // 
@@ -345,7 +344,6 @@
             // renderer3D1
             // 
             resources.ApplyResources(this.renderer3D1, "renderer3D1");
-            this.renderer3D1.ANIM = skinANIM2;
             this.renderer3D1.BackColor = System.Drawing.Color.DimGray;
             this.renderer3D1.ClampModel = false;
             this.renderer3D1.Name = "renderer3D1";
@@ -420,7 +418,7 @@
             this.Controls.Add(this.generateTextureCheckBox);
             this.Controls.Add(this.OpenJSONButton);
             this.Controls.Add(this.buttonExportModel);
-            this.Controls.Add(this.buttonImportModel);
+            this.Controls.Add(this.importCustomSkinButton);
             this.Controls.Add(this.buttonEXPORT);
             this.Controls.Add(labelTextureMappingPreview);
             this.Controls.Add(this.buttonIMPORT);
@@ -460,7 +458,7 @@
         private MetroFramework.Controls.MetroButton buttonDone;
         private MetroFramework.Controls.MetroButton OpenJSONButton;
         private MetroFramework.Controls.MetroButton buttonExportModel;
-        private MetroFramework.Controls.MetroButton buttonImportModel;
+        private MetroFramework.Controls.MetroButton importCustomSkinButton;
         private PckStudio.ToolboxItems.InterpolationPictureBox uvPictureBox;
         private MetroFramework.Controls.MetroButton buttonIMPORT;
         private MetroFramework.Controls.MetroButton buttonEXPORT;

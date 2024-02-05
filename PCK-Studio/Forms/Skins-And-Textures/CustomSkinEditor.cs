@@ -51,7 +51,7 @@ namespace PckStudio.Forms
         {
             renderer3D1.ANIM = properties.GetPropertyValue("ANIM", SkinANIM.FromString);
             var boxProperties = properties.GetProperties("BOX");
-            var offsetProperties = properties.GetProperties("OFFSETS");
+            var offsetProperties = properties.GetProperties("OFFSET");
 
             skinNameLabel.Text = properties.HasProperty("DISPLAYNAME") ? properties.GetPropertyValue("DISPLAYNAME") : "";
 
@@ -317,7 +317,7 @@ namespace PckStudio.Forms
             uvPictureBox.BackgroundImage = img;
         }
 
-        private void listBox1_DoubleClick(object sender, EventArgs e)
+        private void skinPartListBox_DoubleClick(object sender, EventArgs e)
         {
             if (skinPartListBox.SelectedItem is SkinBOX box)
             {
@@ -330,7 +330,7 @@ namespace PckStudio.Forms
             }
         }
 
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void skinPartListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (skinPartListBox.SelectedItem is SkinBOX box)
             {

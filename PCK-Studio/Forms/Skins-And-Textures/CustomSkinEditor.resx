@@ -133,7 +133,7 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="label5.Location" type="System.Drawing.Point, System.Drawing">
-    <value>629, 404</value>
+    <value>624, 404</value>
   </data>
   <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
     <value>44, 13</value>
@@ -169,7 +169,7 @@
     <value>NoControl</value>
   </data>
   <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>632, 374</value>
+    <value>627, 374</value>
   </data>
   <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
     <value>27, 13</value>
@@ -205,7 +205,7 @@
     <value>NoControl</value>
   </data>
   <data name="label7.Location" type="System.Drawing.Point, System.Drawing">
-    <value>684, 345</value>
+    <value>679, 345</value>
   </data>
   <data name="label7.Size" type="System.Drawing.Size, System.Drawing">
     <value>22, 13</value>
@@ -241,7 +241,7 @@
     <value>NoControl</value>
   </data>
   <data name="labelTextureMappingPreview.Location" type="System.Drawing.Point, System.Drawing">
-    <value>695, 41</value>
+    <value>690, 41</value>
   </data>
   <data name="labelTextureMappingPreview.Size" type="System.Drawing.Size, System.Drawing">
     <value>128, 13</value>
@@ -352,7 +352,7 @@
     <value>Bottom, Right</value>
   </data>
   <data name="buttonDone.Location" type="System.Drawing.Point, System.Drawing">
-    <value>632, 547</value>
+    <value>627, 557</value>
   </data>
   <data name="buttonDone.Size" type="System.Drawing.Size, System.Drawing">
     <value>250, 22</value>
@@ -379,7 +379,7 @@
     <value>Top, Right</value>
   </data>
   <data name="buttonEXPORT.Location" type="System.Drawing.Point, System.Drawing">
-    <value>752, 315</value>
+    <value>747, 315</value>
   </data>
   <data name="buttonEXPORT.Size" type="System.Drawing.Size, System.Drawing">
     <value>61, 21</value>
@@ -406,7 +406,7 @@
     <value>Top, Right</value>
   </data>
   <data name="buttonIMPORT.Location" type="System.Drawing.Point, System.Drawing">
-    <value>685, 315</value>
+    <value>680, 315</value>
   </data>
   <data name="buttonIMPORT.Size" type="System.Drawing.Size, System.Drawing">
     <value>61, 21</value>
@@ -429,34 +429,34 @@
   <data name="&gt;&gt;buttonIMPORT.ZOrder" xml:space="preserve">
     <value>23</value>
   </data>
-  <data name="buttonImportModel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+  <data name="importCustomSkinButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
   </data>
-  <data name="buttonImportModel.Enabled" type="System.Boolean, mscorlib">
+  <data name="importCustomSkinButton.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
-  <data name="buttonImportModel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>306, 547</value>
+  <data name="importCustomSkinButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>194, 558</value>
   </data>
-  <data name="buttonImportModel.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="importCustomSkinButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>106, 21</value>
   </data>
-  <data name="buttonImportModel.TabIndex" type="System.Int32, mscorlib">
+  <data name="importCustomSkinButton.TabIndex" type="System.Int32, mscorlib">
     <value>96</value>
   </data>
-  <data name="buttonImportModel.Text" xml:space="preserve">
-    <value>OPEN CSM</value>
+  <data name="importCustomSkinButton.Text" xml:space="preserve">
+    <value>Import Skin</value>
   </data>
-  <data name="&gt;&gt;buttonImportModel.Name" xml:space="preserve">
-    <value>buttonImportModel</value>
+  <data name="&gt;&gt;importCustomSkinButton.Name" xml:space="preserve">
+    <value>importCustomSkinButton</value>
   </data>
-  <data name="&gt;&gt;buttonImportModel.Type" xml:space="preserve">
+  <data name="&gt;&gt;importCustomSkinButton.Type" xml:space="preserve">
     <value>MetroFramework.Controls.MetroButton, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
   </data>
-  <data name="&gt;&gt;buttonImportModel.Parent" xml:space="preserve">
+  <data name="&gt;&gt;importCustomSkinButton.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;buttonImportModel.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;importCustomSkinButton.ZOrder" xml:space="preserve">
     <value>20</value>
   </data>
   <data name="buttonExportModel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
@@ -466,7 +466,7 @@
     <value>False</value>
   </data>
   <data name="buttonExportModel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>418, 548</value>
+    <value>418, 558</value>
   </data>
   <data name="buttonExportModel.Size" type="System.Drawing.Size, System.Drawing">
     <value>89, 21</value>
@@ -475,7 +475,7 @@
     <value>97</value>
   </data>
   <data name="buttonExportModel.Text" xml:space="preserve">
-    <value>EXPORT CSM</value>
+    <value>Export csmb</value>
   </data>
   <data name="&gt;&gt;buttonExportModel.Name" xml:space="preserve">
     <value>buttonExportModel</value>
@@ -496,7 +496,7 @@
     <value>False</value>
   </data>
   <data name="OpenJSONButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>194, 547</value>
+    <value>306, 558</value>
   </data>
   <data name="OpenJSONButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>106, 21</value>
@@ -505,7 +505,7 @@
     <value>145</value>
   </data>
   <data name="OpenJSONButton.Text" xml:space="preserve">
-    <value>OPEN JSON</value>
+    <value>Import json</value>
   </data>
   <data name="&gt;&gt;OpenJSONButton.Name" xml:space="preserve">
     <value>OpenJSONButton</value>
@@ -526,7 +526,7 @@
     <value>True</value>
   </data>
   <data name="generateTextureCheckBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>632, 440</value>
+    <value>627, 440</value>
   </data>
   <data name="generateTextureCheckBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>140, 15</value>
@@ -556,7 +556,7 @@
     <value>True</value>
   </data>
   <data name="checkGuide.Location" type="System.Drawing.Point, System.Drawing">
-    <value>632, 461</value>
+    <value>627, 461</value>
   </data>
   <data name="checkGuide.Size" type="System.Drawing.Size, System.Drawing">
     <value>84, 15</value>
@@ -586,7 +586,7 @@
     <value>True</value>
   </data>
   <data name="checkBoxArmor.Location" type="System.Drawing.Point, System.Drawing">
-    <value>632, 503</value>
+    <value>627, 503</value>
   </data>
   <data name="checkBoxArmor.Size" type="System.Drawing.Size, System.Drawing">
     <value>129, 15</value>
@@ -613,7 +613,7 @@
     <value>Top, Right</value>
   </data>
   <data name="SizeXUpDown.Location" type="System.Drawing.Point, System.Drawing">
-    <value>674, 371</value>
+    <value>669, 371</value>
   </data>
   <data name="SizeXUpDown.Size" type="System.Drawing.Size, System.Drawing">
     <value>53, 20</value>
@@ -640,7 +640,7 @@
     <value>Top, Right</value>
   </data>
   <data name="SizeYUpDown.Location" type="System.Drawing.Point, System.Drawing">
-    <value>733, 371</value>
+    <value>728, 371</value>
   </data>
   <data name="SizeYUpDown.Size" type="System.Drawing.Size, System.Drawing">
     <value>53, 20</value>
@@ -667,7 +667,7 @@
     <value>Top, Right</value>
   </data>
   <data name="SizeZUpDown.Location" type="System.Drawing.Point, System.Drawing">
-    <value>792, 371</value>
+    <value>787, 371</value>
   </data>
   <data name="SizeZUpDown.Size" type="System.Drawing.Size, System.Drawing">
     <value>58, 20</value>
@@ -694,7 +694,7 @@
     <value>Top, Right</value>
   </data>
   <data name="TextureXUpDown.Location" type="System.Drawing.Point, System.Drawing">
-    <value>712, 342</value>
+    <value>707, 342</value>
   </data>
   <data name="TextureXUpDown.Size" type="System.Drawing.Size, System.Drawing">
     <value>43, 20</value>
@@ -718,7 +718,7 @@
     <value>Top, Right</value>
   </data>
   <data name="TextureYUpDown.Location" type="System.Drawing.Point, System.Drawing">
-    <value>761, 342</value>
+    <value>756, 342</value>
   </data>
   <data name="TextureYUpDown.Size" type="System.Drawing.Size, System.Drawing">
     <value>43, 20</value>
@@ -742,7 +742,7 @@
     <value>Top, Right</value>
   </data>
   <data name="PosZUpDown.Location" type="System.Drawing.Point, System.Drawing">
-    <value>792, 403</value>
+    <value>787, 403</value>
   </data>
   <data name="PosZUpDown.Size" type="System.Drawing.Size, System.Drawing">
     <value>58, 20</value>
@@ -769,7 +769,7 @@
     <value>Top, Right</value>
   </data>
   <data name="PosYUpDown.Location" type="System.Drawing.Point, System.Drawing">
-    <value>733, 403</value>
+    <value>728, 403</value>
   </data>
   <data name="PosYUpDown.Size" type="System.Drawing.Size, System.Drawing">
     <value>53, 20</value>
@@ -796,7 +796,7 @@
     <value>Top, Right</value>
   </data>
   <data name="PosXUpDown.Location" type="System.Drawing.Point, System.Drawing">
-    <value>674, 403</value>
+    <value>669, 403</value>
   </data>
   <data name="PosXUpDown.Size" type="System.Drawing.Size, System.Drawing">
     <value>53, 20</value>
@@ -826,7 +826,7 @@
     <value>0, 0</value>
   </data>
   <data name="skinPartListBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 440</value>
+    <value>157, 450</value>
   </data>
   <data name="skinPartListBox.TabIndex" type="System.Int32, mscorlib">
     <value>161</value>
@@ -850,7 +850,7 @@
     <value>True</value>
   </data>
   <data name="clampToViewCheckbox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>632, 482</value>
+    <value>627, 482</value>
   </data>
   <data name="clampToViewCheckbox.Size" type="System.Drawing.Size, System.Drawing">
     <value>137, 15</value>
@@ -877,7 +877,7 @@
     <value>Bottom, Left</value>
   </data>
   <data name="captureScreenshotButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>513, 548</value>
+    <value>513, 558</value>
   </data>
   <data name="captureScreenshotButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>113, 21</value>
@@ -907,7 +907,7 @@
     <value>True</value>
   </data>
   <data name="showToolsCheckBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>632, 524</value>
+    <value>627, 524</value>
   </data>
   <data name="showToolsCheckBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>82, 15</value>
@@ -937,7 +937,7 @@
     <value>194, 59</value>
   </data>
   <data name="renderer3D1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>432, 482</value>
+    <value>427, 492</value>
   </data>
   <data name="renderer3D1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -964,7 +964,7 @@
     <value>NoControl</value>
   </data>
   <data name="uvPictureBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>632, 59</value>
+    <value>627, 59</value>
   </data>
   <data name="uvPictureBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>250, 250</value>
@@ -994,7 +994,7 @@
     <value>True</value>
   </data>
   <data name="skinNameLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>23, 549</value>
+    <value>23, 559</value>
   </data>
   <data name="skinNameLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>73, 19</value>
@@ -1020,6 +1020,51 @@
   <data name="metroTabControl1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left</value>
   </data>
+  <data name="&gt;&gt;skinPartsTabPage.Name" xml:space="preserve">
+    <value>skinPartsTabPage</value>
+  </data>
+  <data name="&gt;&gt;skinPartsTabPage.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;skinPartsTabPage.Parent" xml:space="preserve">
+    <value>metroTabControl1</value>
+  </data>
+  <data name="&gt;&gt;skinPartsTabPage.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;skinOffsetsTabPage.Name" xml:space="preserve">
+    <value>skinOffsetsTabPage</value>
+  </data>
+  <data name="&gt;&gt;skinOffsetsTabPage.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;skinOffsetsTabPage.Parent" xml:space="preserve">
+    <value>metroTabControl1</value>
+  </data>
+  <data name="&gt;&gt;skinOffsetsTabPage.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="metroTabControl1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>23, 59</value>
+  </data>
+  <data name="metroTabControl1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>165, 492</value>
+  </data>
+  <data name="metroTabControl1.TabIndex" type="System.Int32, mscorlib">
+    <value>166</value>
+  </data>
+  <data name="&gt;&gt;metroTabControl1.Name" xml:space="preserve">
+    <value>metroTabControl1</value>
+  </data>
+  <data name="&gt;&gt;metroTabControl1.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroTabControl, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;metroTabControl1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;metroTabControl1.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
   <data name="skinPartsTabPage.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Center</value>
   </data>
@@ -1027,7 +1072,7 @@
     <value>4, 38</value>
   </data>
   <data name="skinPartsTabPage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 440</value>
+    <value>157, 450</value>
   </data>
   <data name="skinPartsTabPage.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1083,27 +1128,6 @@
   <data name="&gt;&gt;skinOffsetsTabPage.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="metroTabControl1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>23, 59</value>
-  </data>
-  <data name="metroTabControl1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>165, 482</value>
-  </data>
-  <data name="metroTabControl1.TabIndex" type="System.Int32, mscorlib">
-    <value>166</value>
-  </data>
-  <data name="&gt;&gt;metroTabControl1.Name" xml:space="preserve">
-    <value>metroTabControl1</value>
-  </data>
-  <data name="&gt;&gt;metroTabControl1.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroTabControl, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;metroTabControl1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;metroTabControl1.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
   <data name="offsetListBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
@@ -1138,7 +1162,7 @@
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>905, 590</value>
+    <value>900, 600</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -3647,7 +3671,7 @@
 </value>
   </data>
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>905, 590</value>
+    <value>900, 600</value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterParent</value>
