@@ -341,8 +341,8 @@ namespace PckStudio.Forms
                     float penWidth = uvPictureBox.BackgroundImage.Width / renderer3D1.TextureSize.Width + uvPictureBox.BackgroundImage.Height / renderer3D1.TextureSize.Height / 2f;
                     GraphicsPath graphicsPath = box.GetUVGraphicsPath(
                         new System.Numerics.Vector2(
-                            scale * (1f / renderer3D1.TextureSize.Width) * uvPictureBox.BackgroundImage.Width,
-                            scale * (1f / renderer3D1.TextureSize.Height) * uvPictureBox.BackgroundImage.Height
+                            scale * renderer3D1.TillingFactor.X * uvPictureBox.BackgroundImage.Width,
+                            scale * renderer3D1.TillingFactor.Y * uvPictureBox.BackgroundImage.Height
                             )
                         );
                     g.DrawPath(new Pen(Color.HotPink, penWidth), graphicsPath);

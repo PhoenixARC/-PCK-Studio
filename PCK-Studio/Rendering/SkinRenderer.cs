@@ -116,6 +116,7 @@ namespace PckStudio.Rendering
         }
 
         public Size TextureSize { get; private set; } = new Size(64, 64);
+        public Vector2 TillingFactor => new Vector2(1f / TextureSize.Width, 1f / TextureSize.Height);
         private const float OverlayScale = 1.12f;
 
         private bool IsMouseHidden
@@ -465,7 +466,7 @@ namespace PckStudio.Rendering
                 }
                 framebuffer.Unbind();
             }
-        }
+
 
         private void UploadMeshData()
         {
@@ -532,36 +533,6 @@ namespace PckStudio.Rendering
             Debug.Assert(error == ErrorCode.NoError, error.ToString());
         }
 
-        protected override bool ProcessDialogKey(Keys keyData)
-        {
-            switch (keyData)
-            {
-                case Keys.Escape:
-                    ReleaseMouse();
-                    var point = new Point(Parent.Location.X + Location.X, Parent.Location.Y + Location.Y);
-                    contextMenuStrip1.Show(point);
-                    return true;
-                case Keys.F3:
-                    showWireFrame = !showWireFrame;
-                    return true;
-                case Keys.R:
-                    GlobalModelRotation = Vector2.Zero;
-                    Camera.Distance = DefaultCameraDistance;
-                    return true;
-                case Keys.A:
-                    ReleaseMouse();
-                    {
-                        using var animeditor = new ANIMEditor(ANIM);
-                        if (animeditor.ShowDialog() == DialogResult.OK)
-                        {
-                            ANIM = animeditor.ResultAnim;
-                        }
-                    }
-                    return true;
-            }
-            return base.ProcessDialogKey(keyData);
-        }
-
         private void ReleaseMouse()
         {
             if (IsMouseHidden)
@@ -617,6 +588,37 @@ namespace PckStudio.Rendering
             rightLegOverlay.SetEnabled(0, false);
             leftLeg.ReplaceCube (0, new(-2, 0, -2), new(4, 12, 4), new(0, 16), mirrorTexture: true);
             leftLegOverlay.SetEnabled(0, false);
+        }
+
+        protected override bool ProcessDialogKey(Keys keyData)
+        {
+            switch (keyData)
+            {
+                case Keys.Escape:
+                    ReleaseMouse();
+                    var point = new Point(Parent.Location.X + Location.X, Parent.Location.Y + Location.Y);
+                    contextMenuStrip1.Show(point);
+                    return true;
+                case Keys.F3:
+                    showWireFrame = !showWireFrame;
+                    return true;
+                case Keys.R:
+                    GlobalModelRotation = Vector2.Zero;
+                    Camera.Distance = DefaultCameraDistance;
+                    Camera.FocalPoint = Vector3.Zero;
+                    return true;
+                case Keys.A:
+                    ReleaseMouse();
+                    {
+                        using var animeditor = new ANIMEditor(ANIM);
+                        if (animeditor.ShowDialog() == DialogResult.OK)
+                        {
+                            ANIM = animeditor.ResultAnim;
+                        }
+                    }
+                    return true;
+            }
+            return base.ProcessDialogKey(keyData);
         }
 
         protected override void OnResize(EventArgs e)
