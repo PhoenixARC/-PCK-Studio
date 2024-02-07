@@ -604,6 +604,8 @@ namespace PckStudio.Rendering
             
             TextureSize = new Size(64, 32);
             
+            bodyOverlay.SetEnabled(0, false);
+
             rightArm.ReplaceCube(0, new(-3, -2, -2), new(4, 12, 4), new(40, 16));
             rightArmOverlay.SetEnabled(0, false);
             
@@ -611,7 +613,9 @@ namespace PckStudio.Rendering
             leftArmOverlay.SetEnabled(0, false);
 
             rightLeg.ReplaceCube(0, new(-2, 0, -2), new(4, 12, 4), new(0, 16));
-            leftLeg.ReplaceCube(0, new(-2, 0, -2), new(4, 12, 4), new(0, 16), mirrorTexture: true);
+            rightLegOverlay.SetEnabled(0, false);
+            leftLeg.ReplaceCube (0, new(-2, 0, -2), new(4, 12, 4), new(0, 16), mirrorTexture: true);
+            leftLegOverlay.SetEnabled(0, false);
         }
 
         protected override void OnResize(EventArgs e)
