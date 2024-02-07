@@ -110,7 +110,7 @@ namespace PckStudio.Rendering
             get => _globalModelRotation;
             set
             {
-                _globalModelRotation.X = MathHelper.Clamp(value.X, -30f, 30f);
+                _globalModelRotation.X = MathHelper.Clamp(value.X, -60f, 60f);
                 _globalModelRotation.Y = value.Y % 360f;
             }
         }
