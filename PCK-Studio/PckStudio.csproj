@@ -154,6 +154,7 @@
     <Compile Include="Rendering\Camera\PerspectiveCamera.cs" />
     <Compile Include="Rendering\CubeData.cs" />
     <Compile Include="Rendering\CubeRenderGroup.cs" />
+    <Compile Include="Rendering\FrameBuffer.cs" />
     <Compile Include="Rendering\IndexBuffer.cs" />
     <Compile Include="Rendering\IVertexLayout.cs" />
     <Compile Include="Rendering\RenderBuffer.cs" />
@@ -642,6 +643,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\shader\framebufferFragmentShader.glsl" />
+    <None Include="Resources\shader\framebufferVertexShader.glsl" />
     <None Include="Resources\shader\skinGeometryShader.glsl" />
     <None Include="Resources\shader\skyboxFragmentShader.glsl" />
     <None Include="Resources\shader\skyboxVertexShader.glsl" />

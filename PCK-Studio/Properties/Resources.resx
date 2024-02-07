@@ -346,4 +346,10 @@
   <data name="skinGeometryShader" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\shader\skinGeometryShader.glsl;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="framebufferFragmentShader" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\shader\framebufferFragmentShader.glsl;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="framebufferVertexShader" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\shader\framebufferVertexShader.glsl;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
 </root>

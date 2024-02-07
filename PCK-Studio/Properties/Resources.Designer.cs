@@ -345,6 +345,46 @@ namespace PckStudio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to #version 330 core
+        ///
+        ///layout(location = 0) out vec4 color;
+        ///
+        ///uniform sampler2D screenTexture;
+        ///
+        ///in vec2 texCoords;
+        ///
+        ///void main()
+        ///{
+        ///	color = texture(screenTexture, texCoords);
+        ///}.
+        /// </summary>
+        public static string framebufferFragmentShader {
+            get {
+                return ResourceManager.GetString("framebufferFragmentShader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #version 330 core
+        ///
+        ///layout(location = 0) in vec4 a_PosAndTexCoord;
+        ///
+        ///out vec2 texCoords;
+        ///
+        ///void main()
+        ///{
+        ///	vec2 pos = a_PosAndTexCoord.xy;
+        ///	texCoords = a_PosAndTexCoord.zw;
+        ///	gl_Position = vec4(pos, 0.0, 1.0);
+        ///};.
+        /// </summary>
+        public static string framebufferVertexShader {
+            get {
+                return ResourceManager.GetString("framebufferVertexShader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap GRF_ICON {
@@ -570,13 +610,13 @@ namespace PckStudio.Properties {
         ///layout(location = 0) out vec4 color;
         ///
         ///uniform sampler2D u_Texture;
-        ///uniform vec2 u_TexScale;
         ///
-        ///in vec2 v_TexCoord;
+        ///in vec2 o_TexScale;
+        ///in vec2 o_TexCoord;
         ///
         ///void main()
         ///{
-        ///	color = texture(u_Texture, v_TexCoord * u_TexScale);
+        ///	color = texture(u_Texture, o_TexCoord * o_TexScale);
         ///};.
         /// </summary>
         public static string skinFragmentShader {
@@ -589,23 +629,29 @@ namespace PckStudio.Properties {
         ///   Looks up a localized string similar to #version 330 core
         ///
         ///layout (triangles) in;
-        ///layout (triangle_strips, max_vertices = 3) out;
+        ///layout (triangle_strip, max_vertices=3) out;
         ///
-        ///uniform mat4 u_ViewProjection;
-        ///uniform mat4 u_Model;
+        ///uniform vec2 u_TexSize;
         ///
-        ///out vec2 v_TexCoord;
+        ///out vec2 o_TexCoord;
+        ///out vec2 o_TexScale;
         ///
-        ///in geometry_data
+        ///in geometryData
         ///{
-        ///	vec2 texCoord;
-        ///	vec2 texSize;
+        ///	vec2 TexCoord;
         ///} dataIn[];
         ///
-        ///void main()
+        ///void FixUV()
         ///{
-        ///	gl_Position = gl_in.gl_Position;
-        ///};.
+        ///	bool isXBad =
+        ///		dataIn[0].TexCoord.x &gt;= u_TexSize.x &amp;&amp;
+        ///		dataIn[1].TexCoord.x &gt;= u_TexSize.x &amp;&amp;
+        ///		dataIn[2].TexCoord.x &gt;= u_TexSize.x;
+        ///
+        ///	gl_Position = gl_in[0].gl_Position;
+        ///	o_TexCoord = dataIn[0].TexCoord;
+        ///	if (isXBad)
+        ///		o_TexCoord.x = mod(o_TexCoord.x, u_TexSize.x); [rest of string was truncated]&quot;;.
         /// </summary>
         public static string skinGeometryShader {
             get {
@@ -632,20 +678,19 @@ namespace PckStudio.Properties {
         ///
         ///uniform mat4 u_ViewProjection;
         ///uniform mat4 u_Model;
-        ///uniform vec2 u_TexSize;
         ///
-        ///out geometry_data
+        ///out geometryData
         ///{
         ///	vec2 TexCoord;
-        ///	vec2 TexSize;
         ///} dataOut;
         ///
         ///void main()
         ///{
         ///	dataOut.TexCoord = texCoord;
-        ///	dataOut.TexSize = u_TexSize;
         ///	vec4 scaledVertex = scale * vertexPosition;
-        ///	vec4 invertedVertex = vec4(scaledVertex.x, scaledVertex.y * -1.0, scaledVertex.z * -1.0,  [rest of string was truncated]&quot;;.
+        ///	vec4 invertedVertex = vec4(scaledVertex.x, scaledVertex.y * -1.0, scaledVertex.z * -1.0, 1.0);
+        ///	gl_Position = u_ViewProjection * u_Model * invertedVertex;
+        ///};.
         /// </summary>
         public static string skinVertexShader {
             get {
@@ -659,12 +704,13 @@ namespace PckStudio.Properties {
         ///layout(location = 0) out vec4 color;
         ///
         ///uniform samplerCube skybox;
+        ///uniform float brightness;
         ///
         ///in vec3 texCoords;
         ///
         ///void main()
         ///{
-        ///	color = texture(skybox, texCoords);
+        ///	color = texture(skybox, texCoords) * vec4(vec3(clamp(brightness, 0.0, 1.0)), 1.0);
         ///}.
         /// </summary>
         public static string skyboxFragmentShader {

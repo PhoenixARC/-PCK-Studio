@@ -9,48 +9,56 @@ namespace PckStudio.Rendering.Texture
 {
     internal class Texture2D : Texture
     {
-        public Texture2D(string filepath)
-            : this(Image.FromFile(filepath))
+        public Texture2D(string filepath, int slot)
+            : this(Image.FromFile(filepath), slot)
         {
 
         }
 
-        public Texture2D(Image image)
-            : this(new Bitmap(image))
-        {
+        public OpenTK.Graphics.OpenGL.PixelFormat PixelFormat { get; set; }
+        public PixelInternalFormat InternalPixelFormat { get; set; }
 
+        public Texture2D(Image image, int slot) : this(slot)
+        {
+            LoadImageData(image);
         }
 
-        public Texture2D(Image image, int slot)
-            : this(new Bitmap(image), slot)
+        public Texture2D(int slot) : this()
         {
-
+            Slot = slot;
+        }
+        
+        private Texture2D() : base(TextureTarget.Texture2D)
+        {
         }
 
-        private Texture2D(Bitmap bitmap, int slot = 0)
-            : base(TextureTarget.Texture2D)
+        public void SetSize(Size size)
         {
-            Bind(slot);
+            Bind();
+            GL.TexImage2D(TextureTarget.Texture2D, 0, InternalPixelFormat, size.Width, size.Height, 0, PixelFormat, PixelType.UnsignedByte, IntPtr.Zero);
+            Unbind();
+        }
 
-            GL.GenerateMipmap(GenerateMipmapTarget.Texture2D);
-
-            SetTexParameter(TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Nearest);
-            SetTexParameter(TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
-           
-            SetTexParameter(TextureParameterName.TextureWrapS, (int)TextureWrapMode.Repeat);
-            SetTexParameter(TextureParameterName.TextureWrapT, (int)TextureWrapMode.Repeat);
-            
+        public void LoadImageData(Image image)
+        {
+            Bind();
+            var bitmap = new Bitmap(image); 
             var data = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba8, bitmap.Width, bitmap.Height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, data.Scan0);
+            GL.TexImage2D(TextureTarget.Texture2D, 0, InternalPixelFormat, bitmap.Width, bitmap.Height, 0, PixelFormat, PixelType.UnsignedByte, data.Scan0);
             bitmap.UnlockBits(data);
+            Unbind();
         }
-
         public void Dispose()
         {
             Unbind();
             GL.DeleteTexture(_id);
         }
 
-        public static implicit operator Texture2D(Bitmap image) => new Texture2D(image);
+
+        public void AttachToFramebuffer(FrameBuffer frameBuffer, FramebufferAttachment attachment)
+        {
+            frameBuffer.Bind();
+            GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, attachment, Target, _id, 0);
+        }
     }
 }

@@ -52,9 +52,11 @@ namespace PckStudio.Rendering
             {
                 var args = new TextureChangingEventArgs(value);
                 Events[nameof(TextureChanging)]?.DynamicInvoke(this, args);
+                OnTextureChanging(this, args);
                 if (!args.Cancel)
                 {
-                    RenderTexture = _texture = value; 
+                    _texture = value;
+                    TextureSize = value.Width == value.Height ? new Size(64, 64) : new Size(64, 32);
                 }
             }
         }
@@ -100,17 +102,6 @@ namespace PckStudio.Rendering
             return bmp;
         }
 
-        private Vector2 CameraTarget
-        {
-            get => Camera.Position;
-            set
-            {
-                if (ClampModel)
-                    value = Vector2.Clamp(value, new Vector2(Camera.Distance / 2f * -1), new Vector2(Camera.Distance / 2f));
-                Camera.LookAt(value);
-            }
-        }
-
         private Vector2 _globalModelRotation;
         private Vector2 GlobalModelRotation
         {
@@ -124,24 +115,6 @@ namespace PckStudio.Rendering
 
         public Size TextureSize { get; private set; } = new Size(64, 64);
         private const float OverlayScale = 1.12f;
-
-        private bool _isLeftMouseDown;
-        private bool _isRightMouseDown;
-
-        private Image RenderTexture
-        {
-            set
-            {
-                if (value is not null && HasValidContext && _skinShader is not null)
-                {
-                    MakeCurrent();
-                    TextureSize = value.Width == value.Height ? new Size(64, 64) : new Size(64, 32);
-                    var texture = new Texture2D(value);
-                    _skinShader.Bind();
-                    _skinShader.SetUniform1("u_Texture", 0);
-                }
-            }
-        }
 
         private bool IsMouseHidden
         {
@@ -162,8 +135,13 @@ namespace PckStudio.Rendering
         private ShaderProgram _skinShader;
         private SkinANIM _anim;
         private Image _texture;
+        private Texture2D skinTexture;
 
-        private Shader _skyboxShader;
+        private FrameBuffer framebuffer;
+        private Texture2D framebufferTexture;
+        private ShaderProgram framebufferShader;
+        private VertexArray framebufferVAO;
+
         private ShaderProgram _skyboxShader;
         private RenderBuffer _skyboxRenderBuffer;
         private CubeTexture _skyboxTexture;
@@ -213,6 +191,17 @@ namespace PckStudio.Rendering
             new Vector3( 1.0f,  1.0f, -1.0f),
             new Vector3(-1.0f,  1.0f, -1.0f)
         };
+
+        private static Vector4[] rectVertices = new Vector4[]
+        {
+            new Vector4( 1.0f, -1.0f, 1.0f, 0.0f),
+            new Vector4(-1.0f, -1.0f, 0.0f, 0.0f),
+            new Vector4(-1.0f,  1.0f, 0.0f, 1.0f),
+            new Vector4( 1.0f,  1.0f, 1.0f, 1.0f),
+            new Vector4( 1.0f, -1.0f, 1.0f, 0.0f),
+            new Vector4(-1.0f,  1.0f, 0.0f, 1.0f),
+        };
+
         public SkinRenderer() : base()
         {
             InitializeCamera();
@@ -416,30 +405,78 @@ namespace PckStudio.Rendering
                     ? Image.FromFile(customSkyboxFilepath)
                     : Resources.DefaultSkyTexture;
 
-                _skyboxTexture = new CubeTexture(skyboxImage);
+                _skyboxTexture = new CubeTexture(skyboxImage, 1);
+                _skyboxTexture.MinFilter = TextureMinFilter.Linear;
+                _skyboxTexture.MagFilter = TextureMagFilter.Linear;
 
-                _skyboxShader = Shader.Create(Resources.skyboxVertexShader, Resources.skyboxFragmentShader);
-                _skyboxShader.Bind();
-                _skyboxShader.SetUniform1("skybox", 1);
-                _skyboxShader.Validate();
+                _skyboxTexture.WrapS = TextureWrapMode.ClampToEdge;
+                _skyboxTexture.WrapT = TextureWrapMode.ClampToEdge;
+                _skyboxTexture.WrapR = TextureWrapMode.ClampToEdge;
+                _skyboxTexture.Unbind();
+                _skyboxShader.Unbind();
 
                 GLErrorCheck();
             }
 
-            // Initialize skin shader
+            // Framebuffer shader
             {
-                _skinShader = Shader.Create(
-                    new ShaderSource(ShaderType.VertexShader, Resources.skinVertexShader),
-                    new ShaderSource(ShaderType.FragmentShader, Resources.skinFragmentShader),
-                    new ShaderSource(ShaderType.GeometryShader, Resources.skinGeometryShader)
-                    );
-                _skinShader.Bind();
-                _skinShader.Validate();
+                framebufferShader = ShaderProgram.Create(Resources.framebufferVertexShader, Resources.framebufferFragmentShader);
+                framebufferShader.Bind();
+                framebufferShader.SetUniform1("screenTexture", 0);
+                framebufferShader.Validate();
             
-                Texture ??= Resources.classic_template;
-                RenderTexture = Texture;
-
                 GLErrorCheck();
+            }
+        }
+
+        protected virtual void OnTextureChanging(object sender, TextureChangingEventArgs e)
+        {
+            e.Cancel = e.NewTexture is null;
+            if (!e.Cancel)
+            {
+                skinTexture.LoadImageData(e.NewTexture);
+                GLErrorCheck();
+            }
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            
+            MakeCurrent();
+            // Initialize framebuffer
+            {
+
+                framebuffer = new FrameBuffer();
+                framebuffer.Bind();
+                framebufferTexture = new Texture2D(0);
+                framebufferTexture.PixelFormat = OpenTK.Graphics.OpenGL.PixelFormat.Rgb;
+                framebufferTexture.InternalPixelFormat = PixelInternalFormat.Rgb;
+                framebufferTexture.SetSize(Size);
+                framebufferTexture.WrapS = TextureWrapMode.ClampToEdge;
+                framebufferTexture.WrapT = TextureWrapMode.ClampToEdge;
+                framebufferTexture.MinFilter = TextureMinFilter.Nearest;
+                framebufferTexture.MagFilter = TextureMagFilter.Nearest;
+
+                framebufferTexture.AttachToFramebuffer(framebuffer, FramebufferAttachment.ColorAttachment0);
+
+                framebufferVAO = new VertexArray();
+                VertexBuffer<Vector4> vertexBuffer = new VertexBuffer<Vector4>(rectVertices, rectVertices.Length * Vector4.SizeInBytes);
+                VertexBufferLayout layout = new VertexBufferLayout();
+                layout.Add<float>(4);
+                framebufferVAO.AddBuffer(vertexBuffer, layout);
+
+                int rbo = GL.GenRenderbuffer();
+                GL.BindRenderbuffer(RenderbufferTarget.Renderbuffer, rbo);
+                GL.RenderbufferStorage(RenderbufferTarget.Renderbuffer, RenderbufferStorage.Depth24Stencil8, Size.Width, Size.Height);
+                GL.FramebufferRenderbuffer(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthStencilAttachment, RenderbufferTarget.Renderbuffer, rbo);
+
+                FramebufferErrorCode status = GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer);
+                if (status != FramebufferErrorCode.FramebufferComplete)
+                {
+                    Debug.Fail("");
+                }
+                framebuffer.Unbind();
             }
         }
 
@@ -526,9 +563,9 @@ namespace PckStudio.Rendering
 
         private void ReleaseMouse()
         {
-            if (IsMouseHidden || _isLeftMouseDown || _isRightMouseDown)
+            if (IsMouseHidden)
             {
-                IsMouseHidden = _isRightMouseDown = _isLeftMouseDown = false;
+                IsMouseHidden = false;
                 Cursor.Position = PreviousMouseLocation;
             }
         }
@@ -577,6 +614,32 @@ namespace PckStudio.Rendering
             leftLeg.ReplaceCube(0, new(-2, 0, -2), new(4, 12, 4), new(0, 16), mirrorTexture: true);
         }
 
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+            if (!IsHandleCreated)
+                return;
+            MakeCurrent();
+            framebuffer.Bind();
+            
+            framebufferTexture.Bind();
+            Size texSize = new Size(Size.Width, Size.Height);
+            framebufferTexture.SetSize(texSize);
+            framebufferTexture.Unbind();
+
+            int rbo = GL.GenRenderbuffer();
+            GL.BindRenderbuffer(RenderbufferTarget.Renderbuffer, rbo);
+            GL.RenderbufferStorage(RenderbufferTarget.Renderbuffer, RenderbufferStorage.Depth24Stencil8, Size.Width, Size.Height);
+            GL.FramebufferRenderbuffer(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthStencilAttachment, RenderbufferTarget.Renderbuffer, rbo);
+            
+            FramebufferErrorCode status = GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer);
+            if (status != FramebufferErrorCode.FramebufferComplete)
+            {
+                Debug.Fail("");
+            }
+            framebuffer.Unbind();
+        }
+
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
@@ -589,6 +652,7 @@ namespace PckStudio.Rendering
 
             GL.Viewport(Size);
 
+            framebuffer.Bind();
             GL.ClearColor(BackColor);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             GL.Enable(EnableCap.DepthTest); // Enable correct Z Drawings
@@ -664,7 +728,7 @@ namespace PckStudio.Rendering
                 GL.DepthFunc(DepthFunction.Lequal);
                 GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
                 _skyboxShader.Bind();
-                _skyboxTexture.Bind(1);
+                _skyboxTexture.Bind();
 
                 var view = new Matrix4(new Matrix3(Matrix4.LookAt(Camera.WorldPosition, Camera.WorldPosition + Camera.Orientation, Camera.Up)))
                     * Matrix4.CreateRotationY(MathHelper.DegreesToRadians(skyboxRotation));
@@ -674,6 +738,16 @@ namespace PckStudio.Rendering
                 Renderer.Draw(_skyboxShader, _skyboxRenderBuffer);
                 GL.DepthFunc(DepthFunction.Less);
             }
+
+            framebuffer.Unbind();
+            GL.Disable(EnableCap.DepthTest);
+            framebufferShader.Bind();
+            framebufferVAO.Bind();
+            framebufferTexture.Bind();
+
+            GL.DrawArrays(PrimitiveType.Triangles, 0, 6);
+
+            framebufferTexture.Unbind();
 
             SwapBuffers();
         }
