@@ -1,4 +1,4 @@
-﻿/* Copyright (c) 2023-present miku-666
+﻿/* Copyright (c) 2024-present miku-666
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
  * arising from the use of this software.
@@ -17,7 +17,6 @@
 **/
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
@@ -26,18 +25,18 @@ using PckStudio.Internal;
 
 namespace PckStudio.Rendering
 {
-    internal class CubeRenderGroup : RenderGroup<TextureVertex>
+    internal class CubeBatchMesh : GenericMesh<TextureVertex>
     {
         private List<CubeData> cubes;
 
         internal float Scale { get; set; } = 1f;
 
-        internal CubeRenderGroup(string name) : base(name, PrimitiveType.Triangles)
+        internal CubeBatchMesh(string name) : base(name, PrimitiveType.Triangles)
         {
             cubes = new List<CubeData>(5);
         }
 
-        internal CubeRenderGroup(string name, float scale)
+        internal CubeBatchMesh(string name, float scale)
             : this(name)
         {
             Scale = scale;
@@ -48,16 +47,16 @@ namespace PckStudio.Rendering
             AddCube(skinBox.Pos.ToOpenTKVector(), skinBox.Size.ToOpenTKVector(), skinBox.UV.ToOpenTKVector(), skinBox.Scale + Scale, skinBox.Mirror, skinBox.Type == "HEAD");
         }
 
-        internal void Clear()
+        internal void ClearData()
         {
             cubes.Clear();
             ResetBuffers();
         }
 
         /// <summary>
-        /// Submits buffered data to the underlying graphics buffer
+        /// Uploads MeshData
         /// </summary>
-        internal void Submit()
+        internal void UploadData()
         {
             ResetBuffers();
             foreach (var cube in cubes)
@@ -71,6 +70,7 @@ namespace PckStudio.Rendering
                 indices.AddRange(indexStorage.Select(n => n + indicesOffset));
                 indicesOffset += cubeVertices.Length;
             }
+            Submit();
         }
 
         internal void AddCube(Vector3 position, Vector3 size, Vector2 uv, float scale = 1f, bool mirrorTexture = false, bool flipZMapping = false)
@@ -90,7 +90,6 @@ namespace PckStudio.Rendering
             cube.Uv = uv;
             cube.Scale = scale;
             cube.MirrorTexture = mirrorTexture;
-            Submit();
         }
 
         internal void SetEnabled(int index, bool enable)
@@ -99,7 +98,6 @@ namespace PckStudio.Rendering
                 throw new IndexOutOfRangeException();
 
             cubes[index].ShouldRender = enable;
-            Submit();
         }
     }
 }
