@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
-namespace PckStudio.Rendering
+namespace PckStudio.Rendering.Shader
 {
-    internal class Shader : IDisposable
+    internal class ShaderProgram : IDisposable
     {
         private int _programId;
         private Dictionary<string, int> locationCache = new Dictionary<string, int>();
 
-        private Shader(int programId)
+        private ShaderProgram(int programId)
         {
             _programId = programId;
         }
@@ -25,7 +25,6 @@ namespace PckStudio.Rendering
             GL.UseProgram(_programId);
         }
 
-        [Conditional("DEBUG")]
         public void Unbind()
         {
             GL.UseProgram(0);
@@ -38,6 +37,12 @@ namespace PckStudio.Rendering
         }
 
         public void SetUniform1(string name, int value)
+        {
+            int location = GetUniformLocation(name);
+            GL.Uniform1(location, value);
+        }
+
+        public void SetUniform1(string name, float value)
         {
             int location = GetUniformLocation(name);
             GL.Uniform1(location, value);
@@ -94,21 +99,13 @@ namespace PckStudio.Rendering
             return shaderId;
         }
 
-        public static Shader Create(string vertexSource, string fragmentSource)
-        {
-            return Create(
-                new ShaderSource(ShaderType.VertexShader, vertexSource),
-                new ShaderSource(ShaderType.FragmentShader, fragmentSource)
-                );
-        }
-
         private bool Link()
         {
             GL.LinkProgram(_programId);
             GL.GetProgram(_programId, GetProgramParameterName.LinkStatus, out int status);
             bool success = status != 0;
             if (!success)
-                Debug.WriteLine(GL.GetProgramInfoLog(_programId), category: nameof(Shader));
+                Debug.WriteLine(GL.GetProgramInfoLog(_programId), category: nameof(ShaderProgram));
             return success;
         }
 
@@ -119,33 +116,41 @@ namespace PckStudio.Rendering
             GL.GetProgram(_programId, GetProgramParameterName.ValidateStatus, out int status);
             bool success = status != 0;
             if (!success)
-                Debug.WriteLine(GL.GetProgramInfoLog(_programId), category: nameof(Shader));
+                Debug.WriteLine(GL.GetProgramInfoLog(_programId), category: nameof(ShaderProgram));
             return success;
 #else
             return true;
 #endif
         }
 
-        public static Shader Create(params ShaderSource[] shaderSources)
+        public static ShaderProgram Create(string vertexSource, string fragmentSource)
+        {
+            return Create(
+                new ShaderSource(ShaderType.VertexShader, vertexSource),
+                new ShaderSource(ShaderType.FragmentShader, fragmentSource)
+                );
+        }
+
+        public static ShaderProgram Create(params ShaderSource[] shaderSources)
         {
             int programId = GL.CreateProgram();
 
-            var shaderIds = new List<int>(shaderSources.Length);
+            var shaderObjects = new List<ShaderObject>(shaderSources.Length);
 
             foreach (var shaderSource in shaderSources)
             {
-                int shaderId = CompileShader(shaderSource.Type, shaderSource.Source);
-                GL.AttachShader(programId, shaderId);
-                shaderIds.Add(shaderId);
+                ShaderObject shaderObject = ShaderObject.CreateNew(shaderSource);
+                shaderObject.AttachToProgram(programId);
+                shaderObjects.Add(shaderObject);
             }
 
-            var shader = new Shader(programId);
+            var shader = new ShaderProgram(programId);
             bool success = shader.Link();
             Debug.Assert(success, "Shader Program linking failed.");
             
-            foreach (var shaderId in shaderIds)
+            foreach (var shaderObject in shaderObjects)
             {
-                GL.DeleteShader(shaderId);
+                shaderObject.Delete();
             }
             return shader;
         }

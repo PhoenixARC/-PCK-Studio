@@ -16,12 +16,13 @@
  * 3. This notice may not be removed or altered from any source distribution.
 **/
 using OpenTK.Graphics.OpenGL;
+using PckStudio.Rendering.Shader;
 
 namespace PckStudio.Rendering
 {
     internal static class Renderer
     {
-        public static void Draw(Shader shader, RenderBuffer renderBuffer)
+        public static void Draw(ShaderProgram shader, RenderBuffer renderBuffer)
         {
             shader.Bind();
             renderBuffer.VertexArray.Bind();

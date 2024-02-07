@@ -159,8 +159,9 @@
     <Compile Include="Rendering\RenderBuffer.cs" />
     <Compile Include="Rendering\Renderer.cs" />
     <Compile Include="Rendering\RenderGroup.cs" />
-    <Compile Include="Rendering\Shader.cs" />
-    <Compile Include="Rendering\ShaderSource.cs" />
+    <Compile Include="Rendering\Shader\ShaderProgram.cs" />
+    <Compile Include="Rendering\Shader\ShaderObject.cs" />
+    <Compile Include="Rendering\Shader\ShaderSource.cs" />
     <Compile Include="Rendering\SkinRenderer.cs">
       <SubType>UserControl</SubType>
     </Compile>

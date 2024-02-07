@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL;
 
-namespace PckStudio.Rendering
+namespace PckStudio.Rendering.Shader
 {
-    internal readonly struct ShaderSource
+    public readonly struct ShaderSource
     {
         public readonly ShaderType Type;
         public readonly string Source;

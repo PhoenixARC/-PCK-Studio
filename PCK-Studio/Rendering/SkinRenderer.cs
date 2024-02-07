@@ -33,6 +33,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using PckStudio.Rendering.Camera;
 using PckStudio.Rendering.Texture;
+using PckStudio.Rendering.Shader;
 
 namespace PckStudio.Rendering
 {
@@ -158,11 +159,12 @@ namespace PckStudio.Rendering
         private Point PreviousMouseLocation;
         private Point CurrentMouseLocation;
 
-        private Shader _skinShader;
+        private ShaderProgram _skinShader;
         private SkinANIM _anim;
         private Image _texture;
 
         private Shader _skyboxShader;
+        private ShaderProgram _skyboxShader;
         private RenderBuffer _skyboxRenderBuffer;
         private CubeTexture _skyboxTexture;
         private float skyboxRotation = 0f;
@@ -198,12 +200,27 @@ namespace PckStudio.Rendering
         private Matrix4 RightLegMatrix { get; set; } = Matrix4.Identity;
         private Matrix4 LeftLegMatrix { get; set; } = Matrix4.Identity;
 
+        private static Vector3[] cubeVertices = new Vector3[]
+        {
+            // front
+            new Vector3(-1.0f, -1.0f,  1.0f),
+            new Vector3( 1.0f, -1.0f,  1.0f),
+            new Vector3( 1.0f,  1.0f,  1.0f),
+            new Vector3(-1.0f,  1.0f,  1.0f),
+            // back
+            new Vector3(-1.0f, -1.0f, -1.0f),
+            new Vector3( 1.0f, -1.0f, -1.0f),
+            new Vector3( 1.0f,  1.0f, -1.0f),
+            new Vector3(-1.0f,  1.0f, -1.0f)
+        };
         public SkinRenderer() : base()
         {
-            InitializeComponent();
             InitializeCamera();
             InitializeSkinData();
-            ANIM ??= SkinANIM.Empty;
+            InitializeShaders();
+            InitializeComponent();
+
+            ANIM ??= new SkinANIM(SkinAnimMask.RESOLUTION_64x64);
             OnTimerTick = AnimationTick;
             ModelData = new ObservableCollection<SkinBOX>();
             ModelData.CollectionChanged += ModelData_CollectionChanged;
@@ -321,9 +338,8 @@ namespace PckStudio.Rendering
             leftLegOverlay.Submit();
         }
 
-        protected override void OnLoad(EventArgs e)
+        private void InitializeShaders()
         {
-            base.OnLoad(e);
             if (DesignMode)
                 return;
 
@@ -331,22 +347,34 @@ namespace PckStudio.Rendering
 
             Trace.TraceInformation(GL.GetString(StringName.Version));
 
-            // Initialize skybox shader
+            // Skin shader
             {
-                Vector3[] cubeVertices = new Vector3[]
-                {
-                    // front
-                    new Vector3(-1.0f, -1.0f,  1.0f),
-                    new Vector3( 1.0f, -1.0f,  1.0f),
-                    new Vector3( 1.0f,  1.0f,  1.0f),
-                    new Vector3(-1.0f,  1.0f,  1.0f),
-                    // back
-                    new Vector3(-1.0f, -1.0f, -1.0f),
-                    new Vector3( 1.0f, -1.0f, -1.0f),
-                    new Vector3( 1.0f,  1.0f, -1.0f),
-                    new Vector3(-1.0f,  1.0f, -1.0f)
-                };
+                _skinShader = ShaderProgram.Create(
+                    new ShaderSource(ShaderType.VertexShader, Resources.skinVertexShader),
+                    new ShaderSource(ShaderType.FragmentShader, Resources.skinFragmentShader),
+                    new ShaderSource(ShaderType.GeometryShader, Resources.skinGeometryShader)
+                    );
+                _skinShader.Bind();
+                _skinShader.SetUniform1("u_Texture", 0);
+                _skinShader.Validate();
+                GLErrorCheck();
 
+                skinTexture = new Texture2D(0);
+                skinTexture.PixelFormat = OpenTK.Graphics.OpenGL.PixelFormat.Bgra;
+                skinTexture.InternalPixelFormat = PixelInternalFormat.Rgba8;
+                skinTexture.MinFilter = TextureMinFilter.Nearest;
+                skinTexture.MagFilter = TextureMagFilter.Nearest;
+                skinTexture.WrapS = TextureWrapMode.Repeat;
+                skinTexture.WrapT = TextureWrapMode.Repeat;
+                
+                Texture ??= Resources.classic_template;
+
+                _skinShader.Unbind();
+                GLErrorCheck();
+            }
+
+            // Skybox shader
+                {
                 var skyboxVAO = new VertexArray();
                 var skyboxVBO = new VertexBuffer<Vector3>(cubeVertices, cubeVertices.Length * Vector3.SizeInBytes);
                 var vboLayout = new VertexBufferLayout();
@@ -376,6 +404,12 @@ namespace PckStudio.Rendering
 
                 skyboxVAO.Unbind();
                 skybocIBO.Unbind();
+
+                _skyboxShader = ShaderProgram.Create(Resources.skyboxVertexShader, Resources.skyboxFragmentShader);
+                _skyboxShader.Bind();
+                _skyboxShader.SetUniform1("skybox", 1);
+                _skyboxShader.SetUniform1("brightness", 1f);
+                _skyboxShader.Validate();
 
                 string customSkyboxFilepath = Path.Combine(Program.AppData, "cubemap.png");
                 Image skyboxImage = File.Exists(customSkyboxFilepath)
@@ -553,21 +587,23 @@ namespace PckStudio.Rendering
 
             MakeCurrent(); 
 
-            Camera.Update(AspectRatio);
+            GL.Viewport(Size);
 
+            GL.ClearColor(BackColor);
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+            GL.Enable(EnableCap.DepthTest); // Enable correct Z Drawings
+
+            // Render (custom) skin
+            {
             var viewProjection = Camera.GetViewProjection();
             _skinShader.Bind();
             _skinShader.SetUniformMat4("u_ViewProjection", ref viewProjection);
             _skinShader.SetUniform2("u_TexSize", new Vector2(TextureSize.Width, TextureSize.Height));
 
-            GL.Viewport(Size);
-
-            GL.ClearColor(BackColor);
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+                skinTexture.Bind();
 
             GL.Enable(EnableCap.Texture2D); // Enable textures
 
-            GL.Enable(EnableCap.DepthTest); // Enable correct Z Drawings
             GL.DepthFunc(DepthFunction.Lequal); // Enable correct Z Drawings
             GL.DepthMask(true);
 
@@ -620,7 +656,8 @@ namespace PckStudio.Rendering
             RenderBodyPart(new Vector3( 4f, 2f, 0f), new Vector3(slimModel ? -4f : -5f, -2f, 0f), RightArmMatrix * armRightMatrix, modelMatrix, "ARM0", "SLEEVE0");
             RenderBodyPart(new Vector3(-4f, 2f, 0f), new Vector3(                   5f, -2f, 0f), LeftArmMatrix  * armLeftMatrix , modelMatrix, "ARM1", "SLEEVE1");
             RenderBodyPart(new Vector3(0f, 12f, 0f), new Vector3(-2f, -12f, 0f), RightLegMatrix * legRightMatrix, modelMatrix, "LEG0", "PANTS0");
-            RenderBodyPart(new Vector3(0f, 12f, 0f), new Vector3( 2f, -12f, 0f), LeftLegMatrix  * legLeftMatrix , modelMatrix, "LEG1", "PANTS1");
+                RenderBodyPart(new Vector3(0f, 12f, 0f), new Vector3(2f, -12f, 0f), LeftLegMatrix * legLeftMatrix, modelMatrix, "LEG1", "PANTS1");
+            }
             
             // Render Skybox
             {
