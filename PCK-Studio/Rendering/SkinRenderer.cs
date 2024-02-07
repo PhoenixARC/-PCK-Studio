@@ -687,7 +687,10 @@ namespace PckStudio.Rendering
                 Matrix4.CreateFromAxisAngle(-Vector3.UnitX, MathHelper.DegreesToRadians(GlobalModelRotation.X)) * 
                 Matrix4.CreateFromAxisAngle( Vector3.UnitY, MathHelper.DegreesToRadians(GlobalModelRotation.Y));
 
-            bool slimModel = ANIM.GetFlag(SkinAnimFlag.SLIM_MODEL);
+                if (ANIM.GetFlag(SkinAnimFlag.DINNERBONE))
+                {
+                    modelMatrix *= Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(-180f));
+                }
 
             var legRightMatrix = Matrix4.Identity;
             var legLeftMatrix = Matrix4.Identity;
