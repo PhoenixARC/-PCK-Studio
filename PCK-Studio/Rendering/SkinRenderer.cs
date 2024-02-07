@@ -145,7 +145,7 @@ namespace PckStudio.Rendering
         private VertexArray framebufferVAO;
 
         private ShaderProgram _skyboxShader;
-        private RenderBuffer _skyboxRenderBuffer;
+        private DrawContext _skyboxRenderBuffer;
         private CubeTexture _skyboxTexture;
         private float skyboxRotation = 0f;
         private float skyboxRotationStep = 0.5f;
@@ -382,7 +382,7 @@ namespace PckStudio.Rendering
                     3, 2, 6,
                     6, 7, 3);
 
-                _skyboxRenderBuffer = new RenderBuffer(skyboxVAO, skybocIBO, PrimitiveType.Triangles);
+                _skyboxRenderBuffer = new DrawContext(skyboxVAO, skybocIBO, PrimitiveType.Triangles);
 
                 skyboxVAO.Unbind();
                 skybocIBO.Unbind();

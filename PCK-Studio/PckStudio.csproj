@@ -157,7 +157,7 @@
     <Compile Include="Rendering\FrameBuffer.cs" />
     <Compile Include="Rendering\IndexBuffer.cs" />
     <Compile Include="Rendering\IVertexLayout.cs" />
-    <Compile Include="Rendering\RenderBuffer.cs" />
+    <Compile Include="Rendering\DrawContext.cs" />
     <Compile Include="Rendering\Renderer.cs" />
     <Compile Include="Rendering\GenericMesh.cs" />
     <Compile Include="Rendering\Shader\ShaderProgram.cs" />

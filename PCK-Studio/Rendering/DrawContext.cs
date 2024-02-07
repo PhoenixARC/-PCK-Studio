@@ -7,13 +7,13 @@ using OpenTK.Graphics.OpenGL;
 
 namespace PckStudio.Rendering
 {
-    internal class RenderBuffer
+    internal class DrawContext
     {
         internal readonly VertexArray VertexArray;
         internal readonly IndexBuffer IndexBuffer;
         internal readonly PrimitiveType PrimitiveType;
 
-        public RenderBuffer(VertexArray vertexArray, IndexBuffer indexBuffer, PrimitiveType primitiveType)
+        public DrawContext(VertexArray vertexArray, IndexBuffer indexBuffer, PrimitiveType primitiveType)
         {
             VertexArray = vertexArray;
             IndexBuffer = indexBuffer;

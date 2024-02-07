@@ -15,6 +15,7 @@
  *    misrepresented as being the original software.
  * 3. This notice may not be removed or altered from any source distribution.
 **/
+using System;
 using OpenTK.Graphics.OpenGL;
 using PckStudio.Rendering.Shader;
 
@@ -22,12 +23,12 @@ namespace PckStudio.Rendering
 {
     internal static class Renderer
     {
-        public static void Draw(ShaderProgram shader, RenderBuffer renderBuffer)
+        public static void Draw(ShaderProgram shader, DrawContext context)
         {
             shader.Bind();
-            renderBuffer.VertexArray.Bind();
-            renderBuffer.IndexBuffer.Bind();
-            GL.DrawElements(renderBuffer.PrimitiveType, renderBuffer.IndexBuffer.GetCount(), DrawElementsType.UnsignedInt, 0);
+            context.VertexArray.Bind();
+            context.IndexBuffer.Bind();
+            GL.DrawElements(context.PrimitiveType, context.IndexBuffer.GetCount(), DrawElementsType.UnsignedInt, 0);
         }
     }
 }
