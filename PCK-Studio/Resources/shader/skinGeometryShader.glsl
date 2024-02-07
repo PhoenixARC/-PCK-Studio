@@ -6,7 +6,7 @@ layout (triangle_strip, max_vertices=3) out;
 uniform vec2 u_TexSize;
 
 out vec2 o_TexCoord;
-out vec2 o_TexScale;
+out vec2 o_TillingFactor;
 
 in geometryData
 {
@@ -41,7 +41,7 @@ void FixUV()
 
 void main()
 {
-	o_TexScale = 1.0 / u_TexSize;
+	o_TillingFactor = 1.0 / u_TexSize;
 	FixUV();
 	EndPrimitive();
 };
