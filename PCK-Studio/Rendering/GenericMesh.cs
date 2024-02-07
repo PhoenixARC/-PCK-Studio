@@ -1,4 +1,4 @@
-﻿/* Copyright (c) 2023-present miku-666
+﻿/* Copyright (c) 2024-present miku-666
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
  * arising from the use of this software.
@@ -17,12 +17,14 @@
 **/
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using OpenTK.Graphics.OpenGL;
+using PckStudio.Rendering.Shader;
 
 namespace PckStudio.Rendering
 {
-    internal class RenderGroup<T> where T : struct, IVertexLayout
+    internal class GenericMesh<T> where T : struct, IVertexLayout
     {
         internal string Name { get; }
 
@@ -37,8 +39,9 @@ namespace PckStudio.Rendering
         private IndexBuffer indexBuffer;
         private readonly VertexBufferLayout _layout;
         private readonly PrimitiveType drawType;
+        private DrawContext drawContext;
 
-        internal RenderGroup(string name, PrimitiveType type)
+        protected GenericMesh(string name, PrimitiveType type)
         {
             Name = name;
             drawType = type;
@@ -55,7 +58,7 @@ namespace PckStudio.Rendering
             indices.Clear();
         }
 
-        internal RenderBuffer GetRenderBuffer()
+        protected void Submit()
         {
             indexBuffer?.Dispose();
             vertexBuffer.Dispose();
@@ -67,8 +70,22 @@ namespace PckStudio.Rendering
             vertexArray.AddBuffer(vertexBuffer, _layout);
 
             indexBuffer = IndexBuffer.Create(indices.ToArray());
+            drawContext = new DrawContext(vertexArray, indexBuffer, drawType);
+        }
 
-            return new RenderBuffer(vertexArray, indexBuffer, drawType);
+        public void Draw(ShaderProgram shader)
+        {
+            if (drawContext == null)
+            {
+                Trace.TraceError($"[{nameof(GenericMesh<T>)}] Field: 'drawContext' is null.");
+                return;
+            }
+            if (shader == null)
+            {
+                Trace.TraceError($"[{nameof(GenericMesh<T>)}] Parameter: 'shader' is null.");
+                return;
+            }
+            Renderer.Draw(shader, drawContext);
         }
     }
 }

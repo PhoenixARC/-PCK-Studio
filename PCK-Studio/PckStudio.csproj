@@ -159,7 +159,7 @@
     <Compile Include="Rendering\IVertexLayout.cs" />
     <Compile Include="Rendering\RenderBuffer.cs" />
     <Compile Include="Rendering\Renderer.cs" />
-    <Compile Include="Rendering\RenderGroup.cs" />
+    <Compile Include="Rendering\GenericMesh.cs" />
     <Compile Include="Rendering\Shader\ShaderProgram.cs" />
     <Compile Include="Rendering\Shader\ShaderObject.cs" />
     <Compile Include="Rendering\Shader\ShaderSource.cs" />
