@@ -1,27 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Octokit;
 using OpenTK;
 
 namespace PckStudio.Rendering.Camera
 {
     internal class PerspectiveCamera : Camera
     {
-        public override float Distance
+        public float Distance
         {
-            get => _position.Z;
-            set => _position.Z = value;
+            get => _distance;
+            set
+            {
+                _distance = value;
+                UpdateViewMatrix();
+            }
         }
 
-        public override Vector2 Position
-        {
-            get => _position.Xy;
-            set => _position.Xy = value;
-        }
+        public Size ViewportSize { get; set; }
 
         public Vector3 WorldPosition => _position;
+        public Vector3 FocalPoint
+        {
+            get => _focalPoint;
+            set
+            {
+                _focalPoint = value;
+                UpdateViewMatrix();
+            }
+        }
 
         public Vector2 Rotation
         {
@@ -30,67 +42,131 @@ namespace PckStudio.Rendering.Camera
             {
                 _rotation.X = MathHelper.Clamp(value.X, -180f, 180f);
                 _rotation.Y = MathHelper.Clamp(value.Y, -180f, 180f);
+                UpdateViewMatrix();
             }
         }
 
         public Vector3 Orientation => -Vector3.UnitZ;
 
         public Vector3 Up = Vector3.UnitY;
+        
         public float MinimumFov { get; set; } = 30f;
         public float MaximumFov { get; set; } = 120f;
+
         public float Fov
         {
             get => fov;
             set => fov = MathHelper.Clamp(value, MinimumFov, MaximumFov);
         }
 
-        public PerspectiveCamera(Vector3 position, Vector2 rotation, float fov) : this(position.Xy, position.Z, rotation, fov)
-        { }
-
-        public PerspectiveCamera(Vector2 position, float distance, Vector2 rotation, float fov)
+        public PerspectiveCamera(float fov, Vector3 position)
         {
-            LookAt(position);
-            Distance = distance;
             Fov = fov;
+            _position = position;
+            _focalPoint = Vector3.Zero;
         }
 
-        private Matrix4 viewProjection;
         private Matrix4 viewMatrix;
         private float fov;
 
+        private float _distance;
         private Vector3 _position;
         private Vector2 _rotation;
+        private Vector3 _focalPoint;
 
-
-        internal override Matrix4 GetViewProjection()
+        public override Matrix4 GetViewProjection()
         {
-            return viewProjection;
+            return viewMatrix * projectionMatrix;
         }
 
-        private void UpdateView()
+        private void UpdateViewMatrix()
         {
+            // m_Yaw = m_Pitch = 0.0f; // Lock the camera's rotation
+            _position = CalculatePosition();
 
-            Matrix4 rotation = Matrix4.CreateFromAxisAngle(new Vector3(-1f, 0f, 0f), MathHelper.DegreesToRadians(Rotation.X))
-                             * Matrix4.CreateFromAxisAngle(new Vector3(0f, 1f, 0f), MathHelper.DegreesToRadians(Rotation.Y));
+            Quaternion orientation = GetOrientation();
+            var rotation = Matrix4.CreateTranslation(_position);
+            rotation *= Matrix4.CreateFromQuaternion(orientation);
+            rotation *= Matrix4.CreateTranslation(_position).Inverted();
 
-            viewMatrix = Matrix4.LookAt(_position, _position + Orientation, Up) * rotation;
+            viewMatrix = Matrix4.CreateTranslation(_position) * rotation;
+            viewMatrix = viewMatrix.Inverted();
         }
 
-        internal override void Update(float aspect)
+        public void Update(float aspect)
         {
-            UpdateView();
-            var projection = Matrix4.CreatePerspectiveFieldOfView((float)MathHelper.DegreesToRadians(Fov), aspect, 1f, 1000f);
-            viewProjection = viewMatrix * projection;
+            UpdateViewMatrix();
+            projectionMatrix = Matrix4.CreatePerspectiveFieldOfView((float)MathHelper.DegreesToRadians(Fov), aspect, 1f, 1000f);
         }
 
-        internal void LookAt(Vector2 pos)
+        private Vector2 GetPanSpeed()
         {
-            Position = pos;
+            float x = Math.Min(ViewportSize.Width / 100.0f, 1.4f); // max = 2.4f
+            float xFactor = 0.0366f * (x * x) - 0.1778f * x + 0.3021f;
+
+            float y = Math.Min(ViewportSize.Height / 100.0f, 1.4f); // max = 2.4f
+            float yFactor = 0.0366f * (y * y) - 0.1778f * y + 0.3021f;
+
+            return new Vector2(xFactor, yFactor);
         }
+
+        public void Pan(Vector2 delta)
+        {
+            Pan(delta.X, delta.Y);
+        }
+
+        public void Pan(float deltaX, float deltaY)
+        {
+            Vector2 panSpeed = GetPanSpeed();
+            _focalPoint += -GetRightDirection() * deltaX * panSpeed.X * _distance;
+            _focalPoint += GetUpDirection() * deltaY * panSpeed.Y * _distance;
+            UpdateViewMatrix();
+        }
+
+        public void Rotate(Vector2 delta)
+        {
+            Rotate(delta.X, delta.Y);
+        }
+
+        public void Rotate(float deltaX,float deltaY)
+        {
+            const float RotationSpeed = 0.8f;
+            float yawSign = GetUpDirection().Y < 0 ? -1.0f : 1.0f;
+            _rotation.Y += yawSign * deltaX * RotationSpeed;
+            _rotation.X += deltaY * RotationSpeed;
+
+            UpdateViewMatrix();
+        }
+
+        public Vector3 GetUpDirection()
+        {
+            return GetOrientation() * Up;
+        }
+
+        public Vector3 GetRightDirection()
+        {
+            return GetOrientation() * Vector3.UnitX;
+        }
+
+        public Vector3 GetForwardDirection()
+        {
+            return GetOrientation() * Orientation;
+        }
+
+        private Vector3 CalculatePosition()
+	    {
+            Vector3 forwadDirection = GetForwardDirection();
+            return FocalPoint - forwadDirection * Distance;
+	    }
+
+	    private Quaternion GetOrientation()
+	    {
+		    return new Quaternion(new Vector3(-Rotation));
+	    }
 
         public override string ToString()
         {
-            return $"FOV: {Fov}\nPosition: {Position}\nRotation: {Rotation}";
+            return $"FOV: {Fov}\nPosition: {WorldPosition}\nRotation: {Rotation}";
         }
 
     }

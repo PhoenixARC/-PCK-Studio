@@ -262,10 +262,11 @@ namespace PckStudio.Rendering
         private const float DefaultCameraDistance = 64f;
         private void InitializeCamera()
         {
-            Camera = new PerspectiveCamera(new Vector2(0f, 5f), DefaultCameraDistance, Vector2.Zero, 60f)
+            Camera = new PerspectiveCamera(60f, new Vector3(0f, 0f, 0f))
             {
                 MinimumFov = 30f,
                 MaximumFov = 120f,
+                Distance = DefaultCameraDistance,
             };
         }
 
@@ -473,7 +474,6 @@ namespace PckStudio.Rendering
                     return true;
                 case Keys.R:
                     GlobalModelRotation = Vector2.Zero;
-                    CameraTarget = Vector2.Zero;
                     Camera.Distance = DefaultCameraDistance;
                     return true;
                 case Keys.A:
@@ -676,21 +676,21 @@ namespace PckStudio.Rendering
         {
             base.OnMouseMove(e);
             // Rotate the model
-            if (_isLeftMouseDown)
+            if (e.Button == MouseButtons.Left)
             {
-                float rotationYDelta = (float)Math.Round((Cursor.Position.X - CurrentMouseLocation.X) * 0.5f);
-                float rotationXDelta = (float)Math.Round(-(Cursor.Position.Y - CurrentMouseLocation.Y) * 0.5f);
-                GlobalModelRotation += new Vector2(rotationXDelta, rotationYDelta);
+                float deltaX = (Cursor.Position.X - CurrentMouseLocation.X) * 0.5f;
+                float deltaY = (Cursor.Position.Y - CurrentMouseLocation.Y) * 0.5f;
+                GlobalModelRotation += new Vector2(-deltaY, deltaX) * Camera.Distance * 0.015f;
                 Cursor.Position = new Point((int)Math.Round(Screen.PrimaryScreen.Bounds.Width / 2d), (int)Math.Round(Screen.PrimaryScreen.Bounds.Height / 2d));
                 CurrentMouseLocation = Cursor.Position;
                 return;
             }
             // Move the model
-            if (_isRightMouseDown)
+            if (e.Button == MouseButtons.Right)
             {
-                float deltaX = -(Cursor.Position.X - CurrentMouseLocation.X) * 0.05f / (float)MathHelper.DegreesToRadians(Camera.Fov);
-                float deltaY = (Cursor.Position.Y - CurrentMouseLocation.Y) * 0.05f / (float)MathHelper.DegreesToRadians(Camera.Fov);
-                CameraTarget += new Vector2(deltaX, deltaY);
+                float deltaX = (Cursor.Position.X - CurrentMouseLocation.X) * 0.05f;
+                float deltaY = (Cursor.Position.Y - CurrentMouseLocation.Y) * 0.05f;
+                Camera.Pan(deltaX, deltaY);
                 Cursor.Position = new Point((int)Math.Round(Screen.PrimaryScreen.Bounds.Width / 2d), (int)Math.Round(Screen.PrimaryScreen.Bounds.Height / 2d));
                 CurrentMouseLocation = Cursor.Position;
             }
@@ -704,26 +704,14 @@ namespace PckStudio.Rendering
         protected override void OnMouseDown(MouseEventArgs e)
         {
             base.OnMouseDown(e);
-            if (!_isLeftMouseDown && e.Button == MouseButtons.Left)
+            if (e.Button == MouseButtons.Right || e.Button == MouseButtons.Left)
             {
-                // If the ray didn't hit the model then rotate the model
-                PreviousMouseLocation = Cursor.Position; // Store the old mouse position to reset it when the action is over
-                if (!IsMouseHidden) // Hide the mouse
+                if (!IsMouseHidden)
                 {
                     IsMouseHidden = true;
                 }
-                CurrentMouseLocation = Cursor.Position; // Store the current mouse position to use it for the rotate action
-                _isLeftMouseDown = true;
-            }
-            else if (!_isRightMouseDown && e.Button == MouseButtons.Right)
-            {
-                PreviousMouseLocation = Cursor.Position; // Store the old mouse position to reset it when the action is over 
-                if (!IsMouseHidden) // Hide the mouse
-                {
-                    IsMouseHidden = true;
-                }
-                CurrentMouseLocation = Cursor.Position; // Store the current mouse position to use it for the move action
-                _isRightMouseDown = true;
+                PreviousMouseLocation = Cursor.Position;
+                CurrentMouseLocation = Cursor.Position;
             }
         }
 

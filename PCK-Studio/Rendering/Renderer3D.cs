@@ -60,13 +60,19 @@ namespace PckStudio.Rendering
             timer.Tick += TimerTick;
             timer.Start();
             VSync = true;
-            Camera = new PerspectiveCamera(Vector3.UnitZ, Vector2.Zero, 30f);
         }
 
         private void TimerTick(object sender, EventArgs e)
         {
             OnTimerTick?.Invoke(sender, e);
             Invalidate();
+        }
+
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+            Camera.Update(AspectRatio);
+            Camera.ViewportSize = Size;
         }
     }
 }

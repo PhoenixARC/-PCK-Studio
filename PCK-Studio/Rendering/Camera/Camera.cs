@@ -10,17 +10,8 @@ namespace PckStudio.Rendering.Camera
 {
     internal abstract class Camera
     {
-        public abstract float Distance { get; set; }
-
-        public abstract Vector2 Position { get; set; }
-
-        internal abstract Matrix4 GetViewProjection();
-
-        internal abstract void Update(float aspect);
-
-        public override string ToString()
-        {
-            return $"Position: {Position}\nDistance: {Distance}";
-        }
+        protected Matrix4 projectionMatrix;
+        
+        public abstract Matrix4 GetViewProjection();
     }
 }
