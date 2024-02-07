@@ -700,13 +700,14 @@ namespace PckStudio.Rendering
             if (!ANIM.GetFlag(SkinAnimFlag.STATIC_ARMS))
             {
                 armRightMatrix = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(animationCurrentRotationAngle));
-                armLeftMatrix  = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(-animationCurrentRotationAngle));
+                    armLeftMatrix = Matrix4.CreateRotationX(MathHelper.DegreesToRadians((ANIM.GetFlag(SkinAnimFlag.SYNCED_ARMS) ? 1f : -1f) * animationCurrentRotationAngle));
             }
+
 
             if (!ANIM.GetFlag(SkinAnimFlag.STATIC_LEGS))
             {
-                legRightMatrix = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(-animationCurrentRotationAngle));
-                legLeftMatrix  = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(animationCurrentRotationAngle));
+                    legRightMatrix = Matrix4.CreateRotationX(MathHelper.DegreesToRadians((ANIM.GetFlag(SkinAnimFlag.SYNCED_LEGS) ? 1f : -1f) * animationCurrentRotationAngle));
+                    legLeftMatrix = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(animationCurrentRotationAngle));
             }
 
             if (ANIM.GetFlag(SkinAnimFlag.ZOMBIE_ARMS))
@@ -722,10 +723,11 @@ namespace PckStudio.Rendering
                 armLeftMatrix = Matrix4.CreateRotationX(0f);
             }
 
-            RenderBodyPart(new Vector3(0f, 0f, 0f), Vector3.Zero, HeadMatrix, modelMatrix, "HEAD", "HEADWEAR");
-            RenderBodyPart(new Vector3(0f, 0f, 0f), Vector3.Zero, BodyMatrix, modelMatrix, "BODY", "JACKET");
-            RenderBodyPart(new Vector3( 4f, 2f, 0f), new Vector3(slimModel ? -4f : -5f, -2f, 0f), RightArmMatrix * armRightMatrix, modelMatrix, "ARM0", "SLEEVE0");
-            RenderBodyPart(new Vector3(-4f, 2f, 0f), new Vector3(                   5f, -2f, 0f), LeftArmMatrix  * armLeftMatrix , modelMatrix, "ARM1", "SLEEVE1");
+                bool slimModel = ANIM.GetFlag(SkinAnimFlag.SLIM_MODEL);
+                RenderBodyPart(new Vector3(0f, 0f, 0f), new Vector3(0f), HeadMatrix, modelMatrix, "HEAD", "HEADWEAR");
+                RenderBodyPart(new Vector3(0f, 0f, 0f), new Vector3(0f), BodyMatrix, modelMatrix, "BODY", "JACKET");
+                RenderBodyPart(new Vector3(4f, 2f, 0f), new Vector3(slimModel ? -4f : -5f, -2f, 0f), RightArmMatrix * armRightMatrix, modelMatrix, "ARM0", "SLEEVE0");
+                RenderBodyPart(new Vector3(-4f, 2f, 0f), new Vector3(5f, -2f, 0f), LeftArmMatrix * armLeftMatrix, modelMatrix, "ARM1", "SLEEVE1");
             RenderBodyPart(new Vector3(0f, 12f, 0f), new Vector3(-2f, -12f, 0f), RightLegMatrix * legRightMatrix, modelMatrix, "LEG0", "PANTS0");
                 RenderBodyPart(new Vector3(0f, 12f, 0f), new Vector3(2f, -12f, 0f), LeftLegMatrix * legLeftMatrix, modelMatrix, "LEG1", "PANTS1");
             }
