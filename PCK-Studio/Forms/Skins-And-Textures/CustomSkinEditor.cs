@@ -24,6 +24,7 @@ namespace PckStudio.Forms
         public Image PreviewImage => _previewImage;
 
         private PckFileData _file;
+        private Random rng;
 
         private BindingSource skinPartListBindingSource;
         private BindingSource skinOffsetListBindingSource;
@@ -39,11 +40,11 @@ namespace PckStudio.Forms
             InitializeComponent();
 
             _file = file;
+            rng = new Random();
             if (_file.Size > 0)
             {
-                uvPictureBox.BackgroundImage = renderer3D1.Texture = _file.GetTexture();
+                renderer3D1.Texture = _file.GetTexture();
             }
-            //comboParent.Items.AddRange(ValidModelBoxTypes);
             LoadModelData(file.Properties);
         }
 
@@ -64,35 +65,20 @@ namespace PckStudio.Forms
 
             skinOffsetListBindingSource = new BindingSource(renderer3D1.PartOffsets, null);
             offsetListBox.DataSource = skinOffsetListBindingSource;
-            //offsetListBox.DisplayMember = ""
         }
 
-        // TODO
-        private void GenerateUVTextureMap()
+        private void GenerateUVTextureMap(SkinBOX skinBox)
         {
-            Random rng = new Random();
-            using (Graphics graphics = Graphics.FromImage(uvPictureBox.Image))
+            using (Graphics graphics = Graphics.FromImage(uvPictureBox.BackgroundImage))
             {
                 graphics.ApplyConfig(_graphicsConfig);
-                //foreach (var part in modelBoxes)
-                //{
-                //    float width = part.Size.X * 2;
-                //    float height = part.Size.Y * 2;
-                //    float length = part.Size.Z * 2;
-                //    float u = part.UV.X * 2;
-                //    float v = part.UV.Y * 2;
-                //    int argb = rng.Next(-16777216, -1); // 0xFF000000 - 0xFFFFFFFF
-                //    var color = Color.FromArgb(argb);
-                //    Brush brush = new SolidBrush(color);
-                //    graphics.FillRectangle(brush, u + length, v, width, length);
-                //    graphics.FillRectangle(brush, u + length + width, v, width, length);
-                //    graphics.FillRectangle(brush, u, length + v, length, height);
-                //    graphics.FillRectangle(brush, u + length, v + length, width, height);
-                //    graphics.FillRectangle(brush, u + length + width, v + length, width, height);
-                //    graphics.FillRectangle(brush, u + length + width * 2, v + length, length, height);
-                //}
+                int argb = rng.Next(unchecked((int)0xFF000000), -1);
+                var color = Color.FromArgb(argb);
+                Brush brush = new SolidBrush(color);
+                graphics.FillPath(brush, skinBox.GetUVGraphicsPath());
             }
             uvPictureBox.Invalidate();
+            renderer3D1.Texture = uvPictureBox.BackgroundImage;
         }
 
         private void createToolStripMenuItem_Click(object sender, EventArgs e)
@@ -100,8 +86,11 @@ namespace PckStudio.Forms
             var boxEditor = new BoxEditor(SkinBOX.Empty, false);
             if (boxEditor.ShowDialog() == DialogResult.OK)
             {
-                renderer3D1.ModelData.Add(boxEditor.Result);
+                var newBox = boxEditor.Result;
+                renderer3D1.ModelData.Add(newBox);
                 skinPartListBindingSource.ResetBindings(false);
+                if (generateTextureCheckBox.Checked)
+                    GenerateUVTextureMap(newBox);
             }
         }
 
@@ -164,7 +153,7 @@ namespace PckStudio.Forms
         }
 
         [Obsolete("Kept for backwards compatibility, remove later.")]
-        private void buttonImportModel_Click(object sender, EventArgs e)
+        private void importCustomSkinButton_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Custom Skin Model File | *.CSM";
