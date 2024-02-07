@@ -30,6 +30,7 @@ namespace PckStudio.Rendering
                 GL.VertexAttribPointer(i, element.Count, element.Type, element.Normalize, layout.GetStride(), offset);
                 offset += element.Count * VertexBufferElement.GetStrideSize(element.Type);
             }
+            Unbind();
         }
 
         public void Bind()

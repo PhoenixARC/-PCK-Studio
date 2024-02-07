@@ -20,12 +20,13 @@ namespace PckStudio.Rendering
 
         public VertexBuffer(T[] data, int size)
         {
-            _id = GL.GenBuffer();
-            Bind();
-            GL.BufferData(BufferTarget.ArrayBuffer, size, data, BufferUsageHint.StaticDraw);
 #if DEBUG
             __data = data;
 #endif
+            _id = GL.GenBuffer();
+            Bind();
+            GL.BufferData(BufferTarget.ArrayBuffer, size, data, BufferUsageHint.StaticDraw);
+            Unbind();
         }
 
         public void Bind()
@@ -33,7 +34,6 @@ namespace PckStudio.Rendering
             GL.BindBuffer(BufferTarget.ArrayBuffer, _id);
         }
 
-        [Conditional("DEBUG")]
         public void Unbind()
         {
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);

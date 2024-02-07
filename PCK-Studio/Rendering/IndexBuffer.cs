@@ -35,6 +35,7 @@ namespace PckStudio.Rendering
             _id = GL.GenBuffer();
             Bind();
             GL.BufferData(BufferTarget.ElementArrayBuffer, _indecies.Count * sizeof(int), _indecies.ToArray(), BufferUsageHint.StaticDraw);
+            Unbind();
         }
 
         public int GetCount() => _indecies.Count;
