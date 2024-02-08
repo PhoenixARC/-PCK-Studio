@@ -1,4 +1,4 @@
-﻿namespace PckStudio.Forms
+﻿namespace PckStudio.Forms.Editor
 {
     partial class CustomSkinEditor
     {
@@ -60,13 +60,13 @@
             this.clampToViewCheckbox = new MetroFramework.Controls.MetroCheckBox();
             this.captureScreenshotButton = new MetroFramework.Controls.MetroButton();
             this.showToolsCheckBox = new MetroFramework.Controls.MetroCheckBox();
-            this.renderer3D1 = new PckStudio.Rendering.SkinRenderer();
-            this.uvPictureBox = new PckStudio.ToolboxItems.InterpolationPictureBox();
             this.skinNameLabel = new MetroFramework.Controls.MetroLabel();
             this.metroTabControl1 = new MetroFramework.Controls.MetroTabControl();
             this.skinPartsTabPage = new System.Windows.Forms.TabPage();
             this.skinOffsetsTabPage = new System.Windows.Forms.TabPage();
             this.offsetListBox = new System.Windows.Forms.ListBox();
+            this.renderer3D1 = new PckStudio.Rendering.SkinRenderer();
+            this.uvPictureBox = new PckStudio.ToolboxItems.InterpolationPictureBox();
             label5 = new System.Windows.Forms.Label();
             label3 = new System.Windows.Forms.Label();
             label7 = new System.Windows.Forms.Label();
@@ -80,10 +80,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.PosZUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PosYUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PosXUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.uvPictureBox)).BeginInit();
             this.metroTabControl1.SuspendLayout();
             this.skinPartsTabPage.SuspendLayout();
             this.skinOffsetsTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.uvPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // label5
@@ -314,6 +314,7 @@
             resources.ApplyResources(this.skinPartListBox, "skinPartListBox");
             this.skinPartListBox.FormattingEnabled = true;
             this.skinPartListBox.Name = "skinPartListBox";
+            this.skinPartListBox.Tag = "";
             this.skinPartListBox.SelectedIndexChanged += new System.EventHandler(this.skinPartListBox_SelectedIndexChanged);
             this.skinPartListBox.DoubleClick += new System.EventHandler(this.skinPartListBox_DoubleClick);
             // 
@@ -340,25 +341,6 @@
             this.showToolsCheckBox.Name = "showToolsCheckBox";
             this.showToolsCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.showToolsCheckBox.UseSelectable = true;
-            // 
-            // renderer3D1
-            // 
-            resources.ApplyResources(this.renderer3D1, "renderer3D1");
-            this.renderer3D1.BackColor = System.Drawing.Color.DimGray;
-            this.renderer3D1.ClampModel = false;
-            this.renderer3D1.Name = "renderer3D1";
-            this.renderer3D1.RefreshRate = 50;
-            this.renderer3D1.Texture = null;
-            this.renderer3D1.VSync = true;
-            this.renderer3D1.TextureChanging += new System.EventHandler<PckStudio.Rendering.TextureChangingEventArgs>(this.renderer3D1_TextureChanging);
-            // 
-            // uvPictureBox
-            // 
-            resources.ApplyResources(this.uvPictureBox, "uvPictureBox");
-            this.uvPictureBox.BackgroundInterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-            this.uvPictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-            this.uvPictureBox.Name = "uvPictureBox";
-            this.uvPictureBox.TabStop = false;
             // 
             // skinNameLabel
             // 
@@ -395,6 +377,24 @@
             this.offsetListBox.FormattingEnabled = true;
             this.offsetListBox.Name = "offsetListBox";
             // 
+            // renderer3D1
+            // 
+            resources.ApplyResources(this.renderer3D1, "renderer3D1");
+            this.renderer3D1.BackColor = System.Drawing.Color.DimGray;
+            this.renderer3D1.ClampModel = false;
+            this.renderer3D1.Name = "renderer3D1";
+            this.renderer3D1.RefreshRate = 50;
+            this.renderer3D1.Texture = null;
+            this.renderer3D1.VSync = true;
+            // 
+            // uvPictureBox
+            // 
+            resources.ApplyResources(this.uvPictureBox, "uvPictureBox");
+            this.uvPictureBox.BackgroundInterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+            this.uvPictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+            this.uvPictureBox.Name = "uvPictureBox";
+            this.uvPictureBox.TabStop = false;
+            // 
             // CustomSkinEditor
             // 
             resources.ApplyResources(this, "$this");
@@ -404,10 +404,10 @@
             this.Controls.Add(this.showToolsCheckBox);
             this.Controls.Add(this.captureScreenshotButton);
             this.Controls.Add(this.clampToViewCheckbox);
-            this.Controls.Add(this.renderer3D1);
             this.Controls.Add(this.PosZUpDown);
             this.Controls.Add(this.PosYUpDown);
             this.Controls.Add(this.PosXUpDown);
+            this.Controls.Add(this.renderer3D1);
             this.Controls.Add(this.TextureYUpDown);
             this.Controls.Add(this.TextureXUpDown);
             this.Controls.Add(this.SizeZUpDown);
@@ -440,10 +440,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.PosZUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PosYUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PosXUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.uvPictureBox)).EndInit();
             this.metroTabControl1.ResumeLayout(false);
             this.skinPartsTabPage.ResumeLayout(false);
             this.skinOffsetsTabPage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.uvPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

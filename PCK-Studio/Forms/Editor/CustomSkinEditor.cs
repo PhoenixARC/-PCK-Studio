@@ -14,9 +14,10 @@ using OMI.Formats.Pck;
 
 using PckStudio.Internal;
 using PckStudio.Extensions;
-using PckStudio.Forms.Editor;
+using PckStudio.IO.CSMB;
+using PckStudio.FileFormats;
 
-namespace PckStudio.Forms
+namespace PckStudio.Forms.Editor
 {
     public partial class CustomSkinEditor : MetroForm
     {
@@ -35,11 +36,24 @@ namespace PckStudio.Forms
             PixelOffsetMode = PixelOffsetMode.HighQuality,
         };
 
-        public CustomSkinEditor(PckFileData file)
+        private CustomSkinEditor()
         {
             InitializeComponent();
+        }
 
+        public CustomSkinEditor(PckFileData file) : this()
+        {
             _file = file;
+
+            if (DesignMode)
+                return;
+            renderer3D1.RefreshRate = 50;
+            renderer3D1.Texture = null;
+            renderer3D1.VSync = true;
+            renderer3D1.TextureChanging += new System.EventHandler<PckStudio.Rendering.TextureChangingEventArgs>(renderer3D1_TextureChanging);
+            renderer3D1.InitializeGL();
+
+            Controls.Add(renderer3D1);
             rng = new Random();
             if (_file.Size > 0)
             {
@@ -156,28 +170,32 @@ namespace PckStudio.Forms
         private void importCustomSkinButton_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Custom Skin Model File | *.CSM";
-            openFileDialog.Title = "Select Custom Skin Model File";
+            openFileDialog.Filter = "Custom Skin Model File (*.csm,*.CSM)|*.csm;*.CSM|Custom Skin Model Binary File (*.csmb)|*.csmb";
+            openFileDialog.Title = "Select File";
             if (MessageBox.Show("Import custom model project file? Your current work will be lost!", "", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1) == DialogResult.Yes && openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                renderer3D1.ModelData.Clear();
-                StreamReader reader = new StreamReader(openFileDialog.FileName);
-                while (!reader.EndOfStream)
+                string fileExtension = Path.GetExtension(openFileDialog.FileName);
+                if (fileExtension == ".csmb")
                 {
-                    reader.ReadLine();
-                    string part = reader.ReadLine();
-                    reader.ReadLine();
-                    var PosX = reader.ReadLine();
-                    var PosY = reader.ReadLine();
-                    var PosZ = reader.ReadLine();
-                    var SizeX = reader.ReadLine();
-                    var SizeY = reader.ReadLine();
-                    var SizeZ = reader.ReadLine();
-                    var UvX = reader.ReadLine();
-                    var UvY = reader.ReadLine();
-                    renderer3D1.ModelData.Add(SkinBOX.FromString($"{part} {PosX} {PosY} {PosZ} {SizeX} {SizeY} {SizeZ} {UvX} {UvY}"));
+                    var reader = new CSMBFileReader();
+                    CSMBFile csmbFile = reader.FromFile(openFileDialog.FileName);
+                    LoadCsmb(csmbFile);
                 }
-                skinPartListBindingSource.ResetBindings(false);
+            }
+        }
+
+        private void LoadCsmb(CSMBFile csmbFile)
+        {
+            renderer3D1.ModelData.Clear();
+            foreach (var part in csmbFile.Parts)
+            {
+                renderer3D1.ModelData.Add(part);
+            }
+
+            renderer3D1.ResetOffsets();
+            foreach (var offset in csmbFile.Offsets)
+            {
+                renderer3D1.SetPartOffset(offset);
             }
         }
 
@@ -201,70 +219,22 @@ namespace PckStudio.Forms
 
         private void generateModel_FormClosing(object sender, FormClosingEventArgs e)
         { 
-            /*if (MessageBox.Show("You done here?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
-            {
-                e.Cancel = true;
-                return;
-            }
-            e.Cancel = false;*/
+            
         }
 
+        // TODO: re-implement comletely
         private void OpenJSONButton_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "JSON Model File | *.JSON";
             openFileDialog.Title = "Select JSON Model File";
-            if (MessageBox.Show("Import custom model project file? Your current work will be lost!", "", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1) == DialogResult.Yes && openFileDialog.ShowDialog() == DialogResult.OK)
+            if (MessageBox.Show(
+                "Import custom model project file? Your current work will be lost!", "",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1) == DialogResult.Yes &&
+                openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                //listViewBoxes.Items.Clear();
-                string str1 = JSONToCSM(File.ReadAllText(openFileDialog.FileName));
-                int x = 0;
-                foreach (string str2 in str1.Split("\n\r".ToCharArray(), StringSplitOptions.RemoveEmptyEntries))
-                    ++x;
-                int y = x / 11;
-                ListView listView = new ListView();
-                int num3 = 0;
-                do
-                {
-                    listView.Items.Add("BOX");
-                    ++num3;
-                }
-                while (num3 < y);
-
-
-                foreach (ListViewItem current in listView.Items)
-                {
-                    ListViewItem listViewItem = new ListViewItem();
-                    int num4 = 0;
-                    foreach (string text in str1.Split("\n\r".ToCharArray(), StringSplitOptions.RemoveEmptyEntries))
-                    {
-                        ++num4;
-                        if (num4 == 1 + 11 * current.Index)
-                            listViewItem.Text = text;
-                        else if (num4 == 2 + 11 * current.Index)
-                            listViewItem.Tag = text;
-                        else if (num4 == 4 + 11 * current.Index)
-                            listViewItem.SubItems.Add(text);
-                        else if (num4 == 5 + 11 * current.Index)
-                            listViewItem.SubItems.Add(text);
-                        else if (num4 == 6 + 11 * current.Index)
-                            listViewItem.SubItems.Add(text);
-                        else if (num4 == 7 + 11 * current.Index)
-                            listViewItem.SubItems.Add(text);
-                        else if (num4 == 8 + 11 * current.Index)
-                            listViewItem.SubItems.Add(text);
-                        else if (num4 == 9 + 11 * current.Index)
-                            listViewItem.SubItems.Add(text);
-                        else if (num4 == 10 + 11 * current.Index)
-                            listViewItem.SubItems.Add(text);
-                        else if (num4 == 11 + 11 * current.Index)
-                        {
-                            listViewItem.SubItems.Add(text);
-                        }
-                    }
-                }
+                
             }
-            
         }
 
         [Obsolete("Will be removed")]
@@ -321,13 +291,13 @@ namespace PckStudio.Forms
 
         private void skinPartListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            int scale = 4;
             if (skinPartListBox.SelectedItem is SkinBOX box)
             {
-                int scale = 3;
                 uvPictureBox.Image = new Bitmap(uvPictureBox.BackgroundImage.Width * scale, uvPictureBox.BackgroundImage.Height * scale);
                 using (Graphics g = Graphics.FromImage(uvPictureBox.Image))
                 {
-                    float penWidth = uvPictureBox.BackgroundImage.Width / renderer3D1.TextureSize.Width + uvPictureBox.BackgroundImage.Height / renderer3D1.TextureSize.Height / 2f;
+                    float penWidth = ((uvPictureBox.BackgroundImage.Width / renderer3D1.TextureSize.Width) + (uvPictureBox.BackgroundImage.Height / renderer3D1.TextureSize.Height)) / 2f;
                     GraphicsPath graphicsPath = box.GetUVGraphicsPath(
                         new System.Numerics.Vector2(
                             scale * renderer3D1.TillingFactor.X * uvPictureBox.BackgroundImage.Width,

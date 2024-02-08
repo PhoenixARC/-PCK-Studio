@@ -402,10 +402,10 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Skins-And-Textures\CustomSkinEditor.cs">
+    <Compile Include="Forms\Editor\CustomSkinEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Skins-And-Textures\CustomSkinEditor.Designer.cs">
+    <Compile Include="Forms\Editor\CustomSkinEditor.Designer.cs">
       <DependentUpon>CustomSkinEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Skins-And-Textures\SkinPreview.cs">
@@ -577,10 +577,10 @@
       <DependentUpon>MainForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Skins-And-Textures\CustomSkinEditor.ja.resx">
+    <EmbeddedResource Include="Forms\Editor\CustomSkinEditor.ja.resx">
       <DependentUpon>CustomSkinEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Skins-And-Textures\CustomSkinEditor.resx">
+    <EmbeddedResource Include="Forms\Editor\CustomSkinEditor.resx">
       <DependentUpon>CustomSkinEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>

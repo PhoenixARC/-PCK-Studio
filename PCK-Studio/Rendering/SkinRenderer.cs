@@ -34,6 +34,7 @@ using System.IO;
 using PckStudio.Rendering.Camera;
 using PckStudio.Rendering.Texture;
 using PckStudio.Rendering.Shader;
+using System.Linq;
 
 namespace PckStudio.Rendering
 {
@@ -72,6 +73,7 @@ namespace PckStudio.Rendering
             remove => Events.RemoveHandler(nameof(TextureChanging), value);
         }
 
+        [Browsable(false)]
         public SkinANIM ANIM
         {
             get => _anim;
@@ -79,8 +81,11 @@ namespace PckStudio.Rendering
             {
                 _anim = value;
                 OnANIMUpdate();
-                MakeCurrent();
-                UploadMeshData();
+                if (initialized)
+                {
+                    MakeCurrent();
+                    UploadMeshData();
+                }
             }
         }
 
@@ -204,6 +209,7 @@ namespace PckStudio.Rendering
             new Vector4( 1.0f, -1.0f, 1.0f, 0.0f),
             new Vector4(-1.0f,  1.0f, 0.0f, 1.0f),
         };
+        private bool initialized = false;
 
         public SkinRenderer() : base()
         {
@@ -259,15 +265,20 @@ namespace PckStudio.Rendering
 
             InitializeCamera();
             InitializeComponent();
-            MakeCurrent();
-            InitializeShaders();
-            InitializeFramebuffer();
-            UploadMeshData();
-
+            
             ANIM ??= new SkinANIM(SkinAnimMask.RESOLUTION_64x64);
             OnTimerTick = AnimationTick;
             ModelData = new ObservableCollection<SkinBOX>();
             ModelData.CollectionChanged += ModelData_CollectionChanged;
+        }
+
+        public void InitializeGL()
+        {
+            MakeCurrent();
+            InitializeShaders();
+            InitializeFramebuffer();
+            UploadMeshData();
+            initialized = true;
         }
 
         // TODO: calculate CameraDistance based on model size
@@ -323,9 +334,6 @@ namespace PckStudio.Rendering
 
         private void InitializeShaders()
         {
-            if (DesignMode)
-                return;
-
             MakeCurrent();
 
             Trace.TraceInformation(GL.GetString(StringName.Version));
@@ -435,37 +443,37 @@ namespace PckStudio.Rendering
 
         private void InitializeFramebuffer()
         {
-                framebuffer = new FrameBuffer();
-                framebuffer.Bind();
-                framebufferTexture = new Texture2D(0);
-                framebufferTexture.PixelFormat = OpenTK.Graphics.OpenGL.PixelFormat.Rgb;
-                framebufferTexture.InternalPixelFormat = PixelInternalFormat.Rgb;
-                framebufferTexture.SetSize(Size);
-                framebufferTexture.WrapS = TextureWrapMode.ClampToEdge;
-                framebufferTexture.WrapT = TextureWrapMode.ClampToEdge;
-                framebufferTexture.MinFilter = TextureMinFilter.Nearest;
-                framebufferTexture.MagFilter = TextureMagFilter.Nearest;
+            framebuffer = new FrameBuffer();
+            framebuffer.Bind();
+            framebufferTexture = new Texture2D(0);
+            framebufferTexture.PixelFormat = OpenTK.Graphics.OpenGL.PixelFormat.Rgb;
+            framebufferTexture.InternalPixelFormat = PixelInternalFormat.Rgb;
+            framebufferTexture.SetSize(Size);
+            framebufferTexture.WrapS = TextureWrapMode.ClampToEdge;
+            framebufferTexture.WrapT = TextureWrapMode.ClampToEdge;
+            framebufferTexture.MinFilter = TextureMinFilter.Nearest;
+            framebufferTexture.MagFilter = TextureMagFilter.Nearest;
 
-                framebufferTexture.AttachToFramebuffer(framebuffer, FramebufferAttachment.ColorAttachment0);
+            framebufferTexture.AttachToFramebuffer(framebuffer, FramebufferAttachment.ColorAttachment0);
 
-                framebufferVAO = new VertexArray();
-                VertexBuffer<Vector4> vertexBuffer = new VertexBuffer<Vector4>(rectVertices, rectVertices.Length * Vector4.SizeInBytes);
-                VertexBufferLayout layout = new VertexBufferLayout();
-                layout.Add<float>(4);
-                framebufferVAO.AddBuffer(vertexBuffer, layout);
+            framebufferVAO = new VertexArray();
+            VertexBuffer<Vector4> vertexBuffer = new VertexBuffer<Vector4>(rectVertices, rectVertices.Length * Vector4.SizeInBytes);
+            VertexBufferLayout layout = new VertexBufferLayout();
+            layout.Add<float>(4);
+            framebufferVAO.AddBuffer(vertexBuffer, layout);
 
-                int rbo = GL.GenRenderbuffer();
-                GL.BindRenderbuffer(RenderbufferTarget.Renderbuffer, rbo);
-                GL.RenderbufferStorage(RenderbufferTarget.Renderbuffer, RenderbufferStorage.Depth24Stencil8, Size.Width, Size.Height);
-                GL.FramebufferRenderbuffer(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthStencilAttachment, RenderbufferTarget.Renderbuffer, rbo);
+            int rbo = GL.GenRenderbuffer();
+            GL.BindRenderbuffer(RenderbufferTarget.Renderbuffer, rbo);
+            GL.RenderbufferStorage(RenderbufferTarget.Renderbuffer, RenderbufferStorage.Depth24Stencil8, Size.Width, Size.Height);
+            GL.FramebufferRenderbuffer(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthStencilAttachment, RenderbufferTarget.Renderbuffer, rbo);
 
-                FramebufferErrorCode status = GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer);
-                if (status != FramebufferErrorCode.FramebufferComplete)
-                {
-                    Debug.Fail("");
-                }
-                framebuffer.Unbind();
+            FramebufferErrorCode status = GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer);
+            if (status != FramebufferErrorCode.FramebufferComplete)
+            {
+                Debug.Fail("");
             }
+            framebuffer.Unbind();
+        }
 
 
         private void UploadMeshData()
@@ -494,6 +502,14 @@ namespace PckStudio.Rendering
         private float GetOffset(string name)
         {
             return partOffset.ContainsKey(name) ? partOffset[name] : 0f;
+        }
+
+        internal void ResetOffsets()
+        {
+            foreach (var key in partOffset.Keys.ToList())
+            {
+                partOffset[key] = 0f;
+            }
         }
 
         private void ModelData_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -624,28 +640,29 @@ namespace PckStudio.Rendering
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
-            if (!IsHandleCreated)
+            if (!IsHandleCreated || DesignMode)
                 return;
             MakeCurrent();
+            if (framebuffer is not null)
             {
-            framebuffer.Bind();
-            
-            framebufferTexture.Bind();
-                framebufferTexture.SetSize(Size);
-            framebufferTexture.Unbind();
+                framebuffer.Bind();
 
-            int rbo = GL.GenRenderbuffer();
-            GL.BindRenderbuffer(RenderbufferTarget.Renderbuffer, rbo);
-            GL.RenderbufferStorage(RenderbufferTarget.Renderbuffer, RenderbufferStorage.Depth24Stencil8, Size.Width, Size.Height);
-            GL.FramebufferRenderbuffer(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthStencilAttachment, RenderbufferTarget.Renderbuffer, rbo);
-            
-            FramebufferErrorCode status = GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer);
-            if (status != FramebufferErrorCode.FramebufferComplete)
-            {
-                Debug.Fail("");
+                framebufferTexture.Bind();
+                framebufferTexture.SetSize(Size);
+                framebufferTexture.Unbind();
+
+                int rbo = GL.GenRenderbuffer();
+                GL.BindRenderbuffer(RenderbufferTarget.Renderbuffer, rbo);
+                GL.RenderbufferStorage(RenderbufferTarget.Renderbuffer, RenderbufferStorage.Depth24Stencil8, Size.Width, Size.Height);
+                GL.FramebufferRenderbuffer(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthStencilAttachment, RenderbufferTarget.Renderbuffer, rbo);
+
+                FramebufferErrorCode status = GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer);
+                if (status != FramebufferErrorCode.FramebufferComplete)
+                {
+                    Debug.Fail("");
+                }
+                framebuffer.Unbind();
             }
-            framebuffer.Unbind();
-        }
 
         }
 
@@ -668,72 +685,72 @@ namespace PckStudio.Rendering
 
             // Render (custom) skin
             {
-            var viewProjection = Camera.GetViewProjection();
-            _skinShader.Bind();
-            _skinShader.SetUniformMat4("u_ViewProjection", ref viewProjection);
-            _skinShader.SetUniform2("u_TexSize", new Vector2(TextureSize.Width, TextureSize.Height));
+                var viewProjection = Camera.GetViewProjection();
+                _skinShader.Bind();
+                _skinShader.SetUniformMat4("u_ViewProjection", ref viewProjection);
+                _skinShader.SetUniform2("u_TexSize", new Vector2(TextureSize.Width, TextureSize.Height));
 
                 skinTexture.Bind();
 
-            GL.Enable(EnableCap.Texture2D); // Enable textures
+                GL.Enable(EnableCap.Texture2D); // Enable textures
 
-            GL.DepthFunc(DepthFunction.Lequal); // Enable correct Z Drawings
-            GL.DepthMask(true);
+                GL.DepthFunc(DepthFunction.Lequal); // Enable correct Z Drawings
+                GL.DepthMask(true);
 
-            GL.Enable(EnableCap.Blend);
-            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
+                GL.Enable(EnableCap.Blend);
+                GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
 
-            GL.Enable(EnableCap.AlphaTest); // Enable transparent
-            GL.AlphaFunc(AlphaFunction.Greater, 0.4f);
+                GL.Enable(EnableCap.AlphaTest); // Enable transparent
+                GL.AlphaFunc(AlphaFunction.Greater, 0.4f);
 
-            GL.PolygonMode(MaterialFace.FrontAndBack, showWireFrame ? PolygonMode.Line : PolygonMode.Fill);
+                GL.PolygonMode(MaterialFace.FrontAndBack, showWireFrame ? PolygonMode.Line : PolygonMode.Fill);
 
-            Matrix4 modelMatrix = Matrix4.CreateTranslation(0f, 4f, 0f) * // <- model rotation pivot point
-                Matrix4.CreateFromAxisAngle(-Vector3.UnitX, MathHelper.DegreesToRadians(GlobalModelRotation.X)) * 
-                Matrix4.CreateFromAxisAngle( Vector3.UnitY, MathHelper.DegreesToRadians(GlobalModelRotation.Y));
+                Matrix4 modelMatrix = Matrix4.CreateTranslation(0f, 4f, 0f) * // <- model rotation pivot point
+                    Matrix4.CreateFromAxisAngle(-Vector3.UnitX, MathHelper.DegreesToRadians(GlobalModelRotation.X)) *
+                    Matrix4.CreateFromAxisAngle(Vector3.UnitY, MathHelper.DegreesToRadians(GlobalModelRotation.Y));
 
                 if (ANIM.GetFlag(SkinAnimFlag.DINNERBONE))
                 {
                     modelMatrix *= Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(-180f));
                 }
 
-            var legRightMatrix = Matrix4.Identity;
-            var legLeftMatrix = Matrix4.Identity;
-            var armRightMatrix = Matrix4.Identity;
-            var armLeftMatrix  = Matrix4.Identity;
-            
-            if (!ANIM.GetFlag(SkinAnimFlag.STATIC_ARMS))
-            {
-                armRightMatrix = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(animationCurrentRotationAngle));
+                var legRightMatrix = Matrix4.Identity;
+                var legLeftMatrix = Matrix4.Identity;
+                var armRightMatrix = Matrix4.Identity;
+                var armLeftMatrix = Matrix4.Identity;
+
+                if (!ANIM.GetFlag(SkinAnimFlag.STATIC_ARMS))
+                {
+                    armRightMatrix = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(animationCurrentRotationAngle));
                     armLeftMatrix = Matrix4.CreateRotationX(MathHelper.DegreesToRadians((ANIM.GetFlag(SkinAnimFlag.SYNCED_ARMS) ? 1f : -1f) * animationCurrentRotationAngle));
-            }
+                }
 
 
-            if (!ANIM.GetFlag(SkinAnimFlag.STATIC_LEGS))
-            {
+                if (!ANIM.GetFlag(SkinAnimFlag.STATIC_LEGS))
+                {
                     legRightMatrix = Matrix4.CreateRotationX(MathHelper.DegreesToRadians((ANIM.GetFlag(SkinAnimFlag.SYNCED_LEGS) ? 1f : -1f) * animationCurrentRotationAngle));
                     legLeftMatrix = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(animationCurrentRotationAngle));
-            }
+                }
 
-            if (ANIM.GetFlag(SkinAnimFlag.ZOMBIE_ARMS))
-            {
-                var rotation = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(-90f));
-                armRightMatrix = rotation;
-                armLeftMatrix  = rotation;
-            }
+                if (ANIM.GetFlag(SkinAnimFlag.ZOMBIE_ARMS))
+                {
+                    var rotation = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(-90f));
+                    armRightMatrix = rotation;
+                    armLeftMatrix = rotation;
+                }
 
-            if (ANIM.GetFlag(SkinAnimFlag.STATUE_OF_LIBERTY))
-            {
-                armRightMatrix = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(-180f));
-                armLeftMatrix = Matrix4.CreateRotationX(0f);
-            }
+                if (ANIM.GetFlag(SkinAnimFlag.STATUE_OF_LIBERTY))
+                {
+                    armRightMatrix = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(-180f));
+                    armLeftMatrix = Matrix4.CreateRotationX(0f);
+                }
 
                 bool slimModel = ANIM.GetFlag(SkinAnimFlag.SLIM_MODEL);
                 RenderBodyPart(new Vector3(0f, 0f, 0f), new Vector3(0f), HeadMatrix, modelMatrix, "HEAD", "HEADWEAR");
                 RenderBodyPart(new Vector3(0f, 0f, 0f), new Vector3(0f), BodyMatrix, modelMatrix, "BODY", "JACKET");
                 RenderBodyPart(new Vector3(4f, 2f, 0f), new Vector3(slimModel ? -4f : -5f, -2f, 0f), RightArmMatrix * armRightMatrix, modelMatrix, "ARM0", "SLEEVE0");
                 RenderBodyPart(new Vector3(-4f, 2f, 0f), new Vector3(5f, -2f, 0f), LeftArmMatrix * armLeftMatrix, modelMatrix, "ARM1", "SLEEVE1");
-            RenderBodyPart(new Vector3(0f, 12f, 0f), new Vector3(-2f, -12f, 0f), RightLegMatrix * legRightMatrix, modelMatrix, "LEG0", "PANTS0");
+                RenderBodyPart(new Vector3(0f, 12f, 0f), new Vector3(-2f, -12f, 0f), RightLegMatrix * legRightMatrix, modelMatrix, "LEG0", "PANTS0");
                 RenderBodyPart(new Vector3(0f, 12f, 0f), new Vector3(2f, -12f, 0f), LeftLegMatrix * legLeftMatrix, modelMatrix, "LEG1", "PANTS1");
             }
             

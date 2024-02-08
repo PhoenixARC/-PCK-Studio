@@ -763,7 +763,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;PosZUpDown.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>6</value>
   </data>
   <data name="PosYUpDown.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -790,7 +790,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;PosYUpDown.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>7</value>
   </data>
   <data name="PosXUpDown.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -817,7 +817,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;PosXUpDown.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>8</value>
   </data>
   <data name="skinPartListBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -929,63 +929,6 @@
   </data>
   <data name="&gt;&gt;showToolsCheckBox.ZOrder" xml:space="preserve">
     <value>3</value>
-  </data>
-  <data name="renderer3D1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
-  </data>
-  <data name="renderer3D1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>194, 59</value>
-  </data>
-  <data name="renderer3D1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>427, 492</value>
-  </data>
-  <data name="renderer3D1.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;renderer3D1.Name" xml:space="preserve">
-    <value>renderer3D1</value>
-  </data>
-  <data name="&gt;&gt;renderer3D1.Type" xml:space="preserve">
-    <value>PckStudio.Rendering.SkinRenderer, PCK-Studio, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;renderer3D1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;renderer3D1.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="uvPictureBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="uvPictureBox.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Zoom</value>
-  </data>
-  <data name="uvPictureBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="uvPictureBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>627, 59</value>
-  </data>
-  <data name="uvPictureBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>250, 250</value>
-  </data>
-  <data name="uvPictureBox.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
-    <value>Zoom</value>
-  </data>
-  <data name="uvPictureBox.TabIndex" type="System.Int32, mscorlib">
-    <value>112</value>
-  </data>
-  <data name="&gt;&gt;uvPictureBox.Name" xml:space="preserve">
-    <value>uvPictureBox</value>
-  </data>
-  <data name="&gt;&gt;uvPictureBox.Type" xml:space="preserve">
-    <value>PckStudio.ToolboxItems.InterpolationPictureBox, PCK-Studio, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;uvPictureBox.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;uvPictureBox.ZOrder" xml:space="preserve">
-    <value>28</value>
   </data>
   <data name="skinNameLabel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
@@ -1108,7 +1051,7 @@
     <value>4, 38</value>
   </data>
   <data name="skinOffsetsTabPage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 440</value>
+    <value>157, 450</value>
   </data>
   <data name="skinOffsetsTabPage.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1135,7 +1078,7 @@
     <value>0, 0</value>
   </data>
   <data name="offsetListBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 440</value>
+    <value>157, 450</value>
   </data>
   <data name="offsetListBox.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1151,6 +1094,63 @@
   </data>
   <data name="&gt;&gt;offsetListBox.ZOrder" xml:space="preserve">
     <value>0</value>
+  </data>
+  <data name="renderer3D1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="renderer3D1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>194, 63</value>
+  </data>
+  <data name="renderer3D1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>424, 484</value>
+  </data>
+  <data name="renderer3D1.TabIndex" type="System.Int32, mscorlib">
+    <value>167</value>
+  </data>
+  <data name="&gt;&gt;renderer3D1.Name" xml:space="preserve">
+    <value>renderer3D1</value>
+  </data>
+  <data name="&gt;&gt;renderer3D1.Type" xml:space="preserve">
+    <value>PckStudio.Rendering.SkinRenderer, PCK-Studio, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;renderer3D1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;renderer3D1.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="uvPictureBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="uvPictureBox.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Zoom</value>
+  </data>
+  <data name="uvPictureBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="uvPictureBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>627, 59</value>
+  </data>
+  <data name="uvPictureBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>250, 250</value>
+  </data>
+  <data name="uvPictureBox.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
+    <value>Zoom</value>
+  </data>
+  <data name="uvPictureBox.TabIndex" type="System.Int32, mscorlib">
+    <value>112</value>
+  </data>
+  <data name="&gt;&gt;uvPictureBox.Name" xml:space="preserve">
+    <value>uvPictureBox</value>
+  </data>
+  <data name="&gt;&gt;uvPictureBox.Type" xml:space="preserve">
+    <value>PckStudio.ToolboxItems.InterpolationPictureBox, PCK-Studio, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;uvPictureBox.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;uvPictureBox.ZOrder" xml:space="preserve">
+    <value>28</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -3670,6 +3670,9 @@
         AP//AAA=
 </value>
   </data>
+  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
     <value>900, 600</value>
   </data>
@@ -3677,7 +3680,7 @@
     <value>CenterParent</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>Custom Model Editor</value>
+    <value>Custom Skin Editor</value>
   </data>
   <data name="&gt;&gt;createToolStripMenuItem.Name" xml:space="preserve">
     <value>createToolStripMenuItem</value>

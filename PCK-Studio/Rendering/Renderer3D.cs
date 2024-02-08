@@ -59,6 +59,7 @@ namespace PckStudio.Rendering
             RefreshRate = refreshRate;
             timer.Tick += TimerTick;
             timer.Start();
+            timer.Enabled = !DesignMode;
             VSync = true;
         }
 
@@ -71,9 +72,13 @@ namespace PckStudio.Rendering
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
-            Camera.Update(AspectRatio);
-            Camera.ViewportSize = Size;
+            if (DesignMode)
+                return;
+            if (Camera is not null)
+            {
+                Camera.ViewportSize = ClientSize;
+                Camera.Update(AspectRatio);
+            }
         }
     }
-}
-
+}  
