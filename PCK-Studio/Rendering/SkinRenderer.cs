@@ -456,25 +456,25 @@ namespace PckStudio.Rendering
 
             framebufferTexture.AttachToFramebuffer(framebuffer, FramebufferAttachment.ColorAttachment0);
 
-            framebufferVAO = new VertexArray();
-            VertexBuffer<Vector4> vertexBuffer = new VertexBuffer<Vector4>(rectVertices, rectVertices.Length * Vector4.SizeInBytes);
-            VertexBufferLayout layout = new VertexBufferLayout();
-            layout.Add<float>(4);
-            framebufferVAO.AddBuffer(vertexBuffer, layout);
-
             int rbo = GL.GenRenderbuffer();
             GL.BindRenderbuffer(RenderbufferTarget.Renderbuffer, rbo);
             GL.RenderbufferStorage(RenderbufferTarget.Renderbuffer, RenderbufferStorage.Depth24Stencil8, Size.Width, Size.Height);
             GL.FramebufferRenderbuffer(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthStencilAttachment, RenderbufferTarget.Renderbuffer, rbo);
 
-            FramebufferErrorCode status = GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer);
-            if (status != FramebufferErrorCode.FramebufferComplete)
+            framebufferVAO = new VertexArray();
+            VertexBuffer<Vector4> vertexBuffer = new VertexBuffer<Vector4>(rectVertices, rectVertices.Length * Vector4.SizeInBytes);
+            VertexBufferLayout layout = new VertexBufferLayout();
+            layout.Add<float>(4);
+            framebufferVAO.AddBuffer(vertexBuffer, layout);
+            framebuffer.CheckStatus();
+
+            if (framebuffer.Status != FramebufferErrorCode.FramebufferComplete)
             {
-                Debug.Fail("");
+                Debug.Fail($"Framebuffer status: '{framebuffer.Status}'");
             }
+
             framebuffer.Unbind();
         }
-
 
         private void UploadMeshData()
         {
