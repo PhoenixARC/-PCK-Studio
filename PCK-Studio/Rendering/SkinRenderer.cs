@@ -676,8 +676,6 @@ namespace PckStudio.Rendering
 
             MakeCurrent(); 
 
-            GL.Viewport(Size);
-
             framebuffer.Bind();
             GL.ClearColor(BackColor);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);

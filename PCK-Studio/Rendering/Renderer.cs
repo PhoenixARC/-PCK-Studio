@@ -16,6 +16,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
 **/
 using System;
+using System.Drawing;
 using OpenTK.Graphics.OpenGL;
 using PckStudio.Rendering.Shader;
 
@@ -29,6 +30,11 @@ namespace PckStudio.Rendering
             context.VertexArray.Bind();
             context.IndexBuffer.Bind();
             GL.DrawElements(context.PrimitiveType, context.IndexBuffer.GetCount(), DrawElementsType.UnsignedInt, 0);
+        }
+
+        public static void SetViewportSize(Size size)
+        {
+            GL.Viewport(size);
         }
     }
 }

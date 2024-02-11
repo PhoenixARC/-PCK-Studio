@@ -78,6 +78,7 @@ namespace PckStudio.Rendering
                 Camera.ViewportSize = ClientSize;
                 Camera.Update();
             }
+            Renderer.SetViewportSize(Camera.ViewportSize);
         }
     }
 }  
