@@ -69,15 +69,14 @@ namespace PckStudio.Rendering
             Invalidate();
         }
 
-        protected override void OnResize(EventArgs e)
+        protected override void OnSizeChanged(EventArgs e)
         {
-            base.OnResize(e);
-            if (DesignMode)
-                return;
+            base.OnSizeChanged(e);
+            MakeCurrent();
             if (Camera is not null)
             {
                 Camera.ViewportSize = ClientSize;
-                Camera.Update(AspectRatio);
+                Camera.Update();
             }
         }
     }

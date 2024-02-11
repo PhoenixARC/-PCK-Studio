@@ -106,9 +106,10 @@ namespace PckStudio.Rendering.Camera
             viewMatrix = viewMatrix.Inverted();
         }
 
-        public void Update(float aspect)
+        public void Update()
         {
             UpdateViewMatrix();
+            float aspect = (float)ViewportSize.Width / (float)ViewportSize.Height;
             projectionMatrix = Matrix4.CreatePerspectiveFieldOfView((float)MathHelper.DegreesToRadians(Fov), aspect, 1f, 1000f);
         }
 
