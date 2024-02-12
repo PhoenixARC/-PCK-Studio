@@ -278,6 +278,7 @@ namespace PckStudio.Rendering
             InitializeShaders();
             InitializeFramebuffer();
             UploadMeshData();
+            Renderer.SetClearColor(BackColor);
             initialized = true;
         }
 
@@ -677,7 +678,6 @@ namespace PckStudio.Rendering
             MakeCurrent(); 
 
             framebuffer.Bind();
-            GL.ClearColor(BackColor);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             GL.Enable(EnableCap.DepthTest); // Enable correct Z Drawings
 

@@ -36,5 +36,10 @@ namespace PckStudio.Rendering
         {
             GL.Viewport(size);
         }
+
+        public static void SetClearColor(Color color)
+        {
+            GL.ClearColor(color);
+        }
     }
 }
