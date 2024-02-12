@@ -50,7 +50,7 @@ namespace PckStudio.Rendering
         protected PerspectiveCamera Camera;
         protected EventHandler OnTimerTick { get; set; }
 
-        private int refreshRate = 50;
+        private int refreshRate = 60;
         private Timer timer;
 
         public Renderer3D() : base()
