@@ -15,6 +15,7 @@
  *    misrepresented as being the original software.
  * 3. This notice may not be removed or altered from any source distribution.
 **/
+//#define USE_FRAMEBUFFER
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -144,12 +145,12 @@ namespace PckStudio.Rendering
         private SkinANIM _anim;
         private Image _texture;
         private Texture2D skinTexture;
-
+#if USE_FRAMEBUFFER
         private FrameBuffer framebuffer;
         private Texture2D framebufferTexture;
         private ShaderProgram framebufferShader;
         private VertexArray framebufferVAO;
-
+#endif
         private ShaderProgram _skyboxShader;
         private DrawContext _skyboxRenderBuffer;
         private CubeTexture _skyboxTexture;
@@ -420,7 +421,7 @@ namespace PckStudio.Rendering
 
                 GLErrorCheck();
             }
-
+#if USE_FRAMEBUFFER
             // Framebuffer shader
             {
                 framebufferShader = ShaderProgram.Create(Resources.framebufferVertexShader, Resources.framebufferFragmentShader);
@@ -430,6 +431,7 @@ namespace PckStudio.Rendering
             
                 GLErrorCheck();
             }
+#endif
         }
 
         protected virtual void OnTextureChanging(object sender, TextureChangingEventArgs e)
@@ -444,6 +446,7 @@ namespace PckStudio.Rendering
 
         private void InitializeFramebuffer()
         {
+#if USE_FRAMEBUFFER
             framebuffer = new FrameBuffer();
             framebuffer.Bind();
             framebufferTexture = new Texture2D(0);
@@ -475,6 +478,7 @@ namespace PckStudio.Rendering
             }
 
             framebuffer.Unbind();
+#endif
         }
 
         private void UploadMeshData()
@@ -638,6 +642,7 @@ namespace PckStudio.Rendering
             return base.ProcessDialogKey(keyData);
         }
 
+#if USE_FRAMEBUFFER
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
@@ -666,6 +671,7 @@ namespace PckStudio.Rendering
             }
 
         }
+#endif
 
         protected override void OnPaint(PaintEventArgs e)
         {
@@ -677,7 +683,9 @@ namespace PckStudio.Rendering
 
             MakeCurrent(); 
 
+#if USE_FRAMEBUFFER
             framebuffer.Bind();
+#endif
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             GL.Enable(EnableCap.DepthTest); // Enable correct Z Drawings
 
@@ -768,6 +776,7 @@ namespace PckStudio.Rendering
                 GL.DepthFunc(DepthFunction.Less);
             }
 
+#if USE_FRAMEBUFFER
             framebuffer.Unbind();
             GL.Disable(EnableCap.DepthTest);
             framebufferShader.Bind();
@@ -777,7 +786,7 @@ namespace PckStudio.Rendering
             GL.DrawArrays(PrimitiveType.Triangles, 0, 6);
 
             framebufferTexture.Unbind();
-
+#endif
             SwapBuffers();
         }
 
