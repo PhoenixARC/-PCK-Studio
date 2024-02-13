@@ -160,6 +160,7 @@
     <Compile Include="Rendering\DrawContext.cs" />
     <Compile Include="Rendering\Renderer.cs" />
     <Compile Include="Rendering\GenericMesh.cs" />
+    <Compile Include="Rendering\Shader\ShaderLibrary.cs" />
     <Compile Include="Rendering\Shader\ShaderProgram.cs" />
     <Compile Include="Rendering\Shader\ShaderObject.cs" />
     <Compile Include="Rendering\Shader\ShaderSource.cs" />

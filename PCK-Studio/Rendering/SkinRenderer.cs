@@ -141,7 +141,7 @@ namespace PckStudio.Rendering
         private Point PreviousMouseLocation;
         private Point CurrentMouseLocation;
 
-        private ShaderProgram _skinShader;
+        private ShaderLibrary _shaders;
         private SkinANIM _anim;
         private Image _texture;
         private Texture2D skinTexture;
@@ -151,7 +151,6 @@ namespace PckStudio.Rendering
         private ShaderProgram framebufferShader;
         private VertexArray framebufferVAO;
 #endif
-        private ShaderProgram _skyboxShader;
         private DrawContext _skyboxRenderBuffer;
         private CubeTexture _skyboxTexture;
         private float skyboxRotation = 0f;
@@ -267,6 +266,7 @@ namespace PckStudio.Rendering
             InitializeCamera();
             InitializeComponent();
             
+            _shaders = new ShaderLibrary();
             ANIM ??= new SkinANIM(SkinAnimMask.RESOLUTION_64x64);
             OnTimerTick = AnimationTick;
             ModelData = new ObservableCollection<SkinBOX>();
@@ -336,14 +336,15 @@ namespace PckStudio.Rendering
 
             // Skin shader
             {
-                _skinShader = ShaderProgram.Create(
+                var skinShader = ShaderProgram.Create(
                     new ShaderSource(ShaderType.VertexShader, Resources.skinVertexShader),
                     new ShaderSource(ShaderType.FragmentShader, Resources.skinFragmentShader),
                     new ShaderSource(ShaderType.GeometryShader, Resources.skinGeometryShader)
                     );
-                _skinShader.Bind();
-                _skinShader.SetUniform1("u_Texture", 0);
-                _skinShader.Validate();
+                skinShader.Bind();
+                skinShader.SetUniform1("u_Texture", 0);
+                skinShader.Validate();
+                _shaders.AddShader("SkinShader", skinShader);
                 GLErrorCheck();
 
                 skinTexture = new Texture2D(0);
@@ -356,7 +357,7 @@ namespace PckStudio.Rendering
                 
                 Texture ??= Resources.classic_template;
 
-                _skinShader.Unbind();
+                skinShader.Unbind();
                 GLErrorCheck();
             }
 
@@ -392,11 +393,12 @@ namespace PckStudio.Rendering
                 skyboxVAO.Unbind();
                 skybocIBO.Unbind();
 
-                _skyboxShader = ShaderProgram.Create(Resources.skyboxVertexShader, Resources.skyboxFragmentShader);
-                _skyboxShader.Bind();
-                _skyboxShader.SetUniform1("skybox", 1);
-                _skyboxShader.SetUniform1("brightness", 1f);
-                _skyboxShader.Validate();
+                var skyboxShader = ShaderProgram.Create(Resources.skyboxVertexShader, Resources.skyboxFragmentShader);
+                skyboxShader.Bind();
+                skyboxShader.SetUniform1("skybox", 1);
+                skyboxShader.SetUniform1("brightness", 1f);
+                skyboxShader.Validate();
+                _shaders.AddShader("SkyboxShader", skyboxShader);
 
                 string customSkyboxFilepath = Path.Combine(Program.AppData, "cubemap.png");
                 Image skyboxImage = File.Exists(customSkyboxFilepath)
@@ -411,7 +413,7 @@ namespace PckStudio.Rendering
                 _skyboxTexture.WrapT = TextureWrapMode.ClampToEdge;
                 _skyboxTexture.WrapR = TextureWrapMode.ClampToEdge;
                 _skyboxTexture.Unbind();
-                _skyboxShader.Unbind();
+                skyboxShader.Unbind();
 
                 GLErrorCheck();
             }
@@ -686,9 +688,10 @@ namespace PckStudio.Rendering
             // Render (custom) skin
             {
                 var viewProjection = Camera.GetViewProjection();
-                _skinShader.Bind();
-                _skinShader.SetUniformMat4("u_ViewProjection", ref viewProjection);
-                _skinShader.SetUniform2("u_TexSize", new Vector2(TextureSize.Width, TextureSize.Height));
+                var skinShader = _shaders.GetShader("SkinShader");
+                skinShader.Bind();
+                skinShader.SetUniformMat4("u_ViewProjection", ref viewProjection);
+                skinShader.SetUniform2("u_TexSize", new Vector2(TextureSize.Width, TextureSize.Height));
 
                 skinTexture.Bind();
 
@@ -746,27 +749,28 @@ namespace PckStudio.Rendering
                 }
 
                 bool slimModel = ANIM.GetFlag(SkinAnimFlag.SLIM_MODEL);
-                RenderBodyPart(new Vector3(0f, 0f, 0f), new Vector3(0f), HeadMatrix, modelMatrix, "HEAD", "HEADWEAR");
-                RenderBodyPart(new Vector3(0f, 0f, 0f), new Vector3(0f), BodyMatrix, modelMatrix, "BODY", "JACKET");
-                RenderBodyPart(new Vector3(4f, 2f, 0f), new Vector3(slimModel ? -4f : -5f, -2f, 0f), RightArmMatrix * armRightMatrix, modelMatrix, "ARM0", "SLEEVE0");
-                RenderBodyPart(new Vector3(-4f, 2f, 0f), new Vector3(5f, -2f, 0f), LeftArmMatrix * armLeftMatrix, modelMatrix, "ARM1", "SLEEVE1");
-                RenderBodyPart(new Vector3(0f, 12f, 0f), new Vector3(-2f, -12f, 0f), RightLegMatrix * legRightMatrix, modelMatrix, "LEG0", "PANTS0");
-                RenderBodyPart(new Vector3(0f, 12f, 0f), new Vector3(2f, -12f, 0f), LeftLegMatrix * legLeftMatrix, modelMatrix, "LEG1", "PANTS1");
+                RenderBodyPart(skinShader, new Vector3(0f, 0f, 0f), new Vector3(0f), HeadMatrix, modelMatrix, "HEAD", "HEADWEAR");
+                RenderBodyPart(skinShader, new Vector3(0f, 0f, 0f), new Vector3(0f), BodyMatrix, modelMatrix, "BODY", "JACKET");
+                RenderBodyPart(skinShader, new Vector3(4f, 2f, 0f), new Vector3(slimModel ? -4f : -5f, -2f, 0f), RightArmMatrix * armRightMatrix, modelMatrix, "ARM0", "SLEEVE0");
+                RenderBodyPart(skinShader, new Vector3(-4f, 2f, 0f), new Vector3(5f, -2f, 0f), LeftArmMatrix * armLeftMatrix, modelMatrix, "ARM1", "SLEEVE1");
+                RenderBodyPart(skinShader, new Vector3(0f, 12f, 0f), new Vector3(-2f, -12f, 0f), RightLegMatrix * legRightMatrix, modelMatrix, "LEG0", "PANTS0");
+                RenderBodyPart(skinShader, new Vector3(0f, 12f, 0f), new Vector3(2f, -12f, 0f), LeftLegMatrix * legLeftMatrix, modelMatrix, "LEG1", "PANTS1");
             }
             
             // Render Skybox
             {
                 GL.DepthFunc(DepthFunction.Lequal);
                 GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
-                _skyboxShader.Bind();
+                var skyboxShader = _shaders.GetShader("SkyboxShader");
+                skyboxShader.Bind();
                 _skyboxTexture.Bind();
 
                 var view = new Matrix4(new Matrix3(Matrix4.LookAt(Camera.WorldPosition, Camera.WorldPosition + Camera.Orientation, Camera.Up)))
                     * Matrix4.CreateRotationY(MathHelper.DegreesToRadians(skyboxRotation));
                 var proj = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(Camera.Fov), AspectRatio, 1f, 1000f);
                 var viewproj = view * proj;
-                _skyboxShader.SetUniformMat4("viewProjection", ref viewproj);
-                Renderer.Draw(_skyboxShader, _skyboxRenderBuffer);
+                skyboxShader.SetUniformMat4("ViewProjection", ref viewproj);
+                Renderer.Draw(skyboxShader, _skyboxRenderBuffer);
                 GL.DepthFunc(DepthFunction.Less);
             }
 
@@ -833,17 +837,12 @@ namespace PckStudio.Rendering
             base.OnMouseUp(e);
         }
 
-        private void RenderBodyPart(Vector3 pivot, Vector3 translation, Matrix4 partMatrix, Matrix4 globalMatrix, params string[] additionalData)
+        private void RenderBodyPart(ShaderProgram shader, Vector3 pivot, Vector3 translation, Matrix4 partMatrix, Matrix4 globalMatrix, params string[] additionalData)
         {
             foreach (var data in additionalData)
             {
-                RenderPart(data, pivot, translation, partMatrix, globalMatrix);
+                RenderPart(shader, data, pivot, translation, partMatrix, globalMatrix);
             }
-        }
-
-        private void RenderPart(string name, Vector3 pivot, Vector3 translation, Matrix4 partMatrix, Matrix4 globalMatrix)
-        {
-            RenderPart(_skinShader, name, pivot, translation, partMatrix, globalMatrix);
         }
 
         private void RenderPart(ShaderProgram shader, string name, Vector3 pivot, Vector3 translation, Matrix4 partMatrix, Matrix4 globalMatrix)
