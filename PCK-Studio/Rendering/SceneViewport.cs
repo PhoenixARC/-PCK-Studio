@@ -32,7 +32,7 @@ using PckStudio.Rendering.Camera;
 
 namespace PckStudio.Rendering
 {
-    internal class Renderer3D : GLControl
+    internal class SceneViewport : GLControl
     {
         /// <summary>
         /// Refresh rate at which the frame is updated. Default is 50(Hz)
@@ -47,19 +47,20 @@ namespace PckStudio.Rendering
             }
         }
 
-        protected PerspectiveCamera Camera;
+        protected PerspectiveCamera Camera { get; }
         protected EventHandler OnTimerTick { get; set; }
 
         private int refreshRate = 60;
         private Timer timer;
 
-        public Renderer3D() : base()
+        public SceneViewport() : base()
         {
             timer = new Timer();
             RefreshRate = refreshRate;
             timer.Tick += TimerTick;
             timer.Start();
             timer.Enabled = !DesignMode;
+            Camera = new PerspectiveCamera(60f, new Vector3(0f, 0f, 0f));
             VSync = true;
         }
 
@@ -76,7 +77,6 @@ namespace PckStudio.Rendering
             if (Camera is not null)
             {
                 Camera.ViewportSize = ClientSize;
-                Camera.Update();
             }
             Renderer.SetViewportSize(Camera.ViewportSize);
         }

@@ -35,7 +35,15 @@ namespace PckStudio.Rendering.Camera
             }
         }
 
-        public Size ViewportSize { get; set; }
+        public Size ViewportSize
+        {
+            get => _viewportSize;
+            set
+            {
+                _viewportSize = value;
+                UpdateProjection();
+            }
+        }
 
         public Vector3 WorldPosition => _position;
         public Vector3 FocalPoint
@@ -69,7 +77,11 @@ namespace PckStudio.Rendering.Camera
         public float Fov
         {
             get => fov;
-            set => fov = MathHelper.Clamp(value, MinimumFov, MaximumFov);
+            set
+            {
+                fov = MathHelper.Clamp(value, MinimumFov, MaximumFov);
+                UpdateProjection();
+            }
         }
 
         public PerspectiveCamera(float fov, Vector3 position)
@@ -83,6 +95,7 @@ namespace PckStudio.Rendering.Camera
         private float fov;
 
         private float _distance;
+        private Size _viewportSize;
         private Vector3 _position;
         private Vector2 _rotation;
         private Vector3 _focalPoint;
@@ -106,9 +119,8 @@ namespace PckStudio.Rendering.Camera
             viewMatrix = viewMatrix.Inverted();
         }
 
-        public void Update()
+        private void UpdateProjection()
         {
-            UpdateViewMatrix();
             float aspect = (float)ViewportSize.Width / (float)ViewportSize.Height;
             projectionMatrix = Matrix4.CreatePerspectiveFieldOfView((float)MathHelper.DegreesToRadians(Fov), aspect, 1f, 1000f);
         }

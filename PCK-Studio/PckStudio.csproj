@@ -183,7 +183,7 @@
     <Compile Include="ToolboxItems\InterpolationPictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Rendering\Renderer3D.cs">
+    <Compile Include="Rendering\SceneViewport.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="ToolboxItems\ToolStripRadioButtonMenuItem.cs">

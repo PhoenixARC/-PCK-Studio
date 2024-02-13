@@ -39,7 +39,7 @@ using System.Linq;
 
 namespace PckStudio.Rendering
 {
-    internal partial class SkinRenderer : Renderer3D
+    internal partial class SkinRenderer : SceneViewport
     {
         /// <summary>
         /// The visible Texture on the renderer
@@ -91,12 +91,12 @@ namespace PckStudio.Rendering
         }
 
         public ObservableCollection<SkinBOX> ModelData { get; }
-        public ReadOnlyDictionary<string, float> PartOffsets => new ReadOnlyDictionary<string, float>(partOffset);
     
         /// <summary>
         /// Captures the currently displayed frame
         /// </summary>
         /// <returns>Image of the cameras current view</returns>
+        // TODO: add thumbnail size argument
         public Image GetThumbnail()
         {
             Bitmap bmp = new Bitmap(Width, Height);
@@ -283,16 +283,10 @@ namespace PckStudio.Rendering
             initialized = true;
         }
 
-        // TODO: calculate CameraDistance based on model size
         private const float DefaultCameraDistance = 64f;
         private void InitializeCamera()
         {
-            Camera = new PerspectiveCamera(60f, new Vector3(0f, 0f, 0f))
-            {
-                MinimumFov = 30f,
-                MaximumFov = 120f,
-                Distance = DefaultCameraDistance,
-            };
+            Camera.Distance = DefaultCameraDistance;
         }
 
         private void InitializeSkinData()
