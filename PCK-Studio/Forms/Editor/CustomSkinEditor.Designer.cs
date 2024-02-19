@@ -386,6 +386,7 @@
             this.renderer3D1.RefreshRate = 50;
             this.renderer3D1.Texture = null;
             this.renderer3D1.VSync = true;
+            this.renderer3D1.TextureChanging += new System.EventHandler<PckStudio.Rendering.TextureChangingEventArgs>(renderer3D1_TextureChanging);
             // 
             // uvPictureBox
             // 

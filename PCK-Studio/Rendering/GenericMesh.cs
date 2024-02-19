@@ -35,7 +35,7 @@ namespace PckStudio.Rendering
         protected int indicesOffset;
 
         private VertexArray vertexArray;
-        private VertexBuffer<T> vertexBuffer;
+        private VertexBuffer vertexBuffer;
         private IndexBuffer indexBuffer;
         private readonly VertexBufferLayout _layout;
         private readonly PrimitiveType drawType;
@@ -65,7 +65,8 @@ namespace PckStudio.Rendering
             vertexArray ??= new VertexArray();
 
             var vertexData = vertices.ToArray();
-            vertexBuffer = new VertexBuffer<T>(vertexData, vertexData.Length * SizeInBytes);
+            vertexBuffer = new VertexBuffer(vertexData.Length * SizeInBytes);
+            vertexBuffer.SetData(vertexData);
 
             vertexArray.AddBuffer(vertexBuffer, _layout);
 

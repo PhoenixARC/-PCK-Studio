@@ -355,7 +355,8 @@ namespace PckStudio.Properties {
         ///
         ///void main()
         ///{
-        ///	color = texture(screenTexture, texCoords);
+        ///	vec3 texColor = texture(screenTexture, texCoords).rgb;
+        ///	color = vec4(texColor, 1.0);
         ///}.
         /// </summary>
         public static string framebufferFragmentShader {
@@ -441,6 +442,42 @@ namespace PckStudio.Properties {
             get {
                 object obj = ResourceManager.GetObject("items_sheet", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #version 330 core
+        ///
+        ///layout(location = 0) in vec4 a_Pos;
+        ///
+        ///uniform mat4 ViewProjection;
+        ///
+        ///void main()
+        ///{
+        ///	gl_Position = ViewProjection * a_Pos;
+        ///};.
+        /// </summary>
+        public static string lineFragmentShader {
+            get {
+                return ResourceManager.GetString("lineFragmentShader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #version 330 core
+        ///
+        ///layout(location = 0) out vec4 FragColor;
+        ///
+        ///uniform vec4 color;
+        ///
+        ///void main()
+        ///{
+        ///	FragColor = color;
+        ///}.
+        /// </summary>
+        public static string lineVertexShader {
+            get {
+                return ResourceManager.GetString("lineVertexShader", resourceCulture);
             }
         }
         
@@ -611,12 +648,12 @@ namespace PckStudio.Properties {
         ///
         ///uniform sampler2D u_Texture;
         ///
-        ///in vec2 o_TexScale;
+        ///in vec2 o_TillingFactor;
         ///in vec2 o_TexCoord;
         ///
         ///void main()
         ///{
-        ///	color = texture(u_Texture, o_TexCoord * o_TexScale);
+        ///	color = texture(u_Texture, o_TexCoord * o_TillingFactor);
         ///};.
         /// </summary>
         public static string skinFragmentShader {
@@ -634,7 +671,7 @@ namespace PckStudio.Properties {
         ///uniform vec2 u_TexSize;
         ///
         ///out vec2 o_TexCoord;
-        ///out vec2 o_TexScale;
+        ///out vec2 o_TillingFactor;
         ///
         ///in geometryData
         ///{
@@ -651,7 +688,7 @@ namespace PckStudio.Properties {
         ///	gl_Position = gl_in[0].gl_Position;
         ///	o_TexCoord = dataIn[0].TexCoord;
         ///	if (isXBad)
-        ///		o_TexCoord.x = mod(o_TexCoord.x, u_TexSize.x); [rest of string was truncated]&quot;;.
+        ///		o_TexCoord.x = mod(o_TexCoord.x, u_TexSiz [rest of string was truncated]&quot;;.
         /// </summary>
         public static string skinGeometryShader {
             get {
@@ -677,7 +714,7 @@ namespace PckStudio.Properties {
         ///layout(location = 2) in float scale;
         ///
         ///uniform mat4 u_ViewProjection;
-        ///uniform mat4 u_Model;
+        ///uniform mat4 u_Transform;
         ///
         ///out geometryData
         ///{
@@ -687,9 +724,8 @@ namespace PckStudio.Properties {
         ///void main()
         ///{
         ///	dataOut.TexCoord = texCoord;
-        ///	vec4 scaledVertex = scale * vertexPosition;
-        ///	vec4 invertedVertex = vec4(scaledVertex.x, scaledVertex.y * -1.0, scaledVertex.z * -1.0, 1.0);
-        ///	gl_Position = u_ViewProjection * u_Model * invertedVertex;
+        ///	vec4 invertedVertex = vec4(vertexPosition.x, vertexPosition.yz * -1.0, 1.0);
+        ///	gl_Position = u_ViewProjection * u_Transform * invertedVertex * scale;
         ///};.
         /// </summary>
         public static string skinVertexShader {
@@ -724,15 +760,15 @@ namespace PckStudio.Properties {
         ///
         ///layout(location = 0) in vec4 a_Pos;
         ///
-        ///uniform mat4 viewProjection;
+        ///uniform mat4 ViewProjection;
         ///
         ///out vec3 texCoords;
         ///
         ///void main()
         ///{
-        ///	vec4 pos = viewProjection * a_Pos;
+        ///	vec4 pos = ViewProjection * a_Pos;
         ///	gl_Position = vec4(pos.x, pos.y, pos.ww);
-        ///	texCoords = vec3(a_Pos.x, a_Pos.y, -a_Pos.z);
+        ///	texCoords = vec3(a_Pos.xy, -a_Pos.z);
         ///};.
         /// </summary>
         public static string skyboxVertexShader {

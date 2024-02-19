@@ -158,6 +158,7 @@
     <Compile Include="Rendering\IndexBuffer.cs" />
     <Compile Include="Rendering\IVertexLayout.cs" />
     <Compile Include="Rendering\DrawContext.cs" />
+    <Compile Include="Rendering\LineVertex.cs" />
     <Compile Include="Rendering\Renderer.cs" />
     <Compile Include="Rendering\GenericMesh.cs" />
     <Compile Include="Rendering\Shader\ShaderLibrary.cs" />
@@ -646,6 +647,8 @@
   <ItemGroup>
     <None Include="Resources\shader\framebufferFragmentShader.glsl" />
     <None Include="Resources\shader\framebufferVertexShader.glsl" />
+    <None Include="Resources\shader\lineFragmentShader.glsl" />
+    <None Include="Resources\shader\lineVertexShader.glsl" />
     <None Include="Resources\shader\skinGeometryShader.glsl" />
     <None Include="Resources\shader\skyboxFragmentShader.glsl" />
     <None Include="Resources\shader\skyboxVertexShader.glsl" />

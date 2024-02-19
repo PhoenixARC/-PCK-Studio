@@ -30,6 +30,8 @@ namespace PckStudio.Rendering
         private List<CubeData> cubes;
 
         internal float Scale { get; set; } = 1f;
+        public Vector3 Translation { get; set; } = Vector3.Zero;
+        public Vector3 Pivot { get; set; } = Vector3.Zero;
 
         internal CubeBatchMesh(string name) : base(name, PrimitiveType.Triangles)
         {
@@ -44,7 +46,9 @@ namespace PckStudio.Rendering
 
         internal void AddSkinBox(SkinBOX skinBox)
         {
-            AddCube(skinBox.Pos.ToOpenTKVector(), skinBox.Size.ToOpenTKVector(), skinBox.UV.ToOpenTKVector(), skinBox.Scale + Scale, skinBox.Mirror, skinBox.Type == "HEAD");
+            AddCube(skinBox.Pos.ToOpenTKVector(), skinBox.Size.ToOpenTKVector(), skinBox.UV.ToOpenTKVector(), skinBox.Scale + Scale, skinBox.Mirror,
+                skinBox.Type == "HEAD" ||
+                skinBox.Type == "HEADWEAR");
         }
 
         internal void ClearData()
@@ -90,6 +94,41 @@ namespace PckStudio.Rendering
             cube.Uv = uv;
             cube.Scale = scale;
             cube.MirrorTexture = mirrorTexture;
+        }
+
+        private Vector3 Transform
+        {
+            get
+            {
+                Vector3 offset = Translation;
+                offset.Xz -= Pivot.Xz / 2f;
+                return -offset;
+            }
+        }
+
+
+        internal Vector3 GetCenter(int index)
+        {
+            if (!cubes.IndexInRange(index))
+                throw new IndexOutOfRangeException();
+
+            return cubes[index].Center + Transform;
+        }
+
+        internal Vector3[] GetCubical(int index)
+        {
+            if (!cubes.IndexInRange(index))
+                throw new IndexOutOfRangeException();
+
+            CubeData cube = cubes[index];
+            return cube.GetOutline().Select(pos => pos + Transform).ToArray();
+        }
+
+        internal Vector3 GetFaceCenter(int index, CubeData.CubeFace face)
+        {
+            if (!cubes.IndexInRange(index))
+                throw new IndexOutOfRangeException();
+            return cubes[index].GetFaceCenter(face) + Transform;
         }
 
         internal void SetEnabled(int index, bool enable)
