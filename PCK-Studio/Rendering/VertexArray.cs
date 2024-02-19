@@ -17,7 +17,7 @@ namespace PckStudio.Rendering
             _id = GL.GenVertexArray();
         }
 
-        public void AddBuffer<T>(VertexBuffer<T> buffer, VertexBufferLayout layout) where T : struct
+        public void AddBuffer(VertexBuffer buffer, VertexBufferLayout layout)
         {
             Bind();
             buffer.Bind();

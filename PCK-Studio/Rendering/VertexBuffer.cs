@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Markup;
@@ -10,23 +11,39 @@ using OpenTK.Graphics.OpenGL;
 
 namespace PckStudio.Rendering
 {
-    internal struct VertexBuffer<T> : IDisposable where T : struct
+    internal struct VertexBuffer : IDisposable
     {
         private int _id;
+        private int _count;
+        private int _size;
 
-#if DEBUG
-        private T[] __data;
-#endif
-
-        public VertexBuffer(T[] data, int size)
+        public VertexBuffer()
         {
-#if DEBUG
-            __data = data;
-#endif
             _id = GL.GenBuffer();
+            _size = 0;
+        }
+
+        public VertexBuffer(int size) : this()
+        {
+            _size = size;
             Bind();
-            GL.BufferData(BufferTarget.ArrayBuffer, size, data, BufferUsageHint.StaticDraw);
+            GL.BufferData(BufferTarget.ArrayBuffer, size, IntPtr.Zero, BufferUsageHint.StaticDraw);
             Unbind();
+        }
+
+        public void SetData<T>(T[] data) where T : struct
+        {
+            int sizeofT = Marshal.SizeOf<T>();
+            _count = data.Length;
+            Bind();
+            int size = sizeofT * _count;
+            if (_size == 0)
+            {
+                GL.BufferData(BufferTarget.ArrayBuffer, size, data, BufferUsageHint.StaticDraw);
+                _size = size;
+                return;
+            }
+            GL.BufferSubData(BufferTarget.ArrayBuffer, IntPtr.Zero, size, data);
         }
 
         public void Bind()
@@ -43,6 +60,11 @@ namespace PckStudio.Rendering
         {
             Unbind();
             GL.DeleteBuffer(_id);
+        }
+
+        internal IndexBuffer GenIndexBuffer()
+        {
+            return IndexBuffer.Create(Enumerable.Range(0, _count).ToArray());
         }
     }
 }

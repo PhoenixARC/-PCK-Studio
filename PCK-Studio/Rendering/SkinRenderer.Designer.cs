@@ -37,6 +37,7 @@ namespace PckStudio.Rendering
             this.components = new System.ComponentModel.Container();
             this.reToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.guidelineModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -50,9 +51,17 @@ namespace PckStudio.Rendering
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.reToolStripMenuItem});
+            this.reToolStripMenuItem,
+            this.guidelineModeToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 48);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 70);
+            // 
+            // guidelineModeToolStripMenuItem
+            // 
+            this.guidelineModeToolStripMenuItem.Name = "guidelineModeToolStripMenuItem";
+            this.guidelineModeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.guidelineModeToolStripMenuItem.Text = "Guideline Mode";
+            this.guidelineModeToolStripMenuItem.Click += new System.EventHandler(this.guidelineModeToolStripMenuItem_Click);
             // 
             // SkinRenderer
             // 
@@ -64,5 +73,6 @@ namespace PckStudio.Rendering
         }
         private System.Windows.Forms.ToolStripMenuItem reToolStripMenuItem;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem guidelineModeToolStripMenuItem;
     }
 }

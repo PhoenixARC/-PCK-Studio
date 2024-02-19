@@ -41,5 +41,10 @@ namespace PckStudio.Rendering
         {
             GL.ClearColor(color);
         }
+
+        public static void SetLineWidth(float width)
+        {
+            GL.LineWidth(width);
+        }
     }
 }

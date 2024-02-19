@@ -64,6 +64,19 @@ namespace PckStudio.Rendering
         }
 
         public bool ClampModel { get; set; } = false;
+        public bool ShowGuideLines
+        {
+            get => guidelineMode != GuidelineMode.None;
+            set
+            {
+                if (value)
+                {
+                    guidelineMode = GuidelineMode.Cubical;
+                    return;
+                }
+                guidelineMode = GuidelineMode.None;
+            }
+        }
 
         [Description("Event that gets fired when the Texture is changing")]
         [Category("Property Chnaged")]
@@ -110,6 +123,16 @@ namespace PckStudio.Rendering
             return bmp;
         }
 
+
+        private enum GuidelineMode
+        {
+            None = -1,
+            Cubical,
+            Skeleton
+        };
+
+        private GuidelineMode guidelineMode { get; set; } = GuidelineMode.None;
+
         private Vector2 _globalModelRotation;
         private Vector2 GlobalModelRotation
         {
@@ -151,6 +174,9 @@ namespace PckStudio.Rendering
         private ShaderProgram framebufferShader;
         private VertexArray framebufferVAO;
 #endif
+        private DrawContext _cubicalDrawContext;
+        private DrawContext _skeletonDrawContext;
+
         private DrawContext _skyboxRenderBuffer;
         private CubeTexture _skyboxTexture;
         private float skyboxRotation = 0f;
@@ -179,12 +205,8 @@ namespace PckStudio.Rendering
 
         private bool showWireFrame = false;
 
-        private Matrix4 HeadMatrix { get; set; } = Matrix4.Identity;
-        private Matrix4 BodyMatrix { get; set; } = Matrix4.Identity;
         private Matrix4 RightArmMatrix { get; set; } = Matrix4.CreateFromAxisAngle(Vector3.UnitZ,  25f);
         private Matrix4 LeftArmMatrix  { get; set; } = Matrix4.CreateFromAxisAngle(Vector3.UnitZ, -25f);
-        private Matrix4 RightLegMatrix { get; set; } = Matrix4.Identity;
-        private Matrix4 LeftLegMatrix { get; set; } = Matrix4.Identity;
 
         private static Vector3[] cubeVertices = new Vector3[]
         {
@@ -265,7 +287,7 @@ namespace PckStudio.Rendering
 
             InitializeCamera();
             InitializeComponent();
-            
+
             _shaders = new ShaderLibrary();
             ANIM ??= new SkinANIM(SkinAnimMask.RESOLUTION_64x64);
             OnTimerTick = AnimationTick;
@@ -304,27 +326,43 @@ namespace PckStudio.Rendering
             bodyOverlay.AddCube(new(-4, 0, -2), new(8, 12, 4), new(16, 32), scale: OverlayScale);
 
             rightArm ??= new CubeBatchMesh("Right Arm");
+            rightArm.Pivot = new Vector3(4f, 2f, 0f);
+            rightArm.Translation = new Vector3(-5f, -2f, 0f);
             rightArm.AddCube(new(-3, -2, -2), new(4, 12, 4), new(40, 16));
             
             rightArmOverlay ??= new CubeBatchMesh("Right Arm Overlay", OverlayScale);
+            rightArmOverlay.Pivot = new Vector3(4f, 2f, 0f);
+            rightArmOverlay.Translation = new Vector3(-5f, -2f, 0f);
             rightArmOverlay.AddCube(new(-3, -2, -2), new(4, 12, 4), new(40, 32), scale: OverlayScale);
             
             leftArm ??= new CubeBatchMesh("Left Arm");
+            leftArm.Pivot = new Vector3(-4f, 2f, 0f);
+            leftArm.Translation = new Vector3(5f, -2f, 0f);
             leftArm.AddCube(new(-1, -2, -2), new(4, 12, 4), new(32, 48));
 
             leftArmOverlay ??= new CubeBatchMesh("Left Arm Overlay", OverlayScale);
+            leftArmOverlay.Pivot = new Vector3(-4f, 2f, 0f);
+            leftArmOverlay.Translation = new Vector3(5f, -2f, 0f);
             leftArmOverlay.AddCube(new(-1, -2, -2), new(4, 12, 4), new(48, 48), scale: OverlayScale);
 
             rightLeg ??= new CubeBatchMesh("Right Leg");
+            rightLeg.Pivot = new Vector3(0f, 12f, 0f);
+            rightLeg.Translation = new Vector3(-2f, -12f, 0f);
             rightLeg.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 16));
 
             rightLegOverlay ??= new CubeBatchMesh("Right Leg Overlay", OverlayScale);
+            rightLegOverlay.Pivot = new Vector3(0f, 12f, 0f);
+            rightLegOverlay.Translation = new Vector3(-2f, -12f, 0f);
             rightLegOverlay.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 32), scale: OverlayScale);
 
             leftLeg ??= new CubeBatchMesh("Left Leg");
+            leftLeg.Pivot = new Vector3(0f, 12f, 0f);
+            leftLeg.Translation = new Vector3(2f, -12f, 0f);
             leftLeg.AddCube(new(-2, 0, -2), new(4, 12, 4), new(16, 48));
 
             leftLegOverlay ??= new CubeBatchMesh("Left Leg Overlay", OverlayScale);
+            leftLegOverlay.Pivot = new Vector3(0f, 12f, 0f);
+            leftLegOverlay.Translation = new Vector3(2f, -12f, 0f);
             leftLegOverlay.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 48), scale: OverlayScale);
         }
 
@@ -362,9 +400,10 @@ namespace PckStudio.Rendering
             }
 
             // Skybox shader
-                {
+            {
                 var skyboxVAO = new VertexArray();
-                var skyboxVBO = new VertexBuffer<Vector3>(cubeVertices, cubeVertices.Length * Vector3.SizeInBytes);
+                var skyboxVBO = new VertexBuffer();
+                skyboxVBO.SetData(cubeVertices);
                 var vboLayout = new VertexBufferLayout();
                 vboLayout.Add<float>(3);
                 skyboxVAO.AddBuffer(skyboxVBO, vboLayout);
@@ -428,6 +467,90 @@ namespace PckStudio.Rendering
                 GLErrorCheck();
             }
 #endif
+            // Line Shader
+            {
+                var lineShader = ShaderProgram.Create(Resources.lineVertexShader, Resources.lineFragmentShader);
+                lineShader.Bind();
+                lineShader.SetUniform4("baseColor", Color.WhiteSmoke);
+                lineShader.Validate();
+                _shaders.AddShader("LineShader", lineShader);
+
+                Color lineColor = Color.Aquamarine;
+
+                // Cubical draw context
+                {
+                    VertexArray lineVAO = new VertexArray();
+                    List<LineVertex> vertices = new List<LineVertex>(24 * 6);
+                    vertices.AddRange(head.GetCubical(0).Select(pos => new LineVertex(pos, lineColor)));
+                    vertices.AddRange(body.GetCubical(0).Select(pos => new LineVertex(pos, lineColor)));
+                    vertices.AddRange(rightArm.GetCubical(0).Select(pos => new LineVertex(pos, lineColor)));
+                    vertices.AddRange(leftArm.GetCubical(0).Select(pos => new LineVertex(pos, lineColor)));
+                    vertices.AddRange(rightLeg.GetCubical(0).Select(pos => new LineVertex(pos, lineColor)));
+                    vertices.AddRange(leftLeg.GetCubical(0).Select(pos => new LineVertex(pos, lineColor)));
+                    VertexBuffer buffer = new VertexBuffer();
+                    buffer.SetData(vertices.ToArray());
+                    VertexBufferLayout layout = new VertexBufferLayout();
+                    layout.Add<float>(3);
+                    layout.Add<float>(4);
+                    lineVAO.AddBuffer(buffer, layout);
+                    lineVAO.Bind();
+
+                    _cubicalDrawContext = new DrawContext(lineVAO, buffer.GenIndexBuffer(), PrimitiveType.Lines);
+                }
+
+                GLErrorCheck();
+
+                // Skeleton draw context
+                {
+                    VertexArray lineVAO = new VertexArray();
+                    Vector3 bodyCenterTop = body.GetFaceCenter(0, CubeData.CubeFace.Top);
+                    Vector3 bodyCenterBottom = body.GetFaceCenter(0, CubeData.CubeFace.Bottom);
+                    LineVertex[] data = [
+                        new LineVertex(head.GetFaceCenter(0, CubeData.CubeFace.Top), lineColor),
+                        new LineVertex(bodyCenterTop, lineColor),
+                    
+                        new LineVertex(rightArm.GetFaceCenter(0, CubeData.CubeFace.Bottom), lineColor),
+                        new LineVertex(rightArm.GetFaceCenter(0, CubeData.CubeFace.Top), lineColor),
+                        new LineVertex(rightArm.GetFaceCenter(0, CubeData.CubeFace.Top), lineColor),
+                        new LineVertex(bodyCenterTop, lineColor),
+
+                        new LineVertex(leftArm.GetFaceCenter(0, CubeData.CubeFace.Bottom), lineColor),
+                        new LineVertex(leftArm.GetFaceCenter(0, CubeData.CubeFace.Top), lineColor),
+                        new LineVertex(leftArm.GetFaceCenter(0, CubeData.CubeFace.Top), lineColor),
+                        new LineVertex(bodyCenterTop, lineColor),
+
+                        new LineVertex(rightLeg.GetFaceCenter(0, CubeData.CubeFace.Bottom), lineColor),
+                        new LineVertex(rightLeg.GetFaceCenter(0, CubeData.CubeFace.Top), lineColor),
+                        new LineVertex(rightLeg.GetFaceCenter(0, CubeData.CubeFace.Top), lineColor),
+                        new LineVertex(bodyCenterBottom, lineColor),
+                        new LineVertex(bodyCenterBottom, lineColor),
+                        new LineVertex(bodyCenterTop, lineColor),
+
+                        new LineVertex(leftLeg.GetFaceCenter(0, CubeData.CubeFace.Bottom), lineColor),
+                        new LineVertex(leftLeg.GetFaceCenter(0, CubeData.CubeFace.Top), lineColor),
+                        new LineVertex(leftLeg.GetFaceCenter(0, CubeData.CubeFace.Top), lineColor),
+                        new LineVertex(bodyCenterBottom, lineColor),
+                        new LineVertex(bodyCenterBottom, lineColor),
+                        new LineVertex(bodyCenterTop, lineColor),
+                    ];
+                    VertexBuffer buffer = new VertexBuffer();
+                    buffer.SetData(data);
+                    VertexBufferLayout layout = new VertexBufferLayout();
+                    layout.Add<float>(3);
+                    layout.Add<float>(4);
+                    lineVAO.AddBuffer(buffer, layout);
+                    lineVAO.Bind();
+
+                    _skeletonDrawContext = new DrawContext(lineVAO, buffer.GenIndexBuffer(), PrimitiveType.Lines);
+                }
+
+                GLErrorCheck();
+            }
+        }
+
+        private DrawContext GetGuidelineDrawContext()
+        {
+            return guidelineMode == GuidelineMode.Skeleton ? _skeletonDrawContext : _cubicalDrawContext;
         }
 
         protected virtual void OnTextureChanging(object sender, TextureChangingEventArgs e)
@@ -462,7 +585,8 @@ namespace PckStudio.Rendering
             GL.FramebufferRenderbuffer(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthStencilAttachment, RenderbufferTarget.Renderbuffer, rbo);
 
             framebufferVAO = new VertexArray();
-            VertexBuffer<Vector4> vertexBuffer = new VertexBuffer<Vector4>(rectVertices, rectVertices.Length * Vector4.SizeInBytes);
+            VertexBuffer vertexBuffer = new VertexBuffer();
+            vertexBuffer.SetData(rectVertices);
             VertexBufferLayout layout = new VertexBufferLayout();
             layout.Add<float>(4);
             framebufferVAO.AddBuffer(vertexBuffer, layout);
@@ -677,17 +801,36 @@ namespace PckStudio.Rendering
                 return;
             }
 
-            MakeCurrent(); 
+            MakeCurrent();
 
 #if USE_FRAMEBUFFER
             framebuffer.Bind();
 #endif
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+            
             GL.Enable(EnableCap.DepthTest); // Enable correct Z Drawings
+            GL.Enable(EnableCap.LineSmooth);
+            Matrix4 viewProjection = Camera.GetViewProjection();
+
+            // Render Skybox
+            {
+                GL.DepthFunc(DepthFunction.Lequal);
+                GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
+                var skyboxShader = _shaders.GetShader("SkyboxShader");
+                skyboxShader.Bind();
+                _skyboxTexture.Bind();
+
+                var view = new Matrix4(new Matrix3(Matrix4.LookAt(Camera.WorldPosition, Camera.WorldPosition + Camera.Orientation, Camera.Up)))
+                    * Matrix4.CreateRotationY(MathHelper.DegreesToRadians(skyboxRotation));
+                var proj = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(Camera.Fov), AspectRatio, 1f, 1000f);
+                var viewproj = view * proj;
+                skyboxShader.SetUniformMat4("ViewProjection", ref viewproj);
+                Renderer.Draw(skyboxShader, _skyboxRenderBuffer);
+                GL.DepthFunc(DepthFunction.Less);
+            }
 
             // Render (custom) skin
             {
-                var viewProjection = Camera.GetViewProjection();
                 var skinShader = _shaders.GetShader("SkinShader");
                 skinShader.Bind();
                 skinShader.SetUniformMat4("u_ViewProjection", ref viewProjection);
@@ -749,29 +892,29 @@ namespace PckStudio.Rendering
                 }
 
                 bool slimModel = ANIM.GetFlag(SkinAnimFlag.SLIM_MODEL);
-                RenderBodyPart(skinShader, new Vector3(0f, 0f, 0f), new Vector3(0f), HeadMatrix, modelMatrix, "HEAD", "HEADWEAR");
-                RenderBodyPart(skinShader, new Vector3(0f, 0f, 0f), new Vector3(0f), BodyMatrix, modelMatrix, "BODY", "JACKET");
-                RenderBodyPart(skinShader, new Vector3(4f, 2f, 0f), new Vector3(slimModel ? -4f : -5f, -2f, 0f), RightArmMatrix * armRightMatrix, modelMatrix, "ARM0", "SLEEVE0");
-                RenderBodyPart(skinShader, new Vector3(-4f, 2f, 0f), new Vector3(5f, -2f, 0f), LeftArmMatrix * armLeftMatrix, modelMatrix, "ARM1", "SLEEVE1");
-                RenderBodyPart(skinShader, new Vector3(0f, 12f, 0f), new Vector3(-2f, -12f, 0f), RightLegMatrix * legRightMatrix, modelMatrix, "LEG0", "PANTS0");
-                RenderBodyPart(skinShader, new Vector3(0f, 12f, 0f), new Vector3(2f, -12f, 0f), LeftLegMatrix * legLeftMatrix, modelMatrix, "LEG1", "PANTS1");
-            }
-            
-            // Render Skybox
-            {
-                GL.DepthFunc(DepthFunction.Lequal);
-                GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
-                var skyboxShader = _shaders.GetShader("SkyboxShader");
-                skyboxShader.Bind();
-                _skyboxTexture.Bind();
+                rightArm.Translation = rightArmOverlay.Translation = new Vector3(slimModel ? -4f : -5f, -2f, 0f);
+                
 
-                var view = new Matrix4(new Matrix3(Matrix4.LookAt(Camera.WorldPosition, Camera.WorldPosition + Camera.Orientation, Camera.Up)))
-                    * Matrix4.CreateRotationY(MathHelper.DegreesToRadians(skyboxRotation));
-                var proj = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(Camera.Fov), AspectRatio, 1f, 1000f);
-                var viewproj = view * proj;
-                skyboxShader.SetUniformMat4("ViewProjection", ref viewproj);
-                Renderer.Draw(skyboxShader, _skyboxRenderBuffer);
-                GL.DepthFunc(DepthFunction.Less);
+                RenderBodyPart(skinShader, Matrix4.Identity, modelMatrix, "HEAD", "HEADWEAR");
+                RenderBodyPart(skinShader, Matrix4.Identity, modelMatrix, "BODY", "JACKET");
+                RenderBodyPart(skinShader, RightArmMatrix * armRightMatrix, modelMatrix, "ARM0", "SLEEVE0");
+                RenderBodyPart(skinShader, LeftArmMatrix * armLeftMatrix, modelMatrix, "ARM1", "SLEEVE1");
+                RenderBodyPart(skinShader, legRightMatrix, modelMatrix, "LEG0", "PANTS0");
+                RenderBodyPart(skinShader, legLeftMatrix, modelMatrix, "LEG1", "PANTS1");
+
+                // render lines
+                if (ShowGuideLines)
+                {
+                    GL.DepthFunc(DepthFunction.Always);
+                    var shader = _shaders.GetShader("LineShader");
+                    shader.Bind();
+                    shader.SetUniformMat4("ViewProjection", ref viewProjection);
+                    shader.SetUniformMat4("Transform", ref modelMatrix);
+                    Renderer.SetLineWidth(2.5f);
+                    Renderer.Draw(shader, GetGuidelineDrawContext());
+                    //GL.DepthFunc(DepthFunction.Less);
+                    Renderer.SetLineWidth(1f);
+                }
             }
 
 #if USE_FRAMEBUFFER
@@ -837,23 +980,26 @@ namespace PckStudio.Rendering
             base.OnMouseUp(e);
         }
 
-        private void RenderBodyPart(ShaderProgram shader, Vector3 pivot, Vector3 translation, Matrix4 partMatrix, Matrix4 globalMatrix, params string[] additionalData)
+        private void RenderBodyPart(ShaderProgram shader, Matrix4 partMatrix, Matrix4 globalMatrix, params string[] additionalData)
         {
             foreach (var data in additionalData)
             {
-                RenderPart(shader, data, pivot, translation, partMatrix, globalMatrix);
+                RenderPart(shader, data, partMatrix, globalMatrix);
             }
         }
 
-        private void RenderPart(ShaderProgram shader, string name, Vector3 pivot, Vector3 translation, Matrix4 partMatrix, Matrix4 globalMatrix)
+        private void RenderPart(ShaderProgram shader, string name, Matrix4 partMatrix, Matrix4 globalMatrix)
         {
             CubeBatchMesh cubeMesh = meshStorage[name];
+            Vector3 translation = cubeMesh.Translation;
+            Vector3 pivot = cubeMesh.Pivot;
             float yOffset = GetOffset(name);
             translation.Y -= yOffset;
             pivot.Y += yOffset;
-            Matrix4 model = Pivot(translation, pivot, partMatrix);
-            model *= globalMatrix;
-            _skinShader.SetUniformMat4("u_Model", ref model);
+            Matrix4 transform = Matrix4.CreateScale(cubeMesh.Scale);
+            transform *= Pivot(translation, pivot, partMatrix);
+            transform *= globalMatrix;
+            shader.SetUniformMat4("u_Transform", ref transform);
             cubeMesh.Draw(shader);
         }
 
@@ -900,6 +1046,15 @@ namespace PckStudio.Rendering
             ReInitialzeSkinData();
             MakeCurrent();
             UploadMeshData();
+        }
+
+        private void guidelineModeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!Enum.IsDefined(typeof(GuidelineMode), ++guidelineMode))
+            {
+                guidelineMode = GuidelineMode.None;
+            }
+            guidelineModeToolStripMenuItem.Text = $"Guideline Mode: {guidelineMode}";
         }
     }
 }

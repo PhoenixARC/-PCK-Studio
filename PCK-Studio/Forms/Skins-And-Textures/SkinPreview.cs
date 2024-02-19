@@ -15,11 +15,21 @@ namespace PckStudio.Forms
             set => ModelView.ANIM = value;
         }
 
-        public SkinPreview(Image texture, IEnumerable<SkinBOX> modelData)
+        private Image texture;
+        private IEnumerable<SkinBOX> data;
+
+        public SkinPreview(Image image, IEnumerable<SkinBOX> modelData)
         {
             InitializeComponent();
+            texture = image;
+            data = modelData;
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
             ModelView.InitializeGL();
-            foreach (var item in modelData)
+            foreach (var item in data)
             {
                 ModelView.ModelData.Add(item);
             }

@@ -36,30 +36,22 @@ namespace PckStudio.Forms.Editor
             PixelOffsetMode = PixelOffsetMode.HighQuality,
         };
 
-        private CustomSkinEditor()
+        public CustomSkinEditor(PckFileData file)
         {
             InitializeComponent();
+            _file = file;
+            rng = new Random();
         }
 
-        public CustomSkinEditor(PckFileData file) : this()
+        protected override void OnLoad(EventArgs e)
         {
-            _file = file;
-
-            if (DesignMode)
-                return;
-            renderer3D1.RefreshRate = 50;
-            renderer3D1.Texture = null;
-            renderer3D1.VSync = true;
-            renderer3D1.TextureChanging += new System.EventHandler<PckStudio.Rendering.TextureChangingEventArgs>(renderer3D1_TextureChanging);
+            base.OnLoad(e);
             renderer3D1.InitializeGL();
-
-            Controls.Add(renderer3D1);
-            rng = new Random();
             if (_file.Size > 0)
             {
                 renderer3D1.Texture = _file.GetTexture();
             }
-            LoadModelData(file.Properties);
+            LoadModelData(_file.Properties);
         }
 
         private void LoadModelData(PckFileProperties properties)
@@ -77,7 +69,7 @@ namespace PckStudio.Forms.Editor
             skinPartListBox.DataSource = skinPartListBindingSource;
             skinPartListBox.DisplayMember = "Type";
 
-            skinOffsetListBindingSource = new BindingSource(renderer3D1.PartOffsets, null);
+            skinOffsetListBindingSource = new BindingSource(renderer3D1, null);
             offsetListBox.DataSource = skinOffsetListBindingSource;
         }
 
@@ -186,17 +178,17 @@ namespace PckStudio.Forms.Editor
 
         private void LoadCsmb(CSMBFile csmbFile)
         {
-            renderer3D1.ModelData.Clear();
-            foreach (var part in csmbFile.Parts)
-            {
-                renderer3D1.ModelData.Add(part);
-            }
+            //renderer3D1.ModelData.Clear();
+            //foreach (var part in csmbFile.Parts)
+            //{
+            //    renderer3D1.ModelData.Add(part);
+            //}
 
-            renderer3D1.ResetOffsets();
-            foreach (var offset in csmbFile.Offsets)
-            {
-                renderer3D1.SetPartOffset(offset);
-            }
+            //renderer3D1.ResetOffsets();
+            //foreach (var offset in csmbFile.Offsets)
+            //{
+            //    renderer3D1.SetPartOffset(offset);
+            //}
         }
 
         private void cloneToolStripMenuItem_Click(object sender, EventArgs e)

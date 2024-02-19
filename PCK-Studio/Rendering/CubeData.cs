@@ -106,6 +106,99 @@ namespace PckStudio.Rendering
             }
         }
 
+        internal Vector3 Center => Position + Size / 2f;
+
+        internal enum CubeFace
+        {
+            Back,
+            Front,
+            Top,
+            Bottom,
+            Left,
+            Right
+        }
+
+        internal Vector3 GetFaceCenter(CubeFace face)
+        {
+            var result = Center;
+            switch (face)
+            {
+                case CubeFace.Top:
+                    result.Y -= Size.Y / 2f;
+                    return result;
+                case CubeFace.Bottom:
+                    result.Y += Size.Y / 2f;
+                    return result;
+                case CubeFace.Back:
+                    result.Z -= Size.Z / 2f;
+                    return result;
+                case CubeFace.Front:
+                    result.Z += Size.Z / 2f;
+                    return result;
+                case CubeFace.Left:
+                    result.X -= Size.X / 2f;
+                    return result;
+                case CubeFace.Right:
+                    result.X += Size.X / 2f;
+                    return result;
+                default:
+                    return result;
+            }
+        }
+
+        internal Vector3[] GetOutline()
+        {
+            List<Vector3> verts = new List<Vector3>();
+
+            Vector3 bottomRightBack = vertices[0].Position;
+            Vector3 bottomLeftBack = vertices[1].Position;
+            Vector3 topLeftBack = vertices[2].Position;
+            Vector3 topRightBack = vertices[3].Position;
+
+            Vector3 bottomRightFront = vertices[4].Position;
+            Vector3 bottomLeftFront = vertices[5].Position;
+            Vector3 topLeftFront = vertices[6].Position;
+            Vector3 topRightFront = vertices[7].Position;
+
+
+            return [
+                topLeftBack,
+                topLeftFront,
+                
+                topLeftBack,
+                topRightBack,
+                
+                topRightBack,
+                topRightFront,
+                
+                topLeftFront,
+                topRightFront,
+
+                bottomLeftBack,
+                bottomLeftFront,
+                
+                bottomLeftBack,
+                bottomRightBack,
+                
+                bottomRightBack,
+                bottomRightFront,
+                
+                bottomLeftFront,
+                bottomRightFront,
+
+                topLeftFront,
+                bottomLeftFront,
+
+                topRightFront,
+                bottomRightFront,
+                topLeftBack,
+                bottomLeftBack,
+                
+                topRightBack,
+                bottomRightBack,
+                ];
+        }
+
         private void UpdateVertices()
         {
             vertices = GetCubeVertexData(Position, Size, Uv, Scale, MirrorTexture, FlipZMapping);
