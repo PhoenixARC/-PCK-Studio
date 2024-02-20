@@ -47,6 +47,7 @@ namespace PckStudio.Forms.Editor
         {
             base.OnLoad(e);
             renderer3D1.InitializeGL();
+            renderer3D1.OutlineColor = Color.DarkSlateBlue;
             if (_file.Size > 0)
             {
                 renderer3D1.Texture = _file.GetTexture();
@@ -116,7 +117,7 @@ namespace PckStudio.Forms.Editor
             openFileDialog.Filter = "PNG Image Files | *.png";
             openFileDialog.Title = "Select Skin Texture";
 
-            if (openFileDialog.ShowDialog() == DialogResult.OK) // skins can only be a 1:1 ratio (base 64x64) or a 2:1 ratio (base 64x32)
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 using (var img = Image.FromFile(openFileDialog.FileName))
 				{
@@ -162,8 +163,8 @@ namespace PckStudio.Forms.Editor
         private void importCustomSkinButton_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Custom Skin Model File (*.csm,*.CSM)|*.csm;*.CSM|Custom Skin Model Binary File (*.csmb)|*.csmb";
-            openFileDialog.Title = "Select File";
+            openFileDialog.Filter = "Custom Skin Model File (*.csm,*.CSM)|*.csm;*.CSM|Custom Skin Model Binary File (*.csmb)|*.csmb|JSON Model File(*.json)|*.JSON;*.json";
+            openFileDialog.Title = "Select Model File";
             if (MessageBox.Show("Import custom model project file? Your current work will be lost!", "", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1) == DialogResult.Yes && openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 string fileExtension = Path.GetExtension(openFileDialog.FileName);
@@ -214,18 +215,14 @@ namespace PckStudio.Forms.Editor
             
         }
 
-        // TODO: re-implement comletely
-        private void OpenJSONButton_Click(object sender, EventArgs e)
+        private void outlineColorButton_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "JSON Model File | *.JSON";
-            openFileDialog.Title = "Select JSON Model File";
-            if (MessageBox.Show(
-                "Import custom model project file? Your current work will be lost!", "",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1) == DialogResult.Yes &&
-                openFileDialog.ShowDialog() == DialogResult.OK)
+            ColorDialog colorDialog = new ColorDialog();
+            colorDialog.SolidColorOnly = true;
+            if (colorDialog.ShowDialog() == DialogResult.OK)
             {
-                
+                renderer3D1.OutlineColor = colorDialog.Color;
+                skinPartListBox_SelectedIndexChanged(sender, e);
             }
         }
 
@@ -239,13 +236,14 @@ namespace PckStudio.Forms.Editor
                 string PARENT = group.Name;
                 foreach (int i in group.children)
                 {
-                    string name = jsonDe.Elements[i].Name;
-                    float PosX = jsonDe.Elements[i].from[0] + group.origin[0];
-                    float PosY = jsonDe.Elements[i].from[1] + group.origin[1];
-                    float PosZ = jsonDe.Elements[i].from[2] + group.origin[2];
-                    float SizeX = jsonDe.Elements[i].to[0] - jsonDe.Elements[i].from[0];
-                    float SizeY = jsonDe.Elements[i].to[1] - jsonDe.Elements[i].from[1];
-                    float SizeZ = jsonDe.Elements[i].to[2] - jsonDe.Elements[i].from[2];
+                    CSMJObjectElement element = jsonDe.Elements[i];
+                    string name = element.Name;
+                    float PosX = element.from[0] + group.origin[0];
+                    float PosY = element.from[1] + group.origin[1];
+                    float PosZ = element.from[2] + group.origin[2];
+                    float SizeX = element.to[0] - element.from[0];
+                    float SizeY = element.to[1] - element.from[1];
+                    float SizeZ = element.to[2] - element.from[2];
                     float U = 0;
                     float V = 0;
 
@@ -258,6 +256,7 @@ namespace PckStudio.Forms.Editor
         private void renderer3D1_TextureChanging(object sender, Rendering.TextureChangingEventArgs e)
         {
             var img = e.NewTexture;
+            // Skins can only be a 1:1 ratio (base 64x64) or a 2:1 ratio (base 64x32)
             if (img.Width != img.Height && img.Height != img.Width / 2)
             {
                 e.Cancel = true;
@@ -289,14 +288,14 @@ namespace PckStudio.Forms.Editor
                 uvPictureBox.Image = new Bitmap(uvPictureBox.BackgroundImage.Width * scale, uvPictureBox.BackgroundImage.Height * scale);
                 using (Graphics g = Graphics.FromImage(uvPictureBox.Image))
                 {
-                    float penWidth = ((uvPictureBox.BackgroundImage.Width / renderer3D1.TextureSize.Width) + (uvPictureBox.BackgroundImage.Height / renderer3D1.TextureSize.Height)) / 2f;
+                    float lineWidth = ((uvPictureBox.BackgroundImage.Width / renderer3D1.TextureSize.Width) + (uvPictureBox.BackgroundImage.Height / renderer3D1.TextureSize.Height)) / 2f;
                     GraphicsPath graphicsPath = box.GetUVGraphicsPath(
                         new System.Numerics.Vector2(
                             scale * renderer3D1.TillingFactor.X * uvPictureBox.BackgroundImage.Width,
                             scale * renderer3D1.TillingFactor.Y * uvPictureBox.BackgroundImage.Height
                             )
                         );
-                    g.DrawPath(new Pen(Color.HotPink, penWidth), graphicsPath);
+                    g.DrawPath(new Pen(renderer3D1.OutlineColor, lineWidth), graphicsPath);
                 }
                 uvPictureBox.Invalidate();
             }

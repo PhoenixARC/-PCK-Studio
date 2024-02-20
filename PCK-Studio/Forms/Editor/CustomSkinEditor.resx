@@ -436,10 +436,10 @@
     <value>False</value>
   </data>
   <data name="importCustomSkinButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>194, 558</value>
+    <value>190, 558</value>
   </data>
   <data name="importCustomSkinButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>106, 21</value>
+    <value>105, 21</value>
   </data>
   <data name="importCustomSkinButton.TabIndex" type="System.Int32, mscorlib">
     <value>96</value>
@@ -466,7 +466,7 @@
     <value>False</value>
   </data>
   <data name="buttonExportModel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>418, 558</value>
+    <value>413, 558</value>
   </data>
   <data name="buttonExportModel.Size" type="System.Drawing.Size, System.Drawing">
     <value>89, 21</value>
@@ -489,34 +489,31 @@
   <data name="&gt;&gt;buttonExportModel.ZOrder" xml:space="preserve">
     <value>19</value>
   </data>
-  <data name="OpenJSONButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+  <data name="outlineColorButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
   </data>
-  <data name="OpenJSONButton.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
+  <data name="outlineColorButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>301, 558</value>
   </data>
-  <data name="OpenJSONButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>306, 558</value>
-  </data>
-  <data name="OpenJSONButton.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="outlineColorButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>106, 21</value>
   </data>
-  <data name="OpenJSONButton.TabIndex" type="System.Int32, mscorlib">
+  <data name="outlineColorButton.TabIndex" type="System.Int32, mscorlib">
     <value>145</value>
   </data>
-  <data name="OpenJSONButton.Text" xml:space="preserve">
-    <value>Import json</value>
+  <data name="outlineColorButton.Text" xml:space="preserve">
+    <value>Set Outline Color</value>
   </data>
-  <data name="&gt;&gt;OpenJSONButton.Name" xml:space="preserve">
-    <value>OpenJSONButton</value>
+  <data name="&gt;&gt;outlineColorButton.Name" xml:space="preserve">
+    <value>outlineColorButton</value>
   </data>
-  <data name="&gt;&gt;OpenJSONButton.Type" xml:space="preserve">
+  <data name="&gt;&gt;outlineColorButton.Type" xml:space="preserve">
     <value>MetroFramework.Controls.MetroButton, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
   </data>
-  <data name="&gt;&gt;OpenJSONButton.Parent" xml:space="preserve">
+  <data name="&gt;&gt;outlineColorButton.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;OpenJSONButton.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;outlineColorButton.ZOrder" xml:space="preserve">
     <value>18</value>
   </data>
   <data name="generateTextureCheckBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
@@ -877,7 +874,7 @@
     <value>Bottom, Left</value>
   </data>
   <data name="captureScreenshotButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>513, 558</value>
+    <value>508, 558</value>
   </data>
   <data name="captureScreenshotButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>113, 21</value>
@@ -1059,14 +1056,11 @@
   <data name="&gt;&gt;metroTabControl1.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="renderer3D1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
-  </data>
   <data name="renderer3D1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>194, 63</value>
+    <value>190, 59</value>
   </data>
   <data name="renderer3D1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>424, 484</value>
+    <value>431, 488</value>
   </data>
   <data name="renderer3D1.TabIndex" type="System.Int32, mscorlib">
     <value>167</value>

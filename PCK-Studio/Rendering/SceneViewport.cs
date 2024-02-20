@@ -73,6 +73,8 @@ namespace PckStudio.Rendering
         protected override void OnSizeChanged(EventArgs e)
         {
             base.OnSizeChanged(e);
+            if (DesignMode)
+                return;
             MakeCurrent();
             if (Camera is not null)
             {

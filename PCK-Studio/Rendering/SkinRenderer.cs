@@ -63,6 +63,26 @@ namespace PckStudio.Rendering
             }
         }
 
+        [Description("The Color used for outlines")]
+        [Category("Appearance")]
+        public Color OutlineColor
+        {
+            get => _outlineColor;
+            set
+            {
+                if (value == _outlineColor)
+                    return;
+                _outlineColor = value;
+                if (initialized && _shaders.HasShader("LineShader"))
+                {
+                    MakeCurrent();
+                    var shader = _shaders.GetShader("LineShader");
+                    shader.Bind();
+                    shader.SetUniform4("baseColor", _outlineColor);
+                }
+            }
+        }
+
         public bool ClampModel { get; set; } = false;
         public bool ShowGuideLines
         {
@@ -88,6 +108,7 @@ namespace PckStudio.Rendering
         }
 
         [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public SkinANIM ANIM
         {
             get => _anim;
@@ -123,6 +144,8 @@ namespace PckStudio.Rendering
             return bmp;
         }
 
+
+        private Color _outlineColor;
 
         private enum GuidelineMode
         {
@@ -475,7 +498,7 @@ namespace PckStudio.Rendering
                 lineShader.Validate();
                 _shaders.AddShader("LineShader", lineShader);
 
-                Color lineColor = Color.Aquamarine;
+                Color lineColor = Color.White;
 
                 // Cubical draw context
                 {

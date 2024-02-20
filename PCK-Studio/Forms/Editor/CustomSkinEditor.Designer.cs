@@ -44,7 +44,7 @@
             this.buttonIMPORT = new MetroFramework.Controls.MetroButton();
             this.importCustomSkinButton = new MetroFramework.Controls.MetroButton();
             this.buttonExportModel = new MetroFramework.Controls.MetroButton();
-            this.OpenJSONButton = new MetroFramework.Controls.MetroButton();
+            this.outlineColorButton = new MetroFramework.Controls.MetroButton();
             this.generateTextureCheckBox = new MetroFramework.Controls.MetroCheckBox();
             this.checkGuide = new MetroFramework.Controls.MetroCheckBox();
             this.checkBoxArmor = new MetroFramework.Controls.MetroCheckBox();
@@ -190,14 +190,14 @@
             this.buttonExportModel.UseSelectable = true;
             this.buttonExportModel.Click += new System.EventHandler(this.buttonExportModel_Click);
             // 
-            // OpenJSONButton
+            // outlineColorButton
             // 
-            resources.ApplyResources(this.OpenJSONButton, "OpenJSONButton");
-            this.OpenJSONButton.ForeColor = System.Drawing.Color.White;
-            this.OpenJSONButton.Name = "OpenJSONButton";
-            this.OpenJSONButton.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.OpenJSONButton.UseSelectable = true;
-            this.OpenJSONButton.Click += new System.EventHandler(this.OpenJSONButton_Click);
+            resources.ApplyResources(this.outlineColorButton, "outlineColorButton");
+            this.outlineColorButton.ForeColor = System.Drawing.Color.White;
+            this.outlineColorButton.Name = "outlineColorButton";
+            this.outlineColorButton.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.outlineColorButton.UseSelectable = true;
+            this.outlineColorButton.Click += new System.EventHandler(this.outlineColorButton_Click);
             // 
             // generateTextureCheckBox
             // 
@@ -379,14 +379,16 @@
             // 
             // renderer3D1
             // 
-            resources.ApplyResources(this.renderer3D1, "renderer3D1");
             this.renderer3D1.BackColor = System.Drawing.Color.DimGray;
             this.renderer3D1.ClampModel = false;
+            resources.ApplyResources(this.renderer3D1, "renderer3D1");
             this.renderer3D1.Name = "renderer3D1";
+            this.renderer3D1.OutlineColor = System.Drawing.Color.Empty;
             this.renderer3D1.RefreshRate = 50;
+            this.renderer3D1.ShowGuideLines = false;
             this.renderer3D1.Texture = null;
             this.renderer3D1.VSync = true;
-            this.renderer3D1.TextureChanging += new System.EventHandler<PckStudio.Rendering.TextureChangingEventArgs>(renderer3D1_TextureChanging);
+            this.renderer3D1.TextureChanging += new System.EventHandler<PckStudio.Rendering.TextureChangingEventArgs>(this.renderer3D1_TextureChanging);
             // 
             // uvPictureBox
             // 
@@ -417,7 +419,7 @@
             this.Controls.Add(this.checkBoxArmor);
             this.Controls.Add(this.checkGuide);
             this.Controls.Add(this.generateTextureCheckBox);
-            this.Controls.Add(this.OpenJSONButton);
+            this.Controls.Add(this.outlineColorButton);
             this.Controls.Add(this.buttonExportModel);
             this.Controls.Add(this.importCustomSkinButton);
             this.Controls.Add(this.buttonEXPORT);
@@ -457,7 +459,7 @@
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem changeColorToolStripMenuItem;
         private MetroFramework.Controls.MetroButton buttonDone;
-        private MetroFramework.Controls.MetroButton OpenJSONButton;
+        private MetroFramework.Controls.MetroButton outlineColorButton;
         private MetroFramework.Controls.MetroButton buttonExportModel;
         private MetroFramework.Controls.MetroButton importCustomSkinButton;
         private PckStudio.ToolboxItems.InterpolationPictureBox uvPictureBox;

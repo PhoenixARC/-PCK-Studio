@@ -12,6 +12,8 @@ namespace PckStudio.Rendering.Shader
 
         public void AddShader(string name, ShaderProgram shader) => _shaderStorage.Add(name, shader);
 
+        public bool HasShader(string name) => _shaderStorage.TryGetValue(name, out _);
+
         public bool HasShader(string name, out ShaderProgram shader) => _shaderStorage.TryGetValue(name, out shader);
         
         public ShaderProgram GetShader(string name) => _shaderStorage[name];
