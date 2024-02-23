@@ -146,7 +146,7 @@ namespace PckStudio.Rendering
             }
         }
 
-        internal Vector3[] GetOutline()
+        internal OutlineDefinition GetOutline()
         {
             List<Vector3> verts = new List<Vector3>();
 
@@ -160,43 +160,37 @@ namespace PckStudio.Rendering
             Vector3 topLeftFront = vertices[6].Position;
             Vector3 topRightFront = vertices[7].Position;
 
+            OutlineDefinition outline = new OutlineDefinition();
+            outline.verticies = [
+                    bottomRightBack,
+                    bottomLeftBack,
+                    topLeftBack,
+                    topRightBack,
 
-            return [
-                topLeftBack,
-                topLeftFront,
-                
-                topLeftBack,
-                topRightBack,
-                
-                topRightBack,
-                topRightFront,
-                
-                topLeftFront,
-                topRightFront,
-
-                bottomLeftBack,
-                bottomLeftFront,
-                
-                bottomLeftBack,
-                bottomRightBack,
-                
-                bottomRightBack,
-                bottomRightFront,
-                
-                bottomLeftFront,
-                bottomRightFront,
-
-                topLeftFront,
-                bottomLeftFront,
-
-                topRightFront,
-                bottomRightFront,
-                topLeftBack,
-                bottomLeftBack,
-                
-                topRightBack,
-                bottomRightBack,
+                    bottomRightFront,
+                    bottomLeftFront,
+                    topLeftFront,
+                    topRightFront,
                 ];
+
+            outline.indicies = [
+                    0, 1,
+                    1, 2,
+                    2, 3,
+                    3, 0,
+
+                    4, 5,
+                    5, 6,
+                    6, 7,
+                    7, 4,
+
+                    0, 4,
+                    1, 5,
+                    2, 6,
+                    3, 7,
+                ];
+
+            return outline;
         }
 
         private void UpdateVertices()

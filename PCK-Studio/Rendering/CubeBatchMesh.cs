@@ -115,13 +115,15 @@ namespace PckStudio.Rendering
             return cubes[index].Center + Transform;
         }
 
-        internal Vector3[] GetCubical(int index)
+        internal OutlineDefinition GetOutline(int index)
         {
             if (!cubes.IndexInRange(index))
                 throw new IndexOutOfRangeException();
 
             CubeData cube = cubes[index];
-            return cube.GetOutline().Select(pos => pos + Transform).ToArray();
+            OutlineDefinition outline = cube.GetOutline();
+            outline.verticies = outline.verticies.Select(pos => pos + Transform).ToArray();
+            return outline;
         }
 
         internal Vector3 GetFaceCenter(int index, CubeData.CubeFace face)

@@ -503,13 +503,22 @@ namespace PckStudio.Rendering
                 // Cubical draw context
                 {
                     VertexArray lineVAO = new VertexArray();
-                    List<LineVertex> vertices = new List<LineVertex>(24 * 6);
-                    vertices.AddRange(head.GetCubical(0).Select(pos => new LineVertex(pos, lineColor)));
-                    vertices.AddRange(body.GetCubical(0).Select(pos => new LineVertex(pos, lineColor)));
-                    vertices.AddRange(rightArm.GetCubical(0).Select(pos => new LineVertex(pos, lineColor)));
-                    vertices.AddRange(leftArm.GetCubical(0).Select(pos => new LineVertex(pos, lineColor)));
-                    vertices.AddRange(rightLeg.GetCubical(0).Select(pos => new LineVertex(pos, lineColor)));
-                    vertices.AddRange(leftLeg.GetCubical(0).Select(pos => new LineVertex(pos, lineColor)));
+
+                    void AddOutline(OutlineDefinition outline, ref List<LineVertex> vertices, ref List<int> indices)
+                    {
+                        int offset = vertices.Count;
+                        vertices.AddRange(outline.verticies.Select(pos => new LineVertex(pos, lineColor)));
+                        indices.AddRange(outline.indicies.Select(i => i + offset));
+                    }
+
+                    List<LineVertex> vertices = new List<LineVertex>(8 * 6);
+                    List<int> indices = new List<int>(24 * 6);
+                    AddOutline(head.GetOutline(0), ref vertices, ref indices);
+                    AddOutline(body.GetOutline(0), ref vertices, ref indices);
+                    AddOutline(rightArm.GetOutline(0), ref vertices, ref indices);
+                    AddOutline(leftArm.GetOutline(0), ref vertices, ref indices);
+                    AddOutline(rightLeg.GetOutline(0), ref vertices, ref indices);
+                    AddOutline(leftLeg.GetOutline(0), ref vertices, ref indices);
                     VertexBuffer buffer = new VertexBuffer();
                     buffer.SetData(vertices.ToArray());
                     VertexBufferLayout layout = new VertexBufferLayout();
@@ -518,7 +527,7 @@ namespace PckStudio.Rendering
                     lineVAO.AddBuffer(buffer, layout);
                     lineVAO.Bind();
 
-                    _cubicalDrawContext = new DrawContext(lineVAO, buffer.GenIndexBuffer(), PrimitiveType.Lines);
+                    _cubicalDrawContext = new DrawContext(lineVAO, IndexBuffer.Create(indices.ToArray()), PrimitiveType.Lines);
                 }
 
                 GLErrorCheck();
@@ -530,31 +539,23 @@ namespace PckStudio.Rendering
                     Vector3 bodyCenterBottom = body.GetFaceCenter(0, CubeData.CubeFace.Bottom);
                     LineVertex[] data = [
                         new LineVertex(head.GetFaceCenter(0, CubeData.CubeFace.Top), lineColor),
-                        new LineVertex(bodyCenterTop, lineColor),
+                        new LineVertex(bodyCenterBottom, lineColor),
                     
                         new LineVertex(rightArm.GetFaceCenter(0, CubeData.CubeFace.Bottom), lineColor),
                         new LineVertex(rightArm.GetFaceCenter(0, CubeData.CubeFace.Top), lineColor),
                         new LineVertex(rightArm.GetFaceCenter(0, CubeData.CubeFace.Top), lineColor),
-                        new LineVertex(bodyCenterTop, lineColor),
+                        new LineVertex(leftArm.GetFaceCenter(0, CubeData.CubeFace.Top), lineColor),
 
                         new LineVertex(leftArm.GetFaceCenter(0, CubeData.CubeFace.Bottom), lineColor),
                         new LineVertex(leftArm.GetFaceCenter(0, CubeData.CubeFace.Top), lineColor),
-                        new LineVertex(leftArm.GetFaceCenter(0, CubeData.CubeFace.Top), lineColor),
-                        new LineVertex(bodyCenterTop, lineColor),
 
                         new LineVertex(rightLeg.GetFaceCenter(0, CubeData.CubeFace.Bottom), lineColor),
                         new LineVertex(rightLeg.GetFaceCenter(0, CubeData.CubeFace.Top), lineColor),
                         new LineVertex(rightLeg.GetFaceCenter(0, CubeData.CubeFace.Top), lineColor),
-                        new LineVertex(bodyCenterBottom, lineColor),
-                        new LineVertex(bodyCenterBottom, lineColor),
-                        new LineVertex(bodyCenterTop, lineColor),
+                        new LineVertex(leftLeg.GetFaceCenter(0, CubeData.CubeFace.Top), lineColor),
 
                         new LineVertex(leftLeg.GetFaceCenter(0, CubeData.CubeFace.Bottom), lineColor),
                         new LineVertex(leftLeg.GetFaceCenter(0, CubeData.CubeFace.Top), lineColor),
-                        new LineVertex(leftLeg.GetFaceCenter(0, CubeData.CubeFace.Top), lineColor),
-                        new LineVertex(bodyCenterBottom, lineColor),
-                        new LineVertex(bodyCenterBottom, lineColor),
-                        new LineVertex(bodyCenterTop, lineColor),
                     ];
                     VertexBuffer buffer = new VertexBuffer();
                     buffer.SetData(data);
@@ -730,6 +731,7 @@ namespace PckStudio.Rendering
                 int slimValue = slim ? 3 : 4;
                 rightArm.ReplaceCube(0, new(-3, -2, -2), new(slimValue, 12, 4), new(40, 16));
                 rightArmOverlay.ReplaceCube(0, new(-3, -2, -2), new(slimValue, 12, 4), new(40, 32), scale: OverlayScale);
+
                 leftArm.ReplaceCube(0, new(-1, -2, -2), new(slimValue, 12, 4), new(32, 48));
                 leftArmOverlay.ReplaceCube(0, new(-1, -2, -2), new(slimValue, 12, 4), new(48, 48), scale: OverlayScale);
 
