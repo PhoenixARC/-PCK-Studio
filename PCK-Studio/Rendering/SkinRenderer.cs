@@ -495,6 +495,7 @@ namespace PckStudio.Rendering
                 var lineShader = ShaderProgram.Create(Resources.lineVertexShader, Resources.lineFragmentShader);
                 lineShader.Bind();
                 lineShader.SetUniform4("baseColor", Color.WhiteSmoke);
+                lineShader.SetUniform1("intensity", 0.5f);
                 lineShader.Validate();
                 _shaders.AddShader("LineShader", lineShader);
 
@@ -836,11 +837,13 @@ namespace PckStudio.Rendering
             GL.Enable(EnableCap.DepthTest); // Enable correct Z Drawings
             GL.Enable(EnableCap.LineSmooth);
             Matrix4 viewProjection = Camera.GetViewProjection();
+            Matrix4 globalMatrix = Matrix4.CreateTranslation(0f, -24f, 0f);
 
             // Render Skybox
             {
                 GL.DepthFunc(DepthFunction.Lequal);
                 GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
+                GL.DepthMask(false);
                 var skyboxShader = _shaders.GetShader("SkyboxShader");
                 skyboxShader.Bind();
                 _skyboxTexture.Bind();
@@ -851,22 +854,15 @@ namespace PckStudio.Rendering
                 var viewproj = view * proj;
                 skyboxShader.SetUniformMat4("ViewProjection", ref viewproj);
                 Renderer.Draw(skyboxShader, _skyboxRenderBuffer);
+                GL.DepthMask(true);
                 GL.DepthFunc(DepthFunction.Less);
             }
 
+            ShaderProgram lineShader = _shaders.GetShader("LineShader");
+
             // Render (custom) skin
             {
-                var skinShader = _shaders.GetShader("SkinShader");
-                skinShader.Bind();
-                skinShader.SetUniformMat4("u_ViewProjection", ref viewProjection);
-                skinShader.SetUniform2("u_TexSize", new Vector2(TextureSize.Width, TextureSize.Height));
-
-                skinTexture.Bind();
-
                 GL.Enable(EnableCap.Texture2D); // Enable textures
-
-                GL.DepthFunc(DepthFunction.Lequal); // Enable correct Z Drawings
-                GL.DepthMask(true);
 
                 GL.Enable(EnableCap.Blend);
                 GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
@@ -876,13 +872,18 @@ namespace PckStudio.Rendering
 
                 GL.PolygonMode(MaterialFace.FrontAndBack, showWireFrame ? PolygonMode.Line : PolygonMode.Fill);
 
-                Matrix4 modelMatrix = Matrix4.CreateTranslation(0f, 4f, 0f) * // <- model rotation pivot point
-                    Matrix4.CreateFromAxisAngle(-Vector3.UnitX, MathHelper.DegreesToRadians(GlobalModelRotation.X)) *
-                    Matrix4.CreateFromAxisAngle(Vector3.UnitY, MathHelper.DegreesToRadians(GlobalModelRotation.Y));
+                Matrix4 transform = Matrix4.CreateTranslation(0f, 24f, 0f) * globalMatrix;
+
+                var skinShader = _shaders.GetShader("SkinShader");
+                skinShader.Bind();
+                skinShader.SetUniformMat4("u_ViewProjection", ref viewProjection);
+                skinShader.SetUniform2("u_TexSize", new Vector2(TextureSize.Width, TextureSize.Height));
+
+                skinTexture.Bind();
 
                 if (ANIM.GetFlag(SkinAnimFlag.DINNERBONE))
                 {
-                    modelMatrix *= Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(-180f));
+                    transform *= Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(-180f));
                 }
 
                 var legRightMatrix = Matrix4.Identity;
@@ -894,13 +895,6 @@ namespace PckStudio.Rendering
                 {
                     armRightMatrix = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(animationCurrentRotationAngle));
                     armLeftMatrix = Matrix4.CreateRotationX(MathHelper.DegreesToRadians((ANIM.GetFlag(SkinAnimFlag.SYNCED_ARMS) ? 1f : -1f) * animationCurrentRotationAngle));
-                }
-
-
-                if (!ANIM.GetFlag(SkinAnimFlag.STATIC_LEGS))
-                {
-                    legRightMatrix = Matrix4.CreateRotationX(MathHelper.DegreesToRadians((ANIM.GetFlag(SkinAnimFlag.SYNCED_LEGS) ? 1f : -1f) * animationCurrentRotationAngle));
-                    legLeftMatrix = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(animationCurrentRotationAngle));
                 }
 
                 if (ANIM.GetFlag(SkinAnimFlag.ZOMBIE_ARMS))
@@ -916,29 +910,35 @@ namespace PckStudio.Rendering
                     armLeftMatrix = Matrix4.CreateRotationX(0f);
                 }
 
+                if (!ANIM.GetFlag(SkinAnimFlag.STATIC_LEGS))
+                {
+                    legRightMatrix = Matrix4.CreateRotationX(MathHelper.DegreesToRadians((ANIM.GetFlag(SkinAnimFlag.SYNCED_LEGS) ? 1f : -1f) * animationCurrentRotationAngle));
+                    legLeftMatrix = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(animationCurrentRotationAngle));
+                }
+
+                // TODO: only apply Translation to the base arm
                 bool slimModel = ANIM.GetFlag(SkinAnimFlag.SLIM_MODEL);
                 rightArm.Translation = rightArmOverlay.Translation = new Vector3(slimModel ? -4f : -5f, -2f, 0f);
                 
+                RenderBodyPart(skinShader, Matrix4.Identity, transform, "HEAD", "HEADWEAR");
+                RenderBodyPart(skinShader, Matrix4.Identity, transform, "BODY", "JACKET");
+                RenderBodyPart(skinShader, RightArmMatrix * armRightMatrix, transform, "ARM0", "SLEEVE0");
+                RenderBodyPart(skinShader, LeftArmMatrix * armLeftMatrix, transform, "ARM1", "SLEEVE1");
+                RenderBodyPart(skinShader, legRightMatrix, transform, "LEG0", "PANTS0");
+                RenderBodyPart(skinShader, legLeftMatrix, transform, "LEG1", "PANTS1");
 
-                RenderBodyPart(skinShader, Matrix4.Identity, modelMatrix, "HEAD", "HEADWEAR");
-                RenderBodyPart(skinShader, Matrix4.Identity, modelMatrix, "BODY", "JACKET");
-                RenderBodyPart(skinShader, RightArmMatrix * armRightMatrix, modelMatrix, "ARM0", "SLEEVE0");
-                RenderBodyPart(skinShader, LeftArmMatrix * armLeftMatrix, modelMatrix, "ARM1", "SLEEVE1");
-                RenderBodyPart(skinShader, legRightMatrix, modelMatrix, "LEG0", "PANTS0");
-                RenderBodyPart(skinShader, legLeftMatrix, modelMatrix, "LEG1", "PANTS1");
-
-                // render lines
                 if (ShowGuideLines)
                 {
                     GL.DepthFunc(DepthFunction.Always);
-                    var shader = _shaders.GetShader("LineShader");
-                    shader.Bind();
-                    shader.SetUniformMat4("ViewProjection", ref viewProjection);
-                    shader.SetUniformMat4("Transform", ref modelMatrix);
+                    GL.BlendFunc(BlendingFactor.DstAlpha, BlendingFactor.OneMinusSrcAlpha);
+                    lineShader.Bind();
+                    lineShader.SetUniformMat4("ViewProjection", ref viewProjection);
+                    lineShader.SetUniformMat4("Transform", ref transform);
                     Renderer.SetLineWidth(2.5f);
-                    Renderer.Draw(shader, GetGuidelineDrawContext());
-                    //GL.DepthFunc(DepthFunction.Less);
+                    Renderer.Draw(lineShader, GetGuidelineDrawContext());
                     Renderer.SetLineWidth(1f);
+                    GL.BlendFunc(BlendingFactor.DstAlpha, BlendingFactor.OneMinusSrcAlpha);
+                    GL.DepthFunc(DepthFunction.Less);
                 }
             }
 
