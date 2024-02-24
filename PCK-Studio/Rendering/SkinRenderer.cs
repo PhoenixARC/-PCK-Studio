@@ -269,12 +269,12 @@ namespace PckStudio.Rendering
 
                 { "HELMET"   , new CubeBatchMesh("HELMET") },
                 { "BODYARMOR", new CubeBatchMesh("BODYARMOR") },
-
+                
                 { "BELT"     , new CubeBatchMesh("BELT") },
-
+                
                 { "ARMARMOR0", new CubeBatchMesh("ARMARMOR0") },
                 { "ARMARMOR1", new CubeBatchMesh("ARMARMOR1") },
-
+                
                 { "BOOT0"    , new CubeBatchMesh("BOOT0") },
                 { "BOOT1"    , new CubeBatchMesh("BOOT1") },
 
@@ -527,7 +527,7 @@ namespace PckStudio.Rendering
                         new LineVertex(rightLeg.GetFaceCenter(0, CubeData.CubeFace.Top), lineColor),
                         new LineVertex(rightLeg.GetFaceCenter(0, CubeData.CubeFace.Top), lineColor),
                         new LineVertex(leftLeg.GetFaceCenter(0, CubeData.CubeFace.Top), lineColor),
-
+                        
                         new LineVertex(leftLeg.GetFaceCenter(0, CubeData.CubeFace.Bottom), lineColor),
                         new LineVertex(leftLeg.GetFaceCenter(0, CubeData.CubeFace.Top), lineColor),
                     ];
@@ -581,8 +581,8 @@ namespace PckStudio.Rendering
             
             if (e.Cancel)
                 return;
-                skinTexture.LoadImageData(e.NewTexture);
-                GLErrorCheck();
+            skinTexture.LoadImageData(e.NewTexture);
+            GLErrorCheck();
             
         }
 
@@ -843,7 +843,7 @@ namespace PckStudio.Rendering
                 GL.DepthMask(true);
                 GL.DepthFunc(DepthFunction.Less);
             }
-
+            
             ShaderProgram lineShader = _shaders.GetShader("LineShader");
 
             // Render (custom) skin
@@ -905,7 +905,7 @@ namespace PckStudio.Rendering
                 // TODO: only apply Translation to the base arm
                 bool slimModel = ANIM.GetFlag(SkinAnimFlag.SLIM_MODEL);
                 rightArm.Translation = rightArmOverlay.Translation = new Vector3(slimModel ? -4f : -5f, -2f, 0f);
-                
+
                 RenderBodyPart(skinShader, Matrix4.Identity, transform, "HEAD", "HEADWEAR");
                 RenderBodyPart(skinShader, Matrix4.Identity, transform, "BODY", "JACKET");
                 RenderBodyPart(skinShader, RightArmMatrix * armRightMatrix, transform, "ARM0", "SLEEVE0");
@@ -978,11 +978,11 @@ namespace PckStudio.Rendering
                     Camera.Rotate(deltaX, deltaY);
                     goto default;
                 case MouseButtons.Right:
-                Camera.Pan(deltaX, deltaY);
+                    Camera.Pan(deltaX, deltaY);
                     goto default;
                 default:
-                Cursor.Position = new Point((int)Math.Round(Screen.PrimaryScreen.Bounds.Width / 2d), (int)Math.Round(Screen.PrimaryScreen.Bounds.Height / 2d));
-                CurrentMouseLocation = Cursor.Position;
+                    Cursor.Position = new Point((int)Math.Round(Screen.PrimaryScreen.Bounds.Width / 2d), (int)Math.Round(Screen.PrimaryScreen.Bounds.Height / 2d));
+                    CurrentMouseLocation = Cursor.Position;
                     break;
             }
         }
@@ -1012,16 +1012,16 @@ namespace PckStudio.Rendering
             base.OnMouseDown(e);
             if (e.Button == MouseButtons.Right || e.Button == MouseButtons.Left)
             {
-                    IsMouseHidden = true;
+                IsMouseHidden = true;
                 CurrentMouseLocation = PreviousMouseLocation = Cursor.Position;
-        }
+            }
         }
 
-        private void RenderBodyPart(ShaderProgram shader, Matrix4 partMatrix, Matrix4 globalMatrix, params string[] additionalData)
+        private void RenderBodyPart(ShaderProgram shader, Matrix4 partsMatrix, Matrix4 globalMatrix, params string[] partNames)
         {
-            foreach (var data in additionalData)
+            foreach (var partName in partNames)
             {
-                RenderPart(shader, data, partMatrix, globalMatrix);
+                RenderPart(shader, partName, partsMatrix, globalMatrix);
             }
         }
 
