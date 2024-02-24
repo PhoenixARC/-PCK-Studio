@@ -12,7 +12,7 @@ namespace PckStudio.Extensions
 {
     internal static class SkinBOXExtensions
     {
-        public static GraphicsPath GetUVGraphicsPath(this SkinBOX skinBOX, Vector2 scalingFactor)
+        public static GraphicsPath GetUVGraphicsPath(this SkinBOX skinBOX, Vector2 tillingFactor)
         {
             var types = new byte[9];
             var points = new PointF[9];
@@ -39,7 +39,7 @@ namespace PckStudio.Extensions
 
             for (int i = 0; i < points.Length; i++)
             {
-                points[i] = new PointF(points[i].X * scalingFactor.X, points[i].Y * scalingFactor.Y);
+                points[i] = new PointF(points[i].X * tillingFactor.X, points[i].Y * tillingFactor.Y);
             }
 
             return new GraphicsPath(points, types);
