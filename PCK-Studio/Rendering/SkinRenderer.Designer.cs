@@ -44,7 +44,7 @@ namespace PckStudio.Rendering
             // reToolStripMenuItem
             // 
             this.reToolStripMenuItem.Name = "reToolStripMenuItem";
-            this.reToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.reToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.reToolStripMenuItem.Text = "Re-Init";
             this.reToolStripMenuItem.Click += new System.EventHandler(this.reInitToolStripMenuItem_Click);
             // 
@@ -54,25 +54,44 @@ namespace PckStudio.Rendering
             this.reToolStripMenuItem,
             this.guidelineModeToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 70);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(159, 48);
             // 
             // guidelineModeToolStripMenuItem
             // 
             this.guidelineModeToolStripMenuItem.Name = "guidelineModeToolStripMenuItem";
-            this.guidelineModeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.guidelineModeToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.guidelineModeToolStripMenuItem.Text = "Guideline Mode";
             this.guidelineModeToolStripMenuItem.Click += new System.EventHandler(this.guidelineModeToolStripMenuItem_Click);
+#if DEBUG
+            // 
+            // debugLabel
+            // 
+            this.debugLabel = new System.Windows.Forms.Label();
+            this.debugLabel.AutoSize = true;
+            this.debugLabel.BackColor = System.Drawing.Color.Transparent;
+            this.debugLabel.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.debugLabel.Location = new System.Drawing.Point(3, 4);
+            this.debugLabel.Name = "debugLabel";
+            this.debugLabel.Size = new System.Drawing.Size(37, 13);
+            this.debugLabel.TabIndex = 2;
+            this.debugLabel.Text = "debug";
+#endif
             // 
             // SkinRenderer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.Controls.Add(this.debugLabel);
             this.Name = "SkinRenderer";
             this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
         private System.Windows.Forms.ToolStripMenuItem reToolStripMenuItem;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem guidelineModeToolStripMenuItem;
+#if DEBUG
+        private System.Windows.Forms.Label debugLabel;
+#endif
     }
 }

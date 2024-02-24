@@ -83,6 +83,8 @@ namespace PckStudio.Rendering
             }
         }
 
+        public float MouseSensetivity { get; set; } = 0.01f;
+
         public bool ClampModel { get; set; } = false;
         public bool ShowGuideLines
         {
@@ -155,17 +157,6 @@ namespace PckStudio.Rendering
         };
 
         private GuidelineMode guidelineMode { get; set; } = GuidelineMode.None;
-
-        private Vector2 _globalModelRotation;
-        private Vector2 GlobalModelRotation
-        {
-            get => _globalModelRotation;
-            set
-            {
-                _globalModelRotation.X = MathHelper.Clamp(value.X, -60f, 60f);
-                _globalModelRotation.Y = value.Y % 360f;
-            }
-        }
 
         public Size TextureSize { get; private set; } = new Size(64, 64);
         public Vector2 TillingFactor => new Vector2(1f / TextureSize.Width, 1f / TextureSize.Height);
@@ -699,15 +690,6 @@ namespace PckStudio.Rendering
             Debug.Assert(error == ErrorCode.NoError, error.ToString());
         }
 
-        private void ReleaseMouse()
-        {
-            if (IsMouseHidden)
-            {
-                IsMouseHidden = false;
-                Cursor.Position = PreviousMouseLocation;
-            }
-        }
-
         private void OnANIMUpdate()
         {
             head.SetEnabled(0, !ANIM.GetFlag(SkinAnimFlag.HEAD_DISABLED));
@@ -770,9 +752,11 @@ namespace PckStudio.Rendering
                     showWireFrame = !showWireFrame;
                     return true;
                 case Keys.R:
-                    GlobalModelRotation = Vector2.Zero;
+                    Vector3 skinTransform = new Vector3(0f, 24f, 0f);
                     Camera.Distance = DefaultCameraDistance;
-                    Camera.FocalPoint = Vector3.Zero;
+                    Camera.FocalPoint = head.GetCenter(0) + skinTransform;
+                    Camera.Yaw = 0f;
+                    Camera.Pitch = 0f;
                     return true;
                 case Keys.A:
                     ReleaseMouse();
@@ -837,7 +821,7 @@ namespace PckStudio.Rendering
             GL.Enable(EnableCap.DepthTest); // Enable correct Z Drawings
             GL.Enable(EnableCap.LineSmooth);
             Matrix4 viewProjection = Camera.GetViewProjection();
-            Matrix4 globalMatrix = Matrix4.CreateTranslation(0f, -24f, 0f);
+            Matrix4 globalMatrix = Matrix4.CreateTranslation(0f, 0f, 0f);
 
             // Render Skybox
             {
@@ -849,9 +833,9 @@ namespace PckStudio.Rendering
                 _skyboxTexture.Bind();
 
                 var view = new Matrix4(new Matrix3(Matrix4.LookAt(Camera.WorldPosition, Camera.WorldPosition + Camera.Orientation, Camera.Up)))
-                    * Matrix4.CreateRotationY(MathHelper.DegreesToRadians(skyboxRotation));
-                var proj = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(Camera.Fov), AspectRatio, 1f, 1000f);
-                var viewproj = view * proj;
+                    * Matrix4.CreateRotationY(MathHelper.DegreesToRadians(Camera.Yaw))
+                    * Matrix4.CreateRotationX(MathHelper.DegreesToRadians(Camera.Pitch));
+                var viewproj = view * Camera.GetProjection();
                 skyboxShader.SetUniformMat4("ViewProjection", ref viewproj);
                 Renderer.Draw(skyboxShader, _skyboxRenderBuffer);
                 GL.DepthMask(true);
@@ -968,29 +952,36 @@ namespace PckStudio.Rendering
             framebufferTexture.Unbind();
 #endif
             SwapBuffers();
+
+#if DEBUG
+            debugLabel.Text = Camera.ToString();
+#endif
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseMove(e);
-            // Rotate the model
-            if (e.Button == MouseButtons.Left)
+
+            float deltaX = (Cursor.Position.X - CurrentMouseLocation.X) * MouseSensetivity;
+            float deltaY = (Cursor.Position.Y - CurrentMouseLocation.Y) * MouseSensetivity;
+
+            switch (e.Button)
             {
-                float deltaX = (Cursor.Position.X - CurrentMouseLocation.X) * 0.5f;
-                float deltaY = (Cursor.Position.Y - CurrentMouseLocation.Y) * 0.5f;
-                GlobalModelRotation += new Vector2(-deltaY, deltaX) * Camera.Distance * 0.015f;
-                Cursor.Position = new Point((int)Math.Round(Screen.PrimaryScreen.Bounds.Width / 2d), (int)Math.Round(Screen.PrimaryScreen.Bounds.Height / 2d));
-                CurrentMouseLocation = Cursor.Position;
-                return;
-            }
-            // Move the model
-            if (e.Button == MouseButtons.Right)
-            {
-                float deltaX = (Cursor.Position.X - CurrentMouseLocation.X) * 0.05f;
-                float deltaY = (Cursor.Position.Y - CurrentMouseLocation.Y) * 0.05f;
+                case MouseButtons.None:
+                case MouseButtons.Middle:
+                case MouseButtons.XButton1:
+                case MouseButtons.XButton2:
+                    break;
+                case MouseButtons.Left:
+                    Camera.Rotate(deltaX, deltaY);
+                    goto default;
+                case MouseButtons.Right:
                 Camera.Pan(deltaX, deltaY);
+                    goto default;
+                default:
                 Cursor.Position = new Point((int)Math.Round(Screen.PrimaryScreen.Bounds.Width / 2d), (int)Math.Round(Screen.PrimaryScreen.Bounds.Height / 2d));
                 CurrentMouseLocation = Cursor.Position;
+                    break;
             }
         }
 
@@ -999,24 +990,29 @@ namespace PckStudio.Rendering
             Camera.Distance -= e.Delta / System.Windows.Input.Mouse.MouseWheelDeltaForOneLine;
         }
 
+        protected override void OnMouseUp(MouseEventArgs e)
+        {
+            ReleaseMouse();
+            base.OnMouseUp(e);
+        }
+
+        private void ReleaseMouse()
+        {
+            if (IsMouseHidden)
+            {
+                IsMouseHidden = false;
+                Cursor.Position = PreviousMouseLocation;
+            }
+        }
+
         protected override void OnMouseDown(MouseEventArgs e)
         {
             base.OnMouseDown(e);
             if (e.Button == MouseButtons.Right || e.Button == MouseButtons.Left)
             {
-                if (!IsMouseHidden)
-                {
                     IsMouseHidden = true;
-                }
-                PreviousMouseLocation = Cursor.Position;
-                CurrentMouseLocation = Cursor.Position;
-            }
+                CurrentMouseLocation = PreviousMouseLocation = Cursor.Position;
         }
-
-        protected override void OnMouseUp(MouseEventArgs e)
-        {
-            ReleaseMouse();
-            base.OnMouseUp(e);
         }
 
         private void RenderBodyPart(ShaderProgram shader, Matrix4 partMatrix, Matrix4 globalMatrix, params string[] additionalData)

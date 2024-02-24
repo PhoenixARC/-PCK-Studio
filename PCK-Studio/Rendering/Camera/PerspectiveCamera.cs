@@ -25,15 +25,37 @@ namespace PckStudio.Rendering.Camera
 {
     internal class PerspectiveCamera : Camera
     {
-        public float Distance
+        public float NearClip
         {
-            get => _distance;
+            get => _nearClip;
             set
             {
-                _distance = value;
+                _nearClip = value;
+                UpdateProjection();
+            }
+        }
+
+        public float FarClip
+        {
+            get => _farClip;
+            set
+            {
+                _farClip = value;
+                UpdateProjection();
+            }
+        }
+
+        public float Distance
+        {
+            get => _spherical.Radius;
+            set
+            {
+                _spherical.Radius = value;
                 UpdateViewMatrix();
             }
         }
+
+        public float RotationSpeed { get; set; }  = 5f;
 
         public Size ViewportSize
         {
@@ -46,6 +68,7 @@ namespace PckStudio.Rendering.Camera
         }
 
         public Vector3 WorldPosition => _position;
+
         public Vector3 FocalPoint
         {
             get => _focalPoint;
@@ -56,48 +79,61 @@ namespace PckStudio.Rendering.Camera
             }
         }
 
-        public Vector2 Rotation
+        public float Pitch
         {
-            get => _rotation;
+            get => _spherical.Theta;
             set
             {
-                _rotation.X = MathHelper.Clamp(value.X, -180f, 180f);
-                _rotation.Y = MathHelper.Clamp(value.Y, -180f, 180f);
+                _spherical.Theta = MathHelper.Clamp(value, -90f, 90f);
+                UpdateViewMatrix();
+            }
+        }
+
+        public float Yaw
+        {
+            get => _spherical.Phi;
+            set
+            {
+                _spherical.Phi = value % 360f;
                 UpdateViewMatrix();
             }
         }
 
         public Vector3 Orientation => -Vector3.UnitZ;
 
-        public Vector3 Up = Vector3.UnitY;
+        public Vector3 Up => Vector3.UnitY;
         
         public float MinimumFov { get; set; } = 30f;
-        public float MaximumFov { get; set; } = 120f;
+        public float MaximumFov { get; set; } = 180f;
 
         public float Fov
         {
-            get => fov;
+            get => _fov;
             set
             {
-                fov = MathHelper.Clamp(value, MinimumFov, MaximumFov);
+                _fov = MathHelper.Clamp(value, MinimumFov, MaximumFov);
                 UpdateProjection();
             }
         }
 
         public PerspectiveCamera(float fov, Vector3 position)
         {
-            Fov = fov;
+            _fov = fov;
             _position = position;
             _focalPoint = Vector3.Zero;
+            _nearClip = 1f;
+            _farClip = 1000f;
+            UpdateProjection();
         }
 
         private Matrix4 viewMatrix;
-        private float fov;
+        private float _fov;
 
-        private float _distance;
+        private float _nearClip;
+        private float _farClip;
+        private Spherical _spherical;
         private Size _viewportSize;
         private Vector3 _position;
-        private Vector2 _rotation;
         private Vector3 _focalPoint;
 
         public override Matrix4 GetViewProjection()
@@ -105,24 +141,24 @@ namespace PckStudio.Rendering.Camera
             return viewMatrix * projectionMatrix;
         }
 
+        public Matrix4 GetProjection()
+        {
+            return projectionMatrix;
+        }
+
         private void UpdateViewMatrix()
         {
-            // m_Yaw = m_Pitch = 0.0f; // Lock the camera's rotation
-            _position = CalculatePosition();
+            Matrix4 rotation = Matrix4.CreateRotationY(MathHelper.DegreesToRadians(Yaw)) * Matrix4.CreateRotationX(MathHelper.DegreesToRadians(Pitch));
 
-            Quaternion orientation = GetOrientation();
-            var rotation = Matrix4.CreateTranslation(_position);
-            rotation *= Matrix4.CreateFromQuaternion(orientation);
-            rotation *= Matrix4.CreateTranslation(_position).Inverted();
-
-            viewMatrix = Matrix4.CreateTranslation(_position) * rotation;
-            viewMatrix = viewMatrix.Inverted();
+            viewMatrix = Matrix4.CreateTranslation(-FocalPoint) * rotation * Matrix4.CreateTranslation(0, 0, -Distance);
+            
+            _position = viewMatrix.Inverted().ExtractTranslation();
         }
 
         private void UpdateProjection()
         {
             float aspect = (float)ViewportSize.Width / (float)ViewportSize.Height;
-            projectionMatrix = Matrix4.CreatePerspectiveFieldOfView((float)MathHelper.DegreesToRadians(Fov), aspect, 1f, 1000f);
+            projectionMatrix = Matrix4.CreatePerspectiveFieldOfView((float)MathHelper.DegreesToRadians(Fov), aspect, NearClip, FarClip);
         }
 
         private Vector2 GetPanSpeed()
@@ -144,56 +180,30 @@ namespace PckStudio.Rendering.Camera
         public void Pan(float deltaX, float deltaY)
         {
             Vector2 panSpeed = GetPanSpeed();
-            _focalPoint += -GetRightDirection() * deltaX * panSpeed.X * _distance;
-            _focalPoint += GetUpDirection() * deltaY * panSpeed.Y * _distance;
+
+            // Taken from: blockbench
+            // https://github.com/JannisX11/blockbench/blob/a56fe01a517ace8d013f67bbd3d02442c44d3141/js/preview/OrbitControls.js#L271-L322
+            Vector3 left = viewMatrix.Column0.Xyz * -Distance;
+            Vector3 up = viewMatrix.Column1.Xyz * Distance;
+            _focalPoint += left * deltaX * panSpeed.X;
+            _focalPoint += up * deltaY * panSpeed.Y;
             UpdateViewMatrix();
         }
 
-        public void Rotate(Vector2 delta)
+        public void Rotate(Vector2 delta) 
         {
             Rotate(delta.X, delta.Y);
         }
 
         public void Rotate(float deltaX,float deltaY)
         {
-            const float RotationSpeed = 0.8f;
-            float yawSign = GetUpDirection().Y < 0 ? -1.0f : 1.0f;
-            _rotation.Y += yawSign * deltaX * RotationSpeed;
-            _rotation.X += deltaY * RotationSpeed;
-
-            UpdateViewMatrix();
+            Yaw += deltaX * RotationSpeed;
+            Pitch += deltaY * RotationSpeed;
         }
-
-        public Vector3 GetUpDirection()
-        {
-            return GetOrientation() * Up;
-        }
-
-        public Vector3 GetRightDirection()
-        {
-            return GetOrientation() * Vector3.UnitX;
-        }
-
-        public Vector3 GetForwardDirection()
-        {
-            return GetOrientation() * Orientation;
-        }
-
-        private Vector3 CalculatePosition()
-	    {
-            Vector3 forwadDirection = GetForwardDirection();
-            return FocalPoint - forwadDirection * Distance;
-	    }
-
-	    private Quaternion GetOrientation()
-	    {
-		    return new Quaternion(new Vector3(-Rotation));
-	    }
 
         public override string ToString()
         {
-            return $"FOV: {Fov}\nPosition: {WorldPosition}\nRotation: {Rotation}";
+            return $"FOV: {Fov}\nPosition: {WorldPosition}\nRotation: {_spherical}";
         }
-
     }
 }

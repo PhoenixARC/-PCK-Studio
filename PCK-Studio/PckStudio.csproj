@@ -172,6 +172,7 @@
     <Compile Include="Rendering\SkinRenderer.Designer.cs">
       <DependentUpon>SkinRenderer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Rendering\Spherical.cs" />
     <Compile Include="Rendering\TextureChangingEventArgs.cs" />
     <Compile Include="Rendering\TextureVertex.cs" />
     <Compile Include="Rendering\Texture\CubeTexture.cs" />
