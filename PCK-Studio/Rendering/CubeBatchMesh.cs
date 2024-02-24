@@ -32,6 +32,7 @@ namespace PckStudio.Rendering
         internal float Scale { get; set; } = 1f;
         public Vector3 Translation { get; set; } = Vector3.Zero;
         public Vector3 Pivot { get; set; } = Vector3.Zero;
+        public Vector3 Offset { get; set; } = Vector3.Zero;
 
         internal CubeBatchMesh(string name) : base(name, PrimitiveType.Triangles)
         {
@@ -100,9 +101,10 @@ namespace PckStudio.Rendering
         {
             get
             {
-                Vector3 offset = Translation;
-                offset.Xz -= Pivot.Xz / 2f;
-                return -offset;
+                Vector3 transform = Translation;
+                transform.Xz -= Pivot.Xz / 2f;
+                //transform += Offset;
+                return -transform;
             }
         }
 

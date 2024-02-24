@@ -206,7 +206,6 @@ namespace PckStudio.Rendering
         private float skyboxRotationStep = 0.5f;
 
         private Dictionary<string, CubeBatchMesh> meshStorage;
-        private Dictionary<string, float> partOffset;
         
         private CubeBatchMesh head;
         private CubeBatchMesh body;
@@ -275,39 +274,20 @@ namespace PckStudio.Rendering
                 { "PANTS0"  , rightLegOverlay },
                 { "PANTS1"  , leftLegOverlay },
 
+                { "HELMET"   , new CubeBatchMesh("HELMET") },
                 { "BODYARMOR", new CubeBatchMesh("BODYARMOR") },
-                { "BELT",      new CubeBatchMesh("BELT") },
-                { "ARMARMOR0",      new CubeBatchMesh("ARMARMOR0") },
-                { "ARMARMOR1",      new CubeBatchMesh("ARMARMOR1") },
+
+                { "BELT"     , new CubeBatchMesh("BELT") },
+
+                { "ARMARMOR0", new CubeBatchMesh("ARMARMOR0") },
+                { "ARMARMOR1", new CubeBatchMesh("ARMARMOR1") },
+
+                { "BOOT0"    , new CubeBatchMesh("BOOT0") },
+                { "BOOT1"    , new CubeBatchMesh("BOOT1") },
+
+                { "TOOL0"    , new CubeBatchMesh("TOOL0") },
+                { "TOOL1"    , new CubeBatchMesh("TOOL1") },
             };
-            partOffset = new Dictionary<string, float>()
-            {
-                { "HEAD", 0f },
-                { "BODY", 0f },
-                { "ARM0", 0f },
-                { "ARM1", 0f },
-                { "LEG0", 0f },
-                { "LEG1", 0f },
-
-                { "HEADWEAR" , 0f },
-                { "JACKET"   , 0f },
-                { "SLEEVE0"  , 0f },
-                { "SLEEVE1"  , 0f },
-                { "PANTS0"   , 0f },
-                { "PANTS1"   , 0f },
-
-                { "BODYARMOR", 0f },
-                { "BELT"     , 0f },
-
-                { "HELMET"     , 0f },
-
-                { "BOOT0"     , 0f },
-                { "BOOT1"     , 0f },
-
-                { "TOOL0"     , 0f },
-                { "TOOL1"     , 0f },
-            };
-
             InitializeCamera();
             InitializeComponent();
 
@@ -641,24 +621,19 @@ namespace PckStudio.Rendering
 
         public void SetPartOffset(string name, float value)
         {
-            if (!partOffset.ContainsKey(name))
+            if (!meshStorage.ContainsKey(name))
             {
-                Trace.TraceInformation($"[{nameof(SetPartOffset)}]: '{name}' is not inside {nameof(partOffset)}");
+                Trace.TraceError($"[{nameof(SetPartOffset)}]: '{name}' is not inside {nameof(meshStorage)}");
                 return;
             }
-            partOffset[name] = value;
-        }
-
-        private float GetOffset(string name)
-        {
-            return partOffset.ContainsKey(name) ? partOffset[name] : 0f;
+            meshStorage[name].Offset = Vector3.UnitY * value;
         }
 
         internal void ResetOffsets()
         {
-            foreach (var key in partOffset.Keys.ToList())
+            foreach (var key in meshStorage.Keys.ToList())
             {
-                partOffset[key] = 0f;
+                meshStorage[key].Offset = Vector3.Zero;
             }
         }
 
@@ -1016,11 +991,8 @@ namespace PckStudio.Rendering
         private void RenderPart(ShaderProgram shader, string name, Matrix4 partMatrix, Matrix4 globalMatrix)
         {
             CubeBatchMesh cubeMesh = meshStorage[name];
-            Vector3 translation = cubeMesh.Translation;
-            Vector3 pivot = cubeMesh.Pivot;
-            float yOffset = GetOffset(name);
-            translation.Y -= yOffset;
-            pivot.Y += yOffset;
+            Vector3 translation = cubeMesh.Translation - cubeMesh.Offset;
+            Vector3 pivot = cubeMesh.Pivot + cubeMesh.Offset;
             Matrix4 transform = Matrix4.CreateScale(cubeMesh.Scale);
             transform *= Pivot(translation, pivot, partMatrix);
             transform *= globalMatrix;
