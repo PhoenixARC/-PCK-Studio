@@ -184,6 +184,7 @@ namespace PckStudio.Rendering
                 Cursor.Show();
             }
         }
+
         private Point PreviousMouseLocation;
         private Point CurrentMouseLocation;
 
@@ -199,6 +200,7 @@ namespace PckStudio.Rendering
 #endif
         private DrawContext _cubicalDrawContext;
         private DrawContext _skeletonDrawContext;
+        private DrawContext _groundDrawContext;
 
         private DrawContext _skyboxRenderBuffer;
         private CubeTexture _skyboxTexture;
@@ -547,6 +549,29 @@ namespace PckStudio.Rendering
                     lineVAO.Bind();
 
                     _skeletonDrawContext = new DrawContext(lineVAO, buffer.GenIndexBuffer(), PrimitiveType.Lines);
+                }
+
+                // Ground plane draw context
+                {
+                    Vector3 center = Vector3.Zero;
+                    Color planeColor = Color.CadetBlue;
+
+                    LineVertex[] vertices = [
+                        new LineVertex(new Vector3(center.X + 1f, 0f, center.Z + 1f), planeColor),
+                        new LineVertex(new Vector3(center.X - 1f, 0f, center.Z + 1f), planeColor),
+                        new LineVertex(new Vector3(center.X - 1f, 0f, center.Z - 1f), planeColor),
+                        new LineVertex(new Vector3(center.X + 1f, 0f, center.Z - 1f), planeColor),
+                        ];
+                    var planeVAO = new VertexArray();
+                    VertexBuffer buffer = new VertexBuffer();
+                    buffer.SetData(vertices);
+
+                    VertexBufferLayout layout = new VertexBufferLayout();
+                    layout.Add<float>(3);
+                    layout.Add<float>(4);
+                    planeVAO.AddBuffer(buffer, layout);
+
+                    _groundDrawContext = new DrawContext(planeVAO, buffer.GenIndexBuffer(), PrimitiveType.Quads);
                 }
 
                 GLErrorCheck();
@@ -909,12 +934,26 @@ namespace PckStudio.Rendering
                     lineShader.Bind();
                     lineShader.SetUniformMat4("ViewProjection", ref viewProjection);
                     lineShader.SetUniformMat4("Transform", ref transform);
+                    lineShader.SetUniform1("intensity", 1f);
                     Renderer.SetLineWidth(2.5f);
                     Renderer.Draw(lineShader, GetGuidelineDrawContext());
                     Renderer.SetLineWidth(1f);
                     GL.BlendFunc(BlendingFactor.DstAlpha, BlendingFactor.OneMinusSrcAlpha);
                     GL.DepthFunc(DepthFunction.Less);
                 }
+            }
+
+            // Ground plane
+            {
+                GL.BlendFunc(BlendingFactor.DstAlpha, BlendingFactor.OneMinusSrcAlpha);
+                lineShader.Bind();
+                lineShader.SetUniformMat4("ViewProjection", ref viewProjection);
+                lineShader.SetUniform1("intensity", 0.5f);
+                Matrix4 transform = Matrix4.CreateScale(25f);
+                transform *= globalMatrix;
+                lineShader.SetUniformMat4("Transform", ref transform);
+                Renderer.Draw(lineShader, _groundDrawContext);
+                GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
             }
 
 #if USE_FRAMEBUFFER
