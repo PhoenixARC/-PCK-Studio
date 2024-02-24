@@ -576,12 +576,14 @@ namespace PckStudio.Rendering
 
         protected virtual void OnTextureChanging(object sender, TextureChangingEventArgs e)
         {
-            e.Cancel = e.NewTexture is null;
-            if (!e.Cancel)
-            {
+            if (e.NewTexture is null)
+                e.Cancel = true;
+            
+            if (e.Cancel)
+                return;
                 skinTexture.LoadImageData(e.NewTexture);
                 GLErrorCheck();
-            }
+            
         }
 
         private void InitializeFramebuffer()
