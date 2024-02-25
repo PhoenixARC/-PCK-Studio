@@ -73,8 +73,8 @@ namespace PckStudio.Rendering
                 if (value == _outlineColor)
                     return;
                 _outlineColor = value;
-                }
             }
+        }
 
         public float MouseSensetivity { get; set; } = 0.01f;
 
@@ -242,6 +242,10 @@ namespace PckStudio.Rendering
             new Vector4(-1.0f,  1.0f, 0.0f, 1.0f),
         };
         private bool initialized = false;
+
+#if DEBUG
+        private DrawContext debugDrawContext;
+#endif
 
         public SkinRenderer() : base()
         {
@@ -564,6 +568,24 @@ namespace PckStudio.Rendering
 
                 GLErrorCheck();
             }
+
+#if DEBUG
+            // Debug render
+            {
+                LineVertex[] vertices = [
+                    new LineVertex(Vector3.Zero, Color.White)
+                ];
+                VertexArray vao = new VertexArray();
+                var debugVBO = new VertexBuffer();
+                debugVBO.SetData(vertices);
+                VertexBufferLayout layout = new VertexBufferLayout();
+                layout.Add<float>(3);
+                layout.Add<float>(4);
+                vao.AddBuffer(debugVBO, layout);
+                debugDrawContext = new DrawContext(vao, debugVBO.GenIndexBuffer(), PrimitiveType.Points);
+            }
+#endif
+
         }
 
         private DrawContext GetGuidelineDrawContext()
@@ -940,6 +962,28 @@ namespace PckStudio.Rendering
                 Renderer.Draw(lineShader, _groundDrawContext);
                 GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
             }
+
+#if DEBUG
+            // Debug
+            {
+                GL.BlendFunc(BlendingFactor.DstAlpha, BlendingFactor.OneMinusSrcAlpha);
+                GL.DepthFunc(DepthFunction.Always);
+                GL.DepthMask(false);
+                GL.Enable(EnableCap.PointSmooth);
+                lineShader.Bind();
+                var transform = Matrix4.CreateTranslation(Camera.FocalPoint).Inverted();
+                lineShader.SetUniformMat4("Transform", ref transform);
+                lineShader.SetUniformMat4("ViewProjection", ref viewProjection);
+                lineShader.SetUniform1("intensity", 0.75f);
+                lineShader.SetUniform4("baseColor", Color.DeepPink);
+                GL.PointSize(5f);
+                Renderer.Draw(lineShader, debugDrawContext);
+                GL.PointSize(1f);
+                GL.DepthMask(true);
+                GL.DepthFunc(DepthFunction.Less);
+                GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
+            }
+#endif
 
 #if USE_FRAMEBUFFER
             framebuffer.Unbind();
