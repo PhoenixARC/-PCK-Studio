@@ -490,19 +490,22 @@
     <value>19</value>
   </data>
   <data name="outlineColorButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left</value>
+    <value>Bottom, Right</value>
   </data>
   <data name="outlineColorButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>301, 558</value>
+    <value>777, 460</value>
   </data>
   <data name="outlineColorButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>106, 21</value>
+    <value>100, 21</value>
   </data>
   <data name="outlineColorButton.TabIndex" type="System.Int32, mscorlib">
     <value>145</value>
   </data>
   <data name="outlineColorButton.Text" xml:space="preserve">
     <value>Set Outline Color</value>
+  </data>
+  <data name="outlineColorButton.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="&gt;&gt;outlineColorButton.Name" xml:space="preserve">
     <value>outlineColorButton</value>
@@ -517,7 +520,7 @@
     <value>18</value>
   </data>
   <data name="generateTextureCheckBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
+    <value>Bottom, Right</value>
   </data>
   <data name="generateTextureCheckBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -547,7 +550,7 @@
     <value>17</value>
   </data>
   <data name="checkGuide.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
+    <value>Bottom, Right</value>
   </data>
   <data name="checkGuide.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -577,7 +580,7 @@
     <value>16</value>
   </data>
   <data name="checkBoxArmor.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
+    <value>Bottom, Right</value>
   </data>
   <data name="checkBoxArmor.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -823,10 +826,10 @@
     <value>0, 0</value>
   </data>
   <data name="skinPartListBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 450</value>
+    <value>153, 446</value>
   </data>
   <data name="skinPartListBox.TabIndex" type="System.Int32, mscorlib">
-    <value>161</value>
+    <value>0</value>
   </data>
   <data name="&gt;&gt;skinPartListBox.Name" xml:space="preserve">
     <value>skinPartListBox</value>
@@ -841,7 +844,7 @@
     <value>0</value>
   </data>
   <data name="clampToViewCheckbox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
+    <value>Bottom, Right</value>
   </data>
   <data name="clampToViewCheckbox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -898,7 +901,7 @@
     <value>4</value>
   </data>
   <data name="showToolsCheckBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
+    <value>Bottom, Right</value>
   </data>
   <data name="showToolsCheckBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -957,17 +960,11 @@
   <data name="&gt;&gt;skinNameLabel.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="metroTabControl1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left</value>
-  </data>
-  <data name="skinPartsTabPage.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Center</value>
-  </data>
   <data name="skinPartsTabPage.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 38</value>
   </data>
   <data name="skinPartsTabPage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 450</value>
+    <value>153, 446</value>
   </data>
   <data name="skinPartsTabPage.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -994,7 +991,7 @@
     <value>0, 0</value>
   </data>
   <data name="offsetListBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 450</value>
+    <value>153, 446</value>
   </data>
   <data name="offsetListBox.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1015,13 +1012,13 @@
     <value>4, 38</value>
   </data>
   <data name="skinOffsetsTabPage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 450</value>
+    <value>153, 446</value>
   </data>
   <data name="skinOffsetsTabPage.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
   <data name="skinOffsetsTabPage.Text" xml:space="preserve">
-    <value>Offsets</value>
+    <value>Offset</value>
   </data>
   <data name="&gt;&gt;skinOffsetsTabPage.Name" xml:space="preserve">
     <value>skinOffsetsTabPage</value>
@@ -1039,10 +1036,10 @@
     <value>23, 59</value>
   </data>
   <data name="metroTabControl1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>165, 492</value>
+    <value>161, 488</value>
   </data>
   <data name="metroTabControl1.TabIndex" type="System.Int32, mscorlib">
-    <value>166</value>
+    <value>1</value>
   </data>
   <data name="&gt;&gt;metroTabControl1.Name" xml:space="preserve">
     <value>metroTabControl1</value>
@@ -1055,6 +1052,9 @@
   </data>
   <data name="&gt;&gt;metroTabControl1.ZOrder" xml:space="preserve">
     <value>1</value>
+  </data>
+  <data name="renderer3D1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
   </data>
   <data name="renderer3D1.Location" type="System.Drawing.Point, System.Drawing">
     <value>190, 59</value>

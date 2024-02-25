@@ -317,6 +317,11 @@ namespace PckStudio.Forms.Editor
                 renderer3D1.GetThumbnail().Save(saveFileDialog.FileName, ImageFormat.Png);
             }
         }
+
+        private void checkGuide_CheckedChanged(object sender, EventArgs e)
+        {
+            outlineColorButton.Visible = renderer3D1.ShowGuideLines = checkGuide.Checked;
+        }
     }
 
     class CSMJObject

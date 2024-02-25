@@ -212,6 +212,7 @@
             this.checkGuide.Name = "checkGuide";
             this.checkGuide.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.checkGuide.UseSelectable = true;
+            this.checkGuide.CheckedChanged += new System.EventHandler(this.checkGuide_CheckedChanged);
             // 
             // checkBoxArmor
             // 
