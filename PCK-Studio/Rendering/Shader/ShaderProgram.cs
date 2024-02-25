@@ -94,6 +94,7 @@ namespace PckStudio.Rendering.Shader
             if (locationCache.ContainsKey(name))
                 return locationCache[name];
             int location = GL.GetUniformLocation(_programId, name);
+            Debug.Assert(location != -1);
             locationCache.Add(name, location);
             return location;
         }
