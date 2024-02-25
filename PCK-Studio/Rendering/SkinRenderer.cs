@@ -431,7 +431,7 @@ namespace PckStudio.Rendering
                 var skyboxShader = ShaderProgram.Create(Resources.skyboxVertexShader, Resources.skyboxFragmentShader);
                 skyboxShader.Bind();
                 skyboxShader.SetUniform1("skybox", 1);
-                skyboxShader.SetUniform1("brightness", 1f);
+                skyboxShader.SetUniform1("brightness", 0.8f);
                 skyboxShader.Validate();
                 _shaders.AddShader("SkyboxShader", skyboxShader);
 
@@ -452,6 +452,7 @@ namespace PckStudio.Rendering
 
                 GLErrorCheck();
             }
+
 #if USE_FRAMEBUFFER
             // Framebuffer shader
             {
