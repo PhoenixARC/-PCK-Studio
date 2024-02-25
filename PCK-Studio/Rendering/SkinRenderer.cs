@@ -300,6 +300,7 @@ namespace PckStudio.Rendering
         private void InitializeCamera()
         {
             Camera.Distance = DefaultCameraDistance;
+            Camera.FocalPoint = head.GetCenter(0);
         }
 
         private void InitializeSkinData()
@@ -750,9 +751,8 @@ namespace PckStudio.Rendering
                     showWireFrame = !showWireFrame;
                     return true;
                 case Keys.R:
-                    Vector3 skinTransform = new Vector3(0f, 24f, 0f);
                     Camera.Distance = DefaultCameraDistance;
-                    Camera.FocalPoint = head.GetCenter(0) + skinTransform;
+                    Camera.FocalPoint = head.GetCenter(0);
                     Camera.Yaw = 0f;
                     Camera.Pitch = 0f;
                     return true;
@@ -850,7 +850,8 @@ namespace PckStudio.Rendering
                 GL.Enable(EnableCap.AlphaTest); // Enable transparent
                 GL.AlphaFunc(AlphaFunction.Greater, 0.4f);
 
-                GL.PolygonMode(MaterialFace.FrontAndBack, showWireFrame ? PolygonMode.Line : PolygonMode.Fill);
+                if (showWireFrame)
+                    GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
 
                 Matrix4 transform = Matrix4.CreateTranslation(0f, 0f, 0f);
 
@@ -906,6 +907,9 @@ namespace PckStudio.Rendering
                 RenderBodyPart(skinShader, LeftArmMatrix * armLeftMatrix, transform, "ARM1", "SLEEVE1");
                 RenderBodyPart(skinShader, legRightMatrix, transform, "LEG0", "PANTS0");
                 RenderBodyPart(skinShader, legLeftMatrix, transform, "LEG1", "PANTS1");
+
+                if (showWireFrame)
+                    GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
 
                 if (ShowGuideLines)
                 {

@@ -50,7 +50,7 @@ namespace PckStudio.Rendering.Camera
             get => _spherical.Radius;
             set
             {
-                _spherical.Radius = value;
+                _spherical.Radius = Math.Max(value, 2f);
                 UpdateViewMatrix();
             }
         }
@@ -116,11 +116,10 @@ namespace PckStudio.Rendering.Camera
             }
         }
 
-        public PerspectiveCamera(float fov, Vector3 position)
+        public PerspectiveCamera(float fov, Vector3 target)
         {
             _fov = fov;
-            _position = position;
-            _focalPoint = Vector3.Zero;
+            _focalPoint = target;
             _nearClip = 1f;
             _farClip = 1000f;
             UpdateProjection();
@@ -150,8 +149,8 @@ namespace PckStudio.Rendering.Camera
         {
             Matrix4 rotation = Matrix4.CreateRotationY(MathHelper.DegreesToRadians(Yaw)) * Matrix4.CreateRotationX(MathHelper.DegreesToRadians(Pitch));
 
-            viewMatrix = Matrix4.CreateTranslation(-FocalPoint) * rotation * Matrix4.CreateTranslation(0, 0, -Distance);
-            
+            viewMatrix = Matrix4.CreateTranslation(FocalPoint) * rotation * Matrix4.CreateTranslation(0, 0, -Distance);
+            // Position in Right-handed coordinates
             _position = viewMatrix.Inverted().ExtractTranslation();
         }
 
@@ -185,8 +184,8 @@ namespace PckStudio.Rendering.Camera
             // https://github.com/JannisX11/blockbench/blob/a56fe01a517ace8d013f67bbd3d02442c44d3141/js/preview/OrbitControls.js#L271-L322
             Vector3 left = viewMatrix.Column0.Xyz * -Distance;
             Vector3 up = viewMatrix.Column1.Xyz * Distance;
-            _focalPoint += left * deltaX * panSpeed.X;
-            _focalPoint += up * deltaY * panSpeed.Y;
+            _focalPoint -= left * deltaX * panSpeed.X;
+            _focalPoint -= up * deltaY * panSpeed.Y;
             UpdateViewMatrix();
         }
 
