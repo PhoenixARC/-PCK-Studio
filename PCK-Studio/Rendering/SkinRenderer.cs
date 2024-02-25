@@ -73,15 +73,8 @@ namespace PckStudio.Rendering
                 if (value == _outlineColor)
                     return;
                 _outlineColor = value;
-                if (initialized && _shaders.HasShader("LineShader"))
-                {
-                    MakeCurrent();
-                    var shader = _shaders.GetShader("LineShader");
-                    shader.Bind();
-                    shader.SetUniform4("baseColor", _outlineColor);
                 }
             }
-        }
 
         public float MouseSensetivity { get; set; } = 0.01f;
 
@@ -183,12 +176,14 @@ namespace PckStudio.Rendering
         private SkinANIM _anim;
         private Image _texture;
         private Texture2D skinTexture;
+
 #if USE_FRAMEBUFFER
         private FrameBuffer framebuffer;
         private Texture2D framebufferTexture;
         private ShaderProgram framebufferShader;
         private VertexArray framebufferVAO;
 #endif
+
         private DrawContext _cubicalDrawContext;
         private DrawContext _skeletonDrawContext;
         private DrawContext _groundDrawContext;
@@ -824,12 +819,10 @@ namespace PckStudio.Rendering
             GL.Enable(EnableCap.DepthTest); // Enable correct Z Drawings
             GL.Enable(EnableCap.LineSmooth);
             Matrix4 viewProjection = Camera.GetViewProjection();
-            Matrix4 globalMatrix = Matrix4.CreateTranslation(0f, 0f, 0f);
 
             // Render Skybox
             {
                 GL.DepthFunc(DepthFunction.Lequal);
-                GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
                 GL.DepthMask(false);
                 var skyboxShader = _shaders.GetShader("SkyboxShader");
                 skyboxShader.Bind();
@@ -859,7 +852,7 @@ namespace PckStudio.Rendering
 
                 GL.PolygonMode(MaterialFace.FrontAndBack, showWireFrame ? PolygonMode.Line : PolygonMode.Fill);
 
-                Matrix4 transform = Matrix4.CreateTranslation(0f, 24f, 0f) * globalMatrix;
+                Matrix4 transform = Matrix4.CreateTranslation(0f, 0f, 0f);
 
                 var skinShader = _shaders.GetShader("SkinShader");
                 skinShader.Bind();
@@ -922,6 +915,7 @@ namespace PckStudio.Rendering
                     lineShader.SetUniformMat4("ViewProjection", ref viewProjection);
                     lineShader.SetUniformMat4("Transform", ref transform);
                     lineShader.SetUniform1("intensity", 1f);
+                    lineShader.SetUniform4("baseColor", _outlineColor);
                     Renderer.SetLineWidth(2.5f);
                     Renderer.Draw(lineShader, GetGuidelineDrawContext());
                     Renderer.SetLineWidth(1f);
@@ -936,8 +930,8 @@ namespace PckStudio.Rendering
                 lineShader.Bind();
                 lineShader.SetUniformMat4("ViewProjection", ref viewProjection);
                 lineShader.SetUniform1("intensity", 0.5f);
-                Matrix4 transform = Matrix4.CreateScale(25f);
-                transform *= globalMatrix;
+                lineShader.SetUniform4("baseColor", Color.AntiqueWhite);
+                Matrix4 transform = Matrix4.CreateScale(25f) * Matrix4.CreateTranslation(new Vector3(0f, -24f, 0f));
                 lineShader.SetUniformMat4("Transform", ref transform);
                 Renderer.Draw(lineShader, _groundDrawContext);
                 GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
