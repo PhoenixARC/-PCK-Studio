@@ -479,14 +479,14 @@ namespace PckStudio.Rendering
                 {
                     VertexArray lineVAO = new VertexArray();
 
-                    void AddOutline(OutlineDefinition outline, ref List<LineVertex> vertices, ref List<int> indices)
+                    void AddOutline(OutlineDefinition outline, ref List<ColorVertex> vertices, ref List<int> indices)
                     {
                         int offset = vertices.Count;
-                        vertices.AddRange(outline.verticies.Select(pos => new LineVertex(pos, lineColor)));
+                        vertices.AddRange(outline.verticies.Select(pos => new ColorVertex(pos, lineColor)));
                         indices.AddRange(outline.indicies.Select(i => i + offset));
                     }
 
-                    List<LineVertex> vertices = new List<LineVertex>(8 * 6);
+                    List<ColorVertex> vertices = new List<ColorVertex>(8 * 6);
                     List<int> indices = new List<int>(24 * 6);
                     AddOutline(head.GetOutline(0), ref vertices, ref indices);
                     AddOutline(body.GetOutline(0), ref vertices, ref indices);
@@ -512,25 +512,25 @@ namespace PckStudio.Rendering
                     VertexArray lineVAO = new VertexArray();
                     Vector3 bodyCenterTop = body.GetFaceCenter(0, CubeData.CubeFace.Top);
                     Vector3 bodyCenterBottom = body.GetFaceCenter(0, CubeData.CubeFace.Bottom);
-                    LineVertex[] data = [
-                        new LineVertex(head.GetFaceCenter(0, CubeData.CubeFace.Top), lineColor),
-                        new LineVertex(bodyCenterBottom, lineColor),
+                    ColorVertex[] data = [
+                        new ColorVertex(head.GetFaceCenter(0, CubeData.CubeFace.Top), lineColor),
+                        new ColorVertex(bodyCenterBottom, lineColor),
                     
-                        new LineVertex(rightArm.GetFaceCenter(0, CubeData.CubeFace.Bottom), lineColor),
-                        new LineVertex(rightArm.GetFaceCenter(0, CubeData.CubeFace.Top), lineColor),
-                        new LineVertex(rightArm.GetFaceCenter(0, CubeData.CubeFace.Top), lineColor),
-                        new LineVertex(leftArm.GetFaceCenter(0, CubeData.CubeFace.Top), lineColor),
+                        new ColorVertex(rightArm.GetFaceCenter(0, CubeData.CubeFace.Bottom), lineColor),
+                        new ColorVertex(rightArm.GetFaceCenter(0, CubeData.CubeFace.Top), lineColor),
+                        new ColorVertex(rightArm.GetFaceCenter(0, CubeData.CubeFace.Top), lineColor),
+                        new ColorVertex(leftArm.GetFaceCenter(0, CubeData.CubeFace.Top), lineColor),
 
-                        new LineVertex(leftArm.GetFaceCenter(0, CubeData.CubeFace.Bottom), lineColor),
-                        new LineVertex(leftArm.GetFaceCenter(0, CubeData.CubeFace.Top), lineColor),
+                        new ColorVertex(leftArm.GetFaceCenter(0, CubeData.CubeFace.Bottom), lineColor),
+                        new ColorVertex(leftArm.GetFaceCenter(0, CubeData.CubeFace.Top), lineColor),
 
-                        new LineVertex(rightLeg.GetFaceCenter(0, CubeData.CubeFace.Bottom), lineColor),
-                        new LineVertex(rightLeg.GetFaceCenter(0, CubeData.CubeFace.Top), lineColor),
-                        new LineVertex(rightLeg.GetFaceCenter(0, CubeData.CubeFace.Top), lineColor),
-                        new LineVertex(leftLeg.GetFaceCenter(0, CubeData.CubeFace.Top), lineColor),
+                        new ColorVertex(rightLeg.GetFaceCenter(0, CubeData.CubeFace.Bottom), lineColor),
+                        new ColorVertex(rightLeg.GetFaceCenter(0, CubeData.CubeFace.Top), lineColor),
+                        new ColorVertex(rightLeg.GetFaceCenter(0, CubeData.CubeFace.Top), lineColor),
+                        new ColorVertex(leftLeg.GetFaceCenter(0, CubeData.CubeFace.Top), lineColor),
                         
-                        new LineVertex(leftLeg.GetFaceCenter(0, CubeData.CubeFace.Bottom), lineColor),
-                        new LineVertex(leftLeg.GetFaceCenter(0, CubeData.CubeFace.Top), lineColor),
+                        new ColorVertex(leftLeg.GetFaceCenter(0, CubeData.CubeFace.Bottom), lineColor),
+                        new ColorVertex(leftLeg.GetFaceCenter(0, CubeData.CubeFace.Top), lineColor),
                     ];
                     VertexBuffer buffer = new VertexBuffer();
                     buffer.SetData(data);
@@ -548,11 +548,11 @@ namespace PckStudio.Rendering
                     Vector3 center = Vector3.Zero;
                     Color planeColor = Color.CadetBlue;
 
-                    LineVertex[] vertices = [
-                        new LineVertex(new Vector3(center.X + 1f, 0f, center.Z + 1f), planeColor),
-                        new LineVertex(new Vector3(center.X - 1f, 0f, center.Z + 1f), planeColor),
-                        new LineVertex(new Vector3(center.X - 1f, 0f, center.Z - 1f), planeColor),
-                        new LineVertex(new Vector3(center.X + 1f, 0f, center.Z - 1f), planeColor),
+                    ColorVertex[] vertices = [
+                        new ColorVertex(new Vector3(center.X + 1f, 0f, center.Z + 1f), planeColor),
+                        new ColorVertex(new Vector3(center.X - 1f, 0f, center.Z + 1f), planeColor),
+                        new ColorVertex(new Vector3(center.X - 1f, 0f, center.Z - 1f), planeColor),
+                        new ColorVertex(new Vector3(center.X + 1f, 0f, center.Z - 1f), planeColor),
                         ];
                     var planeVAO = new VertexArray();
                     VertexBuffer buffer = new VertexBuffer();
@@ -572,8 +572,8 @@ namespace PckStudio.Rendering
 #if DEBUG
             // Debug render
             {
-                LineVertex[] vertices = [
-                    new LineVertex(Vector3.Zero, Color.White)
+                ColorVertex[] vertices = [
+                    new ColorVertex(Vector3.Zero, Color.White)
                 ];
                 VertexArray vao = new VertexArray();
                 var debugVBO = new VertexBuffer();

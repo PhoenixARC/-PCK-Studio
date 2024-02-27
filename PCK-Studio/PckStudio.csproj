@@ -158,7 +158,7 @@
     <Compile Include="Rendering\IndexBuffer.cs" />
     <Compile Include="Rendering\IVertexLayout.cs" />
     <Compile Include="Rendering\DrawContext.cs" />
-    <Compile Include="Rendering\LineVertex.cs" />
+    <Compile Include="Rendering\ColorVertex.cs" />
     <Compile Include="Rendering\OutlineDefinition.cs" />
     <Compile Include="Rendering\Renderer.cs" />
     <Compile Include="Rendering\GenericMesh.cs" />

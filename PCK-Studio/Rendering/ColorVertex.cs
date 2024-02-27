@@ -10,9 +10,9 @@ using OpenTK.Graphics;
 namespace PckStudio.Rendering
 {
     [StructLayout(LayoutKind.Sequential, Size = 28)]
-    internal struct LineVertex
+    internal struct ColorVertex
     {
-        public LineVertex(Vector3 position, Color4 color)
+        public ColorVertex(Vector3 position, Color4 color)
         {
             Position = position;
             Color = color;
