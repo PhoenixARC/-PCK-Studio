@@ -68,6 +68,7 @@ namespace PckStudio.Rendering
             // 
             this.debugLabel = new System.Windows.Forms.Label();
             this.debugLabel.AutoSize = true;
+            this.debugLabel.Visible = false;
             this.debugLabel.BackColor = System.Drawing.Color.Transparent;
             this.debugLabel.ForeColor = System.Drawing.SystemColors.ControlLight;
             this.debugLabel.Location = new System.Drawing.Point(3, 4);
@@ -75,6 +76,10 @@ namespace PckStudio.Rendering
             this.debugLabel.Size = new System.Drawing.Size(37, 13);
             this.debugLabel.TabIndex = 2;
             this.debugLabel.Text = "debug";
+            var debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem("Show debug information");
+            debugToolStripMenuItem.CheckOnClick = true;
+            debugToolStripMenuItem.Click += (s, e) => debugLabel.Visible = debugToolStripMenuItem.Checked;
+            this.contextMenuStrip1.Items.Add(debugToolStripMenuItem);
 #endif
             // 
             // SkinRenderer
