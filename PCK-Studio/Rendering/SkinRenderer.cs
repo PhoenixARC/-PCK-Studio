@@ -732,11 +732,11 @@ namespace PckStudio.Rendering
                 leftLegOverlay.SetEnabled(0, !ANIM.GetFlag(SkinAnimFlag.LEFT_LEG_OVERLAY_DISABLED));
 
                 int slimValue = slim ? 3 : 4;
-                rightArm.ReplaceCube(0, new(-3, -2, -2), new(slimValue, 12, 4), new(40, 16));
-                rightArmOverlay.ReplaceCube(0, new(-3, -2, -2), new(slimValue, 12, 4), new(40, 32), scale: OverlayScale);
+                rightArm       .ReplaceCube(0, new(slim ? -2 : -3, -2, -2), new(slimValue, 12, 4), new(40, 16));
+                rightArmOverlay.ReplaceCube(0, new(slim ? -2 : -3, -2, -2), new(slimValue, 12, 4), new(40, 32));
 
-                leftArm.ReplaceCube(0, new(-1, -2, -2), new(slimValue, 12, 4), new(32, 48));
-                leftArmOverlay.ReplaceCube(0, new(-1, -2, -2), new(slimValue, 12, 4), new(48, 48), scale: OverlayScale);
+                leftArm       .ReplaceCube(0, new(-1, -2, -2), new(slimValue, 12, 4), new(32, 48));
+                leftArmOverlay.ReplaceCube(0, new(-1, -2, -2), new(slimValue, 12, 4), new(48, 48));
 
                 rightLeg.ReplaceCube(0, new(-2, 0, -2), new(4, 12, 4), new(0, 16));
                 leftLeg.ReplaceCube(0, new(-2, 0, -2), new(4, 12, 4), new(16, 48));
@@ -917,10 +917,6 @@ namespace PckStudio.Rendering
                     legRightMatrix = Matrix4.CreateRotationX(MathHelper.DegreesToRadians((ANIM.GetFlag(SkinAnimFlag.SYNCED_LEGS) ? 1f : -1f) * animationCurrentRotationAngle));
                     legLeftMatrix = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(animationCurrentRotationAngle));
                 }
-
-                // TODO: only apply Translation to the base arm
-                bool slimModel = ANIM.GetFlag(SkinAnimFlag.SLIM_MODEL);
-                rightArm.Translation = rightArmOverlay.Translation = new Vector3(slimModel ? -4f : -5f, -2f, 0f);
 
                 RenderBodyPart(skinShader, Matrix4.Identity, transform, "HEAD", "HEADWEAR");
                 RenderBodyPart(skinShader, Matrix4.Identity, transform, "BODY", "JACKET");
