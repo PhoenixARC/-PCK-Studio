@@ -37,7 +37,7 @@ namespace PckStudio.Rendering
             _count = data.Length;
             Bind();
             int size = sizeofT * _count;
-            if (_size == 0)
+            if (_size < size)
             {
                 GL.BufferData(BufferTarget.ArrayBuffer, size, data, BufferUsageHint.StaticDraw);
                 _size = size;

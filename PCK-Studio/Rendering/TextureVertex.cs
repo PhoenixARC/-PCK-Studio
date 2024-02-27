@@ -3,10 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using OpenTK;
-using OpenTK.Graphics;
 
 namespace PckStudio.Rendering
 {
@@ -15,26 +12,18 @@ namespace PckStudio.Rendering
     {
         internal Vector3 Position { get; set; }
         internal Vector2 TexPosition { get; set; }
-        internal float Scale { get; set; }
-
-        public TextureVertex(Vector3 position, Vector2 texPosition)
-            : this(position, texPosition, 1f)
-        {
-        }
         
-        public TextureVertex(Vector3 position, Vector2 texPosition, float scale)
+        public TextureVertex(Vector3 position, Vector2 texPosition)
         {
             Position = position;
             TexPosition = texPosition;
-            Scale = scale;
-        } 
+        }
 
         public VertexBufferLayout GetLayout()
         {
             var layout = new VertexBufferLayout();
-            layout.Add<float>(3);
-            layout.Add<float>(2);
-            layout.Add<float>(1);
+            layout.Add(ShaderDataType.Float3);
+            layout.Add(ShaderDataType.Float2);
             return layout;
         }
     }

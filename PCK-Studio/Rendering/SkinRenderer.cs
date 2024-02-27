@@ -391,7 +391,6 @@ namespace PckStudio.Rendering
                 
                 Texture ??= Resources.classic_template;
 
-                skinShader.Unbind();
                 GLErrorCheck();
             }
 
@@ -401,7 +400,7 @@ namespace PckStudio.Rendering
                 var skyboxVBO = new VertexBuffer();
                 skyboxVBO.SetData(cubeVertices);
                 var vboLayout = new VertexBufferLayout();
-                vboLayout.Add<float>(3);
+                vboLayout.Add(ShaderDataType.Float3);
                 skyboxVAO.AddBuffer(skyboxVBO, vboLayout);
                 var skybocIBO = IndexBuffer.Create(
                     // front
@@ -425,9 +424,6 @@ namespace PckStudio.Rendering
 
                 _skyboxRenderBuffer = new DrawContext(skyboxVAO, skybocIBO, PrimitiveType.Triangles);
 
-                skyboxVAO.Unbind();
-                skybocIBO.Unbind();
-
                 var skyboxShader = ShaderProgram.Create(Resources.skyboxVertexShader, Resources.skyboxFragmentShader);
                 skyboxShader.Bind();
                 skyboxShader.SetUniform1("skybox", 1);
@@ -447,8 +443,6 @@ namespace PckStudio.Rendering
                 _skyboxTexture.WrapS = TextureWrapMode.ClampToEdge;
                 _skyboxTexture.WrapT = TextureWrapMode.ClampToEdge;
                 _skyboxTexture.WrapR = TextureWrapMode.ClampToEdge;
-                _skyboxTexture.Unbind();
-                skyboxShader.Unbind();
 
                 GLErrorCheck();
             }
@@ -497,8 +491,8 @@ namespace PckStudio.Rendering
                     VertexBuffer buffer = new VertexBuffer();
                     buffer.SetData(vertices.ToArray());
                     VertexBufferLayout layout = new VertexBufferLayout();
-                    layout.Add<float>(3);
-                    layout.Add<float>(4);
+                    layout.Add(ShaderDataType.Float3);
+                    layout.Add(ShaderDataType.Float4);
                     lineVAO.AddBuffer(buffer, layout);
                     lineVAO.Bind();
 
@@ -535,8 +529,8 @@ namespace PckStudio.Rendering
                     VertexBuffer buffer = new VertexBuffer();
                     buffer.SetData(data);
                     VertexBufferLayout layout = new VertexBufferLayout();
-                    layout.Add<float>(3);
-                    layout.Add<float>(4);
+                    layout.Add(ShaderDataType.Float3);
+                    layout.Add(ShaderDataType.Float4);
                     lineVAO.AddBuffer(buffer, layout);
                     lineVAO.Bind();
 
@@ -559,8 +553,8 @@ namespace PckStudio.Rendering
                     buffer.SetData(vertices);
 
                     VertexBufferLayout layout = new VertexBufferLayout();
-                    layout.Add<float>(3);
-                    layout.Add<float>(4);
+                    layout.Add(ShaderDataType.Float3);
+                    layout.Add(ShaderDataType.Float4);
                     planeVAO.AddBuffer(buffer, layout);
 
                     _groundDrawContext = new DrawContext(planeVAO, buffer.GenIndexBuffer(), PrimitiveType.Quads);
@@ -579,8 +573,8 @@ namespace PckStudio.Rendering
                 var debugVBO = new VertexBuffer();
                 debugVBO.SetData(vertices);
                 VertexBufferLayout layout = new VertexBufferLayout();
-                layout.Add<float>(3);
-                layout.Add<float>(4);
+                layout.Add(ShaderDataType.Float3);
+                layout.Add(ShaderDataType.Float4);
                 vao.AddBuffer(debugVBO, layout);
                 debugDrawContext = new DrawContext(vao, debugVBO.GenIndexBuffer(), PrimitiveType.Points);
             }

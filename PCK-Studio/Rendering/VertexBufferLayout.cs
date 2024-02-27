@@ -8,68 +8,130 @@ using OpenTK.Graphics.OpenGL;
 
 namespace PckStudio.Rendering
 {
-    struct VertexBufferElement
+    public enum ShaderDataType
     {
-        public readonly VertexAttribPointerType Type;
-        public readonly int Count;
+        Float,
+        Float2,
+        Float3,
+        Float4,
+        
+        Int,
+        Int2,
+        Int3,
+        Int4,
+
+        Mat2,
+        Mat3,
+        Mat4,
+    }
+
+    struct LayoutElement
+    {
+        public readonly ShaderDataType Type;
         public readonly bool Normalize;
 
-        public static int GetStrideSize(VertexAttribPointerType type)
+        public int Size => GetSize(Type);
+
+        public int ComponentCount => GetComponentCount(Type);
+
+        private static int GetSize(ShaderDataType type)
         {
             return type switch
             {
-                VertexAttribPointerType.Int => 4,
-                VertexAttribPointerType.UnsignedInt => 4,
-                VertexAttribPointerType.Float => 4,
+                ShaderDataType.Int    => 1 * 4,
+                ShaderDataType.Int2   => 2 * 4,
+                ShaderDataType.Int3   => 3 * 4,
+                ShaderDataType.Int4   => 4 * 4,
+
+                ShaderDataType.Float  => 1 * 4,
+                ShaderDataType.Float2 => 2 * 4,
+                ShaderDataType.Float3 => 3 * 4,
+                ShaderDataType.Float4 => 4 * 4,
+
+                ShaderDataType.Mat2 => 2 * 2 * 4,
+                ShaderDataType.Mat3 => 3 * 3 * 4,
+                ShaderDataType.Mat4 => 4 * 4 * 4,
                 _ => 0
             };
         }
 
-        public VertexBufferElement(VertexAttribPointerType type, int count, bool normalize)
+        private static int GetComponentSize(ShaderDataType type)
+        {
+            return type switch
+            {
+                ShaderDataType.Int    => 4,
+                ShaderDataType.Int2   => 4,
+                ShaderDataType.Int3   => 4,
+                ShaderDataType.Int4   => 4,
+
+                ShaderDataType.Float  => 4,
+                ShaderDataType.Float2 => 4,
+                ShaderDataType.Float3 => 4,
+                ShaderDataType.Float4 => 4,
+
+                ShaderDataType.Mat2 => 2 * 4,
+                ShaderDataType.Mat3 => 3 * 4,
+                ShaderDataType.Mat4 => 4 * 4,
+                _ => 0
+            };
+        }
+
+        private static int GetComponentCount(ShaderDataType type)
+        {
+            return type switch
+            {
+                ShaderDataType.Int    => 1,
+                ShaderDataType.Int2   => 2,
+                ShaderDataType.Int3   => 3,
+                ShaderDataType.Int4   => 4,
+
+                ShaderDataType.Float  => 1,
+                ShaderDataType.Float2 => 2,
+                ShaderDataType.Float3 => 3,
+                ShaderDataType.Float4 => 4,
+
+                ShaderDataType.Mat2 => 2 * 2,
+                ShaderDataType.Mat3 => 3 * 3,
+                ShaderDataType.Mat4 => 4 * 4,
+                _ => 0
+            };
+        }
+
+        public LayoutElement(ShaderDataType type) : this(type, false) { }
+        
+        public LayoutElement(ShaderDataType type, bool normalize)
         {
             Type = type;
-            Count = count;
             Normalize = normalize;
         }
+
+        public static implicit operator LayoutElement(ShaderDataType type) => new LayoutElement(type);
     }
 
     internal struct VertexBufferLayout
     {
-        private List<VertexBufferElement> elements;
+        private List<LayoutElement> elements;
         private int stride;
-
 
         public VertexBufferLayout()
         {
-            elements = new List<VertexBufferElement>();
+            elements = new List<LayoutElement>();
             stride = 0;
         }
 
-        public ReadOnlyCollection<VertexBufferElement> GetElements()
+        public readonly ReadOnlyCollection<LayoutElement> GetElements()
         {
             return elements.AsReadOnly();
         }
 
-        public void Add<T>(int count)
+        public void Add(ShaderDataType type)
         {
-            if (typeof(T).Equals(typeof(float)))
-            {
-                elements.Add(new VertexBufferElement(VertexAttribPointerType.Float, count, false));
-                stride += count * VertexBufferElement.GetStrideSize(VertexAttribPointerType.Float);
-            }
-            if (typeof(T).Equals(typeof(int)))
-            {
-                elements.Add(new VertexBufferElement(VertexAttribPointerType.Int, count, false));
-                stride += count * VertexBufferElement.GetStrideSize(VertexAttribPointerType.Int);
-            }
-            if (typeof(T).Equals(typeof(uint)))
-            {
-                elements.Add(new VertexBufferElement(VertexAttribPointerType.UnsignedInt, count, false));
-                stride += count * VertexBufferElement.GetStrideSize(VertexAttribPointerType.UnsignedInt);
-            }
+            var element = new LayoutElement(type);
+            elements.Add(element);
+            stride += element.Size;
         }
 
-        internal int GetStride()
+        internal readonly int GetStride()
         {
             return stride;
         }
