@@ -649,8 +649,8 @@
   <ItemGroup>
     <None Include="Resources\shader\framebufferFragmentShader.glsl" />
     <None Include="Resources\shader\framebufferVertexShader.glsl" />
-    <None Include="Resources\shader\lineFragmentShader.glsl" />
-    <None Include="Resources\shader\lineVertexShader.glsl" />
+    <None Include="Resources\shader\plainColorFragmentShader.glsl" />
+    <None Include="Resources\shader\plainColorVertexShader.glsl" />
     <None Include="Resources\shader\skinGeometryShader.glsl" />
     <None Include="Resources\shader\skyboxFragmentShader.glsl" />
     <None Include="Resources\shader\skyboxVertexShader.glsl" />

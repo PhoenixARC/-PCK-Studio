@@ -446,42 +446,6 @@ namespace PckStudio.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to #version 330 core
-        ///
-        ///layout(location = 0) in vec4 a_Pos;
-        ///
-        ///uniform mat4 ViewProjection;
-        ///
-        ///void main()
-        ///{
-        ///	gl_Position = ViewProjection * a_Pos;
-        ///};.
-        /// </summary>
-        public static string lineFragmentShader {
-            get {
-                return ResourceManager.GetString("lineFragmentShader", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to #version 330 core
-        ///
-        ///layout(location = 0) out vec4 FragColor;
-        ///
-        ///uniform vec4 color;
-        ///
-        ///void main()
-        ///{
-        ///	FragColor = color;
-        ///}.
-        /// </summary>
-        public static string lineVertexShader {
-            get {
-                return ResourceManager.GetString("lineVertexShader", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap LOC_ICON {
@@ -588,6 +552,50 @@ namespace PckStudio.Properties {
             get {
                 object obj = ResourceManager.GetObject("pckOpen", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #version 330 core
+        ///
+        ///layout(location = 0) out vec4 FragColor;
+        ///
+        ///uniform vec4 baseColor;
+        ///uniform float intensity;
+        ///
+        ///in vec4 color;
+        ///
+        ///void main()
+        ///{
+        ///	FragColor = vec4((color * baseColor).rgb, intensity);
+        ///}.
+        /// </summary>
+        public static string plainColorFragmentShader {
+            get {
+                return ResourceManager.GetString("plainColorFragmentShader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #version 330 core
+        ///
+        ///layout(location = 0) in vec4 a_Pos;
+        ///layout(location = 1) in vec4 a_Color;
+        ///
+        ///uniform mat4 ViewProjection;
+        ///uniform mat4 Transform;
+        ///
+        ///out vec4 color;
+        ///
+        ///void main()
+        ///{
+        ///	color = a_Color;
+        ///	gl_Position = ViewProjection * Transform * vec4(a_Pos.x, a_Pos.yz * -1.0, 1.0);
+        ///};.
+        /// </summary>
+        public static string plainColorVertexShader {
+            get {
+                return ResourceManager.GetString("plainColorVertexShader", resourceCulture);
             }
         }
         
@@ -746,7 +754,7 @@ namespace PckStudio.Properties {
         ///
         ///void main()
         ///{
-        ///	color = texture(skybox, texCoords) * vec4(vec3(clamp(brightness, 0.0, 1.0)), 1.0);
+        ///	color = vec4(texture(skybox, texCoords).rgb * clamp(brightness, 0.0, 1.0), 1.0);
         ///}.
         /// </summary>
         public static string skyboxFragmentShader {

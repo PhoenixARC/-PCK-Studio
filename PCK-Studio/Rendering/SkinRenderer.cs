@@ -464,14 +464,14 @@ namespace PckStudio.Rendering
                 GLErrorCheck();
             }
 #endif
-            // Line Shader
+            // Plain color shader
             {
-                var lineShader = ShaderProgram.Create(Resources.lineVertexShader, Resources.lineFragmentShader);
+                var lineShader = ShaderProgram.Create(Resources.plainColorVertexShader, Resources.plainColorFragmentShader);
                 lineShader.Bind();
                 lineShader.SetUniform4("baseColor", Color.WhiteSmoke);
                 lineShader.SetUniform1("intensity", 0.5f);
                 lineShader.Validate();
-                _shaders.AddShader("LineShader", lineShader);
+                _shaders.AddShader("PlainColorShader", lineShader);
 
                 Color lineColor = Color.White;
 
@@ -860,7 +860,7 @@ namespace PckStudio.Rendering
                 GL.DepthFunc(DepthFunction.Less);
             }
             
-            ShaderProgram lineShader = _shaders.GetShader("LineShader");
+            ShaderProgram lineShader = _shaders.GetShader("PlainColorShader");
 
             // Render (custom) skin
             {
