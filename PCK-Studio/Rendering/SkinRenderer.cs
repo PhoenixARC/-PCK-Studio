@@ -153,7 +153,7 @@ namespace PckStudio.Rendering
 
         public Size TextureSize { get; private set; } = new Size(64, 64);
         public Vector2 TillingFactor => new Vector2(1f / TextureSize.Width, 1f / TextureSize.Height);
-        private const float OverlayScale = 1.12f;
+        private const float OverlayScale = 0.5f;
 
         private bool IsMouseHidden
         {
@@ -1072,8 +1072,7 @@ namespace PckStudio.Rendering
             CubeGroupMesh cubeMesh = meshStorage[name];
             Vector3 translation = cubeMesh.Translation - cubeMesh.Offset;
             Vector3 pivot = cubeMesh.Pivot + cubeMesh.Offset;
-            Matrix4 transform = Matrix4.CreateScale(cubeMesh.Scale);
-            transform *= Pivot(translation, pivot, partMatrix);
+            Matrix4 transform = Pivot(translation, pivot, partMatrix);
             transform *= globalMatrix;
             shader.SetUniformMat4("u_Transform", ref transform);
             cubeMesh.Draw(shader);
