@@ -51,6 +51,15 @@ namespace PckStudio.Rendering
             _layout = new T().GetLayout();
         }
 
+        internal void Initialize()
+        {
+            vertexArray = new VertexArray();
+            vertexBuffer = new VertexBuffer();
+            indexBuffer = new IndexBuffer();
+            vertexArray.AddBuffer(vertexBuffer, _layout);
+            drawContext = new DrawContext(vertexArray, indexBuffer, drawType);
+        }
+
         protected void ResetBuffers()
         {
             indicesOffset = 0;
@@ -60,18 +69,8 @@ namespace PckStudio.Rendering
 
         protected void Submit()
         {
-            indexBuffer?.Dispose();
-            vertexBuffer.Dispose();
-            vertexArray ??= new VertexArray();
-
-            var vertexData = vertices.ToArray();
-            vertexBuffer = new VertexBuffer(vertexData.Length * SizeInBytes);
-            vertexBuffer.SetData(vertexData);
-
-            vertexArray.AddBuffer(vertexBuffer, _layout);
-
-            indexBuffer = IndexBuffer.Create(indices.ToArray());
-            drawContext = new DrawContext(vertexArray, indexBuffer, drawType);
+            vertexBuffer.SetData(vertices.ToArray());
+            indexBuffer.SetIndicies(indices.ToArray());
         }
 
         public void Draw(ShaderProgram shader)

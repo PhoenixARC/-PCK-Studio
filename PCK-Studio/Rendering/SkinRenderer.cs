@@ -295,8 +295,13 @@ namespace PckStudio.Rendering
             MakeCurrent();
             InitializeShaders();
             InitializeFramebuffer();
-            UploadMeshData();
             Renderer.SetClearColor(BackColor);
+            foreach (var item in meshStorage)
+            {
+                item.Value.Initialize();
+            }
+            UploadMeshData();
+            GLErrorCheck();
             initialized = true;
         }
 
