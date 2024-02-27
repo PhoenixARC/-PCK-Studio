@@ -193,21 +193,21 @@ namespace PckStudio.Rendering
         private float skyboxRotation = 0f;
         private float skyboxRotationStep = 0.5f;
 
-        private Dictionary<string, CubeBatchMesh> meshStorage;
+        private Dictionary<string, CubeGroupMesh> meshStorage;
         
-        private CubeBatchMesh head;
-        private CubeBatchMesh body;
-        private CubeBatchMesh rightArm;
-        private CubeBatchMesh leftArm;
-        private CubeBatchMesh rightLeg;
-        private CubeBatchMesh leftLeg;
+        private CubeGroupMesh head;
+        private CubeGroupMesh body;
+        private CubeGroupMesh rightArm;
+        private CubeGroupMesh leftArm;
+        private CubeGroupMesh rightLeg;
+        private CubeGroupMesh leftLeg;
 
-        private CubeBatchMesh headOverlay;
-        private CubeBatchMesh bodyOverlay;
-        private CubeBatchMesh rightArmOverlay;
-        private CubeBatchMesh leftArmOverlay;
-        private CubeBatchMesh rightLegOverlay;
-        private CubeBatchMesh leftLegOverlay;
+        private CubeGroupMesh headOverlay;
+        private CubeGroupMesh bodyOverlay;
+        private CubeGroupMesh rightArmOverlay;
+        private CubeGroupMesh leftArmOverlay;
+        private CubeGroupMesh rightLegOverlay;
+        private CubeGroupMesh leftLegOverlay;
 
         private float animationCurrentRotationAngle;
         private float animationRotationStep = 0.5f;
@@ -250,7 +250,7 @@ namespace PckStudio.Rendering
         public SkinRenderer() : base()
         {
             InitializeSkinData();
-            meshStorage = new Dictionary<string, CubeBatchMesh>()
+            meshStorage = new Dictionary<string, CubeGroupMesh>()
             {
                 { "HEAD", head },
                 { "BODY", body },
@@ -266,19 +266,19 @@ namespace PckStudio.Rendering
                 { "PANTS0"  , rightLegOverlay },
                 { "PANTS1"  , leftLegOverlay },
 
-                { "HELMET"   , new CubeBatchMesh("HELMET") },
-                { "BODYARMOR", new CubeBatchMesh("BODYARMOR") },
+                { "HELMET"   , new CubeGroupMesh("HELMET") },
+                { "BODYARMOR", new CubeGroupMesh("BODYARMOR") },
                 
-                { "BELT"     , new CubeBatchMesh("BELT") },
+                { "BELT"     , new CubeGroupMesh("BELT") },
                 
-                { "ARMARMOR0", new CubeBatchMesh("ARMARMOR0") },
-                { "ARMARMOR1", new CubeBatchMesh("ARMARMOR1") },
+                { "ARMARMOR0", new CubeGroupMesh("ARMARMOR0") },
+                { "ARMARMOR1", new CubeGroupMesh("ARMARMOR1") },
                 
-                { "BOOT0"    , new CubeBatchMesh("BOOT0") },
-                { "BOOT1"    , new CubeBatchMesh("BOOT1") },
+                { "BOOT0"    , new CubeGroupMesh("BOOT0") },
+                { "BOOT1"    , new CubeGroupMesh("BOOT1") },
 
-                { "TOOL0"    , new CubeBatchMesh("TOOL0") },
-                { "TOOL1"    , new CubeBatchMesh("TOOL1") },
+                { "TOOL0"    , new CubeGroupMesh("TOOL0") },
+                { "TOOL1"    , new CubeGroupMesh("TOOL1") },
             };
             InitializeCamera();
             InitializeComponent();
@@ -314,57 +314,57 @@ namespace PckStudio.Rendering
 
         private void InitializeSkinData()
         {
-            head ??= new CubeBatchMesh("Head");
+            head ??= new CubeGroupMesh("Head");
             head.AddCube(new(-4, -8, -4), new(8, 8, 8), new(0, 0), flipZMapping: true);
             
-            headOverlay ??= new CubeBatchMesh("Head Overlay", OverlayScale);
-            headOverlay.AddCube(new(-4, -8, -4), new(8, 8, 8), new(32, 0), flipZMapping: true, scale: OverlayScale);
+            headOverlay ??= new CubeGroupMesh("Head Overlay", OverlayScale);
+            headOverlay.AddCube(new(-4, -8, -4), new(8, 8, 8), new(32, 0), flipZMapping: true);
 
-            body ??= new CubeBatchMesh("Body");
+            body ??= new CubeGroupMesh("Body");
             body.AddCube(new(-4, 0, -2), new(8, 12, 4), new(16, 16));
             
-            bodyOverlay ??= new CubeBatchMesh("Body Overlay", OverlayScale);
-            bodyOverlay.AddCube(new(-4, 0, -2), new(8, 12, 4), new(16, 32), scale: OverlayScale);
+            bodyOverlay ??= new CubeGroupMesh("Body Overlay", OverlayScale);
+            bodyOverlay.AddCube(new(-4, 0, -2), new(8, 12, 4), new(16, 32));
 
-            rightArm ??= new CubeBatchMesh("Right Arm");
+            rightArm ??= new CubeGroupMesh("Right Arm");
             rightArm.Pivot = new Vector3(4f, 2f, 0f);
             rightArm.Translation = new Vector3(-5f, -2f, 0f);
             rightArm.AddCube(new(-3, -2, -2), new(4, 12, 4), new(40, 16));
             
-            rightArmOverlay ??= new CubeBatchMesh("Right Arm Overlay", OverlayScale);
+            rightArmOverlay ??= new CubeGroupMesh("Right Arm Overlay", OverlayScale);
             rightArmOverlay.Pivot = new Vector3(4f, 2f, 0f);
             rightArmOverlay.Translation = new Vector3(-5f, -2f, 0f);
-            rightArmOverlay.AddCube(new(-3, -2, -2), new(4, 12, 4), new(40, 32), scale: OverlayScale);
+            rightArmOverlay.AddCube(new(-3, -2, -2), new(4, 12, 4), new(40, 32));
             
-            leftArm ??= new CubeBatchMesh("Left Arm");
+            leftArm ??= new CubeGroupMesh("Left Arm");
             leftArm.Pivot = new Vector3(-4f, 2f, 0f);
             leftArm.Translation = new Vector3(5f, -2f, 0f);
             leftArm.AddCube(new(-1, -2, -2), new(4, 12, 4), new(32, 48));
 
-            leftArmOverlay ??= new CubeBatchMesh("Left Arm Overlay", OverlayScale);
+            leftArmOverlay ??= new CubeGroupMesh("Left Arm Overlay", OverlayScale);
             leftArmOverlay.Pivot = new Vector3(-4f, 2f, 0f);
             leftArmOverlay.Translation = new Vector3(5f, -2f, 0f);
-            leftArmOverlay.AddCube(new(-1, -2, -2), new(4, 12, 4), new(48, 48), scale: OverlayScale);
+            leftArmOverlay.AddCube(new(-1, -2, -2), new(4, 12, 4), new(48, 48));
 
-            rightLeg ??= new CubeBatchMesh("Right Leg");
+            rightLeg ??= new CubeGroupMesh("Right Leg");
             rightLeg.Pivot = new Vector3(0f, 12f, 0f);
             rightLeg.Translation = new Vector3(-2f, -12f, 0f);
             rightLeg.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 16));
 
-            rightLegOverlay ??= new CubeBatchMesh("Right Leg Overlay", OverlayScale);
+            rightLegOverlay ??= new CubeGroupMesh("Right Leg Overlay", OverlayScale);
             rightLegOverlay.Pivot = new Vector3(0f, 12f, 0f);
             rightLegOverlay.Translation = new Vector3(-2f, -12f, 0f);
-            rightLegOverlay.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 32), scale: OverlayScale);
+            rightLegOverlay.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 32));
 
-            leftLeg ??= new CubeBatchMesh("Left Leg");
+            leftLeg ??= new CubeGroupMesh("Left Leg");
             leftLeg.Pivot = new Vector3(0f, 12f, 0f);
             leftLeg.Translation = new Vector3(2f, -12f, 0f);
             leftLeg.AddCube(new(-2, 0, -2), new(4, 12, 4), new(16, 48));
 
-            leftLegOverlay ??= new CubeBatchMesh("Left Leg Overlay", OverlayScale);
+            leftLegOverlay ??= new CubeGroupMesh("Left Leg Overlay", OverlayScale);
             leftLegOverlay.Pivot = new Vector3(0f, 12f, 0f);
             leftLegOverlay.Translation = new Vector3(2f, -12f, 0f);
-            leftLegOverlay.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 48), scale: OverlayScale);
+            leftLegOverlay.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 48));
         }
 
         private void InitializeShaders()
@@ -699,7 +699,7 @@ namespace PckStudio.Rendering
             if (!meshStorage.ContainsKey(skinBox.Type))
                 throw new KeyNotFoundException(skinBox.Type);
 
-            CubeBatchMesh cubeMesh = meshStorage[skinBox.Type];
+            CubeGroupMesh cubeMesh = meshStorage[skinBox.Type];
             cubeMesh.AddSkinBox(skinBox);
         }
 
@@ -1069,7 +1069,7 @@ namespace PckStudio.Rendering
 
         private void RenderPart(ShaderProgram shader, string name, Matrix4 partMatrix, Matrix4 globalMatrix)
         {
-            CubeBatchMesh cubeMesh = meshStorage[name];
+            CubeGroupMesh cubeMesh = meshStorage[name];
             Vector3 translation = cubeMesh.Translation - cubeMesh.Offset;
             Vector3 pivot = cubeMesh.Pivot + cubeMesh.Offset;
             Matrix4 transform = Matrix4.CreateScale(cubeMesh.Scale);

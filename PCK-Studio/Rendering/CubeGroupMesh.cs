@@ -25,29 +25,29 @@ using PckStudio.Internal;
 
 namespace PckStudio.Rendering
 {
-    internal class CubeBatchMesh : GenericMesh<TextureVertex>
+    internal class CubeGroupMesh : GenericMesh<TextureVertex>
     {
         private List<CubeData> cubes;
 
-        internal float Scale { get; set; } = 1f;
+        public float Inflate { get; set; } = 0f;
         public Vector3 Translation { get; set; } = Vector3.Zero;
         public Vector3 Pivot { get; set; } = Vector3.Zero;
         public Vector3 Offset { get; set; } = Vector3.Zero;
 
-        internal CubeBatchMesh(string name) : base(name, PrimitiveType.Triangles)
+        internal CubeGroupMesh(string name) : base(name, PrimitiveType.Triangles)
         {
             cubes = new List<CubeData>(5);
         }
 
-        internal CubeBatchMesh(string name, float scale)
+        internal CubeGroupMesh(string name, float inflate)
             : this(name)
         {
-            Scale = scale;
+            Inflate = inflate;
         }
 
         internal void AddSkinBox(SkinBOX skinBox)
         {
-            AddCube(skinBox.Pos.ToOpenTKVector(), skinBox.Size.ToOpenTKVector(), skinBox.UV.ToOpenTKVector(), skinBox.Scale + Scale, skinBox.Mirror,
+            AddCube(skinBox.Pos.ToOpenTKVector(), skinBox.Size.ToOpenTKVector(), skinBox.UV.ToOpenTKVector(), skinBox.Scale + Inflate, skinBox.Mirror,
                 skinBox.Type == "HEAD" ||
                 skinBox.Type == "HEADWEAR");
         }
@@ -78,13 +78,13 @@ namespace PckStudio.Rendering
             Submit();
         }
 
-        internal void AddCube(Vector3 position, Vector3 size, Vector2 uv, float scale = 1f, bool mirrorTexture = false, bool flipZMapping = false)
+        internal void AddCube(Vector3 position, Vector3 size, Vector2 uv, float inflate = 0f, bool mirrorTexture = false, bool flipZMapping = false)
         {
-            var cube = new CubeData(position, size, uv, scale, mirrorTexture, flipZMapping);
+            var cube = new CubeData(position, size, uv, Inflate + inflate, mirrorTexture, flipZMapping);
             cubes.Add(cube);
         }
 
-        internal void ReplaceCube(int index, Vector3 position, Vector3 size, Vector2 uv, float scale = 1f, bool mirrorTexture = false)
+        internal void ReplaceCube(int index, Vector3 position, Vector3 size, Vector2 uv, float inflate = 0f, bool mirrorTexture = false)
         {
             if (!cubes.IndexInRange(index))
                 throw new IndexOutOfRangeException();
@@ -93,7 +93,7 @@ namespace PckStudio.Rendering
             cube.Position = position;
             cube.Size = size;
             cube.Uv = uv;
-            cube.Scale = scale;
+            cube.Inflate = Inflate + inflate;
             cube.MirrorTexture = mirrorTexture;
         }
 
@@ -103,7 +103,6 @@ namespace PckStudio.Rendering
             {
                 Vector3 transform = Translation;
                 transform.Xz -= Pivot.Xz / 2f;
-                //transform += Offset;
                 return -transform;
             }
         }
