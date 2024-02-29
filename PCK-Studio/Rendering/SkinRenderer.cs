@@ -79,6 +79,7 @@ namespace PckStudio.Rendering
         public float MouseSensetivity { get; set; } = 0.01f;
 
         public bool ClampModel { get; set; } = false;
+        public bool ShowArmor { get; set; } = false;
         public bool ShowGuideLines
         {
             get => guidelineMode != GuidelineMode.None;
@@ -176,6 +177,7 @@ namespace PckStudio.Rendering
         private SkinANIM _anim;
         private Image _texture;
         private Texture2D skinTexture;
+        private Texture2D armorTexture;
 
 #if USE_FRAMEBUFFER
         private FrameBuffer framebuffer;
@@ -194,6 +196,7 @@ namespace PckStudio.Rendering
         private float skyboxRotationStep = 0.5f;
 
         private Dictionary<string, CubeGroupMesh> meshStorage;
+        private Dictionary<string, CubeGroupMesh> offsetSpecificMeshStorage;
         
         private CubeGroupMesh head;
         private CubeGroupMesh body;
@@ -201,13 +204,6 @@ namespace PckStudio.Rendering
         private CubeGroupMesh leftArm;
         private CubeGroupMesh rightLeg;
         private CubeGroupMesh leftLeg;
-
-        private CubeGroupMesh headOverlay;
-        private CubeGroupMesh bodyOverlay;
-        private CubeGroupMesh rightArmOverlay;
-        private CubeGroupMesh leftArmOverlay;
-        private CubeGroupMesh rightLegOverlay;
-        private CubeGroupMesh leftLegOverlay;
 
         private float animationCurrentRotationAngle;
         private float animationRotationStep = 0.5f;
@@ -255,27 +251,15 @@ namespace PckStudio.Rendering
                 { "LEG0", rightLeg },
                 { "LEG1", leftLeg },
 
-                { "HEADWEAR", headOverlay },
-                { "JACKET"  , bodyOverlay },
-                { "SLEEVE0" , rightArmOverlay },
-                { "SLEEVE1" , leftArmOverlay },
-                { "PANTS0"  , rightLegOverlay },
-                { "PANTS1"  , leftLegOverlay },
+                { "HEADWEAR", head },
+                { "JACKET"  , body },
+                { "SLEEVE0" , rightArm },
+                { "SLEEVE1" , leftArm },
+                { "PANTS0"  , rightLeg },
+                { "PANTS1"  , leftLeg },
 
-                { "HELMET"   , new CubeGroupMesh("HELMET") },
-                { "BODYARMOR", new CubeGroupMesh("BODYARMOR") },
-                
-                { "BELT"     , new CubeGroupMesh("BELT") },
-                
-                { "ARMARMOR0", new CubeGroupMesh("ARMARMOR0") },
-                { "ARMARMOR1", new CubeGroupMesh("ARMARMOR1") },
-                
-                { "BOOT0"    , new CubeGroupMesh("BOOT0") },
-                { "BOOT1"    , new CubeGroupMesh("BOOT1") },
-
-                { "TOOL0"    , new CubeGroupMesh("TOOL0") },
-                { "TOOL1"    , new CubeGroupMesh("TOOL1") },
             };
+            InitializeArmorData();
             InitializeCamera();
             InitializeComponent();
             InitializeDebug();
@@ -298,6 +282,11 @@ namespace PckStudio.Rendering
                 item.Value.Initialize();
             }
             UploadMeshData();
+            foreach (var cubeMesh in offsetSpecificMeshStorage?.Values)
+            {
+                cubeMesh.Initialize();
+                cubeMesh.UploadData();
+            }
             GLErrorCheck();
             initialized = true;
         }
@@ -313,55 +302,96 @@ namespace PckStudio.Rendering
         {
             head ??= new CubeGroupMesh("Head");
             head.AddCube(new(-4, -8, -4), new(8, 8, 8), new(0, 0), flipZMapping: true);
+            head.AddCube(new(-4, -8, -4), new(8, 8, 8), new(32, 0), OverlayScale, flipZMapping: true);
             
-            headOverlay ??= new CubeGroupMesh("Head Overlay", OverlayScale);
-            headOverlay.AddCube(new(-4, -8, -4), new(8, 8, 8), new(32, 0), flipZMapping: true);
-
             body ??= new CubeGroupMesh("Body");
             body.AddCube(new(-4, 0, -2), new(8, 12, 4), new(16, 16));
+            body.AddCube(new(-4, 0, -2), new(8, 12, 4), new(16, 32), OverlayScale);
             
-            bodyOverlay ??= new CubeGroupMesh("Body Overlay", OverlayScale);
-            bodyOverlay.AddCube(new(-4, 0, -2), new(8, 12, 4), new(16, 32));
-
             rightArm ??= new CubeGroupMesh("Right Arm");
             rightArm.Pivot = new Vector3(4f, 2f, 0f);
             rightArm.Translation = new Vector3(-5f, -2f, 0f);
             rightArm.AddCube(new(-3, -2, -2), new(4, 12, 4), new(40, 16));
-            
-            rightArmOverlay ??= new CubeGroupMesh("Right Arm Overlay", OverlayScale);
-            rightArmOverlay.Pivot = new Vector3(4f, 2f, 0f);
-            rightArmOverlay.Translation = new Vector3(-5f, -2f, 0f);
-            rightArmOverlay.AddCube(new(-3, -2, -2), new(4, 12, 4), new(40, 32));
+            rightArm.AddCube(new(-3, -2, -2), new(4, 12, 4), new(40, 32), OverlayScale);
             
             leftArm ??= new CubeGroupMesh("Left Arm");
             leftArm.Pivot = new Vector3(-4f, 2f, 0f);
             leftArm.Translation = new Vector3(5f, -2f, 0f);
             leftArm.AddCube(new(-1, -2, -2), new(4, 12, 4), new(32, 48));
-
-            leftArmOverlay ??= new CubeGroupMesh("Left Arm Overlay", OverlayScale);
-            leftArmOverlay.Pivot = new Vector3(-4f, 2f, 0f);
-            leftArmOverlay.Translation = new Vector3(5f, -2f, 0f);
-            leftArmOverlay.AddCube(new(-1, -2, -2), new(4, 12, 4), new(48, 48));
+            leftArm.AddCube(new(-1, -2, -2), new(4, 12, 4), new(48, 48), inflate: OverlayScale);
 
             rightLeg ??= new CubeGroupMesh("Right Leg");
             rightLeg.Pivot = new Vector3(0f, 12f, 0f);
             rightLeg.Translation = new Vector3(-2f, -12f, 0f);
             rightLeg.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 16));
-
-            rightLegOverlay ??= new CubeGroupMesh("Right Leg Overlay", OverlayScale);
-            rightLegOverlay.Pivot = new Vector3(0f, 12f, 0f);
-            rightLegOverlay.Translation = new Vector3(-2f, -12f, 0f);
-            rightLegOverlay.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 32));
+            rightLeg.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 32), OverlayScale);
 
             leftLeg ??= new CubeGroupMesh("Left Leg");
             leftLeg.Pivot = new Vector3(0f, 12f, 0f);
             leftLeg.Translation = new Vector3(2f, -12f, 0f);
             leftLeg.AddCube(new(-2, 0, -2), new(4, 12, 4), new(16, 48));
+            leftLeg.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 48), OverlayScale);
+        }
 
-            leftLegOverlay ??= new CubeGroupMesh("Left Leg Overlay", OverlayScale);
-            leftLegOverlay.Pivot = new Vector3(0f, 12f, 0f);
-            leftLegOverlay.Translation = new Vector3(2f, -12f, 0f);
-            leftLegOverlay.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 48));
+        private void InitializeArmorData()
+        {
+            const float armorInflation = 0.75f;
+
+            var helmet    = new CubeGroupMesh("HELMET", armorInflation);
+            helmet.AddCube(new(-4, -8, -4), new(8, 8, 8), new(0, 0));
+
+            var chest = new CubeGroupMesh("CHEST", armorInflation);
+            chest.AddCube(new(-4, 0, -2), new(8, 12, 4), new(16, 16));
+
+            var shoulder0 = new CubeGroupMesh("SHOULDER0", armorInflation);
+            shoulder0.Pivot = new Vector3(4f, 2f, 0f);
+            shoulder0.Translation = new Vector3(-5f, -2f, 0f);
+            shoulder0.AddCube(new(-3, -2, -2), new(4, 12, 4), new(40, 16));
+
+            var shoulder1 = new CubeGroupMesh("SHOULDER1", armorInflation);
+            shoulder1.Pivot = new Vector3(-4f, 2f, 0f);
+            shoulder1.Translation = new Vector3(5f, -2f, 0f);
+            shoulder1.AddCube(new(-1, -2, -2), new(4, 12, 4), new(40, 16), mirrorTexture: true);
+            
+            var waist      = new CubeGroupMesh("WAIST", armorInflation - 0.1f);
+            waist.AddCube(new(-4, 0, -2), new(8, 12, 4), new(16, 48));
+
+            var pants0 = new CubeGroupMesh("PANTS0", armorInflation);
+            pants0.Pivot = new Vector3(0f, 12f, 0f);
+            pants0.Translation = new Vector3(-2f, -12f, 0f);
+            pants0.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 48));
+            
+            var pants1 = new CubeGroupMesh("PANTS1", armorInflation);
+            pants1.Pivot = new Vector3(0f, 12f, 0f);
+            pants1.Translation = new Vector3(2f, -12f, 0f);
+            pants1.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 48), mirrorTexture: true);
+
+            var boot0     = new CubeGroupMesh("BOOT0", armorInflation + 0.25f);
+            boot0.Pivot = new Vector3(0f, 12f, 0f);
+            boot0.Translation = new Vector3(-2f, -12f, 0f);
+            boot0.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 16));
+            
+            var boot1     = new CubeGroupMesh("BOOT1", armorInflation + 0.25f);
+            boot1.Pivot = new Vector3(0f, 12f, 0f);
+            boot1.Translation = new Vector3(2f, -12f, 0f);
+            boot1.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 16), mirrorTexture: true);
+
+            offsetSpecificMeshStorage = new Dictionary<string, CubeGroupMesh>
+            {
+                { helmet.Name, helmet },
+                { chest.Name, chest },
+                { shoulder0.Name, shoulder0 },
+                { shoulder1.Name, shoulder1 },
+                { waist.Name, waist },
+                { pants0.Name, pants0 },
+                { pants1.Name, pants1 },
+                { boot0.Name, boot0 },
+                { boot1.Name, boot1 }
+            };
+
+            //// TODO
+            //{ "TOOL0"    , new CubeGroupMesh("TOOL0") },
+            //{ "TOOL1"    , new CubeGroupMesh("TOOL1") },
         }
 
         private void InitializeShaders()
@@ -381,6 +411,16 @@ namespace PckStudio.Rendering
                 skinShader.SetUniform1("u_Texture", 0);
                 skinShader.Validate();
                 _shaders.AddShader("SkinShader", skinShader);
+                GLErrorCheck();
+
+                armorTexture = new Texture2D(0);
+                armorTexture.PixelFormat = OpenTK.Graphics.OpenGL.PixelFormat.Bgra;
+                armorTexture.InternalPixelFormat = PixelInternalFormat.Rgba8;
+                armorTexture.MinFilter = TextureMinFilter.Nearest;
+                armorTexture.MagFilter = TextureMagFilter.Nearest;
+                armorTexture.WrapS = TextureWrapMode.Repeat;
+                armorTexture.WrapT = TextureWrapMode.Repeat;
+                armorTexture.SetTexture(Resources.armor);
                 GLErrorCheck();
 
                 skinTexture = new Texture2D(0);
@@ -654,9 +694,15 @@ namespace PckStudio.Rendering
 
         public void SetPartOffset(string name, float value)
         {
-            if (!meshStorage.ContainsKey(name))
+            bool offsetSpecific = offsetSpecificMeshStorage.ContainsKey(name);
+            if (!meshStorage.ContainsKey(name) && !offsetSpecific)
             {
-                Trace.TraceError($"[{nameof(SetPartOffset)}]: '{name}' is not inside {nameof(meshStorage)}");
+                Trace.TraceError($"[{nameof(SetPartOffset)}]: '{name}' is not inside {nameof(meshStorage)} or {nameof(offsetSpecificMeshStorage)}");
+                return;
+            }
+            if (offsetSpecific)
+            {
+                offsetSpecificMeshStorage[name].Offset = Vector3.UnitY * value;
                 return;
             }
             meshStorage[name].Offset = Vector3.UnitY * value;
@@ -664,10 +710,14 @@ namespace PckStudio.Rendering
 
         internal void ResetOffsets()
         {
-            foreach (var key in meshStorage.Keys.ToList())
+            foreach (var key in meshStorage.Keys.ToArray())
             {
                 meshStorage[key].Offset = Vector3.Zero;
             }
+            foreach (var key in offsetSpecificMeshStorage.Keys.ToArray())
+            {
+                offsetSpecificMeshStorage[key].Offset = Vector3.Zero;
+        }
         }
 
         private void ModelData_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -710,7 +760,7 @@ namespace PckStudio.Rendering
         private void OnANIMUpdate()
         {
             head.SetEnabled(0, !ANIM.GetFlag(SkinAnimFlag.HEAD_DISABLED));
-            headOverlay.SetEnabled(0, !ANIM.GetFlag(SkinAnimFlag.HEAD_OVERLAY_DISABLED));
+            head.SetEnabled(1, !ANIM.GetFlag(SkinAnimFlag.HEAD_OVERLAY_DISABLED));
             
             body.SetEnabled(0, !ANIM.GetFlag(SkinAnimFlag.BODY_DISABLED));
             rightArm.SetEnabled(0, !ANIM.GetFlag(SkinAnimFlag.RIGHT_ARM_DISABLED));
@@ -722,18 +772,18 @@ namespace PckStudio.Rendering
             if (slim || ANIM.GetFlag(SkinAnimFlag.RESOLUTION_64x64))
             {
                 TextureSize = new Size(64, 64);
-                bodyOverlay.SetEnabled(0, !ANIM.GetFlag(SkinAnimFlag.BODY_OVERLAY_DISABLED));
-                rightArmOverlay.SetEnabled(0, !ANIM.GetFlag(SkinAnimFlag.RIGHT_ARM_OVERLAY_DISABLED));
-                leftArmOverlay.SetEnabled(0, !ANIM.GetFlag(SkinAnimFlag.LEFT_ARM_OVERLAY_DISABLED));
-                rightLegOverlay.SetEnabled(0, !ANIM.GetFlag(SkinAnimFlag.RIGHT_LEG_OVERLAY_DISABLED));
-                leftLegOverlay.SetEnabled(0, !ANIM.GetFlag(SkinAnimFlag.LEFT_LEG_OVERLAY_DISABLED));
+                body.SetEnabled(1, !ANIM.GetFlag(SkinAnimFlag.BODY_OVERLAY_DISABLED));
+                rightArm.SetEnabled(1, !ANIM.GetFlag(SkinAnimFlag.RIGHT_ARM_OVERLAY_DISABLED));
+                leftArm.SetEnabled(1, !ANIM.GetFlag(SkinAnimFlag.LEFT_ARM_OVERLAY_DISABLED));
+                rightLeg.SetEnabled(1, !ANIM.GetFlag(SkinAnimFlag.RIGHT_LEG_OVERLAY_DISABLED));
+                leftLeg.SetEnabled(1, !ANIM.GetFlag(SkinAnimFlag.LEFT_LEG_OVERLAY_DISABLED));
 
                 int slimValue = slim ? 3 : 4;
-                rightArm       .ReplaceCube(0, new(slim ? -2 : -3, -2, -2), new(slimValue, 12, 4), new(40, 16));
-                rightArmOverlay.ReplaceCube(0, new(slim ? -2 : -3, -2, -2), new(slimValue, 12, 4), new(40, 32));
+                rightArm.ReplaceCube(0, new(slim ? -2 : -3, -2, -2), new(slimValue, 12, 4), new(40, 16));
+                rightArm.ReplaceCube(1, new(slim ? -2 : -3, -2, -2), new(slimValue, 12, 4), new(40, 32));
 
-                leftArm       .ReplaceCube(0, new(-1, -2, -2), new(slimValue, 12, 4), new(32, 48));
-                leftArmOverlay.ReplaceCube(0, new(-1, -2, -2), new(slimValue, 12, 4), new(48, 48));
+                leftArm.ReplaceCube(0, new(-1, -2, -2), new(slimValue, 12, 4), new(32, 48));
+                leftArm.ReplaceCube(1, new(-1, -2, -2), new(slimValue, 12, 4), new(48, 48));
 
                 rightLeg.ReplaceCube(0, new(-2, 0, -2), new(4, 12, 4), new(0, 16));
                 leftLeg.ReplaceCube(0, new(-2, 0, -2), new(4, 12, 4), new(16, 48));
@@ -742,18 +792,18 @@ namespace PckStudio.Rendering
             
             TextureSize = new Size(64, 32);
             
-            bodyOverlay.SetEnabled(0, false);
+            body.SetEnabled(1, false);
 
             rightArm.ReplaceCube(0, new(-3, -2, -2), new(4, 12, 4), new(40, 16));
-            rightArmOverlay.SetEnabled(0, false);
+            rightArm.SetEnabled(1, false);
             
             leftArm.ReplaceCube(0, new(-1, -2, -2), new(4, 12, 4), new(40, 16), mirrorTexture: true);
-            leftArmOverlay.SetEnabled(0, false);
+            leftArm.SetEnabled(1, false);
 
             rightLeg.ReplaceCube(0, new(-2, 0, -2), new(4, 12, 4), new(0, 16));
-            rightLegOverlay.SetEnabled(0, false);
+            rightLeg.SetEnabled(1, false);
             leftLeg.ReplaceCube (0, new(-2, 0, -2), new(4, 12, 4), new(0, 16), mirrorTexture: true);
-            leftLegOverlay.SetEnabled(0, false);
+            leftLeg.SetEnabled(1, false);
         }
 
         protected override bool ProcessDialogKey(Keys keyData)
@@ -869,6 +919,7 @@ namespace PckStudio.Rendering
 
                 GL.Enable(EnableCap.AlphaTest); // Enable transparent
                 GL.AlphaFunc(AlphaFunction.Greater, 0.4f);
+                GL.DepthFunc(DepthFunction.Lequal);
 
                 if (showWireFrame)
                     GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
@@ -923,6 +974,42 @@ namespace PckStudio.Rendering
                 RenderBodyPart(skinShader, LeftArmMatrix * armLeftMatrix, transform, "ARM1", "SLEEVE1");
                 RenderBodyPart(skinShader, legRightMatrix, transform, "LEG0", "PANTS0");
                 RenderBodyPart(skinShader, legLeftMatrix, transform, "LEG1", "PANTS1");
+
+                // Armor rendering
+                if (ShowArmor)
+                {
+                    armorTexture.Bind();
+                    //skinShader.SetUniform4("u_Color", Color.FromArgb(0xff << 24 | Color.White.ToArgb() - _outlineColor.ToArgb()));
+                    skinShader.SetUniform2("u_TexSize", new Vector2(64, 64));
+                    if (!ANIM.GetFlag(SkinAnimFlag.HEAD_DISABLED) || ANIM.GetFlag(SkinAnimFlag.FORCE_HEAD_ARMOR))
+                        RenderPart(skinShader, offsetSpecificMeshStorage["HELMET"], Matrix4.Identity, transform);
+                    
+                    if (!ANIM.GetFlag(SkinAnimFlag.BODY_DISABLED) || ANIM.GetFlag(SkinAnimFlag.FORCE_BODY_ARMOR))
+                        RenderPart(skinShader, offsetSpecificMeshStorage["CHEST"], Matrix4.Identity, transform);
+                    
+                    if (!ANIM.GetFlag(SkinAnimFlag.RIGHT_ARM_DISABLED) || ANIM.GetFlag(SkinAnimFlag.FORCE_RIGHT_ARM_ARMOR))
+                        RenderPart(skinShader, offsetSpecificMeshStorage["SHOULDER0"], RightArmMatrix * armRightMatrix, transform);
+                    
+                    if (!ANIM.GetFlag(SkinAnimFlag.LEFT_ARM_DISABLED) || ANIM.GetFlag(SkinAnimFlag.FORCE_LEFT_ARM_ARMOR))
+                        RenderPart(skinShader, offsetSpecificMeshStorage["SHOULDER1"], LeftArmMatrix * armLeftMatrix, transform);
+
+                    bool showRightLegArmor = !ANIM.GetFlag(SkinAnimFlag.RIGHT_LEG_DISABLED) || ANIM.GetFlag(SkinAnimFlag.FORCE_RIGHT_LEG_ARMOR);
+                    if (showRightLegArmor)
+                    {
+                        RenderPart(skinShader, offsetSpecificMeshStorage["PANTS0"], legRightMatrix, transform);
+                        RenderPart(skinShader, offsetSpecificMeshStorage["BOOT0"], legRightMatrix, transform);
+                    }
+
+                    bool showLeftLegArmor = !ANIM.GetFlag(SkinAnimFlag.LEFT_LEG_DISABLED) || ANIM.GetFlag(SkinAnimFlag.FORCE_LEFT_LEG_ARMOR);
+                    if (showLeftLegArmor)
+                    {
+                        RenderPart(skinShader, offsetSpecificMeshStorage["PANTS1"], legLeftMatrix, transform);
+                        RenderPart(skinShader, offsetSpecificMeshStorage["BOOT1"], legLeftMatrix, transform);
+                    }
+                    
+                    if (showRightLegArmor && showLeftLegArmor)
+                        RenderPart(skinShader, offsetSpecificMeshStorage["WAIST"], Matrix4.Identity, transform);
+                }
 
                 if (showWireFrame)
                     GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
@@ -1036,13 +1123,12 @@ namespace PckStudio.Rendering
         {
             foreach (var partName in partNames)
             {
-                RenderPart(shader, partName, partsMatrix, globalMatrix);
+                RenderPart(shader, meshStorage[partName], partsMatrix, globalMatrix);
             }
         }
 
-        private void RenderPart(ShaderProgram shader, string name, Matrix4 partMatrix, Matrix4 globalMatrix)
+        private void RenderPart(ShaderProgram shader, CubeGroupMesh cubeMesh, Matrix4 partMatrix, Matrix4 globalMatrix)
         {
-            CubeGroupMesh cubeMesh = meshStorage[name];
             Vector3 translation = cubeMesh.Translation - cubeMesh.Offset;
             Vector3 pivot = cubeMesh.Pivot + cubeMesh.Offset;
             Matrix4 transform = Pivot(translation, pivot, partMatrix);

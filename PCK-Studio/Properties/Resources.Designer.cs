@@ -83,6 +83,16 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap armor {
+            get {
+                object obj = ResourceManager.GetObject("armor", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap ARROW {
             get {
                 object obj = ResourceManager.GetObject("ARROW", resourceCulture);
@@ -717,9 +727,8 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized string similar to #version 330 core
         ///
-        ///layout(location = 0) in vec4 vertexPosition;
+        ///layout(location = 0) in vec3 vertexPosition;
         ///layout(location = 1) in vec2 texCoord;
-        ///layout(location = 2) in float scale;
         ///
         ///uniform mat4 u_ViewProjection;
         ///uniform mat4 u_Transform;
@@ -733,7 +742,7 @@ namespace PckStudio.Properties {
         ///{
         ///	dataOut.TexCoord = texCoord;
         ///	vec4 invertedVertex = vec4(vertexPosition.x, vertexPosition.yz * -1.0, 1.0);
-        ///	gl_Position = u_ViewProjection * u_Transform * invertedVertex * scale;
+        ///	gl_Position = u_ViewProjection * u_Transform * invertedVertex;
         ///};.
         /// </summary>
         public static string skinVertexShader {
