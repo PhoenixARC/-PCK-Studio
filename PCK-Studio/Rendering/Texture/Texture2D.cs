@@ -9,19 +9,8 @@ namespace PckStudio.Rendering.Texture
 {
     internal class Texture2D : Texture
     {
-        public Texture2D(string filepath, int slot)
-            : this(Image.FromFile(filepath), slot)
-        {
-
-        }
-
         public OpenTK.Graphics.OpenGL.PixelFormat PixelFormat { get; set; }
         public PixelInternalFormat InternalPixelFormat { get; set; }
-
-        public Texture2D(Image image, int slot) : this(slot)
-        {
-            LoadImageData(image);
-        }
 
         public Texture2D(int slot) : this()
         {
@@ -39,7 +28,7 @@ namespace PckStudio.Rendering.Texture
             Unbind();
         }
 
-        public void LoadImageData(Image image)
+        public void SetTexture(Image image)
         {
             Bind();
             var bitmap = new Bitmap(image); 

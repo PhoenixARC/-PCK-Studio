@@ -599,7 +599,7 @@ namespace PckStudio.Rendering
             
             if (e.Cancel)
                 return;
-            skinTexture.LoadImageData(e.NewTexture);
+            skinTexture.SetTexture(e.NewTexture);
             GLErrorCheck();
             
         }
