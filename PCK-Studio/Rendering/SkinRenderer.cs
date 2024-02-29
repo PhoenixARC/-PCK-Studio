@@ -243,10 +243,6 @@ namespace PckStudio.Rendering
         };
         private bool initialized = false;
 
-#if DEBUG
-        private DrawContext debugDrawContext;
-#endif
-
         public SkinRenderer() : base()
         {
             InitializeSkinData();
@@ -282,6 +278,7 @@ namespace PckStudio.Rendering
             };
             InitializeCamera();
             InitializeComponent();
+            InitializeDebug();
 
             _shaders = new ShaderLibrary();
             ANIM ??= new SkinANIM(SkinAnimMask.RESOLUTION_64x64);
@@ -581,7 +578,7 @@ namespace PckStudio.Rendering
                 layout.Add(ShaderDataType.Float3);
                 layout.Add(ShaderDataType.Float4);
                 vao.AddBuffer(debugVBO, layout);
-                debugDrawContext = new DrawContext(vao, debugVBO.GenIndexBuffer(), PrimitiveType.Points);
+                d_debugDrawContext = new DrawContext(vao, debugVBO.GenIndexBuffer(), PrimitiveType.Points);
             }
 #endif
 
@@ -763,11 +760,13 @@ namespace PckStudio.Rendering
         {
             switch (keyData)
             {
+#if DEBUG
                 case Keys.Escape:
                     ReleaseMouse();
                     var point = new Point(Parent.Location.X + Location.X, Parent.Location.Y + Location.Y);
                     contextMenuStrip1.Show(point);
                     return true;
+#endif
                 case Keys.F3:
                     showWireFrame = !showWireFrame;
                     return true;
@@ -958,27 +957,8 @@ namespace PckStudio.Rendering
                 GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
             }
 
-#if DEBUG
             // Debug
-            {
-                GL.BlendFunc(BlendingFactor.DstAlpha, BlendingFactor.OneMinusSrcAlpha);
-                GL.DepthFunc(DepthFunction.Always);
-                GL.DepthMask(false);
-                GL.Enable(EnableCap.PointSmooth);
-                lineShader.Bind();
-                var transform = Matrix4.CreateTranslation(Camera.FocalPoint).Inverted();
-                lineShader.SetUniformMat4("Transform", ref transform);
-                lineShader.SetUniformMat4("ViewProjection", ref viewProjection);
-                lineShader.SetUniform1("intensity", 0.75f);
-                lineShader.SetUniform4("baseColor", Color.DeepPink);
-                GL.PointSize(5f);
-                Renderer.Draw(lineShader, debugDrawContext);
-                GL.PointSize(1f);
-                GL.DepthMask(true);
-                GL.DepthFunc(DepthFunction.Less);
-                GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
-            }
-#endif
+            RenderDebug();
 
 #if USE_FRAMEBUFFER
             framebuffer.Unbind();
@@ -993,9 +973,6 @@ namespace PckStudio.Rendering
 #endif
             SwapBuffers();
 
-#if DEBUG
-            debugLabel.Text = Camera.ToString();
-#endif
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
@@ -1112,6 +1089,103 @@ namespace PckStudio.Rendering
             }
         }
 
+        [Conditional("DEBUG")]
+        private void RenderDebug()
+        {
+#if DEBUG
+            var colorShader = _shaders.GetShader("PlainColorShader");
+            if (d_showFocalPoint)
+            {
+                GL.BlendFunc(BlendingFactor.DstAlpha, BlendingFactor.OneMinusSrcAlpha);
+                GL.DepthFunc(DepthFunction.Always);
+                GL.DepthMask(false);
+                GL.Enable(EnableCap.PointSmooth);
+                colorShader.Bind();
+                var viewProjection = Camera.GetViewProjection();
+                var transform = Matrix4.CreateTranslation(Camera.FocalPoint).Inverted();
+                colorShader.SetUniformMat4("Transform", ref transform);
+                colorShader.SetUniformMat4("ViewProjection", ref viewProjection);
+                colorShader.SetUniform1("intensity", 0.75f);
+                colorShader.SetUniform4("baseColor", Color.DeepPink);
+                GL.PointSize(5f);
+                Renderer.Draw(colorShader, d_debugDrawContext);
+                GL.PointSize(1f);
+                GL.DepthMask(true);
+                GL.DepthFunc(DepthFunction.Less);
+                GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
+            }
+            d_debugLabel.Text = Camera.ToString();
+#endif
+        }
+
+        [Conditional("DEBUG")]
+        private void InitializeDebug()
+        {
+#if DEBUG
+            reToolStripMenuItem = new ToolStripMenuItem();
+            contextMenuStrip1 = new ContextMenuStrip(this.components);
+            guidelineModeToolStripMenuItem = new ToolStripMenuItem();
+            contextMenuStrip1.SuspendLayout();
+            SuspendLayout();
+            // 
+            // contextMenuStrip1
+            // 
+            contextMenuStrip1.Items.AddRange(new ToolStripItem[] {
+            reToolStripMenuItem,
+            guidelineModeToolStripMenuItem});
+            contextMenuStrip1.Name = "contextMenuStrip1";
+            contextMenuStrip1.Size = new Size(159, 48);
+            // 
+            // reToolStripMenuItem
+            // 
+            reToolStripMenuItem.Name = "reToolStripMenuItem";
+            reToolStripMenuItem.Size = new Size(158, 22);
+            reToolStripMenuItem.Text = "Re-Init";
+            reToolStripMenuItem.Click += new EventHandler(this.reInitToolStripMenuItem_Click);
+            // 
+            // guidelineModeToolStripMenuItem
+            // 
+            guidelineModeToolStripMenuItem.Name = "guidelineModeToolStripMenuItem";
+            guidelineModeToolStripMenuItem.Size = new Size(158, 22);
+            guidelineModeToolStripMenuItem.Text = "Guideline Mode";
+            guidelineModeToolStripMenuItem.Click += new EventHandler(this.guidelineModeToolStripMenuItem_Click);
+            // 
+            // debugLabel
+            // 
+            d_debugLabel = new Label();
+            d_debugLabel.AutoSize = true;
+            d_debugLabel.Visible = false;
+            d_debugLabel.BackColor = Color.Transparent;
+            d_debugLabel.ForeColor = SystemColors.ControlLight;
+            d_debugLabel.Location = new Point(3, 4);
+            d_debugLabel.Name = "debugLabel";
+            d_debugLabel.Size = new Size(37, 13);
+            d_debugLabel.TabIndex = 2;
+            d_debugLabel.Text = "debug";
+            var debugCameraToolStripMenuItem = new ToolStripMenuItem("Show Camera debug information");
+            debugCameraToolStripMenuItem.CheckOnClick = true;
+            debugCameraToolStripMenuItem.Click += (s, e) => d_debugLabel.Visible = debugCameraToolStripMenuItem.Checked;
+            contextMenuStrip1.Items.Add(debugCameraToolStripMenuItem);
+
+            var debugShowFocalPointToolStripMenuItem = new ToolStripMenuItem("Show Camera Focal point");
+            debugShowFocalPointToolStripMenuItem.CheckOnClick = true;
+            debugShowFocalPointToolStripMenuItem.Click += (s, e) => d_showFocalPoint = debugShowFocalPointToolStripMenuItem.Checked;
+            contextMenuStrip1.Items.Add(debugShowFocalPointToolStripMenuItem);
+
+            Controls.Add(d_debugLabel);
+
+            this.contextMenuStrip1.ResumeLayout(false);
+#endif
+        }
+
+#if DEBUG
+        private bool d_showFocalPoint;
+        private DrawContext d_debugDrawContext;
+        private Label d_debugLabel;
+        private ToolStripMenuItem reToolStripMenuItem;
+        private ContextMenuStrip contextMenuStrip1;
+        private ToolStripMenuItem guidelineModeToolStripMenuItem;
+
         private void reInitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ReInitialzeSkinData();
@@ -1127,5 +1201,6 @@ namespace PckStudio.Rendering
             }
             guidelineModeToolStripMenuItem.Text = $"Guideline Mode: {guidelineMode}";
         }
+#endif
     }
 }
