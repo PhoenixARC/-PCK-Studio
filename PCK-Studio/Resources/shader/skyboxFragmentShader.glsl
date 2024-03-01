@@ -9,5 +9,5 @@ in vec3 texCoords;
 
 void main()
 {
-	color = texture(skybox, texCoords) * vec4(vec3(clamp(brightness, 0.0, 1.0)), 1.0);
+	color = vec4(texture(skybox, texCoords).rgb * clamp(brightness, 0.0, 1.0), 1.0);
 }
