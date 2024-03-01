@@ -26,6 +26,7 @@ https://github.com/KareemMAX/Minecraft-Skiner/blob/master/src/Minecraft%20skiner
  */
 
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using OpenTK;
@@ -61,9 +62,15 @@ namespace PckStudio.Rendering
         private VertexBuffer VBO;
         private IndexBuffer IBO;
         private ShaderProgram colorShader;
+        private bool isInitialized;
 
         protected void Init()
         {
+            if (isInitialized)
+            {
+                Debug.Fail("Already Initializted.");
+                return;
+            }
             colorShader = ShaderProgram.Create(Resources.plainColorVertexShader, Resources.plainColorFragmentShader);
             VAO = new VertexArray();
             VBO = new VertexBuffer();
@@ -86,6 +93,7 @@ namespace PckStudio.Rendering
             layout.Add(ShaderDataType.Float3);
             layout.Add(ShaderDataType.Float4);
             VAO.AddBuffer(VBO, layout);
+            isInitialized = true;
         }
 
         public SceneViewport() : base()
@@ -97,6 +105,7 @@ namespace PckStudio.Rendering
             timer.Enabled = !DesignMode;
             Camera = new PerspectiveCamera(60f, new Vector3(0f, 0f, 0f));
             VSync = true;
+            isInitialized = false;
         }
 
 
