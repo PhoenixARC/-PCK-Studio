@@ -17,6 +17,11 @@ namespace PckStudio.Rendering
             Position = position;
             Color = color;
         }
+        
+        public ColorVertex(Vector3 position)
+            : this(position, System.Drawing.Color.White)
+        {
+        }
 
         public Vector3 Position { get; set; }
         public Color4 Color { get; set; }

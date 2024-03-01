@@ -267,6 +267,15 @@
   <metadata name="contextMenuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <data name="contextMenuStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 108</value>
+  </data>
+  <data name="&gt;&gt;contextMenuStrip1.Name" xml:space="preserve">
+    <value>contextMenuStrip1</value>
+  </data>
+  <data name="&gt;&gt;contextMenuStrip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="createToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
@@ -338,15 +347,6 @@
   </data>
   <data name="changeColorToolStripMenuItem.Text" xml:space="preserve">
     <value>Change Color</value>
-  </data>
-  <data name="contextMenuStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 108</value>
-  </data>
-  <data name="&gt;&gt;contextMenuStrip1.Name" xml:space="preserve">
-    <value>contextMenuStrip1</value>
-  </data>
-  <data name="&gt;&gt;contextMenuStrip1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="buttonDone.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
@@ -579,34 +579,34 @@
   <data name="&gt;&gt;checkGuide.ZOrder" xml:space="preserve">
     <value>16</value>
   </data>
-  <data name="checkBoxArmor.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+  <data name="showArmorCheckbox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
   </data>
-  <data name="checkBoxArmor.AutoSize" type="System.Boolean, mscorlib">
+  <data name="showArmorCheckbox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="checkBoxArmor.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="showArmorCheckbox.Location" type="System.Drawing.Point, System.Drawing">
     <value>627, 503</value>
   </data>
-  <data name="checkBoxArmor.Size" type="System.Drawing.Size, System.Drawing">
-    <value>129, 15</value>
+  <data name="showArmorCheckbox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>89, 15</value>
   </data>
-  <data name="checkBoxArmor.TabIndex" type="System.Int32, mscorlib">
+  <data name="showArmorCheckbox.TabIndex" type="System.Int32, mscorlib">
     <value>149</value>
   </data>
-  <data name="checkBoxArmor.Text" xml:space="preserve">
-    <value>Show Armor Offsets</value>
+  <data name="showArmorCheckbox.Text" xml:space="preserve">
+    <value>Show Armor</value>
   </data>
-  <data name="&gt;&gt;checkBoxArmor.Name" xml:space="preserve">
-    <value>checkBoxArmor</value>
+  <data name="&gt;&gt;showArmorCheckbox.Name" xml:space="preserve">
+    <value>showArmorCheckbox</value>
   </data>
-  <data name="&gt;&gt;checkBoxArmor.Type" xml:space="preserve">
+  <data name="&gt;&gt;showArmorCheckbox.Type" xml:space="preserve">
     <value>MetroFramework.Controls.MetroCheckBox, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
   </data>
-  <data name="&gt;&gt;checkBoxArmor.Parent" xml:space="preserve">
+  <data name="&gt;&gt;showArmorCheckbox.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;checkBoxArmor.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;showArmorCheckbox.ZOrder" xml:space="preserve">
     <value>15</value>
   </data>
   <data name="SizeXUpDown.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
@@ -960,6 +960,51 @@
   <data name="&gt;&gt;skinNameLabel.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
+  <data name="&gt;&gt;skinPartsTabPage.Name" xml:space="preserve">
+    <value>skinPartsTabPage</value>
+  </data>
+  <data name="&gt;&gt;skinPartsTabPage.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;skinPartsTabPage.Parent" xml:space="preserve">
+    <value>metroTabControl1</value>
+  </data>
+  <data name="&gt;&gt;skinPartsTabPage.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;skinOffsetsTabPage.Name" xml:space="preserve">
+    <value>skinOffsetsTabPage</value>
+  </data>
+  <data name="&gt;&gt;skinOffsetsTabPage.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;skinOffsetsTabPage.Parent" xml:space="preserve">
+    <value>metroTabControl1</value>
+  </data>
+  <data name="&gt;&gt;skinOffsetsTabPage.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="metroTabControl1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>23, 59</value>
+  </data>
+  <data name="metroTabControl1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>161, 488</value>
+  </data>
+  <data name="metroTabControl1.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;metroTabControl1.Name" xml:space="preserve">
+    <value>metroTabControl1</value>
+  </data>
+  <data name="&gt;&gt;metroTabControl1.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroTabControl, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;metroTabControl1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;metroTabControl1.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
   <data name="skinPartsTabPage.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 38</value>
   </data>
@@ -982,18 +1027,6 @@
     <value>metroTabControl1</value>
   </data>
   <data name="&gt;&gt;skinPartsTabPage.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="offsetListBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="offsetListBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="offsetListBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>153, 446</value>
-  </data>
-  <data name="offsetListBox.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
   <data name="&gt;&gt;offsetListBox.Name" xml:space="preserve">
@@ -1032,26 +1065,29 @@
   <data name="&gt;&gt;skinOffsetsTabPage.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="metroTabControl1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>23, 59</value>
+  <data name="offsetListBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
   </data>
-  <data name="metroTabControl1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>161, 488</value>
+  <data name="offsetListBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
   </data>
-  <data name="metroTabControl1.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
+  <data name="offsetListBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>153, 446</value>
   </data>
-  <data name="&gt;&gt;metroTabControl1.Name" xml:space="preserve">
-    <value>metroTabControl1</value>
+  <data name="offsetListBox.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
-  <data name="&gt;&gt;metroTabControl1.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroTabControl, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  <data name="&gt;&gt;offsetListBox.Name" xml:space="preserve">
+    <value>offsetListBox</value>
   </data>
-  <data name="&gt;&gt;metroTabControl1.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="&gt;&gt;offsetListBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ListBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;metroTabControl1.ZOrder" xml:space="preserve">
-    <value>1</value>
+  <data name="&gt;&gt;offsetListBox.Parent" xml:space="preserve">
+    <value>skinOffsetsTabPage</value>
+  </data>
+  <data name="&gt;&gt;offsetListBox.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="renderer3D1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>

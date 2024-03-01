@@ -285,6 +285,7 @@ namespace PckStudio.Forms.Editor
             int scale = 4;
             if (skinPartListBox.SelectedItem is SkinBOX box)
             {
+                renderer3D1.SelectedIndex = skinPartListBox.SelectedIndex;
                 uvPictureBox.Image = new Bitmap(uvPictureBox.BackgroundImage.Width * scale, uvPictureBox.BackgroundImage.Height * scale);
                 using (Graphics g = Graphics.FromImage(uvPictureBox.Image))
                 {
@@ -321,6 +322,11 @@ namespace PckStudio.Forms.Editor
         private void checkGuide_CheckedChanged(object sender, EventArgs e)
         {
             outlineColorButton.Visible = renderer3D1.ShowGuideLines = checkGuide.Checked;
+        }
+
+        private void showArmorCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            renderer3D1.ShowArmor = showArmorCheckbox.Checked;
         }
     }
 

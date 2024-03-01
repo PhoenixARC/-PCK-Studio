@@ -150,6 +150,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Rendering\BoundingBox.cs" />
     <Compile Include="Rendering\Camera\Camera.cs" />
     <Compile Include="Rendering\Camera\PerspectiveCamera.cs" />
     <Compile Include="Rendering\Cube.cs" />

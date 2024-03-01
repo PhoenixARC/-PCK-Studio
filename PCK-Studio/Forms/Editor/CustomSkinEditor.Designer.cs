@@ -47,7 +47,7 @@
             this.outlineColorButton = new MetroFramework.Controls.MetroButton();
             this.generateTextureCheckBox = new MetroFramework.Controls.MetroCheckBox();
             this.checkGuide = new MetroFramework.Controls.MetroCheckBox();
-            this.checkBoxArmor = new MetroFramework.Controls.MetroCheckBox();
+            this.showArmorCheckbox = new MetroFramework.Controls.MetroCheckBox();
             this.SizeXUpDown = new System.Windows.Forms.NumericUpDown();
             this.SizeYUpDown = new System.Windows.Forms.NumericUpDown();
             this.SizeZUpDown = new System.Windows.Forms.NumericUpDown();
@@ -214,12 +214,13 @@
             this.checkGuide.UseSelectable = true;
             this.checkGuide.CheckedChanged += new System.EventHandler(this.checkGuide_CheckedChanged);
             // 
-            // checkBoxArmor
+            // showArmorCheckbox
             // 
-            resources.ApplyResources(this.checkBoxArmor, "checkBoxArmor");
-            this.checkBoxArmor.Name = "checkBoxArmor";
-            this.checkBoxArmor.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.checkBoxArmor.UseSelectable = true;
+            resources.ApplyResources(this.showArmorCheckbox, "showArmorCheckbox");
+            this.showArmorCheckbox.Name = "showArmorCheckbox";
+            this.showArmorCheckbox.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.showArmorCheckbox.UseSelectable = true;
+            this.showArmorCheckbox.CheckedChanged += new System.EventHandler(this.showArmorCheckbox_CheckedChanged);
             // 
             // SizeXUpDown
             // 
@@ -351,9 +352,9 @@
             // 
             // metroTabControl1
             // 
-            resources.ApplyResources(this.metroTabControl1, "metroTabControl1");
             this.metroTabControl1.Controls.Add(this.skinPartsTabPage);
             this.metroTabControl1.Controls.Add(this.skinOffsetsTabPage);
+            resources.ApplyResources(this.metroTabControl1, "metroTabControl1");
             this.metroTabControl1.Name = "metroTabControl1";
             this.metroTabControl1.SelectedIndex = 0;
             this.metroTabControl1.Style = MetroFramework.MetroColorStyle.Pink;
@@ -362,8 +363,8 @@
             // 
             // skinPartsTabPage
             // 
-            resources.ApplyResources(this.skinPartsTabPage, "skinPartsTabPage");
             this.skinPartsTabPage.Controls.Add(this.skinPartListBox);
+            resources.ApplyResources(this.skinPartsTabPage, "skinPartsTabPage");
             this.skinPartsTabPage.Name = "skinPartsTabPage";
             // 
             // skinOffsetsTabPage
@@ -380,12 +381,14 @@
             // 
             // renderer3D1
             // 
+            resources.ApplyResources(this.renderer3D1, "renderer3D1");
             this.renderer3D1.BackColor = System.Drawing.Color.DimGray;
             this.renderer3D1.ClampModel = false;
-            resources.ApplyResources(this.renderer3D1, "renderer3D1");
+            this.renderer3D1.MouseSensetivity = 0.01F;
             this.renderer3D1.Name = "renderer3D1";
             this.renderer3D1.OutlineColor = System.Drawing.Color.Empty;
             this.renderer3D1.RefreshRate = 50;
+            this.renderer3D1.ShowArmor = false;
             this.renderer3D1.ShowGuideLines = false;
             this.renderer3D1.Texture = null;
             this.renderer3D1.VSync = true;
@@ -417,7 +420,7 @@
             this.Controls.Add(this.SizeZUpDown);
             this.Controls.Add(this.SizeYUpDown);
             this.Controls.Add(this.SizeXUpDown);
-            this.Controls.Add(this.checkBoxArmor);
+            this.Controls.Add(this.showArmorCheckbox);
             this.Controls.Add(this.checkGuide);
             this.Controls.Add(this.generateTextureCheckBox);
             this.Controls.Add(this.outlineColorButton);
@@ -468,7 +471,7 @@
         private MetroFramework.Controls.MetroButton buttonEXPORT;
         private MetroFramework.Controls.MetroCheckBox generateTextureCheckBox;
         private MetroFramework.Controls.MetroCheckBox checkGuide;
-        private MetroFramework.Controls.MetroCheckBox checkBoxArmor;
+        private MetroFramework.Controls.MetroCheckBox showArmorCheckbox;
         private System.Windows.Forms.NumericUpDown SizeXUpDown;
         private System.Windows.Forms.NumericUpDown SizeYUpDown;
         private System.Windows.Forms.NumericUpDown SizeZUpDown;

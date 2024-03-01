@@ -77,6 +77,7 @@ namespace PckStudio.Rendering
         }
 
         public float MouseSensetivity { get; set; } = 0.01f;
+        public int SelectedIndex { get; set; } = -1;
 
         public bool ClampModel { get; set; } = false;
         public bool ShowArmor { get; set; } = false;
@@ -287,6 +288,8 @@ namespace PckStudio.Rendering
                 cubeMesh.Initialize();
                 cubeMesh.UploadData();
             }
+            GLErrorCheck();
+            base.Init();
             GLErrorCheck();
             initialized = true;
         }
@@ -1029,10 +1032,55 @@ namespace PckStudio.Rendering
                     GL.BlendFunc(BlendingFactor.DstAlpha, BlendingFactor.OneMinusSrcAlpha);
                     GL.DepthFunc(DepthFunction.Less);
                 }
+
+                if (ModelData.IndexInRange(SelectedIndex))
+                {
+                    SkinBOX box = ModelData[SelectedIndex];
+                    var cubeBoundingBox = Cube.FromSkinBox(box).GetBoundingBox();
+
+                    if (meshStorage.ContainsKey(box.Type))
+                    {
+                        var cubeMesh = meshStorage[box.Type];
+
+                        Matrix4 GetGroupTransform(string type)
+                        {
+                            switch (type)
+                            {
+                                case "ARM0":
+                                case "SLEEVE0":
+                                    return RightArmMatrix * armRightMatrix;
+                                case "ARM1":
+                                case "SLEEVE1":
+                                    return LeftArmMatrix * armLeftMatrix;
+                                case "LEG0":
+                                case "PANTS0":
+                                    return legRightMatrix;
+                                case "LEG1":
+                                case "PANTS1":
+                                    return legLeftMatrix;
+                                default:
+                                    return Matrix4.Identity;
+                            }
+                        }
+
+                        transform *= GetGroupTransform(box.Type);
+                        Vector3 translation = cubeMesh.Translation - cubeMesh.Offset;
+                        Vector3 pivot = cubeMesh.Pivot + cubeMesh.Offset;
+                        transform = Pivot(translation, pivot, transform);
+                    }
+
+                    GL.BlendFunc(BlendingFactor.DstAlpha, BlendingFactor.OneMinusSrcAlpha);
+                    base.DrawBoundingBox(transform, cubeBoundingBox, Color.Red);
+                    GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
+                }
             }
+
 
             // Ground plane
             {
+                GL.Enable(EnableCap.DepthTest);
+                GL.Enable(EnableCap.AlphaTest); // Enable transparent
+                GL.AlphaFunc(AlphaFunction.Always, 0.0f);
                 GL.BlendFunc(BlendingFactor.DstAlpha, BlendingFactor.OneMinusSrcAlpha);
                 lineShader.Bind();
                 lineShader.SetUniformMat4("ViewProjection", ref viewProjection);
