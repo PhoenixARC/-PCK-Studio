@@ -65,16 +65,7 @@ namespace PckStudio.Rendering
 
         [Description("The Color used for outlines")]
         [Category("Appearance")]
-        public Color OutlineColor
-        {
-            get => _outlineColor;
-            set
-            {
-                if (value == _outlineColor)
-                    return;
-                _outlineColor = value;
-            }
-        }
+        public Color OutlineColor { get; set; }
 
         public float MouseSensetivity { get; set; } = 0.01f;
         public int SelectedIndex { get; set; } = -1;
@@ -140,9 +131,6 @@ namespace PckStudio.Rendering
             bmp.RotateFlip(RotateFlipType.RotateNoneFlipY);
             return bmp;
         }
-
-
-        private Color _outlineColor;
 
         private enum GuidelineMode
         {
@@ -1038,7 +1026,7 @@ namespace PckStudio.Rendering
                     lineShader.SetUniformMat4("ViewProjection", ref viewProjection);
                     lineShader.SetUniformMat4("Transform", ref transform);
                     lineShader.SetUniform1("intensity", 1f);
-                    lineShader.SetUniform4("baseColor", _outlineColor);
+                    lineShader.SetUniform4("baseColor", OutlineColor);
                     Renderer.SetLineWidth(2.5f);
                     Renderer.Draw(lineShader, GetGuidelineDrawContext());
                     Renderer.SetLineWidth(1f);
@@ -1080,12 +1068,11 @@ namespace PckStudio.Rendering
                         Vector3 translation = cubeMesh.Translation - cubeMesh.Offset;
                         Vector3 pivot = cubeMesh.Pivot + cubeMesh.Offset;
                         transform = Pivot(translation, pivot, transform);
-                    }
-
                     GL.BlendFunc(BlendingFactor.DstAlpha, BlendingFactor.OneMinusSrcAlpha);
-                    base.DrawBoundingBox(transform, cubeBoundingBox, Color.Red);
+                        DrawBoundingBox(transform, cubeBoundingBox, OutlineColor);
                     GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
                 }
+            }
             }
 
 
