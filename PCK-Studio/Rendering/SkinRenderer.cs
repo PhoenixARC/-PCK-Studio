@@ -938,7 +938,7 @@ namespace PckStudio.Rendering
 
                 if (ANIM.GetFlag(SkinAnimFlag.DINNERBONE))
                 {
-                    transform *= Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(-180f));
+                    transform = Pivot(head.GetFaceCenter(0, Cube.Face.Top), Vector3.UnitY * 12f, transform * Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(-180f)));
                 }
 
                 var legRightMatrix = Matrix4.Identity;
