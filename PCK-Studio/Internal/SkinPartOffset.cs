@@ -17,34 +17,26 @@ namespace PckStudio.Internal
 
         private static readonly string[] ValidModelOffsetTypes = new string[]
         {
-            // Body Offsets
+            //! See: 0x02af8a20 - 0x02af8ed8 (Wii U Editon)
             "HEAD",
             "BODY",
             "ARM0",
             "ARM1",
             "LEG0",
             "LEG1",
-            "PANTS0",
-            "PANTS1",
-            "BOOTS0",
-            "BOOTS1",
-
-            // Armor Offsets
-            "HELMET",
-            "CHEST",
-            "BODYARMOR",
-            "SHOULDER0",
-            "SHOULDER1",
-            "ARMARMOR0",
-            "ARMARMOR1",
-            "BELT",
-            "LEGGING0",
-            "LEGGING1",
-            "SOCK0", "BOOT0",
-            "SOCK1", "BOOT1",
 
             "TOOL0",
             "TOOL1",
+
+            "HELMET",
+            "SHOULDER0",
+            "SHOULDER1",
+            "CHEST",
+            "WAIST",
+            "PANTS0",
+            "PANTS1",
+            "BOOT0",
+            "BOOT1",
         };
 
         public readonly string Type;
