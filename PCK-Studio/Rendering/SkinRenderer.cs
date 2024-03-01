@@ -476,7 +476,7 @@ namespace PckStudio.Rendering
                 skyboxShader.Validate();
                 _shaders.AddShader("SkyboxShader", skyboxShader);
 
-                string customSkyboxFilepath = Path.Combine(Program.AppData, "cubemap.png");
+                string customSkyboxFilepath = Path.Combine(Program.AppData, "skybox.png");
                 Image skyboxImage = File.Exists(customSkyboxFilepath)
                     ? Image.FromFile(customSkyboxFilepath)
                     : Resources.DefaultSkyTexture;
