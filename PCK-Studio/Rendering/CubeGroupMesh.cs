@@ -27,7 +27,7 @@ namespace PckStudio.Rendering
 {
     internal class CubeGroupMesh : GenericMesh<TextureVertex>
     {
-        private List<CubeData> cubes;
+        private List<CubeMesh> cubes;
 
         public float Inflate { get; set; } = 0f;
         public Vector3 Translation { get; set; } = Vector3.Zero;
@@ -36,7 +36,7 @@ namespace PckStudio.Rendering
 
         internal CubeGroupMesh(string name) : base(name, PrimitiveType.Triangles)
         {
-            cubes = new List<CubeData>(5);
+            cubes = new List<CubeMesh>(5);
         }
 
         internal CubeGroupMesh(string name, float inflate)
@@ -47,9 +47,7 @@ namespace PckStudio.Rendering
 
         internal void AddSkinBox(SkinBOX skinBox)
         {
-            AddCube(skinBox.Pos.ToOpenTKVector(), skinBox.Size.ToOpenTKVector(), skinBox.UV.ToOpenTKVector(), skinBox.Scale + Inflate, skinBox.Mirror,
-                skinBox.Type == "HEAD" ||
-                skinBox.Type == "HEADWEAR");
+            cubes.Add(CubeMesh.Create(skinBox));
         }
 
         internal void ClearData()
@@ -61,6 +59,7 @@ namespace PckStudio.Rendering
         /// <summary>
         /// Uploads MeshData
         /// </summary>
+        // TODO: rename function
         internal void UploadData()
         {
             ResetBuffers();
@@ -80,8 +79,17 @@ namespace PckStudio.Rendering
 
         internal void AddCube(Vector3 position, Vector3 size, Vector2 uv, float inflate = 0f, bool mirrorTexture = false, bool flipZMapping = false)
         {
-            var cube = new CubeData(position, size, uv, Inflate + inflate, mirrorTexture, flipZMapping);
+            var cube = new CubeMesh(position, size, uv, Inflate + inflate, mirrorTexture, flipZMapping);
             cubes.Add(cube);
+        }
+
+        internal void RemoveCube(int index)
+        {
+            if (!cubes.IndexInRange(index))
+                throw new IndexOutOfRangeException();
+            
+            cubes.RemoveAt(index);
+            UploadData();
         }
 
         internal void ReplaceCube(int index, Vector3 position, Vector3 size, Vector2 uv, float inflate = 0f, bool mirrorTexture = false)
@@ -113,7 +121,7 @@ namespace PckStudio.Rendering
             if (!cubes.IndexInRange(index))
                 throw new IndexOutOfRangeException();
 
-            return cubes[index].Center + Transform;
+            return cubes[index].Center + Transform + Offset;
         }
 
         internal OutlineDefinition GetOutline(int index)
@@ -121,13 +129,13 @@ namespace PckStudio.Rendering
             if (!cubes.IndexInRange(index))
                 throw new IndexOutOfRangeException();
 
-            CubeData cube = cubes[index];
+            CubeMesh cube = cubes[index];
             OutlineDefinition outline = cube.GetOutline();
             outline.verticies = outline.verticies.Select(pos => pos + Transform).ToArray();
             return outline;
         }
 
-        internal Vector3 GetFaceCenter(int index, CubeData.CubeFace face)
+        internal Vector3 GetFaceCenter(int index, Cube.Face face)
         {
             if (!cubes.IndexInRange(index))
                 throw new IndexOutOfRangeException();

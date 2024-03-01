@@ -546,27 +546,27 @@ namespace PckStudio.Rendering
                 // Skeleton draw context
                 {
                     VertexArray lineVAO = new VertexArray();
-                    Vector3 bodyCenterTop = body.GetFaceCenter(0, CubeData.CubeFace.Top);
-                    Vector3 bodyCenterBottom = body.GetFaceCenter(0, CubeData.CubeFace.Bottom);
+                    Vector3 bodyCenterTop = body.GetFaceCenter(0, Cube.Face.Top);
+                    Vector3 bodyCenterBottom = body.GetFaceCenter(0, Cube.Face.Bottom);
                     ColorVertex[] data = [
-                        new ColorVertex(head.GetFaceCenter(0, CubeData.CubeFace.Top), lineColor),
+                        new ColorVertex(head.GetFaceCenter(0, Cube.Face.Top), lineColor),
                         new ColorVertex(bodyCenterBottom, lineColor),
                     
-                        new ColorVertex(rightArm.GetFaceCenter(0, CubeData.CubeFace.Bottom), lineColor),
-                        new ColorVertex(rightArm.GetFaceCenter(0, CubeData.CubeFace.Top), lineColor),
-                        new ColorVertex(rightArm.GetFaceCenter(0, CubeData.CubeFace.Top), lineColor),
-                        new ColorVertex(leftArm.GetFaceCenter(0, CubeData.CubeFace.Top), lineColor),
+                        new ColorVertex(rightArm.GetFaceCenter(0, Cube.Face.Bottom), lineColor),
+                        new ColorVertex(rightArm.GetFaceCenter(0, Cube.Face.Top), lineColor),
+                        new ColorVertex(rightArm.GetFaceCenter(0, Cube.Face.Top), lineColor),
+                        new ColorVertex(leftArm.GetFaceCenter(0, Cube.Face.Top), lineColor),
 
-                        new ColorVertex(leftArm.GetFaceCenter(0, CubeData.CubeFace.Bottom), lineColor),
-                        new ColorVertex(leftArm.GetFaceCenter(0, CubeData.CubeFace.Top), lineColor),
+                        new ColorVertex(leftArm.GetFaceCenter(0, Cube.Face.Bottom), lineColor),
+                        new ColorVertex(leftArm.GetFaceCenter(0, Cube.Face.Top), lineColor),
 
-                        new ColorVertex(rightLeg.GetFaceCenter(0, CubeData.CubeFace.Bottom), lineColor),
-                        new ColorVertex(rightLeg.GetFaceCenter(0, CubeData.CubeFace.Top), lineColor),
-                        new ColorVertex(rightLeg.GetFaceCenter(0, CubeData.CubeFace.Top), lineColor),
-                        new ColorVertex(leftLeg.GetFaceCenter(0, CubeData.CubeFace.Top), lineColor),
+                        new ColorVertex(rightLeg.GetFaceCenter(0, Cube.Face.Bottom), lineColor),
+                        new ColorVertex(rightLeg.GetFaceCenter(0, Cube.Face.Top), lineColor),
+                        new ColorVertex(rightLeg.GetFaceCenter(0, Cube.Face.Top), lineColor),
+                        new ColorVertex(leftLeg.GetFaceCenter(0, Cube.Face.Top), lineColor),
                         
-                        new ColorVertex(leftLeg.GetFaceCenter(0, CubeData.CubeFace.Bottom), lineColor),
-                        new ColorVertex(leftLeg.GetFaceCenter(0, CubeData.CubeFace.Top), lineColor),
+                        new ColorVertex(leftLeg.GetFaceCenter(0, Cube.Face.Bottom), lineColor),
+                        new ColorVertex(leftLeg.GetFaceCenter(0, Cube.Face.Top), lineColor),
                     ];
                     VertexBuffer buffer = new VertexBuffer();
                     buffer.SetData(data);

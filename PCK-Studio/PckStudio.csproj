@@ -152,7 +152,8 @@
     </Compile>
     <Compile Include="Rendering\Camera\Camera.cs" />
     <Compile Include="Rendering\Camera\PerspectiveCamera.cs" />
-    <Compile Include="Rendering\CubeData.cs" />
+    <Compile Include="Rendering\Cube.cs" />
+    <Compile Include="Rendering\CubeMesh.cs" />
     <Compile Include="Rendering\CubeGroupMesh.cs" />
     <Compile Include="Rendering\FrameBuffer.cs" />
     <Compile Include="Rendering\IndexBuffer.cs" />

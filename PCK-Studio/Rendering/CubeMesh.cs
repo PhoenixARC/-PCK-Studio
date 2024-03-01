@@ -21,14 +21,16 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using OpenTK;
+using PckStudio.Extensions;
+using PckStudio.Internal;
 
 namespace PckStudio.Rendering
 {
-    internal class CubeData
+    internal class CubeMesh : Cube
     {
         internal bool ShouldRender { get; set; } = true;
         
-        internal Vector3 Position
+        internal new Vector3 Position
         {
             get => _position;
             set
@@ -41,7 +43,7 @@ namespace PckStudio.Rendering
             }
         }
         
-        internal Vector3 Size
+        internal new Vector3 Size
         {
             get => _size;
             set
@@ -54,7 +56,7 @@ namespace PckStudio.Rendering
             }
         }
         
-        internal Vector2 Uv
+        internal new Vector2 Uv
         {
             get => _uv;
             set
@@ -67,7 +69,7 @@ namespace PckStudio.Rendering
             }
         }
         
-        internal float Inflate
+        internal new float Inflate
         {
             get => _inflate;
             set
@@ -80,7 +82,7 @@ namespace PckStudio.Rendering
             }
         }
         
-        internal bool MirrorTexture
+        internal new bool MirrorTexture
         {
             get => _mirrorTexture;
             set
@@ -93,7 +95,7 @@ namespace PckStudio.Rendering
             }
         }
         
-        internal bool FlipZMapping
+        internal new bool FlipZMapping
         {
             get => _flipZMapping;
             set
@@ -103,46 +105,6 @@ namespace PckStudio.Rendering
                     _flipZMapping = value;
                     UpdateVertices();
                 }
-            }
-        }
-
-        internal Vector3 Center => Position + Size / 2f;
-
-        internal enum CubeFace
-        {
-            Back,
-            Front,
-            Top,
-            Bottom,
-            Left,
-            Right
-        }
-
-        internal Vector3 GetFaceCenter(CubeFace face)
-        {
-            var result = Center;
-            switch (face)
-            {
-                case CubeFace.Top:
-                    result.Y -= Size.Y / 2f;
-                    return result;
-                case CubeFace.Bottom:
-                    result.Y += Size.Y / 2f;
-                    return result;
-                case CubeFace.Back:
-                    result.Z -= Size.Z / 2f;
-                    return result;
-                case CubeFace.Front:
-                    result.Z += Size.Z / 2f;
-                    return result;
-                case CubeFace.Left:
-                    result.X -= Size.X / 2f;
-                    return result;
-                case CubeFace.Right:
-                    result.X += Size.X / 2f;
-                    return result;
-                default:
-                    return result;
             }
         }
 
@@ -193,18 +155,6 @@ namespace PckStudio.Rendering
             return outline;
         }
 
-        private void UpdateVertices()
-        {
-            vertices = GetCubeVertexData();
-        }
-
-        private Vector3 _position = Vector3.Zero;
-        private Vector3 _size = Vector3.One;
-        private Vector2 _uv = Vector2.Zero;
-        private float _inflate = 0f;
-        private bool _mirrorTexture = false;
-        private bool _flipZMapping = false;
-
         private static int[] indicesData = [
                     // Face 1 (Back)
                      0,  1,  2,
@@ -228,16 +178,14 @@ namespace PckStudio.Rendering
 
         private TextureVertex[] vertices;
 
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="position"></param>
         /// <param name="size"></param>
         /// <param name="uv"></param>
         /// <param name="inflate"></param>
         /// <param name="mirrorTexture"></param>
         /// <param name="flipZMapping">Flips the bottom face mapping of the uv mapping</param>
-        public CubeData(bool enabled, Vector3 position, Vector3 size, Vector2 uv, float inflate, bool mirrorTexture, bool flipZMapping)
+        public CubeMesh(bool enabled, Vector3 position, Vector3 size, Vector2 uv, float inflate, bool mirrorTexture, bool flipZMapping)
+            : base()
         {
             ShouldRender = enabled;
             Position = position;
@@ -258,8 +206,13 @@ namespace PckStudio.Rendering
         /// <param name="inflate"></param>
         /// <param name="mirrorTexture"></param>
         /// <param name="flipZMapping">Flips the bottom face mapping of the uv mapping</param>
-        public CubeData(Vector3 position, Vector3 size, Vector2 uv, float inflate, bool mirrorTexture, bool flipZMapping)
+        public CubeMesh(Vector3 position, Vector3 size, Vector2 uv, float inflate, bool mirrorTexture, bool flipZMapping)
             : this(true, position, size, uv, inflate, mirrorTexture, flipZMapping)
+        {
+        }
+
+        public CubeMesh(Cube cube)
+            : this(cube.Position, cube.Size, cube.Uv, cube.Inflate, cube.MirrorTexture, cube.FlipZMapping)
         {
         }
 
@@ -270,11 +223,9 @@ namespace PckStudio.Rendering
 
             Vector2 uv = Uv;
 
-            Vector3 halfSize = Size / 2f;
-            Vector3 halfSizeInflated = halfSize + new Vector3(Inflate);
-
-            Vector3 from = Center - halfSizeInflated;
-            Vector3 to   = Center + halfSizeInflated;
+            BoundingBox boundingBox = GetBoundingBox();
+            Vector3 from = boundingBox.Start;
+            Vector3 to   = boundingBox.End;
 
             var back = new TextureVertex[]
             {
@@ -335,6 +286,11 @@ namespace PckStudio.Rendering
             return vertices.ToArray();
         }
 
+        private void UpdateVertices()
+        {
+            vertices = GetCubeVertexData();
+        }
+
         internal TextureVertex[] GetVertices()
         {
             return vertices;
@@ -343,6 +299,11 @@ namespace PckStudio.Rendering
         internal int[] GetIndices()
         {
             return indicesData;
+        }
+
+        internal static CubeMesh Create(SkinBOX skinBox)
+        {
+            return new CubeMesh(FromSkinBox(skinBox));
         }
     }
 }
