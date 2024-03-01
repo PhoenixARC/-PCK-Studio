@@ -682,11 +682,18 @@ namespace PckStudio.Rendering
 #endif
         }
 
+        private void UpdateMesh(string name)
+        {
+            if (!meshStorage.ContainsKey(name))
+                return;
+            meshStorage[name]?.UploadData();
+        }
+
         private void UploadMeshData()
         {
-            foreach (var cubeMesh in meshStorage?.Values)
+            foreach (var cubeMeshName in meshStorage?.Keys)
             {
-                cubeMesh?.UploadData();
+                UpdateMesh(cubeMeshName);
             }
         }
 
@@ -729,6 +736,12 @@ namespace PckStudio.Rendering
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
+                    if (e.NewItems[0] is SkinBOX addedBox)
+                    {
+                        AddCustomModelPart(addedBox);
+                        UpdateMesh(addedBox.Type);
+                    }
+                    break;
                 case NotifyCollectionChangedAction.Remove:
                 case NotifyCollectionChangedAction.Replace:
                     ReInitialzeSkinData();
