@@ -1086,7 +1086,7 @@ namespace PckStudio.Rendering
                 lineShader.SetUniformMat4("ViewProjection", ref viewProjection);
                 lineShader.SetUniform1("intensity", 0.5f);
                 lineShader.SetUniform4("baseColor", Color.AntiqueWhite);
-                Matrix4 transform = Matrix4.CreateScale(25f) * Matrix4.CreateTranslation(new Vector3(0f, -24f, 0f));
+                Matrix4 transform = Matrix4.CreateScale(25f) * Matrix4.CreateTranslation(new Vector3(0f, -24.1f, 0f));
                 lineShader.SetUniformMat4("Transform", ref transform);
                 Renderer.Draw(lineShader, _groundDrawContext);
                 GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
