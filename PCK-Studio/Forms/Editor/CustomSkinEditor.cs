@@ -90,7 +90,7 @@ namespace PckStudio.Forms.Editor
 
         private void createToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var boxEditor = new BoxEditor(SkinBOX.Empty, false);
+            var boxEditor = new BoxEditor(SkinBOX.Empty, true);
             if (boxEditor.ShowDialog() == DialogResult.OK)
             {
                 var newBox = boxEditor.Result;
@@ -271,7 +271,7 @@ namespace PckStudio.Forms.Editor
         {
             if (skinPartListBox.SelectedItem is SkinBOX box)
             {
-                var boxEditor = new BoxEditor(box, false);
+                var boxEditor = new BoxEditor(box, true);
                 if (boxEditor.ShowDialog() == DialogResult.OK)
                 {
                     renderer3D1.ModelData[skinPartListBox.SelectedIndex] = boxEditor.Result;
