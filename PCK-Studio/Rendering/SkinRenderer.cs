@@ -32,7 +32,6 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Drawing.Imaging;
 using System.IO;
-using PckStudio.Rendering.Camera;
 using PckStudio.Rendering.Texture;
 using PckStudio.Rendering.Shader;
 using System.Linq;
@@ -291,9 +290,9 @@ namespace PckStudio.Rendering
 
         private void InitializeSkinData()
         {
-            head ??= new CubeGroupMesh("Head");
-            head.AddCube(new(-4, -8, -4), new(8, 8, 8), new(0, 0), flipZMapping: true);
-            head.AddCube(new(-4, -8, -4), new(8, 8, 8), new(32, 0), OverlayScale, flipZMapping: true);
+            head ??= new CubeGroupMesh("Head", flipZMapping: true);
+            head.AddCube(new(-4, -8, -4), new(8, 8, 8), new(0, 0));
+            head.AddCube(new(-4, -8, -4), new(8, 8, 8), new(32, 0), OverlayScale);
             
             body ??= new CubeGroupMesh("Body");
             body.AddCube(new(-4, 0, -2), new(8, 12, 4), new(16, 16));

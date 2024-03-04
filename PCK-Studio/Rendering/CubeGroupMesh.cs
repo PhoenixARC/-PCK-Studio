@@ -30,6 +30,7 @@ namespace PckStudio.Rendering
         private List<CubeMesh> cubes;
 
         public float Inflate { get; set; } = 0f;
+        public bool FlipZMapping { get; set; } = false;
         public Vector3 Translation { get; set; } = Vector3.Zero;
         public Vector3 Pivot { get; set; } = Vector3.Zero;
         public Vector3 Offset { get; set; } = Vector3.Zero;
@@ -37,6 +38,12 @@ namespace PckStudio.Rendering
         internal CubeGroupMesh(string name) : base(name, PrimitiveType.Triangles)
         {
             cubes = new List<CubeMesh>(5);
+        }
+
+        internal CubeGroupMesh(string name, bool flipZMapping)
+            : this(name)
+        {
+            FlipZMapping = flipZMapping;
         }
 
         internal CubeGroupMesh(string name, float inflate)
@@ -47,7 +54,9 @@ namespace PckStudio.Rendering
 
         internal void AddSkinBox(SkinBOX skinBox)
         {
-            cubes.Add(CubeMesh.Create(skinBox));
+            var cube = CubeMesh.Create(skinBox);
+            cube.FlipZMapping = FlipZMapping;
+            cubes.Add(cube);
         }
 
         internal void ClearData()
@@ -79,7 +88,7 @@ namespace PckStudio.Rendering
 
         internal void AddCube(Vector3 position, Vector3 size, Vector2 uv, float inflate = 0f, bool mirrorTexture = false, bool flipZMapping = false)
         {
-            var cube = new CubeMesh(position, size, uv, Inflate + inflate, mirrorTexture, flipZMapping);
+            var cube = new CubeMesh(position, size, uv, Inflate + inflate, mirrorTexture, flipZMapping || FlipZMapping);
             cubes.Add(cube);
         }
 

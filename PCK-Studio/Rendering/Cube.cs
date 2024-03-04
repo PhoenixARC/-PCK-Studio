@@ -62,7 +62,7 @@ namespace PckStudio.Rendering
 
         internal static Cube FromSkinBox(SkinBOX skinBOX)
         {
-            return new Cube(skinBOX.Pos.ToOpenTKVector(), skinBOX.Size.ToOpenTKVector(), skinBOX.UV.ToOpenTKVector(), skinBOX.Scale, skinBOX.Mirror, skinBOX.Type == "HEAD" || skinBOX.Type == "HEADWEAR");
+            return new Cube(skinBOX.Pos.ToOpenTKVector(), skinBOX.Size.ToOpenTKVector(), skinBOX.UV.ToOpenTKVector(), skinBOX.Scale, skinBOX.Mirror, false);
         }
 
         public Cube() { }
