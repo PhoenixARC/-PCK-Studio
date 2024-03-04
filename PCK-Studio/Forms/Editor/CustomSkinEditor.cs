@@ -260,7 +260,7 @@ namespace PckStudio.Forms.Editor
             if (img.Width != img.Height && img.Height != img.Width / 2)
             {
                 e.Cancel = true;
-                MessageBox.Show("Invalid image dimensions.", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("The selected image does not suit a skin texture.", "Invalid image dimensions.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             generateTextureCheckBox.Checked = false;
