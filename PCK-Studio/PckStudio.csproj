@@ -4,7 +4,7 @@
   <PropertyGroup>
     <LangVersion>preview</LangVersion>
     <DisableFody Condition="'$(Configuration)' == 'Debug'">true</DisableFody>
-	<DefineConstants Condition="'$(Configuration)' != 'Debug'">NDEBUG</DefineConstants>
+    <DefineConstants Condition="'$(Configuration)' != 'Debug'">NDEBUG</DefineConstants>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -456,6 +456,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\EntityForms\AddEntry.resx">
       <DependentUpon>AddEntry.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\Loc\AddLanguage.resx">
       <DependentUpon>AddLanguage.cs</DependentUpon>
@@ -531,6 +532,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\Grf\AddParameter.resx">
       <DependentUpon>AddParameter.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\InProgressPrompt.resx">
       <DependentUpon>InProgressPrompt.cs</DependentUpon>
