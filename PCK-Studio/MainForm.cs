@@ -555,74 +555,97 @@ namespace PckStudio
 			}
 		}
 
+		private void extractFile(string outFilePath, PckFileData file)
+        {
+			File.WriteAllBytes(outFilePath, file.Data);
+			if (file.Properties.Count > 0)
+			{
+				using var fs = File.CreateText($"{outFilePath}.txt");
+				file.Properties.ForEach(property => fs.WriteLine($"{property.Key}: {property.Value}"));
+			}
+		}
+
+		private void extractFolderFile(string outPath, PckFileData file)
+        {
+			TreeNode node = treeViewMain.SelectedNode;
+
+			// abb = "Abbreviated Path"
+			string abbPath = Path.GetDirectoryName(file.Filename);
+			int startIndex = abbPath.IndexOf(node.Text);
+			abbPath = abbPath.Substring(startIndex, abbPath.Length - startIndex);
+			string finalPath = ($"{outPath}/{abbPath}/").Replace('\\', '/');
+
+			if (!Directory.Exists(finalPath)) Directory.CreateDirectory(finalPath);
+
+			extractFile(finalPath + "/" + Path.GetFileName(file.Filename), file);
+		}
+
+		private void extractFolder(string outPath)
+        {
+			TreeNode node = treeViewMain.SelectedNode;
+
+			string selectedFolder = node.FullPath;
+
+			if (IsSubPCKNode(node.FullPath))
+			{
+				GetAllChildNodes(node.Nodes).ForEach(fileNode =>
+				{
+					if (fileNode.TryGetTagData(out PckFileData file))
+					{
+						extractFolderFile(outPath, file);
+					}
+				}
+				);
+			}
+			else
+			{
+				foreach (var _file in currentPCK.GetFiles())
+				{
+					if (_file.Filename.StartsWith(selectedFolder))
+					{
+						extractFolderFile(outPath, _file);
+					}
+				};
+			}
+		}
+
 		private void extractToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			var node = treeViewMain.SelectedNode;
+
 			if (node == null)
+            {
+				MessageBox.Show(this, "The selected node was null. Please select a node and try again.", "Node not extracted");
+
 				return;
-			if (node.TryGetTagData(out PckFileData file))
+			}
+
+			if (node.Tag == null)
+            {
+				OpenFolderDialog dialog = new OpenFolderDialog();
+				dialog.Title = @"Select destination folder";
+
+				if (dialog.ShowDialog(Handle) == true) extractFolder(dialog.ResultPath);
+			}
+			else if (node.TryGetTagData(out PckFileData file))
 			{
 				using SaveFileDialog exFile = new SaveFileDialog();
 				exFile.FileName = Path.GetFileName(file.Filename);
 				exFile.Filter = Path.GetExtension(file.Filename).Replace(".", string.Empty) + " File|*" + Path.GetExtension(file.Filename);
 				if (exFile.ShowDialog() != DialogResult.OK ||
 					// Makes sure chosen directory isn't null or whitespace AKA makes sure its usable
-					string.IsNullOrWhiteSpace(Path.GetDirectoryName(exFile.FileName))) return;
-				string extractFilePath = exFile.FileName;
+					string.IsNullOrWhiteSpace(Path.GetDirectoryName(exFile.FileName)))
+                {
+					MessageBox.Show(this, "The chosen directory is invalid. Please choose a different one and try again.", "Node not extracted");
 
-				File.WriteAllBytes(extractFilePath, file.Data);
-				if (file.Properties.Count > 0)
-				{
-					using var fs = File.CreateText($"{extractFilePath}.txt");
-					file.Properties.ForEach(property => fs.WriteLine($"{property.Key}: {property.Value}"));
+					return;
 				}
-				// Verification that file extraction path was successful
-				MessageBox.Show("File Extracted");
-				return;
+
+				extractFile(exFile.FileName, file);
 			}
 
-			string selectedFolder = node.FullPath;
-			OpenFolderDialog dialog = new OpenFolderDialog();
-			dialog.Title = @"Select destination folder";
-
-			if (dialog.ShowDialog() == true)
-			{
-				string extractPath = dialog.ResultPath;
-				if (IsSubPCKNode(node.FullPath) && node.Tag == null)
-				{
-					GetAllChildNodes(node.Nodes).ForEach(fileNode =>
-					{
-						if (fileNode.TryGetTagData(out PckFileData file))
-						{
-							Directory.CreateDirectory($"{extractPath}/{Path.GetDirectoryName(file.Filename)}");
-							File.WriteAllBytes($"{extractPath}/{file.Filename}", file.Data);
-							if (file.Properties.Count > 0)
-							{
-								using var fs = File.CreateText($"{extractPath}/{file.Filename}.txt");
-								file.Properties.ForEach(property => fs.WriteLine($"{property.Key}: {property.Value}"));
-							}
-						}
-					}
-					);
-				}
-				else
-				{
-					foreach (var _file in currentPCK.GetFiles())
-					{
-						if (_file.Filename.StartsWith(selectedFolder))
-						{
-							Directory.CreateDirectory($"{extractPath}/{Path.GetDirectoryName(_file.Filename)}");
-							File.WriteAllBytes($"{extractPath}/{_file.Filename}", _file.Data);
-							if (_file.Properties.Count > 0)
-							{
-								using var fs = File.CreateText($"{extractPath}/{_file.Filename}.txt");
-								_file.Properties.ForEach(property => fs.WriteLine($"{property.Key}: {property.Value}"));
-							}
-						}
-					};
-				}
-				MessageBox.Show("Folder Extracted");
-			}
+			// Verification that file extraction path was successful
+			MessageBox.Show($"\"{node.Text}\" successfully extracted");
 		}
 
 		private void SaveTemplate()
