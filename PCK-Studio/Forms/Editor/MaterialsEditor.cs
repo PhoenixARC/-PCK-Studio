@@ -83,8 +83,7 @@ namespace PckStudio.Forms.Editor
 
 				if (materialFile.hasInvalidEntries())
                 {
-					DialogResult dr = MessageBox.Show(this, "Unsupported entities were found in this file. Would you like to display them?", "Invalid data found", MessageBoxButtons.YesNoCancel);
-					if(dr == DialogResult.Cancel) Close();
+					DialogResult dr = MessageBox.Show(this, "Unsupported entities were found in this file. Would you like to display them?", "Invalid data found", MessageBoxButtons.YesNo);
 
 					showInvalidEntries = dr == DialogResult.Yes;
 				}
