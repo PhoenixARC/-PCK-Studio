@@ -172,6 +172,7 @@ namespace PckStudio.Rendering
         private Texture2D framebufferTexture;
         private ShaderProgram framebufferShader;
         private VertexArray framebufferVAO;
+        private int framebufferRenderBuffer;
 #endif
 
         private DrawContext _cubicalDrawContext;
@@ -629,9 +630,9 @@ namespace PckStudio.Rendering
                 return;
             skinTexture.SetTexture(e.NewTexture);
             GLErrorCheck();
-            
         }
 
+        [Conditional("USE_FRAMEBUFFER")]
         private void InitializeFramebuffer()
         {
 #if USE_FRAMEBUFFER
@@ -648,10 +649,10 @@ namespace PckStudio.Rendering
 
             framebufferTexture.AttachToFramebuffer(framebuffer, FramebufferAttachment.ColorAttachment0);
 
-            int rbo = GL.GenRenderbuffer();
-            GL.BindRenderbuffer(RenderbufferTarget.Renderbuffer, rbo);
+            framebufferRenderBuffer = GL.GenRenderbuffer();
+            GL.BindRenderbuffer(RenderbufferTarget.Renderbuffer, framebufferRenderBuffer);
             GL.RenderbufferStorage(RenderbufferTarget.Renderbuffer, RenderbufferStorage.Depth24Stencil8, Size.Width, Size.Height);
-            GL.FramebufferRenderbuffer(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthStencilAttachment, RenderbufferTarget.Renderbuffer, rbo);
+            GL.FramebufferRenderbuffer(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthStencilAttachment, RenderbufferTarget.Renderbuffer, framebufferRenderBuffer);
 
             framebufferVAO = new VertexArray();
             VertexBuffer vertexBuffer = new VertexBuffer();
@@ -845,33 +846,36 @@ namespace PckStudio.Rendering
         }
 
 #if USE_FRAMEBUFFER
-        protected override void OnResize(EventArgs e)
+        [Conditional("USE_FRAMEBUFFER")]
+        private void SetFramebufferSize(Size size)
         {
-            base.OnResize(e);
-            if (!IsHandleCreated || DesignMode)
-                return;
             MakeCurrent();
             if (framebuffer is not null)
             {
                 framebuffer.Bind();
 
                 framebufferTexture.Bind();
-                framebufferTexture.SetSize(Size);
-                framebufferTexture.Unbind();
+                framebufferTexture.SetSize(size);
 
-                int rbo = GL.GenRenderbuffer();
-                GL.BindRenderbuffer(RenderbufferTarget.Renderbuffer, rbo);
-                GL.RenderbufferStorage(RenderbufferTarget.Renderbuffer, RenderbufferStorage.Depth24Stencil8, Size.Width, Size.Height);
-                GL.FramebufferRenderbuffer(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthStencilAttachment, RenderbufferTarget.Renderbuffer, rbo);
+                GL.BindRenderbuffer(RenderbufferTarget.Renderbuffer, framebufferRenderBuffer);
+                GL.RenderbufferStorage(RenderbufferTarget.Renderbuffer, RenderbufferStorage.Depth24Stencil8, size.Width, size.Height);
+                GL.FramebufferRenderbuffer(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthStencilAttachment, RenderbufferTarget.Renderbuffer, framebufferRenderBuffer);
 
                 FramebufferErrorCode status = GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer);
                 if (status != FramebufferErrorCode.FramebufferComplete)
                 {
-                    Debug.Fail("");
+                    Debug.Fail($"Framebuffer status: '{framebuffer.Status}'");
                 }
                 framebuffer.Unbind();
             }
+        }
 
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+            if (!IsHandleCreated || DesignMode)
+                return;
+            SetFramebufferSize(Size);
         }
 #endif
 
