@@ -265,14 +265,15 @@ namespace PckStudio.Rendering
             InitializeShaders();
             InitializeFramebuffer();
             Renderer.SetClearColor(BackColor);
+            var layout = CubeGroupMesh.GetLayout();
             foreach (var item in meshStorage)
             {
-                item.Value.Initialize();
+                item.Value.Initialize(layout);
             }
             UploadMeshData();
             foreach (var cubeMesh in offsetSpecificMeshStorage?.Values)
             {
-                cubeMesh.Initialize();
+                cubeMesh.Initialize(layout);
                 cubeMesh.UploadData();
             }
             GLErrorCheck();
@@ -656,7 +657,7 @@ namespace PckStudio.Rendering
             VertexBuffer vertexBuffer = new VertexBuffer();
             vertexBuffer.SetData(rectVertices);
             VertexBufferLayout layout = new VertexBufferLayout();
-            layout.Add<float>(4);
+            layout.Add(ShaderDataType.Float4);
             framebufferVAO.AddBuffer(vertexBuffer, layout);
             framebuffer.CheckStatus();
 

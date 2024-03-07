@@ -52,6 +52,14 @@ namespace PckStudio.Rendering
             Inflate = inflate;
         }
 
+        public static VertexBufferLayout GetLayout()
+        {
+            var layout = new VertexBufferLayout();
+            layout.Add(ShaderDataType.Float3);
+            layout.Add(ShaderDataType.Float2);
+            return layout;
+        }
+
         internal void AddSkinBox(SkinBOX skinBox)
         {
             var cube = CubeMesh.Create(skinBox);

@@ -158,7 +158,6 @@
     <Compile Include="Rendering\CubeGroupMesh.cs" />
     <Compile Include="Rendering\FrameBuffer.cs" />
     <Compile Include="Rendering\IndexBuffer.cs" />
-    <Compile Include="Rendering\IVertexLayout.cs" />
     <Compile Include="Rendering\DrawContext.cs" />
     <Compile Include="Rendering\ColorVertex.cs" />
     <Compile Include="Rendering\OutlineDefinition.cs" />

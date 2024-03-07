@@ -24,7 +24,7 @@ using PckStudio.Rendering.Shader;
 
 namespace PckStudio.Rendering
 {
-    internal class GenericMesh<T> where T : struct, IVertexLayout
+    internal class GenericMesh<T> where T : struct
     {
         internal string Name { get; }
 
@@ -37,7 +37,6 @@ namespace PckStudio.Rendering
         private VertexArray vertexArray;
         private VertexBuffer vertexBuffer;
         private IndexBuffer indexBuffer;
-        private readonly VertexBufferLayout _layout;
         private readonly PrimitiveType drawType;
         private DrawContext drawContext;
 
@@ -48,15 +47,14 @@ namespace PckStudio.Rendering
             indicesOffset = 0;
             vertices = new List<T>(10);
             indices = new List<int>(10);
-            _layout = new T().GetLayout();
         }
 
-        internal void Initialize()
+        internal void Initialize(VertexBufferLayout layout)
         {
             vertexArray = new VertexArray();
             vertexBuffer = new VertexBuffer();
             indexBuffer = new IndexBuffer();
-            vertexArray.AddBuffer(vertexBuffer, _layout);
+            vertexArray.AddBuffer(vertexBuffer, layout);
             drawContext = new DrawContext(vertexArray, indexBuffer, drawType);
         }
 
