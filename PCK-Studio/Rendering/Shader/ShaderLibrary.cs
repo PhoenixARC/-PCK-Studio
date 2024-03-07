@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PckStudio.Rendering.Shader
 {
-    internal class ShaderLibrary
+    internal sealed class ShaderLibrary
     {
         private Dictionary<string, ShaderProgram> _shaderStorage = new Dictionary<string, ShaderProgram>();
 
