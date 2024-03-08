@@ -44,11 +44,11 @@ namespace PckStudio.Rendering
         /// The visible Texture on the renderer
         /// </summary>
         /// <returns>The visible Texture</returns>
-        [Description("The current Texture")]
+        [Description("The current skin texture")]
         [Category("Appearance")]
         public Image Texture
         {
-            get => _texture;
+            get => _skinImage;
             set
             {
                 var args = new TextureChangingEventArgs(value);
@@ -56,8 +56,25 @@ namespace PckStudio.Rendering
                 OnTextureChanging(this, args);
                 if (!args.Cancel)
                 {
-                    _texture = value;
+                    _skinImage = value;
                     TextureSize = value.Width == value.Height ? new Size(64, 64) : new Size(64, 32);
+                }
+            }
+        }
+
+        [Description("The current cape texture")]
+        [Category("Appearance")]
+        public Image CapeTexture
+        {
+            get => _capeImage;
+            set
+            {
+                var args = new TextureChangingEventArgs(value);
+                Events[nameof(CapeTextureChanging)]?.DynamicInvoke(this, args);
+                OnCapeTextureChanging(this, args);
+                if (!args.Cancel)
+                {
+                    _capeImage = value;
                 }
             }
         }
@@ -92,6 +109,15 @@ namespace PckStudio.Rendering
         {
             add => Events.AddHandler(nameof(TextureChanging), value);
             remove => Events.RemoveHandler(nameof(TextureChanging), value);
+        }
+
+        [Description("Event that gets fired when the Texture is changing")]
+        [Category("Property Chnaged")]
+        [Browsable(true)]
+        public event EventHandler<TextureChangingEventArgs> CapeTextureChanging
+        {
+            add => Events.AddHandler(nameof(CapeTextureChanging), value);
+            remove => Events.RemoveHandler(nameof(CapeTextureChanging), value);
         }
 
         [Browsable(false)]
@@ -163,8 +189,10 @@ namespace PckStudio.Rendering
 
         private ShaderLibrary _shaders;
         private SkinANIM _anim;
-        private Image _texture;
+        private Image _skinImage;
+        private Image _capeImage;
         private Texture2D skinTexture;
+        private Texture2D capeTexture;
         private Texture2D armorTexture;
 
 #if USE_FRAMEBUFFER
@@ -184,6 +212,8 @@ namespace PckStudio.Rendering
 
         private Dictionary<string, CubeGroupMesh> meshStorage;
         private Dictionary<string, CubeGroupMesh> offsetSpecificMeshStorage;
+        
+        private CubeGroupMesh cape;
         
         private CubeGroupMesh head;
         private CubeGroupMesh body;
@@ -230,6 +260,7 @@ namespace PckStudio.Rendering
         public SkinRenderer() : base()
         {
             InitializeSkinData();
+            InitializeCapeData();
             meshStorage = new Dictionary<string, CubeGroupMesh>()
             {
                 { "HEAD", head },
@@ -279,6 +310,8 @@ namespace PckStudio.Rendering
                 cubeMesh.Initialize(layout);
                 cubeMesh.UploadData();
             }
+            cape.Initialize(layout);
+            cape.UploadData();
             GLErrorCheck();
             base.Init();
             GLErrorCheck();
@@ -325,6 +358,12 @@ namespace PckStudio.Rendering
             leftLeg.Translation = new Vector3(2f, -12f, 0f);
             leftLeg.AddCube(new(-2, 0, -2), new(4, 12, 4), new(16, 48));
             leftLeg.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 48), OverlayScale);
+        }
+
+        private void InitializeCapeData()
+        {
+            cape ??= new CubeGroupMesh("Cape");
+            cape.AddCube(new(-5, 0, -3), new(10, 16, 1), new(0, 0));
         }
 
         private void InitializeArmorData()
@@ -415,6 +454,15 @@ namespace PckStudio.Rendering
                 armorTexture.WrapS = TextureWrapMode.Repeat;
                 armorTexture.WrapT = TextureWrapMode.Repeat;
                 armorTexture.SetTexture(Resources.armor);
+                GLErrorCheck();
+
+                capeTexture = new Texture2D(0);
+                capeTexture.PixelFormat = OpenTK.Graphics.OpenGL.PixelFormat.Bgra;
+                capeTexture.InternalPixelFormat = PixelInternalFormat.Rgba8;
+                capeTexture.MinFilter = TextureMinFilter.Nearest;
+                capeTexture.MagFilter = TextureMagFilter.Nearest;
+                capeTexture.WrapS = TextureWrapMode.Repeat;
+                capeTexture.WrapT = TextureWrapMode.Repeat;
                 GLErrorCheck();
 
                 skinTexture = new Texture2D(0);
@@ -628,6 +676,17 @@ namespace PckStudio.Rendering
             if (e.Cancel)
                 return;
             skinTexture.SetTexture(e.NewTexture);
+            GLErrorCheck();
+        }
+
+        protected virtual void OnCapeTextureChanging(object sender, TextureChangingEventArgs e)
+        {
+            if (e.NewTexture is null)
+                e.Cancel = true;
+            
+            if (e.Cancel)
+                return;
+            capeTexture.SetTexture(e.NewTexture);
             GLErrorCheck();
         }
 
@@ -981,6 +1040,14 @@ namespace PckStudio.Rendering
                 RenderBodyPart(skinShader, LeftArmMatrix * armLeftMatrix, transform, "ARM1", "SLEEVE1");
                 RenderBodyPart(skinShader, legRightMatrix, transform, "LEG0", "PANTS0");
                 RenderBodyPart(skinShader, legLeftMatrix, transform, "LEG1", "PANTS1");
+
+                if (_capeImage is not null)
+                {
+                    skinShader.SetUniform2("u_TexSize", new Vector2(64, 32));
+                    capeTexture.Bind();
+                    Matrix4 partMatrix = Matrix4.CreateRotationY(MathHelper.DegreesToRadians(180f)) * Matrix4.CreateRotationX(MathHelper.DegreesToRadians((float)Math.Sin(Math.Abs(animationCurrentRotationAngle) * 0.25f) * 10f));
+                    RenderPart(skinShader, cape, partMatrix, transform);
+                }
 
                 // Armor rendering
                 if (ShowArmor)

@@ -73,8 +73,8 @@ namespace PckStudio.Extensions
             if (file.Filetype != PckFileType.SkinFile)
                 throw new InvalidOperationException("File is not a skin file");
 
-            if (file.Properties.Contains("CAPEPATH"))
-                Debug.WriteLine($"[{nameof(GetSkin)}] TODO: add cape texture/path.");
+            //if (file.Properties.Contains("CAPEPATH"))
+            //    Debug.WriteLine($"[{nameof(GetSkin)}] TODO: add cape texture/path.");
 
             int skinId = file.GetSkinId();
 

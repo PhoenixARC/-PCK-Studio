@@ -432,7 +432,17 @@ namespace PckStudio
 
 		public void HandleSkinFile(PckFileData file)
 		{
-			using CustomSkinEditor skinEditor = new CustomSkinEditor(file.GetSkin());
+			var skin = file.GetSkin();
+            if (file.Properties.Contains("CAPEPATH"))
+			{
+				string capePath = file.Properties.GetPropertyValue("CAPEPATH");
+				if (currentPCK.TryGetFile(capePath, PckFileType.CapeFile, out var cape))
+				{
+					skin.CapeTexture = cape.GetTexture();
+				}
+			}
+
+			using CustomSkinEditor skinEditor = new CustomSkinEditor(skin, currentPCK.HasVerionString);
 			if (skinEditor.ShowDialog() == DialogResult.OK)
 			{
 				if (!TryGetLocFile(out var locFile))

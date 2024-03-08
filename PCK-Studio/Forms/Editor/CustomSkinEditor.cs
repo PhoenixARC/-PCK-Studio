@@ -68,10 +68,12 @@ namespace PckStudio.Forms.Editor
 
         private void LoadModelData()
         {
+            skinNameLabel.Text = _skin.Name;
             var boxProperties = _skin.AdditionalBoxes;
             var offsetProperties = _skin.PartOffsets;
 
-            skinNameLabel.Text = _skin.Name;
+            if (_skin.HasCape)
+                renderer3D1.CapeTexture = _skin.CapeTexture;
 
             foreach (SkinBOX box in boxProperties)
             {
