@@ -337,6 +337,12 @@ namespace PckStudio.Forms.Editor
         {
             renderer3D1.ShowArmor = showArmorCheckbox.Checked;
         }
+
+        private void skinPartListBox_KeyUp(object sender, System.Windows.Forms.KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete)
+                deleteToolStripMenuItem_Click(sender, e);
+        }
     }
 
     class CSMJObject

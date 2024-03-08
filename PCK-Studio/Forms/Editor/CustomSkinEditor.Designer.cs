@@ -319,6 +319,7 @@
             this.skinPartListBox.Tag = "";
             this.skinPartListBox.SelectedIndexChanged += new System.EventHandler(this.skinPartListBox_SelectedIndexChanged);
             this.skinPartListBox.DoubleClick += new System.EventHandler(this.skinPartListBox_DoubleClick);
+            this.skinPartListBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.skinPartListBox_KeyUp);
             // 
             // clampToViewCheckbox
             // 
@@ -388,6 +389,7 @@
             this.renderer3D1.Name = "renderer3D1";
             this.renderer3D1.OutlineColor = System.Drawing.Color.Empty;
             this.renderer3D1.RefreshRate = 50;
+            this.renderer3D1.SelectedIndex = -1;
             this.renderer3D1.ShowArmor = false;
             this.renderer3D1.ShowGuideLines = false;
             this.renderer3D1.Texture = null;
