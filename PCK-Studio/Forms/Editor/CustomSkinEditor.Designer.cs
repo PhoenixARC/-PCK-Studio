@@ -437,7 +437,7 @@
             this.Name = "CustomSkinEditor";
             this.Style = MetroFramework.MetroColorStyle.Silver;
             this.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.generateModel_FormClosing);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CustomSkinEditor_FormClosing);
             this.contextMenuStrip1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.SizeXUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SizeYUpDown)).EndInit();

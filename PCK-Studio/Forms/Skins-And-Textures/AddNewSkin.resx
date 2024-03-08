@@ -219,21 +219,6 @@
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
     <value>19</value>
   </data>
-  <data name="textTheme.Location" type="System.Drawing.Point, System.Drawing">
-    <value>102, 78</value>
-  </data>
-  <data name="textTheme.Size" type="System.Drawing.Size, System.Drawing">
-    <value>239, 20</value>
-  </data>
-  <data name="textTheme.TabIndex" type="System.Int32, mscorlib">
-    <value>32</value>
-  </data>
-  <data name="&gt;&gt;textTheme.Name" xml:space="preserve">
-    <value>textTheme</value>
-  </data>
-  <data name="&gt;&gt;textTheme.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <metadata name="contextMenuSkin.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>

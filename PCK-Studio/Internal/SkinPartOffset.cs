@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 
 namespace PckStudio.Internal
 {
-    internal readonly struct SkinPartOffset
+    public readonly struct SkinPartOffset
     {
         private static readonly Regex sWhitespace = new Regex(@"\s+");
         internal static string ReplaceWhitespace(string input, string replacement)

@@ -432,21 +432,17 @@ namespace PckStudio
 
 		public void HandleSkinFile(PckFileData file)
 		{
-			if (file.Properties.HasProperty("BOX"))
+			using CustomSkinEditor skinEditor = new CustomSkinEditor(file.GetSkin());
+			if (skinEditor.ShowDialog() == DialogResult.OK)
 			{
-				using CustomSkinEditor generate = new CustomSkinEditor(file);
-				if (generate.ShowDialog() == DialogResult.OK)
-				{
-					entryDataTextBox.Text = entryTypeTextBox.Text = string.Empty;
-					wasModified = true;
-					ReloadMetaTreeView();
-				}
-				return;
-			}
+				if (!TryGetLocFile(out var locFile))
+					Debug.Fail("Failed to aquire loc file.");
+				file.SetSkin(skinEditor.ResultSkin, locFile);
 
-            var skinPreview = new SkinPreview(file.GetTexture(), file.Properties.GetProperties("BOX").Select(kv => SkinBOX.FromString(kv.Value)));
-            skinPreview.ANIM = file.Properties.GetPropertyValue("ANIM", SkinANIM.FromString);
-            skinPreview.ShowDialog();
+				entryDataTextBox.Text = entryTypeTextBox.Text = string.Empty;
+				wasModified = true;
+				ReloadMetaTreeView(); 
+			}
         }
 
 		public void HandleModelsFile(PckFileData file)
@@ -783,43 +779,50 @@ namespace PckStudio
 				MessageBox.Show("No .loc file found", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
-			using (AddNewSkin add = new AddNewSkin(locFile))
-				if (add.ShowDialog() == DialogResult.OK)
+			using (AddNewSkin addNewSkinDialog = new AddNewSkin(locFile))
+				if (addNewSkinDialog.ShowDialog() == DialogResult.OK)
 				{
-
-					if (currentPCK.HasFile("Skins.pck", PckFileType.SkinDataFile)) // Prioritize Skins.pck
+					var skinFile = addNewSkinDialog.NewSkin.CreateFile(locFile);
+					currentPCK.AddFile(skinFile);
+                    if (currentPCK.HasFile("Skins.pck", PckFileType.SkinDataFile)) // Prioritize Skins.pck
 					{
 						TreeNode subPCK = treeViewMain.Nodes.Find("Skins.pck", false).FirstOrDefault();
-						if (subPCK.Nodes.ContainsKey("Skins")) add.SkinFile.Filename = add.SkinFile.Filename.Insert(0, "Skins/");
-						add.SkinFile.Filename = add.SkinFile.Filename.Insert(0, "Skins.pck/");
-						TreeNode newNode = new TreeNode(Path.GetFileName(add.SkinFile.Filename));
-						newNode.Tag = add.SkinFile;
+						if (subPCK.Nodes.ContainsKey("Skins"))
+							skinFile.Filename = skinFile.Filename.Insert(0, "Skins/");
+						skinFile.Filename = skinFile.Filename.Insert(0, "Skins.pck/");
+						TreeNode newNode = new TreeNode(Path.GetFileName(skinFile.Filename));
+						newNode.Tag = skinFile;
 						SetNodeIcon(newNode, PckFileType.SkinFile);
 						subPCK.Nodes.Add(newNode);
 						RebuildSubPCK(newNode.FullPath);
 					}
 					else
 					{
-						if (treeViewMain.Nodes.ContainsKey("Skins")) add.SkinFile.Filename = add.SkinFile.Filename.Insert(0, "Skins/"); // Then Skins folder
-						currentPCK.AddFile(add.SkinFile);
+						if (treeViewMain.Nodes.ContainsKey("Skins"))
+							skinFile.Filename = skinFile.Filename.Insert(0, "Skins/"); // Then Skins folder
+						currentPCK.AddFile(skinFile);
 					}
-					if (add.HasCape)
+
+					if (addNewSkinDialog.NewSkin.HasCape)
 					{
-						if (currentPCK.HasFile("Skins.pck", PckFileType.SkinDataFile)) // Prioritize Skins.pck
+						var capeFile = addNewSkinDialog.NewSkin.CreateCapeFile();
+                        if (currentPCK.HasFile("Skins.pck", PckFileType.SkinDataFile)) // Prioritize Skins.pck
 						{
 							TreeNode subPCK = treeViewMain.Nodes.Find("Skins.pck", false).FirstOrDefault();
-							if (subPCK.Nodes.ContainsKey("Skins")) add.CapeFile.Filename = add.CapeFile.Filename.Insert(0, "Skins/");
-							add.CapeFile.Filename = add.CapeFile.Filename.Insert(0, "Skins.pck/");
-							TreeNode newNode = new TreeNode(Path.GetFileName(add.CapeFile.Filename));
-							newNode.Tag = add.CapeFile;
+							if (subPCK.Nodes.ContainsKey("Skins"))
+								capeFile.Filename = capeFile.Filename.Insert(0, "Skins/");
+							capeFile.Filename = capeFile.Filename.Insert(0, "Skins.pck/");
+							TreeNode newNode = new TreeNode(Path.GetFileName(capeFile.Filename));
+							newNode.Tag = capeFile;
 							SetNodeIcon(newNode, PckFileType.SkinFile);
 							subPCK.Nodes.Add(newNode);
 							RebuildSubPCK(newNode.FullPath);
 						}
 						else
 						{
-							if (treeViewMain.Nodes.ContainsKey("Skins")) add.CapeFile.Filename = add.CapeFile.Filename.Insert(0, "Skins/"); // Then Skins folder
-							currentPCK.AddFile(add.CapeFile);
+							if (treeViewMain.Nodes.ContainsKey("Skins"))
+								capeFile.Filename = capeFile.Filename.Insert(0, "Skins/"); // Then Skins folder
+							currentPCK.AddFile(capeFile);
 						}
 					}
 

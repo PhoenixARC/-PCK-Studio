@@ -57,6 +57,10 @@ namespace PckStudio.Internal
 			=> IsValidANIM(value)
 				? new SkinANIM(Convert.ToInt32(value.TrimEnd(' ', '\n', '\r'), 16))
 				: new SkinANIM();
+		
+		public static SkinANIM FromValue(int value) => new SkinANIM(value);
+		
+		public int ToValue() => _flags.Data;
 
 		public static SkinANIM operator |(SkinANIM _this, SkinANIM other) => new SkinANIM(_this._flags.Data | other._flags.Data);
 		

@@ -21,10 +21,12 @@ namespace PckStudio.Forms.Editor
 {
     public partial class CustomSkinEditor : MetroForm
     {
-        private Image _previewImage;
         public Image PreviewImage => _previewImage;
 
-        private PckFileData _file;
+        public Skin ResultSkin => _skin;
+
+        private Image _previewImage;
+        private Skin _skin;
         private Random rng;
 
         private BindingSource skinPartListBindingSource;
@@ -36,35 +38,45 @@ namespace PckStudio.Forms.Editor
             PixelOffsetMode = PixelOffsetMode.HighQuality,
         };
 
-        public CustomSkinEditor(PckFileData file)
+        private CustomSkinEditor()
         {
             InitializeComponent();
-            _file = file;
             rng = new Random();
+        }
+
+        public CustomSkinEditor(Skin skin) : this()
+        {
+            _skin = skin;
         }
 
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
             renderer3D1.InitializeGL();
-            renderer3D1.OutlineColor = Color.DarkSlateBlue;
-            if (_file.Size > 0)
+            if (_skin.Texture is not null)
             {
-                renderer3D1.Texture = _file.GetTexture();
+                renderer3D1.Texture = _skin.Texture;
             }
-            LoadModelData(_file.Properties);
+            renderer3D1.ANIM = _skin.ANIM;
+            renderer3D1.OutlineColor = Color.DarkSlateBlue;
+            LoadModelData();
         }
 
-        private void LoadModelData(PckFileProperties properties)
+        private void LoadModelData()
         {
-            renderer3D1.ANIM = properties.GetPropertyValue("ANIM", SkinANIM.FromString);
-            var boxProperties = properties.GetProperties("BOX");
-            var offsetProperties = properties.GetProperties("OFFSET");
+            var boxProperties = _skin.AdditionalBoxes;
+            var offsetProperties = _skin.PartOffsets;
 
-            skinNameLabel.Text = properties.HasProperty("DISPLAYNAME") ? properties.GetPropertyValue("DISPLAYNAME") : "";
+            skinNameLabel.Text = _skin.Name;
 
-            Array.ForEach(boxProperties, kv => renderer3D1.ModelData.Add(SkinBOX.FromString(kv.Value)));
-            Array.ForEach(offsetProperties, kv => renderer3D1.SetPartOffset(SkinPartOffset.FromString(kv.Value)));
+            foreach (SkinBOX box in boxProperties)
+            {
+                renderer3D1.ModelData.Add(box);
+            }
+            foreach (SkinPartOffset offset in offsetProperties)
+            {
+                renderer3D1.SetPartOffset(offset);
+            }
 
             skinPartListBindingSource = new BindingSource(renderer3D1.ModelData, null);
             skinPartListBox.DataSource = skinPartListBindingSource;
@@ -128,22 +140,28 @@ namespace PckStudio.Forms.Editor
 
         private void buttonDone_Click(object sender, EventArgs e)
         {
-            _file.Properties.RemoveAll(kv => kv.Key == "BOX");
-            foreach (var part in renderer3D1.ModelData)
-            {
-                _file.Properties.Add("BOX", part);
-            }
-            _previewImage = renderer3D1.GetThumbnail();
+            //Debug.Fail("TODO: Implement");
+            _skin.AdditionalBoxes.Clear();
+            _skin.AdditionalBoxes.AddRange(renderer3D1.ModelData);
+
+            // TODO: Get part offset list/IEnumerable from renderer
+            //_skin.PartOffsets.Clear();
+            //_skin.PartOffsets.AddRange();
+
+            //_previewImage = renderer3D1.GetThumbnail();
 
             DialogResult = DialogResult.OK;
         }
 
+        // TODO
         private void buttonExportModel_Click(object sender, EventArgs e)
         {
-            //SaveFileDialog saveFileDialog = new SaveFileDialog();
-            //saveFileDialog.Filter = "Custom Skin Model File | *.CSM";
-            //if (saveFileDialog.ShowDialog() != DialogResult.OK)
-            //    return;
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Title = "Save Model File";
+            saveFileDialog.Filter = "Custom Skin Model File (*.csm,*.CSM)|*.csm;*.CSM|" +
+                                    "Custom Skin Model Binary File (*.csmb)|*.csmb|";
+            if (saveFileDialog.ShowDialog() != DialogResult.OK)
+                return;
             //string contents = "";
             //foreach (ListViewItem listViewItem in listViewBoxes.Items)
             //{
@@ -159,12 +177,13 @@ namespace PckStudio.Forms.Editor
             //File.WriteAllText(saveFileDialog.FileName, contents);
         }
 
-        [Obsolete("Kept for backwards compatibility, remove later.")]
+        [Obsolete("Kept for backwards compatibility.")]
         private void importCustomSkinButton_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Custom Skin Model File (*.csm,*.CSM)|*.csm;*.CSM|Custom Skin Model Binary File (*.csmb)|*.csmb|JSON Model File(*.json)|*.JSON;*.json";
             openFileDialog.Title = "Select Model File";
+            openFileDialog.Filter = "Custom Skin Model File (*.csm,*.CSM)|*.csm;*.CSM|" +
+                                    "Custom Skin Model Binary File (*.csmb)|*.csmb|";
             if (MessageBox.Show("Import custom model project file? Your current work will be lost!", "", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1) == DialogResult.Yes && openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 string fileExtension = Path.GetExtension(openFileDialog.FileName);
@@ -210,9 +229,8 @@ namespace PckStudio.Forms.Editor
             }
         }
 
-        private void generateModel_FormClosing(object sender, FormClosingEventArgs e)
-        { 
-            
+        private void CustomSkinEditor_FormClosing(object sender, FormClosingEventArgs e)
+        {
         }
 
         private void outlineColorButton_Click(object sender, EventArgs e)
@@ -264,7 +282,7 @@ namespace PckStudio.Forms.Editor
                 return;
             }
             generateTextureCheckBox.Checked = false;
-            uvPictureBox.BackgroundImage = img;
+            uvPictureBox.BackgroundImage = _skin.Texture = img;
         }
 
         private void skinPartListBox_DoubleClick(object sender, EventArgs e)

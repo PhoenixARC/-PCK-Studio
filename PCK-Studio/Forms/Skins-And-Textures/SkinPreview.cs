@@ -18,11 +18,11 @@ namespace PckStudio.Forms
         private Image texture;
         private IEnumerable<SkinBOX> data;
 
-        public SkinPreview(Image image, IEnumerable<SkinBOX> modelData)
+        public SkinPreview(Skin skin)
         {
             InitializeComponent();
-            texture = image;
-            data = modelData;
+            texture = skin.Texture;
+            data = skin.AdditionalBoxes;
         }
 
         protected override void OnLoad(EventArgs e)

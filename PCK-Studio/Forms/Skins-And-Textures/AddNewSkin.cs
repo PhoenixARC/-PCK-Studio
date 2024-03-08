@@ -12,123 +12,93 @@ using PckStudio.IO._3DST;
 using PckStudio.Properties;
 using PckStudio.Forms;
 using PckStudio.Extensions;
+using System.Linq;
+using System.Diagnostics;
 
 namespace PckStudio.Popups
 {
     public partial class AddNewSkin : MetroFramework.Forms.MetroForm
     {
-        public PckFileData SkinFile => skin;
-        public PckFileData CapeFile => cape;
-        public bool HasCape => cape is not null;
+        public Skin NewSkin => newSkin;
+
+        //public PckFileData SkinFile => _skinFile;
+        //public PckFileData CapeFile => cape;
+        //public bool HasCape => cape is not null;
 
         private LOCFile currentLoc;
-        private PckFileData skin = new PckFileData("dlcskinXYXYXYXY", PckFileType.SkinFile);
-        private PckFileData cape;
-        private SkinANIM anim = new SkinANIM();
+        //private PckFileData _skinFile = new PckFileData("dlcskinXYXYXYXY", PckFileType.SkinFile);
+        //private PckFileData cape;
+        private Skin newSkin;
         private Random rng = new Random();
-
-        private eSkinType skinType;
-
-        private enum eSkinType
-        {
-            Invalid = -1,
-            _64x64,
-            _64x32,
-            _64x64HD,
-            _64x32HD,
-            Custom,
-        }
 
         public AddNewSkin(LOCFile loc)
         {
             InitializeComponent();
             currentLoc = loc;
+            newSkin = new Skin("", 0, Resources.classic_template, new SkinANIM(), Enumerable.Empty<SkinBOX>(), Enumerable.Empty<SkinPartOffset>());
         }
 
-        private void CheckImage(Image img)
+        private void SetNewTexture(Image img)
         {
-            switch (img.Height)
+            if (img is null)
             {
-                case 64:
-                    anim.SetFlag(SkinAnimFlag.RESOLUTION_64x64, true);
-                    MessageBox.Show("64x64 Skin Detected");
-                    skinType = eSkinType._64x64;
-                    break;
-                case 32:
-                    anim.SetFlag(SkinAnimFlag.RESOLUTION_64x64 | SkinAnimFlag.SLIM_MODEL, false);
-                    MessageBox.Show("64x32 Skin Detected");
-                    skinType = eSkinType._64x32;
-                    break;
-                default:
-                    if (img.Width == img.Height)
-                    {
-                        anim.SetFlag(SkinAnimFlag.RESOLUTION_64x64, true);
-                        MessageBox.Show("64x64 HD Skin Detected");
-                        skinType = eSkinType._64x64HD;
-                        break;
-                    }
-
-                    if (img.Height == img.Width / 2)
-                    {
-                        anim.SetFlag(SkinAnimFlag.RESOLUTION_64x64 | SkinAnimFlag.SLIM_MODEL, false);
-                        MessageBox.Show("64x32 HD Skin Detected");
-                        skinType = eSkinType._64x32HD;
-                        break;
-                    }
-                    
-                    MessageBox.Show("Not a Valid Skin File");
-                    skinType = eSkinType.Invalid;
-                    return;
+                Debug.Assert(false, "Image is null.");
             }
+            if (img.Width != img.Height && img.Height != img.Width / 2)
+            {
+                MessageBox.Show("The selected image does not suit a skin texture.", "Invalid image dimensions.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            newSkin.ANIM.SetFlag(SkinAnimFlag.RESOLUTION_64x64, img.Width == img.Height);
 
-            skinPictureBox.Image = img;
-            capePictureBox.Visible = true;
-            buttonCape.Visible = true;
-            capeLabel.Visible = true;
-            buttonDone.Enabled = true;
-            buttonAnimGen.Enabled = true;
+            skinPictureBox.Image = newSkin.Texture = img;
             labelSelectTexture.Visible = false;
+            //capePictureBox.Visible = true;
+            //buttonCape.Visible = true;
+            //capeLabel.Visible = true;
+            //buttonDone.Enabled = true;
+            //buttonAnimGen.Enabled = true;
         }
 
         private void DrawModel()
 		{
-            bool isSlim = anim.GetFlag(SkinAnimFlag.SLIM_MODEL);
+            bool isSlim = newSkin.ANIM.GetFlag(SkinAnimFlag.SLIM_MODEL);
             Pen outlineColor = Pens.LightGray;
             Brush fillColor = Brushes.Gray;
             Image previewTexture = new Bitmap(displayBox.Width, displayBox.Height);
             using (Graphics g = Graphics.FromImage(previewTexture))
             {
-                if(!anim.GetFlag(SkinAnimFlag.HEAD_DISABLED))
+                if(!newSkin.ANIM.GetFlag(SkinAnimFlag.HEAD_DISABLED))
 				{
                     //Head
                     g.DrawRectangle(outlineColor, 70, 15, 40, 40);
                     g.FillRectangle(fillColor, 71, 16, 39, 39);
                 }
-                if (!anim.GetFlag(SkinAnimFlag.BODY_DISABLED))
+                if (!newSkin.ANIM.GetFlag(SkinAnimFlag.BODY_DISABLED))
                 {
                     //Body
                     g.DrawRectangle(outlineColor, 70, 55, 40, 60);
                     g.FillRectangle(fillColor, 71, 56, 39, 59);
                 }
-                if (!anim.GetFlag(SkinAnimFlag.RIGHT_ARM_DISABLED))
+                if (!newSkin.ANIM.GetFlag(SkinAnimFlag.RIGHT_ARM_DISABLED))
                 {
                     //Arm0
                     g.DrawRectangle(outlineColor, isSlim ? 55 : 50, 55, isSlim ? 15 : 20, 60);
                     g.FillRectangle(fillColor   , isSlim ? 56 : 51, 56, isSlim ? 14 : 19, 59);
                 }
-                if (!anim.GetFlag(SkinAnimFlag.LEFT_ARM_DISABLED))
+                if (!newSkin.ANIM.GetFlag(SkinAnimFlag.LEFT_ARM_DISABLED))
                 {
                     //Arm1
                     g.DrawRectangle(outlineColor, 110, 55, isSlim ? 15 : 20, 60);
                     g.FillRectangle(fillColor, 111, 56, isSlim ? 14 : 19, 59);
                 }
-                if (!anim.GetFlag(SkinAnimFlag.RIGHT_LEG_DISABLED))
+                if (!newSkin.ANIM.GetFlag(SkinAnimFlag.RIGHT_LEG_DISABLED))
                 {
                     //Leg0
                     g.DrawRectangle(outlineColor, 70, 115, 20, 60);
                     g.FillRectangle(fillColor, 71, 116, 19, 59);
                 }
-                if (!anim.GetFlag(SkinAnimFlag.LEFT_LEG_DISABLED))
+                if (!newSkin.ANIM.GetFlag(SkinAnimFlag.LEFT_LEG_DISABLED))
                 {
                     //Leg1
                     g.DrawRectangle(outlineColor, 90, 115, 20, 60);
@@ -158,7 +128,7 @@ namespace PckStudio.Popups
             OpenFileDialog ofd = new OpenFileDialog();
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-                CheckImage(Image.FromFile(ofd.FileName));
+                SetNewTexture(Image.FromFile(ofd.FileName));
             }
         }
 
@@ -187,12 +157,12 @@ namespace PckStudio.Popups
                         using (var fs = File.OpenRead(ofd.FileName))
                         {
                             var reader = new _3DSTextureReader();
-                            CheckImage(reader.FromStream(fs));
+                            SetNewTexture(reader.FromStream(fs));
                         }
                         textSkinName.Text = Path.GetFileNameWithoutExtension(ofd.FileName);
                         return;
                     }
-                    CheckImage(Image.FromFile(ofd.FileName));
+                    SetNewTexture(Image.FromFile(ofd.FileName));
                 }
             }
         }
@@ -223,9 +193,7 @@ namespace PckStudio.Popups
                         MessageBox.Show("Not a Valid Cape File");
                         return;
                     }
-                    capePictureBox.Image = Image.FromFile(ofd.FileName);
-                    cape ??= new PckFileData("dlccapeXYXYXYXY", PckFileType.CapeFile);
-                    cape.SetData(File.ReadAllBytes(ofd.FileName));
+                    newSkin.CapeTexture = capePictureBox.Image = Image.FromFile(ofd.FileName);
                     contextMenuCape.Items[0].Text = "Replace";
                     capeLabel.Visible = false;
                     contextMenuCape.Visible = true;
@@ -235,35 +203,18 @@ namespace PckStudio.Popups
 
         private void CreateButton_Click(object sender, EventArgs e)
         {
-            if (!int.TryParse(textSkinID.Text, out int _skinId))
+            if (radioButtonManual.Checked)
             {
-                MessageBox.Show("The Skin ID Must be a Unique 8 Digit Number Thats Not Already in Use", "Invalid Skin ID", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                if (!int.TryParse(textSkinID.Text, out int _skinId))
+                {
+                    MessageBox.Show("The Skin Id must be a unique 8 digit number that is not already in use", "Invalid Skin Id", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                newSkin.Id = _skinId;
             }
-            string skinId = _skinId.ToString("d08");
-            skin.Filename = $"dlcskin{skinId}.png";
-            string skinDisplayNameLocKey = $"IDS_dlcskin{skinId}_DISPLAYNAME";
-            currentLoc.AddLocKey(skinDisplayNameLocKey, textSkinName.Text);
-            skin.Properties.Add("DISPLAYNAME", textSkinName.Text);
-            skin.Properties.Add("DISPLAYNAMEID", skinDisplayNameLocKey);
-            if (!string.IsNullOrEmpty(textThemeName.Text))
-            {
-                skin.Properties.Add("THEMENAME", textThemeName.Text);
-                skin.Properties.Add("THEMENAMEID", $"IDS_dlcskin{skinId}_THEMENAME");
-                currentLoc.AddLocKey($"IDS_dlcskin{skinId}_THEMENAME", textThemeName.Text);
-            }
-            skin.Properties.Add("ANIM", anim);
-            skin.Properties.Add("GAME_FLAGS", "0x18");
-            skin.Properties.Add("FREE", "1");
-
-            if (HasCape)
-            {
-                cape.Filename = $"dlccape{skinId}.png";
-                skin.Properties.Add("CAPEPATH", cape.Filename);
-            }
-            skin.SetData(skinPictureBox.Image, ImageFormat.Png);
+            newSkin.Name = textSkinName.Text;
+            newSkin.Theme = textThemeName.Text;
             DialogResult = DialogResult.OK;
-            Close();
         }
 
         private void textSkinID_TextChanged(object sender, EventArgs e)
@@ -274,24 +225,18 @@ namespace PckStudio.Popups
 
         private void CreateCustomModel_Click(object sender, EventArgs e)
         {
-            //Prompt for skin model generator
             if (MessageBox.Show("Create your own custom skin model?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1) != DialogResult.Yes)
                 return;
 
-            skin.SetData(Resources.classic_template, ImageFormat.Png);
+            using CustomSkinEditor customSkinEditor = new CustomSkinEditor(newSkin);
 
-            using CustomSkinEditor generate = new CustomSkinEditor(skin);
-
-            if (generate.ShowDialog() == DialogResult.OK)
+            if (customSkinEditor.ShowDialog() == DialogResult.OK)
             {
-                displayBox.Image = generate.PreviewImage;
+                skinPictureBox.Image = customSkinEditor.ResultSkin.Texture;
+                newSkin = customSkinEditor.ResultSkin;
                 buttonDone.Enabled = true;
                 labelSelectTexture.Visible = false;
-                if (skinType != eSkinType._64x64 && skinType != eSkinType._64x64HD)
-                {
-                    buttonSkin.Location = new Point(buttonSkin.Location.X - skinPictureBox.Width, buttonSkin.Location.Y);
-                    skinType = eSkinType._64x64;
-                }
+                DrawModel();
             }
         }
 
@@ -299,8 +244,8 @@ namespace PckStudio.Popups
         {
             if (radioButtonAuto.Checked)
             {
-                int num = rng.Next(100000, 99999999);
-                textSkinID.Text = num.ToString();
+                newSkin.Id = rng.Next(100000, 99999999);
+                textSkinID.Text = newSkin.Id.ToString();
                 textSkinID.Enabled = false;
             }
         }
@@ -312,10 +257,10 @@ namespace PckStudio.Popups
 
 		private void buttonAnimGen_Click(object sender, EventArgs e)
 		{
-            using ANIMEditor diag = new ANIMEditor(anim.ToString());
+            using ANIMEditor diag = new ANIMEditor(newSkin.ANIM);
             if (diag.ShowDialog(this) == DialogResult.OK)
             {
-                anim = diag.ResultAnim;
+                newSkin.ANIM = diag.ResultAnim;
                 DrawModel();
             }
         }
