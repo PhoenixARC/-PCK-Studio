@@ -28,6 +28,8 @@ namespace PckStudio.Forms.Editor
         private Image _previewImage;
         private Skin _skin;
         private Random rng;
+        private bool _inflateOverlayParts;
+        private bool _allowInflate;
 
         private BindingSource skinPartListBindingSource;
         private BindingSource skinOffsetListBindingSource;
@@ -44,15 +46,17 @@ namespace PckStudio.Forms.Editor
             rng = new Random();
         }
 
-        public CustomSkinEditor(Skin skin) : this()
+        public CustomSkinEditor(Skin skin, bool inflateOverlayParts = false, bool allowInflate = false) : this()
         {
             _skin = skin;
+            _allowInflate = allowInflate;
+            _inflateOverlayParts = inflateOverlayParts;
         }
 
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            renderer3D1.InitializeGL();
+            renderer3D1.InitializeGL(_inflateOverlayParts);
             if (_skin.Texture is not null)
             {
                 renderer3D1.Texture = _skin.Texture;
@@ -102,7 +106,7 @@ namespace PckStudio.Forms.Editor
 
         private void createToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var boxEditor = new BoxEditor(SkinBOX.Empty, true);
+            var boxEditor = new BoxEditor(SkinBOX.Empty, _allowInflate);
             if (boxEditor.ShowDialog() == DialogResult.OK)
             {
                 var newBox = boxEditor.Result;
@@ -162,19 +166,6 @@ namespace PckStudio.Forms.Editor
                                     "Custom Skin Model Binary File (*.csmb)|*.csmb|";
             if (saveFileDialog.ShowDialog() != DialogResult.OK)
                 return;
-            //string contents = "";
-            //foreach (ListViewItem listViewItem in listViewBoxes.Items)
-            //{
-            //    string str = "";
-            //    foreach (ListViewItem.ListViewSubItem subItem in listViewItem.SubItems)
-            //    {
-            //        if (subItem.Text != "unchecked")
-            //            str = str + subItem.Text + Environment.NewLine;
-            //    }
-            //    contents += (listViewItem.Text + Environment.NewLine + listViewItem.Tag) + Environment.NewLine + str;
-            //}
-
-            //File.WriteAllText(saveFileDialog.FileName, contents);
         }
 
         [Obsolete("Kept for backwards compatibility.")]
@@ -289,7 +280,7 @@ namespace PckStudio.Forms.Editor
         {
             if (skinPartListBox.SelectedItem is SkinBOX box)
             {
-                var boxEditor = new BoxEditor(box, true);
+                var boxEditor = new BoxEditor(box, _allowInflate);
                 if (boxEditor.ShowDialog() == DialogResult.OK)
                 {
                     renderer3D1.ModelData[skinPartListBox.SelectedIndex] = boxEditor.Result;

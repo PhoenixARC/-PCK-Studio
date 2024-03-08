@@ -181,8 +181,6 @@ namespace PckStudio.Rendering
 
         private DrawContext _skyboxRenderBuffer;
         private CubeTexture _skyboxTexture;
-        private float skyboxRotation = 0f;
-        private float skyboxRotationStep = 0.5f;
 
         private Dictionary<string, CubeGroupMesh> meshStorage;
         private Dictionary<string, CubeGroupMesh> offsetSpecificMeshStorage;
@@ -199,6 +197,7 @@ namespace PckStudio.Rendering
         private float animationMaxAngleInDegrees = 5f;
 
         private bool showWireFrame = false;
+        private bool autoInflateOverlayParts;
 
         private Matrix4 RightArmMatrix { get; set; } = Matrix4.CreateFromAxisAngle(Vector3.UnitZ,  25f);
         private Matrix4 LeftArmMatrix  { get; set; } = Matrix4.CreateFromAxisAngle(Vector3.UnitZ, -25f);
@@ -260,8 +259,11 @@ namespace PckStudio.Rendering
             ModelData.CollectionChanged += ModelData_CollectionChanged;
         }
 
-        public void InitializeGL()
+        public void InitializeGL(bool inflateOverlayParts)
         {
+            if (initialized)
+                Debug.Fail("Already Initialized!");
+            autoInflateOverlayParts = inflateOverlayParts;
             MakeCurrent();
             InitializeShaders();
             InitializeFramebuffer();
@@ -329,44 +331,44 @@ namespace PckStudio.Rendering
         {
             const float armorInflation = 0.75f;
 
-            var helmet    = new CubeGroupMesh("HELMET", armorInflation);
-            helmet.AddCube(new(-4, -8, -4), new(8, 8, 8), new(0, 0));
+            var helmet    = new CubeGroupMesh("HELMET");
+            helmet.AddCube(new(-4, -8, -4), new(8, 8, 8), new(0, 0), inflate: armorInflation);
 
-            var chest = new CubeGroupMesh("CHEST", armorInflation);
-            chest.AddCube(new(-4, 0, -2), new(8, 12, 4), new(16, 16));
+            var chest = new CubeGroupMesh("CHEST");
+            chest.AddCube(new(-4, 0, -2), new(8, 12, 4), new(16, 16), inflate: armorInflation + 0.01f);
 
-            var shoulder0 = new CubeGroupMesh("SHOULDER0", armorInflation);
+            var shoulder0 = new CubeGroupMesh("SHOULDER0");
             shoulder0.Pivot = new Vector3(4f, 2f, 0f);
             shoulder0.Translation = new Vector3(-5f, -2f, 0f);
-            shoulder0.AddCube(new(-3, -2, -2), new(4, 12, 4), new(40, 16));
+            shoulder0.AddCube(new(-3, -2, -2), new(4, 12, 4), new(40, 16), inflate: armorInflation);
 
-            var shoulder1 = new CubeGroupMesh("SHOULDER1", armorInflation);
+            var shoulder1 = new CubeGroupMesh("SHOULDER1");
             shoulder1.Pivot = new Vector3(-4f, 2f, 0f);
             shoulder1.Translation = new Vector3(5f, -2f, 0f);
-            shoulder1.AddCube(new(-1, -2, -2), new(4, 12, 4), new(40, 16), mirrorTexture: true);
+            shoulder1.AddCube(new(-1, -2, -2), new(4, 12, 4), new(40, 16), inflate: armorInflation, mirrorTexture: true);
             
-            var waist      = new CubeGroupMesh("WAIST", armorInflation - 0.1f);
-            waist.AddCube(new(-4, 0, -2), new(8, 12, 4), new(16, 48));
+            var waist = new CubeGroupMesh("WAIST");
+            waist.AddCube(new(-4, 0, -2), new(8, 12, 4), new(16, 48), inflate: armorInflation);
 
-            var pants0 = new CubeGroupMesh("PANTS0", armorInflation);
+            var pants0 = new CubeGroupMesh("PANTS0");
             pants0.Pivot = new Vector3(0f, 12f, 0f);
             pants0.Translation = new Vector3(-2f, -12f, 0f);
-            pants0.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 48));
+            pants0.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 48), inflate: armorInflation);
             
-            var pants1 = new CubeGroupMesh("PANTS1", armorInflation);
+            var pants1 = new CubeGroupMesh("PANTS1");
             pants1.Pivot = new Vector3(0f, 12f, 0f);
             pants1.Translation = new Vector3(2f, -12f, 0f);
-            pants1.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 48), mirrorTexture: true);
+            pants1.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 48), inflate: armorInflation, mirrorTexture: true);
 
-            var boot0     = new CubeGroupMesh("BOOT0", armorInflation + 0.25f);
+            var boot0     = new CubeGroupMesh("BOOT0");
             boot0.Pivot = new Vector3(0f, 12f, 0f);
             boot0.Translation = new Vector3(-2f, -12f, 0f);
-            boot0.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 16));
+            boot0.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 16), inflate: armorInflation + 0.25f);
             
-            var boot1     = new CubeGroupMesh("BOOT1", armorInflation + 0.25f);
+            var boot1     = new CubeGroupMesh("BOOT1");
             boot1.Pivot = new Vector3(0f, 12f, 0f);
             boot1.Translation = new Vector3(2f, -12f, 0f);
-            boot1.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 16), mirrorTexture: true);
+            boot1.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 16), inflate: armorInflation + 0.25f, mirrorTexture: true);
 
             offsetSpecificMeshStorage = new Dictionary<string, CubeGroupMesh>
             {
@@ -423,8 +425,6 @@ namespace PckStudio.Rendering
                 skinTexture.WrapS = TextureWrapMode.Repeat;
                 skinTexture.WrapT = TextureWrapMode.Repeat;
                 
-                Texture ??= Resources.classic_template;
-
                 GLErrorCheck();
             }
 
@@ -613,7 +613,6 @@ namespace PckStudio.Rendering
                 d_debugDrawContext = new DrawContext(vao, debugVBO.GenIndexBuffer(), PrimitiveType.Points);
             }
 #endif
-
         }
 
         private DrawContext GetGuidelineDrawContext()
@@ -752,7 +751,7 @@ namespace PckStudio.Rendering
                 throw new KeyNotFoundException(skinBox.Type);
 
             CubeGroupMesh cubeMesh = meshStorage[skinBox.Type];
-            cubeMesh.AddSkinBox(skinBox);
+            cubeMesh.AddSkinBox(skinBox, autoInflateOverlayParts && skinBox.IsOverlayPart() ? OverlayScale : 0f);
         }
 
         [Conditional("DEBUG")]

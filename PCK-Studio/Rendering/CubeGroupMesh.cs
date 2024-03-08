@@ -28,12 +28,22 @@ namespace PckStudio.Rendering
     internal class CubeGroupMesh : GenericMesh<TextureVertex>
     {
         private List<CubeMesh> cubes;
+        
+        public bool FlipZMapping
+        {
+            get => _flipZMapping;
+            set
+            {
+                _flipZMapping = value;
+                UpdateCollection();
+            }
+        }
 
-        public float Inflate { get; set; } = 0f;
-        public bool FlipZMapping { get; set; } = false;
         public Vector3 Translation { get; set; } = Vector3.Zero;
         public Vector3 Pivot { get; set; } = Vector3.Zero;
         public Vector3 Offset { get; set; } = Vector3.Zero;
+
+        private bool _flipZMapping = false;
 
         internal CubeGroupMesh(string name) : base(name, PrimitiveType.Triangles)
         {
@@ -46,12 +56,6 @@ namespace PckStudio.Rendering
             FlipZMapping = flipZMapping;
         }
 
-        internal CubeGroupMesh(string name, float inflate)
-            : this(name)
-        {
-            Inflate = inflate;
-        }
-
         public static VertexBufferLayout GetLayout()
         {
             var layout = new VertexBufferLayout();
@@ -60,10 +64,11 @@ namespace PckStudio.Rendering
             return layout;
         }
 
-        internal void AddSkinBox(SkinBOX skinBox)
+        internal void AddSkinBox(SkinBOX skinBox, float inflate = 0f)
         {
             var cube = CubeMesh.Create(skinBox);
             cube.FlipZMapping = FlipZMapping;
+            cube.Inflate += inflate;
             cubes.Add(cube);
         }
 
@@ -94,9 +99,9 @@ namespace PckStudio.Rendering
             Submit();
         }
 
-        internal void AddCube(Vector3 position, Vector3 size, Vector2 uv, float inflate = 0f, bool mirrorTexture = false, bool flipZMapping = false)
+        internal void AddCube(Vector3 position, Vector3 size, Vector2 uv, float inflate = 0f, bool mirrorTexture = false)
         {
-            var cube = new CubeMesh(position, size, uv, Inflate + inflate, mirrorTexture, flipZMapping || FlipZMapping);
+            var cube = new CubeMesh(position, size, uv, inflate, mirrorTexture, FlipZMapping);
             cubes.Add(cube);
         }
 
@@ -118,8 +123,16 @@ namespace PckStudio.Rendering
             cube.Position = position;
             cube.Size = size;
             cube.Uv = uv;
-            cube.Inflate = Inflate + inflate;
+            cube.Inflate = inflate;
             cube.MirrorTexture = mirrorTexture;
+        }
+
+        private void UpdateCollection()
+        {
+            foreach (var cube in cubes)
+            {
+                cube.FlipZMapping = FlipZMapping;
+            }
         }
 
         private Vector3 Transform

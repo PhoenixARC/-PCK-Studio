@@ -50,5 +50,19 @@ namespace PckStudio.Extensions
         {
             return skinBOX.GetUVGraphicsPath(Vector2.One);
         }
+
+        public static bool IsOverlayPart(this SkinBOX skinBOX)
+        {
+            return skinBOX.Type switch
+            {
+                "HEADWEAR" or
+                "JACKET" or
+                "SLEEVE0" or
+                "SLEEVE1" or
+                "PANTS0" or
+                "PANTS1" => true,
+                _ => false,
+            };
+        }
     }
 }
