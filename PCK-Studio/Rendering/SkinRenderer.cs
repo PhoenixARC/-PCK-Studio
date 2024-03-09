@@ -834,6 +834,7 @@ namespace PckStudio.Rendering
             leftLeg.SetEnabled(0, !ANIM.GetFlag(SkinAnimFlag.LEFT_LEG_DISABLED));
 
             bool slim = ANIM.GetFlag(SkinAnimFlag.SLIM_MODEL);
+            head.FlipZMapping = true;
             if (slim || ANIM.GetFlag(SkinAnimFlag.RESOLUTION_64x64))
             {
                 TextureSize = new Size(64, 64);
@@ -858,6 +859,7 @@ namespace PckStudio.Rendering
             TextureSize = new Size(64, 32);
             
             body.SetEnabled(1, false);
+            head.FlipZMapping = false;
 
             rightArm.ReplaceCube(0, new(-3, -2, -2), new(4, 12, 4), new(40, 16));
             rightArm.SetEnabled(1, false);
