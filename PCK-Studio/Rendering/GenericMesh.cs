@@ -28,8 +28,6 @@ namespace PckStudio.Rendering
     {
         internal string Name { get; }
 
-        internal readonly int SizeInBytes = Marshal.SizeOf<T>();
-        
         protected List<T> vertices;
         protected List<int> indices;
         protected int indicesOffset;
