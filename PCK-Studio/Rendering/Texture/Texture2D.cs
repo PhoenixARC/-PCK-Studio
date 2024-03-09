@@ -9,16 +9,9 @@ namespace PckStudio.Rendering.Texture
 {
     internal class Texture2D : Texture
     {
-        public OpenTK.Graphics.OpenGL.PixelFormat PixelFormat { get; set; }
-        public PixelInternalFormat InternalPixelFormat { get; set; }
-
-        public Texture2D(int slot) : this()
+        public Texture2D(int slot) : base(TextureTarget.Texture2D)
         {
             Slot = slot;
-        }
-        
-        private Texture2D() : base(TextureTarget.Texture2D)
-        {
         }
 
         public void SetSize(Size size)
@@ -37,12 +30,12 @@ namespace PckStudio.Rendering.Texture
             bitmap.UnlockBits(data);
             Unbind();
         }
+
         public void Dispose()
         {
             Unbind();
             GL.DeleteTexture(_id);
         }
-
 
         public void AttachToFramebuffer(FrameBuffer frameBuffer, FramebufferAttachment attachment)
         {

@@ -11,6 +11,9 @@ namespace PckStudio.Rendering.Texture
 
         protected readonly TextureTarget Target;
 
+        public PixelFormat PixelFormat { get; set; }
+        public PixelInternalFormat InternalPixelFormat { get; set; }
+
         public TextureMinFilter MinFilter
         {
             get => minFilter;

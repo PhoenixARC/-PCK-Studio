@@ -12,14 +12,12 @@ namespace PckStudio.Rendering.Texture
 {
     internal class CubeTexture : Texture
     {
-        public CubeTexture(Image cubeTexture, int slot)
-            : base(TextureTarget.TextureCubeMap)
+        public CubeTexture(int slot) : base(TextureTarget.TextureCubeMap)
         {
             Slot = slot;
-            LoadImageData(cubeTexture);
         }
 
-        public void LoadImageData(Image image)
+        public void SetTexture(Image image)
         {
             Bind();
 
@@ -52,7 +50,7 @@ namespace PckStudio.Rendering.Texture
             {
                 var texture = new Bitmap(faces[i]);
                 BitmapData data = texture.LockBits(new Rectangle(Point.Empty, texture.Size), ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-                GL.TexImage2D(TextureTarget.TextureCubeMapPositiveX + i, 0, PixelInternalFormat.Rgb8, widthPerFace, heightPerFace, 0, OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, data.Scan0);
+                GL.TexImage2D(TextureTarget.TextureCubeMapPositiveX + i, 0, InternalPixelFormat, widthPerFace, heightPerFace, 0, PixelFormat, PixelType.UnsignedByte, data.Scan0);
             }
             Unbind();
         }

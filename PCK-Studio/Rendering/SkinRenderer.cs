@@ -518,14 +518,16 @@ namespace PckStudio.Rendering
                     ? Image.FromFile(customSkyboxFilepath)
                     : Resources.DefaultSkyTexture;
 
-                _skyboxTexture = new CubeTexture(skyboxImage, 1);
+                _skyboxTexture = new CubeTexture(1);
+                _skyboxTexture.InternalPixelFormat = PixelInternalFormat.Rgb8;
+                _skyboxTexture.PixelFormat = OpenTK.Graphics.OpenGL.PixelFormat.Bgra;
                 _skyboxTexture.MinFilter = TextureMinFilter.Linear;
                 _skyboxTexture.MagFilter = TextureMagFilter.Linear;
 
                 _skyboxTexture.WrapS = TextureWrapMode.ClampToEdge;
                 _skyboxTexture.WrapT = TextureWrapMode.ClampToEdge;
                 _skyboxTexture.WrapR = TextureWrapMode.ClampToEdge;
-
+                _skyboxTexture.SetTexture(skyboxImage);
                 GLErrorCheck();
             }
 
