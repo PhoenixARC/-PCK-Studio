@@ -164,21 +164,26 @@ namespace PckStudio.Forms.Editor
                 selectTilePictureBox.Start(animation);
             }
 
-            if (variantComboBox.Enabled = variantLabel.Visible = variantComboBox.Visible = 
-                dataTile.Tile.HasColourEntry && dataTile.Tile.ColourEntry.Variants.Length > 1)
+            if (variantComboBox.Enabled = variantLabel.Visible = variantComboBox.Visible =
+                dataTile.Tile.HasColourEntry)
             {
-                variantComboBox.Items.AddRange(dataTile.Tile.ColourEntry.Variants);
-                variantComboBox.SelectedItem = dataTile.Tile.ColourEntry.DefaultName;
-            }
-            else if(variantComboBox.Enabled = variantLabel.Visible = variantComboBox.Visible =
-                dataTile.Tile.HasColourEntry && dataTile.Tile.ColourEntry.IsWaterColour && _colourTable.WaterColors.Count > 0)
-            {
-                foreach (var col in _colourTable.WaterColors)
+                if (dataTile.Tile.ColourEntry.IsWaterColour && _colourTable.WaterColors.Count > 0)
                 {
-                    variantComboBox.Items.Add(col.Name);
+                    foreach (var col in _colourTable.WaterColors)
+                    {
+                        if(!variantComboBox.Items.Contains(col.Name))
+                            variantComboBox.Items.Add(col.Name);
+                    }
+
+                    dataTile.Tile.ColourEntry.DefaultName = _colourTable.WaterColors[0].Name;
                 }
 
-                variantComboBox.SelectedItem = _colourTable.WaterColors[0].Name;
+                if (dataTile.Tile.ColourEntry.Variants.Length > 1)
+                {
+                    variantComboBox.Items.AddRange(dataTile.Tile.ColourEntry.Variants);
+                }
+
+                variantComboBox.SelectedItem = dataTile.Tile.ColourEntry.DefaultName;
             }
         }
         
@@ -317,14 +322,17 @@ namespace PckStudio.Forms.Editor
                 dataTile.Tile.HasColourEntry &&
                 dataTile.Tile.ColourEntry is not null)
             {
-                if (dataTile.Tile.ColourEntry.IsWaterColour &&
-                    _colourTable.WaterColors.FirstOrDefault(entry => entry.Name == colorKey) is ColorContainer.WaterColor waterColor)
+                // basic way to check for classic water colors
+                if(!dataTile.Tile.ColourEntry.IsWaterColour || colorKey.StartsWith("Water_"))
+                {
+                    if (_colourTable.Colors.FirstOrDefault(entry => entry.Name == colorKey) is ColorContainer.Color color)
+                    {
+                        return color.ColorPallette;
+                    }
+                }
+                else if (_colourTable.WaterColors.FirstOrDefault(entry => entry.Name == colorKey) is ColorContainer.WaterColor waterColor)
                 {
                     return waterColor.SurfaceColor;
-                }
-                else if (_colourTable.Colors.FirstOrDefault(entry => entry.Name == colorKey) is ColorContainer.Color color)
-                {
-                    return color.ColorPallette;
                 }
             }
             return Color.White;
@@ -442,20 +450,13 @@ namespace PckStudio.Forms.Editor
 
         private void variantComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (dataTile.Tile.ColourEntry is not null &&
-                dataTile.Tile.ColourEntry.Variants.IndexInRange(variantComboBox.SelectedIndex))
+            if (dataTile.Tile.ColourEntry is not null)
             {
-                string colorKey = dataTile.Tile.ColourEntry.IsWaterColour ? variantComboBox.SelectedValue.ToString() : dataTile.Tile.ColourEntry.Variants[variantComboBox.SelectedIndex];
+                string colorKey = variantComboBox.SelectedItem.ToString();
+
                 selectTilePictureBox.BlendColor = FindBlendColorByKey(colorKey);
                 selectTilePictureBox.Image = dataTile.Texture;
             }
-            else if(dataTile.Tile.ColourEntry is not null &&
-                dataTile.Tile.ColourEntry.IsWaterColour)
-            {
-                string colorKey = variantComboBox.GetItemText(variantComboBox.SelectedItem);
-                selectTilePictureBox.BlendColor = FindBlendColorByKey(colorKey);
-                selectTilePictureBox.Image = dataTile.Texture;
-            }    
         }
 
         private void applyColorMaskToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
