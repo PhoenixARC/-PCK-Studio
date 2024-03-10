@@ -28,12 +28,11 @@ namespace PckStudio.Rendering
     {
         internal string Name { get; }
 
-        protected List<T> vertices;
-        protected List<int> indices;
+        protected List<T> vertices { get; }
+        protected List<int> indices { get; }
         protected int indicesOffset;
 
         private VertexArray vertexArray;
-        private VertexBuffer vertexBuffer;
         private IndexBuffer indexBuffer;
         private readonly PrimitiveType drawType;
         private DrawContext drawContext;
@@ -50,9 +49,8 @@ namespace PckStudio.Rendering
         internal void Initialize(VertexBufferLayout layout)
         {
             vertexArray = new VertexArray();
-            vertexBuffer = new VertexBuffer();
             indexBuffer = new IndexBuffer();
-            vertexArray.AddBuffer(vertexBuffer, layout);
+            vertexArray.AddNewBuffer(layout);
             drawContext = new DrawContext(vertexArray, indexBuffer, drawType);
         }
 
@@ -65,7 +63,7 @@ namespace PckStudio.Rendering
 
         protected void Submit()
         {
-            vertexBuffer.SetData(vertices.ToArray());
+            vertexArray.GetBuffer(0).SetData(vertices.ToArray());
             indexBuffer.SetIndicies(indices.ToArray());
         }
 

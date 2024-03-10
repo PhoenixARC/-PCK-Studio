@@ -5,29 +5,31 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL;
+using PckStudio.Extensions;
 
 namespace PckStudio.Rendering
 {
     internal class VertexArray : IDisposable
     {
         private int _id;
-        private int _vertexBufferIndex;
         private List<VertexBuffer> _vertexBuffers;
 
         public VertexArray()
         {
             _id = GL.GenVertexArray();
-            _vertexBufferIndex = 0;
             _vertexBuffers = new List<VertexBuffer>();
         }
 
-        public void AddBuffer(VertexBuffer buffer, VertexBufferLayout layout)
+        public int AddNewBuffer(VertexBufferLayout layout) => AddBuffer(new VertexBuffer(), layout);
+
+        public int AddBuffer(VertexBuffer buffer, VertexBufferLayout layout)
         {
             Bind();
             buffer.Bind();
             var elements = layout.GetElements();
             int offset = 0;
-            foreach(var element in elements)
+            int _vertexBufferIndex = 0;
+            foreach (var element in elements)
             {
                 Debug.Assert(element.Size > 0);
                 switch (element.Type)
@@ -69,7 +71,9 @@ namespace PckStudio.Rendering
                 }
                 offset += element.Size;
             }
+            int index = _vertexBuffers.Count;
             _vertexBuffers.Add(buffer);
+            return index;
         }
 
         public void Bind()
@@ -85,6 +89,7 @@ namespace PckStudio.Rendering
         public void Dispose()
         {
             Unbind();
+            Clear();
             GL.DeleteVertexArray(_id);
         }
 
@@ -95,7 +100,21 @@ namespace PckStudio.Rendering
                 vao.Dispose();
             }
             _vertexBuffers.Clear();
-            _vertexBufferIndex = 0;
+        }
+
+        internal void SelectBuffer(int index)
+        {
+            if (!_vertexBuffers.IndexInRange(index))
+                throw new IndexOutOfRangeException(index.ToString());
+            Bind();
+            GetBuffer(index).Bind();
+        }
+
+        internal VertexBuffer GetBuffer(int index)
+        {
+            if (_vertexBuffers.IndexInRange(index))
+                return _vertexBuffers[index];
+            throw new IndexOutOfRangeException(index.ToString());
         }
     }
 }
