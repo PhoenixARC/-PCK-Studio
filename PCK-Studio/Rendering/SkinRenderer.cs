@@ -223,7 +223,7 @@ namespace PckStudio.Rendering
         private CubeGroupMesh leftLeg;
 
         private float animationCurrentRotationAngle;
-        private float animationRotationStep = 0.5f;
+        private float animationRotationSpeed = 0.5f;
         private float animationMaxAngleInDegrees = 5f;
 
         private bool showWireFrame = false;
@@ -551,8 +551,6 @@ namespace PckStudio.Rendering
                 lineShader.Validate();
                 _shaders.AddShader("PlainColorShader", lineShader);
 
-                Color lineColor = Color.White;
-
                 // Cubical draw context
                 {
                     VertexArray lineVAO = new VertexArray();
@@ -560,7 +558,7 @@ namespace PckStudio.Rendering
                     void AddOutline(OutlineDefinition outline, ref List<ColorVertex> vertices, ref List<int> indices)
                     {
                         int offset = vertices.Count;
-                        vertices.AddRange(outline.verticies.Select(pos => new ColorVertex(pos, lineColor)));
+                        vertices.AddRange(outline.verticies.Select(pos => new ColorVertex(pos)));
                         indices.AddRange(outline.indicies.Select(i => i + offset));
                     }
 
@@ -591,24 +589,24 @@ namespace PckStudio.Rendering
                     Vector3 bodyCenterTop = body.GetFaceCenter(0, Cube.Face.Top);
                     Vector3 bodyCenterBottom = body.GetFaceCenter(0, Cube.Face.Bottom);
                     ColorVertex[] data = [
-                        new ColorVertex(head.GetFaceCenter(0, Cube.Face.Top), lineColor),
-                        new ColorVertex(bodyCenterBottom, lineColor),
+                        new ColorVertex(head.GetFaceCenter(0, Cube.Face.Top)),
+                        new ColorVertex(bodyCenterBottom),
                     
-                        new ColorVertex(rightArm.GetFaceCenter(0, Cube.Face.Bottom), lineColor),
-                        new ColorVertex(rightArm.GetFaceCenter(0, Cube.Face.Top), lineColor),
-                        new ColorVertex(rightArm.GetFaceCenter(0, Cube.Face.Top), lineColor),
-                        new ColorVertex(leftArm.GetFaceCenter(0, Cube.Face.Top), lineColor),
+                        new ColorVertex(rightArm.GetFaceCenter(0, Cube.Face.Bottom)),
+                        new ColorVertex(rightArm.GetFaceCenter(0, Cube.Face.Top)),
+                        new ColorVertex(rightArm.GetFaceCenter(0, Cube.Face.Top)),
+                        new ColorVertex(leftArm.GetFaceCenter(0, Cube.Face.Top)),
 
-                        new ColorVertex(leftArm.GetFaceCenter(0, Cube.Face.Bottom), lineColor),
-                        new ColorVertex(leftArm.GetFaceCenter(0, Cube.Face.Top), lineColor),
+                        new ColorVertex(leftArm.GetFaceCenter(0, Cube.Face.Bottom)),
+                        new ColorVertex(leftArm.GetFaceCenter(0, Cube.Face.Top)),
 
-                        new ColorVertex(rightLeg.GetFaceCenter(0, Cube.Face.Bottom), lineColor),
-                        new ColorVertex(rightLeg.GetFaceCenter(0, Cube.Face.Top), lineColor),
-                        new ColorVertex(rightLeg.GetFaceCenter(0, Cube.Face.Top), lineColor),
-                        new ColorVertex(leftLeg.GetFaceCenter(0, Cube.Face.Top), lineColor),
+                        new ColorVertex(rightLeg.GetFaceCenter(0, Cube.Face.Bottom)),
+                        new ColorVertex(rightLeg.GetFaceCenter(0, Cube.Face.Top)),
+                        new ColorVertex(rightLeg.GetFaceCenter(0, Cube.Face.Top)),
+                        new ColorVertex(leftLeg.GetFaceCenter(0, Cube.Face.Top)),
                         
-                        new ColorVertex(leftLeg.GetFaceCenter(0, Cube.Face.Bottom), lineColor),
-                        new ColorVertex(leftLeg.GetFaceCenter(0, Cube.Face.Top), lineColor),
+                        new ColorVertex(leftLeg.GetFaceCenter(0, Cube.Face.Bottom)),
+                        new ColorVertex(leftLeg.GetFaceCenter(0, Cube.Face.Top)),
                     ];
                     VertexBuffer buffer = new VertexBuffer();
                     buffer.SetData(data);
@@ -834,6 +832,7 @@ namespace PckStudio.Rendering
             leftLeg.SetEnabled(0, !ANIM.GetFlag(SkinAnimFlag.LEFT_LEG_DISABLED));
 
             bool slim = ANIM.GetFlag(SkinAnimFlag.SLIM_MODEL);
+
             head.FlipZMapping = true;
             if (slim || ANIM.GetFlag(SkinAnimFlag.RESOLUTION_64x64))
             {
@@ -1049,7 +1048,16 @@ namespace PckStudio.Rendering
                 {
                     skinShader.SetUniform2("u_TexSize", new Vector2(64, 32));
                     capeTexture.Bind();
-                    Matrix4 partMatrix = Matrix4.CreateRotationY(MathHelper.DegreesToRadians(180f)) * Matrix4.CreateRotationX(MathHelper.DegreesToRadians((float)Math.Sin(Math.Abs(animationCurrentRotationAngle) * 0.25f) * 10f));
+                    // Defines minimum Angle(in Degrees) of the cape
+                    float capeMinimumRotationAngle = 7.5f;
+                    // Controls how much of an angle is applied
+                    float capeRotationFactor = 0.4f;
+                    // Low value = slow movement
+                    float capeRotationSpeed = 0.02f;
+                    float capeRotation = ((float)MathHelper.RadiansToDegrees(Math.Sin(Math.Abs(animationCurrentRotationAngle) * capeRotationSpeed) * capeRotationFactor)) + capeMinimumRotationAngle;
+                    Matrix4 partMatrix =
+                        Matrix4.CreateRotationY(MathHelper.DegreesToRadians(180f)) *
+                        Matrix4.CreateRotationX(MathHelper.DegreesToRadians(capeRotation));
                     RenderPart(skinShader, cape, partMatrix, transform);
                 }
 
@@ -1270,11 +1278,9 @@ namespace PckStudio.Rendering
         
         private void AnimationTick(object sender, EventArgs e)
         {
-            skyboxRotation += skyboxRotationStep;
-            skyboxRotation %= 360f;
-            animationCurrentRotationAngle += animationRotationStep;
+            animationCurrentRotationAngle += animationRotationSpeed;
             if (animationCurrentRotationAngle >= animationMaxAngleInDegrees || animationCurrentRotationAngle <= -animationMaxAngleInDegrees)
-                animationRotationStep = -animationRotationStep;
+                animationRotationSpeed = -animationRotationSpeed;
         }
 
         private void ReInitialzeSkinData()
