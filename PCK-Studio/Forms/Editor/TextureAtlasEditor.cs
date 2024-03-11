@@ -164,9 +164,10 @@ namespace PckStudio.Forms.Editor
                 selectTilePictureBox.Start(animation);
             }
 
-            if (variantComboBox.Enabled = variantLabel.Visible = variantComboBox.Visible =
-                dataTile.Tile.HasColourEntry)
+            if (dataTile.Tile.HasColourEntry)
             {
+                variantComboBox.Enabled = variantLabel.Visible = variantComboBox.Visible = dataTile.Tile.ColourEntry.Variants.Length > 1;
+
                 if (dataTile.Tile.ColourEntry.IsWaterColour && _colourTable.WaterColors.Count > 0)
                 {
                     foreach (var col in _colourTable.WaterColors)
@@ -178,10 +179,7 @@ namespace PckStudio.Forms.Editor
                     dataTile.Tile.ColourEntry.DefaultName = _colourTable.WaterColors[0].Name;
                 }
 
-                if (dataTile.Tile.ColourEntry.Variants.Length > 1)
-                {
-                    variantComboBox.Items.AddRange(dataTile.Tile.ColourEntry.Variants);
-                }
+                variantComboBox.Items.AddRange(dataTile.Tile.ColourEntry.Variants);
 
                 variantComboBox.SelectedItem = dataTile.Tile.ColourEntry.DefaultName;
             }
