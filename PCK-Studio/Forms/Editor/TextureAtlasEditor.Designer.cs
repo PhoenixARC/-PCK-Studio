@@ -58,7 +58,7 @@
             this.variantLabel.AutoSize = true;
             this.variantLabel.Location = new System.Drawing.Point(3, 254);
             this.variantLabel.Name = "variantLabel";
-            this.variantLabel.Size = new System.Drawing.Size(82, 28);
+            this.variantLabel.Size = new System.Drawing.Size(56, 28);
             this.variantLabel.TabIndex = 18;
             this.variantLabel.Text = "Variant:";
             this.variantLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -90,14 +90,14 @@
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // extractTileToolStripMenuItem
             // 
             this.extractTileToolStripMenuItem.Name = "extractTileToolStripMenuItem";
-            this.extractTileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.extractTileToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
             this.extractTileToolStripMenuItem.Text = "Extract Tile";
             this.extractTileToolStripMenuItem.Click += new System.EventHandler(this.extractTileToolStripMenuItem_Click);
             // 
@@ -117,7 +117,7 @@
             this.applyColorMaskToolStripMenuItem.CheckOnClick = true;
             this.applyColorMaskToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.applyColorMaskToolStripMenuItem.Name = "applyColorMaskToolStripMenuItem";
-            this.applyColorMaskToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.applyColorMaskToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.applyColorMaskToolStripMenuItem.Text = "Apply Color Mask";
             this.applyColorMaskToolStripMenuItem.CheckedChanged += new System.EventHandler(this.applyColorMaskToolStripMenuItem_CheckedChanged);
             // 
@@ -127,7 +127,7 @@
             this.playAnimationsToolStripMenuItem.CheckOnClick = true;
             this.playAnimationsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.playAnimationsToolStripMenuItem.Name = "playAnimationsToolStripMenuItem";
-            this.playAnimationsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.playAnimationsToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.playAnimationsToolStripMenuItem.Text = "Play Animations";
             this.playAnimationsToolStripMenuItem.CheckedChanged += new System.EventHandler(this.playAnimationsToolStripMenuItem_CheckedChanged);
             // 
@@ -136,9 +136,9 @@
             this.tableLayoutPanel1.AutoSize = true;
             this.tableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.tableLayoutPanel1.ColumnCount = 3;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10.52632F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 26.31579F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 63.15789F));
             this.tableLayoutPanel1.Controls.Add(this.originalPictureBox, 2, 0);
             this.tableLayoutPanel1.Controls.Add(this.selectTilePictureBox, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.replaceButton, 0, 5);
@@ -164,10 +164,10 @@
             this.originalPictureBox.BackColor = System.Drawing.Color.Transparent;
             this.originalPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.originalPictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-            this.originalPictureBox.Location = new System.Drawing.Point(238, 3);
+            this.originalPictureBox.Location = new System.Drawing.Point(220, 3);
             this.originalPictureBox.Name = "originalPictureBox";
             this.tableLayoutPanel1.SetRowSpan(this.originalPictureBox, 6);
-            this.originalPictureBox.Size = new System.Drawing.Size(349, 559);
+            this.originalPictureBox.Size = new System.Drawing.Size(367, 559);
             this.originalPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.originalPictureBox.TabIndex = 4;
             this.originalPictureBox.TabStop = false;
@@ -186,7 +186,7 @@
             this.selectTilePictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             this.selectTilePictureBox.Location = new System.Drawing.Point(3, 3);
             this.selectTilePictureBox.Name = "selectTilePictureBox";
-            this.selectTilePictureBox.Size = new System.Drawing.Size(229, 220);
+            this.selectTilePictureBox.Size = new System.Drawing.Size(211, 220);
             this.selectTilePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.selectTilePictureBox.TabIndex = 0;
             this.selectTilePictureBox.TabStop = false;
@@ -200,7 +200,7 @@
             this.tableLayoutPanel1.SetColumnSpan(this.replaceButton, 2);
             this.replaceButton.Location = new System.Drawing.Point(3, 539);
             this.replaceButton.Name = "replaceButton";
-            this.replaceButton.Size = new System.Drawing.Size(229, 23);
+            this.replaceButton.Size = new System.Drawing.Size(211, 23);
             this.replaceButton.TabIndex = 14;
             this.replaceButton.Text = "Replace";
             this.replaceButton.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -215,7 +215,7 @@
             this.tableLayoutPanel1.SetColumnSpan(this.animationButton, 2);
             this.animationButton.Location = new System.Drawing.Point(3, 511);
             this.animationButton.Name = "animationButton";
-            this.animationButton.Size = new System.Drawing.Size(229, 22);
+            this.animationButton.Size = new System.Drawing.Size(211, 22);
             this.animationButton.TabIndex = 16;
             this.animationButton.Text = "Animation";
             this.animationButton.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -230,7 +230,7 @@
             this.tableLayoutPanel1.SetColumnSpan(this.tileNameLabel, 2);
             this.tileNameLabel.Location = new System.Drawing.Point(3, 235);
             this.tileNameLabel.Name = "tileNameLabel";
-            this.tileNameLabel.Size = new System.Drawing.Size(229, 19);
+            this.tileNameLabel.Size = new System.Drawing.Size(211, 19);
             this.tileNameLabel.TabIndex = 19;
             this.tileNameLabel.Text = "TileName";
             this.tileNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -242,9 +242,9 @@
             this.variantComboBox.Enabled = false;
             this.variantComboBox.FormattingEnabled = true;
             this.variantComboBox.ItemHeight = 23;
-            this.variantComboBox.Location = new System.Drawing.Point(91, 257);
+            this.variantComboBox.Location = new System.Drawing.Point(65, 257);
             this.variantComboBox.Name = "variantComboBox";
-            this.variantComboBox.Size = new System.Drawing.Size(141, 29);
+            this.variantComboBox.Size = new System.Drawing.Size(149, 29);
             this.variantComboBox.TabIndex = 17;
             this.variantComboBox.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.variantComboBox.UseSelectable = true;
