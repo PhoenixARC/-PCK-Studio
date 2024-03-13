@@ -37,13 +37,14 @@ namespace PckStudio.Forms.Editor
 {
     internal partial class TextureAtlasEditor : MetroForm
     {
+        private Image _workingTexture;
         public Image FinalTexture
         {
             get
             {
                 if (DialogResult != DialogResult.OK)
                     return null;
-                return (Image)originalPictureBox.Image.Clone();
+                return _workingTexture;
             }
         }
 
@@ -96,6 +97,9 @@ namespace PckStudio.Forms.Editor
             InitializeComponent();
 
             AcquireColorTable(pckFile);
+
+            _workingTexture = atlas;
+
             _areaSize = areaSize;
             _pckFile = pckFile;
             _rowCount = atlas.Width / areaSize.Width;
@@ -109,7 +113,9 @@ namespace PckStudio.Forms.Editor
                 "moon_phases" => (Tiles.MoonPhaseTileInfos, "moon_phases"),
                 _ => (null, null),
             };
-            originalPictureBox.Image = atlas;
+
+            originalPictureBox.Image = (Image)((Bitmap)atlas).Clone(new Rectangle(new Point(0, 0), new Size(atlas.Width - 1, atlas.Height - 1)), PixelFormat.Format32bppArgb);
+
             var images = atlas.Split(_areaSize, _imageLayout);
 
             var tiles = images.enumerate().Select(
@@ -153,6 +159,25 @@ namespace PckStudio.Forms.Editor
                 return;
 
             dataTile = _selectedTile;
+
+            var graphicsConfig = new GraphicsConfig()
+            {
+                InterpolationMode = selectTilePictureBox.InterpolationMode,
+                PixelOffsetMode = PixelOffsetMode.HighQuality
+            };
+            using (var g = Graphics.FromImage(originalPictureBox.Image))
+            {
+                g.ApplyConfig(graphicsConfig);
+                g.Clear(Color.Transparent);
+                g.DrawImage(_workingTexture, new Point(0, 0));
+                g.DrawRectangle(
+                    Pens.White,
+                    new Rectangle(_selectedTile.Area.X, _selectedTile.Area.Y, 
+                    _selectedTile.Area.Width,
+                    _selectedTile.Area.Height));
+            }
+
+            originalPictureBox.Invalidate();
 
             if (string.IsNullOrEmpty(dataTile.Tile.InternalName))
             {
@@ -318,7 +343,7 @@ namespace PckStudio.Forms.Editor
             };
             if (texture.Size != _areaSize)
                 texture = texture.Resize(_areaSize, graphicsConfig);
-            using (var g = Graphics.FromImage(originalPictureBox.Image))
+            using (var g = Graphics.FromImage(_workingTexture))
             {
                 g.ApplyConfig(graphicsConfig);
                 g.Fill(_selectedTile.Area, Color.Transparent);
@@ -390,7 +415,7 @@ namespace PckStudio.Forms.Editor
 
             int index = GetSelectedImageIndex(
                 originalPictureBox.Size,
-                originalPictureBox.Image.Size,
+                _workingTexture.Size,
                 _areaSize,
                 e.Location,
                 originalPictureBox.SizeMode,

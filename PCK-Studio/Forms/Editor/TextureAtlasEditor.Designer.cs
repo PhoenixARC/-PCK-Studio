@@ -37,7 +37,6 @@
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.applyColorMaskToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.playAnimationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.sToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.originalPictureBox = new PckStudio.ToolboxItems.InterpolationPictureBox();
             this.selectTilePictureBox = new PckStudio.ToolboxItems.AnimationPictureBox();
@@ -72,8 +71,7 @@
             this.menuStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.viewToolStripMenuItem,
-            this.sToolStripMenuItem});
+            this.viewToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(20, 60);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(590, 24);
@@ -94,14 +92,14 @@
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // extractTileToolStripMenuItem
             // 
             this.extractTileToolStripMenuItem.Name = "extractTileToolStripMenuItem";
-            this.extractTileToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+            this.extractTileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.extractTileToolStripMenuItem.Text = "Extract Tile";
             this.extractTileToolStripMenuItem.Click += new System.EventHandler(this.extractTileToolStripMenuItem_Click);
             // 
@@ -121,7 +119,7 @@
             this.applyColorMaskToolStripMenuItem.CheckOnClick = true;
             this.applyColorMaskToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.applyColorMaskToolStripMenuItem.Name = "applyColorMaskToolStripMenuItem";
-            this.applyColorMaskToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.applyColorMaskToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.applyColorMaskToolStripMenuItem.Text = "Apply Color Mask";
             this.applyColorMaskToolStripMenuItem.CheckedChanged += new System.EventHandler(this.applyColorMaskToolStripMenuItem_CheckedChanged);
             // 
@@ -131,15 +129,9 @@
             this.playAnimationsToolStripMenuItem.CheckOnClick = true;
             this.playAnimationsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.playAnimationsToolStripMenuItem.Name = "playAnimationsToolStripMenuItem";
-            this.playAnimationsToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.playAnimationsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.playAnimationsToolStripMenuItem.Text = "Play Animations";
             this.playAnimationsToolStripMenuItem.CheckedChanged += new System.EventHandler(this.playAnimationsToolStripMenuItem_CheckedChanged);
-            // 
-            // sToolStripMenuItem
-            // 
-            this.sToolStripMenuItem.Name = "sToolStripMenuItem";
-            this.sToolStripMenuItem.Size = new System.Drawing.Size(24, 20);
-            this.sToolStripMenuItem.Text = "s";
             // 
             // tableLayoutPanel1
             // 
@@ -340,6 +332,5 @@
         private MetroFramework.Controls.MetroLabel variantLabel;
         private MetroFramework.Controls.MetroButton clearColorButton;
         private MetroFramework.Controls.MetroButton setColorButton;
-        private System.Windows.Forms.ToolStripMenuItem sToolStripMenuItem;
     }
 }
