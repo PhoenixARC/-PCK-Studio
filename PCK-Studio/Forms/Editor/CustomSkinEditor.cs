@@ -125,7 +125,7 @@ namespace PckStudio.Forms.Editor
             saveFileDialog.Filter = "PNG Image Files | *.png";
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                uvPictureBox.BackgroundImage.Save(saveFileDialog.FileName, ImageFormat.Png);
+                _skin.Texture.Save(saveFileDialog.FileName, ImageFormat.Png);
             }
         }
 
