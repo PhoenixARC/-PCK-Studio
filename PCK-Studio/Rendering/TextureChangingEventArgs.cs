@@ -22,7 +22,7 @@ namespace PckStudio.Rendering
 {
     public class TextureChangingEventArgs : CancelEventArgs
     {
-        public Image NewTexture { get; set; }
+        public Image NewTexture { get; }
 
         public TextureChangingEventArgs(Image newTexture) : base()
         {
