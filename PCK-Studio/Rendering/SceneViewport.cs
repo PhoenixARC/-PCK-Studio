@@ -58,10 +58,9 @@ namespace PckStudio.Rendering
         private int refreshRate = 60;
         private Timer timer;
 
-        private VertexArray VAO;
-        private VertexBuffer VBO;
-        private IndexBuffer IBO;
         private ShaderProgram colorShader;
+        private VertexArray VAO;
+        private IndexBuffer IBO;
         private bool isInitialized;
 
         protected void Init()
@@ -71,9 +70,9 @@ namespace PckStudio.Rendering
                 Debug.Fail("Already Initializted.");
                 return;
             }
+            MakeCurrent();
             colorShader = ShaderProgram.Create(Resources.plainColorVertexShader, Resources.plainColorFragmentShader);
             VAO = new VertexArray();
-            VBO = new VertexBuffer();
             IBO = IndexBuffer.Create(
                     0, 1,
                     1, 2,
@@ -92,7 +91,7 @@ namespace PckStudio.Rendering
             VertexBufferLayout layout = new VertexBufferLayout();
             layout.Add(ShaderDataType.Float3);
             layout.Add(ShaderDataType.Float4);
-            VAO.AddBuffer(VBO, layout);
+            VAO.AddNewBuffer(layout);
             isInitialized = true;
         }
 
@@ -106,6 +105,20 @@ namespace PckStudio.Rendering
             Camera = new PerspectiveCamera(60f, new Vector3(0f, 0f, 0f));
             VSync = true;
             isInitialized = false;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                timer.Stop();
+                timer.Dispose();
+            }
+            MakeCurrent();
+            VAO.Dispose();
+            IBO.Dispose();
+            colorShader.Dispose();
+            base.Dispose(disposing);
         }
 
 
@@ -139,7 +152,7 @@ namespace PckStudio.Rendering
             ];
 
             VAO.Bind();
-            VBO.SetData(vertices);
+            VAO.GetBuffer(0).SetData(vertices);
             IBO.Bind();
             GL.DrawElements(PrimitiveType.Lines, IBO.GetCount(), DrawElementsType.UnsignedInt, 0);
             GL.DepthFunc(DepthFunction.Less);

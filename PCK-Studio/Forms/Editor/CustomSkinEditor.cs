@@ -226,6 +226,7 @@ namespace PckStudio.Forms.Editor
 
         private void CustomSkinEditor_FormClosing(object sender, FormClosingEventArgs e)
         {
+            renderer3D1.Dispose();
         }
 
         private void outlineColorButton_Click(object sender, EventArgs e)
