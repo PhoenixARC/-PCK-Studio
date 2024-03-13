@@ -32,7 +32,7 @@ namespace PckStudio.Forms.Editor
         private bool _allowInflate;
 
         private BindingSource skinPartListBindingSource;
-        private BindingSource skinOffsetListBindingSource;
+        //private BindingSource skinOffsetListBindingSource;
 
         private static GraphicsConfig _graphicsConfig = new GraphicsConfig()
         {
@@ -44,6 +44,9 @@ namespace PckStudio.Forms.Editor
         {
             InitializeComponent();
             rng = new Random();
+            skinPartListBindingSource = new BindingSource(renderer3D1.ModelData, null);
+            skinPartListBox.DataSource = skinPartListBindingSource;
+            skinPartListBox.DisplayMember = "Type";
         }
 
         public CustomSkinEditor(Skin skin, bool inflateOverlayParts = false, bool allowInflate = false) : this()
@@ -84,12 +87,12 @@ namespace PckStudio.Forms.Editor
                 renderer3D1.SetPartOffset(offset);
             }
 
-            skinPartListBindingSource = new BindingSource(renderer3D1.ModelData, null);
-            skinPartListBox.DataSource = skinPartListBindingSource;
-            skinPartListBox.DisplayMember = "Type";
+            //skinOffsetListBindingSource = new BindingSource(renderer3D1.offsetSpecificMeshStorage, null);
+            //offsetListBox.DataSource = skinOffsetListBindingSource;
+            //offsetListBox.DisplayMember = "Value";
 
-            skinOffsetListBindingSource = new BindingSource(renderer3D1, null);
-            offsetListBox.DataSource = skinOffsetListBindingSource;
+            skinPartListBindingSource.ResetBindings(false);
+            //skinOffsetListBindingSource.ResetBindings(false);
         }
 
         private void GenerateUVTextureMap(SkinBOX skinBox)
