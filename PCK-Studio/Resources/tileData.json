@@ -3908,34 +3908,34 @@
 		},
 		{
 			"internalName": "compass",
-			"displayName": "Compass"
-		},
-		{
-			"internalName": "",
 			"displayName": ""
 		},
 		{
-			"internalName": "",
+			"internalName": "compass",
 			"displayName": ""
 		},
 		{
-			"internalName": "",
+			"internalName": "compass",
+			"displayName": ""
+		},
+		{
+			"internalName": "compass",
 			"displayName": ""
 		},
 		{
 			"internalName": "clock",
-			"displayName": "Clock"
-		},
-		{
-			"internalName": "",
 			"displayName": ""
 		},
 		{
-			"internalName": "",
+			"internalName": "clock",
 			"displayName": ""
 		},
 		{
-			"internalName": "",
+			"internalName": "clock",
+			"displayName": ""
+		},
+		{
+			"internalName": "clock",
 			"displayName": ""
 		},
 		{
