@@ -376,15 +376,17 @@ namespace PckStudio
 			}
 
 			bool isTerrainOrItems = file.Filename == "res/terrain.png" || file.Filename == "res/items.png";
-			bool isMoon = file.Filename == "res/terrain/moon_phases.png";
+			bool isMoonPhases = file.Filename == "res/terrain/moon_phases.png";
+			bool isMapIcons = file.Filename == "res/misc/mapicons.png";
+			bool isAdditionalMapIcons = file.Filename == "res/misc/additionalmapicons.png";
 
-			if (isTerrainOrItems || isMoon)
+			if (isTerrainOrItems || isMoonPhases || isMapIcons || isAdditionalMapIcons)
 			{
 				var img = file.GetTexture();
 
 				var columnCount = 0;
 				if (isTerrainOrItems) columnCount = 16;
-				else if (isMoon) columnCount = 4;
+				else if (isMoonPhases || isMapIcons || isAdditionalMapIcons) columnCount = 4;
 
 				var resolution = img.Width / columnCount;
 				var size = new Size(resolution, resolution);

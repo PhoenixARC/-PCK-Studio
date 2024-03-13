@@ -331,4 +331,10 @@
   <data name="moon_phases_sheet" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\atlases\moon_phases.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="additional_map_icons_sheet" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\atlases\additional_mapicons.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="map_icons_sheet" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\atlases\map_icons.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

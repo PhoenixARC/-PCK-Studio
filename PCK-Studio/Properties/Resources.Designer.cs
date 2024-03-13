@@ -73,6 +73,16 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap additional_map_icons_sheet {
+            get {
+                object obj = ResourceManager.GetObject("additional_map_icons_sheet", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap AddTexture {
             get {
                 object obj = ResourceManager.GetObject("AddTexture", resourceCulture);
@@ -400,6 +410,16 @@ namespace PckStudio.Properties {
         public static System.Drawing.Bitmap LOC_ICON {
             get {
                 object obj = ResourceManager.GetObject("LOC_ICON", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap map_icons_sheet {
+            get {
+                object obj = ResourceManager.GetObject("map_icons_sheet", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

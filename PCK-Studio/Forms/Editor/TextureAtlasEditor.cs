@@ -104,7 +104,9 @@ namespace PckStudio.Forms.Editor
             {
                 "terrain" => (Tiles.BlockTileInfos, "blocks"),
                 "items" => (Tiles.ItemTileInfos, "items"),
-                "moon_phases" => (Tiles.MoonPhasesTileInfos, "moon_phases"),
+                "mapicons" => (Tiles.MapIconTileInfos, "map_icons"),
+                "additionalmapicons" => (Tiles.AdditionalMapIconTileInfos, "additional_map_icons"),
+                "moon_phases" => (Tiles.MoonPhaseTileInfos, "moon_phases"),
                 _ => (null, null),
             };
             originalPictureBox.Image = atlas;
@@ -151,6 +153,13 @@ namespace PckStudio.Forms.Editor
                 return;
 
             dataTile = _selectedTile;
+
+            if (string.IsNullOrEmpty(dataTile.Tile.InternalName))
+            {
+                selectTilePictureBox.Image = dataTile.Texture;
+                tileNameLabel.Text = "Unused";
+                return;
+            }
 
             if (string.IsNullOrEmpty(dataTile.Tile.DisplayName))
             {
