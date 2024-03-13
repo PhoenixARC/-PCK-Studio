@@ -136,10 +136,10 @@ namespace PckStudio.Forms.Editor
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                using (var img = Image.FromFile(openFileDialog.FileName))
-				{
-                    renderer3D1.Texture = img;
-                }
+                generateTextureCheckBox.Checked = false;
+                // use stream to not leave handle open
+                using (var imgFs = File.OpenRead(openFileDialog.FileName))
+                    renderer3D1.Texture = Image.FromStream(imgFs); 
             }
         }
 
