@@ -37,13 +37,16 @@
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.applyColorMaskToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.playAnimationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.originalPictureBox = new PckStudio.ToolboxItems.InterpolationPictureBox();
             this.selectTilePictureBox = new PckStudio.ToolboxItems.AnimationPictureBox();
             this.replaceButton = new MetroFramework.Controls.MetroButton();
-            this.animationButton = new MetroFramework.Controls.MetroButton();
             this.tileNameLabel = new MetroFramework.Controls.MetroLabel();
             this.variantComboBox = new MetroFramework.Controls.MetroComboBox();
+            this.setColorButton = new MetroFramework.Controls.MetroButton();
+            this.animationButton = new MetroFramework.Controls.MetroButton();
+            this.clearColorButton = new MetroFramework.Controls.MetroButton();
             this.menuStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.originalPictureBox)).BeginInit();
@@ -56,9 +59,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.variantLabel.AutoSize = true;
-            this.variantLabel.Location = new System.Drawing.Point(3, 254);
+            this.variantLabel.Location = new System.Drawing.Point(3, 232);
             this.variantLabel.Name = "variantLabel";
-            this.variantLabel.Size = new System.Drawing.Size(56, 28);
+            this.variantLabel.Size = new System.Drawing.Size(55, 25);
             this.variantLabel.TabIndex = 18;
             this.variantLabel.Text = "Variant:";
             this.variantLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -69,7 +72,8 @@
             this.menuStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.viewToolStripMenuItem});
+            this.viewToolStripMenuItem,
+            this.sToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(20, 60);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(590, 24);
@@ -131,31 +135,45 @@
             this.playAnimationsToolStripMenuItem.Text = "Play Animations";
             this.playAnimationsToolStripMenuItem.CheckedChanged += new System.EventHandler(this.playAnimationsToolStripMenuItem_CheckedChanged);
             // 
+            // sToolStripMenuItem
+            // 
+            this.sToolStripMenuItem.Name = "sToolStripMenuItem";
+            this.sToolStripMenuItem.Size = new System.Drawing.Size(24, 20);
+            this.sToolStripMenuItem.Text = "s";
+            // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.AutoSize = true;
             this.tableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.tableLayoutPanel1.ColumnCount = 3;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10.52632F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 26.31579F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 63.15789F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10.43842F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 26.09603F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 63.46555F));
             this.tableLayoutPanel1.Controls.Add(this.originalPictureBox, 2, 0);
             this.tableLayoutPanel1.Controls.Add(this.selectTilePictureBox, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.replaceButton, 0, 5);
-            this.tableLayoutPanel1.Controls.Add(this.animationButton, 0, 4);
+            this.tableLayoutPanel1.Controls.Add(this.replaceButton, 0, 6);
             this.tableLayoutPanel1.Controls.Add(this.tileNameLabel, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.variantComboBox, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.variantLabel, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.setColorButton, 0, 4);
+            this.tableLayoutPanel1.Controls.Add(this.animationButton, 1, 6);
+            this.tableLayoutPanel1.Controls.Add(this.clearColorButton, 1, 4);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(20, 84);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 6;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5F));
+            this.tableLayoutPanel1.RowCount = 7;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 38.09524F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.761905F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.761905F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 38.09524F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.761905F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.761905F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.761905F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(590, 565);
             this.tableLayoutPanel1.TabIndex = 17;
             // 
@@ -164,10 +182,10 @@
             this.originalPictureBox.BackColor = System.Drawing.Color.Transparent;
             this.originalPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.originalPictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-            this.originalPictureBox.Location = new System.Drawing.Point(220, 3);
+            this.originalPictureBox.Location = new System.Drawing.Point(217, 3);
             this.originalPictureBox.Name = "originalPictureBox";
-            this.tableLayoutPanel1.SetRowSpan(this.originalPictureBox, 6);
-            this.originalPictureBox.Size = new System.Drawing.Size(367, 559);
+            this.tableLayoutPanel1.SetRowSpan(this.originalPictureBox, 7);
+            this.originalPictureBox.Size = new System.Drawing.Size(370, 533);
             this.originalPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.originalPictureBox.TabIndex = 4;
             this.originalPictureBox.TabStop = false;
@@ -186,7 +204,7 @@
             this.selectTilePictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             this.selectTilePictureBox.Location = new System.Drawing.Point(3, 3);
             this.selectTilePictureBox.Name = "selectTilePictureBox";
-            this.selectTilePictureBox.Size = new System.Drawing.Size(211, 220);
+            this.selectTilePictureBox.Size = new System.Drawing.Size(208, 201);
             this.selectTilePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.selectTilePictureBox.TabIndex = 0;
             this.selectTilePictureBox.TabStop = false;
@@ -198,29 +216,14 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.replaceButton.AutoSize = true;
             this.tableLayoutPanel1.SetColumnSpan(this.replaceButton, 2);
-            this.replaceButton.Location = new System.Drawing.Point(3, 539);
+            this.replaceButton.Location = new System.Drawing.Point(3, 517);
             this.replaceButton.Name = "replaceButton";
-            this.replaceButton.Size = new System.Drawing.Size(211, 23);
+            this.replaceButton.Size = new System.Drawing.Size(208, 19);
             this.replaceButton.TabIndex = 14;
             this.replaceButton.Text = "Replace";
             this.replaceButton.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.replaceButton.UseSelectable = true;
             this.replaceButton.Click += new System.EventHandler(this.replaceButton_Click);
-            // 
-            // animationButton
-            // 
-            this.animationButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.animationButton.AutoSize = true;
-            this.tableLayoutPanel1.SetColumnSpan(this.animationButton, 2);
-            this.animationButton.Location = new System.Drawing.Point(3, 511);
-            this.animationButton.Name = "animationButton";
-            this.animationButton.Size = new System.Drawing.Size(211, 22);
-            this.animationButton.TabIndex = 16;
-            this.animationButton.Text = "Animation";
-            this.animationButton.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.animationButton.UseSelectable = true;
-            this.animationButton.Click += new System.EventHandler(this.animationButton_Click);
             // 
             // tileNameLabel
             // 
@@ -228,9 +231,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tileNameLabel.AutoSize = true;
             this.tableLayoutPanel1.SetColumnSpan(this.tileNameLabel, 2);
-            this.tileNameLabel.Location = new System.Drawing.Point(3, 235);
+            this.tileNameLabel.Location = new System.Drawing.Point(3, 213);
             this.tileNameLabel.Name = "tileNameLabel";
-            this.tileNameLabel.Size = new System.Drawing.Size(211, 19);
+            this.tileNameLabel.Size = new System.Drawing.Size(208, 19);
             this.tileNameLabel.TabIndex = 19;
             this.tileNameLabel.Text = "TileName";
             this.tileNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -242,13 +245,54 @@
             this.variantComboBox.Enabled = false;
             this.variantComboBox.FormattingEnabled = true;
             this.variantComboBox.ItemHeight = 23;
-            this.variantComboBox.Location = new System.Drawing.Point(65, 257);
+            this.variantComboBox.Location = new System.Drawing.Point(64, 235);
             this.variantComboBox.Name = "variantComboBox";
-            this.variantComboBox.Size = new System.Drawing.Size(149, 29);
+            this.variantComboBox.Size = new System.Drawing.Size(147, 29);
             this.variantComboBox.TabIndex = 17;
             this.variantComboBox.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.variantComboBox.UseSelectable = true;
             this.variantComboBox.SelectedIndexChanged += new System.EventHandler(this.variantComboBox_SelectedIndexChanged);
+            // 
+            // setColorButton
+            // 
+            this.setColorButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.tableLayoutPanel1.SetColumnSpan(this.setColorButton, 2);
+            this.setColorButton.Location = new System.Drawing.Point(3, 467);
+            this.setColorButton.Name = "setColorButton";
+            this.setColorButton.Size = new System.Drawing.Size(208, 19);
+            this.setColorButton.TabIndex = 25;
+            this.setColorButton.Text = "Set Custom Colour";
+            this.setColorButton.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.setColorButton.UseSelectable = true;
+            this.setColorButton.Click += new System.EventHandler(this.setColorButton_Click);
+            // 
+            // animationButton
+            // 
+            this.animationButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.animationButton.AutoSize = true;
+            this.tableLayoutPanel1.SetColumnSpan(this.animationButton, 2);
+            this.animationButton.Location = new System.Drawing.Point(3, 542);
+            this.animationButton.Name = "animationButton";
+            this.animationButton.Size = new System.Drawing.Size(208, 20);
+            this.animationButton.TabIndex = 16;
+            this.animationButton.Text = "Animation";
+            this.animationButton.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.animationButton.UseSelectable = true;
+            this.animationButton.Click += new System.EventHandler(this.animationButton_Click);
+            // 
+            // clearColorButton
+            // 
+            this.clearColorButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.tableLayoutPanel1.SetColumnSpan(this.clearColorButton, 2);
+            this.clearColorButton.Location = new System.Drawing.Point(3, 492);
+            this.clearColorButton.Name = "clearColorButton";
+            this.clearColorButton.Size = new System.Drawing.Size(208, 19);
+            this.clearColorButton.TabIndex = 24;
+            this.clearColorButton.Text = "Clear Custom Colour";
+            this.clearColorButton.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.clearColorButton.UseSelectable = true;
+            this.clearColorButton.Click += new System.EventHandler(this.clearColorButton_Click);
             // 
             // TextureAtlasEditor
             // 
@@ -294,5 +338,8 @@
         private System.Windows.Forms.ToolStripMenuItem playAnimationsToolStripMenuItem;
         private MetroFramework.Controls.MetroLabel tileNameLabel;
         private MetroFramework.Controls.MetroLabel variantLabel;
+        private MetroFramework.Controls.MetroButton clearColorButton;
+        private MetroFramework.Controls.MetroButton setColorButton;
+        private System.Windows.Forms.ToolStripMenuItem sToolStripMenuItem;
     }
 }

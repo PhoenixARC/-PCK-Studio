@@ -164,8 +164,11 @@ namespace PckStudio.Forms.Editor
                 selectTilePictureBox.Start(animation);
             }
 
-            if (dataTile.Tile.HasColourEntry)
+            if (setColorButton.Enabled = clearColorButton.Enabled = dataTile.Tile.HasColourEntry)
             {
+                setColorButton.Enabled = clearColorButton.Enabled = dataTile.Tile.ColourEntry.HasCustomColour;
+                clearColorButton.Enabled = false;
+
                 variantComboBox.Enabled = variantLabel.Visible = variantComboBox.Visible = dataTile.Tile.ColourEntry.Variants.Length > 1;
 
                 if (dataTile.Tile.ColourEntry.IsWaterColour && _colourTable.WaterColors.Count > 0)
@@ -471,6 +474,52 @@ namespace PckStudio.Forms.Editor
         {
             if (selectTilePictureBox.IsPlaying)
                 selectTilePictureBox.Stop();
+        }
+
+        private void setColorButton_Click(object sender, EventArgs e)
+        {
+            ColorDialog colorPick = new ColorDialog();
+            colorPick.AllowFullOpen = true;
+            colorPick.AnyColor = true;
+            colorPick.SolidColorOnly = true;
+
+            // custom colors are read as BGR for some reason, so hex values are "backwards"
+            // values below are the default Minecraft dyed leather armor values for convenience
+
+            colorPick.CustomColors = new int[] {
+                0x262EB0, // Red
+                0x1D80F9, // Orange
+                0x3DD8FE, // Yellow
+                0x1FC780, // Lime
+                0x167C5E, // Green
+                0xDAB33A, // Light Blue
+                0x9C9C16, // Cyan
+                0xAA443C, // Blue
+                0xB83289, // Purple
+                0xBD4EC7, // Magenta
+                0xAA8BF3, // Pink
+                0xFEFFF9, // White
+                0x979D9D, // Light Gray
+                0x524F47, // Gray
+                0x211D1D, // Black
+                0x325483  // Brown
+            };
+
+            if (colorPick.ShowDialog() != DialogResult.OK) return;
+
+            selectTilePictureBox.BlendColor = colorPick.Color;
+            selectTilePictureBox.Image = dataTile.Texture;
+            variantComboBox.Enabled = false;
+            clearColorButton.Enabled = true;
+        }
+
+        private void clearColorButton_Click(object sender, EventArgs e)
+        {
+            variantComboBox.Enabled = true;
+
+            variantComboBox_SelectedIndexChanged(sender, e);
+
+            clearColorButton.Enabled = false;
         }
     }
 }

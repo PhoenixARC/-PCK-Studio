@@ -7,7 +7,6 @@
 			"displayName": "Grass Block (Top)",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
 				"defaultName": "Grass_Common",
 				"variants": [
 					"Grass_Common",
@@ -170,7 +169,6 @@
 			"displayName": "Grass Side (Overlay)",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
 				"defaultName": "Grass_Common",
 				"variants": [
 					"Grass_Common",
@@ -185,7 +183,6 @@
 			"displayName": "Tall Grass",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
 				"defaultName": "Grass_Common",
 				"variants": [
 					"Grass_Common",
@@ -248,7 +245,6 @@
 			"displayName": "Oak Leaves",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
 				"defaultName": "Foliage_Default",
 				"variants": [
 					"Foliage_Default",
@@ -264,7 +260,6 @@
 			"displayName": "Oak Leaves (Opaque)",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
 				"defaultName": "Foliage_Default",
 				"variants": [
 					"Foliage_Default",
@@ -288,7 +283,6 @@
 			"displayName": "Fern",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
 				"defaultName": "Grass_Common",
 				"variants": [
 					"Grass_Common",
@@ -524,7 +518,6 @@
 			"displayName": "Stem",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
 				"defaultName": "Tile_StemMin",
 				"variants": [
 					"Tile_StemMin",
@@ -597,7 +590,6 @@
 			"displayName": "Stem (Attached)",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
 				"defaultName": "Tile_StemMin",
 				"variants": [
 					"Tile_StemMin",
@@ -626,7 +618,6 @@
 			"displayName": "Spruce Leaves",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
 				"defaultName": "Foliage_Evergreen",
 				"variants": [
 					"Foliage_Default",
@@ -642,7 +633,6 @@
 			"displayName": "Spruce Leaves (Opaque)",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
 				"defaultName": "Foliage_Evergreen",
 				"variants": [
 					"Foliage_Default",
@@ -694,7 +684,6 @@
 			"displayName": "Vines",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
 				"defaultName": "Foliage_Default",
 				"variants": [
 					"Foliage_Default",
@@ -790,7 +779,6 @@
 			"displayName": "Redstone Dust (Cross)",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
 				"defaultName": "Tile_RedstoneDust",
 				"variants": [
 					"Tile_RedstoneDust",
@@ -805,7 +793,6 @@
 			"displayName": "Redstone Dust (Line)",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
 				"defaultName": "Tile_RedstoneDust",
 				"variants": [
 					"Tile_RedstoneDust",
@@ -940,7 +927,6 @@
 			"displayName": "Jungle Leaves",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
 				"defaultName": "Foliage_Default",
 				"variants": [
 					"Foliage_Default",
@@ -956,7 +942,6 @@
 			"displayName": "Jungle Leaves (Opaque)",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
 				"defaultName": "Foliage_Default",
 				"variants": [
 					"Foliage_Default",
@@ -1554,7 +1539,6 @@
 			"displayName": "Large Fern (Top)",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
 				"defaultName": "Grass_Common",
 				"variants": [
 					"Grass_Common",
@@ -1569,7 +1553,6 @@
 			"displayName": "Double Tall Grass (Top)",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
 				"defaultName": "Grass_Common",
 				"variants": [
 					"Grass_Common",
@@ -1620,7 +1603,6 @@
 			"displayName": "Acacia Leaves",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
 				"defaultName": "Foliage_Default",
 				"variants": [
 					"Foliage_Default",
@@ -1636,7 +1618,6 @@
 			"displayName": "Acacia Leaves (Opaque)",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
 				"defaultName": "Foliage_Default",
 				"variants": [
 					"Foliage_Default",
@@ -1664,7 +1645,6 @@
 			"displayName": "Large Fern (Bottom)",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
 				"defaultName": "Grass_Common",
 				"variants": [
 					"Grass_Common",
@@ -1679,7 +1659,6 @@
 			"displayName": "Double Tall Grass (Bottom)",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
 				"defaultName": "Grass_Common",
 				"variants": [
 					"Grass_Common",
@@ -1730,7 +1709,6 @@
 			"displayName": "Dark Oak Leaves",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
 				"defaultName": "Foliage_Default",
 				"variants": [
 					"Foliage_Default",
@@ -1746,7 +1724,6 @@
 			"displayName": "Dark Oak Leaves (Opaque)",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
 				"defaultName": "Foliage_Default",
 				"variants": [
 					"Foliage_Default",
@@ -1818,7 +1795,6 @@
 			"displayName": "Birch Leaves",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
 				"defaultName": "Foliage_Birch",
 				"variants": [
 					"Foliage_Default",
@@ -1834,7 +1810,6 @@
 			"displayName": "Birch Leaves (Opaque)",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
 				"defaultName": "Foliage_Birch",
 				"variants": [
 					"Foliage_Default",
@@ -2318,7 +2293,7 @@
 			"displayName": "Cauldron Water",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
+				"hasCustomColour": true,
 				"defaultName": "Cauldron_Water",
 				"variants": [ 
 					"Cauldron_Water",
@@ -2924,7 +2899,7 @@
 			"displayName": "Leather Cap",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
+				"hasCustomColour": true,
 				"defaultName": "Armour_Default_Leather_Colour",
 				"variants": [ "Armour_Default_Leather_Colour" ]
 			}
@@ -2994,7 +2969,7 @@
 			"displayName": "Leather Tunic",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
+				"hasCustomColour": true,
 				"defaultName": "Armour_Default_Leather_Colour",
 				"variants": [ "Armour_Default_Leather_Colour" ]
 			}
@@ -3064,7 +3039,7 @@
 			"displayName": "Leather Pants",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
+				"hasCustomColour": true,
 				"defaultName": "Armour_Default_Leather_Colour",
 				"variants": [ "Armour_Default_Leather_Colour" ]
 			}
@@ -3134,7 +3109,7 @@
 			"displayName": "Leather Boots",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
+				"hasCustomColour": true,
 				"defaultName": "Armour_Default_Leather_Colour",
 				"variants": [ "Armour_Default_Leather_Colour" ]
 			}
@@ -3512,8 +3487,8 @@
 			"displayName": "Potion (Overlay)",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
 				"defaultName": "Potion_BaseColour",
+				"hasCustomColour": true,
 				"variants": [ 
 					"Potion_BaseColour",
 					"Effect_MovementSpeed",
@@ -3664,7 +3639,6 @@
 			"displayName": "Bed (Overlay)",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
 				"defaultName": "Bed_White",
 				"variants": [
 					"Bed_Black",
@@ -3899,7 +3873,7 @@
 			"displayName": "Leather Horse Armor",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
+				"hasCustomColour": true,
 				"defaultName": "Armour_Default_Leather_Colour",
 				"variants": [ "Armour_Default_Leather_Colour" ]
 			}
