@@ -223,7 +223,6 @@ namespace PckStudio
 			saveToolStripMenuItem1.Enabled = true;
 			quickChangeToolStripMenuItem.Enabled = true;
 			convertToBedrockToolStripMenuItem.Enabled = true;
-			addCustomPackImageToolStripMenuItem.Enabled = true;
 			BuildMainTreeView();
 			isSelectingTab = true;
 			tabControl.SelectTab(1);
@@ -251,7 +250,6 @@ namespace PckStudio
 			closeToolStripMenuItem.Visible = false;
 			packSettingsToolStripMenuItem.Visible = false;
 			convertToBedrockToolStripMenuItem.Enabled = false;
-			addCustomPackImageToolStripMenuItem.Enabled = false;
 			fileEntryCountLabel.Text = string.Empty;
 			pckFileLabel.Text = string.Empty;
 			UpdateRichPresence();
@@ -804,49 +802,49 @@ namespace PckStudio
 			LOCFile locFile = null;
 			TryGetLocFile(out locFile);
 			using AddNewSkin add = new AddNewSkin(locFile);
-				if (add.ShowDialog() == DialogResult.OK)
-				{
+			if (add.ShowDialog() == DialogResult.OK)
+			{
 
+				if (currentPCK.HasFile("Skins.pck", PckFileType.SkinDataFile)) // Prioritize Skins.pck
+				{
+					TreeNode subPCK = treeViewMain.Nodes.Find("Skins.pck", false).FirstOrDefault();
+					if (subPCK.Nodes.ContainsKey("Skins")) add.SkinFile.Filename = add.SkinFile.Filename.Insert(0, "Skins/");
+					add.SkinFile.Filename = add.SkinFile.Filename.Insert(0, "Skins.pck/");
+					TreeNode newNode = new TreeNode(Path.GetFileName(add.SkinFile.Filename));
+					newNode.Tag = add.SkinFile;
+					SetNodeIcon(newNode, PckFileType.SkinFile);
+					subPCK.Nodes.Add(newNode);
+					RebuildSubPCK(newNode.FullPath);
+				}
+				else
+				{
+					if (treeViewMain.Nodes.ContainsKey("Skins")) add.SkinFile.Filename = add.SkinFile.Filename.Insert(0, "Skins/"); // Then Skins folder
+					currentPCK.AddFile(add.SkinFile);
+				}
+				if (add.HasCape)
+				{
 					if (currentPCK.HasFile("Skins.pck", PckFileType.SkinDataFile)) // Prioritize Skins.pck
 					{
 						TreeNode subPCK = treeViewMain.Nodes.Find("Skins.pck", false).FirstOrDefault();
-						if (subPCK.Nodes.ContainsKey("Skins")) add.SkinFile.Filename = add.SkinFile.Filename.Insert(0, "Skins/");
-						add.SkinFile.Filename = add.SkinFile.Filename.Insert(0, "Skins.pck/");
-						TreeNode newNode = new TreeNode(Path.GetFileName(add.SkinFile.Filename));
-						newNode.Tag = add.SkinFile;
+						if (subPCK.Nodes.ContainsKey("Skins")) add.CapeFile.Filename = add.CapeFile.Filename.Insert(0, "Skins/");
+						add.CapeFile.Filename = add.CapeFile.Filename.Insert(0, "Skins.pck/");
+						TreeNode newNode = new TreeNode(Path.GetFileName(add.CapeFile.Filename));
+						newNode.Tag = add.CapeFile;
 						SetNodeIcon(newNode, PckFileType.SkinFile);
 						subPCK.Nodes.Add(newNode);
 						RebuildSubPCK(newNode.FullPath);
 					}
 					else
 					{
-						if (treeViewMain.Nodes.ContainsKey("Skins")) add.SkinFile.Filename = add.SkinFile.Filename.Insert(0, "Skins/"); // Then Skins folder
-						currentPCK.AddFile(add.SkinFile);
+						if (treeViewMain.Nodes.ContainsKey("Skins")) add.CapeFile.Filename = add.CapeFile.Filename.Insert(0, "Skins/"); // Then Skins folder
+						currentPCK.AddFile(add.CapeFile);
 					}
-					if (add.HasCape)
-					{
-						if (currentPCK.HasFile("Skins.pck", PckFileType.SkinDataFile)) // Prioritize Skins.pck
-						{
-							TreeNode subPCK = treeViewMain.Nodes.Find("Skins.pck", false).FirstOrDefault();
-							if (subPCK.Nodes.ContainsKey("Skins")) add.CapeFile.Filename = add.CapeFile.Filename.Insert(0, "Skins/");
-							add.CapeFile.Filename = add.CapeFile.Filename.Insert(0, "Skins.pck/");
-							TreeNode newNode = new TreeNode(Path.GetFileName(add.CapeFile.Filename));
-							newNode.Tag = add.CapeFile;
-							SetNodeIcon(newNode, PckFileType.SkinFile);
-							subPCK.Nodes.Add(newNode);
-							RebuildSubPCK(newNode.FullPath);
-						}
-						else
-						{
-							if (treeViewMain.Nodes.ContainsKey("Skins")) add.CapeFile.Filename = add.CapeFile.Filename.Insert(0, "Skins/"); // Then Skins folder
-							currentPCK.AddFile(add.CapeFile);
-						}
-					}
-
-					TrySetLocFile(locFile);
-					wasModified = true;
-					BuildMainTreeView();
 				}
+
+				TrySetLocFile(locFile);
+				wasModified = true;
+				BuildMainTreeView();
+			}
 		}
 
 		private static PckFileData CreateNewAudioFile(bool isLittle)
@@ -2024,91 +2022,6 @@ namespace PckStudio
 				ReloadMetaTreeView();
 				RebuildSubPCK(treeViewMain.SelectedNode.FullPath);
 				wasModified = true;
-			}
-		}
-
-		private void addCustomPackIconToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			string packID = "0";
-
-			using NumericPrompt numericPrompt = new NumericPrompt(0);
-			numericPrompt.Minimum = 0; // TODO: put min pack ID value (keeping this 0 just to be safe)
-			numericPrompt.Maximum = int.MinValue; // TODO: put max pack ID value
-			numericPrompt.ContextLabel.Text = "Please insert the desired Pack ID";
-			numericPrompt.TextLabel.Text = "Pack ID";
-
-			if (currentPCK is not null)
-			{
-				DialogResult prompt = MessageBox.Show(this,
-					"Would you like to use the current PackID? You can enter any PackID if not.",
-					"",
-					MessageBoxButtons.YesNoCancel);
-
-				switch (prompt)
-				{
-					case DialogResult.Yes:
-						if (!currentPCK.TryGetFile("0", PckFileType.InfoFile, out PckFileData file) ||
-							string.IsNullOrEmpty(file.Properties.GetPropertyValue("PACKID")))
-						{
-							MessageBox.Show(this,
-								"No PackID is present in this PCK. " +
-								"To avoid this error, ensure that the PCK has a proper PackID property on the \"0\" Info file before trying again.",
-								"Operation Aborted", MessageBoxButtons.OK, MessageBoxIcon.Error);
-							return;
-						}
-
-						packID = file.Properties.GetPropertyValue("PACKID");
-						break;
-					case DialogResult.No:
-						break;
-					case DialogResult.Cancel:
-					default:
-						MessageBox.Show(this, "Operation cancelled");
-						return;
-				}
-			}
-			else if (numericPrompt.ShowDialog(this) == DialogResult.OK) packID = numericPrompt.SelectedValue.ToString();
-			else
-			{
-				MessageBox.Show(this, "Operation cancelled");
-				return;
-			}
-
-			OpenFileDialog fileDialog = new OpenFileDialog();
-			fileDialog.Filter = "Minecraft Archive|*.arc";
-			if (fileDialog.ShowDialog(this) == DialogResult.OK)
-			{
-				var reader = new ARCFileReader();
-				ConsoleArchive archive = reader.FromFile(fileDialog.FileName);
-
-				fileDialog.Filter = "Pack Icon|*.png";
-				if (fileDialog.ShowDialog(this) == DialogResult.OK)
-				{
-					string key = string.Format("Graphics\\PackGraphics\\{0}.png", packID);
-
-					if (archive.Keys.Contains(key))
-					{
-						DialogResult prompt = MessageBox.Show(this,
-							"This pack already has a pack icon present in the chosen file. Would you like to replace the pack icon?",
-							"Icon already exists",
-							MessageBoxButtons.YesNoCancel);
-						switch (prompt)
-						{
-							case DialogResult.Yes:
-								archive.Remove(key); // remove file so it can be injected
-								break;
-							case DialogResult.No:
-							case DialogResult.Cancel:
-							default:
-								Trace.WriteLine("Operation cancelled", category: nameof(addCustomPackIconToolStripMenuItem_Click));
-								return;
-						}
-					}
-					archive.Add(key, File.ReadAllBytes(fileDialog.FileName));
-					var writer = new ARCFileWriter(archive);
-					writer.WriteToFile(fileDialog.FileName);
-					MessageBox.Show($"Successfully added {key} to Archive!", "Successfully Added", MessageBoxButtons.OK, MessageBoxIcon.Information);
-				}
 			}
 		}
 
