@@ -242,15 +242,23 @@ namespace PckStudio.Popups
             }
             string skinId = _skinId.ToString("d08");
             skin.Filename = $"dlcskin{skinId}.png";
-            string skinDisplayNameLocKey = $"IDS_dlcskin{skinId}_DISPLAYNAME";
-            currentLoc.AddLocKey(skinDisplayNameLocKey, textSkinName.Text);
             skin.Properties.Add("DISPLAYNAME", textSkinName.Text);
-            skin.Properties.Add("DISPLAYNAMEID", skinDisplayNameLocKey);
+
+            if (currentLoc is not null)
+            {
+                string skinDisplayNameLocKey = $"IDS_dlcskin{skinId}_DISPLAYNAME";
+                skin.Properties.Add("DISPLAYNAMEID", skinDisplayNameLocKey);
+                currentLoc.AddLocKey(skinDisplayNameLocKey, textSkinName.Text);
+            }
+
             if (!string.IsNullOrEmpty(textThemeName.Text))
             {
                 skin.Properties.Add("THEMENAME", textThemeName.Text);
-                skin.Properties.Add("THEMENAMEID", $"IDS_dlcskin{skinId}_THEMENAME");
-                currentLoc.AddLocKey($"IDS_dlcskin{skinId}_THEMENAME", textThemeName.Text);
+                if (currentLoc is not null)
+                {
+                    skin.Properties.Add("THEMENAMEID", $"IDS_dlcskin{skinId}_THEMENAME");
+                    currentLoc.AddLocKey($"IDS_dlcskin{skinId}_THEMENAME", textThemeName.Text);
+                }
             }
             skin.Properties.Add("ANIM", anim);
             skin.Properties.Add("GAME_FLAGS", "0x18");

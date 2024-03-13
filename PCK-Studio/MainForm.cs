@@ -801,12 +801,9 @@ namespace PckStudio
 
 		private void createSkinToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (!TryGetLocFile(out LOCFile locFile))
-			{
-				MessageBox.Show("No .loc file found", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				return;
-			}
-			using (AddNewSkin add = new AddNewSkin(locFile))
+			LOCFile locFile = null;
+			TryGetLocFile(out locFile);
+			using AddNewSkin add = new AddNewSkin(locFile);
 				if (add.ShowDialog() == DialogResult.OK)
 				{
 
