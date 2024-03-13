@@ -1363,32 +1363,6 @@
   <data name="quickChangeToolStripMenuItem.Text" xml:space="preserve">
     <value>Quick Change</value>
   </data>
-  <data name="convertToBedrockToolStripMenuItem.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="convertToBedrockToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vAAADrwBlbxySQAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xMkMEa+wAAAJeSURBVDhPhVFp
-        TxNRFH1/RbGdlsQElaWzdaQgbadFtnkznWlLCm2Q2UCxTqdFFAzTRONSYheIoCjRpmoErBiKW/hi4q+q
-        bxpoSPzgyfnw7r3nvHvveyD92W/UQ5l9Vt6h5B1S2/Wntnr1977lHxDltVr/7FtaqTLJbc/YU+f8x0GQ
-        rgfmPgw9aoj390dX6uMSgWlVMvkGT7zqLR5PF34lzL3w9HZXunZNfuedr/nAw+9RnnZt/dHl1+SN2lWO
-        cS3sDsVxbOEgsPwTFo9Tz38nRdIRK15MvvRIlBtIFKboSoTGRMp5e4+VaEeEdoi0Y2r7kkBjyqcBjsEW
-        x3s4xomUWUiAkhoweLqiBRurEFLujVl/lvfkICESFyK0M0qc1xU5KxAlOSzQbtuQm+iWiHMVjd2Q++9A
-        b0X3C2SHSHYIpNPgGZMnRbIzLeBZrs8QmH1rEuw+iEVo1xLfl+O6nqzcvQd7MpDay6cQm2fwTBnO8sQL
-        xQcaFq+GLm/eGtm8OfY4N2NN+VBhbWawmhmzhQDYbDatSSafGECDgC/WFFLUrdTBanRNGUbLoDADiTVt
-        5KwBJQvaaFG9Dspq0Ji4YghEWQtlJvCCHLJ1bZwa2rANJZ2VvO5FAUdEh1a6pfuXJ4a5EdTxWz6GaPL4
-        fw0hkydysK+khdFUh5ZkG9o41bUBDA6HjGsd7Qo9ZR0tzR5ZcdRwietu1U8M6NKv+XjDioIM5ylqYfRB
-        izwRoZwmpCoqW9KDJjwzW7N5aMXLGoveEBRV1uQ9EarzKB/LQlyiXOj/JS+GmtiGU6BwXQ2sa8G/5oRp
-        fQPDL0EAAAAASUVORK5CYII=
-</value>
-  </data>
-  <data name="convertToBedrockToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>192, 22</value>
-  </data>
-  <data name="convertToBedrockToolStripMenuItem.Text" xml:space="preserve">
-    <value>Convert to Bedrock</value>
-  </data>
   <data name="editToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>39, 20</value>
   </data>
@@ -6751,12 +6725,6 @@
     <value>quickChangeToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;quickChangeToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;convertToBedrockToolStripMenuItem.Name" xml:space="preserve">
-    <value>convertToBedrockToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;convertToBedrockToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;miscToolStripMenuItem.Name" xml:space="preserve">

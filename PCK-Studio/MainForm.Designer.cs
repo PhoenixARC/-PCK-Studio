@@ -89,7 +89,6 @@
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.quickChangeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.convertToBedrockToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.miscToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openPckManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.convertMusicFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -560,8 +559,7 @@
             // editToolStripMenuItem
             // 
             this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.quickChangeToolStripMenuItem,
-            this.convertToBedrockToolStripMenuItem});
+            this.quickChangeToolStripMenuItem});
             this.editToolStripMenuItem.ForeColor = System.Drawing.Color.Silver;
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             resources.ApplyResources(this.editToolStripMenuItem, "editToolStripMenuItem");
@@ -571,12 +569,6 @@
             resources.ApplyResources(this.quickChangeToolStripMenuItem, "quickChangeToolStripMenuItem");
             this.quickChangeToolStripMenuItem.Name = "quickChangeToolStripMenuItem";
             this.quickChangeToolStripMenuItem.Click += new System.EventHandler(this.quickChangeToolStripMenuItem_Click);
-            // 
-            // convertToBedrockToolStripMenuItem
-            // 
-            resources.ApplyResources(this.convertToBedrockToolStripMenuItem, "convertToBedrockToolStripMenuItem");
-            this.convertToBedrockToolStripMenuItem.Name = "convertToBedrockToolStripMenuItem";
-            this.convertToBedrockToolStripMenuItem.Click += new System.EventHandler(this.convertToBedrockToolStripMenuItem_Click);
             // 
             // miscToolStripMenuItem
             // 
@@ -1163,7 +1155,6 @@
         private System.Windows.Forms.ToolStripMenuItem folderToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem skinToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem createAnimatedTextureToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem convertToBedrockToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem storeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openPckCenterToolStripMenuItem;
         private MetroFramework.Controls.MetroTabControl tabControl;

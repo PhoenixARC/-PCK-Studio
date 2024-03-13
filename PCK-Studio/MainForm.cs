@@ -222,7 +222,6 @@ namespace PckStudio
 			saveToolStripMenuItem.Enabled = true;
 			saveToolStripMenuItem1.Enabled = true;
 			quickChangeToolStripMenuItem.Enabled = true;
-			convertToBedrockToolStripMenuItem.Enabled = true;
 			BuildMainTreeView();
 			isSelectingTab = true;
 			tabControl.SelectTab(1);
@@ -249,7 +248,6 @@ namespace PckStudio
 			quickChangeToolStripMenuItem.Enabled = false;
 			closeToolStripMenuItem.Visible = false;
 			packSettingsToolStripMenuItem.Visible = false;
-			convertToBedrockToolStripMenuItem.Enabled = false;
 			fileEntryCountLabel.Text = string.Empty;
 			pckFileLabel.Text = string.Empty;
 			UpdateRichPresence();
@@ -1642,11 +1640,6 @@ namespace PckStudio
 				}
 				nodeCollection.Add(folerNode);
 			}
-		}
-
-		private void convertToBedrockToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			MessageBox.Show("This feature is currently being reworked.", "Currently unavailable", MessageBoxButtons.OK, MessageBoxIcon.Information);
 		}
 
 		private void openPckCenterToolStripMenuItem_Click(object sender, EventArgs e)
