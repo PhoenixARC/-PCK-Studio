@@ -94,7 +94,7 @@ namespace PckStudio.Forms.Editor
 
         private void GenerateUVTextureMap(SkinBOX skinBox)
         {
-            using (Graphics graphics = Graphics.FromImage(uvPictureBox.BackgroundImage))
+            using (Graphics graphics = Graphics.FromImage(_skin.Texture))
             {
                 graphics.ApplyConfig(_graphicsConfig);
                 int argb = rng.Next(unchecked((int)0xFF000000), -1);
@@ -102,8 +102,7 @@ namespace PckStudio.Forms.Editor
                 Brush brush = new SolidBrush(color);
                 graphics.FillPath(brush, skinBox.GetUVGraphicsPath());
             }
-            uvPictureBox.Invalidate();
-            renderer3D1.Texture = uvPictureBox.BackgroundImage;
+            renderer3D1.Texture = _skin.Texture;
         }
 
         private void createToolStripMenuItem_Click(object sender, EventArgs e)
@@ -274,8 +273,7 @@ namespace PckStudio.Forms.Editor
                 MessageBox.Show("The selected image does not suit a skin texture.", "Invalid image dimensions.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            generateTextureCheckBox.Checked = false;
-            uvPictureBox.BackgroundImage = _skin.Texture = img;
+            uvPictureBox.Image = _skin.Texture = img;
         }
 
         private void skinPartListBox_DoubleClick(object sender, EventArgs e)
@@ -297,16 +295,14 @@ namespace PckStudio.Forms.Editor
             if (skinPartListBox.SelectedItem is SkinBOX box)
             {
                 renderer3D1.SelectedIndex = skinPartListBox.SelectedIndex;
-                uvPictureBox.Image = new Bitmap(uvPictureBox.BackgroundImage.Width * scale, uvPictureBox.BackgroundImage.Height * scale);
+                Size scaleSize = new Size(_skin.Texture.Width * scale, _skin.Texture.Height * scale);
+                uvPictureBox.Image = new Bitmap(scaleSize.Width, scaleSize.Height);
                 using (Graphics g = Graphics.FromImage(uvPictureBox.Image))
                 {
-                    float lineWidth = ((uvPictureBox.BackgroundImage.Width / renderer3D1.TextureSize.Width) + (uvPictureBox.BackgroundImage.Height / renderer3D1.TextureSize.Height)) / 2f;
-                    GraphicsPath graphicsPath = box.GetUVGraphicsPath(
-                        new System.Numerics.Vector2(
-                            scale * renderer3D1.TillingFactor.X * uvPictureBox.BackgroundImage.Width,
-                            scale * renderer3D1.TillingFactor.Y * uvPictureBox.BackgroundImage.Height
-                            )
-                        );
+                    float lineWidth = ((_skin.Texture.Width / renderer3D1.TextureSize.Width) + (_skin.Texture.Height / renderer3D1.TextureSize.Height)) / 2f;
+                    GraphicsPath graphicsPath = box.GetUVGraphicsPath(new System.Numerics.Vector2(scaleSize.Width * renderer3D1.TillingFactor.X, scaleSize.Height * renderer3D1.TillingFactor.Y));
+                    g.ApplyConfig(_graphicsConfig);
+                    g.DrawImage(_skin.Texture, new Rectangle(Point.Empty, scaleSize), new Rectangle(Point.Empty, _skin.Texture.Size), GraphicsUnit.Pixel);
                     g.DrawPath(new Pen(renderer3D1.OutlineColor, lineWidth), graphicsPath);
                 }
                 uvPictureBox.Invalidate();
