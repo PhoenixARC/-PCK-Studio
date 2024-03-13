@@ -57,7 +57,6 @@ namespace PckStudio.Rendering
                 if (!args.Cancel)
                 {
                     _skinImage = value;
-                    TextureSize = value.Width == value.Height ? new Size(64, 64) : new Size(64, 32);
                 }
             }
         }
