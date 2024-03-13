@@ -140,6 +140,28 @@ namespace PckStudio.Forms.Editor
             return false;
         }
 
+        private void updatePictureBoxDisplay()
+        {
+            var graphicsConfig = new GraphicsConfig()
+            {
+                InterpolationMode = selectTilePictureBox.InterpolationMode,
+                PixelOffsetMode = PixelOffsetMode.HighQuality
+            };
+            using (var g = Graphics.FromImage(originalPictureBox.Image))
+            {
+                g.ApplyConfig(graphicsConfig);
+                g.Clear(Color.Transparent);
+                g.DrawImage(_workingTexture, new Point(0, 0));
+                g.DrawRectangle(
+                    Pens.White,
+                    new Rectangle(_selectedTile.Area.X, _selectedTile.Area.Y,
+                    _selectedTile.Area.Width,
+                    _selectedTile.Area.Height));
+            }
+
+            originalPictureBox.Invalidate();
+        }
+
         private void SetImageDisplayed(int index)
         {
             tileNameLabel.Text = string.Empty;
@@ -160,24 +182,7 @@ namespace PckStudio.Forms.Editor
 
             dataTile = _selectedTile;
 
-            var graphicsConfig = new GraphicsConfig()
-            {
-                InterpolationMode = selectTilePictureBox.InterpolationMode,
-                PixelOffsetMode = PixelOffsetMode.HighQuality
-            };
-            using (var g = Graphics.FromImage(originalPictureBox.Image))
-            {
-                g.ApplyConfig(graphicsConfig);
-                g.Clear(Color.Transparent);
-                g.DrawImage(_workingTexture, new Point(0, 0));
-                g.DrawRectangle(
-                    Pens.White,
-                    new Rectangle(_selectedTile.Area.X, _selectedTile.Area.Y, 
-                    _selectedTile.Area.Width,
-                    _selectedTile.Area.Height));
-            }
-
-            originalPictureBox.Invalidate();
+            updatePictureBoxDisplay();
 
             if (string.IsNullOrEmpty(dataTile.Tile.InternalName))
             {
@@ -352,7 +357,8 @@ namespace PckStudio.Forms.Editor
 
             _tiles[_selectedTile.Index] = new AtlasTile(_selectedTile.Index, _selectedTile.Area, _selectedTile.Tile, texture);
             selectTilePictureBox.Image = texture;
-            originalPictureBox.Invalidate();
+
+            updatePictureBoxDisplay();
         }
 
         private Color GetBlendColor()
