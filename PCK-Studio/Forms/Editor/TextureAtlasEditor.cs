@@ -76,7 +76,17 @@ namespace PckStudio.Forms.Editor
 
         private int SelectedIndex
         {
-            set => SetImageDisplayed(value);
+            set {
+                if (value < 0)
+                {
+                    value = _tiles.Count + value;
+                }
+                else if (value >= _tiles.Count)
+                {
+                    value = value - _tiles.Count;
+                }
+                SetImageDisplayed(value); 
+            }
         }
 
         private const ImageLayoutDirection _imageLayout = ImageLayoutDirection.Horizontal;
@@ -348,34 +358,17 @@ namespace PckStudio.Forms.Editor
             switch (keyData)
             {
                 case Keys.Left:
-                    if (_tiles.IndexInRange(_selectedTile.Index - 1))
-                    {
-                        SelectedIndex = _selectedTile.Index - 1;
-                        return true;
-                    }
-                    break;
+                    SelectedIndex = _selectedTile.Index - 1;
+                    return true;
                 case Keys.Right:
-                    if (_tiles.IndexInRange(_selectedTile.Index + 1))
-                    {
-                        SelectedIndex = _selectedTile.Index + 1;
-                        return true;
-                    }
-                    break;
+                    SelectedIndex = _selectedTile.Index + 1;
+                    return true;
                 case Keys.Up:
-                    if (_tiles.IndexInRange(_selectedTile.Index - _rowCount))
-                    {
-                        SelectedIndex = _selectedTile.Index - _rowCount;
-                        return true;
-                    }
-                    break;
-
+                    SelectedIndex = _selectedTile.Index - _rowCount;
+                    return true;
                 case Keys.Down:
-                    if (_tiles.IndexInRange(_selectedTile.Index + _rowCount))
-                    {
-                        SelectedIndex = _selectedTile.Index + _rowCount;
-                        return true;
-                    }
-                    break;
+                    SelectedIndex = _selectedTile.Index + _rowCount;
+                    return true;
             }
 
             return false;
