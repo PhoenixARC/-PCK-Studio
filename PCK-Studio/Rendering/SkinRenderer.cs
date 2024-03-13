@@ -284,7 +284,6 @@ namespace PckStudio.Rendering
 
             _shaders = new ShaderLibrary();
             ANIM ??= new SkinANIM(SkinAnimMask.RESOLUTION_64x64);
-            OnTimerTick = AnimationTick;
             ModelData = new ObservableCollection<SkinBOX>();
             ModelData.CollectionChanged += ModelData_CollectionChanged;
         }
@@ -1275,8 +1274,9 @@ namespace PckStudio.Rendering
             return model;
         }
         
-        private void AnimationTick(object sender, EventArgs e)
+        protected override void OnUpdate(object sender, TimestepEventArgs e)
         {
+            base.OnUpdate(sender, e);
             animationCurrentRotationAngle += animationRotationSpeed;
             if (animationCurrentRotationAngle >= animationMaxAngleInDegrees || animationCurrentRotationAngle <= -animationMaxAngleInDegrees)
                 animationRotationSpeed = -animationRotationSpeed;

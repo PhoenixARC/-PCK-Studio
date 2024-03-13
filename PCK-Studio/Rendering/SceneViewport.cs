@@ -40,7 +40,7 @@ namespace PckStudio.Rendering
     internal class SceneViewport : GLControl
     {
         /// <summary>
-        /// Refresh rate at which the frame is updated. Default is 50(Hz)
+        /// Refresh rate at which the frame is updated. Default is 60(Hz)
         /// </summary>
         public int RefreshRate
         {
@@ -53,15 +53,30 @@ namespace PckStudio.Rendering
         }
 
         protected PerspectiveCamera Camera { get; }
-        protected EventHandler OnTimerTick { get; set; }
 
-        private int refreshRate = 60;
+        protected class TimestepEventArgs : EventArgs
+        {
+            public readonly float Delta;
+
+            public TimestepEventArgs(double seconds)
+            {
+                Delta = (float)seconds;
+            }
+        }
+
+        protected virtual void OnUpdate(object sender, TimestepEventArgs e)
+        {
+            Debug.WriteLine(e.Delta);
+        }
+
+        private int refreshRate = 120;
         private Timer timer;
+        private Stopwatch stopwatch;
+        private bool isInitialized;
 
         private ShaderProgram colorShader;
         private VertexArray VAO;
         private IndexBuffer IBO;
-        private bool isInitialized;
 
         protected void Init()
         {
@@ -98,10 +113,15 @@ namespace PckStudio.Rendering
         public SceneViewport() : base()
         {
             timer = new Timer();
+            stopwatch = new Stopwatch();
             RefreshRate = refreshRate;
             timer.Tick += TimerTick;
-            timer.Start();
-            timer.Enabled = !DesignMode;
+            if (!DesignMode)
+            {
+                timer.Start();
+                stopwatch.Start();
+            }
+
             Camera = new PerspectiveCamera(60f, new Vector3(0f, 0f, 0f));
             VSync = true;
             isInitialized = false;
@@ -112,6 +132,7 @@ namespace PckStudio.Rendering
             if (disposing)
             {
                 timer.Stop();
+                stopwatch.Stop();
                 timer.Dispose();
             }
             MakeCurrent();
@@ -161,8 +182,11 @@ namespace PckStudio.Rendering
 
         private void TimerTick(object sender, EventArgs e)
         {
-            OnTimerTick?.Invoke(sender, e);
-            Invalidate();
+            stopwatch.Stop();
+            double deltaTime = stopwatch.Elapsed.TotalMilliseconds;
+            OnUpdate(sender, new TimestepEventArgs(deltaTime));
+            stopwatch.Restart();
+            Refresh();
         }
 
         protected override void OnSizeChanged(EventArgs e)
