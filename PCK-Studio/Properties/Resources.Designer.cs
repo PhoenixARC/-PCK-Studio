@@ -415,6 +415,16 @@ namespace PckStudio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap moon_phases_sheet {
+            get {
+                object obj = ResourceManager.GetObject("moon_phases_sheet", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
         public static byte[] mss32 {
@@ -617,30 +627,28 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized string similar to {
         ///	&quot;COMMENT_1&quot;: &quot;Tile data research by MattNL&quot;,
-        ///	&quot;COMMENT_2&quot;: &quot;JSON conversion by PhoenixARC&quot;,
+        ///	&quot;COMMENT_2&quot;: &quot;JSON by PhoenixARC, MattNL, and NessieHax (Miku-666)&quot;,
         ///	&quot;blocks&quot;: [
         ///		{
         ///			&quot;internalName&quot;: &quot;grass_top&quot;,
-        ///			&quot;displayName&quot;: &quot;Grass Block (Top)&quot;
+        ///			&quot;displayName&quot;: &quot;Grass Block (Top)&quot;,
+        ///			&quot;hasColourEntry&quot;: true,
+        ///			&quot;colourEntry&quot;: {
+        ///				&quot;defaultName&quot;: &quot;Grass_Common&quot;,
+        ///				&quot;variants&quot;: [
+        ///					&quot;Grass_Common&quot;,
+        ///					&quot;Grass_Mesa&quot;,
+        ///					&quot;Grass_Swamp1&quot;,
+        ///					&quot;Grass_Swamp2&quot;
+        ///				]
+        ///			}
         ///		},
         ///		{
         ///			&quot;internalName&quot;: &quot;stone&quot;,
         ///			&quot;displayName&quot;: &quot;Stone&quot;
         ///		},
         ///		{
-        ///			&quot;internalName&quot;: &quot;dirt&quot;,
-        ///			&quot;displayName&quot;: &quot;Dirt&quot;
-        ///		},
-        ///		{
-        ///			&quot;internalName&quot;: &quot;grass_side&quot;,
-        ///			&quot;displayName&quot;: &quot;Grass Block (Side)&quot;
-        ///		},
-        ///		{
-        ///			&quot;internalName&quot;: &quot;planks_oak&quot;,
-        ///			&quot;displayName&quot;: &quot;Oak Planks&quot;
-        ///		},
-        ///		{
-        ///			&quot;internalName&quot;: [rest of string was truncated]&quot;;.
+        ///			&quot;internalName&quot;:  [rest of string was truncated]&quot;;.
         /// </summary>
         public static string tileData {
             get {

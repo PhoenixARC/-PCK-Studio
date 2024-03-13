@@ -17,6 +17,8 @@ namespace PckStudio.Internal.Json
         public List<JsonTileInfo> Blocks { get; set; }
         [JsonProperty("items")]
         public List<JsonTileInfo> Items { get; set; }
+        [JsonProperty("moon_phases")]
+        public List<JsonTileInfo> MoonPhases { get; set; }
     }
 
     internal static class Tiles
@@ -27,12 +29,16 @@ namespace PckStudio.Internal.Json
         internal static List<JsonTileInfo> ItemTileInfos => JsonTileData.Items;
 
         internal static List<JsonTileInfo> BlockTileInfos => JsonTileData.Blocks;
+        internal static List<JsonTileInfo> MoonPhasesTileInfos => JsonTileData.MoonPhases;
 
         private static Image[] _itemImages;
         public static Image[] ItemImages => _itemImages ??= Resources.items_sheet.SplitHorizontal(16).ToArray();
 
         private static Image[] _blockImages;
         public static Image[] BlockImages => _blockImages ??= Resources.terrain_sheet.SplitHorizontal(16).ToArray();
+
+        private static Image[] _moonPhasesImages;
+        public static Image[] MoonPhasesImages => _moonPhasesImages ??= Resources.moon_phases_sheet.SplitHorizontal(8).ToArray();
 
         private static ImageList _itemImageList;
         public static ImageList ItemImageList
@@ -61,6 +67,21 @@ namespace PckStudio.Internal.Json
                     _blockImageList.Images.AddRange(BlockImages);
                 }
                 return _blockImageList;
+            }
+        }
+
+        private static ImageList _moonPhasesImageList;
+        public static ImageList MoonPhasesImageList
+        {
+            get
+            {
+                if (_moonPhasesImageList is null)
+                {
+                    _moonPhasesImageList = new ImageList();
+                    _moonPhasesImageList.ColorDepth = ColorDepth.Depth32Bit;
+                    _moonPhasesImageList.Images.AddRange(MoonPhasesImages);
+                }
+                return _moonPhasesImageList;
             }
         }
     }

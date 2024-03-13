@@ -94,6 +94,7 @@ namespace PckStudio.Forms.Editor
             {
                 "terrain" => (Tiles.BlockTileInfos, "blocks"),
                 "items" => (Tiles.ItemTileInfos, "items"),
+                "moon_phases" => (Tiles.MoonPhasesTileInfos, "moon_phases"),
                 _ => (null, null),
             };
             originalPictureBox.Image = atlas;
@@ -151,17 +152,20 @@ namespace PckStudio.Forms.Editor
             selectTilePictureBox.BlendColor = GetBlendColor();
             selectTilePictureBox.UseBlendColor = applyColorMaskToolStripMenuItem.Checked;
 
-            bool hasAnimation =
-                _pckFile.TryGetValue($"res/textures/{_atlasType}/{dataTile.Tile.InternalName}.png", PckFileType.TextureFile, out var animationFile);
-            animationButton.Text = hasAnimation ? "Edit Animation" : "Create Animation";
-            replaceButton.Enabled = !hasAnimation;
-
-            if (playAnimationsToolStripMenuItem.Checked &&
-                hasAnimation &&
-                animationFile.Size > 0)
+            if (animationButton.Enabled = _atlasType == "blocks" || _atlasType == "items")
             {
-                var animation = AnimationHelper.GetAnimationFromFile(animationFile);
-                selectTilePictureBox.Start(animation);
+                bool hasAnimation =
+                    _pckFile.TryGetValue($"res/textures/{_atlasType}/{dataTile.Tile.InternalName}.png", PckFileType.TextureFile, out var animationFile);
+                animationButton.Text = hasAnimation ? "Edit Animation" : "Create Animation";
+                replaceButton.Enabled = !hasAnimation;
+
+                if (playAnimationsToolStripMenuItem.Checked &&
+                    hasAnimation &&
+                    animationFile.Size > 0)
+                {
+                    var animation = AnimationHelper.GetAnimationFromFile(animationFile);
+                    selectTilePictureBox.Start(animation);
+                }
             }
 
             if (setColorButton.Enabled = clearColorButton.Enabled = dataTile.Tile.HasColourEntry)
@@ -504,7 +508,7 @@ namespace PckStudio.Forms.Editor
                 0x211D1D, // Black
                 0x325483  // Brown
             };
-
+            
             if (colorPick.ShowDialog() != DialogResult.OK) return;
 
             selectTilePictureBox.BlendColor = colorPick.Color;

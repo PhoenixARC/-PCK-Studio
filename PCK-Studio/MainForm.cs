@@ -375,11 +375,19 @@ namespace PckStudio
 				return;
 			}
 
-			if (file.Filename == "res/terrain.png" || file.Filename == "res/items.png")
+			bool isTerrainOrItems = file.Filename == "res/terrain.png" || file.Filename == "res/items.png";
+			bool isMoon = file.Filename == "res/terrain/moon_phases.png";
+
+			if (isTerrainOrItems || isMoon)
 			{
 				var img = file.GetTexture();
-				var res = img.Width / 16; // texture count on X axes
-				var size = new Size(res, res);
+
+				var columnCount = 0;
+				if (isTerrainOrItems) columnCount = 16;
+				else if (isMoon) columnCount = 4;
+
+				var resolution = img.Width / columnCount;
+				var size = new Size(resolution, resolution);
 				var viewer = new TextureAtlasEditor(currentPCK, file.Filename, img, size);
 				if (viewer.ShowDialog() == DialogResult.OK)
 				{

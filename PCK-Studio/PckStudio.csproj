@@ -689,6 +689,7 @@
     <None Include="Resources\icons\ranch.png" />
     <Content Include="Resources\icons\Replace.png" />
     <Content Include="Resources\icons\Save.png" />
+    <None Include="Resources\moon_phases.png" />
     <Content Include="Resources\NoImageFound.png" />
   </ItemGroup>
   <ItemGroup>
