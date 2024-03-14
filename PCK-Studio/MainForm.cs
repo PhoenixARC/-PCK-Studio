@@ -723,7 +723,9 @@ namespace PckStudio
 			{
 				if (TryGetLocFile(out LOCFile locFile))
 				{
+					if (file.Properties.HasProperty("THEMENAMEID"))
 					locFile.RemoveLocKey(file.Properties.GetPropertyValue("THEMENAMEID"));
+					if (file.Properties.HasProperty("DISPLAYNAMEID"))
 					locFile.RemoveLocKey(file.Properties.GetPropertyValue("DISPLAYNAMEID"));
 					TrySetLocFile(locFile);
 				}
