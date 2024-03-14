@@ -379,14 +379,16 @@ namespace PckStudio
 			bool isMoonPhases = file.Filename == "res/terrain/moon_phases.png";
 			bool isMapIcons = file.Filename == "res/misc/mapicons.png";
 			bool isAdditionalMapIcons = file.Filename == "res/misc/additionalmapicons.png";
+			bool isXPOrbs = file.Filename == "res/item/xporb.png";
 
-			if (isTerrainOrItems || isMoonPhases || isMapIcons || isAdditionalMapIcons)
+			if (isTerrainOrItems || isMoonPhases || isMapIcons || isAdditionalMapIcons || isXPOrbs)
 			{
 				var img = file.GetTexture();
 
-				var columnCount = 0;
+				// all of the other atlases so far use 4
+				var columnCount = 4;
+				
 				if (isTerrainOrItems) columnCount = 16;
-				else if (isMoonPhases || isMapIcons || isAdditionalMapIcons) columnCount = 4;
 
 				var resolution = img.Width / columnCount;
 				var size = new Size(resolution, resolution);

@@ -680,6 +680,7 @@
     <None Include="Resources\atlases\additional_mapicons.png" />
     <None Include="Resources\atlases\map_icons.png" />
     <Content Include="Resources\atlases\entities.png" />
+    <None Include="Resources\atlases\experience_orbs.png" />
     <Content Include="Resources\atlases\items.png" />
     <Content Include="Resources\atlases\moon_phases.png" />
     <Content Include="Resources\atlases\terrain.png" />

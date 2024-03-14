@@ -1,4 +1,4 @@
-﻿/* Copyright (c) 2023-present miku-666
+﻿/* Copyright (c) 2023-present miku-666, MattNL
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
  * arising from the use of this software.
@@ -111,9 +111,11 @@ namespace PckStudio.Forms.Editor
                 "mapicons" => (Tiles.MapIconTileInfos, "map_icons"),
                 "additionalmapicons" => (Tiles.AdditionalMapIconTileInfos, "additional_map_icons"),
                 "moon_phases" => (Tiles.MoonPhaseTileInfos, "moon_phases"),
+                "xporb" => (Tiles.ExperienceOrbTileInfos, "experience_orbs"),
                 _ => (null, null),
             };
 
+            // there's got to be a better way to get around this clone exception
             originalPictureBox.Image = (Image)((Bitmap)atlas).Clone(new Rectangle(new Point(0, 0), new Size(atlas.Width - 1, atlas.Height - 1)), PixelFormat.Format32bppArgb);
 
             var images = atlas.Split(_areaSize, _imageLayout);
@@ -368,9 +370,12 @@ namespace PckStudio.Forms.Editor
                 var col = FindBlendColorByKey(dataTile.Tile.ColourEntry.DefaultName);
                 return col;
             }
+            
             return Color.White;
         }
 
+        int xp_orb_red = 0x0;
+        bool xp_orb_reverse = false;
         private Color FindBlendColorByKey(string colorKey)
         {
             if (_colourTable is not null &&
@@ -390,6 +395,18 @@ namespace PckStudio.Forms.Editor
                     return waterColor.SurfaceColor;
                 }
             }
+
+            // Experience Orbs are hardcoded within a range and do not have color table entries
+            if (colorKey == "experience_orb")
+            {
+                if (xp_orb_red == 0) xp_orb_reverse = false;
+                if (xp_orb_red == 0xFF) xp_orb_reverse = true;
+
+                xp_orb_red += xp_orb_reverse ? -0x05 : 0x05;
+
+                return Color.FromArgb(xp_orb_red, 255, 0);
+            }
+
             return Color.White;
         }
 
@@ -397,6 +414,10 @@ namespace PckStudio.Forms.Editor
         {
             switch (keyData)
             {
+                case Keys.R:
+                    // Reselects the specific tile. Can be held to for cycling through colors for XP orbs
+                    SelectedIndex = _selectedTile.Index;
+                    return true;
                 case Keys.Left:
                     SelectedIndex = _selectedTile.Index - 1;
                     return true;

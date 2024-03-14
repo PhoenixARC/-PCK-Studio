@@ -15,14 +15,21 @@ namespace PckStudio.Internal.Json
     {
         [JsonProperty("blocks")]
         public List<JsonTileInfo> Blocks { get; set; }
+        
         [JsonProperty("items")]
         public List<JsonTileInfo> Items { get; set; }
+        
         [JsonProperty("moon_phases")]
         public List<JsonTileInfo> MoonPhases { get; set; }
+        
         [JsonProperty("map_icons")]
         public List<JsonTileInfo> MapIcons { get; set; }
+        
         [JsonProperty("additional_map_icons")]
         public List<JsonTileInfo> AdditionalMapIcons { get; set; }
+
+        [JsonProperty("experience_orbs")]
+        public List<JsonTileInfo> ExperienceOrbs { get; set; }
     }
 
     internal static class Tiles
@@ -36,6 +43,7 @@ namespace PckStudio.Internal.Json
         internal static List<JsonTileInfo> MoonPhaseTileInfos => JsonTileData.MoonPhases;
         internal static List<JsonTileInfo> MapIconTileInfos => JsonTileData.MapIcons;
         internal static List<JsonTileInfo> AdditionalMapIconTileInfos => JsonTileData.AdditionalMapIcons;
+        internal static List<JsonTileInfo> ExperienceOrbTileInfos => JsonTileData.ExperienceOrbs;
 
         private static Image[] _itemImages;
         public static Image[] ItemImages => _itemImages ??= Resources.items_sheet.SplitHorizontal(16).ToArray();
@@ -50,7 +58,10 @@ namespace PckStudio.Internal.Json
         public static Image[] MapIconImages => _mapIconImages ??= Resources.map_icons_sheet.SplitHorizontal(4).ToArray();
 
         private static Image[] _additionalMapIconImages;
-        public static Image[] AdditionalMapIconImages => _mapIconImages ??= Resources.additional_map_icons_sheet.SplitHorizontal(4).ToArray();
+        public static Image[] AdditionalMapIconImages => _additionalMapIconImages ??= Resources.additional_map_icons_sheet.SplitHorizontal(4).ToArray();
+
+        private static Image[] _experienceOrbIconImages;
+        public static Image[] ExperienceOrbIconImages => _experienceOrbIconImages ??= Resources.experience_orbs_sheet.SplitHorizontal(4).ToArray();
 
         private static ImageList _itemImageList;
         public static ImageList ItemImageList
@@ -109,6 +120,36 @@ namespace PckStudio.Internal.Json
                     _mapIconImageList.Images.AddRange(MapIconImages);
                 }
                 return _mapIconImageList;
+            }
+        }
+
+        private static ImageList _additionalMapIconImageList;
+        public static ImageList AdditionalMapIconImageList
+        {
+            get
+            {
+                if (_additionalMapIconImageList is null)
+                {
+                    _additionalMapIconImageList = new ImageList();
+                    _additionalMapIconImageList.ColorDepth = ColorDepth.Depth32Bit;
+                    _additionalMapIconImageList.Images.AddRange(AdditionalMapIconImages);
+                }
+                return _additionalMapIconImageList;
+            }
+        }
+
+        private static ImageList _experienceOrbsImageList;
+        public static ImageList ExperienceOrbsImageList
+        {
+            get
+            {
+                if (_experienceOrbsImageList is null)
+                {
+                    _experienceOrbsImageList = new ImageList();
+                    _experienceOrbsImageList.ColorDepth = ColorDepth.Depth32Bit;
+                    _experienceOrbsImageList.Images.AddRange(ExperienceOrbIconImages);
+                }
+                return _experienceOrbsImageList;
             }
         }
     }

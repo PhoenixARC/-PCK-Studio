@@ -297,6 +297,16 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap experience_orbs_sheet {
+            get {
+                object obj = ResourceManager.GetObject("experience_orbs_sheet", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap file_delete {
             get {
                 object obj = ResourceManager.GetObject("file_delete", resourceCulture);
