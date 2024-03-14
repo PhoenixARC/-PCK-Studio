@@ -374,10 +374,14 @@ namespace PckStudio.Forms.Editor
             return Color.White;
         }
 
-        int xp_orb_red = 0x0;
-        bool xp_orb_reverse = false;
         private Color FindBlendColorByKey(string colorKey)
         {
+            // Experience Orbs are hardcoded within a range and do not have color table entries
+            if (colorSliderLabel.Visible = colorSlider.Visible = colorKey == "experience_orb")
+            {
+                return Color.FromArgb(colorSlider.Value, 255, 0);
+            }
+
             if (_colourTable is not null &&
                 dataTile.Tile.HasColourEntry &&
                 dataTile.Tile.ColourEntry is not null)
@@ -396,17 +400,6 @@ namespace PckStudio.Forms.Editor
                 }
             }
 
-            // Experience Orbs are hardcoded within a range and do not have color table entries
-            if (colorKey == "experience_orb")
-            {
-                if (xp_orb_red == 0) xp_orb_reverse = false;
-                if (xp_orb_red == 0xFF) xp_orb_reverse = true;
-
-                xp_orb_red += xp_orb_reverse ? -0x05 : 0x05;
-
-                return Color.FromArgb(xp_orb_red, 255, 0);
-            }
-
             return Color.White;
         }
 
@@ -415,7 +408,7 @@ namespace PckStudio.Forms.Editor
             switch (keyData)
             {
                 case Keys.R:
-                    // Reselects the specific tile. Can be held to for cycling through colors for XP orbs
+                    // Refreshes the specific tile
                     SelectedIndex = _selectedTile.Index;
                     return true;
                 case Keys.Left:
@@ -578,6 +571,12 @@ namespace PckStudio.Forms.Editor
             variantComboBox_SelectedIndexChanged(sender, e);
 
             clearColorButton.Enabled = false;
+        }
+
+        private void colorSlider_ValueChanged(object sender, EventArgs e)
+        {
+            selectTilePictureBox.BlendColor = GetBlendColor();
+            selectTilePictureBox.Image = dataTile.Texture;
         }
     }
 }
