@@ -524,22 +524,22 @@ namespace PckStudio.Forms.Editor
             // values below are the default Minecraft dyed leather armor values for convenience
 
             colorPick.CustomColors = new int[] {
-                0x262EB0, // Red
-                0x1D80F9, // Orange
-                0x3DD8FE, // Yellow
-                0x1FC780, // Lime
-                0x167C5E, // Green
-                0xDAB33A, // Light Blue
-                0x9C9C16, // Cyan
-                0xAA443C, // Blue
-                0xB83289, // Purple
-                0xBD4EC7, // Magenta
-                0xAA8BF3, // Pink
-                0xFEFFF9, // White
-                0x979D9D, // Light Gray
-                0x524F47, // Gray
-                0x211D1D, // Black
-                0x325483  // Brown
+                0xfefff9, // White
+                0x1d80f9, // Orange
+                0xbd4ec7, // Magenta
+                0xdab33a, // Light Blue
+                0x3dd8fe, // Yellow
+                0x1fc780, // Lime
+                0xaa8bf3, // Pink
+                0x524f47, // Gray
+                0x979d9d, // Light Gray
+                0x9c9c16, // Cyan
+                0xb83289, // Purple
+                0xaa443c, // Blue
+                0x325483, // Brown
+                0x167c5e, // Green
+                0x262eb0, // Red
+                0x211d1d  // Black
             };
             
             if (colorPick.ShowDialog() != DialogResult.OK) return;
