@@ -380,8 +380,9 @@ namespace PckStudio
 			bool isMapIcons = file.Filename == "res/misc/mapicons.png";
 			bool isAdditionalMapIcons = file.Filename == "res/misc/additionalmapicons.png";
 			bool isXPOrbs = file.Filename == "res/item/xporb.png";
+			bool isExplosion = file.Filename == "res/misc/explosion.png";
 
-			if (isTerrainOrItems || isMoonPhases || isMapIcons || isAdditionalMapIcons || isXPOrbs)
+			if (isTerrainOrItems || isMoonPhases || isMapIcons || isAdditionalMapIcons || isXPOrbs || isExplosion)
 			{
 				var img = file.GetTexture();
 

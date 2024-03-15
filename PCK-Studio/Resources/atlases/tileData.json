@@ -3590,7 +3590,64 @@
 		},
 		{
 			"internalName": "monsterPlacer",
-			"displayName": "Spawn Egg"
+			"displayName": "Spawn Egg",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"defaultName": "Mob_Creeper_Colour1",
+				"variants": [
+					"Mob_Creeper_Colour1",
+					"Mob_Skeleton_Colour1",
+					"Mob_Spider_Colour1",
+					"Mob_Zombie_Colour1",
+					"Mob_Slime_Colour1",
+					"Mob_Ghast_Colour1",
+					"Mob_PigZombie_Colour1",
+					"Mob_Enderman_Colour1",
+					"Mob_CaveSpider_Colour1",
+					"Mob_Silverfish_Colour1",
+					"Mob_Blaze_Colour1",
+					"Mob_LavaSlime_Colour1",
+					"Mob_Pig_Colour1",
+					"Mob_Sheep_Colour1",
+					"Mob_Cow_Colour1",
+					"Mob_Chicken_Colour1",
+					"Mob_Squid_Colour1",
+					"Mob_Wolf_Colour1",
+					"Mob_MushroomCow_Colour1",
+					"Mob_Ocelot_Colour1",
+					"Mob_Villager_Colour1",
+					"Mob_Bat_Colour1",
+					"Mob_Witch_Colour1",
+					"Mob_Horse_Colour1",
+					"Mob_Endermite_Color1",
+					"Mob_Guardian_Color1",
+					"Mob_Rabbit_Colour1",
+					"Mob_PolarBear_Colour1",
+					"Mob_Shulker_Colour1",
+					"Mob_Elder_Guardian_Colour1",
+					"Mob_Evocation_Illager_Colour1",
+					"Mob_Llama_Colour1",
+					"Mob_Donkey_Colour1",
+					"Mob_Skeleton_Horse_Colour1",
+					"Mob_Zombie_Horse_Colour1",
+					"Mob_Mule_Colour1",
+					"Mob_Stray_Colour1",
+					"Mob_Husk_Colour1",
+					"Mob_Vex_Colour1",
+					"Mob_Vindication_Illager_Colour1",
+					"Mob_Zombie_Villager_Colour1",
+					"Mob_Parrot_Colour1",
+					"Mob_Wither_Skeleton_Colour1",
+					"Mob_Turtle_Colour1",
+					"Mob_Tropical_Colour1",
+					"Mob_Cod_Colour1",
+					"Mob_Pufferfish_Colour1",
+					"Mob_Salmon_Colour1",
+					"Mob_Drowned_Colour1",
+					"Mob_Dolphin_Colour1",
+					"Mob_Phantom_Colour1"
+				]
+			}
 		},
 		{
 			"internalName": "potion_splash",
@@ -3654,7 +3711,64 @@
 		},
 		{
 			"internalName": "monsterPlacer_overlay",
-			"displayName": "Spawn Egg (Overlay)"
+			"displayName": "Spawn Egg (Overlay)",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"defaultName": "Mob_Creeper_Colour2",
+				"variants": [
+					"Mob_Creeper_Colour2",
+					"Mob_Skeleton_Colour2",
+					"Mob_Spider_Colour2",
+					"Mob_Zombie_Colour2",
+					"Mob_Slime_Colour2",
+					"Mob_Ghast_Colour2",
+					"Mob_PigZombie_Colour2",
+					"Mob_Enderman_Colour2",
+					"Mob_CaveSpider_Colour2",
+					"Mob_Silverfish_Colour2",
+					"Mob_Blaze_Colour2",
+					"Mob_LavaSlime_Colour2",
+					"Mob_Pig_Colour2",
+					"Mob_Sheep_Colour2",
+					"Mob_Cow_Colour2",
+					"Mob_Chicken_Colour2",
+					"Mob_Squid_Colour2",
+					"Mob_Wolf_Colour2",
+					"Mob_MushroomCow_Colour2",
+					"Mob_Ocelot_Colour2",
+					"Mob_Villager_Colour2",
+					"Mob_Bat_Colour2",
+					"Mob_Witch_Colour2",
+					"Mob_Horse_Colour2",
+					"Mob_Endermite_Color2",
+					"Mob_Guardian_Color2",
+					"Mob_Rabbit_Colour2",
+					"Mob_PolarBear_Colour2",
+					"Mob_Shulker_Colour2",
+					"Mob_Elder_Guardian_Colour2",
+					"Mob_Evocation_Illager_Colour2",
+					"Mob_Llama_Colour2",
+					"Mob_Donkey_Colour2",
+					"Mob_Skeleton_Horse_Colour2",
+					"Mob_Zombie_Horse_Colour2",
+					"Mob_Mule_Colour2",
+					"Mob_Stray_Colour2",
+					"Mob_Husk_Colour2",
+					"Mob_Vex_Colour2",
+					"Mob_Vindication_Illager_Colour2",
+					"Mob_Zombie_Villager_Colour2",
+					"Mob_Parrot_Colour2",
+					"Mob_Wither_Skeleton_Colour2",
+					"Mob_Turtle_Colour2",
+					"Mob_Tropical_Colour2",
+					"Mob_Cod_Colour2",
+					"Mob_Pufferfish_Colour2",
+					"Mob_Salmon_Colour2",
+					"Mob_Drowned_Colour2",
+					"Mob_Dolphin_Colour2",
+					"Mob_Phantom_Colour2"
+				]
+			}
 		},
 		{
 			"internalName": "bed_overlay",
@@ -3812,7 +3926,13 @@
 		},
 		{
 			"internalName": "fireworks_charge_overlay",
-			"displayName": "Firework Star (Overlay)"
+			"displayName": "Firework Star (Overlay)",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"hasCustomColour": true,
+				"defaultName": "",
+				"variants": [""]
+			}
 		},
 		{
 			"internalName": "netherquartz",
@@ -4214,11 +4334,11 @@
 		},
 		{
 			"internalName": "target_point",
-			"displayName": "Unused"
+			"displayName": "Target Point (Unused)"
 		},
 		{
 			"internalName": "player_off_map",
-			"displayName": "Unused"
+			"displayName": "Player (Off Map) (Unused)"
 		},
 		{
 			"internalName": "frame",
@@ -4246,7 +4366,7 @@
 		},
 		{
 			"internalName": "player_off_limits",
-			"displayName": "Unused"
+			"displayName": "Player (Off Limits) (Unused)"
 		},
 		{
 			"internalName": "mansion",
@@ -4442,6 +4562,200 @@
 		{
 			"internalName": "",
 			"displayName": ""
+		}
+	],
+	"explosion": [
+		{
+			"internalName": "explosion_0",
+			"displayName": "Explosion (Stage 1)",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"defaultName": "Particle_Explode",
+				"variants": [
+					"Particle_Explode",
+					"Particle_HugeExplosion"
+				]
+			}
+		},
+		{
+			"internalName": "explosion_1",
+			"displayName": "Explosion (Stage 2)",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"defaultName": "Particle_Explode",
+				"variants": [
+					"Particle_Explode",
+					"Particle_HugeExplosion"
+				]
+			}
+		},
+		{
+			"internalName": "explosion_2",
+			"displayName": "Explosion (Stage 3)",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"defaultName": "Particle_Explode",
+				"variants": [
+					"Particle_Explode",
+					"Particle_HugeExplosion"
+				]
+			}
+		},
+		{
+			"internalName": "explosion_3",
+			"displayName": "Explosion (Stage 4)",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"defaultName": "Particle_Explode",
+				"variants": [
+					"Particle_Explode",
+					"Particle_HugeExplosion"
+				]
+			}
+		},
+		{
+			"internalName": "explosion_4",
+			"displayName": "Explosion (Stage 5)",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"defaultName": "Particle_Explode",
+				"variants": [
+					"Particle_Explode",
+					"Particle_HugeExplosion"
+				]
+			}
+		},
+		{
+			"internalName": "explosion_5",
+			"displayName": "Explosion (Stage 6)",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"defaultName": "Particle_Explode",
+				"variants": [
+					"Particle_Explode",
+					"Particle_HugeExplosion"
+				]
+			}
+		},
+		{
+			"internalName": "explosion_6",
+			"displayName": "Explosion (Stage 7)",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"defaultName": "Particle_Explode",
+				"variants": [
+					"Particle_Explode",
+					"Particle_HugeExplosion"
+				]
+			}
+		},
+		{
+			"internalName": "explosion_7",
+			"displayName": "Explosion (Stage 8)",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"defaultName": "Particle_Explode",
+				"variants": [
+					"Particle_Explode",
+					"Particle_HugeExplosion"
+				]
+			}
+		},
+		{
+			"internalName": "explosion_8",
+			"displayName": "Explosion (Stage 9)",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"defaultName": "Particle_Explode",
+				"variants": [
+					"Particle_Explode",
+					"Particle_HugeExplosion"
+				]
+			}
+		},
+		{
+			"internalName": "explosion_9",
+			"displayName": "Explosion (Stage 10)",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"defaultName": "Particle_Explode",
+				"variants": [
+					"Particle_Explode",
+					"Particle_HugeExplosion"
+				]
+			}
+		},
+		{
+			"internalName": "explosion_10",
+			"displayName": "Explosion (Stage 11)",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"defaultName": "Particle_Explode",
+				"variants": [
+					"Particle_Explode",
+					"Particle_HugeExplosion"
+				]
+			}
+		},
+		{
+			"internalName": "explosion_11",
+			"displayName": "Explosion (Stage 12)",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"defaultName": "Particle_Explode",
+				"variants": [
+					"Particle_Explode",
+					"Particle_HugeExplosion"
+				]
+			}
+		},
+		{
+			"internalName": "explosion_12",
+			"displayName": "Explosion (Stage 13)",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"defaultName": "Particle_Explode",
+				"variants": [
+					"Particle_Explode",
+					"Particle_HugeExplosion"
+				]
+			}
+		},
+		{
+			"internalName": "explosion_13",
+			"displayName": "Explosion (Stage 14)",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"defaultName": "Particle_Explode",
+				"variants": [
+					"Particle_Explode",
+					"Particle_HugeExplosion"
+				]
+			}
+		},
+		{
+			"internalName": "explosion_14",
+			"displayName": "Explosion (Stage 15)",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"defaultName": "Particle_Explode",
+				"variants": [
+					"Particle_Explode",
+					"Particle_HugeExplosion"
+				]
+			}
+		},
+		{
+			"internalName": "explosion_15",
+			"displayName": "Explosion (Stage 16)",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"defaultName": "Particle_Explode",
+				"variants": [
+					"Particle_Explode",
+					"Particle_HugeExplosion"
+				]
+			}
 		}
 	]
 }

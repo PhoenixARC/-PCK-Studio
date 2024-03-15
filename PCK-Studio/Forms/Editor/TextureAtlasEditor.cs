@@ -86,7 +86,7 @@ namespace PckStudio.Forms.Editor
                 {
                     value = value - _tiles.Count;
                 }
-                SetImageDisplayed(value); 
+                SetImageDisplayed(value);
             }
         }
 
@@ -112,6 +112,7 @@ namespace PckStudio.Forms.Editor
                 "additionalmapicons" => (Tiles.AdditionalMapIconTileInfos, "additional_map_icons"),
                 "moon_phases" => (Tiles.MoonPhaseTileInfos, "moon_phases"),
                 "xporb" => (Tiles.ExperienceOrbTileInfos, "experience_orbs"),
+                "explosion" => (Tiles.ExplosionTileInfos, "explosion"),
                 _ => (null, null),
             };
 

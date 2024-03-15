@@ -37,17 +37,17 @@
             this.applyColorMaskToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.playAnimationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.variantComboBox = new MetroFramework.Controls.MetroComboBox();
-            this.colorSliderLabel = new MetroFramework.Controls.MetroLabel();
+            this.originalPictureBox = new PckStudio.ToolboxItems.InterpolationPictureBox();
+            this.selectTilePictureBox = new PckStudio.ToolboxItems.AnimationPictureBox();
             this.replaceButton = new MetroFramework.Controls.MetroButton();
             this.tileNameLabel = new MetroFramework.Controls.MetroLabel();
             this.setColorButton = new MetroFramework.Controls.MetroButton();
             this.animationButton = new MetroFramework.Controls.MetroButton();
             this.clearColorButton = new MetroFramework.Controls.MetroButton();
-            this.colorSlider = new MetroFramework.Controls.MetroTrackBar();
             this.extractButton = new MetroFramework.Controls.MetroButton();
-            this.originalPictureBox = new PckStudio.ToolboxItems.InterpolationPictureBox();
-            this.selectTilePictureBox = new PckStudio.ToolboxItems.AnimationPictureBox();
+            this.colorSlider = new MetroFramework.Controls.MetroTrackBar();
+            this.colorSliderLabel = new MetroFramework.Controls.MetroLabel();
+            this.variantComboBox = new MetroFramework.Controls.MetroComboBox();
             this.menuStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.originalPictureBox)).BeginInit();
@@ -92,7 +92,7 @@
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
@@ -112,7 +112,7 @@
             this.applyColorMaskToolStripMenuItem.CheckOnClick = true;
             this.applyColorMaskToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.applyColorMaskToolStripMenuItem.Name = "applyColorMaskToolStripMenuItem";
-            this.applyColorMaskToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.applyColorMaskToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.applyColorMaskToolStripMenuItem.Text = "Apply Color Mask";
             this.applyColorMaskToolStripMenuItem.CheckedChanged += new System.EventHandler(this.applyColorMaskToolStripMenuItem_CheckedChanged);
             // 
@@ -122,7 +122,7 @@
             this.playAnimationsToolStripMenuItem.CheckOnClick = true;
             this.playAnimationsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.playAnimationsToolStripMenuItem.Name = "playAnimationsToolStripMenuItem";
-            this.playAnimationsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.playAnimationsToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.playAnimationsToolStripMenuItem.Text = "Play Animations";
             this.playAnimationsToolStripMenuItem.CheckedChanged += new System.EventHandler(this.playAnimationsToolStripMenuItem_CheckedChanged);
             // 
@@ -159,39 +159,42 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.833951F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.835886F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.835886F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(590, 565);
             this.tableLayoutPanel1.TabIndex = 17;
             // 
-            // variantComboBox
+            // originalPictureBox
             // 
-            this.variantComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel1.SetColumnSpan(this.variantComboBox, 2);
-            this.variantComboBox.Enabled = false;
-            this.variantComboBox.FormattingEnabled = true;
-            this.variantComboBox.ItemHeight = 23;
-            this.variantComboBox.Location = new System.Drawing.Point(3, 291);
-            this.variantComboBox.Name = "variantComboBox";
-            this.variantComboBox.Size = new System.Drawing.Size(208, 29);
-            this.variantComboBox.TabIndex = 17;
-            this.variantComboBox.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.variantComboBox.UseSelectable = true;
-            this.variantComboBox.SelectedIndexChanged += new System.EventHandler(this.variantComboBox_SelectedIndexChanged);
+            this.originalPictureBox.BackColor = System.Drawing.Color.Transparent;
+            this.originalPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.originalPictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+            this.originalPictureBox.Location = new System.Drawing.Point(217, 3);
+            this.originalPictureBox.Name = "originalPictureBox";
+            this.tableLayoutPanel1.SetRowSpan(this.originalPictureBox, 9);
+            this.originalPictureBox.Size = new System.Drawing.Size(370, 536);
+            this.originalPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.originalPictureBox.TabIndex = 4;
+            this.originalPictureBox.TabStop = false;
+            this.originalPictureBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.originalPictureBox_MouseClick);
             // 
-            // colorSliderLabel
+            // selectTilePictureBox
             // 
-            this.colorSliderLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.selectTilePictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.colorSliderLabel.BackColor = System.Drawing.Color.Transparent;
-            this.colorSliderLabel.Location = new System.Drawing.Point(3, 350);
-            this.colorSliderLabel.Name = "colorSliderLabel";
-            this.colorSliderLabel.Size = new System.Drawing.Size(55, 88);
-            this.colorSliderLabel.TabIndex = 19;
-            this.colorSliderLabel.Text = "Color Range:";
-            this.colorSliderLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.colorSliderLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.colorSliderLabel.Visible = false;
-            this.colorSliderLabel.WrapToLine = true;
+            this.selectTilePictureBox.BackColor = System.Drawing.Color.Transparent;
+            this.selectTilePictureBox.BlendColor = System.Drawing.Color.White;
+            this.selectTilePictureBox.BlendMode = PckStudio.Extensions.BlendMode.Multiply;
+            this.tableLayoutPanel1.SetColumnSpan(this.selectTilePictureBox, 2);
+            this.selectTilePictureBox.Image = null;
+            this.selectTilePictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+            this.selectTilePictureBox.Location = new System.Drawing.Point(3, 3);
+            this.selectTilePictureBox.Name = "selectTilePictureBox";
+            this.selectTilePictureBox.Size = new System.Drawing.Size(208, 204);
+            this.selectTilePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.selectTilePictureBox.TabIndex = 0;
+            this.selectTilePictureBox.TabStop = false;
+            this.selectTilePictureBox.UseBlendColor = true;
             // 
             // replaceButton
             // 
@@ -212,7 +215,6 @@
             // 
             this.tileNameLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tileNameLabel.AutoSize = true;
             this.tableLayoutPanel1.SetColumnSpan(this.tileNameLabel, 2);
             this.tileNameLabel.Location = new System.Drawing.Point(3, 217);
             this.tileNameLabel.Name = "tileNameLabel";
@@ -221,7 +223,6 @@
             this.tileNameLabel.Text = "TileName";
             this.tileNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.tileNameLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.tileNameLabel.WrapToLine = true;
             // 
             // setColorButton
             // 
@@ -267,21 +268,6 @@
             this.clearColorButton.UseSelectable = true;
             this.clearColorButton.Click += new System.EventHandler(this.clearColorButton_Click);
             // 
-            // colorSlider
-            // 
-            this.colorSlider.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
-            this.colorSlider.BackColor = System.Drawing.Color.Transparent;
-            this.colorSlider.Location = new System.Drawing.Point(64, 353);
-            this.colorSlider.Maximum = 255;
-            this.colorSlider.Name = "colorSlider";
-            this.colorSlider.Size = new System.Drawing.Size(147, 82);
-            this.colorSlider.TabIndex = 26;
-            this.colorSlider.Text = "metroTrackBar1";
-            this.colorSlider.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.colorSlider.Value = 0;
-            this.colorSlider.Visible = false;
-            this.colorSlider.ValueChanged += new System.EventHandler(this.colorSlider_ValueChanged);
-            // 
             // extractButton
             // 
             this.extractButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
@@ -297,38 +283,51 @@
             this.extractButton.UseSelectable = true;
             this.extractButton.Click += new System.EventHandler(this.extractTileToolStripMenuItem_Click);
             // 
-            // originalPictureBox
+            // colorSlider
             // 
-            this.originalPictureBox.BackColor = System.Drawing.Color.Transparent;
-            this.originalPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.originalPictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-            this.originalPictureBox.Location = new System.Drawing.Point(217, 3);
-            this.originalPictureBox.Name = "originalPictureBox";
-            this.tableLayoutPanel1.SetRowSpan(this.originalPictureBox, 9);
-            this.originalPictureBox.Size = new System.Drawing.Size(370, 536);
-            this.originalPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.originalPictureBox.TabIndex = 4;
-            this.originalPictureBox.TabStop = false;
-            this.originalPictureBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.originalPictureBox_MouseClick);
+            this.colorSlider.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.colorSlider.BackColor = System.Drawing.Color.Transparent;
+            this.colorSlider.Location = new System.Drawing.Point(64, 353);
+            this.colorSlider.Maximum = 255;
+            this.colorSlider.Name = "colorSlider";
+            this.colorSlider.Size = new System.Drawing.Size(147, 82);
+            this.colorSlider.TabIndex = 26;
+            this.colorSlider.Text = "metroTrackBar1";
+            this.colorSlider.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.colorSlider.Value = 0;
+            this.colorSlider.Visible = false;
+            this.colorSlider.ValueChanged += new System.EventHandler(this.colorSlider_ValueChanged);
             // 
-            // selectTilePictureBox
+            // colorSliderLabel
             // 
-            this.selectTilePictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.colorSliderLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.selectTilePictureBox.BackColor = System.Drawing.Color.Transparent;
-            this.selectTilePictureBox.BlendColor = System.Drawing.Color.White;
-            this.selectTilePictureBox.BlendMode = PckStudio.Extensions.BlendMode.Multiply;
-            this.tableLayoutPanel1.SetColumnSpan(this.selectTilePictureBox, 2);
-            this.selectTilePictureBox.Image = null;
-            this.selectTilePictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-            this.selectTilePictureBox.Location = new System.Drawing.Point(3, 3);
-            this.selectTilePictureBox.Name = "selectTilePictureBox";
-            this.selectTilePictureBox.Size = new System.Drawing.Size(208, 204);
-            this.selectTilePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.selectTilePictureBox.TabIndex = 0;
-            this.selectTilePictureBox.TabStop = false;
-            this.selectTilePictureBox.UseBlendColor = true;
+            this.colorSliderLabel.BackColor = System.Drawing.Color.Transparent;
+            this.colorSliderLabel.Location = new System.Drawing.Point(3, 350);
+            this.colorSliderLabel.Name = "colorSliderLabel";
+            this.colorSliderLabel.Size = new System.Drawing.Size(55, 88);
+            this.colorSliderLabel.TabIndex = 19;
+            this.colorSliderLabel.Text = "Color Range:";
+            this.colorSliderLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.colorSliderLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.colorSliderLabel.Visible = false;
+            this.colorSliderLabel.WrapToLine = true;
+            // 
+            // variantComboBox
+            // 
+            this.variantComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel1.SetColumnSpan(this.variantComboBox, 2);
+            this.variantComboBox.Enabled = false;
+            this.variantComboBox.FormattingEnabled = true;
+            this.variantComboBox.ItemHeight = 23;
+            this.variantComboBox.Location = new System.Drawing.Point(3, 291);
+            this.variantComboBox.Name = "variantComboBox";
+            this.variantComboBox.Size = new System.Drawing.Size(208, 29);
+            this.variantComboBox.TabIndex = 17;
+            this.variantComboBox.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.variantComboBox.UseSelectable = true;
+            this.variantComboBox.SelectedIndexChanged += new System.EventHandler(this.variantComboBox_SelectedIndexChanged);
             // 
             // TextureAtlasEditor
             // 
