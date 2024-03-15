@@ -117,12 +117,31 @@ namespace PckStudio.Forms.Editor
             };
 
             // there's got to be a better way to get around this clone exception
-            originalPictureBox.Image = (Image)((Bitmap)atlas).Clone(new Rectangle(new Point(0, 0), new Size(atlas.Width - 1, atlas.Height - 1)), PixelFormat.Format32bppArgb);
+            originalPictureBox.Image = atlas.GetArea(new Rectangle(0, 0, atlas.Width, atlas.Height));
 
             var images = atlas.Split(_areaSize, _imageLayout);
 
             var tiles = images.enumerate().Select(
-                p => new AtlasTile(p.index, GetAtlasArea(p.index, _rowCount, _columnCount, _areaSize, _imageLayout), tileInfos.IndexInRange(p.index) ? tileInfos[p.index] : null, p.value)
+                    p => new AtlasTile(
+                        p.index, 
+
+                        GetAtlasArea(p.index, 
+                            tileInfos.IndexInRange(p.index) 
+                                ? tileInfos[p.index].Width : 1,                        
+                            tileInfos.IndexInRange(p.index) 
+                                ? tileInfos[p.index].Height : 1, _rowCount, _columnCount, _areaSize, _imageLayout),
+
+                        tileInfos.IndexInRange(p.index) 
+                            ? tileInfos[p.index] : null,
+
+                        // get full area for tiles that are not 1x1 tiles
+                        tileInfos.IndexInRange(p.index)
+                            ? atlas.GetArea(
+                                new Rectangle(
+                                    GetSelectedPoint(p.index, _rowCount, _columnCount, _imageLayout).X * _areaSize.Width,
+                                    GetSelectedPoint(p.index, _rowCount, _columnCount, _imageLayout).Y * _areaSize.Height,
+                                tileInfos[p.index].Width * _areaSize.Width, tileInfos[p.index].Height * _areaSize.Height))
+                            : p.value)
                 );
             _tiles = new List<AtlasTile>(tiles);
 
@@ -158,8 +177,8 @@ namespace PckStudio.Forms.Editor
                 g.DrawRectangle(
                     Pens.White,
                     new Rectangle(_selectedTile.Area.X, _selectedTile.Area.Y,
-                    _selectedTile.Area.Width,
-                    _selectedTile.Area.Height));
+                    _selectedTile.Area.Width / _selectedTile.Tile.Width,
+                    _selectedTile.Area.Height / _selectedTile.Tile.Height));
             }
 
             originalPictureBox.Invalidate();
@@ -186,13 +205,6 @@ namespace PckStudio.Forms.Editor
             dataTile = _selectedTile;
 
             updatePictureBoxDisplay();
-
-            if (string.IsNullOrEmpty(dataTile.Tile.InternalName))
-            {
-                selectTilePictureBox.Image = dataTile.Texture;
-                tileNameLabel.Text = "Unused";
-                return;
-            }
 
             if (string.IsNullOrEmpty(dataTile.Tile.DisplayName))
             {
@@ -326,11 +338,11 @@ namespace PckStudio.Forms.Editor
             };
         }
 
-        private static Rectangle GetAtlasArea(int index, int rowCount, int columnCount, Size size, ImageLayoutDirection imageLayout)
+        private static Rectangle GetAtlasArea(int index, int width, int height, int rowCount, int columnCount, Size size, ImageLayoutDirection imageLayout)
         {
             var p = GetSelectedPoint(index, rowCount, columnCount, imageLayout);
             var ap = new Point(p.X * size.Width, p.Y * size.Height);
-            return new Rectangle(ap, size);
+            return new Rectangle(ap, new Size(size.Width * width, size.Height * height));
         }
 
         private static Point GetSelectedPoint(int index, int rowCount, int columnCount, ImageLayoutDirection imageLayout)
@@ -353,8 +365,8 @@ namespace PckStudio.Forms.Editor
             using (var g = Graphics.FromImage(_workingTexture))
             {
                 g.ApplyConfig(graphicsConfig);
-                g.Fill(_selectedTile.Area, Color.Transparent);
-                g.DrawImage(texture, _selectedTile.Area);
+                g.Fill(dataTile.Area, Color.Transparent);
+                g.DrawImage(texture, dataTile.Area);
             }
 
             _tiles[_selectedTile.Index] = new AtlasTile(_selectedTile.Index, _selectedTile.Area, _selectedTile.Tile, texture);
@@ -498,7 +510,7 @@ namespace PckStudio.Forms.Editor
             };
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                selectTilePictureBox.Image.Save(saveFileDialog.FileName, ImageFormat.Png);
+                dataTile.Texture.Save(saveFileDialog.FileName, ImageFormat.Png);
             }
         }
 

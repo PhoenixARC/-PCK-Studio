@@ -1035,6 +1035,8 @@
 			"internalName": "water_flow",
 			"displayName": "Flowing Water",
 			"hasColourEntry": true,
+			"width": 2,
+			"height": 2,
 			"colourEntry": {
 				"isWaterColour": true,
 				"defaultName": "Water_Plains",
@@ -1208,7 +1210,9 @@
 		},
 		{
 			"internalName": "lava_flow",
-			"displayName": "Flowing Lava"
+			"displayName": "Flowing Lava",
+			"width": 2,
+			"height": 2
 		},
 		{
 			"internalName": "lava_flow",
