@@ -18,7 +18,10 @@ namespace PckStudio.Internal.Json
         
         [JsonProperty("items")]
         public List<JsonTileInfo> Items { get; set; }
-        
+
+        [JsonProperty("particles")]
+        public List<JsonTileInfo> Particles { get; set; }
+
         [JsonProperty("moon_phases")]
         public List<JsonTileInfo> MoonPhases { get; set; }
         
@@ -43,6 +46,7 @@ namespace PckStudio.Internal.Json
         internal static List<JsonTileInfo> ItemTileInfos => JsonTileData.Items;
 
         internal static List<JsonTileInfo> BlockTileInfos => JsonTileData.Blocks;
+        internal static List<JsonTileInfo> ParticleTileInfos => JsonTileData.Particles;
         internal static List<JsonTileInfo> MoonPhaseTileInfos => JsonTileData.MoonPhases;
         internal static List<JsonTileInfo> MapIconTileInfos => JsonTileData.MapIcons;
         internal static List<JsonTileInfo> AdditionalMapIconTileInfos => JsonTileData.AdditionalMapIcons;
@@ -54,6 +58,9 @@ namespace PckStudio.Internal.Json
 
         private static Image[] _blockImages;
         public static Image[] BlockImages => _blockImages ??= Resources.terrain_sheet.SplitHorizontal(16).ToArray();
+
+        private static Image[] _particleImages;
+        public static Image[] ParticleImages => _particleImages ??= Resources.particles_sheet.SplitHorizontal(16).ToArray();
 
         private static Image[] _moonPhaseImages;
         public static Image[] MoonPhaseImages => _moonPhaseImages ??= Resources.moon_phases_sheet.SplitHorizontal(4).ToArray();
@@ -79,11 +86,14 @@ namespace PckStudio.Internal.Json
             return _imageList;
         }
 
+        private static ImageList _blockImageList = GetImageList(BlockImages);
+        public static ImageList BlockImageList { get { return _blockImageList; } }
+
         private static ImageList _itemImageList = GetImageList(ItemImages);
         public static ImageList ItemImageList { get { return _itemImageList; } }
 
-        private static ImageList _blockImageList = GetImageList(BlockImages);
-        public static ImageList BlockImageList { get { return _blockImageList; } }
+        private static ImageList _particleImageList = GetImageList(ParticleImages);
+        public static ImageList ParticleImageList { get { return _particleImageList; } }
 
         private static ImageList _moonPhaseImageList = GetImageList(MoonPhaseImages);
         public static ImageList MoonPhaseImageList { get { return _moonPhaseImageList; } }

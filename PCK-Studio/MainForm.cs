@@ -375,21 +375,26 @@ namespace PckStudio
 				return;
 			}
 
-			bool isTerrainOrItems = file.Filename == "res/terrain.png" || file.Filename == "res/items.png";
+			bool isTerrain = file.Filename == "res/terrain.png";
+			bool isItems = file.Filename == "res/items.png";
+			bool isParticles = file.Filename == "res/particles.png";
 			bool isMoonPhases = file.Filename == "res/terrain/moon_phases.png";
 			bool isMapIcons = file.Filename == "res/misc/mapicons.png";
 			bool isAdditionalMapIcons = file.Filename == "res/misc/additionalmapicons.png";
 			bool isXPOrbs = file.Filename == "res/item/xporb.png";
 			bool isExplosion = file.Filename == "res/misc/explosion.png";
 
-			if (isTerrainOrItems || isMoonPhases || isMapIcons || isAdditionalMapIcons || isXPOrbs || isExplosion)
+			if (
+				isTerrain || isItems || isParticles || isMoonPhases || 
+				isMapIcons || isAdditionalMapIcons || isXPOrbs || isExplosion
+				)
 			{
 				var img = file.GetTexture();
 
 				// all of the other atlases so far use 4
 				var columnCount = 4;
 				
-				if (isTerrainOrItems) columnCount = 16;
+				if (isTerrain || isItems || isParticles) columnCount = 16;
 
 				var resolution = img.Width / columnCount;
 				var size = new Size(resolution, resolution);

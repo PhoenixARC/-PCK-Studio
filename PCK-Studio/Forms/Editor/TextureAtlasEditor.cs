@@ -108,6 +108,7 @@ namespace PckStudio.Forms.Editor
             {
                 "terrain" => (Tiles.BlockTileInfos, "blocks"),
                 "items" => (Tiles.ItemTileInfos, "items"),
+                "particles" => (Tiles.ParticleTileInfos, "particles"),
                 "mapicons" => (Tiles.MapIconTileInfos, "map_icons"),
                 "additionalmapicons" => (Tiles.AdditionalMapIconTileInfos, "additional_map_icons"),
                 "moon_phases" => (Tiles.MoonPhaseTileInfos, "moon_phases"),

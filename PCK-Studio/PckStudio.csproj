@@ -684,6 +684,7 @@
     <None Include="Resources\atlases\explosion.png" />
     <Content Include="Resources\atlases\items.png" />
     <Content Include="Resources\atlases\moon_phases.png" />
+    <None Include="Resources\atlases\particles.png" />
     <Content Include="Resources\atlases\terrain.png" />
     <Content Include="Resources\icons\file_delete.png" />
     <Content Include="Resources\icons\file_empty.png" />

@@ -507,6 +507,16 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap particles_sheet {
+            get {
+                object obj = ResourceManager.GetObject("particles_sheet", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap PCK_ICON {
             get {
                 object obj = ResourceManager.GetObject("PCK_ICON", resourceCulture);
