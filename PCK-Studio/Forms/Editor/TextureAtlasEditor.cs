@@ -188,7 +188,7 @@ namespace PckStudio.Forms.Editor
             {
                 g.ApplyConfig(graphicsConfig);
                 g.Clear(Color.Transparent);
-                g.DrawImage(_workingTexture, new Point(0, 0));
+                g.DrawImage(_workingTexture, 0, 0, _workingTexture.Width, _workingTexture.Height);
 
                 SolidBrush brush = new SolidBrush(Color.FromArgb(127, 255, 255, 255));
 
