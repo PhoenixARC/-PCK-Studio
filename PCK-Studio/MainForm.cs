@@ -39,7 +39,20 @@ namespace PckStudio
 		private PckManager PckManager = null;
 		string saveLocation = string.Empty;
 		PckFile currentPCK = null;
-		bool wasModified = false;
+
+		bool __modified = false;
+		bool wasModified
+		{
+			get => __modified;
+			set
+			{
+				if (__modified == value)
+					return;
+				__modified = value;
+				pckFileLabel.Text = !pckFileLabel.Text.StartsWith("*") && __modified ? "*" + pckFileLabel.Text : pckFileLabel.Text.Substring(1);
+            }
+        }
+
 		bool isTemplateFile = false;
 
 		bool isSelectingTab = false;
@@ -213,7 +226,7 @@ namespace PckStudio
 			if (isTemplateFile)
 				pckFileLabel.Text = "Unsaved File!";
 			else
-				pckFileLabel.Text = "Current PCK File: " + Path.GetFileName(saveLocation);
+				pckFileLabel.Text = Path.GetFileName(saveLocation);
 			treeViewMain.Enabled = treeMeta.Enabled = true;
 			closeToolStripMenuItem.Visible = true;
 			fullBoxSupportToolStripMenuItem.Checked = currentPCK.HasVerionString;
@@ -656,7 +669,7 @@ namespace PckStudio
 			{
 				Save(saveFileDialog.FileName);
 				saveLocation = saveFileDialog.FileName;
-				pckFileLabel.Text = "Current PCK File: " + Path.GetFileName(saveLocation);
+				pckFileLabel.Text = Path.GetFileName(saveLocation);
 				isTemplateFile = false;
 			}
 		}
