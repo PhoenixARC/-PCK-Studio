@@ -116,7 +116,6 @@ namespace PckStudio.Forms.Editor
                 _ => (null, null),
             };
 
-            // there's got to be a better way to get around this clone exception
             originalPictureBox.Image = atlas.GetArea(new Rectangle(0, 0, atlas.Width, atlas.Height));
 
             var images = atlas.Split(_areaSize, _imageLayout);
@@ -125,22 +124,28 @@ namespace PckStudio.Forms.Editor
                     p => new AtlasTile(
                         p.index, 
 
-                        GetAtlasArea(p.index, 
+                        GetAtlasArea(
+                            p.index, 
                             tileInfos.IndexInRange(p.index) 
                                 ? tileInfos[p.index].Width : 1,                        
                             tileInfos.IndexInRange(p.index) 
-                                ? tileInfos[p.index].Height : 1, _rowCount, _columnCount, _areaSize, _imageLayout),
+                                ? tileInfos[p.index].Height : 1, 
+                            _rowCount, 
+                            _columnCount, 
+                            _areaSize, 
+                            _imageLayout),
 
-                        tileInfos.IndexInRange(p.index) 
+                        tileInfos.IndexInRange(p.index)
                             ? tileInfos[p.index] : null,
 
-                        // get full area for tiles that are not 1x1 tiles
+                        // get texture for tiles that are not 1x1 tiles
                         tileInfos.IndexInRange(p.index)
                             ? atlas.GetArea(
                                 new Rectangle(
                                     GetSelectedPoint(p.index, _rowCount, _columnCount, _imageLayout).X * _areaSize.Width,
                                     GetSelectedPoint(p.index, _rowCount, _columnCount, _imageLayout).Y * _areaSize.Height,
-                                tileInfos[p.index].Width * _areaSize.Width, tileInfos[p.index].Height * _areaSize.Height))
+                                tileInfos[p.index].Width * _areaSize.Width,
+                                tileInfos[p.index].Height * _areaSize.Height))
                             : p.value)
                 );
             _tiles = new List<AtlasTile>(tiles);
@@ -162,7 +167,7 @@ namespace PckStudio.Forms.Editor
             return false;
         }
 
-        private void updatePictureBoxDisplay()
+        private void UpdateAtlasDisplay()
         {
             var graphicsConfig = new GraphicsConfig()
             {
@@ -174,11 +179,13 @@ namespace PckStudio.Forms.Editor
                 g.ApplyConfig(graphicsConfig);
                 g.Clear(Color.Transparent);
                 g.DrawImage(_workingTexture, new Point(0, 0));
-                g.DrawRectangle(
-                    Pens.White,
-                    new Rectangle(_selectedTile.Area.X, _selectedTile.Area.Y,
-                    _selectedTile.Area.Width / _selectedTile.Tile.Width,
-                    _selectedTile.Area.Height / _selectedTile.Tile.Height));
+
+                SolidBrush brush = new SolidBrush(Color.FromArgb(127, 255, 255, 255));
+
+                var rect = new Rectangle(_selectedTile.Area.X, _selectedTile.Area.Y,
+                    _areaSize.Width, _areaSize.Height);
+
+                g.FillRectangle(brush, rect);
             }
 
             originalPictureBox.Invalidate();
@@ -204,9 +211,9 @@ namespace PckStudio.Forms.Editor
 
             dataTile = _selectedTile;
 
-            updatePictureBoxDisplay();
+            UpdateAtlasDisplay();
 
-            if (string.IsNullOrEmpty(dataTile.Tile.DisplayName))
+            if (string.IsNullOrEmpty(dataTile.Tile.DisplayName) && !string.IsNullOrEmpty(dataTile.Tile.InternalName))
             {
                 dataTile = _tiles.Find(t => t.Tile.InternalName == _selectedTile.Tile.InternalName);
             }
@@ -372,7 +379,7 @@ namespace PckStudio.Forms.Editor
             _tiles[_selectedTile.Index] = new AtlasTile(_selectedTile.Index, _selectedTile.Area, _selectedTile.Tile, texture);
             selectTilePictureBox.Image = texture;
 
-            updatePictureBoxDisplay();
+            UpdateAtlasDisplay();
         }
 
         private Color GetBlendColor()

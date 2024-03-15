@@ -165,8 +165,10 @@
             // 
             // originalPictureBox
             // 
+            this.originalPictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.originalPictureBox.BackColor = System.Drawing.Color.Transparent;
-            this.originalPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.originalPictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             this.originalPictureBox.Location = new System.Drawing.Point(217, 3);
             this.originalPictureBox.Name = "originalPictureBox";
