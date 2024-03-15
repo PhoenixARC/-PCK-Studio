@@ -134,6 +134,7 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\LocFileExtensions.cs" />
     <Compile Include="Extensions\CursorExtensions.cs" />
     <Compile Include="Extensions\PckFileDataExtensions.cs" />
     <Compile Include="Extensions\SkinBOXExtensions.cs" />
@@ -480,6 +481,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\EntityForms\AddEntry.resx">
       <DependentUpon>AddEntry.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\Loc\AddLanguage.resx">
       <DependentUpon>AddLanguage.cs</DependentUpon>
@@ -555,6 +557,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\Grf\AddParameter.resx">
       <DependentUpon>AddParameter.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\InProgressPrompt.resx">
       <DependentUpon>InProgressPrompt.cs</DependentUpon>

@@ -78,11 +78,11 @@ namespace PckStudio.Extensions
 
             int skinId = file.GetSkinId();
 
-            string name = file.Properties.GetPropertyValue("DISPLAYNAME");
+            string name = file.GetProperty("DISPLAYNAME");
             Image texture = file.GetTexture();
-            SkinANIM anim = file.Properties.GetPropertyValue("ANIM", SkinANIM.FromString);
-            IEnumerable<SkinBOX> boxes = file.Properties.GetProperties("BOX").Select(kv => SkinBOX.FromString(kv.Value));
-            IEnumerable<SkinPartOffset> offsets = file.Properties.GetProperties("OFFSET").Select(kv => SkinPartOffset.FromString(kv.Value));
+            SkinANIM anim = file.GetProperty("ANIM", SkinANIM.FromString);
+            IEnumerable<SkinBOX> boxes = file.GetMultipleProperties("BOX").Select(kv => SkinBOX.FromString(kv.Value));
+            IEnumerable<SkinPartOffset> offsets = file.GetMultipleProperties("OFFSET").Select(kv => SkinPartOffset.FromString(kv.Value));
             return new Skin(name, skinId, texture, anim, boxes, offsets);
         }
 
@@ -99,36 +99,36 @@ namespace PckStudio.Extensions
             file.Filename = $"dlcskin{skinId}.png";
 
             string skinLocKey = $"IDS_dlcskin{skinId}_DISPLAYNAME";
-            file.Properties.SetProperty("DISPLAYNAME", skin.Name);
-            file.Properties.SetProperty("DISPLAYNAMEID", skinLocKey);
+            file.SetProperty("DISPLAYNAME", skin.Name);
+            file.SetProperty("DISPLAYNAMEID", skinLocKey);
             localizationFile.AddLocKey(skinLocKey, skin.Name);
 
             if (!string.IsNullOrEmpty(skin.Theme))
             {
-                file.Properties.SetProperty("THEMENAME", skin.Theme);
-                file.Properties.SetProperty("THEMENAMEID", $"IDS_dlcskin{skinId}_THEMENAME");
+                file.SetProperty("THEMENAME", skin.Theme);
+                file.SetProperty("THEMENAMEID", $"IDS_dlcskin{skinId}_THEMENAME");
                 localizationFile.AddLocKey($"IDS_dlcskin{skinId}_THEMENAME", skin.Theme);
             }
 
             if (skin.HasCape)
             {
-                file.Properties.SetProperty("CAPEPATH", $"dlccape{skinId}.png");
+                file.SetProperty("CAPEPATH", $"dlccape{skinId}.png");
             }
 
-            file.Properties.SetProperty("ANIM", skin.ANIM.ToString());
-            file.Properties.SetProperty("GAME_FLAGS", "0x18");
-            file.Properties.SetProperty("FREE", "1");
+            file.SetProperty("ANIM", skin.ANIM.ToString());
+            file.SetProperty("GAME_FLAGS", "0x18");
+            file.SetProperty("FREE", "1");
 
-            file.Properties.RemoveAll(kv => kv.Key == "BOX");
-            file.Properties.RemoveAll(kv => kv.Key == "OFFSET");
+            file.RemoveProperties("BOX");
+            file.RemoveProperties("OFFSET");
 
             foreach (SkinBOX box in skin.AdditionalBoxes)
             {
-                file.Properties.Add(box.ToProperty());
+                file.AddProperty(box.ToProperty());
             }
             foreach (SkinPartOffset offset in skin.PartOffsets)
             {
-                file.Properties.Add(offset.ToProperty());
+                file.AddProperty(offset.ToProperty());
             }
         }
 

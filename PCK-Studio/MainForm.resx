@@ -924,7 +924,7 @@
 </value>
   </data>
   <data name="createToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>157, 22</value>
   </data>
   <data name="createToolStripMenuItem.Text" xml:space="preserve">
     <value>Create</value>
@@ -991,7 +991,7 @@
 </value>
   </data>
   <data name="importSkinsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>157, 22</value>
   </data>
   <data name="importSkinsToolStripMenuItem.Text" xml:space="preserve">
     <value>Import</value>
@@ -1003,7 +1003,7 @@
     <value>Export as 3DS Texture</value>
   </data>
   <data name="exportToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>157, 22</value>
   </data>
   <data name="exportToolStripMenuItem.Text" xml:space="preserve">
     <value>Export</value>
@@ -1081,7 +1081,7 @@
     <value>Entity Materials File (.BIN)</value>
   </data>
   <data name="setFileTypeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>157, 22</value>
   </data>
   <data name="setFileTypeToolStripMenuItem.Text" xml:space="preserve">
     <value>Set File Type</value>
@@ -1105,19 +1105,19 @@
     <value>Correct Skin Decimals</value>
   </data>
   <data name="miscFunctionsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>157, 22</value>
   </data>
   <data name="miscFunctionsToolStripMenuItem.Text" xml:space="preserve">
     <value>Misc. Functions</value>
   </data>
   <data name="moveUpToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>157, 22</value>
   </data>
   <data name="moveUpToolStripMenuItem.Text" xml:space="preserve">
     <value>Move Up</value>
   </data>
   <data name="moveDownToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>157, 22</value>
   </data>
   <data name="moveDownToolStripMenuItem.Text" xml:space="preserve">
     <value>Move Down</value>
@@ -1132,13 +1132,13 @@
 </value>
   </data>
   <data name="extractToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>157, 22</value>
   </data>
   <data name="extractToolStripMenuItem.Text" xml:space="preserve">
     <value>Extract</value>
   </data>
   <data name="cloneFileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>157, 22</value>
   </data>
   <data name="cloneFileToolStripMenuItem.Text" xml:space="preserve">
     <value>Clone</value>
@@ -1151,7 +1151,7 @@
 </value>
   </data>
   <data name="renameFileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>157, 22</value>
   </data>
   <data name="renameFileToolStripMenuItem.Text" xml:space="preserve">
     <value>Rename</value>
@@ -1167,7 +1167,7 @@
 </value>
   </data>
   <data name="replaceToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>157, 22</value>
   </data>
   <data name="replaceToolStripMenuItem.Text" xml:space="preserve">
     <value>Replace</value>
@@ -1182,13 +1182,13 @@
 </value>
   </data>
   <data name="deleteFileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>157, 22</value>
   </data>
   <data name="deleteFileToolStripMenuItem.Text" xml:space="preserve">
     <value>Delete</value>
   </data>
   <data name="contextMenuPCKEntries.Size" type="System.Drawing.Size, System.Drawing">
-    <value>181, 290</value>
+    <value>158, 268</value>
   </data>
   <data name="&gt;&gt;contextMenuPCKEntries.Name" xml:space="preserve">
     <value>contextMenuPCKEntries</value>
@@ -1369,46 +1369,14 @@
   <data name="quickChangeToolStripMenuItem.Text" xml:space="preserve">
     <value>Quick Change</value>
   </data>
-  <data name="convertToBedrockToolStripMenuItem.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="convertToBedrockToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vAAADrwBlbxySQAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xMkMEa+wAAAJeSURBVDhPhVFp
-        TxNRFH1/RbGdlsQElaWzdaQgbadFtnkznWlLCm2Q2UCxTqdFFAzTRONSYheIoCjRpmoErBiKW/hi4q+q
-        bxpoSPzgyfnw7r3nvHvveyD92W/UQ5l9Vt6h5B1S2/Wntnr1977lHxDltVr/7FtaqTLJbc/YU+f8x0GQ
-        rgfmPgw9aoj390dX6uMSgWlVMvkGT7zqLR5PF34lzL3w9HZXunZNfuedr/nAw+9RnnZt/dHl1+SN2lWO
-        cS3sDsVxbOEgsPwTFo9Tz38nRdIRK15MvvRIlBtIFKboSoTGRMp5e4+VaEeEdoi0Y2r7kkBjyqcBjsEW
-        x3s4xomUWUiAkhoweLqiBRurEFLujVl/lvfkICESFyK0M0qc1xU5KxAlOSzQbtuQm+iWiHMVjd2Q++9A
-        b0X3C2SHSHYIpNPgGZMnRbIzLeBZrs8QmH1rEuw+iEVo1xLfl+O6nqzcvQd7MpDay6cQm2fwTBnO8sQL
-        xQcaFq+GLm/eGtm8OfY4N2NN+VBhbWawmhmzhQDYbDatSSafGECDgC/WFFLUrdTBanRNGUbLoDADiTVt
-        5KwBJQvaaFG9Dspq0Ji4YghEWQtlJvCCHLJ1bZwa2rANJZ2VvO5FAUdEh1a6pfuXJ4a5EdTxWz6GaPL4
-        fw0hkydysK+khdFUh5ZkG9o41bUBDA6HjGsd7Qo9ZR0tzR5ZcdRwietu1U8M6NKv+XjDioIM5ylqYfRB
-        izwRoZwmpCoqW9KDJjwzW7N5aMXLGoveEBRV1uQ9EarzKB/LQlyiXOj/JS+GmtiGU6BwXQ2sa8G/5oRp
-        fQPDL0EAAAAASUVORK5CYII=
-</value>
-  </data>
-  <data name="convertToBedrockToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>192, 22</value>
-  </data>
-  <data name="convertToBedrockToolStripMenuItem.Text" xml:space="preserve">
-    <value>Convert to Bedrock</value>
-  </data>
   <data name="editToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>39, 20</value>
   </data>
   <data name="editToolStripMenuItem.Text" xml:space="preserve">
     <value>Edit</value>
   </data>
-  <data name="addCustomPackImageToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>195, 22</value>
-  </data>
-  <data name="addCustomPackImageToolStripMenuItem.Text" xml:space="preserve">
-    <value>Add Custom Pack Icon</value>
-  </data>
   <data name="openPckManagerToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>195, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="openPckManagerToolStripMenuItem.Text" xml:space="preserve">
     <value>Pck Manager</value>
@@ -1426,7 +1394,7 @@
     <value>Binka -&gt; Wav</value>
   </data>
   <data name="convertMusicFilesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>195, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="convertMusicFilesToolStripMenuItem.Text" xml:space="preserve">
     <value>Audio Converter</value>
@@ -6771,22 +6739,10 @@
   <data name="&gt;&gt;quickChangeToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;convertToBedrockToolStripMenuItem.Name" xml:space="preserve">
-    <value>convertToBedrockToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;convertToBedrockToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;miscToolStripMenuItem.Name" xml:space="preserve">
     <value>miscToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;miscToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;addCustomPackImageToolStripMenuItem.Name" xml:space="preserve">
-    <value>addCustomPackImageToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;addCustomPackImageToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;openPckManagerToolStripMenuItem.Name" xml:space="preserve">

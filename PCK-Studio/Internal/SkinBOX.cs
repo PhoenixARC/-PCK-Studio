@@ -16,6 +16,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
 **/
 using System;
+using System.Collections.Generic;
 using System.Numerics;
 
 namespace PckStudio.Internal
@@ -65,9 +66,9 @@ namespace PckStudio.Internal
             return skinBox;
         }
 
-        public ValueTuple<string, string> ToProperty()
+        public KeyValuePair<string, string> ToProperty()
 		{
-			return new ValueTuple<string, string>("BOX", ToString());
+			return new KeyValuePair<string, string>("BOX", ToString());
 		}
 
         public override string ToString()

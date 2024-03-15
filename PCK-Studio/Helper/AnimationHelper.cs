@@ -18,7 +18,7 @@ namespace PckStudio.Helper
         internal static void SaveAnimationToFile(PckFileData file, Animation animation)
         {
             string anim = animation.BuildAnim();
-            file.Properties.SetProperty("ANIM", anim);
+            file.SetProperty("ANIM", anim);
             var texture = animation.BuildTexture();
             file.SetData(texture, ImageFormat.Png);
         }
@@ -30,7 +30,7 @@ namespace PckStudio.Helper
             {
                 var texture = file.GetTexture();
                 var frameTextures = texture.Split(ImageLayoutDirection.Vertical);
-                var _animation = new Animation(frameTextures, file.Properties.GetPropertyValue("ANIM"));
+                var _animation = new Animation(frameTextures, file.GetProperty("ANIM"));
                 _animation.Category = file.Filename.Split('/').Contains("items")
                     ? AnimationCategory.Items
                     : AnimationCategory.Blocks;

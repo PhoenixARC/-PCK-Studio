@@ -21,20 +21,12 @@ namespace PckStudio.Popups
     {
         public Skin NewSkin => newSkin;
 
-        //public PckFileData SkinFile => _skinFile;
-        //public PckFileData CapeFile => cape;
-        //public bool HasCape => cape is not null;
-
-        private LOCFile currentLoc;
-        //private PckFileData _skinFile = new PckFileData("dlcskinXYXYXYXY", PckFileType.SkinFile);
-        //private PckFileData cape;
         private Skin newSkin;
         private Random rng = new Random();
 
-        public AddNewSkin(LOCFile loc)
+        public AddNewSkin()
         {
             InitializeComponent();
-            currentLoc = loc;
             newSkin = new Skin("", 0, Resources.classic_template, new SkinANIM(), Enumerable.Empty<SkinBOX>(), Enumerable.Empty<SkinPartOffset>());
         }
 

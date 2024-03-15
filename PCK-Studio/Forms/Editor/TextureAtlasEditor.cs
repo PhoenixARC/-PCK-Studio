@@ -56,6 +56,8 @@ namespace PckStudio.Forms.Editor
         private readonly List<AtlasTile> _tiles;
 
         private AtlasTile _selectedTile;
+        // the "parent" tile for tiles that share name; i.e. parts of water_flow
+        private AtlasTile dataTile;
         private sealed class AtlasTile
         {
             internal readonly int Index;
@@ -137,18 +139,20 @@ namespace PckStudio.Forms.Editor
             if (_tiles is null || !_tiles.IndexInRange(index) || (_selectedTile = _tiles[index]) is null)
                 return;
 
-            if(string.IsNullOrEmpty(_selectedTile.Tile.DisplayName))
-			{
-                // changes the selected tile to the base flowing tile (carries all properties over) - Matt
-                _selectedTile = _tiles.Find(t => t.Tile.InternalName == _selectedTile.Tile.InternalName);
-			}
+            dataTile = _selectedTile;
 
-            tileNameLabel.Text = $"{_selectedTile.Tile.DisplayName}";
+            if (string.IsNullOrEmpty(dataTile.Tile.DisplayName))
+            {
+                dataTile = _tiles.Find(t => t.Tile.InternalName == _selectedTile.Tile.InternalName);
+            }
+
+            selectTilePictureBox.Image = dataTile.Texture;
+            tileNameLabel.Text = $"{dataTile.Tile.DisplayName}";
             selectTilePictureBox.BlendColor = GetBlendColor();
             selectTilePictureBox.UseBlendColor = applyColorMaskToolStripMenuItem.Checked;
 
             bool hasAnimation =
-                _pckFile.TryGetValue($"res/textures/{_atlasType}/{_selectedTile.Tile.InternalName}.png", PckFileType.TextureFile, out var animationFile);
+                _pckFile.TryGetValue($"res/textures/{_atlasType}/{dataTile.Tile.InternalName}.png", PckFileType.TextureFile, out var animationFile);
             animationButton.Text = hasAnimation ? "Edit Animation" : "Create Animation";
             replaceButton.Enabled = !hasAnimation;
 
@@ -158,16 +162,29 @@ namespace PckStudio.Forms.Editor
             {
                 var animation = AnimationHelper.GetAnimationFromFile(animationFile);
                 selectTilePictureBox.Start(animation);
-                return;
             }
 
-            if (variantComboBox.Enabled = variantLabel.Visible = variantComboBox.Visible = _selectedTile.Tile.HasColourEntry && _selectedTile.Tile.ColourEntry.Variants.Length > 1)
+            if (variantComboBox.Enabled = variantLabel.Visible = variantComboBox.Visible =
+                dataTile.Tile.HasColourEntry)
             {
-                variantComboBox.Items.AddRange(_selectedTile.Tile.ColourEntry.Variants);
-                variantComboBox.SelectedItem = _selectedTile.Tile.ColourEntry.DefaultName;
+                if (dataTile.Tile.ColourEntry.IsWaterColour && _colourTable.WaterColors.Count > 0)
+                {
+                    foreach (var col in _colourTable.WaterColors)
+                    {
+                        if(!variantComboBox.Items.Contains(col.Name))
+                            variantComboBox.Items.Add(col.Name);
+                    }
+
+                    dataTile.Tile.ColourEntry.DefaultName = _colourTable.WaterColors[0].Name;
+                }
+
+                if (dataTile.Tile.ColourEntry.Variants.Length > 1)
+                {
+                    variantComboBox.Items.AddRange(dataTile.Tile.ColourEntry.Variants);
+                }
+
+                variantComboBox.SelectedItem = dataTile.Tile.ColourEntry.DefaultName;
             }
-            
-            selectTilePictureBox.Image = _selectedTile.Texture;
         }
         
         private static int GetSelectedImageIndex(
@@ -291,25 +308,31 @@ namespace PckStudio.Forms.Editor
 
         private Color GetBlendColor()
         {
-            if (_selectedTile.Tile.HasColourEntry && _selectedTile.Tile.ColourEntry is not null)
-                return FindBlendColorByKey(_selectedTile.Tile.ColourEntry.DefaultName);
+            if (dataTile.Tile.HasColourEntry && dataTile.Tile.ColourEntry is not null)
+            {
+                var col = FindBlendColorByKey(dataTile.Tile.ColourEntry.DefaultName);
+                return col;
+            }
             return Color.White;
         }
 
         private Color FindBlendColorByKey(string colorKey)
         {
             if (_colourTable is not null &&
-                _selectedTile.Tile.HasColourEntry &&
-                _selectedTile.Tile.ColourEntry is not null)
+                dataTile.Tile.HasColourEntry &&
+                dataTile.Tile.ColourEntry is not null)
             {
-                if (_selectedTile.Tile.ColourEntry.IsWaterColour &&
-                    _colourTable.WaterColors.FirstOrDefault(entry => entry.Name == colorKey) is ColorContainer.WaterColor waterColor)
+                // basic way to check for classic water colors
+                if(!dataTile.Tile.ColourEntry.IsWaterColour || colorKey.StartsWith("Water_"))
+                {
+                    if (_colourTable.Colors.FirstOrDefault(entry => entry.Name == colorKey) is ColorContainer.Color color)
+                    {
+                        return color.ColorPallette;
+                    }
+                }
+                else if (_colourTable.WaterColors.FirstOrDefault(entry => entry.Name == colorKey) is ColorContainer.WaterColor waterColor)
                 {
                     return waterColor.SurfaceColor;
-                }
-                else if (_colourTable.Colors.FirstOrDefault(entry => entry.Name == colorKey) is ColorContainer.Color color)
-                {
-                    return color.ColorPallette;
                 }
             }
             return Color.White;
@@ -408,6 +431,8 @@ namespace PckStudio.Forms.Editor
             }
 
             AnimationHelper.SaveAnimationToFile(file, animation);
+            // so animations can automatically update upon saving
+            SelectedIndex = _selectedTile.Index;
         }
 
         private void extractTileToolStripMenuItem_Click(object sender, EventArgs e)
@@ -425,12 +450,12 @@ namespace PckStudio.Forms.Editor
 
         private void variantComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (_selectedTile.Tile.ColourEntry is not null &&
-                _selectedTile.Tile.ColourEntry.Variants.IndexInRange(variantComboBox.SelectedIndex))
+            if (dataTile.Tile.ColourEntry is not null)
             {
-                string colorKey = _selectedTile.Tile.ColourEntry.Variants[variantComboBox.SelectedIndex];
+                string colorKey = variantComboBox.SelectedItem.ToString();
+
                 selectTilePictureBox.BlendColor = FindBlendColorByKey(colorKey);
-                selectTilePictureBox.Image = _selectedTile.Texture;
+                selectTilePictureBox.Image = dataTile.Texture;
             }
         }
 

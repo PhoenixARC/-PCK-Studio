@@ -521,7 +521,16 @@
 		},
 		{
 			"internalName": "stem_straight",
-			"displayName": "Stem"
+			"displayName": "Stem",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"isWaterColour": false,
+				"defaultName": "Tile_StemMin",
+				"variants": [
+					"Tile_StemMin",
+					"Tile_StemMax"
+				]
+			}
 		},
 		{
 			"internalName": "rail_normal_turned",
@@ -585,7 +594,16 @@
 		},
 		{
 			"internalName": "stem_bent",
-			"displayName": "Stem (Attached)"
+			"displayName": "Stem (Attached)",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"isWaterColour": false,
+				"defaultName": "Tile_StemMin",
+				"variants": [
+					"Tile_StemMin",
+					"Tile_StemMax"
+				]
+			}
 		},
 		{
 			"internalName": "rail_normal",
@@ -673,7 +691,19 @@
 		},
 		{
 			"internalName": "vine",
-			"displayName": "Vines"
+			"displayName": "Vines",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"isWaterColour": false,
+				"defaultName": "Foliage_Default",
+				"variants": [
+					"Foliage_Default",
+					"Foliage_Evergreen",
+					"Foliage_Birch",
+					"Foliage_Mesa",
+					"Foliage_Swampland"
+				]
+			}
 		},
 		{
 			"internalName": "lapis_block",
@@ -971,8 +1001,49 @@
 			"hasColourEntry": true,
 			"colourEntry": {
 				"isWaterColour": true,
-				"defaultName": "default",
-				"variants": [ "default" ]
+				"defaultName": "Water_Plains",
+				"variants": [
+					"Water_Ocean",
+					"Water_Plains",
+					"Water_Desert",
+					"Water_ExtremeHills",
+					"Water_Forest",
+					"Water_Taiga",
+					"Water_Swampland",
+					"Water_River",
+					"Water_Hell",
+					"Water_Sky",
+					"Water_FrozenOcean",
+					"Water_FrozenRiver",
+					"Water_IcePlains",
+					"Water_IceMountains",
+					"Water_MushroomIsland",
+					"Water_MushroomIslandShore",
+					"Water_Beach",
+					"Water_DesertHills",
+					"Water_ForestHills",
+					"Water_TaigaHills",
+					"Water_ExtremeHillsEdge",
+					"Water_Jungle",
+					"Water_JungleHills",
+					"Water_JungleEdge",
+					"Water_DeepOcean",
+					"Water_StoneBeach",
+					"Water_ColdBeach",
+					"Water_BirchForest",
+					"Water_BirchForestHills",
+					"Water_RoofedForest",
+					"Water_ColdTaiga",
+					"Water_ColdTaigaHills",
+					"Water_MegaTaiga",
+					"Water_MegaTaigaHills",
+					"Water_ExtremeHillsPlus",
+					"Water_Savanna",
+					"Water_SavannaPlateau",
+					"Water_Mesa",
+					"Water_MesaPlateauF",
+					"Water_MesaPlateau"
+				]
 			}
 		},
 		{
@@ -981,8 +1052,49 @@
 			"hasColourEntry": true,
 			"colourEntry": {
 				"isWaterColour": true,
-				"defaultName": "default",
-				"variants": [ "default" ]
+				"defaultName": "Water_Plains",
+				"variants": [
+					"Water_Ocean",
+					"Water_Plains",
+					"Water_Desert",
+					"Water_ExtremeHills",
+					"Water_Forest",
+					"Water_Taiga",
+					"Water_Swampland",
+					"Water_River",
+					"Water_Hell",
+					"Water_Sky",
+					"Water_FrozenOcean",
+					"Water_FrozenRiver",
+					"Water_IcePlains",
+					"Water_IceMountains",
+					"Water_MushroomIsland",
+					"Water_MushroomIslandShore",
+					"Water_Beach",
+					"Water_DesertHills",
+					"Water_ForestHills",
+					"Water_TaigaHills",
+					"Water_ExtremeHillsEdge",
+					"Water_Jungle",
+					"Water_JungleHills",
+					"Water_JungleEdge",
+					"Water_DeepOcean",
+					"Water_StoneBeach",
+					"Water_ColdBeach",
+					"Water_BirchForest",
+					"Water_BirchForestHills",
+					"Water_RoofedForest",
+					"Water_ColdTaiga",
+					"Water_ColdTaigaHills",
+					"Water_MegaTaiga",
+					"Water_MegaTaigaHills",
+					"Water_ExtremeHillsPlus",
+					"Water_Savanna",
+					"Water_SavannaPlateau",
+					"Water_Mesa",
+					"Water_MesaPlateauF",
+					"Water_MesaPlateau"
+				]
 			}
 		},
 		{
@@ -1439,11 +1551,33 @@
 		},
 		{
 			"internalName": "double_plant_fern_top",
-			"displayName": "Large Fern (Top)"
+			"displayName": "Large Fern (Top)",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"isWaterColour": false,
+				"defaultName": "Grass_Common",
+				"variants": [
+					"Grass_Common",
+					"Grass_Mesa",
+					"Grass_Swamp1",
+					"Grass_Swamp2"
+				]
+			}
 		},
 		{
 			"internalName": "double_plant_grass_top",
-			"displayName": "Double Tall Grass (Top)"
+			"displayName": "Double Tall Grass (Top)",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"isWaterColour": false,
+				"defaultName": "Grass_Common",
+				"variants": [
+					"Grass_Common",
+					"Grass_Mesa",
+					"Grass_Swamp1",
+					"Grass_Swamp2"
+				]
+			}
 		},
 		{
 			"internalName": "double_plant_paeonia_top",
@@ -1527,11 +1661,33 @@
 		},
 		{
 			"internalName": "double_plant_fern_bottom",
-			"displayName": "Large Fern (Bottom)"
+			"displayName": "Large Fern (Bottom)",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"isWaterColour": false,
+				"defaultName": "Grass_Common",
+				"variants": [
+					"Grass_Common",
+					"Grass_Mesa",
+					"Grass_Swamp1",
+					"Grass_Swamp2"
+				]
+			}
 		},
 		{
 			"internalName": "double_plant_grass_bottom",
-			"displayName": "Double Tall Grass (Bottom)"
+			"displayName": "Double Tall Grass (Bottom)",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"isWaterColour": false,
+				"defaultName": "Grass_Common",
+				"variants": [
+					"Grass_Common",
+					"Grass_Mesa",
+					"Grass_Swamp1",
+					"Grass_Swamp2"
+				]
+			}
 		},
 		{
 			"internalName": "double_plant_paeonia_bottom",
@@ -2318,15 +2474,15 @@
 			"displayName": "Kelp (Bottom)"
 		},
 		{
-			"internalName": "",
+			"internalName": "kelp_a",
 			"displayName": ""
 		},
 		{
-			"internalName": "",
+			"internalName": "kelp_a",
 			"displayName": ""
 		},
 		{
-			"internalName": "",
+			"internalName": "kelp_a",
 			"displayName": ""
 		},
 		{
@@ -2334,15 +2490,15 @@
 			"displayName": "Kelp (Top)"
 		},
 		{
-			"internalName": "",
+			"internalName": "kelp_top_a",
 			"displayName": ""
 		},
 		{
-			"internalName": "",
+			"internalName": "kelp_top_a",
 			"displayName": ""
 		},
 		{
-			"internalName": "",
+			"internalName": "kelp_top_a",
 			"displayName": ""
 		},
 		{

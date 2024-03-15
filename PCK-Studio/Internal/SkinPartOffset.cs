@@ -4,6 +4,7 @@ using System.IO;
 using PckStudio.Extensions;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
+using System.Collections.Generic;
 
 namespace PckStudio.Internal
 {
@@ -71,10 +72,10 @@ namespace PckStudio.Internal
             return new SkinPartOffset(type, value);
         }
 
-        public (string, string) ToProperty()
+        public KeyValuePair<string, string> ToProperty()
         {
             string value = $"{Type} Y {Value}";
-            return ("OFFSET", value.Replace(',', '.'));
+            return new KeyValuePair<string, string>("OFFSET", value.Replace(',', '.'));
         }
     }
 }

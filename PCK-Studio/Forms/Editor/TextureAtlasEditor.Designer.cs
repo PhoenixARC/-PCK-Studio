@@ -90,14 +90,14 @@
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // extractTileToolStripMenuItem
             // 
             this.extractTileToolStripMenuItem.Name = "extractTileToolStripMenuItem";
-            this.extractTileToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+            this.extractTileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.extractTileToolStripMenuItem.Text = "Extract Tile";
             this.extractTileToolStripMenuItem.Click += new System.EventHandler(this.extractTileToolStripMenuItem_Click);
             // 
@@ -117,7 +117,7 @@
             this.applyColorMaskToolStripMenuItem.CheckOnClick = true;
             this.applyColorMaskToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.applyColorMaskToolStripMenuItem.Name = "applyColorMaskToolStripMenuItem";
-            this.applyColorMaskToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.applyColorMaskToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.applyColorMaskToolStripMenuItem.Text = "Apply Color Mask";
             this.applyColorMaskToolStripMenuItem.CheckedChanged += new System.EventHandler(this.applyColorMaskToolStripMenuItem_CheckedChanged);
             // 
@@ -127,7 +127,7 @@
             this.playAnimationsToolStripMenuItem.CheckOnClick = true;
             this.playAnimationsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.playAnimationsToolStripMenuItem.Name = "playAnimationsToolStripMenuItem";
-            this.playAnimationsToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.playAnimationsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.playAnimationsToolStripMenuItem.Text = "Play Animations";
             this.playAnimationsToolStripMenuItem.CheckedChanged += new System.EventHandler(this.playAnimationsToolStripMenuItem_CheckedChanged);
             // 

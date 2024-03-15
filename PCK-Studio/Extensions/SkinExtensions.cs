@@ -17,34 +17,40 @@ namespace PckStudio.Extensions
             string skinId = skin.Id.ToString("d08");
             PckFileData skinFile = new PckFileData($"dlcskin{skinId}.png", PckFileType.SkinFile);
 
-            string skinLocKey = $"IDS_dlcskin{skinId}_DISPLAYNAME";
-            skinFile.Properties.Add("DISPLAYNAME", skin.Name);
-            skinFile.Properties.Add("DISPLAYNAMEID", skinLocKey);
-            localizationFile.AddLocKey(skinLocKey, skin.Name);
+            skinFile.AddProperty("DISPLAYNAME", skin.Name);
+            if (localizationFile is not null)
+            {
+                string skinLocKey = $"IDS_dlcskin{skinId}_DISPLAYNAME";
+                skinFile.AddProperty("DISPLAYNAMEID", skinLocKey);
+                localizationFile.AddLocKey(skinLocKey, skin.Name);
+            }
 
             if (!string.IsNullOrEmpty(skin.Theme))
             {
-                skinFile.Properties.Add("THEMENAME", skin.Theme);
-                skinFile.Properties.Add("THEMENAMEID", $"IDS_dlcskin{skinId}_THEMENAME");
-                localizationFile.AddLocKey($"IDS_dlcskin{skinId}_THEMENAME", skin.Theme);
+                skinFile.AddProperty("THEMENAME", skin.Theme);
+                if (localizationFile is not null)
+                {
+                    skinFile.AddProperty("THEMENAMEID", $"IDS_dlcskin{skinId}_THEMENAME");
+                    localizationFile.AddLocKey($"IDS_dlcskin{skinId}_THEMENAME", skin.Theme);
+                }
             }
 
             if (skin.HasCape)
             {
-                skinFile.Properties.Add("CAPEPATH", $"dlccape{skinId}.png");
+                skinFile.AddProperty("CAPEPATH", $"dlccape{skinId}.png");
             }
 
-            skinFile.Properties.Add("ANIM", skin.ANIM);
-            skinFile.Properties.Add("GAME_FLAGS", "0x18");
-            skinFile.Properties.Add("FREE", "1");
+            skinFile.AddProperty("ANIM", skin.ANIM);
+            skinFile.AddProperty("GAME_FLAGS", "0x18");
+            skinFile.AddProperty("FREE", "1");
 
             foreach (SkinBOX box in skin.AdditionalBoxes)
             {
-                skinFile.Properties.Add(box.ToProperty());
+                skinFile.AddProperty(box.ToProperty());
             }
             foreach (SkinPartOffset offset in skin.PartOffsets)
             {
-                skinFile.Properties.Add(offset.ToProperty());
+                skinFile.AddProperty(offset.ToProperty());
             }
 
             skinFile.SetData(skin.Texture, ImageFormat.Png);
