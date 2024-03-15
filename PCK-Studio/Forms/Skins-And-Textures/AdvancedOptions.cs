@@ -67,7 +67,7 @@ namespace PckStudio.Popups
 
                 if (index == -1 || (Enum.IsDefined(typeof(PckFileType), index) && (int)file.Filetype == index))
                 {
-                    file.Properties.Add(propertyKeyTextBox.Text, propertyValueTextBox.Text);
+                    file.AddProperty(propertyKeyTextBox.Text, propertyValueTextBox.Text);
                 }
             }
 

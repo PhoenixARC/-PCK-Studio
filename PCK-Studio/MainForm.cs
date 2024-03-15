@@ -203,7 +203,7 @@ namespace PckStudio
 		{
 			if (currentPCK.TryGetFile("0", PckFileType.InfoFile, out PckFileData file))
 			{
-				file.Properties.RemoveAll(t => t.Key.Equals("LOCK"));
+				file.RemoveProperties("LOCK");
 			}
 		}
 
@@ -428,7 +428,7 @@ namespace PckStudio
 
 		public void HandleSkinFile(PckFileData file)
 		{
-			if (file.Properties.HasProperty("BOX"))
+			if (file.HasProperty("BOX"))
 			{
 				using generateModel generate = new generateModel(file);
 				if (generate.ShowDialog() == DialogResult.OK)
@@ -441,7 +441,7 @@ namespace PckStudio
 			}
 
 			var img = file.GetTexture();
-			using var skinViewer = new SkinPreview(img, file.Properties.GetPropertyValue("ANIM", SkinANIM.FromString));
+			using var skinViewer = new SkinPreview(img, file.GetProperty("ANIM", SkinANIM.FromString));
 			skinViewer.ShowDialog(this);
 		}
 
@@ -472,13 +472,13 @@ namespace PckStudio
 			if (e.Node.TryGetTagData(out PckFileData file))
 			{
 				viewFileInfoToolStripMenuItem.Visible = true;
-				if (file.Properties.HasProperty("BOX"))
+				if (file.HasProperty("BOX"))
 				{
 					buttonEdit.Text = "EDIT BOXES";
 					buttonEdit.Visible = true;
 				}
-				else if (file.Properties.HasProperty("ANIM") &&
-						file.Properties.GetPropertyValue("ANIM", s => SkinANIM.FromString(s) == (SkinAnimMask.RESOLUTION_64x64 | SkinAnimMask.SLIM_MODEL)))
+				else if (file.HasProperty("ANIM") &&
+						file.GetProperty("ANIM", s => SkinANIM.FromString(s) == (SkinAnimMask.RESOLUTION_64x64 | SkinAnimMask.SLIM_MODEL)))
 				{
 					buttonEdit.Text = "View Skin";
 					buttonEdit.Visible = true;
@@ -554,10 +554,13 @@ namespace PckStudio
 		private void extractFile(string outFilePath, PckFileData file)
         {
 			File.WriteAllBytes(outFilePath, file.Data);
-			if (file.Properties.Count > 0)
+			if (file.PropertyCount > 0)
 			{
 				using var fs = File.CreateText($"{outFilePath}.txt");
-				file.Properties.ForEach(property => fs.WriteLine($"{property.Key}: {property.Value}"));
+				foreach (var property in file.GetProperties())
+				{
+					fs.WriteLine($"{property.Key}: {property.Value}");
+                }
 			}
 		}
 
@@ -723,10 +726,10 @@ namespace PckStudio
 			{
 				if (TryGetLocFile(out LOCFile locFile))
 				{
-					if (file.Properties.HasProperty("THEMENAMEID"))
-					locFile.RemoveLocKey(file.Properties.GetPropertyValue("THEMENAMEID"));
-					if (file.Properties.HasProperty("DISPLAYNAMEID"))
-					locFile.RemoveLocKey(file.Properties.GetPropertyValue("DISPLAYNAMEID"));
+					if (file.TryGetProperty("THEMENAMEID", out string value))
+						locFile.RemoveLocKey(value);
+					if (file.TryGetProperty("DISPLAYNAMEID", out value))
+						locFile.RemoveLocKey(value);
 					TrySetLocFile(locFile);
 				}
 			}
@@ -978,7 +981,8 @@ namespace PckStudio
 					if (node.Tag is PckFileData node_file)
 					{
 						PckFileData new_file = newPCKFile.CreateNewFile(node_file.Filename.Replace(parent_file.Filename + "/", String.Empty), node_file.Filetype);
-						foreach (var prop in node_file.Properties) new_file.Properties.Add(prop);
+						foreach (var prop in node_file.GetProperties())
+							new_file.AddProperty(prop);
 						new_file.SetData(node_file.Data);
 					}
 				}
@@ -1017,8 +1021,7 @@ namespace PckStudio
 			if (treeMeta.SelectedNode is TreeNode subnode && subnode.Tag is KeyValuePair<string, string> property &&
 				treeViewMain.SelectedNode is TreeNode node && node.Tag is PckFileData file)
 			{
-				int i = file.Properties.IndexOf(property);
-				if (i != -1)
+				if (file.HasProperty(property.Key))
 				{
 					switch (property.Key)
 					{
@@ -1028,7 +1031,7 @@ namespace PckStudio
 								using ANIMEditor diag = new ANIMEditor(property.Value);
 								if (diag.ShowDialog(this) == DialogResult.OK)
 								{
-									file.Properties[i] = new KeyValuePair<string, string>("ANIM", diag.ResultAnim.ToString());
+									file.SetProperty(file.GetPropertyIndex(property), new KeyValuePair<string, string>("ANIM", diag.ResultAnim.ToString()));
 									RebuildSubPCK(treeViewMain.SelectedNode.FullPath);
 									ReloadMetaTreeView();
 									wasModified = true;
@@ -1049,7 +1052,7 @@ namespace PckStudio
 								using BoxEditor diag = new BoxEditor(property.Value, IsSubPCKNode(treeViewMain.SelectedNode.FullPath));
 								if (diag.ShowDialog(this) == DialogResult.OK)
 								{
-									file.Properties[i] = new KeyValuePair<string, string>("BOX", diag.Result.ToString());
+									file.SetProperty(file.GetPropertyIndex(property), new KeyValuePair<string, string>("BOX", diag.Result.ToString()));
 									RebuildSubPCK(treeViewMain.SelectedNode.FullPath);
 									ReloadMetaTreeView();
 									wasModified = true;
@@ -1073,7 +1076,7 @@ namespace PckStudio
 					{
 						if (addProperty.ShowDialog() == DialogResult.OK)
 						{
-							file.Properties[i] = addProperty.Property;
+							file.SetProperty(file.GetPropertyIndex(property), addProperty.Property);
 							RebuildSubPCK(treeViewMain.SelectedNode.FullPath);
 							ReloadMetaTreeView();
 							wasModified = true;
@@ -1100,7 +1103,10 @@ namespace PckStudio
 					TreeNode newNode = new TreeNode();
 					newNode.Text = Path.GetFileName(diag.NewText);
 					var newFile = new PckFileData(diag.NewText, file.Filetype);
-					file.Properties.ForEach(newFile.Properties.Add);
+					foreach (var property in file.GetProperties())
+					{
+						newFile.AddProperty(property);
+					}
 					newFile.SetData(file.Data);
 					newFile.Filename = diag.NewText;
 					newNode.Tag = newFile;
@@ -1132,7 +1138,7 @@ namespace PckStudio
 		{
 			if (treeMeta.SelectedNode is TreeNode t && t.Tag is KeyValuePair<string, string> property &&
 				treeViewMain.SelectedNode is TreeNode main && main.Tag is PckFileData file &&
-				file.Properties.Remove(property))
+				file.RemoveProperty(property))
 			{
 				treeMeta.SelectedNode.Remove();
 				RebuildSubPCK(treeViewMain.SelectedNode.FullPath);
@@ -1146,7 +1152,7 @@ namespace PckStudio
 			if (treeViewMain.SelectedNode is TreeNode node &&
 				node.Tag is PckFileData file)
 			{
-				foreach (var property in file.Properties)
+				foreach (var property in file.GetProperties())
 				{
 					treeMeta.Nodes.Add(CreateNode(property.Key, property));
 				}
@@ -1161,7 +1167,7 @@ namespace PckStudio
 				using AddPropertyPrompt addProperty = new AddPropertyPrompt();
 				if (addProperty.ShowDialog() == DialogResult.OK)
 				{
-					file.Properties.Add(addProperty.Property);
+					file.AddProperty(addProperty.Property);
 					RebuildSubPCK(treeViewMain.SelectedNode.FullPath);
 					ReloadMetaTreeView();
 					wasModified = true;
@@ -1205,8 +1211,8 @@ namespace PckStudio
 			var pack = new PckFile(3);
 
 			var zeroFile = pack.CreateNewFile("0", PckFileType.InfoFile);
-			zeroFile.Properties.Add("PACKID", packId.ToString());
-			zeroFile.Properties.Add("PACKVERSION", packVersion.ToString());
+			zeroFile.AddProperty("PACKID", packId);
+			zeroFile.AddProperty("PACKVERSION", packVersion);
 
 			var locFile = new LOCFile();
 			locFile.InitializeDefault(packName);
@@ -1234,8 +1240,8 @@ namespace PckStudio
 
 			var texturepackInfo = pack.CreateNewFile($"{res}/{res}Info.pck", PckFileType.TexturePackInfoFile);
 
-			texturepackInfo.Properties.Add("PACKID", "0");
-			texturepackInfo.Properties.Add("DATAPATH", $"{res}Data.pck");
+			texturepackInfo.AddProperty("PACKID", "0");
+			texturepackInfo.AddProperty("DATAPATH", $"{res}Data.pck");
 
 			texturepackInfo.SetData(new PckFileWriter(infoPCK, LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian));
 
@@ -1390,7 +1396,7 @@ namespace PckStudio
 																 //attempts to generate reimportable metadata file out of minefiles metadata
 						string metaData = "";
 
-						foreach (var entry in file.Properties)
+						foreach (var entry in file.GetProperties())
 						{
 							metaData += $"{entry.Key}: {entry.Value}{Environment.NewLine}";
 						}
@@ -1468,7 +1474,7 @@ namespace PckStudio
 						{
 							string[] param = property.Split(':');
 							if (param.Length < 2) continue;
-							newFile.Properties.Add((param[0], param[1]));
+							newFile.AddProperty(param[0], param[1]);
 							//switch (param[0])
 							//{
 							//    case "DISPLAYNAMEID":
@@ -1602,7 +1608,7 @@ namespace PckStudio
 								{
 
 								}
-								mfNew.Properties.Add(new KeyValuePair<string, string>(key, value));
+								mfNew.AddProperty(key, value);
 							}
 							wasModified = true;
 						}
@@ -1884,7 +1890,7 @@ namespace PckStudio
 					"File path: " + file.Filename +
 					"\nAssigned File type: " + (int)file.Filetype + " (" + file.Filetype + ")" +
 					"\nFile size: " + file.Size +
-					"\nProperties count: " + file.Properties.Count
+					"\nProperties count: " + file.PropertyCount
 					, Path.GetFileName(file.Filename) + " file info");
 			}
 		}
@@ -1995,7 +2001,7 @@ namespace PckStudio
 							int idx = line.IndexOf(' ');
 							if (idx == -1 || line.Length - 1 == idx)
 								continue;
-							file.Properties.Add((line.Substring(0, idx), line.Substring(idx + 1)));
+							file.AddProperty(line.Substring(0, idx), line.Substring(idx + 1));
 						}
 						ReloadMetaTreeView();
 						RebuildSubPCK(treeViewMain.SelectedNode.FullPath);
@@ -2010,9 +2016,10 @@ namespace PckStudio
 			if (treeViewMain.SelectedNode.TryGetTagData(out PckFileData file) &&
 				file.Filetype == PckFileType.SkinFile)
 			{
-				foreach (var p in file.Properties.FindAll(s => s.Key == "BOX" || s.Key == "OFFSET"))
+				foreach (var p in file.GetProperties())
 				{
-					file.Properties[file.Properties.IndexOf(p)] = new KeyValuePair<string, string>(p.Key, p.Value.Replace(',', '.'));
+					if (p.Key == "BOX" || p.Key == "OFFSET")
+						file.SetProperty(file.GetPropertyIndex(p), new KeyValuePair<string, string>(p.Key, p.Value.Replace(',', '.')));
 				}
 				ReloadMetaTreeView();
 				RebuildSubPCK(treeViewMain.SelectedNode.FullPath);
@@ -2044,18 +2051,18 @@ namespace PckStudio
 		{
 			if (treeViewMain.SelectedNode.TryGetTagData(out PckFileData file))
 			{
-				var props = file.Properties.Select(p => p.Key + " " + p.Value);
+				var props = file.GetProperties().Select(p => p.Key + " " + p.Value);
 				using (var input = new MultiTextPrompt(props.ToArray()))
 				{
 					if (input.ShowDialog(this) == DialogResult.OK)
 					{
-						file.Properties.Clear();
+						file.ClearProperties();
 						foreach (var line in input.TextOutput)
 						{
 							int idx = line.IndexOf(' ');
 							if (idx == -1 || line.Length - 1 == idx)
 								continue;
-							file.Properties.Add((line.Substring(0, idx).Replace(":", string.Empty), line.Substring(idx + 1)));
+							file.AddProperty(line.Substring(0, idx).Replace(":", string.Empty), line.Substring(idx + 1));
 						}
 						ReloadMetaTreeView();
 						RebuildSubPCK(treeViewMain.SelectedNode.FullPath);
@@ -2183,7 +2190,7 @@ namespace PckStudio
 				using BoxEditor diag = new BoxEditor(SkinBOX.Empty, IsSubPCKNode(treeViewMain.SelectedNode.FullPath));
 				if (diag.ShowDialog(this) == DialogResult.OK)
 				{
-					file.Properties.Add("BOX", diag.Result);
+					file.AddProperty("BOX", diag.Result);
 					RebuildSubPCK(treeViewMain.SelectedNode.FullPath);
 					ReloadMetaTreeView();
 					wasModified = true;
@@ -2199,7 +2206,7 @@ namespace PckStudio
 				using ANIMEditor diag = new ANIMEditor(SkinANIM.Empty);
 				if (diag.ShowDialog(this) == DialogResult.OK)
 				{
-					file.Properties.Add("ANIM", diag.ResultAnim);
+					file.AddProperty("ANIM", diag.ResultAnim);
 					RebuildSubPCK(treeViewMain.SelectedNode.FullPath);
 					ReloadMetaTreeView();
 					wasModified = true;

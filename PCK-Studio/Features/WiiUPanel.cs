@@ -237,7 +237,7 @@ namespace PckStudio.Features
             currentPCK = reader.FromFile(filepath);
             if (currentPCK is null) return string.Empty;
             return currentPCK.TryGetFile("0", PckFileType.InfoFile, out var file)
-                ? file.Properties.GetPropertyValue("PACKID")
+                ? file.GetProperty("PACKID")
                 : string.Empty;
         }
 

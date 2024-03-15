@@ -182,7 +182,7 @@ namespace PckStudio.Forms
                             string capePath = "";
                             bool hasCape = false;
 
-                            foreach (var entry in newSkin.Properties)
+                            foreach (var entry in newSkin.GetProperties())
                             {
                                 if (entry.Key == "DISPLAYNAME")
                                 {
@@ -264,7 +264,7 @@ namespace PckStudio.Forms
                             if (skinPicture.Height == skinPicture.Width)
                             {
                                 //determines skin type based on image dimensions, existence of BOX tags, and the ANIM value
-                                foreach (var entry in newSkin.Properties)
+                                foreach (var entry in newSkin.GetProperties())
                                 {
                                     if (entry.Key == "BOX")
                                     {
