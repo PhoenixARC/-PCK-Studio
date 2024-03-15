@@ -73,9 +73,9 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap additional_map_icons_sheet {
+        public static System.Drawing.Bitmap additional_map_icons_atlas {
             get {
-                object obj = ResourceManager.GetObject("additional_map_icons_sheet", resourceCulture);
+                object obj = ResourceManager.GetObject("additional_map_icons_atlas", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -277,9 +277,9 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap entities_sheet {
+        public static System.Drawing.Bitmap entities_atlas {
             get {
-                object obj = ResourceManager.GetObject("entities_sheet", resourceCulture);
+                object obj = ResourceManager.GetObject("entities_atlas", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -329,9 +329,9 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap experience_orbs_sheet {
+        public static System.Drawing.Bitmap experience_orbs_atlas {
             get {
-                object obj = ResourceManager.GetObject("experience_orbs_sheet", resourceCulture);
+                object obj = ResourceManager.GetObject("experience_orbs_atlas", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -369,9 +369,9 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap explosion_sheet {
+        public static System.Drawing.Bitmap explosion_atlas {
             get {
-                object obj = ResourceManager.GetObject("explosion_sheet", resourceCulture);
+                object obj = ResourceManager.GetObject("explosion_atlas", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -538,9 +538,9 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap items_sheet {
+        public static System.Drawing.Bitmap items_atlas {
             get {
-                object obj = ResourceManager.GetObject("items_sheet", resourceCulture);
+                object obj = ResourceManager.GetObject("items_atlas", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -558,9 +558,9 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap map_icons_sheet {
+        public static System.Drawing.Bitmap map_icons_atlas {
             get {
-                object obj = ResourceManager.GetObject("map_icons_sheet", resourceCulture);
+                object obj = ResourceManager.GetObject("map_icons_atlas", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -615,9 +615,9 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap moon_phases_sheet {
+        public static System.Drawing.Bitmap moon_phases_atlas {
             get {
-                object obj = ResourceManager.GetObject("moon_phases_sheet", resourceCulture);
+                object obj = ResourceManager.GetObject("moon_phases_atlas", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -730,9 +730,9 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap particles_sheet {
+        public static System.Drawing.Bitmap particles_atlas {
             get {
-                object obj = ResourceManager.GetObject("particles_sheet", resourceCulture);
+                object obj = ResourceManager.GetObject("particles_atlas", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -870,9 +870,9 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap terrain_sheet {
+        public static System.Drawing.Bitmap terrain_atlas {
             get {
-                object obj = ResourceManager.GetObject("terrain_sheet", resourceCulture);
+                object obj = ResourceManager.GetObject("terrain_atlas", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

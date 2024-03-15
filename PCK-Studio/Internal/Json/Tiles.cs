@@ -63,28 +63,28 @@ namespace PckStudio.Internal.Json
         internal static List<JsonTileInfo> ExplosionTileInfos => JsonExplosionData.Explosion;
 
         private static Image[] _itemImages;
-        public static Image[] ItemImages => _itemImages ??= Resources.items_sheet.SplitHorizontal(16).ToArray();
+        public static Image[] ItemImages => _itemImages ??= Resources.items_atlas.SplitHorizontal(16).ToArray();
 
         private static Image[] _blockImages;
-        public static Image[] BlockImages => _blockImages ??= Resources.terrain_sheet.SplitHorizontal(16).ToArray();
+        public static Image[] BlockImages => _blockImages ??= Resources.terrain_atlas.SplitHorizontal(16).ToArray();
 
         private static Image[] _particleImages;
-        public static Image[] ParticleImages => _particleImages ??= Resources.particles_sheet.SplitHorizontal(16).ToArray();
+        public static Image[] ParticleImages => _particleImages ??= Resources.particles_atlas.SplitHorizontal(16).ToArray();
 
         private static Image[] _moonPhaseImages;
-        public static Image[] MoonPhaseImages => _moonPhaseImages ??= Resources.moon_phases_sheet.SplitHorizontal(4).ToArray();
+        public static Image[] MoonPhaseImages => _moonPhaseImages ??= Resources.moon_phases_atlas.SplitHorizontal(4).ToArray();
 
         private static Image[] _mapIconImages;
-        public static Image[] MapIconImages => _mapIconImages ??= Resources.map_icons_sheet.SplitHorizontal(4).ToArray();
+        public static Image[] MapIconImages => _mapIconImages ??= Resources.map_icons_atlas.SplitHorizontal(4).ToArray();
 
         private static Image[] _additionalMapIconImages;
-        public static Image[] AdditionalMapIconImages => _additionalMapIconImages ??= Resources.additional_map_icons_sheet.SplitHorizontal(4).ToArray();
+        public static Image[] AdditionalMapIconImages => _additionalMapIconImages ??= Resources.additional_map_icons_atlas.SplitHorizontal(4).ToArray();
 
         private static Image[] _experienceOrbIconImages;
-        public static Image[] ExperienceOrbImages => _experienceOrbIconImages ??= Resources.experience_orbs_sheet.SplitHorizontal(4).ToArray();
+        public static Image[] ExperienceOrbImages => _experienceOrbIconImages ??= Resources.experience_orbs_atlas.SplitHorizontal(4).ToArray();
 
         private static Image[] _explosionImages;
-        public static Image[] ExplosionImages => _explosionImages ??= Resources.explosion_sheet.SplitHorizontal(4).ToArray();
+        public static Image[] ExplosionImages => _explosionImages ??= Resources.explosion_atlas.SplitHorizontal(4).ToArray();
 
         private static ImageList GetImageList(Image[] images)
         {

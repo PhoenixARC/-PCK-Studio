@@ -223,7 +223,7 @@
   <data name="INFO_ICON" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\iconImageList\INFO ICON.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="terrain_sheet" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="terrain_atlas" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\atlases\terrain.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="tu53colours" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -232,7 +232,7 @@
   <data name="clock" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons\clock.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="items_sheet" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="items_atlas" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\atlases\items.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="CHANGELOG" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -277,7 +277,7 @@
   <data name="blank" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\iconImageList\blank.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="entities_sheet" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="entities_atlas" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\atlases\entities.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="entityData" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -325,16 +325,16 @@
   <data name="ProjectLogo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\ProjectLogo.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="moon_phases_sheet" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="moon_phases_atlas" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\atlases\moon_phases.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="additional_map_icons_sheet" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="additional_map_icons_atlas" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\atlases\additional_mapicons.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="map_icons_sheet" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="map_icons_atlas" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\atlases\map_icons.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="experience_orbs_sheet" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="experience_orbs_atlas" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\atlases\experience_orbs.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="blockData" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -346,7 +346,7 @@
   <data name="explosionData" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\atlases\explosionData.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="explosion_sheet" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="explosion_atlas" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\atlases\explosion.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="itemData" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -361,7 +361,7 @@
   <data name="particleData" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\atlases\particleData.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="particles_sheet" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="particles_atlas" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\atlases\particles.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

@@ -636,7 +636,6 @@
     <None Include="Resources\atlases\mapIconData.json" />
     <None Include="Resources\atlases\moonPhaseData.json" />
     <None Include="Resources\atlases\particleData.json" />
-    <None Include="Resources\atlases\tileData.json" />
     <None Include="Resources\TexturePackIcon.png" />
     <None Include="Resources\binka\binkawin.asi" />
     <None Include="Resources\fileTemplates\1.91_colours.col" />

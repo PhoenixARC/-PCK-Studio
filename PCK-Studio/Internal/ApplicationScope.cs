@@ -21,7 +21,7 @@ namespace PckStudio.Internal
         {
             Profiler.Start();
             {
-                _entityImages ??= Resources.entities_sheet.SplitHorizontal(32).ToArray();
+                _entityImages ??= Resources.entities_atlas.SplitHorizontal(32).ToArray();
                 DataCacher ??= new FileCacher(Program.AppDataCache);
                 _ = Tiles.JsonBlockData;
                 _ = Tiles.JsonItemData;
