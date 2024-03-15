@@ -152,6 +152,15 @@ namespace PckStudio.Forms.Editor
             _tiles = new List<AtlasTile>(tiles);
 
             SelectedIndex = 0;
+
+            bool isParticles = _atlasType == "particles";
+
+            // this is directly based on Java's source code for handling enchanted hits
+            // the particle is assigned a random grayscale color between roughly 154 and 230
+            // since critical hit is the only particle with this distinction, we just need to check the atlas type
+            colorSlider.Maximum = isParticles ? 230 : 255;
+            colorSlider.Minimum = isParticles ? 154 : 0;
+            colorSlider.Value = isParticles ? colorSlider.Maximum : colorSlider.Minimum;
         }
 
         private bool AcquireColorTable(PckFile pckFile)
@@ -197,6 +206,8 @@ namespace PckStudio.Forms.Editor
             tileNameLabel.Text = string.Empty;
             internalTileNameLabel.Text = string.Empty;
 
+            colorSlider.Visible = false;
+            colorSliderLabel.Visible = false;
             variantComboBox.Visible = false;
             variantComboBox.Items.Clear();
             variantComboBox.SelectedItem = null;
@@ -395,13 +406,30 @@ namespace PckStudio.Forms.Editor
             return Color.White;
         }
 
+        private Color HandleSpecialTiles(string colorKey)
+        {
+            colorSlider.Visible = colorSliderLabel.Visible = true;
+
+            // Simply, Experience orbs red value is just sliding between 255 and 0
+            if (colorKey == "experience_orb") return Color.FromArgb(colorSlider.Value, 255, 0);
+
+            //similar story for critical hits, but for all values
+            var final_color = Color.FromArgb(colorSlider.Value, colorSlider.Value, colorSlider.Value);
+
+            // enchanted hits are modified critical hit particles
+            if (dataTile.Tile.InternalName == "enchanted_hit")
+                // this is directly based on Java's source code for handling enchanted hits
+                // it just multiplies the red by 0.3 and green by .8 of the color assigned to the critical hit particle
+                final_color = Color.FromArgb((int)(final_color.R * 0.3f), (int)(final_color.R * 0.8f), final_color.B);
+
+            return final_color;
+        }
+
         private Color FindBlendColorByKey(string colorKey)
         {
-            // Experience Orbs are hardcoded within a range and do not have color table entries
-            if (colorSliderLabel.Visible = colorSlider.Visible = colorKey == "experience_orb")
-            {
-                return Color.FromArgb(colorSlider.Value, 255, 0);
-            }
+            // The following tiles are hardcoded within a range and do not have color table entries
+            if (colorKey == "experience_orb" || colorKey == "critical_hit") 
+                return HandleSpecialTiles(colorKey);
 
             if (_colourTable is not null &&
                 dataTile.Tile.HasColourEntry &&
@@ -412,15 +440,7 @@ namespace PckStudio.Forms.Editor
                 {
                     if (_colourTable.Colors.FirstOrDefault(entry => entry.Name == colorKey) is ColorContainer.Color color)
                     {
-                        var final_color = color.ColorPallette;
-
-                        // Enchanted hits are hardcoded and do not have color table entries
-                        if (dataTile.Tile.InternalName == "enchanted_hit")
-                            // this is directly based on Java's source code for handling enchanted hits
-                            // it just multiplies the red by 0.3 and green by .8 of the color assigned to the critical hit particle
-                            final_color = Color.FromArgb((int)(final_color.R * 0.3f), (int)(final_color.R * 0.8f), final_color.B);
-
-                        return final_color;
+                        return color.ColorPallette;
                     }
                 }
                 else if (_colourTable.WaterColors.FirstOrDefault(entry => entry.Name == colorKey) is ColorContainer.WaterColor waterColor)

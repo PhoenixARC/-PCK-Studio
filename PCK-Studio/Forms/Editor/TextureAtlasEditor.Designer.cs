@@ -300,7 +300,7 @@
             this.colorSlider.TabIndex = 26;
             this.colorSlider.Text = "metroTrackBar1";
             this.colorSlider.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.colorSlider.Value = 0;
+            this.colorSlider.Value = 255;
             this.colorSlider.Visible = false;
             this.colorSlider.ValueChanged += new System.EventHandler(this.colorSlider_ValueChanged);
             // 
