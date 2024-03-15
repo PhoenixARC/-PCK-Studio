@@ -628,7 +628,14 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\atlases\blockData.json" />
     <None Include="Resources\atlases\entityData.json" />
+    <None Include="Resources\atlases\experienceOrbData.json" />
+    <None Include="Resources\atlases\explosionData.json" />
+    <None Include="Resources\atlases\itemData.json" />
+    <None Include="Resources\atlases\mapIconData.json" />
+    <None Include="Resources\atlases\moonPhaseData.json" />
+    <None Include="Resources\atlases\particleData.json" />
     <None Include="Resources\atlases\tileData.json" />
     <None Include="Resources\TexturePackIcon.png" />
     <None Include="Resources\binka\binkawin.asi" />

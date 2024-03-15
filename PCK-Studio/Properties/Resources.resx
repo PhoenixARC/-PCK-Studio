@@ -172,9 +172,6 @@
   <data name="GRH_ICON" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\iconImageList\GRH ICON.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="tileData" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\atlases\tileData.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
   <data name="pckClosed" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\pckClosed.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -340,8 +337,29 @@
   <data name="experience_orbs_sheet" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\atlases\experience_orbs.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="blockData" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\atlases\blockData.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="experienceOrbData" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\atlases\experienceOrbData.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="explosionData" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\atlases\explosionData.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
   <data name="explosion_sheet" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\atlases\explosion.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="itemData" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\atlases\itemData.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="mapIconData" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\atlases\mapIconData.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="moonPhaseData" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\atlases\moonPhaseData.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="particleData" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\atlases\particleData.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="particles_sheet" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\atlases\particles.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

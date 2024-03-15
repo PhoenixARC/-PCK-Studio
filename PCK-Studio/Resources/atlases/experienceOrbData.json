@@ -1,0 +1,124 @@
+{
+	"COMMENT_1": "JSON by MattNL",
+	"experience_orbs": [
+		{
+			"internalName": "experience_orb_0",
+			"displayName": "Experience Orb (Size 1)",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"defaultName": "experience_orb",
+				"variants": ["experience_orb"]
+			}
+		},
+		{
+			"internalName": "experience_orb_1",
+			"displayName": "Experience Orb (Size 2)",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"defaultName": "experience_orb",
+				"variants": ["experience_orb"]
+			}
+		},
+		{
+			"internalName": "experience_orb_2",
+			"displayName": "Experience Orb (Size 3)",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"defaultName": "experience_orb",
+				"variants": ["experience_orb"]
+			}
+		},
+		{
+			"internalName": "experience_orb_3",
+			"displayName": "Experience Orb (Size 4)",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"defaultName": "experience_orb",
+				"variants": ["experience_orb"]
+			}
+		},
+		{
+			"internalName": "experience_orb_4",
+			"displayName": "Experience Orb (Size 5)",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"defaultName": "experience_orb",
+				"variants": ["experience_orb"]
+			}
+		},
+		{
+			"internalName": "experience_orb_5",
+			"displayName": "Experience Orb (Size 6)",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"defaultName": "experience_orb",
+				"variants": ["experience_orb"]
+			}
+		},
+		{
+			"internalName": "experience_orb_6",
+			"displayName": "Experience Orb (Size 7)",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"defaultName": "experience_orb",
+				"variants": ["experience_orb"]
+			}
+		},
+		{
+			"internalName": "experience_orb_7",
+			"displayName": "Experience Orb (Size 8)",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"defaultName": "experience_orb",
+				"variants": ["experience_orb"]
+			}
+		},
+		{
+			"internalName": "experience_orb_8",
+			"displayName": "Experience Orb (Size 9)",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"defaultName": "experience_orb",
+				"variants": ["experience_orb"]
+			}
+		},
+		{
+			"internalName": "experience_orb_9",
+			"displayName": "Experience Orb (Size 10)",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"defaultName": "experience_orb",
+				"variants": ["experience_orb"]
+			}
+		},
+		{
+			"internalName": "experience_orb_10",
+			"displayName": "Experience Orb (Size 11)",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"defaultName": "experience_orb",
+				"variants": ["experience_orb"]
+			}
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		}
+	]
+}
