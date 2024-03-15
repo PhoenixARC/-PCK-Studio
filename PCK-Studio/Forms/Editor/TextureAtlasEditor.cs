@@ -208,7 +208,6 @@ namespace PckStudio.Forms.Editor
                 bool hasAnimation =
                     _pckFile.TryGetValue($"res/textures/{_atlasType}/{dataTile.Tile.InternalName}.png", PckFileType.TextureFile, out var animationFile);
                 animationButton.Text = hasAnimation ? "Edit Animation" : "Create Animation";
-                replaceButton.Enabled = !hasAnimation;
 
                 if (playAnimationsToolStripMenuItem.Checked &&
                     hasAnimation &&
@@ -432,6 +431,8 @@ namespace PckStudio.Forms.Editor
         {
             if (e.Button != MouseButtons.Left)
                 return;
+
+            ActiveControl = null;
 
             int index = GetSelectedImageIndex(
                 originalPictureBox.Size,
