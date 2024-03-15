@@ -195,8 +195,8 @@ namespace PckStudio.Forms.Editor
         private void SetImageDisplayed(int index)
         {
             tileNameLabel.Text = string.Empty;
-            
-            variantLabel.Visible = false;
+            internalTileNameLabel.Text = string.Empty;
+
             variantComboBox.Visible = false;
             variantComboBox.Items.Clear();
             variantComboBox.SelectedItem = null;
@@ -221,6 +221,7 @@ namespace PckStudio.Forms.Editor
 
             selectTilePictureBox.Image = dataTile.Texture;
             tileNameLabel.Text = $"{dataTile.Tile.DisplayName}";
+            internalTileNameLabel.Text = $"{dataTile.Tile.InternalName}";
             selectTilePictureBox.BlendColor = GetBlendColor();
             selectTilePictureBox.UseBlendColor = applyColorMaskToolStripMenuItem.Checked;
 
@@ -244,7 +245,7 @@ namespace PckStudio.Forms.Editor
                 setColorButton.Enabled = clearColorButton.Enabled = dataTile.Tile.ColourEntry.HasCustomColour;
                 clearColorButton.Enabled = false;
 
-                variantComboBox.Enabled = variantLabel.Visible = variantComboBox.Visible = dataTile.Tile.ColourEntry.Variants.Length > 1;
+                variantComboBox.Enabled = variantComboBox.Visible = dataTile.Tile.ColourEntry.Variants.Length > 1;
 
                 if (dataTile.Tile.ColourEntry.IsWaterColour && _colourTable.WaterColors.Count > 0)
                 {
@@ -411,7 +412,15 @@ namespace PckStudio.Forms.Editor
                 {
                     if (_colourTable.Colors.FirstOrDefault(entry => entry.Name == colorKey) is ColorContainer.Color color)
                     {
-                        return color.ColorPallette;
+                        var final_color = color.ColorPallette;
+
+                        // Enchanted hits are hardcoded and do not have color table entries
+                        if (dataTile.Tile.InternalName == "enchanted_hit")
+                            // this is directly based on Java's source code for handling enchanted hits
+                            // it just multiplies the red by 0.3 and green by .8 of the color assigned to the critical hit particle
+                            final_color = Color.FromArgb((int)(final_color.R * 0.3f), (int)(final_color.R * 0.8f), final_color.B);
+
+                        return final_color;
                     }
                 }
                 else if (_colourTable.WaterColors.FirstOrDefault(entry => entry.Name == colorKey) is ColorContainer.WaterColor waterColor)
