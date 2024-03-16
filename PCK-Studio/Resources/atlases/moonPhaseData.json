@@ -1,6 +1,6 @@
 {
 	"COMMENT_1": "JSON by MattNL",
-	"moon_phases": [
+	"entries": [
 		{
 			"internalName": "moon_phase_0",
 			"displayName": "Full Moon"

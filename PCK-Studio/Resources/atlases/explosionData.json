@@ -1,6 +1,6 @@
 {
 	"COMMENT_1": "JSON by MattNL",
-	"explosions": [
+	"entries": [
 		{
 			"internalName": "explosion_0",
 			"displayName": "Explosion (Stage 1)",

@@ -1,7 +1,7 @@
 {
 	"COMMENT_1": "Tile data research by MattNL",
 	"COMMENT_2": "JSON by PhoenixARC, MattNL, and NessieHax (Miku-666)",
-	"blocks": [
+	"entries": [
 		{
 			"internalName": "grass_top",
 			"displayName": "Grass Block (Top)",
