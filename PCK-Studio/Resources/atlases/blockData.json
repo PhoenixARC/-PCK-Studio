@@ -1,13 +1,12 @@
 {
 	"COMMENT_1": "Tile data research by MattNL",
 	"COMMENT_2": "JSON by PhoenixARC, MattNL, and NessieHax (Miku-666)",
-	"blocks": [
+	"entries": [
 		{
 			"internalName": "grass_top",
 			"displayName": "Grass Block (Top)",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
 				"defaultName": "Grass_Common",
 				"variants": [
 					"Grass_Common",
@@ -170,7 +169,6 @@
 			"displayName": "Grass Side (Overlay)",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
 				"defaultName": "Grass_Common",
 				"variants": [
 					"Grass_Common",
@@ -185,7 +183,6 @@
 			"displayName": "Tall Grass",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
 				"defaultName": "Grass_Common",
 				"variants": [
 					"Grass_Common",
@@ -248,7 +245,6 @@
 			"displayName": "Oak Leaves",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
 				"defaultName": "Foliage_Default",
 				"variants": [
 					"Foliage_Default",
@@ -264,7 +260,6 @@
 			"displayName": "Oak Leaves (Opaque)",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
 				"defaultName": "Foliage_Default",
 				"variants": [
 					"Foliage_Default",
@@ -288,7 +283,6 @@
 			"displayName": "Fern",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
 				"defaultName": "Grass_Common",
 				"variants": [
 					"Grass_Common",
@@ -524,7 +518,6 @@
 			"displayName": "Stem",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
 				"defaultName": "Tile_StemMin",
 				"variants": [
 					"Tile_StemMin",
@@ -597,7 +590,6 @@
 			"displayName": "Stem (Attached)",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
 				"defaultName": "Tile_StemMin",
 				"variants": [
 					"Tile_StemMin",
@@ -626,7 +618,6 @@
 			"displayName": "Spruce Leaves",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
 				"defaultName": "Foliage_Evergreen",
 				"variants": [
 					"Foliage_Default",
@@ -642,7 +633,6 @@
 			"displayName": "Spruce Leaves (Opaque)",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
 				"defaultName": "Foliage_Evergreen",
 				"variants": [
 					"Foliage_Default",
@@ -694,7 +684,6 @@
 			"displayName": "Vines",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
 				"defaultName": "Foliage_Default",
 				"variants": [
 					"Foliage_Default",
@@ -790,7 +779,6 @@
 			"displayName": "Redstone Dust (Cross)",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
 				"defaultName": "Tile_RedstoneDust",
 				"variants": [
 					"Tile_RedstoneDust",
@@ -805,7 +793,6 @@
 			"displayName": "Redstone Dust (Line)",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
 				"defaultName": "Tile_RedstoneDust",
 				"variants": [
 					"Tile_RedstoneDust",
@@ -940,7 +927,6 @@
 			"displayName": "Jungle Leaves",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
 				"defaultName": "Foliage_Default",
 				"variants": [
 					"Foliage_Default",
@@ -956,7 +942,6 @@
 			"displayName": "Jungle Leaves (Opaque)",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
 				"defaultName": "Foliage_Default",
 				"variants": [
 					"Foliage_Default",
@@ -1050,6 +1035,8 @@
 			"internalName": "water_flow",
 			"displayName": "Flowing Water",
 			"hasColourEntry": true,
+			"width": 2,
+			"height": 2,
 			"colourEntry": {
 				"isWaterColour": true,
 				"defaultName": "Water_Plains",
@@ -1223,7 +1210,9 @@
 		},
 		{
 			"internalName": "lava_flow",
-			"displayName": "Flowing Lava"
+			"displayName": "Flowing Lava",
+			"width": 2,
+			"height": 2
 		},
 		{
 			"internalName": "lava_flow",
@@ -1554,7 +1543,6 @@
 			"displayName": "Large Fern (Top)",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
 				"defaultName": "Grass_Common",
 				"variants": [
 					"Grass_Common",
@@ -1569,7 +1557,6 @@
 			"displayName": "Double Tall Grass (Top)",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
 				"defaultName": "Grass_Common",
 				"variants": [
 					"Grass_Common",
@@ -1620,7 +1607,6 @@
 			"displayName": "Acacia Leaves",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
 				"defaultName": "Foliage_Default",
 				"variants": [
 					"Foliage_Default",
@@ -1636,7 +1622,6 @@
 			"displayName": "Acacia Leaves (Opaque)",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
 				"defaultName": "Foliage_Default",
 				"variants": [
 					"Foliage_Default",
@@ -1664,7 +1649,6 @@
 			"displayName": "Large Fern (Bottom)",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
 				"defaultName": "Grass_Common",
 				"variants": [
 					"Grass_Common",
@@ -1679,7 +1663,6 @@
 			"displayName": "Double Tall Grass (Bottom)",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
 				"defaultName": "Grass_Common",
 				"variants": [
 					"Grass_Common",
@@ -1730,7 +1713,6 @@
 			"displayName": "Dark Oak Leaves",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
 				"defaultName": "Foliage_Default",
 				"variants": [
 					"Foliage_Default",
@@ -1746,7 +1728,6 @@
 			"displayName": "Dark Oak Leaves (Opaque)",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
 				"defaultName": "Foliage_Default",
 				"variants": [
 					"Foliage_Default",
@@ -1818,7 +1799,6 @@
 			"displayName": "Birch Leaves",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
 				"defaultName": "Foliage_Birch",
 				"variants": [
 					"Foliage_Default",
@@ -1834,7 +1814,6 @@
 			"displayName": "Birch Leaves (Opaque)",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
 				"defaultName": "Foliage_Birch",
 				"variants": [
 					"Foliage_Default",
@@ -2307,18 +2286,40 @@
 		},
 		{
 			"internalName": "shulker_top",
-			"displayName": "Shulker Box (Break Particles)"
+			"displayName": "Shulker Box (Break Particles)",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"defaultName": "Shulker_Box_Purple",
+				"variants": [
+					"Shulker_Box_Black",
+					"Shulker_Box_Blue",
+					"Shulker_Box_Brown",
+					"Shulker_Box_Cyan",
+					"Shulker_Box_Grey",
+					"Shulker_Box_Green",
+					"Shulker_Box_Light_Blue",
+					"Shulker_Box_Light_Green",
+					"Shulker_Box_Magenta",
+					"Shulker_Box_Orange",
+					"Shulker_Box_Pink",
+					"Shulker_Box_Purple",
+					"Shulker_Box_Red",
+					"Shulker_Box_Silver",
+					"Shulker_Box_White",
+					"Shulker_Box_Yellow"
+				]
+			}
 		},
 		{
-			"internalName": "",
-			"displayName": ""
+			"internalName": "shulker_top_overlay",
+			"displayName": "Shulker Box (Break Particles) (Overlay) (Unused)"
 		},
 		{
 			"internalName": "cauldron_water",
 			"displayName": "Cauldron Water",
 			"hasColourEntry": true,
 			"colourEntry": {
-				"isWaterColour": false,
+				"hasCustomColour": true,
 				"defaultName": "Cauldron_Water",
 				"variants": [ 
 					"Cauldron_Water",
@@ -2912,1249 +2913,6 @@
 		{
 			"internalName": "",
 			"displayName": ""
-		},
-		{
-			"internalName": "",
-			"displayName": ""
-		}
-	],
-	"items": [
-		{
-			"internalName": "helmetCloth",
-			"displayName": "Leather Cap",
-			"hasColourEntry": true,
-			"colourEntry": {
-				"isWaterColour": false,
-				"defaultName": "Armour_Default_Leather_Colour",
-				"variants": [ "Armour_Default_Leather_Colour" ]
-			}
-		},
-		{
-			"internalName": "helmetChain",
-			"displayName": "Chain Helmet"
-		},
-		{
-			"internalName": "helmetIron",
-			"displayName": "Iron Helmet"
-		},
-		{
-			"internalName": "helmetDiamond",
-			"displayName": "Diamond Helmet"
-		},
-		{
-			"internalName": "helmetGold",
-			"displayName": "Golden Helmet"
-		},
-		{
-			"internalName": "flintAndSteel",
-			"displayName": "Flint and Steel"
-		},
-		{
-			"internalName": "flint",
-			"displayName": "Flint"
-		},
-		{
-			"internalName": "coal",
-			"displayName": "Coal"
-		},
-		{
-			"internalName": "string",
-			"displayName": "String"
-		},
-		{
-			"internalName": "seeds",
-			"displayName": "Seeds"
-		},
-		{
-			"internalName": "apple",
-			"displayName": "Apple"
-		},
-		{
-			"internalName": "appleGold",
-			"displayName": "Golden Apple"
-		},
-		{
-			"internalName": "egg",
-			"displayName": "Egg"
-		},
-		{
-			"internalName": "sugar",
-			"displayName": "Sugar"
-		},
-		{
-			"internalName": "snowball",
-			"displayName": "Snowball"
-		},
-		{
-			"internalName": "elytra",
-			"displayName": "Elytra"
-		},
-		{
-			"internalName": "chestplateCloth",
-			"displayName": "Leather Tunic",
-			"hasColourEntry": true,
-			"colourEntry": {
-				"isWaterColour": false,
-				"defaultName": "Armour_Default_Leather_Colour",
-				"variants": [ "Armour_Default_Leather_Colour" ]
-			}
-		},
-		{
-			"internalName": "chestplateChain",
-			"displayName": "Chain Chestplate"
-		},
-		{
-			"internalName": "chestplateIron",
-			"displayName": "Iron Chestplate"
-		},
-		{
-			"internalName": "chestplateDiamond",
-			"displayName": "Diamond Chestplate"
-		},
-		{
-			"internalName": "chestplateGold",
-			"displayName": "Golden Chestplate"
-		},
-		{
-			"internalName": "bow",
-			"displayName": "Bow"
-		},
-		{
-			"internalName": "brick",
-			"displayName": "Brick"
-		},
-		{
-			"internalName": "ingotIron",
-			"displayName": "Iron Ingot"
-		},
-		{
-			"internalName": "feather",
-			"displayName": "Feather"
-		},
-		{
-			"internalName": "wheat",
-			"displayName": "Wheat"
-		},
-		{
-			"internalName": "painting",
-			"displayName": "Painting"
-		},
-		{
-			"internalName": "reeds",
-			"displayName": "Sugar Canes"
-		},
-		{
-			"internalName": "bone",
-			"displayName": "Bone"
-		},
-		{
-			"internalName": "cake",
-			"displayName": "Cake"
-		},
-		{
-			"internalName": "slimeball",
-			"displayName": "Slimeball"
-		},
-		{
-			"internalName": "broken_elytra",
-			"displayName": "Elytra (Broken)"
-		},
-		{
-			"internalName": "leggingsCloth",
-			"displayName": "Leather Pants",
-			"hasColourEntry": true,
-			"colourEntry": {
-				"isWaterColour": false,
-				"defaultName": "Armour_Default_Leather_Colour",
-				"variants": [ "Armour_Default_Leather_Colour" ]
-			}
-		},
-		{
-			"internalName": "leggingsChain",
-			"displayName": "Chain Leggings"
-		},
-		{
-			"internalName": "leggingsIron",
-			"displayName": "Iron Leggings"
-		},
-		{
-			"internalName": "leggingsDiamond",
-			"displayName": "Diamond Leggings"
-		},
-		{
-			"internalName": "leggingsGold",
-			"displayName": "Golden Leggings"
-		},
-		{
-			"internalName": "arrow",
-			"displayName": "Arrow"
-		},
-		{
-			"internalName": "end_crystal",
-			"displayName": "End Crystal"
-		},
-		{
-			"internalName": "ingotGold",
-			"displayName": "Gold Ingot"
-		},
-		{
-			"internalName": "sulphur",
-			"displayName": "Gunpowder"
-		},
-		{
-			"internalName": "bread",
-			"displayName": "Bread"
-		},
-		{
-			"internalName": "sign",
-			"displayName": "Oak Sign"
-		},
-		{
-			"internalName": "doorWood",
-			"displayName": "Oak Door"
-		},
-		{
-			"internalName": "doorIron",
-			"displayName": "Iron Door"
-		},
-		{
-			"internalName": "bed",
-			"displayName": "Bed"
-		},
-		{
-			"internalName": "fireball",
-			"displayName": "Fire Charge"
-		},
-		{
-			"internalName": "chorus_fruit",
-			"displayName": "Chorus Fruit"
-		},
-		{
-			"internalName": "bootsCloth",
-			"displayName": "Leather Boots",
-			"hasColourEntry": true,
-			"colourEntry": {
-				"isWaterColour": false,
-				"defaultName": "Armour_Default_Leather_Colour",
-				"variants": [ "Armour_Default_Leather_Colour" ]
-			}
-		},
-		{
-			"internalName": "bootsChain",
-			"displayName": "Chain Boots"
-		},
-		{
-			"internalName": "bootsIron",
-			"displayName": "Iron Boots"
-		},
-		{
-			"internalName": "bootsDiamond",
-			"displayName": "Diamond Boots"
-		},
-		{
-			"internalName": "bootsGold",
-			"displayName": "Golden Boots"
-		},
-		{
-			"internalName": "stick",
-			"displayName": "Stick"
-		},
-		{
-			"internalName": "compass",
-			"displayName": "Compass"
-		},
-		{
-			"internalName": "diamond",
-			"displayName": "Diamond"
-		},
-		{
-			"internalName": "redstone",
-			"displayName": "Redstone"
-		},
-		{
-			"internalName": "clay",
-			"displayName": "Clay"
-		},
-		{
-			"internalName": "paper",
-			"displayName": "Paper"
-		},
-		{
-			"internalName": "book",
-			"displayName": "Book"
-		},
-		{
-			"internalName": "map",
-			"displayName": "Map"
-		},
-		{
-			"internalName": "seeds_pumpkin",
-			"displayName": "Pumpkin Seeds"
-		},
-		{
-			"internalName": "seeds_melon",
-			"displayName": "Melon Seeds"
-		},
-		{
-			"internalName": "chorus_fruit_popped",
-			"displayName": "Popped Chorus Fruit"
-		},
-		{
-			"internalName": "swordWood",
-			"displayName": "Wooden Sword"
-		},
-		{
-			"internalName": "swordStone",
-			"displayName": "Stone Sword"
-		},
-		{
-			"internalName": "swordIron",
-			"displayName": "Iron Sword"
-		},
-		{
-			"internalName": "swordDiamond",
-			"displayName": "Diamond Sword"
-		},
-		{
-			"internalName": "swordGold",
-			"displayName": "Golden Sword"
-		},
-		{
-			"internalName": "fishingRod_uncast",
-			"displayName": "Fishing Rod"
-		},
-		{
-			"internalName": "clock",
-			"displayName": "Clock"
-		},
-		{
-			"internalName": "bowl",
-			"displayName": "Bowl"
-		},
-		{
-			"internalName": "mushroomStew",
-			"displayName": "Mushroom Stew"
-		},
-		{
-			"internalName": "yellowDust",
-			"displayName": "Glowstone Dust"
-		},
-		{
-			"internalName": "bucket",
-			"displayName": "Bucket"
-		},
-		{
-			"internalName": "bucketWater",
-			"displayName": "Water Bucket"
-		},
-		{
-			"internalName": "bucketLava",
-			"displayName": "Lava Bucket"
-		},
-		{
-			"internalName": "milk",
-			"displayName": "Milk Bucket"
-		},
-		{
-			"internalName": "dyePowder_black",
-			"displayName": "Ink Sac"
-		},
-		{
-			"internalName": "dyePowder_gray",
-			"displayName": "Gray Dye"
-		},
-		{
-			"internalName": "shovelWood",
-			"displayName": "Wooden Shovel"
-		},
-		{
-			"internalName": "shovelStone",
-			"displayName": "Stone Shovel"
-		},
-		{
-			"internalName": "shovelIron",
-			"displayName": "Iron Shovel"
-		},
-		{
-			"internalName": "shovelDiamond",
-			"displayName": "Diamond Shovel"
-		},
-		{
-			"internalName": "shovelGold",
-			"displayName": "Golden Shovel"
-		},
-		{
-			"internalName": "fishingRod_cast",
-			"displayName": "Fishing Rod (Cast)"
-		},
-		{
-			"internalName": "diode",
-			"displayName": "Redstone Repeater"
-		},
-		{
-			"internalName": "porkchopRaw",
-			"displayName": "Raw Porkchop"
-		},
-		{
-			"internalName": "porkchopCooked",
-			"displayName": "Cooked Porkchop"
-		},
-		{
-			"internalName": "fishRaw",
-			"displayName": "Raw Cod"
-		},
-		{
-			"internalName": "fishCooked",
-			"displayName": "Cooked Cod"
-		},
-		{
-			"internalName": "rottenFlesh",
-			"displayName": "Rotten Flesh"
-		},
-		{
-			"internalName": "cookie",
-			"displayName": "Cookie"
-		},
-		{
-			"internalName": "shears",
-			"displayName": "Shears"
-		},
-		{
-			"internalName": "dyePowder_red",
-			"displayName": "Rose Red"
-		},
-		{
-			"internalName": "dyePowder_pink",
-			"displayName": "Pink Dye"
-		},
-		{
-			"internalName": "pickaxeWood",
-			"displayName": "Wooden Pickaxe"
-		},
-		{
-			"internalName": "pickaxeStone",
-			"displayName": "Stone Pickaxe"
-		},
-		{
-			"internalName": "pickaxeIron",
-			"displayName": "Iron Pickaxe"
-		},
-		{
-			"internalName": "pickaxeDiamond",
-			"displayName": "Diamond Pickaxe"
-		},
-		{
-			"internalName": "pickaxeGold",
-			"displayName": "Golden Pickaxe"
-		},
-		{
-			"internalName": "bow_pull_0",
-			"displayName": "Bow (Pulling Stage 1)"
-		},
-		{
-			"internalName": "carrotOnAStick",
-			"displayName": "Carrot on a Stick"
-		},
-		{
-			"internalName": "leather",
-			"displayName": "Leather"
-		},
-		{
-			"internalName": "saddle",
-			"displayName": "Saddle"
-		},
-		{
-			"internalName": "beefRaw",
-			"displayName": "Raw Beef"
-		},
-		{
-			"internalName": "beefCooked",
-			"displayName": "Steak"
-		},
-		{
-			"internalName": "enderPearl",
-			"displayName": "Ender Pearl"
-		},
-		{
-			"internalName": "blazeRod",
-			"displayName": "Blaze Rod"
-		},
-		{
-			"internalName": "melon",
-			"displayName": "Melon Slice"
-		},
-		{
-			"internalName": "dyePowder_green",
-			"displayName": "Cactus Green"
-		},
-		{
-			"internalName": "dyePowder_lime",
-			"displayName": "Lime Dye"
-		},
-		{
-			"internalName": "hatchetWood",
-			"displayName": "Wooden Axe"
-		},
-		{
-			"internalName": "hatchetStone",
-			"displayName": "Stone Axe"
-		},
-		{
-			"internalName": "hatchetIron",
-			"displayName": "Iron Axe"
-		},
-		{
-			"internalName": "hatchetDiamond",
-			"displayName": "Diamond Axe"
-		},
-		{
-			"internalName": "hatchetGold",
-			"displayName": "Golden Axe"
-		},
-		{
-			"internalName": "bow_pull_1",
-			"displayName": "Bow (Pulling Stage 2)"
-		},
-		{
-			"internalName": "potatoBaked",
-			"displayName": "Baked Potato"
-		},
-		{
-			"internalName": "potato",
-			"displayName": "Potato"
-		},
-		{
-			"internalName": "carrots",
-			"displayName": "Carrot"
-		},
-		{
-			"internalName": "chickenRaw",
-			"displayName": "Raw Chicken"
-		},
-		{
-			"internalName": "chickenCooked",
-			"displayName": "Cooked Chicken"
-		},
-		{
-			"internalName": "ghastTear",
-			"displayName": "Ghast Tear"
-		},
-		{
-			"internalName": "goldNugget",
-			"displayName": "Gold Nugget"
-		},
-		{
-			"internalName": "netherStalkSeeds",
-			"displayName": "Nether Wart"
-		},
-		{
-			"internalName": "dyePowder_brown",
-			"displayName": "Cocoa Beans"
-		},
-		{
-			"internalName": "dyePowder_yellow",
-			"displayName": "Dandelion Yellow"
-		},
-		{
-			"internalName": "hoeWood",
-			"displayName": "Wooden Hoe"
-		},
-		{
-			"internalName": "hoeStone",
-			"displayName": "Stone Hoe"
-		},
-		{
-			"internalName": "hoeIron",
-			"displayName": "Iron Hoe"
-		},
-		{
-			"internalName": "hoeDiamond",
-			"displayName": "Diamond Hoe"
-		},
-		{
-			"internalName": "hoeGold",
-			"displayName": "Golden Hoe"
-		},
-		{
-			"internalName": "bow_pull_2",
-			"displayName": "Bow (Pulling Stage 3)"
-		},
-		{
-			"internalName": "potatoPoisonous",
-			"displayName": "Poisonous Potato"
-		},
-		{
-			"internalName": "minecart",
-			"displayName": "Minecart"
-		},
-		{
-			"internalName": "boat",
-			"displayName": "Oak Boat"
-		},
-		{
-			"internalName": "speckledMelon",
-			"displayName": "Glistering Melon"
-		},
-		{
-			"internalName": "fermentedSpiderEye",
-			"displayName": "Fermented Spider Eye"
-		},
-		{
-			"internalName": "spiderEye",
-			"displayName": "Spider Eye"
-		},
-		{
-			"internalName": "glassBottle",
-			"displayName": "Glass Bottle"
-		},
-		{
-			"internalName": "potion_contents",
-			"displayName": "Potion (Overlay)",
-			"hasColourEntry": true,
-			"colourEntry": {
-				"isWaterColour": false,
-				"defaultName": "Potion_BaseColour",
-				"variants": [ 
-					"Potion_BaseColour",
-					"Effect_MovementSpeed",
-					"Effect_MovementSlowDown",
-					"Effect_DigSpeed",
-					"Effect_DigSlowdown",
-					"Effect_DamageBoost",
-					"Effect_Heal",
-					"Effect_Harm",
-					"Effect_Jump",
-					"Effect_Confusion",
-					"Effect_Regeneration",
-					"Effect_DamageResistance",
-					"Effect_FireResistance",
-					"Effect_WaterBreathing",
-					"Effect_Invisibility",
-					"Effect_Blindness",
-					"Effect_NightVision",
-					"Effect_Hunger",
-					"Effect_Weakness",
-					"Effect_Poison",
-					"Effect_Wither",
-					"Effect_HealthBoost",
-					"Effect_Absorption",
-					"Effect_Saturation",
-					"Effect_Levitation",
-					"Effect_Luck",
-					"Effect_BadLuck",
-					"Effect_TurtleMaster",
-					"Effect_SlowFall"
-				]
-			}
-		},
-		{
-			"internalName": "dyePowder_blue",
-			"displayName": "Lapis Lazuli"
-		},
-		{
-			"internalName": "dyePowder_light_blue",
-			"displayName": "Light Blue Dye"
-		},
-		{
-			"internalName": "helmetCloth_overlay",
-			"displayName": "Leather Cap (Overlay)"
-		},
-		{
-			"internalName": "spectral_arrow",
-			"displayName": "Spectral Arrow"
-		},
-		{
-			"internalName": "iron_horse_armor",
-			"displayName": "Iron Horse Armor"
-		},
-		{
-			"internalName": "diamond_horse_armor",
-			"displayName": "Diamond Horse Armor"
-		},
-		{
-			"internalName": "gold_horse_armor",
-			"displayName": "Gold Horse Armor"
-		},
-		{
-			"internalName": "comparator",
-			"displayName": "Redstone Comparator"
-		},
-		{
-			"internalName": "carrotGolden",
-			"displayName": "Golden Carrot"
-		},
-		{
-			"internalName": "minecart_chest",
-			"displayName": "Minecart with Chest"
-		},
-		{
-			"internalName": "pumpkinPie",
-			"displayName": "Pumpkin Pie"
-		},
-		{
-			"internalName": "monsterPlacer",
-			"displayName": "Spawn Egg"
-		},
-		{
-			"internalName": "potion_splash",
-			"displayName": "Splash Potion"
-		},
-		{
-			"internalName": "eyeOfEnder",
-			"displayName": "Eye of Ender"
-		},
-		{
-			"internalName": "cauldron",
-			"displayName": "Cauldron"
-		},
-		{
-			"internalName": "blazePowder",
-			"displayName": "Blaze Powder"
-		},
-		{
-			"internalName": "dyePowder_purple",
-			"displayName": "Purple Dye"
-		},
-		{
-			"internalName": "dyePowder_magenta",
-			"displayName": "Magenta Dye"
-		},
-		{
-			"internalName": "chestplateCloth_overlay",
-			"displayName": "Leather Tunic (Overlay)"
-		},
-		{
-			"internalName": "tipped_arrow_base",
-			"displayName": "Tipped Arrow"
-		},
-		{
-			"internalName": "dragon_breath",
-			"displayName": "Dragon's Breath"
-		},
-		{
-			"internalName": "name_tag",
-			"displayName": "Name Tag"
-		},
-		{
-			"internalName": "lead",
-			"displayName": "Lead"
-		},
-		{
-			"internalName": "netherbrick",
-			"displayName": "Nether Brick"
-		},
-		{
-			"internalName": "fish_clownfish_raw",
-			"displayName": "Tropical Fish"
-		},
-		{
-			"internalName": "minecart_furnace",
-			"displayName": "Minecart with Furnace"
-		},
-		{
-			"internalName": "charcoal",
-			"displayName": "Charcoal"
-		},
-		{
-			"internalName": "monsterPlacer_overlay",
-			"displayName": "Spawn Egg (Overlay)"
-		},
-		{
-			"internalName": "bed_overlay",
-			"displayName": "Bed (Overlay)",
-			"hasColourEntry": true,
-			"colourEntry": {
-				"isWaterColour": false,
-				"defaultName": "Bed_White",
-				"variants": [
-					"Bed_Black",
-					"Bed_Blue",
-					"Bed_Brown",
-					"Bed_Cyan",
-					"Bed_Grey",
-					"Bed_Green",
-					"Bed_Light_Blue",
-					"Bed_Lime",
-					"Bed_Magenta",
-					"Bed_Orange",
-					"Bed_Pink",
-					"Bed_Purple",
-					"Bed_Red",
-					"Bed_Silver",
-					"Bed_White",
-					"Bed_Yellow"
-				]
-			}
-		},
-		{
-			"internalName": "expBottle",
-			"displayName": "Bottle o'Enchanting"
-		},
-		{
-			"internalName": "brewingStand",
-			"displayName": "Brewing Stand"
-		},
-		{
-			"internalName": "magmaCream",
-			"displayName": "Magma Cream"
-		},
-		{
-			"internalName": "dyePowder_cyan",
-			"displayName": "Cyan Dye"
-		},
-		{
-			"internalName": "dyePowder_orange",
-			"displayName": "Orange Dye"
-		},
-		{
-			"internalName": "leggingsCloth_overlay",
-			"displayName": "Leather Pants (Overlay)"
-		},
-		{
-			"internalName": "tipped_arrow_head",
-			"displayName": "Tipped Arrow (Overlay)"
-		},
-		{
-			"internalName": "potion_bottle_lingering",
-			"displayName": "Lingering Potion"
-		},
-		{
-			"internalName": "barrier",
-			"displayName": "debug_fourj_item"
-		},
-		{
-			"internalName": "mutton_raw",
-			"displayName": "Raw Mutton"
-		},
-		{
-			"internalName": "rabbit_raw",
-			"displayName": "Raw Rabbit"
-		},
-		{
-			"internalName": "fish_pufferfish_raw",
-			"displayName": "Pufferfish"
-		},
-		{
-			"internalName": "minecart_hopper",
-			"displayName": "Minecart with Hopper"
-		},
-		{
-			"internalName": "hopper",
-			"displayName": "Hopper"
-		},
-		{
-			"internalName": "nether_star",
-			"displayName": "Nether Star"
-		},
-		{
-			"internalName": "emerald",
-			"displayName": "Emerald"
-		},
-		{
-			"internalName": "writingBook",
-			"displayName": "Book and Quill"
-		},
-		{
-			"internalName": "writtenBook",
-			"displayName": "Written Book"
-		},
-		{
-			"internalName": "flowerPot",
-			"displayName": "Flower Pot"
-		},
-		{
-			"internalName": "dyePowder_silver",
-			"displayName": "Light Gray Dye"
-		},
-		{
-			"internalName": "dyePowder_white",
-			"displayName": "Bone Meal"
-		},
-		{
-			"internalName": "bootsCloth_overlay",
-			"displayName": "Leather Boots (Overlay)"
-		},
-		{
-			"internalName": "beetroot",
-			"displayName": "Beetroot"
-		},
-		{
-			"internalName": "beetroot_seeds",
-			"displayName": "Beetroot Seeds"
-		},
-		{
-			"internalName": "beetroot_soup",
-			"displayName": "Beetroot Soup"
-		},
-		{
-			"internalName": "mutton_cooked",
-			"displayName": "Cooked Mutton"
-		},
-		{
-			"internalName": "rabbit_cooked",
-			"displayName": "Cooked Rabbit"
-		},
-		{
-			"internalName": "fish_salmon_raw",
-			"displayName": "Raw Salmon"
-		},
-		{
-			"internalName": "minecart_tnt",
-			"displayName": "Minecart with TNT"
-		},
-		{
-			"internalName": "wooden_armorstand",
-			"displayName": "Armor Stand"
-		},
-		{
-			"internalName": "fireworks",
-			"displayName": "Firework Rocket"
-		},
-		{
-			"internalName": "fireworks_charge",
-			"displayName": "Firework Star"
-		},
-		{
-			"internalName": "fireworks_charge_overlay",
-			"displayName": "Firework Star (Overlay)"
-		},
-		{
-			"internalName": "netherquartz",
-			"displayName": "Nether Quartz"
-		},
-		{
-			"internalName": "map_empty",
-			"displayName": "Empty Map"
-		},
-		{
-			"internalName": "frame",
-			"displayName": "Item Frame"
-		},
-		{
-			"internalName": "enchantedBook",
-			"displayName": "Enchanted Book"
-		},
-		{
-			"internalName": "door_acacia",
-			"displayName": "Acacia Door"
-		},
-		{
-			"internalName": "door_birch",
-			"displayName": "Birch Door"
-		},
-		{
-			"internalName": "door_dark_oak",
-			"displayName": "Dark Oak Door"
-		},
-		{
-			"internalName": "door_jungle",
-			"displayName": "Jungle Door"
-		},
-		{
-			"internalName": "door_spruce",
-			"displayName": "Spruce Door"
-		},
-		{
-			"internalName": "rabbit_stew",
-			"displayName": "Rabbit Stew"
-		},
-		{
-			"internalName": "fish_salmon_cooked",
-			"displayName": "Cooked Salmon"
-		},
-		{
-			"internalName": "minecart_command_block",
-			"displayName": "Minecart with Command Block"
-		},
-		{
-			"internalName": "acacia_boat",
-			"displayName": "Acacia Boat"
-		},
-		{
-			"internalName": "birch_boat",
-			"displayName": "Birch Boat"
-		},
-		{
-			"internalName": "dark_oak_boat",
-			"displayName": "Dark Oak Boat"
-		},
-		{
-			"internalName": "jungle_boat",
-			"displayName": "Jungle Boat"
-		},
-		{
-			"internalName": "spruce_boat",
-			"displayName": "Spruce Boat"
-		},
-		{
-			"internalName": "prismarine_shard",
-			"displayName": "Prismarine Shard"
-		},
-		{
-			"internalName": "prismarine_crystals",
-			"displayName": "Prismarine Crystals"
-		},
-		{
-			"internalName": "leather_horse_armor_base",
-			"displayName": "Leather Horse Armor",
-			"hasColourEntry": true,
-			"colourEntry": {
-				"isWaterColour": false,
-				"defaultName": "Armour_Default_Leather_Colour",
-				"variants": [ "Armour_Default_Leather_Colour" ]
-			}
-		},
-		{
-			"internalName": "structure_void",
-			"displayName": "Structure Void"
-		},
-		{
-			"internalName": "map_filled_markings",
-			"displayName": "Filled Map (Overlay)"
-		},
-		{
-			"internalName": "totem",
-			"displayName": "Totem of Undying"
-		},
-		{
-			"internalName": "shulker_shell",
-			"displayName": "Shulker Shell"
-		},
-		{
-			"internalName": "iron_nugget",
-			"displayName": "Iron Nugget"
-		},
-		{
-			"internalName": "rabbit_foot",
-			"displayName": "Rabbit's Foot"
-		},
-		{
-			"internalName": "rabbit_hide",
-			"displayName": "Rabbit Hide"
-		},
-		{
-			"internalName": "compass",
-			"displayName": "Compass"
-		},
-		{
-			"internalName": "",
-			"displayName": ""
-		},
-		{
-			"internalName": "",
-			"displayName": ""
-		},
-		{
-			"internalName": "",
-			"displayName": ""
-		},
-		{
-			"internalName": "clock",
-			"displayName": "Clock"
-		},
-		{
-			"internalName": "",
-			"displayName": ""
-		},
-		{
-			"internalName": "",
-			"displayName": ""
-		},
-		{
-			"internalName": "",
-			"displayName": ""
-		},
-		{
-			"internalName": "dragonFireball",
-			"displayName": "Dragon Fireball"
-		},
-		{
-			"internalName": "record_13",
-			"displayName": "Music Disc (C418 - 13)"
-		},
-		{
-			"internalName": "record_cat",
-			"displayName": "Music Disc (C418 - cat)"
-		},
-		{
-			"internalName": "record_blocks",
-			"displayName": "Music Disc (C418 - blocks)"
-		},
-		{
-			"internalName": "record_chirp",
-			"displayName": "Music Disc (C418 - chirp)"
-		},
-		{
-			"internalName": "record_far",
-			"displayName": "Music Disc (C418 - far)"
-		},
-		{
-			"internalName": "record_mall",
-			"displayName": "Music Disc (C418 - mall)"
-		},
-		{
-			"internalName": "record_mellohi",
-			"displayName": "Music Disc (C418 - mellohi)"
-		},
-		{
-			"internalName": "record_stal",
-			"displayName": "Music Disc (C418 - stal)"
-		},
-		{
-			"internalName": "record_strad",
-			"displayName": "Music Disc (C418 - strad)"
-		},
-		{
-			"internalName": "record_ward",
-			"displayName": "Music Disc (C418 - ward)"
-		},
-		{
-			"internalName": "record_11",
-			"displayName": "Music Disc (C418 - 11)"
-		},
-		{
-			"internalName": "record_where are we now",
-			"displayName": "Music Disc (C418 - wait)"
-		},
-		{
-			"internalName": "bucketFish",
-			"displayName": "Bucket of Cod"
-		},
-		{
-			"internalName": "bucketSalmon",
-			"displayName": "Bucket of Salmon"
-		},
-		{
-			"internalName": "bucketPuffer",
-			"displayName": "Bucket of Pufferfish"
-		},
-		{
-			"internalName": "bucketTropical",
-			"displayName": "Bucket of Tropical Fish"
-		},
-		{
-			"internalName": "leather_horse_armor_detail",
-			"displayName": "Leather Horse Armor (Overlay)"
-		},
-		{
-			"internalName": "dyePowder_black1",
-			"displayName": "Black Dye [PS4 ONLY]"
-		},
-		{
-			"internalName": "dyePowder_blue1",
-			"displayName": "Blue Dye [PS4 ONLY]"
-		},
-		{
-			"internalName": "dyePowder_brown1",
-			"displayName": "Brown Dye [PS4 ONLY]"
-		},
-		{
-			"internalName": "dyePowder_white1",
-			"displayName": "White Dye [PS4 ONLY]"
-		},
-		{
-			"internalName": "bamboo",
-			"displayName": "Bamboo [PS4 ONLY]"
-		},
-		{
-			"internalName": "lantern_carried",
-			"displayName": "Lantern [PS4 ONLY]"
-		},
-		{
-			"internalName": "kelp",
-			"displayName": "Kelp"
-		},
-		{
-			"internalName": "dried_kelp",
-			"displayName": "Dried Kelp"
-		},
-		{
-			"internalName": "sea_pickle",
-			"displayName": "Sea Pickle"
-		},
-		{
-			"internalName": "nautilus",
-			"displayName": "Nautilus Shell"
-		},
-		{
-			"internalName": "nautilus_core",
-			"displayName": "Heart of the Sea"
-		},
-		{
-			"internalName": "turtle_helmet",
-			"displayName": "Turtle Shell"
-		},
-		{
-			"internalName": "turtle_shell_piece",
-			"displayName": "Scute"
-		},
-		{
-			"internalName": "trident",
-			"displayName": "Trident"
-		},
-		{
-			"internalName": "phantom_membrane",
-			"displayName": "Phantom Membrane"
-		},
-		{
-			"internalName": "acacia_sign",
-			"displayName": "Acacia Sign [PS4 ONLY]"
-		},
-		{
-			"internalName": "birch_sign",
-			"displayName": "Birch Sign [PS4 ONLY]"
-		},
-		{
-			"internalName": "dark_oak_sign",
-			"displayName": "Dark Oak Sign [PS4 ONLY]"
-		},
-		{
-			"internalName": "jungle_sign",
-			"displayName": "Jungle Sign [PS4 ONLY]"
-		},
-		{
-			"internalName": "spruce_sign",
-			"displayName": "Spruce Sign [PS4 ONLY]"
-		},
-		{
-			"internalName": "crossbow",
-			"displayName": "Crossbow [PS4 ONLY]"
-		},
-		{
-			"internalName": "crossbow_pull_0",
-			"displayName": "Crossbow (Pulling Stage 1) [PS4 ONLY]"
-		},
-		{
-			"internalName": "crossbow_pull_1",
-			"displayName": "Crossbow (Pulling Stage 2) [PS4 ONLY]"
-		},
-		{
-			"internalName": "crossbow_pull_2",
-			"displayName": "Crossbow (Pulling Stage 3) [PS4 ONLY]"
-		},
-		{
-			"internalName": "crossbow_arrow",
-			"displayName": "Crossbow (Loaded) [PS4 ONLY]"
-		},
-		{
-			"internalName": "crossbow_firework",
-			"displayName": "Crossbow (Loaded) (Firework) [PS4 ONLY]"
-		},
-		{
-			"internalName": "sweet_berries",
-			"displayName": "Sweet Berries [PS4 ONLY]"
-		},
-		{
-			"internalName": "banner_pattern",
-			"displayName": "Banner Pattern [PS4 ONLY]"
-		},
-		{
-			"internalName": "bell",
-			"displayName": "Bell [PS4 ONLY]"
-		},
-		{
-			"internalName": "campfire_carried",
-			"displayName": "Campfire [PS4 ONLY]"
 		},
 		{
 			"internalName": "",

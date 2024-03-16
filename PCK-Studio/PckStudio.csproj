@@ -140,6 +140,11 @@
     <Compile Include="Internal\AnimationCategory.cs" />
     <Compile Include="Internal\SkinAnimFlag.cs" />
     <Compile Include="Internal\SkinAnimMask.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="ToolboxItems\BlendPictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -614,11 +619,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -629,7 +629,16 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\entityData.json" />
+    <None Include="Resources\atlases\bannerData.json" />
+    <None Include="Resources\atlases\blockData.json" />
+    <None Include="Resources\atlases\entityData.json" />
+    <None Include="Resources\atlases\experienceOrbData.json" />
+    <None Include="Resources\atlases\explosionData.json" />
+    <None Include="Resources\atlases\itemData.json" />
+    <None Include="Resources\atlases\mapIconData.json" />
+    <None Include="Resources\atlases\moonPhaseData.json" />
+    <None Include="Resources\atlases\paintingData.json" />
+    <None Include="Resources\atlases\particleData.json" />
     <None Include="Resources\TexturePackIcon.png" />
     <None Include="Resources\binka\binkawin.asi" />
     <None Include="Resources\fileTemplates\1.91_colours.col" />
@@ -645,16 +654,13 @@
     <None Include="Resources\fileTemplates\tu53colours.col" />
     <None Include="Resources\fileTemplates\tu54colours.col" />
     <None Include="Resources\fileTemplates\tu69colours.col" />
-    <None Include="Resources\tileData.json" />
     <None Include="Resources\external\Youtube.png" />
     <None Include="Resources\pckClosed.png" />
     <None Include="Resources\external\Discord.png" />
     <None Include="Resources\icons\clock.png" />
     <None Include="Resources\changeTile.png" />
-    <None Include="Resources\items.png" />
     <None Include="Resources\HamburgerMenuIcon.png" />
     <None Include="Resources\pack.png" />
-    <None Include="Resources\terrain.png" />
     <None Include="Resources\external\Xbox.png" />
     <None Include="Resources\external\PS3.png" />
     <None Include="Resources\external\WiiU.png" />
@@ -680,7 +686,17 @@
     <None Include="Resources\Comparison.png" />
     <None Include="Resources\iconImageList\ENTITY MATERIALS ICON.png" />
     <None Include="Resources\iconImageList\blank.png" />
-    <None Include="Resources\entities.png" />
+    <None Include="Resources\atlases\additional_mapicons.png" />
+    <None Include="Resources\atlases\map_icons.png" />
+    <None Include="Resources\atlases\banners.png" />
+    <Content Include="Resources\atlases\entities.png" />
+    <None Include="Resources\atlases\experience_orbs.png" />
+    <None Include="Resources\atlases\explosion.png" />
+    <Content Include="Resources\atlases\items.png" />
+    <Content Include="Resources\atlases\moon_phases.png" />
+    <None Include="Resources\atlases\particles.png" />
+    <None Include="Resources\atlases\paintings.png" />
+    <Content Include="Resources\atlases\terrain.png" />
     <Content Include="Resources\icons\file_delete.png" />
     <Content Include="Resources\icons\file_empty.png" />
     <None Include="Resources\icons\file_export.png" />

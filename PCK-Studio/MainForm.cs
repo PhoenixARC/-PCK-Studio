@@ -392,15 +392,72 @@ namespace PckStudio
 				return;
 			}
 
-			if (file.Filename == "res/terrain.png" || file.Filename == "res/items.png")
+			bool isTerrain = file.Filename == "res/terrain.png";
+			bool isItems = file.Filename == "res/items.png";
+			bool isParticles = file.Filename == "res/particles.png";
+			bool isMoonPhases = file.Filename == "res/terrain/moon_phases.png";
+			bool isMapIcons = file.Filename == "res/misc/mapicons.png";
+			bool isAdditionalMapIcons = file.Filename == "res/misc/additionalmapicons.png";
+			bool isXPOrbs = file.Filename == "res/item/xporb.png";
+			bool isExplosions = file.Filename == "res/misc/explosion.png";
+			bool isPaintings = file.Filename == "res/art/kz.png";
+			bool isBanners = file.Filename == "res/item/banner/Banner_Atlas.png";
+
+			if (
+				isTerrain || isItems || isParticles || isMoonPhases || isPaintings ||
+				isMapIcons || isAdditionalMapIcons || isXPOrbs || isExplosions || isBanners
+				)
 			{
 				var img = file.GetTexture();
-				var res = img.Width / 16; // texture count on X axes
-				var size = new Size(res, res);
-				var viewer = new TextureAtlasEditor(currentPCK, file.Filename, img, size);
+				var tile_size = new Size();
+
+				var banner_scale = img.Width / Resources.banners_atlas.Width;
+
+				if (isBanners)
+				{
+					// The banner atlas has extra space on it that has to be truncated for the editor
+					img = img.GetArea(new Rectangle(0, 0, img.Width - (4 * banner_scale), img.Height - (1 * banner_scale)));
+
+					// banners are 42x41 because of course they are
+					tile_size = new Size(42 * banner_scale, 41 * banner_scale);
+				}
+
+				// most atlases have 4 columns
+				var columnCount = isBanners ? 6 : 4;
+
+				if (isTerrain || isItems || isParticles || isPaintings) columnCount = 16;
+
+				if (!isBanners)
+                {
+					var resolution = img.Width / columnCount;
+					tile_size = new Size(resolution, resolution);
+				}
+
+				var viewer = new TextureAtlasEditor(currentPCK, file.Filename, img, tile_size);
 				if (viewer.ShowDialog() == DialogResult.OK)
 				{
-					file.SetData(viewer.FinalTexture, ImageFormat.Png);
+					var texture = viewer.FinalTexture;
+					if(isBanners)
+                    {
+						var graphicsConfig = new GraphicsConfig()
+						{
+							InterpolationMode = InterpolationMode.NearestNeighbor,
+							PixelOffsetMode = PixelOffsetMode.HighQuality
+						};
+
+						var _img = new Bitmap((Resources.banners_atlas.Width + 4) * banner_scale,
+									(Resources.banners_atlas.Height + 1) * banner_scale);
+
+						using (var g = Graphics.FromImage(_img))
+                        {
+							g.ApplyConfig(graphicsConfig);
+							g.DrawImage(texture, 0, 0, texture.Width, texture.Height);
+                        }
+
+						texture = _img;
+                    }
+
+					file.SetData(texture, ImageFormat.Png);
 					wasModified = true;
 					BuildMainTreeView();
 				}
