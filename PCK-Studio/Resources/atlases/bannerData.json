@@ -1020,12 +1020,34 @@
 			"displayName": "Mask"
 		},
 		{
-			"internalName": "",
-			"displayName": ""
+			"internalName": "illager",
+			"displayName": "Ominous Banner [PS4 ONLY]"
 		},
 		{
-			"internalName": "",
-			"displayName": ""
+			"internalName": "globe",
+			"displayName": "Globe [PS4 ONLY]",
+			"hasColourEntry": true,
+			"colourEntry": {
+				"defaultName": "Banner_White",
+				"variants": [
+					"Banner_Black",
+					"Banner_Blue",
+					"Banner_Brown",
+					"Banner_Cyan",
+					"Banner_Gray",
+					"Banner_Green",
+					"Banner_Light_Blue",
+					"Banner_Lime",
+					"Banner_Magenta",
+					"Banner_Orange",
+					"Banner_Pink",
+					"Banner_Purple",
+					"Banner_Red",
+					"Banner_Silver",
+					"Banner_White",
+					"Banner_Yellow"
+				]
+			}
 		}
 	]
 }
