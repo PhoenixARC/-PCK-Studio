@@ -44,7 +44,7 @@ namespace PckStudio.Forms.Editor
 
 		private string _tileName = string.Empty;
 
-		public string FinalTileName => $"res/textures/{_animation.CategoryString}/{_tileName}.png";
+		public string FinalPath => $"res/textures/{_animation.CategoryString}/{_tileName}.png";
 
 		private static readonly string[] specialTileNames = { "clock", "compass" };
 
@@ -170,8 +170,7 @@ namespace PckStudio.Forms.Editor
 
 		private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
-			
-			if (!IsSpecialTile(_tileName) && _animation is not null)
+			if (!IsSpecialTile(_tileName) && _animation is not null && _animation.FrameCount > 0)
 			{
 				DialogResult = DialogResult.OK;
 				return;
@@ -376,19 +375,6 @@ namespace PckStudio.Forms.Editor
 				_ => throw new ArgumentOutOfRangeException(_animation.Category.ToString())
 			};
 			tileLabel.Text = textureInfos.FirstOrDefault(p => p.InternalName == _tileName)?.DisplayName ?? _tileName;
-
-            //switch (MessageBox.Show(this, 
-			//	$"{TileName} is not a valid tile for animation, and will not play in game. Would you like to choose a new tile?", 
-			//	"Not a valid tile", 
-			//	MessageBoxButtons.YesNo))
-			//{
-			//	case DialogResult.Yes:
-			//		changeTileToolStripMenuItem_Click(null, EventArgs.Empty);
-			//		break;
-			//	default:
-			//		DialogResult = DialogResult.Abort;
-			//		break;
-			//}
 		}
 
         private void exportJavaAnimationToolStripMenuItem_Click(object sender, EventArgs e)
@@ -466,6 +452,8 @@ namespace PckStudio.Forms.Editor
 				return;
 			}
 
+			var oldResolution = _animation.BuildTexture().Width;
+
             FrameDimension dimension = new FrameDimension(gif.FrameDimensionsList[0]);
             int frameCount = gif.GetFrameCount(dimension);
 
@@ -474,12 +462,14 @@ namespace PckStudio.Forms.Editor
 			for (int i = 0; i < frameCount; i++)
 			{
 				gif.SelectActiveFrame(dimension, i);
-				textures.Add(new Bitmap(gif));
+
+				textures.Add(new Bitmap(gif, oldResolution, oldResolution));
 			}
 
 			var animCat = _animation.Category;
 
 			_animation = new Animation(textures, string.Empty);
+			_animation.Interpolate = InterpolationCheckbox.Checked;
 			_animation.Category = animCat;
 			LoadAnimationTreeView();
         }

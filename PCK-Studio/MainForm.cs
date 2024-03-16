@@ -472,7 +472,7 @@ namespace PckStudio
 				if (animationEditor.ShowDialog(this) == DialogResult.OK)
 				{
 					wasModified = true;
-					file.Filename = animationEditor.FinalTileName;
+					file.Filename = animationEditor.FinalPath;
 					AnimationHelper.SaveAnimationToFile(file, animation);
 					BuildMainTreeView();
 				}
