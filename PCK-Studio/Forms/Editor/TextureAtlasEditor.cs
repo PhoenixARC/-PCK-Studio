@@ -390,7 +390,10 @@ namespace PckStudio.Forms.Editor
                 g.DrawImage(texture, dataTile.Area);
             }
 
-            _tiles[_selectedTile.Index] = new AtlasTile(_selectedTile.Index, _selectedTile.Area, _selectedTile.Tile, texture);
+            if(_selectedTile != dataTile) 
+                _tiles[dataTile.Index] = new AtlasTile(dataTile.Index, dataTile.Area, dataTile.Tile, texture);
+            else 
+                _tiles[_selectedTile.Index] = new AtlasTile(_selectedTile.Index, _selectedTile.Area, _selectedTile.Tile, texture);
             selectTilePictureBox.Image = texture;
 
             UpdateAtlasDisplay();
