@@ -34,8 +34,11 @@ namespace PckStudio.Internal.Json
         [JsonProperty("experience_orbs")]
         public List<JsonTileInfo> ExperienceOrbs { get; set; }
 
-        [JsonProperty("explosion")]
-        public List<JsonTileInfo> Explosion { get; set; }
+        [JsonProperty("explosions")]
+        public List<JsonTileInfo> Explosions { get; set; }
+
+        [JsonProperty("paintings")]
+        public List<JsonTileInfo> Paintings { get; set; }
     }
 
     internal static class Tiles
@@ -44,7 +47,7 @@ namespace PckStudio.Internal.Json
             _jsonBlockData, _jsonItemData, 
             _jsonParticleData, _jsonMoonPhaseData,
             _jsonMapIconData, _jsonExplosionData, 
-            _jsonExperienceOrbData;
+            _jsonExperienceOrbData, _jsonPaintingData;
         internal static JsonTiles JsonBlockData => _jsonBlockData ??= JsonConvert.DeserializeObject<JsonTiles>(Resources.blockData);
         internal static JsonTiles JsonItemData => _jsonItemData ??= JsonConvert.DeserializeObject<JsonTiles>(Resources.itemData);
         internal static JsonTiles JsonParticleData => _jsonParticleData ??= JsonConvert.DeserializeObject<JsonTiles>(Resources.particleData);
@@ -52,6 +55,7 @@ namespace PckStudio.Internal.Json
         internal static JsonTiles JsonMapIconData => _jsonMapIconData ??= JsonConvert.DeserializeObject<JsonTiles>(Resources.mapIconData);
         internal static JsonTiles JsonExplosionData => _jsonExplosionData ??= JsonConvert.DeserializeObject<JsonTiles>(Resources.explosionData);
         internal static JsonTiles JsonExperienceOrbData => _jsonExperienceOrbData ??= JsonConvert.DeserializeObject<JsonTiles>(Resources.experienceOrbData);
+        internal static JsonTiles JsonPaintingData => _jsonPaintingData ??= JsonConvert.DeserializeObject<JsonTiles>(Resources.paintingData);
 
         internal static List<JsonTileInfo> ItemTileInfos => JsonItemData.Items;
         internal static List<JsonTileInfo> BlockTileInfos => JsonBlockData.Blocks;
@@ -60,7 +64,8 @@ namespace PckStudio.Internal.Json
         internal static List<JsonTileInfo> MapIconTileInfos => JsonMapIconData.MapIcons;
         internal static List<JsonTileInfo> AdditionalMapIconTileInfos => JsonMapIconData.AdditionalMapIcons;
         internal static List<JsonTileInfo> ExperienceOrbTileInfos => JsonExperienceOrbData.ExperienceOrbs;
-        internal static List<JsonTileInfo> ExplosionTileInfos => JsonExplosionData.Explosion;
+        internal static List<JsonTileInfo> ExplosionTileInfos => JsonExplosionData.Explosions;
+        internal static List<JsonTileInfo> PaintingTileInfos => JsonPaintingData.Paintings;
 
         private static Image[] _itemImages;
         public static Image[] ItemImages => _itemImages ??= Resources.items_atlas.SplitHorizontal(16).ToArray();
@@ -84,7 +89,10 @@ namespace PckStudio.Internal.Json
         public static Image[] ExperienceOrbImages => _experienceOrbIconImages ??= Resources.experience_orbs_atlas.SplitHorizontal(4).ToArray();
 
         private static Image[] _explosionImages;
-        public static Image[] ExplosionImages => _explosionImages ??= Resources.explosion_atlas.SplitHorizontal(4).ToArray();
+        public static Image[] ExplosionImages => _explosionImages ??= Resources.explosions_atlas.SplitHorizontal(4).ToArray();
+
+        private static Image[] _paintingImages;
+        public static Image[] PaintingImages => _paintingImages ??= Resources.paintings_atlas.SplitHorizontal(16).ToArray();
 
         private static ImageList GetImageList(Image[] images)
         {
@@ -114,9 +122,12 @@ namespace PckStudio.Internal.Json
         public static ImageList AdditionalMapIconImageList { get { return _additionalMapIconImageList; } }
 
         private static ImageList _experienceOrbsImageList = GetImageList(ExperienceOrbImages);
-        public static ImageList ExperienceOrbsImageList { get { return _experienceOrbsImageList; } }
+        public static ImageList ExperienceOrbImageList { get { return _experienceOrbsImageList; } }
 
         private static ImageList _explosionImageList = GetImageList(ExplosionImages);
         public static ImageList ExplosionImageList { get { return _explosionImageList; } }
+
+        private static ImageList _paintingImageList = GetImageList(PaintingImages);
+        public static ImageList PaintingImageList { get { return _paintingImageList; } }
     }
 }

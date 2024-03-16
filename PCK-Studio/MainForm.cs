@@ -382,11 +382,12 @@ namespace PckStudio
 			bool isMapIcons = file.Filename == "res/misc/mapicons.png";
 			bool isAdditionalMapIcons = file.Filename == "res/misc/additionalmapicons.png";
 			bool isXPOrbs = file.Filename == "res/item/xporb.png";
-			bool isExplosion = file.Filename == "res/misc/explosion.png";
+			bool isExplosions = file.Filename == "res/misc/explosion.png";
+			bool isPaintings = file.Filename == "res/art/kz.png";
 
 			if (
-				isTerrain || isItems || isParticles || isMoonPhases || 
-				isMapIcons || isAdditionalMapIcons || isXPOrbs || isExplosion
+				isTerrain || isItems || isParticles || isMoonPhases || isPaintings ||
+				isMapIcons || isAdditionalMapIcons || isXPOrbs || isExplosions
 				)
 			{
 				var img = file.GetTexture();
@@ -394,7 +395,7 @@ namespace PckStudio
 				// all of the other atlases so far use 4
 				var columnCount = 4;
 				
-				if (isTerrain || isItems || isParticles) columnCount = 16;
+				if (isTerrain || isItems || isParticles || isPaintings) columnCount = 16;
 
 				var resolution = img.Width / columnCount;
 				var size = new Size(resolution, resolution);

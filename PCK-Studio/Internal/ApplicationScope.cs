@@ -30,8 +30,15 @@ namespace PckStudio.Internal
                 _ = Tiles.JsonExplosionData;
                 _ = Tiles.JsonMapIconData;
                 _ = Tiles.JsonExperienceOrbData;
-                _ = Tiles.ItemImageList;
+                _ = Tiles.JsonPaintingData;
                 _ = Tiles.BlockImageList;
+                _ = Tiles.ItemImageList;
+                _ = Tiles.ParticleImageList;
+                _ = Tiles.ExplosionImageList;
+                _ = Tiles.MapIconImageList;
+                _ = Tiles.ExperienceOrbImageList;
+                _ = Tiles.MoonPhaseImageList;
+                _ = Tiles.PaintingImageList;
                 SettingsManager.Initialize();
                 CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
             }

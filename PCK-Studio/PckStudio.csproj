@@ -635,6 +635,7 @@
     <None Include="Resources\atlases\itemData.json" />
     <None Include="Resources\atlases\mapIconData.json" />
     <None Include="Resources\atlases\moonPhaseData.json" />
+    <None Include="Resources\atlases\paintingData.json" />
     <None Include="Resources\atlases\particleData.json" />
     <None Include="Resources\TexturePackIcon.png" />
     <None Include="Resources\binka\binkawin.asi" />
@@ -691,6 +692,7 @@
     <Content Include="Resources\atlases\items.png" />
     <Content Include="Resources\atlases\moon_phases.png" />
     <None Include="Resources\atlases\particles.png" />
+    <None Include="Resources\atlases\paintings.png" />
     <Content Include="Resources\atlases\terrain.png" />
     <Content Include="Resources\icons\file_delete.png" />
     <Content Include="Resources\icons\file_empty.png" />

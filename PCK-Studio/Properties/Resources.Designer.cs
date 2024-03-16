@@ -367,19 +367,9 @@ namespace PckStudio.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap explosion_atlas {
-            get {
-                object obj = ResourceManager.GetObject("explosion_atlas", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to {
         ///	&quot;COMMENT_1&quot;: &quot;JSON by MattNL&quot;,
-        ///	&quot;explosion&quot;: [
+        ///	&quot;explosions&quot;: [
         ///		{
         ///			&quot;internalName&quot;: &quot;explosion_0&quot;,
         ///			&quot;displayName&quot;: &quot;Explosion (Stage 1)&quot;,
@@ -399,11 +389,21 @@ namespace PckStudio.Properties {
         ///			&quot;colourEntry&quot;: {
         ///				&quot;defaultName&quot;: &quot;Particle_Explode&quot;,
         ///				&quot;variants&quot;: [
-        ///			 [rest of string was truncated]&quot;;.
+        ///		 [rest of string was truncated]&quot;;.
         /// </summary>
         public static string explosionData {
             get {
                 return ResourceManager.GetString("explosionData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap explosions_atlas {
+            get {
+                object obj = ResourceManager.GetObject("explosions_atlas", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -692,6 +692,46 @@ namespace PckStudio.Properties {
         public static System.Drawing.Bitmap pack {
             get {
                 object obj = ResourceManager.GetObject("pack", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///	&quot;COMMENT_1&quot;: &quot;JSON by MattNL&quot;,
+        ///	&quot;paintings&quot;: [
+        ///		{
+        ///			&quot;internalName&quot;: &quot;Kebab&quot;,
+        ///			&quot;displayName&quot;: &quot;\&quot;Kebab med tre pepperoni\&quot; by Kristoffer Zetterstrand&quot;
+        ///		},
+        ///		{
+        ///			&quot;internalName&quot;: &quot;Aztec&quot;,
+        ///			&quot;displayName&quot;: &quot;\&quot;de_aztec\&quot; by Kristoffer Zetterstrand&quot;
+        ///		},
+        ///		{
+        ///			&quot;internalName&quot;: &quot;Alban&quot;,
+        ///			&quot;displayName&quot;: &quot;\&quot;Albanian\&quot; by Kristoffer Zetterstrand&quot;
+        ///		},
+        ///		{
+        ///			&quot;internalName&quot;: &quot;Aztec2&quot;,
+        ///			&quot;displayName&quot;: &quot;\&quot;de_aztec\&quot; by Kristoffer Zetterstrand&quot;
+        ///		},
+        ///		{
+        ///			&quot;internalName&quot;: &quot;Bomb&quot;,
+        ///			&quot;di [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string paintingData {
+            get {
+                return ResourceManager.GetString("paintingData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap paintings_atlas {
+            get {
+                object obj = ResourceManager.GetObject("paintings_atlas", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

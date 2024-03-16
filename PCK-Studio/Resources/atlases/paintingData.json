@@ -1,0 +1,1062 @@
+{
+	"COMMENT_1": "JSON by MattNL",
+	"paintings": [
+		{
+			"internalName": "Kebab",
+			"displayName": "\"Kebab med tre pepperoni\" by Kristoffer Zetterstrand"
+		},
+		{
+			"internalName": "Aztec",
+			"displayName": "\"de_aztec\" by Kristoffer Zetterstrand"
+		},
+		{
+			"internalName": "Alban",
+			"displayName": "\"Albanian\" by Kristoffer Zetterstrand"
+		},
+		{
+			"internalName": "Aztec2",
+			"displayName": "\"de_aztec\" by Kristoffer Zetterstrand"
+		},
+		{
+			"internalName": "Bomb",
+			"displayName": "\"Target Successfully Bombed\" by Kristoffer Zetterstrand"
+		},
+		{
+			"internalName": "Plant",
+			"displayName": "\"Paradisträd\" by Kristoffer Zetterstrand"
+		},
+		{
+			"internalName": "Wasteland",
+			"displayName": "\"Wasteland\" by Kristoffer Zetterstrand"
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "Back",
+			"displayName": "Back Texture",
+			"width": 4,
+			"height": 4
+		},
+		{
+			"internalName": "Back",
+			"displayName": "",
+		},
+		{
+			"internalName": "Back",
+			"displayName": "",
+		},
+		{
+			"internalName": "Back",
+			"displayName": "",
+		},
+		{
+			"internalName": "1x1E1",
+			"displayName": "Extra Painting 1"
+		},
+		{
+			"internalName": "1x1E2",
+			"displayName": "Extra Painting 2"
+		},
+		{
+			"internalName": "1x1E3",
+			"displayName": "Extra Painting 3"
+		},
+		{
+			"internalName": "1x1E4",
+			"displayName": "Extra Painting 4"
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "Back",
+			"displayName": ""
+		},
+		{
+			"internalName": "Back",
+			"displayName": "",
+		},
+		{
+			"internalName": "Back",
+			"displayName": "",
+		},
+		{
+			"internalName": "Back",
+			"displayName": "",
+		},
+		{
+			"internalName": "Pool",
+			"displayName": "\"The Pool\" by Kristoffer Zetterstrand",
+			"width": 2
+		},
+		{
+			"internalName": "Pool",
+			"displayName": ""
+		},
+		{
+			"internalName": "Courbet",
+			"displayName": "\"Bonjour Monsieur Courbet\" by Kristoffer Zetterstrand",
+			"width": 2
+		},
+		{
+			"internalName": "Courbet",
+			"displayName": ""
+		},
+		{
+			"internalName": "Sea",
+			"displayName": "\"Seaside\" by Kristoffer Zetterstrand",
+			"width": 2
+		},
+		{
+			"internalName": "Sea",
+			"displayName": ""
+		},
+		{
+			"internalName": "Sunset",
+			"displayName": "\"sunset_dense\" by Kristoffer Zetterstrand",
+			"width": 2
+		},
+		{
+			"internalName": "Sunset",
+			"displayName": ""
+		},
+		{
+			"internalName": "Creebet",
+			"displayName": "\"Creebet\" by Kristoffer Zetterstrand",
+			"width": 2
+		},
+		{
+			"internalName": "Creebet",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "Back",
+			"displayName": ""
+		},
+		{
+			"internalName": "Back",
+			"displayName": "",
+		},
+		{
+			"internalName": "Back",
+			"displayName": "",
+		},
+		{
+			"internalName": "Back",
+			"displayName": "",
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "Back",
+			"displayName": ""
+		},
+		{
+			"internalName": "Back",
+			"displayName": "",
+		},
+		{
+			"internalName": "Back",
+			"displayName": "",
+		},
+		{
+			"internalName": "Back",
+			"displayName": "",
+		},
+		{
+			"internalName": "Wanderer",
+			"displayName": "\"Wanderer\" by Kristoffer Zetterstrand",
+			"height": 2
+		},
+		{
+			"internalName": "Graham",
+			"displayName": "\"Graham\" by Kristoffer Zetterstrand",
+			"height": 2
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "Skeleton",
+			"displayName": "\"Mortal Coil\" by Kristoffer Zetterstrand",
+			"width": 4,
+			"height": 3
+		},
+		{
+			"internalName": "Skeleton",
+			"displayName": "",
+		},
+		{
+			"internalName": "Skeleton",
+			"displayName": "",
+		},
+		{
+			"internalName": "Skeleton",
+			"displayName": "",
+		},
+		{
+			"internalName": "Wanderer",
+			"displayName": ""
+		},
+		{
+			"internalName": "Graham",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "Skeleton",
+			"displayName": "",
+		},
+		{
+			"internalName": "Skeleton",
+			"displayName": "",
+		},
+		{
+			"internalName": "Skeleton",
+			"displayName": "",
+		},
+		{
+			"internalName": "Skeleton",
+			"displayName": "",
+		},
+		{
+			"internalName": "Fighters",
+			"displayName": "\"Fighters\" by Kristoffer Zetterstrand",
+			"width": 4,
+			"height": 2
+		},
+		{
+			"internalName": "Fighters",
+			"displayName": ""
+		},
+		{
+			"internalName": "Fighters",
+			"displayName": ""
+		},
+		{
+			"internalName": "Fighters",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "Skeleton",
+			"displayName": ""
+		},
+		{
+			"internalName": "Skeleton",
+			"displayName": ""
+		},
+		{
+			"internalName": "Skeleton",
+			"displayName": ""
+		},
+		{
+			"internalName": "Skeleton",
+			"displayName": ""
+		},
+		{
+			"internalName": "Fighters",
+			"displayName": ""
+		},
+		{
+			"internalName": "Fighters",
+			"displayName": ""
+		},
+		{
+			"internalName": "Fighters",
+			"displayName": ""
+		},
+		{
+			"internalName": "Fighters",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "DonkeyKong",
+			"displayName": "\"Kong\" by Kristoffer Zetterstrand",
+			"width": 4,
+			"height": 3
+		},
+		{
+			"internalName": "DonkeyKong",
+			"displayName": ""
+		},
+		{
+			"internalName": "DonkeyKong",
+			"displayName": ""
+		},
+		{
+			"internalName": "DonkeyKong",
+			"displayName": ""
+		},
+		{
+			"internalName": "Match",
+			"displayName": "\"Match\" by Kristoffer Zetterstrand",
+			"width": 2,
+			"height": 2
+		},
+		{
+			"internalName": "Match",
+			"displayName": ""
+		},
+		{
+			"internalName": "Bust",
+			"displayName": "\"Bust\" by Kristoffer Zetterstrand",
+			"width": 2,
+			"height": 2
+		},
+		{
+			"internalName": "Bust",
+			"displayName": ""
+		},
+		{
+			"internalName": "Stage",
+			"displayName": "\"The stage is set\" by Kristoffer Zetterstrand",
+			"width": 2,
+			"height": 2
+		},
+		{
+			"internalName": "Stage",
+			"displayName": ""
+		},
+		{
+			"internalName": "Void",
+			"displayName": "\"The Void\" by Kristoffer Zetterstrand",
+			"width": 2,
+			"height": 2
+		},
+		{
+			"internalName": "Void",
+			"displayName": ""
+		},
+		{
+			"internalName": "SkullAndRoses",
+			"displayName": "\"Skull and Roses\" by Kristoffer Zetterstrand",
+			"width": 2,
+			"height": 2
+		},
+		{
+			"internalName": "SkullAndRoses",
+			"displayName": ""
+		},
+		{
+			"internalName": "Wither",
+			"displayName": "\"Wither\" by Jens Bergensten",
+			"width": 2,
+			"height": 2
+		},
+		{
+			"internalName": "Wither",
+			"displayName": ""
+		},
+		{
+			"internalName": "DonkeyKong",
+			"displayName": ""
+		},
+		{
+			"internalName": "DonkeyKong",
+			"displayName": ""
+		},
+		{
+			"internalName": "DonkeyKong",
+			"displayName": ""
+		},
+		{
+			"internalName": "DonkeyKong",
+			"displayName": ""
+		},
+		{
+			"internalName": "Match",
+			"displayName": ""
+		},
+		{
+			"internalName": "Match",
+			"displayName": ""
+		},
+		{
+			"internalName": "Bust",
+			"displayName": ""
+		},
+		{
+			"internalName": "Bust",
+			"displayName": ""
+		},
+		{
+			"internalName": "Stage",
+			"displayName": ""
+		},
+		{
+			"internalName": "Stage",
+			"displayName": ""
+		},
+		{
+			"internalName": "Void",
+			"displayName": ""
+		},
+		{
+			"internalName": "Void",
+			"displayName": ""
+		},
+		{
+			"internalName": "SkullAndRoses",
+			"displayName": ""
+		},
+		{
+			"internalName": "SkullAndRoses",
+			"displayName": ""
+		},
+		{
+			"internalName": "Wither",
+			"displayName": ""
+		},
+		{
+			"internalName": "Wither",
+			"displayName": ""
+		},
+		{
+			"internalName": "DonkeyKong",
+			"displayName": "",
+		},
+		{
+			"internalName": "DonkeyKong",
+			"displayName": "",
+		},
+		{
+			"internalName": "DonkeyKong",
+			"displayName": "",
+		},
+		{
+			"internalName": "DonkeyKong",
+			"displayName": "",
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "Pointer",
+			"displayName": "\"Pointer\" by Kristoffer Zetterstrand",
+			"width": 4,
+			"height": 4
+		},
+		{
+			"internalName": "Pointer",
+			"displayName": ""
+		},
+		{
+			"internalName": "Pointer",
+			"displayName": ""
+		},
+		{
+			"internalName": "Pointer",
+			"displayName": ""
+		},
+		{
+			"internalName": "Pigscene",
+			"displayName": "\"Pigscene\" by Kristoffer Zetterstrand",
+			"width": 4,
+			"height": 4
+		},
+		{
+			"internalName": "Pigscene",
+			"displayName": ""
+		},
+		{
+			"internalName": "Pigscene",
+			"displayName": ""
+		},
+		{
+			"internalName": "Pigscene",
+			"displayName": ""
+		},
+		{
+			"internalName": "BurningSkull",
+			"displayName": "\"Skull On Fire\" by Kristoffer Zetterstrand",
+			"width": 4,
+			"height": 4
+		},
+		{
+			"internalName": "BurningSkull",
+			"displayName": ""
+		},
+		{
+			"internalName": "BurningSkull",
+			"displayName": ""
+		},
+		{
+			"internalName": "BurningSkull",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": "",
+		},
+		{
+			"internalName": "",
+			"displayName": "",
+		},
+		{
+			"internalName": "",
+			"displayName": "",
+		},
+		{
+			"internalName": "",
+			"displayName": "",
+		},
+		{
+			"internalName": "Pointer",
+			"displayName": "",
+		},
+		{
+			"internalName": "Pointer",
+			"displayName": ""
+		},
+		{
+			"internalName": "Pointer",
+			"displayName": ""
+		},
+		{
+			"internalName": "Pointer",
+			"displayName": ""
+		},
+		{
+			"internalName": "Pigscene",
+			"displayName": ""
+		},
+		{
+			"internalName": "Pigscene",
+			"displayName": ""
+		},
+		{
+			"internalName": "Pigscene",
+			"displayName": ""
+		},
+		{
+			"internalName": "Pigscene",
+			"displayName": ""
+		},
+		{
+			"internalName": "BurningSkull",
+			"displayName": ""
+		},
+		{
+			"internalName": "BurningSkull",
+			"displayName": ""
+		},
+		{
+			"internalName": "BurningSkull",
+			"displayName": ""
+		},
+		{
+			"internalName": "BurningSkull",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": "",
+		},
+		{
+			"internalName": "",
+			"displayName": "",
+		},
+		{
+			"internalName": "",
+			"displayName": "",
+		},
+		{
+			"internalName": "",
+			"displayName": "",
+		},
+		{
+			"internalName": "Pointer",
+			"displayName": ""
+		},
+		{
+			"internalName": "Pointer",
+			"displayName": ""
+		},
+		{
+			"internalName": "Pointer",
+			"displayName": ""
+		},
+		{
+			"internalName": "Pointer",
+			"displayName": ""
+		},
+		{
+			"internalName": "Pigscene",
+			"displayName": "",
+		},
+		{
+			"internalName": "Pigscene",
+			"displayName": ""
+		},
+		{
+			"internalName": "Pigscene",
+			"displayName": ""
+		},
+		{
+			"internalName": "Pigscene",
+			"displayName": ""
+		},
+		{
+			"internalName": "BurningSkull",
+			"displayName": "",
+		},
+		{
+			"internalName": "BurningSkull",
+			"displayName": ""
+		},
+		{
+			"internalName": "BurningSkull",
+			"displayName": ""
+		},
+		{
+			"internalName": "BurningSkull",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": "",
+		},
+		{
+			"internalName": "",
+			"displayName": "",
+		},
+		{
+			"internalName": "",
+			"displayName": "",
+		},
+		{
+			"internalName": "",
+			"displayName": "",
+		},
+		{
+			"internalName": "Pointer",
+			"displayName": "",
+		},
+		{
+			"internalName": "Pointer",
+			"displayName": ""
+		},
+		{
+			"internalName": "Pointer",
+			"displayName": ""
+		},
+		{
+			"internalName": "Pointer",
+			"displayName": ""
+		},
+		{
+			"internalName": "Pigscene",
+			"displayName": "",
+		},
+		{
+			"internalName": "Pigscene",
+			"displayName": ""
+		},
+		{
+			"internalName": "Pigscene",
+			"displayName": ""
+		},
+		{
+			"internalName": "Pigscene",
+			"displayName": ""
+		},
+		{
+			"internalName": "BurningSkull",
+			"displayName": "",
+		},
+		{
+			"internalName": "BurningSkull",
+			"displayName": ""
+		},
+		{
+			"internalName": "BurningSkull",
+			"displayName": ""
+		},
+		{
+			"internalName": "BurningSkull",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": "",
+		},
+		{
+			"internalName": "",
+			"displayName": "",
+		},
+		{
+			"internalName": "",
+			"displayName": "",
+		},
+		{
+			"internalName": "",
+			"displayName": "",
+		}
+	]
+}
