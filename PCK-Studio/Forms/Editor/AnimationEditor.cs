@@ -44,6 +44,8 @@ namespace PckStudio.Forms.Editor
 
 		private string _tileName = string.Empty;
 
+		public string FinalTileName => $"res/textures/{_animation.CategoryString}/{_tileName}.png";
+
 		private static readonly string[] specialTileNames = { "clock", "compass" };
 
         private static bool IsSpecialTile(string name)
@@ -77,6 +79,7 @@ namespace PckStudio.Forms.Editor
             bulkAnimationSpeedToolStripMenuItem.Enabled =
             importToolStripMenuItem.Enabled =
             exportAsToolStripMenuItem.Enabled =
+			changeTileToolStripMenuItem.Enabled =
             InterpolationCheckbox.Visible = !IsSpecialTile(_tileName);
 
             SetTileLabel();
@@ -157,6 +160,7 @@ namespace PckStudio.Forms.Editor
 
 		private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
+			
 			if (!IsSpecialTile(_tileName) && _animation is not null)
 			{
 				DialogResult = DialogResult.OK;
@@ -342,7 +346,7 @@ namespace PckStudio.Forms.Editor
 				if (diag.ShowDialog(this) != DialogResult.OK)
 					return;
 				
-				Debug.WriteLine(diag.SelectedTile);
+				Debug.WriteLine($"{diag.SelectedTile}");
                 _animation.Category = diag.Category;
 				_tileName = diag.SelectedTile;
 
