@@ -390,11 +390,13 @@ namespace PckStudio.Forms.Editor
                 g.DrawImage(texture, dataTile.Area);
             }
 
+            var _finalTexture = _workingTexture.GetArea(new Rectangle(dataTile.Area.X, dataTile.Area.Y, dataTile.Area.Width, dataTile.Area.Height));
+
             if(_selectedTile != dataTile) 
-                _tiles[dataTile.Index] = new AtlasTile(dataTile.Index, dataTile.Area, dataTile.Tile, texture);
+                _tiles[dataTile.Index] = new AtlasTile(dataTile.Index, dataTile.Area, dataTile.Tile, _finalTexture);
             else 
-                _tiles[_selectedTile.Index] = new AtlasTile(_selectedTile.Index, _selectedTile.Area, _selectedTile.Tile, texture);
-            selectTilePictureBox.Image = texture;
+                _tiles[_selectedTile.Index] = new AtlasTile(_selectedTile.Index, _selectedTile.Area, _selectedTile.Tile, _finalTexture);
+            selectTilePictureBox.Image = _finalTexture;
 
             UpdateAtlasDisplay();
         }
