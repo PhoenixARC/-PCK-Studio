@@ -26,7 +26,7 @@ namespace PckStudio.Internal.Json
             _jsonBlockData, _jsonItemData, 
             _jsonParticleData, _jsonMoonPhaseData,
             _jsonMapIconData, _jsonExplosionData, 
-            _jsonExperienceOrbData, _jsonPaintingData;
+            _jsonExperienceOrbData, _jsonPaintingData, _jsonBannerData;
         internal static JsonTiles JsonBlockData => _jsonBlockData ??= JsonConvert.DeserializeObject<JsonTiles>(Resources.blockData);
         internal static JsonTiles JsonItemData => _jsonItemData ??= JsonConvert.DeserializeObject<JsonTiles>(Resources.itemData);
         internal static JsonTiles JsonParticleData => _jsonParticleData ??= JsonConvert.DeserializeObject<JsonTiles>(Resources.particleData);
@@ -35,6 +35,7 @@ namespace PckStudio.Internal.Json
         internal static JsonTiles JsonExplosionData => _jsonExplosionData ??= JsonConvert.DeserializeObject<JsonTiles>(Resources.explosionData);
         internal static JsonTiles JsonExperienceOrbData => _jsonExperienceOrbData ??= JsonConvert.DeserializeObject<JsonTiles>(Resources.experienceOrbData);
         internal static JsonTiles JsonPaintingData => _jsonPaintingData ??= JsonConvert.DeserializeObject<JsonTiles>(Resources.paintingData);
+        internal static JsonTiles JsonBannerData => _jsonBannerData ??= JsonConvert.DeserializeObject<JsonTiles>(Resources.bannerData);
 
         internal static List<JsonTileInfo> ItemTileInfos => JsonItemData.Entries;
         internal static List<JsonTileInfo> BlockTileInfos => JsonBlockData.Entries;
@@ -45,7 +46,7 @@ namespace PckStudio.Internal.Json
         internal static List<JsonTileInfo> ExperienceOrbTileInfos => JsonExperienceOrbData.Entries;
         internal static List<JsonTileInfo> ExplosionTileInfos => JsonExplosionData.Entries;
         internal static List<JsonTileInfo> PaintingTileInfos => JsonPaintingData.Entries;
-        internal static List<JsonTileInfo> BannerTileInfos => JsonPaintingData.Entries;
+        internal static List<JsonTileInfo> BannerTileInfos => JsonBannerData.Entries;
 
         private static Image[] _itemImages;
         public static Image[] ItemImages => _itemImages ??= Resources.items_atlas.SplitHorizontal(16).ToArray();
@@ -73,6 +74,9 @@ namespace PckStudio.Internal.Json
 
         private static Image[] _paintingImages;
         public static Image[] PaintingImages => _paintingImages ??= Resources.paintings_atlas.SplitHorizontal(16).ToArray();
+
+        private static Image[] _bannerImages;
+        public static Image[] BannerImages => _bannerImages ??= Resources.banners_atlas.SplitHorizontal(6).ToArray();
 
         private static ImageList GetImageList(Image[] images)
         {
@@ -109,5 +113,8 @@ namespace PckStudio.Internal.Json
 
         private static ImageList _paintingImageList = GetImageList(PaintingImages);
         public static ImageList PaintingImageList { get { return _paintingImageList; } }
+
+        private static ImageList _bannerImageList = GetImageList(BannerImages);
+        public static ImageList BannerImageList { get { return _bannerImageList; } }
     }
 }

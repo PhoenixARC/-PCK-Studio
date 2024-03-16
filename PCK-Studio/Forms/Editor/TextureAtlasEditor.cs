@@ -115,6 +115,7 @@ namespace PckStudio.Forms.Editor
                 "xporb" => (Tiles.ExperienceOrbTileInfos, "experience_orbs"),
                 "explosion" => (Tiles.ExplosionTileInfos, "explosions"),
                 "kz" => (Tiles.PaintingTileInfos, "paintings"),
+                "Banner_Atlas" => (Tiles.BannerTileInfos, "banners"),
                 _ => (null, null),
             };
 

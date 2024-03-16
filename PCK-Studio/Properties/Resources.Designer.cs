@@ -101,6 +101,53 @@ namespace PckStudio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {
+        ///	&quot;COMMENT_1&quot;: &quot;JSON by MattNL&quot;,
+        ///	&quot;banners&quot;: [
+        ///		{
+        ///			&quot;internalName&quot;: &quot;base&quot;,
+        ///			&quot;displayName&quot;: &quot;Base&quot;
+        ///		},
+        ///		{
+        ///			&quot;internalName&quot;: &quot;border&quot;,
+        ///			&quot;displayName&quot;: &quot;Bordure&quot;
+        ///		},
+        ///		{
+        ///			&quot;internalName&quot;: &quot;bricks&quot;,
+        ///			&quot;displayName&quot;: &quot;Field Masoned&quot;
+        ///		},
+        ///		{
+        ///			&quot;internalName&quot;: &quot;circle&quot;,
+        ///			&quot;displayName&quot;: &quot;Roundel&quot;
+        ///		},
+        ///		{
+        ///			&quot;internalName&quot;: &quot;creeper&quot;,
+        ///			&quot;displayName&quot;: &quot;Creeper Charge&quot;
+        ///		},
+        ///		{
+        ///			&quot;internalName&quot;: &quot;cross&quot;,
+        ///			&quot;displayName&quot;: &quot;Saltire&quot;
+        ///		},
+        ///		{
+        ///			&quot;internalName&quot;: &quot;curly_bo [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string bannerData {
+            get {
+                return ResourceManager.GetString("bannerData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap banners_atlas {
+            get {
+                object obj = ResourceManager.GetObject("banners_atlas", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap BEHAVIOURS_ICON {
