@@ -31,6 +31,13 @@ namespace PckStudio.Extensions
 {
     internal static class ImageExtensions
     {
+        internal static Image ReleaseFromFile(this Image image)
+        {
+            Image img = new Bitmap(image);
+            image.Dispose();
+            return img;
+        }
+
         internal static Image GetArea(this Image source, Rectangle area)
         {
             Image tileImage = new Bitmap(area.Width, area.Height);

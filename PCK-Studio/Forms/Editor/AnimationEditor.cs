@@ -321,7 +321,7 @@ namespace PckStudio.Forms.Editor
 			}
             try
 			{
-				var img = Image.FromFile(textureFile);
+				var img = Image.FromFile(textureFile).ReleaseFromFile();
 				JObject mcmeta = JObject.Parse(File.ReadAllText(fileDialog.FileName));
                 Animation javaAnimation = AnimationHelper.GetAnimationFromJavaAnimation(mcmeta, img);
 				javaAnimation.Category = _animation.Category;
@@ -447,7 +447,7 @@ namespace PckStudio.Forms.Editor
 			if (fileDialog.ShowDialog(this) != DialogResult.OK)
 				return;
 
-			var gif = Image.FromFile(fileDialog.FileName);
+			var gif = Image.FromFile(fileDialog.FileName).ReleaseFromFile();
 			if (!gif.RawFormat.Equals(ImageFormat.Gif))
 			{
 				MessageBox.Show("Selected file is not a gif", "Invalid file", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -477,7 +477,7 @@ namespace PckStudio.Forms.Editor
             };
             if (ofd.ShowDialog() != DialogResult.OK)
                 return;
-            Image img = Image.FromFile(ofd.FileName);
+            Image img = Image.FromFile(ofd.FileName).ReleaseFromFile();
             var textures = img.Split(ImageLayoutDirection.Vertical);
 			_animation = new Animation(textures, string.Empty);
 			LoadAnimationTreeView();

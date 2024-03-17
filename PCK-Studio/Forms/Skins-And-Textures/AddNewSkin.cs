@@ -120,7 +120,7 @@ namespace PckStudio.Popups
             OpenFileDialog ofd = new OpenFileDialog();
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-                SetNewTexture(Image.FromFile(ofd.FileName));
+                SetNewTexture(Image.FromFile(ofd.FileName).ReleaseFromFile());
             }
         }
 
@@ -154,7 +154,9 @@ namespace PckStudio.Popups
                         textSkinName.Text = Path.GetFileNameWithoutExtension(ofd.FileName);
                         return;
                     }
-                    SetNewTexture(Image.FromFile(ofd.FileName));
+
+                    var img = Image.FromFile(ofd.FileName).ReleaseFromFile();
+                    SetNewTexture(img);
                 }
             }
         }
@@ -179,13 +181,13 @@ namespace PckStudio.Popups
                 ofd.Title = "Select a PNG File";
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
-                    var img = Image.FromFile(ofd.FileName);
+                    var img = Image.FromFile(ofd.FileName).ReleaseFromFile();
                     if (img.RawFormat != ImageFormat.Png && img.Width != img.Height * 2)
                     {
                         MessageBox.Show("Not a Valid Cape File");
                         return;
                     }
-                    newSkin.CapeTexture = capePictureBox.Image = Image.FromFile(ofd.FileName);
+                    newSkin.CapeTexture = capePictureBox.Image = img;
                     contextMenuCape.Items[0].Text = "Replace";
                     capeLabel.Visible = false;
                     contextMenuCape.Visible = true;

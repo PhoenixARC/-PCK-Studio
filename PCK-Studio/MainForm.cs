@@ -1961,7 +1961,7 @@ namespace PckStudio
 						PckFileData MipMappedFile = new PckFileData(mippedPath, PckFileType.TextureFile);
 
 
-						Image originalTexture = Image.FromStream(new MemoryStream(file.Data));
+						Image originalTexture = file.GetTexture();
 						int NewWidth = Math.Max(originalTexture.Width / (int)Math.Pow(2, i - 1), 1);
 						int NewHeight = Math.Max(originalTexture.Height / (int)Math.Pow(2, i - 1), 1);
 
@@ -2011,12 +2011,9 @@ namespace PckStudio
 				saveFileDialog.DefaultExt = ".3dst";
 				if (saveFileDialog.ShowDialog() == DialogResult.OK)
 				{
-					using (var ms = new MemoryStream(file.Data))
-					{
-						Image img = Image.FromStream(ms);
-						var writer = new _3DSTextureWriter(img);
-						writer.WriteToFile(saveFileDialog.FileName);
-					}
+					Image img = file.GetTexture();
+					var writer = new _3DSTextureWriter(img);
+					writer.WriteToFile(saveFileDialog.FileName);
 				}
 			}
 		}

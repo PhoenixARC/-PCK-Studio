@@ -140,9 +140,7 @@ namespace PckStudio.Forms.Editor
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 generateTextureCheckBox.Checked = false;
-                // use stream to not leave handle open
-                using (var imgFs = File.OpenRead(openFileDialog.FileName))
-                    renderer3D1.Texture = Image.FromStream(imgFs); 
+                renderer3D1.Texture = Image.FromFile(openFileDialog.FileName).ReleaseFromFile(); 
             }
         }
 
