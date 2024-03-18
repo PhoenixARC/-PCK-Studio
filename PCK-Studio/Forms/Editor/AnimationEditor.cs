@@ -44,6 +44,8 @@ namespace PckStudio.Forms.Editor
 
 		private string _tileName = string.Empty;
 
+		public string FinalPath => $"res/textures/{_animation.CategoryString}/{_tileName}.png";
+
 		private static readonly string[] specialTileNames = { "clock", "compass" };
 
         private static bool IsSpecialTile(string name)
@@ -72,14 +74,20 @@ namespace PckStudio.Forms.Editor
 			animationPictureBox.BlendColor = blendColor;
 		}
 
+		private void ValidateToolStrip()
+        {
+			bulkAnimationSpeedToolStripMenuItem.Enabled =
+			importToolStripMenuItem.Enabled =
+			exportAsToolStripMenuItem.Enabled =
+			changeTileToolStripMenuItem.Enabled =
+			InterpolationCheckbox.Visible = !IsSpecialTile(_tileName);
+		}
+
         private void AnimationEditor_Load(object sender, EventArgs e)
         {
-            bulkAnimationSpeedToolStripMenuItem.Enabled =
-            importToolStripMenuItem.Enabled =
-            exportAsToolStripMenuItem.Enabled =
-            InterpolationCheckbox.Visible = !IsSpecialTile(_tileName);
+			ValidateToolStrip();
 
-            SetTileLabel();
+			SetTileLabel();
             LoadAnimationTreeView();
         }
 
@@ -124,12 +132,17 @@ namespace PckStudio.Forms.Editor
             animationPictureBox.SelectFrame(_animation, frameTreeView.SelectedNode.Index);
 		}
 
+		private void StopAnimation()
+        {
+			animationPictureBox.Stop();
+			AnimationStartStopBtn.Text = "Play Animation";
+		}
+
 		private void AnimationStartStopBtn_Click(object sender, EventArgs e)
 		{
 			if (animationPictureBox.IsPlaying)
 			{
-				animationPictureBox.Stop();
-				AnimationStartStopBtn.Text = "Play Animation";
+				StopAnimation();
 				return;
 			}
             if (_animation.FrameCount > 1)
@@ -157,7 +170,7 @@ namespace PckStudio.Forms.Editor
 
 		private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
-			if (!IsSpecialTile(_tileName) && _animation is not null)
+			if (!IsSpecialTile(_tileName) && _animation is not null && _animation.FrameCount > 0)
 			{
 				DialogResult = DialogResult.OK;
 				return;
@@ -337,19 +350,17 @@ namespace PckStudio.Forms.Editor
 
 		private void changeTileToolStripMenuItem_Click(object sender, EventArgs e)
 		{
+			StopAnimation();
             using (ChangeTile diag = new ChangeTile())
 			{
 				if (diag.ShowDialog(this) != DialogResult.OK)
 					return;
 				
-				Debug.WriteLine(diag.SelectedTile);
+				Debug.WriteLine($"{diag.SelectedTile}");
                 _animation.Category = diag.Category;
 				_tileName = diag.SelectedTile;
 
-				bulkAnimationSpeedToolStripMenuItem.Enabled = 
-				importToolStripMenuItem.Enabled = 
-				exportAsToolStripMenuItem.Enabled = 
-				InterpolationCheckbox.Visible = !IsSpecialTile(_tileName);
+				ValidateToolStrip();
 
 				SetTileLabel();
 			}
@@ -364,19 +375,6 @@ namespace PckStudio.Forms.Editor
 				_ => throw new ArgumentOutOfRangeException(_animation.Category.ToString())
 			};
 			tileLabel.Text = textureInfos.FirstOrDefault(p => p.InternalName == _tileName)?.DisplayName ?? _tileName;
-
-            //switch (MessageBox.Show(this, 
-			//	$"{TileName} is not a valid tile for animation, and will not play in game. Would you like to choose a new tile?", 
-			//	"Not a valid tile", 
-			//	MessageBoxButtons.YesNo))
-			//{
-			//	case DialogResult.Yes:
-			//		changeTileToolStripMenuItem_Click(null, EventArgs.Empty);
-			//		break;
-			//	default:
-			//		DialogResult = DialogResult.Abort;
-			//		break;
-			//}
 		}
 
         private void exportJavaAnimationToolStripMenuItem_Click(object sender, EventArgs e)
@@ -454,6 +452,8 @@ namespace PckStudio.Forms.Editor
 				return;
 			}
 
+			var oldResolution = _animation.BuildTexture().Width;
+
             FrameDimension dimension = new FrameDimension(gif.FrameDimensionsList[0]);
             int frameCount = gif.GetFrameCount(dimension);
 
@@ -462,9 +462,15 @@ namespace PckStudio.Forms.Editor
 			for (int i = 0; i < frameCount; i++)
 			{
 				gif.SelectActiveFrame(dimension, i);
-				textures.Add(new Bitmap(gif));
+
+				textures.Add(new Bitmap(gif, oldResolution, oldResolution));
 			}
+
+			var animCat = _animation.Category;
+
 			_animation = new Animation(textures, string.Empty);
+			_animation.Interpolate = InterpolationCheckbox.Checked;
+			_animation.Category = animCat;
 			LoadAnimationTreeView();
         }
 

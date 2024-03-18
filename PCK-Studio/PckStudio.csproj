@@ -652,6 +652,16 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\atlases\bannerData.json" />
+    <None Include="Resources\atlases\blockData.json" />
+    <None Include="Resources\atlases\entityData.json" />
+    <None Include="Resources\atlases\experienceOrbData.json" />
+    <None Include="Resources\atlases\explosionData.json" />
+    <None Include="Resources\atlases\itemData.json" />
+    <None Include="Resources\atlases\mapIconData.json" />
+    <None Include="Resources\atlases\moonPhaseData.json" />
+    <None Include="Resources\atlases\paintingData.json" />
+    <None Include="Resources\atlases\particleData.json" />
     <None Include="Resources\shader\framebufferFragmentShader.glsl" />
     <None Include="Resources\shader\framebufferVertexShader.glsl" />
     <None Include="Resources\shader\plainColorFragmentShader.glsl" />
@@ -677,16 +687,13 @@
     <None Include="Resources\fileTemplates\tu53colours.col" />
     <None Include="Resources\fileTemplates\tu54colours.col" />
     <None Include="Resources\fileTemplates\tu69colours.col" />
-    <None Include="Resources\tileData.json" />
     <None Include="Resources\external\Youtube.png" />
     <None Include="Resources\pckClosed.png" />
     <None Include="Resources\external\Discord.png" />
     <None Include="Resources\icons\clock.png" />
     <None Include="Resources\changeTile.png" />
-    <None Include="Resources\items.png" />
     <None Include="Resources\HamburgerMenuIcon.png" />
     <None Include="Resources\pack.png" />
-    <None Include="Resources\terrain.png" />
     <None Include="Resources\external\Xbox.png" />
     <None Include="Resources\external\PS3.png" />
     <None Include="Resources\external\WiiU.png" />
@@ -712,6 +719,17 @@
     <None Include="Resources\Comparison.png" />
     <None Include="Resources\iconImageList\ENTITY MATERIALS ICON.png" />
     <None Include="Resources\iconImageList\blank.png" />
+    <None Include="Resources\atlases\additional_mapicons.png" />
+    <None Include="Resources\atlases\map_icons.png" />
+    <None Include="Resources\atlases\banners.png" />
+    <Content Include="Resources\atlases\entities.png" />
+    <None Include="Resources\atlases\experience_orbs.png" />
+    <None Include="Resources\atlases\explosion.png" />
+    <Content Include="Resources\atlases\items.png" />
+    <Content Include="Resources\atlases\moon_phases.png" />
+    <None Include="Resources\atlases\particles.png" />
+    <None Include="Resources\atlases\paintings.png" />
+    <Content Include="Resources\atlases\terrain.png" />
     <None Include="Resources\entities.png" />
     <None Include="Resources\shader\skinFragmentShader.glsl" />
     <None Include="Resources\armor.png" />

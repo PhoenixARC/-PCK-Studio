@@ -17,7 +17,6 @@
 **/
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -272,7 +271,7 @@ namespace PckStudio.Forms.Editor
             {
                 try
                 {
-                    _pckfile?.SetData(new GameRuleFileWriter(_file, compressionLevel, compressionType));
+                    _pckfile?.SetData(new GameRuleFileWriter(_file));
                     DialogResult = DialogResult.OK;
                     MessageBox.Show("Saved!");
                 }

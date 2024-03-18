@@ -15,6 +15,12 @@ namespace PckStudio.Internal.Json
         [JsonProperty("internalName")]
         public string InternalName { get; set; }
 
+        [JsonProperty("width")]
+        public int Width { get; set; } = 1;
+
+        [JsonProperty("height")]
+        public int Height { get; set; } = 1;
+
         [JsonProperty("hasColourEntry", DefaultValueHandling = DefaultValueHandling.Populate)]
         public bool HasColourEntry { get; set; }
 
