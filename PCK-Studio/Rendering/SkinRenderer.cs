@@ -288,7 +288,7 @@ namespace PckStudio.Rendering
             ModelData.CollectionChanged += ModelData_CollectionChanged;
         }
 
-        public void InitializeGL(bool inflateOverlayParts)
+        public void Initialize(bool inflateOverlayParts)
         {
             if (initialized)
                 Debug.Fail("Already Initialized!");

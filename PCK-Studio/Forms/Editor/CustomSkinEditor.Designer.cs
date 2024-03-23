@@ -384,6 +384,7 @@
             // 
             resources.ApplyResources(this.renderer3D1, "renderer3D1");
             this.renderer3D1.BackColor = System.Drawing.Color.DimGray;
+            this.renderer3D1.CapeTexture = null;
             this.renderer3D1.ClampModel = false;
             this.renderer3D1.MouseSensetivity = 0.01F;
             this.renderer3D1.Name = "renderer3D1";

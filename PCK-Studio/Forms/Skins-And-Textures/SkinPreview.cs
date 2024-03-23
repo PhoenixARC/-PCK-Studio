@@ -28,7 +28,7 @@ namespace PckStudio.Forms
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            ModelView.InitializeGL(true);
+            ModelView.Initialize(true);
             foreach (var item in data)
             {
                 ModelView.ModelData.Add(item);

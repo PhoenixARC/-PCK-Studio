@@ -59,7 +59,7 @@ namespace PckStudio.Forms.Editor
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            renderer3D1.InitializeGL(_inflateOverlayParts);
+            renderer3D1.Initialize(_inflateOverlayParts);
             if (_skin.Texture is not null)
             {
                 renderer3D1.Texture = _skin.Texture;
