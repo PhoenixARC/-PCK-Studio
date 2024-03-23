@@ -153,8 +153,8 @@ namespace PckStudio
 			var pack = new PckFile(3);
 
 			var zeroFile = pack.CreateNewFile("0", PckFileType.InfoFile);
-			zeroFile.Properties.Add("PACKID", packId.ToString());
-			zeroFile.Properties.Add("PACKVERSION", packVersion.ToString());
+			zeroFile.AddProperty("PACKID", packId);
+			zeroFile.AddProperty("PACKVERSION", packVersion);
 
 			var locFile = new LOCFile();
 			locFile.InitializeDefault(packName);
@@ -181,8 +181,8 @@ namespace PckStudio
 
 			var texturepackInfo = pack.CreateNewFile($"{res}/{res}Info.pck", PckFileType.TexturePackInfoFile);
 
-			texturepackInfo.Properties.Add("PACKID", "0");
-			texturepackInfo.Properties.Add("DATAPATH", $"{res}Data.pck");
+			texturepackInfo.AddProperty("PACKID", "0");
+			texturepackInfo.AddProperty("DATAPATH", $"{res}Data.pck");
 
 			texturepackInfo.SetData(new PckFileWriter(infoPCK, LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian));
 
@@ -346,7 +346,7 @@ namespace PckStudio
 																 //attempts to generate reimportable metadata file out of minefiles metadata
 						string metaData = "";
 
-						foreach (var entry in file.Properties)
+						foreach (var entry in file.GetProperties())
 						{
 							metaData += $"{entry.Key}: {entry.Value}{Environment.NewLine}";
 						}
@@ -391,11 +391,6 @@ namespace PckStudio
 		private void fAQToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
 			//System.Diagnostics.Process.Start(hosturl + "pckStudio#faq");
-		}
-
-		private void convertToBedrockToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			MessageBox.Show("This feature is currently being reworked.", "Currently unavailable", MessageBoxButtons.OK, MessageBoxIcon.Information);
 		}
 
 		private void openPckCenterToolStripMenuItem_Click(object sender, EventArgs e)
@@ -519,91 +514,6 @@ namespace PckStudio
 			if (TryGetEditor(out var editor))
 			{
 				editor.SaveAs();
-			}
-		}
-
-		private void addCustomPackIconToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			string packID = "0";
-
-			using NumericPrompt numericPrompt = new NumericPrompt(0);
-			numericPrompt.Minimum = 0; // TODO: put min pack ID value (keeping this 0 just to be safe)
-			numericPrompt.Maximum = int.MinValue; // TODO: put max pack ID value
-			numericPrompt.ContextLabel.Text = "Please insert the desired Pack ID";
-			numericPrompt.TextLabel.Text = "Pack ID";
-
-			if (TryGetEditor(out var editor))
-			{
-				DialogResult prompt = MessageBox.Show(this,
-					"Would you like to use the current PackID? You can enter any PackID if not.",
-					"",
-					MessageBoxButtons.YesNoCancel);
-
-				switch (prompt)
-				{
-					case DialogResult.Yes:
-						if (!editor.Value.TryGetFile("0", PckFileType.InfoFile, out PckFileData file) ||
-							string.IsNullOrEmpty(file.Properties.GetPropertyValue("PACKID")))
-						{
-							MessageBox.Show(this,
-								"No PackID is present in this PCK. " +
-								"To avoid this error, ensure that the PCK has a proper PackID property on the \"0\" Info file before trying again.",
-								"Operation Aborted", MessageBoxButtons.OK, MessageBoxIcon.Error);
-							return;
-						}
-
-						packID = file.Properties.GetPropertyValue("PACKID");
-						break;
-					case DialogResult.No:
-						break;
-					case DialogResult.Cancel:
-					default:
-						MessageBox.Show(this, "Operation cancelled");
-						return;
-				}
-			}
-			else if (numericPrompt.ShowDialog(this) == DialogResult.OK) packID = numericPrompt.SelectedValue.ToString();
-			else
-			{
-				MessageBox.Show(this, "Operation cancelled");
-				return;
-			}
-
-			OpenFileDialog fileDialog = new OpenFileDialog();
-			fileDialog.Filter = "Minecraft Archive|*.arc";
-			if (fileDialog.ShowDialog(this) == DialogResult.OK)
-			{
-				var reader = new ARCFileReader();
-				ConsoleArchive archive = reader.FromFile(fileDialog.FileName);
-
-				fileDialog.Filter = "Pack Icon|*.png";
-				if (fileDialog.ShowDialog(this) == DialogResult.OK)
-				{
-					string key = string.Format("Graphics\\PackGraphics\\{0}.png", packID);
-
-					if (archive.Keys.Contains(key))
-					{
-						DialogResult prompt = MessageBox.Show(this,
-							"This pack already has a pack icon present in the chosen file. Would you like to replace the pack icon?",
-							"Icon already exists",
-							MessageBoxButtons.YesNoCancel);
-						switch (prompt)
-						{
-							case DialogResult.Yes:
-								archive.Remove(key); // remove file so it can be injected
-								break;
-							case DialogResult.No:
-							case DialogResult.Cancel:
-							default:
-								Trace.WriteLine("Operation cancelled", category: nameof(addCustomPackIconToolStripMenuItem_Click));
-								return;
-						}
-					}
-					archive.Add(key, File.ReadAllBytes(fileDialog.FileName));
-					var writer = new ARCFileWriter(archive);
-					writer.WriteToFile(fileDialog.FileName);
-					MessageBox.Show($"Successfully added {key} to Archive!", "Successfully Added", MessageBoxButtons.OK, MessageBoxIcon.Information);
-				}
 			}
 		}
 

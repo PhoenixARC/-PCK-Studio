@@ -54,12 +54,11 @@
             this.treeView1.Location = new System.Drawing.Point(20, 84);
             this.treeView1.Margin = new System.Windows.Forms.Padding(0);
             this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(136, 176);
+            this.treeView1.Size = new System.Drawing.Size(246, 234);
             this.treeView1.TabIndex = 13;
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
             this.treeView1.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseClick);
             this.treeView1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView1_KeyDown);
-            this.treeView1.MouseHover += new System.EventHandler(this.treeView1_MouseHover);
             // 
             // metroContextMenu1
             // 
@@ -92,7 +91,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(20, 60);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(348, 24);
+            this.menuStrip.Size = new System.Drawing.Size(246, 24);
             this.menuStrip.TabIndex = 14;
             this.menuStrip.Text = "menuStrip1";
             // 
@@ -123,7 +122,7 @@
             // xLabel
             // 
             this.xLabel.AutoSize = true;
-            this.xLabel.Location = new System.Drawing.Point(159, 147);
+            this.xLabel.Location = new System.Drawing.Point(98, 325);
             this.xLabel.Name = "xLabel";
             this.xLabel.Size = new System.Drawing.Size(91, 19);
             this.xLabel.TabIndex = 30;
@@ -141,9 +140,9 @@
             "entity_emissive_alpha_only",
             "entity_alphatest_change_color",
             "entity_change_color"});
-            this.materialComboBox.Location = new System.Drawing.Point(159, 169);
+            this.materialComboBox.Location = new System.Drawing.Point(20, 347);
             this.materialComboBox.Name = "materialComboBox";
-            this.materialComboBox.Size = new System.Drawing.Size(209, 29);
+            this.materialComboBox.Size = new System.Drawing.Size(246, 29);
             this.materialComboBox.TabIndex = 31;
             this.materialComboBox.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.materialComboBox.UseSelectable = true;
@@ -153,7 +152,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(388, 280);
+            this.ClientSize = new System.Drawing.Size(286, 399);
             this.Controls.Add(this.materialComboBox);
             this.Controls.Add(this.xLabel);
             this.Controls.Add(this.menuStrip);

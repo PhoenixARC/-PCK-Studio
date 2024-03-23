@@ -23,6 +23,11 @@ namespace PckStudio.Forms.Editor
 
 		private readonly JObject EntityJSONData = JObject.Parse(Properties.Resources.entityData);
 
+		private bool showInvalidEntries;
+
+		//Holds invalid entries so they can be added back to the material file on save should the user decide to hide them
+		List<MaterialContainer.Material> hiddenInvalidEntries = new List<MaterialContainer.Material>();
+
 		void SetUpTree()
 		{
 			treeView1.BeginUpdate();
@@ -31,6 +36,8 @@ namespace PckStudio.Forms.Editor
 			{
 				TreeNode EntryNode = new TreeNode(entry.Name);
 
+				EntryNode.ImageIndex = -1;
+
 				foreach (JObject content in EntityJSONData["materials"].Children())
 				{
 					var prop = content.Properties().FirstOrDefault(prop => prop.Name == entry.Name);
@@ -38,12 +45,26 @@ namespace PckStudio.Forms.Editor
 					{
 						EntryNode.Text = (string)prop.Value;
 						EntryNode.ImageIndex = EntityJSONData["materials"].Children().ToList().IndexOf(content);
-						EntryNode.SelectedImageIndex = EntryNode.ImageIndex;
 						break;
 					}
 				}
 
 				EntryNode.Tag = entry;
+
+				// check for invalid material entry
+				if (EntryNode.ImageIndex == -1)
+                {
+					EntryNode.ImageIndex = 127; // icon for invalid entry
+					EntryNode.Text += " (Invalid)";
+
+					if (!showInvalidEntries)
+                    {
+						hiddenInvalidEntries.Add(entry);
+						continue;
+					}
+                }
+
+				EntryNode.SelectedImageIndex = EntryNode.ImageIndex;
 
 				treeView1.Nodes.Add(EntryNode);
 			}
@@ -58,13 +79,20 @@ namespace PckStudio.Forms.Editor
 			using (var stream = new MemoryStream(file.Data))
 			{
 				var reader = new MaterialFileReader();
-                materialFile = reader.FromStream(stream);
-			}
+				materialFile = reader.FromStream(stream);
 
-			treeView1.ImageList = new ImageList();
-			ApplicationScope.EntityImages.ToList().ForEach(treeView1.ImageList.Images.Add);
-			treeView1.ImageList.ColorDepth = ColorDepth.Depth32Bit;
-			SetUpTree();
+				if (materialFile.hasInvalidEntries())
+                {
+					DialogResult dr = MessageBox.Show(this, "Unsupported entities were found in this file. Would you like to display them?", "Invalid data found", MessageBoxButtons.YesNo);
+
+					showInvalidEntries = dr == DialogResult.Yes;
+				}
+
+				treeView1.ImageList = new ImageList();
+				ApplicationScope.EntityImages.ToList().ForEach(treeView1.ImageList.Images.Add);
+				treeView1.ImageList.ColorDepth = ColorDepth.Depth32Bit;
+				SetUpTree();
+			}
 		}
 
 		private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
@@ -93,24 +121,9 @@ namespace PckStudio.Forms.Editor
 			materialComboBox.Enabled = false;
 		}
 
-		private void addNewPositionOverrideToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-
-		}
-
-		private void addNewEntryToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-
-		}
-
 		private void treeView1_KeyDown(object sender, KeyEventArgs e)
 		{
 			if (e.KeyCode == Keys.Delete) removeToolStripMenuItem_Click(sender, e);
-		}
-
-		private void treeView1_MouseHover(object sender, EventArgs e)
-		{
-
 		}
 
 		private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -123,6 +136,11 @@ namespace PckStudio.Forms.Editor
 				{
 					materialFile.Add(entry);
 				}
+			}
+
+			foreach (MaterialContainer.Material mat in hiddenInvalidEntries)
+			{
+				materialFile.Add(mat);
 			}
 
 			_file.SetData(new MaterialFileWriter(materialFile));
@@ -158,8 +176,6 @@ namespace PckStudio.Forms.Editor
 					}
 				}
 				treeView1.Nodes.Add(NewEntryNode);
-
-				addNewPositionOverrideToolStripMenuItem_Click(sender, e); // adds a Position Override to the new Override
 			}
 		}
 

@@ -21,11 +21,24 @@ namespace PckStudio.Internal
         {
             Profiler.Start();
             {
-                _entityImages ??= Resources.entities_sheet.SplitHorizontal(32).ToArray();
+                _entityImages ??= Resources.entities_atlas.SplitHorizontal(32).ToArray();
                 DataCacher ??= new FileCacher(Program.AppDataCache);
-                _ = Tiles.JsonTileData;
-                _ = Tiles.ItemImageList;
+                _ = Tiles.JsonBlockData;
+                _ = Tiles.JsonItemData;
+                _ = Tiles.JsonParticleData;
+                _ = Tiles.JsonMoonPhaseData;
+                _ = Tiles.JsonExplosionData;
+                _ = Tiles.JsonMapIconData;
+                _ = Tiles.JsonExperienceOrbData;
+                _ = Tiles.JsonPaintingData;
                 _ = Tiles.BlockImageList;
+                _ = Tiles.ItemImageList;
+                _ = Tiles.ParticleImageList;
+                _ = Tiles.ExplosionImageList;
+                _ = Tiles.MapIconImageList;
+                _ = Tiles.ExperienceOrbImageList;
+                _ = Tiles.MoonPhaseImageList;
+                _ = Tiles.PaintingImageList;
                 SettingsManager.Initialize();
                 CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
             }
