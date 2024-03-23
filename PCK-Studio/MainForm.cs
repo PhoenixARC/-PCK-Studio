@@ -837,7 +837,7 @@ namespace PckStudio
 				MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
 			{
 				string pckFolderDir = node.FullPath;
-				currentPCK.RemoveAll(file => !BeforeFileRemove(file) && file.Filename.StartsWith(pckFolderDir));
+				currentPCK.RemoveAll(file => file.Filename.StartsWith(pckFolderDir) && !BeforeFileRemove(file));
 				node.Remove();
 				wasModified = true;
 			}
