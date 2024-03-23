@@ -1170,7 +1170,8 @@ namespace PckStudio
 		private void cloneFileToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			TreeNode node = treeViewMain.SelectedNode;
-			if (node == null) return;
+			if (node == null || !node.IsTagOfType<PckFileData>())
+				return;
 			string path = node.FullPath;
 
 			using TextPrompt diag = new TextPrompt(node.Tag is null ? Path.GetFileName(node.FullPath) : node.FullPath);
