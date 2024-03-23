@@ -1949,6 +1949,7 @@ namespace PckStudio
 			}
 		}
 
+		[Obsolete()]
 		private void addTextureToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			using OpenFileDialog fileDialog = new OpenFileDialog();
@@ -1959,8 +1960,12 @@ namespace PckStudio
 				renamePrompt.LabelText = "Path";
 				if (renamePrompt.ShowDialog() == DialogResult.OK && !string.IsNullOrEmpty(renamePrompt.NewText))
 				{
-					var file = currentPCK.CreateNewFile(renamePrompt.NewText, PckFileType.TextureFile);
-					file.SetData(File.ReadAllBytes(fileDialog.FileName));
+                    if (currentPCK.Contains(renamePrompt.NewText, PckFileType.TextureFile))
+                    {
+                        MessageBox.Show($"'{renamePrompt.NewText}' already exists.", "Import failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    var file = currentPCK.CreateNewFile(renamePrompt.NewText, PckFileType.TextureFile, () => File.ReadAllBytes(fileDialog.FileName));
 					BuildMainTreeView();
 					wasModified = true;
 				}
@@ -2160,7 +2165,8 @@ namespace PckStudio
 		private void addFileToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			using var ofd = new OpenFileDialog();
-			// Suddenly, and randomly, this started throwing an exception because it wasn't formatted correctly? So now it's formatted correctly and now displays the file type name in the dialog.
+			// Suddenly, and randomly, this started throwing an exception because it wasn't formatted correctly?
+			// So now it's formatted correctly and now displays the file type name in the dialog.
 			ofd.Filter = "All files (*.*)|*.*";
 			ofd.Multiselect = false;
 
@@ -2169,13 +2175,14 @@ namespace PckStudio
 				using AddFilePrompt diag = new AddFilePrompt("res/" + Path.GetFileName(ofd.FileName));
 				if (diag.ShowDialog(this) == DialogResult.OK)
 				{
-					PckFileData file = currentPCK.CreateNewFile(
-						diag.Filepath,
-						diag.Filetype,
-						() => File.ReadAllBytes(ofd.FileName));
+					if (currentPCK.Contains(diag.Filepath, diag.Filetype))
+					{
+						MessageBox.Show($"'{diag.Filepath}' of type {diag.Filetype} already exists.", "Import failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+						return;
+					}
+					PckFileData file = currentPCK.CreateNewFile(diag.Filepath, diag.Filetype, () => File.ReadAllBytes(ofd.FileName));
 
 					RebuildSubPCK(treeViewMain.SelectedNode.FullPath);
-					//else treeViewMain.Nodes.Add();
 
 					BuildMainTreeView();
 					wasModified = true;
