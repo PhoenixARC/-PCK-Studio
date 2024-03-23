@@ -99,7 +99,7 @@ namespace PckStudio
 				[PckFileType.ColourTableFile] = HandleColourFile,
 				[PckFileType.GameRulesHeader] = HandleGameRuleFile,
 				[PckFileType.SkinDataFile] = HandleInnerPckFile,
-				[PckFileType.ModelsFile] = HandleModelsFile,
+				[PckFileType.ModelsFile] = null, //HandleModelsFile, // Note: Uncomment when implemented
 				[PckFileType.BehavioursFile] = HandleBehavioursFile,
 				[PckFileType.MaterialFile] = HandleMaterialFile,
 			};
@@ -107,6 +107,8 @@ namespace PckStudio
 
         private void HandleInnerPckFile(PckFileData file)
         {
+			// TODO: decide on how to handle embedded pck files
+			return;
 			if (Settings.Default.LoadSubPcks &&
 				(file.Filetype == PckFileType.SkinDataFile || file.Filetype == PckFileType.TexturePackInfoFile) &&
 				file.Size > 0 && treeViewMain.SelectedNode.Nodes.Count == 0)
@@ -1878,6 +1880,7 @@ namespace PckStudio
 					node.SelectedImageIndex = 3;
 					break;
 				case PckFileType.TexturePackInfoFile:
+                    goto default;
 					node.ImageIndex = 4;
 					node.SelectedImageIndex = 4;
 					break;
@@ -1886,10 +1889,12 @@ namespace PckStudio
 					node.SelectedImageIndex = 6;
 					break;
 				case PckFileType.ModelsFile:
+                    goto default;
 					node.ImageIndex = 8;
 					node.SelectedImageIndex = 8;
 					break;
 				case PckFileType.SkinDataFile:
+					goto default;
 					node.ImageIndex = 7;
 					node.SelectedImageIndex = 7;
 					break;
