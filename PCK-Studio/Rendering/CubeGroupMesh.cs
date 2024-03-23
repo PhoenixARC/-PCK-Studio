@@ -145,8 +145,7 @@ namespace PckStudio.Rendering
             }
         }
 
-
-        internal Vector3 GetCenter(int index)
+    internal Vector3 GetCenter(int index)
         {
             if (!cubes.IndexInRange(index))
                 throw new IndexOutOfRangeException();
@@ -160,9 +159,9 @@ namespace PckStudio.Rendering
                 throw new IndexOutOfRangeException();
 
             CubeMesh cube = cubes[index];
-            OutlineDefinition outline = cube.GetOutline();
-            outline.verticies = outline.verticies.Select(pos => pos + Transform).ToArray();
-            return outline;
+            var boundingBox = cube.GetBoundingBox();
+            Vector3[] verticies = boundingBox.GetVertices().Select(pos => pos.Position + Transform).ToArray();
+            return new OutlineDefinition() { verticies = verticies, indicies = BoundingBox.GetIndecies()};
         }
 
         internal Vector3 GetFaceCenter(int index, Cube.Face face)

@@ -66,7 +66,7 @@ namespace PckStudio.Rendering
 
         protected virtual void OnUpdate(object sender, TimestepEventArgs e)
         {
-            Debug.WriteLine(e.Delta);
+
         }
 
         private int refreshRate = 120;
@@ -75,8 +75,7 @@ namespace PckStudio.Rendering
         private bool isInitialized;
 
         private ShaderProgram colorShader;
-        private VertexArray VAO;
-        private IndexBuffer IBO;
+        private DrawContext boundingBoxDrawContext;
 
         protected void Init()
         {
@@ -87,26 +86,13 @@ namespace PckStudio.Rendering
             }
             MakeCurrent();
             colorShader = ShaderProgram.Create(Resources.plainColorVertexShader, Resources.plainColorFragmentShader);
-            VAO = new VertexArray();
-            IBO = IndexBuffer.Create(
-                    0, 1,
-                    1, 2,
-                    2, 3,
-                    3, 0,
-
-                    4, 5,
-                    5, 6,
-                    6, 7,
-                    7, 4,
-
-                    0, 4,
-                    1, 5,
-                    2, 6,
-                    3, 7);
+            var vao = new VertexArray();
             VertexBufferLayout layout = new VertexBufferLayout();
             layout.Add(ShaderDataType.Float3);
             layout.Add(ShaderDataType.Float4);
-            VAO.AddNewBuffer(layout);
+            vao.AddNewBuffer(layout);
+            var ibo = IndexBuffer.Create(BoundingBox.GetIndecies());
+            boundingBoxDrawContext = new DrawContext(vao, ibo, PrimitiveType.Lines);
             isInitialized = true;
         }
 
@@ -136,9 +122,9 @@ namespace PckStudio.Rendering
                 timer.Dispose();
             }
             MakeCurrent();
-            VAO.Dispose();
-            IBO.Dispose();
+            boundingBoxDrawContext.Dispose();
             colorShader.Dispose();
+            isInitialized = false;
             base.Dispose(disposing);
         }
 
@@ -157,25 +143,9 @@ namespace PckStudio.Rendering
             GL.DepthFunc(DepthFunction.Always);
 
             Renderer.SetLineWidth(2f);
+            boundingBoxDrawContext.VertexArray.GetBuffer(0).SetData(boundingBox.GetVertices());
+            Renderer.Draw(colorShader, boundingBoxDrawContext);
 
-            Vector3 s = boundingBox.Start;
-            Vector3 e = boundingBox.End;
-
-            ColorVertex[] vertices = [
-                new ColorVertex(new Vector3(s.X, e.Y, e.Z)),
-                new ColorVertex(new Vector3(e.X, e.Y, e.Z)),
-                new ColorVertex(new Vector3(e.X, s.Y, e.Z)),
-                new ColorVertex(new Vector3(s.X, s.Y, e.Z)),
-                new ColorVertex(new Vector3(s.X, e.Y, s.Z)),
-                new ColorVertex(new Vector3(e.X, e.Y, s.Z)),
-                new ColorVertex(new Vector3(e.X, s.Y, s.Z)),
-                new ColorVertex(new Vector3(s.X, s.Y, s.Z)),
-            ];
-
-            VAO.Bind();
-            VAO.GetBuffer(0).SetData(vertices);
-            IBO.Bind();
-            GL.DrawElements(PrimitiveType.Lines, IBO.GetCount(), DrawElementsType.UnsignedInt, 0);
             GL.DepthFunc(DepthFunction.Less);
             Renderer.SetLineWidth(1f);
         }

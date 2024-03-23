@@ -7,7 +7,7 @@ using OpenTK.Graphics.OpenGL;
 
 namespace PckStudio.Rendering
 {
-    internal class DrawContext
+    internal class DrawContext : IDisposable
     {
         internal readonly VertexArray VertexArray;
         internal readonly IndexBuffer IndexBuffer;
@@ -18,6 +18,12 @@ namespace PckStudio.Rendering
             VertexArray = vertexArray;
             IndexBuffer = indexBuffer;
             PrimitiveType = primitiveType;
+        }
+
+        public void Dispose()
+        {
+            VertexArray.Dispose();
+            IndexBuffer.Dispose();
         }
     }
 }
