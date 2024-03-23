@@ -141,7 +141,7 @@ namespace PckStudio.Forms
             }
             comboParent.Items.Clear();
             comboParent.Items.AddRange(ValidModelBoxTypes);
-            LoadData(file.Properties);
+            LoadData(file);
         }
         private static readonly Regex sWhitespace = new Regex(@"\s+");
         public static string ReplaceWhitespace(string input, string replacement)
@@ -149,9 +149,9 @@ namespace PckStudio.Forms
             return sWhitespace.Replace(input, replacement);
         }
 
-        private void LoadData(PckFileProperties properties)
+        private void LoadData(PckFileData file)
         {
-            comboParent.Enabled = properties.GetProperties("BOX").All(kv => {
+            comboParent.Enabled = file.GetMultipleProperties("BOX").All(kv => {
                 var box = SkinBOX.FromString(kv.Value);
                 if (ValidModelBoxTypes.Contains(box.Type))
                 {
@@ -160,7 +160,7 @@ namespace PckStudio.Forms
                 }
                 return false;
             });
-            properties.GetProperties("OFFSET").All(kv => {
+            file.GetMultipleProperties("OFFSET").All(kv => {
                 string[] offset = ReplaceWhitespace(kv.Value, ",").TrimEnd('\n', '\r', ' ').Split(',');
                 if (offset.Length < 3)
                     return false;
@@ -176,7 +176,7 @@ namespace PckStudio.Forms
                 return false;
             });
 
-            _ANIM = properties.GetPropertyValue("ANIM", SkinANIM.FromString);
+            _ANIM = file.GetProperty("ANIM", SkinANIM.FromString);
             UpdateListView();
             Rerender();
         }
@@ -1094,7 +1094,7 @@ namespace PckStudio.Forms
         {
             foreach (var part in modelBoxes)
             {
-                _file.Properties.Add("BOX", part);
+                _file.AddProperty("BOX", part);
             }
 
             //Bitmap bitmap2 = new Bitmap(64, 64);

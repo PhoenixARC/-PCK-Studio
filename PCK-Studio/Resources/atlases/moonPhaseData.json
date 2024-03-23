@@ -1,0 +1,37 @@
+{
+	"COMMENT_1": "JSON by MattNL",
+	"entries": [
+		{
+			"internalName": "moon_phase_0",
+			"displayName": "Full Moon"
+		},
+		{
+			"internalName": "moon_phase_1",
+			"displayName": "Waning Gibbous"
+		},
+		{
+			"internalName": "moon_phase_2",
+			"displayName": "Last Quarter"
+		},
+		{
+			"internalName": "moon_phase_3",
+			"displayName": "Waning Crescent"
+		},
+		{
+			"internalName": "moon_phase_4",
+			"displayName": "New Moon"
+		},
+		{
+			"internalName": "moon_phase_5",
+			"displayName": "Waxing Crescent"
+		},
+		{
+			"internalName": "moon_phase_6",
+			"displayName": "First Quarter"
+		},
+		{
+			"internalName": "moon_phase_7",
+			"displayName": "Waxing Gibbous"
+		}
+	]
+}

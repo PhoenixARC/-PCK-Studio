@@ -1,0 +1,135 @@
+{
+	"COMMENT_1": "JSON by MattNL",
+	"entries": [
+		{
+			"internalName": "player_1",
+			"displayName": "Player 1"
+		},
+		{
+			"internalName": "player_2",
+			"displayName": "Player 2"
+		},
+		{
+			"internalName": "player_3",
+			"displayName": "Player 3"
+		},
+		{
+			"internalName": "player_4",
+			"displayName": "Player 4"
+		},
+		{
+			"internalName": "target_x",
+			"displayName": "Unused"
+		},
+		{
+			"internalName": "target_point",
+			"displayName": "Target Point (Unused)"
+		},
+		{
+			"internalName": "player_off_map",
+			"displayName": "Player (Off Map) (Unused)"
+		},
+		{
+			"internalName": "frame",
+			"displayName": "Item Frame"
+		},
+		{
+			"internalName": "player_5",
+			"displayName": "Player 5"
+		},
+		{
+			"internalName": "player_6",
+			"displayName": "Player 6"
+		},
+		{
+			"internalName": "player_7",
+			"displayName": "Player 7"
+		},
+		{
+			"internalName": "player_8",
+			"displayName": "Player 8"
+		},
+		{
+			"internalName": "structure",
+			"displayName": "Structure (Explorer Map)"
+		},
+		{
+			"internalName": "player_off_limits",
+			"displayName": "Player (Off Limits) (Unused)"
+		},
+		{
+			"internalName": "mansion",
+			"displayName": "Woodland Mansion (Explorer Map)"
+		},
+		{
+			"internalName": "monument",
+			"displayName": "Ocean Monument (Explorer Map)"
+		}
+	],
+	"additional_entries": [
+		{
+			"internalName": "player_1_off_map",
+			"displayName": "Player 1 (Off Map)"
+		},
+		{
+			"internalName": "player_2_off_map",
+			"displayName": "Player 2 (Off Map)"
+		},
+		{
+			"internalName": "player_3_off_map",
+			"displayName": "Player 3 (Off Map)"
+		},
+		{
+			"internalName": "player_4_off_map",
+			"displayName": "Player 4 (Off Map)"
+		},
+		{
+			"internalName": "treasure",
+			"displayName": "Buried Treasure"
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "player_5_off_map",
+			"displayName": "Player 5 (Off Map)"
+		},
+		{
+			"internalName": "player_6_off_map",
+			"displayName": "Player 6 (Off Map)"
+		},
+		{
+			"internalName": "player_7_off_map",
+			"displayName": "Player 7 (Off Map)"
+		},
+		{
+			"internalName": "player_8_off_map",
+			"displayName": "Player 8 (Off Map)"
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		}
+	]
+}

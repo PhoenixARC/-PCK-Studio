@@ -27,7 +27,7 @@ namespace PckStudio.Classes.Misc
             new Button()
             {
                 Label = "Check it out!",
-                Url = Program.ProjectUrl,
+                Url = Program.ProjectUrl.AbsoluteUri,
             }
         };
 
