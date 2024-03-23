@@ -944,10 +944,10 @@ namespace PckStudio
 
 		private void audiopckToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (currentPCK.Contains("audio.pck", PckFileType.AudioFile))
+			if (currentPCK.Contains(PckFileType.AudioFile))
 			{
 				// the chance of this happening is really really slim but just in case
-				MessageBox.Show("There is already a file in this PCK named \"audio.pck\"!", "Can't create audio.pck");
+				MessageBox.Show("There is already an audio file in this PCK!", "Can't create audio.pck");
 				return;
 			}
 			if (string.IsNullOrEmpty(saveLocation))
