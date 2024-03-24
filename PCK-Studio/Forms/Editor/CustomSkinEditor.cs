@@ -238,33 +238,6 @@ namespace PckStudio.Forms.Editor
             }
         }
 
-        [Obsolete("Will be removed")]
-        public string JSONToCSM(string inputJson)
-        {
-            CSMJObject jsonDe = JsonConvert.DeserializeObject<CSMJObject>(inputJson);
-            StringBuilder sb = new StringBuilder();
-            foreach (CSMJObjectGroup group in jsonDe.Groups)
-            {
-                string PARENT = group.Name;
-                foreach (int i in group.children)
-                {
-                    CSMJObjectElement element = jsonDe.Elements[i];
-                    string name = element.Name;
-                    float PosX = element.from[0] + group.origin[0];
-                    float PosY = element.from[1] + group.origin[1];
-                    float PosZ = element.from[2] + group.origin[2];
-                    float SizeX = element.to[0] - element.from[0];
-                    float SizeY = element.to[1] - element.from[1];
-                    float SizeZ = element.to[2] - element.from[2];
-                    float U = 0;
-                    float V = 0;
-
-                    sb.AppendLine(name + "\n" + PARENT + "\n" + name + "\n" + PosX + "\n" + PosY + "\n" + PosZ + "\n" + SizeX + "\n" + SizeY + "\n" + SizeZ + "\n" + U + "\n" + V);
-                }
-            }
-            return sb.ToString();
-        }
-
         private void renderer3D1_TextureChanging(object sender, Rendering.TextureChangingEventArgs e)
         {
             var img = e.NewTexture;
@@ -343,38 +316,5 @@ namespace PckStudio.Forms.Editor
             if (e.KeyCode == Keys.Delete)
                 deleteToolStripMenuItem_Click(sender, e);
         }
-    }
-
-    class CSMJObject
-    {
-        [JsonProperty("credit")]
-        public string Credit { get; set; }
-
-        [JsonProperty("texture_size")]
-        public int[] TextureSize;
-
-        [JsonProperty("elements")]
-        public CSMJObjectElement[] Elements;
-
-        [JsonProperty("groups")]
-        public CSMJObjectGroup[] Groups;
-    }
-    
-    class CSMJObjectElement
-    {
-        [JsonProperty("name")]
-        public string Name { get; set; }
-
-        public float[] from;
-        public float[] to;
-    }
-
-    class CSMJObjectGroup
-    {
-        [JsonProperty("name")]
-        public string Name { get; set; }
-
-        public float[] origin;
-        public int[] children;
     }
 }
