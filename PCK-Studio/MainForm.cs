@@ -331,7 +331,7 @@ namespace PckStudio
 			_ = root ?? throw new ArgumentNullException(nameof(root));
 			if (!path.Contains(seperator))
 			{
-				var finalNode = CreateNode(path);
+                TreeNode finalNode = CreateNode(path);
 				root.Add(finalNode);
 				return finalNode;
 			}
@@ -345,7 +345,7 @@ namespace PckStudio
 
 		private void BuildPckTreeView(TreeNodeCollection root, PckFile pckFile)
 		{
-			foreach (var file in pckFile.GetFiles())
+			foreach (PckFileData file in pckFile.GetFiles())
 			{
 				// fix any file paths that may be incorrect
 				//if (file.Filename.StartsWith(parentPath))
@@ -410,10 +410,10 @@ namespace PckStudio
 				isMapIcons || isAdditionalMapIcons || isXPOrbs || isExplosions || isBanners
 				)
 			{
-				var img = file.GetTexture();
+                Image img = file.GetTexture();
 				var tile_size = new Size();
 
-				var banner_scale = img.Width / Resources.banners_atlas.Width;
+                int banner_scale = img.Width / Resources.banners_atlas.Width;
 
 				if (isBanners)
 				{
@@ -424,21 +424,21 @@ namespace PckStudio
 					tile_size = new Size(42 * banner_scale, 41 * banner_scale);
 				}
 
-				// most atlases have 4 columns
-				var columnCount = isBanners ? 6 : 4;
+                // most atlases have 4 columns
+                int columnCount = isBanners ? 6 : 4;
 
 				if (isTerrain || isItems || isParticles || isPaintings) columnCount = 16;
 
 				if (!isBanners)
                 {
-					var resolution = img.Width / columnCount;
+                    int resolution = img.Width / columnCount;
 					tile_size = new Size(resolution, resolution);
 				}
 
 				var viewer = new TextureAtlasEditor(currentPCK, file.Filename, img, tile_size);
 				if (viewer.ShowDialog() == DialogResult.OK)
 				{
-					var texture = viewer.FinalTexture;
+                    Image texture = viewer.FinalTexture;
 					if(isBanners)
                     {
 						var graphicsConfig = new GraphicsConfig()
@@ -450,7 +450,7 @@ namespace PckStudio
 						var _img = new Bitmap((Resources.banners_atlas.Width + 4) * banner_scale,
 									(Resources.banners_atlas.Height + 1) * banner_scale);
 
-						using (var g = Graphics.FromImage(_img))
+						using (Graphics g = Graphics.FromImage(_img))
                         {
 							g.ApplyConfig(graphicsConfig);
 							g.DrawImage(texture, 0, 0, texture.Width, texture.Height);
@@ -468,7 +468,7 @@ namespace PckStudio
 
 			if (!file.Filename.StartsWith("res/textures/blocks/") && !file.Filename.StartsWith("res/textures/items/"))
 				return;
-			var animation = AnimationHelper.GetAnimationFromFile(file);
+            Animation animation = AnimationHelper.GetAnimationFromFile(file);
 			using (AnimationEditor animationEditor = new AnimationEditor(animation, Path.GetFileNameWithoutExtension(file.Filename)))
 			{
 				if (animationEditor.ShowDialog(this) == DialogResult.OK)
@@ -521,7 +521,7 @@ namespace PckStudio
 				return;
 			}
 
-			var img = file.GetTexture();
+            Image img = file.GetTexture();
 			using var skinViewer = new SkinPreview(img, file.GetProperty("ANIM", SkinANIM.FromString));
 			skinViewer.ShowDialog(this);
 		}
@@ -633,7 +633,7 @@ namespace PckStudio
 			if (file.PropertyCount > 0)
 			{
 				using var fs = File.CreateText($"{outFilePath}.txt");
-				foreach (var property in file.GetProperties())
+				foreach (KeyValuePair<string, string> property in file.GetProperties())
 				{
 					fs.WriteLine($"{property.Key}: {property.Value}");
                 }
@@ -674,7 +674,7 @@ namespace PckStudio
 			}
 			else
 			{
-				foreach (var _file in currentPCK.GetFiles())
+				foreach (PckFileData _file in currentPCK.GetFiles())
 				{
 					if (_file.Filename.StartsWith(selectedFolder))
 					{
@@ -686,7 +686,7 @@ namespace PckStudio
 
 		private void extractToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			var node = treeViewMain.SelectedNode;
+            TreeNode node = treeViewMain.SelectedNode;
 
 			if (node == null)
             {
@@ -814,7 +814,7 @@ namespace PckStudio
 
 		private void deleteFileToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			var node = treeViewMain.SelectedNode;
+            TreeNode node = treeViewMain.SelectedNode;
 			if (node == null)
 				return;
 
@@ -861,7 +861,7 @@ namespace PckStudio
 				else // folders
 				{
 					node.Text = diag.NewText;
-					foreach (var childNode in GetAllChildNodes(node.Nodes))
+					foreach (TreeNode childNode in GetAllChildNodes(node.Nodes))
 					{
 						if (childNode.Tag is PckFileData folderFile)
 						{
@@ -951,7 +951,7 @@ namespace PckStudio
 				return;
 			}
 
-			var file = CreateNewAudioFile(LittleEndianCheckBox.Checked);
+            PckFileData file = CreateNewAudioFile(LittleEndianCheckBox.Checked);
 			AudioEditor diag = new AudioEditor(file, LittleEndianCheckBox.Checked);
 			if (diag.ShowDialog(this) == DialogResult.OK)
 			{
@@ -977,7 +977,7 @@ namespace PckStudio
 				$"res/textures/{Animation.GetCategoryName(diag.Category)}/{diag.SelectedTile}.png",
 				PckFileType.TextureFile);
 
-			var animation = AnimationHelper.GetAnimationFromFile(file);
+            Animation animation = AnimationHelper.GetAnimationFromFile(file);
 
 			using AnimationEditor animationEditor = new AnimationEditor(animation, diag.SelectedTile);
 			if (animationEditor.ShowDialog() == DialogResult.OK)
@@ -1026,7 +1026,7 @@ namespace PckStudio
 			Debug.WriteLine(parentPath);
 			string[] s = parentPath.Split('/');
 			Debug.WriteLine(s.Length);
-			foreach (var node in s)
+			foreach (string node in s)
 			{
 				TreeNode parent = treeViewMain.Nodes.Find(node, true)[0];
 				if (parent.TryGetTagData(out PckFileData f) &&
@@ -1290,7 +1290,7 @@ namespace PckStudio
 		{
 			var pack = new PckFile(3);
 
-			var zeroFile = pack.CreateNewFile("0", PckFileType.InfoFile);
+            PckFileData zeroFile = pack.CreateNewFile("0", PckFileType.InfoFile);
 			zeroFile.AddProperty("PACKID", packId);
 			zeroFile.AddProperty("PACKVERSION", packVersion);
 
@@ -1308,18 +1308,17 @@ namespace PckStudio
 
 		private PckFile InitializeTexturePack(int packId, int packVersion, string packName, string res, bool createSkinsPCK)
 		{
-			var pack = InitializePack(packId, packVersion, packName, createSkinsPCK);
+            PckFile pack = InitializePack(packId, packVersion, packName, createSkinsPCK);
 
 			PckFile infoPCK = new PckFile(3);
 
-			var icon = infoPCK.CreateNewFile("icon.png", PckFileType.TextureFile);
+            PckFileData icon = infoPCK.CreateNewFile("icon.png", PckFileType.TextureFile);
 			icon.SetData(Resources.TexturePackIcon, ImageFormat.Png);
 
-			var comparison = infoPCK.CreateNewFile("comparison.png", PckFileType.TextureFile);
+            PckFileData comparison = infoPCK.CreateNewFile("comparison.png", PckFileType.TextureFile);
 			comparison.SetData(Resources.Comparison, ImageFormat.Png);
 
-			var texturepackInfo = pack.CreateNewFile($"{res}/{res}Info.pck", PckFileType.TexturePackInfoFile);
-
+            PckFileData texturepackInfo = pack.CreateNewFile($"{res}/{res}Info.pck", PckFileType.TexturePackInfoFile);
 			texturepackInfo.AddProperty("PACKID", "0");
 			texturepackInfo.AddProperty("DATAPATH", $"{res}Data.pck");
 
@@ -1330,9 +1329,9 @@ namespace PckStudio
 
 		private PckFile InitializeMashUpPack(int packId, int packVersion, string packName, string res)
 		{
-			var pack = InitializeTexturePack(packId, packVersion, packName, res, true);
-			var gameRuleFile = pack.CreateNewFile("GameRules.grf", PckFileType.GameRulesFile);
-			var grfFile = new GameRuleFile();
+            PckFile pack = InitializeTexturePack(packId, packVersion, packName, res, true);
+            PckFileData gameRuleFile = pack.CreateNewFile("GameRules.grf", PckFileType.GameRulesFile);
+            GameRuleFile grfFile = new GameRuleFile();
 			grfFile.AddRule("MapOptions",
 				new KeyValuePair<string, string>("seed", "0"),
 				new KeyValuePair<string, string>("baseSaveName", string.Empty),
@@ -1450,7 +1449,7 @@ namespace PckStudio
 				if (ofd.ShowDialog() == DialogResult.OK && sfd.ShowDialog() == DialogResult.OK)
 				{
 					PckFile pckfile = null;
-					using (var fs = File.OpenRead(ofd.FileName))
+					using (FileStream fs = File.OpenRead(ofd.FileName))
 					{
 						try
 						{
@@ -1476,7 +1475,7 @@ namespace PckStudio
 																 //attempts to generate reimportable metadata file out of minefiles metadata
 						string metaData = "";
 
-						foreach (var entry in file.GetProperties())
+						foreach (KeyValuePair<string, string> entry in file.GetProperties())
 						{
 							metaData += $"{entry.Key}: {entry.Value}{Environment.NewLine}";
 						}
@@ -1828,9 +1827,9 @@ namespace PckStudio
 		{
 			pckOpen.Image = Resources.pckDrop;
 			string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-			foreach (var file in files)
+			foreach (string file in files)
 			{
-				var ext = Path.GetExtension(file);
+                string ext = Path.GetExtension(file);
 				if (ext.Equals(".pck", StringComparison.CurrentCultureIgnoreCase))
 					e.Effect = DragDropEffects.Copy;
 				return;
@@ -1963,7 +1962,7 @@ namespace PckStudio
                         MessageBox.Show($"'{renamePrompt.NewText}' already exists.", "Import failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
-                    var file = currentPCK.CreateNewFile(renamePrompt.NewText, PckFileType.TextureFile, () => File.ReadAllBytes(fileDialog.FileName));
+                    PckFileData file = currentPCK.CreateNewFile(renamePrompt.NewText, PckFileType.TextureFile, () => File.ReadAllBytes(fileDialog.FileName));
 					BuildMainTreeView();
 					wasModified = true;
 				}
@@ -2043,7 +2042,7 @@ namespace PckStudio
 				MessageBox.Show("A color table file already exists in this PCK and a new one cannot be created.", "Operation aborted");
 				return;
 			}
-			var newColorFile = currentPCK.CreateNewFile("colours.col", PckFileType.ColourTableFile);
+            PckFileData newColorFile = currentPCK.CreateNewFile("colours.col", PckFileType.ColourTableFile);
 			newColorFile.SetData(Resources.tu69colours);
 			BuildMainTreeView();
 		}
@@ -2078,7 +2077,7 @@ namespace PckStudio
 				{
 					if (input.ShowDialog(this) == DialogResult.OK)
 					{
-						foreach (var line in input.TextOutput)
+						foreach (string line in input.TextOutput)
 						{
 							int idx = line.IndexOf(' ');
 							if (idx == -1 || line.Length - 1 == idx)
@@ -2098,7 +2097,7 @@ namespace PckStudio
 			if (treeViewMain.SelectedNode.TryGetTagData(out PckFileData file) &&
 				file.Filetype == PckFileType.SkinFile)
 			{
-				foreach (var p in file.GetProperties())
+				foreach (KeyValuePair<string, string> p in file.GetProperties())
 				{
 					if (p.Key == "BOX" || p.Key == "OFFSET")
 						file.SetProperty(file.GetPropertyIndex(p), new KeyValuePair<string, string>(p.Key, p.Value.Replace(',', '.')));
@@ -2133,13 +2132,13 @@ namespace PckStudio
 		{
 			if (treeViewMain.SelectedNode.TryGetTagData(out PckFileData file))
 			{
-				var props = file.GetProperties().Select(p => p.Key + " " + p.Value);
-				using (var input = new MultiTextPrompt(props.ToArray()))
+                string[] props = file.GetProperties().Select(p => p.Key + " " + p.Value).ToArray();
+				using (var input = new MultiTextPrompt(props))
 				{
 					if (input.ShowDialog(this) == DialogResult.OK)
 					{
 						file.ClearProperties();
-						foreach (var line in input.TextOutput)
+						foreach (string line in input.TextOutput)
 						{
 							int idx = line.IndexOf(' ');
 							if (idx == -1 || line.Length - 1 == idx)
@@ -2312,10 +2311,11 @@ namespace PckStudio
 		[Obsolete] // the move functions are to eventually be removed in favor of drag and drop
 		private void moveFile(int amount)
 		{
-			if (treeViewMain.SelectedNode is not TreeNode t || t.Tag is null) return;
+			if (treeViewMain.SelectedNode is not TreeNode t || t.Tag is not PckFileData)
+				return;
 
-			var file = t.Tag as PckFileData;
-			var path = t.FullPath;
+            PckFileData file = t.Tag as PckFileData;
+            string path = t.FullPath;
 
 			// skin and cape files only
 			if (!(file.Filetype == PckFileType.SkinFile || file.Filetype == PckFileType.CapeFile)) return;
