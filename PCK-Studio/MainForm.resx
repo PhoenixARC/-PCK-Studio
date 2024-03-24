@@ -813,7 +813,7 @@
     <value>False</value>
   </metadata>
   <data name="toolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>167, 6</value>
+    <value>220, 6</value>
   </data>
     <data name="toolStripSeparator3.Size" type="System.Drawing.Size, System.Drawing">
 	    <value>177, 6</value>
@@ -827,6 +827,29 @@
   <metadata name="contextMenuPCKEntries.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>116, 17</value>
   </metadata>
+  <data name="contextMenuPCKEntries.Size" type="System.Drawing.Size, System.Drawing">
+    <value>158, 268</value>
+  </data>
+  <data name="&gt;&gt;contextMenuPCKEntries.Name" xml:space="preserve">
+    <value>contextMenuPCKEntries</value>
+  </data>
+  <data name="&gt;&gt;contextMenuPCKEntries.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="createToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        vAAADrwBlbxySQAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xOdTWsmQAAAA3SURBVDhPY/j/
+        /z9FGKsgGIsCKWSMTQ0QYxUE45FmALpiYvFwMgAbxqIYG8YqCMajBhCJ/zMAAPGwpV/Xje8RAAAAAElF
+        TkSuQmCC
+</value>
+  </data>
+  <data name="createToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>157, 22</value>
+  </data>
+  <data name="createToolStripMenuItem.Text" xml:space="preserve">
+    <value>Create</value>
+  </data>
   <data name="folderToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
@@ -915,19 +938,20 @@
   <data name="entityMaterialsbinToolStripMenuItem.Text" xml:space="preserve">
     <value>EntityMaterials.bin</value>
   </data>
-  <data name="createToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="importSkinsToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vAAADrwBlbxySQAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xOdTWsmQAAAA3SURBVDhPY/j/
-        /z9FGKsgGIsCKWSMTQ0QYxUE45FmALpiYvFwMgAbxqIYG8YqCMajBhCJ/zMAAPGwpV/Xje8RAAAAAElF
+        vAAADrwBlbxySQAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xOdTWsmQAAABzSURBVDhPpYzB
+        DQAhCARp4hr3Txu254WTjYRb9cEmk/BgRjBVHTv85Twmgt77PcJEYIFrhIkAgWOEiSAGthEmgtbaD9fW
+        mBgpB4xywCgFxiMf5YDdrq3l5wjEjKtzTARMNlydY2IGot2ureVnRjkQmZbICyCi7XU5cfqKAAAAAElF
         TkSuQmCC
 </value>
   </data>
-  <data name="createToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="importSkinsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>157, 22</value>
   </data>
-  <data name="createToolStripMenuItem.Text" xml:space="preserve">
-    <value>Create</value>
+  <data name="importSkinsToolStripMenuItem.Text" xml:space="preserve">
+    <value>Import</value>
   </data>
   <data name="importSkinToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -981,20 +1005,11 @@
   <data name="addFileToolStripMenuItem.Text" xml:space="preserve">
     <value>Add File</value>
   </data>
-  <data name="importSkinsToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vAAADrwBlbxySQAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xOdTWsmQAAABzSURBVDhPpYzB
-        DQAhCARp4hr3Txu254WTjYRb9cEmk/BgRjBVHTv85Twmgt77PcJEYIFrhIkAgWOEiSAGthEmgtbaD9fW
-        mBgpB4xywCgFxiMf5YDdrq3l5wjEjKtzTARMNlydY2IGot2ureVnRjkQmZbICyCi7XU5cfqKAAAAAElF
-        TkSuQmCC
-</value>
-  </data>
-  <data name="importSkinsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="exportToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>157, 22</value>
   </data>
-  <data name="importSkinsToolStripMenuItem.Text" xml:space="preserve">
-    <value>Import</value>
+  <data name="exportToolStripMenuItem.Text" xml:space="preserve">
+    <value>Export</value>
   </data>
   <data name="as3DSTextureFileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>186, 22</value>
@@ -1002,11 +1017,11 @@
   <data name="as3DSTextureFileToolStripMenuItem.Text" xml:space="preserve">
     <value>Export as 3DS Texture</value>
   </data>
-  <data name="exportToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="setFileTypeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>157, 22</value>
   </data>
-  <data name="exportToolStripMenuItem.Text" xml:space="preserve">
-    <value>Export</value>
+  <data name="setFileTypeToolStripMenuItem.Text" xml:space="preserve">
+    <value>Set File Type</value>
   </data>
   <data name="skinToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
     <value>222, 22</value>
@@ -1080,11 +1095,11 @@
   <data name="entityMaterialsFileBINToolStripMenuItem.Text" xml:space="preserve">
     <value>Entity Materials File (.BIN)</value>
   </data>
-  <data name="setFileTypeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="miscFunctionsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>157, 22</value>
   </data>
-  <data name="setFileTypeToolStripMenuItem.Text" xml:space="preserve">
-    <value>Set File Type</value>
+  <data name="miscFunctionsToolStripMenuItem.Text" xml:space="preserve">
+    <value>Misc. Functions</value>
   </data>
   <data name="generateMipMapTextureToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
     <value>210, 22</value>
@@ -1103,12 +1118,6 @@
   </data>
   <data name="correctSkinDecimalsToolStripMenuItem.Text" xml:space="preserve">
     <value>Correct Skin Decimals</value>
-  </data>
-  <data name="miscFunctionsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 22</value>
-  </data>
-  <data name="miscFunctionsToolStripMenuItem.Text" xml:space="preserve">
-    <value>Misc. Functions</value>
   </data>
   <data name="moveUpToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>157, 22</value>
@@ -1187,15 +1196,6 @@
   <data name="deleteFileToolStripMenuItem.Text" xml:space="preserve">
     <value>Delete</value>
   </data>
-  <data name="contextMenuPCKEntries.Size" type="System.Drawing.Size, System.Drawing">
-    <value>158, 268</value>
-  </data>
-  <data name="&gt;&gt;contextMenuPCKEntries.Name" xml:space="preserve">
-    <value>contextMenuPCKEntries</value>
-  </data>
-  <data name="&gt;&gt;contextMenuPCKEntries.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <metadata name="menuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
@@ -1207,6 +1207,71 @@
   </data>
   <data name="menuStrip.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>None</value>
+  </data>
+  <data name="fileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>37, 20</value>
+  </data>
+  <data name="fileToolStripMenuItem.Text" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="editToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>39, 20</value>
+  </data>
+  <data name="editToolStripMenuItem.Text" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="miscToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>46, 20</value>
+  </data>
+  <data name="miscToolStripMenuItem.Text" xml:space="preserve">
+    <value>Tools</value>
+  </data>
+  <data name="helpToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>44, 20</value>
+  </data>
+  <data name="helpToolStripMenuItem.Text" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="menuStrip.Location" type="System.Drawing.Point, System.Drawing">
+    <value>24, 44</value>
+  </data>
+  <data name="menuStrip.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1016, 24</value>
+  </data>
+  <data name="menuStrip.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="menuStrip.Text" xml:space="preserve">
+    <value>MainMenuStrip</value>
+  </data>
+  <data name="&gt;&gt;menuStrip.Name" xml:space="preserve">
+    <value>menuStrip</value>
+  </data>
+  <data name="&gt;&gt;menuStrip.Type" xml:space="preserve">
+    <value>System.Windows.Forms.MenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;menuStrip.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;menuStrip.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="newToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        vAAADrwBlbxySQAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4yMfEgaZUAAADuSURBVFhH7ZbB
+        CsMgEERDbv5A/v83e2jNTmCKGdegJk0heHgUn7vrKBQyxRj/iivJPM9WMTWjc45wJeAwhAghVJEG1nkl
+        XNkziLCvtteXphFCfQ08nOi+4kvTeFL1NfBQ/BLuefjS9NkAADOwPnpNX14UADBEaV4mNnkygN34Y/1v
+        AgeWZXll9So2eTLAEVm9ik2a7g1Qgn9t9bvFV/4gAOZdHgB1RPeUEeAZAeBr0d4R4JIACuqI7ikjwDMD
+        tDACNAfo/Sou0fQ9wGKvoQfO8i61W6SkTXi+XtLLgOwcFSna3It3c+LKO3HlfcRpBa3JBjU5E8DiAAAA
+        AElFTkSuQmCC
+</value>
+  </data>
+  <data name="newToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>186, 22</value>
+  </data>
+  <data name="newToolStripMenuItem.Text" xml:space="preserve">
+    <value>New</value>
   </data>
   <data name="skinPackToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>151, 22</value>
@@ -1225,23 +1290,6 @@
   </data>
   <data name="mashUpPackToolStripMenuItem.Text" xml:space="preserve">
     <value>Mash-Up Pack</value>
-  </data>
-  <data name="newToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vAAADrwBlbxySQAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4yMfEgaZUAAADuSURBVFhH7ZbB
-        CsMgEERDbv5A/v83e2jNTmCKGdegJk0heHgUn7vrKBQyxRj/iivJPM9WMTWjc45wJeAwhAghVJEG1nkl
-        XNkziLCvtteXphFCfQ08nOi+4kvTeFL1NfBQ/BLuefjS9NkAADOwPnpNX14UADBEaV4mNnkygN34Y/1v
-        AgeWZXll9So2eTLAEVm9ik2a7g1Qgn9t9bvFV/4gAOZdHgB1RPeUEeAZAeBr0d4R4JIACuqI7ikjwDMD
-        tDACNAfo/Sou0fQ9wGKvoQfO8i61W6SkTXi+XtLLgOwcFSna3It3c+LKO3HlfcRpBa3JBjU5E8DiAAAA
-        AElFTkSuQmCC
-</value>
-  </data>
-  <data name="newToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>186, 22</value>
-  </data>
-  <data name="newToolStripMenuItem.Text" xml:space="preserve">
-    <value>New</value>
   </data>
   <data name="openToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1274,12 +1322,6 @@
   <data name="extractToolStripMenuItem1.Text" xml:space="preserve">
     <value>Extract</value>
   </data>
-  <data name="fullBoxSupportToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>160, 22</value>
-  </data>
-  <data name="fullBoxSupportToolStripMenuItem.Text" xml:space="preserve">
-    <value>Full box support</value>
-  </data>
   <data name="packSettingsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>186, 22</value>
   </data>
@@ -1288,6 +1330,12 @@
   </data>
   <data name="packSettingsToolStripMenuItem.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
+  </data>
+  <data name="fullBoxSupportToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>160, 22</value>
+  </data>
+  <data name="fullBoxSupportToolStripMenuItem.Text" xml:space="preserve">
+    <value>Full box support</value>
   </data>
   <data name="saveToolStripMenuItem1.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
@@ -1342,12 +1390,6 @@
   <data name="closeToolStripMenuItem.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
-  <data name="fileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>37, 20</value>
-  </data>
-  <data name="fileToolStripMenuItem.Text" xml:space="preserve">
-    <value>File</value>
-  </data>
   <data name="quickChangeToolStripMenuItem.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
@@ -1369,17 +1411,17 @@
   <data name="quickChangeToolStripMenuItem.Text" xml:space="preserve">
     <value>Quick Change</value>
   </data>
-  <data name="editToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>39, 20</value>
-  </data>
-  <data name="editToolStripMenuItem.Text" xml:space="preserve">
-    <value>Edit</value>
-  </data>
   <data name="openPckManagerToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>161, 22</value>
   </data>
   <data name="openPckManagerToolStripMenuItem.Text" xml:space="preserve">
     <value>Pck Manager</value>
+  </data>
+  <data name="convertMusicFilesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>161, 22</value>
+  </data>
+  <data name="convertMusicFilesToolStripMenuItem.Text" xml:space="preserve">
+    <value>Audio Converter</value>
   </data>
   <data name="wavBinkaToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>145, 22</value>
@@ -1543,18 +1585,6 @@
   </data>
   <data name="trelloBoardToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>223, 22</value>
-  </data>
-  <data name="trelloBoardToolStripMenuItem.Text" xml:space="preserve">
-    <value>Trello Board</value>
-  </data>
-  <data name="storeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>63, 20</value>
-  </data>
-  <data name="storeToolStripMenuItem.Text" xml:space="preserve">
-    <value>More</value>
-  </data>
-  <data name="checkForUpdatesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>170, 22</value>
   </data>
   <data name="checkForUpdatesToolStripMenuItem.Text" xml:space="preserve">
     <value>Check for updates</value>
@@ -2023,10 +2053,24 @@
 </value>
   </data>
   <data name="aboutToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>170, 22</value>
+    <value>223, 22</value>
   </data>
   <data name="aboutToolStripMenuItem.Text" xml:space="preserve">
     <value>About</value>
+  </data>
+  <data name="videosToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAKdJREFUOE+1
+        jzEKwzAQBNUEXKQIBOwifcgTUvkDbt2p9qP0Ev1E31FYkVXOx2FLRRYWi7NnTnZ/z/MxZPY7aguhbZlq
+        myQafL+ubRINshCwnO0kFqi3HkpwWOf7DkC1RBfvx9slV4ElscqbxBiz9/4nwOBIQjCEUL7FswhwDYAp
+        JVMiN0oYs/ILiCXRIGHOwVQBoiXsKSgjJdzaBMpQ0g3KEOoG++PcBx9PFJGNjU4vAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="videosToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>223, 22</value>
+  </data>
+  <data name="videosToolStripMenuItem.Text" xml:space="preserve">
+    <value>Tutorials</value>
   </data>
   <data name="howToMakeABasicSkinPackToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>312, 22</value>
@@ -2070,19 +2114,11 @@
   <data name="howPCKsWorkToolStripMenuItem.Text" xml:space="preserve">
     <value>How PCKs work</value>
   </data>
-  <data name="videosToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAKdJREFUOE+1
-        jzEKwzAQBNUEXKQIBOwifcgTUvkDbt2p9qP0Ev1E31FYkVXOx2FLRRYWi7NnTnZ/z/MxZPY7aguhbZlq
-        myQafL+ubRINshCwnO0kFqi3HkpwWOf7DkC1RBfvx9slV4ElscqbxBiz9/4nwOBIQjCEUL7FswhwDYAp
-        JVMiN0oYs/ILiCXRIGHOwVQBoiXsKSgjJdzaBMpQ0g3KEOoG++PcBx9PFJGNjU4vAAAAAElFTkSuQmCC
-</value>
+  <data name="donateToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>223, 22</value>
   </data>
-  <data name="videosToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>170, 22</value>
-  </data>
-  <data name="videosToolStripMenuItem.Text" xml:space="preserve">
-    <value>Tutorials</value>
+  <data name="donateToolStripMenuItem.Text" xml:space="preserve">
+    <value>Buy a coffee</value>
   </data>
   <data name="toNobledezJackToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>253, 22</value>
@@ -2102,54 +2138,165 @@
   <data name="forMattNLContributorToolStripMenuItem.Text" xml:space="preserve">
     <value>For MattNL (Other Developer)</value>
   </data>
-  <data name="donateToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>170, 22</value>
+  <data name="joinDevelopmentDiscordToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        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
+</value>
   </data>
-  <data name="donateToolStripMenuItem.Text" xml:space="preserve">
-    <value>Buy a coffee</value>
+  <data name="joinDevelopmentDiscordToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>223, 22</value>
+  </data>
+  <data name="joinDevelopmentDiscordToolStripMenuItem.Text" xml:space="preserve">
+    <value>Development Discord Server</value>
   </data>
   <data name="settingsToolStripMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
     <value>Alt+S</value>
   </data>
   <data name="settingsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>170, 22</value>
+    <value>223, 22</value>
   </data>
   <data name="settingsToolStripMenuItem.Text" xml:space="preserve">
     <value>Settings</value>
   </data>
-  <data name="helpToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>44, 20</value>
-  </data>
-  <data name="helpToolStripMenuItem.Text" xml:space="preserve">
-    <value>Help</value>
-  </data>
-  <data name="menuStrip.Location" type="System.Drawing.Point, System.Drawing">
-    <value>24, 44</value>
-  </data>
-  <data name="menuStrip.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1016, 24</value>
-  </data>
-  <data name="menuStrip.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="menuStrip.Text" xml:space="preserve">
-    <value>MainMenuStrip</value>
-  </data>
-  <data name="&gt;&gt;menuStrip.Name" xml:space="preserve">
-    <value>menuStrip</value>
-  </data>
-  <data name="&gt;&gt;menuStrip.Type" xml:space="preserve">
-    <value>System.Windows.Forms.MenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;menuStrip.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;menuStrip.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
   <metadata name="contextMenuMetaTree.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>298, 17</value>
   </metadata>
+  <data name="contextMenuMetaTree.Size" type="System.Drawing.Size, System.Drawing">
+    <value>182, 92</value>
+  </data>
+  <data name="&gt;&gt;contextMenuMetaTree.Name" xml:space="preserve">
+    <value>contextMenuMetaTree</value>
+  </data>
+  <data name="&gt;&gt;contextMenuMetaTree.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="addEntryToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        vAAADrwBlbxySQAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xMkMEa+wAAABSSURBVDhP5c0x
+        DsAgDENRxt7/wmkNSpRGf0CCCZAegxNMM7MlGMp3dIU6dxhKf/QMNxRogeQC8ivw5Vn7C0heJlFA+kL5
+        jWAohxRkde4wnGftBS90axNmphIGAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="addEntryToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>181, 22</value>
+  </data>
+  <data name="addEntryToolStripMenuItem.Text" xml:space="preserve">
+    <value>Add Entry</value>
+  </data>
   <data name="addEntryToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
     <value>160, 22</value>
   </data>
@@ -2167,20 +2314,6 @@
   </data>
   <data name="addANIMEntryToolStripMenuItem1.Text" xml:space="preserve">
     <value>Add ANIM Entry</value>
-  </data>
-  <data name="addEntryToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vAAADrwBlbxySQAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xMkMEa+wAAABSSURBVDhP5c0x
-        DsAgDENRxt7/wmkNSpRGf0CCCZAegxNMM7MlGMp3dIU6dxhKf/QMNxRogeQC8ivw5Vn7C0heJlFA+kL5
-        jWAohxRkde4wnGftBS90axNmphIGAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="addEntryToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>181, 22</value>
-  </data>
-  <data name="addEntryToolStripMenuItem.Text" xml:space="preserve">
-    <value>Add Entry</value>
   </data>
   <data name="addMultipleEntriesToolStripMenuItem1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -2217,14 +2350,128 @@
   <data name="editAllEntriesToolStripMenuItem.Text" xml:space="preserve">
     <value>Edit All Entries</value>
   </data>
-  <data name="contextMenuMetaTree.Size" type="System.Drawing.Size, System.Drawing">
-    <value>182, 92</value>
+  <data name="&gt;&gt;openTab.Name" xml:space="preserve">
+    <value>openTab</value>
   </data>
-  <data name="&gt;&gt;contextMenuMetaTree.Name" xml:space="preserve">
-    <value>contextMenuMetaTree</value>
+  <data name="&gt;&gt;openTab.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroTabPage, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
   </data>
-  <data name="&gt;&gt;contextMenuMetaTree.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;openTab.Parent" xml:space="preserve">
+    <value>tabControl</value>
+  </data>
+  <data name="&gt;&gt;openTab.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;editorTab.Name" xml:space="preserve">
+    <value>editorTab</value>
+  </data>
+  <data name="&gt;&gt;editorTab.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroTabPage, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;editorTab.Parent" xml:space="preserve">
+    <value>tabControl</value>
+  </data>
+  <data name="&gt;&gt;editorTab.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="tabControl.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="tabControl.Location" type="System.Drawing.Point, System.Drawing">
+    <value>20, 30</value>
+  </data>
+  <data name="tabControl.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="tabControl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1024, 600</value>
+  </data>
+  <data name="tabControl.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;tabControl.Name" xml:space="preserve">
+    <value>tabControl</value>
+  </data>
+  <data name="&gt;&gt;tabControl.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroTabControl, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;tabControl.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;tabControl.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;pckOpen.Name" xml:space="preserve">
+    <value>pckOpen</value>
+  </data>
+  <data name="&gt;&gt;pckOpen.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;pckOpen.Parent" xml:space="preserve">
+    <value>openTab</value>
+  </data>
+  <data name="&gt;&gt;pckOpen.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;label5.Name" xml:space="preserve">
+    <value>label5</value>
+  </data>
+  <data name="&gt;&gt;label5.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;label5.Parent" xml:space="preserve">
+    <value>openTab</value>
+  </data>
+  <data name="&gt;&gt;label5.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;labelVersion.Name" xml:space="preserve">
+    <value>labelVersion</value>
+  </data>
+  <data name="&gt;&gt;labelVersion.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;labelVersion.Parent" xml:space="preserve">
+    <value>openTab</value>
+  </data>
+  <data name="&gt;&gt;labelVersion.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;ChangelogRichTextBox.Name" xml:space="preserve">
+    <value>ChangelogRichTextBox</value>
+  </data>
+  <data name="&gt;&gt;ChangelogRichTextBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RichTextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ChangelogRichTextBox.Parent" xml:space="preserve">
+    <value>openTab</value>
+  </data>
+  <data name="&gt;&gt;ChangelogRichTextBox.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="openTab.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 38</value>
+  </data>
+  <data name="openTab.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>18, 30, 20, 5</value>
+  </data>
+  <data name="openTab.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1016, 558</value>
+  </data>
+  <data name="openTab.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;openTab.Name" xml:space="preserve">
+    <value>openTab</value>
+  </data>
+  <data name="&gt;&gt;openTab.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroTabPage, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;openTab.Parent" xml:space="preserve">
+    <value>tabControl</value>
+  </data>
+  <data name="&gt;&gt;openTab.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="pckOpen.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>None</value>
@@ -3336,32 +3583,119 @@
   <data name="&gt;&gt;ChangelogRichTextBox.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
-  <data name="openTab.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 38</value>
-  </data>
-  <data name="openTab.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>18, 30, 20, 5</value>
-  </data>
-  <data name="openTab.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1016, 558</value>
-  </data>
-  <data name="openTab.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;openTab.Name" xml:space="preserve">
-    <value>openTab</value>
-  </data>
-  <data name="&gt;&gt;openTab.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroTabPage, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;openTab.Parent" xml:space="preserve">
-    <value>tabControl</value>
-  </data>
-  <data name="&gt;&gt;openTab.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
+  <metadata name="label11.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
   <data name="editorTab.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>None</value>
+  </data>
+  <data name="&gt;&gt;pckFileLabel.Name" xml:space="preserve">
+    <value>pckFileLabel</value>
+  </data>
+  <data name="&gt;&gt;pckFileLabel.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;pckFileLabel.Parent" xml:space="preserve">
+    <value>editorTab</value>
+  </data>
+  <data name="&gt;&gt;pckFileLabel.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;labelImageSize.Name" xml:space="preserve">
+    <value>labelImageSize</value>
+  </data>
+  <data name="&gt;&gt;labelImageSize.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;labelImageSize.Parent" xml:space="preserve">
+    <value>editorTab</value>
+  </data>
+  <data name="&gt;&gt;labelImageSize.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;fileEntryCountLabel.Name" xml:space="preserve">
+    <value>fileEntryCountLabel</value>
+  </data>
+  <data name="&gt;&gt;fileEntryCountLabel.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;fileEntryCountLabel.Parent" xml:space="preserve">
+    <value>editorTab</value>
+  </data>
+  <data name="&gt;&gt;fileEntryCountLabel.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;PropertiesTabControl.Name" xml:space="preserve">
+    <value>PropertiesTabControl</value>
+  </data>
+  <data name="&gt;&gt;PropertiesTabControl.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroTabControl, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;PropertiesTabControl.Parent" xml:space="preserve">
+    <value>editorTab</value>
+  </data>
+  <data name="&gt;&gt;PropertiesTabControl.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;label11.Name" xml:space="preserve">
+    <value>label11</value>
+  </data>
+  <data name="&gt;&gt;label11.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;label11.Parent" xml:space="preserve">
+    <value>editorTab</value>
+  </data>
+  <data name="&gt;&gt;label11.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;treeViewMain.Name" xml:space="preserve">
+    <value>treeViewMain</value>
+  </data>
+  <data name="&gt;&gt;treeViewMain.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TreeView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;treeViewMain.Parent" xml:space="preserve">
+    <value>editorTab</value>
+  </data>
+  <data name="&gt;&gt;treeViewMain.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;previewPictureBox.Name" xml:space="preserve">
+    <value>previewPictureBox</value>
+  </data>
+  <data name="&gt;&gt;previewPictureBox.Type" xml:space="preserve">
+    <value>PckStudio.ToolboxItems.InterpolationPictureBox, PCK-Studio, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;previewPictureBox.Parent" xml:space="preserve">
+    <value>editorTab</value>
+  </data>
+  <data name="&gt;&gt;previewPictureBox.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="editorTab.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 38</value>
+  </data>
+  <data name="editorTab.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 50, 5, 7</value>
+  </data>
+  <data name="editorTab.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1016, 558</value>
+  </data>
+  <data name="editorTab.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;editorTab.Name" xml:space="preserve">
+    <value>editorTab</value>
+  </data>
+  <data name="&gt;&gt;editorTab.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroTabPage, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;editorTab.Parent" xml:space="preserve">
+    <value>tabControl</value>
+  </data>
+  <data name="&gt;&gt;editorTab.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <data name="pckFileLabel.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 17</value>
@@ -3440,6 +3774,138 @@
   </data>
   <data name="PropertiesTabControl.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Right</value>
+  </data>
+  <data name="&gt;&gt;MetaTab.Name" xml:space="preserve">
+    <value>MetaTab</value>
+  </data>
+  <data name="&gt;&gt;MetaTab.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroTabPage, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;MetaTab.Parent" xml:space="preserve">
+    <value>PropertiesTabControl</value>
+  </data>
+  <data name="&gt;&gt;MetaTab.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="PropertiesTabControl.Location" type="System.Drawing.Point, System.Drawing">
+    <value>338, 277</value>
+  </data>
+  <data name="PropertiesTabControl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>671, 282</value>
+  </data>
+  <data name="PropertiesTabControl.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;PropertiesTabControl.Name" xml:space="preserve">
+    <value>PropertiesTabControl</value>
+  </data>
+  <data name="&gt;&gt;PropertiesTabControl.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroTabControl, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;PropertiesTabControl.Parent" xml:space="preserve">
+    <value>editorTab</value>
+  </data>
+  <data name="&gt;&gt;PropertiesTabControl.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;metroLabel2.Name" xml:space="preserve">
+    <value>metroLabel2</value>
+  </data>
+  <data name="&gt;&gt;metroLabel2.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;metroLabel2.Parent" xml:space="preserve">
+    <value>MetaTab</value>
+  </data>
+  <data name="&gt;&gt;metroLabel2.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;treeMeta.Name" xml:space="preserve">
+    <value>treeMeta</value>
+  </data>
+  <data name="&gt;&gt;treeMeta.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TreeView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;treeMeta.Parent" xml:space="preserve">
+    <value>MetaTab</value>
+  </data>
+  <data name="&gt;&gt;treeMeta.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;entryTypeTextBox.Name" xml:space="preserve">
+    <value>entryTypeTextBox</value>
+  </data>
+  <data name="&gt;&gt;entryTypeTextBox.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroTextBox, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;entryTypeTextBox.Parent" xml:space="preserve">
+    <value>MetaTab</value>
+  </data>
+  <data name="&gt;&gt;entryTypeTextBox.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;entryDataTextBox.Name" xml:space="preserve">
+    <value>entryDataTextBox</value>
+  </data>
+  <data name="&gt;&gt;entryDataTextBox.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroTextBox, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;entryDataTextBox.Parent" xml:space="preserve">
+    <value>MetaTab</value>
+  </data>
+  <data name="&gt;&gt;entryDataTextBox.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;buttonEdit.Name" xml:space="preserve">
+    <value>buttonEdit</value>
+  </data>
+  <data name="&gt;&gt;buttonEdit.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroButton, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;buttonEdit.Parent" xml:space="preserve">
+    <value>MetaTab</value>
+  </data>
+  <data name="&gt;&gt;buttonEdit.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;metroLabel1.Name" xml:space="preserve">
+    <value>metroLabel1</value>
+  </data>
+  <data name="&gt;&gt;metroLabel1.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;metroLabel1.Parent" xml:space="preserve">
+    <value>MetaTab</value>
+  </data>
+  <data name="&gt;&gt;metroLabel1.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="MetaTab.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 38</value>
+  </data>
+  <data name="MetaTab.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="MetaTab.Size" type="System.Drawing.Size, System.Drawing">
+    <value>663, 240</value>
+  </data>
+  <data name="MetaTab.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="MetaTab.Text" xml:space="preserve">
+    <value>Properties</value>
+  </data>
+  <data name="&gt;&gt;MetaTab.Name" xml:space="preserve">
+    <value>MetaTab</value>
+  </data>
+  <data name="&gt;&gt;MetaTab.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroTabPage, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;MetaTab.Parent" xml:space="preserve">
+    <value>PropertiesTabControl</value>
+  </data>
+  <data name="&gt;&gt;MetaTab.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="metroLabel2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -3642,54 +4108,6 @@
   <data name="&gt;&gt;metroLabel1.ZOrder" xml:space="preserve">
     <value>7</value>
   </data>
-  <data name="MetaTab.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 38</value>
-  </data>
-  <data name="MetaTab.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
-  </data>
-  <data name="MetaTab.Size" type="System.Drawing.Size, System.Drawing">
-    <value>663, 240</value>
-  </data>
-  <data name="MetaTab.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="MetaTab.Text" xml:space="preserve">
-    <value>Properties</value>
-  </data>
-  <data name="&gt;&gt;MetaTab.Name" xml:space="preserve">
-    <value>MetaTab</value>
-  </data>
-  <data name="&gt;&gt;MetaTab.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroTabPage, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;MetaTab.Parent" xml:space="preserve">
-    <value>PropertiesTabControl</value>
-  </data>
-  <data name="&gt;&gt;MetaTab.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="PropertiesTabControl.Location" type="System.Drawing.Point, System.Drawing">
-    <value>338, 277</value>
-  </data>
-  <data name="PropertiesTabControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>671, 282</value>
-  </data>
-  <data name="PropertiesTabControl.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
-  </data>
-  <data name="&gt;&gt;PropertiesTabControl.Name" xml:space="preserve">
-    <value>PropertiesTabControl</value>
-  </data>
-  <data name="&gt;&gt;PropertiesTabControl.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroTabControl, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;PropertiesTabControl.Parent" xml:space="preserve">
-    <value>editorTab</value>
-  </data>
-  <data name="&gt;&gt;PropertiesTabControl.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
   <metadata name="label11.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -3792,57 +4210,6 @@
   <data name="&gt;&gt;previewPictureBox.ZOrder" xml:space="preserve">
     <value>9</value>
   </data>
-  <data name="editorTab.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 38</value>
-  </data>
-  <data name="editorTab.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>5, 50, 5, 7</value>
-  </data>
-  <data name="editorTab.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1016, 558</value>
-  </data>
-  <data name="editorTab.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;editorTab.Name" xml:space="preserve">
-    <value>editorTab</value>
-  </data>
-  <data name="&gt;&gt;editorTab.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroTabPage, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;editorTab.Parent" xml:space="preserve">
-    <value>tabControl</value>
-  </data>
-  <data name="&gt;&gt;editorTab.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="tabControl.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="tabControl.Location" type="System.Drawing.Point, System.Drawing">
-    <value>20, 30</value>
-  </data>
-  <data name="tabControl.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="tabControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1024, 600</value>
-  </data>
-  <data name="tabControl.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;tabControl.Name" xml:space="preserve">
-    <value>tabControl</value>
-  </data>
-  <data name="&gt;&gt;tabControl.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroTabControl, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;tabControl.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;tabControl.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
   <data name="LittleEndianCheckBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
@@ -3872,6 +4239,12 @@
   </data>
   <data name="&gt;&gt;LittleEndianCheckBox.ZOrder" xml:space="preserve">
     <value>2</value>
+  </data>
+  <data name="trelloBoardToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>223, 22</value>
+  </data>
+  <data name="trelloBoardToolStripMenuItem.Text" xml:space="preserve">
+    <value>Trello Board</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -6769,30 +7142,6 @@
   <data name="&gt;&gt;binkaWavToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;storeToolStripMenuItem.Name" xml:space="preserve">
-    <value>storeToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;storeToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;openPckCenterToolStripMenuItem.Name" xml:space="preserve">
-    <value>openPckCenterToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;openPckCenterToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;joinDevelopmentDiscordToolStripMenuItem.Name" xml:space="preserve">
-    <value>joinDevelopmentDiscordToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;joinDevelopmentDiscordToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;trelloBoardToolStripMenuItem.Name" xml:space="preserve">
-    <value>trelloBoardToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;trelloBoardToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;helpToolStripMenuItem.Name" xml:space="preserve">
     <value>helpToolStripMenuItem</value>
   </data>
@@ -6883,6 +7232,12 @@
   <data name="&gt;&gt;forMattNLContributorToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;joinDevelopmentDiscordToolStripMenuItem.Name" xml:space="preserve">
+    <value>joinDevelopmentDiscordToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;joinDevelopmentDiscordToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;settingsToolStripMenuItem.Name" xml:space="preserve">
     <value>settingsToolStripMenuItem</value>
   </data>
@@ -6937,10 +7292,10 @@
   <data name="&gt;&gt;imageList.Type" xml:space="preserve">
     <value>System.Windows.Forms.ImageList, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;skinRenderer3DToolStripMenuItem.Name" xml:space="preserve">
-    <value>skinRenderer3DToolStripMenuItem</value>
+  <data name="&gt;&gt;trelloBoardToolStripMenuItem.Name" xml:space="preserve">
+    <value>trelloBoardToolStripMenuItem</value>
   </data>
-  <data name="&gt;&gt;skinRenderer3DToolStripMenuItem.Type" xml:space="preserve">
+  <data name="&gt;&gt;trelloBoardToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">

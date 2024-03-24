@@ -1741,20 +1741,6 @@ namespace PckStudio
 			}
 		}
 
-		private void openPckCenterToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			MessageBox.Show("This feature is currently being reworked.", "Currently unavailable", MessageBoxButtons.OK, MessageBoxIcon.Information);
-#if false
-			DateTime Begin = DateTime.Now;
-			//pckCenter open = new pckCenter();
-			PckCenterBeta open = new PckCenterBeta();
-			open.Show();
-			TimeSpan duration = new TimeSpan(DateTime.Now.Ticks - Begin.Ticks);
-
-			Debug.WriteLine("Completed in: " + duration);
-#endif
-		}
-
 		private void howToMakeABasicSkinPackToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			Process.Start("https://www.youtube.com/watch?v=A43aHRHkKxk");
