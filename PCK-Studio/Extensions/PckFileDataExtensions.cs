@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OMI.Formats.Pck;
 using OMI.Workers;
+using PckStudio.IO.TGA;
 
 namespace PckStudio.Extensions
 {
@@ -30,7 +31,10 @@ namespace PckStudio.Extensions
             {
                 try
                 {
-                    return Image.FromStream(stream);
+                    if (Path.GetExtension(file.Filename) == ".tga")
+                        return TGADeserializer.DeserializeFromStream(stream);
+                    else
+                        return Image.FromStream(stream);
                 }
                 catch(Exception ex)
                 {

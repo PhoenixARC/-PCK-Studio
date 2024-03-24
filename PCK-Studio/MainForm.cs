@@ -571,11 +571,7 @@ namespace PckStudio
 					case PckFileType.CapeFile:
 					case PckFileType.TextureFile:
 						{
-							// TODO: Add tga support
-							if (Path.GetExtension(file.Filename) == ".tga") break;
-							using MemoryStream stream = new MemoryStream(file.Data);
-
-							var img = Image.FromStream(stream);
+							Image img = file.GetTexture();
 
 							if (img.RawFormat != ImageFormat.Jpeg || img.RawFormat != ImageFormat.Png)
 							{
@@ -594,7 +590,6 @@ namespace PckStudio
 								Debug.WriteLine("Not a supported image format. Setting back to default");
 								Debug.WriteLine(string.Format("An error occured of type: {0} with message: {1}", ex.GetType(), ex.Message), "Exception");
 							}
-
 
 							if ((file.Filename.StartsWith("res/textures/blocks/") || file.Filename.StartsWith("res/textures/items/")) &&
 								file.Filetype == PckFileType.TextureFile
@@ -1953,7 +1948,7 @@ namespace PckStudio
 		private void addTextureToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			using OpenFileDialog fileDialog = new OpenFileDialog();
-			fileDialog.Filter = "Texture File(*.png;*.tga)|*.png;*.tga";
+			fileDialog.Filter = "Texture File(*.png,*.tga)|*.png;*.tga";
 			if (fileDialog.ShowDialog() == DialogResult.OK)
 			{
 				using TextPrompt renamePrompt = new TextPrompt(Path.GetFileName(fileDialog.FileName));
@@ -1997,9 +1992,6 @@ namespace PckStudio
 
 				string textureExtension = Path.GetExtension(file.Filename);
 
-				// TGA is not yet supported
-				if (textureExtension == ".tga") return;
-
 				using NumericPrompt numericPrompt = new NumericPrompt(0);
 				numericPrompt.Minimum = 1;
 				numericPrompt.Maximum = 4; // 5 is the presumed max MipMap level
@@ -2018,7 +2010,7 @@ namespace PckStudio
 						PckFileData MipMappedFile = new PckFileData(mippedPath, PckFileType.TextureFile);
 
 
-						Image originalTexture = Image.FromStream(new MemoryStream(file.Data));
+						Image originalTexture = file.GetTexture();
 						int NewWidth = Math.Max(originalTexture.Width / (int)Math.Pow(2, i - 1), 1);
 						int NewHeight = Math.Max(originalTexture.Height / (int)Math.Pow(2, i - 1), 1);
 

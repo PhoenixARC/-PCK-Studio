@@ -133,11 +133,14 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\IO\TGA\TGADeserializer.cs" />
+    <Compile Include="Classes\IO\TGA\TGASerializer.cs" />
     <Compile Include="Extensions\LocFileExtensions.cs" />
     <Compile Include="Extensions\PckFileDataExtensions.cs" />
     <Compile Include="Extensions\TreeNodeExtensions.cs" />
     <Compile Include="Helper\AnimationHelper.cs" />
     <Compile Include="Internal\AnimationCategory.cs" />
+    <Compile Include="Internal\CommitInfo.cs" />
     <Compile Include="Internal\SkinAnimFlag.cs" />
     <Compile Include="Internal\SkinAnimMask.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -245,7 +248,14 @@
     <Compile Include="Features\WiiUPanel.Designer.cs">
       <DependentUpon>WiiUPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Internal\CommitInfo.cs" />
+    <Compile Include="Classes\IO\TGA\TGAFileData.cs" />
+    <Compile Include="Classes\IO\TGA\TGADataTypeCode.cs" />
+    <Compile Include="Classes\IO\TGA\TGAException.cs" />
+    <Compile Include="Classes\IO\TGA\TGAExtentionData.cs" />
+    <Compile Include="Classes\IO\TGA\TGAFooter.cs" />
+    <Compile Include="Classes\IO\TGA\TGAHeader.cs" />
+    <Compile Include="Classes\IO\TGA\TGAReader.cs" />
+    <Compile Include="Classes\IO\TGA\TGAWriter.cs" />
     <Compile Include="Forms\Additional-Popups\EntityForms\AddEntry.cs">
       <SubType>Form</SubType>
     </Compile>
