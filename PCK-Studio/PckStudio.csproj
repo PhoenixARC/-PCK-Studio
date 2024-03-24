@@ -430,30 +430,6 @@
     <Compile Include="Forms\Editor\AudioEditor.Designer.cs">
       <DependentUpon>AudioEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Utilities\pckCenter.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Utilities\pckCenter.Designer.cs">
-      <DependentUpon>pckCenter.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Utilities\PckCenterBeta.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Utilities\PckCenterBeta.Designer.cs">
-      <DependentUpon>PckCenterBeta.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Utilities\pckCenterOpen.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Utilities\pckCenterOpen.Designer.cs">
-      <DependentUpon>pckCenterOpen.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Utilities\TextureConverterUtility.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Utilities\TextureConverterUtility.Designer.cs">
-      <DependentUpon>TextureConverterUtility.cs</DependentUpon>
-    </Compile>
     <Compile Include="Internal\PckNodeSorter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Forms\CreditsForm.cs">
@@ -596,25 +572,6 @@
       <DependentUpon>AudioEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\pckCenter.ja.resx">
-      <DependentUpon>pckCenter.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\pckCenter.resx">
-      <DependentUpon>pckCenter.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\PckCenterBeta.resx">
-      <DependentUpon>PckCenterBeta.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\pckCenterOpen.ja.resx">
-      <DependentUpon>pckCenterOpen.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\pckCenterOpen.resx">
-      <DependentUpon>pckCenterOpen.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\TextureConverterUtility.resx">
-      <DependentUpon>TextureConverterUtility.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\CreditsForm.resx">
       <DependentUpon>CreditsForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -677,7 +634,6 @@
     <None Include="Resources\Splash.png" />
     <None Include="Resources\pckOpen.png" />
     <None Include="Resources\pckDrop.png" />
-    <None Include="Resources\pckCenterHeader.png" />
     <None Include="Resources\binka\binka_encode.exe" />
     <None Include="Resources\binka\mss32.dll" />
     <None Include="Resources\anim_editor\classic_template.png" />
