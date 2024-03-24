@@ -103,33 +103,28 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized string similar to {
         ///	&quot;COMMENT_1&quot;: &quot;JSON by MattNL&quot;,
-        ///	&quot;banners&quot;: [
+        ///	&quot;entries&quot;: [
         ///		{
         ///			&quot;internalName&quot;: &quot;base&quot;,
-        ///			&quot;displayName&quot;: &quot;Base&quot;
-        ///		},
-        ///		{
-        ///			&quot;internalName&quot;: &quot;border&quot;,
-        ///			&quot;displayName&quot;: &quot;Bordure&quot;
-        ///		},
-        ///		{
-        ///			&quot;internalName&quot;: &quot;bricks&quot;,
-        ///			&quot;displayName&quot;: &quot;Field Masoned&quot;
-        ///		},
-        ///		{
-        ///			&quot;internalName&quot;: &quot;circle&quot;,
-        ///			&quot;displayName&quot;: &quot;Roundel&quot;
-        ///		},
-        ///		{
-        ///			&quot;internalName&quot;: &quot;creeper&quot;,
-        ///			&quot;displayName&quot;: &quot;Creeper Charge&quot;
-        ///		},
-        ///		{
-        ///			&quot;internalName&quot;: &quot;cross&quot;,
-        ///			&quot;displayName&quot;: &quot;Saltire&quot;
-        ///		},
-        ///		{
-        ///			&quot;internalName&quot;: &quot;curly_bo [rest of string was truncated]&quot;;.
+        ///			&quot;displayName&quot;: &quot;Base&quot;,
+        ///			&quot;hasColourEntry&quot;: true,
+        ///			&quot;colourEntry&quot;: {
+        ///				&quot;defaultName&quot;: &quot;Banner_White&quot;,
+        ///				&quot;variants&quot;: [
+        ///					&quot;Banner_Black&quot;,
+        ///					&quot;Banner_Blue&quot;,
+        ///					&quot;Banner_Brown&quot;,
+        ///					&quot;Banner_Cyan&quot;,
+        ///					&quot;Banner_Gray&quot;,
+        ///					&quot;Banner_Green&quot;,
+        ///					&quot;Banner_Light_Blue&quot;,
+        ///					&quot;Banner_Lime&quot;,
+        ///					&quot;Banner_Magenta&quot;,
+        ///					&quot;Banner_Orange&quot;,
+        ///					&quot;Banner_Pink&quot;,
+        ///					&quot;Banner_Purple&quot;,
+        ///					&quot;Banner_Red&quot;,
+        ///					&quot;Ban [rest of string was truncated]&quot;;.
         /// </summary>
         public static string bannerData {
             get {
@@ -201,7 +196,7 @@ namespace PckStudio.Properties {
         ///   Looks up a localized string similar to {
         ///	&quot;COMMENT_1&quot;: &quot;Tile data research by MattNL&quot;,
         ///	&quot;COMMENT_2&quot;: &quot;JSON by PhoenixARC, MattNL, and NessieHax (Miku-666)&quot;,
-        ///	&quot;blocks&quot;: [
+        ///	&quot;entries&quot;: [
         ///		{
         ///			&quot;internalName&quot;: &quot;grass_top&quot;,
         ///			&quot;displayName&quot;: &quot;Grass Block (Top)&quot;,
@@ -221,7 +216,7 @@ namespace PckStudio.Properties {
         ///			&quot;displayName&quot;: &quot;Stone&quot;
         ///		},
         ///		{
-        ///			&quot;internalName&quot;:  [rest of string was truncated]&quot;;.
+        ///			&quot;internalName&quot;: [rest of string was truncated]&quot;;.
         /// </summary>
         public static string blockData {
             get {
@@ -386,7 +381,7 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized string similar to {
         ///	&quot;COMMENT_1&quot;: &quot;JSON by MattNL&quot;,
-        ///	&quot;experience_orbs&quot;: [
+        ///	&quot;entries&quot;: [
         ///		{
         ///			&quot;internalName&quot;: &quot;experience_orb_0&quot;,
         ///			&quot;displayName&quot;: &quot;Experience Orb (Size 1)&quot;,
@@ -405,7 +400,8 @@ namespace PckStudio.Properties {
         ///				&quot;variants&quot;: [&quot;experience_orb&quot;]
         ///			}
         ///		},
-        ///	 [rest of string was truncated]&quot;;.
+        ///		{
+        ///			&quot; [rest of string was truncated]&quot;;.
         /// </summary>
         public static string experienceOrbData {
             get {
@@ -416,7 +412,7 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized string similar to {
         ///	&quot;COMMENT_1&quot;: &quot;JSON by MattNL&quot;,
-        ///	&quot;explosions&quot;: [
+        ///	&quot;entries&quot;: [
         ///		{
         ///			&quot;internalName&quot;: &quot;explosion_0&quot;,
         ///			&quot;displayName&quot;: &quot;Explosion (Stage 1)&quot;,
@@ -436,7 +432,7 @@ namespace PckStudio.Properties {
         ///			&quot;colourEntry&quot;: {
         ///				&quot;defaultName&quot;: &quot;Particle_Explode&quot;,
         ///				&quot;variants&quot;: [
-        ///		 [rest of string was truncated]&quot;;.
+        ///					 [rest of string was truncated]&quot;;.
         /// </summary>
         public static string explosionData {
             get {
@@ -558,7 +554,7 @@ namespace PckStudio.Properties {
         ///   Looks up a localized string similar to {
         ///	&quot;COMMENT_1&quot;: &quot;Tile data research by MattNL&quot;,
         ///	&quot;COMMENT_2&quot;: &quot;JSON by PhoenixARC, MattNL, and NessieHax (Miku-666)&quot;,
-        ///	&quot;items&quot;: [
+        ///	&quot;entries&quot;: [
         ///		{
         ///			&quot;internalName&quot;: &quot;helmetCloth&quot;,
         ///			&quot;displayName&quot;: &quot;Leather Cap&quot;,
@@ -574,7 +570,7 @@ namespace PckStudio.Properties {
         ///			&quot;displayName&quot;: &quot;Chain Helmet&quot;
         ///		},
         ///		{
-        ///			&quot;internalName&quot;: &quot;he [rest of string was truncated]&quot;;.
+        ///			&quot;internalName&quot;: &quot; [rest of string was truncated]&quot;;.
         /// </summary>
         public static string itemData {
             get {
@@ -615,7 +611,7 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized string similar to {
         ///	&quot;COMMENT_1&quot;: &quot;JSON by MattNL&quot;,
-        ///	&quot;map_icons&quot;: [
+        ///	&quot;entries&quot;: [
         ///		{
         ///			&quot;internalName&quot;: &quot;player_1&quot;,
         ///			&quot;displayName&quot;: &quot;Player 1&quot;
@@ -641,7 +637,7 @@ namespace PckStudio.Properties {
         ///			&quot;displayName&quot;: &quot;Target Point (Unused)&quot;
         ///		},
         ///		{
-        ///	 [rest of string was truncated]&quot;;.
+        ///			 [rest of string was truncated]&quot;;.
         /// </summary>
         public static string mapIconData {
             get {
@@ -672,7 +668,7 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized string similar to {
         ///	&quot;COMMENT_1&quot;: &quot;JSON by MattNL&quot;,
-        ///	&quot;moon_phases&quot;: [
+        ///	&quot;entries&quot;: [
         ///		{
         ///			&quot;internalName&quot;: &quot;moon_phase_0&quot;,
         ///			&quot;displayName&quot;: &quot;Full Moon&quot;
@@ -695,7 +691,7 @@ namespace PckStudio.Properties {
         ///		},
         ///		{
         ///			&quot;internalName&quot;: &quot;moon_phase_5&quot;,
-        ///			&quot;displayNa [rest of string was truncated]&quot;;.
+        ///			&quot;displayName&quot;: [rest of string was truncated]&quot;;.
         /// </summary>
         public static string moonPhaseData {
             get {
@@ -746,7 +742,7 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized string similar to {
         ///	&quot;COMMENT_1&quot;: &quot;JSON by MattNL&quot;,
-        ///	&quot;paintings&quot;: [
+        ///	&quot;entries&quot;: [
         ///		{
         ///			&quot;internalName&quot;: &quot;Kebab&quot;,
         ///			&quot;displayName&quot;: &quot;\&quot;Kebab med tre pepperoni\&quot; by Kristoffer Zetterstrand&quot;
@@ -765,7 +761,7 @@ namespace PckStudio.Properties {
         ///		},
         ///		{
         ///			&quot;internalName&quot;: &quot;Bomb&quot;,
-        ///			&quot;di [rest of string was truncated]&quot;;.
+        ///			&quot;disp [rest of string was truncated]&quot;;.
         /// </summary>
         public static string paintingData {
             get {
@@ -786,7 +782,7 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized string similar to {
         ///	&quot;COMMENT_1&quot;: &quot;JSON by MattNL&quot;,
-        ///	&quot;particles&quot;: [
+        ///	&quot;entries&quot;: [
         ///		{
         ///			&quot;internalName&quot;: &quot;generic_0&quot;,
         ///			&quot;displayName&quot;: &quot;Generic (Stage 1)&quot;,
@@ -806,7 +802,8 @@ namespace PckStudio.Properties {
         ///		},
         ///		{
         ///			&quot;internalName&quot;: &quot;generic_1&quot;,
-        ///			&quot;displayName&quot;: &quot;Generic (Stage 2)&quot;, [rest of string was truncated]&quot;;.
+        ///			&quot;displayName&quot;: &quot;Generic (Stage 2)&quot;,
+        /// [rest of string was truncated]&quot;;.
         /// </summary>
         public static string particleData {
             get {
@@ -980,6 +977,16 @@ namespace PckStudio.Properties {
         public static System.Drawing.Bitmap TexturePackIcon {
             get {
                 object obj = ResourceManager.GetObject("TexturePackIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap trello {
+            get {
+                object obj = ResourceManager.GetObject("trello", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
