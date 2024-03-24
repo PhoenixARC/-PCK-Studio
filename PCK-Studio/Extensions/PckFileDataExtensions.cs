@@ -32,7 +32,7 @@ namespace PckStudio.Extensions
                 try
                 {
                     if (Path.GetExtension(file.Filename) == ".tga")
-                        return TGAImage.FromStream(stream);
+                        return TGADeserializer.DeserializeFromStream(stream);
                     else
                         return Image.FromStream(stream);
                 }

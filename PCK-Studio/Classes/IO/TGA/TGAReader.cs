@@ -64,7 +64,7 @@ namespace PckStudio.IO.TGA
             Marshal.Copy(data, 0, bitmapData.Scan0, data.Length);
         }
 
-        private static void TGA_HandleNoData(EndiannessAwareBinaryReader reader, TGAHeader header, BitmapData bitmapData)
+        private static void TGA_HandleNoData(EndiannessAwareBinaryReader _, TGAHeader header, BitmapData bitmapData)
         {
             Random r = new Random();
             byte[] bytes = new byte[bitmapData.Width * bitmapData.Height * 4];
@@ -232,8 +232,10 @@ namespace PckStudio.IO.TGA
         [DebuggerStepThrough]
         private static void DebugLogFooter(TGAFooter footer)
         {
-            Debug.WriteLine("Extension Data Offset:         {0:x}", footer.ExtensionDataOffset);
-            Debug.WriteLine("Developer Area Data Offset:    {0:x}", footer.DeveloperAreaDataOffset);
+            Debug.WriteLine("-------Footer Data-------", category: nameof(TGAReader));
+            Debug.WriteLine($"Extension Data Offset:         {footer.ExtensionDataOffset:x}", category: nameof(TGAReader));
+            Debug.WriteLine($"Developer Area Data Offset:    {footer.DeveloperAreaDataOffset:x}", category: nameof(TGAReader));
+            Debug.WriteLine("-----------------------", category: nameof(TGAReader));
         }
     }
 }

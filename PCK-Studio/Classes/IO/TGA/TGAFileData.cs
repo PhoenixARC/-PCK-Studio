@@ -38,27 +38,4 @@ namespace PckStudio.IO.TGA
         public readonly TGAFooter Footer;
         public readonly TGAExtentionData ExtentionData;
     }
-
-    internal static class TGAImage
-    {
-        // private static TGAWriter _writer = new TGAWriter();
-        private static TGAReader _reader = new TGAReader();
-
-        public static Image FromFile(string filename)
-        {
-            if (File.Exists(filename))
-            {
-                var fs = File.OpenRead(filename);
-                var img = FromStream(fs);
-                fs.Close();
-                return img;
-            }
-            throw new FileNotFoundException(filename);
-        }
-
-        public static Image FromStream(Stream stream)
-        {
-            return _reader.FromStream(stream).Bitmap;
-        }
-    }
 }

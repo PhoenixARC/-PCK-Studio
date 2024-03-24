@@ -16,6 +16,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
 **/
 using System;
+using System.Windows.Forms;
 
 namespace PckStudio.IO.TGA
 {
@@ -36,5 +37,27 @@ namespace PckStudio.IO.TGA
         public int PostageStampOffset;
         public int ScanLineOffset;
         public byte AttributesType;
+
+        public static TGAExtentionData Create()
+        {
+            var extensionData = new TGAExtentionData();
+            extensionData.AuthorName = "";
+            extensionData.AuthorComment = "";
+            extensionData.AuthorComment = "";
+            extensionData.TimeStamp = DateTime.Now;
+            extensionData.JobID = "";
+            extensionData.JobTime = new TimeSpan(extensionData.TimeStamp.Hour, extensionData.TimeStamp.Minute, extensionData.TimeStamp.Second);
+            extensionData.SoftwareID = Application.ProductName;
+            Version.TryParse(Application.ProductVersion, out Version currentVersion);
+            extensionData.SoftwareVersion = [(byte)currentVersion.Major, (byte)currentVersion.Minor, (byte)currentVersion.Build];
+            extensionData.KeyColor = 0;
+            extensionData.PixelAspectRatio = 0;
+            extensionData.GammaValue = 0;
+            extensionData.ColorCorrectionOffset = 0;
+            extensionData.PostageStampOffset = 0;
+            extensionData.ScanLineOffset = 0;
+            extensionData.AttributesType = 3;
+            return extensionData;
+        }
     }
 }
