@@ -2060,15 +2060,12 @@ namespace PckStudio
 				saveFileDialog.DefaultExt = ".3dst";
 				if (saveFileDialog.ShowDialog() == DialogResult.OK)
 				{
-					using (var ms = new MemoryStream(file.Data))
-					{
-						Image img = Image.FromStream(ms);
+					Image img = file.GetTexture();
 						var writer = new _3DSTextureWriter(img);
 						writer.WriteToFile(saveFileDialog.FileName);
 					}
 				}
 			}
-		}
 
 		private void addMultipleEntriesToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
