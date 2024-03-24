@@ -990,6 +990,7 @@ namespace PckStudio
 			}
 		}
 
+		[Obsolete()]
 		bool IsSubPCKNode(string nodePath, string extention = ".pck")
 		{
 			// written by miku, implemented and modified by MattNL
@@ -1018,6 +1019,7 @@ namespace PckStudio
 			return childNodes;
 		}
 
+		[Obsolete()]
 		TreeNode GetSubPCK(string childPath)
 		{
 			string parentPath = childPath.Replace('\\', '/');
@@ -1036,6 +1038,7 @@ namespace PckStudio
 			return null;
 		}
 
+		[Obsolete()]
 		void RebuildSubPCK(string childPath)
 		{
 			// Support for if a file is edited within a nested PCK File (AKA SubPCK)
@@ -2061,11 +2064,11 @@ namespace PckStudio
 				if (saveFileDialog.ShowDialog() == DialogResult.OK)
 				{
 					Image img = file.GetTexture();
-						var writer = new _3DSTextureWriter(img);
-						writer.WriteToFile(saveFileDialog.FileName);
-					}
+					var writer = new _3DSTextureWriter(img);
+					writer.WriteToFile(saveFileDialog.FileName);	
 				}
 			}
+		}
 
 		private void addMultipleEntriesToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
