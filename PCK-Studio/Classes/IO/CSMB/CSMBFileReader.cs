@@ -8,12 +8,16 @@ namespace PckStudio.IO.CSMB
 {
     internal class CSMBFileReader : IDataFormatReader<CSMBFile>, IDataFormatReader
     {
-        private CSMBFileReader()
-        { }
-
         public CSMBFile FromFile(string filename)
         {
-            throw new System.NotImplementedException();
+            if (File.Exists(filename))
+            {
+                using (var fs = File.OpenRead(filename))
+                {
+                    return FromStream(fs);
+        }
+            }
+            throw new FileNotFoundException(filename);
         }
 
         public CSMBFile FromStream(Stream stream)
