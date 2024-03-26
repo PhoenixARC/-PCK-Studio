@@ -57,7 +57,7 @@ namespace PckStudio.FileFormats
 		public float VerticalOffset = 0.0f;
 	}
 
-	public enum CSMBOffsetPart
+	public enum CSMBOffsetType : byte
 	{
 		HEAD = 0,
 		BODY = 1,
@@ -65,29 +65,19 @@ namespace PckStudio.FileFormats
 		ARM1 = 3,
 		LEG0 = 4,
 		LEG1 = 5,
-		HEADWEAR = 6,
-		JACKET = 7,
-		SLEEVE0 = 8,
-		SLEEVE1 = 9,
-		PANTS0 = 10,
-		PANTS1 = 11,
+
+        TOOL0 = 6,
+        TOOL1 = 7,
+
+        HELMET = 8,
+        SHOULDER0 = 9,
+        SHOULDER1 = 10,
+        CHEST = 11,
 		WAIST = 12,
-		LEGGING0 = 13,
-		LEGGING1 = 14,
-		SOCK0 = 15,
-		SOCK1 = 16,
-		BOOT0 = 17,
-		BOOT1 = 18,
-		ARMARMOR1 = 19,
-		ARMARMOR0 = 20,
-		BODYARMOR = 21,
-		BELT = 22,
-		TOOL0 = 23,
-		TOOL1 = 24,
-		HELMET = 25,
-		SHOULDER0 = 26,
-		SHOULDER1 = 27,
-		CHEST = 28
+        PANTS0 = 13,
+        PANTS1 = 14,
+        BOOT0 = 15,
+        BOOT1 = 16,
 	}
 
 	public enum CSMBParentPart
