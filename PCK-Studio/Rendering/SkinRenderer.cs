@@ -275,7 +275,6 @@ namespace PckStudio.Rendering
                 { "SLEEVE1" , leftArm },
                 { "PANTS0"  , rightLeg },
                 { "PANTS1"  , leftLeg },
-
             };
             InitializeArmorData();
             InitializeCamera();
@@ -749,6 +748,11 @@ namespace PckStudio.Rendering
 
         public void SetPartOffset(string name, float value)
         {
+            if (!SkinPartOffset.ValidModelOffsetTypes.Contains(name))
+            {
+                Trace.TraceWarning($"{name} is not a valid offset.");
+                return;
+            }
             bool offsetSpecific = offsetSpecificMeshStorage.ContainsKey(name);
             if (!meshStorage.ContainsKey(name) && !offsetSpecific)
             {
@@ -787,13 +791,12 @@ namespace PckStudio.Rendering
                         UpdateMesh(addedBox.Type);
                     }
                     break;
+                case NotifyCollectionChangedAction.Reset:
                 case NotifyCollectionChangedAction.Remove:
                 case NotifyCollectionChangedAction.Replace:
                     ReInitialzeSkinData();
                     goto default;
                 case NotifyCollectionChangedAction.Move:
-                    break;
-                case NotifyCollectionChangedAction.Reset:
                     break;
                 default:
                     MakeCurrent();
