@@ -11,6 +11,8 @@ using PckStudio.Internal;
 using PckStudio.Extensions;
 using PckStudio.IO.CSMB;
 using PckStudio.FileFormats;
+using System.Linq;
+using PckStudio.Forms.Additional_Popups;
 
 namespace PckStudio.Forms.Editor
 {
@@ -85,12 +87,13 @@ namespace PckStudio.Forms.Editor
                 renderer3D1.Texture = skin.Texture;
             }
 
-            //skinOffsetListBindingSource = new BindingSource(renderer3D1.offsetSpecificMeshStorage, null);
-            //offsetListBox.DataSource = skinOffsetListBindingSource;
-            //offsetListBox.DisplayMember = "Value";
+            skinOffsetListBindingSource = new BindingSource(renderer3D1.GetOffsets().ToArray(), null);
+            offsetListBox.DataSource = skinOffsetListBindingSource;
+            offsetListBox.DisplayMember = "Type";
+            offsetListBox.ValueMember = "Value";
 
             skinPartListBindingSource.ResetBindings(false);
-            //skinOffsetListBindingSource.ResetBindings(false);
+            skinOffsetListBindingSource.ResetBindings(false);
         }
 
         private void GenerateUVTextureMap(SkinBOX skinBox)
@@ -144,16 +147,12 @@ namespace PckStudio.Forms.Editor
 
         private void buttonDone_Click(object sender, EventArgs e)
         {
-            //Debug.Fail("TODO: Implement");
             _skin.AdditionalBoxes.Clear();
             _skin.AdditionalBoxes.AddRange(renderer3D1.ModelData);
-
-            // TODO: Get part offset list/IEnumerable from renderer
-            //_skin.PartOffsets.Clear();
-            //_skin.PartOffsets.AddRange();
-
-            //_previewImage = renderer3D1.GetThumbnail();
-
+            _skin.PartOffsets.Clear();
+            _skin.PartOffsets.AddRange(renderer3D1.GetOffsets());
+            // just in case they're not the same instance
+            _skin.ANIM = renderer3D1.ANIM;
             DialogResult = DialogResult.OK;
         }
 
@@ -309,10 +308,52 @@ namespace PckStudio.Forms.Editor
             renderer3D1.ShowArmor = showArmorCheckbox.Checked;
         }
 
-        private void skinPartListBox_KeyUp(object sender, System.Windows.Forms.KeyEventArgs e)
+        private void skinPartListBox_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Delete)
                 deleteToolStripMenuItem_Click(sender, e);
+        }
+
+        private void ReloadOffsetList()
+        {
+            skinOffsetListBindingSource = new BindingSource(renderer3D1.GetOffsets().ToArray(), null);
+            offsetListBox.DataSource = skinOffsetListBindingSource;
+            skinOffsetListBindingSource.ResetBindings(false);
+        }
+
+        private void addOffsetToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var offsets = renderer3D1.GetOffsets().Select(offset => offset.Type).ToList();
+            string[] available = SkinPartOffset.ValidModelOffsetTypes.Where(s => !offsets.Contains(s)).ToArray();
+            using ItemSelectionPopUp typeSelection = new ItemSelectionPopUp(available);
+            using NumericPrompt valuePrompt = new NumericPrompt(0f, -100_000f, 100_000f);
+            if (typeSelection.ShowDialog() == DialogResult.OK && valuePrompt.ShowDialog() == DialogResult.OK)
+            {
+                renderer3D1.SetPartOffset(typeSelection.SelectedItem, (float)valuePrompt.SelectedValue);
+                ReloadOffsetList();
+            }
+        }
+
+        private void removeOffsetToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (offsetListBox.SelectedItem is not SkinPartOffset offset)
+                return;
+            renderer3D1.SetPartOffset(offset.Type, 0f);
+            ReloadOffsetList();
+        }
+
+        private void offsetListBox_DoubleClick(object sender, EventArgs e)
+        {
+            if (offsetListBox.SelectedItem is not SkinPartOffset offset)
+                return;
+
+            using NumericPrompt valuePrompt = new NumericPrompt((float)offset.Value, -100_000f, 100_000f);
+            valuePrompt.ToolTipText = "Set new Value for " + offset.Type;
+            if (valuePrompt.ShowDialog() == DialogResult.OK)
+            {
+                renderer3D1.SetPartOffset(offset.Type, (float)valuePrompt.SelectedValue);
+                ReloadOffsetList();
+            }
         }
     }
 }

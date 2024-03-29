@@ -65,8 +65,11 @@
             this.skinPartsTabPage = new System.Windows.Forms.TabPage();
             this.skinOffsetsTabPage = new System.Windows.Forms.TabPage();
             this.offsetListBox = new System.Windows.Forms.ListBox();
+            this.offsetTabContextMenu = new MetroFramework.Controls.MetroContextMenu(this.components);
+            this.addOffsetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.renderer3D1 = new PckStudio.Rendering.SkinRenderer();
             this.uvPictureBox = new PckStudio.ToolboxItems.InterpolationPictureBox();
+            this.removeOffsetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             label5 = new System.Windows.Forms.Label();
             label3 = new System.Windows.Forms.Label();
             label7 = new System.Windows.Forms.Label();
@@ -83,6 +86,7 @@
             this.metroTabControl1.SuspendLayout();
             this.skinPartsTabPage.SuspendLayout();
             this.skinOffsetsTabPage.SuspendLayout();
+            this.offsetTabContextMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uvPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -376,9 +380,26 @@
             // 
             // offsetListBox
             // 
+            this.offsetListBox.ContextMenuStrip = this.offsetTabContextMenu;
             resources.ApplyResources(this.offsetListBox, "offsetListBox");
             this.offsetListBox.FormattingEnabled = true;
             this.offsetListBox.Name = "offsetListBox";
+            this.offsetListBox.DoubleClick += new System.EventHandler(this.offsetListBox_DoubleClick);
+            // 
+            // offsetTabContextMenu
+            // 
+            this.offsetTabContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addOffsetToolStripMenuItem,
+            this.removeOffsetToolStripMenuItem});
+            this.offsetTabContextMenu.Name = "offsetTabContextMenu";
+            resources.ApplyResources(this.offsetTabContextMenu, "offsetTabContextMenu");
+            this.offsetTabContextMenu.Theme = MetroFramework.MetroThemeStyle.Dark;
+            // 
+            // addOffsetToolStripMenuItem
+            // 
+            this.addOffsetToolStripMenuItem.Name = "addOffsetToolStripMenuItem";
+            resources.ApplyResources(this.addOffsetToolStripMenuItem, "addOffsetToolStripMenuItem");
+            this.addOffsetToolStripMenuItem.Click += new System.EventHandler(this.addOffsetToolStripMenuItem_Click);
             // 
             // renderer3D1
             // 
@@ -404,6 +425,12 @@
             this.uvPictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             this.uvPictureBox.Name = "uvPictureBox";
             this.uvPictureBox.TabStop = false;
+            // 
+            // removeOffsetToolStripMenuItem
+            // 
+            this.removeOffsetToolStripMenuItem.Name = "removeOffsetToolStripMenuItem";
+            resources.ApplyResources(this.removeOffsetToolStripMenuItem, "removeOffsetToolStripMenuItem");
+            this.removeOffsetToolStripMenuItem.Click += new System.EventHandler(this.removeOffsetToolStripMenuItem_Click);
             // 
             // CustomSkinEditor
             // 
@@ -453,6 +480,7 @@
             this.metroTabControl1.ResumeLayout(false);
             this.skinPartsTabPage.ResumeLayout(false);
             this.skinOffsetsTabPage.ResumeLayout(false);
+            this.offsetTabContextMenu.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.uvPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -493,5 +521,8 @@
         private System.Windows.Forms.TabPage skinPartsTabPage;
         private System.Windows.Forms.TabPage skinOffsetsTabPage;
         private System.Windows.Forms.ListBox offsetListBox;
+        private MetroFramework.Controls.MetroContextMenu offsetTabContextMenu;
+        private System.Windows.Forms.ToolStripMenuItem addOffsetToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem removeOffsetToolStripMenuItem;
     }
 }
