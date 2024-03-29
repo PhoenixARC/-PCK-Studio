@@ -510,11 +510,6 @@ namespace PckStudio.Rendering
                 skyboxShader.Validate();
                 _shaders.AddShader("SkyboxShader", skyboxShader);
 
-                string customSkyboxFilepath = Path.Combine(Program.AppData, "skybox.png");
-                Image skyboxImage = File.Exists(customSkyboxFilepath)
-                    ? Image.FromFile(customSkyboxFilepath)
-                    : Resources.DefaultSkyTexture;
-
                 _skyboxTexture = new CubeTexture(1);
                 _skyboxTexture.InternalPixelFormat = PixelInternalFormat.Rgb8;
                 _skyboxTexture.PixelFormat = OpenTK.Graphics.OpenGL.PixelFormat.Bgra;
@@ -524,6 +519,11 @@ namespace PckStudio.Rendering
                 _skyboxTexture.WrapS = TextureWrapMode.ClampToEdge;
                 _skyboxTexture.WrapT = TextureWrapMode.ClampToEdge;
                 _skyboxTexture.WrapR = TextureWrapMode.ClampToEdge;
+
+                string customSkyboxFilepath = Path.Combine(Program.AppData, "skybox.png");
+                using Image skyboxImage = File.Exists(customSkyboxFilepath)
+                    ? Image.FromFile(customSkyboxFilepath)
+                    : Resources.DefaultSkyTexture;
                 _skyboxTexture.SetTexture(skyboxImage);
                 GLErrorCheck();
             }
@@ -1416,6 +1416,21 @@ namespace PckStudio.Rendering
                 guidelineMode = GuidelineMode.None;
             }
             guidelineModeToolStripMenuItem.Text = $"Guideline Mode: {guidelineMode}";
+        }
+
+        internal IEnumerable<SkinPartOffset> GetOffsets()
+        {
+            foreach (var mesh in meshStorage)
+            {
+                if (SkinPartOffset.ValidModelOffsetTypes.Contains(mesh.Key) && mesh.Value.Offset.Y != 0f)
+                    yield return new SkinPartOffset(mesh.Key, mesh.Value.Offset.Y);
+            }
+            foreach (var offsetmesh in offsetSpecificMeshStorage)
+            {
+                if (offsetmesh.Value.Offset.Y != 0f)
+                    yield return new SkinPartOffset(offsetmesh.Key, offsetmesh.Value.Offset.Y);
+            }
+            yield break;
         }
 #endif
     }
