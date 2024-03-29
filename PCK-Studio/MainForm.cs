@@ -93,13 +93,13 @@ namespace PckStudio
 				[PckFileType.UIDataFile] = _ => throw new NotSupportedException("unused in-game"),
 				[PckFileType.InfoFile] = null,
 				[PckFileType.TexturePackInfoFile] = HandleInnerPckFile,
-				[PckFileType.LocalisationFile] = HandleLocalisationFile,
+                [PckFileType.LocalisationFile] = HandleLocalisationFile,
 				[PckFileType.GameRulesFile] = HandleGameRuleFile,
 				[PckFileType.AudioFile] = HandleAudioFile,
 				[PckFileType.ColourTableFile] = HandleColourFile,
 				[PckFileType.GameRulesHeader] = HandleGameRuleFile,
 				[PckFileType.SkinDataFile] = HandleInnerPckFile,
-				[PckFileType.ModelsFile] = null, //HandleModelsFile, // Note: Uncomment when implemented
+                [PckFileType.ModelsFile] = null, //HandleModelsFile, // Note: Uncomment when implemented
 				[PckFileType.BehavioursFile] = HandleBehavioursFile,
 				[PckFileType.MaterialFile] = HandleMaterialFile,
 			};
@@ -1865,7 +1865,7 @@ namespace PckStudio
 
 		private void SetNodeIcon(TreeNode node, PckFileType type)
 		{
-			switch (type)
+            switch (type)
 			{
 				case PckFileType.AudioFile:
 					node.ImageIndex = 1;
@@ -1995,13 +1995,13 @@ namespace PckStudio
 				using NumericPrompt numericPrompt = new NumericPrompt(0);
 				numericPrompt.Minimum = 1;
 				numericPrompt.Maximum = 4; // 5 is the presumed max MipMap level
-				numericPrompt.ContextLabel.Text = "You can enter the amount of MipMap levels that you would like to generate. " +
+				numericPrompt.ToolTipText = "You can enter the amount of MipMap levels that you would like to generate. " +
 					"For example: if you enter 2, MipMapLevel1.png and MipMapLevel2.png will be generated";
 				numericPrompt.TextLabel.Text = "Levels";
 
 				if (numericPrompt.ShowDialog(this) == DialogResult.OK)
 				{
-					for (int i = 2; i < 2 + numericPrompt.SelectedValue; i++)
+					for (int i = 2; i < 2 + numericPrompt.SelectedValueAsInt; i++)
 					{
 						string mippedPath = $"{textureDirectory}/{textureName}MipMapLevel{i}{textureExtension}";
 						Debug.WriteLine(mippedPath);

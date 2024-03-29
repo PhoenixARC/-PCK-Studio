@@ -31,8 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NumericPrompt));
             this.TextLabel = new System.Windows.Forms.Label();
             this.OKButton = new System.Windows.Forms.Button();
-            this.ContextLabel = new MetroFramework.Controls.MetroLabel();
             this.ValueUpDown = new System.Windows.Forms.NumericUpDown();
+            this.toolTipLabel = new MetroFramework.Controls.MetroLabel();
             ((System.ComponentModel.ISupportInitialize)(this.ValueUpDown)).BeginInit();
             this.SuspendLayout();
             // 
@@ -50,18 +50,18 @@
             this.OKButton.UseVisualStyleBackColor = true;
             this.OKButton.Click += new System.EventHandler(this.OKBtn_Click);
             // 
-            // ContextLabel
-            // 
-            resources.ApplyResources(this.ContextLabel, "ContextLabel");
-            this.ContextLabel.FontSize = MetroFramework.MetroLabelSize.Small;
-            this.ContextLabel.Name = "ContextLabel";
-            this.ContextLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.ContextLabel.WrapToLine = true;
-            // 
             // ValueUpDown
             // 
             resources.ApplyResources(this.ValueUpDown, "ValueUpDown");
             this.ValueUpDown.Name = "ValueUpDown";
+            // 
+            // toolTipLabel
+            // 
+            resources.ApplyResources(this.toolTipLabel, "toolTipLabel");
+            this.toolTipLabel.FontSize = MetroFramework.MetroLabelSize.Small;
+            this.toolTipLabel.Name = "toolTipLabel";
+            this.toolTipLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.toolTipLabel.WrapToLine = true;
             // 
             // NumericPrompt
             // 
@@ -69,7 +69,7 @@
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.ValueUpDown);
-            this.Controls.Add(this.ContextLabel);
+            this.Controls.Add(this.toolTipLabel);
             this.Controls.Add(this.OKButton);
             this.Controls.Add(this.TextLabel);
             this.MaximizeBox = false;
@@ -89,7 +89,7 @@
         #endregion
         public System.Windows.Forms.Button OKButton;
         public System.Windows.Forms.Label TextLabel;
-		public MetroFramework.Controls.MetroLabel ContextLabel;
         private System.Windows.Forms.NumericUpDown ValueUpDown;
+        private MetroFramework.Controls.MetroLabel toolTipLabel;
     }
 }
