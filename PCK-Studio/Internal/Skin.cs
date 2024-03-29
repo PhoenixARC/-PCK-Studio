@@ -16,8 +16,8 @@ namespace PckStudio.Internal
         public Image CapeTexture { get; set; }
         public bool HasCape => CapeTexture is not null;
         public SkinANIM ANIM { get; set; }
-        public List<SkinBOX> AdditionalBoxes { get; }
-        public List<SkinPartOffset> PartOffsets { get; }
+        public readonly List<SkinBOX> AdditionalBoxes;
+        public readonly List<SkinPartOffset> PartOffsets;
 
         public Skin(string name, int id, Image texture, SkinANIM anim, IEnumerable<SkinBOX> additionalBoxes, IEnumerable<SkinPartOffset> partOffsets)
         {
