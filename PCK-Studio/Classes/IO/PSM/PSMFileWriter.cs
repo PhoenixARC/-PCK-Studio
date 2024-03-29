@@ -7,15 +7,15 @@ using PckStudio.Internal;
 using System;
 using OpenTK;
 
-namespace PckStudio.IO.CSMB
+namespace PckStudio.IO.PSM
 {
-    internal class CSMBFileWriter : IDataFormatWriter
+    internal class PSMFileWriter : IDataFormatWriter
     {
-        CSMBFile _CSMB;
+        PSMFile _PSM;
 
-        public CSMBFileWriter(CSMBFile csmb)
+        public PSMFileWriter(PSMFile csmb)
         {
-            _CSMB = csmb;
+            _PSM = csmb;
         }
 
         public void WriteToFile(string filename)
@@ -30,16 +30,16 @@ namespace PckStudio.IO.CSMB
         {
             using (var writer = new EndiannessAwareBinaryWriter(stream, Encoding.ASCII, leaveOpen: true, Endianness.LittleEndian))
             {
-                writer.Write(CSMBFile.HEADER_MAGIC);
-                writer.Write(_CSMB.Version);
-                writer.Write(_CSMB.SkinANIM.ToValue());
-                writer.Write(_CSMB.Parts.Count);
-                foreach (SkinBOX part in _CSMB.Parts)
+                writer.Write(PSMFile.HEADER_MAGIC);
+                writer.Write(_PSM.Version);
+                writer.Write(_PSM.SkinANIM.ToValue());
+                writer.Write(_PSM.Parts.Count);
+                foreach (SkinBOX part in _PSM.Parts)
                 {
                     WritePart(writer, part);
                 }
-                writer.Write(_CSMB.Offsets.Count);
-                foreach (SkinPartOffset offset in _CSMB.Offsets)
+                writer.Write(_PSM.Offsets.Count);
+                foreach (SkinPartOffset offset in _PSM.Offsets)
                 {
                     writer.Write((byte)GetOffsetPart(offset.Type));
                     writer.Write(offset.Value);
@@ -67,65 +67,65 @@ namespace PckStudio.IO.CSMB
             writer.Write(part.Scale);
         }
 
-        private static CSMBParentType GetParentPart(string type)
+        private static PSMParentType GetParentPart(string type)
         {
             switch (type)
             {
                 case "HEAD":
-                    return CSMBParentType.HEAD;
+                    return PSMParentType.HEAD;
                 case "BODY":
-                    return CSMBParentType.BODY;
+                    return PSMParentType.BODY;
                 case "ARM0":
-                    return CSMBParentType.ARM0;
+                    return PSMParentType.ARM0;
                 case "ARM1":
-                    return CSMBParentType.ARM1;
+                    return PSMParentType.ARM1;
                 case "LEG0":
-                    return CSMBParentType.LEG0;
+                    return PSMParentType.LEG0;
                 case "LEG1":
-                    return CSMBParentType.LEG1;
+                    return PSMParentType.LEG1;
                 default:
                     throw new InvalidDataException(type);
             }
         }
 
-        private static CSMBOffsetType GetOffsetPart(string type)
+        private static PSMOffsetType GetOffsetPart(string type)
         {
             switch (type)
             {
                 case "HEAD":
-                    return CSMBOffsetType.HEAD;
+                    return PSMOffsetType.HEAD;
                 case "BODY":
-                    return CSMBOffsetType.BODY;
+                    return PSMOffsetType.BODY;
                 case "ARM0":
-                    return CSMBOffsetType.ARM0;
+                    return PSMOffsetType.ARM0;
                 case "ARM1":
-                    return CSMBOffsetType.ARM1;
+                    return PSMOffsetType.ARM1;
                 case "LEG0":
-                    return CSMBOffsetType.LEG0;
+                    return PSMOffsetType.LEG0;
                 case "LEG1":
-                    return CSMBOffsetType.LEG1;
+                    return PSMOffsetType.LEG1;
                 case "TOOL0":
-                    return CSMBOffsetType.TOOL0;
+                    return PSMOffsetType.TOOL0;
                 case "TOOL1":
-                    return CSMBOffsetType.TOOL1;
+                    return PSMOffsetType.TOOL1;
                 case "HELMET":
-                    return CSMBOffsetType.HELMET;
+                    return PSMOffsetType.HELMET;
                 case "SHOULDER0":
-                    return CSMBOffsetType.SHOULDER0;
+                    return PSMOffsetType.SHOULDER0;
                 case "SHOULDER1":
-                    return CSMBOffsetType.SHOULDER1;
+                    return PSMOffsetType.SHOULDER1;
                 case "CHEST":
-                    return CSMBOffsetType.CHEST;
+                    return PSMOffsetType.CHEST;
                 case "WAIST":
-                    return CSMBOffsetType.WAIST;
+                    return PSMOffsetType.WAIST;
                 case "PANTS0":
-                    return CSMBOffsetType.PANTS0;
+                    return PSMOffsetType.PANTS0;
                 case "PANTS1":
-                    return CSMBOffsetType.PANTS1;
+                    return PSMOffsetType.PANTS1;
                 case "BOOT0":
-                    return CSMBOffsetType.BOOT0;
+                    return PSMOffsetType.BOOT0;
                 case "BOOT1":
-                    return CSMBOffsetType.BOOT1;
+                    return PSMOffsetType.BOOT1;
                 default:
                     throw new InvalidDataException(type);
             }

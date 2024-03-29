@@ -34,16 +34,16 @@
             System.Windows.Forms.Label label3;
             System.Windows.Forms.Label label7;
             System.Windows.Forms.Label labelTextureMappingPreview;
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.skinPartTabContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.createToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cloneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changeColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.buttonDone = new MetroFramework.Controls.MetroButton();
-            this.buttonEXPORT = new MetroFramework.Controls.MetroButton();
-            this.buttonIMPORT = new MetroFramework.Controls.MetroButton();
-            this.importCustomSkinButton = new MetroFramework.Controls.MetroButton();
-            this.buttonExportModel = new MetroFramework.Controls.MetroButton();
+            this.exportTextureButton = new MetroFramework.Controls.MetroButton();
+            this.importTextureButton = new MetroFramework.Controls.MetroButton();
+            this.importSkinButton = new MetroFramework.Controls.MetroButton();
+            this.exportSkinButton = new MetroFramework.Controls.MetroButton();
             this.outlineColorButton = new MetroFramework.Controls.MetroButton();
             this.generateTextureCheckBox = new MetroFramework.Controls.MetroCheckBox();
             this.checkGuide = new MetroFramework.Controls.MetroCheckBox();
@@ -74,7 +74,7 @@
             label3 = new System.Windows.Forms.Label();
             label7 = new System.Windows.Forms.Label();
             labelTextureMappingPreview = new System.Windows.Forms.Label();
-            this.contextMenuStrip1.SuspendLayout();
+            this.skinPartTabContextMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SizeXUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SizeYUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SizeZUpDown)).BeginInit();
@@ -114,16 +114,16 @@
             labelTextureMappingPreview.ForeColor = System.Drawing.Color.White;
             labelTextureMappingPreview.Name = "labelTextureMappingPreview";
             // 
-            // contextMenuStrip1
+            // skinPartTabContextMenu
             // 
-            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.skinPartTabContextMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.skinPartTabContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.createToolStripMenuItem,
             this.cloneToolStripMenuItem,
             this.deleteToolStripMenuItem,
             this.changeColorToolStripMenuItem});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            resources.ApplyResources(this.contextMenuStrip1, "contextMenuStrip1");
+            this.skinPartTabContextMenu.Name = "contextMenuStrip1";
+            resources.ApplyResources(this.skinPartTabContextMenu, "skinPartTabContextMenu");
             // 
             // createToolStripMenuItem
             // 
@@ -158,41 +158,41 @@
             this.buttonDone.UseSelectable = true;
             this.buttonDone.Click += new System.EventHandler(this.buttonDone_Click);
             // 
-            // buttonEXPORT
+            // exportTextureButton
             // 
-            resources.ApplyResources(this.buttonEXPORT, "buttonEXPORT");
-            this.buttonEXPORT.ForeColor = System.Drawing.Color.White;
-            this.buttonEXPORT.Name = "buttonEXPORT";
-            this.buttonEXPORT.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.buttonEXPORT.UseSelectable = true;
-            this.buttonEXPORT.Click += new System.EventHandler(this.buttonEXPORT_Click);
+            resources.ApplyResources(this.exportTextureButton, "exportTextureButton");
+            this.exportTextureButton.ForeColor = System.Drawing.Color.White;
+            this.exportTextureButton.Name = "exportTextureButton";
+            this.exportTextureButton.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.exportTextureButton.UseSelectable = true;
+            this.exportTextureButton.Click += new System.EventHandler(this.exportTextureButton_Click);
             // 
-            // buttonIMPORT
+            // importTextureButton
             // 
-            resources.ApplyResources(this.buttonIMPORT, "buttonIMPORT");
-            this.buttonIMPORT.ForeColor = System.Drawing.Color.White;
-            this.buttonIMPORT.Name = "buttonIMPORT";
-            this.buttonIMPORT.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.buttonIMPORT.UseSelectable = true;
-            this.buttonIMPORT.Click += new System.EventHandler(this.buttonIMPORT_Click);
+            resources.ApplyResources(this.importTextureButton, "importTextureButton");
+            this.importTextureButton.ForeColor = System.Drawing.Color.White;
+            this.importTextureButton.Name = "importTextureButton";
+            this.importTextureButton.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.importTextureButton.UseSelectable = true;
+            this.importTextureButton.Click += new System.EventHandler(this.importTextureButton_Click);
             // 
-            // importCustomSkinButton
+            // importSkinButton
             // 
-            resources.ApplyResources(this.importCustomSkinButton, "importCustomSkinButton");
-            this.importCustomSkinButton.ForeColor = System.Drawing.Color.White;
-            this.importCustomSkinButton.Name = "importCustomSkinButton";
-            this.importCustomSkinButton.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.importCustomSkinButton.UseSelectable = true;
-            this.importCustomSkinButton.Click += new System.EventHandler(this.importCustomSkinButton_Click);
+            resources.ApplyResources(this.importSkinButton, "importSkinButton");
+            this.importSkinButton.ForeColor = System.Drawing.Color.White;
+            this.importSkinButton.Name = "importSkinButton";
+            this.importSkinButton.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.importSkinButton.UseSelectable = true;
+            this.importSkinButton.Click += new System.EventHandler(this.importSkinButton_Click);
             // 
-            // buttonExportModel
+            // exportSkinButton
             // 
-            resources.ApplyResources(this.buttonExportModel, "buttonExportModel");
-            this.buttonExportModel.ForeColor = System.Drawing.Color.White;
-            this.buttonExportModel.Name = "buttonExportModel";
-            this.buttonExportModel.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.buttonExportModel.UseSelectable = true;
-            this.buttonExportModel.Click += new System.EventHandler(this.buttonExportModel_Click);
+            resources.ApplyResources(this.exportSkinButton, "exportSkinButton");
+            this.exportSkinButton.ForeColor = System.Drawing.Color.White;
+            this.exportSkinButton.Name = "exportSkinButton";
+            this.exportSkinButton.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.exportSkinButton.UseSelectable = true;
+            this.exportSkinButton.Click += new System.EventHandler(this.exportSkinButton_Click);
             // 
             // outlineColorButton
             // 
@@ -316,7 +316,7 @@
             // skinPartListBox
             // 
             this.skinPartListBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.skinPartListBox.ContextMenuStrip = this.contextMenuStrip1;
+            this.skinPartListBox.ContextMenuStrip = this.skinPartTabContextMenu;
             resources.ApplyResources(this.skinPartListBox, "skinPartListBox");
             this.skinPartListBox.FormattingEnabled = true;
             this.skinPartListBox.Name = "skinPartListBox";
@@ -454,11 +454,11 @@
             this.Controls.Add(this.checkGuide);
             this.Controls.Add(this.generateTextureCheckBox);
             this.Controls.Add(this.outlineColorButton);
-            this.Controls.Add(this.buttonExportModel);
-            this.Controls.Add(this.importCustomSkinButton);
-            this.Controls.Add(this.buttonEXPORT);
+            this.Controls.Add(this.exportSkinButton);
+            this.Controls.Add(this.importSkinButton);
+            this.Controls.Add(this.exportTextureButton);
             this.Controls.Add(labelTextureMappingPreview);
-            this.Controls.Add(this.buttonIMPORT);
+            this.Controls.Add(this.importTextureButton);
             this.Controls.Add(label7);
             this.Controls.Add(this.buttonDone);
             this.Controls.Add(label3);
@@ -468,7 +468,7 @@
             this.Style = MetroFramework.MetroColorStyle.Silver;
             this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CustomSkinEditor_FormClosing);
-            this.contextMenuStrip1.ResumeLayout(false);
+            this.skinPartTabContextMenu.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.SizeXUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SizeYUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SizeZUpDown)).EndInit();
@@ -488,18 +488,18 @@
         }
 
         #endregion
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ContextMenuStrip skinPartTabContextMenu;
         private System.Windows.Forms.ToolStripMenuItem createToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cloneToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem changeColorToolStripMenuItem;
         private MetroFramework.Controls.MetroButton buttonDone;
         private MetroFramework.Controls.MetroButton outlineColorButton;
-        private MetroFramework.Controls.MetroButton buttonExportModel;
-        private MetroFramework.Controls.MetroButton importCustomSkinButton;
+        private MetroFramework.Controls.MetroButton exportSkinButton;
+        private MetroFramework.Controls.MetroButton importSkinButton;
         private PckStudio.ToolboxItems.InterpolationPictureBox uvPictureBox;
-        private MetroFramework.Controls.MetroButton buttonIMPORT;
-        private MetroFramework.Controls.MetroButton buttonEXPORT;
+        private MetroFramework.Controls.MetroButton importTextureButton;
+        private MetroFramework.Controls.MetroButton exportTextureButton;
         private MetroFramework.Controls.MetroCheckBox generateTextureCheckBox;
         private MetroFramework.Controls.MetroCheckBox checkGuide;
         private MetroFramework.Controls.MetroCheckBox showArmorCheckbox;

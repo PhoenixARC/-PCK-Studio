@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Drawing;
-using System.IO;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace PckStudio.Internal.FileFormats
 {
-    #region File Structure
 /*
-	Magic - 8 bytes[uint64]
+	Magic - 3 bytes("psm")
 	Version - 1 byte [u8]
 	Anim - 4 bytes[int32]
 	NumberOfParts - 4 bytes[int32]
@@ -30,19 +26,18 @@ namespace PckStudio.Internal.FileFormats
 		vertical offset - 4 bytes[float]
 	}
 */
-    #endregion
-    class CSMBFile
+    class PSMFile
     {
 		internal static readonly string HEADER_MAGIC = "psm";
 
         public readonly byte Version;
 
-        internal CSMBFile(byte version)
+        internal PSMFile(byte version)
         {
             Version = version;
         }
 
-        internal CSMBFile(byte version, SkinANIM skinANIM)
+        internal PSMFile(byte version, SkinANIM skinANIM)
 			: this(version)
         {
 			SkinANIM = skinANIM;
@@ -52,9 +47,9 @@ namespace PckStudio.Internal.FileFormats
 		public readonly List<SkinBOX> Parts = new List<SkinBOX>();
 		public readonly List<SkinPartOffset> Offsets = new List<SkinPartOffset>();
 
-		public static CSMBFile FromSkin(Skin skin)
+		public static PSMFile FromSkin(Skin skin)
 		{
-			var csmb = new CSMBFile(1);
+			var csmb = new PSMFile(1);
 			csmb.SkinANIM = skin.ANIM;
 			csmb.Parts.AddRange(skin.AdditionalBoxes);
 			csmb.Offsets.AddRange(skin.PartOffsets);
@@ -62,7 +57,7 @@ namespace PckStudio.Internal.FileFormats
 		}
 	}
 
-	public enum CSMBOffsetType : byte
+	public enum PSMOffsetType : byte
     {
 		HEAD = 0,
         BODY = 1,
@@ -85,7 +80,7 @@ namespace PckStudio.Internal.FileFormats
         BOOT1 = 16,
     }
 
-	public enum CSMBParentType : byte
+	public enum PSMParentType : byte
 	{
 		HEAD = 0,
 		BODY = 1,

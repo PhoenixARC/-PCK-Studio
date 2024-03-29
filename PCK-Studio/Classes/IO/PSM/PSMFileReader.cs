@@ -6,11 +6,11 @@ using OMI.Workers;
 using PckStudio.Internal.FileFormats;
 using PckStudio.Internal;
 
-namespace PckStudio.IO.CSMB
+namespace PckStudio.IO.PSM
 {
-    internal class CSMBFileReader : IDataFormatReader<CSMBFile>, IDataFormatReader
+    internal class PSMFileReader : IDataFormatReader<PSMFile>, IDataFormatReader
     {
-        public CSMBFile FromFile(string filename)
+        public PSMFile FromFile(string filename)
         {
             if (File.Exists(filename))
             {
@@ -22,26 +22,26 @@ namespace PckStudio.IO.CSMB
             throw new FileNotFoundException(filename);
         }
 
-        public CSMBFile FromStream(Stream stream)
+        public PSMFile FromStream(Stream stream)
         {
             using var reader = new EndiannessAwareBinaryReader(stream, Encoding.ASCII, leaveOpen: true, Endianness.LittleEndian);
             
             var magic = reader.ReadString(3);
-            if (magic != CSMBFile.HEADER_MAGIC)
+            if (magic != PSMFile.HEADER_MAGIC)
             {
                 Trace.TraceError("CSMBFileReader.FromStream - Failed to load csmb.\n\tReason: Header magic mismatch.");
-                return new CSMBFile(byte.MaxValue);
+                return new PSMFile(byte.MaxValue);
             }
             
             byte version = reader.ReadByte();
             if (version < 1 || version > 1)
             {
                 Trace.TraceError("CSMBFileReader.FromStream - Failed to load csmb.\n\tReason: Unsupported version.");
-                return new CSMBFile(byte.MaxValue);
+                return new PSMFile(byte.MaxValue);
             }
 
             var skinANIM = SkinANIM.FromValue(reader.ReadInt32());
-            CSMBFile csmbFile = new CSMBFile(version, skinANIM);
+            PSMFile csmbFile = new PSMFile(version, skinANIM);
             int numOfParts = reader.ReadInt32();
             for (int i = 0; i < numOfParts; i++)
             {
@@ -60,7 +60,7 @@ namespace PckStudio.IO.CSMB
 
         private SkinBOX ReadPart(EndiannessAwareBinaryReader reader)
         {
-            string type = GetParentType((CSMBParentType)reader.ReadByte());
+            string type = GetParentType((PSMParentType)reader.ReadByte());
             float posX = reader.ReadSingle();
             float posY = reader.ReadSingle();
             float posZ = reader.ReadSingle();
@@ -79,69 +79,69 @@ namespace PckStudio.IO.CSMB
 
         private SkinPartOffset ReadOffset(EndiannessAwareBinaryReader reader)
         {
-            CSMBOffsetType type = (CSMBOffsetType)reader.ReadByte();
+            PSMOffsetType type = (PSMOffsetType)reader.ReadByte();
             float value = reader.ReadSingle();
             return new SkinPartOffset(GetOffsetType(type), value);
         }
 
-        private static string GetParentType(CSMBParentType type)
+        private static string GetParentType(PSMParentType type)
         {
             switch (type)
             {
-                case CSMBParentType.HEAD:
+                case PSMParentType.HEAD:
                     return "HEAD";
-                case CSMBParentType.BODY:
+                case PSMParentType.BODY:
                     return "BODY";
-                case CSMBParentType.ARM0:
+                case PSMParentType.ARM0:
                     return "ARM0";
-                case CSMBParentType.ARM1:
+                case PSMParentType.ARM1:
                     return "ARM1";
-                case CSMBParentType.LEG0:
+                case PSMParentType.LEG0:
                     return "LEG0";
-                case CSMBParentType.LEG1:
+                case PSMParentType.LEG1:
                     return "LEG1";
                 default:
                     throw new InvalidDataException(type.ToString());
             }
         }
 
-        private static string GetOffsetType(CSMBOffsetType type)
+        private static string GetOffsetType(PSMOffsetType type)
         {
             switch (type)
             {
-                case CSMBOffsetType.HEAD:
+                case PSMOffsetType.HEAD:
                     return "HEAD";
-                case CSMBOffsetType.BODY:
+                case PSMOffsetType.BODY:
                     return "BODY";
-                case CSMBOffsetType.ARM0:
+                case PSMOffsetType.ARM0:
                     return "ARM0";
-                case CSMBOffsetType.ARM1:
+                case PSMOffsetType.ARM1:
                     return "ARM1";
-                case CSMBOffsetType.LEG0:
+                case PSMOffsetType.LEG0:
                     return "LEG0";
-                case CSMBOffsetType.LEG1:
+                case PSMOffsetType.LEG1:
                     return "LEG1";
-                case CSMBOffsetType.TOOL0:
+                case PSMOffsetType.TOOL0:
                     return "TOOL0";
-                case CSMBOffsetType.TOOL1:
+                case PSMOffsetType.TOOL1:
                     return "TOOL1";
-                case CSMBOffsetType.HELMET:
+                case PSMOffsetType.HELMET:
                     return "HELMET";
-                case CSMBOffsetType.SHOULDER0:
+                case PSMOffsetType.SHOULDER0:
                     return "SHOULDER0";
-                case CSMBOffsetType.SHOULDER1:
+                case PSMOffsetType.SHOULDER1:
                     return "SHOULDER1";
-                case CSMBOffsetType.CHEST:
+                case PSMOffsetType.CHEST:
                     return "CHEST";
-                case CSMBOffsetType.WAIST:
+                case PSMOffsetType.WAIST:
                     return "WAIST";
-                case CSMBOffsetType.PANTS0:
+                case PSMOffsetType.PANTS0:
                     return "PANTS0";
-                case CSMBOffsetType.PANTS1:
+                case PSMOffsetType.PANTS1:
                     return "PANTS1";
-                case CSMBOffsetType.BOOT0:
+                case PSMOffsetType.BOOT0:
                     return "BOOT0";
-                case CSMBOffsetType.BOOT1:
+                case PSMOffsetType.BOOT1:
                     return "BOOT1";
                 default:
                     throw new InvalidDataException(type.ToString());

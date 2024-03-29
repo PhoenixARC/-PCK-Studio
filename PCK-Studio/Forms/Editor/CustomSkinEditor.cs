@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using MetroFramework.Forms;
 using PckStudio.Internal;
 using PckStudio.Extensions;
-using PckStudio.IO.CSMB;
+using PckStudio.IO.PSM;
 using PckStudio.Internal.FileFormats;
 using System.Linq;
 using PckStudio.Forms.Additional_Popups;
@@ -28,8 +28,33 @@ namespace PckStudio.Forms.Editor
         private bool _inflateOverlayParts;
         private bool _allowInflate;
 
+        private struct FileDialogOption
+        {
+            public readonly string FilterDescription;
+            public readonly string FilterPattern;
+            public string Filter => $"{FilterDescription}|{FilterPattern}";
+
+            public FileDialogOption(string filterDescription, string filterPattern)
+            {
+                FilterDescription = filterDescription;
+                FilterPattern = filterPattern;
+            }
+
+            public override string ToString()
+            {
+                return Filter;
+            }
+        }
+
+        private readonly FileDialogOption[] fileFilters = 
+        [
+            new ("Pck skin model(*.psm)", "*.psm")
+        ];
+
+        private string skinModelFileFilters => string.Join("|", fileFilters);
+
         private BindingSource skinPartListBindingSource;
-        //private BindingSource skinOffsetListBindingSource;
+        private BindingSource skinOffsetListBindingSource;
 
         private static GraphicsConfig _graphicsConfig = new GraphicsConfig()
         {
@@ -66,7 +91,7 @@ namespace PckStudio.Forms.Editor
             skinNameLabel.Text = skin.Name;
             var boxProperties = skin.AdditionalBoxes;
             var offsetProperties = skin.PartOffsets;
-
+            
             renderer3D1.ANIM = skin.ANIM;
 
             if (skin.HasCape)
@@ -122,7 +147,7 @@ namespace PckStudio.Forms.Editor
             }
         }
 
-        private void buttonEXPORT_Click(object sender, EventArgs e)
+        private void exportTextureButton_Click(object sender, EventArgs e)
         {
             using SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "PNG Image Files | *.png";
@@ -132,7 +157,7 @@ namespace PckStudio.Forms.Editor
             }
         }
 
-        private void buttonIMPORT_Click(object sender, EventArgs e)
+        private void importTextureButton_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "PNG Image Files | *.png";
@@ -156,49 +181,49 @@ namespace PckStudio.Forms.Editor
             DialogResult = DialogResult.OK;
         }
 
-        // TODO
-        private void buttonExportModel_Click(object sender, EventArgs e)
+        private void exportSkinButton_Click(object sender, EventArgs e)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Title = "Save Model File";
-            saveFileDialog.Filter = "Custom Skin Model File (*.csm,*.CSM)|*.csm;*.CSM|" +
-                                    "Custom Skin Model Binary File (*.csmb)|*.csmb|";
+            saveFileDialog.Filter = skinModelFileFilters;
             if (saveFileDialog.ShowDialog() != DialogResult.OK)
                 return;
-        }
-
-        [Obsolete("Kept for backwards compatibility.")]
-        private void importCustomSkinButton_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Title = "Select Model File";
-            openFileDialog.Filter = "Custom Skin Model File (*.csm,*.CSM)|*.csm;*.CSM|" +
-                                    "Custom Skin Model Binary File (*.csmb)|*.csmb|";
-            if (MessageBox.Show("Import custom model project file? Your current work will be lost!", "", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1) == DialogResult.Yes && openFileDialog.ShowDialog() == DialogResult.OK)
+            string fileExtension = Path.GetExtension(saveFileDialog.FileName);
+            switch (fileExtension)
             {
-                string fileExtension = Path.GetExtension(openFileDialog.FileName);
-                if (fileExtension == ".csmb")
-                {
-                    //var reader = new CSMBFileReader();
-                    //CSMBFile csmbFile = reader.FromFile(openFileDialog.FileName);
-                    //LoadCsmb(csmbFile);
-                }
+                case ".psm":
+                    var writer = new PSMFileWriter(PSMFile.FromSkin(_skin));
+                    writer.WriteToFile(saveFileDialog.FileName);
+                    break;
+                default:
+                    break;
             }
         }
 
-        private void LoadCsmb(CSMBFile csmbFile)
+        private void importSkinButton_Click(object sender, EventArgs e)
         {
-            //renderer3D1.ModelData.Clear();
-            //foreach (var part in csmbFile.Parts)
-            //{
-            //    renderer3D1.ModelData.Add(part);
-            //}
-
-            //renderer3D1.ResetOffsets();
-            //foreach (var offset in csmbFile.Offsets)
-            //{
-            //    renderer3D1.SetPartOffset(offset);
-            //}
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Title = "Select Model File";
+            openFileDialog.Filter = skinModelFileFilters;
+            if (MessageBox.Show("Import custom model project file? Your current work will be lost!", "", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1) == DialogResult.Yes && openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string fileExtension = Path.GetExtension(openFileDialog.FileName);
+                switch (fileExtension)
+                {
+                    case ".psm":
+                        var reader = new PSMFileReader();
+                        PSMFile csmbFile = reader.FromFile(openFileDialog.FileName);
+                        _skin.ANIM = csmbFile.SkinANIM;
+                        _skin.AdditionalBoxes.Clear();
+                        _skin.PartOffsets.Clear();
+                        _skin.AdditionalBoxes.AddRange(csmbFile.Parts);
+                        _skin.PartOffsets.AddRange(csmbFile.Offsets);
+                        LoadModelData(_skin);
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
 
         private void cloneToolStripMenuItem_Click(object sender, EventArgs e)
