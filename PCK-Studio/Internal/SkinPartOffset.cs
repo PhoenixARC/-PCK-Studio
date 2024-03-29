@@ -16,7 +16,7 @@ namespace PckStudio.Internal
             return sWhitespace.Replace(input, replacement);
         }
 
-        private static readonly string[] ValidModelOffsetTypes = new string[]
+        internal static readonly string[] ValidModelOffsetTypes = new string[]
         {
             //! See: 0x02af8a20 - 0x02af8ed8 (Wii U Editon)
             "HEAD",
