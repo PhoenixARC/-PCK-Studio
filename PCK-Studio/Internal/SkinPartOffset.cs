@@ -40,8 +40,8 @@ namespace PckStudio.Internal
             "BOOT1",
         };
 
-        public readonly string Type;
-        public readonly float Value;
+        public string Type { get; }
+        public float Value { get; }
 
         public SkinPartOffset(string type, float value)
         {
