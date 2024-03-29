@@ -10,7 +10,7 @@ using MetroFramework.Forms;
 using PckStudio.Internal;
 using PckStudio.Extensions;
 using PckStudio.IO.CSMB;
-using PckStudio.FileFormats;
+using PckStudio.Internal.FileFormats;
 using System.Linq;
 using PckStudio.Forms.Additional_Popups;
 

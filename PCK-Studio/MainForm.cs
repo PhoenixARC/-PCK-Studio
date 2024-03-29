@@ -7,16 +7,14 @@ using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 using System.Diagnostics;
 using System.Drawing.Imaging;
-using OMI.Formats.Archive;
 using OMI.Formats.Pck;
 using OMI.Formats.GameRule;
 using OMI.Formats.Languages;
-using OMI.Workers.Archive;
 using OMI.Workers.Pck;
 using OMI.Workers.GameRule;
 using OMI.Workers.Language;
 using PckStudio.Properties;
-using PckStudio.FileFormats;
+using PckStudio.Internal.FileFormats;
 using PckStudio.Forms;
 using PckStudio.Forms.Editor;
 using PckStudio.Forms.Additional_Popups.Animation;
@@ -30,7 +28,6 @@ using PckStudio.Extensions;
 using PckStudio.Popups;
 using PckStudio.Classes.Utils;
 using PckStudio.Helper;
-using PCKStudio_Updater;
 
 namespace PckStudio
 {

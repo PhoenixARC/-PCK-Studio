@@ -233,8 +233,8 @@
     <Compile Include="Extensions\ColorExtensions.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="Extensions\GraphicsExtensions.cs" />
-    <Compile Include="FileFormats\CSMBFile.cs" />
-    <Compile Include="FileFormats\PckAudioFile.cs" />
+    <Compile Include="Internal\FileFormats\CSMBFile.cs" />
+    <Compile Include="Internal\FileFormats\PckAudioFile.cs" />
     <Compile Include="Classes\API\Miles\Binka.cs" />
     <Compile Include="Classes\IO\3DST\3DSTextureReader.cs" />
     <Compile Include="Classes\IO\3DST\3DSTextureWriter.cs" />

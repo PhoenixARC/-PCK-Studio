@@ -13,12 +13,12 @@ using NAudio.Wave;
 
 using OMI.Formats.Pck;
 
-using PckStudio.FileFormats;
 using PckStudio.IO.PckAudio;
 using PckStudio.Forms.Additional_Popups;
 using PckStudio.Properties;
 using PckStudio.API.Miles;
 using PckStudio.Internal;
+using PckStudio.Internal.FileFormats;
 using PckStudio.Extensions;
 
 // Audio Editor by MattNL and Miku-666
