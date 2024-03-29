@@ -6,12 +6,7 @@ using System.Windows.Forms;
 using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
 using System.Collections.Generic;
-
-using Newtonsoft.Json;
 using MetroFramework.Forms;
-
-using OMI.Formats.Pck;
-
 using PckStudio.Internal;
 using PckStudio.Extensions;
 using PckStudio.IO.CSMB;
@@ -60,31 +55,34 @@ namespace PckStudio.Forms.Editor
         {
             base.OnLoad(e);
             renderer3D1.Initialize(_inflateOverlayParts);
-            if (_skin.Texture is not null)
-            {
-                renderer3D1.Texture = _skin.Texture;
-            }
-            renderer3D1.ANIM = _skin.ANIM;
             renderer3D1.OutlineColor = Color.DarkSlateBlue;
-            LoadModelData();
+            LoadModelData(_skin);
         }
 
-        private void LoadModelData()
+        private void LoadModelData(Skin skin)
         {
-            skinNameLabel.Text = _skin.Name;
-            var boxProperties = _skin.AdditionalBoxes;
-            var offsetProperties = _skin.PartOffsets;
+            skinNameLabel.Text = skin.Name;
+            var boxProperties = skin.AdditionalBoxes;
+            var offsetProperties = skin.PartOffsets;
 
-            if (_skin.HasCape)
-                renderer3D1.CapeTexture = _skin.CapeTexture;
+            renderer3D1.ANIM = skin.ANIM;
 
+            if (skin.HasCape)
+                renderer3D1.CapeTexture = skin.CapeTexture;
+
+            renderer3D1.ModelData.Clear();
             foreach (SkinBOX box in boxProperties)
             {
                 renderer3D1.ModelData.Add(box);
             }
+            renderer3D1.ResetOffsets();
             foreach (SkinPartOffset offset in offsetProperties)
             {
                 renderer3D1.SetPartOffset(offset);
+            }
+            if (skin.Texture is not null)
+            {
+                renderer3D1.Texture = skin.Texture;
             }
 
             //skinOffsetListBindingSource = new BindingSource(renderer3D1.offsetSpecificMeshStorage, null);
