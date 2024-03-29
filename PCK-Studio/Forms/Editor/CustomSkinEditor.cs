@@ -352,6 +352,8 @@ namespace PckStudio.Forms.Editor
             string[] available = SkinPartOffset.ValidModelOffsetTypes.Where(s => !offsets.Contains(s)).ToArray();
             using ItemSelectionPopUp typeSelection = new ItemSelectionPopUp(available);
             using NumericPrompt valuePrompt = new NumericPrompt(0f, -100_000f, 100_000f);
+            valuePrompt.DecimalPlaces = 1;
+            valuePrompt.ValueStep = (decimal)0.1f;
             if (typeSelection.ShowDialog() == DialogResult.OK && valuePrompt.ShowDialog() == DialogResult.OK)
             {
                 renderer3D1.SetPartOffset(typeSelection.SelectedItem, (float)valuePrompt.SelectedValue);
@@ -372,8 +374,10 @@ namespace PckStudio.Forms.Editor
             if (offsetListBox.SelectedItem is not SkinPartOffset offset)
                 return;
 
-            using NumericPrompt valuePrompt = new NumericPrompt((float)offset.Value, -100_000f, 100_000f);
+            using NumericPrompt valuePrompt = new NumericPrompt(offset.Value, -100_000f, 100_000f);
             valuePrompt.ToolTipText = "Set new Value for " + offset.Type;
+            valuePrompt.DecimalPlaces = 1;
+            valuePrompt.ValueStep = (decimal)0.1f;
             if (valuePrompt.ShowDialog() == DialogResult.OK)
             {
                 renderer3D1.SetPartOffset(offset.Type, (float)valuePrompt.SelectedValue);

@@ -22,6 +22,12 @@ namespace PckStudio
 			set => ValueUpDown.Increment = value;
 		}
 
+		public int DecimalPlaces
+		{
+			get => ValueUpDown.DecimalPlaces;
+			set => ValueUpDown.DecimalPlaces = value;
+		}
+
         public decimal Minimum
         {
             get => ValueUpDown.Minimum;

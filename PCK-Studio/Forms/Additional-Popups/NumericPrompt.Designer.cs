@@ -53,6 +53,8 @@
             // ValueUpDown
             // 
             resources.ApplyResources(this.ValueUpDown, "ValueUpDown");
+            this.ValueUpDown.BackColor = System.Drawing.SystemColors.WindowText;
+            this.ValueUpDown.ForeColor = System.Drawing.SystemColors.Window;
             this.ValueUpDown.Name = "ValueUpDown";
             // 
             // toolTipLabel
