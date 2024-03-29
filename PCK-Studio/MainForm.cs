@@ -1517,85 +1517,50 @@ namespace PckStudio
 				deleteEntryToolStripMenuItem_Click(sender, e);
 		}
 
-		#region imports a folder of skins to pck
 		private void importExtractedSkinsFolder(object sender, EventArgs e)
 		{
 			using FolderBrowserDialog contents = new FolderBrowserDialog();
-			if (contents.ShowDialog() == DialogResult.OK)
+			if (contents.ShowDialog() == DialogResult.OK && Directory.Exists(contents.SelectedPath))
 			{
-				//checks to make sure selected path exist
-				if (!Directory.Exists(contents.SelectedPath))
-				{
-					MessageBox.Show("Directory Lost");
-					return;
-				}
-				// creates variable to indicate wether current pck skin structure is mashup or regular skin
-				bool hasSkinsPck = currentPCK.HasFile("Skins.pck", PckFileType.SkinDataFile);
+				string filepath = treeViewMain.SelectedNode?.FullPath ?? "";
+				if (treeViewMain.SelectedNode is not null && treeViewMain.SelectedNode.IsTagOfType<PckFileData>())
+					filepath = treeViewMain.SelectedNode.Parent?.FullPath ?? "";
 
-				foreach (var fullfilename in Directory.GetFiles(contents.SelectedPath, "*.png"))
+                foreach (var fullfilename in Directory.GetFiles(contents.SelectedPath, "dlc*.png"))
 				{
-					string filename = Path.GetFileNameWithoutExtension(fullfilename);
+					string filename = Path.GetFileName(fullfilename);
+					// only accept skin or cape named files
+					if (!filename.StartsWith("dlcskin") && !filename.StartsWith("dlccape"))
+						continue;
 					// sets file type based on wether its a cape or skin
 					PckFileType pckfiletype = filename.StartsWith("dlccape", StringComparison.OrdinalIgnoreCase)
 						? PckFileType.CapeFile
 						: PckFileType.SkinFile;
-					string pckfilepath = (hasSkinsPck ? "Skins/" : string.Empty) + filename + ".png";
+					string pckfilepath = Path.Combine(filepath, filename);
 
-
-					PckFileData newFile = new PckFileData(pckfilepath, pckfiletype);
+					PckFileData newFile = currentPCK.CreateNewFile(pckfilepath, pckfiletype);
 					byte[] filedata = File.ReadAllBytes(fullfilename);
 					newFile.SetData(filedata);
 
 					if (File.Exists(fullfilename + ".txt"))
 					{
-						string[] properties = File.ReadAllText(fullfilename + ".txt").Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+						string propertiesFileContent = File.ReadAllText(fullfilename + ".txt");
+                        string[] properties = propertiesFileContent.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
 						foreach (string property in properties)
 						{
 							string[] param = property.Split(':');
-							if (param.Length < 2) continue;
-							newFile.AddProperty(param[0], param[1]);
-							//switch (param[0])
-							//{
-							//    case "DISPLAYNAMEID":
-							//        locNameId = param[1];
-							//        continue;
-
-							//    case "DISPLAYNAME":
-							//        locName = param[1];
-							//        continue;
-
-							//    case "THEMENAMEID":
-							//        locThemeId = param[1];
-							//        continue;
-
-							//    case "THEMENAME":
-							//        locTheme = param[1];
-							//        continue;
-							//}
+							if (param.Length < 2)
+								continue;
+							string key = param[0];
+							string value = param[1];
+							newFile.AddProperty(key, value);
 						}
 					}
-					if (hasSkinsPck)
-					{
-						var skinsfile = currentPCK.GetFile("Skins.pck", PckFileType.SkinDataFile);
-						using (var ms = new MemoryStream(skinsfile.Data))
-						{
-							var reader = new PckFileReader(LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
-							var skinspck = reader.FromStream(ms);
-							skinspck.AddFile(newFile);
-							ms.Position = 0;
-							var writer = new PckFileWriter(skinspck, LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
-							writer.WriteToStream(ms);
-							skinsfile.SetData(ms.ToArray());
-						}
-						continue;
-					}
-					currentPCK.AddFile(newFile);
 				}
 				BuildMainTreeView();
 				wasModified = true;
 			}
 		}
-		#endregion
 
 		private bool TryGetLocFile(out LOCFile locFile)
 		{
