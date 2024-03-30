@@ -929,7 +929,6 @@ namespace PckStudio
 			using AddNewSkin add = new AddNewSkin(locFile);
 			if (add.ShowDialog() == DialogResult.OK)
 			{
-
 				if (currentPCK.HasFile("Skins.pck", PckFileType.SkinDataFile)) // Prioritize Skins.pck
 				{
 					TreeNode subPCK = treeViewMain.Nodes.Find("Skins.pck", false).FirstOrDefault();
@@ -1096,16 +1095,38 @@ namespace PckStudio
 			if (parent == null) return;
 
 			PckFileData parent_file = parent.Tag as PckFileData;
+			PckFile parent_file_pck = 
+				new PckFileReader(
+					LittleEndianCheckBox.Checked ? 
+					OMI.Endianness.LittleEndian : 
+					OMI.Endianness.BigEndian
+					).FromStream(new MemoryStream(parent_file.Data));
+
 			if (parent_file.Filetype is PckFileType.TexturePackInfoFile || parent_file.Filetype is PckFileType.SkinDataFile)
 			{
 				Debug.WriteLine("Rebuilding " + parent_file.Filename);
 				PckFile newPCKFile = new PckFile(3, parent_file.Filetype is PckFileType.SkinDataFile);
 
+				bool hasSkinsFolder = false;
+
+				// add original pck files to prevent data loss
+				foreach (PckFileData _fd in parent_file_pck.GetFiles())
+				{
+					PckFileData new_file = newPCKFile.CreateNewFile(_fd.Filename, _fd.Filetype);
+					// check for skins folder so files are placed consistently in final pck
+					if (_fd.Filename.StartsWith("Skins/") && parent_file.Filetype is PckFileType.SkinDataFile) hasSkinsFolder = true;
+					foreach (var prop in _fd.GetProperties())
+						new_file.AddProperty(prop);
+					new_file.SetData(_fd.Data);
+				}
+
 				foreach (TreeNode node in GetAllChildNodes(parent.Nodes))
 				{
 					if (node.Tag is PckFileData node_file)
 					{
-						PckFileData new_file = newPCKFile.CreateNewFile(node_file.Filename.Replace(parent_file.Filename + "/", String.Empty), node_file.Filetype);
+						PckFileData new_file = newPCKFile.CreateNewFile(
+							(hasSkinsFolder ? "Skins/" : String.Empty) 
+							+ node_file.Filename.Replace(parent_file.Filename + "/", String.Empty), node_file.Filetype);
 						foreach (var prop in node_file.GetProperties())
 							new_file.AddProperty(prop);
 						new_file.SetData(node_file.Data);
@@ -1115,7 +1136,12 @@ namespace PckStudio
 				parent_file.SetData(new PckFileWriter(newPCKFile, LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian));
 				parent.Tag = parent_file;
 
+				// erase hidden sub-pck nodes to prevent duplication
+				parent.Nodes.Clear();
+
 				BuildMainTreeView();
+
+				MessageBox.Show(this, $"Files added successfully to {parent_file.Filename}");
 			}
 		}
 
