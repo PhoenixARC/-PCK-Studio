@@ -815,6 +815,18 @@
   <data name="toolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
     <value>202, 6</value>
   </data>
+  <metadata name="toolStripSeparator2.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
+  </metadata>
+  <data name="toolStripSeparator2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>183, 6</value>
+  </data>
+  <metadata name="toolStripSeparator4.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
+  </metadata>
+  <data name="toolStripSeparator4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>183, 6</value>
+  </data>
   <data name="toolStripSeparator3.Size" type="System.Drawing.Size, System.Drawing">
     <value>202, 6</value>
   </data>
@@ -1255,7 +1267,7 @@
     <value>Open</value>
   </data>
   <data name="fullBoxSupportToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>160, 22</value>
   </data>
   <data name="fullBoxSupportToolStripMenuItem.Text" xml:space="preserve">
     <value>Full box support</value>
@@ -1322,23 +1334,11 @@
   <data name="closeToolStripMenuItem.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
-  <metadata name="toolStripSeparator2.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>False</value>
-  </metadata>
-  <data name="toolStripSeparator2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>183, 6</value>
-  </data>
   <data name="recentlyOpenToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>186, 22</value>
   </data>
   <data name="recentlyOpenToolStripMenuItem.Text" xml:space="preserve">
     <value>Recently open</value>
-  </data>
-  <metadata name="toolStripSeparator4.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>False</value>
-  </metadata>
-  <data name="toolStripSeparator4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>183, 6</value>
   </data>
   <data name="exitToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>186, 22</value>
@@ -1358,7 +1358,7 @@
   <data name="quickChangeToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wQAADsEBuJFr7QAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAACBnSURBVHhe7d0L
+        vwAADr8BOAVTJAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAACBnSURBVHhe7d0L
         jHZrVdhxOCA3ERWp11agYNFiURG8QRURBKnQNkiwiSG9RHpRSmKtoE2aUysFSoIQxJhIFW3UVk/TViIX
         qVosF2nTSgtWY0Q4oNwvUoQjAqddjziF85013zcz395rP2vv3y/5J0YPOPO879lrve/seecWALBTt4ke
         GD0hek704ui3ot+L3hP93+iD0bui10e/Fv3r6J9Gj4k+JwIAGrh79L3Rr0RjuI8hfzX9dvSj0cOjW0cA
@@ -1542,7 +1542,7 @@
   <data name="miscToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        EAAACxABrSO9dQAAA6pJREFUeF7tms9vDVEYhouqpFZVRFpdd+cPkFphQeKPqIUfSVl0Y9OQWNpXE/ak
+        DgAACw4BQL7hQQAAA6pJREFUeF7tms9vDVEYhouqpFZVRFpdd+cPkFphQeKPqIUfSVl0Y9OQWNpXE/ak
         SEhYkEjZUFZERCxtCaKKWKDe787jpNftmTlzz4x0rvMkb3Lzzfu9c8690zkz0+lLJBKJRCKRqIOVlZUx
         6Yb0WSqL9dyUxolrFhq4Tf6DFMtHaYzY5qBB2y9fFdeIbQ4adDeHvY8lYpsDA3dQDoY2B+XmwLgdlIOh
         zUG5OTBuB+VgaHNQbg6M20E5GNoclP8N2l/M+r3eKHc9IWNV6/d6I+x6QqYq1+/1RvH1hEy9cNj7KL6e
@@ -1824,7 +1824,7 @@
   <data name="aboutToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wQAADsEBuJFr7QAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAADnLSURBVHhe7d0J
+        vwAADr8BOAVTJAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAADnLSURBVHhe7d0J
         vK5jvf/xZZ7nWQiNSJExM5kasI1FhjJFiqQUQhqdFKk4piISoaNShzLPY+JkTOZ5ZpvH///73extsX9r
         77We8Xfd1+f9en3Oq7PsvfYa7uF67ue+r2sAQBFmV4up1dUmalv1VbWfOkgdqU5RZ6nL1DXq9kHdp54Y
         1Kvq/w3qZTX4v7s71K3Kn+tidbb6gzpB/UJ9T31N+WvZSPlr89c4p5pEAQCAIUytFlWfVruoA9TR6s/q
@@ -2585,7 +2585,7 @@
   <data name="settingsToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wQAADsEBuJFr7QAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAEirSURBVHhe7Z0J
+        vwAADr8BOAVTJAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAEirSURBVHhe7Z0J
         uK7V3P9P0jyXJqVRhQiVuUFUKOF1vb1lqIhCRV5jhFIJRen18koyq5QoiSakuaQolWgeUCppHv3/3+85
         jrP32b+99zPda7jvz+e6PhfX0z57P89a61lr3Wv4/WYAQJEsJjeUb5L7y+/L8+Xl8jp5l3xE/r/M+j34
         vfg9XSb9Hv1e/Z7fKP0Z/FkAAAAgYBG5ufyMPEeWMLiPysflFfJwua1cQgIAAHQWD/pvlqfKR2U0eLZR
@@ -2911,7 +2911,7 @@
   <data name="helpToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        EAAACxABrSO9dQAAAeRJREFUeF7tzjGOIzEMAEH//9N3SaEzwzLH2plAFTZEUq/jOI7jOI5f+beZM8/l
+        DgAACw4BQL7hQQAAAeRJREFUeF7tzjGOIzEMAEH//9N3SaEzwzLH2plAFTZEUq/jOI7jOI5f+beZM8/l
         n9s481z+uY0zz+Wf2zjzHP4VeRtnIt/HPyJv40zk+/hH5G2ciXwf/4i8jTOR/467kW/jG5H3cSfybXwj
         8j7uRL6Nb0Tex53It/GNyL9jb+RlxsasWWYs8pw9kZcZG7NmmbHIc/ZEXmZszJplxiLP2RN5mbExa5YZ
         izxnT+RlxiK/5VnkZcYiz9kTeZmxyG95FnmZschz9kReZizyW55FXmYs8pw9kZcZi/yWZ5GXGYs8Z0/k
@@ -7214,6 +7214,18 @@
   <data name="&gt;&gt;toolStripSeparator1.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;toolStripSeparator2.Name" xml:space="preserve">
+    <value>toolStripSeparator2</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator4.Name" xml:space="preserve">
+    <value>toolStripSeparator4</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;toolStripSeparator3.Name" xml:space="preserve">
     <value>toolStripSeparator3</value>
   </data>
@@ -7526,6 +7538,18 @@
   <data name="&gt;&gt;closeToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;recentlyOpenToolStripMenuItem.Name" xml:space="preserve">
+    <value>recentlyOpenToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;recentlyOpenToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;exitToolStripMenuItem.Name" xml:space="preserve">
+    <value>exitToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;exitToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;editToolStripMenuItem.Name" xml:space="preserve">
     <value>editToolStripMenuItem</value>
   </data>
@@ -7723,30 +7747,6 @@
   </data>
   <data name="&gt;&gt;imageList.Type" xml:space="preserve">
     <value>System.Windows.Forms.ImageList, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;recentlyOpenToolStripMenuItem.Name" xml:space="preserve">
-    <value>recentlyOpenToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;recentlyOpenToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;toolStripSeparator2.Name" xml:space="preserve">
-    <value>toolStripSeparator2</value>
-  </data>
-  <data name="&gt;&gt;toolStripSeparator2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;exitToolStripMenuItem.Name" xml:space="preserve">
-    <value>exitToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;exitToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;toolStripSeparator4.Name" xml:space="preserve">
-    <value>toolStripSeparator4</value>
-  </data>
-  <data name="&gt;&gt;toolStripSeparator4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>MainForm</value>

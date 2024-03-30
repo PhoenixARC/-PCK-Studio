@@ -2296,5 +2296,10 @@ namespace PckStudio
 		private void moveUpToolStripMenuItem_Click(object sender, EventArgs e) => moveFile(-1);
 		[Obsolete]
 		private void moveDownToolStripMenuItem_Click(object sender, EventArgs e) => moveFile(1);
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
 	}
 }
