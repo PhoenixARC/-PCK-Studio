@@ -81,7 +81,6 @@
             this.texturePackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mashUpPackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.extractToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.packSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fullBoxSupportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -472,7 +471,6 @@
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newToolStripMenuItem,
             this.openToolStripMenuItem,
-            this.extractToolStripMenuItem1,
             this.packSettingsToolStripMenuItem,
             this.saveToolStripMenuItem1,
             this.saveToolStripMenuItem,
@@ -513,12 +511,6 @@
             resources.ApplyResources(this.openToolStripMenuItem, "openToolStripMenuItem");
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
-            // 
-            // extractToolStripMenuItem1
-            // 
-            resources.ApplyResources(this.extractToolStripMenuItem1, "extractToolStripMenuItem1");
-            this.extractToolStripMenuItem1.Name = "extractToolStripMenuItem1";
-            this.extractToolStripMenuItem1.Click += new System.EventHandler(this.extractToolStripMenuItem1_Click);
             // 
             // packSettingsToolStripMenuItem
             // 
@@ -1127,7 +1119,6 @@
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem quickChangeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem extractToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem importSkinsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem importSkinToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;

@@ -1436,60 +1436,6 @@ namespace PckStudio
 			e.CancelEdit = true;
 		}
 
-		private void extractToolStripMenuItem1_Click(object sender, EventArgs e)
-		{
-			try
-			{
-				//Extracts a chosen pck file to a chosen destincation
-				using OpenFileDialog ofd = new OpenFileDialog();
-				using FolderBrowserDialog sfd = new FolderBrowserDialog();
-				ofd.CheckFileExists = true;
-				ofd.Filter = "PCK (Minecraft Console Package)|*.pck";
-
-				if (ofd.ShowDialog() == DialogResult.OK && sfd.ShowDialog() == DialogResult.OK)
-				{
-					PckFile pckfile = null;
-					using (FileStream fs = File.OpenRead(ofd.FileName))
-					{
-						try
-						{
-							var reader = new PckFileReader(LittleEndianCheckBox.Checked
-								? OMI.Endianness.LittleEndian
-								: OMI.Endianness.BigEndian);
-							pckfile = reader.FromStream(fs);
-						}
-						catch (OverflowException ex)
-						{
-							Debug.WriteLine(ex.Message);
-							Trace.WriteLine("Failed to open " + ofd.FileName);
-							MessageBox.Show("Error", "Failed to open pck\nTry checking the 'Open/Save as Switch/Vita/PS4 pck' check box in the upper right corner.",
-								MessageBoxButtons.OK, MessageBoxIcon.Error);
-						}
-					}
-					foreach (PckFileData file in pckfile.GetFiles())
-					{
-						string filepath = $"{sfd.SelectedPath}/{file.Filename}";
-						FileInfo fileinfo = new FileInfo(filepath);
-						fileinfo.Directory.Create();
-						File.WriteAllBytes(filepath, file.Data); // writes data to file
-																 //attempts to generate reimportable metadata file out of minefiles metadata
-						string metaData = "";
-
-						foreach (KeyValuePair<string, string> entry in file.GetProperties())
-						{
-							metaData += $"{entry.Key}: {entry.Value}{Environment.NewLine}";
-						}
-
-						File.WriteAllText(sfd.SelectedPath + @"\" + file.Filename + ".txt", metaData);
-					}
-				}
-			}
-			catch (Exception)
-			{
-				MessageBox.Show("An Error occured while extracting data");
-			}
-		}
-
 		public string GetDataPath()
 		{
 			return Path.Combine(Path.GetDirectoryName(saveLocation), "Data");
