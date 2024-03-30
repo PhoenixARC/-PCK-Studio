@@ -7,10 +7,10 @@ using System.Security.Permissions;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("PCK Studio")]
+[assembly: AssemblyTitle("Pck Studio")]
 [assembly: AssemblyDescription("A Minecraft Legacy Console .pck Editor")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Nobledez & PhoenixARC")]
+[assembly: AssemblyCompany("PCK-Studio")]
 [assembly: AssemblyProduct("PCK-Studio")]
 [assembly: AssemblyCopyright("Copyright ©  2021")]
 [assembly: AssemblyCulture("")]
