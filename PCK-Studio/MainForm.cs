@@ -2276,21 +2276,28 @@ namespace PckStudio
 
 			int index = pck.IndexOfFile(file);
 
-			if (index + amount < 0 || index + amount > pck.FileCount) return;
-			pck.RemoveFile(file);
-			pck.InsertFile(index + amount, file);
+			try
+            {
+				if (index + amount < 0 || index + amount > pck.FileCount) return;
+				pck.RemoveFile(file);
+				pck.InsertFile(index + amount, file);
 
-			if (IsSubPCK)
-			{
-				using (var stream = new MemoryStream())
+				if (IsSubPCK)
 				{
-					var writer = new PckFileWriter(pck, LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
-					writer.WriteToStream(stream);
-					(GetSubPCK(path).Tag as PckFileData).SetData(stream.ToArray());
+					using (var stream = new MemoryStream())
+					{
+						var writer = new PckFileWriter(pck, LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
+						writer.WriteToStream(stream);
+						(GetSubPCK(path).Tag as PckFileData).SetData(stream.ToArray());
+					}
 				}
+				BuildMainTreeView();
+				wasModified = true;
 			}
-			BuildMainTreeView();
-			wasModified = true;
+			catch(Exception ex)
+            {
+				MessageBox.Show("Can't move file under or above a folder");
+            }
 		}
 		[Obsolete]
 		private void moveUpToolStripMenuItem_Click(object sender, EventArgs e) => moveFile(-1);
