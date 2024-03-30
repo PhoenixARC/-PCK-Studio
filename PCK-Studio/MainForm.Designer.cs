@@ -32,6 +32,8 @@
             System.Windows.Forms.PictureBox logoPictureBox;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+            System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+            System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.contextMenuPCKEntries = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.createToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -81,7 +83,6 @@
             this.texturePackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mashUpPackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.extractToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.packSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fullBoxSupportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -110,6 +111,7 @@
             this.toPhoenixARCDeveloperToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.forMattNLContributorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.joinDevelopmentDiscordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.trelloBoardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuMetaTree = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addEntryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -142,9 +144,12 @@
             this.imageList = new System.Windows.Forms.ImageList(this.components);
             this.previewPictureBox = new PckStudio.ToolboxItems.InterpolationPictureBox();
             this.LittleEndianCheckBox = new MetroFramework.Controls.MetroCheckBox();
-            this.trelloBoardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.recentlyOpenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             logoPictureBox = new System.Windows.Forms.PictureBox();
             toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             ((System.ComponentModel.ISupportInitialize)(logoPictureBox)).BeginInit();
             this.contextMenuPCKEntries.SuspendLayout();
             this.menuStrip.SuspendLayout();
@@ -472,11 +477,14 @@
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newToolStripMenuItem,
             this.openToolStripMenuItem,
-            this.extractToolStripMenuItem1,
             this.packSettingsToolStripMenuItem,
             this.saveToolStripMenuItem1,
             this.saveToolStripMenuItem,
-            this.closeToolStripMenuItem});
+            this.closeToolStripMenuItem,
+            toolStripSeparator2,
+            this.recentlyOpenToolStripMenuItem,
+            toolStripSeparator4,
+            this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.ForeColor = System.Drawing.Color.Silver;
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             resources.ApplyResources(this.fileToolStripMenuItem, "fileToolStripMenuItem");
@@ -513,12 +521,6 @@
             resources.ApplyResources(this.openToolStripMenuItem, "openToolStripMenuItem");
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
-            // 
-            // extractToolStripMenuItem1
-            // 
-            resources.ApplyResources(this.extractToolStripMenuItem1, "extractToolStripMenuItem1");
-            this.extractToolStripMenuItem1.Name = "extractToolStripMenuItem1";
-            this.extractToolStripMenuItem1.Click += new System.EventHandler(this.extractToolStripMenuItem1_Click);
             // 
             // packSettingsToolStripMenuItem
             // 
@@ -573,8 +575,8 @@
             this.openPckManagerToolStripMenuItem,
             this.convertMusicFilesToolStripMenuItem});
             this.miscToolStripMenuItem.ForeColor = System.Drawing.Color.Silver;
-            this.miscToolStripMenuItem.Name = "miscToolStripMenuItem";
             resources.ApplyResources(this.miscToolStripMenuItem, "miscToolStripMenuItem");
+            this.miscToolStripMenuItem.Name = "miscToolStripMenuItem";
             // 
             // openPckManagerToolStripMenuItem
             // 
@@ -615,13 +617,13 @@
             this.toolStripSeparator3,
             this.settingsToolStripMenuItem});
             this.helpToolStripMenuItem.ForeColor = System.Drawing.Color.Silver;
-            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             resources.ApplyResources(this.helpToolStripMenuItem, "helpToolStripMenuItem");
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             // 
             // checkForUpdatesToolStripMenuItem
             // 
-            this.checkForUpdatesToolStripMenuItem.Name = "checkForUpdatesToolStripMenuItem";
             resources.ApplyResources(this.checkForUpdatesToolStripMenuItem, "checkForUpdatesToolStripMenuItem");
+            this.checkForUpdatesToolStripMenuItem.Name = "checkForUpdatesToolStripMenuItem";
             this.checkForUpdatesToolStripMenuItem.Click += new System.EventHandler(this.checkForUpdatesToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
@@ -699,8 +701,8 @@
             this.toNobledezJackToolStripMenuItem,
             this.toPhoenixARCDeveloperToolStripMenuItem,
             this.forMattNLContributorToolStripMenuItem});
-            this.donateToolStripMenuItem.Name = "donateToolStripMenuItem";
             resources.ApplyResources(this.donateToolStripMenuItem, "donateToolStripMenuItem");
+            this.donateToolStripMenuItem.Name = "donateToolStripMenuItem";
             // 
             // toNobledezJackToolStripMenuItem
             // 
@@ -726,11 +728,17 @@
             this.joinDevelopmentDiscordToolStripMenuItem.Name = "joinDevelopmentDiscordToolStripMenuItem";
             this.joinDevelopmentDiscordToolStripMenuItem.Click += new System.EventHandler(this.joinDevelopmentDiscordToolStripMenuItem_Click);
             // 
+            // trelloBoardToolStripMenuItem
+            // 
+            this.trelloBoardToolStripMenuItem.Image = global::PckStudio.Properties.Resources.trello;
+            this.trelloBoardToolStripMenuItem.Name = "trelloBoardToolStripMenuItem";
+            resources.ApplyResources(this.trelloBoardToolStripMenuItem, "trelloBoardToolStripMenuItem");
+            this.trelloBoardToolStripMenuItem.Click += new System.EventHandler(this.trelloBoardToolStripMenuItem_Click);
+            // 
             // settingsToolStripMenuItem
             // 
-            this.settingsToolStripMenuItem.Image = global::PckStudio.Properties.Resources.ranch;
-            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             resources.ApplyResources(this.settingsToolStripMenuItem, "settingsToolStripMenuItem");
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
             // contextMenuMetaTree
@@ -1066,12 +1074,25 @@
             this.LittleEndianCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.LittleEndianCheckBox.UseSelectable = true;
             // 
-            // trelloBoardToolStripMenuItem
+            // recentlyOpenToolStripMenuItem
             // 
-            this.trelloBoardToolStripMenuItem.Image = global::PckStudio.Properties.Resources.trello;
-            this.trelloBoardToolStripMenuItem.Name = "trelloBoardToolStripMenuItem";
-            resources.ApplyResources(this.trelloBoardToolStripMenuItem, "trelloBoardToolStripMenuItem");
-            this.trelloBoardToolStripMenuItem.Click += new System.EventHandler(this.trelloBoardToolStripMenuItem_Click);
+            this.recentlyOpenToolStripMenuItem.Name = "recentlyOpenToolStripMenuItem";
+            resources.ApplyResources(this.recentlyOpenToolStripMenuItem, "recentlyOpenToolStripMenuItem");
+            // 
+            // toolStripSeparator2
+            // 
+            toolStripSeparator2.Name = "toolStripSeparator2";
+            resources.ApplyResources(toolStripSeparator2, "toolStripSeparator2");
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            resources.ApplyResources(this.exitToolStripMenuItem, "exitToolStripMenuItem");
+            // 
+            // toolStripSeparator4
+            // 
+            toolStripSeparator4.Name = "toolStripSeparator4";
+            resources.ApplyResources(toolStripSeparator4, "toolStripSeparator4");
             // 
             // MainForm
             // 
@@ -1128,7 +1149,6 @@
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem quickChangeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem extractToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem importSkinsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem importSkinToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
@@ -1222,6 +1242,8 @@
 		private System.Windows.Forms.ToolStripMenuItem moveDownToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem joinDevelopmentDiscordToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem trelloBoardToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem recentlyOpenToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
     }
 }
 

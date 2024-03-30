@@ -28,13 +28,15 @@ using PckStudio.Extensions;
 using PckStudio.Popups;
 using PckStudio.Classes.Utils;
 using PckStudio.Helper;
+using System.Text.RegularExpressions;
 
 namespace PckStudio
 {
 	public partial class MainForm : MetroFramework.Forms.MetroForm
 	{
 		private PckManager PckManager = null;
-		string saveLocation = string.Empty;
+		string saveLocation;
+
 		PckFile currentPCK = null;
 
 		bool __modified = false;
@@ -186,16 +188,59 @@ namespace PckStudio
 			imageList.Images.Add(Resources.BEHAVIOURS_ICON); // Icon for Behaviour files (behaviours.bin)
 			imageList.Images.Add(Resources.ENTITY_MATERIALS_ICON); // Icon for Entity Material files (entityMaterials.bin)
 
+			LoadRecentFileList();
+
 			isSelectingTab = true;
 			tabControl.SelectTab(0);
 			isSelectingTab = false;
 
 			UpdateRichPresence();
 
-			if (saveLocation != String.Empty) LoadPckFromFile(saveLocation);
+			if (!string.IsNullOrWhiteSpace(saveLocation))
+				LoadPckFromFile(saveLocation);
 		}
 
-		private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        private void LoadRecentFileList()
+        {
+            Settings.Default.RecentFiles ??= new System.Collections.Specialized.StringCollection();
+            recentlyOpenToolStripMenuItem.DropDownItems.Clear();
+			for (int i = 0; i < Settings.Default.RecentFiles.Count && i < 5; i++)
+			{
+				string filepath = Settings.Default.RecentFiles[i];
+				if (!string.IsNullOrWhiteSpace(filepath))
+				{
+					string displayFilepath = Regex.Replace(filepath, @"([A-Z]{1}\:\\[Uu]sers\\)([^\\]*\\)(.*)", "~\\$3");
+					var item = recentlyOpenToolStripMenuItem.DropDownItems.Add(displayFilepath, null, HandleOpenFile);
+					item.Tag = filepath;
+				}
+            }
+        }
+
+		private void HandleOpenFile(object sender, EventArgs e)
+		{
+			if (((ToolStripMenuItem)sender).Tag is string filepath && File.Exists(filepath))
+				LoadPckFromFile(filepath);
+        }
+
+		private void SaveToRecentFiles(string filepath)
+		{
+			if (filepath is null || string.IsNullOrWhiteSpace(filepath))
+				return;
+            if (Settings.Default.RecentFiles.Contains(filepath))
+                Settings.Default.RecentFiles.Remove(filepath);
+			Settings.Default.RecentFiles.Insert(0, filepath);
+			if (Settings.Default.RecentFiles.Count > 5)
+			{
+				for (int i = 5; i < Settings.Default.RecentFiles.Count; i++)
+				{
+                    Settings.Default.RecentFiles.RemoveAt(i);
+                }
+			}
+			Settings.Default.Save();
+			LoadRecentFileList();
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
 		{
 			PckManager?.Close();
 			checkSaveState();
@@ -218,7 +263,8 @@ namespace PckStudio
 		{
 			isTemplateFile = false;
 			saveLocation = filePath;
-			var reader = new PckFileReader(LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
+			SaveToRecentFiles(filePath);
+            var reader = new PckFileReader(LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
 			try
 			{
 				PckFile pck = reader.FromFile(filePath);
@@ -735,7 +781,8 @@ namespace PckStudio
 			{
 				Save(saveFileDialog.FileName);
 				saveLocation = saveFileDialog.FileName;
-				pckFileLabel.Text = Path.GetFileName(saveLocation);
+				SaveToRecentFiles(saveFileDialog.FileName);
+                pckFileLabel.Text = Path.GetFileName(saveLocation);
 				isTemplateFile = false;
 			}
 		}
@@ -1445,60 +1492,6 @@ namespace PckStudio
 			e.CancelEdit = true;
 		}
 
-		private void extractToolStripMenuItem1_Click(object sender, EventArgs e)
-		{
-			try
-			{
-				//Extracts a chosen pck file to a chosen destincation
-				using OpenFileDialog ofd = new OpenFileDialog();
-				using FolderBrowserDialog sfd = new FolderBrowserDialog();
-				ofd.CheckFileExists = true;
-				ofd.Filter = "PCK (Minecraft Console Package)|*.pck";
-
-				if (ofd.ShowDialog() == DialogResult.OK && sfd.ShowDialog() == DialogResult.OK)
-				{
-					PckFile pckfile = null;
-					using (FileStream fs = File.OpenRead(ofd.FileName))
-					{
-						try
-						{
-							var reader = new PckFileReader(LittleEndianCheckBox.Checked
-								? OMI.Endianness.LittleEndian
-								: OMI.Endianness.BigEndian);
-							pckfile = reader.FromStream(fs);
-						}
-						catch (OverflowException ex)
-						{
-							Debug.WriteLine(ex.Message);
-							Trace.WriteLine("Failed to open " + ofd.FileName);
-							MessageBox.Show("Error", "Failed to open pck\nTry checking the 'Open/Save as Switch/Vita/PS4 pck' check box in the upper right corner.",
-								MessageBoxButtons.OK, MessageBoxIcon.Error);
-						}
-					}
-					foreach (PckFileData file in pckfile.GetFiles())
-					{
-						string filepath = $"{sfd.SelectedPath}/{file.Filename}";
-						FileInfo fileinfo = new FileInfo(filepath);
-						fileinfo.Directory.Create();
-						File.WriteAllBytes(filepath, file.Data); // writes data to file
-																 //attempts to generate reimportable metadata file out of minefiles metadata
-						string metaData = "";
-
-						foreach (KeyValuePair<string, string> entry in file.GetProperties())
-						{
-							metaData += $"{entry.Key}: {entry.Value}{Environment.NewLine}";
-						}
-
-						File.WriteAllText(sfd.SelectedPath + @"\" + file.Filename + ".txt", metaData);
-					}
-				}
-			}
-			catch (Exception)
-			{
-				MessageBox.Show("An Error occured while extracting data");
-			}
-		}
-
 		public string GetDataPath()
 		{
 			return Path.Combine(Path.GetDirectoryName(saveLocation), "Data");
@@ -1526,85 +1519,50 @@ namespace PckStudio
 				deleteEntryToolStripMenuItem_Click(sender, e);
 		}
 
-		#region imports a folder of skins to pck
 		private void importExtractedSkinsFolder(object sender, EventArgs e)
 		{
 			using FolderBrowserDialog contents = new FolderBrowserDialog();
-			if (contents.ShowDialog() == DialogResult.OK)
+			if (contents.ShowDialog() == DialogResult.OK && Directory.Exists(contents.SelectedPath))
 			{
-				//checks to make sure selected path exist
-				if (!Directory.Exists(contents.SelectedPath))
-				{
-					MessageBox.Show("Directory Lost");
-					return;
-				}
-				// creates variable to indicate wether current pck skin structure is mashup or regular skin
-				bool hasSkinsPck = currentPCK.HasFile("Skins.pck", PckFileType.SkinDataFile);
+				string filepath = treeViewMain.SelectedNode?.FullPath ?? "";
+				if (treeViewMain.SelectedNode is not null && treeViewMain.SelectedNode.IsTagOfType<PckFileData>())
+					filepath = treeViewMain.SelectedNode.Parent?.FullPath ?? "";
 
-				foreach (var fullfilename in Directory.GetFiles(contents.SelectedPath, "*.png"))
+                foreach (var fullfilename in Directory.GetFiles(contents.SelectedPath, "dlc*.png"))
 				{
-					string filename = Path.GetFileNameWithoutExtension(fullfilename);
+					string filename = Path.GetFileName(fullfilename);
+					// only accept skin or cape named files
+					if (!filename.StartsWith("dlcskin") && !filename.StartsWith("dlccape"))
+						continue;
 					// sets file type based on wether its a cape or skin
 					PckFileType pckfiletype = filename.StartsWith("dlccape", StringComparison.OrdinalIgnoreCase)
 						? PckFileType.CapeFile
 						: PckFileType.SkinFile;
-					string pckfilepath = (hasSkinsPck ? "Skins/" : string.Empty) + filename + ".png";
+					string pckfilepath = Path.Combine(filepath, filename);
 
-
-					PckFileData newFile = new PckFileData(pckfilepath, pckfiletype);
+					PckFileData newFile = currentPCK.CreateNewFile(pckfilepath, pckfiletype);
 					byte[] filedata = File.ReadAllBytes(fullfilename);
 					newFile.SetData(filedata);
 
 					if (File.Exists(fullfilename + ".txt"))
 					{
-						string[] properties = File.ReadAllText(fullfilename + ".txt").Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+						string propertiesFileContent = File.ReadAllText(fullfilename + ".txt");
+                        string[] properties = propertiesFileContent.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
 						foreach (string property in properties)
 						{
 							string[] param = property.Split(':');
-							if (param.Length < 2) continue;
-							newFile.AddProperty(param[0], param[1]);
-							//switch (param[0])
-							//{
-							//    case "DISPLAYNAMEID":
-							//        locNameId = param[1];
-							//        continue;
-
-							//    case "DISPLAYNAME":
-							//        locName = param[1];
-							//        continue;
-
-							//    case "THEMENAMEID":
-							//        locThemeId = param[1];
-							//        continue;
-
-							//    case "THEMENAME":
-							//        locTheme = param[1];
-							//        continue;
-							//}
+							if (param.Length < 2)
+								continue;
+							string key = param[0];
+							string value = param[1];
+							newFile.AddProperty(key, value);
 						}
 					}
-					if (hasSkinsPck)
-					{
-						var skinsfile = currentPCK.GetFile("Skins.pck", PckFileType.SkinDataFile);
-						using (var ms = new MemoryStream(skinsfile.Data))
-						{
-							var reader = new PckFileReader(LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
-							var skinspck = reader.FromStream(ms);
-							skinspck.AddFile(newFile);
-							ms.Position = 0;
-							var writer = new PckFileWriter(skinspck, LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
-							writer.WriteToStream(ms);
-							skinsfile.SetData(ms.ToArray());
-						}
-						continue;
-					}
-					currentPCK.AddFile(newFile);
 				}
 				BuildMainTreeView();
 				wasModified = true;
 			}
 		}
-		#endregion
 
 		private bool TryGetLocFile(out LOCFile locFile)
 		{
