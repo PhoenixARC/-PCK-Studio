@@ -110,6 +110,7 @@
             this.toPhoenixARCDeveloperToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.forMattNLContributorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.joinDevelopmentDiscordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.trelloBoardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuMetaTree = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addEntryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -142,7 +143,6 @@
             this.imageList = new System.Windows.Forms.ImageList(this.components);
             this.previewPictureBox = new PckStudio.ToolboxItems.InterpolationPictureBox();
             this.LittleEndianCheckBox = new MetroFramework.Controls.MetroCheckBox();
-            this.trelloBoardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             logoPictureBox = new System.Windows.Forms.PictureBox();
             toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             ((System.ComponentModel.ISupportInitialize)(logoPictureBox)).BeginInit();
@@ -573,8 +573,8 @@
             this.openPckManagerToolStripMenuItem,
             this.convertMusicFilesToolStripMenuItem});
             this.miscToolStripMenuItem.ForeColor = System.Drawing.Color.Silver;
-            this.miscToolStripMenuItem.Name = "miscToolStripMenuItem";
             resources.ApplyResources(this.miscToolStripMenuItem, "miscToolStripMenuItem");
+            this.miscToolStripMenuItem.Name = "miscToolStripMenuItem";
             // 
             // openPckManagerToolStripMenuItem
             // 
@@ -615,13 +615,13 @@
             this.toolStripSeparator3,
             this.settingsToolStripMenuItem});
             this.helpToolStripMenuItem.ForeColor = System.Drawing.Color.Silver;
-            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             resources.ApplyResources(this.helpToolStripMenuItem, "helpToolStripMenuItem");
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             // 
             // checkForUpdatesToolStripMenuItem
             // 
-            this.checkForUpdatesToolStripMenuItem.Name = "checkForUpdatesToolStripMenuItem";
             resources.ApplyResources(this.checkForUpdatesToolStripMenuItem, "checkForUpdatesToolStripMenuItem");
+            this.checkForUpdatesToolStripMenuItem.Name = "checkForUpdatesToolStripMenuItem";
             this.checkForUpdatesToolStripMenuItem.Click += new System.EventHandler(this.checkForUpdatesToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
@@ -699,8 +699,8 @@
             this.toNobledezJackToolStripMenuItem,
             this.toPhoenixARCDeveloperToolStripMenuItem,
             this.forMattNLContributorToolStripMenuItem});
-            this.donateToolStripMenuItem.Name = "donateToolStripMenuItem";
             resources.ApplyResources(this.donateToolStripMenuItem, "donateToolStripMenuItem");
+            this.donateToolStripMenuItem.Name = "donateToolStripMenuItem";
             // 
             // toNobledezJackToolStripMenuItem
             // 
@@ -726,11 +726,17 @@
             this.joinDevelopmentDiscordToolStripMenuItem.Name = "joinDevelopmentDiscordToolStripMenuItem";
             this.joinDevelopmentDiscordToolStripMenuItem.Click += new System.EventHandler(this.joinDevelopmentDiscordToolStripMenuItem_Click);
             // 
+            // trelloBoardToolStripMenuItem
+            // 
+            this.trelloBoardToolStripMenuItem.Image = global::PckStudio.Properties.Resources.trello;
+            this.trelloBoardToolStripMenuItem.Name = "trelloBoardToolStripMenuItem";
+            resources.ApplyResources(this.trelloBoardToolStripMenuItem, "trelloBoardToolStripMenuItem");
+            this.trelloBoardToolStripMenuItem.Click += new System.EventHandler(this.trelloBoardToolStripMenuItem_Click);
+            // 
             // settingsToolStripMenuItem
             // 
-            this.settingsToolStripMenuItem.Image = global::PckStudio.Properties.Resources.ranch;
-            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             resources.ApplyResources(this.settingsToolStripMenuItem, "settingsToolStripMenuItem");
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
             // contextMenuMetaTree
@@ -1065,13 +1071,6 @@
             this.LittleEndianCheckBox.Style = MetroFramework.MetroColorStyle.White;
             this.LittleEndianCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.LittleEndianCheckBox.UseSelectable = true;
-            // 
-            // trelloBoardToolStripMenuItem
-            // 
-            this.trelloBoardToolStripMenuItem.Image = global::PckStudio.Properties.Resources.trello;
-            this.trelloBoardToolStripMenuItem.Name = "trelloBoardToolStripMenuItem";
-            resources.ApplyResources(this.trelloBoardToolStripMenuItem, "trelloBoardToolStripMenuItem");
-            this.trelloBoardToolStripMenuItem.Click += new System.EventHandler(this.trelloBoardToolStripMenuItem_Click);
             // 
             // MainForm
             // 
