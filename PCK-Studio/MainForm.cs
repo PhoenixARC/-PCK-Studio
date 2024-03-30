@@ -30,14 +30,15 @@ using PckStudio.Extensions;
 using PckStudio.Popups;
 using PckStudio.Classes.Utils;
 using PckStudio.Helper;
-using PCKStudio_Updater;
+using System.Text.RegularExpressions;
 
 namespace PckStudio
 {
 	public partial class MainForm : MetroFramework.Forms.MetroForm
 	{
 		private PckManager PckManager = null;
-		string saveLocation = string.Empty;
+		string saveLocation;
+
 		PckFile currentPCK = null;
 
 		bool __modified = false;
@@ -189,16 +190,59 @@ namespace PckStudio
 			imageList.Images.Add(Resources.BEHAVIOURS_ICON); // Icon for Behaviour files (behaviours.bin)
 			imageList.Images.Add(Resources.ENTITY_MATERIALS_ICON); // Icon for Entity Material files (entityMaterials.bin)
 
+			LoadRecentFileList();
+
 			isSelectingTab = true;
 			tabControl.SelectTab(0);
 			isSelectingTab = false;
 
 			UpdateRichPresence();
 
-			if (saveLocation != String.Empty) LoadPckFromFile(saveLocation);
+			if (!string.IsNullOrWhiteSpace(saveLocation))
+				LoadPckFromFile(saveLocation);
 		}
 
-		private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        private void LoadRecentFileList()
+        {
+            Settings.Default.RecentFiles ??= new System.Collections.Specialized.StringCollection();
+            recentlyOpenToolStripMenuItem.DropDownItems.Clear();
+			for (int i = 0; i < Settings.Default.RecentFiles.Count && i < 5; i++)
+			{
+				string filepath = Settings.Default.RecentFiles[i];
+				if (!string.IsNullOrWhiteSpace(filepath))
+				{
+					string displayFilepath = Regex.Replace(filepath, @"([A-Z]{1}\:\\[Uu]sers\\)([^\\]*\\)(.*)", "~\\$3");
+					var item = recentlyOpenToolStripMenuItem.DropDownItems.Add(displayFilepath, null, HandleOpenFile);
+					item.Tag = filepath;
+				}
+            }
+        }
+
+		private void HandleOpenFile(object sender, EventArgs e)
+		{
+			if (((ToolStripMenuItem)sender).Tag is string filepath && File.Exists(filepath))
+				LoadPckFromFile(filepath);
+        }
+
+		private void SaveToRecentFiles(string filepath)
+		{
+			if (filepath is null || string.IsNullOrWhiteSpace(filepath))
+				return;
+            if (Settings.Default.RecentFiles.Contains(filepath))
+                Settings.Default.RecentFiles.Remove(filepath);
+			Settings.Default.RecentFiles.Insert(0, filepath);
+			if (Settings.Default.RecentFiles.Count > 5)
+			{
+				for (int i = 5; i < Settings.Default.RecentFiles.Count; i++)
+				{
+                    Settings.Default.RecentFiles.RemoveAt(i);
+                }
+			}
+			Settings.Default.Save();
+			LoadRecentFileList();
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
 		{
 			PckManager?.Close();
 			checkSaveState();
@@ -221,7 +265,8 @@ namespace PckStudio
 		{
 			isTemplateFile = false;
 			saveLocation = filePath;
-			var reader = new PckFileReader(LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
+			SaveToRecentFiles(filePath);
+            var reader = new PckFileReader(LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
 			try
 			{
 				PckFile pck = reader.FromFile(filePath);
@@ -732,7 +777,8 @@ namespace PckStudio
 			{
 				Save(saveFileDialog.FileName);
 				saveLocation = saveFileDialog.FileName;
-				pckFileLabel.Text = Path.GetFileName(saveLocation);
+				SaveToRecentFiles(saveFileDialog.FileName);
+                pckFileLabel.Text = Path.GetFileName(saveLocation);
 				isTemplateFile = false;
 			}
 		}
