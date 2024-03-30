@@ -2180,7 +2180,22 @@ namespace PckStudio
 			};
 			if (fileDialog.ShowDialog() == DialogResult.OK)
 			{
-				BinkaConverter.ToBinka(fileDialog.FileNames, new DirectoryInfo(Path.GetDirectoryName(fileDialog.FileName)));
+				using ItemSelectionPopUp dialog = new ItemSelectionPopUp(
+					"Level 1 (Best Quality)", "Level 2", "Level 3", "Level 4", "Level 5", 
+					"Level 6", "Level 7", "Level 8", "Level 9 (Worst Quality)")
+				{
+					LabelText = "Compression",
+					ButtonText = "OK"
+				};
+
+				if(dialog.ShowDialog() == DialogResult.OK)
+                {
+					BinkaConverter.ToBinka(
+						fileDialog.FileNames, 
+						new DirectoryInfo(Path.GetDirectoryName(fileDialog.FileName)), 
+						dialog.SelectedIndex + 1 // compression level
+						);
+				}
 			}
 		}
 

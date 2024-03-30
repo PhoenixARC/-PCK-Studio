@@ -30,7 +30,7 @@ namespace PckStudio.Classes.Utils
             MessageBox.Show($"Successfully converted {convertedCount}/{filenames.Length} file{(filenames.Length > 1 ? "s" : "")}", "Done!");
         }
 
-        public static void ToBinka(string[] filenames, DirectoryInfo destination)
+        public static void ToBinka(string[] filenames, DirectoryInfo destination, int compressionLevel = 4)
         {
             int convertedCount = 0;
             Directory.CreateDirectory(ApplicationScope.DataCacher.CacheDirectory);
@@ -56,7 +56,7 @@ namespace PckStudio.Classes.Utils
                 }
 
                 Cursor.Current = Cursors.WaitCursor;
-                int exitCode = Binka.ToBinka(cacheSongFilepath, Path.Combine(destination.FullName, Path.GetFileNameWithoutExtension(file) + ".binka"), 4);
+                int exitCode = Binka.ToBinka(cacheSongFilepath, Path.Combine(destination.FullName, Path.GetFileNameWithoutExtension(file) + ".binka"), compressionLevel);
                 if (exitCode == 0)
                     convertedCount++;
             }
