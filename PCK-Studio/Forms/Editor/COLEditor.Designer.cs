@@ -51,7 +51,19 @@ namespace PckStudio.Forms.Editor
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.targetUpdateToolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.waterTab = new System.Windows.Forms.TabPage();
+            this.waterTreeView = new System.Windows.Forms.TreeView();
+            this.ColorContextMenu = new MetroFramework.Controls.MetroContextMenu(this.components);
+            this.copyColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pasteColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.restoreOriginalColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.underwaterTreeView = new System.Windows.Forms.TreeView();
+            this.fogTreeView = new System.Windows.Forms.TreeView();
+            this.colorsTab = new System.Windows.Forms.TabPage();
+            this.colorTreeView = new System.Windows.Forms.TreeView();
+            this.tabControl = new MetroFramework.Controls.MetroTabControl();
+            this.underwaterTab = new System.Windows.Forms.TabPage();
+            this.fogTab = new System.Windows.Forms.TabPage();
             this.TU12ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TU13ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TU14ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -65,19 +77,7 @@ namespace PckStudio.Forms.Editor
             this.TU54ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TU69ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this._1_9_1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.waterTab = new System.Windows.Forms.TabPage();
-            this.waterTreeView = new System.Windows.Forms.TreeView();
-            this.ColorContextMenu = new MetroFramework.Controls.MetroContextMenu(this.components);
-            this.restoreOriginalColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.copyColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pasteColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.underwaterTreeView = new System.Windows.Forms.TreeView();
-            this.fogTreeView = new System.Windows.Forms.TreeView();
-            this.colorsTab = new System.Windows.Forms.TabPage();
-            this.colorTreeView = new System.Windows.Forms.TreeView();
-            this.tabControl = new MetroFramework.Controls.MetroTabControl();
-            this.underwaterTab = new System.Windows.Forms.TabPage();
-            this.fogTab = new System.Windows.Forms.TabPage();
+            this.targetUpdateToolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.metroPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.blueUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.greenUpDown)).BeginInit();
@@ -306,25 +306,105 @@ namespace PckStudio.Forms.Editor
             this.saveToolStripMenuItem1.Name = "saveToolStripMenuItem1";
             this.saveToolStripMenuItem1.Click += new System.EventHandler(this.saveToolStripMenuItem1_Click);
             // 
-            // targetUpdateToolToolStripMenuItem
+            // waterTab
             // 
-            this.targetUpdateToolToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.TU12ToolStripMenuItem,
-            this.TU13ToolStripMenuItem,
-            this.TU14ToolStripMenuItem,
-            this.TU19ToolStripMenuItem,
-            this.TU31ToolStripMenuItem,
-            this.TU32ToolStripMenuItem,
-            this.TU43ToolStripMenuItem,
-            this.TU46ToolStripMenuItem,
-            this.TU51ToolStripMenuItem,
-            this.TU53ToolStripMenuItem,
-            this.TU54ToolStripMenuItem,
-            this.TU69ToolStripMenuItem,
-            this._1_9_1ToolStripMenuItem});
-            this.targetUpdateToolToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.targetUpdateToolToolStripMenuItem.Name = "targetUpdateToolToolStripMenuItem";
-            resources.ApplyResources(this.targetUpdateToolToolStripMenuItem, "targetUpdateToolToolStripMenuItem");
+            this.waterTab.BackColor = System.Drawing.SystemColors.WindowFrame;
+            this.waterTab.Controls.Add(this.waterTreeView);
+            resources.ApplyResources(this.waterTab, "waterTab");
+            this.waterTab.Name = "waterTab";
+            // 
+            // waterTreeView
+            // 
+            this.waterTreeView.ContextMenuStrip = this.ColorContextMenu;
+            resources.ApplyResources(this.waterTreeView, "waterTreeView");
+            this.waterTreeView.Name = "waterTreeView";
+            this.waterTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView2_AfterSelect);
+            this.waterTreeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView2_KeyDown);
+            // 
+            // ColorContextMenu
+            // 
+            this.ColorContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.copyColorToolStripMenuItem,
+            this.pasteColorToolStripMenuItem,
+            this.restoreOriginalColorToolStripMenuItem});
+            this.ColorContextMenu.Name = "ColorContextMenu";
+            resources.ApplyResources(this.ColorContextMenu, "ColorContextMenu");
+            // 
+            // copyColorToolStripMenuItem
+            // 
+            this.copyColorToolStripMenuItem.Name = "copyColorToolStripMenuItem";
+            resources.ApplyResources(this.copyColorToolStripMenuItem, "copyColorToolStripMenuItem");
+            this.copyColorToolStripMenuItem.Click += new System.EventHandler(this.copyColorToolStripMenuItem_Click);
+            // 
+            // pasteColorToolStripMenuItem
+            // 
+            this.pasteColorToolStripMenuItem.Name = "pasteColorToolStripMenuItem";
+            resources.ApplyResources(this.pasteColorToolStripMenuItem, "pasteColorToolStripMenuItem");
+            this.pasteColorToolStripMenuItem.Click += new System.EventHandler(this.pasteColorToolStripMenuItem_Click);
+            // 
+            // restoreOriginalColorToolStripMenuItem
+            // 
+            this.restoreOriginalColorToolStripMenuItem.Name = "restoreOriginalColorToolStripMenuItem";
+            resources.ApplyResources(this.restoreOriginalColorToolStripMenuItem, "restoreOriginalColorToolStripMenuItem");
+            this.restoreOriginalColorToolStripMenuItem.Click += new System.EventHandler(this.restoreOriginalColorToolStripMenuItem_Click);
+            // 
+            // underwaterTreeView
+            // 
+            this.underwaterTreeView.ContextMenuStrip = this.ColorContextMenu;
+            resources.ApplyResources(this.underwaterTreeView, "underwaterTreeView");
+            this.underwaterTreeView.Name = "underwaterTreeView";
+            this.underwaterTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView3_AfterSelect);
+            this.underwaterTreeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView3_KeyDown);
+            // 
+            // fogTreeView
+            // 
+            this.fogTreeView.ContextMenuStrip = this.ColorContextMenu;
+            resources.ApplyResources(this.fogTreeView, "fogTreeView");
+            this.fogTreeView.Name = "fogTreeView";
+            this.fogTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView4_AfterSelect);
+            this.fogTreeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView4_KeyDown);
+            // 
+            // colorsTab
+            // 
+            this.colorsTab.BackColor = System.Drawing.SystemColors.WindowFrame;
+            this.colorsTab.Controls.Add(this.colorTreeView);
+            resources.ApplyResources(this.colorsTab, "colorsTab");
+            this.colorsTab.Name = "colorsTab";
+            // 
+            // colorTreeView
+            // 
+            this.colorTreeView.ContextMenuStrip = this.ColorContextMenu;
+            resources.ApplyResources(this.colorTreeView, "colorTreeView");
+            this.colorTreeView.Name = "colorTreeView";
+            this.colorTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
+            this.colorTreeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView1_KeyDown);
+            // 
+            // tabControl
+            // 
+            resources.ApplyResources(this.tabControl, "tabControl");
+            this.tabControl.Controls.Add(this.colorsTab);
+            this.tabControl.Controls.Add(this.waterTab);
+            this.tabControl.Controls.Add(this.underwaterTab);
+            this.tabControl.Controls.Add(this.fogTab);
+            this.tabControl.Name = "tabControl";
+            this.tabControl.SelectedIndex = 0;
+            this.tabControl.Style = MetroFramework.MetroColorStyle.White;
+            this.tabControl.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.tabControl.UseSelectable = true;
+            // 
+            // underwaterTab
+            // 
+            this.underwaterTab.BackColor = System.Drawing.SystemColors.WindowFrame;
+            this.underwaterTab.Controls.Add(this.underwaterTreeView);
+            resources.ApplyResources(this.underwaterTab, "underwaterTab");
+            this.underwaterTab.Name = "underwaterTab";
+            // 
+            // fogTab
+            // 
+            this.fogTab.BackColor = System.Drawing.SystemColors.WindowFrame;
+            this.fogTab.Controls.Add(this.fogTreeView);
+            resources.ApplyResources(this.fogTab, "fogTab");
+            this.fogTab.Name = "fogTab";
             // 
             // TU12ToolStripMenuItem
             // 
@@ -391,105 +471,25 @@ namespace PckStudio.Forms.Editor
             this._1_9_1ToolStripMenuItem.Name = "_1_9_1ToolStripMenuItem";
             resources.ApplyResources(this._1_9_1ToolStripMenuItem, "_1_9_1ToolStripMenuItem");
             // 
-            // waterTab
+            // targetUpdateToolToolStripMenuItem
             // 
-            this.waterTab.BackColor = System.Drawing.SystemColors.WindowFrame;
-            this.waterTab.Controls.Add(this.waterTreeView);
-            resources.ApplyResources(this.waterTab, "waterTab");
-            this.waterTab.Name = "waterTab";
-            // 
-            // waterTreeView
-            // 
-            this.waterTreeView.ContextMenuStrip = this.ColorContextMenu;
-            resources.ApplyResources(this.waterTreeView, "waterTreeView");
-            this.waterTreeView.Name = "waterTreeView";
-            this.waterTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView2_AfterSelect);
-            this.waterTreeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView2_KeyDown);
-            // 
-            // ColorContextMenu
-            // 
-            this.ColorContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.restoreOriginalColorToolStripMenuItem,
-            this.copyColorToolStripMenuItem,
-            this.pasteColorToolStripMenuItem});
-            this.ColorContextMenu.Name = "ColorContextMenu";
-            resources.ApplyResources(this.ColorContextMenu, "ColorContextMenu");
-            // 
-            // restoreOriginalColorToolStripMenuItem
-            // 
-            this.restoreOriginalColorToolStripMenuItem.Name = "restoreOriginalColorToolStripMenuItem";
-            resources.ApplyResources(this.restoreOriginalColorToolStripMenuItem, "restoreOriginalColorToolStripMenuItem");
-            this.restoreOriginalColorToolStripMenuItem.Click += new System.EventHandler(this.restoreOriginalColorToolStripMenuItem_Click);
-            // 
-            // copyColorToolStripMenuItem
-            // 
-            this.copyColorToolStripMenuItem.Name = "copyColorToolStripMenuItem";
-            resources.ApplyResources(this.copyColorToolStripMenuItem, "copyColorToolStripMenuItem");
-            this.copyColorToolStripMenuItem.Click += new System.EventHandler(this.copyColorToolStripMenuItem_Click);
-            // 
-            // pasteColorToolStripMenuItem
-            // 
-            this.pasteColorToolStripMenuItem.Name = "pasteColorToolStripMenuItem";
-            resources.ApplyResources(this.pasteColorToolStripMenuItem, "pasteColorToolStripMenuItem");
-            this.pasteColorToolStripMenuItem.Click += new System.EventHandler(this.pasteColorToolStripMenuItem_Click);
-            // 
-            // underwaterTreeView
-            // 
-            this.underwaterTreeView.ContextMenuStrip = this.ColorContextMenu;
-            resources.ApplyResources(this.underwaterTreeView, "underwaterTreeView");
-            this.underwaterTreeView.Name = "underwaterTreeView";
-            this.underwaterTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView3_AfterSelect);
-            this.underwaterTreeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView3_KeyDown);
-            // 
-            // fogTreeView
-            // 
-            this.fogTreeView.ContextMenuStrip = this.ColorContextMenu;
-            resources.ApplyResources(this.fogTreeView, "fogTreeView");
-            this.fogTreeView.Name = "fogTreeView";
-            this.fogTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView4_AfterSelect);
-            this.fogTreeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView4_KeyDown);
-            // 
-            // colorsTab
-            // 
-            this.colorsTab.BackColor = System.Drawing.SystemColors.WindowFrame;
-            this.colorsTab.Controls.Add(this.colorTreeView);
-            resources.ApplyResources(this.colorsTab, "colorsTab");
-            this.colorsTab.Name = "colorsTab";
-            // 
-            // colorTreeView
-            // 
-            this.colorTreeView.ContextMenuStrip = this.ColorContextMenu;
-            resources.ApplyResources(this.colorTreeView, "colorTreeView");
-            this.colorTreeView.Name = "colorTreeView";
-            this.colorTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
-            this.colorTreeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView1_KeyDown);
-            // 
-            // tabControl
-            // 
-            resources.ApplyResources(this.tabControl, "tabControl");
-            this.tabControl.Controls.Add(this.colorsTab);
-            this.tabControl.Controls.Add(this.waterTab);
-            this.tabControl.Controls.Add(this.underwaterTab);
-            this.tabControl.Controls.Add(this.fogTab);
-            this.tabControl.Name = "tabControl";
-            this.tabControl.SelectedIndex = 0;
-            this.tabControl.Style = MetroFramework.MetroColorStyle.White;
-            this.tabControl.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.tabControl.UseSelectable = true;
-            // 
-            // underwaterTab
-            // 
-            this.underwaterTab.BackColor = System.Drawing.SystemColors.WindowFrame;
-            this.underwaterTab.Controls.Add(this.underwaterTreeView);
-            resources.ApplyResources(this.underwaterTab, "underwaterTab");
-            this.underwaterTab.Name = "underwaterTab";
-            // 
-            // fogTab
-            // 
-            this.fogTab.BackColor = System.Drawing.SystemColors.WindowFrame;
-            this.fogTab.Controls.Add(this.fogTreeView);
-            resources.ApplyResources(this.fogTab, "fogTab");
-            this.fogTab.Name = "fogTab";
+            this.targetUpdateToolToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.TU12ToolStripMenuItem,
+            this.TU13ToolStripMenuItem,
+            this.TU14ToolStripMenuItem,
+            this.TU19ToolStripMenuItem,
+            this.TU31ToolStripMenuItem,
+            this.TU32ToolStripMenuItem,
+            this.TU43ToolStripMenuItem,
+            this.TU46ToolStripMenuItem,
+            this.TU51ToolStripMenuItem,
+            this.TU53ToolStripMenuItem,
+            this.TU54ToolStripMenuItem,
+            this.TU69ToolStripMenuItem,
+            this._1_9_1ToolStripMenuItem});
+            this.targetUpdateToolToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.targetUpdateToolToolStripMenuItem.Name = "targetUpdateToolToolStripMenuItem";
+            resources.ApplyResources(this.targetUpdateToolToolStripMenuItem, "targetUpdateToolToolStripMenuItem");
             // 
             // COLEditor
             // 
@@ -553,21 +553,21 @@ namespace PckStudio.Forms.Editor
 		private ToolStripMenuItem restoreOriginalColorToolStripMenuItem;
 		private MetroFramework.Controls.MetroTextBox metroTextBox1;
 		private MetroFramework.Controls.MetroLabel metroLabel2;
-		private ToolStripMenuItem targetUpdateToolToolStripMenuItem;
-		private ToolStripMenuItem TU12ToolStripMenuItem;
-		private ToolStripMenuItem TU13ToolStripMenuItem;
-		private ToolStripMenuItem TU14ToolStripMenuItem;
-		private ToolStripMenuItem TU19ToolStripMenuItem;
-		private ToolStripMenuItem TU31ToolStripMenuItem;
-		private ToolStripMenuItem TU32ToolStripMenuItem;
-		private ToolStripMenuItem TU43ToolStripMenuItem;
-		private ToolStripMenuItem TU46ToolStripMenuItem;
-		private ToolStripMenuItem TU51ToolStripMenuItem;
-		private ToolStripMenuItem TU53ToolStripMenuItem;
-		private ToolStripMenuItem TU54ToolStripMenuItem;
-		private ToolStripMenuItem TU69ToolStripMenuItem;
-		private ToolStripMenuItem _1_9_1ToolStripMenuItem;
-		private ToolStripMenuItem copyColorToolStripMenuItem;
-		private ToolStripMenuItem pasteColorToolStripMenuItem;
-	}
+        private ToolStripMenuItem copyColorToolStripMenuItem;
+        private ToolStripMenuItem pasteColorToolStripMenuItem;
+        private ToolStripMenuItem targetUpdateToolToolStripMenuItem;
+        private ToolStripMenuItem TU12ToolStripMenuItem;
+        private ToolStripMenuItem TU13ToolStripMenuItem;
+        private ToolStripMenuItem TU14ToolStripMenuItem;
+        private ToolStripMenuItem TU19ToolStripMenuItem;
+        private ToolStripMenuItem TU31ToolStripMenuItem;
+        private ToolStripMenuItem TU32ToolStripMenuItem;
+        private ToolStripMenuItem TU43ToolStripMenuItem;
+        private ToolStripMenuItem TU46ToolStripMenuItem;
+        private ToolStripMenuItem TU51ToolStripMenuItem;
+        private ToolStripMenuItem TU53ToolStripMenuItem;
+        private ToolStripMenuItem TU54ToolStripMenuItem;
+        private ToolStripMenuItem TU69ToolStripMenuItem;
+        private ToolStripMenuItem _1_9_1ToolStripMenuItem;
+    }
 }
