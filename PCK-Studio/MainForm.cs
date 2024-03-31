@@ -232,13 +232,11 @@ namespace PckStudio
             if (Settings.Default.RecentFiles.Contains(filepath))
                 Settings.Default.RecentFiles.Remove(filepath);
 			Settings.Default.RecentFiles.Insert(0, filepath);
-			if (Settings.Default.RecentFiles.Count > 5)
-			{
-				for (int i = 5; i < Settings.Default.RecentFiles.Count; i++)
+
+			for (int i = Settings.Default.RecentFiles.Count - 1; i >= 5; i--)
 				{
                     Settings.Default.RecentFiles.RemoveAt(i);
                 }
-			}
 			Settings.Default.Save();
 			LoadRecentFileList();
         }
