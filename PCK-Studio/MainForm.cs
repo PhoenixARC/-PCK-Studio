@@ -2224,8 +2224,8 @@ namespace PckStudio
 			};
 			if (!PckManager.Visible)
 			{
-				PckManager.Show(this);
-				PckManager.BringToFront();
+				// passing in a parent form will make it stay on top of every other form. -miku
+				PckManager.Show();
 			}
 			if (PckManager.Focus())
 				PckManager.BringToFront();
