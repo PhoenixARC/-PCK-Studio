@@ -44,7 +44,7 @@ namespace PckStudio.Forms.Additional_Popups.Grf
         {
             if (string.IsNullOrWhiteSpace(ParameterName) || string.IsNullOrWhiteSpace(ParameterValue))
             {
-                MessageBox.Show("Name and Value need valid values");
+                MessageBox.Show(this, "Name and Value need valid values");
                 return;
             }    
             DialogResult = DialogResult.OK;

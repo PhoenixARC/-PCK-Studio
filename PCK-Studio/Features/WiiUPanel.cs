@@ -41,7 +41,7 @@ namespace PckStudio.Features
         [Obsolete("Prompt user to use Aroma instead!")]
         private void buttonSelect_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Please use Aroma's ftp Plugin!");
+            MessageBox.Show(this, "Please use Aroma's ftp Plugin!");
             return;
         }
 
@@ -131,14 +131,14 @@ namespace PckStudio.Features
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.ToString());
+                    MessageBox.Show(this, ex.ToString());
                 }
                 return;
             }
 
             if (!Regex.IsMatch(IPv4TextBox.Text, @"^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$"))
             {
-                MessageBox.Show("Please enter a valid Wii U IP!");
+                MessageBox.Show(this, "Please enter a valid Wii U IP!");
                 return;
             }
 
@@ -169,7 +169,7 @@ namespace PckStudio.Features
             catch (Exception ex)
             {
                 SetButtonState(ButtonState.Start);
-                MessageBox.Show(ex.ToString());
+                MessageBox.Show(this, ex.ToString());
             }   
         }
 
@@ -184,7 +184,7 @@ namespace PckStudio.Features
             ListViewHitTestInfo hitTestInfo = listViewPCKS.HitTest(e.Location);
             if (e.Button == MouseButtons.Right && hitTestInfo.Location != ListViewHitTestLocations.None)
             {
-                contextMenuStripCaffiine.Show(Cursor.Position);
+                contextMenuStripCaffiine.Show(this, Cursor.Position);
             }
         }
 
@@ -194,7 +194,7 @@ namespace PckStudio.Features
             {
                 SetButtonState(ButtonState.Wait);
                 ReplacePck(mod);
-                MessageBox.Show("PCK Replaced!");
+                MessageBox.Show(this, "PCK Replaced!");
             }
             SetButtonState(ButtonState.Stop);
             UpdateDLCPath();
@@ -208,10 +208,10 @@ namespace PckStudio.Features
                 OpenFileDialog openPCK = new OpenFileDialog();
                 openPCK.Filter = "PCK File|*.pck";
 
-                if (openPCK.ShowDialog() == DialogResult.OK)
+                if (openPCK.ShowDialog(this) == DialogResult.OK)
                 {
                     ReplacePck(openPCK.FileName);
-                    MessageBox.Show("PCK Replaced!");
+                    MessageBox.Show(this, "PCK Replaced!");
                 }
             }
             SetButtonState(ButtonState.Stop);
@@ -283,7 +283,7 @@ namespace PckStudio.Features
         {
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Filter = "Pack Image|*.png";
-            if (ofd.ShowDialog() == DialogResult.OK)
+            if (ofd.ShowDialog(this) == DialogResult.OK)
                 TextBoxPackImage.Text = ofd.FileName;
         }
     }

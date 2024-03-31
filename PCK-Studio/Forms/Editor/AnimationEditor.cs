@@ -308,6 +308,7 @@ namespace PckStudio.Forms.Editor
 		private void importJavaAnimationToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			if (MessageBox.Show(
+				this,
 				"This feature will replace the existing animation data. " +
 				"It might fail if the selected animation script is invalid. " +
 				"Are you sure that you want to continue?",
@@ -329,7 +330,7 @@ namespace PckStudio.Forms.Editor
 			string textureFile = fileDialog.FileName.Substring(0, fileDialog.FileName.Length - ".mcmeta".Length);
             if (!File.Exists(textureFile))
 			{
-				MessageBox.Show(textureFile + " was not found", "Texture not found");
+				MessageBox.Show(this, textureFile + " was not found", "Texture not found");
 				return;
 			}
             try
@@ -343,7 +344,7 @@ namespace PckStudio.Forms.Editor
 			}
 			catch (JsonException j_ex)
 			{
-				MessageBox.Show(j_ex.Message, "Invalid animation");
+				MessageBox.Show(this, j_ex.Message, "Invalid animation");
 				return;
 			}
 		}
@@ -392,29 +393,29 @@ namespace PckStudio.Forms.Editor
 				// removes ".mcmeta" from filename
 				string texturePath = Path.Combine(Path.GetDirectoryName(filename), Path.GetFileNameWithoutExtension(filename));
                 finalTexture.Save(texturePath);
-                MessageBox.Show("Animation was successfully exported as " + Path.GetFileName(filename), "Export successful!");
+                MessageBox.Show(this, "Animation was successfully exported as " + Path.GetFileName(filename), "Export successful!");
             }
         }
 
         private void howToInterpolation_Click(object sender, EventArgs e)
 		{
-			MessageBox.Show("The Interpolation effect is when the animtion smoothly translates between the frames instead of simply displaying the next one. This can be seen with some vanilla Minecraft textures such as Magma and Prismarine.", "Interpolation");
+			MessageBox.Show(this, "The Interpolation effect is when the animtion smoothly translates between the frames instead of simply displaying the next one. This can be seen with some vanilla Minecraft textures such as Magma and Prismarine.", "Interpolation");
 		}
 
 		private void editorControlsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			MessageBox.Show("Simply drag and drop frames in the tree to rearrange your animation.\n\n" +
+			MessageBox.Show(this, "Simply drag and drop frames in the tree to rearrange your animation.\n\n" +
 				"You can also preview your animation at any time by simply pressing the button under the animation display.", "Editor Controls");
 		}
 
 		private void setBulkSpeedToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			MessageBox.Show("You can edit the frame and its speed by double clicking a frame in the tree. If you'd like to change the entire animation's speed, you can do so with the \"Set Bulk Animation Speed\" button in the \"Tools\" tab", "How to use Bulk Animation tool");
+			MessageBox.Show(this, "You can edit the frame and its speed by double clicking a frame in the tree. If you'd like to change the entire animation's speed, you can do so with the \"Set Bulk Animation Speed\" button in the \"Tools\" tab", "How to use Bulk Animation tool");
 		}
 
 		private void javaAnimationSupportToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			MessageBox.Show("You can import any valid Java Edition tile animations into your pck by opening an mcmeta.\n\n" +
+			MessageBox.Show(this, "You can import any valid Java Edition tile animations into your pck by opening an mcmeta.\n\n" +
 				"You can also export your animation as an Java Edition tile animation. It will also export the actual texture in the same spot.", "Java Edition Support");
 		}
 
@@ -448,7 +449,7 @@ namespace PckStudio.Forms.Editor
 			var gif = Image.FromFile(fileDialog.FileName);
 			if (!gif.RawFormat.Equals(ImageFormat.Gif))
 			{
-				MessageBox.Show("Selected file is not a gif", "Invalid file", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show(this, "Selected file is not a gif", "Invalid file", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
 
@@ -481,7 +482,7 @@ namespace PckStudio.Forms.Editor
                 Filter = "PNG Files | *.png",
                 Title = "Select a PNG File",
             };
-            if (ofd.ShowDialog() != DialogResult.OK)
+            if (ofd.ShowDialog(this) != DialogResult.OK)
                 return;
             Image img = Image.FromFile(ofd.FileName);
             var textures = img.Split(ImageLayoutDirection.Vertical);

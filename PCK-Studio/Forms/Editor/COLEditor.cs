@@ -366,7 +366,7 @@ namespace PckStudio.Forms.Editor
 			colorPick.AllowFullOpen = true;
 			colorPick.AnyColor = true;
 			colorPick.SolidColorOnly = tabControl.SelectedTab == colorsTab;
-			if (colorPick.ShowDialog() != DialogResult.OK) return;
+			if (colorPick.ShowDialog(this) != DialogResult.OK) return;
             pictureBox1.BackColor = colorPick.Color;
 			if (tabControl.SelectedTab == waterTab && waterTreeView.SelectedNode != null &&
 				waterTreeView.SelectedNode.Tag != null && waterTreeView.SelectedNode.Tag is ColorContainer.WaterColor)

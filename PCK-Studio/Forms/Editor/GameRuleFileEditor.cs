@@ -47,16 +47,16 @@ namespace PckStudio.Forms.Editor
         public GameRuleFileEditor()
         {
             InitializeComponent();
-            PromptForCompressionType();
+            PromptForCompressionType(Program.MainInstance);
             saveToolStripMenuItem.Visible = !Settings.Default.AutoSaveChanges;
         }
 
-        private void PromptForCompressionType()
+        private void PromptForCompressionType(Form owner)
         {
             ItemSelectionPopUp dialog = new ItemSelectionPopUp(use_zlib, use_deflate, use_xmem);
             dialog.LabelText = "Type";
             dialog.ButtonText = "Ok";
-            if (dialog.ShowDialog() == DialogResult.OK)
+            if (dialog.ShowDialog(owner) == DialogResult.OK)
             {
                 switch(dialog.SelectedItem)
                 {
@@ -97,7 +97,7 @@ namespace PckStudio.Forms.Editor
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
-                MessageBox.Show("Faild to open .grf/.grh file");
+                MessageBox.Show(this, "Failed to open .grf/.grh file");
             }
             return default!;
         }
@@ -169,11 +169,11 @@ namespace PckStudio.Forms.Editor
             if (GrfTreeView.SelectedNode == null || !(GrfTreeView.SelectedNode.Tag is GameRuleFile.GameRule)) return;
             var grfTag = GrfTreeView.SelectedNode.Tag as GameRuleFile.GameRule;
             AddParameter prompt = new AddParameter();
-            if (prompt.ShowDialog() == DialogResult.OK)
+            if (prompt.ShowDialog(this) == DialogResult.OK)
             {
                 if (grfTag.Parameters.ContainsKey(prompt.ParameterName))
                 {
-                    MessageBox.Show("Can't add detail that already exists.", "Error");
+                    MessageBox.Show(this, "Can't add detail that already exists.", "Error");
                     return;
                 }
                 grfTag.Parameters.Add(prompt.ParameterName, prompt.ParameterValue);
@@ -190,7 +190,7 @@ namespace PckStudio.Forms.Editor
                 ReloadParameterTreeView(); 
                 return;
             }
-            MessageBox.Show("No Rule selected");
+            MessageBox.Show(this, "No Rule selected");
         }
 
         private void GrfDetailsTreeView_KeyDown(object sender, KeyEventArgs e)
@@ -205,7 +205,7 @@ namespace PckStudio.Forms.Editor
                 GrfParametersTreeView.SelectedNode is TreeNode paramNode && paramNode.Tag is KeyValuePair<string, string> param)
             {
                 AddParameter prompt = new AddParameter(param.Key, param.Value, false);
-                if (prompt.ShowDialog() == DialogResult.OK)
+                if (prompt.ShowDialog(this) == DialogResult.OK)
                 {
                     rule.Parameters[prompt.ParameterName] = prompt.ParameterValue;
                     ReloadParameterTreeView();
@@ -227,9 +227,9 @@ namespace PckStudio.Forms.Editor
             using (TextPrompt prompt = new TextPrompt())
             {
                 prompt.OKButtonText = "Add";
-                if (MessageBox.Show($"Add Game Rule to {parentRule.Name}", "Attention",
+                if (MessageBox.Show(this, $"Add Game Rule to {parentRule.Name}", "Attention",
                     MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes &&
-                    prompt.ShowDialog() == DialogResult.OK &&
+                    prompt.ShowDialog(this) == DialogResult.OK &&
                     !string.IsNullOrWhiteSpace(prompt.NewText))
                 {
                     var tag = parentRule.AddRule(prompt.NewText);
@@ -264,7 +264,7 @@ namespace PckStudio.Forms.Editor
         {
             if (_file.Header.unknownData[3] != 0)
             {
-                MessageBox.Show("World grf saving is currently unsupported");
+                MessageBox.Show(this, "World grf saving is currently unsupported");
                 return;
             }
             using (var stream = new MemoryStream())
@@ -273,12 +273,12 @@ namespace PckStudio.Forms.Editor
                 {
                     _pckfile?.SetData(new GameRuleFileWriter(_file));
                     DialogResult = DialogResult.OK;
-                    MessageBox.Show("Saved!");
+                    MessageBox.Show(this, "Saved!");
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
-                    MessageBox.Show($"Failed to save grf file\n{ex.Message}", "Save Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(this, $"Failed to save grf file\n{ex.Message}", "Save Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -287,7 +287,7 @@ namespace PckStudio.Forms.Editor
         {
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = "Game Rule File|*.grf";
-            PromptForCompressionType();
+            PromptForCompressionType(this);
             if (dialog.ShowDialog(this) == DialogResult.OK)
             {
                 using (var fs = File.OpenRead(dialog.FileName))

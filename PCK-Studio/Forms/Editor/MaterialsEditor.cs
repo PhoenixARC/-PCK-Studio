@@ -152,7 +152,7 @@ namespace PckStudio.Forms.Editor
 		{
 			var diag = new Additional_Popups.EntityForms.AddEntry("materials", ApplicationScope.EntityImages);
 
-			if (diag.ShowDialog() == DialogResult.OK)
+			if (diag.ShowDialog(this) == DialogResult.OK)
 			{
 				if (string.IsNullOrEmpty(diag.SelectedEntity)) return;
 				if (materialFile.FindAll(mat => mat.Name == diag.SelectedEntity).Count() > 0)

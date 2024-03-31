@@ -126,7 +126,7 @@ namespace PckStudio
                     }
 					catch (OverflowException ex)
 					{
-						MessageBox.Show("Failed to open pck\n" +
+						MessageBox.Show(this, "Failed to open pck\n" +
 							"Try checking the 'Open/Save as Switch/Vita/PS4 pck' checkbox in the upper right corner.",
 							"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 						Debug.WriteLine(ex.Message);
@@ -150,7 +150,7 @@ namespace PckStudio
 			currentPCK = openPck(filepath);
 			if (currentPCK == null)
 			{
-				MessageBox.Show(string.Format("Failed to load {0}", Path.GetFileName(filepath)), "Error");
+				MessageBox.Show(this, string.Format("Failed to load {0}", Path.GetFileName(filepath)), "Error");
 				return;
 			}
 
@@ -254,7 +254,7 @@ namespace PckStudio
 			{
 				ofd.CheckFileExists = true;
 				ofd.Filter = "PCK (Minecraft Console Package)|*.pck";
-				if (ofd.ShowDialog() == DialogResult.OK)
+				if (ofd.ShowDialog(this) == DialogResult.OK)
 				{
 					LoadPckFromFile(ofd.FileName);
 				}
@@ -274,14 +274,14 @@ namespace PckStudio
 			}
 			catch (OverflowException ex)
 			{
-				MessageBox.Show("Failed to open pck\n" +
+				MessageBox.Show(this, "Failed to open pck\n" +
 					$"Try {(LittleEndianCheckBox.Checked ? "unchecking" : "checking")} the 'Open/Save as Switch/Vita/PS4 pck' check box in the upper right corner.",
 					"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				Debug.WriteLine(ex.Message);
 			}
 			catch
 			{
-				MessageBox.Show("Failed to open pck. There's two common reasons for this:\n" +
+				MessageBox.Show(this, "Failed to open pck. There's two common reasons for this:\n" +
 					"1. The file is audio/music cues PCK file. Please use the specialized editor while inside of a pck file.\n" +
 					"2. We're aware of an issue where a pck file might fail to load because it contains multiple entries with the same path.",
 					"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -481,7 +481,7 @@ namespace PckStudio
 				}
 
 				var viewer = new TextureAtlasEditor(currentPCK, file.Filename, img, tile_size);
-				if (viewer.ShowDialog() == DialogResult.OK)
+				if (viewer.ShowDialog(this) == DialogResult.OK)
 				{
                     Image texture = viewer.FinalTexture;
 					if(isBanners)
@@ -557,7 +557,7 @@ namespace PckStudio
 			if (file.HasProperty("BOX"))
 			{
 				using generateModel generate = new generateModel(file);
-				if (generate.ShowDialog() == DialogResult.OK)
+				if (generate.ShowDialog(this) == DialogResult.OK)
 				{
 					entryDataTextBox.Text = entryTypeTextBox.Text = string.Empty;
 					wasModified = true;
@@ -573,7 +573,7 @@ namespace PckStudio
 
 		public void HandleModelsFile(PckFileData file)
 		{
-			MessageBox.Show("Models.bin support has not been implemented. You can use the Spark Editor for the time being to edit these files.", "Not implemented yet.");
+			MessageBox.Show(this, "Models.bin support has not been implemented. You can use the Spark Editor for the time being to edit these files.", "Not implemented yet.");
 		}
 
 		public void HandleBehavioursFile(PckFileData file)
@@ -752,7 +752,7 @@ namespace PckStudio
 				using SaveFileDialog exFile = new SaveFileDialog();
 				exFile.FileName = Path.GetFileName(file.Filename);
 				exFile.Filter = Path.GetExtension(file.Filename).Replace(".", string.Empty) + " File|*" + Path.GetExtension(file.Filename);
-				if (exFile.ShowDialog() != DialogResult.OK ||
+				if (exFile.ShowDialog(this) != DialogResult.OK ||
 					// Makes sure chosen directory isn't null or whitespace AKA makes sure its usable
 					string.IsNullOrWhiteSpace(Path.GetDirectoryName(exFile.FileName)))
                 {
@@ -765,7 +765,7 @@ namespace PckStudio
 			}
 
 			// Verification that file extraction path was successful
-			MessageBox.Show($"\"{node.Text}\" successfully extracted");
+			MessageBox.Show(this, $"\"{node.Text}\" successfully extracted");
 		}
 
 		private void SaveTemplate()
@@ -773,7 +773,7 @@ namespace PckStudio
 			using SaveFileDialog saveFileDialog = new SaveFileDialog();
 			saveFileDialog.Filter = "PCK (Minecraft Console Package)|*.pck";
 			saveFileDialog.DefaultExt = ".pck";
-			if (saveFileDialog.ShowDialog() == DialogResult.OK)
+			if (saveFileDialog.ShowDialog(this) == DialogResult.OK)
 			{
 				Save(saveFileDialog.FileName);
 				saveLocation = saveFileDialog.FileName;
@@ -788,7 +788,7 @@ namespace PckStudio
 			var writer = new PckFileWriter(currentPCK, LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
 			writer.WriteToFile(filePath);
 			wasModified = false;
-			MessageBox.Show("Saved Pck file", "File Saved");
+			MessageBox.Show(this, "Saved Pck file", "File Saved");
 		}
 
 		private void replaceToolStripMenuItem_Click(object sender, EventArgs e)
@@ -811,7 +811,7 @@ namespace PckStudio
 				string fileExt = Path.GetExtension(file.Filename);
 
 				ofd.Filter = $"{file.Filetype} (*{fileExt}{extra_extensions})|*{fileExt}{extra_extensions}";
-				if (ofd.ShowDialog() == DialogResult.OK)
+				if (ofd.ShowDialog(this) == DialogResult.OK)
 				{
 					string newFileExt = Path.GetExtension(ofd.FileName);
 					file.SetData(File.ReadAllBytes(ofd.FileName));
@@ -822,7 +822,7 @@ namespace PckStudio
 				}
 				return;
 			}
-			MessageBox.Show("Can't replace a folder.");
+			MessageBox.Show(this, "Can't replace a folder.");
 		}
 
 		/// <summary>
@@ -838,7 +838,7 @@ namespace PckStudio
 			if (file.Filetype == PckFileType.TextureFile &&
 				(file.Filename == itemPath + "compass.png" || file.Filename == itemPath + "clock.png"))
 			{
-				if (MessageBox.Show("Are you sure want to delete this file? If \"compass.png\" or \"clock.png\" are missing, your game will crash upon loading this pack.", "Warning",
+				if (MessageBox.Show(this, "Are you sure want to delete this file? If \"compass.png\" or \"clock.png\" are missing, your game will crash upon loading this pack.", "Warning",
 					MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
 					return true;
 			}
@@ -874,7 +874,7 @@ namespace PckStudio
 					wasModified = true;
 				}
 			}
-			else if (MessageBox.Show("Are you sure want to delete this folder? All contents will be deleted", "Warning",
+			else if (MessageBox.Show(this, "Are you sure want to delete this folder? All contents will be deleted", "Warning",
 				MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
 			{
 				string pckFolderDir = node.FullPath;
@@ -899,7 +899,7 @@ namespace PckStudio
 				{
 					if (currentPCK.TryGetFile(diag.NewText, file.Filetype, out _))
 					{
-						MessageBox.Show($"{diag.NewText} already exists", "File already exists");
+						MessageBox.Show(this, $"{diag.NewText} already exists", "File already exists");
 						return;
 					}
 					file.Filename = diag.NewText;
@@ -927,7 +927,7 @@ namespace PckStudio
 			LOCFile locFile = null;
 			TryGetLocFile(out locFile);
 			using AddNewSkin add = new AddNewSkin(locFile);
-			if (add.ShowDialog() == DialogResult.OK)
+			if (add.ShowDialog(this) == DialogResult.OK)
 			{
 				if (currentPCK.HasFile("Skins.pck", PckFileType.SkinDataFile)) // Prioritize Skins.pck
 				{
@@ -987,12 +987,12 @@ namespace PckStudio
 			if (currentPCK.Contains(PckFileType.AudioFile))
 			{
 				// the chance of this happening is really really slim but just in case
-				MessageBox.Show("There is already an audio file in this PCK!", "Can't create audio.pck");
+				MessageBox.Show(this, "There is already an audio file in this PCK!", "Can't create audio.pck");
 				return;
 			}
 			if (string.IsNullOrEmpty(saveLocation))
 			{
-				MessageBox.Show("You must save your pck before creating or opening a music cues PCK file", "Can't create audio.pck");
+				MessageBox.Show(this, "You must save your pck before creating or opening a music cues PCK file", "Can't create audio.pck");
 				return;
 			}
 
@@ -1014,7 +1014,7 @@ namespace PckStudio
 
 			if (currentPCK.Contains($"res/textures/{Animation.GetCategoryName(diag.Category)}/{diag.SelectedTile}.png", PckFileType.TextureFile))
 			{
-				MessageBox.Show($"{diag.SelectedTile} is already present.", "File already present");
+				MessageBox.Show(this, $"{diag.SelectedTile} is already present.", "File already present");
 				return;
 			}
 
@@ -1025,7 +1025,7 @@ namespace PckStudio
             Animation animation = AnimationHelper.GetAnimationFromFile(file);
 
 			using AnimationEditor animationEditor = new AnimationEditor(animation, diag.SelectedTile);
-			if (animationEditor.ShowDialog() == DialogResult.OK)
+			if (animationEditor.ShowDialog(this) == DialogResult.OK)
 			{
 				wasModified = true;
 				AnimationHelper.SaveAnimationToFile(file, animation);
@@ -1193,7 +1193,7 @@ namespace PckStudio
 							{
 								Debug.WriteLine(ex.Message);
 								Trace.WriteLine("Invalid ANIM value: " + property.Value);
-								MessageBox.Show("Failed to parse ANIM value, aborting to normal functionality. Please make sure the value only includes hexadecimal characters (0-9,A-F) and has no more than 8 characters.");
+								MessageBox.Show(this, "Failed to parse ANIM value, aborting to normal functionality. Please make sure the value only includes hexadecimal characters (0-9,A-F) and has no more than 8 characters.");
 							}
 							break;
 
@@ -1214,7 +1214,7 @@ namespace PckStudio
 							{
 								Debug.WriteLine(ex.Message);
 								Trace.WriteLine("Invalid BOX value: " + property.Value);
-								MessageBox.Show("Failed to parse BOX value, aborting to normal functionality.");
+								MessageBox.Show(this, "Failed to parse BOX value, aborting to normal functionality.");
 							}
 							break;
 
@@ -1225,7 +1225,7 @@ namespace PckStudio
 
 					using (AddPropertyPrompt addProperty = new AddPropertyPrompt(property))
 					{
-						if (addProperty.ShowDialog() == DialogResult.OK)
+						if (addProperty.ShowDialog(this) == DialogResult.OK)
 						{
 							file.SetProperty(file.GetPropertyIndex(property), addProperty.Property);
 							RebuildSubPCK(treeViewMain.SelectedNode.FullPath);
@@ -1317,7 +1317,7 @@ namespace PckStudio
 				t.Tag is PckFileData file)
 			{
 				using AddPropertyPrompt addProperty = new AddPropertyPrompt();
-				if (addProperty.ShowDialog() == DialogResult.OK)
+				if (addProperty.ShowDialog(this) == DialogResult.OK)
 				{
 					file.AddProperty(addProperty.Property);
 					RebuildSubPCK(treeViewMain.SelectedNode.FullPath);
@@ -1429,7 +1429,7 @@ namespace PckStudio
 			checkSaveState();
 			TextPrompt namePrompt = new TextPrompt();
 			namePrompt.OKButtonText = "Ok";
-			if (namePrompt.ShowDialog() == DialogResult.OK)
+			if (namePrompt.ShowDialog(this) == DialogResult.OK)
 			{
 				currentPCK = InitializePack(new Random().Next(8000, int.MaxValue), 0, namePrompt.NewText, true);
 				isTemplateFile = true;
@@ -1442,7 +1442,7 @@ namespace PckStudio
 		{
 			checkSaveState();
 			CreateTexturePackPrompt packPrompt = new CreateTexturePackPrompt();
-			if (packPrompt.ShowDialog() == DialogResult.OK)
+			if (packPrompt.ShowDialog(this) == DialogResult.OK)
 			{
 				currentPCK = InitializeTexturePack(new Random().Next(8000, int.MaxValue), 0, packPrompt.PackName, packPrompt.PackRes, packPrompt.CreateSkinsPck);
 				isTemplateFile = true;
@@ -1455,7 +1455,7 @@ namespace PckStudio
 		{
 			checkSaveState();
 			CreateTexturePackPrompt packPrompt = new CreateTexturePackPrompt();
-			if (packPrompt.ShowDialog() == DialogResult.OK)
+			if (packPrompt.ShowDialog(this) == DialogResult.OK)
 			{
 				currentPCK = InitializeMashUpPack(new Random().Next(8000, int.MaxValue), 0, packPrompt.PackName, packPrompt.PackRes);
 				isTemplateFile = true;
@@ -1468,7 +1468,7 @@ namespace PckStudio
 		{
 			using AdvancedOptions advanced = new AdvancedOptions(currentPCK);
 			advanced.IsLittleEndian = LittleEndianCheckBox.Checked;
-			if (advanced.ShowDialog() == DialogResult.OK)
+			if (advanced.ShowDialog(this) == DialogResult.OK)
 			{
 				wasModified = true;
 				BuildMainTreeView();
@@ -1484,7 +1484,7 @@ namespace PckStudio
 		private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			using CreditsForm info = new CreditsForm();
-			info.ShowDialog();
+			info.ShowDialog(this);
 		}
 
 		private void treeViewMain_KeyDown(object sender, KeyEventArgs e)
@@ -1522,7 +1522,7 @@ namespace PckStudio
 		{
 			if (!HasDataFolder())
 			{
-				DialogResult result = MessageBox.Show("There is not a \"Data\" folder present in the pack folder. Would you like to create one?", "Folder missing", MessageBoxButtons.YesNo);
+				DialogResult result = MessageBox.Show(this, "There is not a \"Data\" folder present in the pack folder. Would you like to create one?", "Folder missing", MessageBoxButtons.YesNo);
 				if (result == DialogResult.No) return false;
 				else Directory.CreateDirectory(GetDataPath());
 			}
@@ -1538,7 +1538,7 @@ namespace PckStudio
 		private void importExtractedSkinsFolder(object sender, EventArgs e)
 		{
 			using FolderBrowserDialog contents = new FolderBrowserDialog();
-			if (contents.ShowDialog() == DialogResult.OK && Directory.Exists(contents.SelectedPath))
+			if (contents.ShowDialog(this) == DialogResult.OK && Directory.Exists(contents.SelectedPath))
 			{
 				string filepath = treeViewMain.SelectedNode?.FullPath ?? "";
 				if (treeViewMain.SelectedNode is not null && treeViewMain.SelectedNode.IsTagOfType<PckFileData>())
@@ -1635,7 +1635,7 @@ namespace PckStudio
 				contents.Title = "Select Extracted Skin File";
 				contents.Filter = "Skin File (*.png)|*.png";
 
-				if (contents.ShowDialog() == DialogResult.OK)
+				if (contents.ShowDialog(this) == DialogResult.OK)
 				{
 					string skinNameImport = Path.GetFileName(contents.FileName);
 					byte[] data = File.ReadAllBytes(contents.FileName);
@@ -1676,7 +1676,7 @@ namespace PckStudio
 						}
 						catch (Exception ex)
 						{
-							MessageBox.Show(ex.Message);
+							MessageBox.Show(this, ex.Message);
 						}
 					}
 				}
@@ -1688,7 +1688,7 @@ namespace PckStudio
 			TextPrompt folderNamePrompt = new TextPrompt();
 			if (treeViewMain.SelectedNode is not null) folderNamePrompt.contextLabel.Text = $"New folder at the location of \"{treeViewMain.SelectedNode.FullPath}\"";
 			folderNamePrompt.OKButtonText = "Add";
-			if (folderNamePrompt.ShowDialog() == DialogResult.OK)
+			if (folderNamePrompt.ShowDialog(this) == DialogResult.OK)
 			{
 				TreeNode folerNode = CreateNode(folderNamePrompt.NewText);
 				folerNode.ImageIndex = 0;
@@ -1781,7 +1781,7 @@ namespace PckStudio
 		{
 			if (currentPCK is not null &&
 				wasModified &&
-				MessageBox.Show("Save PCK?", "Unsaved PCK", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+				MessageBox.Show(this, "Save PCK?", "Unsaved PCK", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
 			{
 				if (isTemplateFile || string.IsNullOrEmpty(saveLocation))
 				{
@@ -1809,7 +1809,7 @@ namespace PckStudio
 		{
 			string[] Filepaths = (string[])e.Data.GetData(DataFormats.FileDrop, false);
 			if (Filepaths.Length > 1)
-				MessageBox.Show("Only one pck file at a time is currently supported");
+				MessageBox.Show(this, "Only one pck file at a time is currently supported");
 			LoadPckFromFile(Filepaths[0]);
 		}
 
@@ -1920,15 +1920,15 @@ namespace PckStudio
 		{
 			using OpenFileDialog fileDialog = new OpenFileDialog();
 			fileDialog.Filter = "Texture File(*.png,*.tga)|*.png;*.tga";
-			if (fileDialog.ShowDialog() == DialogResult.OK)
+			if (fileDialog.ShowDialog(this) == DialogResult.OK)
 			{
 				using TextPrompt renamePrompt = new TextPrompt(Path.GetFileName(fileDialog.FileName));
 				renamePrompt.LabelText = "Path";
-				if (renamePrompt.ShowDialog() == DialogResult.OK && !string.IsNullOrEmpty(renamePrompt.NewText))
+				if (renamePrompt.ShowDialog(this) == DialogResult.OK && !string.IsNullOrEmpty(renamePrompt.NewText))
 				{
                     if (currentPCK.Contains(renamePrompt.NewText, PckFileType.TextureFile))
                     {
-                        MessageBox.Show($"'{renamePrompt.NewText}' already exists.", "Import failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show(this, $"'{renamePrompt.NewText}' already exists.", "Import failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
                     PckFileData file = currentPCK.CreateNewFile(renamePrompt.NewText, PckFileType.TextureFile, () => File.ReadAllBytes(fileDialog.FileName));
@@ -1942,7 +1942,7 @@ namespace PckStudio
 		{
 			if (treeViewMain.SelectedNode.Tag is PckFileData file)
 			{
-				MessageBox.Show(
+				MessageBox.Show(this,
 					"File path: " + file.Filename +
 					"\nAssigned File type: " + (int)file.Filetype + " (" + file.Filetype + ")" +
 					"\nFile size: " + file.Size +
@@ -2008,7 +2008,7 @@ namespace PckStudio
 		{
 			if (currentPCK.TryGetFile("colours.col", PckFileType.ColourTableFile, out _))
 			{
-				MessageBox.Show("A color table file already exists in this PCK and a new one cannot be created.", "Operation aborted");
+				MessageBox.Show(this, "A color table file already exists in this PCK and a new one cannot be created.", "Operation aborted");
 				return;
 			}
             PckFileData newColorFile = currentPCK.CreateNewFile("colours.col", PckFileType.ColourTableFile);
@@ -2029,11 +2029,11 @@ namespace PckStudio
 				SaveFileDialog saveFileDialog = new SaveFileDialog();
 				saveFileDialog.Filter = "3DS Texture|*.3dst";
 				saveFileDialog.DefaultExt = ".3dst";
-				if (saveFileDialog.ShowDialog() == DialogResult.OK)
+				if (saveFileDialog.ShowDialog(this) == DialogResult.OK)
 				{
 					Image img = file.GetTexture();
 					var writer = new _3DSTextureWriter(img);
-					writer.WriteToFile(saveFileDialog.FileName);	
+					writer.WriteToFile(saveFileDialog.FileName);
 				}
 			}
 		}
@@ -2081,7 +2081,7 @@ namespace PckStudio
 		{
 			if (currentPCK.TryGetFile("Skins.pck", PckFileType.SkinDataFile, out _))
 			{
-				MessageBox.Show("A Skins.pck file already exists in this PCK and a new one cannot be created.", "Operation aborted");
+				MessageBox.Show(this, "A Skins.pck file already exists in this PCK and a new one cannot be created.", "Operation aborted");
 				return;
 			}
 
@@ -2130,14 +2130,14 @@ namespace PckStudio
 			ofd.Filter = "All files (*.*)|*.*";
 			ofd.Multiselect = false;
 
-			if (ofd.ShowDialog() == DialogResult.OK)
+			if (ofd.ShowDialog(this) == DialogResult.OK)
 			{
 				using AddFilePrompt diag = new AddFilePrompt("res/" + Path.GetFileName(ofd.FileName));
 				if (diag.ShowDialog(this) == DialogResult.OK)
 				{
 					if (currentPCK.Contains(diag.Filepath, diag.Filetype))
 					{
-						MessageBox.Show($"'{diag.Filepath}' of type {diag.Filetype} already exists.", "Import failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+						MessageBox.Show(this, $"'{diag.Filepath}' of type {diag.Filetype} already exists.", "Import failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 						return;
 					}
 					PckFileData file = currentPCK.CreateNewFile(diag.Filepath, diag.Filetype, () => File.ReadAllBytes(ofd.FileName));
@@ -2155,7 +2155,7 @@ namespace PckStudio
 		{
 			if (currentPCK.TryGetFile("behaviours.bin", PckFileType.BehavioursFile, out _))
 			{
-				MessageBox.Show("A behaviours file already exists in this PCK and a new one cannot be created.", "Operation aborted");
+				MessageBox.Show(this, "A behaviours file already exists in this PCK and a new one cannot be created.", "Operation aborted");
 				return;
 			}
 
@@ -2167,7 +2167,7 @@ namespace PckStudio
 		{
 			if (currentPCK.TryGetFile("entityMaterials.bin", PckFileType.MaterialFile, out _))
 			{
-				MessageBox.Show("A behaviours file already exists in this PCK and a new one cannot be created.", "Operation aborted");
+				MessageBox.Show(this, "A behaviours file already exists in this PCK and a new one cannot be created.", "Operation aborted");
 				return;
 			}
 			currentPCK.CreateNewFile("entityMaterials.bin", PckFileType.MaterialFile, MaterialResources.MaterialsFileInitializer);
@@ -2189,7 +2189,7 @@ namespace PckStudio
 			};
 			if (!PckManager.Visible)
 			{
-				PckManager.Show();
+				PckManager.Show(this);
 				PckManager.BringToFront();
 			}
 			if (PckManager.Focus())
@@ -2204,7 +2204,7 @@ namespace PckStudio
 				Filter = "WAV files (*.wav)|*.wav",
 				Title = "Please choose WAV files to convert to BINKA"
 			};
-			if (fileDialog.ShowDialog() == DialogResult.OK)
+			if (fileDialog.ShowDialog(this) == DialogResult.OK)
 			{
 				using ItemSelectionPopUp dialog = new ItemSelectionPopUp(
 					"Level 1 (Best Quality)", "Level 2", "Level 3", "Level 4", "Level 5", 
@@ -2214,7 +2214,7 @@ namespace PckStudio
 					ButtonText = "OK"
 				};
 
-				if(dialog.ShowDialog() == DialogResult.OK)
+				if(dialog.ShowDialog(this) == DialogResult.OK)
                 {
 					BinkaConverter.ToBinka(
 						fileDialog.FileNames, 
@@ -2233,7 +2233,7 @@ namespace PckStudio
 				Filter = "BINKA files (*.binka)|*.binka",
 				Title = "Please choose BINKA files to convert to WAV"
 			};
-			if (fileDialog.ShowDialog() == DialogResult.OK)
+			if (fileDialog.ShowDialog(this) == DialogResult.OK)
 			{
 				BinkaConverter.ToWav(fileDialog.FileNames, new DirectoryInfo(Path.GetDirectoryName(fileDialog.FileName)));
 			}
@@ -2289,7 +2289,7 @@ namespace PckStudio
 				Program.UpdateToLatest("Would you like to download it?", MessageBoxButtons.YesNo, MessageBoxIcon.Question, DialogResult.Yes);
 				return;
 			}
-			MessageBox.Show("Already up to date.", "No update available");
+			MessageBox.Show(this, "Already up to date.", "No update available");
 		}
 
 		[Obsolete] // the move functions are to eventually be removed in favor of drag and drop
@@ -2337,7 +2337,7 @@ namespace PckStudio
 			}
 			catch(Exception ex)
             {
-				MessageBox.Show("Can't move file under or above a folder");
+				MessageBox.Show(this, "Can't move file under or above a folder");
             }
 		}
 		[Obsolete]

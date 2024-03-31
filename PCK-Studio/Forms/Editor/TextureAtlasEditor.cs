@@ -513,7 +513,7 @@ namespace PckStudio.Forms.Editor
                 Title = "Select Texture"
             };
 
-            if (fileDialog.ShowDialog() == DialogResult.OK)
+            if (fileDialog.ShowDialog(this) == DialogResult.OK)
             {
                 var img = Image.FromFile(fileDialog.FileName);
                 SetTile(img);
@@ -535,7 +535,7 @@ namespace PckStudio.Forms.Editor
             var animation = AnimationHelper.GetAnimationFromFile(file);
 
             var animationEditor = new AnimationEditor(animation, _selectedTile.Tile.InternalName, GetBlendColor());
-            if (animationEditor.ShowDialog() != DialogResult.OK)
+            if (animationEditor.ShowDialog(this) != DialogResult.OK)
             {
                 return;
             }
@@ -552,7 +552,7 @@ namespace PckStudio.Forms.Editor
                 Filter = "Tile Texture|*.png",
                 FileName = _selectedTile.Tile.InternalName
             };
-            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            if (saveFileDialog.ShowDialog(this) == DialogResult.OK)
             {
                 dataTile.Texture.Save(saveFileDialog.FileName, ImageFormat.Png);
             }
@@ -614,7 +614,7 @@ namespace PckStudio.Forms.Editor
                 0x211d1d  // Black
             };
             
-            if (colorPick.ShowDialog() != DialogResult.OK) return;
+            if (colorPick.ShowDialog(this) != DialogResult.OK) return;
 
             selectTilePictureBox.BlendColor = colorPick.Color;
             selectTilePictureBox.Image = dataTile.Texture;

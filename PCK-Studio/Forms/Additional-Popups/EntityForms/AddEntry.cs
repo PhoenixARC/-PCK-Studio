@@ -52,7 +52,7 @@ namespace PckStudio.Forms.Additional_Popups.EntityForms
 			}
 			catch (Newtonsoft.Json.JsonException j_ex)
 			{
-				MessageBox.Show(j_ex.Message, "Error");
+				MessageBox.Show(this, j_ex.Message, "Error");
 				return;
 			}
 

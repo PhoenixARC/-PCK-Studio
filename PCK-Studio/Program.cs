@@ -58,6 +58,7 @@ namespace PckStudio
         {
             bool updateAvailable = Updater.IsUpdateAvailable(Application.ProductVersion);
             if (updateAvailable && MessageBox.Show(
+                    MainInstance ?? null,
                     "New update available.\n" +
                     message,
                     "Update Available",
