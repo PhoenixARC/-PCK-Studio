@@ -31,6 +31,7 @@ using PckStudio.Popups;
 using PckStudio.Classes.Utils;
 using PckStudio.Helper;
 using System.Text.RegularExpressions;
+using PckStudio.Internal.Json;
 
 namespace PckStudio
 {
@@ -511,16 +512,29 @@ namespace PckStudio
 				return;
 			}
 
-			if (!file.Filename.StartsWith("res/textures/blocks/") && !file.Filename.StartsWith("res/textures/items/"))
+			if (!file.Filename.StartsWith(ResourceLocation.GetPathFromCategory(ResourceCategory.ItemAnimation)) &&
+				!file.Filename.StartsWith(ResourceLocation.GetPathFromCategory(ResourceCategory.BlockAnimation)))
 				return;
-            Animation animation = AnimationHelper.GetAnimationFromFile(file);
-			using (AnimationEditor animationEditor = new AnimationEditor(animation, Path.GetFileNameWithoutExtension(file.Filename)))
+
+            Animation animation = file.Get(AnimationDeserializer.DefaultDeserializer);
+			string filename = Path.GetFileNameWithoutExtension(file.Filename);
+
+            var textureInfos = ResourceLocation.GetCategoryFromPath(file.Filename) switch
+			{
+				ResourceCategory.BlockAnimation => Tiles.BlockTileInfos,
+				ResourceCategory.ItemAnimation => Tiles.ItemTileInfos,
+				_ => Array.Empty<JsonTileInfo>().ToList()
+			};
+			string displayname = textureInfos.FirstOrDefault(p => p.InternalName == filename)?.DisplayName ?? filename;
+
+            string[] specialTileNames = { "clock", "compass" };
+
+            using (AnimationEditor animationEditor = new AnimationEditor(animation, displayname, filename.ToLower().EqualsAny(specialTileNames)))
 			{
 				if (animationEditor.ShowDialog(this) == DialogResult.OK)
 				{
 					wasModified = true;
-					file.Filename = animationEditor.FinalPath;
-					AnimationHelper.SaveAnimationToFile(file, animation);
+					file.SetData(animationEditor.Result, AnimationSerializer.DefaultSerializer);
 					BuildMainTreeView();
 				}
 			}
@@ -528,9 +542,33 @@ namespace PckStudio
 
 		private void HandleGameRuleFile(PckFileData file)
 		{
-			using GameRuleFileEditor grfEditor = new GameRuleFileEditor(file);
-			wasModified = grfEditor.ShowDialog(this) == DialogResult.OK;
-			UpdateRichPresence();
+			const string use_deflate = "PS3";
+			const string use_xmem = "Xbox 360";
+			const string use_zlib = "Wii U, PS Vita";
+
+	        ItemSelectionPopUp dialog = new ItemSelectionPopUp(use_zlib, use_deflate, use_xmem);
+            dialog.LabelText = "Type";
+            dialog.ButtonText = "Ok";
+			if (dialog.ShowDialog() != DialogResult.OK)
+				return;
+			
+			var compressiontype = dialog.SelectedItem switch
+			{
+				use_deflate => GameRuleFile.CompressionType.Deflate,
+                use_xmem => GameRuleFile.CompressionType.XMem,
+                use_zlib => GameRuleFile.CompressionType.Zlib,
+				_ => GameRuleFile.CompressionType.Unknown
+            };
+
+			GameRuleFile grf = file.Get(new GameRuleFileReader(compressiontype));
+
+			using GameRuleFileEditor grfEditor = new GameRuleFileEditor(grf);
+			if (grfEditor.ShowDialog(this) == DialogResult.OK)
+			{
+				file.SetData(new GameRuleFileWriter(grfEditor.Result));
+				wasModified = true;
+				UpdateRichPresence();
+			}
 		}
 
 		private void HandleAudioFile(PckFileData file)
@@ -636,7 +674,8 @@ namespace PckStudio
 								Debug.WriteLine(string.Format("An error occured of type: {0} with message: {1}", ex.GetType(), ex.Message), "Exception");
 							}
 
-							if ((file.Filename.StartsWith("res/textures/blocks/") || file.Filename.StartsWith("res/textures/items/")) &&
+							if ((file.Filename.StartsWith(ResourceLocation.GetPathFromCategory(ResourceCategory.ItemAnimation)) ||
+								 file.Filename.StartsWith(ResourceLocation.GetPathFromCategory(ResourceCategory.BlockAnimation))) &&
 								file.Filetype == PckFileType.TextureFile
 								&& !file.IsMipmappedFile())
 							{
@@ -832,11 +871,11 @@ namespace PckStudio
 		/// <returns>True if the remove should be canceled, otherwise False</returns>
 		private bool BeforeFileRemove(PckFileData file)
 		{
-			string itemPath = "res/textures/items/";
+			string itemPath = ResourceLocation.GetPathFromCategory(ResourceCategory.ItemAnimation);
 
 			// warn the user about deleting compass.png and clock.png
 			if (file.Filetype == PckFileType.TextureFile &&
-				(file.Filename == itemPath + "compass.png" || file.Filename == itemPath + "clock.png"))
+				(file.Filename == itemPath + "/compass.png" || file.Filename == itemPath + "/clock.png"))
 			{
 				if (MessageBox.Show("Are you sure want to delete this file? If \"compass.png\" or \"clock.png\" are missing, your game will crash upon loading this pack.", "Warning",
 					MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
@@ -1013,24 +1052,20 @@ namespace PckStudio
 			if (diag.ShowDialog(this) != DialogResult.OK)
 				return;
 
-			if (currentPCK.Contains($"res/textures/{Animation.GetCategoryName(diag.Category)}/{diag.SelectedTile}.png", PckFileType.TextureFile))
+			string animationFilepath = $"{ResourceLocation.GetPathFromCategory(diag.Category)}/{diag.SelectedTile}.png";
+
+            if (currentPCK.Contains(animationFilepath, PckFileType.TextureFile))
 			{
 				MessageBox.Show($"{diag.SelectedTile} is already present.", "File already present");
 				return;
 			}
 
-			var file = new PckFileData(
-				$"res/textures/{Animation.GetCategoryName(diag.Category)}/{diag.SelectedTile}.png",
-				PckFileType.TextureFile);
-
-            Animation animation = AnimationHelper.GetAnimationFromFile(file);
-
-			using AnimationEditor animationEditor = new AnimationEditor(animation, diag.SelectedTile);
+            using AnimationEditor animationEditor = new AnimationEditor(Animation.CreateEmpty(), diag.SelectedTile.DisplayName, diag.SelectedTile.InternalName.EqualsAny("clock", "compass"));
 			if (animationEditor.ShowDialog() == DialogResult.OK)
 			{
 				wasModified = true;
-				AnimationHelper.SaveAnimationToFile(file, animation);
-				currentPCK.AddFile(file);
+				PckFileData file = currentPCK.CreateNewFile(animationFilepath, PckFileType.TextureFile);
+				file.SetData(animationEditor.Result, AnimationSerializer.DefaultSerializer);
 				BuildMainTreeView();
 				ReloadMetaTreeView();
 			}

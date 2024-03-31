@@ -31,6 +31,7 @@ using OMI.Workers.Color;
 
 using PckStudio.Extensions;
 using PckStudio.Helper;
+using PckStudio.Internal;
 using PckStudio.Internal.Json;
 
 namespace PckStudio.Forms.Editor
@@ -248,7 +249,7 @@ namespace PckStudio.Forms.Editor
                     hasAnimation &&
                     animationFile.Size > 0)
                 {
-                    var animation = AnimationHelper.GetAnimationFromFile(animationFile);
+                    var animation = animationFile.Get(AnimationDeserializer.DefaultDeserializer);
                     selectTilePictureBox.Start(animation);
                 }
             }
@@ -532,7 +533,7 @@ namespace PckStudio.Forms.Editor
                     PckFileType.TextureFile
                 );
 
-            var animation = AnimationHelper.GetAnimationFromFile(file);
+            var animation = file.Get(AnimationDeserializer.DefaultDeserializer);
 
             var animationEditor = new AnimationEditor(animation, _selectedTile.Tile.InternalName, GetBlendColor());
             if (animationEditor.ShowDialog() != DialogResult.OK)
@@ -540,7 +541,7 @@ namespace PckStudio.Forms.Editor
                 return;
             }
 
-            AnimationHelper.SaveAnimationToFile(file, animation);
+            file.SetData(animationEditor.Result, AnimationSerializer.DefaultSerializer);
             // so animations can automatically update upon saving
             SelectedIndex = _selectedTile.Index;
         }

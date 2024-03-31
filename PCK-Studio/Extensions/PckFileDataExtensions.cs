@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OMI.Formats.Pck;
 using OMI.Workers;
+using PckStudio.Interfaces;
 using PckStudio.IO.TGA;
 
 namespace PckStudio.Extensions
@@ -43,6 +44,22 @@ namespace PckStudio.Extensions
                     return EmptyImage;
                 }
             }
+        }
+
+        internal static T Get<T>(this PckFileData file, IPckDeserializer<T> deserializer)
+        {
+            return deserializer.Deserialize(file);
+        }
+
+        internal static T Get<T>(this PckFileData file, IDataFormatReader<T> deserializer) where T : class
+        {
+            using var ms = new MemoryStream(file.Data);
+            return deserializer.FromStream(ms);
+        }
+
+        internal static void SetData<T>(this PckFileData file, T obj, IPckFileSerializer<T> serializer)
+        {
+            serializer.Serialize(obj, ref file);
         }
 
         internal static void SetData(this PckFileData file, IDataFormatWriter writer)

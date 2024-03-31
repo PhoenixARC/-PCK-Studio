@@ -40,35 +40,27 @@ namespace PckStudio.Forms.Editor
 {
     public partial class AnimationEditor : MetroForm
 	{
+        public Animation Result => _animation;
+
 		private Animation _animation;
-
-		private string _tileName = string.Empty;
-
-		public string FinalPath => $"res/textures/{_animation.CategoryString}/{_tileName}.png";
-
-		private static readonly string[] specialTileNames = { "clock", "compass" };
-
-        private static bool IsSpecialTile(string name)
-        {
-			return name.ToLower().EqualsAny(specialTileNames);
-        }
-
+		private bool _isSpecialTile;
 		private AnimationEditor()
 		{
             InitializeComponent();
             toolStripSeparator1.Visible = saveToolStripMenuItem1.Visible = !Settings.Default.AutoSaveChanges;
         }
 
-        internal AnimationEditor(Animation animation, string name)
+        internal AnimationEditor(Animation animation, string displayName, bool isSpecialTile = false)
 			: this()
 		{
 			_ = animation ?? throw new ArgumentNullException(nameof(animation));
 			_animation = animation;
-			_tileName = name;
+            tileLabel.Text = displayName;
+            _isSpecialTile = isSpecialTile;
         }
 
-        internal AnimationEditor(Animation animation, string name, Color blendColor)
-			: this(animation, name)
+        internal AnimationEditor(Animation animation, string displayName, Color blendColor)
+			: this(animation, displayName)
         {
 			animationPictureBox.UseBlendColor = true;
 			animationPictureBox.BlendColor = blendColor;
@@ -79,15 +71,12 @@ namespace PckStudio.Forms.Editor
 			bulkAnimationSpeedToolStripMenuItem.Enabled =
 			importToolStripMenuItem.Enabled =
 			exportAsToolStripMenuItem.Enabled =
-			changeTileToolStripMenuItem.Enabled =
-			InterpolationCheckbox.Visible = !IsSpecialTile(_tileName);
+			InterpolationCheckbox.Visible = !_isSpecialTile;
 		}
 
         private void AnimationEditor_Load(object sender, EventArgs e)
         {
 			ValidateToolStrip();
-
-			SetTileLabel();
             LoadAnimationTreeView();
         }
 
@@ -170,7 +159,7 @@ namespace PckStudio.Forms.Editor
 
 		private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
-			if (!IsSpecialTile(_tileName) && _animation is not null && _animation.FrameCount > 0)
+			if (!_isSpecialTile && _animation is not null && _animation.FrameCount > 0)
 			{
 				DialogResult = DialogResult.OK;
 				return;
@@ -279,7 +268,7 @@ namespace PckStudio.Forms.Editor
 			diag.SaveBtn.Text = "Add";
 			if (diag.ShowDialog(this) == DialogResult.OK)
 			{
-                _animation.AddFrame(diag.FrameTextureIndex, IsSpecialTile(_tileName) ? Animation.MinimumFrameTime : diag.FrameTime);
+                _animation.AddFrame(diag.FrameTextureIndex, _isSpecialTile ? Animation.MinimumFrameTime : diag.FrameTime);
                 UpdateTreeView();
 			}
 		}
@@ -336,8 +325,8 @@ namespace PckStudio.Forms.Editor
 			{
 				var img = Image.FromFile(textureFile);
 				JObject mcmeta = JObject.Parse(File.ReadAllText(fileDialog.FileName));
-                Animation javaAnimation = AnimationHelper.GetAnimationFromJavaAnimation(mcmeta, img);
-				javaAnimation.Category = _animation.Category;
+                Animation javaAnimation = AnimationDeserializer.DefaultDeserializer.DeserializeJavaAnimation(mcmeta, img);
+				//javaAnimation.Category = _animation.Category;
 				_animation = javaAnimation;
 				LoadAnimationTreeView();
 			}
@@ -348,36 +337,7 @@ namespace PckStudio.Forms.Editor
 			}
 		}
 
-		private void changeTileToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			StopAnimation();
-            using (ChangeTile diag = new ChangeTile())
-			{
-				if (diag.ShowDialog(this) != DialogResult.OK)
-					return;
-				
-				Debug.WriteLine($"{diag.SelectedTile}");
-                _animation.Category = diag.Category;
-				_tileName = diag.SelectedTile;
-
-				ValidateToolStrip();
-
-				SetTileLabel();
-			}
-        }
-
-        private void SetTileLabel()
-        {
-			var textureInfos = _animation.Category switch
-			{
-				AnimationCategory.Blocks => Tiles.BlockTileInfos,
-				AnimationCategory.Items => Tiles.ItemTileInfos,
-				_ => throw new ArgumentOutOfRangeException(_animation.Category.ToString())
-			};
-			tileLabel.Text = textureInfos.FirstOrDefault(p => p.InternalName == _tileName)?.DisplayName ?? _tileName;
-		}
-
-        private void exportJavaAnimationToolStripMenuItem_Click(object sender, EventArgs e)
+		private void exportJavaAnimationToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			SaveFileDialog fileDialog = new SaveFileDialog();
 			fileDialog.Title = "Please choose where you want to save your new animation";
@@ -466,11 +426,8 @@ namespace PckStudio.Forms.Editor
 				textures.Add(new Bitmap(gif, oldResolution, oldResolution));
 			}
 
-			var animCat = _animation.Category;
-
-			_animation = new Animation(textures, string.Empty);
+			_animation = new Animation(textures);
 			_animation.Interpolate = InterpolationCheckbox.Checked;
-			_animation.Category = animCat;
 			LoadAnimationTreeView();
         }
 
@@ -493,7 +450,7 @@ namespace PckStudio.Forms.Editor
         {
 			var fileDialog = new SaveFileDialog()
 			{
-				FileName = _tileName,
+				FileName = tileLabel.Text,
 				Filter = "GIF file|*.gif"
 			};
 			if (fileDialog.ShowDialog(this) != DialogResult.OK)

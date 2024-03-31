@@ -2,28 +2,21 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using OMI.Formats.Pck;
 using PckStudio.Extensions;
-using PckStudio.Internal;
+using PckStudio.Interfaces;
 
-namespace PckStudio.Helper
+namespace PckStudio.Internal
 {
-    internal static class AnimationHelper
+    internal sealed class AnimationDeserializer : IPckDeserializer<Animation>
     {
-        internal static void SaveAnimationToFile(PckFileData file, Animation animation)
-        {
-            string anim = animation.BuildAnim();
-            file.SetProperty("ANIM", anim);
-            var texture = animation.BuildTexture();
-            file.SetData(texture, ImageFormat.Png);
-        }
-
-        internal static Animation GetAnimationFromFile(PckFileData file)
+        public static readonly AnimationDeserializer DefaultDeserializer = new AnimationDeserializer();
+        
+        public Animation Deserialize(PckFileData file)
         {
             _ = file ?? throw new ArgumentNullException(nameof(file));
             if (file.Size > 0)
@@ -31,25 +24,20 @@ namespace PckStudio.Helper
                 var texture = file.GetTexture();
                 var frameTextures = texture.Split(ImageLayoutDirection.Vertical);
                 var _animation = new Animation(frameTextures, file.GetProperty("ANIM"));
-                _animation.Category = file.Filename.Split('/').Contains("items")
-                    ? AnimationCategory.Items
-                    : AnimationCategory.Blocks;
                 return _animation;
             }
-            return Animation.Empty(file.Filename.Split('/').Contains("items")
-                    ? AnimationCategory.Items
-                    : AnimationCategory.Blocks);
+            return Animation.CreateEmpty();
         }
 
-        internal static Animation GetAnimationFromJavaAnimation(JObject jsonObject, Image texture)
+        public Animation DeserializeJavaAnimation(JObject jsonObject, Image texture)
         {
             var textures = texture.Split(ImageLayoutDirection.Vertical);
             Animation result = new Animation(textures);
             if (jsonObject["animation"] is not JToken animation)
                 return result;
-            
+
             int frameTime = Animation.MinimumFrameTime;
-            
+
             if (animation["frametime"] is JToken frametime_token && frametime_token.Type == JTokenType.Integer)
                 frameTime = (int)frametime_token;
 
@@ -60,12 +48,12 @@ namespace PckStudio.Helper
             {
                 foreach (JToken frame in frames_token.Children())
                 {
-                    if (frame.Type == JTokenType.Object && 
+                    if (frame.Type == JTokenType.Object &&
                         frame["index"] is JToken frame_index &&
                         frame_index.Type == JTokenType.Integer &&
                         frame["time"] is JToken frame_time &&
                         frame_time.Type == JTokenType.Integer)
-                    { 
+                    {
                         Debug.WriteLine("Index: {0}, Time: {1}", frame_index, frame_time);
                         result.AddFrame((int)frame_index, (int)frame_time);
                     }

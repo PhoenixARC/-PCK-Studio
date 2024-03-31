@@ -48,7 +48,6 @@
             this.gifToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bulkAnimationSpeedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.changeTileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.frameTimeandTicksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.howToInterpolation = new System.Windows.Forms.ToolStripMenuItem();
@@ -215,8 +214,7 @@
             // editToolStripMenuItem
             // 
             this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.bulkAnimationSpeedToolStripMenuItem,
-            this.changeTileToolStripMenuItem});
+            this.bulkAnimationSpeedToolStripMenuItem});
             this.editToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
@@ -228,13 +226,6 @@
             this.bulkAnimationSpeedToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
             this.bulkAnimationSpeedToolStripMenuItem.Text = "Set Bulk Animation Speed";
             this.bulkAnimationSpeedToolStripMenuItem.Click += new System.EventHandler(this.bulkAnimationSpeedToolStripMenuItem_Click);
-            // 
-            // changeTileToolStripMenuItem
-            // 
-            this.changeTileToolStripMenuItem.Name = "changeTileToolStripMenuItem";
-            this.changeTileToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
-            this.changeTileToolStripMenuItem.Text = "Change Tile";
-            this.changeTileToolStripMenuItem.Click += new System.EventHandler(this.changeTileToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -337,7 +328,6 @@
             this.animationPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.animationPictureBox.TabIndex = 16;
             this.animationPictureBox.TabStop = false;
-            this.animationPictureBox.UseBlendColor = false;
             // 
             // AnimationEditor
             // 
@@ -382,7 +372,6 @@
 		private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem bulkAnimationSpeedToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem changeTileToolStripMenuItem;
 		private MetroFramework.Controls.MetroLabel tileLabel;
 		private System.Windows.Forms.ToolStripMenuItem howToInterpolation;
 		private System.Windows.Forms.ToolStripMenuItem editorControlsToolStripMenuItem;
