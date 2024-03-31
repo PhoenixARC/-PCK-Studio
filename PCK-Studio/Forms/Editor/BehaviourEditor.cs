@@ -160,7 +160,7 @@ namespace PckStudio.Forms.Editor
 			var diag = new AddEntry("behaviours", ApplicationScope.EntityImages);
 			diag.acceptBtn.Text = "Save";
 
-			if (diag.ShowDialog() == DialogResult.OK)
+			if (diag.ShowDialog(this) == DialogResult.OK)
 			{
 				if (String.IsNullOrEmpty(diag.SelectedEntity)) return;
 				if (behaviourFile.entries.FindAll(behaviour => behaviour.name == diag.SelectedEntity).Count() > 0)
@@ -213,7 +213,7 @@ namespace PckStudio.Forms.Editor
 		{
 			var diag = new AddEntry("behaviours", ApplicationScope.EntityImages);
 
-			if(diag.ShowDialog() == DialogResult.OK)
+			if(diag.ShowDialog(this) == DialogResult.OK)
 			{
 				if (string.IsNullOrEmpty(diag.SelectedEntity)) return;
 				if (behaviourFile.entries.FindAll(behaviour => behaviour.name == diag.SelectedEntity).Count() > 0)

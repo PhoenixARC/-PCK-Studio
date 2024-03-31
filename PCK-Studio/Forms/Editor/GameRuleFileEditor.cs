@@ -117,11 +117,11 @@ namespace PckStudio.Forms.Editor
             if (GrfTreeView.SelectedNode == null || !(GrfTreeView.SelectedNode.Tag is GameRuleFile.GameRule)) return;
             var grfTag = GrfTreeView.SelectedNode.Tag as GameRuleFile.GameRule;
             AddParameter prompt = new AddParameter();
-            if (prompt.ShowDialog() == DialogResult.OK)
+            if (prompt.ShowDialog(this) == DialogResult.OK)
             {
                 if (grfTag.Parameters.ContainsKey(prompt.ParameterName))
                 {
-                    MessageBox.Show("Can't add detail that already exists.", "Error");
+                    MessageBox.Show(this, "Can't add detail that already exists.", "Error");
                     return;
                 }
                 grfTag.Parameters.Add(prompt.ParameterName, prompt.ParameterValue);
@@ -138,7 +138,7 @@ namespace PckStudio.Forms.Editor
                 ReloadParameterTreeView(); 
                 return;
             }
-            MessageBox.Show("No Rule selected");
+            MessageBox.Show(this, "No Rule selected");
         }
 
         private void GrfDetailsTreeView_KeyDown(object sender, KeyEventArgs e)
@@ -153,7 +153,7 @@ namespace PckStudio.Forms.Editor
                 GrfParametersTreeView.SelectedNode is TreeNode paramNode && paramNode.Tag is KeyValuePair<string, string> param)
             {
                 AddParameter prompt = new AddParameter(param.Key, param.Value, false);
-                if (prompt.ShowDialog() == DialogResult.OK)
+                if (prompt.ShowDialog(this) == DialogResult.OK)
                 {
                     rule.Parameters[prompt.ParameterName] = prompt.ParameterValue;
                     ReloadParameterTreeView();
@@ -175,9 +175,9 @@ namespace PckStudio.Forms.Editor
             using (TextPrompt prompt = new TextPrompt())
             {
                 prompt.OKButtonText = "Add";
-                if (MessageBox.Show($"Add Game Rule to {parentRule.Name}", "Attention",
+                if (MessageBox.Show(this, $"Add Game Rule to {parentRule.Name}", "Attention",
                     MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes &&
-                    prompt.ShowDialog() == DialogResult.OK &&
+                    prompt.ShowDialog(this) == DialogResult.OK &&
                     !string.IsNullOrWhiteSpace(prompt.NewText))
                 {
                     var tag = parentRule.AddRule(prompt.NewText);
@@ -212,7 +212,7 @@ namespace PckStudio.Forms.Editor
         {
             if (_file.Header.unknownData[3] != 0)
             {
-                MessageBox.Show("World grf saving is currently unsupported");
+                MessageBox.Show(this, "World grf saving is currently unsupported");
                 return;
             }
             DialogResult = DialogResult.OK;

@@ -49,7 +49,7 @@ namespace PckStudio.IO.TGA
             extensionData.JobTime = new TimeSpan(extensionData.TimeStamp.Hour, extensionData.TimeStamp.Minute, extensionData.TimeStamp.Second);
             extensionData.SoftwareID = Application.ProductName;
             Version.TryParse(Application.ProductVersion, out Version currentVersion);
-            extensionData.SoftwareVersion = [(byte)currentVersion.Major, (byte)currentVersion.Minor, (byte)currentVersion.Build];
+            extensionData.SoftwareVersion = new byte[] { (byte)currentVersion.Major, (byte)currentVersion.Minor, (byte)currentVersion.Build };
             extensionData.KeyColor = 0;
             extensionData.PixelAspectRatio = 0;
             extensionData.GammaValue = 0;

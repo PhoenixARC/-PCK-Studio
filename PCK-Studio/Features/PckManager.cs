@@ -73,7 +73,7 @@ namespace PckStudio.Features
                 }
                 catch (NotImplementedException ex)
                 {
-                    MessageBox.Show(ex.Message, "Not Implemented");
+                    MessageBox.Show(this, ex.Message, "Not Implemented");
                 }
 
             }

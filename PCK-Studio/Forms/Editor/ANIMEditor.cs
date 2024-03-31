@@ -246,11 +246,11 @@ namespace PckStudio.Forms.Editor
             string value = string.Empty;
             while (!SkinANIM.IsValidANIM(value))
             {
-                if (!string.IsNullOrWhiteSpace(value)) MessageBox.Show($"The following value \"{value}\" is not valid. Please try again.");
+                if (!string.IsNullOrWhiteSpace(value)) MessageBox.Show(this, $"The following value \"{value}\" is not valid. Please try again.");
                 TextPrompt diag = new TextPrompt(value);
                 diag.LabelText = "ANIM";
                 diag.OKButtonText = "Ok";
-                if (diag.ShowDialog() == DialogResult.OK)
+                if (diag.ShowDialog(this) == DialogResult.OK)
                 {
                     value = diag.NewText;
                 }
@@ -276,7 +276,7 @@ namespace PckStudio.Forms.Editor
                 FileName = animValue.Text + ".png",
                 Filter = "Skin textures|*.png"
             };
-            if (saveFileDialog.ShowDialog() != DialogResult.OK)
+            if (saveFileDialog.ShowDialog(this) != DialogResult.OK)
                 return;
             bool isSlim = ruleset.Value.GetFlag(SkinAnimFlag.SLIM_MODEL);
             bool is64x64 = ruleset.Value.GetFlag(SkinAnimFlag.RESOLUTION_64x64);
@@ -349,7 +349,7 @@ namespace PckStudio.Forms.Editor
             diag.ButtonText = "Presets";
             diag.ButtonText = "Load";
 
-            if (diag.ShowDialog() != DialogResult.OK)
+            if (diag.ShowDialog(this) != DialogResult.OK)
                 return;
 
             var templateANIM = new SkinANIM(Templates[diag.SelectedItem]);

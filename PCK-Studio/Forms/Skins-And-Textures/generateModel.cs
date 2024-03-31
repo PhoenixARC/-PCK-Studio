@@ -1052,7 +1052,7 @@ namespace PckStudio.Forms
             Bitmap bitmap = new Bitmap(uvPictureBox.Image, 64, 64);
             using SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "PNG Image Files | *.png";
-            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            if (saveFileDialog.ShowDialog(this) == DialogResult.OK)
             {
                 bitmap.Save(saveFileDialog.FileName, ImageFormat.Png);
             }
@@ -1066,7 +1066,7 @@ namespace PckStudio.Forms
             openFileDialog.Filter = "PNG Image Files | *.png";
             openFileDialog.Title = "Select Skin Texture";
 
-            if (openFileDialog.ShowDialog() == DialogResult.OK) // skins can only be a 1:1 ratio (base 64x64) or a 2:1 ratio (base 64x32)
+            if (openFileDialog.ShowDialog(this) == DialogResult.OK) // skins can only be a 1:1 ratio (base 64x64) or a 2:1 ratio (base 64x32)
             {
                 using (var img = Image.FromFile(openFileDialog.FileName))
 				{
@@ -1117,7 +1117,7 @@ namespace PckStudio.Forms
         private void listView1_DoubleClick(object sender, EventArgs e)
         {
             ColorDialog colorDialog = new ColorDialog();
-            if (colorDialog.ShowDialog() == DialogResult.OK)
+            if (colorDialog.ShowDialog(this) == DialogResult.OK)
                 listViewBoxes.SelectedItems[0].ForeColor = colorDialog.Color;
             Rerender();
         }
@@ -1175,7 +1175,7 @@ namespace PckStudio.Forms
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "Custom Skin Model File | *.CSM";
-            if (saveFileDialog.ShowDialog() != DialogResult.OK)
+            if (saveFileDialog.ShowDialog(this) != DialogResult.OK)
                 return;
             string contents = "";
             foreach (ListViewItem listViewItem in listViewBoxes.Items)
@@ -1199,7 +1199,7 @@ namespace PckStudio.Forms
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Custom Skin Model File | *.CSM";
             openFileDialog.Title = "Select Custom Skin Model File";
-            if (MessageBox.Show("Import custom model project file? Your current work will be lost!", "", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1) == DialogResult.Yes && openFileDialog.ShowDialog() == DialogResult.OK)
+            if (MessageBox.Show(this, "Import custom model project file? Your current work will be lost!", "", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1) == DialogResult.Yes && openFileDialog.ShowDialog(this) == DialogResult.OK)
             {
                 listViewBoxes.Items.Clear();
                 modelBoxes.Clear();
@@ -1246,7 +1246,7 @@ namespace PckStudio.Forms
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                MessageBox.Show("Please Select a Part");
+                MessageBox.Show(this, "Please Select a Part");
             }
         }
 
@@ -1261,7 +1261,7 @@ namespace PckStudio.Forms
         private void changeColorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ColorDialog colorDialog = new ColorDialog();
-            if (colorDialog.ShowDialog() == DialogResult.OK)
+            if (colorDialog.ShowDialog(this) == DialogResult.OK)
                 listViewBoxes.SelectedItems[0].ForeColor = colorDialog.Color;
             Rerender();
         }
@@ -1368,7 +1368,7 @@ namespace PckStudio.Forms
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "JSON Model File | *.JSON";
             openFileDialog.Title = "Select JSON Model File";
-            if (MessageBox.Show("Import custom model project file? Your current work will be lost!", "", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1) == DialogResult.Yes && openFileDialog.ShowDialog() == DialogResult.OK)
+            if (MessageBox.Show(this, "Import custom model project file? Your current work will be lost!", "", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1) == DialogResult.Yes && openFileDialog.ShowDialog(this) == DialogResult.OK)
             {
                 listViewBoxes.Items.Clear();
                 string str1 = JSONToCSM(openFileDialog.FileName);
