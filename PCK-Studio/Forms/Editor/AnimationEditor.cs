@@ -427,8 +427,11 @@ namespace PckStudio.Forms.Editor
 				textures.Add(new Bitmap(gif, oldResolution, oldResolution));
 			}
 
-			_animation = new Animation(textures);
-			_animation.Interpolate = InterpolationCheckbox.Checked;
+            // TODO: Add function or a other way to initialize the frames by textures.
+            // Currently single frames only get added when an anim has an invalid format or is empty.
+            // -Miku
+            _animation = new Animation(textures, "");
+            _animation.Interpolate = InterpolationCheckbox.Checked;
 			LoadAnimationTreeView();
         }
 
