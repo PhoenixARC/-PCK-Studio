@@ -184,14 +184,14 @@ namespace PckStudio
 			}
 			catch (OverflowException ex)
 			{
-				MessageBox.Show("Failed to open PCK\n" +
+				MessageBox.Show("Failed to open pck\n" +
 					$"Try {(LittleEndianCheckBox.Checked ? "unchecking" : "checking")} the 'Open/Save as Switch/Vita/PS4 pck' check box in the upper right corner.",
 					"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				Debug.WriteLine(ex.Message);
 			}
 			catch
 			{
-				MessageBox.Show("Failed to open PCK. There's two common reasons for this:\n" +
+				MessageBox.Show("Failed to open pck. There's two common reasons for this:\n" +
 					"1. The file is audio/music cues PCK file. Please use the specialized editor while inside of a pck file.\n" +
 					"2. We're aware of an issue where a pck file might fail to load because it contains multiple entries with the same path.",
 					"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -302,13 +302,15 @@ namespace PckStudio
 			return BuildNodeTreeBySeperator(subNode.Nodes, subPath, seperator);
 		}
 
-		private void BuildPckTreeView(TreeNodeCollection root, PckFile pckFile, bool isSubPCK)
+		private void BuildPckTreeView(TreeNodeCollection root, PckFile pckFile, string parentPath = "")
 		{
 			foreach (var file in pckFile.GetFiles())
 			{
+				// fix any file paths that may be incorrect
+				//if (file.Filename.StartsWith(parentPath))
+				//	file.Filename = file.Filename.Remove(0, parentPath.Length);
 				TreeNode node = BuildNodeTreeBySeperator(root, file.Filename, '/');
 				node.Tag = file;
-				SetNodeIcon(node, file.Filetype);
 				if (Settings.Default.LoadSubPcks &&
 					(file.Filetype == PckFileType.SkinDataFile || file.Filetype == PckFileType.TexturePackInfoFile) &&
 					file.Size > 0)
@@ -319,29 +321,19 @@ namespace PckStudio
 						{
 							var reader = new PckFileReader(LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
 							PckFile subPCKfile = reader.FromStream(stream);
-							BuildPckTreeView(node.Nodes, subPCKfile, true);
+							// passes parent path to remove from sub pck filepaths
+							BuildPckTreeView(node.Nodes, subPCKfile, file.Filename + "/");
 						}
 						catch (OverflowException ex)
 						{
-							// i think i'm stupid of something because this is needs to be negated to work right... whatever.
-							if(!isSubPCK)
-                            {
-								SetNodeIcon(node, file.Filetype);
-								MessageBox.Show($"Failed to open {file.Filename}\n" +
-									"This file's entries will not be shown in the tree and will crash the game if not resolved. Try right clicking the file and selecting one of the options inside of \"Misc. Functions/Set PCK Endianness\".",
-									"Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-								Debug.WriteLine(ex.Message);
-							}
-							else
-                            {
-								MessageBox.Show($"Failed to open PCK\n" +
-									"Try checking the 'Open/Save as Switch/Vita/PS4 pck' checkbox in the upper right corner.",
-									"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-								Debug.WriteLine(ex.Message);
-							}
+							MessageBox.Show("Failed to open pck\n" +
+								"Try checking the 'Open/Save as Switch/Vita/PS4 pck' checkbox in the upper right corner.",
+								"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+							Debug.WriteLine(ex.Message);
 						}
 					}
 				}
+				SetNodeIcon(node, file.Filetype);
 			};
 		}
 
@@ -352,7 +344,7 @@ namespace PckStudio
 			previewPictureBox.Image = Resources.NoImageFound;
 			treeMeta.Nodes.Clear();
 			treeViewMain.Nodes.Clear();
-			BuildPckTreeView(treeViewMain.Nodes, currentPCK, false);
+			BuildPckTreeView(treeViewMain.Nodes, currentPCK);
 
 			if (isTemplateFile && currentPCK.HasFile("Skins.pck", PckFileType.SkinDataFile))
 			{
@@ -421,18 +413,8 @@ namespace PckStudio
 
 		private void HandleAudioFile(PckFileData file)
 		{
-			try
-            {
-				using AudioEditor audioEditor = new AudioEditor(file, LittleEndianCheckBox.Checked);
-				wasModified = audioEditor.ShowDialog(this) == DialogResult.OK;
-			}
-			catch (Exception ex)
-            {
-				MessageBox.Show($"Failed to open {file.Filename}\n" +
-					"Try converting the file by right clicking the file and selecting one of the options inside of \"Misc. Functions/Set PCK Endianness\" and then try opening this file again.",
-					"Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-				Debug.WriteLine(ex.Message);
-			}
+			using AudioEditor audioEditor = new AudioEditor(file, LittleEndianCheckBox.Checked);
+			wasModified = audioEditor.ShowDialog(this) == DialogResult.OK;
 		}
 
 		private void HandleLocalisationFile(PckFileData file)
@@ -2352,48 +2334,5 @@ namespace PckStudio
 		private void moveUpToolStripMenuItem_Click(object sender, EventArgs e) => moveFile(-1);
 		[Obsolete]
 		private void moveDownToolStripMenuItem_Click(object sender, EventArgs e) => moveFile(1);
-
-        private void setPCKEndiannessStripMenuItem_Click(OMI.Endianness endianness)
-        {
-			try
-            {
-				if (treeViewMain.SelectedNode.Tag is PckFileData file && (file.Filetype is PckFileType.AudioFile || file.Filetype is PckFileType.SkinDataFile || file.Filetype is PckFileType.TexturePackInfoFile))
-				{
-					using (var WrittenStream = new MemoryStream())
-					{
-						dynamic reader = file.Filetype is PckFileType.AudioFile 
-							? new PckAudioFileReader(endianness == OMI.Endianness.BigEndian ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian)
-							: new PckFileReader(endianness == OMI.Endianness.BigEndian ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
-						var pck = reader.FromStream(new MemoryStream(file.Data));
-						dynamic writer = file.Filetype is PckFileType.AudioFile
-							? new PckAudioFileWriter(pck, endianness)
-							: new PckFileWriter(pck, endianness);
-						writer.WriteToStream(WrittenStream);
-						file.SetData(WrittenStream.ToArray());
-					}
-					BuildMainTreeView();
-					wasModified = true;
-					MessageBox.Show($"{file.Filename} converted to {(endianness == OMI.Endianness.LittleEndian ? "little" : "big")} endian.", "Converted PCK file");
-				}
-			}
-			catch (OverflowException ex)
-            {
-				MessageBox.Show(this, $"File was not a valid {(endianness != OMI.Endianness.LittleEndian ? "little" : "big")} endian PCK File.", "Not a valid PCK file");
-				return;
-			}
-			catch(Exception ex)
-            {
-				MessageBox.Show(this, ex.Message, "Not a valid PCK file");
-				return;
-			}
-		}
-
-		private void littleEndianToolStripMenuItem_Click(object sender, EventArgs e) => setPCKEndiannessStripMenuItem_Click(OMI.Endianness.LittleEndian);
-		private void bigEndianToolStripMenuItem_Click(object sender, EventArgs e) => setPCKEndiannessStripMenuItem_Click(OMI.Endianness.BigEndian);
-
-        private void refreshFileTreeToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-			BuildMainTreeView();
-        }
-    }
+	}
 }
