@@ -90,6 +90,14 @@ namespace PckStudio.Forms.Editor
 			SetUpTable(targetVersion);
 		}
 
+		void AddEntry(TreeView treeView, List<TreeNode> cache, string name, object tag)
+        {
+			TreeNode tn = new TreeNode(name);
+			tn.Tag = tag;
+			treeView.Nodes.Add(tn);
+			cache.Add(tn);
+		}
+
 		void SetUpTable(bool targetVersion)
 		{
 			colorTreeView.Nodes.Clear();
@@ -101,35 +109,57 @@ namespace PckStudio.Forms.Editor
 
 			List<string> CurrentEntries = new List<string>();
 
-			foreach (var obj in temp.Colors)
+			colorCache.Clear();
+			fogCache.Clear();
+			underwaterCache.Clear();
+			waterCache.Clear();
+
+			// fixes the duplicate entry bug
+			if (targetVersion)
+            {
+				foreach(var col in colourfile.Colors)
+                {
+					if (default_colourfile.Colors.Find(c => c.Name == col.Name) == null) continue;
+					CurrentEntries.Add(col.Name);
+					AddEntry(colorTreeView, colorCache, col.Name, col);
+				}
+            }
+
+			foreach (var col in temp.Colors)
 			{
-				var entry = colourfile.Colors.Find(color => color.Name == obj.Name);
-				TreeNode tn = new TreeNode(obj.Name);
-				tn.Tag = entry != null ? entry : obj;
-				if (CurrentEntries.Contains(obj.Name)) continue;
-				CurrentEntries.Add(obj.Name);
-				colorTreeView.Nodes.Add(tn);
-				colorCache.Add(tn);
+				var entry = colourfile.Colors.Find(color => color.Name == col.Name);
+				if (CurrentEntries.Contains(col.Name)) continue;
+				var color = entry ?? col;
+				AddEntry(colorTreeView, colorCache, color.Name, color);
 			}
 			CurrentEntries.Clear();
-			foreach (var obj in temp.WaterColors)
+
+			// fixes the duplicate entry bug
+			if (targetVersion)
 			{
-				var entry = colourfile.WaterColors.Find(color => color.Name == obj.Name);
-				TreeNode tn = new TreeNode(obj.Name);
-				tn.Tag = entry != null ? entry : obj;
-				if (CurrentEntries.Contains(obj.Name)) continue;
-				CurrentEntries.Add(obj.Name);
-				waterTreeView.Nodes.Add(tn);
-				waterCache.Add(tn);
-				TreeNode tnB = new TreeNode(obj.Name);
-				tnB.Tag = entry != null ? entry : obj;
-				underwaterTreeView.Nodes.Add(tnB);
-				underwaterCache.Add(tnB);
-				TreeNode tnC = new TreeNode(obj.Name);
-				tnC.Tag = entry != null ? entry : obj;
-				fogTreeView.Nodes.Add(tnC);
-				fogCache.Add(tnC);
+				foreach (var col in colourfile.WaterColors)
+				{
+					if (default_colourfile.WaterColors.Find(c => c.Name == col.Name) == null) continue;
+					var entry = colourfile.WaterColors.Find(color => color.Name == col.Name);
+					var color = entry ?? col;
+					AddEntry(waterTreeView, waterCache, color.Name, color);
+					AddEntry(underwaterTreeView, underwaterCache, color.Name, color);
+					AddEntry(fogTreeView, fogCache, color.Name, color);
+				}
 			}
+
+			foreach (var col in temp.WaterColors)
+			{
+				var entry = colourfile.WaterColors.Find(color => color.Name == col.Name);
+				if (CurrentEntries.Contains(col.Name)) continue;
+				var color = entry ?? col;
+				AddEntry(waterTreeView, waterCache, color.Name, color);
+				AddEntry(underwaterTreeView, underwaterCache, color.Name, color);
+				AddEntry(fogTreeView, fogCache, color.Name, color);
+			}
+
+			// force the filter function to run to carry filter over and fix treeview size
+			metroTextBox1_TextChanged(null, null);
 		}
 
 		void SetUpValueChanged(bool add)

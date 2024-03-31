@@ -739,24 +739,6 @@
   <metadata name="ColorContextMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>125, 17</value>
   </metadata>
-  <data name="copyColorToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>134, 22</value>
-  </data>
-  <data name="copyColorToolStripMenuItem.Text" xml:space="preserve">
-    <value>Copy Color</value>
-  </data>
-  <data name="pasteColorToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>134, 22</value>
-  </data>
-  <data name="pasteColorToolStripMenuItem.Text" xml:space="preserve">
-    <value>Paste Color</value>
-  </data>
-  <data name="restoreOriginalColorToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>145, 22</value>
-  </data>
-  <data name="restoreOriginalColorToolStripMenuItem.Text" xml:space="preserve">
-    <value>Restore Color</value>
-  </data>
   <data name="ColorContextMenu.Size" type="System.Drawing.Size, System.Drawing">
     <value>146, 70</value>
   </data>
@@ -816,6 +798,24 @@
   </data>
   <data name="&gt;&gt;waterTab.ZOrder" xml:space="preserve">
     <value>1</value>
+  </data>
+  <data name="copyColorToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>134, 22</value>
+  </data>
+  <data name="copyColorToolStripMenuItem.Text" xml:space="preserve">
+    <value>Copy Color</value>
+  </data>
+  <data name="pasteColorToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>134, 22</value>
+  </data>
+  <data name="pasteColorToolStripMenuItem.Text" xml:space="preserve">
+    <value>Paste Color</value>
+  </data>
+  <data name="restoreOriginalColorToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>145, 22</value>
+  </data>
+  <data name="restoreOriginalColorToolStripMenuItem.Text" xml:space="preserve">
+    <value>Restore Color</value>
   </data>
   <data name="underwaterTreeView.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>

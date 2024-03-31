@@ -317,8 +317,10 @@ namespace PckStudio.Forms.Editor
             // 
             // waterTreeView
             // 
+            this.waterTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.waterTreeView.ContextMenuStrip = this.ColorContextMenu;
             resources.ApplyResources(this.waterTreeView, "waterTreeView");
+            this.waterTreeView.ForeColor = System.Drawing.Color.White;
             this.waterTreeView.Name = "waterTreeView";
             this.waterTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView2_AfterSelect);
             this.waterTreeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView2_KeyDown);
@@ -352,7 +354,9 @@ namespace PckStudio.Forms.Editor
             // 
             // underwaterTreeView
             // 
+            this.underwaterTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.underwaterTreeView.ContextMenuStrip = this.ColorContextMenu;
+            this.underwaterTreeView.ForeColor = System.Drawing.Color.White;
             resources.ApplyResources(this.underwaterTreeView, "underwaterTreeView");
             this.underwaterTreeView.Name = "underwaterTreeView";
             this.underwaterTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView3_AfterSelect);
@@ -360,7 +364,9 @@ namespace PckStudio.Forms.Editor
             // 
             // fogTreeView
             // 
+            this.fogTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.fogTreeView.ContextMenuStrip = this.ColorContextMenu;
+            this.fogTreeView.ForeColor = System.Drawing.Color.White;
             resources.ApplyResources(this.fogTreeView, "fogTreeView");
             this.fogTreeView.Name = "fogTreeView";
             this.fogTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView4_AfterSelect);
@@ -375,8 +381,10 @@ namespace PckStudio.Forms.Editor
             // 
             // colorTreeView
             // 
+            this.colorTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.colorTreeView.ContextMenuStrip = this.ColorContextMenu;
             resources.ApplyResources(this.colorTreeView, "colorTreeView");
+            this.colorTreeView.ForeColor = System.Drawing.Color.White;
             this.colorTreeView.Name = "colorTreeView";
             this.colorTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
             this.colorTreeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView1_KeyDown);
