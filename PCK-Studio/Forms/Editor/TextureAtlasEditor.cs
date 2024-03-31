@@ -241,8 +241,11 @@ namespace PckStudio.Forms.Editor
 
             if (animationButton.Enabled = _atlasType == "blocks" || _atlasType == "items")
             {
+                PckFileData animationFile;
+
                 bool hasAnimation =
-                    _pckFile.TryGetValue($"res/textures/{_atlasType}/{dataTile.Tile.InternalName}.png", PckFileType.TextureFile, out var animationFile);
+                    _pckFile.TryGetValue($"res/textures/{_atlasType}/{dataTile.Tile.InternalName}.png", PckFileType.TextureFile, out animationFile) ||
+                    _pckFile.TryGetValue($"res/textures/{_atlasType}/{dataTile.Tile.InternalName}.tga", PckFileType.TextureFile, out animationFile);
                 animationButton.Text = hasAnimation ? "Edit Animation" : "Create Animation";
 
                 if (playAnimationsToolStripMenuItem.Checked &&
