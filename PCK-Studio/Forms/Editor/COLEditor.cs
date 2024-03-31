@@ -242,33 +242,6 @@ namespace PckStudio.Forms.Editor
 
 		private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
-            List<string> PS4Biomes = new List<string>
-            {
-                "bamboo_jungle",
-                "bamboo_jungle_hills",
-                "mesa_mutated",
-                "mega_spruce_taiga_mutated",
-                "mega_taiga_mutated"
-            };
-
-            if (colourfile.WaterColors.Find(e => PS4Biomes.Contains(e.Name)) != null)
-			{
-				var result = MessageBox.Show(this, "Biomes exclusive to PS4 Edition v1.91 were found in the water section of this colour table. This will crash all other editions of the game and PS4 Edition v1.90 and below. Would you like to remove them?", "Potentially unsupported biomes found", MessageBoxButtons.YesNoCancel);
-				switch (result)
-				{
-					case DialogResult.Yes:
-						foreach (var col in colourfile.WaterColors.ToList())
-						{
-							if(PS4Biomes.Contains(col.Name)) colourfile.WaterColors.Remove(col);
-						}
-						break;
-					case DialogResult.No:
-						break;
-					default:
-						return;
-				}
-			}
-			
 			_file.SetData(new COLFileWriter(colourfile));
 			
             DialogResult = DialogResult.OK;
@@ -570,6 +543,28 @@ namespace PckStudio.Forms.Editor
 			string hexCheck = "0123456789abcdefABCDEF\b";
 
 			e.Handled = !hexCheck.Contains(e.KeyChar);
+		}
+
+        private void stripPS4BiomesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+			if(colourfile.WaterColors.Count > 0)
+            {
+				List<string> PS4Biomes = new List<string>
+				{
+					"bamboo_jungle",
+					"bamboo_jungle_hills",
+					"mesa_mutated",
+					"mega_spruce_taiga_mutated",
+					"mega_taiga_mutated"
+				};
+
+				foreach (var col in colourfile.WaterColors.ToList())
+				{
+					if (PS4Biomes.Contains(col.Name)) colourfile.WaterColors.Remove(col);
+				}
+
+				SetUpTable(false);
+			}
 		}
     }
 }

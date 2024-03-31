@@ -64,6 +64,8 @@ namespace PckStudio.Forms.Editor
             this.tabControl = new MetroFramework.Controls.MetroTabControl();
             this.underwaterTab = new System.Windows.Forms.TabPage();
             this.fogTab = new System.Windows.Forms.TabPage();
+            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.targetUpdateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TU12ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TU13ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TU14ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -77,7 +79,7 @@ namespace PckStudio.Forms.Editor
             this.TU54ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TU69ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this._1_9_1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.targetUpdateToolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.stripPS4BiomesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.metroPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.blueUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.greenUpDown)).BeginInit();
@@ -289,7 +291,7 @@ namespace PckStudio.Forms.Editor
             this.menuStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.targetUpdateToolToolStripMenuItem});
+            this.toolsToolStripMenuItem});
             this.menuStrip.Name = "menuStrip";
             // 
             // fileToolStripMenuItem
@@ -406,6 +408,34 @@ namespace PckStudio.Forms.Editor
             resources.ApplyResources(this.fogTab, "fogTab");
             this.fogTab.Name = "fogTab";
             // 
+            // toolsToolStripMenuItem
+            // 
+            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.stripPS4BiomesToolStripMenuItem,
+            this.targetUpdateToolStripMenuItem});
+            this.toolsToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
+            resources.ApplyResources(this.toolsToolStripMenuItem, "toolsToolStripMenuItem");
+            // 
+            // targetUpdateToolStripMenuItem
+            // 
+            this.targetUpdateToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.TU12ToolStripMenuItem,
+            this.TU13ToolStripMenuItem,
+            this.TU14ToolStripMenuItem,
+            this.TU19ToolStripMenuItem,
+            this.TU31ToolStripMenuItem,
+            this.TU32ToolStripMenuItem,
+            this.TU43ToolStripMenuItem,
+            this.TU46ToolStripMenuItem,
+            this.TU51ToolStripMenuItem,
+            this.TU53ToolStripMenuItem,
+            this.TU54ToolStripMenuItem,
+            this.TU69ToolStripMenuItem,
+            this._1_9_1ToolStripMenuItem});
+            this.targetUpdateToolStripMenuItem.Name = "targetUpdateToolStripMenuItem";
+            resources.ApplyResources(this.targetUpdateToolStripMenuItem, "targetUpdateToolStripMenuItem");
+            // 
             // TU12ToolStripMenuItem
             // 
             this.TU12ToolStripMenuItem.Name = "TU12ToolStripMenuItem";
@@ -471,25 +501,11 @@ namespace PckStudio.Forms.Editor
             this._1_9_1ToolStripMenuItem.Name = "_1_9_1ToolStripMenuItem";
             resources.ApplyResources(this._1_9_1ToolStripMenuItem, "_1_9_1ToolStripMenuItem");
             // 
-            // targetUpdateToolToolStripMenuItem
+            // stripPS4BiomesToolStripMenuItem
             // 
-            this.targetUpdateToolToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.TU12ToolStripMenuItem,
-            this.TU13ToolStripMenuItem,
-            this.TU14ToolStripMenuItem,
-            this.TU19ToolStripMenuItem,
-            this.TU31ToolStripMenuItem,
-            this.TU32ToolStripMenuItem,
-            this.TU43ToolStripMenuItem,
-            this.TU46ToolStripMenuItem,
-            this.TU51ToolStripMenuItem,
-            this.TU53ToolStripMenuItem,
-            this.TU54ToolStripMenuItem,
-            this.TU69ToolStripMenuItem,
-            this._1_9_1ToolStripMenuItem});
-            this.targetUpdateToolToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.targetUpdateToolToolStripMenuItem.Name = "targetUpdateToolToolStripMenuItem";
-            resources.ApplyResources(this.targetUpdateToolToolStripMenuItem, "targetUpdateToolToolStripMenuItem");
+            this.stripPS4BiomesToolStripMenuItem.Name = "stripPS4BiomesToolStripMenuItem";
+            resources.ApplyResources(this.stripPS4BiomesToolStripMenuItem, "stripPS4BiomesToolStripMenuItem");
+            this.stripPS4BiomesToolStripMenuItem.Click += new System.EventHandler(this.stripPS4BiomesToolStripMenuItem_Click);
             // 
             // COLEditor
             // 
@@ -555,7 +571,8 @@ namespace PckStudio.Forms.Editor
 		private MetroFramework.Controls.MetroLabel metroLabel2;
         private ToolStripMenuItem copyColorToolStripMenuItem;
         private ToolStripMenuItem pasteColorToolStripMenuItem;
-        private ToolStripMenuItem targetUpdateToolToolStripMenuItem;
+        private ToolStripMenuItem toolsToolStripMenuItem;
+        private ToolStripMenuItem targetUpdateToolStripMenuItem;
         private ToolStripMenuItem TU12ToolStripMenuItem;
         private ToolStripMenuItem TU13ToolStripMenuItem;
         private ToolStripMenuItem TU14ToolStripMenuItem;
@@ -569,5 +586,6 @@ namespace PckStudio.Forms.Editor
         private ToolStripMenuItem TU54ToolStripMenuItem;
         private ToolStripMenuItem TU69ToolStripMenuItem;
         private ToolStripMenuItem _1_9_1ToolStripMenuItem;
+        private ToolStripMenuItem stripPS4BiomesToolStripMenuItem;
     }
 }
