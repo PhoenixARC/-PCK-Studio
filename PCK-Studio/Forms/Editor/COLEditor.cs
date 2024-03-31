@@ -160,6 +160,7 @@ namespace PckStudio.Forms.Editor
 			greenUpDown.Value = color >> 8 & 0xff;
 			blueUpDown.Value = color & 0xff;
 			pictureBox1.BackColor = Color.FromArgb(0xff << 24 | color);
+			colorTextbox.Text = ColorTranslator.ToHtml(colorEntry.ColorPallette).TrimStart('#');
 			SetUpValueChanged(true);
 		}
 
@@ -178,6 +179,7 @@ namespace PckStudio.Forms.Editor
 			greenUpDown.Value = color >> 8 & 0xff;
 			blueUpDown.Value = color & 0xff;
 			pictureBox1.BackColor = colorEntry.SurfaceColor;
+			colorTextbox.Text = ColorTranslator.ToHtml(colorEntry.SurfaceColor).TrimStart('#');
 			SetUpValueChanged(true);
 		}
 
@@ -194,6 +196,7 @@ namespace PckStudio.Forms.Editor
 			greenUpDown.Value = color >> 8 & 0xff;
 			blueUpDown.Value = color & 0xff;
 			pictureBox1.BackColor = Color.FromArgb(255, Color.FromArgb(0xff << 24 | color));
+			colorTextbox.Text = ColorTranslator.ToHtml(colorEntry.UnderwaterColor).TrimStart('#');
 			SetUpValueChanged(true);
 		}
 
@@ -210,6 +213,7 @@ namespace PckStudio.Forms.Editor
 			greenUpDown.Value = color >> 8 & 0xff;
 			blueUpDown.Value = color & 0xff;
 			pictureBox1.BackColor = Color.FromArgb(255, Color.FromArgb(0xff << 24 | color));
+			colorTextbox.Text = ColorTranslator.ToHtml(colorEntry.FogColor).TrimStart('#');
 			SetUpValueChanged(true);
 		}
 
@@ -315,29 +319,21 @@ namespace PckStudio.Forms.Editor
 			}
 		}
 
+		public bool IsValidHexString(string value)
+		{
+			return System.Text.RegularExpressions.Regex.IsMatch(value, @"\A\b[0-9a-fA-F]+\b\Z") && value.Length == 6;
+		}
+
 		private void colorBox_TextChanged(object sender, EventArgs e)
 		{
-			//TreeView tv = (TreeView)tabControl.SelectedTab.Controls[0];
-			//if (tv.SelectedNode == null || tv.SelectedNode.Tag == null)
-			//	return;
-			//bool hasAlpha = tabControl.SelectedTab == waterTab;
-			//alphaUpDown.Enabled = hasAlpha;
-			//redUpDown.Value = StringToByteArrayFastest(colorTextbox.Text)[!hasAlpha ? 0 : 1];
-			//greenUpDown.Value = StringToByteArrayFastest(colorTextbox.Text)[!hasAlpha ? 1 : 2];
-			//blueUpDown.Value = StringToByteArrayFastest(colorTextbox.Text)[!hasAlpha ? 2 : 3];
-			//int color = 0; /*colorEntry.color*/;
-   //         int argb = (int)((0xff000000u) | (color >> 24));
-			//colorTextbox.MaxLength = hasAlpha ? 8 : 6;
-			//alphaLabel.Visible = false;
-			//alphaUpDown.Visible = false;
-			//if (hasAlpha)
-			//{
-			//	alphaLabel.Visible = true;
-			//	alphaUpDown.Visible = true;
-			//	alphaUpDown.Value = StringToByteArrayFastest(colorTextbox.Text)[0];
-			//	argb = color >> 24 | color << 8;
-			//}
-			//pictureBox1.BackColor = Color.FromArgb(argb);
+			if(IsValidHexString(colorTextbox.Text))
+            {
+				Color color = ColorTranslator.FromHtml("#" + colorTextbox.Text);
+
+				redUpDown.Value = color.R;
+				greenUpDown.Value = color.G;
+				blueUpDown.Value = color.B;
+            }
 		}
 
 		private void color_ValueChanged(object sender, EventArgs e)
@@ -461,6 +457,7 @@ namespace PckStudio.Forms.Editor
             greenUpDown.Value = color.G;
             blueUpDown.Value = color.B;
             pictureBox1.BackColor = Color.FromArgb(tabControl.SelectedTab == colorsTab ? 0xFF : color.A, color);
+			metroTextBox1.Text = pictureBox1.BackColor.ToString();
         }
 
 		private void metroTextBox1_TextChanged(object sender, EventArgs e)
@@ -605,5 +602,12 @@ namespace PckStudio.Forms.Editor
 				saveToolStripMenuItem1_Click(sender, EventArgs.Empty);
 			}
         }
+
+        private void colorTextbox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+			string hexCheck = "0123456789abcdefABCDEF\b";
+
+			e.Handled = !hexCheck.Contains(e.KeyChar);
+		}
     }
 }

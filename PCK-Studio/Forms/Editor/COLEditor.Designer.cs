@@ -239,6 +239,7 @@ namespace PckStudio.Forms.Editor
             // 
             // colorTextbox
             // 
+            this.colorTextbox.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             // 
             // 
             // 
@@ -254,7 +255,7 @@ namespace PckStudio.Forms.Editor
             this.colorTextbox.CustomButton.Visible = ((bool)(resources.GetObject("resource.Visible1")));
             this.colorTextbox.Lines = new string[0];
             resources.ApplyResources(this.colorTextbox, "colorTextbox");
-            this.colorTextbox.MaxLength = 32767;
+            this.colorTextbox.MaxLength = 6;
             this.colorTextbox.Name = "colorTextbox";
             this.colorTextbox.PasswordChar = '\0';
             this.colorTextbox.ScrollBars = System.Windows.Forms.ScrollBars.None;
@@ -267,6 +268,7 @@ namespace PckStudio.Forms.Editor
             this.colorTextbox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.colorTextbox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
             this.colorTextbox.TextChanged += new System.EventHandler(this.colorBox_TextChanged);
+            this.colorTextbox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.colorTextbox_KeyPress);
             // 
             // metroLabel1
             // 
