@@ -571,8 +571,22 @@ namespace PckStudio
 
 		private void HandleAudioFile(PckFileData file)
 		{
-			using AudioEditor audioEditor = new AudioEditor(file, LittleEndianCheckBox.Checked);
-			wasModified = audioEditor.ShowDialog(this) == DialogResult.OK;
+			try
+            {
+				using AudioEditor audioEditor = new AudioEditor(file, LittleEndianCheckBox.Checked);
+				wasModified = audioEditor.ShowDialog(this) == DialogResult.OK;
+			}
+			catch (OverflowException)
+            {
+				MessageBox.Show(this, $"Failed to open {file.Filename}\n" +
+					"Try converting the file by using the \"Misc. Functions/Set PCK Endianness\" tool and try again.",
+					"Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show($"Failed to open {file.Filename}\n" + ex.Message,
+					"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
 		}
 
 		private void HandleLocalisationFile(PckFileData file)
@@ -2382,5 +2396,42 @@ namespace PckStudio
         {
             Application.Exit();
         }
+
+		private void setPCKEndiannessStripMenuItem_Click(OMI.Endianness endianness)
+		{
+			try
+			{
+				if (treeViewMain.SelectedNode.Tag is PckFileData file && (file.Filetype is PckFileType.AudioFile || file.Filetype is PckFileType.SkinDataFile || file.Filetype is PckFileType.TexturePackInfoFile))
+				{
+					using (var stream = new MemoryStream())
+					{
+						dynamic reader = file.Filetype is PckFileType.AudioFile
+							? new PckAudioFileReader(endianness == OMI.Endianness.BigEndian ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian)
+							: new PckFileReader(endianness == OMI.Endianness.BigEndian ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
+						var pck = reader.FromStream(new MemoryStream(file.Data));
+						dynamic writer = file.Filetype is PckFileType.AudioFile
+							? new PckAudioFileWriter(pck, endianness)
+							: new PckFileWriter(pck, endianness);
+						writer.WriteToStream(stream);
+						file.SetData(stream.ToArray());
+					}
+					wasModified = true;
+					MessageBox.Show($"\"{file.Filename}\" successfully converted to {(endianness == OMI.Endianness.LittleEndian ? "little" : "big")} endian.", "Converted PCK file");
+				}
+			}
+			catch (OverflowException)
+			{
+				MessageBox.Show(this, $"File was not a valid {(endianness != OMI.Endianness.LittleEndian ? "little" : "big")} endian PCK File.", "Not a valid PCK file");
+				return;
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(this, ex.Message, "Not a valid PCK file");
+				return;
+			}
+		}
+
+		private void littleEndianToolStripMenuItem_Click(object sender, EventArgs e) => setPCKEndiannessStripMenuItem_Click(OMI.Endianness.LittleEndian);
+		private void bigEndianToolStripMenuItem_Click(object sender, EventArgs e) => setPCKEndiannessStripMenuItem_Click(OMI.Endianness.BigEndian);
 	}
 }
