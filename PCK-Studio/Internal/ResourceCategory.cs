@@ -18,9 +18,10 @@
 
 namespace PckStudio.Internal
 {
-    internal enum AnimationCategory
+    internal enum ResourceCategory
     {
-        Items,
-        Blocks
+        Unknown = -1,
+        ItemAnimation,
+        BlockAnimation
     }
 }

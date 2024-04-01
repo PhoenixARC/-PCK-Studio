@@ -41,7 +41,7 @@ namespace PckStudio.Popups
                 DialogResult = DialogResult.OK;
                 return;
             }
-            MessageBox.Show("Please select a filetype before applying");
+            MessageBox.Show(this, "Please select a filetype before applying");
         }
 
         private void applyBulkProperties(IReadOnlyCollection<PckFileData> files, int index)
@@ -73,10 +73,10 @@ namespace PckStudio.Popups
 
             if (Enum.IsDefined(typeof(PckFileType), index))
             {
-                MessageBox.Show($"Data added to {(PckFileType)index} entries");
+                MessageBox.Show(this, $"Data added to {(PckFileType)index} entries");
                 return;
             }
-            MessageBox.Show("Data added to all entries");
+            MessageBox.Show(this, "Data added to all entries");
         }
 
         private void treeMeta_AfterSelect(object sender, TreeViewEventArgs e)

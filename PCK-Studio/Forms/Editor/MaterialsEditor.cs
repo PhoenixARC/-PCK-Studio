@@ -12,6 +12,7 @@ using OMI.Formats.Material;
 using OMI.Workers.Material;
 using PckStudio.Internal;
 using PckStudio.Extensions;
+using PckStudio.Internal.Json;
 
 namespace PckStudio.Forms.Editor
 {
@@ -21,7 +22,7 @@ namespace PckStudio.Forms.Editor
 		private readonly PckFileData _file;
 		MaterialContainer materialFile;
 
-		private readonly JObject EntityJSONData = JObject.Parse(Properties.Resources.entityData);
+		private readonly List<EntityInfo> MaterialData = Entities.BehaviourInfos;
 
 		private bool showInvalidEntries;
 
@@ -36,23 +37,15 @@ namespace PckStudio.Forms.Editor
 			{
 				TreeNode EntryNode = new TreeNode(entry.Name);
 
-				EntryNode.ImageIndex = -1;
-
-				foreach (JObject content in EntityJSONData["materials"].Children())
-				{
-					var prop = content.Properties().FirstOrDefault(prop => prop.Name == entry.Name);
-					if (prop is JProperty)
-					{
-						EntryNode.Text = (string)prop.Value;
-						EntryNode.ImageIndex = EntityJSONData["materials"].Children().ToList().IndexOf(content);
-						break;
-					}
+				var material = MaterialData.Find(m => m.InternalName == entry.Name);
+				if(material != null)
+                {
+					EntryNode.Text = material.DisplayName;
+					EntryNode.ImageIndex = MaterialData.IndexOf(material);
+					EntryNode.Tag = entry;
 				}
-
-				EntryNode.Tag = entry;
-
 				// check for invalid material entry
-				if (EntryNode.ImageIndex == -1)
+				else
                 {
 					EntryNode.ImageIndex = 127; // icon for invalid entry
 					EntryNode.Text += " (Invalid)";
@@ -152,7 +145,7 @@ namespace PckStudio.Forms.Editor
 		{
 			var diag = new Additional_Popups.EntityForms.AddEntry("materials", ApplicationScope.EntityImages);
 
-			if (diag.ShowDialog() == DialogResult.OK)
+			if (diag.ShowDialog(this) == DialogResult.OK)
 			{
 				if (string.IsNullOrEmpty(diag.SelectedEntity)) return;
 				if (materialFile.FindAll(mat => mat.Name == diag.SelectedEntity).Count() > 0)
@@ -164,17 +157,11 @@ namespace PckStudio.Forms.Editor
 
 				TreeNode NewEntryNode = new TreeNode(NewEntry.Name);
 				NewEntryNode.Tag = NewEntry;
-				foreach (JObject content in EntityJSONData["materials"].Children())
-				{
-					var prop = content.Properties().FirstOrDefault(prop => prop.Name == NewEntry.Name);
-					if (prop is JProperty)
-					{
-						NewEntryNode.Text = (string)prop.Value;
-						NewEntryNode.ImageIndex = EntityJSONData["materials"].Children().ToList().IndexOf(content);
-						NewEntryNode.SelectedImageIndex = NewEntryNode.ImageIndex;
-						break;
-					}
-				}
+
+				var material = MaterialData.Find(m => m.InternalName == NewEntry.Name);
+				NewEntryNode.Text = material.DisplayName;
+				NewEntryNode.ImageIndex = MaterialData.IndexOf(material);
+				NewEntryNode.SelectedImageIndex = NewEntryNode.ImageIndex;
 				treeView1.Nodes.Add(NewEntryNode);
 			}
 		}

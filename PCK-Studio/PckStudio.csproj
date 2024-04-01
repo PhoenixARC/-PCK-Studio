@@ -143,11 +143,17 @@
     <Compile Include="Extensions\SkinExtensions.cs" />
     <Compile Include="Extensions\System.Numerics.cs" />
     <Compile Include="Extensions\TreeNodeExtensions.cs" />
+    <Compile Include="Internal\AnimationSerializer.cs" />
+    <Compile Include="Internal\AnimationDeserializer.cs" />
+    <Compile Include="Interfaces\IPckDeserializer.cs" />
+    <Compile Include="Interfaces\IPckFileSerializer.cs" />
+    <Compile Include="Internal\Json\Entities.cs" />
+    <Compile Include="Internal\Json\EntityInfo.cs" />
+    <Compile Include="Internal\ResourceCategory.cs" />
     <Compile Include="Internal\Skin.cs" />
     <Compile Include="Internal\SkinPartOffset.cs" />
-    <Compile Include="Helper\AnimationHelper.cs" />
-    <Compile Include="Internal\AnimationCategory.cs" />
     <Compile Include="Internal\CommitInfo.cs" />
+    <Compile Include="Internal\ResourceLocation.cs" />
     <Compile Include="Internal\SkinAnimFlag.cs" />
     <Compile Include="Internal\SkinAnimMask.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -621,7 +627,9 @@
   <ItemGroup>
     <None Include="Resources\atlases\bannerData.json" />
     <None Include="Resources\atlases\blockData.json" />
-    <None Include="Resources\atlases\entityData.json" />
+    <None Include="Resources\atlases\entityBehavioursData.json" />
+    <None Include="Resources\atlases\entityMaterialsData.json" />
+    <None Include="Resources\atlases\entityModelsData.json" />
     <None Include="Resources\atlases\experienceOrbData.json" />
     <None Include="Resources\atlases\explosionData.json" />
     <None Include="Resources\atlases\itemData.json" />

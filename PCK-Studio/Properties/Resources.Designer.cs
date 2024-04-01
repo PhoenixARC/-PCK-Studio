@@ -359,32 +359,110 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized string similar to {
         ///	&quot;COMMENT&quot;: &quot;Entity data research by NessieHax (Miku-666) and MattNL&quot;,
-        ///	&quot;models&quot;: [
-        ///		{ &quot;&quot;: &quot;&quot; },
-        ///		{ &quot;&quot;: &quot;&quot; },
-        ///		{ &quot;&quot;: &quot;&quot; },
-        ///		{ &quot;bat&quot;: &quot;Bat&quot; },
-        ///		{ &quot;blaze&quot;: &quot;Blaze&quot; },
-        ///		{ &quot;boat&quot;: &quot;Boat&quot; },
-        ///		{ &quot;cat&quot;: &quot;Cat (PS4 EXCLUSIVE)&quot; },
-        ///		{ &quot;&quot;: &quot;&quot; },
-        ///		{ &quot;&quot;: &quot;&quot; },
-        ///		{ &quot;chicken&quot;: &quot;Chicken&quot; },
-        ///		{ &quot;cod&quot;: &quot;Cod&quot; },
-        ///		{ &quot;&quot;: &quot;&quot; },
-        ///		{ &quot;cow&quot;: &quot;Cow&quot; },
-        ///		{ &quot;creeper&quot;: &quot;Creeper&quot; },
-        ///		{ &quot;dolphin&quot;: &quot;Dolphin&quot; },
-        ///		{ &quot;&quot;: &quot;&quot; },
-        ///		{ &quot;&quot;: &quot;&quot; },
-        ///		{ &quot;zombie.drowned&quot;: &quot;Drowned&quot; },
-        ///		{ &quot;&quot;: &quot;&quot; },
-        ///		{ &quot;&quot;: &quot;&quot; },
-        ///		 [rest of string was truncated]&quot;;.
+        ///	&quot;entries&quot;: [
+        ///		{
+        ///			&quot;internalName&quot;: &quot;area_effect_cloud&quot;,
+        ///			&quot;displayName&quot;: &quot;Area Effect Cloud / Particle&quot;
+        ///		},
+        ///		{
+        ///			&quot;internalName&quot;: &quot;armor_stand&quot;,
+        ///			&quot;displayName&quot;: &quot;Armor Stand&quot;
+        ///		},
+        ///		{
+        ///			&quot;internalName&quot;: &quot;arrow&quot;,
+        ///			&quot;displayName&quot;: &quot;Arrow&quot;
+        ///		},
+        ///		{
+        ///			&quot;internalName&quot;: &quot;bat&quot;,
+        ///			&quot;displayName&quot;: &quot;Bat&quot;
+        ///		},
+        ///		{
+        ///			&quot;internalName&quot;: &quot;blaze&quot;,
+        ///			&quot;displayName&quot;: &quot;Blaze&quot;
+        ///		},
+        ///		{
+        ///			&quot;internalName&quot;: &quot;boat&quot;,
+        ///			&quot;display [rest of string was truncated]&quot;;.
         /// </summary>
-        public static string entityData {
+        public static string entityBehavioursData {
             get {
-                return ResourceManager.GetString("entityData", resourceCulture);
+                return ResourceManager.GetString("entityBehavioursData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///	&quot;COMMENT&quot;: &quot;Entity data research by NessieHax (Miku-666) and MattNL&quot;,
+        ///	&quot;entries&quot;: [
+        ///		{
+        ///			&quot;internalName&quot;: &quot;&quot;,
+        ///			&quot;displayName&quot;: &quot;&quot;
+        ///		},
+        ///		{
+        ///			&quot;internalName&quot;: &quot;&quot;,
+        ///			&quot;displayName&quot;: &quot;&quot;
+        ///		},
+        ///		{
+        ///			&quot;internalName&quot;: &quot;&quot;,
+        ///			&quot;displayName&quot;: &quot;&quot;
+        ///		},
+        ///		{
+        ///			&quot;internalName&quot;: &quot;bat&quot;,
+        ///			&quot;displayName&quot;: &quot;Bat&quot;
+        ///		},
+        ///		{
+        ///			&quot;internalName&quot;: &quot;blaze_head&quot;,
+        ///			&quot;displayName&quot;: &quot;Blaze&quot;
+        ///		},
+        ///		{
+        ///			&quot;internalName&quot;: &quot;&quot;,
+        ///			&quot;displayName&quot;: &quot;&quot;
+        ///		},
+        ///		{
+        ///			&quot;internalName&quot;: &quot;cat&quot;,
+        ///			&quot;displayName&quot;: &quot;Cat [PS4 [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string entityMaterialsData {
+            get {
+                return ResourceManager.GetString("entityMaterialsData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///	&quot;COMMENT&quot;: &quot;Entity data research by NessieHax (Miku-666) and MattNL&quot;,
+        ///	&quot;entries&quot;: [
+        ///		{
+        ///			&quot;internalName&quot;: &quot;&quot;,
+        ///			&quot;displayName&quot;: &quot;&quot;
+        ///		},
+        ///		{
+        ///			&quot;internalName&quot;: &quot;&quot;,
+        ///			&quot;displayName&quot;: &quot;&quot;
+        ///		},
+        ///		{
+        ///			&quot;internalName&quot;: &quot;&quot;,
+        ///			&quot;displayName&quot;: &quot;&quot;
+        ///		},
+        ///		{
+        ///			&quot;internalName&quot;: &quot;bat&quot;,
+        ///			&quot;displayName&quot;: &quot;Bat&quot;
+        ///		},
+        ///		{
+        ///			&quot;internalName&quot;: &quot;blaze&quot;,
+        ///			&quot;displayName&quot;: &quot;Blaze&quot;
+        ///		},
+        ///		{
+        ///			&quot;internalName&quot;: &quot;boat&quot;,
+        ///			&quot;displayName&quot;: &quot;Boat&quot;
+        ///		},
+        ///		{
+        ///			&quot;internalName&quot;: &quot;cat&quot;,
+        ///			&quot;displayName&quot;: &quot;Cat [ [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string entityModelsData {
+            get {
+                return ResourceManager.GetString("entityModelsData", resourceCulture);
             }
         }
         

@@ -124,8 +124,8 @@ namespace PckStudio.Forms.Editor
 			if (!parent.CreateDataFolder()) return;
 			string FileName = Path.Combine(parent.GetDataPath(), entry.Text + ".binka");
 
-			if (File.Exists(FileName)) MessageBox.Show("\"" + entry.Text + ".binka\" exists in the \"Data\" folder", "File found");
-			else MessageBox.Show("\"" + entry.Text + ".binka\" does not exist in the \"Data\" folder. The game will crash when attempting to load this track.", "File missing");
+			if (File.Exists(FileName)) MessageBox.Show(this, "\"" + entry.Text + ".binka\" exists in the \"Data\" folder", "File found");
+			else MessageBox.Show(this, "\"" + entry.Text + ".binka\" does not exist in the \"Data\" folder. The game will crash when attempting to load this track.", "File missing");
 		}
 
 		private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
@@ -145,7 +145,7 @@ namespace PckStudio.Forms.Editor
 			if (available.Length > 0)
 			{
 				using ItemSelectionPopUp add = new ItemSelectionPopUp(available);
-				if (add.ShowDialog() == DialogResult.OK)
+				if (add.ShowDialog(this) == DialogResult.OK)
 					audioFile.AddCategory(GetCategoryId(add.SelectedItem));
 				else return;
 
@@ -165,7 +165,7 @@ namespace PckStudio.Forms.Editor
 			}
 			else
 			{
-				MessageBox.Show("There are no more categories that could be added", "All possible categories are used");
+				MessageBox.Show(this, "There are no more categories that could be added", "All possible categories are used");
 			}
 		}
 
@@ -179,7 +179,7 @@ namespace PckStudio.Forms.Editor
 				ofn.Multiselect = true;
 				ofn.Filter = "Supported audio files (*.binka,*.wav)|*.binka;*.wav";
 				ofn.Title = "Please choose WAV or BINKA files to add to your pack";
-				ofn.ShowDialog();
+				ofn.ShowDialog(this);
 				ofn.Dispose();
 				if (string.IsNullOrEmpty(ofn.FileName)) return; // Return if name is null or if the user cancels
 
@@ -268,7 +268,7 @@ namespace PckStudio.Forms.Editor
 						diag_text += " Pressing yes will replace the existing file. By pressing no, the song entry will be added without affecting the file." +
 							"You can also cancel this operation and all files in queue.";
 
-						DialogResult user_prompt = MessageBox.Show(diag_text, "File already exists", MessageBoxButtons.YesNoCancel);
+						DialogResult user_prompt = MessageBox.Show(this, diag_text, "File already exists", MessageBoxButtons.YesNoCancel);
 						while (user_prompt == DialogResult.None) ; // Stops the editor from adding or processing the file until the user has made their choice
 						if (user_prompt == DialogResult.Cancel)
 						{
@@ -364,7 +364,7 @@ namespace PckStudio.Forms.Editor
 			   !audioFile.HasCategory(PckAudioFile.AudioCategory.EAudioType.Nether) ||
 			   !audioFile.HasCategory(PckAudioFile.AudioCategory.EAudioType.End))
 			{
-				MessageBox.Show("Your changes were not saved. The game will crash when loading your pack if the Overworld, Nether and End categories don't all exist with at least one valid song.", "Mandatory Categories Missing");
+				MessageBox.Show(this, "Your changes were not saved. The game will crash when loading your pack if the Overworld, Nether and End categories don't all exist with at least one valid song.", "Mandatory Categories Missing");
 				return;
 			}
 
@@ -375,7 +375,7 @@ namespace PckStudio.Forms.Editor
 			{
 				if (category.SongNames.Count < 1)
 				{
-					MessageBox.Show("The game will crash upon loading your pack if any of the categories are empty. Please remove or occupy the category.", "Empty Category");
+					MessageBox.Show(this, "The game will crash upon loading your pack if any of the categories are empty. Please remove or occupy the category.", "Empty Category");
 					return;
 				}
 
@@ -385,7 +385,7 @@ namespace PckStudio.Forms.Editor
 					if (!File.Exists(FileName))
 					{
 						songs_missing = true;
-						MessageBox.Show("\"" + song + ".binka\" does not exist in the \"Data\" folder. The game will crash when attempting to load this track.", "File missing");
+						MessageBox.Show(this, "\"" + song + ".binka\" does not exist in the \"Data\" folder. The game will crash when attempting to load this track.", "File missing");
 					}
 				}
 
@@ -406,7 +406,7 @@ namespace PckStudio.Forms.Editor
 
 			if (songs_missing)
 			{
-				MessageBox.Show("Failed to save AudioData file because there are missing song entries", "Error");
+				MessageBox.Show(this, "Failed to save AudioData file because there are missing song entries", "Error");
 				return;
 			}
 
@@ -421,7 +421,7 @@ namespace PckStudio.Forms.Editor
 
 		private void helpToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			MessageBox.Show("Simply drag and drop BINKA or WAV audio files into the right tree to add them to the category selected on the left tree.\n\n" +
+			MessageBox.Show(this, "Simply drag and drop BINKA or WAV audio files into the right tree to add them to the category selected on the left tree.\n\n" +
 				"The \"Menu\" category will only play once when loading the pack, and never again.\n\n" +
 				"The \"Creative\" category will only play songs listed in that category, and unlike other editions of Minecraft, will NOT play songs from the Overworld category. You can fix this by clicking the checkbox found at the top of the form.\n\n" +
 				"The mini game categories will only play if you have your pack loaded in those mini games.\n\n" +
@@ -430,7 +430,7 @@ namespace PckStudio.Forms.Editor
 
 		private void deleteUnusedBINKAsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			DialogResult dr = MessageBox.Show("This will delete all unused BINKA songs in the Data directory. This cannot be undone. Are you sure you want to continue?", "Warning", MessageBoxButtons.YesNo);
+			DialogResult dr = MessageBox.Show(this, "This will delete all unused BINKA songs in the Data directory. This cannot be undone. Are you sure you want to continue?", "Warning", MessageBoxButtons.YesNo);
 			if (dr != DialogResult.Yes) return;
 			var totalSongList = new List<string>();
 			foreach (string song in audioFile.Categories.SelectMany(cat => cat.SongNames))
@@ -458,17 +458,17 @@ namespace PckStudio.Forms.Editor
 					totalDeleted++;
 				}
 			}
-			MessageBox.Show("Successfully deleted " + totalDeleted + " files", "Done");
+			MessageBox.Show(this, "Successfully deleted " + totalDeleted + " files", "Done");
 		}
 
 		private void howToAddSongsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			MessageBox.Show("Right click the right window and press \"Add Entry\" or drag and drop a valid WAV file into the editor's right window. You can also drop other BINKA files, either from the main game or using a tool like BinkMan. The editor will automatically put the song in the Data folder for you.", "How to add a song");
+			MessageBox.Show(this, "Right click the right window and press \"Add Entry\" or drag and drop a valid WAV file into the editor's right window. You can also drop other BINKA files, either from the main game or using a tool like BinkMan. The editor will automatically put the song in the Data folder for you.", "How to add a song");
 		}
 
 		private void whatAreTheCategoriesToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			MessageBox.Show("Categories are pretty self explanatory. The game controls when each category should play.\n" +
+			MessageBox.Show(this, "Categories are pretty self explanatory. The game controls when each category should play.\n" +
 				"\nGAMEPLAY - Plays in the specified dimensions and game modes.\n" +
 				"-Overworld: Plays in survival mode and in Creative if no songs are set\n" +
 				"-Nether: Plays in the Nether.\n" +
@@ -484,17 +484,17 @@ namespace PckStudio.Forms.Editor
 
 		private void howToEditCreditsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			MessageBox.Show("Click Tools -> Credits Editor. This will allow you to edit all the credits easily in the pack easily. Only supports English credits at the moment. ","How to edit credits?");
+			MessageBox.Show(this, "Click Tools -> Credits Editor. This will allow you to edit all the credits easily in the pack easily. Only supports English credits at the moment. ","How to edit credits?");
 		}
 
 		private void optimizeDataFolderToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			MessageBox.Show("Click Tools -> Delete Unused BINKA files. This will clean your folder of any unused songs.", "How to optimize the Data folder");
+			MessageBox.Show(this, "Click Tools -> Delete Unused BINKA files. This will clean your folder of any unused songs.", "How to optimize the Data folder");
 		}
 
 		private void BINKACompressionToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			MessageBox.Show("The numerical up/down control is responsible for the level of compression used when converting WAV files. The default is 4, which was commonly used by 4J for the game's files.","BINKA Compression Level");
+			MessageBox.Show(this, "The numerical up/down control is responsible for the level of compression used when converting WAV files. The default is 4, which was commonly used by 4J for the game's files.","BINKA Compression Level");
 		}
 
 		private void openDataFolderToolStripMenuItem_Click(object sender, EventArgs e)
@@ -520,7 +520,7 @@ namespace PckStudio.Forms.Editor
 			ofn.Multiselect = true;
 			ofn.Filter = "Supported audio files (*.binka,*.wav)|*.binka;*.wav";
 			ofn.Title = "Please choose WAV or BINKA files to replace existing track files";
-			ofn.ShowDialog();
+			ofn.ShowDialog(this);
 			ofn.Dispose();
 			if (string.IsNullOrEmpty(ofn.FileName)) return; // Return if name is null or if the user cancels
 
@@ -578,7 +578,7 @@ namespace PckStudio.Forms.Editor
 			{
 				using ItemSelectionPopUp add = new ItemSelectionPopUp(available);
 				add.ButtonText = "Save";
-				if (add.ShowDialog() != DialogResult.OK) return;
+				if (add.ShowDialog(this) != DialogResult.OK) return;
 
 				audioFile.RemoveCategory(category.audioType);
 
@@ -592,13 +592,13 @@ namespace PckStudio.Forms.Editor
 			}
 			else
 			{
-				MessageBox.Show("There are no categories that aren't already used", "All possible categories are used");
+				MessageBox.Show(this, "There are no categories that aren't already used", "All possible categories are used");
 			}
 		}
 
 		private void organizeTracksToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if(MessageBox.Show("This function will move all binka files in the \"Data\" folder into a \"Music\" folder, to keep your data better organized. Would you like to continue?", "Move tracks?", MessageBoxButtons.YesNo) == DialogResult.Yes)
+			if(MessageBox.Show(this, "This function will move all binka files in the \"Data\" folder into a \"Music\" folder, to keep your data better organized. Would you like to continue?", "Move tracks?", MessageBoxButtons.YesNo) == DialogResult.Yes)
 			{
 				if (treeView1.Nodes.Count < 1 || !parent.CreateDataFolder()) return;
 				string musicdir = Path.Combine(parent.GetDataPath(), "Music");

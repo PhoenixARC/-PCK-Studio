@@ -31,6 +31,7 @@ using OMI.Workers.Color;
 
 using PckStudio.Extensions;
 using PckStudio.Helper;
+using PckStudio.Internal;
 using PckStudio.Internal.Json;
 
 namespace PckStudio.Forms.Editor
@@ -240,15 +241,18 @@ namespace PckStudio.Forms.Editor
 
             if (animationButton.Enabled = _atlasType == "blocks" || _atlasType == "items")
             {
+                PckFileData animationFile;
+
                 bool hasAnimation =
-                    _pckFile.TryGetValue($"res/textures/{_atlasType}/{dataTile.Tile.InternalName}.png", PckFileType.TextureFile, out var animationFile);
+                    _pckFile.TryGetValue($"res/textures/{_atlasType}/{dataTile.Tile.InternalName}.png", PckFileType.TextureFile, out animationFile) ||
+                    _pckFile.TryGetValue($"res/textures/{_atlasType}/{dataTile.Tile.InternalName}.tga", PckFileType.TextureFile, out animationFile);
                 animationButton.Text = hasAnimation ? "Edit Animation" : "Create Animation";
 
                 if (playAnimationsToolStripMenuItem.Checked &&
                     hasAnimation &&
                     animationFile.Size > 0)
                 {
-                    var animation = AnimationHelper.GetAnimationFromFile(animationFile);
+                    var animation = animationFile.Get(AnimationDeserializer.DefaultDeserializer);
                     selectTilePictureBox.Start(animation);
                 }
             }
@@ -513,7 +517,7 @@ namespace PckStudio.Forms.Editor
                 Title = "Select Texture"
             };
 
-            if (fileDialog.ShowDialog() == DialogResult.OK)
+            if (fileDialog.ShowDialog(this) == DialogResult.OK)
             {
                 var img = Image.FromFile(fileDialog.FileName);
                 SetTile(img);
@@ -532,15 +536,15 @@ namespace PckStudio.Forms.Editor
                     PckFileType.TextureFile
                 );
 
-            var animation = AnimationHelper.GetAnimationFromFile(file);
+            var animation = file.Get(AnimationDeserializer.DefaultDeserializer);
 
             var animationEditor = new AnimationEditor(animation, _selectedTile.Tile.InternalName, GetBlendColor());
-            if (animationEditor.ShowDialog() != DialogResult.OK)
+            if (animationEditor.ShowDialog(this) != DialogResult.OK)
             {
                 return;
             }
 
-            AnimationHelper.SaveAnimationToFile(file, animation);
+            file.SetData(animationEditor.Result, AnimationSerializer.DefaultSerializer);
             // so animations can automatically update upon saving
             SelectedIndex = _selectedTile.Index;
         }
@@ -552,7 +556,7 @@ namespace PckStudio.Forms.Editor
                 Filter = "Tile Texture|*.png",
                 FileName = _selectedTile.Tile.InternalName
             };
-            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            if (saveFileDialog.ShowDialog(this) == DialogResult.OK)
             {
                 dataTile.Texture.Save(saveFileDialog.FileName, ImageFormat.Png);
             }
@@ -614,7 +618,7 @@ namespace PckStudio.Forms.Editor
                 0x211d1d  // Black
             };
             
-            if (colorPick.ShowDialog() != DialogResult.OK) return;
+            if (colorPick.ShowDialog(this) != DialogResult.OK) return;
 
             selectTilePictureBox.BlendColor = colorPick.Color;
             selectTilePictureBox.Image = dataTile.Texture;

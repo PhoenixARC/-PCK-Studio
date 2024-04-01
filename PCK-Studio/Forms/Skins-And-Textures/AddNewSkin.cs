@@ -107,12 +107,12 @@ namespace PckStudio.Popups
 
         private void buttonSkin_Click(object sender, EventArgs e)
         {
-            contextMenuSkin.Show(Location.X + buttonSkin.Location.X + 2, Location.Y + buttonSkin.Location.Y + buttonSkin.Size.Height);
+            contextMenuSkin.Show(this, Location.X + buttonSkin.Location.X + 2, Location.Y + buttonSkin.Location.Y + buttonSkin.Size.Height);
         }
 
         private void buttonCape_Click(object sender, EventArgs e)
         {
-            contextMenuCape.Show(Location.X + buttonCape.Location.X + 2, Location.Y + buttonCape.Location.Y + buttonCape.Size.Height);
+            contextMenuCape.Show(this, Location.X + buttonCape.Location.X + 2, Location.Y + buttonCape.Location.Y + buttonCape.Size.Height);
         }
 
         private void replaceToolStripMenuItem_Click(object sender, EventArgs e)
@@ -132,6 +132,7 @@ namespace PckStudio.Popups
             if (e.Button == MouseButtons.Right)
             {
                 contextMenuSkin.Show(
+                    this,
                     x: Location.X + skinPictureBox.Location.X,
                     y: Location.Y + skinPictureBox.Location.Y + skinPictureBox.Size.Height
                     );
@@ -169,6 +170,7 @@ namespace PckStudio.Popups
             if (e.Button == MouseButtons.Right)
             {
                 contextMenuCape.Show(
+                    this,
                     x: Location.X + capePictureBox.Location.X,
                     y: Location.Y + capePictureBox.Location.Y + capePictureBox.Size.Height
                     );
@@ -184,7 +186,7 @@ namespace PckStudio.Popups
                     var img = Image.FromFile(ofd.FileName).ReleaseFromFile();
                     if (img.RawFormat != ImageFormat.Png && img.Width != img.Height * 2)
                     {
-                        MessageBox.Show("Not a Valid Cape File");
+                        MessageBox.Show(this, "Not a Valid Cape File");
                         return;
                     }
                     newSkin.CapeTexture = capePictureBox.Image = img;
