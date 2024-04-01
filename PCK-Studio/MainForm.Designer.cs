@@ -69,6 +69,9 @@
             this.generateMipMapTextureToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.viewFileInfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.correctSkinDecimalsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.setSubPCKEndiannessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bigEndianXbox360PS3WiiUToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.littleEndianPS4PSVitaSwitchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.moveUpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.moveDownToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.extractToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -150,9 +153,6 @@
             toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.setSubPCKEndiannessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.bigEndianXbox360PS3WiiUToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.littleEndianPS4PSVitaSwitchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(logoPictureBox)).BeginInit();
             this.contextMenuPCKEntries.SuspendLayout();
             this.menuStrip.SuspendLayout();
@@ -431,6 +431,26 @@
             this.correctSkinDecimalsToolStripMenuItem.Name = "correctSkinDecimalsToolStripMenuItem";
             resources.ApplyResources(this.correctSkinDecimalsToolStripMenuItem, "correctSkinDecimalsToolStripMenuItem");
             this.correctSkinDecimalsToolStripMenuItem.Click += new System.EventHandler(this.correctSkinDecimalsToolStripMenuItem_Click);
+            // 
+            // setSubPCKEndiannessToolStripMenuItem
+            // 
+            this.setSubPCKEndiannessToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.bigEndianXbox360PS3WiiUToolStripMenuItem,
+            this.littleEndianPS4PSVitaSwitchToolStripMenuItem});
+            this.setSubPCKEndiannessToolStripMenuItem.Name = "setSubPCKEndiannessToolStripMenuItem";
+            resources.ApplyResources(this.setSubPCKEndiannessToolStripMenuItem, "setSubPCKEndiannessToolStripMenuItem");
+            // 
+            // bigEndianXbox360PS3WiiUToolStripMenuItem
+            // 
+            this.bigEndianXbox360PS3WiiUToolStripMenuItem.Name = "bigEndianXbox360PS3WiiUToolStripMenuItem";
+            resources.ApplyResources(this.bigEndianXbox360PS3WiiUToolStripMenuItem, "bigEndianXbox360PS3WiiUToolStripMenuItem");
+            this.bigEndianXbox360PS3WiiUToolStripMenuItem.Click += new System.EventHandler(this.bigEndianToolStripMenuItem_Click);
+            // 
+            // littleEndianPS4PSVitaSwitchToolStripMenuItem
+            // 
+            this.littleEndianPS4PSVitaSwitchToolStripMenuItem.Name = "littleEndianPS4PSVitaSwitchToolStripMenuItem";
+            resources.ApplyResources(this.littleEndianPS4PSVitaSwitchToolStripMenuItem, "littleEndianPS4PSVitaSwitchToolStripMenuItem");
+            this.littleEndianPS4PSVitaSwitchToolStripMenuItem.Click += new System.EventHandler(this.littleEndianToolStripMenuItem_Click);
             // 
             // moveUpToolStripMenuItem
             // 
@@ -827,7 +847,7 @@
             this.tabControl.Controls.Add(this.editorTab);
             resources.ApplyResources(this.tabControl, "tabControl");
             this.tabControl.Name = "tabControl";
-            this.tabControl.SelectedIndex = 0;
+            this.tabControl.SelectedIndex = 1;
             this.tabControl.Style = MetroFramework.MetroColorStyle.Silver;
             this.tabControl.TabStop = false;
             this.tabControl.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -1072,6 +1092,10 @@
             this.treeViewMain.Name = "treeViewMain";
             this.treeViewMain.PathSeparator = "/";
             this.treeViewMain.BeforeLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.treeViewMain_BeforeLabelEdit);
+            this.treeViewMain.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.treeViewMain_ItemDrag);
+            this.treeViewMain.DragEnter += new System.Windows.Forms.DragEventHandler(this.treeViewMain_DragEnter);
+            this.treeViewMain.DragDrop += new System.Windows.Forms.DragEventHandler(this.treeViewMain_DragDrop);
+            this.treeViewMain.DragOver += new System.Windows.Forms.DragEventHandler(this.treeViewMain_DragOver);
             this.treeViewMain.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.selectNode);
             this.treeViewMain.DoubleClick += new System.EventHandler(this.treeViewMain_DoubleClick);
             this.treeViewMain.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeViewMain_KeyDown);
@@ -1098,26 +1122,6 @@
             this.LittleEndianCheckBox.Style = MetroFramework.MetroColorStyle.White;
             this.LittleEndianCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.LittleEndianCheckBox.UseSelectable = true;
-            // 
-            // setSubPCKEndiannessToolStripMenuItem
-            // 
-            this.setSubPCKEndiannessToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.bigEndianXbox360PS3WiiUToolStripMenuItem,
-            this.littleEndianPS4PSVitaSwitchToolStripMenuItem});
-            this.setSubPCKEndiannessToolStripMenuItem.Name = "setSubPCKEndiannessToolStripMenuItem";
-            resources.ApplyResources(this.setSubPCKEndiannessToolStripMenuItem, "setSubPCKEndiannessToolStripMenuItem");
-            // 
-            // bigEndianXbox360PS3WiiUToolStripMenuItem
-            // 
-            this.bigEndianXbox360PS3WiiUToolStripMenuItem.Name = "bigEndianXbox360PS3WiiUToolStripMenuItem";
-            resources.ApplyResources(this.bigEndianXbox360PS3WiiUToolStripMenuItem, "bigEndianXbox360PS3WiiUToolStripMenuItem");
-            this.bigEndianXbox360PS3WiiUToolStripMenuItem.Click += new System.EventHandler(this.bigEndianToolStripMenuItem_Click);
-            // 
-            // littleEndianPS4PSVitaSwitchToolStripMenuItem
-            // 
-            this.littleEndianPS4PSVitaSwitchToolStripMenuItem.Name = "littleEndianPS4PSVitaSwitchToolStripMenuItem";
-            resources.ApplyResources(this.littleEndianPS4PSVitaSwitchToolStripMenuItem, "littleEndianPS4PSVitaSwitchToolStripMenuItem");
-            this.littleEndianPS4PSVitaSwitchToolStripMenuItem.Click += new System.EventHandler(this.littleEndianToolStripMenuItem_Click);
             // 
             // MainForm
             // 

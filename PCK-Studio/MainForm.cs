@@ -1376,31 +1376,61 @@ namespace PckStudio
 
 		#region drag and drop for main tree node
 
-		// Most of the code below is modified code from this link: https://docs.microsoft.com/en-us/dotnet/api/system.windows.forms.treeview.itemdrag?view=windowsdesktop-6.0
+		// Most of the code below is modified code from this link:
+		// https://docs.microsoft.com/en-us/dotnet/api/system.windows.forms.treeview.itemdrag?view=windowsdesktop-6.0
 		// - MattNL
 
 		private void treeViewMain_ItemDrag(object sender, ItemDragEventArgs e)
 		{
-
+			if (e.Button == MouseButtons.Left &&
+				e.Item is TreeNode node &&
+				node.TryGetTagData(out PckFileData file))
+			{
+				if (currentPCK.Contains(file.Filename, file.Filetype))
+				{
+					Debug.WriteLine("Dragable file!");
+					DoDragDrop(file, DragDropEffects.Move);
+				}
+            }
 		}
 
-		// Set the target drop effect to the effect 
-		// specified in the ItemDrag event handler.
 		private void treeViewMain_DragEnter(object sender, DragEventArgs e)
 		{
 			e.Effect = e.AllowedEffect;
 		}
 
-		// Select the node under the mouse pointer to indicate the 
-		// expected drop location.
 		private void treeViewMain_DragOver(object sender, DragEventArgs e)
 		{
-
+            Point dragLocation = new Point(e.X, e.Y);
+            treeViewMain.SelectedNode = treeViewMain.GetNodeAt(treeViewMain.PointToClient(dragLocation)) ?? treeViewMain.SelectedNode;
 		}
 
 		private void treeViewMain_DragDrop(object sender, DragEventArgs e)
 		{
+			// Retrieve the client coordinates of the drop location.
+			Point dragLocation = new Point(e.X, e.Y);
+			Point targetPoint = treeViewMain.PointToClient(dragLocation);
+			
+			if (!treeViewMain.ClientRectangle.Contains(targetPoint))
+				return;
 
+            // Retrieve the node at the drop location.
+            TreeNode targetNode = treeViewMain.GetNodeAt(targetPoint);
+			bool isPckFile = targetNode.IsTagOfType<PckFileData>();
+
+            // Retrieve the node that was dragged.
+            if (e.Data.GetData(typeof(PckFileData)) is PckFileData draggedFile &&
+                targetNode.FullPath != draggedFile.Filename)
+			{ 
+				Debug.WriteLine(draggedFile.Filename + " was droped onto " + targetNode.FullPath);
+				Debug.WriteLine($"Target drop location is {(isPckFile ? "file" : "folder")}.");
+                string newFilePath = Path.Combine(isPckFile
+					? Path.GetDirectoryName(targetNode.FullPath)
+					: targetNode.FullPath, Path.GetFileName(draggedFile.Filename));
+				Debug.WriteLine("New filepath: " + newFilePath);
+                draggedFile.Filename = newFilePath;
+				BuildMainTreeView();
+			}
 		}
 
 		#endregion
@@ -2433,5 +2463,5 @@ namespace PckStudio
 
 		private void littleEndianToolStripMenuItem_Click(object sender, EventArgs e) => setPCKEndiannessStripMenuItem_Click(OMI.Endianness.LittleEndian);
 		private void bigEndianToolStripMenuItem_Click(object sender, EventArgs e) => setPCKEndiannessStripMenuItem_Click(OMI.Endianness.BigEndian);
-	}
+    }
 }
