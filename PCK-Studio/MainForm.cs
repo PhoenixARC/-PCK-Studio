@@ -2113,7 +2113,7 @@ namespace PckStudio
 			if (treeViewMain.SelectedNode.TryGetTagData(out PckFileData file) &&
 				file.Filetype == PckFileType.SkinFile)
 			{
-				foreach (KeyValuePair<string, string> p in file.GetProperties())
+				foreach (KeyValuePair<string, string> p in file.GetProperties().ToList())
 				{
 					if (p.Key == "BOX" || p.Key == "OFFSET")
 						file.SetProperty(file.GetPropertyIndex(p), new KeyValuePair<string, string>(p.Key, p.Value.Replace(',', '.')));
