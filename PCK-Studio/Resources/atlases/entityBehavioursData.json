@@ -1,0 +1,489 @@
+{
+	"COMMENT": "Entity data research by NessieHax (Miku-666) and MattNL",
+	"entries": [
+		{
+			"internalName": "area_effect_cloud",
+			"displayName": "Area Effect Cloud / Particle"
+		},
+		{
+			"internalName": "armor_stand",
+			"displayName": "Armor Stand"
+		},
+		{
+			"internalName": "arrow",
+			"displayName": "Arrow"
+		},
+		{
+			"internalName": "bat",
+			"displayName": "Bat"
+		},
+		{
+			"internalName": "blaze",
+			"displayName": "Blaze"
+		},
+		{
+			"internalName": "boat",
+			"displayName": "Boat"
+		},
+		{
+			"internalName": "cat",
+			"displayName": "Cat [PS4 EXCLUSIVE]"
+		},
+		{
+			"internalName": "cave_spider",
+			"displayName": "Cave Spider"
+		},
+		{
+			"internalName": "chest_minecart",
+			"displayName": "Chest Minecart"
+		},
+		{
+			"internalName": "chicken",
+			"displayName": "Chicken"
+		},
+		{
+			"internalName": "cod",
+			"displayName": "Cod"
+		},
+		{
+			"internalName": "commandblock_minecart",
+			"displayName": "Command Block Minecart"
+		},
+		{
+			"internalName": "cow",
+			"displayName": "Cow"
+		},
+		{
+			"internalName": "creeper",
+			"displayName": "Creeper"
+		},
+		{
+			"internalName": "dolphin",
+			"displayName": "Dolphin"
+		},
+		{
+			"internalName": "donkey",
+			"displayName": "Donkey"
+		},
+		{
+			"internalName": "dragon_fireball",
+			"displayName": "Dragon Fireball"
+		},
+		{
+			"internalName": "drowned",
+			"displayName": "Drowned"
+		},
+		{
+			"internalName": "egg",
+			"displayName": "Thrown Egg"
+		},
+		{
+			"internalName": "elder_guardian",
+			"displayName": "Elder Guardian"
+		},
+		{
+			"internalName": "ender_crystal",
+			"displayName": "End Crystal"
+		},
+		{
+			"internalName": "ender_dragon",
+			"displayName": "Ender Dragon"
+		},
+		{
+			"internalName": "ender_pearl",
+			"displayName": "Thrown Ender Pearl"
+		},
+		{
+			"internalName": "enderman",
+			"displayName": "Enderman"
+		},
+		{
+			"internalName": "endermite",
+			"displayName": "Endermite"
+		},
+		{
+			"internalName": "evocation_illager",
+			"displayName": "Evoker"
+		},
+		{
+			"internalName": "evocation_fangs",
+			"displayName": "Evoker Fangs"
+		},
+		{
+			"internalName": "xp_bottle",
+			"displayName": "Thrown Bottle O' Enchanting"
+		},
+		{
+			"internalName": "xp_orb",
+			"displayName": "Experience Orb"
+		},
+		{
+			"internalName": "eye_of_ender_signal",
+			"displayName": "Thrown Eye of Ender"
+		},
+		{
+			"internalName": "falling_block",
+			"displayName": "Falling Block"
+		},
+		{
+			"internalName": "fireball",
+			"displayName": "Fireball"
+		},
+		{
+			"internalName": "fireworks_rocket",
+			"displayName": "Firework Rocket"
+		},
+		{
+			"internalName": "furnace_minecart",
+			"displayName": "Furnace Minecart"
+		},
+		{
+			"internalName": "ghast",
+			"displayName": "Ghast"
+		},
+		{
+			"internalName": "giant",
+			"displayName": "Giant"
+		},
+		{
+			"internalName": "guardian",
+			"displayName": "Guardian"
+		},
+		{
+			"internalName": "hopper_minecart",
+			"displayName": "Hopper Minecart"
+		},
+		{
+			"internalName": "horse",
+			"displayName": "Horse"
+		},
+		{
+			"internalName": "husk",
+			"displayName": "Husk"
+		},
+		{
+			"internalName": "villager_golem",
+			"displayName": "Iron Golem"
+		},
+		{
+			"internalName": "item",
+			"displayName": "Dropped Item"
+		},
+		{
+			"internalName": "item_frame",
+			"displayName": "Item Frame"
+		},
+		{
+			"internalName": "leash_knot",
+			"displayName": "Lead Knot"
+		},
+		{
+			"internalName": "llama",
+			"displayName": "Llama"
+		},
+		{
+			"internalName": "llama_spit",
+			"displayName": "Llama Spit"
+		},
+		{
+			"internalName": "magma_cube",
+			"displayName": "Magma Cube"
+		},
+		{
+			"internalName": "minecart",
+			"displayName": "Minecart"
+		},
+		{
+			"internalName": "mooshroom",
+			"displayName": "Mooshroom"
+		},
+		{
+			"internalName": "mule",
+			"displayName": "Mule"
+		},
+		{
+			"internalName": "ocelot",
+			"displayName": "Ocelot"
+		},
+		{
+			"internalName": "painting",
+			"displayName": "Painting"
+		},
+		{
+			"internalName": "panda",
+			"displayName": "Panda [PS4 EXCLUSIVE]"
+		},
+		{
+			"internalName": "parrot",
+			"displayName": "Parrot"
+		},
+		{
+			"internalName": "phantom",
+			"displayName": "Phantom"
+		},
+		{
+			"internalName": "pig",
+			"displayName": "Pig"
+		},
+		{
+			"internalName": "pillager",
+			"displayName": "Pillager [PS4 EXCLUSIVE]"
+		},
+		{
+			"internalName": "polar_bear",
+			"displayName": "Polar Bear"
+		},
+		{
+			"internalName": "potion",
+			"displayName": "Thrown Potion"
+		},
+		{
+			"internalName": "pufferfish",
+			"displayName": "Pufferfish"
+		},
+		{
+			"internalName": "rabbit",
+			"displayName": "Rabbit"
+		},
+		{
+			"internalName": "ravager",
+			"displayName": "Ravager [PS4 EXCLUSIVE]"
+		},
+		{
+			"internalName": "salmon",
+			"displayName": "Salmon"
+		},
+		{
+			"internalName": "sheep",
+			"displayName": "Sheep"
+		},
+		{
+			"internalName": "shulker",
+			"displayName": "Shulker"
+		},
+		{
+			"internalName": "shulker_bullet",
+			"displayName": "Shulker Bullet"
+		},
+		{
+			"internalName": "silverfish",
+			"displayName": "Silverfish"
+		},
+		{
+			"internalName": "skeleton",
+			"displayName": "Skeleton"
+		},
+		{
+			"internalName": "skeleton_horse",
+			"displayName": "Skeleton Horse"
+		},
+		{
+			"internalName": "slime",
+			"displayName": "Slime"
+		},
+		{
+			"internalName": "small_fireball",
+			"displayName": "Small Fireball"
+		},
+		{
+			"internalName": "snowman",
+			"displayName": "Snow Golem"
+		},
+		{
+			"internalName": "snowball",
+			"displayName": "Thrown Snowball"
+		},
+		{
+			"internalName": "spawner_minecart",
+			"displayName": "Spawner Minecart"
+		},
+		{
+			"internalName": "spectral_arrow",
+			"displayName": "Spectral Arrow"
+		},
+		{
+			"internalName": "spider",
+			"displayName": "Spider"
+		},
+		{
+			"internalName": "squid",
+			"displayName": "Squid"
+		},
+		{
+			"internalName": "stray",
+			"displayName": "Stray"
+		},
+		{
+			"internalName": "tnt",
+			"displayName": "Primed TNT"
+		},
+		{
+			"internalName": "tnt_minecart",
+			"displayName": "TNT Minecart"
+		},
+		{
+			"internalName": "trident",
+			"displayName": "Thrown Trident"
+		},
+		{
+			"internalName": "tropical_fish",
+			"displayName": "Tropical Fish"
+		},
+		{
+			"internalName": "turtle",
+			"displayName": "Turtle"
+		},
+		{
+			"internalName": "vex",
+			"displayName": "Vex"
+		},
+		{
+			"internalName": "villager",
+			"displayName": "Villager"
+		},
+		{
+			"internalName": "vindication_illager",
+			"displayName": "Vindicator"
+		},
+		{
+			"internalName": "wandering_trader",
+			"displayName": "Wandering Trader [PS4 EXCLUSIVE]"
+		},
+		{
+			"internalName": "witch",
+			"displayName": "Witch"
+		},
+		{
+			"internalName": "wither",
+			"displayName": "Wither"
+		},
+		{
+			"internalName": "wither_skeleton",
+			"displayName": "Wither Skeleton"
+		},
+		{
+			"internalName": "wither_skull",
+			"displayName": "Wither Skull"
+		},
+		{
+			"internalName": "wolf",
+			"displayName": "Wolf"
+		},
+		{
+			"internalName": "zombie",
+			"displayName": "Zombie"
+		},
+		{
+			"internalName": "zombie_horse",
+			"displayName": "Zombie Horse"
+		},
+		{
+			"internalName": "zombie_pigman",
+			"displayName": "Zombie Pigman"
+		},
+		{
+			"internalName": "zombie_villager",
+			"displayName": "Zombie Villager"
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "illusion_illager",
+			"displayName": "Illusioner"
+		}
+	]
+}

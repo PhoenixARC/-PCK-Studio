@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using MetroFramework.Forms;
 using Newtonsoft.Json.Linq;
+using PckStudio.Internal.Json;
 
 namespace PckStudio.Forms.Additional_Popups.EntityForms
 {
 	public partial class AddEntry : MetroForm
 	{
         string selectedEntity = "";
-
-		private static JObject EntityJSONData = JObject.Parse(Properties.Resources.entityData);
 		public string SelectedEntity => selectedEntity;
 
 		List<TreeNode> treeViewEntityCache = new List<TreeNode>();
@@ -24,36 +23,30 @@ namespace PckStudio.Forms.Additional_Popups.EntityForms
 			entities.Images.AddRange(entityImages);
 			treeViewEntity.ImageList = entities;
 
-			try
+			var entityInfos = dataType switch
 			{
-				int i = 0;
+				"models" => Entities.ModelInfos,
+				"materials" => Entities.MaterialInfos,
+				"behaviours" => Entities.BehaviourInfos,
+				_ => null,
+			};
 
-				if (EntityJSONData[dataType] != null)
+			int i = 0;
+
+			foreach(var entity in entityInfos)
+            {
+				TreeNode entityNode = new TreeNode(entity.DisplayName)
 				{
-					foreach (JObject content in EntityJSONData[dataType].Children())
-					{
-						foreach (JProperty prop in content.Properties())
-						{
-							if (!string.IsNullOrEmpty((string)prop.Value))
-							{
-								TreeNode entityNode = new TreeNode((string)prop.Value)
-								{
-									Tag = prop.Name,
-									ImageIndex = i,
-									SelectedImageIndex = i,
-								};
-								treeViewEntity.Nodes.Add(entityNode);
-								treeViewEntityCache.Add(entityNode);
-							}
-							i++;
-						}
-					}
+					Tag = entity.InternalName,
+					ImageIndex = i,
+					SelectedImageIndex = i,
+				};
+				i++;
+				if (!String.IsNullOrEmpty(entity.InternalName))
+                {
+					treeViewEntity.Nodes.Add(entityNode);
+					treeViewEntityCache.Add(entityNode);
 				}
-			}
-			catch (Newtonsoft.Json.JsonException j_ex)
-			{
-				MessageBox.Show(this, j_ex.Message, "Error");
-				return;
 			}
 
 			treeViewEntity.Sort();
@@ -64,7 +57,6 @@ namespace PckStudio.Forms.Additional_Popups.EntityForms
 			if (e.Node.Tag is string entityData)
 			{
 				selectedEntity = entityData;
-				Console.WriteLine(selectedEntity);
 			}
 		}
 

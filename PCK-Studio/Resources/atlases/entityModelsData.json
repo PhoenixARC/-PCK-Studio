@@ -1,0 +1,485 @@
+{
+	"COMMENT": "Entity data research by NessieHax (Miku-666) and MattNL",
+	"entries": [
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "bat",
+			"displayName": "Bat"
+		},
+		{
+			"internalName": "blaze",
+			"displayName": "Blaze"
+		},
+		{
+			"internalName": "boat",
+			"displayName": "Boat"
+		},
+		{
+			"internalName": "cat",
+			"displayName": "Cat [PS4 EXCLUSIVE]"
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "chicken",
+			"displayName": "Chicken"
+		},
+		{
+			"internalName": "cod",
+			"displayName": "Cod"
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "cow",
+			"displayName": "Cow"
+		},
+		{
+			"internalName": "creeper",
+			"displayName": "Creeper"
+		},
+		{
+			"internalName": "dolphin",
+			"displayName": "Dolphin"
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "zombie.drowned",
+			"displayName": "Drowned"
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "dragon",
+			"displayName": "Ender Dragon"
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "enderman",
+			"displayName": "Enderman"
+		},
+		{
+			"internalName": "endermite",
+			"displayName": "Endermite"
+		},
+		{
+			"internalName": "evoker",
+			"displayName": "Evoker"
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "ghast",
+			"displayName": "Ghast"
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "zombie.husk",
+			"displayName": "Husk"
+		},
+		{
+			"internalName": "irongolem",
+			"displayName": "Iron Golem"
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "llama",
+			"displayName": "Llama"
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "lavaslime",
+			"displayName": "Magma Cube"
+		},
+		{
+			"internalName": "minecart",
+			"displayName": "Minecart"
+		},
+		{
+			"internalName": "mooshroom",
+			"displayName": "Mooshroom"
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "ocelot",
+			"displayName": "Ocelot"
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "panda",
+			"displayName": "Panda [PS4 EXCLUSIVE]"
+		},
+		{
+			"internalName": "parrot",
+			"displayName": "Parrot"
+		},
+		{
+			"internalName": "phantom",
+			"displayName": "Phantom"
+		},
+		{
+			"internalName": "pig",
+			"displayName": "Pig"
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "polarbear",
+			"displayName": "Polar Bear"
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "pufferfish.large",
+			"displayName": "Pufferfish (Large)"
+		},
+		{
+			"internalName": "rabbit",
+			"displayName": "Rabbit"
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "salmon",
+			"displayName": "Salmon"
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "shulker",
+			"displayName": "Shulker"
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "silverfish",
+			"displayName": "Silverfish"
+		},
+		{
+			"internalName": "skeleton",
+			"displayName": "Skeleton"
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "snowgolem",
+			"displayName": "Snow Golem"
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "squid",
+			"displayName": "Squid"
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "trident",
+			"displayName": "Thrown Trident"
+		},
+		{
+			"internalName": "tropicalfish_a",
+			"displayName": "Tropical Fish (Small)"
+		},
+		{
+			"internalName": "turtle",
+			"displayName": "Turtle"
+		},
+		{
+			"internalName": "vex",
+			"displayName": "Vex"
+		},
+		{
+			"internalName": "villager",
+			"displayName": "Villager"
+		},
+		{
+			"internalName": "vindicator",
+			"displayName": "Vindicator/Illusioner"
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "witch",
+			"displayName": "Witch"
+		},
+		{
+			"internalName": "witherboss",
+			"displayName": "Wither"
+		},
+		{
+			"internalName": "skeleton.wither",
+			"displayName": "Wither Skeleton"
+		},
+		{
+			"internalName": "witherboss.armor",
+			"displayName": "Wither (Armor)"
+		},
+		{
+			"internalName": "wolf",
+			"displayName": "Wolf"
+		},
+		{
+			"internalName": "zombie",
+			"displayName": "Zombie"
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "pigzombie",
+			"displayName": "Zombie Pigman"
+		},
+		{
+			"internalName": "zombie.villager",
+			"displayName": "Zombie Villager"
+		},
+		{
+			"internalName": "skeleton_head",
+			"displayName": "Skeleton Skull"
+		},
+		{
+			"internalName": "skeleton_wither_head",
+			"displayName": "Wither Skeleton Skull"
+		},
+		{
+			"internalName": "zombie_head",
+			"displayName": "Zombie Head"
+		},
+		{
+			"internalName": "creeper_head",
+			"displayName": "Creeper Head"
+		},
+		{
+			"internalName": "dragon_head",
+			"displayName": "Ender Dragon Head"
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "spider",
+			"displayName": "Spider"
+		},
+		{
+			"internalName": "bed",
+			"displayName": "Bed"
+		},
+		{
+			"internalName": "guardian",
+			"displayName": "Guardian"
+		},
+		{
+			"internalName": "horse.v2",
+			"displayName": "Horse/Donkey/Mule"
+		},
+		{
+			"internalName": "pufferfish.small",
+			"displayName": "Pufferfish (Small)"
+		},
+		{
+			"internalName": "pufferfish.mid",
+			"displayName": "Pufferfish (Medium)"
+		},
+		{
+			"internalName": "sheep.sheared",
+			"displayName": "Sheep (Without Fur)"
+		},
+		{
+			"internalName": "sheep",
+			"displayName": "Sheep (Fur Only)"
+		},
+		{
+			"internalName": "slime",
+			"displayName": "Slime (Inner)"
+		},
+		{
+			"internalName": "slime.armor",
+			"displayName": "Slime (Outer)"
+		},
+		{
+			"internalName": "skeleton.stray",
+			"displayName": "Stray"
+		},
+		{
+			"internalName": "stray.armor",
+			"displayName": "Stray (Overlay)"
+		},
+		{
+			"internalName": "tropicalfish_b",
+			"displayName": "Tropical Fish (Large)"
+		}
+	]
+}
