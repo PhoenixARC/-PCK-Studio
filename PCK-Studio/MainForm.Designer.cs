@@ -69,6 +69,12 @@
             this.generateMipMapTextureToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.viewFileInfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.correctSkinDecimalsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.setSubPCKEndiannessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bigEndianXbox360PS3WiiUToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.littleEndianPS4PSVitaSwitchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.setModelContainerFormatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.version1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.version2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.moveUpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.moveDownToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.extractToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -144,15 +150,13 @@
             this.label11 = new MetroFramework.Controls.MetroLabel();
             this.treeViewMain = new System.Windows.Forms.TreeView();
             this.imageList = new System.Windows.Forms.ImageList(this.components);
-            this.previewPictureBox = new PckStudio.ToolboxItems.InterpolationPictureBox();
             this.LittleEndianCheckBox = new MetroFramework.Controls.MetroCheckBox();
+            this.previewPictureBox = new PckStudio.ToolboxItems.InterpolationPictureBox();
+            this.version3114ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             logoPictureBox = new System.Windows.Forms.PictureBox();
             toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.setSubPCKEndiannessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.bigEndianXbox360PS3WiiUToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.littleEndianPS4PSVitaSwitchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(logoPictureBox)).BeginInit();
             this.contextMenuPCKEntries.SuspendLayout();
             this.menuStrip.SuspendLayout();
@@ -410,7 +414,8 @@
             this.generateMipMapTextureToolStripMenuItem1,
             this.viewFileInfoToolStripMenuItem,
             this.correctSkinDecimalsToolStripMenuItem,
-            this.setSubPCKEndiannessToolStripMenuItem});
+            this.setSubPCKEndiannessToolStripMenuItem,
+            this.setModelContainerFormatToolStripMenuItem});
             this.miscFunctionsToolStripMenuItem.Name = "miscFunctionsToolStripMenuItem";
             resources.ApplyResources(this.miscFunctionsToolStripMenuItem, "miscFunctionsToolStripMenuItem");
             // 
@@ -431,6 +436,47 @@
             this.correctSkinDecimalsToolStripMenuItem.Name = "correctSkinDecimalsToolStripMenuItem";
             resources.ApplyResources(this.correctSkinDecimalsToolStripMenuItem, "correctSkinDecimalsToolStripMenuItem");
             this.correctSkinDecimalsToolStripMenuItem.Click += new System.EventHandler(this.correctSkinDecimalsToolStripMenuItem_Click);
+            // 
+            // setSubPCKEndiannessToolStripMenuItem
+            // 
+            this.setSubPCKEndiannessToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.bigEndianXbox360PS3WiiUToolStripMenuItem,
+            this.littleEndianPS4PSVitaSwitchToolStripMenuItem});
+            this.setSubPCKEndiannessToolStripMenuItem.Name = "setSubPCKEndiannessToolStripMenuItem";
+            resources.ApplyResources(this.setSubPCKEndiannessToolStripMenuItem, "setSubPCKEndiannessToolStripMenuItem");
+            // 
+            // bigEndianXbox360PS3WiiUToolStripMenuItem
+            // 
+            this.bigEndianXbox360PS3WiiUToolStripMenuItem.Name = "bigEndianXbox360PS3WiiUToolStripMenuItem";
+            resources.ApplyResources(this.bigEndianXbox360PS3WiiUToolStripMenuItem, "bigEndianXbox360PS3WiiUToolStripMenuItem");
+            this.bigEndianXbox360PS3WiiUToolStripMenuItem.Click += new System.EventHandler(this.bigEndianToolStripMenuItem_Click);
+            // 
+            // littleEndianPS4PSVitaSwitchToolStripMenuItem
+            // 
+            this.littleEndianPS4PSVitaSwitchToolStripMenuItem.Name = "littleEndianPS4PSVitaSwitchToolStripMenuItem";
+            resources.ApplyResources(this.littleEndianPS4PSVitaSwitchToolStripMenuItem, "littleEndianPS4PSVitaSwitchToolStripMenuItem");
+            this.littleEndianPS4PSVitaSwitchToolStripMenuItem.Click += new System.EventHandler(this.littleEndianToolStripMenuItem_Click);
+            // 
+            // setModelContainerFormatToolStripMenuItem
+            // 
+            this.setModelContainerFormatToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.version1ToolStripMenuItem,
+            this.version2ToolStripMenuItem,
+            this.version3114ToolStripMenuItem});
+            this.setModelContainerFormatToolStripMenuItem.Name = "setModelContainerFormatToolStripMenuItem";
+            resources.ApplyResources(this.setModelContainerFormatToolStripMenuItem, "setModelContainerFormatToolStripMenuItem");
+            // 
+            // version1ToolStripMenuItem
+            // 
+            this.version1ToolStripMenuItem.Name = "version1ToolStripMenuItem";
+            resources.ApplyResources(this.version1ToolStripMenuItem, "version1ToolStripMenuItem");
+            this.version1ToolStripMenuItem.Click += new System.EventHandler(this.setModelVersion1ToolStripMenuItem_Click);
+            // 
+            // version2ToolStripMenuItem
+            // 
+            this.version2ToolStripMenuItem.Name = "version2ToolStripMenuItem";
+            resources.ApplyResources(this.version2ToolStripMenuItem, "version2ToolStripMenuItem");
+            this.version2ToolStripMenuItem.Click += new System.EventHandler(this.setModelVersion2ToolStripMenuItem_Click);
             // 
             // moveUpToolStripMenuItem
             // 
@@ -1082,14 +1128,6 @@
             resources.ApplyResources(this.imageList, "imageList");
             this.imageList.TransparentColor = System.Drawing.Color.Transparent;
             // 
-            // previewPictureBox
-            // 
-            resources.ApplyResources(this.previewPictureBox, "previewPictureBox");
-            this.previewPictureBox.BackColor = System.Drawing.Color.Transparent;
-            this.previewPictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-            this.previewPictureBox.Name = "previewPictureBox";
-            this.previewPictureBox.TabStop = false;
-            // 
             // LittleEndianCheckBox
             // 
             resources.ApplyResources(this.LittleEndianCheckBox, "LittleEndianCheckBox");
@@ -1099,25 +1137,19 @@
             this.LittleEndianCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.LittleEndianCheckBox.UseSelectable = true;
             // 
-            // setSubPCKEndiannessToolStripMenuItem
+            // previewPictureBox
             // 
-            this.setSubPCKEndiannessToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.bigEndianXbox360PS3WiiUToolStripMenuItem,
-            this.littleEndianPS4PSVitaSwitchToolStripMenuItem});
-            this.setSubPCKEndiannessToolStripMenuItem.Name = "setSubPCKEndiannessToolStripMenuItem";
-            resources.ApplyResources(this.setSubPCKEndiannessToolStripMenuItem, "setSubPCKEndiannessToolStripMenuItem");
+            resources.ApplyResources(this.previewPictureBox, "previewPictureBox");
+            this.previewPictureBox.BackColor = System.Drawing.Color.Transparent;
+            this.previewPictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+            this.previewPictureBox.Name = "previewPictureBox";
+            this.previewPictureBox.TabStop = false;
             // 
-            // bigEndianXbox360PS3WiiUToolStripMenuItem
+            // version3114ToolStripMenuItem
             // 
-            this.bigEndianXbox360PS3WiiUToolStripMenuItem.Name = "bigEndianXbox360PS3WiiUToolStripMenuItem";
-            resources.ApplyResources(this.bigEndianXbox360PS3WiiUToolStripMenuItem, "bigEndianXbox360PS3WiiUToolStripMenuItem");
-            this.bigEndianXbox360PS3WiiUToolStripMenuItem.Click += new System.EventHandler(this.bigEndianToolStripMenuItem_Click);
-            // 
-            // littleEndianPS4PSVitaSwitchToolStripMenuItem
-            // 
-            this.littleEndianPS4PSVitaSwitchToolStripMenuItem.Name = "littleEndianPS4PSVitaSwitchToolStripMenuItem";
-            resources.ApplyResources(this.littleEndianPS4PSVitaSwitchToolStripMenuItem, "littleEndianPS4PSVitaSwitchToolStripMenuItem");
-            this.littleEndianPS4PSVitaSwitchToolStripMenuItem.Click += new System.EventHandler(this.littleEndianToolStripMenuItem_Click);
+            this.version3114ToolStripMenuItem.Name = "version3114ToolStripMenuItem";
+            resources.ApplyResources(this.version3114ToolStripMenuItem, "version3114ToolStripMenuItem");
+            this.version3114ToolStripMenuItem.Click += new System.EventHandler(this.setModelVersion3ToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -1272,6 +1304,10 @@
         private System.Windows.Forms.ToolStripMenuItem setSubPCKEndiannessToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem bigEndianXbox360PS3WiiUToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem littleEndianPS4PSVitaSwitchToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem setModelContainerFormatToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem version1ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem version2ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem version3114ToolStripMenuItem;
     }
 }
 

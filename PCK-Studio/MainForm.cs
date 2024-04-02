@@ -11,10 +11,12 @@ using OMI.Formats.Archive;
 using OMI.Formats.Pck;
 using OMI.Formats.GameRule;
 using OMI.Formats.Languages;
+using OMI.Formats.Model;
 using OMI.Workers.Archive;
 using OMI.Workers.Pck;
 using OMI.Workers.GameRule;
 using OMI.Workers.Language;
+using OMI.Workers.Model;
 using PckStudio.Properties;
 using PckStudio.FileFormats;
 using PckStudio.Forms;
@@ -2433,5 +2435,72 @@ namespace PckStudio
 
 		private void littleEndianToolStripMenuItem_Click(object sender, EventArgs e) => setPCKEndiannessStripMenuItem_Click(OMI.Endianness.LittleEndian);
 		private void bigEndianToolStripMenuItem_Click(object sender, EventArgs e) => setPCKEndiannessStripMenuItem_Click(OMI.Endianness.BigEndian);
-	}
+
+		private void setModelVersion(int version)
+        {
+			try
+			{
+				if (treeViewMain.SelectedNode.Tag is PckFileData file && file.Filetype is PckFileType.ModelsFile)
+				{
+					using (var stream = new MemoryStream())
+					{
+						var reader = new ModelFileReader();
+						var container = reader.FromStream(new MemoryStream(file.Data));
+
+						if (container.Version == version)
+                        {
+							MessageBox.Show(
+								this, 
+								$"this model container is already Version {version + 1}", 
+								"Can't convert", MessageBoxButtons.OK, MessageBoxIcon.Error
+							);
+							return;
+						}
+
+						if (version == 2 &&
+							MessageBox.Show(
+								this,
+								"Conversion to 1.14 models.bin format does not yet support parent declaration and may not be 100% accurate. " +
+								"Would you like to continue?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes
+							)
+						{
+							return;
+						}
+
+						if (
+							container.Version > 1 && 
+							MessageBox.Show(
+								this, 
+								"Conversion from 1.14 models.bin format does not yet support parent parts and may not be 100% accurate. " +
+                                "Would you like to continue?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes
+							)
+						{
+							return;
+						}
+
+						var writer = new ModelFileWriter(container, version);
+						writer.WriteToStream(stream);
+						file.SetData(stream.ToArray());
+					}
+					wasModified = true;
+					MessageBox.Show(
+						this, 
+						$"\"{file.Filename}\" successfully converted to Version {version + 1} format.", 
+						"Converted model container file"
+						);
+				}
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(this, ex.Message, "Not a valid model container file");
+				return;
+			}
+		}
+
+		private void setModelVersion1ToolStripMenuItem_Click(object sender, EventArgs e) => setModelVersion(0);
+
+        private void setModelVersion2ToolStripMenuItem_Click(object sender, EventArgs e) => setModelVersion(1);
+
+		private void setModelVersion3ToolStripMenuItem_Click(object sender, EventArgs e) => setModelVersion(2);
+    }
 }
