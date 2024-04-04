@@ -29,7 +29,7 @@ namespace PckStudio.Extensions
                 throw new Exception("File is not suitable to contain image data.");
             }
             return file.Get(ImageDeserializer.DefaultDeserializer);
-                }
+        }
 
         internal static T Get<T>(this PckFileData file, IPckDeserializer<T> deserializer)
         {
@@ -56,7 +56,7 @@ namespace PckStudio.Extensions
             }
         }
 
-        internal static void SetData(this PckFileData file, Image image, ImageFormat imageFormat)
+        internal static void SetTexture(this PckFileData file, Image image)
         {
             if (file.Filetype != PckFileType.SkinFile &&
                 file.Filetype != PckFileType.CapeFile &&
@@ -64,12 +64,7 @@ namespace PckStudio.Extensions
             {
                 throw new Exception("File is not suitable to contain image data.");
             }
-
-            using (var stream = new MemoryStream())
-            {
-                image.Save(stream, imageFormat);
-                file.SetData(stream.ToArray());
-            }
+            file.SetData(image, ImageSerializer.DefaultSerializer);
         }
 
         internal static bool IsMipmappedFile(this PckFileData file)

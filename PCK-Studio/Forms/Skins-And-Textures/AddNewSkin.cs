@@ -271,7 +271,7 @@ namespace PckStudio.Popups
                 cape.Filename = $"dlccape{skinId}.png";
                 skin.AddProperty("CAPEPATH", cape.Filename);
             }
-            skin.SetData(skinPictureBox.Image, ImageFormat.Png);
+            skin.SetTexture(skinPictureBox.Image);
             DialogResult = DialogResult.OK;
             Close();
         }
@@ -288,7 +288,7 @@ namespace PckStudio.Popups
             if (MessageBox.Show(this, "Create your own custom skin model?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1) != DialogResult.Yes)
                 return;
 
-            skin.SetData(Resources.classic_template, ImageFormat.Png);
+            skin.SetTexture(Resources.classic_template);
 
             using generateModel generate = new generateModel(skin);
 

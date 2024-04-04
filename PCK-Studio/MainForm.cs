@@ -508,7 +508,7 @@ namespace PckStudio
 						texture = _img;
                     }
 
-					file.SetData(texture, ImageFormat.Png);
+					file.SetTexture(texture);
 					wasModified = true;
 					BuildMainTreeView();
 				}
@@ -1437,10 +1437,10 @@ namespace PckStudio
 			PckFile infoPCK = new PckFile(3);
 
             PckFileData icon = infoPCK.CreateNewFile("icon.png", PckFileType.TextureFile);
-			icon.SetData(Resources.TexturePackIcon, ImageFormat.Png);
+			icon.SetTexture(Resources.TexturePackIcon);
 
             PckFileData comparison = infoPCK.CreateNewFile("comparison.png", PckFileType.TextureFile);
-			comparison.SetData(Resources.Comparison, ImageFormat.Png);
+			comparison.SetTexture(Resources.Comparison);
 
             PckFileData texturepackInfo = pack.CreateNewFile($"{res}/{res}Info.pck", PckFileType.TexturePackInfoFile);
 			texturepackInfo.AddProperty("PACKID", "0");
@@ -2047,7 +2047,7 @@ namespace PckStudio
 							gfx.DrawImage(originalTexture, tileArea);
 						}
 
-						MipMappedFile.SetData(mippedTexture, ImageFormat.Png);
+						MipMappedFile.SetTexture(mippedTexture);
 
 						currentPCK.InsertFile(currentPCK.IndexOfFile(file) + i - 1, MipMappedFile);
 					}
