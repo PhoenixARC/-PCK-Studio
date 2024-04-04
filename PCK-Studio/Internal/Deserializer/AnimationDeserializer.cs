@@ -10,7 +10,7 @@ using OMI.Formats.Pck;
 using PckStudio.Extensions;
 using PckStudio.Interfaces;
 
-namespace PckStudio.Internal
+namespace PckStudio.Internal.Deserializer
 {
     internal sealed class AnimationDeserializer : IPckDeserializer<Animation>
     {
