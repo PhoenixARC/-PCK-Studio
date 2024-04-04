@@ -11,14 +11,14 @@ using OMI.Formats.Pck;
 using OMI.Workers;
 using PckStudio.Interfaces;
 using PckStudio.IO.TGA;
+using PckStudio.Internal.Deserializer;
+using PckStudio.Internal.Serializer;
 
 namespace PckStudio.Extensions
 {
     internal static class PckFileDataExtensions
     {
         private const string MipMap = "MipMapLevel";
-
-        private static Image EmptyImage = new Bitmap(1, 1, PixelFormat.Format32bppArgb);
 
         internal static Image GetTexture(this PckFileData file)
         {
@@ -28,23 +28,8 @@ namespace PckStudio.Extensions
             {
                 throw new Exception("File is not suitable to contain image data.");
             }
-            using (var stream = new MemoryStream(file.Data))
-            {
-                try
-                {
-                    if (Path.GetExtension(file.Filename) == ".tga")
-                        return TGADeserializer.DeserializeFromStream(stream);
-                    else
-                        return Image.FromStream(stream);
+            return file.Get(ImageDeserializer.DefaultDeserializer);
                 }
-                catch(Exception ex)
-                {
-                    Trace.WriteLine($"Failed to read image from pck file data({file.Filename}).", category: nameof(PckFileDataExtensions) + "." + nameof(GetTexture));
-                    Debug.WriteLine(ex.Message);
-                    return EmptyImage;
-                }
-            }
-        }
 
         internal static T Get<T>(this PckFileData file, IPckDeserializer<T> deserializer)
         {
