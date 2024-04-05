@@ -28,18 +28,18 @@ namespace PckStudio.Extensions
             {
                 throw new Exception("File is not suitable to contain image data.");
             }
-            return file.Get(ImageDeserializer.DefaultDeserializer);
+            return file.GetDeserializedData(ImageDeserializer.DefaultDeserializer);
         }
 
-        internal static T Get<T>(this PckFileData file, IPckDeserializer<T> deserializer)
+        internal static T GetDeserializedData<T>(this PckFileData file, IPckDeserializer<T> deserializer)
         {
             return deserializer.Deserialize(file);
         }
 
-        internal static T Get<T>(this PckFileData file, IDataFormatReader<T> deserializer) where T : class
+        internal static T GetData<T>(this PckFileData file, IDataFormatReader<T> formatReader) where T : class
         {
             using var ms = new MemoryStream(file.Data);
-            return deserializer.FromStream(ms);
+            return formatReader.FromStream(ms);
         }
 
         internal static void SetData<T>(this PckFileData file, T obj, IPckFileSerializer<T> serializer)

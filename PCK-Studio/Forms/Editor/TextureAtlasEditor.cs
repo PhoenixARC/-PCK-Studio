@@ -254,7 +254,7 @@ namespace PckStudio.Forms.Editor
                     hasAnimation &&
                     animationFile.Size > 0)
                 {
-                    var animation = animationFile.Get(AnimationDeserializer.DefaultDeserializer);
+                    var animation = animationFile.GetDeserializedData(AnimationDeserializer.DefaultDeserializer);
                     selectTilePictureBox.Start(animation);
                 }
             }
@@ -538,7 +538,7 @@ namespace PckStudio.Forms.Editor
                     PckFileType.TextureFile
                 );
 
-            var animation = file.Get(AnimationDeserializer.DefaultDeserializer);
+            var animation = file.GetDeserializedData(AnimationDeserializer.DefaultDeserializer);
 
             var animationEditor = new AnimationEditor(animation, _selectedTile.Tile.InternalName, GetBlendColor());
             if (animationEditor.ShowDialog(this) != DialogResult.OK)

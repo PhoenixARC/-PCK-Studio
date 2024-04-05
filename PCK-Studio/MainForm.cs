@@ -519,7 +519,7 @@ namespace PckStudio
 				!file.Filename.StartsWith(ResourceLocation.GetPathFromCategory(ResourceCategory.BlockAnimation)))
 				return;
 
-            Animation animation = file.Get(AnimationDeserializer.DefaultDeserializer);
+            Animation animation = file.GetDeserializedData(AnimationDeserializer.DefaultDeserializer);
 			string filename = Path.GetFileNameWithoutExtension(file.Filename);
 
             var textureInfos = ResourceLocation.GetCategoryFromPath(file.Filename) switch
@@ -563,7 +563,7 @@ namespace PckStudio
 				_ => GameRuleFile.CompressionType.Unknown
             };
 
-			GameRuleFile grf = file.Get(new GameRuleFileReader(compressiontype));
+			GameRuleFile grf = file.GetData(new GameRuleFileReader(compressiontype));
 
 			using GameRuleFileEditor grfEditor = new GameRuleFileEditor(grf);
 			if (grfEditor.ShowDialog(this) == DialogResult.OK)
@@ -2442,7 +2442,7 @@ namespace PckStudio
 			{
 				try
 				{
-                    ModelContainer container = file.Get(new ModelFileReader());
+                    ModelContainer container = file.GetData(new ModelFileReader());
 
 					if (container.Version == version)
                     {
