@@ -99,36 +99,31 @@ namespace PckStudio
 				[PckFileType.TextureFile] = HandleTextureFile,
 				[PckFileType.UIDataFile] = _ => throw new NotSupportedException("unused in-game"),
 				[PckFileType.InfoFile] = null,
-				[PckFileType.TexturePackInfoFile] = HandleInnerPckFile,
+				[PckFileType.TexturePackInfoFile] = null, // HandleInnerPckFile,
 				[PckFileType.LocalisationFile] = HandleLocalisationFile,
 				[PckFileType.GameRulesFile] = HandleGameRuleFile,
 				[PckFileType.AudioFile] = HandleAudioFile,
 				[PckFileType.ColourTableFile] = HandleColourFile,
 				[PckFileType.GameRulesHeader] = HandleGameRuleFile,
-				[PckFileType.SkinDataFile] = HandleInnerPckFile,
+				[PckFileType.SkinDataFile] = null, // HandleInnerPckFile,
 				[PckFileType.ModelsFile] = null, //HandleModelsFile, // Note: Uncomment when implemented
 				[PckFileType.BehavioursFile] = HandleBehavioursFile,
 				[PckFileType.MaterialFile] = HandleMaterialFile,
 			};
 		}
 
+		// TODO: decide on how to handle embedded pck files
         private void HandleInnerPckFile(PckFileData file)
         {
-			// TODO: decide on how to handle embedded pck files
-			return;
 			if (Settings.Default.LoadSubPcks &&
 				(file.Filetype == PckFileType.SkinDataFile || file.Filetype == PckFileType.TexturePackInfoFile) &&
 				file.Size > 0 && treeViewMain.SelectedNode.Nodes.Count == 0)
 			{
-				using (var stream = new MemoryStream(file.Data))
-				{
 					try
 					{
-						var reader = new PckFileReader(LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
-						PckFile subPCKfile = reader.FromStream(stream);
+					PckFile subPCKfile = file.GetData(new PckFileReader(LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian));
 						BuildPckTreeView(treeViewMain.SelectedNode.Nodes, subPCKfile);
                         treeViewMain.SelectedNode.ExpandAll();
-
                     }
 					catch (OverflowException ex)
 					{
@@ -137,7 +132,6 @@ namespace PckStudio
 							"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 						Debug.WriteLine(ex.Message);
 					}
-				}
 				return;
 			}
 			treeViewMain.SelectedNode.Nodes.Clear();
