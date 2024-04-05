@@ -546,7 +546,7 @@ namespace PckStudio.Forms.Editor
                 return;
             }
 
-            file.SetData(animationEditor.Result, AnimationSerializer.DefaultSerializer);
+            file.SetSerializedData(animationEditor.Result, AnimationSerializer.DefaultSerializer);
             // so animations can automatically update upon saving
             SelectedIndex = _selectedTile.Index;
         }

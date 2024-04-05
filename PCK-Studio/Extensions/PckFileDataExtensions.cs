@@ -42,16 +42,16 @@ namespace PckStudio.Extensions
             return formatReader.FromStream(ms);
         }
 
-        internal static void SetData<T>(this PckFileData file, T obj, IPckFileSerializer<T> serializer)
+        internal static void SetSerializedData<T>(this PckFileData file, T obj, IPckFileSerializer<T> serializer)
         {
             serializer.Serialize(obj, ref file);
         }
 
-        internal static void SetData(this PckFileData file, IDataFormatWriter writer)
+        internal static void SetData(this PckFileData file, IDataFormatWriter formatWriter)
         {
             using (var stream = new MemoryStream())
             {
-                writer.WriteToStream(stream);
+                formatWriter.WriteToStream(stream);
                 file.SetData(stream.ToArray());
             }
         }
@@ -64,7 +64,7 @@ namespace PckStudio.Extensions
             {
                 throw new Exception("File is not suitable to contain image data.");
             }
-            file.SetData(image, ImageSerializer.DefaultSerializer);
+            file.SetSerializedData(image, ImageSerializer.DefaultSerializer);
         }
 
         internal static bool IsMipmappedFile(this PckFileData file)

@@ -537,7 +537,7 @@ namespace PckStudio
 				if (animationEditor.ShowDialog(this) == DialogResult.OK)
 				{
 					wasModified = true;
-					file.SetData(animationEditor.Result, AnimationSerializer.DefaultSerializer);
+					file.SetSerializedData(animationEditor.Result, AnimationSerializer.DefaultSerializer);
 					BuildMainTreeView();
 				}
 			}
@@ -1081,7 +1081,7 @@ namespace PckStudio
 			{
 				wasModified = true;
 				PckFileData file = currentPCK.CreateNewFile(animationFilepath, PckFileType.TextureFile);
-				file.SetData(animationEditor.Result, AnimationSerializer.DefaultSerializer);
+				file.SetSerializedData(animationEditor.Result, AnimationSerializer.DefaultSerializer);
 				BuildMainTreeView();
 				ReloadMetaTreeView();
 			}
