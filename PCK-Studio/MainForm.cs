@@ -2409,8 +2409,8 @@ namespace PckStudio
 				if (treeViewMain.SelectedNode.Tag is PckFileData file && (file.Filetype is PckFileType.AudioFile || file.Filetype is PckFileType.SkinDataFile || file.Filetype is PckFileType.TexturePackInfoFile))
 				{
 					IDataFormatReader reader = file.Filetype is PckFileType.AudioFile
-							? new PckAudioFileReader(endianness == OMI.Endianness.BigEndian ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian)
-							: new PckFileReader(endianness == OMI.Endianness.BigEndian ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
+						? new PckAudioFileReader(endianness == OMI.Endianness.BigEndian ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian)
+						: new PckFileReader(endianness == OMI.Endianness.BigEndian ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
                     object pck = reader.FromStream(new MemoryStream(file.Data));
 
                     IDataFormatWriter writer = file.Filetype is PckFileType.AudioFile
@@ -2436,43 +2436,43 @@ namespace PckStudio
 		private void littleEndianToolStripMenuItem_Click(object sender, EventArgs e) => SetPckEndianness(OMI.Endianness.LittleEndian);
 		private void bigEndianToolStripMenuItem_Click(object sender, EventArgs e) => SetPckEndianness(OMI.Endianness.BigEndian);
 
-		private void setModelVersion(int version)
+		private void SetModelVersion(int version)
         {
-				if (treeViewMain.SelectedNode.Tag is PckFileData file && file.Filetype is PckFileType.ModelsFile)
-				{
+			if (treeViewMain.SelectedNode.Tag is PckFileData file && file.Filetype is PckFileType.ModelsFile)
+			{
 				try
-					{
+				{
                     ModelContainer container = file.Get(new ModelFileReader());
 
-						if (container.Version == version)
-                        {
-							MessageBox.Show(
-								this, 
+					if (container.Version == version)
+                    {
+						MessageBox.Show(
+							this, 
 							$"This model container is already Version {version + 1}.", 
-								"Can't convert", MessageBoxButtons.OK, MessageBoxIcon.Error
-							);
-							return;
-						}
+							"Can't convert", MessageBoxButtons.OK, MessageBoxIcon.Error
+						);
+						return;
+					}
 
-						if (version == 2 &&
-							MessageBox.Show(
-								this,
+					if (version == 2 &&
+						MessageBox.Show(
+							this,
 							"Conversion to 1.14 models.bin format does not yet support parent declaration and may not be 100% accurate.\n" +
-								"Would you like to continue?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes
-							)
-						{
-							return;
-						}
+							"Would you like to continue?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes
+						)
+					{
+						return;
+					}
 
 					if (container.Version > 1 && 
-							MessageBox.Show(
-								this, 
+						MessageBox.Show(
+							this, 
 							"Conversion from 1.14 models.bin format does not yet support parent parts and may not be 100% accurate.\n" +
-                                "Would you like to continue?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes
+                            "Would you like to continue?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes
 							)
-						{
-							return;
-						}
+					{
+						return;
+					}
 
 					file.SetData(new ModelFileWriter(container, version));
 					wasModified = true;
@@ -2482,18 +2482,18 @@ namespace PckStudio
 						"Converted model container file"
 						);
 				}
-			catch (Exception ex)
-			{
+				catch (Exception ex)
+				{
 					MessageBox.Show(this, ex.Message, "Not a valid model container file.");
-				return;
+					return;
+				}
 			}
 		}
-		}
 
-		private void setModelVersion1ToolStripMenuItem_Click(object sender, EventArgs e) => setModelVersion(0);
+		private void setModelVersion1ToolStripMenuItem_Click(object sender, EventArgs e) => SetModelVersion(0);
 
-        private void setModelVersion2ToolStripMenuItem_Click(object sender, EventArgs e) => setModelVersion(1);
+        private void setModelVersion2ToolStripMenuItem_Click(object sender, EventArgs e) => SetModelVersion(1);
 
-		private void setModelVersion3ToolStripMenuItem_Click(object sender, EventArgs e) => setModelVersion(2);
+		private void setModelVersion3ToolStripMenuItem_Click(object sender, EventArgs e) => SetModelVersion(2);
     }
 }
