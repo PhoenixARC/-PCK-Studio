@@ -2408,18 +2408,15 @@ namespace PckStudio
 			{
 				if (treeViewMain.SelectedNode.Tag is PckFileData file && (file.Filetype is PckFileType.AudioFile || file.Filetype is PckFileType.SkinDataFile || file.Filetype is PckFileType.TexturePackInfoFile))
 				{
-					using (var stream = new MemoryStream())
-					{
-						dynamic reader = file.Filetype is PckFileType.AudioFile
+					IDataFormatReader reader = file.Filetype is PckFileType.AudioFile
 							? new PckAudioFileReader(endianness == OMI.Endianness.BigEndian ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian)
 							: new PckFileReader(endianness == OMI.Endianness.BigEndian ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
-						var pck = reader.FromStream(new MemoryStream(file.Data));
-						dynamic writer = file.Filetype is PckFileType.AudioFile
-							? new PckAudioFileWriter(pck, endianness)
-							: new PckFileWriter(pck, endianness);
-						writer.WriteToStream(stream);
-						file.SetData(stream.ToArray());
-					}
+                    object pck = reader.FromStream(new MemoryStream(file.Data));
+
+                    IDataFormatWriter writer = file.Filetype is PckFileType.AudioFile
+						? new PckAudioFileWriter((PckAudioFile)pck, endianness)
+						: new PckFileWriter((PckFile)pck, endianness);
+					file.SetData(writer);
 					wasModified = true;
 					MessageBox.Show($"\"{file.Filename}\" successfully converted to {(endianness == OMI.Endianness.LittleEndian ? "little" : "big")} endian.", "Converted PCK file");
 				}
