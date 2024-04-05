@@ -2402,7 +2402,7 @@ namespace PckStudio
             Application.Exit();
         }
 
-		private void setPCKEndiannessStripMenuItem_Click(OMI.Endianness endianness)
+		private void SetPckEndianness(OMI.Endianness endianness)
 		{
 			try
 			{
@@ -2433,8 +2433,8 @@ namespace PckStudio
 			}
 		}
 
-		private void littleEndianToolStripMenuItem_Click(object sender, EventArgs e) => setPCKEndiannessStripMenuItem_Click(OMI.Endianness.LittleEndian);
-		private void bigEndianToolStripMenuItem_Click(object sender, EventArgs e) => setPCKEndiannessStripMenuItem_Click(OMI.Endianness.BigEndian);
+		private void littleEndianToolStripMenuItem_Click(object sender, EventArgs e) => SetPckEndianness(OMI.Endianness.LittleEndian);
+		private void bigEndianToolStripMenuItem_Click(object sender, EventArgs e) => SetPckEndianness(OMI.Endianness.BigEndian);
 
 		private void setModelVersion(int version)
         {
