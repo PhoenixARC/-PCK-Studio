@@ -212,7 +212,7 @@ namespace PckStudio
 				if (!string.IsNullOrWhiteSpace(filepath))
 				{
 					string displayFilepath = Regex.Replace(filepath, @"([A-Z]{1}\:\\[Uu]sers\\)([^\\]*\\)(.*)", "~\\$3");
-					var item = recentlyOpenToolStripMenuItem.DropDownItems.Add(displayFilepath, null, HandleOpenFile);
+                    ToolStripItem item = recentlyOpenToolStripMenuItem.DropDownItems.Add(displayFilepath, null, HandleOpenFile);
 					item.Tag = filepath;
 				}
             }
@@ -220,7 +220,7 @@ namespace PckStudio
 
 		private void HandleOpenFile(object sender, EventArgs e)
 		{
-			if (((ToolStripMenuItem)sender).Tag is string filepath && File.Exists(filepath))
+			if (sender is ToolStripItem menuItem && menuItem.Tag is string filepath && File.Exists(filepath))
 				LoadPckFromFile(filepath);
         }
 
