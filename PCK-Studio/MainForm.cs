@@ -151,7 +151,7 @@ namespace PckStudio
 
 		public void LoadPckFromFile(string filepath)
 		{
-			checkSaveState();
+			CheckSaveState();
 			treeViewMain.Nodes.Clear();
 			currentPCK = openPck(filepath);
 			if (currentPCK == null)
@@ -249,7 +249,7 @@ namespace PckStudio
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
 		{
 			PckManager?.Close();
-			checkSaveState();
+			CheckSaveState();
 		}
 
 		private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1478,7 +1478,7 @@ namespace PckStudio
 
 		private void skinPackToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			checkSaveState();
+			CheckSaveState();
 			TextPrompt namePrompt = new TextPrompt();
 			namePrompt.OKButtonText = "Ok";
 			if (namePrompt.ShowDialog(this) == DialogResult.OK)
@@ -1492,7 +1492,7 @@ namespace PckStudio
 
 		private void texturePackToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			checkSaveState();
+			CheckSaveState();
 			CreateTexturePackPrompt packPrompt = new CreateTexturePackPrompt();
 			if (packPrompt.ShowDialog(this) == DialogResult.OK)
 			{
@@ -1505,7 +1505,7 @@ namespace PckStudio
 
 		private void mashUpPackToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			checkSaveState();
+			CheckSaveState();
 			CreateTexturePackPrompt packPrompt = new CreateTexturePackPrompt();
 			if (packPrompt.ShowDialog(this) == DialogResult.OK)
 			{
@@ -1529,7 +1529,7 @@ namespace PckStudio
 
 		private void closeToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			checkSaveState();
+			CheckSaveState();
 			CloseEditorTab();
 		}
 
@@ -1829,7 +1829,7 @@ namespace PckStudio
 			pckOpen.Image = Resources.pckClosed;
 		}
 
-		private void checkSaveState()
+		private void CheckSaveState()
 		{
 			if (currentPCK is not null &&
 				wasModified &&
