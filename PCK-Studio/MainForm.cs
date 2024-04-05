@@ -2438,20 +2438,17 @@ namespace PckStudio
 
 		private void setModelVersion(int version)
         {
-			try
-			{
 				if (treeViewMain.SelectedNode.Tag is PckFileData file && file.Filetype is PckFileType.ModelsFile)
 				{
-					using (var stream = new MemoryStream())
+				try
 					{
-						var reader = new ModelFileReader();
-						var container = reader.FromStream(new MemoryStream(file.Data));
+                    ModelContainer container = file.Get(new ModelFileReader());
 
 						if (container.Version == version)
                         {
 							MessageBox.Show(
 								this, 
-								$"this model container is already Version {version + 1}", 
+							$"This model container is already Version {version + 1}.", 
 								"Can't convert", MessageBoxButtons.OK, MessageBoxIcon.Error
 							);
 							return;
@@ -2460,28 +2457,24 @@ namespace PckStudio
 						if (version == 2 &&
 							MessageBox.Show(
 								this,
-								"Conversion to 1.14 models.bin format does not yet support parent declaration and may not be 100% accurate. " +
+							"Conversion to 1.14 models.bin format does not yet support parent declaration and may not be 100% accurate.\n" +
 								"Would you like to continue?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes
 							)
 						{
 							return;
 						}
 
-						if (
-							container.Version > 1 && 
+					if (container.Version > 1 && 
 							MessageBox.Show(
 								this, 
-								"Conversion from 1.14 models.bin format does not yet support parent parts and may not be 100% accurate. " +
+							"Conversion from 1.14 models.bin format does not yet support parent parts and may not be 100% accurate.\n" +
                                 "Would you like to continue?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes
 							)
 						{
 							return;
 						}
 
-						var writer = new ModelFileWriter(container, version);
-						writer.WriteToStream(stream);
-						file.SetData(stream.ToArray());
-					}
+					file.SetData(new ModelFileWriter(container, version));
 					wasModified = true;
 					MessageBox.Show(
 						this, 
@@ -2489,12 +2482,12 @@ namespace PckStudio
 						"Converted model container file"
 						);
 				}
-			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(this, ex.Message, "Not a valid model container file");
+					MessageBox.Show(this, ex.Message, "Not a valid model container file.");
 				return;
 			}
+		}
 		}
 
 		private void setModelVersion1ToolStripMenuItem_Click(object sender, EventArgs e) => setModelVersion(0);
