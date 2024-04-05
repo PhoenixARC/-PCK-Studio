@@ -153,7 +153,7 @@ namespace PckStudio
 		{
 			CheckSaveState();
 			treeViewMain.Nodes.Clear();
-			currentPCK = openPck(filepath);
+			currentPCK = OpenPck(filepath);
 			if (currentPCK == null)
 			{
 				MessageBox.Show(this, string.Format("Failed to load {0}", Path.GetFileName(filepath)), "Error");
@@ -265,7 +265,7 @@ namespace PckStudio
 			}
 		}
 
-		private PckFile openPck(string filePath)
+		private PckFile OpenPck(string filePath)
 		{
 			isTemplateFile = false;
 			saveLocation = filePath;
