@@ -100,7 +100,7 @@ namespace PckStudio
 				[PckFileType.UIDataFile] = _ => throw new NotSupportedException("unused in-game"),
 				[PckFileType.InfoFile] = null,
 				[PckFileType.TexturePackInfoFile] = null, // HandleInnerPckFile,
-				[PckFileType.LocalisationFile] = HandleLocalisationFile,
+                [PckFileType.LocalisationFile] = HandleLocalisationFile,
 				[PckFileType.GameRulesFile] = HandleGameRuleFile,
 				[PckFileType.AudioFile] = HandleAudioFile,
 				[PckFileType.ColourTableFile] = HandleColourFile,
@@ -119,19 +119,19 @@ namespace PckStudio
 				(file.Filetype == PckFileType.SkinDataFile || file.Filetype == PckFileType.TexturePackInfoFile) &&
 				file.Size > 0 && treeViewMain.SelectedNode.Nodes.Count == 0)
 			{
-					try
-					{
+				try
+				{
 					PckFile subPCKfile = file.GetData(new PckFileReader(LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian));
-						BuildPckTreeView(treeViewMain.SelectedNode.Nodes, subPCKfile);
-                        treeViewMain.SelectedNode.ExpandAll();
-                    }
-					catch (OverflowException ex)
-					{
-						MessageBox.Show(this, "Failed to open pck\n" +
-							"Try checking the 'Open/Save as Switch/Vita/PS4 pck' checkbox in the upper right corner.",
-							"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-						Debug.WriteLine(ex.Message);
-					}
+					BuildPckTreeView(treeViewMain.SelectedNode.Nodes, subPCKfile);
+					treeViewMain.SelectedNode.ExpandAll();
+                }
+				catch (OverflowException ex)
+				{
+					MessageBox.Show(this, "Failed to open pck\n" +
+						"Try checking the 'Open/Save as Switch/Vita/PS4 pck' checkbox in the upper right corner.",
+						"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					Debug.WriteLine(ex.Message);
+				}
 				return;
 			}
 			treeViewMain.SelectedNode.Nodes.Clear();
@@ -233,9 +233,9 @@ namespace PckStudio
 			Settings.Default.RecentFiles.Insert(0, filepath);
 
 			for (int i = Settings.Default.RecentFiles.Count - 1; i >= 5; i--)
-				{
-                    Settings.Default.RecentFiles.RemoveAt(i);
-                }
+			{
+                Settings.Default.RecentFiles.RemoveAt(i);
+            }
 			Settings.Default.Save();
 			LoadRecentFileList();
         }
@@ -246,7 +246,20 @@ namespace PckStudio
 			CheckSaveState();
 		}
 
-		private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        private void openPckManagerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PckManager ??= new PckManager();
+            PckManager.FormClosing += (s, e) => PckManager = null;
+            if (!PckManager.Visible)
+            {
+                // Passing in a parent form will make it stay on top of every other form. -miku
+                PckManager.Show();
+            }
+            if (PckManager.Focus())
+                PckManager.BringToFront();
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			using (var ofd = new OpenFileDialog())
 			{
@@ -2223,23 +2236,6 @@ namespace PckStudio
 		private void trelloBoardToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			Process.Start("https://trello.com/b/0XLNOEbe/pck-studio");
-		}
-
-		private void openPckManagerToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			PckManager ??= new PckManager();
-			PckManager.FormClosing += (s, e) =>
-			{
-				PckManager.Hide();
-				e.Cancel = true;
-			};
-			if (!PckManager.Visible)
-			{
-				// passing in a parent form will make it stay on top of every other form. -miku
-				PckManager.Show();
-			}
-			if (PckManager.Focus())
-				PckManager.BringToFront();
 		}
 
 		private void wavBinkaToolStripMenuItem_Click(object sender, EventArgs e)
