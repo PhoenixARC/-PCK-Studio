@@ -17,6 +17,7 @@
 **/
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 
 namespace PckStudio.Internal
@@ -24,6 +25,28 @@ namespace PckStudio.Internal
     public class SkinBOX : ICloneable, IEquatable<SkinBOX>
     {
         public static readonly SkinBOX Empty = new SkinBOX("HEAD", new Vector3(-4, -8, -4), new Vector3(8), Vector2.Zero);
+
+        public static readonly string[] BaseTypes = new string[]
+        {
+            "HEAD",
+            "BODY",
+            "ARM0",
+            "ARM1",
+            "LEG0",
+            "LEG1",
+        };
+
+        public static readonly string[] OverlayTypes = new string[]
+        {
+            "HEADWEAR",
+            "JACKET",
+            "SLEEVE0",
+            "SLEEVE1",
+            "PANTS0",
+            "PANTS1",
+        };
+
+        public static readonly string[] ValidBoxTypes = BaseTypes.Concat(OverlayTypes).ToArray();
 
         public string Type { get; set; }
         public Vector3 Pos;
