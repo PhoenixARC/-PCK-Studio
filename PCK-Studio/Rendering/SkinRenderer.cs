@@ -101,7 +101,7 @@ namespace PckStudio.Rendering
             }
         }
 
-        [Description("Event that gets fired when the Texture is changing")]
+        [Description("Event that gets fired when the skin texture is changing")]
         [Category("Property Chnaged")]
         [Browsable(true)]
         public event EventHandler<TextureChangingEventArgs> TextureChanging
@@ -110,7 +110,7 @@ namespace PckStudio.Rendering
             remove => Events.RemoveHandler(nameof(TextureChanging), value);
         }
 
-        [Description("Event that gets fired when the Texture is changing")]
+        [Description("Event that gets fired when the cape texture is changing")]
         [Category("Property Chnaged")]
         [Browsable(true)]
         public event EventHandler<TextureChangingEventArgs> CapeTextureChanging
@@ -345,13 +345,13 @@ namespace PckStudio.Rendering
             leftArm.AddCube(new(-1, -2, -2), new(4, 12, 4), new(48, 48), inflate: OverlayScale);
 
             rightLeg ??= new CubeGroupMesh("Right Leg");
-            rightLeg.Pivot = new Vector3(0f, 12f, 0f);
+            rightLeg.Pivot = new Vector3(-2f, 12f, 0f);
             rightLeg.Translation = new Vector3(-2f, -12f, 0f);
             rightLeg.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 16));
             rightLeg.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 32), OverlayScale);
 
             leftLeg ??= new CubeGroupMesh("Left Leg");
-            leftLeg.Pivot = new Vector3(0f, 12f, 0f);
+            leftLeg.Pivot = new Vector3(2f, 12f, 0f);
             leftLeg.Translation = new Vector3(2f, -12f, 0f);
             leftLeg.AddCube(new(-2, 0, -2), new(4, 12, 4), new(16, 48));
             leftLeg.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 48), OverlayScale);
@@ -642,22 +642,7 @@ namespace PckStudio.Rendering
                 GLErrorCheck();
             }
 
-#if DEBUG
-            // Debug render
-            {
-                ColorVertex[] vertices = [
-                    new ColorVertex(Vector3.Zero, Color.White)
-                ];
-                VertexArray vao = new VertexArray();
-                var debugVBO = new VertexBuffer();
-                debugVBO.SetData(vertices);
-                VertexBufferLayout layout = new VertexBufferLayout();
-                layout.Add(ShaderDataType.Float3);
-                layout.Add(ShaderDataType.Float4);
-                vao.AddBuffer(debugVBO, layout);
-                d_debugDrawContext = new DrawContext(vao, debugVBO.GenIndexBuffer(), PrimitiveType.Points);
-            }
-#endif
+            InitializeDebugShaders();
         }
 
         private DrawContext GetGuidelineDrawContext()
@@ -739,6 +724,16 @@ namespace PckStudio.Rendering
             {
                 UpdateMesh(cubeMeshName);
             }
+        }
+
+        public Vector3 GetTranslation(string name)
+        {
+            return meshStorage.ContainsKey(name) ? meshStorage[name].Translation : Vector3.Zero;
+        }
+
+        public Vector3 GetPivot(string name)
+        {
+            return meshStorage.ContainsKey(name) ? meshStorage[name].Pivot : Vector3.Zero;
         }
 
         public void SetPartOffset(SkinPartOffset offset)
@@ -988,9 +983,9 @@ namespace PckStudio.Rendering
                 GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
 
                 GL.Enable(EnableCap.AlphaTest); // Enable transparent
-                GL.AlphaFunc(AlphaFunction.Greater, 0.4f);
+                GL.AlphaFunc(AlphaFunction.Greater, 0.0f);
                 GL.DepthFunc(DepthFunction.Lequal);
-
+                
                 if (showWireFrame)
                     GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
 
@@ -1306,6 +1301,42 @@ namespace PckStudio.Rendering
         }
 
         [Conditional("DEBUG")]
+        private void InitializeDebugShaders()
+        {
+#if DEBUG
+            // Debug point render
+            {
+                ColorVertex[] vertices = [
+                    new ColorVertex(Vector3.Zero, Color.White)
+                ];
+                VertexArray vao = new VertexArray();
+                var debugVBO = new VertexBuffer();
+                debugVBO.SetData(vertices);
+                VertexBufferLayout layout = new VertexBufferLayout();
+                layout.Add(ShaderDataType.Float3);
+                layout.Add(ShaderDataType.Float4);
+                vao.AddBuffer(debugVBO, layout);
+                d_debugPointDrawContext = new DrawContext(vao, debugVBO.GenIndexBuffer(), PrimitiveType.Points);
+            }
+            // Debug point render
+            {
+                ColorVertex[] vertices = [
+                    new ColorVertex(Vector3.Zero),
+                    new ColorVertex(Vector3.One)
+                ];
+                VertexArray vao = new VertexArray();
+                var debugVBO = new VertexBuffer();
+                debugVBO.SetData(vertices);
+                VertexBufferLayout layout = new VertexBufferLayout();
+                layout.Add(ShaderDataType.Float3);
+                layout.Add(ShaderDataType.Float4);
+                vao.AddBuffer(debugVBO, layout);
+                d_debugLineDrawContext = new DrawContext(vao, debugVBO.GenIndexBuffer(), PrimitiveType.Lines);
+            }
+#endif
+        }
+
+        [Conditional("DEBUG")]
         private void RenderDebug()
         {
 #if DEBUG
@@ -1324,8 +1355,49 @@ namespace PckStudio.Rendering
                 colorShader.SetUniform1("intensity", 0.75f);
                 colorShader.SetUniform4("baseColor", Color.DeepPink);
                 GL.PointSize(5f);
-                Renderer.Draw(colorShader, d_debugDrawContext);
+                Renderer.Draw(colorShader, d_debugPointDrawContext);
                 GL.PointSize(1f);
+                GL.DepthMask(true);
+                GL.DepthFunc(DepthFunction.Less);
+                GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
+            }
+            if (d_showDirectionArrows)
+            {
+                GL.BlendFunc(BlendingFactor.DstAlpha, BlendingFactor.OneMinusSrcAlpha);
+                GL.DepthFunc(DepthFunction.Always);
+                GL.DepthMask(false);
+                GL.Enable(EnableCap.LineSmooth);
+                colorShader.Bind();
+                
+                var viewProjection = Camera.GetViewProjection();
+                var transform = Matrix4.Identity;
+                transform *= Matrix4.CreateTranslation(Vector3.Zero);
+                transform *= Matrix4.CreateScale(Camera.Distance / 4f).Inverted();
+                transform.Invert();
+                colorShader.SetUniformMat4("Transform", ref transform);
+                colorShader.SetUniformMat4("ViewProjection", ref viewProjection);
+                colorShader.SetUniform1("intensity", 0.75f);
+                
+                
+                Renderer.SetLineWidth(2f);
+
+                colorShader.SetUniform4("baseColor", Color.Red);
+                ColorVertex[] line = [new ColorVertex(Vector3.Zero), new ColorVertex(Vector3.UnitX)];
+                d_debugLineDrawContext.VertexArray.GetBuffer(0).SetData(line);
+                Renderer.Draw(colorShader, d_debugLineDrawContext);
+
+                colorShader.SetUniform4("baseColor", Color.Green);
+                line = [new ColorVertex(Vector3.Zero), new ColorVertex(Vector3.UnitY)];
+                d_debugLineDrawContext.VertexArray.GetBuffer(0).SetData(line);
+                Renderer.Draw(colorShader, d_debugLineDrawContext);
+
+                colorShader.SetUniform4("baseColor", Color.Blue);
+                line = [new ColorVertex(Vector3.Zero), new ColorVertex(Vector3.UnitZ)];
+                d_debugLineDrawContext.VertexArray.GetBuffer(0).SetData(line);
+                Renderer.Draw(colorShader, d_debugLineDrawContext);
+
+                Renderer.SetLineWidth(1f);
+
                 GL.DepthMask(true);
                 GL.DepthFunc(DepthFunction.Less);
                 GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
@@ -1388,6 +1460,11 @@ namespace PckStudio.Rendering
             debugShowFocalPointToolStripMenuItem.Click += (s, e) => d_showFocalPoint = debugShowFocalPointToolStripMenuItem.Checked;
             contextMenuStrip1.Items.Add(debugShowFocalPointToolStripMenuItem);
 
+            var debugShowDirectionArrows = new ToolStripMenuItem("Show Direction Arrows");
+            debugShowDirectionArrows.CheckOnClick = true;
+            debugShowDirectionArrows.Click += (s, e) => d_showDirectionArrows = debugShowDirectionArrows.Checked;
+            contextMenuStrip1.Items.Add(debugShowDirectionArrows);
+
             Controls.Add(d_debugLabel);
 
             this.contextMenuStrip1.ResumeLayout(false);
@@ -1396,7 +1473,9 @@ namespace PckStudio.Rendering
 
 #if DEBUG
         private bool d_showFocalPoint;
-        private DrawContext d_debugDrawContext;
+        private bool d_showDirectionArrows;
+        private DrawContext d_debugPointDrawContext;
+        private DrawContext d_debugLineDrawContext;
         private Label d_debugLabel;
         private ToolStripMenuItem reToolStripMenuItem;
         private ContextMenuStrip contextMenuStrip1;

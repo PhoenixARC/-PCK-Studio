@@ -13,6 +13,11 @@ using PckStudio.IO.PSM;
 using PckStudio.Internal.FileFormats;
 using System.Linq;
 using PckStudio.Forms.Additional_Popups;
+using PckStudio.External.Format;
+using Newtonsoft.Json;
+using System.Numerics;
+using PckStudio.Rendering;
+using System.Diagnostics;
 
 namespace PckStudio.Forms.Editor
 {
@@ -48,7 +53,8 @@ namespace PckStudio.Forms.Editor
 
         private readonly FileDialogOption[] fileFilters = 
         [
-            new ("Pck skin model(*.psm)", "*.psm")
+            new ("Pck skin model(*.psm)", "*.psm"),
+            new ("Block bench model(*.bbmodel)", "*.bbmodel")
         ];
 
         private string skinModelFileFilters => string.Join("|", fileFilters);
@@ -218,6 +224,66 @@ namespace PckStudio.Forms.Editor
                         _skin.PartOffsets.Clear();
                         _skin.AdditionalBoxes.AddRange(csmbFile.Parts);
                         _skin.PartOffsets.AddRange(csmbFile.Offsets);
+                        LoadModelData(_skin);
+                        break;
+                    case ".bbmodel":
+                        BlockBenchModel blockBenchModel = JsonConvert.DeserializeObject<BlockBenchModel>(File.ReadAllText(openFileDialog.FileName));
+                        _skin.AdditionalBoxes.Clear();
+                        _skin.PartOffsets.Clear();
+                        // TODO: clean this up -miku
+                        _skin.ANIM.SetFlag(SkinAnimFlag.RESOLUTION_64x64, true);
+                        _skin.ANIM.SetFlag(SkinAnimFlag.SLIM_MODEL, false);
+                        _skin.ANIM.SetFlag(SkinAnimFlag.HEAD_DISABLED, true);
+                        _skin.ANIM.SetFlag(SkinAnimFlag.HEAD_OVERLAY_DISABLED, true);
+                        _skin.ANIM.SetFlag(SkinAnimFlag.BODY_DISABLED, true);
+                        _skin.ANIM.SetFlag(SkinAnimFlag.BODY_OVERLAY_DISABLED, true);
+                        _skin.ANIM.SetFlag(SkinAnimFlag.RIGHT_ARM_DISABLED, true);
+                        _skin.ANIM.SetFlag(SkinAnimFlag.RIGHT_ARM_OVERLAY_DISABLED, true);
+                        _skin.ANIM.SetFlag(SkinAnimFlag.LEFT_ARM_DISABLED, true);
+                        _skin.ANIM.SetFlag(SkinAnimFlag.LEFT_ARM_OVERLAY_DISABLED, true);
+                        _skin.ANIM.SetFlag(SkinAnimFlag.RIGHT_LEG_DISABLED, true);
+                        _skin.ANIM.SetFlag(SkinAnimFlag.RIGHT_LEG_OVERLAY_DISABLED, true);
+                        _skin.ANIM.SetFlag(SkinAnimFlag.LEFT_LEG_DISABLED, true);
+                        _skin.ANIM.SetFlag(SkinAnimFlag.LEFT_LEG_OVERLAY_DISABLED, true);
+
+
+                        // IMPROVMENT: detect default body parts and toggle anim flag instead of adding box data -miku
+                        foreach (Outline outline in blockBenchModel.Outliner)
+                        {
+                            foreach (Element element in blockBenchModel.Elements.Where(e => outline.Children.Contains(e.Uuid)))
+                            {
+                                if (!element.UseBoxUv || !element.Visibility)
+                                    continue;
+
+                                BoundingBox boundingBox = new BoundingBox(element.From.ToOpenTKVector(), element.To.ToOpenTKVector());
+                                Vector3 pos = boundingBox.Start.ToNumericsVector();
+                                Vector3 size = boundingBox.Volume.ToNumericsVector();
+
+                                //Debug.WriteLine($"{outline.Name} {element.Name}({element.Uuid})");
+                                //Debug.WriteLine($"boundingBox.Start({boundingBox.Start})");
+                                //Debug.WriteLine($"boundingBox.End({boundingBox.End})");
+                                //Debug.WriteLine($"size({size})");
+
+                                Vector3 transformUnit = new Vector3(-1, -1, 1);
+                                Vector3 coordinateUnit = new Vector3(1, 1, 0);
+
+                                pos *= transformUnit;
+                                pos -= size * coordinateUnit;
+                                pos.Y += 24f;
+
+                                Vector3 translation = renderer3D1.GetTranslation(outline.Name).ToNumericsVector();
+                                Vector3 pivot = renderer3D1.GetPivot(outline.Name).ToNumericsVector();
+                                
+                                pos += translation * -Vector3.UnitX - pivot * Vector3.UnitY;
+                                //Debug.WriteLine(translation);
+                                //Debug.WriteLine(pivot);
+                                //Debug.WriteLine(pos);
+
+                                _skin.AdditionalBoxes.Add(new SkinBOX(outline.Name, pos, size, element.UvOffset));
+                            }
+                        }
+
+                        _skin.Texture = blockBenchModel.Textures[0].GetTexture();
                         LoadModelData(_skin);
                         break;
                     default:

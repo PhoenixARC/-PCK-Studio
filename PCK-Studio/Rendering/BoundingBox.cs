@@ -11,11 +11,14 @@ namespace PckStudio.Rendering
     {
         public readonly Vector3 Start;
         public readonly Vector3 End;
+        public readonly Vector3 Volume;
 
         public BoundingBox(Vector3 start, Vector3 end)
         {
             Start = start;
             End = end;
+            Vector3 size = End - Start;
+            Volume = new Vector3(Math.Abs(size.X), Math.Abs(size.Y), Math.Abs(size.Z));
         }
 
         public ColorVertex[] GetVertices()

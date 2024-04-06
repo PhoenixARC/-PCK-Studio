@@ -151,6 +151,7 @@
     <Compile Include="Internal\Json\Entities.cs" />
     <Compile Include="Internal\Json\EntityInfo.cs" />
     <Compile Include="Internal\ResourceCategory.cs" />
+    <Compile Include="External\Format\BlockBenchModel.cs" />
     <Compile Include="Internal\Skin.cs" />
     <Compile Include="Internal\SkinPartOffset.cs" />
     <Compile Include="Internal\CommitInfo.cs" />
