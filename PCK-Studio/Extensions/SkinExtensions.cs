@@ -53,7 +53,7 @@ namespace PckStudio.Extensions
                 skinFile.AddProperty(offset.ToProperty());
             }
 
-            skinFile.SetData(skin.Texture, ImageFormat.Png);
+            skinFile.SetTexture(skin.Texture);
 
             return skinFile;
         }
@@ -64,7 +64,7 @@ namespace PckStudio.Extensions
                 throw new InvalidOperationException("Skin does not contain a cape.");
             string skinId = skin.Id.ToString("d08");
             PckFileData capeFile = new PckFileData($"dlccape{skinId}.png", PckFileType.CapeFile);
-            capeFile.SetData(skin.CapeTexture, ImageFormat.Png);
+            capeFile.SetTexture(skin.CapeTexture);
             return capeFile;
         }
     }

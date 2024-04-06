@@ -11,7 +11,7 @@ using OMI.Formats.Pck;
 using PckStudio.Extensions;
 using PckStudio.Interfaces;
 
-namespace PckStudio.Internal
+namespace PckStudio.Internal.Serializer
 {
     internal sealed class AnimationSerializer : IPckFileSerializer<Animation>
     {
@@ -22,7 +22,7 @@ namespace PckStudio.Internal
             string anim = animation.BuildAnim();
             file.SetProperty("ANIM", anim);
             var texture = animation.BuildTexture();
-            file.SetData(texture, ImageFormat.Png);
+            file.SetTexture(texture);
         }
     }
 }

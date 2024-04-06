@@ -24,7 +24,7 @@ namespace PckStudio.IO.TGA
     {
         private static TGAWriter writer = new TGAWriter();
 
-        public static void SerializeToStream(ref Stream stream, Image image)
+        public static void SerializeToStream(Stream stream, Image image)
         {
             writer.WriteToStream(stream, image);
         }

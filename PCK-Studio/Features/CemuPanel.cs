@@ -246,7 +246,7 @@ namespace PckStudio.Features
 
         private void openSkinPackToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (DLCTreeView.SelectedNode.Tag is DLCDirectoryInfo dlcDir)
+            if (DLCTreeView.SelectedNode?.Tag is DLCDirectoryInfo dlcDir)
             {
                 Program.MainInstance.LoadPckFromFile(dlcDir.PackPath);
             }
@@ -254,7 +254,7 @@ namespace PckStudio.Features
 
         private void openTexturePackToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (DLCTreeView.SelectedNode.Tag is DLCDirectoryInfo dlcDir && dlcDir.HasTexturePack)
+            if (DLCTreeView.SelectedNode?.Tag is DLCDirectoryInfo dlcDir && dlcDir.HasTexturePack)
             {
                 Program.MainInstance.LoadPckFromFile(dlcDir.TexturePackPath);
             }
