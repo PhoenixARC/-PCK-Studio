@@ -46,23 +46,35 @@ namespace PckStudio.Extensions
 
         }
 
-        public static GraphicsPath GetUVGraphicsPath(this SkinBOX skinBOX)
+        public static GraphicsPath GetUVGraphicsPath(this SkinBOX skinBox)
         {
-            return skinBOX.GetUVGraphicsPath(Vector2.One);
+            return skinBox.GetUVGraphicsPath(Vector2.One);
         }
 
-        public static bool IsOverlayPart(this SkinBOX skinBOX)
+        public static string GetOverlayType(this SkinBOX skinBox)
         {
-            return skinBOX.Type switch
-            {
-                "HEADWEAR" or
-                "JACKET" or
-                "SLEEVE0" or
-                "SLEEVE1" or
-                "PANTS0" or
-                "PANTS1" => true,
-                _ => false,
-            };
+            if (!skinBox.IsValidType())
+                return "";
+            int index = Array.IndexOf(SkinBOX.BaseTypes, skinBox.Type);
+            return SkinBOX.OverlayTypes.IndexInRange(index) ? SkinBOX.OverlayTypes[index] : "";
+        }
+
+        public static string GetBaseType(this SkinBOX skinBox)
+        {
+            if (!skinBox.IsValidType())
+                return "";
+            int index = Array.IndexOf(SkinBOX.OverlayTypes, skinBox.Type);
+            return SkinBOX.BaseTypes.IndexInRange(index) ? SkinBOX.BaseTypes[index] : "";
+        }
+
+        public static bool IsBasePart(this SkinBOX skinBox)
+        {
+            return SkinBOX.BaseTypes.Contains(skinBox.Type);
+        }
+
+        public static bool IsOverlayPart(this SkinBOX skinBox)
+        {
+            return SkinBOX.OverlayTypes.Contains(skinBox.Type);
         }
     }
 }

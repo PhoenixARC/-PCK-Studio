@@ -89,6 +89,10 @@ namespace PckStudio.Internal
             return skinBox;
         }
 
+        public bool IsValidType() => IsValidType(Type);
+
+        public static bool IsValidType(string type) => ValidBoxTypes.Contains(type);
+
         public KeyValuePair<string, string> ToProperty()
 		{
 			return new KeyValuePair<string, string>("BOX", ToString());
