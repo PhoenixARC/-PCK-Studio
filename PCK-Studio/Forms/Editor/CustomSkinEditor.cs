@@ -229,6 +229,10 @@ namespace PckStudio.Forms.Editor
                         BlockBenchModel blockBenchModel = JsonConvert.DeserializeObject<BlockBenchModel>(File.ReadAllText(openFileDialog.FileName));
                         _skin.AdditionalBoxes.Clear();
                         _skin.PartOffsets.Clear();
+
+                        if (blockBenchModel.Textures.IndexInRange(0))
+                            _skin.Texture = blockBenchModel.Textures[0].GetTexture();
+
                         // TODO: clean this up -miku
                         _skin.ANIM.SetFlag(SkinAnimFlag.RESOLUTION_64x64, true);
                         _skin.ANIM.SetFlag(SkinAnimFlag.SLIM_MODEL, false);
@@ -244,7 +248,6 @@ namespace PckStudio.Forms.Editor
                         _skin.ANIM.SetFlag(SkinAnimFlag.RIGHT_LEG_OVERLAY_DISABLED, true);
                         _skin.ANIM.SetFlag(SkinAnimFlag.LEFT_LEG_DISABLED, true);
                         _skin.ANIM.SetFlag(SkinAnimFlag.LEFT_LEG_OVERLAY_DISABLED, true);
-
 
                         foreach (Outline outline in blockBenchModel.Outliner)
                         {
@@ -285,7 +288,6 @@ namespace PckStudio.Forms.Editor
                             }
                         }
 
-                        _skin.Texture = blockBenchModel.Textures[0].GetTexture();
                         LoadModelData(_skin);
                         break;
                     default:
