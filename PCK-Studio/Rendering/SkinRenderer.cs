@@ -331,11 +331,11 @@ namespace PckStudio.Rendering
             body ??= new CubeGroupMesh("Body");
             body.AddCube(new(-4, 0, -2), new(8, 12, 4), new(16, 16));
             body.AddCube(new(-4, 0, -2), new(8, 12, 4), new(16, 32), OverlayScale);
-            
+
             rightArm ??= new CubeGroupMesh("Right Arm", new Vector3(-5f, -2f, 0f), new Vector3(4f, 2f, 0f));
             rightArm.AddCube(new(-3, -2, -2), new(4, 12, 4), new(40, 16));
             rightArm.AddCube(new(-3, -2, -2), new(4, 12, 4), new(40, 32), OverlayScale);
-            
+
             leftArm ??= new CubeGroupMesh("Left Arm", new Vector3(5f, -2f, 0f), new Vector3(-4f, 2f, 0f));
             leftArm.AddCube(new(-1, -2, -2), new(4, 12, 4), new(32, 48));
             leftArm.AddCube(new(-1, -2, -2), new(4, 12, 4), new(48, 48), inflate: OverlayScale);
@@ -783,7 +783,10 @@ namespace PckStudio.Rendering
         private void AddCustomModelPart(SkinBOX skinBox)
         {
             if (!meshStorage.ContainsKey(skinBox.Type))
-                throw new KeyNotFoundException(skinBox.Type);
+            {
+                Trace.TraceWarning("[{0}@{1}] Invalid BOX Type: '{2}'", nameof(SkinRenderer), nameof(AddCustomModelPart), skinBox.Type);
+                return;
+            }
 
             CubeGroupMesh cubeMesh = meshStorage[skinBox.Type];
             cubeMesh.AddSkinBox(skinBox, autoInflateOverlayParts && skinBox.IsOverlayPart() ? skinBox.Type == "HEADWEAR" ? OverlayScale * 2 : OverlayScale : 0f);
@@ -1126,11 +1129,11 @@ namespace PckStudio.Rendering
                         Vector3 translation = cubeMesh.Translation - cubeMesh.Offset;
                         Vector3 pivot = cubeMesh.Pivot + cubeMesh.Offset;
                         transform = Pivot(translation, pivot, transform);
-                    GL.BlendFunc(BlendingFactor.DstAlpha, BlendingFactor.OneMinusSrcAlpha);
+                        GL.BlendFunc(BlendingFactor.DstAlpha, BlendingFactor.OneMinusSrcAlpha);
                         DrawBoundingBox(transform, cubeBoundingBox, OutlineColor);
-                    GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
+                        GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
+                    }
                 }
-            }
             }
 
 
