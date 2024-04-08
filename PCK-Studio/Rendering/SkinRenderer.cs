@@ -167,7 +167,7 @@ namespace PckStudio.Rendering
 
         public Size TextureSize { get; private set; } = new Size(64, 64);
         public Vector2 TillingFactor => new Vector2(1f / TextureSize.Width, 1f / TextureSize.Height);
-        private const float OverlayScale = 0.5f;
+        private const float OverlayScale = 0.25f;
 
         private bool IsMouseHidden
         {
@@ -786,7 +786,7 @@ namespace PckStudio.Rendering
                 throw new KeyNotFoundException(skinBox.Type);
 
             CubeGroupMesh cubeMesh = meshStorage[skinBox.Type];
-            cubeMesh.AddSkinBox(skinBox, autoInflateOverlayParts && skinBox.IsOverlayPart() ? OverlayScale : 0f);
+            cubeMesh.AddSkinBox(skinBox, autoInflateOverlayParts && skinBox.IsOverlayPart() ? skinBox.Type == "HEADWEAR" ? OverlayScale * 2 : OverlayScale : 0f);
         }
 
         [Conditional("DEBUG")]
