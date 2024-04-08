@@ -324,35 +324,27 @@ namespace PckStudio.Rendering
 
         private void InitializeSkinData()
         {
-            head ??= new CubeGroupMesh("Head", flipZMapping: true);
+            head ??= new CubeGroupMesh("Head") { FlipZMapping = true };
             head.AddCube(new(-4, -8, -4), new(8, 8, 8), new(0, 0));
-            head.AddCube(new(-4, -8, -4), new(8, 8, 8), new(32, 0), OverlayScale);
+            head.AddCube(new(-4, -8, -4), new(8, 8, 8), new(32, 0), OverlayScale * 2);
             
             body ??= new CubeGroupMesh("Body");
             body.AddCube(new(-4, 0, -2), new(8, 12, 4), new(16, 16));
             body.AddCube(new(-4, 0, -2), new(8, 12, 4), new(16, 32), OverlayScale);
             
-            rightArm ??= new CubeGroupMesh("Right Arm");
-            rightArm.Pivot = new Vector3(4f, 2f, 0f);
-            rightArm.Translation = new Vector3(-5f, -2f, 0f);
+            rightArm ??= new CubeGroupMesh("Right Arm", new Vector3(-5f, -2f, 0f), new Vector3(4f, 2f, 0f));
             rightArm.AddCube(new(-3, -2, -2), new(4, 12, 4), new(40, 16));
             rightArm.AddCube(new(-3, -2, -2), new(4, 12, 4), new(40, 32), OverlayScale);
             
-            leftArm ??= new CubeGroupMesh("Left Arm");
-            leftArm.Pivot = new Vector3(-4f, 2f, 0f);
-            leftArm.Translation = new Vector3(5f, -2f, 0f);
+            leftArm ??= new CubeGroupMesh("Left Arm", new Vector3(5f, -2f, 0f), new Vector3(-4f, 2f, 0f));
             leftArm.AddCube(new(-1, -2, -2), new(4, 12, 4), new(32, 48));
             leftArm.AddCube(new(-1, -2, -2), new(4, 12, 4), new(48, 48), inflate: OverlayScale);
 
-            rightLeg ??= new CubeGroupMesh("Right Leg");
-            rightLeg.Pivot = new Vector3(-2f, 12f, 0f);
-            rightLeg.Translation = new Vector3(-2f, -12f, 0f);
+            rightLeg ??= new CubeGroupMesh("Right Leg", new Vector3(-2f, -12f, 0f), new Vector3(-2f, 12f, 0f));
             rightLeg.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 16));
             rightLeg.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 32), OverlayScale);
 
-            leftLeg ??= new CubeGroupMesh("Left Leg");
-            leftLeg.Pivot = new Vector3(2f, 12f, 0f);
-            leftLeg.Translation = new Vector3(2f, -12f, 0f);
+            leftLeg ??= new CubeGroupMesh("Left Leg", new Vector3(2f, -12f, 0f), new Vector3(2f, 12f, 0f));
             leftLeg.AddCube(new(-2, 0, -2), new(4, 12, 4), new(16, 48));
             leftLeg.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 48), OverlayScale);
         }
@@ -367,43 +359,31 @@ namespace PckStudio.Rendering
         {
             const float armorInflation = 0.75f;
 
-            var helmet    = new CubeGroupMesh("HELMET");
+            var helmet = new CubeGroupMesh("HELMET");
             helmet.AddCube(new(-4, -8, -4), new(8, 8, 8), new(0, 0), inflate: armorInflation);
 
             var chest = new CubeGroupMesh("CHEST");
             chest.AddCube(new(-4, 0, -2), new(8, 12, 4), new(16, 16), inflate: armorInflation + 0.01f);
 
-            var shoulder0 = new CubeGroupMesh("SHOULDER0");
-            shoulder0.Pivot = new Vector3(4f, 2f, 0f);
-            shoulder0.Translation = new Vector3(-5f, -2f, 0f);
+            var shoulder0 = new CubeGroupMesh("SHOULDER0", rightArm.Translation, rightArm.Pivot);
             shoulder0.AddCube(new(-3, -2, -2), new(4, 12, 4), new(40, 16), inflate: armorInflation);
 
-            var shoulder1 = new CubeGroupMesh("SHOULDER1");
-            shoulder1.Pivot = new Vector3(-4f, 2f, 0f);
-            shoulder1.Translation = new Vector3(5f, -2f, 0f);
+            var shoulder1 = new CubeGroupMesh("SHOULDER1", leftArm.Translation, leftArm.Pivot);
             shoulder1.AddCube(new(-1, -2, -2), new(4, 12, 4), new(40, 16), inflate: armorInflation, mirrorTexture: true);
             
             var waist = new CubeGroupMesh("WAIST");
             waist.AddCube(new(-4, 0, -2), new(8, 12, 4), new(16, 48), inflate: armorInflation);
 
-            var pants0 = new CubeGroupMesh("PANTS0");
-            pants0.Pivot = new Vector3(0f, 12f, 0f);
-            pants0.Translation = new Vector3(-2f, -12f, 0f);
+            var pants0 = new CubeGroupMesh("PANTS0", rightLeg.Translation, rightLeg.Pivot);
             pants0.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 48), inflate: armorInflation);
             
-            var pants1 = new CubeGroupMesh("PANTS1");
-            pants1.Pivot = new Vector3(0f, 12f, 0f);
-            pants1.Translation = new Vector3(2f, -12f, 0f);
+            var pants1 = new CubeGroupMesh("PANTS1", leftLeg.Translation, leftLeg.Pivot);
             pants1.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 48), inflate: armorInflation, mirrorTexture: true);
 
-            var boot0     = new CubeGroupMesh("BOOT0");
-            boot0.Pivot = new Vector3(0f, 12f, 0f);
-            boot0.Translation = new Vector3(-2f, -12f, 0f);
+            var boot0     = new CubeGroupMesh("BOOT0", rightLeg.Translation, rightLeg.Pivot);
             boot0.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 16), inflate: armorInflation + 0.25f);
             
-            var boot1     = new CubeGroupMesh("BOOT1");
-            boot1.Pivot = new Vector3(0f, 12f, 0f);
-            boot1.Translation = new Vector3(2f, -12f, 0f);
+            var boot1     = new CubeGroupMesh("BOOT1", leftLeg.Translation, leftLeg.Pivot);
             boot1.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 16), inflate: armorInflation + 0.25f, mirrorTexture: true);
 
             offsetSpecificMeshStorage = new Dictionary<string, CubeGroupMesh>

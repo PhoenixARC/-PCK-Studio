@@ -39,8 +39,8 @@ namespace PckStudio.Rendering
             }
         }
 
-        public Vector3 Translation { get; set; } = Vector3.Zero;
-        public Vector3 Pivot { get; set; } = Vector3.Zero;
+        public Vector3 Translation { get; } 
+        public Vector3 Pivot { get; } 
         public Vector3 Offset { get; set; } = Vector3.Zero;
 
         private bool _flipZMapping = false;
@@ -50,10 +50,11 @@ namespace PckStudio.Rendering
             cubes = new List<CubeMesh>(5);
         }
 
-        internal CubeGroupMesh(string name, bool flipZMapping)
+        internal CubeGroupMesh(string name, Vector3 translation, Vector3 pivot)
             : this(name)
         {
-            FlipZMapping = flipZMapping;
+            Translation = translation;
+            Pivot = pivot;
         }
 
         public static VertexBufferLayout GetLayout()
