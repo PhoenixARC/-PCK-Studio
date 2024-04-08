@@ -9,6 +9,7 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace PckStudio.External.Format
 {
@@ -33,7 +34,7 @@ namespace PckStudio.External.Format
         internal bool UseBoxUv;
 
         [JsonProperty("visibility")]
-        internal bool Visibility { get; set; } = true;
+        internal bool IsVisibile { get; set; } = true;
 
         [JsonProperty("rescale")]
         internal bool Rescale;
@@ -111,7 +112,7 @@ namespace PckStudio.External.Format
         internal Guid Uuid;
         
         [JsonProperty("children")]
-        internal Guid[] Children;
+        internal JArray Children;
     }
 
     internal class TextureRes
@@ -146,7 +147,7 @@ namespace PckStudio.External.Format
         internal Element[] Elements;
         
         [JsonProperty("outliner")]
-        internal Outline[] Outliner;
+        internal JArray Outliner;
         
         [JsonProperty("textures")]
         internal Texture[] Textures;

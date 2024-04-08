@@ -249,42 +249,23 @@ namespace PckStudio.Forms.Editor
                         _skin.ANIM.SetFlag(SkinAnimFlag.LEFT_LEG_DISABLED, true);
                         _skin.ANIM.SetFlag(SkinAnimFlag.LEFT_LEG_OVERLAY_DISABLED, true);
 
-                        foreach (Outline outline in blockBenchModel.Outliner)
+                        foreach (JToken token in blockBenchModel.Outliner)
                         {
+                            if (token.Type == JTokenType.String && Guid.TryParse((string)token, out Guid tokenGuid))
+                            {
+                                Element element = blockBenchModel.Elements.First(e => e.Uuid.Equals(tokenGuid));
+                                if (!SkinBOX.IsValidType(element.Name))
+                                    continue;
+                                LoadElement(element.Name, element);
+                                continue;
+                            }
+                            if (token.Type == JTokenType.Object)
+                            {
+                                Outline outline = token.ToObject<Outline>();
                             string type = outline.Name;
                             if (!SkinBOX.IsValidType(type))
                                 continue;
-                            foreach (Element element in blockBenchModel.Elements.Where(e => outline.Children.Contains(e.Uuid)))
-                            {
-                                if (!element.UseBoxUv || !element.Visibility)
-                                    continue;
-
-                                //Debug.WriteLine($"{type} {element.Name}({element.Uuid})");
-                                BoundingBox boundingBox = new BoundingBox(element.From.ToOpenTKVector(), element.To.ToOpenTKVector());
-                                Vector3 pos = boundingBox.Start.ToNumericsVector();
-                                Vector3 size = boundingBox.Volume.ToNumericsVector();
-                                Vector2 uv = element.UvOffset;
-
-                                Vector3 transformUnit = new Vector3(-1, -1, 1);
-                                Vector3 coordinateUnit = new Vector3(1, 1, 0);
-
-                                pos *= transformUnit;
-                                pos -= size * coordinateUnit;
-                                pos.Y += 24f;
-
-                                Vector3 translation = renderer3D1.GetTranslation(type).ToNumericsVector();
-                                Vector3 pivot = renderer3D1.GetPivot(type).ToNumericsVector();
-                                
-                                pos += translation * -Vector3.UnitX - pivot * Vector3.UnitY;
-                                //Debug.WriteLine(pos);
-
-                                // IMPROVMENT: detect default body parts and toggle anim flag instead of adding box data -miku
-
-                                var box = new SkinBOX(type, pos, size, uv);
-                                if (box.IsBasePart() && element.Inflate == 0.5f)
-                                    box.Type = box.GetOverlayType();
-
-                                _skin.AdditionalBoxes.Add(box);
+                                ReadOutliner(token, type, blockBenchModel.Elements);
                             }
                         }
 
@@ -295,6 +276,73 @@ namespace PckStudio.Forms.Editor
                 }
             }
         }
+
+        private void ReadOutliner(JToken token, string type, IReadOnlyCollection<Element> elements)
+        {
+            if (TryReadElement(token, type, elements))
+                return;
+
+            if (token.Type == JTokenType.Object)
+            {
+                Outline outline = token.ToObject<Outline>();
+                foreach (JToken childToken in outline.Children)
+                {
+                    ReadOutliner(childToken, type, elements);
+                }
+            }
+        }
+
+        private bool TryReadElement(JToken token, string type, IReadOnlyCollection<Element> elements)
+        {
+            if (token.Type == JTokenType.String && Guid.TryParse((string)token, out Guid tokenGuid))
+            {
+                Element element = elements.First(e => e.Uuid.Equals(tokenGuid));
+                LoadElement(type, element);
+                return true;
+            }
+            return false;
+        }
+
+        private bool LoadElement(string boxType, Element element)
+                            {
+            if (!element.UseBoxUv || !element.IsVisibile)
+                return false;
+
+                                //Debug.WriteLine($"{type} {element.Name}({element.Uuid})");
+                                BoundingBox boundingBox = new BoundingBox(element.From.ToOpenTKVector(), element.To.ToOpenTKVector());
+                                Vector3 pos = boundingBox.Start.ToNumericsVector();
+                                Vector3 size = boundingBox.Volume.ToNumericsVector();
+                                Vector2 uv = element.UvOffset;
+            pos = TranslatePosition(boxType, pos, size);
+            //Debug.WriteLine(pos);
+
+            // IMPROVMENT: detect default body parts and toggle anim flag instead of adding box data -miku
+
+            var box = new SkinBOX(boxType, pos, size, uv);
+            if (box.IsBasePart() && ((boxType == "HEAD" && element.Inflate == 0.5f) || (element.Inflate == 0.25f)))
+                box.Type = box.GetOverlayType();
+
+            _skin.AdditionalBoxes.Add(box);
+            return true;
+        }
+
+        // Translates Block benchs coordinate system into out coordinate system
+        private Vector3 TranslatePosition(string boxType, Vector3 origin, Vector3 size)
+        {
+                                Vector3 transformUnit = new Vector3(-1, -1, 1);
+                                Vector3 coordinateUnit = new Vector3(1, 1, 0);
+
+            Vector3 pos = origin;
+                                pos *= transformUnit;
+                                pos -= size * coordinateUnit;
+                                pos.Y += 24f;
+
+            Vector3 translation = renderer3D1.GetTranslation(boxType).ToNumericsVector();
+            Vector3 pivot = renderer3D1.GetPivot(boxType).ToNumericsVector();
+                                
+                                pos += translation * -Vector3.UnitX - pivot * Vector3.UnitY;
+            return pos;
+                            }
 
         private void cloneToolStripMenuItem_Click(object sender, EventArgs e)
         {
