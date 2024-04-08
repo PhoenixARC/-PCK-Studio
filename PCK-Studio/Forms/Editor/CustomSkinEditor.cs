@@ -313,7 +313,7 @@ namespace PckStudio.Forms.Editor
                                 Vector3 pos = boundingBox.Start.ToNumericsVector();
                                 Vector3 size = boundingBox.Volume.ToNumericsVector();
                                 Vector2 uv = element.UvOffset;
-            pos = TranslatePosition(boxType, pos, size);
+            pos = TranslatePosition(boxType, pos, size, new Vector3(1, 1, 0));
             //Debug.WriteLine(pos);
 
             // IMPROVMENT: detect default body parts and toggle anim flag instead of adding box data -miku
@@ -326,21 +326,38 @@ namespace PckStudio.Forms.Editor
             return true;
         }
 
-        // Translates Block benchs coordinate system into out coordinate system
-        private Vector3 TranslatePosition(string boxType, Vector3 origin, Vector3 size)
+        /// <summary>
+        /// Translates coordinate unit system into our coordinate system
+        /// </summary>
+        /// <param name="boxType">See <see cref="SkinBOX.BaseTypes"/> and <see cref="SkinBOX.OverlayTypes"/>.</param>
+        /// <param name="origin">Position/Origin of the Object(Cube).</param>
+        /// <param name="size">The Size of the Object(Cube).</param>
+        /// <param name="translationUnit">Describes what axises need translation.</param>
+        /// <returns>The translated position</returns>
+        private Vector3 TranslatePosition(string boxType, Vector3 origin, Vector3 size, Vector3 translationUnit)
         {
-                                Vector3 transformUnit = new Vector3(-1, -1, 1);
-                                Vector3 coordinateUnit = new Vector3(1, 1, 0);
+            // The translation unit describes what axises needd to be swap
+            // Example:
+            //      translation unit = (1, 0, 0) => This translation unit would swap ONLY the X axis
+            translationUnit = Vector3.Clamp(translationUnit, Vector3.Zero, Vector3.One);
+            // To better understand see:
+            // https://sharplab.io/#v2:C4LgTgrgdgNAJiA1AHwAICYCMBYAUKgBgAJVMA6AOQgFsBTMASwGMBnAbj1QGYT0iBhIgG88RMb3SjxI3OLlEAbgEMwRBlAAOEYEQC8RKLQDuRAGq0mwAPZguACkwwijogQCUHWfLHLVtAB4aFsC0cHoGxmbBNvYAtC7xTpgeUt6+RGC0LOEAKmBKUCwAYjbU/FY2cOpKISx26lrAKV7epACcdpkszd5i7Z1ZevoBQZahPeIAvqlEM9wkmABsUZYxRHkFxaXlldW1duartmqa2m4zMr2KKhmD+ofWtmT8ADZK1Br1p8BODzFkAC16FZftEngB5QwTbxdIgAKn06E8V1hsXuYK4ZEhtGRvVQAHYiLEurixNNcJMgA
+            Vector3 transformUnit = -((translationUnit * 2) - Vector3.One);
 
             Vector3 pos = origin;
+            // The next line essentialy does uses the fomular below just on all axis.
+            // x = -(pos.x + size.x)
                                 pos *= transformUnit;
-                                pos -= size * coordinateUnit;
+            pos -= size * translationUnit;
+            // Skin Renderer (and Game) specific offset value.
                                 pos.Y += 24f;
 
             Vector3 translation = renderer3D1.GetTranslation(boxType).ToNumericsVector();
             Vector3 pivot = renderer3D1.GetPivot(boxType).ToNumericsVector();
                                 
+            // This will cancel out the part specific translation and pivot.
                                 pos += translation * -Vector3.UnitX - pivot * Vector3.UnitY;
+
             return pos;
                             }
 
