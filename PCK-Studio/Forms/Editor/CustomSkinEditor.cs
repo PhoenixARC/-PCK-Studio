@@ -18,6 +18,7 @@ using Newtonsoft.Json;
 using System.Numerics;
 using PckStudio.Rendering;
 using System.Diagnostics;
+using Newtonsoft.Json.Linq;
 
 namespace PckStudio.Forms.Editor
 {
@@ -53,7 +54,8 @@ namespace PckStudio.Forms.Editor
         private readonly FileDialogFilter[] fileFilters = 
         [
             new ("Pck skin model(*.psm)", "*.psm"),
-            new ("Block bench model(*.bbmodel)", "*.bbmodel")
+            new ("Block bench model(*.bbmodel)", "*.bbmodel"),
+            new ("Bedrock Model(*.geo.json)", "*.geo.json"),
         ];
 
         private string skinModelFileFilters => string.Join("|", fileFilters);
@@ -225,6 +227,36 @@ namespace PckStudio.Forms.Editor
                         _skin.PartOffsets.AddRange(csmbFile.Offsets);
                         LoadModelData(_skin);
                         break;
+                    case ".json":
+                        _skin.AdditionalBoxes.Clear();
+                        _skin.PartOffsets.Clear();
+
+                        _skin.ANIM.SetFlag(SkinAnimFlag.RESOLUTION_64x64, true);
+                        _skin.ANIM.SetFlag(SkinAnimFlag.SLIM_MODEL, false);
+                        _skin.ANIM.SetFlag(SkinAnimFlag.HEAD_DISABLED, true);
+                        _skin.ANIM.SetFlag(SkinAnimFlag.HEAD_OVERLAY_DISABLED, true);
+                        _skin.ANIM.SetFlag(SkinAnimFlag.BODY_DISABLED, true);
+                        _skin.ANIM.SetFlag(SkinAnimFlag.BODY_OVERLAY_DISABLED, true);
+                        _skin.ANIM.SetFlag(SkinAnimFlag.RIGHT_ARM_DISABLED, true);
+                        _skin.ANIM.SetFlag(SkinAnimFlag.RIGHT_ARM_OVERLAY_DISABLED, true);
+                        _skin.ANIM.SetFlag(SkinAnimFlag.LEFT_ARM_DISABLED, true);
+                        _skin.ANIM.SetFlag(SkinAnimFlag.LEFT_ARM_OVERLAY_DISABLED, true);
+                        _skin.ANIM.SetFlag(SkinAnimFlag.RIGHT_LEG_DISABLED, true);
+                        _skin.ANIM.SetFlag(SkinAnimFlag.RIGHT_LEG_OVERLAY_DISABLED, true);
+                        _skin.ANIM.SetFlag(SkinAnimFlag.LEFT_LEG_DISABLED, true);
+                        _skin.ANIM.SetFlag(SkinAnimFlag.LEFT_LEG_OVERLAY_DISABLED, true);
+
+                        BedrockModel bedrockModel = JsonConvert.DeserializeObject<BedrockModel>(File.ReadAllText(openFileDialog.FileName));
+                        ItemSelectionPopUp itemSelectionPopUp = new ItemSelectionPopUp(bedrockModel.Models.Select(m => m.Description.Identifier).ToArray());
+                        if (itemSelectionPopUp.ShowDialog() == DialogResult.OK && bedrockModel.Models.IndexInRange(itemSelectionPopUp.SelectedIndex))
+                        {
+                            Geometry selectedGeometry = bedrockModel.Models[itemSelectionPopUp.SelectedIndex];
+                            LoadGeometry(selectedGeometry);
+                            LoadModelData(_skin);
+                        }
+                        itemSelectionPopUp.Dispose();
+                        
+                        break;
                     case ".bbmodel":
                         BlockBenchModel blockBenchModel = JsonConvert.DeserializeObject<BlockBenchModel>(File.ReadAllText(openFileDialog.FileName));
                         _skin.AdditionalBoxes.Clear();
@@ -262,9 +294,9 @@ namespace PckStudio.Forms.Editor
                             if (token.Type == JTokenType.Object)
                             {
                                 Outline outline = token.ToObject<Outline>();
-                            string type = outline.Name;
-                            if (!SkinBOX.IsValidType(type))
-                                continue;
+                                string type = outline.Name;
+                                if (!SkinBOX.IsValidType(type))
+                                    continue;
                                 ReadOutliner(token, type, blockBenchModel.Elements);
                             }
                         }
@@ -304,15 +336,15 @@ namespace PckStudio.Forms.Editor
         }
 
         private bool LoadElement(string boxType, Element element)
-                            {
+        {
             if (!element.UseBoxUv || !element.IsVisibile)
                 return false;
 
-                                //Debug.WriteLine($"{type} {element.Name}({element.Uuid})");
-                                BoundingBox boundingBox = new BoundingBox(element.From.ToOpenTKVector(), element.To.ToOpenTKVector());
-                                Vector3 pos = boundingBox.Start.ToNumericsVector();
-                                Vector3 size = boundingBox.Volume.ToNumericsVector();
-                                Vector2 uv = element.UvOffset;
+            //Debug.WriteLine($"{type} {element.Name}({element.Uuid})");
+            BoundingBox boundingBox = new BoundingBox(element.From.ToOpenTKVector(), element.To.ToOpenTKVector());
+            Vector3 pos = boundingBox.Start.ToNumericsVector();
+            Vector3 size = boundingBox.Volume.ToNumericsVector();
+            Vector2 uv = element.UvOffset;
             pos = TranslatePosition(boxType, pos, size, new Vector3(1, 1, 0));
             //Debug.WriteLine(pos);
 
@@ -347,19 +379,19 @@ namespace PckStudio.Forms.Editor
             Vector3 pos = origin;
             // The next line essentialy does uses the fomular below just on all axis.
             // x = -(pos.x + size.x)
-                                pos *= transformUnit;
+            pos *= transformUnit;
             pos -= size * translationUnit;
             // Skin Renderer (and Game) specific offset value.
-                                pos.Y += 24f;
+            pos.Y += 24f;
 
             Vector3 translation = renderer3D1.GetTranslation(boxType).ToNumericsVector();
             Vector3 pivot = renderer3D1.GetPivot(boxType).ToNumericsVector();
-                                
+
             // This will cancel out the part specific translation and pivot.
-                                pos += translation * -Vector3.UnitX - pivot * Vector3.UnitY;
+            pos += translation * -Vector3.UnitX - pivot * Vector3.UnitY;
 
             return pos;
-                            }
+        }
 
         private void cloneToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -367,6 +399,20 @@ namespace PckStudio.Forms.Editor
             {
                 renderer3D1.ModelData.Add((SkinBOX)box.Clone());
                 skinPartListBindingSource.ResetBindings(false);
+            }
+        }
+
+        private void LoadGeometry(Geometry geometry)
+        {
+            foreach (Bone bone in geometry.Bones)
+            {
+                if (!SkinBOX.IsValidType(bone.Name))
+                    continue;
+                foreach (External.Format.Cube cube in bone.Cubes)
+                {
+                    Vector3 pos = TranslatePosition(bone.Name, cube.Origin, cube.Size, Vector3.UnitY);
+                    _skin.AdditionalBoxes.Add(new SkinBOX(bone.Name, pos, cube.Size, cube.Uv));
+                }
             }
         }
 

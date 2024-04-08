@@ -143,6 +143,7 @@
     <Compile Include="Extensions\SkinExtensions.cs" />
     <Compile Include="Extensions\System.Numerics.cs" />
     <Compile Include="Extensions\TreeNodeExtensions.cs" />
+    <Compile Include="External\Format\BedrockModel.cs" />
     <Compile Include="Internal\Deserializer\ImageDeserializer.cs" />
     <Compile Include="Internal\Serializer\AnimationSerializer.cs" />
     <Compile Include="Internal\Deserializer\AnimationDeserializer.cs" />
