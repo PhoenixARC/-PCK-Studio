@@ -11,14 +11,14 @@ using OMI.Formats.Pck;
 using OMI.Workers;
 using PckStudio.Interfaces;
 using PckStudio.IO.TGA;
+using PckStudio.Internal.Deserializer;
+using PckStudio.Internal.Serializer;
 
 namespace PckStudio.Extensions
 {
     internal static class PckFileDataExtensions
     {
         private const string MipMap = "MipMapLevel";
-
-        private static Image EmptyImage = new Bitmap(1, 1, PixelFormat.Format32bppArgb);
 
         internal static Image GetTexture(this PckFileData file)
         {
@@ -28,50 +28,35 @@ namespace PckStudio.Extensions
             {
                 throw new Exception("File is not suitable to contain image data.");
             }
-            using (var stream = new MemoryStream(file.Data))
-            {
-                try
-                {
-                    if (Path.GetExtension(file.Filename) == ".tga")
-                        return TGADeserializer.DeserializeFromStream(stream);
-                    else
-                        return Image.FromStream(stream);
-                }
-                catch(Exception ex)
-                {
-                    Trace.WriteLine($"Failed to read image from pck file data({file.Filename}).", category: nameof(PckFileDataExtensions) + "." + nameof(GetTexture));
-                    Debug.WriteLine(ex.Message);
-                    return EmptyImage;
-                }
-            }
+            return file.GetDeserializedData(ImageDeserializer.DefaultDeserializer);
         }
 
-        internal static T Get<T>(this PckFileData file, IPckDeserializer<T> deserializer)
+        internal static T GetDeserializedData<T>(this PckFileData file, IPckDeserializer<T> deserializer)
         {
             return deserializer.Deserialize(file);
         }
 
-        internal static T Get<T>(this PckFileData file, IDataFormatReader<T> deserializer) where T : class
+        internal static T GetData<T>(this PckFileData file, IDataFormatReader<T> formatReader) where T : class
         {
             using var ms = new MemoryStream(file.Data);
-            return deserializer.FromStream(ms);
+            return formatReader.FromStream(ms);
         }
 
-        internal static void SetData<T>(this PckFileData file, T obj, IPckFileSerializer<T> serializer)
+        internal static void SetSerializedData<T>(this PckFileData file, T obj, IPckFileSerializer<T> serializer)
         {
             serializer.Serialize(obj, ref file);
         }
 
-        internal static void SetData(this PckFileData file, IDataFormatWriter writer)
+        internal static void SetData(this PckFileData file, IDataFormatWriter formatWriter)
         {
             using (var stream = new MemoryStream())
             {
-                writer.WriteToStream(stream);
+                formatWriter.WriteToStream(stream);
                 file.SetData(stream.ToArray());
             }
         }
 
-        internal static void SetData(this PckFileData file, Image image, ImageFormat imageFormat)
+        internal static void SetTexture(this PckFileData file, Image image)
         {
             if (file.Filetype != PckFileType.SkinFile &&
                 file.Filetype != PckFileType.CapeFile &&
@@ -79,12 +64,7 @@ namespace PckStudio.Extensions
             {
                 throw new Exception("File is not suitable to contain image data.");
             }
-
-            using (var stream = new MemoryStream())
-            {
-                image.Save(stream, imageFormat);
-                file.SetData(stream.ToArray());
-            }
+            file.SetSerializedData(image, ImageSerializer.DefaultSerializer);
         }
 
         internal static bool IsMipmappedFile(this PckFileData file)

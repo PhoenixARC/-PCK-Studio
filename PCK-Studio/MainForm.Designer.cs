@@ -72,6 +72,9 @@
             this.setSubPCKEndiannessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bigEndianXbox360PS3WiiUToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.littleEndianPS4PSVitaSwitchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.setModelContainerFormatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.version1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.version2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.moveUpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.moveDownToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.extractToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -147,8 +150,9 @@
             this.label11 = new MetroFramework.Controls.MetroLabel();
             this.treeViewMain = new System.Windows.Forms.TreeView();
             this.imageList = new System.Windows.Forms.ImageList(this.components);
-            this.previewPictureBox = new PckStudio.ToolboxItems.InterpolationPictureBox();
             this.LittleEndianCheckBox = new MetroFramework.Controls.MetroCheckBox();
+            this.previewPictureBox = new PckStudio.ToolboxItems.InterpolationPictureBox();
+            this.version3114ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             logoPictureBox = new System.Windows.Forms.PictureBox();
             toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -410,7 +414,8 @@
             this.generateMipMapTextureToolStripMenuItem1,
             this.viewFileInfoToolStripMenuItem,
             this.correctSkinDecimalsToolStripMenuItem,
-            this.setSubPCKEndiannessToolStripMenuItem});
+            this.setSubPCKEndiannessToolStripMenuItem,
+            this.setModelContainerFormatToolStripMenuItem});
             this.miscFunctionsToolStripMenuItem.Name = "miscFunctionsToolStripMenuItem";
             resources.ApplyResources(this.miscFunctionsToolStripMenuItem, "miscFunctionsToolStripMenuItem");
             // 
@@ -451,6 +456,27 @@
             this.littleEndianPS4PSVitaSwitchToolStripMenuItem.Name = "littleEndianPS4PSVitaSwitchToolStripMenuItem";
             resources.ApplyResources(this.littleEndianPS4PSVitaSwitchToolStripMenuItem, "littleEndianPS4PSVitaSwitchToolStripMenuItem");
             this.littleEndianPS4PSVitaSwitchToolStripMenuItem.Click += new System.EventHandler(this.littleEndianToolStripMenuItem_Click);
+            // 
+            // setModelContainerFormatToolStripMenuItem
+            // 
+            this.setModelContainerFormatToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.version1ToolStripMenuItem,
+            this.version2ToolStripMenuItem,
+            this.version3114ToolStripMenuItem});
+            this.setModelContainerFormatToolStripMenuItem.Name = "setModelContainerFormatToolStripMenuItem";
+            resources.ApplyResources(this.setModelContainerFormatToolStripMenuItem, "setModelContainerFormatToolStripMenuItem");
+            // 
+            // version1ToolStripMenuItem
+            // 
+            this.version1ToolStripMenuItem.Name = "version1ToolStripMenuItem";
+            resources.ApplyResources(this.version1ToolStripMenuItem, "version1ToolStripMenuItem");
+            this.version1ToolStripMenuItem.Click += new System.EventHandler(this.setModelVersion1ToolStripMenuItem_Click);
+            // 
+            // version2ToolStripMenuItem
+            // 
+            this.version2ToolStripMenuItem.Name = "version2ToolStripMenuItem";
+            resources.ApplyResources(this.version2ToolStripMenuItem, "version2ToolStripMenuItem");
+            this.version2ToolStripMenuItem.Click += new System.EventHandler(this.setModelVersion2ToolStripMenuItem_Click);
             // 
             // moveUpToolStripMenuItem
             // 
@@ -847,7 +873,7 @@
             this.tabControl.Controls.Add(this.editorTab);
             resources.ApplyResources(this.tabControl, "tabControl");
             this.tabControl.Name = "tabControl";
-            this.tabControl.SelectedIndex = 1;
+            this.tabControl.SelectedIndex = 0;
             this.tabControl.Style = MetroFramework.MetroColorStyle.Silver;
             this.tabControl.TabStop = false;
             this.tabControl.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -1092,10 +1118,6 @@
             this.treeViewMain.Name = "treeViewMain";
             this.treeViewMain.PathSeparator = "/";
             this.treeViewMain.BeforeLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.treeViewMain_BeforeLabelEdit);
-            this.treeViewMain.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.treeViewMain_ItemDrag);
-            this.treeViewMain.DragEnter += new System.Windows.Forms.DragEventHandler(this.treeViewMain_DragEnter);
-            this.treeViewMain.DragDrop += new System.Windows.Forms.DragEventHandler(this.treeViewMain_DragDrop);
-            this.treeViewMain.DragOver += new System.Windows.Forms.DragEventHandler(this.treeViewMain_DragOver);
             this.treeViewMain.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.selectNode);
             this.treeViewMain.DoubleClick += new System.EventHandler(this.treeViewMain_DoubleClick);
             this.treeViewMain.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeViewMain_KeyDown);
@@ -1106,14 +1128,6 @@
             resources.ApplyResources(this.imageList, "imageList");
             this.imageList.TransparentColor = System.Drawing.Color.Transparent;
             // 
-            // previewPictureBox
-            // 
-            resources.ApplyResources(this.previewPictureBox, "previewPictureBox");
-            this.previewPictureBox.BackColor = System.Drawing.Color.Transparent;
-            this.previewPictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-            this.previewPictureBox.Name = "previewPictureBox";
-            this.previewPictureBox.TabStop = false;
-            // 
             // LittleEndianCheckBox
             // 
             resources.ApplyResources(this.LittleEndianCheckBox, "LittleEndianCheckBox");
@@ -1122,6 +1136,20 @@
             this.LittleEndianCheckBox.Style = MetroFramework.MetroColorStyle.White;
             this.LittleEndianCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.LittleEndianCheckBox.UseSelectable = true;
+            // 
+            // previewPictureBox
+            // 
+            resources.ApplyResources(this.previewPictureBox, "previewPictureBox");
+            this.previewPictureBox.BackColor = System.Drawing.Color.Transparent;
+            this.previewPictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+            this.previewPictureBox.Name = "previewPictureBox";
+            this.previewPictureBox.TabStop = false;
+            // 
+            // version3114ToolStripMenuItem
+            // 
+            this.version3114ToolStripMenuItem.Name = "version3114ToolStripMenuItem";
+            resources.ApplyResources(this.version3114ToolStripMenuItem, "version3114ToolStripMenuItem");
+            this.version3114ToolStripMenuItem.Click += new System.EventHandler(this.setModelVersion3ToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -1276,6 +1304,10 @@
         private System.Windows.Forms.ToolStripMenuItem setSubPCKEndiannessToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem bigEndianXbox360PS3WiiUToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem littleEndianPS4PSVitaSwitchToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem setModelContainerFormatToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem version1ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem version2ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem version3114ToolStripMenuItem;
     }
 }
 

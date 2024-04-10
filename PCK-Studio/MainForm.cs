@@ -11,10 +11,12 @@ using OMI.Formats.Archive;
 using OMI.Formats.Pck;
 using OMI.Formats.GameRule;
 using OMI.Formats.Languages;
+using OMI.Formats.Model;
 using OMI.Workers.Archive;
 using OMI.Workers.Pck;
 using OMI.Workers.GameRule;
 using OMI.Workers.Language;
+using OMI.Workers.Model;
 using PckStudio.Properties;
 using PckStudio.FileFormats;
 using PckStudio.Forms;
@@ -32,6 +34,9 @@ using PckStudio.Classes.Utils;
 using PckStudio.Helper;
 using System.Text.RegularExpressions;
 using PckStudio.Internal.Json;
+using PckStudio.Internal.Deserializer;
+using PckStudio.Internal.Serializer;
+using OMI.Workers;
 
 namespace PckStudio
 {
@@ -94,44 +99,38 @@ namespace PckStudio
 				[PckFileType.TextureFile] = HandleTextureFile,
 				[PckFileType.UIDataFile] = _ => throw new NotSupportedException("unused in-game"),
 				[PckFileType.InfoFile] = null,
-				[PckFileType.TexturePackInfoFile] = HandleInnerPckFile,
-				[PckFileType.LocalisationFile] = HandleLocalisationFile,
+				[PckFileType.TexturePackInfoFile] = null, // HandleInnerPckFile,
+                [PckFileType.LocalisationFile] = HandleLocalisationFile,
 				[PckFileType.GameRulesFile] = HandleGameRuleFile,
 				[PckFileType.AudioFile] = HandleAudioFile,
 				[PckFileType.ColourTableFile] = HandleColourFile,
 				[PckFileType.GameRulesHeader] = HandleGameRuleFile,
-				[PckFileType.SkinDataFile] = HandleInnerPckFile,
+				[PckFileType.SkinDataFile] = null, // HandleInnerPckFile,
 				[PckFileType.ModelsFile] = null, //HandleModelsFile, // Note: Uncomment when implemented
 				[PckFileType.BehavioursFile] = HandleBehavioursFile,
 				[PckFileType.MaterialFile] = HandleMaterialFile,
 			};
 		}
 
+		// TODO: decide on how to handle embedded pck files
         private void HandleInnerPckFile(PckFileData file)
         {
-			// TODO: decide on how to handle embedded pck files
-			return;
 			if (Settings.Default.LoadSubPcks &&
 				(file.Filetype == PckFileType.SkinDataFile || file.Filetype == PckFileType.TexturePackInfoFile) &&
 				file.Size > 0 && treeViewMain.SelectedNode.Nodes.Count == 0)
 			{
-				using (var stream = new MemoryStream(file.Data))
+				try
 				{
-					try
-					{
-						var reader = new PckFileReader(LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
-						PckFile subPCKfile = reader.FromStream(stream);
-						BuildPckTreeView(treeViewMain.SelectedNode.Nodes, subPCKfile);
-                        treeViewMain.SelectedNode.ExpandAll();
-
-                    }
-					catch (OverflowException ex)
-					{
-						MessageBox.Show(this, "Failed to open pck\n" +
-							"Try checking the 'Open/Save as Switch/Vita/PS4 pck' checkbox in the upper right corner.",
-							"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-						Debug.WriteLine(ex.Message);
-					}
+					PckFile subPCKfile = file.GetData(new PckFileReader(LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian));
+					BuildPckTreeView(treeViewMain.SelectedNode.Nodes, subPCKfile);
+					treeViewMain.SelectedNode.ExpandAll();
+                }
+				catch (OverflowException ex)
+				{
+					MessageBox.Show(this, "Failed to open pck\n" +
+						"Try checking the 'Open/Save as Switch/Vita/PS4 pck' checkbox in the upper right corner.",
+						"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					Debug.WriteLine(ex.Message);
 				}
 				return;
 			}
@@ -146,9 +145,9 @@ namespace PckStudio
 
 		public void LoadPckFromFile(string filepath)
 		{
-			checkSaveState();
+			CheckSaveState();
 			treeViewMain.Nodes.Clear();
-			currentPCK = openPck(filepath);
+			currentPCK = OpenPck(filepath);
 			if (currentPCK == null)
 			{
 				MessageBox.Show(this, string.Format("Failed to load {0}", Path.GetFileName(filepath)), "Error");
@@ -213,7 +212,7 @@ namespace PckStudio
 				if (!string.IsNullOrWhiteSpace(filepath))
 				{
 					string displayFilepath = Regex.Replace(filepath, @"([A-Z]{1}\:\\[Uu]sers\\)([^\\]*\\)(.*)", "~\\$3");
-					var item = recentlyOpenToolStripMenuItem.DropDownItems.Add(displayFilepath, null, HandleOpenFile);
+                    ToolStripItem item = recentlyOpenToolStripMenuItem.DropDownItems.Add(displayFilepath, null, HandleOpenFile);
 					item.Tag = filepath;
 				}
             }
@@ -221,7 +220,7 @@ namespace PckStudio
 
 		private void HandleOpenFile(object sender, EventArgs e)
 		{
-			if (((ToolStripMenuItem)sender).Tag is string filepath && File.Exists(filepath))
+			if (sender is ToolStripItem menuItem && menuItem.Tag is string filepath && File.Exists(filepath))
 				LoadPckFromFile(filepath);
         }
 
@@ -234,9 +233,9 @@ namespace PckStudio
 			Settings.Default.RecentFiles.Insert(0, filepath);
 
 			for (int i = Settings.Default.RecentFiles.Count - 1; i >= 5; i--)
-				{
-                    Settings.Default.RecentFiles.RemoveAt(i);
-                }
+			{
+                Settings.Default.RecentFiles.RemoveAt(i);
+            }
 			Settings.Default.Save();
 			LoadRecentFileList();
         }
@@ -244,10 +243,23 @@ namespace PckStudio
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
 		{
 			PckManager?.Close();
-			checkSaveState();
+			CheckSaveState();
 		}
 
-		private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        private void openPckManagerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PckManager ??= new PckManager();
+            PckManager.FormClosing += (s, e) => PckManager = null;
+            if (!PckManager.Visible)
+            {
+                // Passing in a parent form will make it stay on top of every other form. -miku
+                PckManager.Show();
+            }
+            if (PckManager.Focus())
+                PckManager.BringToFront();
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			using (var ofd = new OpenFileDialog())
 			{
@@ -260,7 +272,7 @@ namespace PckStudio
 			}
 		}
 
-		private PckFile openPck(string filePath)
+		private PckFile OpenPck(string filePath)
 		{
 			isTemplateFile = false;
 			saveLocation = filePath;
@@ -503,7 +515,7 @@ namespace PckStudio
 						texture = _img;
                     }
 
-					file.SetData(texture, ImageFormat.Png);
+					file.SetTexture(texture);
 					wasModified = true;
 					BuildMainTreeView();
 				}
@@ -514,7 +526,7 @@ namespace PckStudio
 				!file.Filename.StartsWith(ResourceLocation.GetPathFromCategory(ResourceCategory.BlockAnimation)))
 				return;
 
-            Animation animation = file.Get(AnimationDeserializer.DefaultDeserializer);
+            Animation animation = file.GetDeserializedData(AnimationDeserializer.DefaultDeserializer);
 			string filename = Path.GetFileNameWithoutExtension(file.Filename);
 
             var textureInfos = ResourceLocation.GetCategoryFromPath(file.Filename) switch
@@ -532,7 +544,7 @@ namespace PckStudio
 				if (animationEditor.ShowDialog(this) == DialogResult.OK)
 				{
 					wasModified = true;
-					file.SetData(animationEditor.Result, AnimationSerializer.DefaultSerializer);
+					file.SetSerializedData(animationEditor.Result, AnimationSerializer.DefaultSerializer);
 					BuildMainTreeView();
 				}
 			}
@@ -558,7 +570,7 @@ namespace PckStudio
 				_ => GameRuleFile.CompressionType.Unknown
             };
 
-			GameRuleFile grf = file.Get(new GameRuleFileReader(compressiontype));
+			GameRuleFile grf = file.GetData(new GameRuleFileReader(compressiontype));
 
 			using GameRuleFileEditor grfEditor = new GameRuleFileEditor(grf);
 			if (grfEditor.ShowDialog(this) == DialogResult.OK)
@@ -1076,7 +1088,7 @@ namespace PckStudio
 			{
 				wasModified = true;
 				PckFileData file = currentPCK.CreateNewFile(animationFilepath, PckFileType.TextureFile);
-				file.SetData(animationEditor.Result, AnimationSerializer.DefaultSerializer);
+				file.SetSerializedData(animationEditor.Result, AnimationSerializer.DefaultSerializer);
 				BuildMainTreeView();
 				ReloadMetaTreeView();
 			}
@@ -1462,10 +1474,10 @@ namespace PckStudio
 			PckFile infoPCK = new PckFile(3);
 
             PckFileData icon = infoPCK.CreateNewFile("icon.png", PckFileType.TextureFile);
-			icon.SetData(Resources.TexturePackIcon, ImageFormat.Png);
+			icon.SetTexture(Resources.TexturePackIcon);
 
             PckFileData comparison = infoPCK.CreateNewFile("comparison.png", PckFileType.TextureFile);
-			comparison.SetData(Resources.Comparison, ImageFormat.Png);
+			comparison.SetTexture(Resources.Comparison);
 
             PckFileData texturepackInfo = pack.CreateNewFile($"{res}/{res}Info.pck", PckFileType.TexturePackInfoFile);
 			texturepackInfo.AddProperty("PACKID", "0");
@@ -1503,7 +1515,7 @@ namespace PckStudio
 
 		private void skinPackToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			checkSaveState();
+			CheckSaveState();
 			TextPrompt namePrompt = new TextPrompt();
 			namePrompt.OKButtonText = "Ok";
 			if (namePrompt.ShowDialog(this) == DialogResult.OK)
@@ -1517,7 +1529,7 @@ namespace PckStudio
 
 		private void texturePackToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			checkSaveState();
+			CheckSaveState();
 			CreateTexturePackPrompt packPrompt = new CreateTexturePackPrompt();
 			if (packPrompt.ShowDialog(this) == DialogResult.OK)
 			{
@@ -1530,7 +1542,7 @@ namespace PckStudio
 
 		private void mashUpPackToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			checkSaveState();
+			CheckSaveState();
 			CreateTexturePackPrompt packPrompt = new CreateTexturePackPrompt();
 			if (packPrompt.ShowDialog(this) == DialogResult.OK)
 			{
@@ -1554,7 +1566,7 @@ namespace PckStudio
 
 		private void closeToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			checkSaveState();
+			CheckSaveState();
 			CloseEditorTab();
 		}
 
@@ -1854,7 +1866,7 @@ namespace PckStudio
 			pckOpen.Image = Resources.pckClosed;
 		}
 
-		private void checkSaveState()
+		private void CheckSaveState()
 		{
 			if (currentPCK is not null &&
 				wasModified &&
@@ -2072,7 +2084,7 @@ namespace PckStudio
 							gfx.DrawImage(originalTexture, tileArea);
 						}
 
-						MipMappedFile.SetData(mippedTexture, ImageFormat.Png);
+						MipMappedFile.SetTexture(mippedTexture);
 
 						currentPCK.InsertFile(currentPCK.IndexOfFile(file) + i - 1, MipMappedFile);
 					}
@@ -2256,23 +2268,6 @@ namespace PckStudio
 			Process.Start("https://trello.com/b/0XLNOEbe/pck-studio");
 		}
 
-		private void openPckManagerToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			PckManager ??= new PckManager();
-			PckManager.FormClosing += (s, e) =>
-			{
-				PckManager.Hide();
-				e.Cancel = true;
-			};
-			if (!PckManager.Visible)
-			{
-				// passing in a parent form will make it stay on top of every other form. -miku
-				PckManager.Show();
-			}
-			if (PckManager.Focus())
-				PckManager.BringToFront();
-		}
-
 		private void wavBinkaToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			using OpenFileDialog fileDialog = new OpenFileDialog
@@ -2427,24 +2422,21 @@ namespace PckStudio
             Application.Exit();
         }
 
-		private void setPCKEndiannessStripMenuItem_Click(OMI.Endianness endianness)
+		private void SetPckEndianness(OMI.Endianness endianness)
 		{
 			try
 			{
 				if (treeViewMain.SelectedNode.Tag is PckFileData file && (file.Filetype is PckFileType.AudioFile || file.Filetype is PckFileType.SkinDataFile || file.Filetype is PckFileType.TexturePackInfoFile))
 				{
-					using (var stream = new MemoryStream())
-					{
-						dynamic reader = file.Filetype is PckFileType.AudioFile
-							? new PckAudioFileReader(endianness == OMI.Endianness.BigEndian ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian)
-							: new PckFileReader(endianness == OMI.Endianness.BigEndian ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
-						var pck = reader.FromStream(new MemoryStream(file.Data));
-						dynamic writer = file.Filetype is PckFileType.AudioFile
-							? new PckAudioFileWriter(pck, endianness)
-							: new PckFileWriter(pck, endianness);
-						writer.WriteToStream(stream);
-						file.SetData(stream.ToArray());
-					}
+					IDataFormatReader reader = file.Filetype is PckFileType.AudioFile
+						? new PckAudioFileReader(endianness == OMI.Endianness.BigEndian ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian)
+						: new PckFileReader(endianness == OMI.Endianness.BigEndian ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
+                    object pck = reader.FromStream(new MemoryStream(file.Data));
+
+                    IDataFormatWriter writer = file.Filetype is PckFileType.AudioFile
+						? new PckAudioFileWriter((PckAudioFile)pck, endianness)
+						: new PckFileWriter((PckFile)pck, endianness);
+					file.SetData(writer);
 					wasModified = true;
 					MessageBox.Show($"\"{file.Filename}\" successfully converted to {(endianness == OMI.Endianness.LittleEndian ? "little" : "big")} endian.", "Converted PCK file");
 				}
@@ -2461,7 +2453,67 @@ namespace PckStudio
 			}
 		}
 
-		private void littleEndianToolStripMenuItem_Click(object sender, EventArgs e) => setPCKEndiannessStripMenuItem_Click(OMI.Endianness.LittleEndian);
-		private void bigEndianToolStripMenuItem_Click(object sender, EventArgs e) => setPCKEndiannessStripMenuItem_Click(OMI.Endianness.BigEndian);
+		private void littleEndianToolStripMenuItem_Click(object sender, EventArgs e) => SetPckEndianness(OMI.Endianness.LittleEndian);
+		private void bigEndianToolStripMenuItem_Click(object sender, EventArgs e) => SetPckEndianness(OMI.Endianness.BigEndian);
+
+		private void SetModelVersion(int version)
+        {
+			if (treeViewMain.SelectedNode.Tag is PckFileData file && file.Filetype is PckFileType.ModelsFile)
+			{
+				try
+				{
+                    ModelContainer container = file.GetData(new ModelFileReader());
+
+					if (container.Version == version)
+                    {
+						MessageBox.Show(
+							this, 
+							$"This model container is already Version {version + 1}.", 
+							"Can't convert", MessageBoxButtons.OK, MessageBoxIcon.Error
+						);
+						return;
+					}
+
+					if (version == 2 &&
+						MessageBox.Show(
+							this,
+							"Conversion to 1.14 models.bin format does not yet support parent declaration and may not be 100% accurate.\n" +
+							"Would you like to continue?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes
+						)
+					{
+						return;
+					}
+
+					if (container.Version > 1 && 
+						MessageBox.Show(
+							this, 
+							"Conversion from 1.14 models.bin format does not yet support parent parts and may not be 100% accurate.\n" +
+                            "Would you like to continue?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes
+							)
+					{
+						return;
+					}
+
+					file.SetData(new ModelFileWriter(container, version));
+					wasModified = true;
+					MessageBox.Show(
+						this, 
+						$"\"{file.Filename}\" successfully converted to Version {version + 1} format.", 
+						"Converted model container file"
+						);
+				}
+				catch (Exception ex)
+				{
+					MessageBox.Show(this, ex.Message, "Not a valid model container file.");
+					return;
+				}
+			}
+		}
+
+		private void setModelVersion1ToolStripMenuItem_Click(object sender, EventArgs e) => SetModelVersion(0);
+
+        private void setModelVersion2ToolStripMenuItem_Click(object sender, EventArgs e) => SetModelVersion(1);
+
+		private void setModelVersion3ToolStripMenuItem_Click(object sender, EventArgs e) => SetModelVersion(2);
     }
 }

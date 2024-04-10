@@ -138,8 +138,9 @@
     <Compile Include="Extensions\LocFileExtensions.cs" />
     <Compile Include="Extensions\PckFileDataExtensions.cs" />
     <Compile Include="Extensions\TreeNodeExtensions.cs" />
-    <Compile Include="Internal\AnimationSerializer.cs" />
-    <Compile Include="Internal\AnimationDeserializer.cs" />
+    <Compile Include="Internal\Deserializer\ImageDeserializer.cs" />
+    <Compile Include="Internal\Serializer\AnimationSerializer.cs" />
+    <Compile Include="Internal\Deserializer\AnimationDeserializer.cs" />
     <Compile Include="Interfaces\IPckDeserializer.cs" />
     <Compile Include="Interfaces\IPckFileSerializer.cs" />
     <Compile Include="Internal\Json\Entities.cs" />
@@ -147,6 +148,7 @@
     <Compile Include="Internal\ResourceCategory.cs" />
     <Compile Include="Internal\CommitInfo.cs" />
     <Compile Include="Internal\ResourceLocation.cs" />
+    <Compile Include="Internal\Serializer\ImageSerializer.cs" />
     <Compile Include="Internal\SkinAnimFlag.cs" />
     <Compile Include="Internal\SkinAnimMask.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
