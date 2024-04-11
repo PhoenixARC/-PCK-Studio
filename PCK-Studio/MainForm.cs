@@ -1394,27 +1394,25 @@ namespace PckStudio
 
 		private void treeViewMain_ItemDrag(object sender, ItemDragEventArgs e)
 		{
-			if (e.Button == MouseButtons.Left &&
-				e.Item is TreeNode node &&
-				node.TryGetTagData(out PckFileData file))
-			{
-				if (currentPCK.Contains(file.Filename, file.Filetype))
-				{
-					Debug.WriteLine("Dragable file!");
-					DoDragDrop(file, DragDropEffects.Move);
-				}
-            }
-		}
+			if (e.Button != MouseButtons.Left || e.Item is not TreeNode node)
+				return;
 
-		private void treeViewMain_DragEnter(object sender, DragEventArgs e)
-		{
-			e.Effect = e.AllowedEffect;
+			if (node.TryGetTagData(out PckFileData file) && currentPCK.Contains(file.Filename, file.Filetype))
+			{
+				Debug.WriteLine("Dragable file!");
+				DoDragDrop(file, DragDropEffects.Move);
+			}
 		}
 
 		private void treeViewMain_DragOver(object sender, DragEventArgs e)
 		{
             Point dragLocation = new Point(e.X, e.Y);
             treeViewMain.SelectedNode = treeViewMain.GetNodeAt(treeViewMain.PointToClient(dragLocation)) ?? treeViewMain.SelectedNode;
+		}
+
+		private void treeViewMain_DragEnter(object sender, DragEventArgs e)
+		{
+			e.Effect = e.AllowedEffect;
 		}
 
 		private void treeViewMain_DragDrop(object sender, DragEventArgs e)
@@ -1432,7 +1430,7 @@ namespace PckStudio
 
             // Retrieve the node that was dragged.
             if (e.Data.GetData(typeof(PckFileData)) is PckFileData draggedFile &&
-                targetNode.FullPath != draggedFile.Filename)
+                targetNode.FullPath != draggedFile.Filename && targetNode.FullPath != Path.GetDirectoryName(draggedFile.Filename))
 			{ 
 				Debug.WriteLine(draggedFile.Filename + " was droped onto " + targetNode.FullPath);
 				Debug.WriteLine($"Target drop location is {(isPckFile ? "file" : "folder")}.");
@@ -1441,6 +1439,7 @@ namespace PckStudio
 					: targetNode.FullPath, Path.GetFileName(draggedFile.Filename));
 				Debug.WriteLine("New filepath: " + newFilePath);
                 draggedFile.Filename = newFilePath;
+				wasModified = true;
 				BuildMainTreeView();
 			}
 		}
