@@ -1451,13 +1451,25 @@ namespace PckStudio
 				return;
 			}
 
+			if (draggedNode.Equals(targetNode.Parent))
+			{
+				Debug.WriteLine("dragged node is parent of target node... nothing done.");
+				return;
+			}
+
+			if ((targetNode.Parent?.Equals(draggedNode.Parent) ?? false) && isTargetPckFile)
+			{
+				Debug.WriteLine("target node and dragged node have the same parent... nothing done.");
+				return;
+			}
+
+			Debug.WriteLine($"Target drop location is {(isTargetPckFile ? "file" : "folder")}.");
+
             // Retrieve the node that was dragged.
             if (draggedNode.TryGetTagData(out PckFileData draggedFile) &&
-                targetNode.FullPath != draggedFile.Filename &&
-				targetNode.FullPath != Path.GetDirectoryName(draggedFile.Filename))
-			{ 
+                targetNode.FullPath != draggedFile.Filename)
+			{
 				Debug.WriteLine(draggedFile.Filename + " was droped onto " + targetNode.FullPath);
-				Debug.WriteLine($"Target drop location is {(isTargetPckFile ? "file" : "folder")}.");
                 string newFilePath = Path.Combine(isTargetPckFile
 					? Path.GetDirectoryName(targetNode.FullPath)
 					: targetNode.FullPath, Path.GetFileName(draggedFile.Filename));
@@ -1465,8 +1477,36 @@ namespace PckStudio
                 draggedFile.Filename = newFilePath;
 				wasModified = true;
 				BuildMainTreeView();
+				return;
 			}
+			else
+			{
+				List<PckFileData> pckFiles = GetEndingNodes(draggedNode.Nodes).Where(t => t.IsTagOfType<PckFileData>()).Select(t => t.Tag as PckFileData).ToList();
+				string oldPath = draggedNode.FullPath;
+				string newPath = Path.Combine(isTargetPckFile ? Path.GetDirectoryName(targetNode.FullPath) : targetNode.FullPath, draggedNode.Text).Replace('\\', '/');
+				foreach (var pckFile in pckFiles)
+				{
+                    pckFile.Filename = Path.Combine(newPath, pckFile.Filename.Substring(oldPath.Length + 1)).Replace('\\', '/');
+				}
+                wasModified = true;
+                BuildMainTreeView();
+            }
 		}
+
+		private IEnumerable<TreeNode> GetEndingNodes(TreeNodeCollection collection)
+		{
+			List<TreeNode> trailingNodes = new List<TreeNode>(collection.Count);
+            foreach (TreeNode node in collection)
+            {
+				if (node.Nodes.Count > 0)
+				{
+					trailingNodes.AddRange(GetEndingNodes(node.Nodes));
+					continue;
+				}
+                trailingNodes.Add(node);
+            }
+			return trailingNodes;
+        }
 
         private void ImportFiles(string[] files)
         {
