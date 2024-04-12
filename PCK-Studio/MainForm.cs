@@ -1397,26 +1397,37 @@ namespace PckStudio
 			if (e.Button != MouseButtons.Left || e.Item is not TreeNode node)
 				return;
 
-			if (node.TryGetTagData(out PckFileData file) && currentPCK.Contains(file.Filename, file.Filetype))
+			if ((node.TryGetTagData(out PckFileData file) && currentPCK.Contains(file.Filename, file.Filetype)) || node.Parent is TreeNode)
 			{
-				Debug.WriteLine("Dragable file!");
-				DoDragDrop(file, DragDropEffects.Move);
+				treeViewMain.DoDragDrop(node, DragDropEffects.Move);
 			}
 		}
 
 		private void treeViewMain_DragOver(object sender, DragEventArgs e)
 		{
             Point dragLocation = new Point(e.X, e.Y);
-            treeViewMain.SelectedNode = treeViewMain.GetNodeAt(treeViewMain.PointToClient(dragLocation)) ?? treeViewMain.SelectedNode;
+			TreeNode node = treeViewMain.GetNodeAt(treeViewMain.PointToClient(dragLocation));
+			treeViewMain.SelectedNode = node.IsTagOfType<PckFileData>() ? null : node;
 		}
 
 		private void treeViewMain_DragEnter(object sender, DragEventArgs e)
 		{
-			e.Effect = e.AllowedEffect;
+			e.Effect = e.Data.GetDataPresent(DataFormats.FileDrop) ? DragDropEffects.Copy : e.AllowedEffect;
 		}
 
 		private void treeViewMain_DragDrop(object sender, DragEventArgs e)
 		{
+			if (e.Data.GetDataPresent(DataFormats.FileDrop) && e.Data.GetData(DataFormats.FileDrop) is string[] files)
+			{
+				ImportFiles(files);
+				return;
+			}
+
+			string dataFormat = typeof(TreeNode).FullName;
+
+            if (!e.Data.GetDataPresent(dataFormat))
+				return;
+
 			// Retrieve the client coordinates of the drop location.
 			Point dragLocation = new Point(e.X, e.Y);
 			Point targetPoint = treeViewMain.PointToClient(dragLocation);
@@ -1426,15 +1437,28 @@ namespace PckStudio
 
             // Retrieve the node at the drop location.
             TreeNode targetNode = treeViewMain.GetNodeAt(targetPoint);
-			bool isPckFile = targetNode.IsTagOfType<PckFileData>();
+			bool isTargetPckFile = targetNode.IsTagOfType<PckFileData>();
+
+			if (e.Data.GetData(dataFormat) is not TreeNode draggedNode)
+			{
+				Debug.WriteLine("Dragged data was not of type TreeNode.");
+				return;
+			}
+
+			if (targetNode.Equals(draggedNode.Parent))
+			{
+				Debug.WriteLine("target node is parent of dragged node... nothing done.");
+				return;
+			}
 
             // Retrieve the node that was dragged.
-            if (e.Data.GetData(typeof(PckFileData)) is PckFileData draggedFile &&
-                targetNode.FullPath != draggedFile.Filename && targetNode.FullPath != Path.GetDirectoryName(draggedFile.Filename))
+            if (draggedNode.TryGetTagData(out PckFileData draggedFile) &&
+                targetNode.FullPath != draggedFile.Filename &&
+				targetNode.FullPath != Path.GetDirectoryName(draggedFile.Filename))
 			{ 
 				Debug.WriteLine(draggedFile.Filename + " was droped onto " + targetNode.FullPath);
-				Debug.WriteLine($"Target drop location is {(isPckFile ? "file" : "folder")}.");
-                string newFilePath = Path.Combine(isPckFile
+				Debug.WriteLine($"Target drop location is {(isTargetPckFile ? "file" : "folder")}.");
+                string newFilePath = Path.Combine(isTargetPckFile
 					? Path.GetDirectoryName(targetNode.FullPath)
 					: targetNode.FullPath, Path.GetFileName(draggedFile.Filename));
 				Debug.WriteLine("New filepath: " + newFilePath);
@@ -1444,9 +1468,32 @@ namespace PckStudio
 			}
 		}
 
-		#endregion
+        private void ImportFiles(string[] files)
+        {
+			int addedCount = 0;
+            foreach (var file in files)
+            {
+                using AddFilePrompt addFile = new AddFilePrompt(Path.GetFileName(file));
+                if (addFile.ShowDialog(this) != DialogResult.OK)
+                    continue;
 
-		private PckFile InitializePack(int packId, int packVersion, string packName, bool createSkinsPCK)
+                if (currentPCK.Contains(addFile.Filepath, addFile.Filetype))
+                {
+                    MessageBox.Show(this, $"'{addFile.Filepath}' of type {addFile.Filetype} already exists.", "Import failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    continue;
+                }
+                currentPCK.CreateNewFile(addFile.Filepath, addFile.Filetype, () => File.ReadAllBytes(file));
+				addedCount++;
+
+                BuildMainTreeView();
+                wasModified = true;
+            }
+			Trace.TraceInformation("[{0}] Imported {1} file(s).", nameof(ImportFiles), addedCount);	
+        }
+
+        #endregion
+
+        private PckFile InitializePack(int packId, int packVersion, string packName, bool createSkinsPCK)
 		{
 			var pack = new PckFile(3);
 

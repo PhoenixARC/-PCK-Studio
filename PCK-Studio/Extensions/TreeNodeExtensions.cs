@@ -11,7 +11,7 @@ namespace PckStudio.Extensions
     {
         internal static bool IsTagOfType<T>(this TreeNode node) where T : class
         {
-            return node.Tag is T;
+            return node?.Tag is T;
         }
 
         internal static bool TryGetTagData<TOut>(this TreeNode node, out TOut tagData) where TOut : class
