@@ -54,9 +54,6 @@ namespace PckStudio.External.Format
     {
         [JsonProperty("name")]
         public string Name { get; set; }
-
-        [JsonProperty("binding")]
-        public string Binding { get; set; }
         
         [JsonIgnore]
         public Vector3 Pivot
@@ -121,6 +118,6 @@ namespace PckStudio.External.Format
         }
 
         [JsonProperty("inflate")]
-        public float Inflate { get; set; }
+        public float Inflate { get; set; } = 0f;
     }
 }

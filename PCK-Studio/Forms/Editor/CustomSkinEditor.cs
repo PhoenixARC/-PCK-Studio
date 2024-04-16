@@ -39,6 +39,7 @@ namespace PckStudio.Forms.Editor
             new ("Pck skin model(*.psm)", "*.psm"),
             new ("Block bench model(*.bbmodel)", "*.bbmodel"),
             new ("Bedrock Model(*.geo.json)", "*.geo.json"),
+            new ("Bedrock Legacy Model(*.json)", "*.json"),
         ];
 
         private string skinModelFileFilters => string.Join("|", fileFilters);
@@ -211,34 +212,7 @@ namespace PckStudio.Forms.Editor
                         LoadModelData(_skin);
                         break;
                     case ".json":
-                        _skin.AdditionalBoxes.Clear();
-                        _skin.PartOffsets.Clear();
-
-                        _skin.ANIM.SetFlag(SkinAnimFlag.RESOLUTION_64x64, true);
-                        _skin.ANIM.SetFlag(SkinAnimFlag.SLIM_MODEL, false);
-                        _skin.ANIM.SetFlag(SkinAnimFlag.HEAD_DISABLED, true);
-                        _skin.ANIM.SetFlag(SkinAnimFlag.HEAD_OVERLAY_DISABLED, true);
-                        _skin.ANIM.SetFlag(SkinAnimFlag.BODY_DISABLED, true);
-                        _skin.ANIM.SetFlag(SkinAnimFlag.BODY_OVERLAY_DISABLED, true);
-                        _skin.ANIM.SetFlag(SkinAnimFlag.RIGHT_ARM_DISABLED, true);
-                        _skin.ANIM.SetFlag(SkinAnimFlag.RIGHT_ARM_OVERLAY_DISABLED, true);
-                        _skin.ANIM.SetFlag(SkinAnimFlag.LEFT_ARM_DISABLED, true);
-                        _skin.ANIM.SetFlag(SkinAnimFlag.LEFT_ARM_OVERLAY_DISABLED, true);
-                        _skin.ANIM.SetFlag(SkinAnimFlag.RIGHT_LEG_DISABLED, true);
-                        _skin.ANIM.SetFlag(SkinAnimFlag.RIGHT_LEG_OVERLAY_DISABLED, true);
-                        _skin.ANIM.SetFlag(SkinAnimFlag.LEFT_LEG_DISABLED, true);
-                        _skin.ANIM.SetFlag(SkinAnimFlag.LEFT_LEG_OVERLAY_DISABLED, true);
-
-                        BedrockModel bedrockModel = JsonConvert.DeserializeObject<BedrockModel>(File.ReadAllText(openFileDialog.FileName));
-                        ItemSelectionPopUp itemSelectionPopUp = new ItemSelectionPopUp(bedrockModel.Models.Select(m => m.Description.Identifier).ToArray());
-                        if (itemSelectionPopUp.ShowDialog() == DialogResult.OK && bedrockModel.Models.IndexInRange(itemSelectionPopUp.SelectedIndex))
-                        {
-                            Geometry selectedGeometry = bedrockModel.Models[itemSelectionPopUp.SelectedIndex];
-                            LoadGeometry(selectedGeometry);
-                            LoadModelData(_skin);
-                        }
-                        itemSelectionPopUp.Dispose();
-                        
+                        ImportBedrockJson(openFileDialog.FileName);
                         break;
                     case ".bbmodel":
                         BlockBenchModel blockBenchModel = JsonConvert.DeserializeObject<BlockBenchModel>(File.ReadAllText(openFileDialog.FileName));
@@ -289,6 +263,58 @@ namespace PckStudio.Forms.Editor
                     default:
                         break;
                 }
+            }
+        }
+
+        private void ImportBedrockJson(string fileName)
+        {
+            _skin.AdditionalBoxes.Clear();
+            _skin.PartOffsets.Clear();
+
+            _skin.ANIM.SetFlag(SkinAnimFlag.RESOLUTION_64x64, true);
+            _skin.ANIM.SetFlag(SkinAnimFlag.SLIM_MODEL, false);
+            _skin.ANIM.SetFlag(SkinAnimFlag.HEAD_DISABLED, true);
+            _skin.ANIM.SetFlag(SkinAnimFlag.HEAD_OVERLAY_DISABLED, true);
+            _skin.ANIM.SetFlag(SkinAnimFlag.BODY_DISABLED, true);
+            _skin.ANIM.SetFlag(SkinAnimFlag.BODY_OVERLAY_DISABLED, true);
+            _skin.ANIM.SetFlag(SkinAnimFlag.RIGHT_ARM_DISABLED, true);
+            _skin.ANIM.SetFlag(SkinAnimFlag.RIGHT_ARM_OVERLAY_DISABLED, true);
+            _skin.ANIM.SetFlag(SkinAnimFlag.LEFT_ARM_DISABLED, true);
+            _skin.ANIM.SetFlag(SkinAnimFlag.LEFT_ARM_OVERLAY_DISABLED, true);
+            _skin.ANIM.SetFlag(SkinAnimFlag.RIGHT_LEG_DISABLED, true);
+            _skin.ANIM.SetFlag(SkinAnimFlag.RIGHT_LEG_OVERLAY_DISABLED, true);
+            _skin.ANIM.SetFlag(SkinAnimFlag.LEFT_LEG_DISABLED, true);
+            _skin.ANIM.SetFlag(SkinAnimFlag.LEFT_LEG_OVERLAY_DISABLED, true);
+
+            Geometry selectedGeometry = null;
+            // Bedrock Entity (Model)
+            if (fileName.EndsWith(".geo.json"))
+            {
+                BedrockModel bedrockModel = JsonConvert.DeserializeObject<BedrockModel>(File.ReadAllText(fileName));
+                ItemSelectionPopUp itemSelectionPopUp = new ItemSelectionPopUp(bedrockModel.Models.Select(m => m.Description.Identifier).ToArray());
+                if (itemSelectionPopUp.ShowDialog() == DialogResult.OK && bedrockModel.Models.IndexInRange(itemSelectionPopUp.SelectedIndex))
+                {
+                    selectedGeometry = bedrockModel.Models[itemSelectionPopUp.SelectedIndex];
+                }
+                itemSelectionPopUp.Dispose();
+            }
+
+            // Bedrock Legacy Model
+            if (fileName.EndsWith(".json"))
+            {
+                BedrockLegacyModel bedrockModel = JsonConvert.DeserializeObject<BedrockLegacyModel>(File.ReadAllText(fileName));
+                ItemSelectionPopUp itemSelectionPopUp = new ItemSelectionPopUp(bedrockModel.Select(m => m.Key).ToArray());
+                if (itemSelectionPopUp.ShowDialog() == DialogResult.OK)
+                {
+                    selectedGeometry = bedrockModel[itemSelectionPopUp.SelectedItem];
+                }
+                itemSelectionPopUp.Dispose();
+            }
+
+            if (selectedGeometry is not null)
+            {
+                LoadGeometry(selectedGeometry);
+                LoadModelData(_skin);
             }
         }
 
@@ -351,9 +377,9 @@ namespace PckStudio.Forms.Editor
         /// <returns>The translated position</returns>
         private Vector3 TranslatePosition(string boxType, Vector3 origin, Vector3 size, Vector3 translationUnit)
         {
-            // The translation unit describes what axises needd to be swap
+            // The translation unit describes what axises need to be swapped
             // Example:
-            //      translation unit = (1, 0, 0) => This translation unit would swap ONLY the X axis
+            //      translation unit = (1, 0, 0) => This translation unit will ONLY swap the X axis
             translationUnit = Vector3.Clamp(translationUnit, Vector3.Zero, Vector3.One);
             // To better understand see:
             // https://sharplab.io/#v2:C4LgTgrgdgNAJiA1AHwAICYCMBYAUKgBgAJVMA6AOQgFsBTMASwGMBnAbj1QGYT0iBhIgG88RMb3SjxI3OLlEAbgEMwRBlAAOEYEQC8RKLQDuRAGq0mwAPZguACkwwijogQCUHWfLHLVtAB4aFsC0cHoGxmbBNvYAtC7xTpgeUt6+RGC0LOEAKmBKUCwAYjbU/FY2cOpKISx26lrAKV7epACcdpkszd5i7Z1ZevoBQZahPeIAvqlEM9wkmABsUZYxRHkFxaXlldW1duartmqa2m4zMr2KKhmD+ofWtmT8ADZK1Br1p8BODzFkAC16FZftEngB5QwTbxdIgAKn06E8V1hsXuYK4ZEhtGRvVQAHYiLEurixNNcJMgA
@@ -389,12 +415,61 @@ namespace PckStudio.Forms.Editor
         {
             foreach (Bone bone in geometry.Bones)
             {
-                if (!SkinBOX.IsValidType(bone.Name))
+                string boxType = bone.Name;
+                if (!SkinBOX.IsValidType(boxType))
+                {
+                    switch (bone.Name)
+                    {
+                        case "head":
+                        case "helmet":
+                            boxType = "HEAD";
+                            break;
+                        case "body":
+                            boxType = "BODY";
+                            break;
+                        case "rightArm":
+                            boxType = "ARM0";
+                            break;
+                        case "leftArm":
+                            boxType = "ARM1";
+                            break;
+                        case "rightLeg":
+                            boxType = "LEG0";
+                            break;
+                        case "leftLeg":
+                            boxType = "LEG1";
+                            break;
+                        case "hat":
+                            boxType = "HEADWEAR";
+                            break;
+                        case "jacket":
+                            boxType = "JACKET";
+                            break;
+                        case "rightSleeve":
+                            boxType = "SLEEVE0";
+                            break;
+                        case "leftSleeve":
+                            boxType = "SLEEVE1";
+                            break;
+                        case "rightPants":
+                            boxType = "PANTS0";
+                            break;
+                        case "leftPants":
+                            boxType = "PANTS1";
+                            break;
+                        default:
                     continue;
+                    }
+                }
                 foreach (External.Format.Cube cube in bone.Cubes)
                 {
-                    Vector3 pos = TranslatePosition(bone.Name, cube.Origin, cube.Size, Vector3.UnitY);
-                    _skin.AdditionalBoxes.Add(new SkinBOX(bone.Name, pos, cube.Size, cube.Uv));
+                    Vector3 pos = TranslatePosition(boxType, cube.Origin, cube.Size, Vector3.UnitY);
+                    var skinBox = new SkinBOX(boxType, pos, cube.Size, cube.Uv);
+                    if (bone.Name == "helmet")
+                    {
+                        skinBox.HideWithArmor = true;
+                    }
+                    _skin.AdditionalBoxes.Add(skinBox);
                 }
             }
         }
