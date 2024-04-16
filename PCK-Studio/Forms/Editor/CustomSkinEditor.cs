@@ -42,7 +42,7 @@ namespace PckStudio.Forms.Editor
             new ("Bedrock Legacy Model(*.json)", "*.json"),
         ];
 
-        private string skinModelFileFilters => string.Join("|", fileFilters);
+        private string AvailableModelFileFilters => string.Join("|", fileFilters);
 
         private BindingSource skinPartListBindingSource;
         private BindingSource skinOffsetListBindingSource;
@@ -176,7 +176,7 @@ namespace PckStudio.Forms.Editor
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Title = "Save Model File";
-            saveFileDialog.Filter = skinModelFileFilters;
+            saveFileDialog.Filter = AvailableModelFileFilters;
             if (saveFileDialog.ShowDialog() != DialogResult.OK)
                 return;
             string fileExtension = Path.GetExtension(saveFileDialog.FileName);
@@ -195,7 +195,7 @@ namespace PckStudio.Forms.Editor
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Title = "Select Model File";
-            openFileDialog.Filter = skinModelFileFilters;
+            openFileDialog.Filter = AvailableModelFileFilters;
             if (MessageBox.Show("Import custom model project file? Your current work will be lost!", "", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1) == DialogResult.Yes && openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 string fileExtension = Path.GetExtension(openFileDialog.FileName);
@@ -243,7 +243,7 @@ namespace PckStudio.Forms.Editor
                             if (token.Type == JTokenType.String && Guid.TryParse((string)token, out Guid tokenGuid))
                             {
                                 Element element = blockBenchModel.Elements.First(e => e.Uuid.Equals(tokenGuid));
-                                if (!SkinBOX.IsValidType(element.Name))
+                                if (!SkinBOX.IsValidType(element.Name) || element.Type != "cube")
                                     continue;
                                 LoadElement(element.Name, element);
                                 continue;
