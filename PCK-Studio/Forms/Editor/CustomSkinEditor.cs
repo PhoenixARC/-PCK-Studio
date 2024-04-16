@@ -34,24 +34,7 @@ namespace PckStudio.Forms.Editor
         private bool _inflateOverlayParts;
         private bool _allowInflate;
 
-        private struct FileDialogFilter
-        {
-            public readonly string Description;
-            public readonly string Pattern;
-
-            public FileDialogFilter(string description, string pattern)
-            {
-                Description = description;
-                Pattern = pattern;
-            }
-
-            public override string ToString()
-            {
-                return $"{Description}|{Pattern}";
-            }
-        }
-
-        private readonly FileDialogFilter[] fileFilters = 
+        private static readonly FileDialogFilter[] fileFilters = 
         [
             new ("Pck skin model(*.psm)", "*.psm"),
             new ("Block bench model(*.bbmodel)", "*.bbmodel"),
