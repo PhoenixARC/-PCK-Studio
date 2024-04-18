@@ -1388,36 +1388,152 @@ namespace PckStudio
 
 		#region drag and drop for main tree node
 
-		// Most of the code below is modified code from this link: https://docs.microsoft.com/en-us/dotnet/api/system.windows.forms.treeview.itemdrag?view=windowsdesktop-6.0
+		// Most of the code below is modified code from this link:
+		// https://docs.microsoft.com/en-us/dotnet/api/system.windows.forms.treeview.itemdrag?view=windowsdesktop-6.0
 		// - MattNL
 
 		private void treeViewMain_ItemDrag(object sender, ItemDragEventArgs e)
 		{
+			if (e.Button != MouseButtons.Left || e.Item is not TreeNode node)
+				return;
 
+			if ((node.TryGetTagData(out PckFileData file) && currentPCK.Contains(file.Filename, file.Filetype)) || node.Parent is TreeNode)
+			{
+				treeViewMain.DoDragDrop(node, DragDropEffects.Move);
+			}
 		}
 
-		// Set the target drop effect to the effect 
-		// specified in the ItemDrag event handler.
-		private void treeViewMain_DragEnter(object sender, DragEventArgs e)
-		{
-			e.Effect = e.AllowedEffect;
-		}
-
-		// Select the node under the mouse pointer to indicate the 
-		// expected drop location.
 		private void treeViewMain_DragOver(object sender, DragEventArgs e)
 		{
+            Point dragLocation = new Point(e.X, e.Y);
+			TreeNode node = treeViewMain.GetNodeAt(treeViewMain.PointToClient(dragLocation));
+			treeViewMain.SelectedNode = node.IsTagOfType<PckFileData>() ? null : node;
+		}
 
+		private void treeViewMain_DragEnter(object sender, DragEventArgs e)
+		{
+			e.Effect = e.Data.GetDataPresent(DataFormats.FileDrop) ? DragDropEffects.Copy : e.AllowedEffect;
 		}
 
 		private void treeViewMain_DragDrop(object sender, DragEventArgs e)
 		{
+			if (e.Data.GetDataPresent(DataFormats.FileDrop) && e.Data.GetData(DataFormats.FileDrop) is string[] files)
+			{
+				ImportFiles(files);
+				return;
+			}
 
+			string dataFormat = typeof(TreeNode).FullName;
+
+            if (!e.Data.GetDataPresent(dataFormat))
+				return;
+
+			// Retrieve the client coordinates of the drop location.
+			Point dragLocation = new Point(e.X, e.Y);
+			Point targetPoint = treeViewMain.PointToClient(dragLocation);
+			
+			if (!treeViewMain.ClientRectangle.Contains(targetPoint))
+				return;
+
+            // Retrieve the node at the drop location.
+            TreeNode targetNode = treeViewMain.GetNodeAt(targetPoint);
+			bool isTargetPckFile = targetNode.IsTagOfType<PckFileData>();
+
+			if (e.Data.GetData(dataFormat) is not TreeNode draggedNode)
+			{
+				Debug.WriteLine("Dragged data was not of type TreeNode.");
+				return;
+			}
+
+			if (targetNode.Equals(draggedNode.Parent))
+			{
+				Debug.WriteLine("target node is parent of dragged node... nothing done.");
+				return;
+			}
+
+			if (draggedNode.Equals(targetNode.Parent))
+			{
+				Debug.WriteLine("dragged node is parent of target node... nothing done.");
+				return;
+			}
+
+			if ((targetNode.Parent?.Equals(draggedNode.Parent) ?? false) && isTargetPckFile)
+			{
+				Debug.WriteLine("target node and dragged node have the same parent... nothing done.");
+				return;
+			}
+
+			Debug.WriteLine($"Target drop location is {(isTargetPckFile ? "file" : "folder")}.");
+
+            // Retrieve the node that was dragged.
+            if (draggedNode.TryGetTagData(out PckFileData draggedFile) &&
+                targetNode.FullPath != draggedFile.Filename)
+			{
+				Debug.WriteLine(draggedFile.Filename + " was droped onto " + targetNode.FullPath);
+                string newFilePath = Path.Combine(isTargetPckFile
+					? Path.GetDirectoryName(targetNode.FullPath)
+					: targetNode.FullPath, Path.GetFileName(draggedFile.Filename));
+				Debug.WriteLine("New filepath: " + newFilePath);
+                draggedFile.Filename = newFilePath;
+				wasModified = true;
+				BuildMainTreeView();
+				return;
+			}
+			else
+			{
+				List<PckFileData> pckFiles = GetEndingNodes(draggedNode.Nodes).Where(t => t.IsTagOfType<PckFileData>()).Select(t => t.Tag as PckFileData).ToList();
+				string oldPath = draggedNode.FullPath;
+				string newPath = Path.Combine(isTargetPckFile ? Path.GetDirectoryName(targetNode.FullPath) : targetNode.FullPath, draggedNode.Text).Replace('\\', '/');
+				foreach (var pckFile in pckFiles)
+				{
+                    pckFile.Filename = Path.Combine(newPath, pckFile.Filename.Substring(oldPath.Length + 1)).Replace('\\', '/');
+				}
+                wasModified = true;
+                BuildMainTreeView();
+            }
 		}
 
-		#endregion
+		private IEnumerable<TreeNode> GetEndingNodes(TreeNodeCollection collection)
+		{
+			List<TreeNode> trailingNodes = new List<TreeNode>(collection.Count);
+            foreach (TreeNode node in collection)
+            {
+				if (node.Nodes.Count > 0)
+				{
+					trailingNodes.AddRange(GetEndingNodes(node.Nodes));
+					continue;
+				}
+                trailingNodes.Add(node);
+            }
+			return trailingNodes;
+        }
 
-		private PckFile InitializePack(int packId, int packVersion, string packName, bool createSkinsPCK)
+        private void ImportFiles(string[] files)
+        {
+			int addedCount = 0;
+            foreach (var file in files)
+            {
+                using AddFilePrompt addFile = new AddFilePrompt(Path.GetFileName(file));
+                if (addFile.ShowDialog(this) != DialogResult.OK)
+                    continue;
+
+                if (currentPCK.Contains(addFile.Filepath, addFile.Filetype))
+                {
+                    MessageBox.Show(this, $"'{addFile.Filepath}' of type {addFile.Filetype} already exists.", "Import failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    continue;
+                }
+                currentPCK.CreateNewFile(addFile.Filepath, addFile.Filetype, () => File.ReadAllBytes(file));
+				addedCount++;
+
+                BuildMainTreeView();
+                wasModified = true;
+            }
+			Trace.TraceInformation("[{0}] Imported {1} file(s).", nameof(ImportFiles), addedCount);	
+        }
+
+        #endregion
+
+        private PckFile InitializePack(int packId, int packVersion, string packName, bool createSkinsPCK)
 		{
 			var pack = new PckFile(3);
 
