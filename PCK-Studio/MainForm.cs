@@ -1465,6 +1465,12 @@ namespace PckStudio
 				return;
 			}
 
+			if (targetNode.Parent == null && isTargetPckFile && draggedNode.Parent == null)
+            {
+                Debug.WriteLine("target node is file and is in the root... nothing done.");
+                return;
+            }
+
 			if ((targetNode.Parent?.Equals(draggedNode.Parent) ?? false) && isTargetPckFile)
 			{
 				Debug.WriteLine("target node and dragged node have the same parent... nothing done.");
