@@ -393,6 +393,12 @@ namespace PckStudio
 			}
 			string nodeText = path.Substring(0, path.IndexOf(seperator));
 			string subPath = path.Substring(path.IndexOf(seperator) + 1);
+
+			if (string.IsNullOrWhiteSpace(nodeText))
+			{
+                return BuildNodeTreeBySeperator(root, subPath, seperator);
+            }
+
 			bool alreadyExists = root.ContainsKey(nodeText);
 			TreeNode subNode = alreadyExists ? root[nodeText] : CreateNode(nodeText);
 			if (!alreadyExists) root.Add(subNode);
@@ -954,13 +960,15 @@ namespace PckStudio
 			if (node == null) return;
 			string path = node.FullPath;
 
-			using TextPrompt diag = new TextPrompt(node.Tag is null ? Path.GetFileName(node.FullPath) : node.FullPath);
+			bool isFile = node.TryGetTagData<PckFileData>(out var file);
+
+            using TextPrompt diag = new TextPrompt(isFile ? file.Filename : Path.GetFileName(node.FullPath));
 
 			if (diag.ShowDialog(this) == DialogResult.OK)
 			{
-				if (node.Tag is PckFileData file)
+				if (isFile)
 				{
-					if (currentPCK.TryGetFile(diag.NewText, file.Filetype, out _))
+					if (currentPCK.Contains(diag.NewText, file.Filetype))
 					{
 						MessageBox.Show(this, $"{diag.NewText} already exists", "File already exists");
 						return;
