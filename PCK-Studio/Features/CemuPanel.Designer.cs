@@ -118,7 +118,7 @@
             this.radioButtonEur.Size = new System.Drawing.Size(137, 30);
             this.radioButtonEur.TabIndex = 1;
             this.radioButtonEur.TabStop = true;
-            this.radioButtonEur.Text = "EUR";
+            this.radioButtonEur.Text = "EU";
             this.radioButtonEur.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.radioButtonEur.UseVisualStyleBackColor = false;
             this.radioButtonEur.Click += new System.EventHandler(this.radioButton_Click);
@@ -164,7 +164,7 @@
             this.radioButtonJap.Name = "radioButtonJap";
             this.radioButtonJap.Size = new System.Drawing.Size(138, 30);
             this.radioButtonJap.TabIndex = 2;
-            this.radioButtonJap.Text = "JAP";
+            this.radioButtonJap.Text = "JP";
             this.radioButtonJap.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.radioButtonJap.UseVisualStyleBackColor = false;
             this.radioButtonJap.Click += new System.EventHandler(this.radioButton_Click);
