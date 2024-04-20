@@ -1,4 +1,6 @@
-﻿namespace PckStudio.Controls
+﻿using System.Windows.Forms;
+
+namespace PckStudio.Controls
 {
     partial class PckEditor
     {
@@ -89,6 +91,13 @@
             this.extractToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cloneFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.renameFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.setSubPCKEndiannessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bigEndianXbox360PS3WiiUToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.littleEndianPS4PSVitaSwitchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.setModelContainerFormatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.version1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.version2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.version3114ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.replaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imageList = new System.Windows.Forms.ImageList(this.components);
@@ -167,9 +176,6 @@
             // entryTypeTextBox
             // 
             resources.ApplyResources(this.entryTypeTextBox, "entryTypeTextBox");
-            // 
-            // 
-            // 
             this.entryTypeTextBox.CustomButton.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image")));
             this.entryTypeTextBox.CustomButton.ImeMode = ((System.Windows.Forms.ImeMode)(resources.GetObject("resource.ImeMode")));
             this.entryTypeTextBox.CustomButton.Location = ((System.Drawing.Point)(resources.GetObject("resource.Location")));
@@ -197,9 +203,6 @@
             // entryDataTextBox
             // 
             resources.ApplyResources(this.entryDataTextBox, "entryDataTextBox");
-            // 
-            // 
-            // 
             this.entryDataTextBox.CustomButton.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image1")));
             this.entryDataTextBox.CustomButton.ImeMode = ((System.Windows.Forms.ImeMode)(resources.GetObject("resource.ImeMode1")));
             this.entryDataTextBox.CustomButton.Location = ((System.Drawing.Point)(resources.GetObject("resource.Location1")));
@@ -325,7 +328,11 @@
             this.treeViewMain.Name = "treeViewMain";
             this.treeViewMain.PathSeparator = "/";
             this.treeViewMain.BeforeLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.treeViewMain_BeforeLabelEdit);
+            this.treeViewMain.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.treeViewMain_ItemDrag);
             this.treeViewMain.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewMain_AfterSelect);
+            this.treeViewMain.DragDrop += new System.Windows.Forms.DragEventHandler(this.treeViewMain_DragDrop);
+            this.treeViewMain.DragEnter += new System.Windows.Forms.DragEventHandler(this.treeViewMain_DragEnter);
+            this.treeViewMain.DragOver += new System.Windows.Forms.DragEventHandler(this.treeViewMain_DragOver);
             this.treeViewMain.DoubleClick += new System.EventHandler(this.treeViewMain_DoubleClick);
             this.treeViewMain.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeViewMain_KeyDown);
             // 
@@ -556,7 +563,9 @@
             this.miscFunctionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.generateMipMapTextureToolStripMenuItem1,
             this.viewFileInfoToolStripMenuItem,
-            this.correctSkinDecimalsToolStripMenuItem});
+            this.correctSkinDecimalsToolStripMenuItem,
+            this.setSubPCKEndiannessToolStripMenuItem,
+            this.setModelContainerFormatToolStripMenuItem});
             this.miscFunctionsToolStripMenuItem.Name = "miscFunctionsToolStripMenuItem";
             resources.ApplyResources(this.miscFunctionsToolStripMenuItem, "miscFunctionsToolStripMenuItem");
             // 
@@ -608,6 +617,56 @@
             this.deleteFileToolStripMenuItem.Name = "deleteFileToolStripMenuItem";
             resources.ApplyResources(this.deleteFileToolStripMenuItem, "deleteFileToolStripMenuItem");
             this.deleteFileToolStripMenuItem.Click += new System.EventHandler(this.deleteFileToolStripMenuItem_Click);
+            // 
+            // setSubPCKEndiannessToolStripMenuItem
+            // 
+            this.setSubPCKEndiannessToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.bigEndianXbox360PS3WiiUToolStripMenuItem,
+            this.littleEndianPS4PSVitaSwitchToolStripMenuItem});
+            this.setSubPCKEndiannessToolStripMenuItem.Name = "setSubPCKEndiannessToolStripMenuItem";
+            resources.ApplyResources(this.setSubPCKEndiannessToolStripMenuItem, "setSubPCKEndiannessToolStripMenuItem");
+            // 
+            // bigEndianXbox360PS3WiiUToolStripMenuItem
+            // 
+            this.bigEndianXbox360PS3WiiUToolStripMenuItem.Name = "bigEndianXbox360PS3WiiUToolStripMenuItem";
+            resources.ApplyResources(this.bigEndianXbox360PS3WiiUToolStripMenuItem, "bigEndianXbox360PS3WiiUToolStripMenuItem");
+            this.bigEndianXbox360PS3WiiUToolStripMenuItem.Click += new System.EventHandler(this.bigEndianToolStripMenuItem_Click);
+            // 
+            // littleEndianPS4PSVitaSwitchToolStripMenuItem
+            // 
+            this.littleEndianPS4PSVitaSwitchToolStripMenuItem.Name = "littleEndianPS4PSVitaSwitchToolStripMenuItem";
+            resources.ApplyResources(this.littleEndianPS4PSVitaSwitchToolStripMenuItem, "littleEndianPS4PSVitaSwitchToolStripMenuItem");
+            this.littleEndianPS4PSVitaSwitchToolStripMenuItem.Click += new System.EventHandler(this.littleEndianToolStripMenuItem_Click);
+            // 
+            // setModelContainerFormatToolStripMenuItem
+            // 
+            this.setModelContainerFormatToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.version1ToolStripMenuItem,
+            this.version2ToolStripMenuItem,
+            this.version3114ToolStripMenuItem});
+            this.setModelContainerFormatToolStripMenuItem.Name = "setModelContainerFormatToolStripMenuItem";
+            resources.ApplyResources(this.setModelContainerFormatToolStripMenuItem, "setModelContainerFormatToolStripMenuItem");
+            // 
+            // version1ToolStripMenuItem
+            // 
+            this.version1ToolStripMenuItem.Name = "version1ToolStripMenuItem";
+            resources.ApplyResources(this.version1ToolStripMenuItem, "version1ToolStripMenuItem");
+            this.version1ToolStripMenuItem.Click += new System.EventHandler(this.setModelVersion1ToolStripMenuItem_Click);
+            // 
+            // version2ToolStripMenuItem
+            // 
+            this.version2ToolStripMenuItem.Name = "version2ToolStripMenuItem";
+            resources.ApplyResources(this.version2ToolStripMenuItem, "version2ToolStripMenuItem");
+            this.version2ToolStripMenuItem.Click += new System.EventHandler(this.setModelVersion2ToolStripMenuItem_Click);
+            // 
+            // version3114ToolStripMenuItem
+            // 
+            this.version3114ToolStripMenuItem.Name = "version3114ToolStripMenuItem";
+            resources.ApplyResources(this.version3114ToolStripMenuItem, "version3114ToolStripMenuItem");
+            this.version3114ToolStripMenuItem.Click += new System.EventHandler(this.setModelVersion3ToolStripMenuItem_Click);
+            // 
+            // moveUpToolStripMenuItem
+            // 
             // 
             // imageList
             // 
@@ -732,5 +791,12 @@
         private MetroFramework.Controls.MetroButton buttonEdit;
         private MetroFramework.Controls.MetroLabel metroLabel1;
         private MetroFramework.Controls.MetroCheckBox LittleEndianCheckBox;
+        private System.Windows.Forms.ToolStripMenuItem setSubPCKEndiannessToolStripMenuItem;
+        private ToolStripMenuItem bigEndianXbox360PS3WiiUToolStripMenuItem;
+        private ToolStripMenuItem littleEndianPS4PSVitaSwitchToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem setModelContainerFormatToolStripMenuItem;
+        private ToolStripMenuItem version1ToolStripMenuItem;
+        private ToolStripMenuItem version2ToolStripMenuItem;
+        private ToolStripMenuItem version3114ToolStripMenuItem;
     }
 }

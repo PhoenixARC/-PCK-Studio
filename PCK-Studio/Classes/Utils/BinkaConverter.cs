@@ -18,7 +18,7 @@ namespace PckStudio.Classes.Utils
         {
             int convertedCount = 0;
             InProgressPrompt waitDiag = new InProgressPrompt();
-            waitDiag.Show();
+            waitDiag.Show(Program.MainInstance);
             foreach (string file in filenames)
             {
                 Binka.ToWav(file, Path.Combine(destination.FullName, Path.GetFileNameWithoutExtension(file) + ".binka"));
@@ -27,16 +27,16 @@ namespace PckStudio.Classes.Utils
 
             waitDiag.Close();
             waitDiag.Dispose();
-            MessageBox.Show($"Successfully converted {convertedCount}/{filenames.Length} file{(filenames.Length > 1 ? "s" : "")}", "Done!");
+            MessageBox.Show(Program.MainInstance, $"Successfully converted {convertedCount}/{filenames.Length} file{(filenames.Length > 1 ? "s" : "")}", "Done!");
         }
 
-        public static void ToBinka(string[] filenames, DirectoryInfo destination)
+        public static void ToBinka(string[] filenames, DirectoryInfo destination, int compressionLevel = 4)
         {
             int convertedCount = 0;
             Directory.CreateDirectory(ApplicationScope.DataCacher.CacheDirectory);
 
             InProgressPrompt waitDiag = new InProgressPrompt();
-            waitDiag.Show();
+            waitDiag.Show(Program.MainInstance);
             
             foreach (string file in filenames)
             {
@@ -56,14 +56,14 @@ namespace PckStudio.Classes.Utils
                 }
 
                 Cursor.Current = Cursors.WaitCursor;
-                int exitCode = Binka.ToBinka(cacheSongFilepath, Path.Combine(destination.FullName, Path.GetFileNameWithoutExtension(file) + ".binka"), 4);
+                int exitCode = Binka.ToBinka(cacheSongFilepath, Path.Combine(destination.FullName, Path.GetFileNameWithoutExtension(file) + ".binka"), compressionLevel);
                 if (exitCode == 0)
                     convertedCount++;
             }
 
             waitDiag.Close();
             waitDiag.Dispose();
-            MessageBox.Show($"Successfully converted {convertedCount}/{filenames.Length} file{(filenames.Length > 1 ? "s" : "")}", "Done!");
+            MessageBox.Show(Program.MainInstance, $"Successfully converted {convertedCount}/{filenames.Length} file{(filenames.Length > 1 ? "s" : "")}", "Done!");
         }
     }
 }

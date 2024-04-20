@@ -25,18 +25,11 @@ using System.Linq;
 
 namespace PckStudio.Internal
 {
-    internal sealed class Animation
+    public sealed class Animation
 	{
 		public const int MinimumFrameTime = 1;
 
 		public const int GameTickInMilliseconds = 50;
-
-		public static Animation Empty(AnimationCategory category)
-		{
-            var animation = new Animation(Array.Empty<Image>(), string.Empty);
-			animation.Category = category;
-			return animation;
-		}
 
 		public int FrameCount => frames.Count;
 
@@ -44,24 +37,11 @@ namespace PckStudio.Internal
 
 		public bool Interpolate { get; set; } = false;
 
-
-		public AnimationCategory Category { get; set; }
-
-        public string CategoryString => GetCategoryName(Category);
-
-		public static string GetCategoryName(AnimationCategory category)
-		{
-			return category switch
-			{
-				AnimationCategory.Items => "items",
-				AnimationCategory.Blocks => "blocks",
-				_ => throw new ArgumentOutOfRangeException(category.ToString())
-			};
-        }
-
         private readonly List<Image> textures;
 
 		private readonly IList<Frame> frames = new List<Frame>();
+
+		private object _syncLock = new object();
 
 		public Animation(IEnumerable<Image> textures)
 		{
@@ -215,7 +195,7 @@ namespace PckStudio.Internal
 
 		public void SetFrame(int frameIndex, Frame frame)
 		{
-			lock(frames)
+			lock(_syncLock)
 			{
 				frames[frameIndex] = frame;
 			}
@@ -245,7 +225,7 @@ namespace PckStudio.Internal
 
         internal void SetFrameTicks(int ticks)
         {
-			lock(frames)
+			lock(_syncLock)
 			{
 				foreach (var frame in frames)
 				{
@@ -256,10 +236,15 @@ namespace PckStudio.Internal
 
         internal void SwapFrames(int sourceIndex, int destinationIndex)
         {
-			lock(frames)
+			lock(_syncLock)
 			{
 				frames.Swap(sourceIndex, destinationIndex);
 			}
+        }
+
+        internal static Animation CreateEmpty()
+        {
+			return new Animation(Array.Empty<Image>());
         }
     }
 }

@@ -35,71 +35,19 @@ namespace PckStudio.Forms.Editor
 {
     public partial class GameRuleFileEditor : MetroFramework.Forms.MetroForm
     {
-        private PckFileData _pckfile;
         private GameRuleFile _file;
-        private GameRuleFile.CompressionType compressionType;
-        private GameRuleFile.CompressionLevel compressionLevel;
 
-        private const string use_zlib = "Wii U, PS Vita";
-        private const string use_deflate = "PS3";
-        private const string use_xmem = "Xbox 360";
+        public GameRuleFile Result => _file;
 
-        public GameRuleFileEditor()
+        private GameRuleFileEditor()
         {
             InitializeComponent();
-            PromptForCompressionType();
             saveToolStripMenuItem.Visible = !Settings.Default.AutoSaveChanges;
         }
 
-        private void PromptForCompressionType()
+        public GameRuleFileEditor(GameRuleFile gameRuleFile) : this()
         {
-            ItemSelectionPopUp dialog = new ItemSelectionPopUp(use_zlib, use_deflate, use_xmem);
-            dialog.LabelText = "Type";
-            dialog.ButtonText = "Ok";
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                switch(dialog.SelectedItem)
-                {
-                    case use_zlib:
-                        wiiUPSVitaToolStripMenuItem.Checked = true;
-                        break;
-                    case use_deflate:
-                        pS3ToolStripMenuItem.Checked = true;
-                            break;
-                    case use_xmem:
-                        xbox360ToolStripMenuItem.Checked = true;
-                        break;
-                }
-            }
-        }
-
-        public GameRuleFileEditor(PckFileData file) : this()
-        {
-            _pckfile = file;
-            using (var stream = new MemoryStream(file.Data))
-            {
-                _file = OpenGameRuleFile(stream);
-            }
-        }
-
-        public GameRuleFileEditor(Stream stream) : this()
-        {
-            _file = OpenGameRuleFile(stream);
-        }
-
-        private GameRuleFile OpenGameRuleFile(Stream stream)
-        {
-            try
-            {
-                var reader = new GameRuleFileReader(compressionType);
-                return reader.FromStream(stream);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-                MessageBox.Show("Faild to open .grf/.grh file");
-            }
-            return default!;
+            _file = gameRuleFile;
         }
 
         private void OnLoad(object sender, EventArgs e)
@@ -169,11 +117,11 @@ namespace PckStudio.Forms.Editor
             if (GrfTreeView.SelectedNode == null || !(GrfTreeView.SelectedNode.Tag is GameRuleFile.GameRule)) return;
             var grfTag = GrfTreeView.SelectedNode.Tag as GameRuleFile.GameRule;
             AddParameter prompt = new AddParameter();
-            if (prompt.ShowDialog() == DialogResult.OK)
+            if (prompt.ShowDialog(this) == DialogResult.OK)
             {
                 if (grfTag.Parameters.ContainsKey(prompt.ParameterName))
                 {
-                    MessageBox.Show("Can't add detail that already exists.", "Error");
+                    MessageBox.Show(this, "Can't add detail that already exists.", "Error");
                     return;
                 }
                 grfTag.Parameters.Add(prompt.ParameterName, prompt.ParameterValue);
@@ -190,7 +138,7 @@ namespace PckStudio.Forms.Editor
                 ReloadParameterTreeView(); 
                 return;
             }
-            MessageBox.Show("No Rule selected");
+            MessageBox.Show(this, "No Rule selected");
         }
 
         private void GrfDetailsTreeView_KeyDown(object sender, KeyEventArgs e)
@@ -205,7 +153,7 @@ namespace PckStudio.Forms.Editor
                 GrfParametersTreeView.SelectedNode is TreeNode paramNode && paramNode.Tag is KeyValuePair<string, string> param)
             {
                 AddParameter prompt = new AddParameter(param.Key, param.Value, false);
-                if (prompt.ShowDialog() == DialogResult.OK)
+                if (prompt.ShowDialog(this) == DialogResult.OK)
                 {
                     rule.Parameters[prompt.ParameterName] = prompt.ParameterValue;
                     ReloadParameterTreeView();
@@ -227,9 +175,9 @@ namespace PckStudio.Forms.Editor
             using (TextPrompt prompt = new TextPrompt())
             {
                 prompt.OKButtonText = "Add";
-                if (MessageBox.Show($"Add Game Rule to {parentRule.Name}", "Attention",
+                if (MessageBox.Show(this, $"Add Game Rule to {parentRule.Name}", "Attention",
                     MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes &&
-                    prompt.ShowDialog() == DialogResult.OK &&
+                    prompt.ShowDialog(this) == DialogResult.OK &&
                     !string.IsNullOrWhiteSpace(prompt.NewText))
                 {
                     var tag = parentRule.AddRule(prompt.NewText);
@@ -264,80 +212,58 @@ namespace PckStudio.Forms.Editor
         {
             if (_file.Header.unknownData[3] != 0)
             {
-                MessageBox.Show("World grf saving is currently unsupported");
+                MessageBox.Show(this, "World grf saving is currently unsupported");
                 return;
             }
-            using (var stream = new MemoryStream())
-            {
-                try
-                {
-                    _pckfile?.SetData(new GameRuleFileWriter(_file));
-                    DialogResult = DialogResult.OK;
-                    MessageBox.Show("Saved!");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                    MessageBox.Show($"Failed to save grf file\n{ex.Message}", "Save Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
+            DialogResult = DialogResult.OK;
+            MessageBox.Show("Saved!");
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = "Game Rule File|*.grf";
-            PromptForCompressionType();
-            if (dialog.ShowDialog(this) == DialogResult.OK)
-            {
-                using (var fs = File.OpenRead(dialog.FileName))
-                {
-                    _file = OpenGameRuleFile(fs);
-                    ReloadGameRuleTree();
-                }
-            }
+            
         }
 
         private void noneToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
         {
             if (sender is ToolStripRadioButtonMenuItem radioButton && radioButton.Checked)
-                compressionLevel = GameRuleFile.CompressionLevel.None;
+                _file.Header.CompressionLevel = GameRuleFile.CompressionLevel.None;
         }
 
         private void compressedToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
         {
             if (sender is ToolStripRadioButtonMenuItem radioButton && radioButton.Checked)
-                compressionLevel = GameRuleFile.CompressionLevel.Compressed;
+                _file.Header.CompressionLevel = GameRuleFile.CompressionLevel.Compressed;
         }
 
         private void compressedRLEToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
         {
             if (sender is ToolStripRadioButtonMenuItem radioButton && radioButton.Checked)
-                compressionLevel = GameRuleFile.CompressionLevel.CompressedRle;
+                _file.Header.CompressionLevel = GameRuleFile.CompressionLevel.CompressedRle;
         }
 
         private void compressedRLECRCToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
         {
             if (sender is ToolStripRadioButtonMenuItem radioButton && radioButton.Checked)
-                compressionLevel = GameRuleFile.CompressionLevel.CompressedRleCrc;
+                _file.Header.CompressionLevel = GameRuleFile.CompressionLevel.CompressedRleCrc;
         }
 
         private void wiiUPSVitaToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
         {
             if (sender is ToolStripRadioButtonMenuItem radioButton && radioButton.Checked)
-                compressionType = GameRuleFile.CompressionType.Zlib;
+                _file.Header.CompressionType = GameRuleFile.CompressionType.Zlib;
         }
 
         private void pS3ToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
         {
             if (sender is ToolStripRadioButtonMenuItem radioButton && radioButton.Checked)
-                compressionType = GameRuleFile.CompressionType.Deflate;
+                _file.Header.CompressionType = GameRuleFile.CompressionType.Deflate;
         }
 
         private void xbox360ToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
         {
             if (sender is ToolStripRadioButtonMenuItem radioButton && radioButton.Checked)
-                compressionType = GameRuleFile.CompressionType.XMem;
+                _file.Header.CompressionType = GameRuleFile.CompressionType.XMem;
         }
 
         private void GameRuleFileEditor_FormClosing(object sender, FormClosingEventArgs e)

@@ -117,18 +117,210 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="&gt;&gt;metroTextBox1.Name" xml:space="preserve">
+    <value>metroTextBox1</value>
+  </data>
+  <data name="&gt;&gt;metroTextBox1.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroTextBox, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;metroTextBox1.Parent" xml:space="preserve">
+    <value>metroPanel1</value>
+  </data>
+  <data name="&gt;&gt;metroTextBox1.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;metroLabel2.Name" xml:space="preserve">
+    <value>metroLabel2</value>
+  </data>
+  <data name="&gt;&gt;metroLabel2.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;metroLabel2.Parent" xml:space="preserve">
+    <value>metroPanel1</value>
+  </data>
+  <data name="&gt;&gt;metroLabel2.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;setColorBtn.Name" xml:space="preserve">
+    <value>setColorBtn</value>
+  </data>
+  <data name="&gt;&gt;setColorBtn.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroButton, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;setColorBtn.Parent" xml:space="preserve">
+    <value>metroPanel1</value>
+  </data>
+  <data name="&gt;&gt;setColorBtn.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;blueUpDown.Name" xml:space="preserve">
+    <value>blueUpDown</value>
+  </data>
+  <data name="&gt;&gt;blueUpDown.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;blueUpDown.Parent" xml:space="preserve">
+    <value>metroPanel1</value>
+  </data>
+  <data name="&gt;&gt;blueUpDown.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;greenUpDown.Name" xml:space="preserve">
+    <value>greenUpDown</value>
+  </data>
+  <data name="&gt;&gt;greenUpDown.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;greenUpDown.Parent" xml:space="preserve">
+    <value>metroPanel1</value>
+  </data>
+  <data name="&gt;&gt;greenUpDown.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;redUpDown.Name" xml:space="preserve">
+    <value>redUpDown</value>
+  </data>
+  <data name="&gt;&gt;redUpDown.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;redUpDown.Parent" xml:space="preserve">
+    <value>metroPanel1</value>
+  </data>
+  <data name="&gt;&gt;redUpDown.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;alphaUpDown.Name" xml:space="preserve">
+    <value>alphaUpDown</value>
+  </data>
+  <data name="&gt;&gt;alphaUpDown.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;alphaUpDown.Parent" xml:space="preserve">
+    <value>metroPanel1</value>
+  </data>
+  <data name="&gt;&gt;alphaUpDown.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;alphaLabel.Name" xml:space="preserve">
+    <value>alphaLabel</value>
+  </data>
+  <data name="&gt;&gt;alphaLabel.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;alphaLabel.Parent" xml:space="preserve">
+    <value>metroPanel1</value>
+  </data>
+  <data name="&gt;&gt;alphaLabel.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;blueLabel.Name" xml:space="preserve">
+    <value>blueLabel</value>
+  </data>
+  <data name="&gt;&gt;blueLabel.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;blueLabel.Parent" xml:space="preserve">
+    <value>metroPanel1</value>
+  </data>
+  <data name="&gt;&gt;blueLabel.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;greenLabel.Name" xml:space="preserve">
+    <value>greenLabel</value>
+  </data>
+  <data name="&gt;&gt;greenLabel.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;greenLabel.Parent" xml:space="preserve">
+    <value>metroPanel1</value>
+  </data>
+  <data name="&gt;&gt;greenLabel.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;redLabel.Name" xml:space="preserve">
+    <value>redLabel</value>
+  </data>
+  <data name="&gt;&gt;redLabel.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;redLabel.Parent" xml:space="preserve">
+    <value>metroPanel1</value>
+  </data>
+  <data name="&gt;&gt;redLabel.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="&gt;&gt;colorTextbox.Name" xml:space="preserve">
+    <value>colorTextbox</value>
+  </data>
+  <data name="&gt;&gt;colorTextbox.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroTextBox, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;colorTextbox.Parent" xml:space="preserve">
+    <value>metroPanel1</value>
+  </data>
+  <data name="&gt;&gt;colorTextbox.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="&gt;&gt;metroLabel1.Name" xml:space="preserve">
+    <value>metroLabel1</value>
+  </data>
+  <data name="&gt;&gt;metroLabel1.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;metroLabel1.Parent" xml:space="preserve">
+    <value>metroPanel1</value>
+  </data>
+  <data name="&gt;&gt;metroLabel1.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="&gt;&gt;pictureBox1.Name" xml:space="preserve">
+    <value>pictureBox1</value>
+  </data>
+  <data name="&gt;&gt;pictureBox1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;pictureBox1.Parent" xml:space="preserve">
+    <value>metroPanel1</value>
+  </data>
+  <data name="&gt;&gt;pictureBox1.ZOrder" xml:space="preserve">
+    <value>15</value>
+  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="metroPanel1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="metroPanel1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>20, 60</value>
+  </data>
+  <data name="metroPanel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>612, 523</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="metroPanel1.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;metroPanel1.Name" xml:space="preserve">
+    <value>metroPanel1</value>
+  </data>
+  <data name="&gt;&gt;metroPanel1.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroPanel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;metroPanel1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;metroPanel1.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
   <data name="resource.Image" type="System.Resources.ResXNullRef, System.Windows.Forms">
     <value />
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="resource.Location" type="System.Drawing.Point, System.Drawing">
     <value>113, 1</value>
   </data>
   <data name="resource.Size" type="System.Drawing.Size, System.Drawing">
     <value>21, 21</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="resource.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
@@ -298,16 +490,16 @@
     <value>True</value>
   </data>
   <data name="alphaLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>367, 320</value>
+    <value>342, 320</value>
   </data>
   <data name="alphaLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>21, 19</value>
+    <value>46, 19</value>
   </data>
   <data name="alphaLabel.TabIndex" type="System.Int32, mscorlib">
     <value>16</value>
   </data>
   <data name="alphaLabel.Text" xml:space="preserve">
-    <value>A:</value>
+    <value>Alpha:</value>
   </data>
   <data name="alphaLabel.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
@@ -328,16 +520,16 @@
     <value>True</value>
   </data>
   <data name="blueLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>368, 395</value>
+    <value>351, 397</value>
   </data>
   <data name="blueLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>20, 19</value>
+    <value>37, 19</value>
   </data>
   <data name="blueLabel.TabIndex" type="System.Int32, mscorlib">
     <value>12</value>
   </data>
   <data name="blueLabel.Text" xml:space="preserve">
-    <value>B:</value>
+    <value>Blue:</value>
   </data>
   <data name="&gt;&gt;blueLabel.Name" xml:space="preserve">
     <value>blueLabel</value>
@@ -355,16 +547,16 @@
     <value>True</value>
   </data>
   <data name="greenLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>367, 371</value>
+    <value>341, 371</value>
   </data>
   <data name="greenLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>21, 19</value>
+    <value>47, 19</value>
   </data>
   <data name="greenLabel.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
   </data>
   <data name="greenLabel.Text" xml:space="preserve">
-    <value>G:</value>
+    <value>Green:</value>
   </data>
   <data name="&gt;&gt;greenLabel.Name" xml:space="preserve">
     <value>greenLabel</value>
@@ -382,16 +574,16 @@
     <value>True</value>
   </data>
   <data name="redLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>368, 345</value>
+    <value>353, 345</value>
   </data>
   <data name="redLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>20, 19</value>
+    <value>35, 19</value>
   </data>
   <data name="redLabel.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
   </data>
   <data name="redLabel.Text" xml:space="preserve">
-    <value>R:</value>
+    <value>Red:</value>
   </data>
   <data name="&gt;&gt;redLabel.Name" xml:space="preserve">
     <value>redLabel</value>
@@ -448,16 +640,16 @@
     <value>True</value>
   </data>
   <data name="metroLabel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>342, 423</value>
+    <value>354, 423</value>
   </data>
   <data name="metroLabel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>46, 19</value>
+    <value>34, 19</value>
   </data>
   <data name="metroLabel1.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
   <data name="metroLabel1.Text" xml:space="preserve">
-    <value>Color:</value>
+    <value>Hex:</value>
   </data>
   <data name="&gt;&gt;metroLabel1.Name" xml:space="preserve">
     <value>metroLabel1</value>
@@ -492,141 +684,11 @@
   <data name="&gt;&gt;pictureBox1.ZOrder" xml:space="preserve">
     <value>15</value>
   </data>
-  <data name="metroPanel1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="metroPanel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>20, 60</value>
-  </data>
-  <data name="metroPanel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>612, 523</value>
-  </data>
-  <data name="metroPanel1.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;metroPanel1.Name" xml:space="preserve">
-    <value>metroPanel1</value>
-  </data>
-  <data name="&gt;&gt;metroPanel1.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroPanel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;metroPanel1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;metroPanel1.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
   <metadata name="menuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
   <data name="menuStrip.AutoSize" type="System.Boolean, mscorlib">
     <value>False</value>
-  </data>
-  <data name="saveToolStripMenuItem1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vAAADrwBlbxySQAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4yMfEgaZUAAADfSURBVDhPYxg8
-        QLt++3yTGbf/Fm599P/Nh49wfPXxq/+rTt37f+Dak/8gOSBgAGEMANIMxGBFyAasPf/0v8GE8//z1t8C
-        y4HU4DIALIluwLpLL+HiMANAGKoNAWASCavv/n/57gPcgOvP3oENOXj7NViOoAFGU6791+k4ghWD5Aga
-        QCyGakMAkODcU89R/I8Ng9TgNADk14dPn/8/c+kqVgySgwUqVBsCwAx49urN/zsPHmPFIDmaGvAXJInN
-        38gYasBfqDYE0K7dOn/Wvut/sfkdGYPUgJI9VNuAAwYGAGn6yvdevWgPAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="saveToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>98, 22</value>
-  </data>
-  <data name="saveToolStripMenuItem1.Text" xml:space="preserve">
-    <value>Save</value>
-  </data>
-  <data name="fileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>37, 20</value>
-  </data>
-  <data name="fileToolStripMenuItem.Text" xml:space="preserve">
-    <value>File</value>
-  </data>
-  <data name="TU12ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>414, 22</value>
-  </data>
-  <data name="TU12ToolStripMenuItem.Text" xml:space="preserve">
-    <value>TU12 (360)</value>
-  </data>
-  <data name="TU13ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>414, 22</value>
-  </data>
-  <data name="TU13ToolStripMenuItem.Text" xml:space="preserve">
-    <value>TU13/1.00 (360/PS3)</value>
-  </data>
-  <data name="TU14ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>414, 22</value>
-  </data>
-  <data name="TU14ToolStripMenuItem.Text" xml:space="preserve">
-    <value>TU14/1.04 (360/PS3)</value>
-  </data>
-  <data name="TU19ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>414, 22</value>
-  </data>
-  <data name="TU19ToolStripMenuItem.Text" xml:space="preserve">
-    <value>TU19/1.12/CU7 (360/PS3-4-Vita/XONE)</value>
-  </data>
-  <data name="TU31ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>414, 22</value>
-  </data>
-  <data name="TU31ToolStripMenuItem.Text" xml:space="preserve">
-    <value>TU31/1.22/CU19 (360/PS3-4-Vita/XONE)</value>
-  </data>
-  <data name="TU32ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>414, 22</value>
-  </data>
-  <data name="TU32ToolStripMenuItem.Text" xml:space="preserve">
-    <value>TU32/1.24/CU20/P3 (360/PS3-4-Vita/XONE/WIIU)</value>
-  </data>
-  <data name="TU43ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>414, 22</value>
-  </data>
-  <data name="TU43ToolStripMenuItem.Text" xml:space="preserve">
-    <value>TU43/1.35/CU32/P12 (360/PS3-4-Vita/XONE/WIIU)</value>
-  </data>
-  <data name="TU46ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>414, 22</value>
-  </data>
-  <data name="TU46ToolStripMenuItem.Text" xml:space="preserve">
-    <value>TU46/1.38/CU36/P15 (360/PS3-4-Vita/XONE/WIIU)</value>
-  </data>
-  <data name="TU51ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>414, 22</value>
-  </data>
-  <data name="TU51ToolStripMenuItem.Text" xml:space="preserve">
-    <value>TU51/1.44/CU41/P20 (360/PS3-4-Vita/XONE/WIIU)</value>
-  </data>
-  <data name="TU53ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>414, 22</value>
-  </data>
-  <data name="TU53ToolStripMenuItem.Text" xml:space="preserve">
-    <value>TU53/1.49/CU43/P23/1.0.3 (360/PS3-4-Vita/XONE/WIIU/SWITCH)</value>
-  </data>
-  <data name="TU54ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>414, 22</value>
-  </data>
-  <data name="TU54ToolStripMenuItem.Text" xml:space="preserve">
-    <value>TU54/1.52/CU44/P24/1.0.4 (360/PS3-4-Vita/XONE/WIIU/SWITCH)</value>
-  </data>
-  <data name="TU69ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>414, 22</value>
-  </data>
-  <data name="TU69ToolStripMenuItem.Text" xml:space="preserve">
-    <value>TU69/1.76/P38 (360/PS3-4-Vita/WIIU)</value>
-  </data>
-  <data name="_1_9_1ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>414, 22</value>
-  </data>
-  <data name="_1_9_1ToolStripMenuItem.Text" xml:space="preserve">
-    <value>1.91 (PS4)</value>
-  </data>
-  <data name="targetUpdateToolToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>117, 20</value>
-  </data>
-  <data name="targetUpdateToolToolStripMenuItem.Text" xml:space="preserve">
-    <value>Target Update Tool</value>
   </data>
   <data name="menuStrip.Location" type="System.Drawing.Point, System.Drawing">
     <value>20, 60</value>
@@ -652,29 +714,33 @@
   <data name="&gt;&gt;menuStrip.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
+  <data name="fileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>37, 20</value>
+  </data>
+  <data name="fileToolStripMenuItem.Text" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="saveToolStripMenuItem1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        vAAADrwBlbxySQAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4yMfEgaZUAAADdSURBVDhPzZJB
+        CoJQEIa9jy0iPFAnCDpAtG3ZooUE4b6oVtIuClpJIAgqZEVlKpqEHUAm5pGPmhTbRA18G//5P5iHgvA3
+        I7ZniiQ7aVM9QZzcOKYbwVDbw8I6A2YAICBvg2VJdtjSs2Cse1Dt6tCYbliGO0UCFlLBxAj590yA0D4X
+        1Ec7CK8JF9j+lUmWzoVlpYJaz4JKZ5ULZqWCT6F9Jhhowcv9eeBOoQBvPXoBrA0zF8yyR6V9LvCjGLYH
+        NxfMvipIMaQ3Ux6ClPYFsaUq/bmd0rspuIO/Pe3/bu5p+sr3gTvFEQAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="saveToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="saveToolStripMenuItem1.Text" xml:space="preserve">
+    <value>Save</value>
+  </data>
   <metadata name="ColorContextMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>125, 17</value>
   </metadata>
-  <data name="restoreOriginalColorToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>186, 22</value>
-  </data>
-  <data name="restoreOriginalColorToolStripMenuItem.Text" xml:space="preserve">
-    <value>Restore original color</value>
-  </data>
-  <data name="copyColorToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>186, 22</value>
-  </data>
-  <data name="copyColorToolStripMenuItem.Text" xml:space="preserve">
-    <value>Copy Color</value>
-  </data>
-  <data name="pasteColorToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>186, 22</value>
-  </data>
-  <data name="pasteColorToolStripMenuItem.Text" xml:space="preserve">
-    <value>Paste Color</value>
-  </data>
   <data name="ColorContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>187, 70</value>
+    <value>146, 70</value>
   </data>
   <data name="&gt;&gt;ColorContextMenu.Name" xml:space="preserve">
     <value>ColorContextMenu</value>
@@ -732,6 +798,24 @@
   </data>
   <data name="&gt;&gt;waterTab.ZOrder" xml:space="preserve">
     <value>1</value>
+  </data>
+  <data name="copyColorToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>134, 22</value>
+  </data>
+  <data name="copyColorToolStripMenuItem.Text" xml:space="preserve">
+    <value>Copy Color</value>
+  </data>
+  <data name="pasteColorToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>134, 22</value>
+  </data>
+  <data name="pasteColorToolStripMenuItem.Text" xml:space="preserve">
+    <value>Paste Color</value>
+  </data>
+  <data name="restoreOriginalColorToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>145, 22</value>
+  </data>
+  <data name="restoreOriginalColorToolStripMenuItem.Text" xml:space="preserve">
+    <value>Restore Color</value>
   </data>
   <data name="underwaterTreeView.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
@@ -894,6 +978,102 @@
   </data>
   <data name="&gt;&gt;tabControl.ZOrder" xml:space="preserve">
     <value>2</value>
+  </data>
+  <data name="toolsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>47, 20</value>
+  </data>
+  <data name="toolsToolStripMenuItem.Text" xml:space="preserve">
+    <value>Tools</value>
+  </data>
+  <data name="targetUpdateToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="targetUpdateToolStripMenuItem.Text" xml:space="preserve">
+    <value>Target Update</value>
+  </data>
+  <data name="TU12ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>416, 22</value>
+  </data>
+  <data name="TU12ToolStripMenuItem.Text" xml:space="preserve">
+    <value>TU12 (360)</value>
+  </data>
+  <data name="TU13ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>416, 22</value>
+  </data>
+  <data name="TU13ToolStripMenuItem.Text" xml:space="preserve">
+    <value>TU13/1.00 (360/PS3)</value>
+  </data>
+  <data name="TU14ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>416, 22</value>
+  </data>
+  <data name="TU14ToolStripMenuItem.Text" xml:space="preserve">
+    <value>TU14/1.04 (360/PS3)</value>
+  </data>
+  <data name="TU19ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>416, 22</value>
+  </data>
+  <data name="TU19ToolStripMenuItem.Text" xml:space="preserve">
+    <value>TU19/1.12/CU7 (360/PS3-4-Vita/XONE)</value>
+  </data>
+  <data name="TU31ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>416, 22</value>
+  </data>
+  <data name="TU31ToolStripMenuItem.Text" xml:space="preserve">
+    <value>TU31/1.22/CU19 (360/PS3-4-Vita/XONE)</value>
+  </data>
+  <data name="TU32ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>416, 22</value>
+  </data>
+  <data name="TU32ToolStripMenuItem.Text" xml:space="preserve">
+    <value>TU32/1.24/CU20/P3 (360/PS3-4-Vita/XONE/WIIU)</value>
+  </data>
+  <data name="TU43ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>416, 22</value>
+  </data>
+  <data name="TU43ToolStripMenuItem.Text" xml:space="preserve">
+    <value>TU43/1.35/CU32/P12 (360/PS3-4-Vita/XONE/WIIU)</value>
+  </data>
+  <data name="TU46ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>416, 22</value>
+  </data>
+  <data name="TU46ToolStripMenuItem.Text" xml:space="preserve">
+    <value>TU46/1.38/CU36/P15 (360/PS3-4-Vita/XONE/WIIU)</value>
+  </data>
+  <data name="TU51ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>416, 22</value>
+  </data>
+  <data name="TU51ToolStripMenuItem.Text" xml:space="preserve">
+    <value>TU51/1.44/CU41/P20 (360/PS3-4-Vita/XONE/WIIU)</value>
+  </data>
+  <data name="TU53ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>416, 22</value>
+  </data>
+  <data name="TU53ToolStripMenuItem.Text" xml:space="preserve">
+    <value>TU53/1.49/CU43/P23/1.0.3 (360/PS3-4-Vita/XONE/WIIU/SWITCH)</value>
+  </data>
+  <data name="TU54ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>416, 22</value>
+  </data>
+  <data name="TU54ToolStripMenuItem.Text" xml:space="preserve">
+    <value>TU54/1.52/CU44/P24/1.0.4 (360/PS3-4-Vita/XONE/WIIU/SWITCH)</value>
+  </data>
+  <data name="TU69ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>416, 22</value>
+  </data>
+  <data name="TU69ToolStripMenuItem.Text" xml:space="preserve">
+    <value>TU69/1.76/P38 (360/PS3-4-Vita/WIIU)</value>
+  </data>
+  <data name="_1_9_1ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>416, 22</value>
+  </data>
+  <data name="_1_9_1ToolStripMenuItem.Text" xml:space="preserve">
+    <value>1.91 (PS4)</value>
+  </data>
+  <data name="stripPS4BiomesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>213, 22</value>
+  </data>
+  <data name="stripPS4BiomesToolStripMenuItem.Text" xml:space="preserve">
+    <value>Remove PS4 Biome Colors</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -3431,10 +3611,34 @@
   <data name="&gt;&gt;saveToolStripMenuItem1.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;targetUpdateToolToolStripMenuItem.Name" xml:space="preserve">
-    <value>targetUpdateToolToolStripMenuItem</value>
+  <data name="&gt;&gt;copyColorToolStripMenuItem.Name" xml:space="preserve">
+    <value>copyColorToolStripMenuItem</value>
   </data>
-  <data name="&gt;&gt;targetUpdateToolToolStripMenuItem.Type" xml:space="preserve">
+  <data name="&gt;&gt;copyColorToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;pasteColorToolStripMenuItem.Name" xml:space="preserve">
+    <value>pasteColorToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;pasteColorToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;restoreOriginalColorToolStripMenuItem.Name" xml:space="preserve">
+    <value>restoreOriginalColorToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;restoreOriginalColorToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolsToolStripMenuItem.Name" xml:space="preserve">
+    <value>toolsToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;toolsToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;targetUpdateToolStripMenuItem.Name" xml:space="preserve">
+    <value>targetUpdateToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;targetUpdateToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;TU12ToolStripMenuItem.Name" xml:space="preserve">
@@ -3515,22 +3719,10 @@
   <data name="&gt;&gt;_1_9_1ToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;restoreOriginalColorToolStripMenuItem.Name" xml:space="preserve">
-    <value>restoreOriginalColorToolStripMenuItem</value>
+  <data name="&gt;&gt;stripPS4BiomesToolStripMenuItem.Name" xml:space="preserve">
+    <value>stripPS4BiomesToolStripMenuItem</value>
   </data>
-  <data name="&gt;&gt;restoreOriginalColorToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;copyColorToolStripMenuItem.Name" xml:space="preserve">
-    <value>copyColorToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;copyColorToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;pasteColorToolStripMenuItem.Name" xml:space="preserve">
-    <value>pasteColorToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;pasteColorToolStripMenuItem.Type" xml:space="preserve">
+  <data name="&gt;&gt;stripPS4BiomesToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">

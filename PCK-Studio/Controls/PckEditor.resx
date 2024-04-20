@@ -884,6 +884,141 @@
   <data name="&gt;&gt;fileEntryCountLabel.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
+  <data name="&gt;&gt;MetaTab.Name" xml:space="preserve">
+    <value>MetaTab</value>
+  </data>
+  <data name="&gt;&gt;MetaTab.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroTabPage, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;MetaTab.Parent" xml:space="preserve">
+    <value>PropertiesTabControl</value>
+  </data>
+  <data name="&gt;&gt;MetaTab.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="PropertiesTabControl.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Bottom</value>
+  </data>
+  <data name="PropertiesTabControl.Location" type="System.Drawing.Point, System.Drawing">
+    <value>279, 270</value>
+  </data>
+  <data name="PropertiesTabControl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>732, 281</value>
+  </data>
+  <data name="PropertiesTabControl.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;PropertiesTabControl.Name" xml:space="preserve">
+    <value>PropertiesTabControl</value>
+  </data>
+  <data name="&gt;&gt;PropertiesTabControl.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroTabControl, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;PropertiesTabControl.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;PropertiesTabControl.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;metroLabel2.Name" xml:space="preserve">
+    <value>metroLabel2</value>
+  </data>
+  <data name="&gt;&gt;metroLabel2.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;metroLabel2.Parent" xml:space="preserve">
+    <value>MetaTab</value>
+  </data>
+  <data name="&gt;&gt;metroLabel2.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;entryTypeTextBox.Name" xml:space="preserve">
+    <value>entryTypeTextBox</value>
+  </data>
+  <data name="&gt;&gt;entryTypeTextBox.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroTextBox, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;entryTypeTextBox.Parent" xml:space="preserve">
+    <value>MetaTab</value>
+  </data>
+  <data name="&gt;&gt;entryTypeTextBox.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;entryDataTextBox.Name" xml:space="preserve">
+    <value>entryDataTextBox</value>
+  </data>
+  <data name="&gt;&gt;entryDataTextBox.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroTextBox, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;entryDataTextBox.Parent" xml:space="preserve">
+    <value>MetaTab</value>
+  </data>
+  <data name="&gt;&gt;entryDataTextBox.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;buttonEdit.Name" xml:space="preserve">
+    <value>buttonEdit</value>
+  </data>
+  <data name="&gt;&gt;buttonEdit.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroButton, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;buttonEdit.Parent" xml:space="preserve">
+    <value>MetaTab</value>
+  </data>
+  <data name="&gt;&gt;buttonEdit.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;metroLabel1.Name" xml:space="preserve">
+    <value>metroLabel1</value>
+  </data>
+  <data name="&gt;&gt;metroLabel1.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;metroLabel1.Parent" xml:space="preserve">
+    <value>MetaTab</value>
+  </data>
+  <data name="&gt;&gt;metroLabel1.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;treeMeta.Name" xml:space="preserve">
+    <value>treeMeta</value>
+  </data>
+  <data name="&gt;&gt;treeMeta.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TreeView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;treeMeta.Parent" xml:space="preserve">
+    <value>MetaTab</value>
+  </data>
+  <data name="&gt;&gt;treeMeta.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="MetaTab.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 38</value>
+  </data>
+  <data name="MetaTab.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 5, 5, 5</value>
+  </data>
+  <data name="MetaTab.Size" type="System.Drawing.Size, System.Drawing">
+    <value>724, 239</value>
+  </data>
+  <data name="MetaTab.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="MetaTab.Text" xml:space="preserve">
+    <value>Properties</value>
+  </data>
+  <data name="&gt;&gt;MetaTab.Name" xml:space="preserve">
+    <value>MetaTab</value>
+  </data>
+  <data name="&gt;&gt;MetaTab.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroTabPage, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;MetaTab.Parent" xml:space="preserve">
+    <value>PropertiesTabControl</value>
+  </data>
+  <data name="&gt;&gt;MetaTab.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="metroLabel2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
   </data>
@@ -891,7 +1026,7 @@
     <value>True</value>
   </data>
   <data name="metroLabel2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>204, 168</value>
+    <value>204, 165</value>
   </data>
   <data name="metroLabel2.Size" type="System.Drawing.Size, System.Drawing">
     <value>0, 0</value>
@@ -936,7 +1071,7 @@
     <value>False</value>
   </data>
   <data name="entryTypeTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>215, 138</value>
+    <value>215, 135</value>
   </data>
   <data name="entryTypeTextBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>146, 20</value>
@@ -981,7 +1116,7 @@
     <value>False</value>
   </data>
   <data name="entryDataTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>215, 170</value>
+    <value>215, 167</value>
   </data>
   <data name="entryDataTextBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>146, 20</value>
@@ -1005,7 +1140,7 @@
     <value>Bottom, Right</value>
   </data>
   <data name="buttonEdit.Location" type="System.Drawing.Point, System.Drawing">
-    <value>215, 196</value>
+    <value>215, 193</value>
   </data>
   <data name="buttonEdit.Size" type="System.Drawing.Size, System.Drawing">
     <value>146, 33</value>
@@ -1038,7 +1173,7 @@
     <value>True</value>
   </data>
   <data name="metroLabel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>266, 61</value>
+    <value>266, 58</value>
   </data>
   <data name="metroLabel1.Size" type="System.Drawing.Size, System.Drawing">
     <value>0, 0</value>
@@ -1061,56 +1196,6 @@
   <metadata name="contextMenuMetaTree.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>301, 19</value>
   </metadata>
-  <data name="addEntryToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>160, 22</value>
-  </data>
-  <data name="addEntryToolStripMenuItem1.Text" xml:space="preserve">
-    <value>Add Entry</value>
-  </data>
-  <data name="addBOXEntryToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>160, 22</value>
-  </data>
-  <data name="addBOXEntryToolStripMenuItem1.Text" xml:space="preserve">
-    <value>Add BOX Entry</value>
-  </data>
-  <data name="addANIMEntryToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>160, 22</value>
-  </data>
-  <data name="addANIMEntryToolStripMenuItem1.Text" xml:space="preserve">
-    <value>Add ANIM Entry</value>
-  </data>
-  <data name="addEntryToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vAAADrwBlbxySQAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xMkMEa+wAAABSSURBVDhP5c0x
-        DsAgDENRxt7/wmkNSpRGf0CCCZAegxNMM7MlGMp3dIU6dxhKf/QMNxRogeQC8ivw5Vn7C0heJlFA+kL5
-        jWAohxRkde4wnGftBS90axNmphIGAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="addEntryToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>181, 22</value>
-  </data>
-  <data name="addEntryToolStripMenuItem.Text" xml:space="preserve">
-    <value>Add Entry</value>
-  </data>
-  <data name="addMultipleEntriesToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>181, 22</value>
-  </data>
-  <data name="addMultipleEntriesToolStripMenuItem1.Text" xml:space="preserve">
-    <value>Add Multiple Entries</value>
-  </data>
-  <data name="deleteEntryToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>181, 22</value>
-  </data>
-  <data name="deleteEntryToolStripMenuItem.Text" xml:space="preserve">
-    <value>Delete Entry</value>
-  </data>
-  <data name="editAllEntriesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>181, 22</value>
-  </data>
-  <data name="editAllEntriesToolStripMenuItem.Text" xml:space="preserve">
-    <value>Edit All Entries</value>
-  </data>
   <data name="contextMenuMetaTree.Size" type="System.Drawing.Size, System.Drawing">
     <value>182, 92</value>
   </data>
@@ -1144,56 +1229,55 @@
   <data name="&gt;&gt;treeMeta.ZOrder" xml:space="preserve">
     <value>7</value>
   </data>
-  <data name="MetaTab.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 38</value>
+  <data name="addEntryToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        vAAADrwBlbxySQAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xMkMEa+wAAABSSURBVDhP5c0x
+        DsAgDENRxt7/wmkNSpRGf0CCCZAegxNMM7MlGMp3dIU6dxhKf/QMNxRogeQC8ivw5Vn7C0heJlFA+kL5
+        jWAohxRkde4wnGftBS90axNmphIGAAAAAElFTkSuQmCC
+</value>
   </data>
-  <data name="MetaTab.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>5, 5, 5, 5</value>
+  <data name="addEntryToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>181, 22</value>
   </data>
-  <data name="MetaTab.Size" type="System.Drawing.Size, System.Drawing">
-    <value>724, 239</value>
+  <data name="addEntryToolStripMenuItem.Text" xml:space="preserve">
+    <value>Add Entry</value>
   </data>
-  <data name="MetaTab.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+  <data name="addEntryToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>160, 22</value>
   </data>
-  <data name="MetaTab.Text" xml:space="preserve">
-    <value>Properties</value>
+  <data name="addEntryToolStripMenuItem1.Text" xml:space="preserve">
+    <value>Add Entry</value>
   </data>
-  <data name="&gt;&gt;MetaTab.Name" xml:space="preserve">
-    <value>MetaTab</value>
+  <data name="addBOXEntryToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>160, 22</value>
   </data>
-  <data name="&gt;&gt;MetaTab.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroTabPage, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  <data name="addBOXEntryToolStripMenuItem1.Text" xml:space="preserve">
+    <value>Add BOX Entry</value>
   </data>
-  <data name="&gt;&gt;MetaTab.Parent" xml:space="preserve">
-    <value>PropertiesTabControl</value>
+  <data name="addANIMEntryToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>160, 22</value>
   </data>
-  <data name="&gt;&gt;MetaTab.ZOrder" xml:space="preserve">
-    <value>0</value>
+  <data name="addANIMEntryToolStripMenuItem1.Text" xml:space="preserve">
+    <value>Add ANIM Entry</value>
   </data>
-  <data name="PropertiesTabControl.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Bottom</value>
+  <data name="addMultipleEntriesToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>181, 22</value>
   </data>
-  <data name="PropertiesTabControl.Location" type="System.Drawing.Point, System.Drawing">
-    <value>279, 270</value>
+  <data name="addMultipleEntriesToolStripMenuItem1.Text" xml:space="preserve">
+    <value>Add Multiple Entries</value>
   </data>
-  <data name="PropertiesTabControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>732, 281</value>
+  <data name="deleteEntryToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>181, 22</value>
   </data>
-  <data name="PropertiesTabControl.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
+  <data name="deleteEntryToolStripMenuItem.Text" xml:space="preserve">
+    <value>Delete Entry</value>
   </data>
-  <data name="&gt;&gt;PropertiesTabControl.Name" xml:space="preserve">
-    <value>PropertiesTabControl</value>
+  <data name="editAllEntriesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>181, 22</value>
   </data>
-  <data name="&gt;&gt;PropertiesTabControl.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroTabControl, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;PropertiesTabControl.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;PropertiesTabControl.ZOrder" xml:space="preserve">
-    <value>6</value>
+  <data name="editAllEntriesToolStripMenuItem.Text" xml:space="preserve">
+    <value>Edit All Entries</value>
   </data>
   <metadata name="label11.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -1225,6 +1309,65 @@
   <metadata name="contextMenuPCKEntries.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>22, 20</value>
   </metadata>
+  <data name="contextMenuPCKEntries.Size" type="System.Drawing.Size, System.Drawing">
+    <value>158, 224</value>
+  </data>
+  <data name="&gt;&gt;contextMenuPCKEntries.Name" xml:space="preserve">
+    <value>contextMenuPCKEntries</value>
+  </data>
+  <data name="&gt;&gt;contextMenuPCKEntries.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="treeViewMain.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Left</value>
+  </data>
+  <data name="treeViewMain.ImageIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <metadata name="imageList.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>204, 20</value>
+  </metadata>
+  <data name="imageList.ImageSize" type="System.Drawing.Size, System.Drawing">
+    <value>32, 32</value>
+  </data>
+  <data name="treeViewMain.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 50</value>
+  </data>
+  <data name="treeViewMain.SelectedImageIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="treeViewMain.Size" type="System.Drawing.Size, System.Drawing">
+    <value>274, 501</value>
+  </data>
+  <data name="treeViewMain.TabIndex" type="System.Int32, mscorlib">
+    <value>20</value>
+  </data>
+  <data name="&gt;&gt;treeViewMain.Name" xml:space="preserve">
+    <value>treeViewMain</value>
+  </data>
+  <data name="&gt;&gt;treeViewMain.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TreeView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;treeViewMain.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;treeViewMain.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="createToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        vAAADrwBlbxySQAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xOdTWsmQAAAA3SURBVDhPY/j/
+        /z9FGKsgGIsCKWSMTQ0QYxUE45FmALpiYvFwMgAbxqIYG8YqCMajBhCJ/zMAAPGwpV/Xje8RAAAAAElF
+        TkSuQmCC
+</value>
+  </data>
+  <data name="createToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>157, 22</value>
+  </data>
+  <data name="createToolStripMenuItem.Text" xml:space="preserve">
+    <value>Create</value>
+  </data>
   <data name="folderToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
@@ -1313,19 +1456,20 @@
   <data name="entityMaterialsbinToolStripMenuItem.Text" xml:space="preserve">
     <value>EntityMaterials.bin</value>
   </data>
-  <data name="createToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="importSkinsToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vAAADrwBlbxySQAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xOdTWsmQAAAA3SURBVDhPY/j/
-        /z9FGKsgGIsCKWSMTQ0QYxUE45FmALpiYvFwMgAbxqIYG8YqCMajBhCJ/zMAAPGwpV/Xje8RAAAAAElF
+        vAAADrwBlbxySQAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xOdTWsmQAAABzSURBVDhPpYzB
+        DQAhCARp4hr3Txu254WTjYRb9cEmk/BgRjBVHTv85Twmgt77PcJEYIFrhIkAgWOEiSAGthEmgtbaD9fW
+        mBgpB4xywCgFxiMf5YDdrq3l5wjEjKtzTARMNlydY2IGot2ureVnRjkQmZbICyCi7XU5cfqKAAAAAElF
         TkSuQmCC
 </value>
   </data>
-  <data name="createToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="importSkinsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>157, 22</value>
   </data>
-  <data name="createToolStripMenuItem.Text" xml:space="preserve">
-    <value>Create</value>
+  <data name="importSkinsToolStripMenuItem.Text" xml:space="preserve">
+    <value>Import</value>
   </data>
   <data name="importSkinToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1379,20 +1523,11 @@
   <data name="addFileToolStripMenuItem.Text" xml:space="preserve">
     <value>Add File</value>
   </data>
-  <data name="importSkinsToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vAAADrwBlbxySQAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xOdTWsmQAAABzSURBVDhPpYzB
-        DQAhCARp4hr3Txu254WTjYRb9cEmk/BgRjBVHTv85Twmgt77PcJEYIFrhIkAgWOEiSAGthEmgtbaD9fW
-        mBgpB4xywCgFxiMf5YDdrq3l5wjEjKtzTARMNlydY2IGot2ureVnRjkQmZbICyCi7XU5cfqKAAAAAElF
-        TkSuQmCC
-</value>
-  </data>
-  <data name="importSkinsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="exportToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>157, 22</value>
   </data>
-  <data name="importSkinsToolStripMenuItem.Text" xml:space="preserve">
-    <value>Import</value>
+  <data name="exportToolStripMenuItem.Text" xml:space="preserve">
+    <value>Export</value>
   </data>
   <data name="as3DSTextureFileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>186, 22</value>
@@ -1400,11 +1535,11 @@
   <data name="as3DSTextureFileToolStripMenuItem.Text" xml:space="preserve">
     <value>Export as 3DS Texture</value>
   </data>
-  <data name="exportToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="setFileTypeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>157, 22</value>
   </data>
-  <data name="exportToolStripMenuItem.Text" xml:space="preserve">
-    <value>Export</value>
+  <data name="setFileTypeToolStripMenuItem.Text" xml:space="preserve">
+    <value>Set File Type</value>
   </data>
   <data name="skinToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
     <value>222, 22</value>
@@ -1478,11 +1613,11 @@
   <data name="entityMaterialsFileBINToolStripMenuItem.Text" xml:space="preserve">
     <value>Entity Materials File (.BIN)</value>
   </data>
-  <data name="setFileTypeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="miscFunctionsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>157, 22</value>
   </data>
-  <data name="setFileTypeToolStripMenuItem.Text" xml:space="preserve">
-    <value>Set File Type</value>
+  <data name="miscFunctionsToolStripMenuItem.Text" xml:space="preserve">
+    <value>Misc. Functions</value>
   </data>
   <data name="generateMipMapTextureToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
     <value>210, 22</value>
@@ -1501,12 +1636,6 @@
   </data>
   <data name="correctSkinDecimalsToolStripMenuItem.Text" xml:space="preserve">
     <value>Correct Skin Decimals</value>
-  </data>
-  <data name="miscFunctionsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 22</value>
-  </data>
-  <data name="miscFunctionsToolStripMenuItem.Text" xml:space="preserve">
-    <value>Misc. Functions</value>
   </data>
   <data name="extractToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1563,51 +1692,6 @@
   </data>
   <data name="deleteFileToolStripMenuItem.Text" xml:space="preserve">
     <value>Delete</value>
-  </data>
-  <data name="contextMenuPCKEntries.Size" type="System.Drawing.Size, System.Drawing">
-    <value>158, 224</value>
-  </data>
-  <data name="&gt;&gt;contextMenuPCKEntries.Name" xml:space="preserve">
-    <value>contextMenuPCKEntries</value>
-  </data>
-  <data name="&gt;&gt;contextMenuPCKEntries.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="treeViewMain.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Left</value>
-  </data>
-  <data name="treeViewMain.ImageIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <metadata name="imageList.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>204, 20</value>
-  </metadata>
-  <data name="imageList.ImageSize" type="System.Drawing.Size, System.Drawing">
-    <value>32, 32</value>
-  </data>
-  <data name="treeViewMain.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 50</value>
-  </data>
-  <data name="treeViewMain.SelectedImageIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="treeViewMain.Size" type="System.Drawing.Size, System.Drawing">
-    <value>274, 501</value>
-  </data>
-  <data name="treeViewMain.TabIndex" type="System.Int32, mscorlib">
-    <value>20</value>
-  </data>
-  <data name="&gt;&gt;treeViewMain.Name" xml:space="preserve">
-    <value>treeViewMain</value>
-  </data>
-  <data name="&gt;&gt;treeViewMain.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TreeView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;treeViewMain.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;treeViewMain.ZOrder" xml:space="preserve">
-    <value>8</value>
   </data>
   <data name="addMultipleEntriesToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1678,7 +1762,7 @@
     <value>previewPictureBox</value>
   </data>
   <data name="&gt;&gt;previewPictureBox.Type" xml:space="preserve">
-    <value>PckStudio.PictureBoxWithInterpolationMode, PCK-Studio, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>PckStudio.ToolboxItems.InterpolationPictureBox, PCK-Studio, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;previewPictureBox.Parent" xml:space="preserve">
     <value>$this</value>

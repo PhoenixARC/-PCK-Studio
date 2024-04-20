@@ -53,7 +53,7 @@ namespace PckStudio.Forms.Editor
 			if (node == null ||
 				!currentLoc.LocKeys.ContainsKey(node.Text))
 			{
-				MessageBox.Show("Selected Node does not seem to be in the loc file");
+				MessageBox.Show(this, "Selected Node does not seem to be in the loc file");
 				return;
 			}
 			ReloadTranslationTable();
@@ -65,7 +65,7 @@ namespace PckStudio.Forms.Editor
 				using (TextPrompt prompt = new TextPrompt())
 				{
 					prompt.OKButtonText = "Add";
-					if (prompt.ShowDialog() == DialogResult.OK && 
+					if (prompt.ShowDialog(this) == DialogResult.OK && 
 						!currentLoc.LocKeys.ContainsKey(prompt.NewText) &&
 						currentLoc.AddLocKey(prompt.NewText, ""))
 					{
@@ -87,7 +87,7 @@ namespace PckStudio.Forms.Editor
 			if (e.ColumnIndex != 1 ||
 				treeViewLocKeys.SelectedNode == null)
             {
-				MessageBox.Show("something went wrong");
+				MessageBox.Show(this, "something went wrong");
 				return;
             }
 			currentLoc.SetLocEntry(treeViewLocKeys.SelectedNode.Text, tbl.Rows[e.RowIndex][0].ToString(), tbl.Rows[e.RowIndex][1].ToString());
@@ -136,7 +136,7 @@ namespace PckStudio.Forms.Editor
 		{
 			string[] avalibleLang = GetAvailableLanguages().ToArray();
 			using (var dialog = new AddLanguage(avalibleLang))
-				if (dialog.ShowDialog() == DialogResult.OK)
+				if (dialog.ShowDialog(this) == DialogResult.OK)
 				{
 					currentLoc.AddLanguage(dialog.SelectedLanguage);
 					ReloadTranslationTable();

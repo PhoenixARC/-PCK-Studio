@@ -25,7 +25,7 @@ namespace PckStudio.Internal
     {
         // this is to specify which build release this is. This is manually updated for now
         // TODO: add different chars for different configurations
-        private const string BuildType = "b";
+        private const string BuildType = "c";
         private static System.Globalization.Calendar _buildCalendar;
         private static DateTime date = new FileInfo(Assembly.GetExecutingAssembly().Location).LastWriteTime;
         private static string _betaBuildVersion;

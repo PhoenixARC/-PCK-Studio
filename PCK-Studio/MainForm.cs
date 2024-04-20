@@ -12,10 +12,12 @@ using OMI.Formats.Archive;
 using OMI.Formats.Pck;
 using OMI.Formats.GameRule;
 using OMI.Formats.Languages;
+using OMI.Formats.Model;
 using OMI.Workers.Archive;
 using OMI.Workers.Pck;
 using OMI.Workers.GameRule;
 using OMI.Workers.Language;
+using OMI.Workers.Model;
 using PckStudio.Properties;
 using PckStudio.Forms;
 using PckStudio.Forms.Editor;
@@ -117,42 +119,11 @@ namespace PckStudio
 			return TryGetEditor(tabControl.SelectedTab, out editor);
 		}
 
-		#region drag and drop for main tree node
-
-		// Most of the code below is modified code from this link: https://docs.microsoft.com/en-us/dotnet/api/system.windows.forms.treeview.itemdrag?view=windowsdesktop-6.0
-		// - MattNL
-
-		private void treeViewMain_ItemDrag(object sender, ItemDragEventArgs e)
-		{
-
-		}
-
-		// Set the target drop effect to the effect 
-		// specified in the ItemDrag event handler.
-		private void treeViewMain_DragEnter(object sender, DragEventArgs e)
-		{
-			e.Effect = e.AllowedEffect;
-		}
-
-		// Select the node under the mouse pointer to indicate the 
-		// expected drop location.
-		private void treeViewMain_DragOver(object sender, DragEventArgs e)
-		{
-
-		}
-
-		private void treeViewMain_DragDrop(object sender, DragEventArgs e)
-		{
-
-		}
-
-		#endregion
-
-		private PckFile InitializePack(int packId, int packVersion, string packName, bool createSkinsPCK)
+        private PckFile InitializePack(int packId, int packVersion, string packName, bool createSkinsPCK)
 		{
 			var pack = new PckFile(3);
 
-			var zeroFile = pack.CreateNewFile("0", PckFileType.InfoFile);
+            PckFileData zeroFile = pack.CreateNewFile("0", PckFileType.InfoFile);
 			zeroFile.AddProperty("PACKID", packId);
 			zeroFile.AddProperty("PACKVERSION", packVersion);
 
@@ -173,14 +144,13 @@ namespace PckStudio
 			var pack = InitializePack(packId, packVersion, packName, createSkinsPCK);
 			PckFile infoPCK = new PckFile(3);
 
-			var icon = infoPCK.CreateNewFile("icon.png", PckFileType.TextureFile);
-			icon.SetData(Resources.TexturePackIcon, ImageFormat.Png);
+            PckFileData icon = infoPCK.CreateNewFile("icon.png", PckFileType.TextureFile);
+			icon.SetTexture(Resources.TexturePackIcon);
 
-			var comparison = infoPCK.CreateNewFile("comparison.png", PckFileType.TextureFile);
-			comparison.SetData(Resources.Comparison, ImageFormat.Png);
+            PckFileData comparison = infoPCK.CreateNewFile("comparison.png", PckFileType.TextureFile);
+			comparison.SetTexture(Resources.Comparison);
 
-			var texturepackInfo = pack.CreateNewFile($"{res}/{res}Info.pck", PckFileType.TexturePackInfoFile);
-
+            PckFileData texturepackInfo = pack.CreateNewFile($"{res}/{res}Info.pck", PckFileType.TexturePackInfoFile);
 			texturepackInfo.AddProperty("PACKID", "0");
 			texturepackInfo.AddProperty("DATAPATH", $"{res}Data.pck");
 
@@ -191,9 +161,9 @@ namespace PckStudio
 
 		private PckFile InitializeMashUpPack(int packId, int packVersion, string packName, string res)
 		{
-			var pack = InitializeTexturePack(packId, packVersion, packName, res, true);
-			var gameRuleFile = pack.CreateNewFile("GameRules.grf", PckFileType.GameRulesFile);
-			var grfFile = new GameRuleFile();
+            PckFile pack = InitializeTexturePack(packId, packVersion, packName, res, true);
+            PckFileData gameRuleFile = pack.CreateNewFile("GameRules.grf", PckFileType.GameRulesFile);
+            GameRuleFile grfFile = new GameRuleFile();
 			grfFile.AddRule("MapOptions",
 				new KeyValuePair<string, string>("seed", "0"),
 				new KeyValuePair<string, string>("baseSaveName", string.Empty),
@@ -218,7 +188,7 @@ namespace PckStudio
 		{
 			TextPrompt namePrompt = new TextPrompt();
 			namePrompt.OKButtonText = "Ok";
-			if (namePrompt.ShowDialog() == DialogResult.OK)
+			if (namePrompt.ShowDialog(this) == DialogResult.OK)
 			{
                 var currentPCK = InitializePack(new Random().Next(8000, int.MaxValue), 0, namePrompt.NewText, true);
                 AddEditorPage(currentPCK);
@@ -376,7 +346,7 @@ namespace PckStudio
 		{
 			if (!HasDataFolder())
 			{
-				DialogResult result = MessageBox.Show("There is not a \"Data\" folder present in the pack folder. Would you like to create one?", "Folder missing", MessageBoxButtons.YesNo);
+				DialogResult result = MessageBox.Show(this, "There is not a \"Data\" folder present in the pack folder. Would you like to create one?", "Folder missing", MessageBoxButtons.YesNo);
 				if (result == DialogResult.No) return false;
 				else Directory.CreateDirectory(GetDataPath());
 			}
@@ -476,9 +446,9 @@ namespace PckStudio
 		{
 			pckOpen.Image = Resources.pckDrop;
 			string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-			foreach (var file in files)
+			foreach (string file in files)
 			{
-				var ext = Path.GetExtension(file);
+                string ext = Path.GetExtension(file);
 				if (ext.Equals(".pck", StringComparison.CurrentCultureIgnoreCase))
 					e.Effect = DragDropEffects.Copy;
 				return;
@@ -522,23 +492,6 @@ namespace PckStudio
 			Process.Start("https://trello.com/b/0XLNOEbe/pck-studio");
 		}
 
-		private void openPckManagerToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			PckManager ??= new PckManager();
-			PckManager.FormClosing += (s, e) =>
-			{
-				PckManager.Hide();
-				e.Cancel = true;
-			};
-			if (!PckManager.Visible)
-			{
-				PckManager.Show();
-				PckManager.BringToFront();
-			}
-			if (PckManager.Focus())
-				PckManager.BringToFront();
-		}
-
 		private void wavBinkaToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			using OpenFileDialog fileDialog = new OpenFileDialog
@@ -547,9 +500,24 @@ namespace PckStudio
 				Filter = "WAV files (*.wav)|*.wav",
 				Title = "Please choose WAV files to convert to BINKA"
 			};
-			if (fileDialog.ShowDialog() == DialogResult.OK)
+			if (fileDialog.ShowDialog(this) == DialogResult.OK)
 			{
-				BinkaConverter.ToBinka(fileDialog.FileNames, new DirectoryInfo(Path.GetDirectoryName(fileDialog.FileName)));
+				using ItemSelectionPopUp dialog = new ItemSelectionPopUp(
+					"Level 1 (Best Quality)", "Level 2", "Level 3", "Level 4", "Level 5", 
+					"Level 6", "Level 7", "Level 8", "Level 9 (Worst Quality)")
+				{
+					LabelText = "Compression",
+					ButtonText = "OK"
+				};
+
+				if(dialog.ShowDialog(this) == DialogResult.OK)
+                {
+					BinkaConverter.ToBinka(
+						fileDialog.FileNames, 
+						new DirectoryInfo(Path.GetDirectoryName(fileDialog.FileName)), 
+						dialog.SelectedIndex + 1 // compression level
+						);
+				}
 			}
 		}
 
@@ -561,7 +529,7 @@ namespace PckStudio
 				Filter = "BINKA files (*.binka)|*.binka",
 				Title = "Please choose BINKA files to convert to WAV"
 			};
-			if (fileDialog.ShowDialog() == DialogResult.OK)
+			if (fileDialog.ShowDialog(this) == DialogResult.OK)
 			{
 				BinkaConverter.ToWav(fileDialog.FileNames, new DirectoryInfo(Path.GetDirectoryName(fileDialog.FileName)));
 			}
@@ -613,7 +581,20 @@ namespace PckStudio
 			closeAllToolStripMenuItem.Visible = false;
 		}
 
-		private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        private void openPckManagerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PckManager ??= new PckManager();
+            PckManager.FormClosing += (s, e) => PckManager = null;
+            if (!PckManager.Visible)
+            {
+                // Passing in a parent form will make it stay on top of every other form. -miku
+                PckManager.Show();
+            }
+            if (PckManager.Focus())
+                PckManager.BringToFront();
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
 		{
 			PckManager?.Close();
 			closeAllToolStripMenuItem_Click(sender, e);

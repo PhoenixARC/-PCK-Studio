@@ -51,19 +51,19 @@ namespace PckStudio.Popups
             {
                 case 64:
                     anim.SetFlag(SkinAnimFlag.RESOLUTION_64x64, true);
-                    MessageBox.Show("64x64 Skin Detected");
+                    MessageBox.Show(this, "64x64 Skin Detected");
                     skinType = eSkinType._64x64;
                     break;
                 case 32:
                     anim.SetFlag(SkinAnimFlag.RESOLUTION_64x64 | SkinAnimFlag.SLIM_MODEL, false);
-                    MessageBox.Show("64x32 Skin Detected");
+                    MessageBox.Show(this, "64x32 Skin Detected");
                     skinType = eSkinType._64x32;
                     break;
                 default:
                     if (img.Width == img.Height)
                     {
                         anim.SetFlag(SkinAnimFlag.RESOLUTION_64x64, true);
-                        MessageBox.Show("64x64 HD Skin Detected");
+                        MessageBox.Show(this, "64x64 HD Skin Detected");
                         skinType = eSkinType._64x64HD;
                         break;
                     }
@@ -71,12 +71,12 @@ namespace PckStudio.Popups
                     if (img.Height == img.Width / 2)
                     {
                         anim.SetFlag(SkinAnimFlag.RESOLUTION_64x64 | SkinAnimFlag.SLIM_MODEL, false);
-                        MessageBox.Show("64x32 HD Skin Detected");
+                        MessageBox.Show(this, "64x32 HD Skin Detected");
                         skinType = eSkinType._64x32HD;
                         break;
                     }
                     
-                    MessageBox.Show("Not a Valid Skin File");
+                    MessageBox.Show(this, "Not a Valid Skin File");
                     skinType = eSkinType.Invalid;
                     return;
             }
@@ -145,12 +145,12 @@ namespace PckStudio.Popups
 
         private void buttonSkin_Click(object sender, EventArgs e)
         {
-            contextMenuSkin.Show(Location.X + buttonSkin.Location.X + 2, Location.Y + buttonSkin.Location.Y + buttonSkin.Size.Height);
+            contextMenuSkin.Show(this, Location.X + buttonSkin.Location.X + 2, Location.Y + buttonSkin.Location.Y + buttonSkin.Size.Height);
         }
 
         private void buttonCape_Click(object sender, EventArgs e)
         {
-            contextMenuCape.Show(Location.X + buttonCape.Location.X + 2, Location.Y + buttonCape.Location.Y + buttonCape.Size.Height);
+            contextMenuCape.Show(this, Location.X + buttonCape.Location.X + 2, Location.Y + buttonCape.Location.Y + buttonCape.Size.Height);
         }
 
         private void replaceToolStripMenuItem_Click(object sender, EventArgs e)
@@ -170,6 +170,7 @@ namespace PckStudio.Popups
             if (e.Button == MouseButtons.Right)
             {
                 contextMenuSkin.Show(
+                    this,
                     x: Location.X + skinPictureBox.Location.X,
                     y: Location.Y + skinPictureBox.Location.Y + skinPictureBox.Size.Height
                     );
@@ -205,6 +206,7 @@ namespace PckStudio.Popups
             if (e.Button == MouseButtons.Right)
             {
                 contextMenuCape.Show(
+                    this,
                     x: Location.X + capePictureBox.Location.X,
                     y: Location.Y + capePictureBox.Location.Y + capePictureBox.Size.Height
                     );
@@ -220,7 +222,7 @@ namespace PckStudio.Popups
                     var img = Image.FromFile(ofd.FileName);
                     if (img.RawFormat != ImageFormat.Png && img.Width != img.Height * 2)
                     {
-                        MessageBox.Show("Not a Valid Cape File");
+                        MessageBox.Show(this, "Not a Valid Cape File");
                         return;
                     }
                     capePictureBox.Image = Image.FromFile(ofd.FileName);
@@ -237,7 +239,7 @@ namespace PckStudio.Popups
         {
             if (!int.TryParse(textSkinID.Text, out int _skinId))
             {
-                MessageBox.Show("The Skin ID Must be a Unique 8 Digit Number Thats Not Already in Use", "Invalid Skin ID", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(this, "The Skin ID Must be a Unique 8 Digit Number Thats Not Already in Use", "Invalid Skin ID", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             string skinId = _skinId.ToString("d08");
@@ -269,7 +271,7 @@ namespace PckStudio.Popups
                 cape.Filename = $"dlccape{skinId}.png";
                 skin.AddProperty("CAPEPATH", cape.Filename);
             }
-            skin.SetData(skinPictureBox.Image, ImageFormat.Png);
+            skin.SetTexture(skinPictureBox.Image);
             DialogResult = DialogResult.OK;
             Close();
         }
@@ -283,10 +285,10 @@ namespace PckStudio.Popups
         private void CreateCustomModel_Click(object sender, EventArgs e)
         {
             //Prompt for skin model generator
-            if (MessageBox.Show("Create your own custom skin model?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1) != DialogResult.Yes)
+            if (MessageBox.Show(this, "Create your own custom skin model?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1) != DialogResult.Yes)
                 return;
 
-            skin.SetData(Resources.classic_template, ImageFormat.Png);
+            skin.SetTexture(Resources.classic_template);
 
             using generateModel generate = new generateModel(skin);
 

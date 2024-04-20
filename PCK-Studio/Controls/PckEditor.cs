@@ -29,6 +29,13 @@ using OMI.Workers.Language;
 using OMI.Workers.Pck;
 using PckStudio.FileFormats;
 using PckStudio.Helper;
+using PckStudio.Internal.Deserializer;
+using PckStudio.Internal.Serializer;
+using OMI.Formats.GameRule;
+using OMI.Workers.GameRule;
+using OMI.Formats.Model;
+using OMI.Workers.Model;
+using OMI.Workers;
 
 namespace PckStudio.Controls
 {
@@ -117,24 +124,22 @@ namespace PckStudio.Controls
                 (file.Filetype == PckFileType.SkinDataFile || file.Filetype == PckFileType.TexturePackInfoFile) &&
                 file.Size > 0 && treeViewMain.SelectedNode.Nodes.Count == 0)
             {
-                using (var stream = new MemoryStream(file.Data))
+                try
                 {
-                    try
-                    {
-                        var reader = new PckFileReader(LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
-                        PckFile subPCKfile = reader.FromStream(stream);
-                        BuildPckTreeView(treeViewMain.SelectedNode.Nodes, subPCKfile);
-                        treeViewMain.SelectedNode.ExpandAll();
+                    var reader = new PckFileReader(LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
+                    PckFile subPCKfile = file.GetData(reader);
+                    BuildPckTreeView(treeViewMain.SelectedNode.Nodes, subPCKfile);
+                    treeViewMain.SelectedNode.ExpandAll();
 
-                    }
-                    catch (OverflowException ex)
-                    {
-                        MessageBox.Show("Failed to open pck\n" +
-                            "Try checking the 'Open/Save as Switch/Vita/PS4 pck' checkbox in the upper right corner.",
-                            "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        Debug.WriteLine(ex.Message);
-                    }
                 }
+                catch (OverflowException ex)
+                {
+                    MessageBox.Show("Failed to open pck\n" +
+                        "Try checking the 'Open/Save as Switch/Vita/PS4 pck' checkbox in the upper right corner.",
+                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Debug.WriteLine(ex.Message);
+                }
+                
                 return;
             }
             treeViewMain.SelectedNode.Nodes.Clear();
@@ -193,22 +198,19 @@ namespace PckStudio.Controls
                     (file.Filetype == PckFileType.SkinDataFile || file.Filetype == PckFileType.TexturePackInfoFile) &&
                     file.Data.Length > 0)
                 {
-                    using (var stream = new MemoryStream(file.Data))
+                    try
                     {
-                        try
-                        {
-                            var reader = new PckFileReader(GetEndianess());
-                            PckFile subPCKfile = reader.FromStream(stream);
-                            // passes parent path to remove from sub pck filepaths
-                            BuildPckTreeView(node.Nodes, subPCKfile, file.Filename + "/");
-                        }
-                        catch (OverflowException ex)
-                        {
-                            MessageBox.Show("Failed to open pck\n" +
-                                "Try checking the 'Open/Save as Switch/Vita/PS4 pck' checkbox in the upper right corner.",
-                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            Debug.WriteLine(ex.Message);
-                        }
+                        var reader = new PckFileReader(GetEndianess());
+                        PckFile subPCKfile = file.GetData(reader);
+                        // passes parent path to remove from sub pck filepaths
+                        BuildPckTreeView(node.Nodes, subPCKfile, file.Filename + "/");
+                    }
+                    catch (OverflowException ex)
+                    {
+                        MessageBox.Show("Failed to open pck\n" +
+                            "Try checking the 'Open/Save as Switch/Vita/PS4 pck' checkbox in the upper right corner.",
+                            "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        Debug.WriteLine(ex.Message);
                     }
                 }
                 SetPckFileIcon(node, file.Filetype);
@@ -651,11 +653,7 @@ namespace PckStudio.Controls
                     case PckFileType.CapeFile:
                     case PckFileType.TextureFile:
                         {
-                            // TODO: Add tga support
-                            if (Path.GetExtension(file.Filename) == ".tga") break;
-                            using MemoryStream stream = new MemoryStream(file.Data);
-
-                            var img = Image.FromStream(stream);
+                            var img = file.GetTexture();
 
                             if (img.RawFormat != ImageFormat.Jpeg || img.RawFormat != ImageFormat.Png)
                             {
@@ -720,6 +718,159 @@ namespace PckStudio.Controls
             }
         }
 
+        #region drag and drop for main tree node
+
+        // Most of the code below is modified code from this link:
+        // https://docs.microsoft.com/en-us/dotnet/api/system.windows.forms.treeview.itemdrag?view=windowsdesktop-6.0
+        // - MattNL
+
+        private void treeViewMain_ItemDrag(object sender, ItemDragEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left || e.Item is not TreeNode node)
+                return;
+
+            if ((node.TryGetTagData(out PckFileData file) && _pck.Contains(file.Filename, file.Filetype)) || node.Parent is TreeNode)
+            {
+                treeViewMain.DoDragDrop(node, DragDropEffects.Move);
+            }
+        }
+
+        private void treeViewMain_DragOver(object sender, DragEventArgs e)
+        {
+            Point dragLocation = new Point(e.X, e.Y);
+            TreeNode node = treeViewMain.GetNodeAt(treeViewMain.PointToClient(dragLocation));
+            treeViewMain.SelectedNode = node.IsTagOfType<PckFileData>() ? null : node;
+        }
+
+        private void treeViewMain_DragEnter(object sender, DragEventArgs e)
+        {
+            e.Effect = e.Data.GetDataPresent(DataFormats.FileDrop) ? DragDropEffects.Copy : e.AllowedEffect;
+        }
+
+        private void treeViewMain_DragDrop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop) && e.Data.GetData(DataFormats.FileDrop) is string[] files)
+            {
+                ImportFiles(files);
+                return;
+            }
+
+            string dataFormat = typeof(TreeNode).FullName;
+
+            if (!e.Data.GetDataPresent(dataFormat))
+                return;
+
+            // Retrieve the client coordinates of the drop location.
+            Point dragLocation = new Point(e.X, e.Y);
+            Point targetPoint = treeViewMain.PointToClient(dragLocation);
+
+            if (!treeViewMain.ClientRectangle.Contains(targetPoint))
+                return;
+
+            // Retrieve the node at the drop location.
+            TreeNode targetNode = treeViewMain.GetNodeAt(targetPoint);
+            bool isTargetPckFile = targetNode.IsTagOfType<PckFileData>();
+
+            if (e.Data.GetData(dataFormat) is not TreeNode draggedNode)
+            {
+                Debug.WriteLine("Dragged data was not of type TreeNode.");
+                return;
+            }
+
+            if (targetNode.Equals(draggedNode.Parent))
+            {
+                Debug.WriteLine("target node is parent of dragged node... nothing done.");
+                return;
+            }
+
+            if (draggedNode.Equals(targetNode.Parent))
+            {
+                Debug.WriteLine("dragged node is parent of target node... nothing done.");
+                return;
+            }
+
+            if (targetNode.Parent == null && isTargetPckFile && draggedNode.Parent == null)
+            {
+                Debug.WriteLine("target node is file and is in the root... nothing done.");
+                return;
+            }
+
+            if ((targetNode.Parent?.Equals(draggedNode.Parent) ?? false) && isTargetPckFile)
+            {
+                Debug.WriteLine("target node and dragged node have the same parent... nothing done.");
+                return;
+            }
+
+            Debug.WriteLine($"Target drop location is {(isTargetPckFile ? "file" : "folder")}.");
+
+            // Retrieve the node that was dragged.
+            if (draggedNode.TryGetTagData(out PckFileData draggedFile) &&
+                targetNode.FullPath != draggedFile.Filename)
+            {
+                Debug.WriteLine(draggedFile.Filename + " was droped onto " + targetNode.FullPath);
+                string newFilePath = Path.Combine(isTargetPckFile
+                    ? Path.GetDirectoryName(targetNode.FullPath)
+                    : targetNode.FullPath, Path.GetFileName(draggedFile.Filename));
+                Debug.WriteLine("New filepath: " + newFilePath);
+                draggedFile.Filename = newFilePath;
+                _wasModified = true;
+                BuildMainTreeView();
+                return;
+            }
+            else
+            {
+                List<PckFileData> pckFiles = GetEndingNodes(draggedNode.Nodes).Where(t => t.IsTagOfType<PckFileData>()).Select(t => t.Tag as PckFileData).ToList();
+                string oldPath = draggedNode.FullPath;
+                string newPath = Path.Combine(isTargetPckFile ? Path.GetDirectoryName(targetNode.FullPath) : targetNode.FullPath, draggedNode.Text).Replace('\\', '/');
+                foreach (var pckFile in pckFiles)
+                {
+                    pckFile.Filename = Path.Combine(newPath, pckFile.Filename.Substring(oldPath.Length + 1)).Replace('\\', '/');
+                }
+                _wasModified = true;
+                BuildMainTreeView();
+            }
+        }
+
+        private IEnumerable<TreeNode> GetEndingNodes(TreeNodeCollection collection)
+        {
+            List<TreeNode> trailingNodes = new List<TreeNode>(collection.Count);
+            foreach (TreeNode node in collection)
+            {
+                if (node.Nodes.Count > 0)
+                {
+                    trailingNodes.AddRange(GetEndingNodes(node.Nodes));
+                    continue;
+                }
+                trailingNodes.Add(node);
+            }
+            return trailingNodes;
+        }
+
+        private void ImportFiles(string[] files)
+        {
+            int addedCount = 0;
+            foreach (var file in files)
+            {
+                using AddFilePrompt addFile = new AddFilePrompt(Path.GetFileName(file));
+                if (addFile.ShowDialog(this) != DialogResult.OK)
+                    continue;
+
+                if (_pck.Contains(addFile.Filepath, addFile.Filetype))
+                {
+                    MessageBox.Show(this, $"'{addFile.Filepath}' of type {addFile.Filetype} already exists.", "Import failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    continue;
+                }
+                _pck.CreateNewFile(addFile.Filepath, addFile.Filetype, () => File.ReadAllBytes(file));
+                addedCount++;
+
+                BuildMainTreeView();
+                _wasModified = true;
+            }
+            Trace.TraceInformation("[{0}] Imported {1} file(s).", nameof(ImportFiles), addedCount);
+        }
+
+        #endregion
+
         private void createSkinToolStripMenuItem_Click(object sender, EventArgs e)
         {
             LOCFile locFile = null;
@@ -777,10 +928,10 @@ namespace PckStudio.Controls
                 return;
 
             var file = new PckFileData(
-                $"res/textures/{Animation.GetCategoryName(diag.Category)}/{diag.SelectedTile}.png",
+                $"{ResourceLocation.GetPathFromCategory(diag.Category)}/{diag.SelectedTile}.png",
                 PckFileType.TextureFile);
 
-            var animation = AnimationHelper.GetAnimationFromFile(file);
+            var animation = file.GetDeserializedData<Animation>(AnimationDeserializer.DefaultDeserializer);
             using AnimationEditor animationEditor = new AnimationEditor(animation, Path.GetFileNameWithoutExtension(file.Filename));
             if (animationEditor.ShowDialog() == DialogResult.OK)
             {
@@ -964,12 +1115,9 @@ namespace PckStudio.Controls
                 saveFileDialog.DefaultExt = ".3dst";
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    using (var ms = new MemoryStream(file.Data))
-                    {
-                        Image img = Image.FromStream(ms);
-                        var writer = new _3DSTextureWriter(img);
-                        writer.WriteToFile(saveFileDialog.FileName);
-                    }
+                    Image img = file.GetTexture();
+                    var writer = new _3DSTextureWriter(img);
+                    writer.WriteToFile(saveFileDialog.FileName);
                 }
             }
         }
@@ -1007,7 +1155,7 @@ namespace PckStudio.Controls
                         PckFileData MipMappedFile = new PckFileData(mippedPath, PckFileType.TextureFile);
 
 
-                        Image originalTexture = Image.FromStream(new MemoryStream(file.Data));
+                        Image originalTexture = file.GetTexture();
                         int NewWidth = Math.Max(originalTexture.Width / (int)Math.Pow(2, i - 1), 1);
                         int NewHeight = Math.Max(originalTexture.Height / (int)Math.Pow(2, i - 1), 1);
 
@@ -1607,7 +1755,7 @@ namespace PckStudio.Controls
                         texture = _img;
                     }
 
-                    file.SetData(texture, ImageFormat.Png);
+                    file.SetTexture(texture);
                     _wasModified = true;
                     BuildMainTreeView();
                 }
@@ -1616,14 +1764,13 @@ namespace PckStudio.Controls
 
             if (!file.Filename.StartsWith("res/textures/blocks/") && !file.Filename.StartsWith("res/textures/items/"))
                 return;
-            var animation = AnimationHelper.GetAnimationFromFile(file);
+            var animation = file.GetDeserializedData<Animation>(AnimationDeserializer.DefaultDeserializer);
             using (AnimationEditor animationEditor = new AnimationEditor(animation, Path.GetFileNameWithoutExtension(file.Filename)))
             {
                 if (animationEditor.ShowDialog(this) == DialogResult.OK)
                 {
                     _wasModified = true;
-                    file.Filename = animationEditor.FinalPath;
-                    AnimationHelper.SaveAnimationToFile(file, animation);
+                    file.SetSerializedData(animation, AnimationSerializer.DefaultSerializer);
                     BuildMainTreeView();
                 }
             }
@@ -1631,9 +1778,33 @@ namespace PckStudio.Controls
 
         private void HandleGameRuleFile(PckFileData file)
         {
-            using GameRuleFileEditor grfEditor = new GameRuleFileEditor(file);
-            _wasModified = grfEditor.ShowDialog(this) == DialogResult.OK;
-            UpdateRichPresence();
+            const string use_deflate = "PS3";
+            const string use_xmem = "Xbox 360";
+            const string use_zlib = "Wii U, PS Vita";
+
+            ItemSelectionPopUp dialog = new ItemSelectionPopUp(use_zlib, use_deflate, use_xmem);
+            dialog.LabelText = "Type";
+            dialog.ButtonText = "Ok";
+            if (dialog.ShowDialog() != DialogResult.OK)
+                return;
+
+            var compressiontype = dialog.SelectedItem switch
+            {
+                use_deflate => GameRuleFile.CompressionType.Deflate,
+                use_xmem => GameRuleFile.CompressionType.XMem,
+                use_zlib => GameRuleFile.CompressionType.Zlib,
+                _ => GameRuleFile.CompressionType.Unknown
+            };
+
+            GameRuleFile grf = file.GetData(new GameRuleFileReader(compressiontype));
+
+            using GameRuleFileEditor grfEditor = new GameRuleFileEditor(grf);
+            if (grfEditor.ShowDialog(this) == DialogResult.OK)
+            {
+                file.SetData(new GameRuleFileWriter(grfEditor.Result));
+                _wasModified = true;
+                UpdateRichPresence();
+            }
         }
 
         private void HandleAudioFile(PckFileData file)
@@ -1666,25 +1837,22 @@ namespace PckStudio.Controls
         {
             if (file.Size <= 0)
                 return;
-            using (var ms = new MemoryStream(file.Data))
+            var texture = file.GetTexture();
+            if (file.HasProperty("BOX"))
             {
-                var texture = Image.FromStream(ms);
-                if (file.HasProperty("BOX"))
+                using generateModel generate = new generateModel(file);
+                if (generate.ShowDialog() == DialogResult.OK)
                 {
-                    using generateModel generate = new generateModel(file);
-                    if (generate.ShowDialog() == DialogResult.OK)
-                    {
-                        entryDataTextBox.Text = entryTypeTextBox.Text = string.Empty;
-                        _wasModified = true;
-                        ReloadMetaTreeView();
-                    }
+                    entryDataTextBox.Text = entryTypeTextBox.Text = string.Empty;
+                    _wasModified = true;
+                    ReloadMetaTreeView();
                 }
-                else
-                {
-                    SkinPreview frm = new SkinPreview(texture, file.GetProperty("ANIM", SkinANIM.FromString));
-                    frm.ShowDialog(this);
-                    frm.Dispose();
-                }
+            }
+            else
+            {
+                SkinPreview frm = new SkinPreview(texture, file.GetProperty("ANIM", SkinANIM.FromString));
+                frm.ShowDialog(this);
+                frm.Dispose();
             }
         }
 
@@ -1912,5 +2080,101 @@ namespace PckStudio.Controls
         private void moveUpToolStripMenuItem_Click(object sender, EventArgs e) => moveFile(-1);
         [Obsolete]
         private void moveDownToolStripMenuItem_Click(object sender, EventArgs e) => moveFile(1);
+
+
+        private void SetPckEndianness(OMI.Endianness endianness)
+        {
+            try
+            {
+                if (treeViewMain.SelectedNode.Tag is PckFileData file && (file.Filetype is PckFileType.AudioFile || file.Filetype is PckFileType.SkinDataFile || file.Filetype is PckFileType.TexturePackInfoFile))
+                {
+                    IDataFormatReader reader = file.Filetype is PckFileType.AudioFile
+                        ? new PckAudioFileReader(endianness == OMI.Endianness.BigEndian ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian)
+                        : new PckFileReader(endianness == OMI.Endianness.BigEndian ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
+                    object pck = reader.FromStream(new MemoryStream(file.Data));
+
+                    IDataFormatWriter writer = file.Filetype is PckFileType.AudioFile
+                        ? new PckAudioFileWriter((PckAudioFile)pck, endianness)
+                        : new PckFileWriter((PckFile)pck, endianness);
+                    file.SetData(writer);
+                    _wasModified = true;
+                    MessageBox.Show($"\"{file.Filename}\" successfully converted to {(endianness == OMI.Endianness.LittleEndian ? "little" : "big")} endian.", "Converted PCK file");
+                }
+            }
+            catch (OverflowException)
+            {
+                MessageBox.Show(this, $"File was not a valid {(endianness != OMI.Endianness.LittleEndian ? "little" : "big")} endian PCK File.", "Not a valid PCK file");
+                return;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, ex.Message, "Not a valid PCK file");
+                return;
+            }
+        }
+
+        private void littleEndianToolStripMenuItem_Click(object sender, EventArgs e) => SetPckEndianness(OMI.Endianness.LittleEndian);
+        private void bigEndianToolStripMenuItem_Click(object sender, EventArgs e) => SetPckEndianness(OMI.Endianness.BigEndian);
+
+        private void SetModelVersion(int version)
+        {
+            if (treeViewMain.SelectedNode.Tag is PckFileData file && file.Filetype is PckFileType.ModelsFile)
+            {
+                try
+                {
+                    ModelContainer container = file.GetData(new ModelFileReader());
+
+                    if (container.Version == version)
+                    {
+                        MessageBox.Show(
+                            this,
+                            $"This model container is already Version {version + 1}.",
+                            "Can't convert", MessageBoxButtons.OK, MessageBoxIcon.Error
+                        );
+                        return;
+                    }
+
+                    if (version == 2 &&
+                        MessageBox.Show(
+                            this,
+                            "Conversion to 1.14 models.bin format does not yet support parent declaration and may not be 100% accurate.\n" +
+                            "Would you like to continue?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes
+                        )
+                    {
+                        return;
+                    }
+
+                    if (container.Version > 1 &&
+                        MessageBox.Show(
+                            this,
+                            "Conversion from 1.14 models.bin format does not yet support parent parts and may not be 100% accurate.\n" +
+                            "Would you like to continue?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes
+                            )
+                    {
+                        return;
+                    }
+
+                    file.SetData(new ModelFileWriter(container, version));
+                    _wasModified = true;
+                    MessageBox.Show(
+                        this,
+                        $"\"{file.Filename}\" successfully converted to Version {version + 1} format.",
+                        "Converted model container file"
+                        );
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(this, ex.Message, "Not a valid model container file.");
+                    return;
+                }
+            }
+        }
+
+        private void setModelVersion1ToolStripMenuItem_Click(object sender, EventArgs e) => SetModelVersion(0);
+
+        private void setModelVersion2ToolStripMenuItem_Click(object sender, EventArgs e) => SetModelVersion(1);
+
+        private void setModelVersion3ToolStripMenuItem_Click(object sender, EventArgs e) => SetModelVersion(2);
+
     }
 }

@@ -105,8 +105,7 @@
             resources.GetString("FileTypeComboBox.Items10"),
             resources.GetString("FileTypeComboBox.Items11"),
             resources.GetString("FileTypeComboBox.Items12"),
-            resources.GetString("FileTypeComboBox.Items13"),
-            resources.GetString("FileTypeComboBox.Items14")});
+            resources.GetString("FileTypeComboBox.Items13")});
             this.FileTypeComboBox.Name = "FileTypeComboBox";
             this.FileTypeComboBox.Style = MetroFramework.MetroColorStyle.Blue;
             this.FileTypeComboBox.Theme = MetroFramework.MetroThemeStyle.Dark;

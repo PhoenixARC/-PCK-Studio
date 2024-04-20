@@ -133,11 +133,22 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\IO\TGA\TGADeserializer.cs" />
+    <Compile Include="Classes\IO\TGA\TGASerializer.cs" />
     <Compile Include="Extensions\LocFileExtensions.cs" />
     <Compile Include="Extensions\PckFileDataExtensions.cs" />
     <Compile Include="Extensions\TreeNodeExtensions.cs" />
-    <Compile Include="Helper\AnimationHelper.cs" />
-    <Compile Include="Internal\AnimationCategory.cs" />
+    <Compile Include="Internal\Deserializer\ImageDeserializer.cs" />
+    <Compile Include="Internal\Serializer\AnimationSerializer.cs" />
+    <Compile Include="Internal\Deserializer\AnimationDeserializer.cs" />
+    <Compile Include="Interfaces\IPckDeserializer.cs" />
+    <Compile Include="Interfaces\IPckFileSerializer.cs" />
+    <Compile Include="Internal\Json\Entities.cs" />
+    <Compile Include="Internal\Json\EntityInfo.cs" />
+    <Compile Include="Internal\ResourceCategory.cs" />
+    <Compile Include="Internal\CommitInfo.cs" />
+    <Compile Include="Internal\ResourceLocation.cs" />
+    <Compile Include="Internal\Serializer\ImageSerializer.cs" />
     <Compile Include="Internal\SkinAnimFlag.cs" />
     <Compile Include="Internal\SkinAnimMask.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -256,7 +267,14 @@
     <Compile Include="Features\WiiUPanel.Designer.cs">
       <DependentUpon>WiiUPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Internal\CommitInfo.cs" />
+    <Compile Include="Classes\IO\TGA\TGAFileData.cs" />
+    <Compile Include="Classes\IO\TGA\TGADataTypeCode.cs" />
+    <Compile Include="Classes\IO\TGA\TGAException.cs" />
+    <Compile Include="Classes\IO\TGA\TGAExtentionData.cs" />
+    <Compile Include="Classes\IO\TGA\TGAFooter.cs" />
+    <Compile Include="Classes\IO\TGA\TGAHeader.cs" />
+    <Compile Include="Classes\IO\TGA\TGAReader.cs" />
+    <Compile Include="Classes\IO\TGA\TGAWriter.cs" />
     <Compile Include="Forms\Additional-Popups\EntityForms\AddEntry.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -431,30 +449,6 @@
     <Compile Include="Forms\Editor\AudioEditor.Designer.cs">
       <DependentUpon>AudioEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Utilities\pckCenter.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Utilities\pckCenter.Designer.cs">
-      <DependentUpon>pckCenter.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Utilities\PckCenterBeta.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Utilities\PckCenterBeta.Designer.cs">
-      <DependentUpon>PckCenterBeta.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Utilities\pckCenterOpen.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Utilities\pckCenterOpen.Designer.cs">
-      <DependentUpon>pckCenterOpen.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Utilities\TextureConverterUtility.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Utilities\TextureConverterUtility.Designer.cs">
-      <DependentUpon>TextureConverterUtility.cs</DependentUpon>
-    </Compile>
     <Compile Include="Internal\PckNodeSorter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Forms\CreditsForm.cs">
@@ -600,25 +594,6 @@
       <DependentUpon>AudioEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\pckCenter.ja.resx">
-      <DependentUpon>pckCenter.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\pckCenter.resx">
-      <DependentUpon>pckCenter.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\PckCenterBeta.resx">
-      <DependentUpon>PckCenterBeta.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\pckCenterOpen.ja.resx">
-      <DependentUpon>pckCenterOpen.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\pckCenterOpen.resx">
-      <DependentUpon>pckCenterOpen.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\TextureConverterUtility.resx">
-      <DependentUpon>TextureConverterUtility.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\CreditsForm.resx">
       <DependentUpon>CreditsForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -645,7 +620,9 @@
   <ItemGroup>
     <None Include="Resources\atlases\bannerData.json" />
     <None Include="Resources\atlases\blockData.json" />
-    <None Include="Resources\atlases\entityData.json" />
+    <None Include="Resources\atlases\entityBehavioursData.json" />
+    <None Include="Resources\atlases\entityMaterialsData.json" />
+    <None Include="Resources\atlases\entityModelsData.json" />
     <None Include="Resources\atlases\experienceOrbData.json" />
     <None Include="Resources\atlases\explosionData.json" />
     <None Include="Resources\atlases\itemData.json" />
@@ -681,7 +658,6 @@
     <None Include="Resources\Splash.png" />
     <None Include="Resources\pckOpen.png" />
     <None Include="Resources\pckDrop.png" />
-    <None Include="Resources\pckCenterHeader.png" />
     <None Include="Resources\binka\binka_encode.exe" />
     <None Include="Resources\binka\mss32.dll" />
     <None Include="Resources\anim_editor\classic_template.png" />
@@ -711,6 +687,7 @@
     <None Include="Resources\atlases\particles.png" />
     <None Include="Resources\atlases\paintings.png" />
     <Content Include="Resources\atlases\terrain.png" />
+    <None Include="Resources\external\trello.png" />
     <Content Include="Resources\icons\file_delete.png" />
     <Content Include="Resources\icons\file_empty.png" />
     <None Include="Resources\icons\file_export.png" />

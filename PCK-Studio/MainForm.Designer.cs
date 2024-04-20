@@ -96,21 +96,6 @@
             this.openPckCenterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.joinDevelopmentDiscordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.trelloBoardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.videosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.howToMakeABasicSkinPackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.howToMakeACustomSkinModelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.howToMakeCustomSkinModelsbedrockToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.howToMakeCustomMusicToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.howToInstallPcksDirectlyToWiiUToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pckCenterReleaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.howPCKsWorkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.donateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toNobledezJackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toPhoenixARCDeveloperToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.forMattNLContributorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuMetaTree = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addEntryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addEntryToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -573,7 +558,7 @@
             // 
             // openPckCenterToolStripMenuItem
             // 
-            this.openPckCenterToolStripMenuItem.Image = global::PckStudio.Properties.Resources.pckCenterHeader;
+            this.openPckCenterToolStripMenuItem.Image = global::PckStudio.Properties.Resources.NoImageFound;
             this.openPckCenterToolStripMenuItem.Name = "openPckCenterToolStripMenuItem";
             resources.ApplyResources(this.openPckCenterToolStripMenuItem, "openPckCenterToolStripMenuItem");
             this.openPckCenterToolStripMenuItem.Click += new System.EventHandler(this.openPckCenterToolStripMenuItem_Click);

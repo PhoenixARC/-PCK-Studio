@@ -41,7 +41,7 @@ namespace PckStudio.Features
         {
             InitializeComponent();
             if (!TryApplyPermanentCemuConfig() &&
-                MessageBox.Show("Failed to get Cemu perma settings\nDo you want to open your local settings.xml file?",
+                MessageBox.Show(this, "Failed to get Cemu perma settings\nDo you want to open your local settings.xml file?",
                 "Cemu mlc path not found",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Warning) == DialogResult.Yes
@@ -197,14 +197,14 @@ namespace PckStudio.Features
             DLCTreeView.Nodes.Clear();
             if (!IsValidInstallDirectory())
             {
-                MessageBox.Show("Please select a valid Game Directory!", "Invalid Directory Specified",
+                MessageBox.Show(this, "Please select a valid Game Directory!", "Invalid Directory Specified",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             if (!IsValidGameDirectory())
             {
-                MessageBox.Show($"Could not find '{GetGameContentPath()}'!", "Not Found",
+                MessageBox.Show(this, $"Could not find '{GetGameContentPath()}'!", "Not Found",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
@@ -214,7 +214,7 @@ namespace PckStudio.Features
 
             if (!dlcDirectory.Exists)
             {
-                MessageBox.Show($"'{dirPath}' does not exist!", "Not Found",
+                MessageBox.Show(this, $"'{dirPath}' does not exist!", "Not Found",
                    MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
@@ -246,7 +246,7 @@ namespace PckStudio.Features
 
         private void openSkinPackToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (DLCTreeView.SelectedNode.Tag is DLCDirectoryInfo dlcDir)
+            if (DLCTreeView.SelectedNode?.Tag is DLCDirectoryInfo dlcDir)
             {
                 Program.MainInstance.LoadPckFromFile(dlcDir.PackPath);
             }
@@ -254,7 +254,7 @@ namespace PckStudio.Features
 
         private void openTexturePackToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (DLCTreeView.SelectedNode.Tag is DLCDirectoryInfo dlcDir && dlcDir.HasTexturePack)
+            if (DLCTreeView.SelectedNode?.Tag is DLCDirectoryInfo dlcDir && dlcDir.HasTexturePack)
             {
                 Program.MainInstance.LoadPckFromFile(dlcDir.TexturePackPath);
             }
@@ -276,7 +276,7 @@ namespace PckStudio.Features
             
             if (prompt.NewText.ContainsAny(Path.GetInvalidPathChars()))
             {
-                MessageBox.Show("Invalid Folder name entered!", "Invalid Folder Name", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(this, "Invalid Folder name entered!", "Invalid Folder Name", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -284,7 +284,7 @@ namespace PckStudio.Features
 
             if (Directory.Exists(directoryPath))
             {
-                MessageBox.Show("A Folder with the same name already exists!", "Folder Name taken", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(this, "A Folder with the same name already exists!", "Folder Name taken", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             Directory.CreateDirectory(directoryPath);
@@ -302,7 +302,7 @@ namespace PckStudio.Features
         private void removePckToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string pckName = DLCTreeView.SelectedNode.Text;
-            var result = MessageBox.Show($"Are you sure you want to permanently delete '{pckName}'?", "Hold up!", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+            var result = MessageBox.Show(this, $"Are you sure you want to permanently delete '{pckName}'?", "Hold up!", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
                 string directoryPath = GetContentSubDirectory("WiiU", "DLC", pckName);

@@ -11,11 +11,11 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 {
 	internal partial class ChangeTile : MetroForm
 	{
-        string selectedTile = "";
-        AnimationCategory category = AnimationCategory.Blocks;
+        private JsonTileInfo selectedTile;
+        private ResourceCategory category = ResourceCategory.BlockAnimation;
 
-		public string SelectedTile => selectedTile;
-		public AnimationCategory Category => category;
+		public JsonTileInfo SelectedTile => selectedTile;
+		public ResourceCategory Category => category;
 
         List<TreeNode> treeViewBlockCache = new List<TreeNode>();
 		List<TreeNode> treeViewItemCache = new List<TreeNode>();
@@ -31,8 +31,8 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 		private void InitializeTreeviews()
 		{
             Profiler.Start();
-            GetTileDataToView(AnimationCategory.Blocks, treeViewBlocks.Nodes, treeViewBlockCache.Add);
-            GetTileDataToView(AnimationCategory.Items, treeViewItems.Nodes, treeViewItemCache.Add);
+            GetTileDataToView(ResourceCategory.BlockAnimation, treeViewBlocks.Nodes, treeViewBlockCache.Add);
+            GetTileDataToView(ResourceCategory.ItemAnimation, treeViewItems.Nodes, treeViewItemCache.Add);
             Profiler.Stop();
         }
 
@@ -40,19 +40,19 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 		{
 			if (e.Node.Tag is JsonTileInfo tileData)
 			{
-				selectedTile = tileData.InternalName;
+				selectedTile = tileData;
                 category = e.Node.TreeView == treeViewItems
-					? AnimationCategory.Items
-					: AnimationCategory.Blocks;
+					? ResourceCategory.ItemAnimation
+					: ResourceCategory.BlockAnimation;
             }
 		}
 
-		private void GetTileDataToView(AnimationCategory key, TreeNodeCollection collection, Action<TreeNode> additionalAction)
+		private void GetTileDataToView(ResourceCategory key, TreeNodeCollection collection, Action<TreeNode> additionalAction)
 		{
 			List<JsonTileInfo> textureInfos = key switch
 			{
-                AnimationCategory.Blocks => Tiles.BlockTileInfos,
-                AnimationCategory.Items => Tiles.ItemTileInfos,
+                ResourceCategory.BlockAnimation => Tiles.BlockTileInfos,
+                ResourceCategory.ItemAnimation => Tiles.ItemTileInfos,
 				_ => throw new InvalidOperationException(nameof(key))
 			};
 			Profiler.Start();
@@ -126,7 +126,7 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 
 		private void AcceptBtn_Click(object sender, EventArgs e)
 		{
-			if (string.IsNullOrEmpty(selectedTile))
+			if (string.IsNullOrEmpty(selectedTile.InternalName))
 			{
                 DialogResult = DialogResult.Cancel;
 				return;
