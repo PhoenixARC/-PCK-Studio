@@ -1445,6 +1445,9 @@ namespace PckStudio
 
             // Retrieve the node at the drop location.
             TreeNode targetNode = treeViewMain.GetNodeAt(targetPoint);
+			if (targetNode is null)
+				return;
+
 			bool isTargetPckFile = targetNode.IsTagOfType<PckFileData>();
 
 			if (e.Data.GetData(dataFormat) is not TreeNode draggedNode)
