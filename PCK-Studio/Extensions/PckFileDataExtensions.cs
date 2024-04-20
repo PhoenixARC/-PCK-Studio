@@ -42,7 +42,7 @@ namespace PckStudio.Extensions
             return formatReader.FromStream(ms);
         }
 
-        internal static void SetSerializedData<T>(this PckFileData file, T obj, IPckFileSerializer<T> serializer)
+        internal static void SetSerializedData<T>(this PckFileData file, T obj, IPckSerializer<T> serializer)
         {
             serializer.Serialize(obj, ref file);
         }

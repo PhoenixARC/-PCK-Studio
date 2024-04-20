@@ -7,7 +7,7 @@ using OMI.Formats.Pck;
 
 namespace PckStudio.Interfaces
 {
-    internal interface IPckFileSerializer<T>
+    internal interface IPckSerializer<T>
     {
         public void Serialize(T obj, ref PckFileData file);
     }

@@ -13,7 +13,7 @@ using PckStudio.IO.TGA;
 
 namespace PckStudio.Internal.Serializer
 {
-    internal sealed class ImageSerializer : IPckFileSerializer<Image>
+    internal sealed class ImageSerializer : IPckSerializer<Image>
     {
         public static readonly ImageSerializer DefaultSerializer = new ImageSerializer();
 

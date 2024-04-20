@@ -142,7 +142,7 @@
     <Compile Include="Internal\Serializer\AnimationSerializer.cs" />
     <Compile Include="Internal\Deserializer\AnimationDeserializer.cs" />
     <Compile Include="Interfaces\IPckDeserializer.cs" />
-    <Compile Include="Interfaces\IPckFileSerializer.cs" />
+    <Compile Include="Interfaces\IPckSerializer.cs" />
     <Compile Include="Internal\Json\Entities.cs" />
     <Compile Include="Internal\Json\EntityInfo.cs" />
     <Compile Include="Internal\ResourceCategory.cs" />
