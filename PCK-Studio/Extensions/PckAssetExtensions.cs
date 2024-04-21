@@ -16,7 +16,7 @@ using PckStudio.Internal.Serializer;
 
 namespace PckStudio.Extensions
 {
-    internal static class PckFileDataExtensions
+    internal static class PckAssetExtensions
     {
         private const string MipMap = "MipMapLevel";
 
