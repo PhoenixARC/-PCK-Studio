@@ -9,6 +9,6 @@ namespace PckStudio.Interfaces
 {
     internal interface IPckSerializer<T>
     {
-        public void Serialize(T obj, ref PckFileData file);
+        public void Serialize(T obj, ref PckAsset file);
     }
 }

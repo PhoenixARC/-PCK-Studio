@@ -170,7 +170,7 @@ namespace PckStudio.Forms.Editor
 
         private bool AcquireColorTable(PckFile pckFile)
         {
-            if (pckFile.TryGetFile("colours.col", PckFileType.ColourTableFile, out var colFile) &&
+            if (pckFile.TryGetFile("colours.col", PckAssetType.ColourTableFile, out var colFile) &&
                 colFile.Size > 0)
             {
                 using var ms = new MemoryStream(colFile.Data);
@@ -243,11 +243,11 @@ namespace PckStudio.Forms.Editor
 
             if (animationButton.Enabled = _atlasType == "blocks" || _atlasType == "items")
             {
-                PckFileData animationFile;
+                PckAsset animationFile;
 
                 bool hasAnimation =
-                    _pckFile.TryGetValue($"res/textures/{_atlasType}/{dataTile.Tile.InternalName}.png", PckFileType.TextureFile, out animationFile) ||
-                    _pckFile.TryGetValue($"res/textures/{_atlasType}/{dataTile.Tile.InternalName}.tga", PckFileType.TextureFile, out animationFile);
+                    _pckFile.TryGetValue($"res/textures/{_atlasType}/{dataTile.Tile.InternalName}.png", PckAssetType.TextureFile, out animationFile) ||
+                    _pckFile.TryGetValue($"res/textures/{_atlasType}/{dataTile.Tile.InternalName}.tga", PckAssetType.TextureFile, out animationFile);
                 animationButton.Text = hasAnimation ? "Edit Animation" : "Create Animation";
 
                 if (playAnimationsToolStripMenuItem.Checked &&
@@ -535,7 +535,7 @@ namespace PckStudio.Forms.Editor
         {
             var file = _pckFile.GetOrCreate(
                     $"res/textures/{_atlasType}/{_selectedTile.Tile.InternalName}.png",
-                    PckFileType.TextureFile
+                    PckAssetType.TextureFile
                 );
 
             var animation = file.GetDeserializedData(AnimationDeserializer.DefaultDeserializer);

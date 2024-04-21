@@ -16,7 +16,7 @@ namespace PckStudio.Internal.Deserializer
     {
         public static readonly AnimationDeserializer DefaultDeserializer = new AnimationDeserializer();
         
-        public Animation Deserialize(PckFileData file)
+        public Animation Deserialize(PckAsset file)
         {
             _ = file ?? throw new ArgumentNullException(nameof(file));
             if (file.Size > 0)

@@ -11,7 +11,7 @@ namespace PckStudio.Extensions
 {
     internal static class PckFileExtensions
     {
-        internal static PckFileData CreateNewFileIf(this PckFile pck, bool condition, string filename, PckFileType filetype, IDataFormatWriter writer)
+        internal static PckAsset CreateNewFileIf(this PckFile pck, bool condition, string filename, PckAssetType filetype, IDataFormatWriter writer)
         {
             if (condition)
             {
@@ -20,7 +20,7 @@ namespace PckStudio.Extensions
             return null;
         }
 
-        internal static PckFileData CreateNewFile(this PckFile pck, string filename, PckFileType filetype, IDataFormatWriter writer)
+        internal static PckAsset CreateNewFile(this PckFile pck, string filename, PckAssetType filetype, IDataFormatWriter writer)
         {
             var file = pck.CreateNewFile(filename, filetype);
             file.SetData(writer);

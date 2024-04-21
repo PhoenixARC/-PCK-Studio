@@ -18,7 +18,7 @@ namespace PckStudio.Internal.Deserializer
         public static readonly ImageDeserializer DefaultDeserializer = new ImageDeserializer();
         private static Image EmptyImage = new Bitmap(1, 1, PixelFormat.Format32bppArgb);
 
-        public Image Deserialize(PckFileData file)
+        public Image Deserialize(PckAsset file)
         {
             using var stream = new MemoryStream(file.Data);
             try

@@ -17,7 +17,7 @@ namespace PckStudio.Internal.Serializer
     {
         public static readonly ImageSerializer DefaultSerializer = new ImageSerializer();
 
-        public void Serialize(Image obj, ref PckFileData file)
+        public void Serialize(Image obj, ref PckAsset file)
         {
             var stream = new MemoryStream();
             try
