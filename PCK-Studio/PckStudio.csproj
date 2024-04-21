@@ -208,7 +208,6 @@
     <Compile Include="Classes\IO\CSMB\CSMBFileWriter.cs" />
     <Compile Include="Classes\IO\PckAudio\PckAudioFileReader.cs" />
     <Compile Include="Classes\IO\PckAudio\PckAudioFileWriter.cs" />
-    <Compile Include="Classes\Misc\FTPClient.cs" />
     <Compile Include="Classes\Misc\FileCacher.cs" />
     <Compile Include="Classes\Misc\OpenFolderDialog.cs" />
     <Compile Include="Classes\Models\DefaultModels\Steve64x64Model.cs" />
@@ -249,12 +248,6 @@
     </Compile>
     <Compile Include="Features\CemuPanel.Designer.cs">
       <DependentUpon>CemuPanel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Features\WiiUPanel.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Features\WiiUPanel.Designer.cs">
-      <DependentUpon>WiiUPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="Classes\IO\TGA\TGAFileData.cs" />
     <Compile Include="Classes\IO\TGA\TGADataTypeCode.cs" />
@@ -450,9 +443,6 @@
     <Compile Include="Classes\IO\3DST\TextureCodec.cs" />
     <EmbeddedResource Include="Features\CemuPanel.resx">
       <DependentUpon>CemuPanel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Features\WiiUPanel.resx">
-      <DependentUpon>WiiUPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\EntityForms\AddEntry.resx">
       <DependentUpon>AddEntry.cs</DependentUpon>
