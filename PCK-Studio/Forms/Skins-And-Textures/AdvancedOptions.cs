@@ -44,12 +44,12 @@ namespace PckStudio.Popups
             MessageBox.Show(this, "Please select a filetype before applying");
         }
 
-        private void applyBulkProperties(IReadOnlyCollection<PckFileData> files, int index)
+        private void applyBulkProperties(IReadOnlyCollection<PckAsset> files, int index)
 		{
-            foreach (PckFileData file in files)
+            foreach (PckAsset file in files)
             {
-                if (file.Filetype == PckFileType.TexturePackInfoFile ||
-                file.Filetype == PckFileType.SkinDataFile)
+                if (file.Type == PckAssetType.TexturePackInfoFile ||
+                file.Type == PckAssetType.SkinDataFile)
                 {
                     try
                     {
@@ -65,15 +65,15 @@ namespace PckStudio.Popups
                     }
                 }
 
-                if (index == -1 || (Enum.IsDefined(typeof(PckFileType), index) && (int)file.Filetype == index))
+                if (index == -1 || (Enum.IsDefined(typeof(PckAssetType), index) && (int)file.Type == index))
                 {
                     file.AddProperty(propertyKeyTextBox.Text, propertyValueTextBox.Text);
                 }
             }
 
-            if (Enum.IsDefined(typeof(PckFileType), index))
+            if (Enum.IsDefined(typeof(PckAssetType), index))
             {
-                MessageBox.Show(this, $"Data added to {(PckFileType)index} entries");
+                MessageBox.Show(this, $"Data added to {(PckAssetType)index} entries");
                 return;
             }
             MessageBox.Show(this, "Data added to all entries");

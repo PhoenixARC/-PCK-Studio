@@ -19,7 +19,7 @@ namespace PckStudio.Forms.Editor
 	public partial class MaterialsEditor : MetroForm
 	{
 		// Materials File Format research by PhoenixARC
-		private readonly PckFileData _file;
+		private readonly PckAsset _file;
 		MaterialContainer materialFile;
 
 		private readonly List<EntityInfo> MaterialData = Entities.BehaviourInfos;
@@ -64,7 +64,7 @@ namespace PckStudio.Forms.Editor
 			treeView1.EndUpdate();
 		}
 
-		public MaterialsEditor(PckFileData file)
+		public MaterialsEditor(PckAsset file)
 		{
 			InitializeComponent();
 			_file = file;

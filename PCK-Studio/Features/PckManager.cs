@@ -61,7 +61,7 @@ namespace PckStudio.Features
                     currentlyShowingControl = currentlyShowingControlName switch
                     {
                         CemU => new CemuPanel(),
-                        //WiiU => new WiiUPanel(),
+                        //WiiU => throw new NotImplementedException($"{text}-Panel is currently not implemented."),
                         //PS3 => throw new NotImplementedException($"{text}-Panel is currently not implemented."),
                         //PSVita => throw new NotImplementedException($"{text}-Panel is currently not implemented."),
                         //RPCS3 => throw new NotImplementedException($"{text}-Panel is currently not implemented."),

@@ -21,11 +21,11 @@ namespace PckStudio.Extensions
     {
         private const string MipMap = "MipMapLevel";
 
-        internal static Image GetTexture(this PckFileData file)
+        internal static Image GetTexture(this PckAsset file)
         {
-            if (file.Filetype != PckFileType.SkinFile &&
-                file.Filetype != PckFileType.CapeFile &&
-                file.Filetype != PckFileType.TextureFile)
+            if (file.Type != PckAssetType.SkinFile &&
+                file.Type != PckAssetType.CapeFile &&
+                file.Type != PckAssetType.TextureFile)
             {
                 throw new Exception("File is not suitable to contain image data.");
             }
@@ -38,9 +38,9 @@ namespace PckStudio.Extensions
         /// <param name="file"></param>
         /// <returns>Non-zero base number on success, otherwise 0</returns>
         /// <exception cref="InvalidOperationException"></exception>
-        internal static int GetSkinId(this PckFileData file)
+        internal static int GetSkinId(this PckAsset file)
         {
-            if (file.Filetype != PckFileType.SkinFile)
+            if (file.Type != PckAssetType.SkinFile)
                 throw new InvalidOperationException("File is not a skin file");
             
             string filename = Path.GetFileNameWithoutExtension(file.Filename);
@@ -58,9 +58,9 @@ namespace PckStudio.Extensions
             return skinId;
         }
 
-        internal static Skin GetSkin(this PckFileData file)
+        internal static Skin GetSkin(this PckAsset file)
         {
-            if (file.Filetype != PckFileType.SkinFile)
+            if (file.Type != PckAssetType.SkinFile)
                 throw new InvalidOperationException("File is not a skin file");
 
             //if (file.Properties.Contains("CAPEPATH"))
@@ -76,9 +76,9 @@ namespace PckStudio.Extensions
             return new Skin(name, skinId, texture, anim, boxes, offsets);
         }
 
-        internal static void SetSkin(this PckFileData file, Skin skin, LOCFile localizationFile)
+        internal static void SetSkin(this PckAsset file, Skin skin, LOCFile localizationFile)
         {
-            if (file.Filetype != PckFileType.SkinFile)
+            if (file.Type != PckAssetType.SkinFile)
                 throw new InvalidOperationException("File is not a skin file");
 
             file.SetTexture(skin.Texture);
@@ -122,23 +122,23 @@ namespace PckStudio.Extensions
             }
         }
 
-        internal static T GetDeserializedData<T>(this PckFileData file, IPckDeserializer<T> deserializer)
+        internal static T GetDeserializedData<T>(this PckAsset file, IPckDeserializer<T> deserializer)
         {
             return deserializer.Deserialize(file);
         }
 
-        internal static T GetData<T>(this PckFileData file, IDataFormatReader<T> formatReader) where T : class
+        internal static T GetData<T>(this PckAsset file, IDataFormatReader<T> formatReader) where T : class
         {
             using var ms = new MemoryStream(file.Data);
             return formatReader.FromStream(ms);
         }
 
-        internal static void SetSerializedData<T>(this PckFileData file, T obj, IPckFileSerializer<T> serializer)
+        internal static void SetSerializedData<T>(this PckAsset file, T obj, IPckSerializer<T> serializer)
         {
             serializer.Serialize(obj, ref file);
         }
 
-        internal static void SetData(this PckFileData file, IDataFormatWriter formatWriter)
+        internal static void SetData(this PckAsset file, IDataFormatWriter formatWriter)
         {
             using (var stream = new MemoryStream())
             {
@@ -147,18 +147,18 @@ namespace PckStudio.Extensions
             }
         }
 
-        internal static void SetTexture(this PckFileData file, Image image)
+        internal static void SetTexture(this PckAsset file, Image image)
         {
-            if (file.Filetype != PckFileType.SkinFile &&
-                file.Filetype != PckFileType.CapeFile &&
-                file.Filetype != PckFileType.TextureFile)
+            if (file.Type != PckAssetType.SkinFile &&
+                file.Type != PckAssetType.CapeFile &&
+                file.Type != PckAssetType.TextureFile)
             {
                 throw new Exception("File is not suitable to contain image data.");
             }
             file.SetSerializedData(image, ImageSerializer.DefaultSerializer);
         }
 
-        internal static bool IsMipmappedFile(this PckFileData file)
+        internal static bool IsMipmappedFile(this PckAsset file)
         {
             // We only want to test the file name itself. ex: "terrainMipMapLevel2"
             string name = Path.GetFileNameWithoutExtension(file.Filename);
@@ -173,7 +173,7 @@ namespace PckStudio.Extensions
             return true;
         }
 
-        internal static string GetNormalPath(this PckFileData file)
+        internal static string GetNormalPath(this PckAsset file)
         {
             if (!file.IsMipmappedFile())
                 return file.Filename;

@@ -9,6 +9,6 @@ namespace PckStudio.Interfaces
 {
     internal interface IPckDeserializer<T>
     {
-        public T Deserialize(PckFileData file);
+        public T Deserialize(PckAsset file);
     }
 }

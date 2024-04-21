@@ -12,10 +12,10 @@ namespace PckStudio.Extensions
 {
     internal static class SkinExtensions
     {
-        public static PckFileData CreateFile(this Skin skin, LOCFile localizationFile)
+        public static PckAsset CreateFile(this Skin skin, LOCFile localizationFile)
         {
             string skinId = skin.Id.ToString("d08");
-            PckFileData skinFile = new PckFileData($"dlcskin{skinId}.png", PckFileType.SkinFile);
+            PckAsset skinFile = new PckAsset($"dlcskin{skinId}.png", PckAssetType.SkinFile);
 
             skinFile.AddProperty("DISPLAYNAME", skin.Name);
             if (localizationFile is not null)
@@ -58,12 +58,12 @@ namespace PckStudio.Extensions
             return skinFile;
         }
 
-        public static PckFileData CreateCapeFile(this Skin skin)
+        public static PckAsset CreateCapeFile(this Skin skin)
         {
             if (!skin.HasCape)
                 throw new InvalidOperationException("Skin does not contain a cape.");
             string skinId = skin.Id.ToString("d08");
-            PckFileData capeFile = new PckFileData($"dlccape{skinId}.png", PckFileType.CapeFile);
+            PckAsset capeFile = new PckAsset($"dlccape{skinId}.png", PckAssetType.CapeFile);
             capeFile.SetTexture(skin.CapeTexture);
             return capeFile;
         }
