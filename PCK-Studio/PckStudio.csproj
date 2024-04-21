@@ -191,10 +191,6 @@
     <Compile Include="Forms\Editor\TextureAtlasEditor.Designer.cs">
       <DependentUpon>TextureAtlasEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Classes\API\PCKCenter\model\PCKCenterJSON.cs" />
-    <Compile Include="Classes\API\PCKCenter\PCKCollections.cs" />
-    <Compile Include="Classes\API\PCKCenter\PCKCollectionsLocal.cs" />
-    <Compile Include="Classes\API\PCKCenter\SaveLocalJSON.cs" />
     <Compile Include="Extensions\BlendMode.cs" />
     <Compile Include="Extensions\ColorExtensions.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
