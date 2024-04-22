@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Windows.Forms;
 using MetroFramework.Forms;
+using PckStudio.ToolboxItems;
 
 namespace PckStudio
 {
-    public partial class NumericPrompt : MetroForm
+    public partial class NumericPrompt : ThemeForm
 	{
 		public int SelectedValue => (int)ValueUpDown.Value;
 
@@ -27,7 +28,7 @@ namespace PckStudio
 
         private void OKBtn_Click(object sender, EventArgs e)
         {
-			DialogResult = DialogResult.OK;
+
         }
 
 		private void RenamePrompt_Load(object sender, EventArgs e)

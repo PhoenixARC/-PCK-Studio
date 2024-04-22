@@ -13324,6 +13324,18 @@
         fIVcL9Tx89LfDpv/AMuV/wBPJW+Pz+Vj/9k=
 </value>
   </data>
+  <data name="label3.Text" xml:space="preserve">
+    <value>PCK Dev Assists:
+AleBlbl7276
+jerrinth
+SkyForces
+
+Other Credits:
+Base program and PCK development by: Jam1gamer
+Visual tools, server functions and OG UI by: JackHasWifi / Nobledez
+De velopment assisted by: XxModZxXWiiPlaza and SlothWiiPlaza
+3D skin rendering by: Łukasz Rejman</value>
+  </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAA0AAAAAAAEAIAD7NAAA1gAAAICAAAABACAAKAgBANE1AACAgAAAAQAIAChMAAD5PQEAQEAAAAEA

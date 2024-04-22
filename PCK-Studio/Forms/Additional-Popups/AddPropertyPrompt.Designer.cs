@@ -33,7 +33,7 @@
             System.Windows.Forms.Label label2;
             this.keyTextBox = new System.Windows.Forms.TextBox();
             this.valueTextBox = new System.Windows.Forms.TextBox();
-            this.saveButton = new System.Windows.Forms.Button();
+            this.SaveBtn = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
             label1 = new System.Windows.Forms.Label();
             label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
@@ -66,30 +66,40 @@
             resources.ApplyResources(this.valueTextBox, "valueTextBox");
             this.valueTextBox.Name = "valueTextBox";
             // 
-            // saveButton
+            // SaveBtn
             // 
-            resources.ApplyResources(this.saveButton, "saveButton");
-            this.saveButton.ForeColor = System.Drawing.Color.White;
-            this.saveButton.Name = "saveButton";
-            this.saveButton.UseVisualStyleBackColor = true;
-            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
+            resources.ApplyResources(this.SaveBtn, "SaveBtn");
+            this.SaveBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.SaveBtn.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.SaveBtn.BorderRadius = 10;
+            this.SaveBtn.BorderSize = 1;
+            this.SaveBtn.ClickedColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.SaveBtn.FlatAppearance.BorderSize = 0;
+            this.SaveBtn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.SaveBtn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(250)))), ((int)(((byte)(165)))));
+            this.SaveBtn.ForeColor = System.Drawing.Color.White;
+            this.SaveBtn.GradientColorPrimary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.SaveBtn.GradientColorSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.SaveBtn.HoverOverColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(250)))), ((int)(((byte)(165)))));
+            this.SaveBtn.Name = "SaveBtn";
+            this.SaveBtn.TextColor = System.Drawing.Color.White;
+            this.SaveBtn.UseVisualStyleBackColor = false;
             // 
             // AddPropertyPrompt
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.saveButton);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.Controls.Add(this.SaveBtn);
             this.Controls.Add(label2);
             this.Controls.Add(label1);
             this.Controls.Add(this.valueTextBox);
             this.Controls.Add(this.keyTextBox);
+            this.ForeColor = System.Drawing.Color.White;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "AddPropertyPrompt";
-            this.Resizable = false;
-            this.ShadowType = MetroFramework.Forms.MetroFormShadowType.DropShadow;
-            this.Style = MetroFramework.MetroColorStyle.Black;
-            this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -99,6 +109,6 @@
 
         private System.Windows.Forms.TextBox keyTextBox;
         private System.Windows.Forms.TextBox valueTextBox;
-        private System.Windows.Forms.Button saveButton;
+        private CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton SaveBtn;
     }
 }

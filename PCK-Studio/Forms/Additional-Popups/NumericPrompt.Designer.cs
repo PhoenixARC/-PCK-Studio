@@ -30,9 +30,9 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NumericPrompt));
             this.TextLabel = new System.Windows.Forms.Label();
-            this.OKButton = new System.Windows.Forms.Button();
             this.ContextLabel = new MetroFramework.Controls.MetroLabel();
             this.ValueUpDown = new System.Windows.Forms.NumericUpDown();
+            this.setBtn = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
             ((System.ComponentModel.ISupportInitialize)(this.ValueUpDown)).BeginInit();
             this.SuspendLayout();
             // 
@@ -41,14 +41,6 @@
             resources.ApplyResources(this.TextLabel, "TextLabel");
             this.TextLabel.ForeColor = System.Drawing.Color.White;
             this.TextLabel.Name = "TextLabel";
-            // 
-            // OKButton
-            // 
-            resources.ApplyResources(this.OKButton, "OKButton");
-            this.OKButton.ForeColor = System.Drawing.Color.White;
-            this.OKButton.Name = "OKButton";
-            this.OKButton.UseVisualStyleBackColor = true;
-            this.OKButton.Click += new System.EventHandler(this.OKBtn_Click);
             // 
             // ContextLabel
             // 
@@ -63,22 +55,39 @@
             resources.ApplyResources(this.ValueUpDown, "ValueUpDown");
             this.ValueUpDown.Name = "ValueUpDown";
             // 
+            // setBtn
+            // 
+            this.setBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.setBtn.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.setBtn.BorderRadius = 10;
+            this.setBtn.BorderSize = 1;
+            this.setBtn.ClickedColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.setBtn.FlatAppearance.BorderSize = 0;
+            this.setBtn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.setBtn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(250)))), ((int)(((byte)(165)))));
+            resources.ApplyResources(this.setBtn, "setBtn");
+            this.setBtn.ForeColor = System.Drawing.Color.White;
+            this.setBtn.GradientColorPrimary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.setBtn.GradientColorSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.setBtn.HoverOverColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(250)))), ((int)(((byte)(165)))));
+            this.setBtn.Name = "setBtn";
+            this.setBtn.TextColor = System.Drawing.Color.White;
+            this.setBtn.UseVisualStyleBackColor = false;
+            // 
             // NumericPrompt
             // 
-            this.AcceptButton = this.OKButton;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.Controls.Add(this.setBtn);
             this.Controls.Add(this.ValueUpDown);
             this.Controls.Add(this.ContextLabel);
-            this.Controls.Add(this.OKButton);
             this.Controls.Add(this.TextLabel);
+            this.ForeColor = System.Drawing.Color.White;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "NumericPrompt";
-            this.Resizable = false;
-            this.ShadowType = MetroFramework.Forms.MetroFormShadowType.DropShadow;
-            this.Style = MetroFramework.MetroColorStyle.Silver;
-            this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.Load += new System.EventHandler(this.RenamePrompt_Load);
             ((System.ComponentModel.ISupportInitialize)(this.ValueUpDown)).EndInit();
             this.ResumeLayout(false);
@@ -87,9 +96,9 @@
         }
 
         #endregion
-        public System.Windows.Forms.Button OKButton;
         public System.Windows.Forms.Label TextLabel;
 		public MetroFramework.Controls.MetroLabel ContextLabel;
         private System.Windows.Forms.NumericUpDown ValueUpDown;
+        internal CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton setBtn;
     }
 }

@@ -27,14 +27,19 @@ namespace PckStudio.Popups
 
         private void OKBtn_Click(object sender, EventArgs e)
         {
-			if(FileTypeComboBox.SelectedIndex > -1)
-				DialogResult = DialogResult.OK;
+
         }
 
         private void InputTextBox_KeyDown(object sender, KeyEventArgs e)
         {
 			if (e.KeyCode == Keys.Enter)
 				OKBtn_Click(sender, e);
+        }
+
+        private void AddBtn_Click(object sender, EventArgs e)
+        {
+            if (FileTypeComboBox.SelectedIndex > -1)
+                DialogResult = DialogResult.OK;
         }
     }
 }

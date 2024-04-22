@@ -90,10 +90,28 @@ namespace PckStudio
 				[PckFileType.ModelsFile]          = HandleModelsFile,
 				[PckFileType.BehavioursFile]      = HandleBehavioursFile,
 				[PckFileType.MaterialFile]        = HandleMaterialFile,
-			};
-		}
 
-		public void LoadPckFromFile(string filepath)
+			};
+
+            // Set KeyPreview property to true
+            this.KeyPreview = true;
+
+            // Subscribe to the KeyDown event
+            this.KeyDown += MainForm_KeyDown;
+        }
+
+        // CTRL + W to close the form
+        private void MainForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            // Check if Ctrl + W is pressed
+            if (e.Control && e.KeyCode == Keys.W)
+            {
+                // Close the application
+                this.Close();
+            }
+        }
+
+        public void LoadPckFromFile(string filepath)
 		{
 			checkSaveState();
 			treeViewMain.Nodes.Clear();
@@ -2290,5 +2308,5 @@ namespace PckStudio
 				return;
 			}
 		}
-	}
+    }
 }

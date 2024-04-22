@@ -24,5 +24,10 @@ namespace PckStudio
 				return;
 			DialogResult = DialogResult.OK;
         }
+
+        private void createSkinsPckCheckBox_CheckedChanged(object sender)
+        {
+
+        }
     }
 }

@@ -255,6 +255,16 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap edit_26px {
+            get {
+                object obj = ResourceManager.GetObject("edit_26px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap entities_sheet {
             get {
                 object obj = ResourceManager.GetObject("entities_sheet", resourceCulture);
@@ -307,6 +317,16 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap file_32px {
+            get {
+                object obj = ResourceManager.GetObject("file_32px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap file_delete {
             get {
                 object obj = ResourceManager.GetObject("file_delete", resourceCulture);
@@ -350,16 +370,6 @@ namespace PckStudio.Properties {
         public static System.Drawing.Bitmap file_new {
             get {
                 object obj = ResourceManager.GetObject("file_new", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap file_32px {
-            get {
-                object obj = ResourceManager.GetObject("file_32px", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -565,6 +575,26 @@ namespace PckStudio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap plus___24px {
+            get {
+                object obj = ResourceManager.GetObject("plus___24px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap plus_math_32px {
+            get {
+                object obj = ResourceManager.GetObject("plus_math_32px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
         public static System.Drawing.Icon ProjectLogo {
@@ -630,16 +660,6 @@ namespace PckStudio.Properties {
         public static System.Drawing.Bitmap save_24px {
             get {
                 object obj = ResourceManager.GetObject("save_24px", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap sdDownload {
-            get {
-                object obj = ResourceManager.GetObject("sdDownload", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -717,30 +737,27 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized string similar to {
         ///	&quot;COMMENT_1&quot;: &quot;Tile data research by MattNL&quot;,
-        ///	&quot;COMMENT_2&quot;: &quot;JSON conversion by PhoenixARC&quot;,
+        ///	&quot;COMMENT_2&quot;: &quot;JSON by PhoenixARC, MattNL, and NessieHax (Miku-666)&quot;,
         ///	&quot;blocks&quot;: [
         ///		{
         ///			&quot;internalName&quot;: &quot;grass_top&quot;,
-        ///			&quot;displayName&quot;: &quot;Grass Block (Top)&quot;
+        ///			&quot;displayName&quot;: &quot;Grass Block (Top)&quot;,
+        ///			&quot;hasColourEntry&quot;: true,
+        ///			&quot;colourEntry&quot;: {
+        ///				&quot;isWaterColour&quot;: false,
+        ///				&quot;defaultName&quot;: &quot;Grass_Common&quot;,
+        ///				&quot;variants&quot;: [
+        ///					&quot;Grass_Common&quot;,
+        ///					&quot;Grass_Mesa&quot;,
+        ///					&quot;Grass_Swamp1&quot;,
+        ///					&quot;Grass_Swamp2&quot;
+        ///				]
+        ///			}
         ///		},
         ///		{
         ///			&quot;internalName&quot;: &quot;stone&quot;,
         ///			&quot;displayName&quot;: &quot;Stone&quot;
-        ///		},
-        ///		{
-        ///			&quot;internalName&quot;: &quot;dirt&quot;,
-        ///			&quot;displayName&quot;: &quot;Dirt&quot;
-        ///		},
-        ///		{
-        ///			&quot;internalName&quot;: &quot;grass_side&quot;,
-        ///			&quot;displayName&quot;: &quot;Grass Block (Side)&quot;
-        ///		},
-        ///		{
-        ///			&quot;internalName&quot;: &quot;planks_oak&quot;,
-        ///			&quot;displayName&quot;: &quot;Oak Planks&quot;
-        ///		},
-        ///		{
-        ///			&quot;internalName&quot;: [rest of string was truncated]&quot;;.
+        ///	 [rest of string was truncated]&quot;;.
         /// </summary>
         public static string tileData {
             get {

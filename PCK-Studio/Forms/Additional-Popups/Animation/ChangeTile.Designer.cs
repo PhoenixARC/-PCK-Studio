@@ -114,6 +114,7 @@
             // 
             // metroTabControl1
             // 
+            this.metroTabControl1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.metroTabControl1.Controls.Add(this.Blocks);
             this.metroTabControl1.Controls.Add(this.Items);
             this.metroTabControl1.Location = new System.Drawing.Point(6, 8);
@@ -145,8 +146,9 @@
             this.Items.TabIndex = 0;
             this.Items.Text = "Items";
             // 
-            // SaveButton
+            // acceptBtn
             // 
+            this.acceptBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.acceptBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.acceptBtn.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.acceptBtn.BorderRadius = 10;
@@ -161,10 +163,10 @@
             this.acceptBtn.GradientColorPrimary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
             this.acceptBtn.GradientColorSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
             this.acceptBtn.HoverOverColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(250)))), ((int)(((byte)(165)))));
-            this.acceptBtn.Image = ((System.Drawing.Image)(resources.GetObject("SaveButton.Image")));
+            this.acceptBtn.Image = ((System.Drawing.Image)(resources.GetObject("acceptBtn.Image")));
             this.acceptBtn.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.acceptBtn.Location = new System.Drawing.Point(46, 198);
-            this.acceptBtn.Name = "SaveButton";
+            this.acceptBtn.Name = "acceptBtn";
             this.acceptBtn.Size = new System.Drawing.Size(120, 40);
             this.acceptBtn.TabIndex = 19;
             this.acceptBtn.Text = "Save";
@@ -174,8 +176,9 @@
             this.acceptBtn.UseVisualStyleBackColor = false;
             this.acceptBtn.Click += new System.EventHandler(this.AcceptBtn_Click);
             // 
-            // CancelButton
+            // CancelBtn
             // 
+            this.CancelBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.CancelBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CancelBtn.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CancelBtn.BorderRadius = 10;
@@ -190,10 +193,10 @@
             this.CancelBtn.GradientColorPrimary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
             this.CancelBtn.GradientColorSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
             this.CancelBtn.HoverOverColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(36)))), ((int)(((byte)(38)))));
-            this.CancelBtn.Image = ((System.Drawing.Image)(resources.GetObject("CancelButton.Image")));
+            this.CancelBtn.Image = ((System.Drawing.Image)(resources.GetObject("CancelBtn.Image")));
             this.CancelBtn.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.CancelBtn.Location = new System.Drawing.Point(172, 198);
-            this.CancelBtn.Name = "CancelButton";
+            this.CancelBtn.Name = "CancelBtn";
             this.CancelBtn.Size = new System.Drawing.Size(120, 40);
             this.CancelBtn.TabIndex = 20;
             this.CancelBtn.Text = "Cancel";
@@ -209,7 +212,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.ClientSize = new System.Drawing.Size(338, 246);
-            this.ControlBox = false;
             this.Controls.Add(this.CancelBtn);
             this.Controls.Add(this.acceptBtn);
             this.Controls.Add(this.metroTextBox1);
@@ -217,11 +219,13 @@
             this.Controls.Add(this.metroTabControl1);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.ForeColor = System.Drawing.Color.White;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Location = new System.Drawing.Point(0, 0);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ChangeTile";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Change Title";
             this.metroTabControl1.ResumeLayout(false);
             this.Blocks.ResumeLayout(false);
             this.Items.ResumeLayout(false);

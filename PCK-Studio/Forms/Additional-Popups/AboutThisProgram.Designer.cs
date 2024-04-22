@@ -57,10 +57,8 @@
             this.phoenixarcGitHubButton = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
             this.phoenixarcPictureBox = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_PictureBox();
             this.phoenixarcNameLabel = new System.Windows.Forms.Label();
-            this.LegacyDevelopersTab = new MetroFramework.Controls.MetroTabPage();
+            this.OtherCreditsTab = new MetroFramework.Controls.MetroTabPage();
             this.label3 = new System.Windows.Forms.Label();
-            this.OthersTab = new MetroFramework.Controls.MetroTabPage();
-            this.label6 = new System.Windows.Forms.Label();
             this.ProgramDetailsTab = new System.Windows.Forms.TabPage();
             this.panel2.SuspendLayout();
             this.ProgramInformationTabControl.SuspendLayout();
@@ -73,8 +71,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.mattNLPictureBox)).BeginInit();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.phoenixarcPictureBox)).BeginInit();
-            this.LegacyDevelopersTab.SuspendLayout();
-            this.OthersTab.SuspendLayout();
+            this.OtherCreditsTab.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel2
@@ -181,8 +178,7 @@
             // 
             this.ProgramInformationTabControl.Alignment = System.Windows.Forms.TabAlignment.Left;
             this.ProgramInformationTabControl.Controls.Add(this.DevelopersTab);
-            this.ProgramInformationTabControl.Controls.Add(this.LegacyDevelopersTab);
-            this.ProgramInformationTabControl.Controls.Add(this.OthersTab);
+            this.ProgramInformationTabControl.Controls.Add(this.OtherCreditsTab);
             this.ProgramInformationTabControl.Controls.Add(this.ProgramDetailsTab);
             this.ProgramInformationTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ProgramInformationTabControl.ItemSize = new System.Drawing.Size(35, 135);
@@ -561,69 +557,36 @@
             this.phoenixarcNameLabel.TabIndex = 4;
             this.phoenixarcNameLabel.Text = "PhoenixARC";
             // 
-            // LegacyDevelopersTab
+            // OtherCreditsTab
             // 
-            this.LegacyDevelopersTab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.LegacyDevelopersTab.Controls.Add(this.label3);
-            this.LegacyDevelopersTab.HorizontalScrollbarBarColor = true;
-            this.LegacyDevelopersTab.HorizontalScrollbarHighlightOnWheel = false;
-            this.LegacyDevelopersTab.HorizontalScrollbarSize = 10;
-            this.LegacyDevelopersTab.Location = new System.Drawing.Point(139, 4);
-            this.LegacyDevelopersTab.Name = "LegacyDevelopersTab";
-            this.LegacyDevelopersTab.Size = new System.Drawing.Size(498, 363);
-            this.LegacyDevelopersTab.TabIndex = 0;
-            this.LegacyDevelopersTab.Text = "Legacy Developers";
-            this.LegacyDevelopersTab.UseCustomBackColor = true;
-            this.LegacyDevelopersTab.UseCustomForeColor = true;
-            this.LegacyDevelopersTab.VerticalScrollbarBarColor = true;
-            this.LegacyDevelopersTab.VerticalScrollbarHighlightOnWheel = false;
-            this.LegacyDevelopersTab.VerticalScrollbarSize = 10;
+            this.OtherCreditsTab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.OtherCreditsTab.Controls.Add(this.label3);
+            this.OtherCreditsTab.HorizontalScrollbarBarColor = true;
+            this.OtherCreditsTab.HorizontalScrollbarHighlightOnWheel = false;
+            this.OtherCreditsTab.HorizontalScrollbarSize = 10;
+            this.OtherCreditsTab.Location = new System.Drawing.Point(139, 4);
+            this.OtherCreditsTab.Name = "OtherCreditsTab";
+            this.OtherCreditsTab.Size = new System.Drawing.Size(498, 363);
+            this.OtherCreditsTab.TabIndex = 0;
+            this.OtherCreditsTab.Text = "Other Credits";
+            this.OtherCreditsTab.UseCustomBackColor = true;
+            this.OtherCreditsTab.UseCustomForeColor = true;
+            this.OtherCreditsTab.VerticalScrollbarBarColor = true;
+            this.OtherCreditsTab.VerticalScrollbarHighlightOnWheel = false;
+            this.OtherCreditsTab.VerticalScrollbarSize = 10;
             // 
             // label3
             // 
             this.label3.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label3.AutoSize = true;
             this.label3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.label3.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.label3.Location = new System.Drawing.Point(3, 0);
+            this.label3.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.label3.Location = new System.Drawing.Point(4, 0);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(372, 45);
+            this.label3.Size = new System.Drawing.Size(475, 210);
             this.label3.TabIndex = 7;
-            this.label3.Text = "Base program and PCK development by: Jam1gamer\r\nVisual tools, server development " +
-    "functions and OG UI by: JackHasWifi\r\nDevelopment assisted by: XxModZxXWiiPlaza a" +
-    "nd SlothWiiPlaza";
-            // 
-            // OthersTab
-            // 
-            this.OthersTab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.OthersTab.Controls.Add(this.label6);
-            this.OthersTab.HorizontalScrollbarBarColor = true;
-            this.OthersTab.HorizontalScrollbarHighlightOnWheel = true;
-            this.OthersTab.HorizontalScrollbarSize = 10;
-            this.OthersTab.Location = new System.Drawing.Point(139, 4);
-            this.OthersTab.Name = "OthersTab";
-            this.OthersTab.Size = new System.Drawing.Size(498, 363);
-            this.OthersTab.TabIndex = 1;
-            this.OthersTab.Text = "Others";
-            this.OthersTab.UseCustomBackColor = true;
-            this.OthersTab.UseCustomForeColor = true;
-            this.OthersTab.VerticalScrollbarBarColor = true;
-            this.OthersTab.VerticalScrollbarHighlightOnWheel = false;
-            this.OthersTab.VerticalScrollbarSize = 10;
-            // 
-            // label6
-            // 
-            this.label6.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label6.AutoSize = true;
-            this.label6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.label6.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.label6.Location = new System.Drawing.Point(3, 0);
-            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(199, 30);
-            this.label6.TabIndex = 8;
-            this.label6.Text = "3D rendering found by: NewAgent\r\n3D skin rendering by: Łukasz Rejman";
+            this.label3.Text = resources.GetString("label3.Text");
             // 
             // ProgramDetailsTab
             // 
@@ -672,10 +635,8 @@
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.phoenixarcPictureBox)).EndInit();
-            this.LegacyDevelopersTab.ResumeLayout(false);
-            this.LegacyDevelopersTab.PerformLayout();
-            this.OthersTab.ResumeLayout(false);
-            this.OthersTab.PerformLayout();
+            this.OtherCreditsTab.ResumeLayout(false);
+            this.OtherCreditsTab.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -688,9 +649,7 @@
         private CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton GitHubButton;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Panel panel2;
-        private MetroFramework.Controls.MetroTabPage LegacyDevelopersTab;
-        private MetroFramework.Controls.MetroTabPage OthersTab;
-        private System.Windows.Forms.Label label6;
+        private MetroFramework.Controls.MetroTabPage OtherCreditsTab;
         private System.Windows.Forms.TabPage DevelopersTab;
         private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.Label eternalModzLabel;

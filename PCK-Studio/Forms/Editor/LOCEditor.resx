@@ -170,13 +170,13 @@
     <value>321, 17</value>
   </metadata>
   <data name="saveToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>98, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="saveToolStripMenuItem.Text" xml:space="preserve">
     <value>Save</value>
   </data>
   <data name="fileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>37, 20</value>
+    <value>53, 20</value>
   </data>
   <data name="fileToolStripMenuItem.Text" xml:space="preserve">
     <value>File</value>
@@ -201,7 +201,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;menuStrip.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="locSort.ColumnCount" type="System.Int32, mscorlib">
     <value>3</value>
@@ -214,7 +214,7 @@
     <value>303, 32</value>
   </data>
   <data name="dataGridViewLocEntryData.Size" type="System.Drawing.Size, System.Drawing">
-    <value>554, 525</value>
+    <value>594, 552</value>
   </data>
   <data name="dataGridViewLocEntryData.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -238,7 +238,7 @@
     <value>303, 3</value>
   </data>
   <data name="textBoxReplaceAll.Size" type="System.Drawing.Size, System.Drawing">
-    <value>457, 22</value>
+    <value>497, 22</value>
   </data>
   <data name="textBoxReplaceAll.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -262,7 +262,7 @@
     <value>3, 3</value>
   </data>
   <data name="treeViewLocKeys.Size" type="System.Drawing.Size, System.Drawing">
-    <value>294, 554</value>
+    <value>294, 581</value>
   </data>
   <data name="treeViewLocKeys.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -298,7 +298,7 @@
     <value>NoControl</value>
   </data>
   <data name="ReplaceAllButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>766, 3</value>
+    <value>806, 3</value>
   </data>
   <data name="ReplaceAllButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>91, 23</value>
@@ -319,7 +319,7 @@
     <value>ReplaceAllButton</value>
   </data>
   <data name="&gt;&gt;ReplaceAllButton.Type" xml:space="preserve">
-    <value>CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton, CBH-Ultimate-Theme-Library-NET-Framework, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton, CBH-WinForm-Theme-Library, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;ReplaceAllButton.Parent" xml:space="preserve">
     <value>locSort</value>
@@ -327,14 +327,17 @@
   <data name="&gt;&gt;ReplaceAllButton.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
+  <data name="locSort.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
   <data name="locSort.Location" type="System.Drawing.Point, System.Drawing">
-    <value>20, 34</value>
+    <value>0, 24</value>
   </data>
   <data name="locSort.RowCount" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
   <data name="locSort.Size" type="System.Drawing.Size, System.Drawing">
-    <value>860, 560</value>
+    <value>900, 587</value>
   </data>
   <data name="locSort.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -349,10 +352,25 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;locSort.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>2</value>
   </data>
   <data name="locSort.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
     <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="dataGridViewLocEntryData" Row="1" RowSpan="1" Column="1" ColumnSpan="2" /&gt;&lt;Control Name="textBoxReplaceAll" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="treeViewLocKeys" Row="0" RowSpan="2" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="ReplaceAllButton" Row="0" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,300,Percent,100,AutoSize,0" /&gt;&lt;Rows Styles="AutoSize,0,Percent,100,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
+  <data name="buttonReplaceAll.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="buttonReplaceAll.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="buttonReplaceAll.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;buttonReplaceAll.Name" xml:space="preserve">
+    <value>buttonReplaceAll</value>
+  </data>
+  <data name="&gt;&gt;buttonReplaceAll.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -2871,6 +2889,9 @@
         AP//AADgBwAA4AcAAMADAADAAwAAwAMAAMADAADAAwAAwAMAAMADAADABwAAwA8AAMAfAADgPwAA4H8A
         AP//AAA=
 </value>
+  </data>
+  <data name="$this.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
   </data>
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
     <value>900, 650</value>

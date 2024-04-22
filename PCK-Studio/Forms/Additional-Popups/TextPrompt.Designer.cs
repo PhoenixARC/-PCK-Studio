@@ -30,23 +30,13 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TextPrompt));
             this.InputTextBox = new MetroFramework.Controls.MetroTextBox();
-            this.CancelButton = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
             this.OKButton = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
             this.SuspendLayout();
             // 
-            // TextLabel
+            // InputTextBox
             // 
-            resources.ApplyResources(this.TextLabel, "TextLabel");
-            this.TextLabel.ForeColor = System.Drawing.Color.White;
-            this.TextLabel.Name = "TextLabel";
             // 
-            // OKButton
             // 
-            resources.ApplyResources(this.OKButton, "OKButton");
-            this.OKButton.ForeColor = System.Drawing.Color.White;
-            this.OKButton.Name = "OKButton";
-            this.OKButton.UseVisualStyleBackColor = true;
-            this.OKButton.Click += new System.EventHandler(this.OKBtn_Click);
             // 
             this.InputTextBox.CustomButton.Image = null;
             this.InputTextBox.CustomButton.Location = new System.Drawing.Point(61, 1);
@@ -61,7 +51,7 @@
             this.InputTextBox.Location = new System.Drawing.Point(7, 9);
             this.InputTextBox.MaxLength = 32767;
             this.InputTextBox.Multiline = true;
-            this.InputTextBox.Name = "PromptTextBox";
+            this.InputTextBox.Name = "InputTextBox";
             this.InputTextBox.PasswordChar = '\0';
             this.InputTextBox.PromptText = "Paste Multi-line text here...";
             this.InputTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
@@ -79,7 +69,7 @@
             this.InputTextBox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.InputTextBox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
             // 
-            // SaveButton
+            // OKButton
             // 
             this.OKButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.OKButton.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
@@ -95,10 +85,10 @@
             this.OKButton.GradientColorPrimary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
             this.OKButton.GradientColorSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
             this.OKButton.HoverOverColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(250)))), ((int)(((byte)(165)))));
-            this.OKButton.Image = ((System.Drawing.Image)(resources.GetObject("SaveButton.Image")));
+            this.OKButton.Image = ((System.Drawing.Image)(resources.GetObject("OKButton.Image")));
             this.OKButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.OKButton.Location = new System.Drawing.Point(56, 300);
-            this.OKButton.Name = "SaveButton";
+            this.OKButton.Location = new System.Drawing.Point(119, 300);
+            this.OKButton.Name = "OKButton";
             this.OKButton.Size = new System.Drawing.Size(120, 40);
             this.OKButton.TabIndex = 21;
             this.OKButton.Text = "Save";
@@ -108,34 +98,27 @@
             this.OKButton.UseVisualStyleBackColor = false;
             this.OKButton.Click += new System.EventHandler(this.OKBtn_Click);
             // 
-            // contextLabel
-            // 
-            resources.ApplyResources(this.contextLabel, "contextLabel");
-            this.contextLabel.FontSize = MetroFramework.MetroLabelSize.Small;
-            this.contextLabel.Name = "contextLabel";
-            this.contextLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.contextLabel.WrapToLine = true;
-            // 
             // TextPrompt
             // 
             this.AcceptButton = this.OKButton;
-            resources.ApplyResources(this, "$this");
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.ClientSize = new System.Drawing.Size(358, 348);
-            this.Controls.Add(this.contextLabel);
             this.Controls.Add(this.OKButton);
             this.Controls.Add(this.InputTextBox);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.ForeColor = System.Drawing.Color.White;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Location = new System.Drawing.Point(0, 0);
             this.MinimizeBox = false;
             this.Name = "TextPrompt";
             this.Padding = new System.Windows.Forms.Padding(20, 60, 20, 40);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "Text Prompt";
             this.Load += new System.EventHandler(this.RenamePrompt_Load);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 

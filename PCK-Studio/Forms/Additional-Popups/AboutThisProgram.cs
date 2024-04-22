@@ -7,6 +7,7 @@ using System.Net;
 using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Octokit;
 using PckStudio.Extensions;
 using PckStudio.ToolboxItems;
@@ -18,6 +19,8 @@ namespace PckStudio
         public AboutThisProgram()
         {
             InitializeComponent();
+            // Subscribe to the KeyDown event
+            this.KeyDown += MainForm_KeyDown;
         }
 
         private async Task<User[]> AcquireDeveloperUserInfoAsync(params string[] usernames)
@@ -69,6 +72,16 @@ namespace PckStudio
         private void DiscordDevelopmentServerButton(object sender, EventArgs e)
         {
             Process.Start("https://discord.gg/dAepk3Bhud");
+        }
+
+        private void MainForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            // Check if Ctrl + W is pressed
+            if (e.Control && e.KeyCode == Keys.W)
+            {
+                // Close the application
+                this.Close();
+            }
         }
     }
 }

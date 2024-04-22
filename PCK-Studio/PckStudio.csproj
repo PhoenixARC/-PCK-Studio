@@ -643,6 +643,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\plus_+_24px.png" />
+    <None Include="Resources\plus_math_32px.png" />
     <None Include="Resources\Tools_48px.png" />
     <None Include="Resources\save_24px.png" />
     <None Include="Resources\rubik%27s_cube_24px.png" />
@@ -785,12 +787,6 @@
   -->
   <Target Name="GetGitInfo" BeforeTargets="WriteGitInfo" Condition="'$(BuildHash)' == ''">
     <!-- write hash and branch to console.-->
-    <Exec Condition="'$(Configuration)' == 'Debug'" Command="git -C $(ProjectDir) describe --always" ConsoleToMsBuild="true">
-      <Output TaskParameter="ConsoleOutput" PropertyName="GitHash" />
-    </Exec>
-    <Exec Command="git -C $(ProjectDir) branch --show-current" ConsoleToMsBuild="true">
-      <Output TaskParameter="ConsoleOutput" PropertyName="GitBranch" />
-    </Exec>
     <PropertyGroup>
       <BuildHash Condition="'$(Configuration)' == 'Debug'">$(GitHash)</BuildHash>
       <BuildBranch>$(GitBranch)</BuildBranch>

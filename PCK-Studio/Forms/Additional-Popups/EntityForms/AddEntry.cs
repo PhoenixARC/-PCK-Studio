@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using MetroFramework.Forms;
 using Newtonsoft.Json.Linq;
+using PckStudio.ToolboxItems;
 
 namespace PckStudio.Forms.Additional_Popups.EntityForms
 {
-	public partial class AddEntry : MetroForm
+	public partial class AddEntry : ThemeForm
 	{
         string selectedEntity = "";
 
@@ -98,17 +99,17 @@ namespace PckStudio.Forms.Additional_Popups.EntityForms
 			treeViewEntity.EndUpdate();
 		}
 
-		private void CancelBtn_Click(object sender, EventArgs e)
-		{
-			DialogResult = DialogResult.Cancel;
-			Close();
-		}
+        private void CancelBtn_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
+            Close();
+        }
 
-		private void AcceptBtn_Click(object sender, EventArgs e)
-		{
-			if (string.IsNullOrEmpty(selectedEntity)) CancelBtn_Click(sender, e);
-			DialogResult = DialogResult.OK;
-			Close();
-		}
-	}
+        private void AddNtb_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(selectedEntity)) CancelBtn_Click(sender, e);
+            DialogResult = DialogResult.OK;
+            Close();
+        }
+    }
 }

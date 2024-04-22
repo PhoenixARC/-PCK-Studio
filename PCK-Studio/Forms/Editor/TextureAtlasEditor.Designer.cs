@@ -56,9 +56,10 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.variantLabel.AutoSize = true;
-            this.variantLabel.Location = new System.Drawing.Point(3, 254);
+            this.variantLabel.Location = new System.Drawing.Point(4, 315);
+            this.variantLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.variantLabel.Name = "variantLabel";
-            this.variantLabel.Size = new System.Drawing.Size(82, 28);
+            this.variantLabel.Size = new System.Drawing.Size(109, 35);
             this.variantLabel.TabIndex = 18;
             this.variantLabel.Text = "Variant:";
             this.variantLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -70,9 +71,10 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.viewToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(20, 60);
+            this.menuStrip1.Location = new System.Drawing.Point(27, 74);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(590, 24);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(8, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(786, 24);
             this.menuStrip1.TabIndex = 16;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -147,7 +149,8 @@
             this.tableLayoutPanel1.Controls.Add(this.variantComboBox, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.variantLabel, 0, 2);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(20, 84);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(27, 98);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 6;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40F));
@@ -156,7 +159,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(590, 565);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(786, 700);
             this.tableLayoutPanel1.TabIndex = 17;
             // 
             // originalPictureBox
@@ -164,10 +167,11 @@
             this.originalPictureBox.BackColor = System.Drawing.Color.Transparent;
             this.originalPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.originalPictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-            this.originalPictureBox.Location = new System.Drawing.Point(238, 3);
+            this.originalPictureBox.Location = new System.Drawing.Point(317, 4);
+            this.originalPictureBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.originalPictureBox.Name = "originalPictureBox";
             this.tableLayoutPanel1.SetRowSpan(this.originalPictureBox, 6);
-            this.originalPictureBox.Size = new System.Drawing.Size(349, 559);
+            this.originalPictureBox.Size = new System.Drawing.Size(465, 692);
             this.originalPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.originalPictureBox.TabIndex = 4;
             this.originalPictureBox.TabStop = false;
@@ -184,9 +188,10 @@
             this.tableLayoutPanel1.SetColumnSpan(this.selectTilePictureBox, 2);
             this.selectTilePictureBox.Image = null;
             this.selectTilePictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-            this.selectTilePictureBox.Location = new System.Drawing.Point(3, 3);
+            this.selectTilePictureBox.Location = new System.Drawing.Point(4, 4);
+            this.selectTilePictureBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.selectTilePictureBox.Name = "selectTilePictureBox";
-            this.selectTilePictureBox.Size = new System.Drawing.Size(229, 220);
+            this.selectTilePictureBox.Size = new System.Drawing.Size(305, 272);
             this.selectTilePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.selectTilePictureBox.TabIndex = 0;
             this.selectTilePictureBox.TabStop = false;
@@ -198,9 +203,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.replaceButton.AutoSize = true;
             this.tableLayoutPanel1.SetColumnSpan(this.replaceButton, 2);
-            this.replaceButton.Location = new System.Drawing.Point(3, 539);
+            this.replaceButton.Location = new System.Drawing.Point(4, 669);
+            this.replaceButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.replaceButton.Name = "replaceButton";
-            this.replaceButton.Size = new System.Drawing.Size(229, 23);
+            this.replaceButton.Size = new System.Drawing.Size(305, 27);
             this.replaceButton.TabIndex = 14;
             this.replaceButton.Text = "Replace";
             this.replaceButton.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -213,9 +219,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.animationButton.AutoSize = true;
             this.tableLayoutPanel1.SetColumnSpan(this.animationButton, 2);
-            this.animationButton.Location = new System.Drawing.Point(3, 511);
+            this.animationButton.Location = new System.Drawing.Point(4, 634);
+            this.animationButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.animationButton.Name = "animationButton";
-            this.animationButton.Size = new System.Drawing.Size(229, 22);
+            this.animationButton.Size = new System.Drawing.Size(305, 27);
             this.animationButton.TabIndex = 16;
             this.animationButton.Text = "Animation";
             this.animationButton.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -228,9 +235,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tileNameLabel.AutoSize = true;
             this.tableLayoutPanel1.SetColumnSpan(this.tileNameLabel, 2);
-            this.tileNameLabel.Location = new System.Drawing.Point(3, 235);
+            this.tileNameLabel.Location = new System.Drawing.Point(4, 296);
+            this.tileNameLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.tileNameLabel.Name = "tileNameLabel";
-            this.tileNameLabel.Size = new System.Drawing.Size(229, 19);
+            this.tileNameLabel.Size = new System.Drawing.Size(305, 19);
             this.tileNameLabel.TabIndex = 19;
             this.tileNameLabel.Text = "TileName";
             this.tileNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -242,9 +250,10 @@
             this.variantComboBox.Enabled = false;
             this.variantComboBox.FormattingEnabled = true;
             this.variantComboBox.ItemHeight = 23;
-            this.variantComboBox.Location = new System.Drawing.Point(91, 257);
+            this.variantComboBox.Location = new System.Drawing.Point(121, 319);
+            this.variantComboBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.variantComboBox.Name = "variantComboBox";
-            this.variantComboBox.Size = new System.Drawing.Size(141, 29);
+            this.variantComboBox.Size = new System.Drawing.Size(188, 29);
             this.variantComboBox.TabIndex = 17;
             this.variantComboBox.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.variantComboBox.UseSelectable = true;
@@ -252,15 +261,17 @@
             // 
             // TextureAtlasEditor
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(630, 669);
+            this.ClientSize = new System.Drawing.Size(840, 823);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
-            this.MinimumSize = new System.Drawing.Size(630, 669);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.MinimumSize = new System.Drawing.Size(840, 823);
             this.Name = "TextureAtlasEditor";
+            this.Padding = new System.Windows.Forms.Padding(27, 74, 27, 25);
             this.ShadowType = MetroFramework.Forms.MetroFormShadowType.None;
             this.Style = MetroFramework.MetroColorStyle.Silver;
             this.Text = "Texture Atlas Editor";

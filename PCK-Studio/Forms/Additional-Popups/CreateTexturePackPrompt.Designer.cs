@@ -34,7 +34,7 @@
             this.metroComboBox1 = new MetroFramework.Controls.MetroComboBox();
             this.TextLabel = new System.Windows.Forms.Label();
             this.InputTextBox = new MetroFramework.Controls.MetroTextBox();
-            this.createSkinsPckCheckBox = new CBH.Controls.CrEaTiiOn_ModernCheckBox();
+            this.createSkinsPckCheckBox = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // OkButton
@@ -130,16 +130,9 @@
             // 
             // createSkinsPckCheckBox
             // 
-            this.createSkinsPckCheckBox.BackColor = System.Drawing.Color.Transparent;
-            this.createSkinsPckCheckBox.Checked = false;
-            this.createSkinsPckCheckBox.CheckedBackColorA = System.Drawing.Color.Transparent;
-            this.createSkinsPckCheckBox.CheckedBackColorB = System.Drawing.Color.Transparent;
-            this.createSkinsPckCheckBox.CheckedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
-            this.createSkinsPckCheckBox.CheckedColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(36)))), ((int)(((byte)(38)))));
-            this.createSkinsPckCheckBox.Cursor = System.Windows.Forms.Cursors.Hand;
             resources.ApplyResources(this.createSkinsPckCheckBox, "createSkinsPckCheckBox");
-            this.createSkinsPckCheckBox.ForeColor = System.Drawing.Color.White;
             this.createSkinsPckCheckBox.Name = "createSkinsPckCheckBox";
+            this.createSkinsPckCheckBox.UseVisualStyleBackColor = true;
             // 
             // CreateTexturePack
             // 
@@ -153,7 +146,7 @@
             this.Controls.Add(this.InputTextBox);
             this.Controls.Add(this.TextLabel);
             this.ForeColor = System.Drawing.Color.White;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "CreateTexturePack";
@@ -168,6 +161,6 @@
 		private MetroFramework.Controls.MetroComboBox metroComboBox1;
 		public System.Windows.Forms.Label label1;
         private CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton OkButton;
-        private CBH.Controls.CrEaTiiOn_ModernCheckBox createSkinsPckCheckBox;
+        private System.Windows.Forms.CheckBox createSkinsPckCheckBox;
     }
 }

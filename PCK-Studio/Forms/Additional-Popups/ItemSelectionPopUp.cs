@@ -15,8 +15,8 @@ namespace PckStudio.Forms.Additional_Popups
         }
 		public string ButtonText
         {
-            get => okBtn.Text;
-            set => okBtn.Text = value;
+            get => addBtn.Text;
+            set => addBtn.Text = value;
         }
 
         public ItemSelectionPopUp(params string[] items)
@@ -27,15 +27,25 @@ namespace PckStudio.Forms.Additional_Popups
 
 		private void okBtn_Click(object sender, EventArgs e)
 		{
-			if(ComboBox.SelectedIndex > -1)
-				cancelButton_Click(sender, e);
-			DialogResult = DialogResult.OK;
+
 		}
 
 		private void cancelButton_Click(object sender, EventArgs e)
 		{
-			DialogResult = DialogResult.Cancel;
-			Close();
+
 		}
-	}
+
+        private void addBtn_Click(object sender, EventArgs e)
+        {
+            if (ComboBox.SelectedIndex > -1)
+                cancelButton_Click(sender, e);
+            DialogResult = DialogResult.OK;
+        }
+
+        private void cancelBtn_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
+            Close();
+        }
+    }
 }
