@@ -16,38 +16,38 @@ using PckStudio.Internal.Serializer;
 
 namespace PckStudio.Extensions
 {
-    internal static class PckFileDataExtensions
+    internal static class PckAssetExtensions
     {
         private const string MipMap = "MipMapLevel";
 
-        internal static Image GetTexture(this PckFileData file)
+        internal static Image GetTexture(this PckAsset file)
         {
-            if (file.Filetype != PckFileType.SkinFile &&
-                file.Filetype != PckFileType.CapeFile &&
-                file.Filetype != PckFileType.TextureFile)
+            if (file.Type != PckAssetType.SkinFile &&
+                file.Type != PckAssetType.CapeFile &&
+                file.Type != PckAssetType.TextureFile)
             {
                 throw new Exception("File is not suitable to contain image data.");
             }
             return file.GetDeserializedData(ImageDeserializer.DefaultDeserializer);
         }
 
-        internal static T GetDeserializedData<T>(this PckFileData file, IPckDeserializer<T> deserializer)
+        internal static T GetDeserializedData<T>(this PckAsset file, IPckAssetDeserializer<T> deserializer)
         {
             return deserializer.Deserialize(file);
         }
 
-        internal static T GetData<T>(this PckFileData file, IDataFormatReader<T> formatReader) where T : class
+        internal static T GetData<T>(this PckAsset file, IDataFormatReader<T> formatReader) where T : class
         {
             using var ms = new MemoryStream(file.Data);
             return formatReader.FromStream(ms);
         }
 
-        internal static void SetSerializedData<T>(this PckFileData file, T obj, IPckFileSerializer<T> serializer)
+        internal static void SetSerializedData<T>(this PckAsset file, T obj, IPckAssetSerializer<T> serializer)
         {
             serializer.Serialize(obj, ref file);
         }
 
-        internal static void SetData(this PckFileData file, IDataFormatWriter formatWriter)
+        internal static void SetData(this PckAsset file, IDataFormatWriter formatWriter)
         {
             using (var stream = new MemoryStream())
             {
@@ -56,18 +56,18 @@ namespace PckStudio.Extensions
             }
         }
 
-        internal static void SetTexture(this PckFileData file, Image image)
+        internal static void SetTexture(this PckAsset file, Image image)
         {
-            if (file.Filetype != PckFileType.SkinFile &&
-                file.Filetype != PckFileType.CapeFile &&
-                file.Filetype != PckFileType.TextureFile)
+            if (file.Type != PckAssetType.SkinFile &&
+                file.Type != PckAssetType.CapeFile &&
+                file.Type != PckAssetType.TextureFile)
             {
                 throw new Exception("File is not suitable to contain image data.");
             }
             file.SetSerializedData(image, ImageSerializer.DefaultSerializer);
         }
 
-        internal static bool IsMipmappedFile(this PckFileData file)
+        internal static bool IsMipmappedFile(this PckAsset file)
         {
             // We only want to test the file name itself. ex: "terrainMipMapLevel2"
             string name = Path.GetFileNameWithoutExtension(file.Filename);
@@ -82,7 +82,7 @@ namespace PckStudio.Extensions
             return true;
         }
 
-        internal static string GetNormalPath(this PckFileData file)
+        internal static string GetNormalPath(this PckAsset file)
         {
             if (!file.IsMipmappedFile())
                 return file.Filename;

@@ -13,11 +13,11 @@ using PckStudio.Interfaces;
 
 namespace PckStudio.Internal.Serializer
 {
-    internal sealed class AnimationSerializer : IPckFileSerializer<Animation>
+    internal sealed class AnimationSerializer : IPckAssetSerializer<Animation>
     {
         public static readonly AnimationSerializer DefaultSerializer = new AnimationSerializer();
 
-        public void Serialize(Animation animation, ref PckFileData file)
+        public void Serialize(Animation animation, ref PckAsset file)
         {
             string anim = animation.BuildAnim();
             file.SetProperty("ANIM", anim);

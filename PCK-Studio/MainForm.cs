@@ -123,15 +123,15 @@ namespace PckStudio
 		{
 			var pack = new PckFile(3);
 
-            PckFileData zeroFile = pack.CreateNewFile("0", PckFileType.InfoFile);
+            PckAsset zeroFile = pack.CreateNewFile("0", PckAssetType.InfoFile);
 			zeroFile.AddProperty("PACKID", packId);
 			zeroFile.AddProperty("PACKVERSION", packVersion);
 
 			var locFile = new LOCFile();
 			locFile.InitializeDefault(packName);
-			pack.CreateNewFile("localisation.loc", PckFileType.LocalisationFile, new LOCFileWriter(locFile, 2));
+			pack.CreateNewFile("localisation.loc", PckAssetType.LocalisationFile, new LOCFileWriter(locFile, 2));
 
-			pack.CreateNewFileIf(createSkinsPCK, "Skins.pck", PckFileType.SkinDataFile, new PckFileWriter(new PckFile(3, true),
+			pack.CreateNewFileIf(createSkinsPCK, "Skins.pck", PckAssetType.SkinDataFile, new PckFileWriter(new PckFile(3, true),
 				LittleEndianCheckBox.Checked
 					? OMI.Endianness.LittleEndian
 					: OMI.Endianness.BigEndian));
@@ -144,13 +144,13 @@ namespace PckStudio
 			var pack = InitializePack(packId, packVersion, packName, createSkinsPCK);
 			PckFile infoPCK = new PckFile(3);
 
-            PckFileData icon = infoPCK.CreateNewFile("icon.png", PckFileType.TextureFile);
+            PckAsset icon = infoPCK.CreateNewFile("icon.png", PckAssetType.TextureFile);
 			icon.SetTexture(Resources.TexturePackIcon);
 
-            PckFileData comparison = infoPCK.CreateNewFile("comparison.png", PckFileType.TextureFile);
+            PckAsset comparison = infoPCK.CreateNewFile("comparison.png", PckAssetType.TextureFile);
 			comparison.SetTexture(Resources.Comparison);
 
-            PckFileData texturepackInfo = pack.CreateNewFile($"{res}/{res}Info.pck", PckFileType.TexturePackInfoFile);
+            PckAsset texturepackInfo = pack.CreateNewFile($"{res}/{res}Info.pck", PckAssetType.TexturePackInfoFile);
 			texturepackInfo.AddProperty("PACKID", "0");
 			texturepackInfo.AddProperty("DATAPATH", $"{res}Data.pck");
 
@@ -162,7 +162,7 @@ namespace PckStudio
 		private PckFile InitializeMashUpPack(int packId, int packVersion, string packName, string res)
 		{
             PckFile pack = InitializeTexturePack(packId, packVersion, packName, res, true);
-            PckFileData gameRuleFile = pack.CreateNewFile("GameRules.grf", PckFileType.GameRulesFile);
+            PckAsset gameRuleFile = pack.CreateNewFile("GameRules.grf", PckAssetType.GameRulesFile);
             GameRuleFile grfFile = new GameRuleFile();
 			grfFile.AddRule("MapOptions",
 				new KeyValuePair<string, string>("seed", "0"),
@@ -308,7 +308,7 @@ namespace PckStudio
 								MessageBoxButtons.OK, MessageBoxIcon.Error);
 						}
 					}
-					foreach (PckFileData file in pckfile.GetFiles())
+					foreach (PckAsset file in pckfile.GetFiles())
 					{
 						string filepath = $"{sfd.SelectedPath}/{file.Filename}";
 						Directory.CreateDirectory(filepath);

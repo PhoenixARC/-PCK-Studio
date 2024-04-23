@@ -17,13 +17,13 @@ namespace PckStudio.Popups
 {
     public partial class AddNewSkin : MetroFramework.Forms.MetroForm
     {
-        public PckFileData SkinFile => skin;
-        public PckFileData CapeFile => cape;
+        public PckAsset SkinFile => skin;
+        public PckAsset CapeFile => cape;
         public bool HasCape => cape is not null;
 
         private LOCFile currentLoc;
-        private PckFileData skin = new PckFileData("dlcskinXYXYXYXY", PckFileType.SkinFile);
-        private PckFileData cape;
+        private PckAsset skin = new PckAsset("dlcskinXYXYXYXY", PckAssetType.SkinFile);
+        private PckAsset cape;
         private SkinANIM anim = new SkinANIM();
         private Random rng = new Random();
 
@@ -226,7 +226,7 @@ namespace PckStudio.Popups
                         return;
                     }
                     capePictureBox.Image = Image.FromFile(ofd.FileName);
-                    cape ??= new PckFileData("dlccapeXYXYXYXY", PckFileType.CapeFile);
+                    cape ??= new PckAsset("dlccapeXYXYXYXY", PckAssetType.CapeFile);
                     cape.SetData(File.ReadAllBytes(ofd.FileName));
                     contextMenuCape.Items[0].Text = "Replace";
                     capeLabel.Visible = false;

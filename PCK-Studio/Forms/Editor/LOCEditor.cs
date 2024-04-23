@@ -19,9 +19,9 @@ namespace PckStudio.Forms.Editor
     {
 		DataTable tbl;
 		LOCFile currentLoc;
-		PckFileData _file;
+		PckAsset _file;
 
-		public LOCEditor(PckFileData file)
+		public LOCEditor(PckAsset file)
 		{
 			InitializeComponent();
 			_file = file;

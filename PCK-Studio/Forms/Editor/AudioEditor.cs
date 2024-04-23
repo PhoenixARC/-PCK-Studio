@@ -29,7 +29,7 @@ namespace PckStudio.Forms.Editor
 	{
 		public string defaultType = "yes";
 		PckAudioFile audioFile = null;
-		PckFileData audioPCK;
+		PckAsset audioPCK;
 		bool _isLittleEndian = false;
         MainForm parent = null;
 
@@ -63,7 +63,7 @@ namespace PckStudio.Forms.Editor
 			return (PckAudioFile.AudioCategory.EAudioType)Categories.IndexOf(category);
 		}
 
-		public AudioEditor(PckFileData file, bool isLittleEndian)
+		public AudioEditor(PckAsset file, bool isLittleEndian)
 		{
 			InitializeComponent();
 

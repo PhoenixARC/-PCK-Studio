@@ -13,12 +13,12 @@ using PckStudio.IO.TGA;
 
 namespace PckStudio.Internal.Deserializer
 {
-    internal sealed class ImageDeserializer : IPckDeserializer<Image>
+    internal sealed class ImageDeserializer : IPckAssetDeserializer<Image>
     {
         public static readonly ImageDeserializer DefaultDeserializer = new ImageDeserializer();
         private static Image EmptyImage = new Bitmap(1, 1, PixelFormat.Format32bppArgb);
 
-        public Image Deserialize(PckFileData file)
+        public Image Deserialize(PckAsset file)
         {
             using var stream = new MemoryStream(file.Data);
             try

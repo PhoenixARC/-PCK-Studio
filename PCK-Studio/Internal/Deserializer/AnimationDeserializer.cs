@@ -12,11 +12,11 @@ using PckStudio.Interfaces;
 
 namespace PckStudio.Internal.Deserializer
 {
-    internal sealed class AnimationDeserializer : IPckDeserializer<Animation>
+    internal sealed class AnimationDeserializer : IPckAssetDeserializer<Animation>
     {
         public static readonly AnimationDeserializer DefaultDeserializer = new AnimationDeserializer();
         
-        public Animation Deserialize(PckFileData file)
+        public Animation Deserialize(PckAsset file)
         {
             _ = file ?? throw new ArgumentNullException(nameof(file));
             if (file.Size > 0)

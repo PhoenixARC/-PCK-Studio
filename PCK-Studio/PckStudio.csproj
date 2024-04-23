@@ -136,13 +136,13 @@
     <Compile Include="Classes\IO\TGA\TGADeserializer.cs" />
     <Compile Include="Classes\IO\TGA\TGASerializer.cs" />
     <Compile Include="Extensions\LocFileExtensions.cs" />
-    <Compile Include="Extensions\PckFileDataExtensions.cs" />
+    <Compile Include="Extensions\PckAssetExtensions.cs" />
     <Compile Include="Extensions\TreeNodeExtensions.cs" />
     <Compile Include="Internal\Deserializer\ImageDeserializer.cs" />
     <Compile Include="Internal\Serializer\AnimationSerializer.cs" />
     <Compile Include="Internal\Deserializer\AnimationDeserializer.cs" />
-    <Compile Include="Interfaces\IPckDeserializer.cs" />
-    <Compile Include="Interfaces\IPckFileSerializer.cs" />
+    <Compile Include="Interfaces\IPckAssetDeserializer.cs" />
+    <Compile Include="Interfaces\IPckAssetSerializer.cs" />
     <Compile Include="Internal\Json\Entities.cs" />
     <Compile Include="Internal\Json\EntityInfo.cs" />
     <Compile Include="Internal\ResourceCategory.cs" />
@@ -202,10 +202,6 @@
       <DependentUpon>TextureAtlasEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\IEditor.cs" />
-    <Compile Include="Classes\API\PCKCenter\model\PCKCenterJSON.cs" />
-    <Compile Include="Classes\API\PCKCenter\PCKCollections.cs" />
-    <Compile Include="Classes\API\PCKCenter\PCKCollectionsLocal.cs" />
-    <Compile Include="Classes\API\PCKCenter\SaveLocalJSON.cs" />
     <Compile Include="Extensions\BlendMode.cs" />
     <Compile Include="Extensions\ColorExtensions.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
@@ -219,7 +215,6 @@
     <Compile Include="Classes\IO\CSMB\CSMBFileWriter.cs" />
     <Compile Include="Classes\IO\PckAudio\PckAudioFileReader.cs" />
     <Compile Include="Classes\IO\PckAudio\PckAudioFileWriter.cs" />
-    <Compile Include="Classes\Misc\FTPClient.cs" />
     <Compile Include="Classes\Misc\FileCacher.cs" />
     <Compile Include="Classes\Misc\OpenFolderDialog.cs" />
     <Compile Include="Classes\Models\DefaultModels\Steve64x64Model.cs" />
@@ -260,12 +255,6 @@
     </Compile>
     <Compile Include="Features\CemuPanel.Designer.cs">
       <DependentUpon>CemuPanel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Features\WiiUPanel.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Features\WiiUPanel.Designer.cs">
-      <DependentUpon>WiiUPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="Classes\IO\TGA\TGAFileData.cs" />
     <Compile Include="Classes\IO\TGA\TGADataTypeCode.cs" />
@@ -464,9 +453,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Features\CemuPanel.resx">
       <DependentUpon>CemuPanel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Features\WiiUPanel.resx">
-      <DependentUpon>WiiUPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\EntityForms\AddEntry.resx">
       <DependentUpon>AddEntry.cs</DependentUpon>
