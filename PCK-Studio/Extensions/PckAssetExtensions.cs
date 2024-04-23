@@ -17,7 +17,7 @@ using PckStudio.Internal.Serializer;
 
 namespace PckStudio.Extensions
 {
-    internal static class PckFileDataExtensions
+    internal static class PckAssetExtensions
     {
         private const string MipMap = "MipMapLevel";
 
@@ -122,7 +122,7 @@ namespace PckStudio.Extensions
             }
         }
 
-        internal static T GetDeserializedData<T>(this PckAsset file, IPckDeserializer<T> deserializer)
+        internal static T GetDeserializedData<T>(this PckAsset file, IPckAssetDeserializer<T> deserializer)
         {
             return deserializer.Deserialize(file);
         }
@@ -133,7 +133,7 @@ namespace PckStudio.Extensions
             return formatReader.FromStream(ms);
         }
 
-        internal static void SetSerializedData<T>(this PckAsset file, T obj, IPckSerializer<T> serializer)
+        internal static void SetSerializedData<T>(this PckAsset file, T obj, IPckAssetSerializer<T> serializer)
         {
             serializer.Serialize(obj, ref file);
         }

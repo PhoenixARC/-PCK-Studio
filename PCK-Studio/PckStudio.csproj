@@ -137,8 +137,8 @@
     <Compile Include="Classes\IO\TGA\TGADeserializer.cs" />
     <Compile Include="Classes\IO\TGA\TGASerializer.cs" />
     <Compile Include="Extensions\LocFileExtensions.cs" />
+    <Compile Include="Extensions\PckAssetExtensions.cs" />
     <Compile Include="Extensions\CursorExtensions.cs" />
-    <Compile Include="Extensions\PckFileDataExtensions.cs" />
     <Compile Include="Extensions\SkinBOXExtensions.cs" />
     <Compile Include="Extensions\SkinExtensions.cs" />
     <Compile Include="Extensions\System.Numerics.cs" />
@@ -149,8 +149,8 @@
     <Compile Include="Internal\Deserializer\ImageDeserializer.cs" />
     <Compile Include="Internal\Serializer\AnimationSerializer.cs" />
     <Compile Include="Internal\Deserializer\AnimationDeserializer.cs" />
-    <Compile Include="Interfaces\IPckDeserializer.cs" />
-    <Compile Include="Interfaces\IPckSerializer.cs" />
+    <Compile Include="Interfaces\IPckAssetDeserializer.cs" />
+    <Compile Include="Interfaces\IPckAssetSerializer.cs" />
     <Compile Include="Internal\Json\Entities.cs" />
     <Compile Include="Internal\Json\EntityInfo.cs" />
     <Compile Include="Internal\ResourceCategory.cs" />
@@ -237,10 +237,6 @@
     <Compile Include="Forms\Editor\TextureAtlasEditor.Designer.cs">
       <DependentUpon>TextureAtlasEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Classes\API\PCKCenter\model\PCKCenterJSON.cs" />
-    <Compile Include="Classes\API\PCKCenter\PCKCollections.cs" />
-    <Compile Include="Classes\API\PCKCenter\PCKCollectionsLocal.cs" />
-    <Compile Include="Classes\API\PCKCenter\SaveLocalJSON.cs" />
     <Compile Include="Extensions\BlendMode.cs" />
     <Compile Include="Extensions\ColorExtensions.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />

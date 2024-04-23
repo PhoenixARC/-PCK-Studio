@@ -13,7 +13,7 @@ using PckStudio.Interfaces;
 
 namespace PckStudio.Internal.Serializer
 {
-    internal sealed class AnimationSerializer : IPckSerializer<Animation>
+    internal sealed class AnimationSerializer : IPckAssetSerializer<Animation>
     {
         public static readonly AnimationSerializer DefaultSerializer = new AnimationSerializer();
 
