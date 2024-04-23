@@ -12,7 +12,7 @@ using PckStudio.Interfaces;
 
 namespace PckStudio.Internal.Deserializer
 {
-    internal sealed class AnimationDeserializer : IPckDeserializer<Animation>
+    internal sealed class AnimationDeserializer : IPckAssetDeserializer<Animation>
     {
         public static readonly AnimationDeserializer DefaultDeserializer = new AnimationDeserializer();
         

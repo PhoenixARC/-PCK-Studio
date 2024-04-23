@@ -7,7 +7,7 @@ using OMI.Formats.Pck;
 
 namespace PckStudio.Interfaces
 {
-    internal interface IPckDeserializer<T>
+    internal interface IPckAssetDeserializer<T>
     {
         public T Deserialize(PckAsset file);
     }
