@@ -73,6 +73,8 @@ namespace PckStudio.Forms.Editor
             this.copyColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pasteColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.restoreOriginalColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.removeColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.underwaterTreeView = new System.Windows.Forms.TreeView();
             this.fogTreeView = new System.Windows.Forms.TreeView();
             this.colorsTab = new System.Windows.Forms.TabPage();
@@ -80,8 +82,6 @@ namespace PckStudio.Forms.Editor
             this.tabControl = new MetroFramework.Controls.MetroTabControl();
             this.underwaterTab = new System.Windows.Forms.TabPage();
             this.fogTab = new System.Windows.Forms.TabPage();
-            this.addColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.removeColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.metroPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.blueUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.greenUpDown)).BeginInit();
@@ -429,31 +429,48 @@ namespace PckStudio.Forms.Editor
             // ColorContextMenu
             // 
             this.ColorContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addColorToolStripMenuItem,
-            this.removeColorToolStripMenuItem,
             this.copyColorToolStripMenuItem,
             this.pasteColorToolStripMenuItem,
-            this.restoreOriginalColorToolStripMenuItem});
+            this.restoreOriginalColorToolStripMenuItem,
+            this.addColorToolStripMenuItem,
+            this.removeColorToolStripMenuItem});
             this.ColorContextMenu.Name = "ColorContextMenu";
             resources.ApplyResources(this.ColorContextMenu, "ColorContextMenu");
             // 
             // copyColorToolStripMenuItem
             // 
+            this.copyColorToolStripMenuItem.Image = global::PckStudio.Properties.Resources.file_copy;
             this.copyColorToolStripMenuItem.Name = "copyColorToolStripMenuItem";
             resources.ApplyResources(this.copyColorToolStripMenuItem, "copyColorToolStripMenuItem");
             this.copyColorToolStripMenuItem.Click += new System.EventHandler(this.copyColorToolStripMenuItem_Click);
             // 
             // pasteColorToolStripMenuItem
             // 
+            this.pasteColorToolStripMenuItem.Image = global::PckStudio.Properties.Resources.file_paste;
             this.pasteColorToolStripMenuItem.Name = "pasteColorToolStripMenuItem";
             resources.ApplyResources(this.pasteColorToolStripMenuItem, "pasteColorToolStripMenuItem");
             this.pasteColorToolStripMenuItem.Click += new System.EventHandler(this.pasteColorToolStripMenuItem_Click);
             // 
             // restoreOriginalColorToolStripMenuItem
             // 
+            this.restoreOriginalColorToolStripMenuItem.Image = global::PckStudio.Properties.Resources.file_restore;
             this.restoreOriginalColorToolStripMenuItem.Name = "restoreOriginalColorToolStripMenuItem";
             resources.ApplyResources(this.restoreOriginalColorToolStripMenuItem, "restoreOriginalColorToolStripMenuItem");
             this.restoreOriginalColorToolStripMenuItem.Click += new System.EventHandler(this.restoreOriginalColorToolStripMenuItem_Click);
+            // 
+            // addColorToolStripMenuItem
+            // 
+            this.addColorToolStripMenuItem.Image = global::PckStudio.Properties.Resources.file_new;
+            this.addColorToolStripMenuItem.Name = "addColorToolStripMenuItem";
+            resources.ApplyResources(this.addColorToolStripMenuItem, "addColorToolStripMenuItem");
+            this.addColorToolStripMenuItem.Click += new System.EventHandler(this.addColorToolStripMenuItem_Click);
+            // 
+            // removeColorToolStripMenuItem
+            // 
+            this.removeColorToolStripMenuItem.Image = global::PckStudio.Properties.Resources.file_delete;
+            this.removeColorToolStripMenuItem.Name = "removeColorToolStripMenuItem";
+            resources.ApplyResources(this.removeColorToolStripMenuItem, "removeColorToolStripMenuItem");
+            this.removeColorToolStripMenuItem.Click += new System.EventHandler(this.removeColorToolStripMenuItem_Click);
             // 
             // underwaterTreeView
             // 
@@ -518,18 +535,6 @@ namespace PckStudio.Forms.Editor
             this.fogTab.Controls.Add(this.fogTreeView);
             resources.ApplyResources(this.fogTab, "fogTab");
             this.fogTab.Name = "fogTab";
-            // 
-            // addColorToolStripMenuItem
-            // 
-            this.addColorToolStripMenuItem.Name = "addColorToolStripMenuItem";
-            resources.ApplyResources(this.addColorToolStripMenuItem, "addColorToolStripMenuItem");
-            this.addColorToolStripMenuItem.Click += new System.EventHandler(this.addColorToolStripMenuItem_Click);
-            // 
-            // removeColorToolStripMenuItem
-            // 
-            this.removeColorToolStripMenuItem.Name = "removeColorToolStripMenuItem";
-            resources.ApplyResources(this.removeColorToolStripMenuItem, "removeColorToolStripMenuItem");
-            this.removeColorToolStripMenuItem.Click += new System.EventHandler(this.removeColorToolStripMenuItem_Click);
             // 
             // COLEditor
             // 

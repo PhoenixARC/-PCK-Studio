@@ -172,14 +172,12 @@ namespace PckStudio.Forms.Editor
 		{
 			if(add)
 			{
-				//alphaUpDown.ValueChanged += color_ValueChanged;
 				redUpDown.ValueChanged += color_ValueChanged;
 				greenUpDown.ValueChanged += color_ValueChanged;
 				blueUpDown.ValueChanged += color_ValueChanged;
 			}
 			else
 			{
-				//alphaUpDown.ValueChanged -= color_ValueChanged;
 				redUpDown.ValueChanged -= color_ValueChanged;
 				greenUpDown.ValueChanged -= color_ValueChanged;
 				blueUpDown.ValueChanged -= color_ValueChanged;
@@ -191,7 +189,10 @@ namespace PckStudio.Forms.Editor
 			if (colorTreeView.SelectedNode.Tag == null)
 				return;
 
-			waterTreeView.SelectedNode = null;
+            addColorToolStripMenuItem.Visible = true;
+            removeColorToolStripMenuItem.Visible = true;
+
+            waterTreeView.SelectedNode = null;
 			underwaterTreeView.SelectedNode = null;
 			fogTreeView.SelectedNode = null;
 
@@ -212,6 +213,9 @@ namespace PckStudio.Forms.Editor
         {
 			if (waterTreeView.SelectedNode.Tag == null)
 				return;
+
+			addColorToolStripMenuItem.Visible = false;
+			removeColorToolStripMenuItem.Visible = false;
 
 			colorTreeView.SelectedNode = null;
 			underwaterTreeView.SelectedNode = null;
@@ -237,7 +241,10 @@ namespace PckStudio.Forms.Editor
 			if (underwaterTreeView.SelectedNode.Tag == null)
 				return;
 
-			colorTreeView.SelectedNode = null;
+            addColorToolStripMenuItem.Visible = false;
+            removeColorToolStripMenuItem.Visible = false;
+
+            colorTreeView.SelectedNode = null;
 			waterTreeView.SelectedNode = null;
 			fogTreeView.SelectedNode = null;
 
@@ -259,7 +266,10 @@ namespace PckStudio.Forms.Editor
 			if (fogTreeView.SelectedNode.Tag == null)
 				return;
 
-			colorTreeView.SelectedNode = null;
+            addColorToolStripMenuItem.Visible = false;
+            removeColorToolStripMenuItem.Visible = false;
+
+            colorTreeView.SelectedNode = null;
 			waterTreeView.SelectedNode = null;
 			underwaterTreeView.SelectedNode = null;
 
