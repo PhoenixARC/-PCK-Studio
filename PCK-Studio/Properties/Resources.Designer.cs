@@ -531,6 +531,16 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap file_copy {
+            get {
+                object obj = ResourceManager.GetObject("file_copy", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap file_delete {
             get {
                 object obj = ResourceManager.GetObject("file_delete", resourceCulture);
@@ -574,6 +584,26 @@ namespace PckStudio.Properties {
         public static System.Drawing.Bitmap file_new {
             get {
                 object obj = ResourceManager.GetObject("file_new", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap file_paste {
+            get {
+                object obj = ResourceManager.GetObject("file_paste", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap file_restore {
+            get {
+                object obj = ResourceManager.GetObject("file_restore", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
