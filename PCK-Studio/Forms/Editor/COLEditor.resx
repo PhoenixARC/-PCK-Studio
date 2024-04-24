@@ -731,16 +731,142 @@
 </value>
   </data>
   <data name="saveToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>98, 22</value>
   </data>
   <data name="saveToolStripMenuItem1.Text" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="toolsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>47, 20</value>
+  </data>
+  <data name="toolsToolStripMenuItem.Text" xml:space="preserve">
+    <value>Tools</value>
+  </data>
+  <data name="stripPS4BiomesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>213, 22</value>
+  </data>
+  <data name="stripPS4BiomesToolStripMenuItem.Text" xml:space="preserve">
+    <value>Remove PS4 Biome Colors</value>
+  </data>
+  <data name="targetUpdateToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>213, 22</value>
+  </data>
+  <data name="targetUpdateToolStripMenuItem.Text" xml:space="preserve">
+    <value>Target Update</value>
+  </data>
+  <data name="TU12ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>416, 22</value>
+  </data>
+  <data name="TU12ToolStripMenuItem.Text" xml:space="preserve">
+    <value>TU12 (360)</value>
+  </data>
+  <data name="TU13ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>416, 22</value>
+  </data>
+  <data name="TU13ToolStripMenuItem.Text" xml:space="preserve">
+    <value>TU13/1.00 (360/PS3)</value>
+  </data>
+  <data name="TU14ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>416, 22</value>
+  </data>
+  <data name="TU14ToolStripMenuItem.Text" xml:space="preserve">
+    <value>TU14/1.04 (360/PS3)</value>
+  </data>
+  <data name="TU19ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>416, 22</value>
+  </data>
+  <data name="TU19ToolStripMenuItem.Text" xml:space="preserve">
+    <value>TU19/1.12/CU7 (360/PS3-4-Vita/XONE)</value>
+  </data>
+  <data name="TU31ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>416, 22</value>
+  </data>
+  <data name="TU31ToolStripMenuItem.Text" xml:space="preserve">
+    <value>TU31/1.22/CU19 (360/PS3-4-Vita/XONE)</value>
+  </data>
+  <data name="TU32ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>416, 22</value>
+  </data>
+  <data name="TU32ToolStripMenuItem.Text" xml:space="preserve">
+    <value>TU32/1.24/CU20/P3 (360/PS3-4-Vita/XONE/WIIU)</value>
+  </data>
+  <data name="TU43ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>416, 22</value>
+  </data>
+  <data name="TU43ToolStripMenuItem.Text" xml:space="preserve">
+    <value>TU43/1.35/CU32/P12 (360/PS3-4-Vita/XONE/WIIU)</value>
+  </data>
+  <data name="TU46ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>416, 22</value>
+  </data>
+  <data name="TU46ToolStripMenuItem.Text" xml:space="preserve">
+    <value>TU46/1.38/CU36/P15 (360/PS3-4-Vita/XONE/WIIU)</value>
+  </data>
+  <data name="TU51ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>416, 22</value>
+  </data>
+  <data name="TU51ToolStripMenuItem.Text" xml:space="preserve">
+    <value>TU51/1.44/CU41/P20 (360/PS3-4-Vita/XONE/WIIU)</value>
+  </data>
+  <data name="TU53ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>416, 22</value>
+  </data>
+  <data name="TU53ToolStripMenuItem.Text" xml:space="preserve">
+    <value>TU53/1.49/CU43/P23/1.0.3 (360/PS3-4-Vita/XONE/WIIU/SWITCH)</value>
+  </data>
+  <data name="TU54ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>416, 22</value>
+  </data>
+  <data name="TU54ToolStripMenuItem.Text" xml:space="preserve">
+    <value>TU54/1.52/CU44/P24/1.0.4 (360/PS3-4-Vita/XONE/WIIU/SWITCH)</value>
+  </data>
+  <data name="TU69ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>416, 22</value>
+  </data>
+  <data name="TU69ToolStripMenuItem.Text" xml:space="preserve">
+    <value>TU69/1.76/P38 (360/PS3-4-Vita/WIIU)</value>
+  </data>
+  <data name="_1_9_1ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>416, 22</value>
+  </data>
+  <data name="_1_9_1ToolStripMenuItem.Text" xml:space="preserve">
+    <value>1.91 (PS4)</value>
+  </data>
   <metadata name="ColorContextMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>125, 17</value>
   </metadata>
+  <data name="addColorToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="addColorToolStripMenuItem.Text" xml:space="preserve">
+    <value>Add Color</value>
+  </data>
+  <data name="removeColorToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="removeColorToolStripMenuItem.Text" xml:space="preserve">
+    <value>Remove Color</value>
+  </data>
+  <data name="copyColorToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="copyColorToolStripMenuItem.Text" xml:space="preserve">
+    <value>Copy Color</value>
+  </data>
+  <data name="pasteColorToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="pasteColorToolStripMenuItem.Text" xml:space="preserve">
+    <value>Paste Color</value>
+  </data>
+  <data name="restoreOriginalColorToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="restoreOriginalColorToolStripMenuItem.Text" xml:space="preserve">
+    <value>Restore Color</value>
+  </data>
   <data name="ColorContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>146, 70</value>
+    <value>181, 136</value>
   </data>
   <data name="&gt;&gt;ColorContextMenu.Name" xml:space="preserve">
     <value>ColorContextMenu</value>
@@ -798,24 +924,6 @@
   </data>
   <data name="&gt;&gt;waterTab.ZOrder" xml:space="preserve">
     <value>1</value>
-  </data>
-  <data name="copyColorToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>134, 22</value>
-  </data>
-  <data name="copyColorToolStripMenuItem.Text" xml:space="preserve">
-    <value>Copy Color</value>
-  </data>
-  <data name="pasteColorToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>134, 22</value>
-  </data>
-  <data name="pasteColorToolStripMenuItem.Text" xml:space="preserve">
-    <value>Paste Color</value>
-  </data>
-  <data name="restoreOriginalColorToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>145, 22</value>
-  </data>
-  <data name="restoreOriginalColorToolStripMenuItem.Text" xml:space="preserve">
-    <value>Restore Color</value>
   </data>
   <data name="underwaterTreeView.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
@@ -978,102 +1086,6 @@
   </data>
   <data name="&gt;&gt;tabControl.ZOrder" xml:space="preserve">
     <value>2</value>
-  </data>
-  <data name="toolsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>47, 20</value>
-  </data>
-  <data name="toolsToolStripMenuItem.Text" xml:space="preserve">
-    <value>Tools</value>
-  </data>
-  <data name="targetUpdateToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
-  </data>
-  <data name="targetUpdateToolStripMenuItem.Text" xml:space="preserve">
-    <value>Target Update</value>
-  </data>
-  <data name="TU12ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>416, 22</value>
-  </data>
-  <data name="TU12ToolStripMenuItem.Text" xml:space="preserve">
-    <value>TU12 (360)</value>
-  </data>
-  <data name="TU13ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>416, 22</value>
-  </data>
-  <data name="TU13ToolStripMenuItem.Text" xml:space="preserve">
-    <value>TU13/1.00 (360/PS3)</value>
-  </data>
-  <data name="TU14ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>416, 22</value>
-  </data>
-  <data name="TU14ToolStripMenuItem.Text" xml:space="preserve">
-    <value>TU14/1.04 (360/PS3)</value>
-  </data>
-  <data name="TU19ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>416, 22</value>
-  </data>
-  <data name="TU19ToolStripMenuItem.Text" xml:space="preserve">
-    <value>TU19/1.12/CU7 (360/PS3-4-Vita/XONE)</value>
-  </data>
-  <data name="TU31ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>416, 22</value>
-  </data>
-  <data name="TU31ToolStripMenuItem.Text" xml:space="preserve">
-    <value>TU31/1.22/CU19 (360/PS3-4-Vita/XONE)</value>
-  </data>
-  <data name="TU32ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>416, 22</value>
-  </data>
-  <data name="TU32ToolStripMenuItem.Text" xml:space="preserve">
-    <value>TU32/1.24/CU20/P3 (360/PS3-4-Vita/XONE/WIIU)</value>
-  </data>
-  <data name="TU43ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>416, 22</value>
-  </data>
-  <data name="TU43ToolStripMenuItem.Text" xml:space="preserve">
-    <value>TU43/1.35/CU32/P12 (360/PS3-4-Vita/XONE/WIIU)</value>
-  </data>
-  <data name="TU46ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>416, 22</value>
-  </data>
-  <data name="TU46ToolStripMenuItem.Text" xml:space="preserve">
-    <value>TU46/1.38/CU36/P15 (360/PS3-4-Vita/XONE/WIIU)</value>
-  </data>
-  <data name="TU51ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>416, 22</value>
-  </data>
-  <data name="TU51ToolStripMenuItem.Text" xml:space="preserve">
-    <value>TU51/1.44/CU41/P20 (360/PS3-4-Vita/XONE/WIIU)</value>
-  </data>
-  <data name="TU53ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>416, 22</value>
-  </data>
-  <data name="TU53ToolStripMenuItem.Text" xml:space="preserve">
-    <value>TU53/1.49/CU43/P23/1.0.3 (360/PS3-4-Vita/XONE/WIIU/SWITCH)</value>
-  </data>
-  <data name="TU54ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>416, 22</value>
-  </data>
-  <data name="TU54ToolStripMenuItem.Text" xml:space="preserve">
-    <value>TU54/1.52/CU44/P24/1.0.4 (360/PS3-4-Vita/XONE/WIIU/SWITCH)</value>
-  </data>
-  <data name="TU69ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>416, 22</value>
-  </data>
-  <data name="TU69ToolStripMenuItem.Text" xml:space="preserve">
-    <value>TU69/1.76/P38 (360/PS3-4-Vita/WIIU)</value>
-  </data>
-  <data name="_1_9_1ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>416, 22</value>
-  </data>
-  <data name="_1_9_1ToolStripMenuItem.Text" xml:space="preserve">
-    <value>1.91 (PS4)</value>
-  </data>
-  <data name="stripPS4BiomesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>213, 22</value>
-  </data>
-  <data name="stripPS4BiomesToolStripMenuItem.Text" xml:space="preserve">
-    <value>Remove PS4 Biome Colors</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -3611,28 +3623,16 @@
   <data name="&gt;&gt;saveToolStripMenuItem1.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;copyColorToolStripMenuItem.Name" xml:space="preserve">
-    <value>copyColorToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;copyColorToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;pasteColorToolStripMenuItem.Name" xml:space="preserve">
-    <value>pasteColorToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;pasteColorToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;restoreOriginalColorToolStripMenuItem.Name" xml:space="preserve">
-    <value>restoreOriginalColorToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;restoreOriginalColorToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;toolsToolStripMenuItem.Name" xml:space="preserve">
     <value>toolsToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;toolsToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;stripPS4BiomesToolStripMenuItem.Name" xml:space="preserve">
+    <value>stripPS4BiomesToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;stripPS4BiomesToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;targetUpdateToolStripMenuItem.Name" xml:space="preserve">
@@ -3719,10 +3719,34 @@
   <data name="&gt;&gt;_1_9_1ToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;stripPS4BiomesToolStripMenuItem.Name" xml:space="preserve">
-    <value>stripPS4BiomesToolStripMenuItem</value>
+  <data name="&gt;&gt;copyColorToolStripMenuItem.Name" xml:space="preserve">
+    <value>copyColorToolStripMenuItem</value>
   </data>
-  <data name="&gt;&gt;stripPS4BiomesToolStripMenuItem.Type" xml:space="preserve">
+  <data name="&gt;&gt;copyColorToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;pasteColorToolStripMenuItem.Name" xml:space="preserve">
+    <value>pasteColorToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;pasteColorToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;restoreOriginalColorToolStripMenuItem.Name" xml:space="preserve">
+    <value>restoreOriginalColorToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;restoreOriginalColorToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;addColorToolStripMenuItem.Name" xml:space="preserve">
+    <value>addColorToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;addColorToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;removeColorToolStripMenuItem.Name" xml:space="preserve">
+    <value>removeColorToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;removeColorToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">

@@ -51,20 +51,8 @@ namespace PckStudio.Forms.Editor
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.waterTab = new System.Windows.Forms.TabPage();
-            this.waterTreeView = new System.Windows.Forms.TreeView();
-            this.ColorContextMenu = new MetroFramework.Controls.MetroContextMenu(this.components);
-            this.copyColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pasteColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.restoreOriginalColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.underwaterTreeView = new System.Windows.Forms.TreeView();
-            this.fogTreeView = new System.Windows.Forms.TreeView();
-            this.colorsTab = new System.Windows.Forms.TabPage();
-            this.colorTreeView = new System.Windows.Forms.TreeView();
-            this.tabControl = new MetroFramework.Controls.MetroTabControl();
-            this.underwaterTab = new System.Windows.Forms.TabPage();
-            this.fogTab = new System.Windows.Forms.TabPage();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.stripPS4BiomesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.targetUpdateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TU12ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TU13ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -79,7 +67,21 @@ namespace PckStudio.Forms.Editor
             this.TU54ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TU69ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this._1_9_1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.stripPS4BiomesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.waterTab = new System.Windows.Forms.TabPage();
+            this.waterTreeView = new System.Windows.Forms.TreeView();
+            this.ColorContextMenu = new MetroFramework.Controls.MetroContextMenu(this.components);
+            this.copyColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pasteColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.restoreOriginalColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.underwaterTreeView = new System.Windows.Forms.TreeView();
+            this.fogTreeView = new System.Windows.Forms.TreeView();
+            this.colorsTab = new System.Windows.Forms.TabPage();
+            this.colorTreeView = new System.Windows.Forms.TreeView();
+            this.tabControl = new MetroFramework.Controls.MetroTabControl();
+            this.underwaterTab = new System.Windows.Forms.TabPage();
+            this.fogTab = new System.Windows.Forms.TabPage();
+            this.addColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.removeColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.metroPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.blueUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.greenUpDown)).BeginInit();
@@ -308,6 +310,105 @@ namespace PckStudio.Forms.Editor
             this.saveToolStripMenuItem1.Name = "saveToolStripMenuItem1";
             this.saveToolStripMenuItem1.Click += new System.EventHandler(this.saveToolStripMenuItem1_Click);
             // 
+            // toolsToolStripMenuItem
+            // 
+            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.stripPS4BiomesToolStripMenuItem,
+            this.targetUpdateToolStripMenuItem});
+            this.toolsToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
+            resources.ApplyResources(this.toolsToolStripMenuItem, "toolsToolStripMenuItem");
+            // 
+            // stripPS4BiomesToolStripMenuItem
+            // 
+            this.stripPS4BiomesToolStripMenuItem.Name = "stripPS4BiomesToolStripMenuItem";
+            resources.ApplyResources(this.stripPS4BiomesToolStripMenuItem, "stripPS4BiomesToolStripMenuItem");
+            this.stripPS4BiomesToolStripMenuItem.Click += new System.EventHandler(this.stripPS4BiomesToolStripMenuItem_Click);
+            // 
+            // targetUpdateToolStripMenuItem
+            // 
+            this.targetUpdateToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.TU12ToolStripMenuItem,
+            this.TU13ToolStripMenuItem,
+            this.TU14ToolStripMenuItem,
+            this.TU19ToolStripMenuItem,
+            this.TU31ToolStripMenuItem,
+            this.TU32ToolStripMenuItem,
+            this.TU43ToolStripMenuItem,
+            this.TU46ToolStripMenuItem,
+            this.TU51ToolStripMenuItem,
+            this.TU53ToolStripMenuItem,
+            this.TU54ToolStripMenuItem,
+            this.TU69ToolStripMenuItem,
+            this._1_9_1ToolStripMenuItem});
+            this.targetUpdateToolStripMenuItem.Name = "targetUpdateToolStripMenuItem";
+            resources.ApplyResources(this.targetUpdateToolStripMenuItem, "targetUpdateToolStripMenuItem");
+            // 
+            // TU12ToolStripMenuItem
+            // 
+            this.TU12ToolStripMenuItem.Name = "TU12ToolStripMenuItem";
+            resources.ApplyResources(this.TU12ToolStripMenuItem, "TU12ToolStripMenuItem");
+            // 
+            // TU13ToolStripMenuItem
+            // 
+            this.TU13ToolStripMenuItem.Name = "TU13ToolStripMenuItem";
+            resources.ApplyResources(this.TU13ToolStripMenuItem, "TU13ToolStripMenuItem");
+            // 
+            // TU14ToolStripMenuItem
+            // 
+            this.TU14ToolStripMenuItem.Name = "TU14ToolStripMenuItem";
+            resources.ApplyResources(this.TU14ToolStripMenuItem, "TU14ToolStripMenuItem");
+            // 
+            // TU19ToolStripMenuItem
+            // 
+            this.TU19ToolStripMenuItem.Name = "TU19ToolStripMenuItem";
+            resources.ApplyResources(this.TU19ToolStripMenuItem, "TU19ToolStripMenuItem");
+            // 
+            // TU31ToolStripMenuItem
+            // 
+            this.TU31ToolStripMenuItem.Name = "TU31ToolStripMenuItem";
+            resources.ApplyResources(this.TU31ToolStripMenuItem, "TU31ToolStripMenuItem");
+            // 
+            // TU32ToolStripMenuItem
+            // 
+            this.TU32ToolStripMenuItem.Name = "TU32ToolStripMenuItem";
+            resources.ApplyResources(this.TU32ToolStripMenuItem, "TU32ToolStripMenuItem");
+            // 
+            // TU43ToolStripMenuItem
+            // 
+            this.TU43ToolStripMenuItem.Name = "TU43ToolStripMenuItem";
+            resources.ApplyResources(this.TU43ToolStripMenuItem, "TU43ToolStripMenuItem");
+            // 
+            // TU46ToolStripMenuItem
+            // 
+            this.TU46ToolStripMenuItem.Name = "TU46ToolStripMenuItem";
+            resources.ApplyResources(this.TU46ToolStripMenuItem, "TU46ToolStripMenuItem");
+            // 
+            // TU51ToolStripMenuItem
+            // 
+            this.TU51ToolStripMenuItem.Name = "TU51ToolStripMenuItem";
+            resources.ApplyResources(this.TU51ToolStripMenuItem, "TU51ToolStripMenuItem");
+            // 
+            // TU53ToolStripMenuItem
+            // 
+            this.TU53ToolStripMenuItem.Name = "TU53ToolStripMenuItem";
+            resources.ApplyResources(this.TU53ToolStripMenuItem, "TU53ToolStripMenuItem");
+            // 
+            // TU54ToolStripMenuItem
+            // 
+            this.TU54ToolStripMenuItem.Name = "TU54ToolStripMenuItem";
+            resources.ApplyResources(this.TU54ToolStripMenuItem, "TU54ToolStripMenuItem");
+            // 
+            // TU69ToolStripMenuItem
+            // 
+            this.TU69ToolStripMenuItem.Name = "TU69ToolStripMenuItem";
+            resources.ApplyResources(this.TU69ToolStripMenuItem, "TU69ToolStripMenuItem");
+            // 
+            // _1_9_1ToolStripMenuItem
+            // 
+            this._1_9_1ToolStripMenuItem.Name = "_1_9_1ToolStripMenuItem";
+            resources.ApplyResources(this._1_9_1ToolStripMenuItem, "_1_9_1ToolStripMenuItem");
+            // 
             // waterTab
             // 
             this.waterTab.BackColor = System.Drawing.SystemColors.WindowFrame;
@@ -328,6 +429,8 @@ namespace PckStudio.Forms.Editor
             // ColorContextMenu
             // 
             this.ColorContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addColorToolStripMenuItem,
+            this.removeColorToolStripMenuItem,
             this.copyColorToolStripMenuItem,
             this.pasteColorToolStripMenuItem,
             this.restoreOriginalColorToolStripMenuItem});
@@ -416,104 +519,17 @@ namespace PckStudio.Forms.Editor
             resources.ApplyResources(this.fogTab, "fogTab");
             this.fogTab.Name = "fogTab";
             // 
-            // toolsToolStripMenuItem
+            // addColorToolStripMenuItem
             // 
-            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.stripPS4BiomesToolStripMenuItem,
-            this.targetUpdateToolStripMenuItem});
-            this.toolsToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            resources.ApplyResources(this.toolsToolStripMenuItem, "toolsToolStripMenuItem");
+            this.addColorToolStripMenuItem.Name = "addColorToolStripMenuItem";
+            resources.ApplyResources(this.addColorToolStripMenuItem, "addColorToolStripMenuItem");
+            this.addColorToolStripMenuItem.Click += new System.EventHandler(this.addColorToolStripMenuItem_Click);
             // 
-            // targetUpdateToolStripMenuItem
+            // removeColorToolStripMenuItem
             // 
-            this.targetUpdateToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.TU12ToolStripMenuItem,
-            this.TU13ToolStripMenuItem,
-            this.TU14ToolStripMenuItem,
-            this.TU19ToolStripMenuItem,
-            this.TU31ToolStripMenuItem,
-            this.TU32ToolStripMenuItem,
-            this.TU43ToolStripMenuItem,
-            this.TU46ToolStripMenuItem,
-            this.TU51ToolStripMenuItem,
-            this.TU53ToolStripMenuItem,
-            this.TU54ToolStripMenuItem,
-            this.TU69ToolStripMenuItem,
-            this._1_9_1ToolStripMenuItem});
-            this.targetUpdateToolStripMenuItem.Name = "targetUpdateToolStripMenuItem";
-            resources.ApplyResources(this.targetUpdateToolStripMenuItem, "targetUpdateToolStripMenuItem");
-            // 
-            // TU12ToolStripMenuItem
-            // 
-            this.TU12ToolStripMenuItem.Name = "TU12ToolStripMenuItem";
-            resources.ApplyResources(this.TU12ToolStripMenuItem, "TU12ToolStripMenuItem");
-            // 
-            // TU13ToolStripMenuItem
-            // 
-            this.TU13ToolStripMenuItem.Name = "TU13ToolStripMenuItem";
-            resources.ApplyResources(this.TU13ToolStripMenuItem, "TU13ToolStripMenuItem");
-            // 
-            // TU14ToolStripMenuItem
-            // 
-            this.TU14ToolStripMenuItem.Name = "TU14ToolStripMenuItem";
-            resources.ApplyResources(this.TU14ToolStripMenuItem, "TU14ToolStripMenuItem");
-            // 
-            // TU19ToolStripMenuItem
-            // 
-            this.TU19ToolStripMenuItem.Name = "TU19ToolStripMenuItem";
-            resources.ApplyResources(this.TU19ToolStripMenuItem, "TU19ToolStripMenuItem");
-            // 
-            // TU31ToolStripMenuItem
-            // 
-            this.TU31ToolStripMenuItem.Name = "TU31ToolStripMenuItem";
-            resources.ApplyResources(this.TU31ToolStripMenuItem, "TU31ToolStripMenuItem");
-            // 
-            // TU32ToolStripMenuItem
-            // 
-            this.TU32ToolStripMenuItem.Name = "TU32ToolStripMenuItem";
-            resources.ApplyResources(this.TU32ToolStripMenuItem, "TU32ToolStripMenuItem");
-            // 
-            // TU43ToolStripMenuItem
-            // 
-            this.TU43ToolStripMenuItem.Name = "TU43ToolStripMenuItem";
-            resources.ApplyResources(this.TU43ToolStripMenuItem, "TU43ToolStripMenuItem");
-            // 
-            // TU46ToolStripMenuItem
-            // 
-            this.TU46ToolStripMenuItem.Name = "TU46ToolStripMenuItem";
-            resources.ApplyResources(this.TU46ToolStripMenuItem, "TU46ToolStripMenuItem");
-            // 
-            // TU51ToolStripMenuItem
-            // 
-            this.TU51ToolStripMenuItem.Name = "TU51ToolStripMenuItem";
-            resources.ApplyResources(this.TU51ToolStripMenuItem, "TU51ToolStripMenuItem");
-            // 
-            // TU53ToolStripMenuItem
-            // 
-            this.TU53ToolStripMenuItem.Name = "TU53ToolStripMenuItem";
-            resources.ApplyResources(this.TU53ToolStripMenuItem, "TU53ToolStripMenuItem");
-            // 
-            // TU54ToolStripMenuItem
-            // 
-            this.TU54ToolStripMenuItem.Name = "TU54ToolStripMenuItem";
-            resources.ApplyResources(this.TU54ToolStripMenuItem, "TU54ToolStripMenuItem");
-            // 
-            // TU69ToolStripMenuItem
-            // 
-            this.TU69ToolStripMenuItem.Name = "TU69ToolStripMenuItem";
-            resources.ApplyResources(this.TU69ToolStripMenuItem, "TU69ToolStripMenuItem");
-            // 
-            // _1_9_1ToolStripMenuItem
-            // 
-            this._1_9_1ToolStripMenuItem.Name = "_1_9_1ToolStripMenuItem";
-            resources.ApplyResources(this._1_9_1ToolStripMenuItem, "_1_9_1ToolStripMenuItem");
-            // 
-            // stripPS4BiomesToolStripMenuItem
-            // 
-            this.stripPS4BiomesToolStripMenuItem.Name = "stripPS4BiomesToolStripMenuItem";
-            resources.ApplyResources(this.stripPS4BiomesToolStripMenuItem, "stripPS4BiomesToolStripMenuItem");
-            this.stripPS4BiomesToolStripMenuItem.Click += new System.EventHandler(this.stripPS4BiomesToolStripMenuItem_Click);
+            this.removeColorToolStripMenuItem.Name = "removeColorToolStripMenuItem";
+            resources.ApplyResources(this.removeColorToolStripMenuItem, "removeColorToolStripMenuItem");
+            this.removeColorToolStripMenuItem.Click += new System.EventHandler(this.removeColorToolStripMenuItem_Click);
             // 
             // COLEditor
             // 
@@ -595,5 +611,7 @@ namespace PckStudio.Forms.Editor
         private ToolStripMenuItem TU69ToolStripMenuItem;
         private ToolStripMenuItem _1_9_1ToolStripMenuItem;
         private ToolStripMenuItem stripPS4BiomesToolStripMenuItem;
+        private ToolStripMenuItem addColorToolStripMenuItem;
+        private ToolStripMenuItem removeColorToolStripMenuItem;
     }
 }
