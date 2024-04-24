@@ -450,15 +450,17 @@ namespace PckStudio.Forms.Editor
 
 				if (tab == colorsTab)
                 {
-					color = default_colourfile.Colors.Find(color => color.Name == node.Text).ColorPallette;
+					ColorContainer.Color col_entry = default_colourfile.Colors.Find(color => color.Name == node.Text);
 
-					if (color.IsEmpty) return;
+                    if (col_entry == null) return;
+
+                    color = col_entry.ColorPallette;
 
 					colorTextbox.Text = ColorTranslator.ToHtml(color).TrimStart('#');
 				}
 				else
                 {
-					var WaterEntry = default_colourfile.WaterColors.Find(color => color.Name == node.Text);
+                    ColorContainer.WaterColor WaterEntry = default_colourfile.WaterColors.Find(color => color.Name == node.Text);
 
 					if (WaterEntry == null) return;
 
