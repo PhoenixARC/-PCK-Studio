@@ -814,7 +814,8 @@ namespace PckStudio
 				OpenFolderDialog dialog = new OpenFolderDialog();
 				dialog.Title = @"Select destination folder";
 
-				if (dialog.ShowDialog(Handle) == true) extractFolder(dialog.ResultPath);
+				if (dialog.ShowDialog(Handle) == true)
+					extractFolder(dialog.ResultPath);
 			}
 			else if (node.TryGetTagData(out PckAsset file))
 			{
@@ -872,8 +873,10 @@ namespace PckStudio
 				switch (file.Type)
 				{
 					case PckAssetType.TextureFile:
-						if (Path.GetExtension(file.Filename) == ".png") extra_extensions = ";*.tga";
-						else if (Path.GetExtension(file.Filename) == ".tga") extra_extensions = ";*.png";
+						if (Path.GetExtension(file.Filename) == ".png")
+							extra_extensions = ";*.tga";
+						else if (Path.GetExtension(file.Filename) == ".tga")
+							extra_extensions = ";*.png";
 						break;
 				}
 
@@ -2565,5 +2568,46 @@ namespace PckStudio
         private void setModelVersion2ToolStripMenuItem_Click(object sender, EventArgs e) => SetModelVersion(1);
 
 		private void setModelVersion3ToolStripMenuItem_Click(object sender, EventArgs e) => SetModelVersion(2);
+
+        private void contextMenuPCKEntries_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+			if (treeViewMain?.SelectedNode == null)
+			{
+				e.Cancel = true;
+				return;
+			}
+
+			correctSkinDecimalsToolStripMenuItem.Visible = false;
+			generateMipMapTextureToolStripMenuItem1.Visible = false;
+            setModelContainerFormatToolStripMenuItem.Visible = false;
+            setSubPCKEndiannessToolStripMenuItem.Visible = false;
+            exportToolStripMenuItem.Visible = false;
+            if (treeViewMain.SelectedNode.TryGetTagData(out PckAsset asset))
+			{
+				replaceToolStripMenuItem.Visible = true;
+                cloneFileToolStripMenuItem.Visible = true;
+				setFileTypeToolStripMenuItem.Visible = true;
+				miscFunctionsToolStripMenuItem.Visible = true;
+
+				if (asset.Type == PckAssetType.SkinFile)
+				{
+					correctSkinDecimalsToolStripMenuItem.Visible = true;
+					exportToolStripMenuItem.Visible = true;
+				}
+				if (asset.Type == PckAssetType.TextureFile)
+					generateMipMapTextureToolStripMenuItem1.Visible = true;
+				if (asset.Type == PckAssetType.ModelsFile)
+                    setModelContainerFormatToolStripMenuItem.Visible = true;
+				if (asset.Type == PckAssetType.SkinDataFile || asset.Type == PckAssetType.TexturePackInfoFile || asset.Type == PckAssetType.AudioFile)
+                    setSubPCKEndiannessToolStripMenuItem.Visible = true;
+            }
+			else
+			{
+                replaceToolStripMenuItem.Visible = false;
+                cloneFileToolStripMenuItem.Visible = false;
+				setFileTypeToolStripMenuItem.Visible = false;
+				miscFunctionsToolStripMenuItem.Visible = false;
+			}
+        }
     }
 }

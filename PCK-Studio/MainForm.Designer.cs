@@ -209,6 +209,7 @@
             this.deleteFileToolStripMenuItem});
             this.contextMenuPCKEntries.Name = "contextMenuStrip1";
             resources.ApplyResources(this.contextMenuPCKEntries, "contextMenuPCKEntries");
+            this.contextMenuPCKEntries.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuPCKEntries_Opening);
             // 
             // createToolStripMenuItem
             // 
@@ -1283,8 +1284,6 @@
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem checkForUpdatesToolStripMenuItem;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-		private System.Windows.Forms.ToolStripMenuItem moveUpToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem moveDownToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem joinDevelopmentDiscordToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem trelloBoardToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem recentlyOpenToolStripMenuItem;
