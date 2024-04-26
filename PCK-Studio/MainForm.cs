@@ -2467,59 +2467,6 @@ namespace PckStudio
 			MessageBox.Show(this, "Already up to date.", "No update available");
 		}
 
-		[Obsolete] // the move functions are to eventually be removed in favor of drag and drop
-		private void moveFile(int amount)
-		{
-			if (treeViewMain.SelectedNode is not TreeNode t || t.Tag is not PckAsset)
-				return;
-
-            PckAsset file = t.Tag as PckAsset;
-            string path = t.FullPath;
-
-			// skin and cape files only
-			if (!(file.Type == PckAssetType.SkinFile || file.Type == PckAssetType.CapeFile)) return;
-
-			PckFile pck = currentPCK;
-			bool IsSubPCK = IsSubPCKNode(path);
-			if (IsSubPCK)
-			{
-				using (var stream = new MemoryStream((GetSubPCK(path).Tag as PckAsset).Data))
-				{
-					var reader = new PckFileReader(LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
-					pck = reader.FromStream(stream);
-				}
-			}
-
-			int index = pck.IndexOfFile(file);
-
-			try
-            {
-				if (index + amount < 0 || index + amount > pck.FileCount) return;
-				pck.RemoveFile(file);
-				pck.InsertFile(index + amount, file);
-
-				if (IsSubPCK)
-				{
-					using (var stream = new MemoryStream())
-					{
-						var writer = new PckFileWriter(pck, LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
-						writer.WriteToStream(stream);
-						(GetSubPCK(path).Tag as PckAsset).SetData(stream.ToArray());
-					}
-				}
-				BuildMainTreeView();
-				wasModified = true;
-			}
-			catch(Exception ex)
-            {
-				MessageBox.Show(this, "Can't move file under or above a folder");
-            }
-		}
-		[Obsolete]
-		private void moveUpToolStripMenuItem_Click(object sender, EventArgs e) => moveFile(-1);
-		[Obsolete]
-		private void moveDownToolStripMenuItem_Click(object sender, EventArgs e) => moveFile(1);
-
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
