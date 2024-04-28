@@ -1881,7 +1881,12 @@ namespace PckStudio
 		private void folderToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			TextPrompt folderNamePrompt = new TextPrompt();
-			if (treeViewMain.SelectedNode is not null) folderNamePrompt.contextLabel.Text = $"New folder at the location of \"{treeViewMain.SelectedNode.FullPath}\"";
+			if (treeViewMain.SelectedNode is not null)
+				folderNamePrompt.contextLabel.Text =
+					$"New folder at the location of \"{(
+					!treeViewMain.SelectedNode.IsTagOfType<PckAsset>()
+					? "/" + treeViewMain.SelectedNode.FullPath
+					: treeViewMain.SelectedNode.Parent == null ? "/" : "/" + treeViewMain.SelectedNode.Parent.FullPath)}\"";
 			folderNamePrompt.OKButtonText = "Add";
 			if (folderNamePrompt.ShowDialog(this) == DialogResult.OK)
 			{
