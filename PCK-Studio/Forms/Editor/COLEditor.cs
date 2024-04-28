@@ -98,7 +98,13 @@ namespace PckStudio.Forms.Editor
 			cache.Add(tn);
 		}
 
-		void SetUpTable(bool targetVersion)
+        void RemoveEntry(TreeNode entry, List<TreeNode> cache)
+        {
+            cache.Remove(entry);
+            entry.Remove();
+        }
+
+        void SetUpTable(bool targetVersion)
 		{
 			colorTreeView.Nodes.Clear();
 			waterTreeView.Nodes.Clear();
@@ -166,14 +172,12 @@ namespace PckStudio.Forms.Editor
 		{
 			if(add)
 			{
-				//alphaUpDown.ValueChanged += color_ValueChanged;
 				redUpDown.ValueChanged += color_ValueChanged;
 				greenUpDown.ValueChanged += color_ValueChanged;
 				blueUpDown.ValueChanged += color_ValueChanged;
 			}
 			else
 			{
-				//alphaUpDown.ValueChanged -= color_ValueChanged;
 				redUpDown.ValueChanged -= color_ValueChanged;
 				greenUpDown.ValueChanged -= color_ValueChanged;
 				blueUpDown.ValueChanged -= color_ValueChanged;
@@ -185,7 +189,10 @@ namespace PckStudio.Forms.Editor
 			if (colorTreeView.SelectedNode.Tag == null)
 				return;
 
-			waterTreeView.SelectedNode = null;
+            addColorToolStripMenuItem.Visible = true;
+            removeColorToolStripMenuItem.Visible = true;
+
+            waterTreeView.SelectedNode = null;
 			underwaterTreeView.SelectedNode = null;
 			fogTreeView.SelectedNode = null;
 
@@ -206,6 +213,9 @@ namespace PckStudio.Forms.Editor
         {
 			if (waterTreeView.SelectedNode.Tag == null)
 				return;
+
+			addColorToolStripMenuItem.Visible = false;
+			removeColorToolStripMenuItem.Visible = false;
 
 			colorTreeView.SelectedNode = null;
 			underwaterTreeView.SelectedNode = null;
@@ -231,7 +241,10 @@ namespace PckStudio.Forms.Editor
 			if (underwaterTreeView.SelectedNode.Tag == null)
 				return;
 
-			colorTreeView.SelectedNode = null;
+            addColorToolStripMenuItem.Visible = false;
+            removeColorToolStripMenuItem.Visible = false;
+
+            colorTreeView.SelectedNode = null;
 			waterTreeView.SelectedNode = null;
 			fogTreeView.SelectedNode = null;
 
@@ -253,7 +266,10 @@ namespace PckStudio.Forms.Editor
 			if (fogTreeView.SelectedNode.Tag == null)
 				return;
 
-			colorTreeView.SelectedNode = null;
+            addColorToolStripMenuItem.Visible = false;
+            removeColorToolStripMenuItem.Visible = false;
+
+            colorTreeView.SelectedNode = null;
 			waterTreeView.SelectedNode = null;
 			underwaterTreeView.SelectedNode = null;
 
@@ -450,15 +466,17 @@ namespace PckStudio.Forms.Editor
 
 				if (tab == colorsTab)
                 {
-					color = default_colourfile.Colors.Find(color => color.Name == node.Text).ColorPallette;
+					ColorContainer.Color col_entry = default_colourfile.Colors.Find(color => color.Name == node.Text);
 
-					if (color.IsEmpty) return;
+                    if (col_entry == null) return;
+
+                    color = col_entry.ColorPallette;
 
 					colorTextbox.Text = ColorTranslator.ToHtml(color).TrimStart('#');
 				}
 				else
                 {
-					var WaterEntry = default_colourfile.WaterColors.Find(color => color.Name == node.Text);
+                    ColorContainer.WaterColor WaterEntry = default_colourfile.WaterColors.Find(color => color.Name == node.Text);
 
 					if (WaterEntry == null) return;
 
@@ -596,5 +614,43 @@ namespace PckStudio.Forms.Editor
 				SetUpTable(false);
 			}
 		}
+
+        private void addColorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+			if(tabControl.SelectedTab == colorsTab)
+			{
+				using (TextPrompt prompt = new TextPrompt())
+				{
+					prompt.OKButtonText = "Add";
+					prompt.contextLabel.Text = "Insert the name of the color you would like to add";
+					if(prompt.ShowDialog(this) == DialogResult.OK)
+					{
+						ColorContainer.Color entry = new ColorContainer.Color();
+						entry.Name = prompt.NewText;
+						entry.ColorPallette = Color.FromArgb(0xFFFFFF);
+
+						if(colourfile.Colors.Find(c => c.Name == entry.Name) != null)
+						{
+							MessageBox.Show(this, $"\"{entry.Name}\" already exists in this color table", "Color not added");
+						}
+
+						colourfile.Colors.Add(entry);
+						AddEntry(colorTreeView, colorCache, entry.Name, entry);
+                    }
+				}
+			}
+        }
+
+        private void removeColorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+			if (tabControl.SelectedTab == colorsTab 
+				&& colorTreeView.SelectedNode is TreeNode entry 
+				&& entry != null 
+				&& entry.Tag is ColorContainer.Color color)
+            {
+                colourfile.Colors.Remove(color);
+                RemoveEntry(entry, colorCache);
+            }
+        }
     }
 }

@@ -75,8 +75,7 @@
             this.setModelContainerFormatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.version1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.version2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.moveUpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.moveDownToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.version3114ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.extractToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cloneFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.renameFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -150,9 +149,8 @@
             this.label11 = new MetroFramework.Controls.MetroLabel();
             this.treeViewMain = new System.Windows.Forms.TreeView();
             this.imageList = new System.Windows.Forms.ImageList(this.components);
-            this.LittleEndianCheckBox = new MetroFramework.Controls.MetroCheckBox();
             this.previewPictureBox = new PckStudio.ToolboxItems.InterpolationPictureBox();
-            this.version3114ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.LittleEndianCheckBox = new MetroFramework.Controls.MetroCheckBox();
             logoPictureBox = new System.Windows.Forms.PictureBox();
             toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -204,8 +202,6 @@
             this.exportToolStripMenuItem,
             this.setFileTypeToolStripMenuItem,
             this.miscFunctionsToolStripMenuItem,
-            this.moveUpToolStripMenuItem,
-            this.moveDownToolStripMenuItem,
             this.extractToolStripMenuItem,
             this.cloneFileToolStripMenuItem,
             this.renameFileToolStripMenuItem,
@@ -213,6 +209,7 @@
             this.deleteFileToolStripMenuItem});
             this.contextMenuPCKEntries.Name = "contextMenuStrip1";
             resources.ApplyResources(this.contextMenuPCKEntries, "contextMenuPCKEntries");
+            this.contextMenuPCKEntries.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuPCKEntries_Opening);
             // 
             // createToolStripMenuItem
             // 
@@ -478,17 +475,11 @@
             resources.ApplyResources(this.version2ToolStripMenuItem, "version2ToolStripMenuItem");
             this.version2ToolStripMenuItem.Click += new System.EventHandler(this.setModelVersion2ToolStripMenuItem_Click);
             // 
-            // moveUpToolStripMenuItem
+            // version3114ToolStripMenuItem
             // 
-            this.moveUpToolStripMenuItem.Name = "moveUpToolStripMenuItem";
-            resources.ApplyResources(this.moveUpToolStripMenuItem, "moveUpToolStripMenuItem");
-            this.moveUpToolStripMenuItem.Click += new System.EventHandler(this.moveUpToolStripMenuItem_Click);
-            // 
-            // moveDownToolStripMenuItem
-            // 
-            this.moveDownToolStripMenuItem.Name = "moveDownToolStripMenuItem";
-            resources.ApplyResources(this.moveDownToolStripMenuItem, "moveDownToolStripMenuItem");
-            this.moveDownToolStripMenuItem.Click += new System.EventHandler(this.moveDownToolStripMenuItem_Click);
+            this.version3114ToolStripMenuItem.Name = "version3114ToolStripMenuItem";
+            resources.ApplyResources(this.version3114ToolStripMenuItem, "version3114ToolStripMenuItem");
+            this.version3114ToolStripMenuItem.Click += new System.EventHandler(this.setModelVersion3ToolStripMenuItem_Click);
             // 
             // extractToolStripMenuItem
             // 
@@ -1118,28 +1109,19 @@
             this.treeViewMain.Name = "treeViewMain";
             this.treeViewMain.PathSeparator = "/";
             this.treeViewMain.BeforeLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.treeViewMain_BeforeLabelEdit);
-            this.treeViewMain.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.selectNode);
-            this.treeViewMain.DoubleClick += new System.EventHandler(this.treeViewMain_DoubleClick);
-            this.treeViewMain.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeViewMain_KeyDown);
             this.treeViewMain.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.treeViewMain_ItemDrag);
+            this.treeViewMain.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.selectNode);
             this.treeViewMain.DragDrop += new System.Windows.Forms.DragEventHandler(this.treeViewMain_DragDrop);
             this.treeViewMain.DragEnter += new System.Windows.Forms.DragEventHandler(this.treeViewMain_DragEnter);
             this.treeViewMain.DragOver += new System.Windows.Forms.DragEventHandler(this.treeViewMain_DragOver);
+            this.treeViewMain.DoubleClick += new System.EventHandler(this.treeViewMain_DoubleClick);
+            this.treeViewMain.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeViewMain_KeyDown);
             // 
             // imageList
             // 
             this.imageList.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
             resources.ApplyResources(this.imageList, "imageList");
             this.imageList.TransparentColor = System.Drawing.Color.Transparent;
-            // 
-            // LittleEndianCheckBox
-            // 
-            resources.ApplyResources(this.LittleEndianCheckBox, "LittleEndianCheckBox");
-            this.LittleEndianCheckBox.BackColor = System.Drawing.Color.Transparent;
-            this.LittleEndianCheckBox.Name = "LittleEndianCheckBox";
-            this.LittleEndianCheckBox.Style = MetroFramework.MetroColorStyle.White;
-            this.LittleEndianCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.LittleEndianCheckBox.UseSelectable = true;
             // 
             // previewPictureBox
             // 
@@ -1149,11 +1131,14 @@
             this.previewPictureBox.Name = "previewPictureBox";
             this.previewPictureBox.TabStop = false;
             // 
-            // version3114ToolStripMenuItem
+            // LittleEndianCheckBox
             // 
-            this.version3114ToolStripMenuItem.Name = "version3114ToolStripMenuItem";
-            resources.ApplyResources(this.version3114ToolStripMenuItem, "version3114ToolStripMenuItem");
-            this.version3114ToolStripMenuItem.Click += new System.EventHandler(this.setModelVersion3ToolStripMenuItem_Click);
+            resources.ApplyResources(this.LittleEndianCheckBox, "LittleEndianCheckBox");
+            this.LittleEndianCheckBox.BackColor = System.Drawing.Color.Transparent;
+            this.LittleEndianCheckBox.Name = "LittleEndianCheckBox";
+            this.LittleEndianCheckBox.Style = MetroFramework.MetroColorStyle.White;
+            this.LittleEndianCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.LittleEndianCheckBox.UseSelectable = true;
             // 
             // MainForm
             // 
@@ -1299,8 +1284,6 @@
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem checkForUpdatesToolStripMenuItem;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-		private System.Windows.Forms.ToolStripMenuItem moveUpToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem moveDownToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem joinDevelopmentDiscordToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem trelloBoardToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem recentlyOpenToolStripMenuItem;

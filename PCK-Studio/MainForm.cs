@@ -819,7 +819,8 @@ namespace PckStudio
 				OpenFolderDialog dialog = new OpenFolderDialog();
 				dialog.Title = @"Select destination folder";
 
-				if (dialog.ShowDialog(Handle) == true) extractFolder(dialog.ResultPath);
+				if (dialog.ShowDialog(Handle) == true)
+					extractFolder(dialog.ResultPath);
 			}
 			else if (node.TryGetTagData(out PckAsset file))
 			{
@@ -877,8 +878,10 @@ namespace PckStudio
 				switch (file.Type)
 				{
 					case PckAssetType.TextureFile:
-						if (Path.GetExtension(file.Filename) == ".png") extra_extensions = ";*.tga";
-						else if (Path.GetExtension(file.Filename) == ".tga") extra_extensions = ";*.png";
+						if (Path.GetExtension(file.Filename) == ".png")
+							extra_extensions = ";*.tga";
+						else if (Path.GetExtension(file.Filename) == ".tga")
+							extra_extensions = ";*.png";
 						break;
 				}
 
@@ -1890,7 +1893,12 @@ namespace PckStudio
 		private void folderToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			TextPrompt folderNamePrompt = new TextPrompt();
-			if (treeViewMain.SelectedNode is not null) folderNamePrompt.contextLabel.Text = $"New folder at the location of \"{treeViewMain.SelectedNode.FullPath}\"";
+			if (treeViewMain.SelectedNode is not null)
+				folderNamePrompt.contextLabel.Text =
+					$"New folder at the location of \"{(
+					!treeViewMain.SelectedNode.IsTagOfType<PckAsset>()
+					? "/" + treeViewMain.SelectedNode.FullPath
+					: treeViewMain.SelectedNode.Parent == null ? "/" : "/" + treeViewMain.SelectedNode.Parent.FullPath)}\"";
 			folderNamePrompt.OKButtonText = "Add";
 			if (folderNamePrompt.ShowDialog(this) == DialogResult.OK)
 			{
@@ -2479,59 +2487,6 @@ namespace PckStudio
 			MessageBox.Show(this, "Already up to date.", "No update available");
 		}
 
-		[Obsolete] // the move functions are to eventually be removed in favor of drag and drop
-		private void moveFile(int amount)
-		{
-			if (treeViewMain.SelectedNode is not TreeNode t || t.Tag is not PckAsset)
-				return;
-
-            PckAsset file = t.Tag as PckAsset;
-            string path = t.FullPath;
-
-			// skin and cape files only
-			if (!(file.Type == PckAssetType.SkinFile || file.Type == PckAssetType.CapeFile)) return;
-
-			PckFile pck = currentPCK;
-			bool IsSubPCK = IsSubPCKNode(path);
-			if (IsSubPCK)
-			{
-				using (var stream = new MemoryStream((GetSubPCK(path).Tag as PckAsset).Data))
-				{
-					var reader = new PckFileReader(LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
-					pck = reader.FromStream(stream);
-				}
-			}
-
-			int index = pck.IndexOfFile(file);
-
-			try
-            {
-				if (index + amount < 0 || index + amount > pck.FileCount) return;
-				pck.RemoveFile(file);
-				pck.InsertFile(index + amount, file);
-
-				if (IsSubPCK)
-				{
-					using (var stream = new MemoryStream())
-					{
-						var writer = new PckFileWriter(pck, LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
-						writer.WriteToStream(stream);
-						(GetSubPCK(path).Tag as PckAsset).SetData(stream.ToArray());
-					}
-				}
-				BuildMainTreeView();
-				wasModified = true;
-			}
-			catch(Exception ex)
-            {
-				MessageBox.Show(this, "Can't move file under or above a folder");
-            }
-		}
-		[Obsolete]
-		private void moveUpToolStripMenuItem_Click(object sender, EventArgs e) => moveFile(-1);
-		[Obsolete]
-		private void moveDownToolStripMenuItem_Click(object sender, EventArgs e) => moveFile(1);
-
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
@@ -2630,5 +2585,46 @@ namespace PckStudio
         private void setModelVersion2ToolStripMenuItem_Click(object sender, EventArgs e) => SetModelVersion(1);
 
 		private void setModelVersion3ToolStripMenuItem_Click(object sender, EventArgs e) => SetModelVersion(2);
+
+        private void contextMenuPCKEntries_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+			if (treeViewMain?.SelectedNode == null)
+			{
+				e.Cancel = true;
+				return;
+			}
+
+			correctSkinDecimalsToolStripMenuItem.Visible = false;
+			generateMipMapTextureToolStripMenuItem1.Visible = false;
+            setModelContainerFormatToolStripMenuItem.Visible = false;
+            setSubPCKEndiannessToolStripMenuItem.Visible = false;
+            exportToolStripMenuItem.Visible = false;
+            if (treeViewMain.SelectedNode.TryGetTagData(out PckAsset asset))
+			{
+				replaceToolStripMenuItem.Visible = true;
+                cloneFileToolStripMenuItem.Visible = true;
+				setFileTypeToolStripMenuItem.Visible = true;
+				miscFunctionsToolStripMenuItem.Visible = true;
+
+				if (asset.Type == PckAssetType.SkinFile)
+				{
+					correctSkinDecimalsToolStripMenuItem.Visible = true;
+					exportToolStripMenuItem.Visible = true;
+				}
+				if (asset.Type == PckAssetType.TextureFile)
+					generateMipMapTextureToolStripMenuItem1.Visible = true;
+				if (asset.Type == PckAssetType.ModelsFile)
+                    setModelContainerFormatToolStripMenuItem.Visible = true;
+				if (asset.Type == PckAssetType.SkinDataFile || asset.Type == PckAssetType.TexturePackInfoFile || asset.Type == PckAssetType.AudioFile)
+                    setSubPCKEndiannessToolStripMenuItem.Visible = true;
+            }
+			else
+			{
+                replaceToolStripMenuItem.Visible = false;
+                cloneFileToolStripMenuItem.Visible = false;
+				setFileTypeToolStripMenuItem.Visible = false;
+				miscFunctionsToolStripMenuItem.Visible = false;
+			}
+        }
     }
 }

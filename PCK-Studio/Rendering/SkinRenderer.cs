@@ -751,7 +751,22 @@ namespace PckStudio.Rendering
             foreach (var key in offsetSpecificMeshStorage.Keys.ToArray())
             {
                 offsetSpecificMeshStorage[key].Offset = Vector3.Zero;
+            }
         }
+
+        internal IEnumerable<SkinPartOffset> GetOffsets()
+        {
+            foreach (var mesh in meshStorage)
+            {
+                if (SkinPartOffset.ValidModelOffsetTypes.Contains(mesh.Key) && mesh.Value.Offset.Y != 0f)
+                    yield return new SkinPartOffset(mesh.Key, mesh.Value.Offset.Y);
+            }
+            foreach (var offsetmesh in offsetSpecificMeshStorage)
+            {
+                if (offsetmesh.Value.Offset.Y != 0f)
+                    yield return new SkinPartOffset(offsetmesh.Key, offsetmesh.Value.Offset.Y);
+            }
+            yield break;
         }
 
         private void ModelData_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -1478,21 +1493,6 @@ namespace PckStudio.Rendering
                 guidelineMode = GuidelineMode.None;
             }
             guidelineModeToolStripMenuItem.Text = $"Guideline Mode: {guidelineMode}";
-        }
-
-        internal IEnumerable<SkinPartOffset> GetOffsets()
-        {
-            foreach (var mesh in meshStorage)
-            {
-                if (SkinPartOffset.ValidModelOffsetTypes.Contains(mesh.Key) && mesh.Value.Offset.Y != 0f)
-                    yield return new SkinPartOffset(mesh.Key, mesh.Value.Offset.Y);
-            }
-            foreach (var offsetmesh in offsetSpecificMeshStorage)
-            {
-                if (offsetmesh.Value.Offset.Y != 0f)
-                    yield return new SkinPartOffset(offsetmesh.Key, offsetmesh.Value.Offset.Y);
-            }
-            yield break;
         }
 #endif
     }
