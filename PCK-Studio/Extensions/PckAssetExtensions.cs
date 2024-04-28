@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using OMI.Formats.Pck;
 using OMI.Workers;
 using PckStudio.Interfaces;
-using PckStudio.IO.TGA;
 using PckStudio.Internal.Deserializer;
 using PckStudio.Internal.Serializer;
 

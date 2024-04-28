@@ -17,16 +17,25 @@
 **/
 using System.IO;
 using System.Drawing;
+using System;
 
-namespace PckStudio.IO.TGA
+namespace PckStudio.Internal.IO.TGA
 {
-    internal static class TGASerializer
+    internal class TGAFileData
     {
-        private static TGAWriter writer = new TGAWriter();
-
-        public static void SerializeToStream(Stream stream, Image image)
+        public TGAFileData(TGAHeader header, Image bitmap, TGAFooter footer, TGAExtentionData extentionData)
         {
-            writer.WriteToStream(stream, image);
+            if (bitmap.Width != header.Width || bitmap.Height != header.Height)
+                throw new InvalidDataException("Header resolution doesn't match Image resolution");
+            Header = header;
+            Bitmap = bitmap;
+            Footer = footer;
+            ExtentionData = extentionData;
         }
+
+        public readonly TGAHeader Header;
+        public readonly Image Bitmap;
+        public readonly TGAFooter Footer;
+        public readonly TGAExtentionData ExtentionData;
     }
 }

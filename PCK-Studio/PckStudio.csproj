@@ -133,8 +133,8 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\IO\TGA\TGADeserializer.cs" />
-    <Compile Include="Classes\IO\TGA\TGASerializer.cs" />
+    <Compile Include="Internal\IO\TGA\TGADeserializer.cs" />
+    <Compile Include="Internal\IO\TGA\TGASerializer.cs" />
     <Compile Include="Extensions\LocFileExtensions.cs" />
     <Compile Include="Extensions\PckAssetExtensions.cs" />
     <Compile Include="Extensions\TreeNodeExtensions.cs" />
@@ -198,12 +198,12 @@
     <Compile Include="FileFormats\CSMBFile.cs" />
     <Compile Include="FileFormats\PckAudioFile.cs" />
     <Compile Include="Classes\API\Miles\Binka.cs" />
-    <Compile Include="Classes\IO\3DST\3DSTextureReader.cs" />
-    <Compile Include="Classes\IO\3DST\3DSTextureWriter.cs" />
-    <Compile Include="Classes\IO\CSMB\CSMBFileReader.cs" />
-    <Compile Include="Classes\IO\CSMB\CSMBFileWriter.cs" />
-    <Compile Include="Classes\IO\PckAudio\PckAudioFileReader.cs" />
-    <Compile Include="Classes\IO\PckAudio\PckAudioFileWriter.cs" />
+    <Compile Include="Internal\IO\3DST\3DSTextureReader.cs" />
+    <Compile Include="Internal\IO\3DST\3DSTextureWriter.cs" />
+    <Compile Include="Internal\IO\CSMB\CSMBFileReader.cs" />
+    <Compile Include="Internal\IO\CSMB\CSMBFileWriter.cs" />
+    <Compile Include="Internal\IO\PckAudio\PckAudioFileReader.cs" />
+    <Compile Include="Internal\IO\PckAudio\PckAudioFileWriter.cs" />
     <Compile Include="Classes\Misc\FileCacher.cs" />
     <Compile Include="Classes\Misc\OpenFolderDialog.cs" />
     <Compile Include="Classes\Models\DefaultModels\Steve64x64Model.cs" />
@@ -245,14 +245,14 @@
     <Compile Include="Features\CemuPanel.Designer.cs">
       <DependentUpon>CemuPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Classes\IO\TGA\TGAFileData.cs" />
-    <Compile Include="Classes\IO\TGA\TGADataTypeCode.cs" />
-    <Compile Include="Classes\IO\TGA\TGAException.cs" />
-    <Compile Include="Classes\IO\TGA\TGAExtentionData.cs" />
-    <Compile Include="Classes\IO\TGA\TGAFooter.cs" />
-    <Compile Include="Classes\IO\TGA\TGAHeader.cs" />
-    <Compile Include="Classes\IO\TGA\TGAReader.cs" />
-    <Compile Include="Classes\IO\TGA\TGAWriter.cs" />
+    <Compile Include="Internal\IO\TGA\TGAFileData.cs" />
+    <Compile Include="Internal\IO\TGA\TGADataTypeCode.cs" />
+    <Compile Include="Internal\IO\TGA\TGAException.cs" />
+    <Compile Include="Internal\IO\TGA\TGAExtentionData.cs" />
+    <Compile Include="Internal\IO\TGA\TGAFooter.cs" />
+    <Compile Include="Internal\IO\TGA\TGAHeader.cs" />
+    <Compile Include="Internal\IO\TGA\TGAReader.cs" />
+    <Compile Include="Internal\IO\TGA\TGAWriter.cs" />
     <Compile Include="Forms\Additional-Popups\EntityForms\AddEntry.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -436,7 +436,7 @@
       <DependentUpon>CreditsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Classes\IO\3DST\TextureCodec.cs" />
+    <Compile Include="Internal\IO\3DST\TextureCodec.cs" />
     <EmbeddedResource Include="Features\CemuPanel.resx">
       <DependentUpon>CemuPanel.cs</DependentUpon>
     </EmbeddedResource>

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace PckStudio.IO.TGA
+namespace PckStudio.Internal.IO.TGA
 {
     [Serializable]
     internal class TGAException : Exception

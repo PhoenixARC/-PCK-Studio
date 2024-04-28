@@ -26,7 +26,7 @@ using System.Collections.Generic;
 using OMI.Workers;
 using OMI;
 
-namespace PckStudio.IO.TGA
+namespace PckStudio.Internal.IO.TGA
 {
     internal class TGAReader : IDataFormatReader<TGAFileData>, IDataFormatReader
     {

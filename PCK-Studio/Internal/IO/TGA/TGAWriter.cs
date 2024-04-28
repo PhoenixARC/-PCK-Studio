@@ -26,7 +26,7 @@ using OMI;
 using System.Windows.Forms;
 using DiscordRPC;
 
-namespace PckStudio.IO.TGA
+namespace PckStudio.Internal.IO.TGA
 {
     internal class TGAWriter
     {

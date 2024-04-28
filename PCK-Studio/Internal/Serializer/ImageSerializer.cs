@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OMI.Formats.Pck;
 using PckStudio.Interfaces;
-using PckStudio.IO.TGA;
+using PckStudio.Internal.IO.TGA;
 
 namespace PckStudio.Internal.Serializer
 {

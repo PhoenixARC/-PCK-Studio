@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using OMI.Workers;
 using OMI;
 
-namespace PckStudio.IO._3DST
+namespace PckStudio.Internal.IO._3DST
 {
     internal class _3DSTextureReader : IDataFormatReader<Image>, IDataFormatReader
     {

@@ -18,7 +18,7 @@
 using System.IO;
 using System.Drawing;
 
-namespace PckStudio.IO.TGA
+namespace PckStudio.Internal.IO.TGA
 {
     internal static class TGADeserializer
     {
