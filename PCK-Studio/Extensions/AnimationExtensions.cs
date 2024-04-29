@@ -15,6 +15,10 @@ namespace PckStudio.Extensions
     {
         internal static Image CreateAnimationImage(this Animation animation)
         {
+            if (animation.FrameCount  == 0)
+            {
+                return null;
+            }
             var ms = new System.IO.MemoryStream();
             var generateor = new AnimatedGifCreator(ms, Animation.GameTickInMilliseconds, 0);
             foreach (var frame in animation.GetInterpolatedFrames())

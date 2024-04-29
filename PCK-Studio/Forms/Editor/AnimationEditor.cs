@@ -94,6 +94,8 @@ namespace PckStudio.Forms.Editor
             TextureIcons.Images.AddRange(_animation.GetTextures().ToArray());
             UpdateTreeView();
 
+			animationPictureBox.Image ??= _animation.CreateAnimationImage();
+
             if (_animation.FrameCount > 0)
             {
 				animationPictureBox.Image.SelectActiveFrame(FrameDimension.Page, 0);
