@@ -1084,11 +1084,11 @@ namespace PckStudio
 			if (diag.ShowDialog(this) != DialogResult.OK)
 				return;
 
-			string animationFilepath = $"{ResourceLocation.GetPathFromCategory(diag.Category)}/{diag.SelectedTile}.png";
+			string animationFilepath = $"{ResourceLocation.GetPathFromCategory(diag.Category)}/{diag.SelectedTile.InternalName}.png";
 
             if (currentPCK.Contains(animationFilepath, PckAssetType.TextureFile))
 			{
-				MessageBox.Show(this, $"{diag.SelectedTile} is already present.", "File already present");
+				MessageBox.Show(this, $"{diag.SelectedTile.DisplayName} is already present.", "File already present");
 				return;
 			}
 
