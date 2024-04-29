@@ -255,7 +255,8 @@ namespace PckStudio.Forms.Editor
                     animationFile.Size > 0)
                 {
                     var animation = animationFile.GetDeserializedData(AnimationDeserializer.DefaultDeserializer);
-                    selectTilePictureBox.Start(animation);
+                    selectTilePictureBox.Image = animation.CreateAnimationImage();
+                    selectTilePictureBox.Start();
                 }
             }
 
