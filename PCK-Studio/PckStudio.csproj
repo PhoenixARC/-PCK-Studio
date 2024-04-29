@@ -660,11 +660,14 @@
     <None Include="Resources\atlases\paintings.png" />
     <Content Include="Resources\atlases\terrain.png" />
     <None Include="Resources\external\trello.png" />
+    <None Include="Resources\icons\file_copy.png" />
     <Content Include="Resources\icons\file_delete.png" />
     <Content Include="Resources\icons\file_empty.png" />
     <None Include="Resources\icons\file_export.png" />
     <None Include="Resources\icons\file_import.png" />
     <Content Include="Resources\icons\file_new.png" />
+    <None Include="Resources\icons\file_paste.png" />
+    <None Include="Resources\icons\file_restore.png" />
     <Content Include="Resources\icons\music.png" />
     <None Include="Resources\icons\ranch.png" />
     <Content Include="Resources\icons\Replace.png" />

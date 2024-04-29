@@ -710,6 +710,26 @@ namespace PckStudio
 								buttonEdit.Text = "EDIT TILE ANIMATION";
 								buttonEdit.Visible = true;
 							}
+
+                            bool isTerrain = file.Filename == "res/terrain.png";
+                            bool isItems = file.Filename == "res/items.png";
+                            bool isParticles = file.Filename == "res/particles.png";
+                            bool isMoonPhases = file.Filename == "res/terrain/moon_phases.png";
+                            bool isMapIcons = file.Filename == "res/misc/mapicons.png";
+                            bool isAdditionalMapIcons = file.Filename == "res/misc/additionalmapicons.png";
+                            bool isXPOrbs = file.Filename == "res/item/xporb.png";
+                            bool isExplosions = file.Filename == "res/misc/explosion.png";
+                            bool isPaintings = file.Filename == "res/art/kz.png";
+                            bool isBanners = file.Filename == "res/item/banner/Banner_Atlas.png";
+
+                            if ((
+                                isTerrain || isItems || isParticles || isMoonPhases || isPaintings ||
+                                isMapIcons || isAdditionalMapIcons || isXPOrbs || isExplosions || isBanners
+                                ) && file.Type == PckAssetType.TextureFile)
+							{
+								buttonEdit.Text = "EDIT TEXTURE ATLAS";
+								buttonEdit.Visible = true;
+							}
 						}
 						break;
 
