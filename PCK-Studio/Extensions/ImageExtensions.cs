@@ -232,33 +232,38 @@ namespace PckStudio.Extensions
                 return image1;
 
             BitmapData baseImageData = baseImage.LockBits(new Rectangle(Point.Empty, baseImage.Size),
-                ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
+                ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
             byte[] baseImageBuffer = new byte[baseImageData.Stride * baseImageData.Height];
 
             Marshal.Copy(baseImageData.Scan0, baseImageBuffer, 0, baseImageBuffer.Length);
 
+            baseImage.UnlockBits(baseImageData);
+
             BitmapData overlayImageData = overlayImage.LockBits(new Rectangle(Point.Empty, overlayImage.Size),
                 ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
-            byte[] overlayImageBuffer = new byte[overlayImageData.Stride * overlayImageData.Height];
 
+            byte[] overlayImageBuffer = new byte[overlayImageData.Stride * overlayImageData.Height];
+            
             Marshal.Copy(overlayImageData.Scan0, overlayImageBuffer, 0, overlayImageBuffer.Length);
 
+            overlayImage.UnlockBits(overlayImageData);
+
+            byte[] finalBuffer = new byte[baseImageData.Stride * baseImageData.Height];
             for (int k = 0; k < baseImageBuffer.Length && k < overlayImageBuffer.Length; k += 4)
             {
-                baseImageBuffer[k + 0] = ColorExtensions.Mix(delta, baseImageBuffer[k + 0], overlayImageBuffer[k + 0]);
-                baseImageBuffer[k + 1] = ColorExtensions.Mix(delta, baseImageBuffer[k + 1], overlayImageBuffer[k + 1]);
-                baseImageBuffer[k + 2] = ColorExtensions.Mix(delta, baseImageBuffer[k + 2], overlayImageBuffer[k + 2]);
+                finalBuffer[k + 0] = ColorExtensions.Mix(delta, baseImageBuffer[k + 0], overlayImageBuffer[k + 0]);
+                finalBuffer[k + 1] = ColorExtensions.Mix(delta, baseImageBuffer[k + 1], overlayImageBuffer[k + 1]);
+                finalBuffer[k + 2] = ColorExtensions.Mix(delta, baseImageBuffer[k + 2], overlayImageBuffer[k + 2]);
+                finalBuffer[k + 3] = ColorExtensions.Mix(delta, baseImageBuffer[k + 3], overlayImageBuffer[k + 3]);
             }
 
             Bitmap bitmapResult = new Bitmap(baseImage.Width, baseImage.Height, PixelFormat.Format32bppArgb);
             BitmapData resultImageData = bitmapResult.LockBits(new Rectangle(Point.Empty, bitmapResult.Size),
                 ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
 
-            Marshal.Copy(baseImageBuffer, 0, resultImageData.Scan0, baseImageBuffer.Length);
+            Marshal.Copy(finalBuffer, 0, resultImageData.Scan0, finalBuffer.Length);
 
             bitmapResult.UnlockBits(resultImageData);
-            baseImage.UnlockBits(baseImageData);
-            overlayImage.UnlockBits(overlayImageData);
             return bitmapResult;
         }
     }
