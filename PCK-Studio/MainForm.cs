@@ -764,11 +764,7 @@ namespace PckStudio
 			File.WriteAllBytes(outFilePath, file.Data);
 			if (file.PropertyCount > 0)
 			{
-				using var fs = File.CreateText($"{outFilePath}.txt");
-				foreach (KeyValuePair<string, string> property in file.GetProperties())
-				{
-					fs.WriteLine($"{property.Key}: {property.Value}");
-                }
+				File.WriteAllText($"{outFilePath}.txt", file.SerializePropertiesToString());
 			}
 		}
 
@@ -1549,9 +1545,9 @@ namespace PckStudio
         private void ImportFiles(string[] files)
         {
 			int addedCount = 0;
-            foreach (var file in files)
+            foreach (var filepath in files)
             {
-                using AddFilePrompt addFile = new AddFilePrompt(Path.GetFileName(file));
+                using AddFilePrompt addFile = new AddFilePrompt(Path.GetFileName(filepath));
                 if (addFile.ShowDialog(this) != DialogResult.OK)
                     continue;
 
@@ -1560,8 +1556,13 @@ namespace PckStudio
                     MessageBox.Show(this, $"'{addFile.Filepath}' of type {addFile.Filetype} already exists.", "Import failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     continue;
                 }
-                currentPCK.CreateNewFile(addFile.Filepath, addFile.Filetype, () => File.ReadAllBytes(file));
-				addedCount++;
+                var importedFile = currentPCK.CreateNewFile(addFile.Filepath, addFile.Filetype, () => File.ReadAllBytes(filepath));
+                string propertyFile = filepath + ".txt";
+				if (File.Exists(propertyFile))
+				{
+					importedFile.DeserializePropertiesFromString(File.ReadAllText(propertyFile));
+				}
+                addedCount++;
 
                 BuildMainTreeView();
                 wasModified = true;
@@ -1769,6 +1770,12 @@ namespace PckStudio
 						: PckAssetType.SkinFile;
 					string pckfilepath = Path.Combine(filepath, filename);
 
+					if (currentPCK.Contains(pckfilepath, pckfiletype))
+					{
+						Trace.TraceInformation("[{0}] {1} already exists.", nameof(importExtractedSkinsFolder), pckfilepath);
+						continue;
+					}
+
 					PckAsset newFile = currentPCK.CreateNewFile(pckfilepath, pckfiletype);
 					byte[] filedata = File.ReadAllBytes(fullfilename);
 					newFile.SetData(filedata);
@@ -1776,16 +1783,7 @@ namespace PckStudio
 					if (File.Exists(fullfilename + ".txt"))
 					{
 						string propertiesFileContent = File.ReadAllText(fullfilename + ".txt");
-                        string[] properties = propertiesFileContent.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-						foreach (string property in properties)
-						{
-							string[] param = property.Split(':');
-							if (param.Length < 2)
-								continue;
-							string key = param[0];
-							string value = param[1];
-							newFile.AddProperty(key, value);
-						}
+						newFile.DeserializePropertiesFromString(propertiesFileContent);
 					}
 				}
 				BuildMainTreeView();
@@ -1852,45 +1850,28 @@ namespace PckStudio
 				{
 					string skinNameImport = Path.GetFileName(contents.FileName);
 					byte[] data = File.ReadAllBytes(contents.FileName);
-					PckAsset mfNew = currentPCK.CreateNewFile(skinNameImport, PckAssetType.SkinFile);
-					mfNew.SetData(data);
-					string propertyFile = Path.GetFileNameWithoutExtension(contents.FileName) + ".txt";
+
+                    if (currentPCK.Contains(skinNameImport, PckAssetType.SkinFile))
+                    {
+                        Trace.TraceInformation("[{0}] {1} already exists.", nameof(importExtractedSkinsFolder), skinNameImport);
+                        return;
+                    }
+
+                    PckAsset importSkinAsset = currentPCK.CreateNewFile(skinNameImport, PckAssetType.SkinFile);
+					importSkinAsset.SetData(data);
+					string propertyFile = contents.FileName + ".txt";
 					if (File.Exists(propertyFile))
 					{
-						string[] txtProperties = File.ReadAllLines(propertyFile);
-						if ((txtProperties.Contains("DISPLAYNAMEID") && txtProperties.Contains("DISPLAYNAME")) ||
-							txtProperties.Contains("THEMENAMEID") && txtProperties.Contains("THEMENAME") &&
-							TryGetLocFile(out LOCFile locFile))
-						{
-							// do stuff 
-							//l.AddLocKey(locThemeId, locTheme);
-							//using (var stream = new MemoryStream())
-							//{
-							//	LOCFileWriter.Write(stream, locFile);
-							//	locdata.SetData(stream.ToArray());
-							//}
-						}
-
-						try
-						{
-							foreach (string prop in txtProperties)
-							{
-								string[] arg = prop.Split(':');
-								if (arg.Length < 2) continue;
-								string key = arg[0];
-								string value = arg[1];
-								if (key == "DISPLNAMEID" || key == "THEMENAMEID")
-								{
-
-								}
-								mfNew.AddProperty(key, value);
-							}
-							wasModified = true;
-						}
-						catch (Exception ex)
-						{
-							MessageBox.Show(this, ex.Message);
-						}
+						string txtProperties = File.ReadAllText(propertyFile);
+						importSkinAsset.DeserializePropertiesFromString(txtProperties);
+						
+						// Because extracting/exporting an assest doesn't export
+						// the actual loc value we just get an undefined loc key
+						// - Miku
+						importSkinAsset.RemoveProperty("DISPLAYNAMEID");
+						importSkinAsset.RemoveProperty("THEMENAMEID");
+                        BuildMainTreeView();
+                        wasModified = true;
 					}
 				}
 			}
