@@ -6,7 +6,7 @@ using OMI.Workers;
 using PckStudio.Internal.FileFormats;
 using PckStudio.Internal;
 
-namespace PckStudio.IO.PSM
+namespace PckStudio.Internal.IO.PSM
 {
     internal class PSMFileReader : IDataFormatReader<PSMFile>, IDataFormatReader
     {
@@ -29,14 +29,14 @@ namespace PckStudio.IO.PSM
             var magic = reader.ReadString(3);
             if (magic != PSMFile.HEADER_MAGIC)
             {
-                Trace.TraceError("CSMBFileReader.FromStream - Failed to load csmb.\n\tReason: Header magic mismatch.");
+                Trace.TraceError("PSMFileReader.FromStream - Failed to load csmb.\n\tReason: Header magic mismatch.");
                 return new PSMFile(byte.MaxValue);
             }
             
             byte version = reader.ReadByte();
             if (version < 1 || version > 1)
             {
-                Trace.TraceError("CSMBFileReader.FromStream - Failed to load csmb.\n\tReason: Unsupported version.");
+                Trace.TraceError("PSMFileReader.FromStream - Failed to load csmb.\n\tReason: Unsupported version.");
                 return new PSMFile(byte.MaxValue);
             }
 

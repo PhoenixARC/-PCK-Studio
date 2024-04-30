@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace PckStudio.IO.PckAudio
+namespace PckStudio.Internal.IO.PckAudio
 {
     internal class PckAudioFileWriter : IDataFormatWriter
     {

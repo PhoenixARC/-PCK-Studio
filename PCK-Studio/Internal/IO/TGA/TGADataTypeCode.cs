@@ -16,7 +16,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
 **/
 
-namespace PckStudio.IO.TGA
+namespace PckStudio.Internal.IO.TGA
 {
     internal enum TGADataTypeCode : byte
     {

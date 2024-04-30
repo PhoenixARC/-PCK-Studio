@@ -18,7 +18,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace PckStudio.IO.TGA
+namespace PckStudio.Internal.IO.TGA
 {
     internal struct TGAExtentionData
     {

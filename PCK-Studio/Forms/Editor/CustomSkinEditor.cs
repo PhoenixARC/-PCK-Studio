@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using MetroFramework.Forms;
 using PckStudio.Internal;
 using PckStudio.Extensions;
-using PckStudio.IO.PSM;
+using PckStudio.Internal.IO.PSM;
 using PckStudio.Internal.FileFormats;
 using System.Linq;
 using PckStudio.Forms.Additional_Popups;

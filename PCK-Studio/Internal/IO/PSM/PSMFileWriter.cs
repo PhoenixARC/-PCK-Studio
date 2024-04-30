@@ -7,7 +7,7 @@ using PckStudio.Internal;
 using System;
 using OpenTK;
 
-namespace PckStudio.IO.PSM
+namespace PckStudio.Internal.IO.PSM
 {
     internal class PSMFileWriter : IDataFormatWriter
     {

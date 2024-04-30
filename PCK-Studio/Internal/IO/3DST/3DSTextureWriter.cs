@@ -5,7 +5,7 @@ using System.Text;
 using OMI;
 using OMI.Workers;
 
-namespace PckStudio.IO._3DST
+namespace PckStudio.Internal.IO._3DST
 {
     internal class _3DSTextureWriter : IDataFormatWriter
     {

@@ -8,7 +8,7 @@ using OMI.Formats.Languages;
 using OMI.Formats.Pck;
 using PckStudio.Internal;
 using PckStudio.Forms.Editor;
-using PckStudio.IO._3DST;
+using PckStudio.Internal.IO._3DST;
 using PckStudio.Properties;
 using PckStudio.Forms;
 using PckStudio.Extensions;

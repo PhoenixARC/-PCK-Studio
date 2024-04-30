@@ -43,6 +43,7 @@ namespace PckStudio.Forms.Editor
 
 		private Animation _animation;
 		private bool _isSpecialTile;
+
 		private AnimationEditor()
 		{
             InitializeComponent();
@@ -56,6 +57,7 @@ namespace PckStudio.Forms.Editor
 			_animation = animation;
             tileLabel.Text = displayName;
             _isSpecialTile = isSpecialTile;
+            animationPictureBox.Image = animation.CreateAnimationImage();
         }
 
         internal AnimationEditor(Animation animation, string displayName, Color blendColor)
@@ -63,7 +65,7 @@ namespace PckStudio.Forms.Editor
         {
 			animationPictureBox.UseBlendColor = true;
 			animationPictureBox.BlendColor = blendColor;
-		}
+        }
 
 		private void ValidateToolStrip()
         {
@@ -90,12 +92,13 @@ namespace PckStudio.Forms.Editor
             InterpolationCheckbox.Checked = _animation.Interpolate;
             TextureIcons.Images.Clear();
             TextureIcons.Images.AddRange(_animation.GetTextures().ToArray());
-
             UpdateTreeView();
+
+			animationPictureBox.Image ??= _animation.CreateAnimationImage();
 
             if (_animation.FrameCount > 0)
             {
-                animationPictureBox.SelectFrame(_animation, 0);
+				animationPictureBox.Image.SelectActiveFrame(FrameDimension.Page, 0);
             }
         }
 
@@ -111,13 +114,15 @@ namespace PckStudio.Forms.Editor
                 })
                 .ToArray()
                 );
-        }
+		}
 
         private void frameTreeView_AfterSelect(object sender, TreeViewEventArgs e)
 		{
 			if (animationPictureBox.IsPlaying)
-                AnimationStartStopBtn.Text = "Play Animation";
-            animationPictureBox.SelectFrame(_animation, frameTreeView.SelectedNode.Index);
+			{
+				StopAnimation();
+			}
+            animationPictureBox.Image = _animation.GetFrame(frameTreeView.SelectedNode.Index).Texture;
 		}
 
 		private void StopAnimation()
@@ -133,9 +138,11 @@ namespace PckStudio.Forms.Editor
 				StopAnimation();
 				return;
 			}
+
             if (_animation.FrameCount > 1)
 			{
-                animationPictureBox.Start(_animation);
+				animationPictureBox.Image = _animation.CreateAnimationImage();
+                animationPictureBox.Start();
 				AnimationStartStopBtn.Text = "Stop Animation";
 			}
 		}

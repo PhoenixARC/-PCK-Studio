@@ -180,5 +180,27 @@ namespace PckStudio.Extensions
             string ext = Path.GetExtension(file.Filename);
             return file.Filename.Remove(file.Filename.Length - (MipMap.Length + 1) - ext.Length) + ext;
         }
+
+        internal static void DeserializePropertiesFromString(this PckAsset file, string serializedData)
+        {
+            string[] lines = serializedData.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (string line in lines)
+            {
+                int idx = line.IndexOf(' ');
+                if (idx == -1 || line.Length - 1 == idx)
+                    continue;
+                file.AddProperty(line.Substring(0, idx).Replace(":", string.Empty), line.Substring(idx + 1));
+            }
+        }
+
+        internal static string SerializePropertiesToString(this PckAsset file)
+        {
+            StringBuilder builder = new StringBuilder(file.PropertyCount * 20);
+            foreach (var property in file.GetProperties())
+            {
+                builder.AppendLine(property.Key + ": " + property.Value);
+            }
+            return builder.ToString();
+        }
     }
 }
