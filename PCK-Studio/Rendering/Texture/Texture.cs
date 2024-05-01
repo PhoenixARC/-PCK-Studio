@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Drawing;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
@@ -85,6 +86,11 @@ namespace PckStudio.Rendering.Texture
         {
             _id = GL.GenTexture();
             Target = target;
+        }
+
+        public virtual void SetTexture(Image image)
+        {
+            throw new NotImplementedException();
         }
 
         public void Bind()

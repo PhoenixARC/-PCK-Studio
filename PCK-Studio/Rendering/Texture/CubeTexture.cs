@@ -17,7 +17,7 @@ namespace PckStudio.Rendering.Texture
             Slot = slot;
         }
 
-        public void SetTexture(Image image)
+        public override void SetTexture(Image image)
         {
             Bind();
 

@@ -21,7 +21,7 @@ namespace PckStudio.Rendering.Texture
             Unbind();
         }
 
-        public void SetTexture(Image image)
+        public override void SetTexture(Image image)
         {
             Bind();
             var bitmap = new Bitmap(image); 
