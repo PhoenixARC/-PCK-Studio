@@ -1,4 +1,4 @@
-﻿namespace PckStudio.Features
+﻿namespace PckStudio.Forms.Features
 {
     partial class CemuPanel
     {
