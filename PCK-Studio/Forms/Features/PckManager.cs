@@ -18,7 +18,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace PckStudio.Features
+namespace PckStudio.Forms.Features
 {
     public partial class PckManager : MetroFramework.Forms.MetroForm
     {

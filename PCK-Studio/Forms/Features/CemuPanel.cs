@@ -24,7 +24,7 @@ using PckStudio.Extensions;
 using PckStudio.Classes.Misc;
 using System.Diagnostics;
 
-namespace PckStudio.Features
+namespace PckStudio.Forms.Features
 {
     /// <summary>
     /// Wishlist:

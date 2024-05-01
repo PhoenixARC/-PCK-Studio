@@ -239,10 +239,10 @@
     <Compile Include="Classes\Models\TexelComparer.cs" />
     <Compile Include="Classes\Models\TexturePlane.cs" />
     <Compile Include="Classes\Misc\RichPresenceClient.cs" />
-    <Compile Include="Features\CemuPanel.cs">
+    <Compile Include="Forms\Features\CemuPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Features\CemuPanel.Designer.cs">
+    <Compile Include="Forms\Features\CemuPanel.Designer.cs">
       <DependentUpon>CemuPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="Internal\IO\TGA\TGAFileData.cs" />
@@ -376,10 +376,10 @@
     <Compile Include="Forms\Editor\BoxEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Features\PckManager.cs">
+    <Compile Include="Forms\Features\PckManager.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Features\PckManager.Designer.cs">
+    <Compile Include="Forms\Features\PckManager.Designer.cs">
       <DependentUpon>PckManager.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Editor\BoxEditor.Designer.cs">
@@ -437,7 +437,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Internal\IO\3DST\TextureCodec.cs" />
-    <EmbeddedResource Include="Features\CemuPanel.resx">
+    <EmbeddedResource Include="Forms\Features\CemuPanel.resx">
       <DependentUpon>CemuPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\EntityForms\AddEntry.resx">
@@ -523,7 +523,7 @@
     <EmbeddedResource Include="Forms\Additional-Popups\InProgressPrompt.resx">
       <DependentUpon>InProgressPrompt.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Features\PckManager.resx">
+    <EmbeddedResource Include="Forms\Features\PckManager.resx">
       <DependentUpon>PckManager.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Editor\BoxEditor.resx">
