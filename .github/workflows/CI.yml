@@ -2,26 +2,43 @@ name: .NET
 
 on: [push, pull_request]
 
+env:
+  NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
+  nuget-cache-key: nuget-package-cache
+
 jobs:
+    
   build:
 
     runs-on: windows-latest
-
+    
     steps:
-    - uses: actions/checkout@v3
-    
-    - name: Checkout submodules
-      run: |
-        git submodule update --init --recursive
-    
-    - name: Setup MSBuild
-      uses: microsoft/setup-msbuild@v1.1
-
-    - name: Setup NuGet
-      uses: NuGet/setup-nuget@v1.0.6
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
       
-    - name: Restore NuGet Packages
-      run: nuget restore PCK_Studio.sln
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
       
-    - name: Build Solution
-      run: msbuild PCK_Studio.sln
+      - name: Setup NuGet
+        uses: NuGet/setup-nuget@v2
+      
+      - name: Restore NuGet Packages
+        id: nuget-packages-restore
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ env.NUGET_PACKAGES }}
+          key: ${{ runner.os }}-${{ env.nuget-cache-key }}
+        
+      - name: Get NuGet Packages
+        run: nuget restore PCK_Studio.sln
+      
+      - name: Cache NuGet Packages
+        id: nuget-packages-save
+        uses: actions/cache/save@v4
+        with:
+          path: ${{ env.NUGET_PACKAGES }}
+          key: ${{ steps.nuget-packages-restore.outputs.cache-primary-key }}
+  
+      - name: Build Solution
+        run: msbuild PCK_Studio.sln
