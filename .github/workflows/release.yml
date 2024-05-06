@@ -1,0 +1,40 @@
+name: Create release
+
+on: 
+  push:
+    branches: main
+    tags: v*.*
+    
+env:
+  RELEASE_NAME: PCK-Studio
+
+jobs:
+  CreateRelease:
+      runs-on: windows-latest
+
+      steps:
+        - uses: actions/checkout@v4
+          with:
+            submodules: recursive
+        
+        - name: Setup MSBuild
+          uses: microsoft/setup-msbuild@v2
+        
+        - name: Setup NuGet
+          uses: NuGet/setup-nuget@v2
+          
+        - name: Get NuGet Packages
+          run: nuget restore PCK_Studio.sln
+    
+        - name: Build solution
+          run: "msbuild PCK_Studio.sln -p:Configuration=Release"
+
+        - name: Package binary
+          run: Compress-Archive -Path ${{ github.workspace }}\PCK-Studio\bin\Release\ -Destination ${{ env.RELEASE_NAME }}.zip
+
+        - name: Release
+          uses: softprops/action-gh-release@v2
+          if: startsWith(github.ref, 'refs/tags/')
+          with:
+            files: ${{ env.RELEASE_NAME }}.zip
+              
