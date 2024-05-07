@@ -1,40 +1,55 @@
 name: Create release
 
+
+
 on: 
   push:
-    branches: main
     tags: v*.*
     
 env:
   RELEASE_NAME: PCK-Studio
-
+      
 jobs:
+  on-main-branch-check:
+    runs-on: ubuntu-latest
+    outputs:
+      on_main: ${{ steps.contains_tag.outputs.retval }}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: rickstaa/action-contains-tag@v1
+        id: contains_tag
+        with:
+          reference: "main"
+          tag: "${{ github.ref }}"
   CreateRelease:
-      runs-on: windows-latest
-
-      steps:
-        - uses: actions/checkout@v4
-          with:
-            submodules: recursive
+    runs-on: windows-latest
+    needs: on-main-branch-check
+    if: ${{ needs.on-main-branch-check.outputs.on_main == 'true' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+      
+      - name: Setup NuGet
+        uses: NuGet/setup-nuget@v2
         
-        - name: Setup MSBuild
-          uses: microsoft/setup-msbuild@v2
-        
-        - name: Setup NuGet
-          uses: NuGet/setup-nuget@v2
-          
-        - name: Get NuGet Packages
-          run: nuget restore PCK_Studio.sln
-    
-        - name: Build solution
-          run: "msbuild PCK_Studio.sln -p:Configuration=Release"
+      - name: Get NuGet Packages
+        run: nuget restore PCK_Studio.sln
+  
+      - name: Build solution
+        run: "msbuild PCK_Studio.sln -p:Configuration=Release"
 
-        - name: Package binary
-          run: Compress-Archive -Path ${{ github.workspace }}\PCK-Studio\bin\Release\ -Destination ${{ env.RELEASE_NAME }}.zip
+      - name: Package binary
+        run: Compress-Archive -Path ${{ github.workspace }}\PCK-Studio\bin\Release\ -Destination ${{ env.RELEASE_NAME }}.zip
 
-        - name: Release
-          uses: softprops/action-gh-release@v2
-          if: startsWith(github.ref, 'refs/tags/')
-          with:
-            files: ${{ env.RELEASE_NAME }}.zip
-              
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: ${{ env.RELEASE_NAME }}.zip
+            
