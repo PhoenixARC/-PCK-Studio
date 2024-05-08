@@ -1466,10 +1466,16 @@ namespace PckStudio
 				return;
 
 			bool isTargetPckFile = targetNode.IsTagOfType<PckAsset>();
-
-			if (e.Data.GetData(dataFormat) is not TreeNode draggedNode)
+            TreeNode draggedNode = e.Data.GetData(dataFormat) as TreeNode;
+            if (draggedNode == null)
 			{
-				Debug.WriteLine("Dragged data was not of type TreeNode.");
+				Debug.WriteLine("Dragged node is null.");
+				return;
+			}
+
+			if (targetNode.Equals(draggedNode))
+			{
+				Debug.WriteLine("Dragged node was not moved.");
 				return;
 			}
 
