@@ -158,6 +158,8 @@
     <Compile Include="Internal\ResourceCategory.cs" />
     <Compile Include="External\Format\BlockBenchModel.cs" />
     <Compile Include="Internal\Skin.cs" />
+    <Compile Include="Internal\SkinMetaData.cs" />
+    <Compile Include="Internal\SkinModelInfo.cs" />
     <Compile Include="Internal\SkinPartOffset.cs" />
     <Compile Include="Internal\CommitInfo.cs" />
     <Compile Include="Internal\ResourceLocation.cs" />

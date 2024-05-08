@@ -79,11 +79,11 @@ namespace PckStudio.Forms.Editor
 
         private void LoadModelData(Skin skin)
         {
-            skinNameLabel.Text = skin.Name;
-            var boxProperties = skin.AdditionalBoxes;
-            var offsetProperties = skin.PartOffsets;
+            skinNameLabel.Text = skin.MetaData.Name;
+            var boxProperties = skin.Model.AdditionalBoxes;
+            var offsetProperties = skin.Model.PartOffsets;
             
-            renderer3D1.ANIM = skin.ANIM;
+            renderer3D1.ANIM = skin.Model.ANIM;
 
             if (skin.HasCape)
                 renderer3D1.CapeTexture = skin.CapeTexture;
@@ -98,9 +98,9 @@ namespace PckStudio.Forms.Editor
             {
                 renderer3D1.SetPartOffset(offset);
             }
-            if (skin.Texture is not null)
+            if (skin.Model.Texture is not null)
             {
-                renderer3D1.Texture = skin.Texture;
+                renderer3D1.Texture = skin.Model.Texture;
             }
 
             skinOffsetListBindingSource = new BindingSource(renderer3D1.GetOffsets().ToArray(), null);
@@ -114,7 +114,7 @@ namespace PckStudio.Forms.Editor
 
         private void GenerateUVTextureMap(SkinBOX skinBox)
         {
-            using (Graphics graphics = Graphics.FromImage(_skin.Texture))
+            using (Graphics graphics = Graphics.FromImage(_skin.Model.Texture))
             {
                 graphics.ApplyConfig(_graphicsConfig);
                 int argb = rng.Next(unchecked((int)0xFF000000), -1);
@@ -122,7 +122,7 @@ namespace PckStudio.Forms.Editor
                 Brush brush = new SolidBrush(color);
                 graphics.FillPath(brush, skinBox.GetUVGraphicsPath());
             }
-            renderer3D1.Texture = _skin.Texture;
+            renderer3D1.Texture = _skin.Model.Texture;
         }
 
         private void createToolStripMenuItem_Click(object sender, EventArgs e)
@@ -144,7 +144,7 @@ namespace PckStudio.Forms.Editor
             saveFileDialog.Filter = "PNG Image Files | *.png";
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                _skin.Texture.Save(saveFileDialog.FileName, ImageFormat.Png);
+                _skin.Model.Texture.Save(saveFileDialog.FileName, ImageFormat.Png);
             }
         }
 
@@ -163,12 +163,12 @@ namespace PckStudio.Forms.Editor
 
         private void buttonDone_Click(object sender, EventArgs e)
         {
-            _skin.AdditionalBoxes.Clear();
-            _skin.AdditionalBoxes.AddRange(renderer3D1.ModelData);
-            _skin.PartOffsets.Clear();
-            _skin.PartOffsets.AddRange(renderer3D1.GetOffsets());
+            _skin.Model.AdditionalBoxes.Clear();
+            _skin.Model.AdditionalBoxes.AddRange(renderer3D1.ModelData);
+            _skin.Model.PartOffsets.Clear();
+            _skin.Model.PartOffsets.AddRange(renderer3D1.GetOffsets());
             // just in case they're not the same instance
-            _skin.ANIM = renderer3D1.ANIM;
+            _skin.Model.ANIM = renderer3D1.ANIM;
             DialogResult = DialogResult.OK;
         }
 
@@ -204,11 +204,11 @@ namespace PckStudio.Forms.Editor
                     case ".psm":
                         var reader = new PSMFileReader();
                         PSMFile csmbFile = reader.FromFile(openFileDialog.FileName);
-                        _skin.ANIM = csmbFile.SkinANIM;
-                        _skin.AdditionalBoxes.Clear();
-                        _skin.PartOffsets.Clear();
-                        _skin.AdditionalBoxes.AddRange(csmbFile.Parts);
-                        _skin.PartOffsets.AddRange(csmbFile.Offsets);
+                        _skin.Model.ANIM = csmbFile.SkinANIM;
+                        _skin.Model.AdditionalBoxes.Clear();
+                        _skin.Model.PartOffsets.Clear();
+                        _skin.Model.AdditionalBoxes.AddRange(csmbFile.Parts);
+                        _skin.Model.PartOffsets.AddRange(csmbFile.Offsets);
                         LoadModelData(_skin);
                         break;
                     case ".json":
@@ -216,27 +216,27 @@ namespace PckStudio.Forms.Editor
                         break;
                     case ".bbmodel":
                         BlockBenchModel blockBenchModel = JsonConvert.DeserializeObject<BlockBenchModel>(File.ReadAllText(openFileDialog.FileName));
-                        _skin.AdditionalBoxes.Clear();
-                        _skin.PartOffsets.Clear();
+                        _skin.Model.AdditionalBoxes.Clear();
+                        _skin.Model.PartOffsets.Clear();
 
                         if (blockBenchModel.Textures.IndexInRange(0))
-                            _skin.Texture = blockBenchModel.Textures[0].GetTexture();
+                            _skin.Model.Texture = blockBenchModel.Textures[0].GetTexture();
 
                         // TODO: clean this up -miku
-                        _skin.ANIM.SetFlag(SkinAnimFlag.RESOLUTION_64x64, true);
-                        _skin.ANIM.SetFlag(SkinAnimFlag.SLIM_MODEL, false);
-                        _skin.ANIM.SetFlag(SkinAnimFlag.HEAD_DISABLED, true);
-                        _skin.ANIM.SetFlag(SkinAnimFlag.HEAD_OVERLAY_DISABLED, true);
-                        _skin.ANIM.SetFlag(SkinAnimFlag.BODY_DISABLED, true);
-                        _skin.ANIM.SetFlag(SkinAnimFlag.BODY_OVERLAY_DISABLED, true);
-                        _skin.ANIM.SetFlag(SkinAnimFlag.RIGHT_ARM_DISABLED, true);
-                        _skin.ANIM.SetFlag(SkinAnimFlag.RIGHT_ARM_OVERLAY_DISABLED, true);
-                        _skin.ANIM.SetFlag(SkinAnimFlag.LEFT_ARM_DISABLED, true);
-                        _skin.ANIM.SetFlag(SkinAnimFlag.LEFT_ARM_OVERLAY_DISABLED, true);
-                        _skin.ANIM.SetFlag(SkinAnimFlag.RIGHT_LEG_DISABLED, true);
-                        _skin.ANIM.SetFlag(SkinAnimFlag.RIGHT_LEG_OVERLAY_DISABLED, true);
-                        _skin.ANIM.SetFlag(SkinAnimFlag.LEFT_LEG_DISABLED, true);
-                        _skin.ANIM.SetFlag(SkinAnimFlag.LEFT_LEG_OVERLAY_DISABLED, true);
+                        _skin.Model.ANIM.SetFlag(SkinAnimFlag.RESOLUTION_64x64, true);
+                        _skin.Model.ANIM.SetFlag(SkinAnimFlag.SLIM_MODEL, false);
+                        _skin.Model.ANIM.SetFlag(SkinAnimFlag.HEAD_DISABLED, true);
+                        _skin.Model.ANIM.SetFlag(SkinAnimFlag.HEAD_OVERLAY_DISABLED, true);
+                        _skin.Model.ANIM.SetFlag(SkinAnimFlag.BODY_DISABLED, true);
+                        _skin.Model.ANIM.SetFlag(SkinAnimFlag.BODY_OVERLAY_DISABLED, true);
+                        _skin.Model.ANIM.SetFlag(SkinAnimFlag.RIGHT_ARM_DISABLED, true);
+                        _skin.Model.ANIM.SetFlag(SkinAnimFlag.RIGHT_ARM_OVERLAY_DISABLED, true);
+                        _skin.Model.ANIM.SetFlag(SkinAnimFlag.LEFT_ARM_DISABLED, true);
+                        _skin.Model.ANIM.SetFlag(SkinAnimFlag.LEFT_ARM_OVERLAY_DISABLED, true);
+                        _skin.Model.ANIM.SetFlag(SkinAnimFlag.RIGHT_LEG_DISABLED, true);
+                        _skin.Model.ANIM.SetFlag(SkinAnimFlag.RIGHT_LEG_OVERLAY_DISABLED, true);
+                        _skin.Model.ANIM.SetFlag(SkinAnimFlag.LEFT_LEG_DISABLED, true);
+                        _skin.Model.ANIM.SetFlag(SkinAnimFlag.LEFT_LEG_OVERLAY_DISABLED, true);
 
                         foreach (JToken token in blockBenchModel.Outliner)
                         {
@@ -268,23 +268,23 @@ namespace PckStudio.Forms.Editor
 
         private void ImportBedrockJson(string fileName)
         {
-            _skin.AdditionalBoxes.Clear();
-            _skin.PartOffsets.Clear();
+            _skin.Model.AdditionalBoxes.Clear();
+            _skin.Model.PartOffsets.Clear();
 
-            _skin.ANIM.SetFlag(SkinAnimFlag.RESOLUTION_64x64, true);
-            _skin.ANIM.SetFlag(SkinAnimFlag.SLIM_MODEL, false);
-            _skin.ANIM.SetFlag(SkinAnimFlag.HEAD_DISABLED, true);
-            _skin.ANIM.SetFlag(SkinAnimFlag.HEAD_OVERLAY_DISABLED, true);
-            _skin.ANIM.SetFlag(SkinAnimFlag.BODY_DISABLED, true);
-            _skin.ANIM.SetFlag(SkinAnimFlag.BODY_OVERLAY_DISABLED, true);
-            _skin.ANIM.SetFlag(SkinAnimFlag.RIGHT_ARM_DISABLED, true);
-            _skin.ANIM.SetFlag(SkinAnimFlag.RIGHT_ARM_OVERLAY_DISABLED, true);
-            _skin.ANIM.SetFlag(SkinAnimFlag.LEFT_ARM_DISABLED, true);
-            _skin.ANIM.SetFlag(SkinAnimFlag.LEFT_ARM_OVERLAY_DISABLED, true);
-            _skin.ANIM.SetFlag(SkinAnimFlag.RIGHT_LEG_DISABLED, true);
-            _skin.ANIM.SetFlag(SkinAnimFlag.RIGHT_LEG_OVERLAY_DISABLED, true);
-            _skin.ANIM.SetFlag(SkinAnimFlag.LEFT_LEG_DISABLED, true);
-            _skin.ANIM.SetFlag(SkinAnimFlag.LEFT_LEG_OVERLAY_DISABLED, true);
+            _skin.Model.ANIM.SetFlag(SkinAnimFlag.RESOLUTION_64x64, true);
+            _skin.Model.ANIM.SetFlag(SkinAnimFlag.SLIM_MODEL, false);
+            _skin.Model.ANIM.SetFlag(SkinAnimFlag.HEAD_DISABLED, true);
+            _skin.Model.ANIM.SetFlag(SkinAnimFlag.HEAD_OVERLAY_DISABLED, true);
+            _skin.Model.ANIM.SetFlag(SkinAnimFlag.BODY_DISABLED, true);
+            _skin.Model.ANIM.SetFlag(SkinAnimFlag.BODY_OVERLAY_DISABLED, true);
+            _skin.Model.ANIM.SetFlag(SkinAnimFlag.RIGHT_ARM_DISABLED, true);
+            _skin.Model.ANIM.SetFlag(SkinAnimFlag.RIGHT_ARM_OVERLAY_DISABLED, true);
+            _skin.Model.ANIM.SetFlag(SkinAnimFlag.LEFT_ARM_DISABLED, true);
+            _skin.Model.ANIM.SetFlag(SkinAnimFlag.LEFT_ARM_OVERLAY_DISABLED, true);
+            _skin.Model.ANIM.SetFlag(SkinAnimFlag.RIGHT_LEG_DISABLED, true);
+            _skin.Model.ANIM.SetFlag(SkinAnimFlag.RIGHT_LEG_OVERLAY_DISABLED, true);
+            _skin.Model.ANIM.SetFlag(SkinAnimFlag.LEFT_LEG_DISABLED, true);
+            _skin.Model.ANIM.SetFlag(SkinAnimFlag.LEFT_LEG_OVERLAY_DISABLED, true);
 
             Geometry selectedGeometry = null;
             // Bedrock Entity (Model)
@@ -363,7 +363,7 @@ namespace PckStudio.Forms.Editor
             if (box.IsBasePart() && ((boxType == "HEAD" && element.Inflate == 0.5f) || (element.Inflate == 0.25f)))
                 box.Type = box.GetOverlayType();
 
-            _skin.AdditionalBoxes.Add(box);
+            _skin.Model.AdditionalBoxes.Add(box);
             return true;
         }
 
@@ -469,7 +469,7 @@ namespace PckStudio.Forms.Editor
                     {
                         skinBox.HideWithArmor = true;
                     }
-                    _skin.AdditionalBoxes.Add(skinBox);
+                    _skin.Model.AdditionalBoxes.Add(skinBox);
                 }
             }
         }
@@ -509,7 +509,7 @@ namespace PckStudio.Forms.Editor
                 MessageBox.Show("The selected image does not suit a skin texture.", "Invalid image dimensions.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            uvPictureBox.Image = _skin.Texture = img;
+            uvPictureBox.Image = _skin.Model.Texture = img;
         }
 
         private void skinPartListBox_DoubleClick(object sender, EventArgs e)
@@ -531,14 +531,14 @@ namespace PckStudio.Forms.Editor
             if (skinPartListBox.SelectedItem is SkinBOX box)
             {
                 renderer3D1.SelectedIndex = skinPartListBox.SelectedIndex;
-                Size scaleSize = new Size(_skin.Texture.Width * scale, _skin.Texture.Height * scale);
+                Size scaleSize = new Size(_skin.Model.Texture.Width * scale, _skin.Model.Texture.Height * scale);
                 uvPictureBox.Image = new Bitmap(scaleSize.Width, scaleSize.Height);
                 using (Graphics g = Graphics.FromImage(uvPictureBox.Image))
                 {
-                    float lineWidth = ((_skin.Texture.Width / renderer3D1.TextureSize.Width) + (_skin.Texture.Height / renderer3D1.TextureSize.Height)) / 2f;
+                    float lineWidth = ((_skin.Model.Texture.Width / renderer3D1.TextureSize.Width) + (_skin.Model.Texture.Height / renderer3D1.TextureSize.Height)) / 2f;
                     GraphicsPath graphicsPath = box.GetUVGraphicsPath(new System.Numerics.Vector2(scaleSize.Width * renderer3D1.TillingFactor.X, scaleSize.Height * renderer3D1.TillingFactor.Y));
                     g.ApplyConfig(_graphicsConfig);
-                    g.DrawImage(_skin.Texture, new Rectangle(Point.Empty, scaleSize), new Rectangle(Point.Empty, _skin.Texture.Size), GraphicsUnit.Pixel);
+                    g.DrawImage(_skin.Model.Texture, new Rectangle(Point.Empty, scaleSize), new Rectangle(Point.Empty, _skin.Model.Texture.Size), GraphicsUnit.Pixel);
                     g.DrawPath(new Pen(renderer3D1.OutlineColor, lineWidth), graphicsPath);
                 }
                 uvPictureBox.Invalidate();

@@ -50,9 +50,9 @@ namespace PckStudio.Internal.FileFormats
 		public static PSMFile FromSkin(Skin skin)
 		{
 			var csmb = new PSMFile(1);
-			csmb.SkinANIM = skin.ANIM;
-			csmb.Parts.AddRange(skin.AdditionalBoxes);
-			csmb.Offsets.AddRange(skin.PartOffsets);
+			csmb.SkinANIM = skin.Model.ANIM;
+			csmb.Parts.AddRange(skin.Model.AdditionalBoxes);
+			csmb.Offsets.AddRange(skin.Model.PartOffsets);
 			return csmb;
 		}
 	}

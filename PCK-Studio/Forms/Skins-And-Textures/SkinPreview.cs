@@ -18,7 +18,7 @@ namespace PckStudio.Forms
         private Image texture;
         private IEnumerable<SkinBOX> data;
 
-        public SkinPreview(Skin skin)
+        public SkinPreview(SkinModelInfo skin)
         {
             InitializeComponent();
             texture = skin.Texture;

@@ -81,23 +81,23 @@ namespace PckStudio.Extensions
             if (file.Type != PckAssetType.SkinFile)
                 throw new InvalidOperationException("File is not a skin file");
 
-            file.SetTexture(skin.Texture);
+            file.SetTexture(skin.Model.Texture);
 
-            string skinId = skin.Id.ToString("d08");
+            string skinId = skin.MetaData.Id.ToString("d08");
 
             // TODO: keep filepath 
             file.Filename = $"dlcskin{skinId}.png";
 
             string skinLocKey = $"IDS_dlcskin{skinId}_DISPLAYNAME";
-            file.SetProperty("DISPLAYNAME", skin.Name);
+            file.SetProperty("DISPLAYNAME", skin.MetaData.Name);
             file.SetProperty("DISPLAYNAMEID", skinLocKey);
-            localizationFile.AddLocKey(skinLocKey, skin.Name);
+            localizationFile.AddLocKey(skinLocKey, skin.MetaData.Name);
 
-            if (!string.IsNullOrEmpty(skin.Theme))
+            if (!string.IsNullOrEmpty(skin.MetaData.Theme))
             {
-                file.SetProperty("THEMENAME", skin.Theme);
+                file.SetProperty("THEMENAME", skin.MetaData.Theme);
                 file.SetProperty("THEMENAMEID", $"IDS_dlcskin{skinId}_THEMENAME");
-                localizationFile.AddLocKey($"IDS_dlcskin{skinId}_THEMENAME", skin.Theme);
+                localizationFile.AddLocKey($"IDS_dlcskin{skinId}_THEMENAME", skin.MetaData.Theme);
             }
 
             if (skin.HasCape)
@@ -105,18 +105,18 @@ namespace PckStudio.Extensions
                 file.SetProperty("CAPEPATH", $"dlccape{skinId}.png");
             }
 
-            file.SetProperty("ANIM", skin.ANIM.ToString());
+            file.SetProperty("ANIM", skin.Model.ANIM.ToString());
             file.SetProperty("GAME_FLAGS", "0x18");
             file.SetProperty("FREE", "1");
 
             file.RemoveProperties("BOX");
             file.RemoveProperties("OFFSET");
 
-            foreach (SkinBOX box in skin.AdditionalBoxes)
+            foreach (SkinBOX box in skin.Model.AdditionalBoxes)
             {
                 file.AddProperty(box.ToProperty());
             }
-            foreach (SkinPartOffset offset in skin.PartOffsets)
+            foreach (SkinPartOffset offset in skin.Model.PartOffsets)
             {
                 file.AddProperty(offset.ToProperty());
             }

@@ -14,24 +14,24 @@ namespace PckStudio.Extensions
     {
         public static PckAsset CreateFile(this Skin skin, LOCFile localizationFile)
         {
-            string skinId = skin.Id.ToString("d08");
+            string skinId = skin.MetaData.Id.ToString("d08");
             PckAsset skinFile = new PckAsset($"dlcskin{skinId}.png", PckAssetType.SkinFile);
 
-            skinFile.AddProperty("DISPLAYNAME", skin.Name);
+            skinFile.AddProperty("DISPLAYNAME", skin.MetaData.Name);
             if (localizationFile is not null)
             {
                 string skinLocKey = $"IDS_dlcskin{skinId}_DISPLAYNAME";
                 skinFile.AddProperty("DISPLAYNAMEID", skinLocKey);
-                localizationFile.AddLocKey(skinLocKey, skin.Name);
+                localizationFile.AddLocKey(skinLocKey, skin.MetaData.Name);
             }
 
-            if (!string.IsNullOrEmpty(skin.Theme))
+            if (!string.IsNullOrEmpty(skin.MetaData.Theme))
             {
-                skinFile.AddProperty("THEMENAME", skin.Theme);
+                skinFile.AddProperty("THEMENAME", skin.MetaData.Theme);
                 if (localizationFile is not null)
                 {
                     skinFile.AddProperty("THEMENAMEID", $"IDS_dlcskin{skinId}_THEMENAME");
-                    localizationFile.AddLocKey($"IDS_dlcskin{skinId}_THEMENAME", skin.Theme);
+                    localizationFile.AddLocKey($"IDS_dlcskin{skinId}_THEMENAME", skin.MetaData.Theme);
                 }
             }
 
@@ -40,20 +40,20 @@ namespace PckStudio.Extensions
                 skinFile.AddProperty("CAPEPATH", $"dlccape{skinId}.png");
             }
 
-            skinFile.AddProperty("ANIM", skin.ANIM);
+            skinFile.AddProperty("ANIM", skin.Model.ANIM);
             skinFile.AddProperty("GAME_FLAGS", "0x18");
             skinFile.AddProperty("FREE", "1");
 
-            foreach (SkinBOX box in skin.AdditionalBoxes)
+            foreach (SkinBOX box in skin.Model.AdditionalBoxes)
             {
                 skinFile.AddProperty(box.ToProperty());
             }
-            foreach (SkinPartOffset offset in skin.PartOffsets)
+            foreach (SkinPartOffset offset in skin.Model.PartOffsets)
             {
                 skinFile.AddProperty(offset.ToProperty());
             }
 
-            skinFile.SetTexture(skin.Texture);
+            skinFile.SetTexture(skin.Model.Texture);
 
             return skinFile;
         }
@@ -62,7 +62,7 @@ namespace PckStudio.Extensions
         {
             if (!skin.HasCape)
                 throw new InvalidOperationException("Skin does not contain a cape.");
-            string skinId = skin.Id.ToString("d08");
+            string skinId = skin.MetaData.Id.ToString("d08");
             PckAsset capeFile = new PckAsset($"dlccape{skinId}.png", PckAssetType.CapeFile);
             capeFile.SetTexture(skin.CapeTexture);
             return capeFile;
