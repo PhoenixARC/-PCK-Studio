@@ -228,8 +228,10 @@ namespace PckStudio.Rendering
         private bool showWireFrame = false;
         private bool autoInflateOverlayParts;
 
-        private Matrix4 RightArmMatrix { get; set; } = Matrix4.CreateFromAxisAngle(Vector3.UnitZ,  25f);
-        private Matrix4 LeftArmMatrix  { get; set; } = Matrix4.CreateFromAxisAngle(Vector3.UnitZ, -25f);
+        private float defaultArmRotation => 5f;
+
+        private Matrix4 RightArmMatrix => Matrix4.CreateFromAxisAngle(Vector3.UnitZ, MathHelper.DegreesToRadians(-defaultArmRotation));
+        private Matrix4 LeftArmMatrix => Matrix4.CreateFromAxisAngle(Vector3.UnitZ, MathHelper.DegreesToRadians(defaultArmRotation));
 
         private static Vector3[] cubeVertices = new Vector3[]
         {
