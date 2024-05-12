@@ -93,6 +93,14 @@ namespace PckStudio.Internal
 
         public static bool IsValidType(string type) => ValidBoxTypes.Contains(type);
 
+        public bool IsBasePart() => IsBasePart(Type);
+        
+        public static bool IsBasePart(string type) => BaseTypes.Contains(type);
+
+        public bool IsOverlayPart() => IsOverlayPart(Type);
+
+        public static bool IsOverlayPart(string type) => OverlayTypes.Contains(type);
+
         public KeyValuePair<string, string> ToProperty()
 		{
 			return new KeyValuePair<string, string>("BOX", ToString());

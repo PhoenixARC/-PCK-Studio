@@ -67,14 +67,12 @@ namespace PckStudio.Extensions
             return SkinBOX.BaseTypes.IndexInRange(index) ? SkinBOX.BaseTypes[index] : "";
         }
 
-        public static bool IsBasePart(this SkinBOX skinBox)
+        public static string GetBaseType(string type)
         {
-            return SkinBOX.BaseTypes.Contains(skinBox.Type);
-        }
-
-        public static bool IsOverlayPart(this SkinBOX skinBox)
-        {
-            return SkinBOX.OverlayTypes.Contains(skinBox.Type);
+            if (!SkinBOX.IsValidType(type))
+                return "";
+            int index = Array.IndexOf(SkinBOX.OverlayTypes, type);
+            return SkinBOX.BaseTypes.IndexInRange(index) ? SkinBOX.BaseTypes[index] : "";
         }
     }
 }
