@@ -67,9 +67,9 @@
             this.offsetListBox = new System.Windows.Forms.ListBox();
             this.offsetTabContextMenu = new MetroFramework.Controls.MetroContextMenu(this.components);
             this.addOffsetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.removeOffsetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.renderer3D1 = new PckStudio.Rendering.SkinRenderer();
             this.uvPictureBox = new PckStudio.ToolboxItems.InterpolationPictureBox();
-            this.removeOffsetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             label5 = new System.Windows.Forms.Label();
             label3 = new System.Windows.Forms.Label();
             label7 = new System.Windows.Forms.Label();
@@ -321,6 +321,7 @@
             this.skinPartListBox.FormattingEnabled = true;
             this.skinPartListBox.Name = "skinPartListBox";
             this.skinPartListBox.Tag = "";
+            this.skinPartListBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.skinPartListBox_MouseClick);
             this.skinPartListBox.SelectedIndexChanged += new System.EventHandler(this.skinPartListBox_SelectedIndexChanged);
             this.skinPartListBox.DoubleClick += new System.EventHandler(this.skinPartListBox_DoubleClick);
             this.skinPartListBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.skinPartListBox_KeyUp);
@@ -401,6 +402,12 @@
             resources.ApplyResources(this.addOffsetToolStripMenuItem, "addOffsetToolStripMenuItem");
             this.addOffsetToolStripMenuItem.Click += new System.EventHandler(this.addOffsetToolStripMenuItem_Click);
             // 
+            // removeOffsetToolStripMenuItem
+            // 
+            this.removeOffsetToolStripMenuItem.Name = "removeOffsetToolStripMenuItem";
+            resources.ApplyResources(this.removeOffsetToolStripMenuItem, "removeOffsetToolStripMenuItem");
+            this.removeOffsetToolStripMenuItem.Click += new System.EventHandler(this.removeOffsetToolStripMenuItem_Click);
+            // 
             // renderer3D1
             // 
             resources.ApplyResources(this.renderer3D1, "renderer3D1");
@@ -425,12 +432,6 @@
             this.uvPictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             this.uvPictureBox.Name = "uvPictureBox";
             this.uvPictureBox.TabStop = false;
-            // 
-            // removeOffsetToolStripMenuItem
-            // 
-            this.removeOffsetToolStripMenuItem.Name = "removeOffsetToolStripMenuItem";
-            resources.ApplyResources(this.removeOffsetToolStripMenuItem, "removeOffsetToolStripMenuItem");
-            this.removeOffsetToolStripMenuItem.Click += new System.EventHandler(this.removeOffsetToolStripMenuItem_Click);
             // 
             // CustomSkinEditor
             // 

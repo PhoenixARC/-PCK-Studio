@@ -1015,19 +1015,19 @@
     <value>204, 17</value>
   </metadata>
   <data name="addOffsetToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>152, 22</value>
   </data>
   <data name="addOffsetToolStripMenuItem.Text" xml:space="preserve">
     <value>Add Offset</value>
   </data>
   <data name="removeOffsetToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>152, 22</value>
   </data>
   <data name="removeOffsetToolStripMenuItem.Text" xml:space="preserve">
     <value>Remove Offset</value>
   </data>
   <data name="offsetTabContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>181, 70</value>
+    <value>153, 48</value>
   </data>
   <data name="&gt;&gt;offsetTabContextMenu.Name" xml:space="preserve">
     <value>offsetTabContextMenu</value>

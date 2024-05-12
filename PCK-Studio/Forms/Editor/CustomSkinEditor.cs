@@ -304,8 +304,17 @@ namespace PckStudio.Forms.Editor
 
         private void skinPartListBox_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Delete)
-                deleteToolStripMenuItem_Click(sender, e);
+            switch (e.KeyCode)
+            {
+                case Keys.Delete:
+                    deleteToolStripMenuItem_Click(sender, e);
+                    break;
+                case Keys.Escape:
+                    ClearSelection();
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void ReloadOffsetList()
@@ -352,6 +361,18 @@ namespace PckStudio.Forms.Editor
                 renderer3D1.SetPartOffset(offset.Type, (float)valuePrompt.SelectedValue);
                 ReloadOffsetList();
             }
+        }
+
+        private void skinPartListBox_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (skinPartListBox.IndexFromPoint(e.X, e.Y) == -1)
+                ClearSelection();
+        }
+
+        private void ClearSelection()
+        {
+            skinPartListBox.ClearSelected();
+            renderer3D1.SelectedIndex = skinPartListBox.SelectedIndex;
         }
     }
 }
