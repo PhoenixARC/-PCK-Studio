@@ -138,12 +138,7 @@ namespace PckStudio.Rendering
 
         private Vector3 Transform
         {
-            get
-            {
-                Vector3 transform = Translation;
-                transform.Xz -= Pivot.Xz / 2f;
-                return -transform;
-            }
+            get => Vector3.TransformPosition(Vector3.Zero, Matrix4.CreateTranslation(Translation) * Matrix4.CreateTranslation(Pivot * 2));
         }
 
     internal Vector3 GetCenter(int index)
