@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
-using OpenTK;
+using PckStudio.Extensions;
 
 namespace PckStudio.Rendering
 {
@@ -18,7 +19,7 @@ namespace PckStudio.Rendering
             Start = start;
             End = end;
             Vector3 size = End - Start;
-            Volume = new Vector3(Math.Abs(size.X), Math.Abs(size.Y), Math.Abs(size.Z));
+            Volume = Vector3.Abs(size);
         }
 
         public ColorVertex[] GetVertices()
@@ -26,14 +27,14 @@ namespace PckStudio.Rendering
             Vector3 s = Start;
             Vector3 e = End;
             return [
-                new ColorVertex(new Vector3(s.X, e.Y, e.Z)),
-                new ColorVertex(new Vector3(e.X, e.Y, e.Z)),
-                new ColorVertex(new Vector3(e.X, s.Y, e.Z)),
-                new ColorVertex(new Vector3(s.X, s.Y, e.Z)),
-                new ColorVertex(new Vector3(s.X, e.Y, s.Z)),
-                new ColorVertex(new Vector3(e.X, e.Y, s.Z)),
-                new ColorVertex(new Vector3(e.X, s.Y, s.Z)),
-                new ColorVertex(new Vector3(s.X, s.Y, s.Z)),
+                new ColorVertex(new Vector3(s.X, e.Y, e.Z).ToOpenTKVector()),
+                new ColorVertex(new Vector3(e.X, e.Y, e.Z).ToOpenTKVector()),
+                new ColorVertex(new Vector3(e.X, s.Y, e.Z).ToOpenTKVector()),
+                new ColorVertex(new Vector3(s.X, s.Y, e.Z).ToOpenTKVector()),
+                new ColorVertex(new Vector3(s.X, e.Y, s.Z).ToOpenTKVector()),
+                new ColorVertex(new Vector3(e.X, e.Y, s.Z).ToOpenTKVector()),
+                new ColorVertex(new Vector3(e.X, s.Y, s.Z).ToOpenTKVector()),
+                new ColorVertex(new Vector3(s.X, s.Y, s.Z).ToOpenTKVector()),
             ];
         }
 

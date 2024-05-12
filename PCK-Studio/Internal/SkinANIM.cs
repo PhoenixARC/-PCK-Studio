@@ -115,5 +115,10 @@ namespace PckStudio.Internal
         {
             return MemberwiseClone();
         }
+
+        internal void SetMask(SkinAnimMask skinAnimMask)
+        {
+			_flags = new BitVector32((int)skinAnimMask);
+        }
     }
 }

@@ -177,8 +177,8 @@ namespace PckStudio.Rendering
             Vector2 uv = Uv;
 
             BoundingBox boundingBox = GetBoundingBox();
-            Vector3 from = boundingBox.Start;
-            Vector3 to   = boundingBox.End;
+            Vector3 from = boundingBox.Start.ToOpenTKVector();
+            Vector3 to   = boundingBox.End.ToOpenTKVector();
 
             var back = new TextureVertex[]
             {

@@ -17,6 +17,7 @@
 **/
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
 
@@ -44,6 +45,37 @@ namespace PckStudio.Internal
             "SLEEVE1",
             "PANTS0",
             "PANTS1",
+        };
+
+        public static Dictionary<int, SkinAnimFlag> KnownHashes = new Dictionary<int, SkinAnimFlag>()
+        {
+            //[unchecked((int)0x9560320c)] = SkinAnimFlag.HEAD_DISABLED,              // HEAD     -4 -8 -4 8  8 8  0  0 0 0 0
+            
+            //[unchecked((int)0x1f13e4a3)] = SkinAnimFlag.BODY_DISABLED,              // BODY     -4  0 -2 8 12 4 16 16 0 0 0
+
+            //[unchecked((int)0x407c9b27)] = SkinAnimFlag.RIGHT_ARM_DISABLED,         // ARM0     -3 -2 -2 4 12 4 40 16 0 0 0 // standard (64x64)
+            //[unchecked((int)0x867c9b27)] = SkinAnimFlag.RIGHT_ARM_DISABLED,         // ARM0     -2 -2 -2 3 12 4 40 16 0 0 0 // slim
+
+            //[unchecked((int)0xca3cf050)] = SkinAnimFlag.LEFT_ARM_DISABLED,          // ARM1     -1 -2 -2 4 12 4 40 16 0 1 0 // classic (64x32)
+            //[unchecked((int)0x879b27)]   = SkinAnimFlag.LEFT_ARM_DISABLED,          // ARM1     -1 -2 -2 4 12 4 32 48 0 0 0 // standard (64x64)
+            //[unchecked((int)0xe8c79b27)] = SkinAnimFlag.LEFT_ARM_DISABLED,          // ARM1     -1 -2 -2 3 12 4 32 48 0 0 0 // slim
+
+            //[unchecked((int)0x49a63773)] = SkinAnimFlag.LEFT_LEG_DISABLED,          // LEG1     -1 -2 -2 4 12 4  0 16 0 1 0 // 64x32
+            //[unchecked((int)0xdd10e24a)] = SkinAnimFlag.LEFT_LEG_DISABLED,          // LEG1     -1 -2 -2 4 12 4 32 48 0 0 0 // 64x64
+
+            //[unchecked((int)0x5da5e24a)] = SkinAnimFlag.RIGHT_LEG_DISABLED,         // LEG0     -2  0 -2 4 12 4  0 16 0 0 0
+
+            //[unchecked((int)0x4bfe0142)] = SkinAnimFlag.HEAD_OVERLAY_DISABLED,      // HEADWEAR -4 -8 -4 8  8 8 32  0 0 0 0
+
+            //// ------------------------------------------------------------------------------------------------------------------------------------
+
+            //[unchecked((int)0xe693e4a3)] = SkinAnimFlag.BODY_OVERLAY_DISABLED,      // BODY     -4  0 -2 8 12 4 16 32 0 0 0
+            //[unchecked((int)0x8e322609)] = SkinAnimFlag.BODY_OVERLAY_DISABLED,      // JACKET   -4  0 -2 8 12 4 16 32 0 0 0
+            
+            //[unchecked((int)0xbefc9b27)] = SkinAnimFlag.RIGHT_ARM_OVERLAY_DISABLED, // ARM0     -2 -2 -2 3 12 4 40 32 0 0 0
+            //[unchecked((int)0xd7807908)] = SkinAnimFlag.LEFT_ARM_OVERLAY_DISABLED,  // SLEEVE1  -1 -2 -2 4 12 4 32 48 0 0 0
+
+            //[unchecked((int)0xf3d833dc)] = SkinAnimFlag.RIGHT_ARM_OVERLAY_DISABLED, // PATNS0   -2  0 -2 4 12 4  0 16 0 0 0
         };
 
         public static readonly string[] ValidBoxTypes = BaseTypes.Concat(OverlayTypes).ToArray();
@@ -129,7 +161,16 @@ namespace PckStudio.Internal
 
         public override int GetHashCode()
         {
-            return Type.GetHashCode() % Pos.GetHashCode() * UV.GetHashCode() % Size.GetHashCode();
+            int hashCode = -1311939065;
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Type);
+            hashCode = hashCode * -1521134295 + Pos.GetHashCode();
+            hashCode = hashCode * -1521134295 + Size.GetHashCode();
+            hashCode = hashCode * -1521134295 + UV.GetHashCode();
+            hashCode = hashCode * -1521134295 + HideWithArmor.GetHashCode();
+            hashCode = hashCode * -1521134295 + Mirror.GetHashCode();
+            hashCode = hashCode * -1521134295 + Scale.GetHashCode();
+            //Debug.WriteLineIf(!KnownHashes.ContainsKey(hashCode), $"Hash for {this}: 0x{hashCode:x}");
+            return hashCode;
         }
 
         public override bool Equals(object obj)

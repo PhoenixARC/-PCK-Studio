@@ -19,6 +19,7 @@ using System.Numerics;
 using PckStudio.Rendering;
 using System.Diagnostics;
 using Newtonsoft.Json.Linq;
+using PckStudio.Properties;
 
 namespace PckStudio.Forms.Editor
 {
@@ -33,16 +34,6 @@ namespace PckStudio.Forms.Editor
         private Random rng;
         private bool _inflateOverlayParts;
         private bool _allowInflate;
-
-        private static readonly FileDialogFilter[] fileFilters = 
-        [
-            new ("Pck skin model(*.psm)", "*.psm"),
-            new ("Block bench model(*.bbmodel)", "*.bbmodel"),
-            new ("Bedrock Model(*.geo.json)", "*.geo.json"),
-            new ("Bedrock Legacy Model(*.json)", "*.json"),
-        ];
-
-        private string AvailableModelFileFilters => string.Join("|", fileFilters);
 
         private BindingSource skinPartListBindingSource;
         private BindingSource skinOffsetListBindingSource;
@@ -98,9 +89,15 @@ namespace PckStudio.Forms.Editor
             {
                 renderer3D1.SetPartOffset(offset);
             }
+
             if (skin.Model.Texture is not null)
             {
                 renderer3D1.Texture = skin.Model.Texture;
+            }
+
+            if (skin.Model.Texture is null && renderer3D1.Texture is not null)
+            {
+                skin.Model.Texture = renderer3D1.Texture;
             }
 
             skinOffsetListBindingSource = new BindingSource(renderer3D1.GetOffsets().ToArray(), null);
@@ -176,230 +173,26 @@ namespace PckStudio.Forms.Editor
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Title = "Save Model File";
-            saveFileDialog.Filter = AvailableModelFileFilters;
-            if (saveFileDialog.ShowDialog() != DialogResult.OK)
-                return;
-            string fileExtension = Path.GetExtension(saveFileDialog.FileName);
-            switch (fileExtension)
-            {
-                case ".psm":
-                    var writer = new PSMFileWriter(PSMFile.FromSkin(_skin));
-                    writer.WriteToFile(saveFileDialog.FileName);
-                    break;
-                default:
-                    break;
-            }
+            saveFileDialog.Filter = ModelImporter.SupportedModelFileFormatsFilter;
+            saveFileDialog.FileName = _skin.MetaData.Name;
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                ModelImporter.Export(saveFileDialog.FileName, _skin.Model);
         }
 
         private void importSkinButton_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Title = "Select Model File";
-            openFileDialog.Filter = AvailableModelFileFilters;
+            openFileDialog.Filter = ModelImporter.SupportedModelFileFormatsFilter;
             if (MessageBox.Show("Import custom model project file? Your current work will be lost!", "", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1) == DialogResult.Yes && openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                string fileExtension = Path.GetExtension(openFileDialog.FileName);
-                switch (fileExtension)
+                SkinModelInfo modelInfo = ModelImporter.Import(openFileDialog.FileName);
+                if (modelInfo is not null)
                 {
-                    case ".psm":
-                        var reader = new PSMFileReader();
-                        PSMFile csmbFile = reader.FromFile(openFileDialog.FileName);
-                        _skin.Model.ANIM = csmbFile.SkinANIM;
-                        _skin.Model.AdditionalBoxes.Clear();
-                        _skin.Model.PartOffsets.Clear();
-                        _skin.Model.AdditionalBoxes.AddRange(csmbFile.Parts);
-                        _skin.Model.PartOffsets.AddRange(csmbFile.Offsets);
-                        LoadModelData(_skin);
-                        break;
-                    case ".json":
-                        ImportBedrockJson(openFileDialog.FileName);
-                        break;
-                    case ".bbmodel":
-                        BlockBenchModel blockBenchModel = JsonConvert.DeserializeObject<BlockBenchModel>(File.ReadAllText(openFileDialog.FileName));
-                        _skin.Model.AdditionalBoxes.Clear();
-                        _skin.Model.PartOffsets.Clear();
-
-                        if (blockBenchModel.Textures.IndexInRange(0))
-                            _skin.Model.Texture = blockBenchModel.Textures[0].GetTexture();
-
-                        // TODO: clean this up -miku
-                        _skin.Model.ANIM.SetFlag(SkinAnimFlag.RESOLUTION_64x64, true);
-                        _skin.Model.ANIM.SetFlag(SkinAnimFlag.SLIM_MODEL, false);
-                        _skin.Model.ANIM.SetFlag(SkinAnimFlag.HEAD_DISABLED, true);
-                        _skin.Model.ANIM.SetFlag(SkinAnimFlag.HEAD_OVERLAY_DISABLED, true);
-                        _skin.Model.ANIM.SetFlag(SkinAnimFlag.BODY_DISABLED, true);
-                        _skin.Model.ANIM.SetFlag(SkinAnimFlag.BODY_OVERLAY_DISABLED, true);
-                        _skin.Model.ANIM.SetFlag(SkinAnimFlag.RIGHT_ARM_DISABLED, true);
-                        _skin.Model.ANIM.SetFlag(SkinAnimFlag.RIGHT_ARM_OVERLAY_DISABLED, true);
-                        _skin.Model.ANIM.SetFlag(SkinAnimFlag.LEFT_ARM_DISABLED, true);
-                        _skin.Model.ANIM.SetFlag(SkinAnimFlag.LEFT_ARM_OVERLAY_DISABLED, true);
-                        _skin.Model.ANIM.SetFlag(SkinAnimFlag.RIGHT_LEG_DISABLED, true);
-                        _skin.Model.ANIM.SetFlag(SkinAnimFlag.RIGHT_LEG_OVERLAY_DISABLED, true);
-                        _skin.Model.ANIM.SetFlag(SkinAnimFlag.LEFT_LEG_DISABLED, true);
-                        _skin.Model.ANIM.SetFlag(SkinAnimFlag.LEFT_LEG_OVERLAY_DISABLED, true);
-
-                        foreach (JToken token in blockBenchModel.Outliner)
-                        {
-                            if (token.Type == JTokenType.String && Guid.TryParse((string)token, out Guid tokenGuid))
-                            {
-                                Element element = blockBenchModel.Elements.First(e => e.Uuid.Equals(tokenGuid));
-                                if (!SkinBOX.IsValidType(element.Name) || element.Type != "cube")
-                                    continue;
-                                LoadElement(element.Name, element);
-                                continue;
-                            }
-                            if (token.Type == JTokenType.Object)
-                            {
-                                Outline outline = token.ToObject<Outline>();
-                                string type = outline.Name;
-                                if (!SkinBOX.IsValidType(type))
-                                    continue;
-                                ReadOutliner(token, type, blockBenchModel.Elements);
-                            }
-                        }
-
-                        LoadModelData(_skin);
-                        break;
-                    default:
-                        break;
+                    _skin.Model = modelInfo;
+                    LoadModelData(_skin);
                 }
             }
-        }
-
-        private void ImportBedrockJson(string fileName)
-        {
-            _skin.Model.AdditionalBoxes.Clear();
-            _skin.Model.PartOffsets.Clear();
-
-            _skin.Model.ANIM.SetFlag(SkinAnimFlag.RESOLUTION_64x64, true);
-            _skin.Model.ANIM.SetFlag(SkinAnimFlag.SLIM_MODEL, false);
-            _skin.Model.ANIM.SetFlag(SkinAnimFlag.HEAD_DISABLED, true);
-            _skin.Model.ANIM.SetFlag(SkinAnimFlag.HEAD_OVERLAY_DISABLED, true);
-            _skin.Model.ANIM.SetFlag(SkinAnimFlag.BODY_DISABLED, true);
-            _skin.Model.ANIM.SetFlag(SkinAnimFlag.BODY_OVERLAY_DISABLED, true);
-            _skin.Model.ANIM.SetFlag(SkinAnimFlag.RIGHT_ARM_DISABLED, true);
-            _skin.Model.ANIM.SetFlag(SkinAnimFlag.RIGHT_ARM_OVERLAY_DISABLED, true);
-            _skin.Model.ANIM.SetFlag(SkinAnimFlag.LEFT_ARM_DISABLED, true);
-            _skin.Model.ANIM.SetFlag(SkinAnimFlag.LEFT_ARM_OVERLAY_DISABLED, true);
-            _skin.Model.ANIM.SetFlag(SkinAnimFlag.RIGHT_LEG_DISABLED, true);
-            _skin.Model.ANIM.SetFlag(SkinAnimFlag.RIGHT_LEG_OVERLAY_DISABLED, true);
-            _skin.Model.ANIM.SetFlag(SkinAnimFlag.LEFT_LEG_DISABLED, true);
-            _skin.Model.ANIM.SetFlag(SkinAnimFlag.LEFT_LEG_OVERLAY_DISABLED, true);
-
-            Geometry selectedGeometry = null;
-            // Bedrock Entity (Model)
-            if (fileName.EndsWith(".geo.json"))
-            {
-                BedrockModel bedrockModel = JsonConvert.DeserializeObject<BedrockModel>(File.ReadAllText(fileName));
-                ItemSelectionPopUp itemSelectionPopUp = new ItemSelectionPopUp(bedrockModel.Models.Select(m => m.Description.Identifier).ToArray());
-                if (itemSelectionPopUp.ShowDialog() == DialogResult.OK && bedrockModel.Models.IndexInRange(itemSelectionPopUp.SelectedIndex))
-                {
-                    selectedGeometry = bedrockModel.Models[itemSelectionPopUp.SelectedIndex];
-                }
-                itemSelectionPopUp.Dispose();
-            }
-
-            // Bedrock Legacy Model
-            if (fileName.EndsWith(".json"))
-            {
-                BedrockLegacyModel bedrockModel = JsonConvert.DeserializeObject<BedrockLegacyModel>(File.ReadAllText(fileName));
-                ItemSelectionPopUp itemSelectionPopUp = new ItemSelectionPopUp(bedrockModel.Select(m => m.Key).ToArray());
-                if (itemSelectionPopUp.ShowDialog() == DialogResult.OK)
-                {
-                    selectedGeometry = bedrockModel[itemSelectionPopUp.SelectedItem];
-                }
-                itemSelectionPopUp.Dispose();
-            }
-
-            if (selectedGeometry is not null)
-            {
-                LoadGeometry(selectedGeometry);
-                LoadModelData(_skin);
-            }
-        }
-
-        private void ReadOutliner(JToken token, string type, IReadOnlyCollection<Element> elements)
-        {
-            if (TryReadElement(token, type, elements))
-                return;
-
-            if (token.Type == JTokenType.Object)
-            {
-                Outline outline = token.ToObject<Outline>();
-                foreach (JToken childToken in outline.Children)
-                {
-                    ReadOutliner(childToken, type, elements);
-                }
-            }
-        }
-
-        private bool TryReadElement(JToken token, string type, IReadOnlyCollection<Element> elements)
-        {
-            if (token.Type == JTokenType.String && Guid.TryParse((string)token, out Guid tokenGuid))
-            {
-                Element element = elements.First(e => e.Uuid.Equals(tokenGuid));
-                LoadElement(type, element);
-                return true;
-            }
-            return false;
-        }
-
-        private bool LoadElement(string boxType, Element element)
-        {
-            if (!element.UseBoxUv || !element.IsVisibile)
-                return false;
-
-            //Debug.WriteLine($"{type} {element.Name}({element.Uuid})");
-            BoundingBox boundingBox = new BoundingBox(element.From.ToOpenTKVector(), element.To.ToOpenTKVector());
-            Vector3 pos = boundingBox.Start.ToNumericsVector();
-            Vector3 size = boundingBox.Volume.ToNumericsVector();
-            Vector2 uv = element.UvOffset;
-            pos = TranslatePosition(boxType, pos, size, new Vector3(1, 1, 0));
-            //Debug.WriteLine(pos);
-
-            // IMPROVMENT: detect default body parts and toggle anim flag instead of adding box data -miku
-
-            var box = new SkinBOX(boxType, pos, size, uv);
-            if (box.IsBasePart() && ((boxType == "HEAD" && element.Inflate == 0.5f) || (element.Inflate == 0.25f)))
-                box.Type = box.GetOverlayType();
-
-            _skin.Model.AdditionalBoxes.Add(box);
-            return true;
-        }
-
-        /// <summary>
-        /// Translates coordinate unit system into our coordinate system
-        /// </summary>
-        /// <param name="boxType">See <see cref="SkinBOX.BaseTypes"/> and <see cref="SkinBOX.OverlayTypes"/>.</param>
-        /// <param name="origin">Position/Origin of the Object(Cube).</param>
-        /// <param name="size">The Size of the Object(Cube).</param>
-        /// <param name="translationUnit">Describes what axises need translation.</param>
-        /// <returns>The translated position</returns>
-        private Vector3 TranslatePosition(string boxType, Vector3 origin, Vector3 size, Vector3 translationUnit)
-        {
-            // The translation unit describes what axises need to be swapped
-            // Example:
-            //      translation unit = (1, 0, 0) => This translation unit will ONLY swap the X axis
-            translationUnit = Vector3.Clamp(translationUnit, Vector3.Zero, Vector3.One);
-            // To better understand see:
-            // https://sharplab.io/#v2:C4LgTgrgdgNAJiA1AHwAICYCMBYAUKgBgAJVMA6AOQgFsBTMASwGMBnAbj1QGYT0iBhIgG88RMb3SjxI3OLlEAbgEMwRBlAAOEYEQC8RKLQDuRAGq0mwAPZguACkwwijogQCUHWfLHLVtAB4aFsC0cHoGxmbBNvYAtC7xTpgeUt6+RGC0LOEAKmBKUCwAYjbU/FY2cOpKISx26lrAKV7epACcdpkszd5i7Z1ZevoBQZahPeIAvqlEM9wkmABsUZYxRHkFxaXlldW1duartmqa2m4zMr2KKhmD+ofWtmT8ADZK1Br1p8BODzFkAC16FZftEngB5QwTbxdIgAKn06E8V1hsXuYK4ZEhtGRvVQAHYiLEurixNNcJMgA
-            Vector3 transformUnit = -((translationUnit * 2) - Vector3.One);
-
-            Vector3 pos = origin;
-            // The next line essentialy does uses the fomular below just on all axis.
-            // x = -(pos.x + size.x)
-            pos *= transformUnit;
-            pos -= size * translationUnit;
-            // Skin Renderer (and Game) specific offset value.
-            pos.Y += 24f;
-
-            Vector3 translation = renderer3D1.GetTranslation(boxType).ToNumericsVector();
-            Vector3 pivot = renderer3D1.GetPivot(boxType).ToNumericsVector();
-
-            // This will cancel out the part specific translation and pivot.
-            pos += translation * -Vector3.UnitX - pivot * Vector3.UnitY;
-
-            return pos;
         }
 
         private void cloneToolStripMenuItem_Click(object sender, EventArgs e)
@@ -408,69 +201,6 @@ namespace PckStudio.Forms.Editor
             {
                 renderer3D1.ModelData.Add((SkinBOX)box.Clone());
                 skinPartListBindingSource.ResetBindings(false);
-            }
-        }
-
-        private void LoadGeometry(Geometry geometry)
-        {
-            foreach (Bone bone in geometry.Bones)
-            {
-                string boxType = bone.Name;
-                if (!SkinBOX.IsValidType(boxType))
-                {
-                    switch (bone.Name)
-                    {
-                        case "head":
-                        case "helmet":
-                            boxType = "HEAD";
-                            break;
-                        case "body":
-                            boxType = "BODY";
-                            break;
-                        case "rightArm":
-                            boxType = "ARM0";
-                            break;
-                        case "leftArm":
-                            boxType = "ARM1";
-                            break;
-                        case "rightLeg":
-                            boxType = "LEG0";
-                            break;
-                        case "leftLeg":
-                            boxType = "LEG1";
-                            break;
-                        case "hat":
-                            boxType = "HEADWEAR";
-                            break;
-                        case "jacket":
-                            boxType = "JACKET";
-                            break;
-                        case "rightSleeve":
-                            boxType = "SLEEVE0";
-                            break;
-                        case "leftSleeve":
-                            boxType = "SLEEVE1";
-                            break;
-                        case "rightPants":
-                            boxType = "PANTS0";
-                            break;
-                        case "leftPants":
-                            boxType = "PANTS1";
-                            break;
-                        default:
-                    continue;
-                    }
-                }
-                foreach (External.Format.Cube cube in bone.Cubes)
-                {
-                    Vector3 pos = TranslatePosition(boxType, cube.Origin, cube.Size, Vector3.UnitY);
-                    var skinBox = new SkinBOX(boxType, pos, cube.Size, cube.Uv);
-                    if (bone.Name == "helmet")
-                    {
-                        skinBox.HideWithArmor = true;
-                    }
-                    _skin.Model.AdditionalBoxes.Add(skinBox);
-                }
             }
         }
 

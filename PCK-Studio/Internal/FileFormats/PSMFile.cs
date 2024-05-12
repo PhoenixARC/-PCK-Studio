@@ -29,6 +29,7 @@ namespace PckStudio.Internal.FileFormats
     class PSMFile
     {
 		internal static readonly string HEADER_MAGIC = "psm";
+		internal const byte CurrentVersion = 1;
 
         public readonly byte Version;
 
@@ -44,15 +45,16 @@ namespace PckStudio.Internal.FileFormats
         }
 
 		public SkinANIM SkinANIM { get; private set; }
-		public readonly List<SkinBOX> Parts = new List<SkinBOX>();
+
+        public readonly List<SkinBOX> Parts = new List<SkinBOX>();
 		public readonly List<SkinPartOffset> Offsets = new List<SkinPartOffset>();
 
-		public static PSMFile FromSkin(Skin skin)
+		public static PSMFile FromSkin(SkinModelInfo skin)
 		{
 			var csmb = new PSMFile(1);
-			csmb.SkinANIM = skin.Model.ANIM;
-			csmb.Parts.AddRange(skin.Model.AdditionalBoxes);
-			csmb.Offsets.AddRange(skin.Model.PartOffsets);
+			csmb.SkinANIM = skin.ANIM;
+			csmb.Parts.AddRange(skin.AdditionalBoxes);
+			csmb.Offsets.AddRange(skin.PartOffsets);
 			return csmb;
 		}
 	}

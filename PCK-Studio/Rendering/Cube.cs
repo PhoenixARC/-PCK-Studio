@@ -123,7 +123,7 @@ namespace PckStudio.Rendering
             Vector3 halfSizeInflated = halfSize + new Vector3(Inflate);
             Vector3 start = Center - halfSizeInflated;
             Vector3 end = Center + halfSizeInflated;
-            return new BoundingBox(start, end);
+            return new BoundingBox(start.ToNumericsVector(), end.ToNumericsVector());
         }
 
 

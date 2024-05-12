@@ -20,7 +20,7 @@ namespace PckStudio.External.Format
 
     internal class Geometry
     {
-        [JsonProperty("description")]
+        [JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)]
         public GeometryDescription Description { get; set; }
 
         [JsonProperty("bones")]
@@ -54,13 +54,21 @@ namespace PckStudio.External.Format
     {
         [JsonProperty("name")]
         public string Name { get; set; }
-        
+
+        public Bone(string name)
+        {
+            Name = name;
+            Cubes = new List<Cube>();
+        }
+
         [JsonIgnore]
         public Vector3 Pivot
         {
             get => pivot.Length < 3 ? Vector3.Zero : new Vector3(pivot[0], pivot[1], pivot[2]);
             set
             {
+                if (pivot.Length < 3)
+                    pivot = new float[3];
                 pivot[0] = value.X;
                 pivot[1] = value.Y;
                 pivot[2] = value.Z;
@@ -71,7 +79,7 @@ namespace PckStudio.External.Format
         public List<Cube> Cubes;
 
         [JsonProperty("pivot")]
-        private float[] pivot { get; set; }
+        private float[] pivot { get; set; } = new float[3];
     }
 
     internal class Cube
@@ -84,6 +92,8 @@ namespace PckStudio.External.Format
             get => origin.Length < 3 ? Vector3.Zero : new Vector3(origin[0], origin[1], origin[2]);
             set
             {
+                if (origin.Length < 3)
+                    origin = new float[3];
                 origin[0] = value.X;
                 origin[1] = value.Y;
                 origin[2] = value.Z;
@@ -98,6 +108,8 @@ namespace PckStudio.External.Format
             get => size.Length < 3 ? Vector3.Zero : new Vector3(size[0], size[1], size[2]);
             set
             {
+                if (size.Length < 3)
+                    size = new float[3];
                 size[0] = value.X;
                 size[1] = value.Y;
                 size[2] = value.Z;
@@ -112,6 +124,8 @@ namespace PckStudio.External.Format
             get => uv.Length < 2 ? Vector2.Zero : new Vector2(uv[0], uv[1]);
             set
             {
+                if (uv.Length < 2)
+                    uv = new float[2];
                 uv[0] = value.X;
                 uv[1] = value.Y;
             }
@@ -119,5 +133,8 @@ namespace PckStudio.External.Format
 
         [JsonProperty("inflate")]
         public float Inflate { get; set; } = 0f;
+
+        [JsonProperty("mirror", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public bool Mirror;
     }
 }

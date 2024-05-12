@@ -1,6 +1,6 @@
 ﻿namespace PckStudio.Internal
 {
-    internal struct FileDialogFilter
+    internal readonly struct FileDialogFilter
     {
         public readonly string Description;
         public readonly string Pattern;
