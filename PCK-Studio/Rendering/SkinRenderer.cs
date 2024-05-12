@@ -332,19 +332,23 @@ namespace PckStudio.Rendering
             body.AddCube(new(-4, 0, -2), new(8, 12, 4), new(16, 16));
             body.AddCube(new(-4, 0, -2), new(8, 12, 4), new(16, 32), OverlayScale);
 
-            rightArm ??= new CubeGroupMesh("Right Arm", new Vector3(-5f, -2f, 0f), new Vector3(4f, 2f, 0f));
+            var rightArmInfo = ModelPartSpecifics.GetPositioningInfo("ARM0");
+            rightArm ??= new CubeGroupMesh("Right Arm", rightArmInfo.Translation.ToOpenTKVector(), rightArmInfo.Pivot.ToOpenTKVector());
             rightArm.AddCube(new(-3, -2, -2), new(4, 12, 4), new(40, 16));
             rightArm.AddCube(new(-3, -2, -2), new(4, 12, 4), new(40, 32), OverlayScale);
 
-            leftArm ??= new CubeGroupMesh("Left Arm", new Vector3(5f, -2f, 0f), new Vector3(-4f, 2f, 0f));
+            var leftArmInfo = ModelPartSpecifics.GetPositioningInfo("ARM1");
+            leftArm ??= new CubeGroupMesh("Left Arm", leftArmInfo.Translation.ToOpenTKVector(), leftArmInfo.Pivot.ToOpenTKVector());
             leftArm.AddCube(new(-1, -2, -2), new(4, 12, 4), new(32, 48));
             leftArm.AddCube(new(-1, -2, -2), new(4, 12, 4), new(48, 48), inflate: OverlayScale);
 
-            rightLeg ??= new CubeGroupMesh("Right Leg", new Vector3(-2f, -12f, 0f), new Vector3(-2f, 12f, 0f));
+            var rightLegInfo = ModelPartSpecifics.GetPositioningInfo("LEG0");
+            rightLeg ??= new CubeGroupMesh("Right Leg", rightLegInfo.Translation.ToOpenTKVector(), rightLegInfo.Pivot.ToOpenTKVector());
             rightLeg.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 16));
             rightLeg.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 32), OverlayScale);
 
-            leftLeg ??= new CubeGroupMesh("Left Leg", new Vector3(2f, -12f, 0f), new Vector3(2f, 12f, 0f));
+            var leftLegInfo = ModelPartSpecifics.GetPositioningInfo("LEG1");
+            leftLeg ??= new CubeGroupMesh("Left Leg", leftLegInfo.Translation.ToOpenTKVector(), leftLegInfo.Pivot.ToOpenTKVector());
             leftLeg.AddCube(new(-2, 0, -2), new(4, 12, 4), new(16, 48));
             leftLeg.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 48), OverlayScale);
         }
