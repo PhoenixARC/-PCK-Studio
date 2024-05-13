@@ -136,35 +136,35 @@ namespace PckStudio.Rendering
             }
         }
 
-        private Vector3 Transform
+        private Matrix4 Transform
         {
-            get => Vector3.TransformPosition(Vector3.Zero, Matrix4.CreateTranslation(Translation) * Matrix4.CreateTranslation(Pivot * 2));
+            get => Matrix4.CreateTranslation(Translation) * Matrix4.CreateTranslation(Pivot * 2);
         }
 
-    internal Vector3 GetCenter(int index)
+        private Vector3 GetWorldPosition(Vector3 localPosition) => Vector3.TransformPosition(localPosition, Transform);
+
+        internal Vector3 GetCenter(int index)
         {
             if (!cubes.IndexInRange(index))
                 throw new IndexOutOfRangeException();
 
-            return cubes[index].Center + Transform + Offset;
+            return GetWorldPosition(cubes[index].Center) + Offset;
         }
 
-        internal OutlineDefinition GetOutline(int index)
+        internal BoundingBox GetCubeBoundingBox(int index)
         {
             if (!cubes.IndexInRange(index))
                 throw new IndexOutOfRangeException();
 
             CubeMesh cube = cubes[index];
-            var boundingBox = cube.GetBoundingBox();
-            Vector3[] verticies = boundingBox.GetVertices().Select(pos => pos.Position + Transform).ToArray();
-            return new OutlineDefinition() { verticies = verticies, indicies = BoundingBox.GetIndecies()};
+            return cube.GetBoundingBox(Transform);
         }
 
         internal Vector3 GetFaceCenter(int index, Cube.Face face)
         {
             if (!cubes.IndexInRange(index))
                 throw new IndexOutOfRangeException();
-            return cubes[index].GetFaceCenter(face) + Transform;
+            return GetWorldPosition(cubes[index].GetFaceCenter(face));
         }
 
         internal void SetEnabled(int index, bool enable)

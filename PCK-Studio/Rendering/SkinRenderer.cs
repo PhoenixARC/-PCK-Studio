@@ -538,21 +538,21 @@ namespace PckStudio.Rendering
                 {
                     VertexArray lineVAO = new VertexArray();
 
-                    void AddOutline(OutlineDefinition outline, ref List<ColorVertex> vertices, ref List<int> indices)
+                    void AddOutline(BoundingBox boundingBox, ref List<ColorVertex> vertices, ref List<int> indices)
                     {
                         int offset = vertices.Count;
-                        vertices.AddRange(outline.verticies.Select(pos => new ColorVertex(pos)));
-                        indices.AddRange(outline.indicies.Select(i => i + offset));
+                        vertices.AddRange(boundingBox.GetVertices());
+                        indices.AddRange(BoundingBox.GetIndecies().Select(i => i + offset));
                     }
 
                     List<ColorVertex> vertices = new List<ColorVertex>(8 * 6);
                     List<int> indices = new List<int>(24 * 6);
-                    AddOutline(head.GetOutline(0), ref vertices, ref indices);
-                    AddOutline(body.GetOutline(0), ref vertices, ref indices);
-                    AddOutline(rightArm.GetOutline(0), ref vertices, ref indices);
-                    AddOutline(leftArm.GetOutline(0), ref vertices, ref indices);
-                    AddOutline(rightLeg.GetOutline(0), ref vertices, ref indices);
-                    AddOutline(leftLeg.GetOutline(0), ref vertices, ref indices);
+                    AddOutline(head.GetCubeBoundingBox(0), ref vertices, ref indices);
+                    AddOutline(body.GetCubeBoundingBox(0), ref vertices, ref indices);
+                    AddOutline(rightArm.GetCubeBoundingBox(0), ref vertices, ref indices);
+                    AddOutline(leftArm.GetCubeBoundingBox(0), ref vertices, ref indices);
+                    AddOutline(rightLeg.GetCubeBoundingBox(0), ref vertices, ref indices);
+                    AddOutline(leftLeg.GetCubeBoundingBox(0), ref vertices, ref indices);
                     VertexBuffer buffer = new VertexBuffer();
                     buffer.SetData(vertices.ToArray());
                     VertexBufferLayout layout = new VertexBufferLayout();

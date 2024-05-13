@@ -117,12 +117,15 @@ namespace PckStudio.Rendering
             }
         }
 
-        public BoundingBox GetBoundingBox()
+        public BoundingBox GetBoundingBox() => GetBoundingBox(Matrix4.Identity);
+
+        public BoundingBox GetBoundingBox(Matrix4 transform)
         {
             Vector3 halfSize = Size / 2f;
             Vector3 halfSizeInflated = halfSize + new Vector3(Inflate);
-            Vector3 start = Center - halfSizeInflated;
-            Vector3 end = Center + halfSizeInflated;
+            Vector3 transformedCenter = Vector3.TransformPosition(Center, transform);
+            Vector3 start = transformedCenter - halfSizeInflated;
+            Vector3 end   = transformedCenter + halfSizeInflated;
             return new BoundingBox(start.ToNumericsVector(), end.ToNumericsVector());
         }
 
