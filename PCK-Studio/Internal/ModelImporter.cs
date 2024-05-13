@@ -432,13 +432,17 @@ namespace PckStudio.Internal
                 };
             }
             // Bedrock Legacy Model
-            // TODO: Add notice for 64x32 skin being incompatible due to lack of texture size information. -miku
-            else if (fileName.EndsWith(".json"))
+            else if (fileName.EndsWith(".json") && modelInfo.Texture.Height == modelInfo.Texture.Width)
             {
                 bedrockModel = new BedrockLegacyModel
                 {
                     { $"geometry.{Application.ProductName}.{Path.GetFileNameWithoutExtension(fileName)}", selectedGeometry }
                 };
+            }
+            else
+            {
+                MessageBox.Show("Can't export to Bedrock Legacy Model.", "Invalid Texture Dimensions", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
 
             if (bedrockModel is not null)
