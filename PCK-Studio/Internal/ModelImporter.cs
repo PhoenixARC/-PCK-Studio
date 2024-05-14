@@ -24,14 +24,14 @@ namespace PckStudio.Internal
 {
     internal static class ModelImporter
     {
-        internal static readonly FileDialogFilter[] fileFilters =
+        internal static FileDialogFilter[] SupportedModelFormts { get; } =
         [
             new ("Pck skin model(*.psm)", "*.psm"),
             new ("Block bench model(*.bbmodel)", "*.bbmodel"),
             new ("Bedrock (Legacy) Model(*.geo.json;*.json)", "*.geo.json;*.json"),
         ];
 
-        internal static string SupportedModelFileFormatsFilter => string.Join("|", fileFilters);
+        internal static string SupportedModelFileFormatsFilter { get; } = string.Join("|", SupportedModelFormts);
 
         internal static SkinModelInfo Import(string fileName)
         {
