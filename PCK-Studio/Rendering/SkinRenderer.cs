@@ -83,7 +83,15 @@ namespace PckStudio.Rendering
         public Color OutlineColor { get; set; }
 
         public float MouseSensetivity { get; set; } = 0.01f;
-        public int SelectedIndex { get; set; } = -1;
+        public int SelectedIndex
+        {
+            get => selectedIndex;
+            set
+            {
+                selectedIndex = value;
+                CenterSelectedObject();
+            }
+        }
 
         public bool ClampModel { get; set; } = false;
         public bool ShowArmor { get; set; } = false;
@@ -165,6 +173,7 @@ namespace PckStudio.Rendering
         };
 
         private GuidelineMode guidelineMode { get; set; } = GuidelineMode.None;
+        private int selectedIndex = -1;
 
         public Size TextureSize { get; private set; } = new Size(64, 64);
         public Vector2 TillingFactor => new Vector2(1f / TextureSize.Width, 1f / TextureSize.Height);
@@ -893,6 +902,9 @@ namespace PckStudio.Rendering
                     Camera.Yaw = 0f;
                     Camera.Pitch = 0f;
                     return true;
+                case Keys.C:
+                    CenterSelectedObject();
+                    break;
                 case Keys.A:
                     ReleaseMouse();
                     {
@@ -905,6 +917,22 @@ namespace PckStudio.Rendering
                     return true;
             }
             return base.ProcessDialogKey(keyData);
+        }
+
+        internal void CenterSelectedObject()
+        {
+            if (ModelData.IndexInRange(SelectedIndex))
+            {
+                SkinBOX skinBox = ModelData[SelectedIndex];
+                if (!meshStorage.ContainsKey(skinBox.Type))
+                {
+                    Trace.TraceWarning("[{0}@{1}] Invalid BOX Type: '{2}'", nameof(SkinRenderer), nameof(AddCustomModelPart), skinBox.Type);
+                    return;
+                }
+
+                CubeGroupMesh cubeMesh = meshStorage[skinBox.Type];
+                Camera.FocalPoint = cubeMesh.GetWorldPosition(Cube.FromSkinBox(skinBox).Center);
+            }
         }
 
 #if USE_FRAMEBUFFER

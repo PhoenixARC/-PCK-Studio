@@ -141,7 +141,7 @@ namespace PckStudio.Rendering
             get => Matrix4.CreateTranslation(Translation) * Matrix4.CreateTranslation(Pivot * 2);
         }
 
-        private Vector3 GetWorldPosition(Vector3 localPosition) => Vector3.TransformPosition(localPosition, Transform);
+        internal Vector3 GetWorldPosition(Vector3 localPosition) => Vector3.TransformPosition(localPosition, Transform);
 
         internal Vector3 GetCenter(int index)
         {
