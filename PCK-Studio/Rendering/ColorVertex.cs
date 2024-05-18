@@ -23,6 +23,8 @@ namespace PckStudio.Rendering
         {
         }
 
+        public static implicit operator ColorVertex(Vector3 vector3) => new ColorVertex(vector3);
+
         public Vector3 Position { get; set; }
         public Color4 Color { get; set; }
     }

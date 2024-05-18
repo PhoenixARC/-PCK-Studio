@@ -1409,20 +1409,18 @@ namespace PckStudio.Rendering
                 
                 Renderer.SetLineWidth(2f);
 
-                colorShader.SetUniform4("baseColor", Color.Red);
-                ColorVertex[] line = [new ColorVertex(Vector3.Zero), new ColorVertex(Vector3.UnitX)];
-                d_debugLineDrawContext.VertexArray.GetBuffer(0).SetData(line);
-                Renderer.Draw(colorShader, d_debugLineDrawContext);
+                VertexBuffer lineVertexBuffer = d_debugLineDrawContext.VertexArray.GetBuffer(0);
 
-                colorShader.SetUniform4("baseColor", Color.Green);
-                line = [new ColorVertex(Vector3.Zero), new ColorVertex(Vector3.UnitY)];
-                d_debugLineDrawContext.VertexArray.GetBuffer(0).SetData(line);
-                Renderer.Draw(colorShader, d_debugLineDrawContext);
+                void DrawLine(Color color, params ColorVertex[] positions)
+                {
+                    colorShader.SetUniform4("baseColor", color);
+                    lineVertexBuffer.SetData(positions);
+                    Renderer.Draw(colorShader, d_debugLineDrawContext);
+                };
 
-                colorShader.SetUniform4("baseColor", Color.Blue);
-                line = [new ColorVertex(Vector3.Zero), new ColorVertex(Vector3.UnitZ)];
-                d_debugLineDrawContext.VertexArray.GetBuffer(0).SetData(line);
-                Renderer.Draw(colorShader, d_debugLineDrawContext);
+                DrawLine(Color.Red,   Vector3.Zero, Vector3.UnitX);
+                DrawLine(Color.Green, Vector3.Zero, Vector3.UnitY);
+                DrawLine(Color.Blue,  Vector3.Zero, Vector3.UnitZ);
 
                 Renderer.SetLineWidth(1f);
 
