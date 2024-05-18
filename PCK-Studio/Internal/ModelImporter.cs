@@ -169,27 +169,18 @@ namespace PckStudio.Internal
             if (!element.UseBoxUv || !element.IsVisibile)
                 return;
 
-            //Debug.WriteLine($"{type} {element.Name}({element.Uuid})");
             BoundingBox boundingBox = new BoundingBox(element.From, element.To);
             Vector3 pos = boundingBox.Start;
             Vector3 size = boundingBox.Volume;
             Vector2 uv = element.UvOffset;
             pos = TranslateToInternalPosition(boxType, pos, size, new Vector3(1, 1, 0));
-            //Debug.WriteLine(pos);
 
-            var box = new SkinBOX(boxType, pos, size, uv);
-            if (box.IsBasePart() && ((boxType == "HEAD" && element.Inflate == 0.5f) || (element.Inflate == 0.25f)))
+            var box = new SkinBOX(boxType, pos, size, uv, mirror: element.MirrorUv);
+            if (box.IsBasePart() && ((boxType == "HEAD" && element.Inflate == 0.5f) || (element.Inflate >= 0.25f && element.Inflate <= 0.5f)))
                 box.Type = box.GetOverlayType();
 
-            // IMPROVMENT: detect default body parts and toggle anim flag instead of adding box data -miku
-            //int hash = box.GetHashCode();
-            //if (SkinBOX.KnownHashes.ContainsKey(hash))
-            //{
-            //    Debug.WriteLine("Found known hash of " + box.ToString());
-            //    modelInfo.ANIM.SetFlag(SkinBOX.KnownHashes[hash], false);
-            //    return;
-            //}
-            modelInfo.AdditionalBoxes.Add(box);
+            if (!BOX2ANIM(box, ref modelInfo))
+                modelInfo.AdditionalBoxes.Add(box);
         }
 
         internal static void ExportBlockBenchModel(string fileName, SkinModelInfo modelInfo)
@@ -288,8 +279,14 @@ namespace PckStudio.Internal
             if (selectedGeometry is not null)
             {
                 modelInfo = LoadGeometry(selectedGeometry);
-                modelInfo.ANIM.SetMask(
-                    SkinAnimMask.RESOLUTION_64x64 |
+            }
+            return modelInfo;
+        }
+
+        private static SkinModelInfo LoadGeometry(Geometry geometry)
+        {
+            SkinModelInfo modelInfo = new SkinModelInfo();
+            modelInfo.ANIM.SetMask(
                     SkinAnimMask.HEAD_DISABLED |
                     SkinAnimMask.HEAD_OVERLAY_DISABLED |
                     SkinAnimMask.BODY_DISABLED |
@@ -302,13 +299,9 @@ namespace PckStudio.Internal
                     SkinAnimMask.RIGHT_LEG_OVERLAY_DISABLED |
                     SkinAnimMask.LEFT_LEG_DISABLED |
                     SkinAnimMask.LEFT_LEG_OVERLAY_DISABLED);
-            }
-            return modelInfo;
-        }
+            if (geometry.Description?.TextureSize.Width == geometry.Description?.TextureSize.Height)
+                modelInfo.ANIM.SetFlag(SkinAnimFlag.RESOLUTION_64x64, true);
 
-        private static SkinModelInfo LoadGeometry(Geometry geometry)
-        {
-            SkinModelInfo modelInfo = new SkinModelInfo();
             foreach (Bone bone in geometry.Bones)
             {
                 string boxType = bone.Name;
@@ -368,7 +361,8 @@ namespace PckStudio.Internal
                     {
                         skinBox.HideWithArmor = true;
                     }
-                    modelInfo.AdditionalBoxes.Add(skinBox);
+                    if (!BOX2ANIM(skinBox, ref modelInfo))
+                        modelInfo.AdditionalBoxes.Add(skinBox);
                 }
             }
             return modelInfo;
@@ -392,8 +386,6 @@ namespace PckStudio.Internal
                     bone.Pivot = (translation * -Vector3.UnitX - pivot * Vector3.UnitY) + (Vector3.UnitY * 24);
                     bones.Add(box.Type, bone);
                 }
-
-                box.GetHashCode();
 
                 Vector3 pos = TranslateFromInternalPosistion(box, Vector3.UnitY);
 
@@ -496,6 +488,17 @@ namespace PckStudio.Internal
             {
                 converter(new SkinBOX("PATNS1", new(-2, 0, -2), new(4, 12, 4), new(32, 48)));
             }
+        }
+
+        internal static bool BOX2ANIM(SkinBOX box, ref SkinModelInfo modelInfo)
+        {
+            int hash = box.GetHashCode();
+            if (SkinBOX.KnownHashes.ContainsKey(hash))
+            {
+                modelInfo.ANIM.SetFlag(SkinBOX.KnownHashes[hash], false);
+                return true;
+            }
+            return false;
         }
 
         internal static Vector3 TranslateToInternalPosition(string boxType, Vector3 origin, Vector3 size, Vector3 translationUnit)
