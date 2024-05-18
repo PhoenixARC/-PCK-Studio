@@ -418,7 +418,7 @@
             this.renderer3D1.ClampModel = false;
             this.renderer3D1.MouseSensetivity = 0.01F;
             this.renderer3D1.Name = "renderer3D1";
-            this.renderer3D1.OutlineColor = System.Drawing.Color.Empty;
+            this.renderer3D1.GuideLineColor = System.Drawing.Color.Empty;
             this.renderer3D1.RefreshRate = 50;
             this.renderer3D1.SelectedIndex = -1;
             this.renderer3D1.ShowArmor = false;

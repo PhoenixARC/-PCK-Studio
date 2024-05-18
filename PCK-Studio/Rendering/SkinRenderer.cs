@@ -80,7 +80,7 @@ namespace PckStudio.Rendering
 
         [Description("The Color used for outlines")]
         [Category("Appearance")]
-        public Color OutlineColor { get; set; }
+        public Color GuideLineColor { get; set; }
 
         public float MouseSensetivity { get; set; } = 0.01f;
         public int SelectedIndex
@@ -1085,7 +1085,7 @@ namespace PckStudio.Rendering
                     // Low value = slow movement
                     float capeRotationSpeed = 0.02f;
                     float capeRotation = ((float)MathHelper.RadiansToDegrees(Math.Sin(Math.Abs(animationCurrentRotationAngle) * capeRotationSpeed) * capeRotationFactor)) + capeMinimumRotationAngle;
-                    Matrix4 partMatrix =
+                    Matrix4 partMatrix = 
                         Matrix4.CreateRotationY(MathHelper.DegreesToRadians(180f)) *
                         Matrix4.CreateRotationX(MathHelper.DegreesToRadians(capeRotation));
                     RenderPart(skinShader, cape, partMatrix, transform);
@@ -1138,7 +1138,7 @@ namespace PckStudio.Rendering
                     lineShader.SetUniformMat4("ViewProjection", ref viewProjection);
                     lineShader.SetUniformMat4("Transform", ref transform);
                     lineShader.SetUniform1("intensity", 1f);
-                    lineShader.SetUniform4("baseColor", OutlineColor);
+                    lineShader.SetUniform4("baseColor", GuideLineColor);
                     Renderer.SetLineWidth(2.5f);
                     Renderer.Draw(lineShader, GetGuidelineDrawContext());
                     Renderer.SetLineWidth(1f);
@@ -1181,7 +1181,7 @@ namespace PckStudio.Rendering
                         Vector3 pivot = cubeMesh.Pivot + cubeMesh.Offset;
                         transform = Pivot(translation, pivot, transform);
                         GL.BlendFunc(BlendingFactor.DstAlpha, BlendingFactor.OneMinusSrcAlpha);
-                        DrawBoundingBox(transform, cubeBoundingBox, OutlineColor);
+                        DrawBoundingBox(transform, cubeBoundingBox, GuideLineColor);
                         GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
                     }
                 }
@@ -1309,6 +1309,8 @@ namespace PckStudio.Rendering
         protected override void OnUpdate(object sender, TimestepEventArgs e)
         {
             base.OnUpdate(sender, e);
+            if (!Animate)
+                return;
             animationCurrentRotationAngle += animationRotationSpeed;
             if (animationCurrentRotationAngle >= animationMaxAngleInDegrees || animationCurrentRotationAngle <= -animationMaxAngleInDegrees)
                 animationRotationSpeed = -animationRotationSpeed;

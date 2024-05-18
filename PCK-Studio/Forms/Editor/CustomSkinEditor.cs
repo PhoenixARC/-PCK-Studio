@@ -64,7 +64,7 @@ namespace PckStudio.Forms.Editor
         {
             base.OnLoad(e);
             renderer3D1.Initialize(_inflateOverlayParts);
-            renderer3D1.OutlineColor = Color.DarkSlateBlue;
+            renderer3D1.GuideLineColor = Color.DarkSlateBlue;
             LoadModelData(_skin);
         }
 
@@ -224,7 +224,7 @@ namespace PckStudio.Forms.Editor
             colorDialog.SolidColorOnly = true;
             if (colorDialog.ShowDialog() == DialogResult.OK)
             {
-                renderer3D1.OutlineColor = colorDialog.Color;
+                renderer3D1.GuideLineColor = colorDialog.Color;
                 skinPartListBox_SelectedIndexChanged(sender, e);
             }
         }
@@ -269,7 +269,7 @@ namespace PckStudio.Forms.Editor
                     GraphicsPath graphicsPath = box.GetUVGraphicsPath(new System.Numerics.Vector2(scaleSize.Width * renderer3D1.TillingFactor.X, scaleSize.Height * renderer3D1.TillingFactor.Y));
                     g.ApplyConfig(_graphicsConfig);
                     g.DrawImage(_skin.Model.Texture, new Rectangle(Point.Empty, scaleSize), new Rectangle(Point.Empty, _skin.Model.Texture.Size), GraphicsUnit.Pixel);
-                    g.DrawPath(new Pen(renderer3D1.OutlineColor, lineWidth), graphicsPath);
+                    g.DrawPath(new Pen(renderer3D1.GuideLineColor, lineWidth), graphicsPath);
                 }
                 uvPictureBox.Invalidate();
             }
