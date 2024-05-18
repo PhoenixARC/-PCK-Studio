@@ -82,6 +82,10 @@ namespace PckStudio.Rendering
         [Category("Appearance")]
         public Color GuideLineColor { get; set; }
 
+        [Description("The Color used for highlighting selected cube")]
+        [Category("Appearance")]
+        public Color HighlightlingColor { get; set; } = Color.Aqua;
+
         public float MouseSensetivity { get; set; } = 0.01f;
         public int SelectedIndex
         {
@@ -1181,7 +1185,7 @@ namespace PckStudio.Rendering
                         Vector3 pivot = cubeMesh.Pivot + cubeMesh.Offset;
                         transform = Pivot(translation, pivot, transform);
                         GL.BlendFunc(BlendingFactor.DstAlpha, BlendingFactor.OneMinusSrcAlpha);
-                        DrawBoundingBox(transform, cubeBoundingBox, GuideLineColor);
+                        DrawBoundingBox(transform, cubeBoundingBox, HighlightlingColor);
                         GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
                     }
                 }

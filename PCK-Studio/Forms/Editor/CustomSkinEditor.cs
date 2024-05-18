@@ -255,6 +255,7 @@ namespace PckStudio.Forms.Editor
             }
         }
 
+        // TODO: fixed outline rendering
         private void skinPartListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             int scale = 4;
@@ -269,7 +270,7 @@ namespace PckStudio.Forms.Editor
                     GraphicsPath graphicsPath = box.GetUVGraphicsPath(new System.Numerics.Vector2(scaleSize.Width * renderer3D1.TillingFactor.X, scaleSize.Height * renderer3D1.TillingFactor.Y));
                     g.ApplyConfig(_graphicsConfig);
                     g.DrawImage(_skin.Model.Texture, new Rectangle(Point.Empty, scaleSize), new Rectangle(Point.Empty, _skin.Model.Texture.Size), GraphicsUnit.Pixel);
-                    g.DrawPath(new Pen(renderer3D1.GuideLineColor, lineWidth), graphicsPath);
+                    g.DrawPath(new Pen(renderer3D1.HighlightlingColor, lineWidth), graphicsPath);
                 }
                 uvPictureBox.Invalidate();
             }
