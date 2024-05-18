@@ -932,7 +932,7 @@ namespace PckStudio.Rendering
                 }
 
                 CubeGroupMesh cubeMesh = meshStorage[skinBox.Type];
-                Camera.FocalPoint = cubeMesh.GetWorldPosition(Cube.FromSkinBox(skinBox).Center);
+                Camera.FocalPoint = cubeMesh.GetWorldPosition(Cube.FromSkinBox(skinBox).Center * new Vector3(-1, 1, 1));
             }
         }
 
