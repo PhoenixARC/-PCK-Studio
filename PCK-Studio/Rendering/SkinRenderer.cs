@@ -87,6 +87,7 @@ namespace PckStudio.Rendering
 
         public bool ClampModel { get; set; } = false;
         public bool ShowArmor { get; set; } = false;
+        public bool Animate { get; set; } = true;
         public bool ShowGuideLines
         {
             get => guidelineMode != GuidelineMode.None;
@@ -1002,45 +1003,49 @@ namespace PckStudio.Rendering
 
                 skinTexture.Bind();
 
-                if (ANIM.GetFlag(SkinAnimFlag.DINNERBONE))
-                {
-                    transform = Pivot(head.GetFaceCenter(0, Cube.Face.Top), Vector3.UnitY * 12f, transform * Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(-180f)));
-                }
-
                 var legRightMatrix = Matrix4.Identity;
                 var legLeftMatrix = Matrix4.Identity;
                 var armRightMatrix = Matrix4.Identity;
                 var armLeftMatrix = Matrix4.Identity;
-
-                if (!ANIM.GetFlag(SkinAnimFlag.STATIC_ARMS))
+                if (Animate)
                 {
-                    armRightMatrix = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(animationCurrentRotationAngle));
-                    armLeftMatrix = Matrix4.CreateRotationX(MathHelper.DegreesToRadians((ANIM.GetFlag(SkinAnimFlag.SYNCED_ARMS) ? 1f : -1f) * animationCurrentRotationAngle));
-                }
+                    if (ANIM.GetFlag(SkinAnimFlag.DINNERBONE))
+                    {
+                        transform = Pivot(head.GetFaceCenter(0, Cube.Face.Top), Vector3.UnitY * 12f, transform * Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(-180f)));
+                    }
 
-                if (ANIM.GetFlag(SkinAnimFlag.ZOMBIE_ARMS))
-                {
-                    var rotation = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(-90f));
-                    armRightMatrix = rotation;
-                    armLeftMatrix = rotation;
-                }
+                    if (!ANIM.GetFlag(SkinAnimFlag.STATIC_ARMS))
+                    {
+                        armRightMatrix = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(animationCurrentRotationAngle));
+                        armLeftMatrix = Matrix4.CreateRotationX(MathHelper.DegreesToRadians((ANIM.GetFlag(SkinAnimFlag.SYNCED_ARMS) ? 1f : -1f) * animationCurrentRotationAngle));
+                    }
 
-                if (ANIM.GetFlag(SkinAnimFlag.STATUE_OF_LIBERTY))
-                {
-                    armRightMatrix = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(-180f));
-                    armLeftMatrix = Matrix4.CreateRotationX(0f);
-                }
+                    if (ANIM.GetFlag(SkinAnimFlag.ZOMBIE_ARMS))
+                    {
+                        var rotation = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(-90f));
+                        armRightMatrix = rotation;
+                        armLeftMatrix = rotation;
+                    }
 
-                if (!ANIM.GetFlag(SkinAnimFlag.STATIC_LEGS))
-                {
-                    legRightMatrix = Matrix4.CreateRotationX(MathHelper.DegreesToRadians((ANIM.GetFlag(SkinAnimFlag.SYNCED_LEGS) ? 1f : -1f) * animationCurrentRotationAngle));
-                    legLeftMatrix = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(animationCurrentRotationAngle));
+                    if (ANIM.GetFlag(SkinAnimFlag.STATUE_OF_LIBERTY))
+                    {
+                        armRightMatrix = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(-180f));
+                        armLeftMatrix = Matrix4.CreateRotationX(0f);
+                    }
+
+                    if (!ANIM.GetFlag(SkinAnimFlag.STATIC_LEGS))
+                    {
+                        legRightMatrix = Matrix4.CreateRotationX(MathHelper.DegreesToRadians((ANIM.GetFlag(SkinAnimFlag.SYNCED_LEGS) ? 1f : -1f) * animationCurrentRotationAngle));
+                        legLeftMatrix = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(animationCurrentRotationAngle));
+                    }
+                    armRightMatrix = RightArmMatrix * armRightMatrix;
+                    armLeftMatrix = LeftArmMatrix * armLeftMatrix;
                 }
 
                 RenderBodyPart(skinShader, Matrix4.Identity, transform, "HEAD", "HEADWEAR");
                 RenderBodyPart(skinShader, Matrix4.Identity, transform, "BODY", "JACKET");
-                RenderBodyPart(skinShader, RightArmMatrix * armRightMatrix, transform, "ARM0", "SLEEVE0");
-                RenderBodyPart(skinShader, LeftArmMatrix * armLeftMatrix, transform, "ARM1", "SLEEVE1");
+                RenderBodyPart(skinShader, armRightMatrix, transform, "ARM0", "SLEEVE0");
+                RenderBodyPart(skinShader, armLeftMatrix, transform, "ARM1", "SLEEVE1");
                 RenderBodyPart(skinShader, legRightMatrix, transform, "LEG0", "PANTS0");
                 RenderBodyPart(skinShader, legLeftMatrix, transform, "LEG1", "PANTS1");
 

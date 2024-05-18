@@ -374,5 +374,10 @@ namespace PckStudio.Forms.Editor
             skinPartListBox.ClearSelected();
             renderer3D1.SelectedIndex = skinPartListBox.SelectedIndex;
         }
+
+        private void skinAnimateCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            renderer3D1.Animate = skinAnimateCheckBox.Checked;
+        }
     }
 }

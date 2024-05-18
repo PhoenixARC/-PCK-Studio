@@ -70,6 +70,7 @@
             this.removeOffsetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.renderer3D1 = new PckStudio.Rendering.SkinRenderer();
             this.uvPictureBox = new PckStudio.ToolboxItems.InterpolationPictureBox();
+            this.skinAnimateCheckBox = new MetroFramework.Controls.MetroCheckBox();
             label5 = new System.Windows.Forms.Label();
             label3 = new System.Windows.Forms.Label();
             label7 = new System.Windows.Forms.Label();
@@ -411,6 +412,7 @@
             // renderer3D1
             // 
             resources.ApplyResources(this.renderer3D1, "renderer3D1");
+            this.renderer3D1.Animate = true;
             this.renderer3D1.BackColor = System.Drawing.Color.DimGray;
             this.renderer3D1.CapeTexture = null;
             this.renderer3D1.ClampModel = false;
@@ -433,10 +435,21 @@
             this.uvPictureBox.Name = "uvPictureBox";
             this.uvPictureBox.TabStop = false;
             // 
+            // skinAnimateCheckBox
+            // 
+            resources.ApplyResources(this.skinAnimateCheckBox, "skinAnimateCheckBox");
+            this.skinAnimateCheckBox.Checked = true;
+            this.skinAnimateCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.skinAnimateCheckBox.Name = "skinAnimateCheckBox";
+            this.skinAnimateCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.skinAnimateCheckBox.UseSelectable = true;
+            this.skinAnimateCheckBox.CheckedChanged += new System.EventHandler(this.skinAnimateCheckBox_CheckedChanged);
+            // 
             // CustomSkinEditor
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.skinAnimateCheckBox);
             this.Controls.Add(this.metroTabControl1);
             this.Controls.Add(this.skinNameLabel);
             this.Controls.Add(this.showToolsCheckBox);
@@ -525,5 +538,6 @@
         private MetroFramework.Controls.MetroContextMenu offsetTabContextMenu;
         private System.Windows.Forms.ToolStripMenuItem addOffsetToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem removeOffsetToolStripMenuItem;
+        private MetroFramework.Controls.MetroCheckBox skinAnimateCheckBox;
     }
 }
