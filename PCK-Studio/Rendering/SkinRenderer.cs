@@ -196,6 +196,8 @@ namespace PckStudio.Rendering
         private Point PreviousMouseLocation;
         private Point CurrentMouseLocation;
 
+        private VertexBufferLayout plainColorVertexBufferLayout;
+
         private ShaderLibrary _shaders;
         private SkinANIM _anim;
         private Image _skinImage;
@@ -426,6 +428,11 @@ namespace PckStudio.Rendering
 
             Trace.TraceInformation(GL.GetString(StringName.Version));
 
+            
+            plainColorVertexBufferLayout = new VertexBufferLayout();
+            plainColorVertexBufferLayout.Add(ShaderDataType.Float3);
+            plainColorVertexBufferLayout.Add(ShaderDataType.Float4);
+            
             // Skin shader
             {
                 var skinShader = ShaderProgram.Create(
@@ -565,10 +572,7 @@ namespace PckStudio.Rendering
                     AddOutline(leftLeg.GetCubeBoundingBox(0), ref vertices, ref indices);
                     VertexBuffer buffer = new VertexBuffer();
                     buffer.SetData(vertices.ToArray());
-                    VertexBufferLayout layout = new VertexBufferLayout();
-                    layout.Add(ShaderDataType.Float3);
-                    layout.Add(ShaderDataType.Float4);
-                    lineVAO.AddBuffer(buffer, layout);
+                    lineVAO.AddBuffer(buffer, plainColorVertexBufferLayout);
                     lineVAO.Bind();
 
                     _cubicalDrawContext = new DrawContext(lineVAO, IndexBuffer.Create(indices.ToArray()), PrimitiveType.Lines);
@@ -603,10 +607,7 @@ namespace PckStudio.Rendering
                     ];
                     VertexBuffer buffer = new VertexBuffer();
                     buffer.SetData(data);
-                    VertexBufferLayout layout = new VertexBufferLayout();
-                    layout.Add(ShaderDataType.Float3);
-                    layout.Add(ShaderDataType.Float4);
-                    lineVAO.AddBuffer(buffer, layout);
+                    lineVAO.AddBuffer(buffer, plainColorVertexBufferLayout);
                     lineVAO.Bind();
 
                     _skeletonDrawContext = new DrawContext(lineVAO, buffer.GenIndexBuffer(), PrimitiveType.Lines);
@@ -626,11 +627,7 @@ namespace PckStudio.Rendering
                     var planeVAO = new VertexArray();
                     VertexBuffer buffer = new VertexBuffer();
                     buffer.SetData(vertices);
-
-                    VertexBufferLayout layout = new VertexBufferLayout();
-                    layout.Add(ShaderDataType.Float3);
-                    layout.Add(ShaderDataType.Float4);
-                    planeVAO.AddBuffer(buffer, layout);
+                    planeVAO.AddBuffer(buffer, plainColorVertexBufferLayout);
 
                     _groundDrawContext = new DrawContext(planeVAO, buffer.GenIndexBuffer(), PrimitiveType.Quads);
                 }
@@ -1349,10 +1346,7 @@ namespace PckStudio.Rendering
                 VertexArray vao = new VertexArray();
                 var debugVBO = new VertexBuffer();
                 debugVBO.SetData(vertices);
-                VertexBufferLayout layout = new VertexBufferLayout();
-                layout.Add(ShaderDataType.Float3);
-                layout.Add(ShaderDataType.Float4);
-                vao.AddBuffer(debugVBO, layout);
+                vao.AddBuffer(debugVBO, plainColorVertexBufferLayout);
                 d_debugPointDrawContext = new DrawContext(vao, debugVBO.GenIndexBuffer(), PrimitiveType.Points);
             }
             // Debug point render
@@ -1364,10 +1358,7 @@ namespace PckStudio.Rendering
                 VertexArray vao = new VertexArray();
                 var debugVBO = new VertexBuffer();
                 debugVBO.SetData(vertices);
-                VertexBufferLayout layout = new VertexBufferLayout();
-                layout.Add(ShaderDataType.Float3);
-                layout.Add(ShaderDataType.Float4);
-                vao.AddBuffer(debugVBO, layout);
+                vao.AddBuffer(debugVBO, plainColorVertexBufferLayout);
                 d_debugLineDrawContext = new DrawContext(vao, debugVBO.GenIndexBuffer(), PrimitiveType.Lines);
             }
 #endif
