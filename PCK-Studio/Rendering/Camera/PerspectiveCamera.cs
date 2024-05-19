@@ -103,8 +103,8 @@ namespace PckStudio.Rendering.Camera
 
         public Vector3 Up => Vector3.UnitY;
         
-        public float MinimumFov { get; set; } = 30f;
-        public float MaximumFov { get; set; } = 180f;
+        public float MinimumFov { get; } = 30f;
+        public float MaximumFov { get; } = 180f;
 
         public float Fov
         {
