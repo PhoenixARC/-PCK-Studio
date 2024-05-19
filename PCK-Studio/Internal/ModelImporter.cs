@@ -255,24 +255,40 @@ namespace PckStudio.Internal
             if (fileName.EndsWith(".geo.json"))
             {
                 BedrockModel bedrockModel = JsonConvert.DeserializeObject<BedrockModel>(File.ReadAllText(fileName));
-                ItemSelectionPopUp itemSelectionPopUp = new ItemSelectionPopUp(bedrockModel.Models.Select(m => m.Description.Identifier).ToArray());
-                if (itemSelectionPopUp.ShowDialog() == DialogResult.OK && bedrockModel.Models.IndexInRange(itemSelectionPopUp.SelectedIndex))
+                var availableModels = bedrockModel.Models.Select(m => m.Description.Identifier).ToArray();
+                if (availableModels.Length > 1)
                 {
-                    selectedGeometry = bedrockModel.Models[itemSelectionPopUp.SelectedIndex];
+                    ItemSelectionPopUp itemSelectionPopUp = new ItemSelectionPopUp(availableModels);
+                    if (itemSelectionPopUp.ShowDialog() == DialogResult.OK && bedrockModel.Models.IndexInRange(itemSelectionPopUp.SelectedIndex))
+                    {
+                        selectedGeometry = bedrockModel.Models[itemSelectionPopUp.SelectedIndex];
+                    }
+                    itemSelectionPopUp.Dispose();
                 }
-                itemSelectionPopUp.Dispose();
+                else
+                {
+                    selectedGeometry = bedrockModel.Models[0];
+                }
             }
 
             // Bedrock Legacy Model
             else if (fileName.EndsWith(".json"))
             {
                 BedrockLegacyModel bedrockModel = JsonConvert.DeserializeObject<BedrockLegacyModel>(File.ReadAllText(fileName));
-                ItemSelectionPopUp itemSelectionPopUp = new ItemSelectionPopUp(bedrockModel.Select(m => m.Key).ToArray());
-                if (itemSelectionPopUp.ShowDialog() == DialogResult.OK && itemSelectionPopUp.SelectedItem is not null)
+                var availableModels = bedrockModel.Select(m => m.Key).ToArray();
+                if (availableModels.Length > 1)
                 {
-                    selectedGeometry = bedrockModel[itemSelectionPopUp.SelectedItem];
+                    ItemSelectionPopUp itemSelectionPopUp = new ItemSelectionPopUp(availableModels);
+                    if (itemSelectionPopUp.ShowDialog() == DialogResult.OK && itemSelectionPopUp.SelectedItem is not null)
+                    {
+                        selectedGeometry = bedrockModel[itemSelectionPopUp.SelectedItem];
+                    }
+                    itemSelectionPopUp.Dispose();
                 }
-                itemSelectionPopUp.Dispose();
+                else
+                {
+                    selectedGeometry = bedrockModel[availableModels[0]];
+                }
             }
 
             SkinModelInfo modelInfo = null;
@@ -356,7 +372,7 @@ namespace PckStudio.Internal
                 foreach (External.Format.Cube cube in bone.Cubes)
                 {
                     Vector3 pos = TranslateToInternalPosition(boxType, cube.Origin, cube.Size, Vector3.UnitY);
-                    var skinBox = new SkinBOX(boxType, pos, cube.Size, cube.Uv);
+                    var skinBox = new SkinBOX(boxType, pos, cube.Size, cube.Uv, mirror: cube.Mirror);
                     if (bone.Name == "helmet")
                     {
                         skinBox.HideWithArmor = true;
