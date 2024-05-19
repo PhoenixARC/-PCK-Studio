@@ -64,20 +64,21 @@ namespace PckStudio.Forms.Editor
         {
             base.OnLoad(e);
             renderer3D1.Initialize(_inflateOverlayParts);
-            renderer3D1.GuideLineColor = Color.DarkSlateBlue;
-            LoadModelData(_skin);
+            renderer3D1.GuideLineColor = Color.LightCoral;
+            skinNameLabel.Text = _skin.MetaData.Name;
+            if (_skin.HasCape)
+                renderer3D1.CapeTexture = _skin.CapeTexture;
+            LoadModelData();
         }
 
-        private void LoadModelData(Skin skin)
+        private void LoadModelData()
         {
-            skinNameLabel.Text = skin.MetaData.Name;
-            var boxProperties = skin.Model.AdditionalBoxes;
-            var offsetProperties = skin.Model.PartOffsets;
-            
-            renderer3D1.ANIM = skin.Model.ANIM;
+            var modelInfo = _skin.Model;
 
-            if (skin.HasCape)
-                renderer3D1.CapeTexture = skin.CapeTexture;
+            var boxProperties = modelInfo.AdditionalBoxes;
+            var offsetProperties = modelInfo.PartOffsets;
+            
+            renderer3D1.ANIM = modelInfo.ANIM;
 
             renderer3D1.ModelData.Clear();
             foreach (SkinBOX box in boxProperties)
@@ -90,14 +91,14 @@ namespace PckStudio.Forms.Editor
                 renderer3D1.SetPartOffset(offset);
             }
 
-            if (skin.Model.Texture is not null)
+            if (modelInfo.Texture is not null)
             {
-                renderer3D1.Texture = skin.Model.Texture;
+                renderer3D1.Texture = modelInfo.Texture;
             }
 
-            if (skin.Model.Texture is null && renderer3D1.Texture is not null)
+            if (modelInfo.Texture is null && renderer3D1.Texture is not null)
             {
-                skin.Model.Texture = renderer3D1.Texture;
+                modelInfo.Texture = renderer3D1.Texture;
             }
 
             skinOffsetListBindingSource = new BindingSource(renderer3D1.GetOffsets().ToArray(), null);
@@ -190,7 +191,7 @@ namespace PckStudio.Forms.Editor
                 if (modelInfo is not null)
                 {
                     _skin.Model = modelInfo;
-                    LoadModelData(_skin);
+                    LoadModelData();
                 }
             }
         }
