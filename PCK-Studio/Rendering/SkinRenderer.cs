@@ -927,12 +927,14 @@ namespace PckStudio.Rendering
                 SkinBOX skinBox = ModelData[SelectedIndex];
                 if (!meshStorage.ContainsKey(skinBox.Type))
                 {
-                    Trace.TraceWarning("[{0}@{1}] Invalid BOX Type: '{2}'", nameof(SkinRenderer), nameof(AddCustomModelPart), skinBox.Type);
+                    Trace.TraceWarning("[{0}@{1}] Invalid BOX Type: '{2}'", nameof(SkinRenderer), nameof(CenterSelectedObject), skinBox.Type);
                     return;
                 }
 
                 CubeGroupMesh cubeMesh = meshStorage[skinBox.Type];
-                Camera.FocalPoint = cubeMesh.GetWorldPosition(Cube.FromSkinBox(skinBox).Center * new Vector3(-1, 1, 1));
+                var center = Cube.FromSkinBox(skinBox).Center * new Vector3(1, -1, -1);
+                Camera.FocalPoint = cubeMesh.GetWorldPosition(center);
+                Camera.Distance = skinBox.Size.Length() * 2;
             }
         }
 
