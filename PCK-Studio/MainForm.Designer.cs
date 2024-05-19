@@ -65,7 +65,7 @@
             this.modelsFileBINToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.behavioursFileBINToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.entityMaterialsFileBINToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.miscFunctionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.generateMipMapTextureToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.viewFileInfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.correctSkinDecimalsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -76,6 +76,7 @@
             this.version1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.version2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.version3114ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.extractToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cloneFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.renameFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -201,7 +202,13 @@
             this.importSkinsToolStripMenuItem,
             this.exportToolStripMenuItem,
             this.setFileTypeToolStripMenuItem,
-            this.miscFunctionsToolStripMenuItem,
+            this.toolStripSeparator5,
+            this.generateMipMapTextureToolStripMenuItem1,
+            this.viewFileInfoToolStripMenuItem,
+            this.correctSkinDecimalsToolStripMenuItem,
+            this.setSubPCKEndiannessToolStripMenuItem,
+            this.setModelContainerFormatToolStripMenuItem,
+            this.toolStripSeparator6,
             this.extractToolStripMenuItem,
             this.cloneFileToolStripMenuItem,
             this.renameFileToolStripMenuItem,
@@ -405,16 +412,10 @@
             this.entityMaterialsFileBINToolStripMenuItem.Name = "entityMaterialsFileBINToolStripMenuItem";
             resources.ApplyResources(this.entityMaterialsFileBINToolStripMenuItem, "entityMaterialsFileBINToolStripMenuItem");
             // 
-            // miscFunctionsToolStripMenuItem
+            // toolStripSeparator5
             // 
-            this.miscFunctionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.generateMipMapTextureToolStripMenuItem1,
-            this.viewFileInfoToolStripMenuItem,
-            this.correctSkinDecimalsToolStripMenuItem,
-            this.setSubPCKEndiannessToolStripMenuItem,
-            this.setModelContainerFormatToolStripMenuItem});
-            this.miscFunctionsToolStripMenuItem.Name = "miscFunctionsToolStripMenuItem";
-            resources.ApplyResources(this.miscFunctionsToolStripMenuItem, "miscFunctionsToolStripMenuItem");
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            resources.ApplyResources(this.toolStripSeparator5, "toolStripSeparator5");
             // 
             // generateMipMapTextureToolStripMenuItem1
             // 
@@ -480,6 +481,11 @@
             this.version3114ToolStripMenuItem.Name = "version3114ToolStripMenuItem";
             resources.ApplyResources(this.version3114ToolStripMenuItem, "version3114ToolStripMenuItem");
             this.version3114ToolStripMenuItem.Click += new System.EventHandler(this.setModelVersion3ToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            resources.ApplyResources(this.toolStripSeparator6, "toolStripSeparator6");
             // 
             // extractToolStripMenuItem
             // 
@@ -1247,10 +1253,6 @@
 		private MetroFramework.Controls.MetroLabel labelVersion;
 		private System.Windows.Forms.RichTextBox ChangelogRichTextBox;
 		private System.Windows.Forms.ToolStripMenuItem colourscolToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem miscFunctionsToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem generateMipMapTextureToolStripMenuItem1;
-		private System.Windows.Forms.ToolStripMenuItem viewFileInfoToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem correctSkinDecimalsToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem miscToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem CreateSkinsPCKToolStripMenuItem1;
 		private System.Windows.Forms.ToolStripMenuItem editAllEntriesToolStripMenuItem;
@@ -1288,6 +1290,10 @@
         private System.Windows.Forms.ToolStripMenuItem trelloBoardToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem recentlyOpenToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripMenuItem generateMipMapTextureToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem viewFileInfoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem correctSkinDecimalsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem setSubPCKEndiannessToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem bigEndianXbox360PS3WiiUToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem littleEndianPS4PSVitaSwitchToolStripMenuItem;
@@ -1295,6 +1301,7 @@
         private System.Windows.Forms.ToolStripMenuItem version1ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem version2ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem version3114ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
     }
 }
 

@@ -2592,12 +2592,15 @@ namespace PckStudio
             setModelContainerFormatToolStripMenuItem.Visible = false;
             setSubPCKEndiannessToolStripMenuItem.Visible = false;
             exportToolStripMenuItem.Visible = false;
+			toolStripSeparator5.Visible = false;
+			toolStripSeparator6.Visible = false;
             if (treeViewMain.SelectedNode.TryGetTagData(out PckAsset asset))
 			{
 				replaceToolStripMenuItem.Visible = true;
                 cloneFileToolStripMenuItem.Visible = true;
 				setFileTypeToolStripMenuItem.Visible = true;
-				miscFunctionsToolStripMenuItem.Visible = true;
+				toolStripSeparator5.Visible = true;
+				toolStripSeparator6.Visible = true;
 
 				if (asset.Type == PckAssetType.SkinFile)
 				{
@@ -2616,7 +2619,6 @@ namespace PckStudio
                 replaceToolStripMenuItem.Visible = false;
                 cloneFileToolStripMenuItem.Visible = false;
 				setFileTypeToolStripMenuItem.Visible = false;
-				miscFunctionsToolStripMenuItem.Visible = false;
 			}
         }
     }
