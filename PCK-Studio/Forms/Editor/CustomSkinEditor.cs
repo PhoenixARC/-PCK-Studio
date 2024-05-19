@@ -375,6 +375,7 @@ namespace PckStudio.Forms.Editor
         {
             skinPartListBox.ClearSelected();
             renderer3D1.SelectedIndex = skinPartListBox.SelectedIndex;
+            uvPictureBox.Image = _skin.Model.Texture;
         }
 
         private void skinAnimateCheckBox_CheckedChanged(object sender, EventArgs e)
