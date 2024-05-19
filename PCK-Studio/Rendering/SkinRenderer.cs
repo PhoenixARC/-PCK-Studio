@@ -93,11 +93,12 @@ namespace PckStudio.Rendering
             set
             {
                 selectedIndex = value;
-                CenterSelectedObject();
+                if (CenterOnSelect)
+                    CenterSelectedObject();
             }
         }
 
-        public bool ClampModel { get; set; } = false;
+        public bool CenterOnSelect { get; set; } = false;
         public bool ShowArmor { get; set; } = false;
         public bool Animate { get; set; } = true;
         public bool ShowGuideLines

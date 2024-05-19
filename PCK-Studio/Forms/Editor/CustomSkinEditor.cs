@@ -1,25 +1,14 @@
 ﻿using System;
-using System.IO;
-using System.Text;
+using System.Linq;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
-using System.Collections.Generic;
 using MetroFramework.Forms;
+
 using PckStudio.Internal;
 using PckStudio.Extensions;
-using PckStudio.Internal.IO.PSM;
-using PckStudio.Internal.FileFormats;
-using System.Linq;
 using PckStudio.Forms.Additional_Popups;
-using PckStudio.External.Format;
-using Newtonsoft.Json;
-using System.Numerics;
-using PckStudio.Rendering;
-using System.Diagnostics;
-using Newtonsoft.Json.Linq;
-using PckStudio.Properties;
 
 namespace PckStudio.Forms.Editor
 {
@@ -241,6 +230,7 @@ namespace PckStudio.Forms.Editor
                 return;
             }
             uvPictureBox.Image = _skin.Model.Texture = img;
+            textureSizeLabel.Text = $"{img.Width}x{img.Height}";
         }
 
         private void skinPartListBox_DoubleClick(object sender, EventArgs e)
@@ -263,6 +253,9 @@ namespace PckStudio.Forms.Editor
             if (skinPartListBox.SelectedItem is SkinBOX box)
             {
                 renderer3D1.SelectedIndex = skinPartListBox.SelectedIndex;
+                uvLabel.Text = $"UV: {box.UV}";
+                sizeLabel.Text = $"Size: {box.Size}";
+                positionLabel.Text = $"Position: {box.Pos}";
                 Size scaleSize = new Size(_skin.Model.Texture.Width * scale, _skin.Model.Texture.Height * scale);
                 uvPictureBox.Image = new Bitmap(scaleSize.Width, scaleSize.Height);
                 using (Graphics g = Graphics.FromImage(uvPictureBox.Image))
@@ -275,11 +268,6 @@ namespace PckStudio.Forms.Editor
                 }
                 uvPictureBox.Invalidate();
             }
-        }
-
-        private void clampToViewCheckbox_CheckedChanged(object sender, EventArgs e)
-        {
-            renderer3D1.ClampModel = clampToViewCheckbox.Checked;
         }
 
         private void captureScreenshotButton_Click(object sender, EventArgs e)
@@ -381,6 +369,11 @@ namespace PckStudio.Forms.Editor
         private void skinAnimateCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             renderer3D1.Animate = skinAnimateCheckBox.Checked;
+        }
+
+        private void centerSelectionCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            renderer3D1.CenterOnSelect = centerSelectionCheckbox.Checked;
         }
     }
 }
