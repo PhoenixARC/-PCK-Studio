@@ -1040,7 +1040,8 @@ namespace PckStudio.Rendering
                 {
                     if (ANIM.GetFlag(SkinAnimFlag.DINNERBONE))
                     {
-                        transform = Pivot(head.GetFaceCenter(0, Cube.Face.Top), Vector3.UnitY * 12f, transform * Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(-180f)));
+                        transform *= Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(-180f));
+                        transform = transform.Pivoted(head.GetFaceCenter(0, Cube.Face.Top), Vector3.UnitY * 12f);
                     }
 
                     if (!ANIM.GetFlag(SkinAnimFlag.STATIC_ARMS))
@@ -1165,10 +1166,10 @@ namespace PckStudio.Rendering
                             {
                                 case "ARM0":
                                 case "SLEEVE0":
-                                    return RightArmMatrix * armRightMatrix;
+                                    return armRightMatrix;
                                 case "ARM1":
                                 case "SLEEVE1":
-                                    return LeftArmMatrix * armLeftMatrix;
+                                    return armLeftMatrix;
                                 case "LEG0":
                                 case "PANTS0":
                                     return legRightMatrix;
@@ -1181,9 +1182,7 @@ namespace PckStudio.Rendering
                         }
 
                         transform *= GetGroupTransform(box.Type);
-                        Vector3 translation = cubeMesh.Translation - cubeMesh.Offset;
-                        Vector3 pivot = cubeMesh.Pivot + cubeMesh.Offset;
-                        transform = Pivot(translation, pivot, transform);
+                        transform *= cubeMesh.Transform;
                         GL.BlendFunc(BlendingFactor.DstAlpha, BlendingFactor.OneMinusSrcAlpha);
                         DrawBoundingBox(transform, cubeBoundingBox, HighlightlingColor);
                         GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
@@ -1293,23 +1292,13 @@ namespace PckStudio.Rendering
 
         private void RenderPart(ShaderProgram shader, CubeGroupMesh cubeMesh, Matrix4 partMatrix, Matrix4 globalMatrix)
         {
-            Vector3 translation = cubeMesh.Translation - cubeMesh.Offset;
-            Vector3 pivot = cubeMesh.Pivot + cubeMesh.Offset;
-            Matrix4 transform = Pivot(translation, pivot, partMatrix);
+            Matrix4 transform = partMatrix;
+            transform *= cubeMesh.Transform;
             transform *= globalMatrix;
             shader.SetUniformMat4("u_Transform", ref transform);
             cubeMesh.Draw(shader);
         }
 
-        private static Matrix4 Pivot(Vector3 translation, Vector3 pivot, Matrix4 target)
-        {
-            var model = Matrix4.CreateTranslation(translation);
-            model *= Matrix4.CreateTranslation(pivot);
-            model *= target;
-            model *= Matrix4.CreateTranslation(pivot).Inverted();
-            return model;
-        }
-        
         protected override void OnUpdate(object sender, TimestepEventArgs e)
         {
             base.OnUpdate(sender, e);

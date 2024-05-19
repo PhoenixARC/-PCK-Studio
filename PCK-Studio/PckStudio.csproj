@@ -134,6 +134,7 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\OpenTkMatrixExtensions.cs" />
     <Compile Include="Internal\IO\PSM\PSMFileReader.cs" />
     <Compile Include="Internal\IO\PSM\PSMFileWriter.cs" />
     <Compile Include="Internal\IO\TGA\TGADeserializer.cs" />
