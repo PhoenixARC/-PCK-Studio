@@ -34,7 +34,7 @@ namespace PckStudio.External.Format
         [JsonProperty("box_uv")]
         internal bool UseBoxUv;
 
-        [JsonProperty("visibility")]
+        [JsonProperty("visibility", DefaultValueHandling = DefaultValueHandling.Ignore)]
         internal bool IsVisibile { get; set; } = true;
 
         [JsonProperty("rescale")]
@@ -72,9 +72,9 @@ namespace PckStudio.External.Format
             {
                 if (origin is null || origin.Length < 3)
                     origin = new float[3];
-                origin[0] = (int)value.X;
-                origin[1] = (int)value.Y;
-                origin[2] = (int)value.Z;
+                origin[0] = value.X;
+                origin[1] = value.Y;
+                origin[2] = value.Z;
             }
         }
 
@@ -89,9 +89,9 @@ namespace PckStudio.External.Format
             {
                 if (from is null || from.Length < 3)
                     from = new float[3];
-                from[0] = (int)value.X;
-                from[1] = (int)value.Y;
-                from[2] = (int)value.Z;
+                from[0] = value.X;
+                from[1] = value.Y;
+                from[2] = value.Z;
             }
         }
 
@@ -106,9 +106,9 @@ namespace PckStudio.External.Format
             {
                 if (to is null || to.Length < 3)
                     to = new float[3];
-                to[0] = (int)value.X;
-                to[1] = (int)value.Y;
-                to[2] = (int)value.Z;
+                to[0] = value.X;
+                to[1] = value.Y;
+                to[2] = value.Z;
             }
         }
 
@@ -176,8 +176,22 @@ namespace PckStudio.External.Format
         internal string Name;
 
         [JsonProperty("origin")]
-        internal float[] Origin;
-        
+        private float[] origin;
+
+        [JsonIgnore]
+        public Vector3 Origin
+        {
+            get => new Vector3(origin?[0] ?? 0, origin?[1] ?? 0, origin?[2] ?? 0);
+            set
+            {
+                if (origin is null || origin.Length < 3)
+                    origin = new float[3];
+                origin[0] = value.X;
+                origin[1] = value.Y;
+                origin[2] = value.Z;
+            }
+        }
+
         [JsonProperty("uuid")]
         internal Guid Uuid;
         
@@ -187,7 +201,7 @@ namespace PckStudio.External.Format
         public Outline(string name)
         {
             Name = name;
-            Origin = new float[3];
+            origin = new float[3];
             Uuid = Guid.NewGuid();
             Children = new JArray();
         }
@@ -196,10 +210,10 @@ namespace PckStudio.External.Format
     internal class TextureRes
     {
         [JsonProperty("width")]
-        internal int Width;
+        internal int Width { get; set; }
 
         [JsonProperty("height")]
-        internal int Height;
+        internal int Height { get; set; }
 
         public TextureRes(int width, int height)
         {
@@ -218,9 +232,9 @@ namespace PckStudio.External.Format
 
         [JsonProperty("meta")]
         internal Meta Metadata;
-        
+
         [JsonProperty("model_identifier")]
-        internal string ModelIdentifier;
+        internal string ModelIdentifier { get; set; } = "";
 
         [JsonProperty("visible_box")]
         internal int[] VisibleBox;

@@ -183,8 +183,9 @@ namespace PckStudio.Internal
         {
             BlockBenchModel blockBenchModel = new BlockBenchModel()
             {
+                Name = Path.GetFileNameWithoutExtension(fileName),
                 Textures = new Texture[] { modelInfo.Texture },
-                TextureResolution = modelInfo.Texture.Size,
+                TextureResolution = new TextureRes(64, modelInfo.Texture.Width == modelInfo.Texture.Height ? 64 : 32),
                 ModelIdentifier = "",
                 Metadata = new Meta()
                 {
