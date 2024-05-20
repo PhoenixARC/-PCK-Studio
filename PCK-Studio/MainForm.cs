@@ -21,7 +21,7 @@ using PckStudio.Forms;
 using PckStudio.Forms.Editor;
 using PckStudio.Forms.Additional_Popups.Animation;
 using PckStudio.Forms.Additional_Popups;
-using PckStudio.Classes.Misc;
+using PckStudio.Internal.Misc;
 using PckStudio.Internal.IO.PckAudio;
 using PckStudio.Internal.IO._3DST;
 using PckStudio.Internal;

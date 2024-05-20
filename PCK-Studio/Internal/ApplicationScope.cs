@@ -2,11 +2,11 @@
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
-using PckStudio.Classes.Misc;
 using PckStudio.Properties;
 using PckStudio.Extensions;
 using System.Globalization;
 using PckStudio.Internal.Json;
+using PckStudio.Internal.Misc;
 
 namespace PckStudio.Internal
 {

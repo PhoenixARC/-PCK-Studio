@@ -2,7 +2,7 @@
  * Source by: Simon Mourier(https://stackoverflow.com/users/403671/simon-mourier)
  */
 
-namespace PckStudio.Classes.Misc
+namespace PckStudio.Internal.Misc
 {
     using System;
     using System.Diagnostics;

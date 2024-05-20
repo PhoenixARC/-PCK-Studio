@@ -5,7 +5,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using MetroFramework.Forms;
-using PckStudio.Classes.Misc;
+using PckStudio.Internal.Misc;
 using PckStudio.Forms.Additional_Popups.Loc;
 using OMI.Formats.Languages;
 using OMI.Workers.Language;
