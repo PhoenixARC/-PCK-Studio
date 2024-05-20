@@ -164,7 +164,7 @@ namespace PckStudio.Forms.Editor
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Title = "Save Model File";
             saveFileDialog.Filter = ModelImporter.SupportedModelFileFormatsFilter;
-            saveFileDialog.FileName = _skin.MetaData.Name;
+            saveFileDialog.FileName = _skin.MetaData.Name.TrimEnd(new char[] { '\n', '\r' }).Replace(' ', '_');
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 ModelImporter.Export(saveFileDialog.FileName, _skin.Model);
         }
