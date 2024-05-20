@@ -1,24 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using PckStudio.External.Format;
-using PckStudio.Forms.Additional_Popups;
-using System.Windows.Forms;
-using PckStudio.Properties;
 using System.IO;
-using PckStudio.Extensions;
+using System.Linq;
 using System.Numerics;
-using PckStudio.Internal.FileFormats;
-using PckStudio.Internal.IO.PSM;
-using Microsoft.Win32;
-using Newtonsoft.Json.Linq;
-using PckStudio.Rendering;
 using System.Diagnostics;
-using System.Xml.Linq;
+using System.Windows.Forms;
 using System.Drawing.Imaging;
+using System.Collections.Generic;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+
+using PckStudio.Rendering;
+using PckStudio.Extensions;
+using PckStudio.External.Format;
+using PckStudio.Internal.IO.PSM;
+using PckStudio.Internal.FileFormats;
+using PckStudio.Forms.Additional_Popups;
 
 namespace PckStudio.Internal
 {
@@ -179,7 +175,7 @@ namespace PckStudio.Internal
             if (box.IsBasePart() && ((boxType == "HEAD" && element.Inflate == 0.5f) || (element.Inflate >= 0.25f && element.Inflate <= 0.5f)))
                 box.Type = box.GetOverlayType();
 
-            if (!BOX2ANIM(box, ref modelInfo))
+            if (!BOX2ANIM(modelInfo.ANIM, box))
                 modelInfo.AdditionalBoxes.Add(box);
         }
 
@@ -377,7 +373,7 @@ namespace PckStudio.Internal
                     {
                         skinBox.HideWithArmor = true;
                     }
-                    if (!BOX2ANIM(skinBox, ref modelInfo))
+                    if (!BOX2ANIM(modelInfo.ANIM, skinBox))
                         modelInfo.AdditionalBoxes.Add(skinBox);
                 }
             }
@@ -506,12 +502,12 @@ namespace PckStudio.Internal
             }
         }
 
-        internal static bool BOX2ANIM(SkinBOX box, ref SkinModelInfo modelInfo)
+        internal static bool BOX2ANIM(SkinANIM anim, SkinBOX box)
         {
             int hash = box.GetHashCode();
             if (SkinBOX.KnownHashes.ContainsKey(hash))
             {
-                modelInfo.ANIM.SetFlag(SkinBOX.KnownHashes[hash], false);
+                anim.SetFlag(SkinBOX.KnownHashes[hash], false);
                 return true;
             }
             return false;
