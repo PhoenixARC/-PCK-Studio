@@ -198,14 +198,24 @@ namespace PckStudio.Internal
             Dictionary<string, Outline> outliners = new Dictionary<string, Outline>(5);
             List<Element> elements = new List<Element>(modelInfo.AdditionalBoxes.Count);
 
+            Dictionary<string, SkinPartOffset> offsetLookUp = new Dictionary<string, SkinPartOffset>(5);
+
             void AddElement(SkinBOX box)
             {
+                Vector3 offset = GetOffset(box.Type, ref offsetLookUp, modelInfo.PartOffsets);
                 if (!outliners.ContainsKey(box.Type))
                 {
-                    outliners.Add(box.Type, new Outline(box.Type));
+                    outliners.Add(box.Type, new Outline(box.Type)
+                    {
+                        Origin = GetPivot(box.Type) + offset
+                    });
                 }
 
                 Element element = CreateElement(box);
+
+                element.From += offset;
+                element.To += offset;
+
                 elements.Add(element);
                 outliners[box.Type].Children.Add(element.Uuid);
             }
@@ -387,24 +397,26 @@ namespace PckStudio.Internal
                 return;
 
             Dictionary<string, Bone> bones = new Dictionary<string, Bone>(5);
+            Dictionary<string, SkinPartOffset> offsetLookUp = new Dictionary<string, SkinPartOffset>(5);
 
             void AddElement(SkinBOX box)
             {
+                Vector3 offset = GetOffset(box.Type, ref offsetLookUp, modelInfo.PartOffsets);
+
                 if (!bones.ContainsKey(box.Type))
                 {
-                    Bone bone = new Bone(box.Type);
-                    Vector3 translation = ModelPartSpecifics.GetPositioningInfo(box.Type).Translation;
-                    Vector3 pivot = ModelPartSpecifics.GetPositioningInfo(box.Type).Pivot;
-
-                    bone.Pivot = (translation * -Vector3.UnitX - pivot * Vector3.UnitY) + (Vector3.UnitY * 24);
+                    Bone bone = new Bone(box.Type)
+                    {
+                        Pivot = GetPivot(box.Type) + offset
+                    };
                     bones.Add(box.Type, bone);
                 }
 
-                Vector3 pos = TranslateFromInternalPosistion(box, Vector3.UnitY);
+                Vector3 pos = TranslateFromInternalPosistion(box, new Vector3(1,1,0));
 
                 bones[box.Type].Cubes.Add(new External.Format.Cube()
                 {
-                    Origin = pos,
+                    Origin = pos + offset,
                     Size = box.Size,
                     Uv = box.UV,
                     Inflate = box.Scale,
@@ -459,7 +471,7 @@ namespace PckStudio.Internal
             }
         }
 
-        internal static void ANIM2BOX(SkinANIM anim, Action<SkinBOX> converter)
+        private static void ANIM2BOX(SkinANIM anim, Action<SkinBOX> converter)
         {
             bool is32x64 = !(anim.GetFlag(SkinAnimFlag.RESOLUTION_64x64) || anim.GetFlag(SkinAnimFlag.SLIM_MODEL));
             if (!anim.GetFlag(SkinAnimFlag.HEAD_DISABLED))
@@ -503,7 +515,7 @@ namespace PckStudio.Internal
             }
         }
 
-        internal static bool BOX2ANIM(SkinANIM anim, SkinBOX box)
+        private static bool BOX2ANIM(SkinANIM anim, SkinBOX box)
         {
             int hash = box.GetHashCode();
             if (SkinBOX.KnownHashes.ContainsKey(hash))
@@ -514,7 +526,27 @@ namespace PckStudio.Internal
             return false;
         }
 
-        internal static Vector3 TranslateToInternalPosition(string boxType, Vector3 origin, Vector3 size, Vector3 translationUnit)
+        private static Vector3 GetOffset(string name, ref Dictionary<string, SkinPartOffset> offsetLookUp, IReadOnlyList<SkinPartOffset> partOffsets)
+        {
+            if (offsetLookUp.ContainsKey(name))
+            {
+                return -offsetLookUp[name].Value * Vector3.UnitY;
+            }
+            if (partOffsets.Any(o => o.Type == name))
+            {
+                var partOffset = partOffsets.First(o => o.Type == name);
+                offsetLookUp.Add(name, partOffset);
+                return -partOffset.Value * Vector3.UnitY;
+            }
+            return Vector3.Zero;
+        }
+
+        private static Vector3 GetPivot(string partName)
+        {
+            return TransformSpace(ModelPartSpecifics.GetPositioningInfo(partName).Pivot, Vector3.Zero, Vector3.UnitY) + (24f * Vector3.UnitY);
+        }
+
+        private static Vector3 TranslateToInternalPosition(string boxType, Vector3 origin, Vector3 size, Vector3 translationUnit)
         {
             Vector3 pos = TransformSpace(origin, size, translationUnit);
             // Skin Renderer (and Game) specific offset value.
@@ -529,7 +561,7 @@ namespace PckStudio.Internal
             return pos;
         }
 
-        internal static Vector3 TranslateFromInternalPosistion(SkinBOX skinBox, Vector3 translationUnit)
+        private static Vector3 TranslateFromInternalPosistion(SkinBOX skinBox, Vector3 translationUnit)
         {
             return TranslateToInternalPosition(skinBox.Type, skinBox.Pos, skinBox.Size, translationUnit);
         }
