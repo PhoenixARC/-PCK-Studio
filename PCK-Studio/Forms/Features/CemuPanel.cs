@@ -21,7 +21,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using PckStudio.Extensions;
-using PckStudio.Classes.Misc;
+using PckStudio.Internal.Misc;
 using System.Diagnostics;
 
 namespace PckStudio.Forms.Features

@@ -18,7 +18,7 @@
 using System;
 using System.IO;
 
-namespace PckStudio.Classes.Misc
+namespace PckStudio.Internal.Misc
 {
     internal class FileCacher
     {

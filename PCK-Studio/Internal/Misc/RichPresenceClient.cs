@@ -5,7 +5,7 @@ using PckStudio.Internal;
 using PckStudio.Properties;
 using DiscordRPC.Logging;
 
-namespace PckStudio.Classes.Misc
+namespace PckStudio.Internal.Misc
 {
     // https://github.com/BullyWiiPlaza/Minecraft-Wii-U-Mod-Injector/blob/main/Minecraft%20Wii%20U%20Mod%20Injector/Helpers/DiscordRpc.cs
     static class RPC

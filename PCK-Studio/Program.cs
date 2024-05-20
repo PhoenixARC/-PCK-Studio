@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using PckStudio.Classes.Misc;
+using PckStudio.Internal.Misc;
 using PckStudio.Internal;
 using PckStudio.Properties;
 using PCKStudio_Updater;

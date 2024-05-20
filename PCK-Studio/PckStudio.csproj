@@ -204,8 +204,8 @@
     <Compile Include="Internal\IO\CSMB\CSMBFileWriter.cs" />
     <Compile Include="Internal\IO\PckAudio\PckAudioFileReader.cs" />
     <Compile Include="Internal\IO\PckAudio\PckAudioFileWriter.cs" />
-    <Compile Include="Classes\Misc\FileCacher.cs" />
-    <Compile Include="Classes\Misc\OpenFolderDialog.cs" />
+    <Compile Include="Internal\Misc\FileCacher.cs" />
+    <Compile Include="Internal\Misc\OpenFolderDialog.cs" />
     <Compile Include="Classes\Models\DefaultModels\Steve64x64Model.cs" />
     <Compile Include="Internal\ApplicationScope.cs" />
     <Compile Include="Internal\Json\ColorEntry.cs" />
@@ -238,7 +238,7 @@
     <Compile Include="Classes\Models\Texel.cs" />
     <Compile Include="Classes\Models\TexelComparer.cs" />
     <Compile Include="Classes\Models\TexturePlane.cs" />
-    <Compile Include="Classes\Misc\RichPresenceClient.cs" />
+    <Compile Include="Internal\Misc\RichPresenceClient.cs" />
     <Compile Include="Forms\Features\CemuPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
