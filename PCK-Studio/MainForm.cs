@@ -1479,10 +1479,16 @@ namespace PckStudio
 				return;
 
 			bool isTargetPckFile = targetNode.IsTagOfType<PckAsset>();
-
-			if (e.Data.GetData(dataFormat) is not TreeNode draggedNode)
+            TreeNode draggedNode = e.Data.GetData(dataFormat) as TreeNode;
+            if (draggedNode == null)
 			{
-				Debug.WriteLine("Dragged data was not of type TreeNode.");
+				Debug.WriteLine("Dragged node is null.");
+				return;
+			}
+
+			if (targetNode.Equals(draggedNode))
+			{
+				Debug.WriteLine("Dragged node was not moved.");
 				return;
 			}
 
@@ -2599,12 +2605,15 @@ namespace PckStudio
             setModelContainerFormatToolStripMenuItem.Visible = false;
             setSubPCKEndiannessToolStripMenuItem.Visible = false;
             exportToolStripMenuItem.Visible = false;
+			toolStripSeparator5.Visible = false;
+			toolStripSeparator6.Visible = false;
             if (treeViewMain.SelectedNode.TryGetTagData(out PckAsset asset))
 			{
 				replaceToolStripMenuItem.Visible = true;
                 cloneFileToolStripMenuItem.Visible = true;
 				setFileTypeToolStripMenuItem.Visible = true;
-				miscFunctionsToolStripMenuItem.Visible = true;
+				toolStripSeparator5.Visible = true;
+				toolStripSeparator6.Visible = true;
 
 				if (asset.Type == PckAssetType.SkinFile)
 				{
@@ -2623,7 +2632,6 @@ namespace PckStudio
                 replaceToolStripMenuItem.Visible = false;
                 cloneFileToolStripMenuItem.Visible = false;
 				setFileTypeToolStripMenuItem.Visible = false;
-				miscFunctionsToolStripMenuItem.Visible = false;
 			}
         }
     }
