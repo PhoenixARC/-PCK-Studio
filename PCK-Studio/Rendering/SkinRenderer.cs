@@ -1100,7 +1100,7 @@ namespace PckStudio.Rendering
                 }
 
                 // Armor rendering
-                if (ShowArmor)
+                if (ShowArmor && !ANIM.GetFlag(SkinAnimFlag.ALL_ARMOR_DISABLED))
                 {
                     armorTexture.Bind();
                     //skinShader.SetUniform4("u_Color", Color.FromArgb(0xff << 24 | Color.White.ToArgb() - _outlineColor.ToArgb()));
