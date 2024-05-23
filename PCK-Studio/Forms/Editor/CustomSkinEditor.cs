@@ -9,6 +9,7 @@ using MetroFramework.Forms;
 using PckStudio.Internal;
 using PckStudio.Extensions;
 using PckStudio.Forms.Additional_Popups;
+using System.Diagnostics;
 
 namespace PckStudio.Forms.Editor
 {
@@ -101,6 +102,11 @@ namespace PckStudio.Forms.Editor
 
         private void GenerateUVTextureMap(SkinBOX skinBox)
         {
+            if (_skin?.Model?.Texture is null)
+            {
+                Trace.TraceWarning($"[{nameof(CustomSkinEditor)}@{nameof(GenerateUVTextureMap)}] Failed to generate uv for {skinBox}. Reason: Model.Texture was null");
+                return;
+            }
             using (Graphics graphics = Graphics.FromImage(_skin.Model.Texture))
             {
                 graphics.ApplyConfig(_graphicsConfig);
@@ -128,6 +134,11 @@ namespace PckStudio.Forms.Editor
 
         private void exportTextureButton_Click(object sender, EventArgs e)
         {
+            if (_skin?.Model?.Texture is null)
+            {
+                Trace.TraceWarning($"[{nameof(CustomSkinEditor)}@{nameof(exportTextureButton_Click)}] Failed to export texture. Reason: skin.Model.Texture was null");
+                return;
+            }
             using SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "PNG Image Files | *.png";
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
