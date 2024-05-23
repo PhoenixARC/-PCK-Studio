@@ -224,6 +224,9 @@ namespace PckStudio.Popups
             if (MessageBox.Show("Create your own custom skin model?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1) != DialogResult.Yes)
                 return;
 
+            newSkin.MetaData.Name = textSkinName.Text;
+            newSkin.MetaData.Theme = textThemeName.Text;
+
             using CustomSkinEditor customSkinEditor = new CustomSkinEditor(newSkin);
 
             if (customSkinEditor.ShowDialog() == DialogResult.OK)
