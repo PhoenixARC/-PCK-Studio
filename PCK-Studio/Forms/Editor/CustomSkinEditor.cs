@@ -119,6 +119,7 @@ namespace PckStudio.Forms.Editor
             {
                 var newBox = boxEditor.Result;
                 renderer3D1.ModelData.Add(newBox);
+                _skin.Model.AdditionalBoxes.Add(newBox);
                 skinPartListBindingSource.ResetBindings(false);
                 if (generateTextureCheckBox.Checked)
                     GenerateUVTextureMap(newBox);
@@ -189,7 +190,9 @@ namespace PckStudio.Forms.Editor
         {
             if (skinPartListBox.SelectedItem is SkinBOX box)
             {
-                renderer3D1.ModelData.Add((SkinBOX)box.Clone());
+                var clone = (SkinBOX)box.Clone();
+                renderer3D1.ModelData.Add(clone);
+                _skin.Model.AdditionalBoxes.Add(clone);
                 skinPartListBindingSource.ResetBindings(false);
             }
         }
@@ -199,6 +202,7 @@ namespace PckStudio.Forms.Editor
             if (skinPartListBox.SelectedItem is SkinBOX box)
             {
                 renderer3D1.ModelData.Remove(box);
+                _skin.Model.AdditionalBoxes.Remove(box);
                 skinPartListBindingSource.ResetBindings(false);
             }
         }
