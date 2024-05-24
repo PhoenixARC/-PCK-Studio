@@ -507,28 +507,28 @@ namespace PckStudio.Internal
                 converter(new SkinBOX("ARM0", new(-3, -2, -2), new(4, 12, 4), new(40, 16)));
 
             if (!is32x64 && !anim.GetFlag(SkinAnimFlag.RIGHT_ARM_OVERLAY_DISABLED))
-                converter(new SkinBOX("SLEEVE0", new(-3, -2, -2), new(4, 12, 4), new(40, 16)));
+                converter(new SkinBOX("SLEEVE0", new(-3, -2, -2), new(4, 12, 4), new(40, 32)));
 
             if (!anim.GetFlag(SkinAnimFlag.LEFT_ARM_DISABLED))
                 converter(new SkinBOX("ARM1", new(-1, -2, -2), new(4, 12, 4), is32x64 ? new(40, 16) : new(32, 48), mirror: is32x64));
 
             if (!is32x64 && !anim.GetFlag(SkinAnimFlag.LEFT_ARM_OVERLAY_DISABLED))
-                converter(new SkinBOX("SLEEVE1", new(-1, -2, -2), new(4, 12, 4), new(32, 48)));
+                converter(new SkinBOX("SLEEVE1", new(-1, -2, -2), new(4, 12, 4), new(48, 48)));
 
             if (!anim.GetFlag(SkinAnimFlag.RIGHT_LEG_DISABLED))
                 converter(new SkinBOX("LEG0", new(-2, 0, -2), new(4, 12, 4), new(0, 16)));
 
             if (!is32x64 && !anim.GetFlag(SkinAnimFlag.RIGHT_LEG_OVERLAY_DISABLED))
-                converter(new SkinBOX("PATNS0", new(-2, 0, -2), new(4, 12, 4), new(0, 16)));
+                converter(new SkinBOX("PANTS0", new(-2, 0, -2), new(4, 12, 4), new(0, 32)));
 
             if (!anim.GetFlag(SkinAnimFlag.LEFT_LEG_DISABLED))
             {
-                converter(new SkinBOX("LEG1", new(-2, 0, -2), new(4, 12, 4), is32x64 ? new(0, 16) : new(32, 48), mirror: is32x64));
+                converter(new SkinBOX("LEG1", new(-2, 0, -2), new(4, 12, 4), is32x64 ? new(0, 16) : new(16, 48), mirror: is32x64));
             }
 
             if (!is32x64 && !anim.GetFlag(SkinAnimFlag.LEFT_LEG_OVERLAY_DISABLED))
             {
-                converter(new SkinBOX("PATNS1", new(-2, 0, -2), new(4, 12, 4), new(32, 48)));
+                converter(new SkinBOX("PANTS1", new(-2, 0, -2), new(4, 12, 4), new(0, 48)));
             }
         }
 
