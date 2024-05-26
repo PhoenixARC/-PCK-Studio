@@ -390,5 +390,13 @@ namespace PckStudio.Forms.Editor
         {
             renderer3D1.CenterOnSelect = centerSelectionCheckbox.Checked;
         }
+
+        private void generateUvTextureToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (skinPartListBox.SelectedItem is SkinBOX skinBox)
+            {
+                GenerateUVTextureMap(skinBox);
+            }
+        }
     }
 }

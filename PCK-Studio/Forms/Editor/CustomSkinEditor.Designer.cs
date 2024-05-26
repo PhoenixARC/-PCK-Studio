@@ -41,7 +41,7 @@
             this.createToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cloneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.changeColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.generateUvTextureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.buttonDone = new MetroFramework.Controls.MetroButton();
             this.importSkinButton = new MetroFramework.Controls.MetroButton();
             this.exportSkinButton = new MetroFramework.Controls.MetroButton();
@@ -134,7 +134,7 @@
             this.createToolStripMenuItem,
             this.cloneToolStripMenuItem,
             this.deleteToolStripMenuItem,
-            this.changeColorToolStripMenuItem});
+            this.generateUvTextureToolStripMenuItem});
             this.skinPartTabContextMenu.Name = "contextMenuStrip1";
             resources.ApplyResources(this.skinPartTabContextMenu, "skinPartTabContextMenu");
             // 
@@ -156,10 +156,11 @@
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
-            // changeColorToolStripMenuItem
+            // generateUvTextureToolStripMenuItem
             // 
-            resources.ApplyResources(this.changeColorToolStripMenuItem, "changeColorToolStripMenuItem");
-            this.changeColorToolStripMenuItem.Name = "changeColorToolStripMenuItem";
+            resources.ApplyResources(this.generateUvTextureToolStripMenuItem, "generateUvTextureToolStripMenuItem");
+            this.generateUvTextureToolStripMenuItem.Name = "generateUvTextureToolStripMenuItem";
+            this.generateUvTextureToolStripMenuItem.Click += new System.EventHandler(this.generateUvTextureToolStripMenuItem_Click);
             // 
             // buttonDone
             // 
@@ -405,7 +406,7 @@
         private System.Windows.Forms.ToolStripMenuItem createToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cloneToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem changeColorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem generateUvTextureToolStripMenuItem;
         private MetroFramework.Controls.MetroButton buttonDone;
         private MetroFramework.Controls.MetroButton outlineColorButton;
         private MetroFramework.Controls.MetroButton exportSkinButton;

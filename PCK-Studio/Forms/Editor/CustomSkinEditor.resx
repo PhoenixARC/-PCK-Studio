@@ -351,7 +351,7 @@
 </value>
   </data>
   <data name="createToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>151, 26</value>
+    <value>201, 26</value>
   </data>
   <data name="createToolStripMenuItem.Text" xml:space="preserve">
     <value>Add Cube</value>
@@ -372,7 +372,7 @@
 </value>
   </data>
   <data name="cloneToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>151, 26</value>
+    <value>201, 26</value>
   </data>
   <data name="cloneToolStripMenuItem.Text" xml:space="preserve">
     <value>Clone</value>
@@ -387,15 +387,12 @@
 </value>
   </data>
   <data name="deleteToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>151, 26</value>
+    <value>201, 26</value>
   </data>
   <data name="deleteToolStripMenuItem.Text" xml:space="preserve">
     <value>Delete</value>
   </data>
-  <data name="changeColorToolStripMenuItem.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="changeColorToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="generateUvTextureToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
         vAAADrwBlbxySQAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xMkMEa+wAAAFhSURBVFhH7ZY/
@@ -408,14 +405,14 @@
         rkJggg==
 </value>
   </data>
-  <data name="changeColorToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>151, 26</value>
+  <data name="generateUvTextureToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>201, 26</value>
   </data>
-  <data name="changeColorToolStripMenuItem.Text" xml:space="preserve">
-    <value>Change Color</value>
+  <data name="generateUvTextureToolStripMenuItem.Text" xml:space="preserve">
+    <value>Re-generate UV Texture</value>
   </data>
   <data name="skinPartTabContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 108</value>
+    <value>202, 130</value>
   </data>
   <data name="&gt;&gt;skinPartTabContextMenu.Name" xml:space="preserve">
     <value>skinPartTabContextMenu</value>
@@ -3547,10 +3544,10 @@
   <data name="&gt;&gt;deleteToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;changeColorToolStripMenuItem.Name" xml:space="preserve">
-    <value>changeColorToolStripMenuItem</value>
+  <data name="&gt;&gt;generateUvTextureToolStripMenuItem.Name" xml:space="preserve">
+    <value>generateUvTextureToolStripMenuItem</value>
   </data>
-  <data name="&gt;&gt;changeColorToolStripMenuItem.Type" xml:space="preserve">
+  <data name="&gt;&gt;generateUvTextureToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;addOffsetToolStripMenuItem.Name" xml:space="preserve">
