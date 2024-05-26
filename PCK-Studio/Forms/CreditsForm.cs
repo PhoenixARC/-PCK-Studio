@@ -10,13 +10,17 @@ namespace PckStudio.Forms
         public CreditsForm()
         {
             InitializeComponent();
+            string buildConfig = "";
 #if BETA
-            buildLabel.Text = $"Build Config: Beta\nBuild Version: {ApplicationBuildInfo.BetaBuildVersion}\n Branch: {CommitInfo.BranchName}";
+            buildConfig = "Beta";
 #elif DEBUG
-            buildLabel.Text = $"Build Config: Debug\nBranch: {CommitInfo.BranchName}\nCommit Id: {CommitInfo.CommitHash}";
+            buildConfig = "Debug";
+#elif RELEASE
+            buildConfig = "Release";
 #else
-            buildLabel.Text = string.Empty;
+            buildConfig = "unknown";
 #endif
+            buildLabel.Text = $"Verion: {Application.ProductVersion}\nBuild Config: {buildConfig}\nBranch: {CommitInfo.BranchName}@{CommitInfo.CommitHash}";
         }
     }
 }
