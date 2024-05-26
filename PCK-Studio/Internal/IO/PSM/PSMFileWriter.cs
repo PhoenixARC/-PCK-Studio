@@ -30,7 +30,7 @@ namespace PckStudio.Internal.IO.PSM
         {
             using (var writer = new EndiannessAwareBinaryWriter(stream, Encoding.ASCII, leaveOpen: true, Endianness.LittleEndian))
             {
-                writer.Write(PSMFile.HEADER_MAGIC);
+                writer.WriteString(PSMFile.HEADER_MAGIC);
                 writer.Write(_PSM.Version);
                 writer.Write(_PSM.SkinANIM.ToValue());
                 writer.Write(_PSM.Parts.Count);
