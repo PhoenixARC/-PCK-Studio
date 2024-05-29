@@ -138,6 +138,7 @@ namespace PckStudio.External.Format
     internal class Texture
     {
         public static implicit operator Texture(Image image) => new Texture(image);
+        public static implicit operator Image(Texture texture) => texture.GetImage();
         
         private Texture() { }
 
@@ -154,7 +155,7 @@ namespace PckStudio.External.Format
         [JsonProperty("source")]
         internal string TextureSource;
 
-        internal Image GetTexture()
+        private Image GetImage()
         {
             string data = TextureSource;
             const string dataHead = "data:image/png;base64,";

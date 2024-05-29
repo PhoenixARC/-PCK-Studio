@@ -124,7 +124,7 @@ namespace PckStudio.Internal
 
             if (blockBenchModel.Textures.IndexInRange(0))
             {
-                modelInfo.Texture = blockBenchModel.Textures[0].GetTexture();
+                modelInfo.Texture = blockBenchModel.Textures[0];
                 modelInfo.ANIM.SetFlag(SkinAnimFlag.RESOLUTION_64x64, modelInfo.Texture.Size.Width == modelInfo.Texture.Size.Height);
             }
 
