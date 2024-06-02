@@ -63,6 +63,7 @@ namespace PckStudio.Internal
             }
         }
 
+        // TODO: flip bottom texture of each box...
         internal static void Export(string fileName, SkinModelInfo model)
         {
             if (model is null)
