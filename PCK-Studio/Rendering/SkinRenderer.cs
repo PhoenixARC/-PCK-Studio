@@ -900,7 +900,7 @@ namespace PckStudio.Rendering
                     return true;
                 case Keys.R:
                     Camera.Distance = DefaultCameraDistance;
-                    Camera.FocalPoint = head.GetCenter(0);
+                    Camera.FocalPoint = head.GetCenter(0) * new Vector3(1, -1, -1);
                     Camera.Yaw = 0f;
                     Camera.Pitch = 0f;
                     return true;
