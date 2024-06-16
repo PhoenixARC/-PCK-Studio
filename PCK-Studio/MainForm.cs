@@ -1703,7 +1703,7 @@ namespace PckStudio
 
 		private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			using CreditsForm info = new CreditsForm();
+			using ContributorsForm info = new ContributorsForm();
 			info.ShowDialog(this);
 		}
 

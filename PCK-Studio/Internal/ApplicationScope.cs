@@ -7,12 +7,16 @@ using PckStudio.Extensions;
 using System.Globalization;
 using PckStudio.Internal.Json;
 using PckStudio.Internal.Misc;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace PckStudio.Internal
 {
     internal static class ApplicationScope
     {
         public static FileCacher DataCacher { get; private set; }
+
+        public static Octokit.RepositoryContributor[] Contributors { get; private set; }
 
         private static Image[] _entityImages;
         public static Image[] EntityImages => _entityImages;
@@ -41,8 +45,17 @@ namespace PckStudio.Internal
                 _ = Tiles.PaintingImageList;
                 SettingsManager.Initialize();
                 CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+                Task.Run(GetContributors);
             }
             Profiler.Stop();
+        }
+
+        internal static void GetContributors()
+        {
+            var ghClient = new Octokit.GitHubClient(new Octokit.ProductHeaderValue(Application.ProductName + "Credits"));
+            var allContributorsAct = ghClient.Repository.GetAllContributors("PhoenixARC", "-PCK-Studio");
+            allContributorsAct.Wait();
+            Contributors = allContributorsAct.Result.ToArray();
         }
     }
 }

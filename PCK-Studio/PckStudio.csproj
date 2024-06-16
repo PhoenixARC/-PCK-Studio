@@ -133,6 +133,12 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\ContributorsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ContributorsForm.Designer.cs">
+      <DependentUpon>ContributorsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Internal\IO\TGA\TGADeserializer.cs" />
     <Compile Include="Internal\IO\TGA\TGASerializer.cs" />
     <Compile Include="Extensions\LocFileExtensions.cs" />
@@ -158,6 +164,12 @@
     </Compile>
     <Compile Include="ToolboxItems\BlendPictureBox.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ToolboxItems\GithubUserPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ToolboxItems\GithubUserPanel.Designer.cs">
+      <DependentUpon>GithubUserPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="ToolboxItems\InterpolationPictureBox.cs">
       <SubType>Component</SubType>
@@ -429,14 +441,11 @@
     </Compile>
     <Compile Include="Internal\PckNodeSorter.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Forms\CreditsForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\CreditsForm.Designer.cs">
-      <DependentUpon>CreditsForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Internal\IO\3DST\TextureCodec.cs" />
+    <EmbeddedResource Include="Forms\ContributorsForm.resx">
+      <DependentUpon>ContributorsForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Features\CemuPanel.resx">
       <DependentUpon>CemuPanel.cs</DependentUpon>
     </EmbeddedResource>
@@ -566,13 +575,13 @@
       <DependentUpon>AudioEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\CreditsForm.resx">
-      <DependentUpon>CreditsForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ToolboxItems\GithubUserPanel.resx">
+      <DependentUpon>GithubUserPanel.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="CommunityKey.snk" />
     <None Include="Properties\app.manifest" />
@@ -627,7 +636,6 @@
     <None Include="Resources\external\Xbox.png" />
     <None Include="Resources\external\PS3.png" />
     <None Include="Resources\external\WiiU.png" />
-    <None Include="Resources\Splash.png" />
     <None Include="Resources\pckOpen.png" />
     <None Include="Resources\pckDrop.png" />
     <None Include="Resources\binka\binka_encode.exe" />
@@ -706,6 +714,9 @@
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>13.0.3</Version>
+    </PackageReference>
+    <PackageReference Include="Octokit">
+      <Version>12.0.0</Version>
     </PackageReference>
     <PackageReference Include="System.ValueTuple">
       <Version>4.5.0</Version>
