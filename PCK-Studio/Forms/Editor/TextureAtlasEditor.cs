@@ -170,7 +170,7 @@ namespace PckStudio.Forms.Editor
 
         private bool AcquireColorTable(PckFile pckFile)
         {
-            if (pckFile.TryGetFile("colours.col", PckAssetType.ColourTableFile, out var colAsset) &&
+            if (pckFile.TryGetAsset("colours.col", PckAssetType.ColourTableFile, out var colAsset) &&
                 colAsset.Size > 0)
             {
                 using var ms = new MemoryStream(colAsset.Data);
