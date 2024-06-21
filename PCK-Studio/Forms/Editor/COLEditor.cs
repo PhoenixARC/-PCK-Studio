@@ -19,22 +19,22 @@ namespace PckStudio.Forms.Editor
         ColorContainer colourfile;
         string clipboard_color = "#FFFFFF";
 
-		private readonly PckAsset _file;
+		private readonly PckAsset _asset;
 
 		List<TreeNode> colorCache = new List<TreeNode>();
 		List<TreeNode> waterCache = new List<TreeNode>();
 		List<TreeNode> underwaterCache = new List<TreeNode>();
 		List<TreeNode> fogCache = new List<TreeNode>();
 
-		public COLEditor(PckAsset file)
+		public COLEditor(PckAsset asset)
 		{
 			InitializeComponent();
 
 			saveToolStripMenuItem1.Visible = !Settings.Default.AutoSaveChanges;
 
-            _file = file;
+            _asset = asset;
 
-			using(var stream = new MemoryStream(file.Data))
+			using(var stream = new MemoryStream(asset.Data))
 			{
 				var reader = new COLFileReader();
                 colourfile = reader.FromStream(stream);
@@ -288,7 +288,7 @@ namespace PckStudio.Forms.Editor
 
 		private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
-			_file.SetData(new COLFileWriter(colourfile));
+			_asset.SetData(new COLFileWriter(colourfile));
 			
             DialogResult = DialogResult.OK;
         }

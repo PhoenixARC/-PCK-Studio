@@ -19,13 +19,13 @@ namespace PckStudio.Forms.Editor
     {
 		DataTable tbl;
 		LOCFile currentLoc;
-		PckAsset _file;
+		PckAsset _asset;
 
-		public LOCEditor(PckAsset file)
+		public LOCEditor(PckAsset asset)
 		{
 			InitializeComponent();
-			_file = file;
-            using (var ms = new MemoryStream(file.Data))
+			_asset = asset;
+            using (var ms = new MemoryStream(asset.Data))
             {
 				var reader = new LOCFileReader();
                 currentLoc = reader.FromStream(ms);
@@ -145,7 +145,7 @@ namespace PckStudio.Forms.Editor
 
 		private void saveToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-            _file.SetData(new LOCFileWriter(currentLoc, 2));
+            _asset.SetData(new LOCFileWriter(currentLoc, 2));
 			DialogResult = DialogResult.OK;
         }
 

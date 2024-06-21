@@ -17,20 +17,20 @@ namespace PckStudio.Internal.Serializer
     {
         public static readonly ImageSerializer DefaultSerializer = new ImageSerializer();
 
-        public void Serialize(Image obj, ref PckAsset file)
+        public void Serialize(Image obj, ref PckAsset asset)
         {
             var stream = new MemoryStream();
             try
             {
-                if (Path.GetExtension(file.Filename) == ".tga")
+                if (Path.GetExtension(asset.Filename) == ".tga")
                     TGASerializer.SerializeToStream(stream, obj);
                 else
                     obj.Save(stream, ImageFormat.Png);
-                file.SetData(stream.ToArray());
+                asset.SetData(stream.ToArray());
             }
             catch (Exception ex)
             {
-                Trace.TraceError($"Failed to serialize image to pck file data({file.Filename}).");
+                Trace.TraceError($"Failed to serialize image to pck file data({asset.Filename}).");
                 Debug.WriteLine(ex.Message);
             }
         }

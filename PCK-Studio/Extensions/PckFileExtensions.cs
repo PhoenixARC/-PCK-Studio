@@ -11,20 +11,20 @@ namespace PckStudio.Extensions
 {
     internal static class PckFileExtensions
     {
-        internal static PckAsset CreateNewFileIf(this PckFile pck, bool condition, string filename, PckAssetType filetype, IDataFormatWriter writer)
+        internal static PckAsset CreateNewAssetIf(this PckFile pck, bool condition, string filename, PckAssetType filetype, IDataFormatWriter writer)
         {
             if (condition)
             {
-                return pck.CreateNewFile(filename, filetype, writer);
+                return pck.CreateNewAsset(filename, filetype, writer);
             }
             return null;
         }
 
-        internal static PckAsset CreateNewFile(this PckFile pck, string filename, PckAssetType filetype, IDataFormatWriter writer)
+        internal static PckAsset CreateNewAsset(this PckFile pck, string filename, PckAssetType filetype, IDataFormatWriter writer)
         {
-            var file = pck.CreateNewFile(filename, filetype);
-            file.SetData(writer);
-            return file;
+            var asset = pck.CreateNewAsset(filename, filetype);
+            asset.SetData(writer);
+            return asset;
         }
     }
 }
