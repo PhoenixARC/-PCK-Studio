@@ -32,6 +32,7 @@ using PckStudio.External.Format;
 using PckStudio.Internal.IO.PSM;
 using PckStudio.Internal.FileFormats;
 using PckStudio.Forms.Additional_Popups;
+using System.Drawing;
 
 namespace PckStudio.Internal
 {
@@ -149,6 +150,7 @@ namespace PckStudio.Internal
                     ReadOutliner(token, type, blockBenchModel.Elements, ref modelInfo);
                 }
             }
+            modelInfo.Texture = FixTexture(modelInfo);
             return modelInfo;
         }
 
@@ -199,11 +201,12 @@ namespace PckStudio.Internal
 
         internal static void ExportBlockBenchModel(string fileName, SkinModelInfo modelInfo)
         {
+            Image exportTexture = FixTexture(modelInfo);
             BlockBenchModel blockBenchModel = new BlockBenchModel()
             {
                 Name = Path.GetFileNameWithoutExtension(fileName),
-                Textures = new Texture[] { modelInfo.Texture },
-                TextureResolution = new TextureRes(64, modelInfo.Texture.Width == modelInfo.Texture.Height ? 64 : 32),
+                Textures = [exportTexture],
+                TextureResolution = new TextureRes(64, exportTexture.Width == exportTexture.Height ? 64 : 32),
                 ModelIdentifier = "",
                 Metadata = new Meta()
                 {
@@ -321,6 +324,7 @@ namespace PckStudio.Internal
             {
                 modelInfo = LoadGeometry(selectedGeometry);
             }
+            modelInfo.Texture = FixTexture(modelInfo);
             return modelInfo;
         }
 
@@ -485,7 +489,7 @@ namespace PckStudio.Internal
                 string content = JsonConvert.SerializeObject(bedrockModel);
                 File.WriteAllText(fileName, content);
                 string texturePath = Path.Combine(Path.GetDirectoryName(fileName), Path.GetFileNameWithoutExtension(fileName)) + ".png";
-                modelInfo.Texture.Save(texturePath, ImageFormat.Png);
+                FixTexture(modelInfo).Save(texturePath, ImageFormat.Png);
             }
         }
 
@@ -542,6 +546,32 @@ namespace PckStudio.Internal
                 return true;
             }
             return false;
+        }
+
+        private static Image FixTexture(SkinModelInfo modelInfo)
+        {
+            Image result = new Bitmap(modelInfo.Texture);
+            using var g = Graphics.FromImage(result);
+            g.ApplyConfig(new GraphicsConfig()
+            {
+                InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor,
+                PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality
+            });
+            foreach (var box in modelInfo.AdditionalBoxes)
+            {
+                if (box.Size == Vector3.One || box.Size == Vector3.Zero)
+                    continue;
+                var imgPos = Point.Truncate(new PointF(box.UV.X + box.Size.X + box.Size.Z, box.UV.Y));
+                var area = new RectangleF(imgPos, Size.Truncate(new SizeF(box.Size.X, box.Size.Z)));
+                var targetAreaImage = modelInfo.Texture.GetArea(Rectangle.Truncate(area));
+                targetAreaImage.RotateFlip(RotateFlipType.RotateNoneFlipY);
+                var clip = g.Clip;
+                g.SetClip(area);
+                g.Clear(Color.Transparent);
+                g.DrawImage(targetAreaImage, imgPos);
+                g.Clip = clip;
+            }
+            return result;
         }
 
         private static Vector3 GetOffset(string name, ref Dictionary<string, SkinPartOffset> offsetLookUp, IReadOnlyList<SkinPartOffset> partOffsets)
