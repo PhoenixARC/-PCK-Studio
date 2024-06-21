@@ -41,6 +41,7 @@ namespace PckStudio.ToolboxItems
 
         private void LoadAuthor()
         {
+            // TODO: find a better way to check if the avatar has changed since last cache.
             string cacheKey = Convert.ToBase64String(Encoding.Default.GetBytes(_contributor.AvatarUrl));
 
             if (!ApplicationScope.DataCacher.HasFileCached(cacheKey))
