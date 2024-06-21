@@ -166,12 +166,12 @@
     <Compile Include="Internal\Json\Entities.cs" />
     <Compile Include="Internal\Json\EntityInfo.cs" />
     <Compile Include="Internal\ResourceCategory.cs" />
+    <Compile Include="Internal\App\CommitInfo.cs" />
     <Compile Include="External\Format\BlockBenchModel.cs" />
     <Compile Include="Internal\Skin\Skin.cs" />
     <Compile Include="Internal\Skin\SkinMetaData.cs" />
     <Compile Include="Internal\Skin\SkinModelInfo.cs" />
     <Compile Include="Internal\Skin\SkinPartOffset.cs" />
-    <Compile Include="Internal\CommitInfo.cs" />
     <Compile Include="Internal\ResourceLocation.cs" />
     <Compile Include="Internal\Serializer\ImageSerializer.cs" />
     <Compile Include="Internal\Skin\SkinAnimFlag.cs" />
@@ -249,7 +249,7 @@
     <Compile Include="Forms\AppSettingsForm.Designer.cs">
       <DependentUpon>AppSettingsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Internal\ApplicationBuildInfo.cs" />
+    <Compile Include="Internal\App\ApplicationBuildInfo.cs" />
     <Compile Include="Forms\Editor\TextureAtlasEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -269,12 +269,12 @@
     <Compile Include="Internal\IO\PckAudio\PckAudioFileWriter.cs" />
     <Compile Include="Internal\Misc\FileCacher.cs" />
     <Compile Include="Internal\Misc\OpenFolderDialog.cs" />
-    <Compile Include="Internal\ApplicationScope.cs" />
+    <Compile Include="Internal\App\ApplicationScope.cs" />
     <Compile Include="Internal\Json\ColorEntry.cs" />
     <Compile Include="Internal\Json\TileInfo.cs" />
     <Compile Include="Internal\Json\Tiles.cs" />
-    <Compile Include="Internal\Profiler.cs" />
-    <Compile Include="Internal\SettingsManager.cs" />
+    <Compile Include="Internal\App\Profiler.cs" />
+    <Compile Include="Internal\App\SettingsManager.cs" />
     <Compile Include="Internal\Skin\SkinBOX.cs" />
     <Compile Include="Extensions\ImageExtensions.cs" />
     <Compile Include="Internal\Skin\SkinANIM.cs" />

@@ -10,7 +10,7 @@ using PckStudio.Internal.Misc;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace PckStudio.Internal
+namespace PckStudio.Internal.App
 {
     internal static class ApplicationScope
     {

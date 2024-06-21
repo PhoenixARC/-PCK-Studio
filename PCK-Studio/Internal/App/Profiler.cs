@@ -23,7 +23,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PckStudio.Internal
+namespace PckStudio.Internal.App
 {
     internal static class Profiler
     {

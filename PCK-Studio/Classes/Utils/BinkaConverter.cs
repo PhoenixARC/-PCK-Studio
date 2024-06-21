@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.IO;
 using PckStudio.Internal;
 using System.Text.RegularExpressions;
+using PckStudio.Internal.App;
 
 namespace PckStudio.Classes.Utils
 {

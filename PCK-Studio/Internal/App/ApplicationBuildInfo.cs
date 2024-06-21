@@ -19,7 +19,7 @@ using System;
 using System.IO;
 using System.Reflection;
 
-namespace PckStudio.Internal
+namespace PckStudio.Internal.App
 {
     static internal class ApplicationBuildInfo
     {

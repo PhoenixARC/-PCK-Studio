@@ -7,6 +7,7 @@ using PckStudio.Internal.Misc;
 using PckStudio.Internal;
 using PckStudio.Properties;
 using PCKStudio_Updater;
+using PckStudio.Internal.App;
 
 
 namespace PckStudio

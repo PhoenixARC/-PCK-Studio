@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using MetroFramework.Forms;
 using PckStudio.Extensions;
 using PckStudio.Internal;
+using PckStudio.Internal.App;
 using PckStudio.Internal.Json;
 
 namespace PckStudio.Forms.Additional_Popups.Animation

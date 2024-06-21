@@ -15,6 +15,7 @@ using PckStudio.Properties;
 using PckStudio.Internal;
 using PckStudio.Extensions;
 using PckStudio.Internal.Json;
+using PckStudio.Internal.App;
 
 namespace PckStudio.Forms.Editor
 {
