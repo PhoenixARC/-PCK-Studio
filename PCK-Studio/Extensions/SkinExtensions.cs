@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using OMI.Formats.Languages;
 using OMI.Formats.Pck;
 using PckStudio.Internal;
+using PckStudio.Internal.Skin;
 
 namespace PckStudio.Extensions
 {

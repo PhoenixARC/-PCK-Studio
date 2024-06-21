@@ -14,6 +14,7 @@ using PckStudio.Internal;
 using PckStudio.Interfaces;
 using PckStudio.Internal.Deserializer;
 using PckStudio.Internal.Serializer;
+using PckStudio.Internal.Skin;
 
 namespace PckStudio.Extensions
 {
@@ -33,27 +34,27 @@ namespace PckStudio.Extensions
         }
 
         /// <summary>
-        /// Tries to get the skin id of the skin <paramref name="file"/>
+        /// Tries to get the skin id of the skin <paramref name="asset"/>
         /// </summary>
-        /// <param name="file"></param>
+        /// <param name="asset"></param>
         /// <returns>Non-zero base number on success, otherwise 0</returns>
         /// <exception cref="InvalidOperationException"></exception>
-        internal static int GetSkinId(this PckAsset file)
+        internal static int GetSkinId(this PckAsset asset)
         {
-            if (file.Type != PckAssetType.SkinFile)
+            if (asset.Type != PckAssetType.SkinFile)
                 throw new InvalidOperationException("File is not a skin file");
             
-            string filename = Path.GetFileNameWithoutExtension(file.Filename);
+            string filename = Path.GetFileNameWithoutExtension(asset.Filename);
             if (!filename.StartsWith("dlcskin"))
             {
-                Trace.TraceWarning($"[{nameof(GetSkin)}] File does not start with 'dlcskin'");
+                Trace.TraceWarning($"[{nameof(GetSkinId)}] File does not start with 'dlcskin'");
                 return 0;
             }
 
             int skinId = 0;
             if (!int.TryParse(filename.Substring("dlcskin".Length), out skinId))
             {
-                Trace.TraceWarning($"[{nameof(GetSkin)}] Failed to parse Skin Id");
+                Trace.TraceWarning($"[{nameof(GetSkinId)}] Failed to parse Skin Id");
             }
             return skinId;
         }
@@ -62,9 +63,6 @@ namespace PckStudio.Extensions
         {
             if (file.Type != PckAssetType.SkinFile)
                 throw new InvalidOperationException("File is not a skin file");
-
-            //if (file.Properties.Contains("CAPEPATH"))
-            //    Debug.WriteLine($"[{nameof(GetSkin)}] TODO: add cape texture/path.");
 
             int skinId = file.GetSkinId();
 
@@ -76,49 +74,49 @@ namespace PckStudio.Extensions
             return new Skin(name, skinId, texture, anim, boxes, offsets);
         }
 
-        internal static void SetSkin(this PckAsset file, Skin skin, LOCFile localizationFile)
+        internal static void SetSkin(this PckAsset asset, Skin skin, LOCFile localizationFile)
         {
-            if (file.Type != PckAssetType.SkinFile)
-                throw new InvalidOperationException("File is not a skin file");
+            if (asset.Type != PckAssetType.SkinFile)
+                throw new InvalidOperationException("Asset is not a skin file");
 
-            file.SetTexture(skin.Model.Texture);
+            asset.SetTexture(skin.Model.Texture);
 
             string skinId = skin.MetaData.Id.ToString("d08");
 
             // TODO: keep filepath 
-            file.Filename = $"dlcskin{skinId}.png";
+            asset.Filename = $"dlcskin{skinId}.png";
 
             string skinLocKey = $"IDS_dlcskin{skinId}_DISPLAYNAME";
-            file.SetProperty("DISPLAYNAME", skin.MetaData.Name);
-            file.SetProperty("DISPLAYNAMEID", skinLocKey);
+            asset.SetProperty("DISPLAYNAME", skin.MetaData.Name);
+            asset.SetProperty("DISPLAYNAMEID", skinLocKey);
             localizationFile.AddLocKey(skinLocKey, skin.MetaData.Name);
 
             if (!string.IsNullOrEmpty(skin.MetaData.Theme))
             {
-                file.SetProperty("THEMENAME", skin.MetaData.Theme);
-                file.SetProperty("THEMENAMEID", $"IDS_dlcskin{skinId}_THEMENAME");
+                asset.SetProperty("THEMENAME", skin.MetaData.Theme);
+                asset.SetProperty("THEMENAMEID", $"IDS_dlcskin{skinId}_THEMENAME");
                 localizationFile.AddLocKey($"IDS_dlcskin{skinId}_THEMENAME", skin.MetaData.Theme);
             }
 
             if (skin.HasCape)
             {
-                file.SetProperty("CAPEPATH", $"dlccape{skinId}.png");
+                asset.SetProperty("CAPEPATH", $"dlccape{skinId}.png");
             }
 
-            file.SetProperty("ANIM", skin.Model.ANIM.ToString());
-            file.SetProperty("GAME_FLAGS", "0x18");
-            file.SetProperty("FREE", "1");
+            asset.SetProperty("ANIM", skin.Model.ANIM.ToString());
+            asset.SetProperty("GAME_FLAGS", "0x18");
+            asset.SetProperty("FREE", "1");
 
-            file.RemoveProperties("BOX");
-            file.RemoveProperties("OFFSET");
+            asset.RemoveProperties("BOX");
+            asset.RemoveProperties("OFFSET");
 
             foreach (SkinBOX box in skin.Model.AdditionalBoxes)
             {
-                file.AddProperty(box.ToProperty());
+                asset.AddProperty(box.ToProperty());
             }
             foreach (SkinPartOffset offset in skin.Model.PartOffsets)
             {
-                file.AddProperty(offset.ToProperty());
+                asset.AddProperty(offset.ToProperty());
             }
         }
 

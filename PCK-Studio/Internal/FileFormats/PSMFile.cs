@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using PckStudio.Internal.Skin;
 
 namespace PckStudio.Internal.FileFormats
 {

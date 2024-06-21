@@ -19,7 +19,7 @@ using System;
 using System.Collections.Specialized;
 using System.Text.RegularExpressions;
 
-namespace PckStudio.Internal
+namespace PckStudio.Internal.Skin
 {
     /// <summary>
     /// Represents a Skin Anim value where flags can be set

@@ -21,7 +21,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
 
-namespace PckStudio.Internal
+namespace PckStudio.Internal.Skin
 {
     public class SkinBOX : ICloneable, IEquatable<SkinBOX>
     {

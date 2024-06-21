@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Drawing;
+using System.Diagnostics;
 using System.Windows.Forms;
 using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
@@ -8,8 +9,8 @@ using MetroFramework.Forms;
 
 using PckStudio.Internal;
 using PckStudio.Extensions;
+using PckStudio.Internal.Skin;
 using PckStudio.Forms.Additional_Popups;
-using System.Diagnostics;
 
 namespace PckStudio.Forms.Editor
 {

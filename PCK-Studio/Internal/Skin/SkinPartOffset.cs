@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
 
-namespace PckStudio.Internal
+namespace PckStudio.Internal.Skin
 {
     public readonly struct SkinPartOffset
     {

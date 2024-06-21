@@ -5,6 +5,7 @@ using OMI;
 using OMI.Workers;
 using PckStudio.Internal.FileFormats;
 using PckStudio.Internal;
+using PckStudio.Internal.Skin;
 
 namespace PckStudio.Internal.IO.PSM
 {

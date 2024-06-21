@@ -167,15 +167,15 @@
     <Compile Include="Internal\Json\EntityInfo.cs" />
     <Compile Include="Internal\ResourceCategory.cs" />
     <Compile Include="External\Format\BlockBenchModel.cs" />
-    <Compile Include="Internal\Skin.cs" />
-    <Compile Include="Internal\SkinMetaData.cs" />
-    <Compile Include="Internal\SkinModelInfo.cs" />
-    <Compile Include="Internal\SkinPartOffset.cs" />
+    <Compile Include="Internal\Skin\Skin.cs" />
+    <Compile Include="Internal\Skin\SkinMetaData.cs" />
+    <Compile Include="Internal\Skin\SkinModelInfo.cs" />
+    <Compile Include="Internal\Skin\SkinPartOffset.cs" />
     <Compile Include="Internal\CommitInfo.cs" />
     <Compile Include="Internal\ResourceLocation.cs" />
     <Compile Include="Internal\Serializer\ImageSerializer.cs" />
-    <Compile Include="Internal\SkinAnimFlag.cs" />
-    <Compile Include="Internal\SkinAnimMask.cs" />
+    <Compile Include="Internal\Skin\SkinAnimFlag.cs" />
+    <Compile Include="Internal\Skin\SkinAnimMask.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -275,9 +275,9 @@
     <Compile Include="Internal\Json\Tiles.cs" />
     <Compile Include="Internal\Profiler.cs" />
     <Compile Include="Internal\SettingsManager.cs" />
-    <Compile Include="Internal\SkinBOX.cs" />
+    <Compile Include="Internal\Skin\SkinBOX.cs" />
     <Compile Include="Extensions\ImageExtensions.cs" />
-    <Compile Include="Internal\SkinANIM.cs" />
+    <Compile Include="Internal\Skin\SkinANIM.cs" />
     <Compile Include="Forms\Features\CemuPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>

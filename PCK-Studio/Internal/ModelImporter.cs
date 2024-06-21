@@ -33,6 +33,7 @@ using PckStudio.Internal.IO.PSM;
 using PckStudio.Internal.FileFormats;
 using PckStudio.Forms.Additional_Popups;
 using System.Drawing;
+using PckStudio.Internal.Skin;
 
 namespace PckStudio.Internal
 {
@@ -64,7 +65,6 @@ namespace PckStudio.Internal
             }
         }
 
-        // TODO: flip bottom texture of each box...
         internal static void Export(string fileName, SkinModelInfo model)
         {
             if (model is null)

@@ -7,6 +7,7 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using PckStudio.Internal;
+using PckStudio.Internal.Skin;
 
 namespace PckStudio.Extensions
 {

@@ -6,6 +6,7 @@ using OMI;
 using PckStudio.Internal;
 using System;
 using OpenTK;
+using PckStudio.Internal.Skin;
 
 namespace PckStudio.Internal.IO.PSM
 {

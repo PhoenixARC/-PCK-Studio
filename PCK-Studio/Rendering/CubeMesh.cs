@@ -23,6 +23,7 @@ using System.Linq;
 using OpenTK;
 using PckStudio.Extensions;
 using PckStudio.Internal;
+using PckStudio.Internal.Skin;
 
 namespace PckStudio.Rendering
 {

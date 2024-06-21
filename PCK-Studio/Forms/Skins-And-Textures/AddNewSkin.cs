@@ -14,6 +14,7 @@ using PckStudio.Forms;
 using PckStudio.Extensions;
 using System.Linq;
 using System.Diagnostics;
+using PckStudio.Internal.Skin;
 
 namespace PckStudio.Popups
 {

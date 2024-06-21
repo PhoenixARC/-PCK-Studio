@@ -17,7 +17,7 @@
 **/
 using System;
 
-namespace PckStudio.Internal
+namespace PckStudio.Internal.Skin
 {
     /// <summary>
     /// For usage see <see cref="SkinANIM"/>

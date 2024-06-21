@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PckStudio.Internal
+namespace PckStudio.Internal.Skin
 {
     public sealed class Skin
     {

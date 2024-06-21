@@ -22,6 +22,7 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using PckStudio.Extensions;
 using PckStudio.Internal;
+using PckStudio.Internal.Skin;
 
 namespace PckStudio.Rendering
 {

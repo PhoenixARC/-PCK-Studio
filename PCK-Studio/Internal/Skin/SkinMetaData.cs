@@ -1,4 +1,4 @@
-﻿namespace PckStudio.Internal
+﻿namespace PckStudio.Internal.Skin
 {
     public sealed class SkinMetaData
     {

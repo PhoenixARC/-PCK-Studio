@@ -35,6 +35,7 @@ using PckStudio.Internal.Json;
 using PckStudio.Internal.Deserializer;
 using PckStudio.Internal.Serializer;
 using OMI.Workers;
+using PckStudio.Internal.Skin;
 
 namespace PckStudio
 {

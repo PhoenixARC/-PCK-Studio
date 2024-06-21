@@ -35,6 +35,7 @@ using System.IO;
 using PckStudio.Rendering.Texture;
 using PckStudio.Rendering.Shader;
 using System.Linq;
+using PckStudio.Internal.Skin;
 
 namespace PckStudio.Rendering
 {

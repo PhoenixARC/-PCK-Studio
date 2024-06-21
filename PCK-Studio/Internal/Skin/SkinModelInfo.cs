@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using OMI.Formats.Pck;
 
-namespace PckStudio.Internal
+namespace PckStudio.Internal.Skin
 {
     public sealed class SkinModelInfo
     {

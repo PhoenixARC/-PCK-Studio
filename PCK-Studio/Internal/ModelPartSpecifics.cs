@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 using PckStudio.Extensions;
+using PckStudio.Internal.Skin;
 
 namespace PckStudio.Internal
 {
