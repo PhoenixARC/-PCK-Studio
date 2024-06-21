@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MetroFramework.Forms;
 using PckStudio.Internal;
+using PckStudio.Internal.App;
 using PckStudio.ToolboxItems;
 
 namespace PckStudio.Forms

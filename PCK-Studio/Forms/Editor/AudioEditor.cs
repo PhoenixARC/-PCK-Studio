@@ -20,6 +20,7 @@ using PckStudio.Properties;
 using PckStudio.API.Miles;
 using PckStudio.Internal;
 using PckStudio.Extensions;
+using PckStudio.Internal.App;
 
 // Audio Editor by MattNL and Miku-666
 

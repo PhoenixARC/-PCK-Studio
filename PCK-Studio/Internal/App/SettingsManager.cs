@@ -21,7 +21,7 @@ using System.ComponentModel;
 using System.Configuration;
 using PckStudio.Properties;
 
-namespace PckStudio.Internal
+namespace PckStudio.Internal.App
 {
     internal static class SettingsManager
     {

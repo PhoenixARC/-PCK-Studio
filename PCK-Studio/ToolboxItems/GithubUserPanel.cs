@@ -12,6 +12,7 @@ using System.IO;
 using System.Threading.Tasks;
 using PckStudio.Internal;
 using System.Drawing.Imaging;
+using PckStudio.Internal.App;
 
 namespace PckStudio.ToolboxItems
 {

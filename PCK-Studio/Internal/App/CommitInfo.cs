@@ -18,7 +18,7 @@
 using System.Linq;
 using System.Reflection;
 
-namespace PckStudio.Internal
+namespace PckStudio.Internal.App
 {
     static internal class CommitInfo
     {

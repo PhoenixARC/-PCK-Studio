@@ -4,6 +4,7 @@ using DiscordRPC;
 using PckStudio.Internal;
 using PckStudio.Properties;
 using DiscordRPC.Logging;
+using PckStudio.Internal.App;
 
 namespace PckStudio.Internal.Misc
 {

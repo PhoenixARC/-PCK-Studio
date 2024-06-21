@@ -152,7 +152,7 @@
     <Compile Include="Internal\Json\Entities.cs" />
     <Compile Include="Internal\Json\EntityInfo.cs" />
     <Compile Include="Internal\ResourceCategory.cs" />
-    <Compile Include="Internal\CommitInfo.cs" />
+    <Compile Include="Internal\App\CommitInfo.cs" />
     <Compile Include="Internal\ResourceLocation.cs" />
     <Compile Include="Internal\Serializer\ImageSerializer.cs" />
     <Compile Include="Internal\SkinAnimFlag.cs" />
@@ -196,7 +196,7 @@
     <Compile Include="Forms\AppSettingsForm.Designer.cs">
       <DependentUpon>AppSettingsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Internal\ApplicationBuildInfo.cs" />
+    <Compile Include="Internal\App\ApplicationBuildInfo.cs" />
     <Compile Include="Forms\Editor\TextureAtlasEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -219,12 +219,12 @@
     <Compile Include="Internal\Misc\FileCacher.cs" />
     <Compile Include="Internal\Misc\OpenFolderDialog.cs" />
     <Compile Include="Classes\Models\DefaultModels\Steve64x64Model.cs" />
-    <Compile Include="Internal\ApplicationScope.cs" />
+    <Compile Include="Internal\App\ApplicationScope.cs" />
     <Compile Include="Internal\Json\ColorEntry.cs" />
     <Compile Include="Internal\Json\TileInfo.cs" />
     <Compile Include="Internal\Json\Tiles.cs" />
-    <Compile Include="Internal\Profiler.cs" />
-    <Compile Include="Internal\SettingsManager.cs" />
+    <Compile Include="Internal\App\Profiler.cs" />
+    <Compile Include="Internal\App\SettingsManager.cs" />
     <Compile Include="Internal\SkinBOX.cs" />
     <Compile Include="Extensions\ImageExtensions.cs" />
     <Compile Include="Internal\SkinANIM.cs" />
