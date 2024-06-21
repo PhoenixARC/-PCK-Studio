@@ -18,19 +18,19 @@ namespace PckStudio.Internal.Deserializer
         public static readonly ImageDeserializer DefaultDeserializer = new ImageDeserializer();
         private static Image EmptyImage = new Bitmap(1, 1, PixelFormat.Format32bppArgb);
 
-        public Image Deserialize(PckAsset file)
+        public Image Deserialize(PckAsset asset)
         {
-            using var stream = new MemoryStream(file.Data);
+            using var stream = new MemoryStream(asset.Data);
             try
             {
-                if (Path.GetExtension(file.Filename) == ".tga")
+                if (Path.GetExtension(asset.Filename) == ".tga")
                     return TGADeserializer.DeserializeFromStream(stream);
                 else
                     return Image.FromStream(stream);
             }
             catch (Exception ex)
             {
-                Trace.TraceError($"Failed to read image from pck file data({file.Filename}).");
+                Trace.TraceError($"Failed to read image from pck file data({asset.Filename}).");
                 Debug.WriteLine(ex.Message);
                 return EmptyImage;
             }

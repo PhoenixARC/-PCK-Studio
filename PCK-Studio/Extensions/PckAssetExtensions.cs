@@ -19,57 +19,57 @@ namespace PckStudio.Extensions
     {
         private const string MipMap = "MipMapLevel";
 
-        internal static Image GetTexture(this PckAsset file)
+        internal static Image GetTexture(this PckAsset asset)
         {
-            if (file.Type != PckAssetType.SkinFile &&
-                file.Type != PckAssetType.CapeFile &&
-                file.Type != PckAssetType.TextureFile)
+            if (asset.Type != PckAssetType.SkinFile &&
+                asset.Type != PckAssetType.CapeFile &&
+                asset.Type != PckAssetType.TextureFile)
             {
-                throw new Exception("File is not suitable to contain image data.");
+                throw new Exception("Asset is not suitable to contain image data.");
             }
-            return file.GetDeserializedData(ImageDeserializer.DefaultDeserializer);
+            return asset.GetDeserializedData(ImageDeserializer.DefaultDeserializer);
         }
 
-        internal static T GetDeserializedData<T>(this PckAsset file, IPckAssetDeserializer<T> deserializer)
+        internal static T GetDeserializedData<T>(this PckAsset asset, IPckAssetDeserializer<T> deserializer)
         {
-            return deserializer.Deserialize(file);
+            return deserializer.Deserialize(asset);
         }
 
-        internal static T GetData<T>(this PckAsset file, IDataFormatReader<T> formatReader) where T : class
+        internal static T GetData<T>(this PckAsset asset, IDataFormatReader<T> formatReader) where T : class
         {
-            using var ms = new MemoryStream(file.Data);
+            using var ms = new MemoryStream(asset.Data);
             return formatReader.FromStream(ms);
         }
 
-        internal static void SetSerializedData<T>(this PckAsset file, T obj, IPckAssetSerializer<T> serializer)
+        internal static void SetSerializedData<T>(this PckAsset asset, T obj, IPckAssetSerializer<T> serializer)
         {
-            serializer.Serialize(obj, ref file);
+            serializer.Serialize(obj, ref asset);
         }
 
-        internal static void SetData(this PckAsset file, IDataFormatWriter formatWriter)
+        internal static void SetData(this PckAsset asset, IDataFormatWriter formatWriter)
         {
             using (var stream = new MemoryStream())
             {
                 formatWriter.WriteToStream(stream);
-                file.SetData(stream.ToArray());
+                asset.SetData(stream.ToArray());
             }
         }
 
-        internal static void SetTexture(this PckAsset file, Image image)
+        internal static void SetTexture(this PckAsset asset, Image image)
         {
-            if (file.Type != PckAssetType.SkinFile &&
-                file.Type != PckAssetType.CapeFile &&
-                file.Type != PckAssetType.TextureFile)
+            if (asset.Type != PckAssetType.SkinFile &&
+                asset.Type != PckAssetType.CapeFile &&
+                asset.Type != PckAssetType.TextureFile)
             {
-                throw new Exception("File is not suitable to contain image data.");
+                throw new Exception("Asset is not suitable to contain image data.");
             }
-            file.SetSerializedData(image, ImageSerializer.DefaultSerializer);
+            asset.SetSerializedData(image, ImageSerializer.DefaultSerializer);
         }
 
-        internal static bool IsMipmappedFile(this PckAsset file)
+        internal static bool IsMipmappedFile(this PckAsset asset)
         {
             // We only want to test the file name itself. ex: "terrainMipMapLevel2"
-            string name = Path.GetFileNameWithoutExtension(file.Filename);
+            string name = Path.GetFileNameWithoutExtension(asset.Filename);
 
             // check if last character is a digit (0-9). If not return false
             if (!char.IsDigit(name[name.Length - 1]))
@@ -81,15 +81,15 @@ namespace PckStudio.Extensions
             return true;
         }
 
-        internal static string GetNormalPath(this PckAsset file)
+        internal static string GetNormalPath(this PckAsset asset)
         {
-            if (!file.IsMipmappedFile())
-                return file.Filename;
-            string ext = Path.GetExtension(file.Filename);
-            return file.Filename.Remove(file.Filename.Length - (MipMap.Length + 1) - ext.Length) + ext;
+            if (!asset.IsMipmappedFile())
+                return asset.Filename;
+            string ext = Path.GetExtension(asset.Filename);
+            return asset.Filename.Remove(asset.Filename.Length - (MipMap.Length + 1) - ext.Length) + ext;
         }
 
-        internal static void DeserializePropertiesFromString(this PckAsset file, string serializedData)
+        internal static void DeserializePropertiesFromString(this PckAsset asset, string serializedData)
         {
             string[] lines = serializedData.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
             foreach (string line in lines)
@@ -97,14 +97,14 @@ namespace PckStudio.Extensions
                 int idx = line.IndexOf(' ');
                 if (idx == -1 || line.Length - 1 == idx)
                     continue;
-                file.AddProperty(line.Substring(0, idx).Replace(":", string.Empty), line.Substring(idx + 1));
+                asset.AddProperty(line.Substring(0, idx).Replace(":", string.Empty), line.Substring(idx + 1));
             }
         }
 
-        internal static string SerializePropertiesToString(this PckAsset file)
+        internal static string SerializePropertiesToString(this PckAsset asset)
         {
-            StringBuilder builder = new StringBuilder(file.PropertyCount * 20);
-            foreach (var property in file.GetProperties())
+            StringBuilder builder = new StringBuilder(asset.PropertyCount * 20);
+            foreach (var property in asset.GetProperties())
             {
                 builder.AppendLine(property.Key + ": " + property.Value);
             }

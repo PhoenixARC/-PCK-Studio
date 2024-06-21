@@ -17,13 +17,13 @@ namespace PckStudio.Popups
 {
     public partial class AddNewSkin : MetroFramework.Forms.MetroForm
     {
-        public PckAsset SkinFile => skin;
-        public PckAsset CapeFile => cape;
-        public bool HasCape => cape is not null;
+        public PckAsset SkinAsset => _skin;
+        public PckAsset CapeAsset => _cape;
+        public bool HasCape => _cape is not null;
 
         private LOCFile currentLoc;
-        private PckAsset skin = new PckAsset("dlcskinXYXYXYXY", PckAssetType.SkinFile);
-        private PckAsset cape;
+        private PckAsset _skin = new PckAsset("dlcskinXYXYXYXY", PckAssetType.SkinFile);
+        private PckAsset _cape;
         private SkinANIM anim = new SkinANIM();
         private Random rng = new Random();
 
@@ -226,8 +226,8 @@ namespace PckStudio.Popups
                         return;
                     }
                     capePictureBox.Image = Image.FromFile(ofd.FileName);
-                    cape ??= new PckAsset("dlccapeXYXYXYXY", PckAssetType.CapeFile);
-                    cape.SetData(File.ReadAllBytes(ofd.FileName));
+                    _cape ??= new PckAsset("dlccapeXYXYXYXY", PckAssetType.CapeFile);
+                    _cape.SetData(File.ReadAllBytes(ofd.FileName));
                     contextMenuCape.Items[0].Text = "Replace";
                     capeLabel.Visible = false;
                     contextMenuCape.Visible = true;
@@ -243,35 +243,35 @@ namespace PckStudio.Popups
                 return;
             }
             string skinId = _skinId.ToString("d08");
-            skin.Filename = $"dlcskin{skinId}.png";
-            skin.AddProperty("DISPLAYNAME", textSkinName.Text);
+            _skin.Filename = $"dlcskin{skinId}.png";
+            _skin.AddProperty("DISPLAYNAME", textSkinName.Text);
 
             if (currentLoc is not null)
             {
                 string skinDisplayNameLocKey = $"IDS_dlcskin{skinId}_DISPLAYNAME";
-                skin.AddProperty("DISPLAYNAMEID", skinDisplayNameLocKey);
+                _skin.AddProperty("DISPLAYNAMEID", skinDisplayNameLocKey);
                 currentLoc.AddLocKey(skinDisplayNameLocKey, textSkinName.Text);
             }
 
             if (!string.IsNullOrEmpty(textThemeName.Text))
             {
-                skin.AddProperty("THEMENAME", textThemeName.Text);
+                _skin.AddProperty("THEMENAME", textThemeName.Text);
                 if (currentLoc is not null)
                 {
-                    skin.AddProperty("THEMENAMEID", $"IDS_dlcskin{skinId}_THEMENAME");
+                    _skin.AddProperty("THEMENAMEID", $"IDS_dlcskin{skinId}_THEMENAME");
                     currentLoc.AddLocKey($"IDS_dlcskin{skinId}_THEMENAME", textThemeName.Text);
                 }
             }
-            skin.AddProperty("ANIM", anim);
-            skin.AddProperty("GAME_FLAGS", "0x18");
-            skin.AddProperty("FREE", "1");
+            _skin.AddProperty("ANIM", anim);
+            _skin.AddProperty("GAME_FLAGS", "0x18");
+            _skin.AddProperty("FREE", "1");
 
             if (HasCape)
             {
-                cape.Filename = $"dlccape{skinId}.png";
-                skin.AddProperty("CAPEPATH", cape.Filename);
+                _cape.Filename = $"dlccape{skinId}.png";
+                _skin.AddProperty("CAPEPATH", _cape.Filename);
             }
-            skin.SetTexture(skinPictureBox.Image);
+            _skin.SetTexture(skinPictureBox.Image);
             DialogResult = DialogResult.OK;
             Close();
         }
@@ -288,9 +288,9 @@ namespace PckStudio.Popups
             if (MessageBox.Show(this, "Create your own custom skin model?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1) != DialogResult.Yes)
                 return;
 
-            skin.SetTexture(Resources.classic_template);
+            _skin.SetTexture(Resources.classic_template);
 
-            using generateModel generate = new generateModel(skin);
+            using generateModel generate = new generateModel(_skin);
 
             if (generate.ShowDialog() == DialogResult.OK)
             {

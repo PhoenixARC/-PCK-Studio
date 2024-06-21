@@ -170,10 +170,10 @@ namespace PckStudio.Forms.Editor
 
         private bool AcquireColorTable(PckFile pckFile)
         {
-            if (pckFile.TryGetFile("colours.col", PckAssetType.ColourTableFile, out var colFile) &&
-                colFile.Size > 0)
+            if (pckFile.TryGetFile("colours.col", PckAssetType.ColourTableFile, out var colAsset) &&
+                colAsset.Size > 0)
             {
-                using var ms = new MemoryStream(colFile.Data);
+                using var ms = new MemoryStream(colAsset.Data);
                 var reader = new COLFileReader();
                 _colourTable = reader.FromStream(ms);
                 return true;
@@ -243,18 +243,18 @@ namespace PckStudio.Forms.Editor
 
             if (animationButton.Enabled = _atlasType == "blocks" || _atlasType == "items")
             {
-                PckAsset animationFile;
+                PckAsset animationAsset;
 
                 bool hasAnimation =
-                    _pckFile.TryGetValue($"res/textures/{_atlasType}/{dataTile.Tile.InternalName}.png", PckAssetType.TextureFile, out animationFile) ||
-                    _pckFile.TryGetValue($"res/textures/{_atlasType}/{dataTile.Tile.InternalName}.tga", PckAssetType.TextureFile, out animationFile);
+                    _pckFile.TryGetValue($"res/textures/{_atlasType}/{dataTile.Tile.InternalName}.png", PckAssetType.TextureFile, out animationAsset) ||
+                    _pckFile.TryGetValue($"res/textures/{_atlasType}/{dataTile.Tile.InternalName}.tga", PckAssetType.TextureFile, out animationAsset);
                 animationButton.Text = hasAnimation ? "Edit Animation" : "Create Animation";
 
                 if (playAnimationsToolStripMenuItem.Checked &&
                     hasAnimation &&
-                    animationFile.Size > 0)
+                    animationAsset.Size > 0)
                 {
-                    var animation = animationFile.GetDeserializedData(AnimationDeserializer.DefaultDeserializer);
+                    var animation = animationAsset.GetDeserializedData(AnimationDeserializer.DefaultDeserializer);
                     selectTilePictureBox.Image = animation.CreateAnimationImage();
                     selectTilePictureBox.Start();
                 }

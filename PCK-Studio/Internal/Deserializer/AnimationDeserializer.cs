@@ -16,14 +16,14 @@ namespace PckStudio.Internal.Deserializer
     {
         public static readonly AnimationDeserializer DefaultDeserializer = new AnimationDeserializer();
         
-        public Animation Deserialize(PckAsset file)
+        public Animation Deserialize(PckAsset asset)
         {
-            _ = file ?? throw new ArgumentNullException(nameof(file));
-            if (file.Size > 0)
+            _ = asset ?? throw new ArgumentNullException(nameof(asset));
+            if (asset.Size > 0)
             {
-                var texture = file.GetTexture();
+                var texture = asset.GetTexture();
                 var frameTextures = texture.Split(ImageLayoutDirection.Vertical);
-                var _animation = new Animation(frameTextures, file.GetProperty("ANIM"));
+                var _animation = new Animation(frameTextures, asset.GetProperty("ANIM"));
                 return _animation;
             }
             return Animation.CreateEmpty();
