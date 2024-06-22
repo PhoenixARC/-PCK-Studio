@@ -151,7 +151,6 @@ namespace PckStudio.Forms.Editor
 			if (!(treeView1.SelectedNode.Tag is BehaviourFile.RiderPositionOverride entry)) return;
 
 			var diag = new AddEntry("behaviours", ApplicationScope.EntityImages);
-			diag.acceptBtn.Text = "Save";
 
 			if (diag.ShowDialog(this) == DialogResult.OK)
 			{

@@ -1,23 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using MetroFramework.Forms;
-using Newtonsoft.Json.Linq;
+using PckStudio.Forms.Additional_Popups.Animation;
 using PckStudio.Internal.Json;
+
 
 namespace PckStudio.Forms.Additional_Popups.EntityForms
 {
-	public partial class AddEntry : MetroForm
+	/// Wrapper class kept for simplicity
+	public class AddEntry
 	{
         string selectedEntity = "";
 		public string SelectedEntity => selectedEntity;
 
-		List<TreeNode> treeViewEntityCache = new List<TreeNode>();
+		private FilterPrompt filterPrompt;
 
 		public AddEntry(string dataType, System.Drawing.Image[] entityImages)
 		{
-			InitializeComponent();
-			ImageList entities = new ImageList();
+			filterPrompt = new FilterPrompt();
+            filterPrompt.OnSelectedItemChanged += FilterPrompt_OnSelectedItemChanged;
+            var treeViewEntity = filterPrompt.AddFilterPage("Entities", null, filterPredicate);
+            ImageList entities = new ImageList();
 			entities.ColorDepth = ColorDepth.Depth32Bit;
 			entities.ImageSize = new System.Drawing.Size(32, 32);
 			entities.Images.AddRange(entityImages);
@@ -42,14 +45,24 @@ namespace PckStudio.Forms.Additional_Popups.EntityForms
 					SelectedImageIndex = i,
 				};
 				i++;
-				if (!String.IsNullOrEmpty(entity.InternalName))
+				if (!string.IsNullOrEmpty(entity.InternalName))
                 {
 					treeViewEntity.Nodes.Add(entityNode);
-					treeViewEntityCache.Add(entityNode);
+					(treeViewEntity.Tag as List<TreeNode>).Add(entityNode);
 				}
 			}
 
 			treeViewEntity.Sort();
+		}
+
+        private void FilterPrompt_OnSelectedItemChanged(object sender, EventArgs e)
+        {
+			selectedEntity = filterPrompt.SelectedItem.ToString();
+        }
+
+        public DialogResult ShowDialog(IWin32Window owner)
+		{
+			return filterPrompt.ShowDialog(owner);
 		}
 
 		private void treeViews_AfterSelect(object sender, TreeViewEventArgs e)
@@ -60,47 +73,9 @@ namespace PckStudio.Forms.Additional_Popups.EntityForms
 			}
 		}
 
-		void filter_TextChanged(object sender, EventArgs e)
+		private bool filterPredicate(string filterText, object nodeTag)
 		{
-			// Some code in this function is modified code from this StackOverflow answer - MattNL
-			//https://stackoverflow.com/questions/8260322/filter-a-treeview-with-a-textbox-in-a-c-sharp-winforms-app
-
-			//blocks repainting tree until all objects loaded
-			treeViewEntity.BeginUpdate();
-			treeViewEntity.Nodes.Clear();
-			if (!string.IsNullOrEmpty(metroTextBox1.Text))
-			{
-				foreach (TreeNode _node in treeViewEntityCache)
-				{
-					if (_node.Text.ToLower().Contains(metroTextBox1.Text.ToLower()) || 
-						(_node.Tag as string).ToLower().Contains(metroTextBox1.Text.ToLower()))
-					{
-						treeViewEntity.Nodes.Add((TreeNode)_node.Clone());
-					}
-				}
-			}
-			else
-			{
-				foreach (TreeNode _node in treeViewEntityCache)
-				{
-					treeViewEntity.Nodes.Add((TreeNode)_node.Clone());
-				}
-			}
-			//enables redrawing tree after all objects have been added
-			treeViewEntity.EndUpdate();
-		}
-
-		private void CancelBtn_Click(object sender, EventArgs e)
-		{
-			DialogResult = DialogResult.Cancel;
-			Close();
-		}
-
-		private void AcceptBtn_Click(object sender, EventArgs e)
-		{
-			if (string.IsNullOrEmpty(selectedEntity)) CancelBtn_Click(sender, e);
-			DialogResult = DialogResult.OK;
-			Close();
-		}
+			return nodeTag is string a && a.ToLower().Contains(filterText.ToLower());
+        }
 	}
 }
