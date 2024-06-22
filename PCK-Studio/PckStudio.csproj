@@ -134,6 +134,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\MaterialContainerExtensions.cs" />
+    <Compile Include="Forms\Additional-Popups\FilterPrompt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\FilterPrompt.Designer.cs">
+      <DependentUpon>FilterPrompt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ContributorsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -266,12 +272,7 @@
     <Compile Include="Internal\IO\TGA\TGAHeader.cs" />
     <Compile Include="Internal\IO\TGA\TGAReader.cs" />
     <Compile Include="Internal\IO\TGA\TGAWriter.cs" />
-    <Compile Include="Forms\Additional-Popups\EntityForms\AddEntry.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Additional-Popups\EntityForms\AddEntry.Designer.cs">
-      <DependentUpon>AddEntry.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Forms\Additional-Popups\EntityForms\AddEntry.cs" />
     <Compile Include="Forms\Additional-Popups\Loc\AddLanguage.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -330,12 +331,7 @@
     <Compile Include="Forms\Editor\LOCEditor.Designer.cs">
       <DependentUpon>LOCEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Additional-Popups\Animation\ChangeTile.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Additional-Popups\Animation\ChangeTile.Designer.cs">
-      <DependentUpon>ChangeTile.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Forms\Additional-Popups\Animation\ChangeTile.cs" />
     <Compile Include="Forms\Additional-Popups\Animation\SetBulkSpeed.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -442,15 +438,14 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Internal\IO\3DST\TextureCodec.cs" />
+    <EmbeddedResource Include="Forms\Additional-Popups\FilterPrompt.resx">
+      <DependentUpon>FilterPrompt.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\ContributorsForm.resx">
       <DependentUpon>ContributorsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Features\CemuPanel.resx">
       <DependentUpon>CemuPanel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Additional-Popups\EntityForms\AddEntry.resx">
-      <DependentUpon>AddEntry.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\Loc\AddLanguage.resx">
       <DependentUpon>AddLanguage.cs</DependentUpon>
@@ -491,9 +486,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Editor\LOCEditor.resx">
       <DependentUpon>LOCEditor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Additional-Popups\Animation\ChangeTile.resx">
-      <DependentUpon>ChangeTile.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\Animation\SetBulkSpeed.resx">
       <DependentUpon>SetBulkSpeed.cs</DependentUpon>
