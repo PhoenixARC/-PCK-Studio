@@ -133,6 +133,7 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\MaterialContainerExtensions.cs" />
     <Compile Include="Forms\ContributorsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -383,8 +384,6 @@
     <Compile Include="Forms\Additional-Popups\InProgressPrompt.Designer.cs">
       <DependentUpon>InProgressPrompt.cs</DependentUpon>
     </Compile>
-    <Compile Include="Helper\MaterialResources.cs" />
-    <Compile Include="Helper\BehaviourResources.cs" />
     <Compile Include="Forms\Editor\BoxEditor.cs">
       <SubType>Form</SubType>
     </Compile>
