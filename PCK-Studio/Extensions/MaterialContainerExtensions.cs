@@ -1,18 +1,15 @@
 ﻿using System;
-using System.IO;
-
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using OMI.Formats.Material;
-using OMI.Workers.Material;
 
-namespace PckStudio.Helper
+namespace PckStudio.Extensions
 {
-    public static class MaterialResources
+    internal static class MaterialContainerExtensions
     {
-        public static byte[] MaterialsFileInitializer()
-        {
-            using var stream = new MemoryStream();
-            var matFile = new MaterialContainer
-            {
+        private static readonly MaterialContainer.Material[] defaultMaterials = [
                 new MaterialContainer.Material("bat", "entity_alphatest"),
                 new MaterialContainer.Material("ender_dragon", "entity_emissive_alpha"),
                 new MaterialContainer.Material("blaze_head", "entity_emissive_alpha"),
@@ -35,10 +32,11 @@ namespace PckStudio.Helper
                 new MaterialContainer.Material("wither_boss", "entity_alphatest"),
                 new MaterialContainer.Material("wither_skeleton", "entity_alphatest"),
                 new MaterialContainer.Material("wolf", "entity_alphatest_change_color")
-            };
-            var writer = new MaterialFileWriter(matFile);
-            writer.WriteToStream(stream);
-            return stream.ToArray();
+            ];
+
+        public static void InitializeDefault(this MaterialContainer materials)
+        {
+            materials.AddRange(defaultMaterials);
         }
     }
 }

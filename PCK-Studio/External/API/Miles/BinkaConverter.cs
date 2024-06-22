@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using PckStudio.API.Miles;
 using PckStudio.Forms.Additional_Popups;
 using System.Windows.Forms;
 using System.IO;
@@ -11,7 +10,7 @@ using PckStudio.Internal;
 using System.Text.RegularExpressions;
 using PckStudio.Internal.App;
 
-namespace PckStudio.Classes.Utils
+namespace PckStudio.External.API.Miles
 {
     internal static class BinkaConverter
     {

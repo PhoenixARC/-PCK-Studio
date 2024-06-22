@@ -134,6 +134,7 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\MaterialContainerExtensions.cs" />
     <Compile Include="Forms\ContributorsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -230,7 +231,7 @@
     <Compile Include="ToolboxItems\ToolStripRadioButtonMenuItem.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Classes\Utils\BinkaConverter.cs" />
+    <Compile Include="External\API\Miles\BinkaConverter.cs" />
     <Compile Include="Extensions\AnimationExtensions.cs" />
     <Compile Include="Extensions\ImageLayoutDirection.cs" />
     <Compile Include="Extensions\ImageSection.cs" />
@@ -262,7 +263,7 @@
     <Compile Include="Extensions\GraphicsExtensions.cs" />
     <Compile Include="Internal\FileFormats\PSMFile.cs" />
     <Compile Include="Internal\FileFormats\PckAudioFile.cs" />
-    <Compile Include="Classes\API\Miles\Binka.cs" />
+    <Compile Include="External\API\Miles\Binka.cs" />
     <Compile Include="Internal\IO\3DST\3DSTextureReader.cs" />
     <Compile Include="Internal\IO\3DST\3DSTextureWriter.cs" />
     <Compile Include="Internal\IO\PckAudio\PckAudioFileReader.cs" />
@@ -410,8 +411,6 @@
     <Compile Include="Forms\Additional-Popups\InProgressPrompt.Designer.cs">
       <DependentUpon>InProgressPrompt.cs</DependentUpon>
     </Compile>
-    <Compile Include="Helper\MaterialResources.cs" />
-    <Compile Include="Helper\BehaviourResources.cs" />
     <Compile Include="Forms\Editor\BoxEditor.cs">
       <SubType>Form</SubType>
     </Compile>

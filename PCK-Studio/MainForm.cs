@@ -7,14 +7,20 @@ using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 using System.Diagnostics;
 using System.Drawing.Imaging;
+using System.Text.RegularExpressions;
 using OMI.Formats.Pck;
-using OMI.Formats.GameRule;
-using OMI.Formats.Languages;
 using OMI.Formats.Model;
+using OMI.Formats.GameRule;
+using OMI.Formats.Material;
+using OMI.Formats.Behaviour;
+using OMI.Formats.Languages;
+using OMI.Workers;
 using OMI.Workers.Pck;
 using OMI.Workers.GameRule;
 using OMI.Workers.Language;
 using OMI.Workers.Model;
+using OMI.Workers.Behaviour;
+using OMI.Workers.Material;
 using PckStudio.Properties;
 using PckStudio.Internal.FileFormats;
 using PckStudio.Forms;
@@ -28,13 +34,10 @@ using PckStudio.Internal;
 using PckStudio.Forms.Features;
 using PckStudio.Extensions;
 using PckStudio.Popups;
-using PckStudio.Classes.Utils;
-using PckStudio.Helper;
-using System.Text.RegularExpressions;
+using PckStudio.External.API.Miles;
 using PckStudio.Internal.Json;
 using PckStudio.Internal.Deserializer;
 using PckStudio.Internal.Serializer;
-using OMI.Workers;
 using PckStudio.Internal.App;
 using PckStudio.Internal.Skin;
 
@@ -2382,7 +2385,7 @@ namespace PckStudio
 				return;
 			}
 
-			currentPCK.CreateNewAsset("behaviours.bin", PckAssetType.BehavioursFile, BehaviourResources.BehaviourFileInitializer);
+			currentPCK.CreateNewAsset("behaviours.bin", PckAssetType.BehavioursFile, new BehavioursWriter(new BehaviourFile()));
 			BuildMainTreeView();
 		}
 
@@ -2393,7 +2396,9 @@ namespace PckStudio
 				MessageBox.Show(this, "A behaviours file already exists in this PCK and a new one cannot be created.", "Operation aborted");
 				return;
 			}
-			currentPCK.CreateNewAsset("entityMaterials.bin", PckAssetType.MaterialFile, MaterialResources.MaterialsFileInitializer);
+			var materialContainer = new MaterialContainer();
+			materialContainer.InitializeDefault();
+			currentPCK.CreateNewAsset("entityMaterials.bin", PckAssetType.MaterialFile, new MaterialFileWriter(materialContainer));
 			BuildMainTreeView();
 		}
 
