@@ -17,8 +17,7 @@ using PckStudio.FileFormats;
 using PckStudio.Internal.IO.PckAudio;
 using PckStudio.Forms.Additional_Popups;
 using PckStudio.Properties;
-using PckStudio.API.Miles;
-using PckStudio.Internal;
+using PckStudio.External.API.Miles;
 using PckStudio.Extensions;
 using PckStudio.Internal.App;
 

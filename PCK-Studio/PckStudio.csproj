@@ -178,7 +178,7 @@
     <Compile Include="ToolboxItems\ToolStripRadioButtonMenuItem.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Classes\Utils\BinkaConverter.cs" />
+    <Compile Include="External\API\Miles\BinkaConverter.cs" />
     <Compile Include="Extensions\AnimationExtensions.cs" />
     <Compile Include="Extensions\ImageLayoutDirection.cs" />
     <Compile Include="Extensions\ImageSection.cs" />
@@ -210,7 +210,7 @@
     <Compile Include="Extensions\GraphicsExtensions.cs" />
     <Compile Include="FileFormats\CSMBFile.cs" />
     <Compile Include="FileFormats\PckAudioFile.cs" />
-    <Compile Include="Classes\API\Miles\Binka.cs" />
+    <Compile Include="External\API\Miles\Binka.cs" />
     <Compile Include="Internal\IO\3DST\3DSTextureReader.cs" />
     <Compile Include="Internal\IO\3DST\3DSTextureWriter.cs" />
     <Compile Include="Internal\IO\CSMB\CSMBFileReader.cs" />

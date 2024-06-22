@@ -7,7 +7,7 @@ using PckStudio.Internal;
 using PckStudio.Internal.App;
 using SharpMSS;
 
-namespace PckStudio.API.Miles
+namespace PckStudio.External.API.Miles
 {
 	internal static class Binka
 	{
