@@ -2491,6 +2491,7 @@ namespace PckStudio
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
+			PckManager?.Close();
             Application.Exit();
         }
 
