@@ -2630,5 +2630,11 @@ namespace PckStudio
 				setFileTypeToolStripMenuItem.Visible = false;
 			}
         }
+
+        private void treeViewMain_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+			if (e.Node is not null)
+				treeViewMain.SelectedNode = e.Node;
+        }
     }
 }
