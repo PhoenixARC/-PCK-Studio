@@ -1,6 +1,5 @@
-7.0 (IN DEVELOPMENT)  
+7.0.0.0
 ====================  
-Some features may be completely missing or incomplete at this point in time!  
 
 -Added .3dst (3DS Texture) support  
 -Semi-added Sub-Pck editing  
