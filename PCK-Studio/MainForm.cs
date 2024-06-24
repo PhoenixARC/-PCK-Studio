@@ -423,7 +423,7 @@ namespace PckStudio
 		private void BuildMainTreeView()
 		{
 			// In case the Rename function was just used and the selected node name no longer matches the file name
-			string selectedNodeText = treeViewMain.SelectedNode is TreeNode node ? node.Text : string.Empty;
+			string selectedNodeText = treeViewMain.SelectedNode is TreeNode node ? node.FullPath : string.Empty;
 			previewPictureBox.Image = Resources.NoImageFound;
 			treeMeta.Nodes.Clear();
 			treeViewMain.Nodes.Clear();
@@ -440,9 +440,8 @@ namespace PckStudio
 			}
 			treeViewMain.Sort();
 
-			TreeNode[] selectedNodes;
-			if (!string.IsNullOrEmpty(selectedNodeText) &&
-				(selectedNodes = treeViewMain.Nodes.Find(selectedNodeText, true)).Length > 0)
+			TreeNode[] selectedNodes = treeViewMain.FindPath(selectedNodeText);
+			if (selectedNodes.Length > 0)
 			{
 				treeViewMain.SelectedNode = selectedNodes[0];
 			}
