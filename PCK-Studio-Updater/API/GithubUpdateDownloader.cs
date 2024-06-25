@@ -47,7 +47,7 @@ namespace PCKStudio_Updater
         {
             Debug.WriteLine("Release Product ver.: " + latestReleaseVersion);
             Debug.WriteLine("Current Product ver.: " + productVersion);
-            return latestReleaseVersion.CompareTo(productVersion) > 0;
+            return latestReleaseVersion.CompareTo(productVersion) >= 0;
         }
 
         public bool IsUpdateAvailable(string productVersion)
@@ -101,10 +101,9 @@ namespace PCKStudio_Updater
 
         private void EmptyDirectory(DirectoryInfo directory)
         {
-            string appname = Assembly.GetExecutingAssembly().GetName().Name;
             foreach (FileInfo file in directory.GetFiles())
             {
-                if (Path.GetFileNameWithoutExtension(file.Name) != appname && file.Name != "update.zip")
+                if (Path.GetFileNameWithoutExtension(file.Name) != _updateParams.TargetExecutableName && file.Name != "update.zip")
                     file.Delete();
             }
             foreach (DirectoryInfo subDirectory in directory.GetDirectories())
@@ -118,7 +117,7 @@ namespace PCKStudio_Updater
             if (latestFetchedRelease.Assets?.Count > 0)
             {
                 var asset = latestFetchedRelease.Assets[0];
-                string zipFilePath = Path.Combine(directory.FullName, "update.zip");
+                string zipFilePath = Path.Combine(directory.FullName, asset.Name);
                 using(var zipFileStream = File.OpenWrite(zipFilePath))
                 {
                     DownloadAsset(asset, zipFileStream);
@@ -126,7 +125,6 @@ namespace PCKStudio_Updater
                 Debug.WriteLine("Download Complete", category: nameof(GithubUpdateDownloader));
                 EmptyDirectory(directory);
                 UnpackZip(zipFilePath);
-                File.Delete(zipFilePath);
                 downloadDirectory = directory;
             }
         }

@@ -45,7 +45,7 @@ jobs:
         run: "msbuild PCK_Studio.sln -p:Configuration=Release"
 
       - name: Package binary
-        run: Compress-Archive -Path ${{ github.workspace }}\PCK-Studio\bin\Release\ -Destination ${{ env.RELEASE_NAME }}.zip
+        run: Compress-Archive -Path "${{ github.workspace }}\PCK-Studio\bin\Release\*" -Destination ${{ env.RELEASE_NAME }}.zip
 
       - name: Release
         uses: softprops/action-gh-release@v2
