@@ -108,12 +108,12 @@ namespace PckStudio.Popups
 
         private void buttonSkin_Click(object sender, EventArgs e)
         {
-            contextMenuSkin.Show(this, Location.X + buttonSkin.Location.X + 2, Location.Y + buttonSkin.Location.Y + buttonSkin.Size.Height);
+            contextMenuSkin.Show(this, buttonSkin.Location.X + 2, buttonSkin.Location.Y + buttonSkin.Size.Height);
         }
 
         private void buttonCape_Click(object sender, EventArgs e)
         {
-            contextMenuCape.Show(this, Location.X + buttonCape.Location.X + 2, Location.Y + buttonCape.Location.Y + buttonCape.Size.Height);
+            contextMenuCape.Show(this, buttonCape.Location.X + 2, buttonCape.Location.Y + buttonCape.Size.Height);
         }
 
         private void replaceToolStripMenuItem_Click(object sender, EventArgs e)
@@ -134,8 +134,8 @@ namespace PckStudio.Popups
             {
                 contextMenuSkin.Show(
                     this,
-                    x: Location.X + skinPictureBox.Location.X,
-                    y: Location.Y + skinPictureBox.Location.Y + skinPictureBox.Size.Height
+                    x: skinPictureBox.Location.X,
+                    y: skinPictureBox.Location.Y + skinPictureBox.Size.Height
                     );
                 return;
             }
@@ -172,8 +172,8 @@ namespace PckStudio.Popups
             {
                 contextMenuCape.Show(
                     this,
-                    x: Location.X + capePictureBox.Location.X,
-                    y: Location.Y + capePictureBox.Location.Y + capePictureBox.Size.Height
+                    x: capePictureBox.Location.X,
+                    y: capePictureBox.Location.Y + capePictureBox.Size.Height
                     );
                 return;
             }

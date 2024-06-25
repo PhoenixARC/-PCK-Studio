@@ -34,37 +34,38 @@ namespace PckStudio.ToolboxItems
         
         private bool _isPlaying;
 
-        private void PictureBox_Internal_Animate(PictureBox pictureBox, bool animate)
-        {
-            var animateMethod = typeof(PictureBox).GetMethod("Animate",
-            System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance,
-            null, new Type[] { typeof(bool) }, null);
-            animateMethod.Invoke(pictureBox, new object[] { animate });
-        }
-
         public new Image Image
         {
             get => base.Image;
             set
             {
                 base.Image = value;
-                PictureBox_Internal_Animate(this, false);
+                this.Animate(false);
                 if (value is null)
                     return;
                 value.SelectActiveFrame(new FrameDimension(value.FrameDimensionsList[0]), 0);
             }
         }
 
+        protected override void OnPaint(PaintEventArgs paintEventArgs)
+        {
+            base.OnPaint(paintEventArgs);
+            if (!_isPlaying && this.IsAnimating())
+            {
+                Stop();
+            }
+        }
+
         public void Start()
 		{
             _isPlaying = true;
-            PictureBox_Internal_Animate(this, _isPlaying);
+            this.Animate(_isPlaying);
         }
 
         public void Stop()
 		{
             _isPlaying = false;
-            PictureBox_Internal_Animate(this, _isPlaying);
+            this.Animate(_isPlaying);
         }
 
 		protected override void Dispose(bool disposing)

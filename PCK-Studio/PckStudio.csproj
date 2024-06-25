@@ -135,6 +135,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\MaterialContainerExtensions.cs" />
+    <Compile Include="Extensions\PictureBoxExtensions.cs" />
+    <Compile Include="Extensions\TreeViewExtensions.cs" />
     <Compile Include="Forms\Additional-Popups\FilterPrompt.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -777,14 +779,14 @@
   -->
   <Target Name="GetGitInfo" BeforeTargets="WriteGitInfo" Condition="'$(BuildHash)' == ''">
     <!-- write hash and branch to console.-->
-    <Exec Condition="'$(Configuration)' == 'Debug'" Command="git -C $(ProjectDir) describe --always" ConsoleToMsBuild="true">
+    <Exec Command="git -C $(ProjectDir) describe --always" ConsoleToMsBuild="true">
       <Output TaskParameter="ConsoleOutput" PropertyName="GitHash" />
     </Exec>
     <Exec Command="git -C $(ProjectDir) branch --show-current" ConsoleToMsBuild="true">
       <Output TaskParameter="ConsoleOutput" PropertyName="GitBranch" />
     </Exec>
     <PropertyGroup>
-      <BuildHash Condition="'$(Configuration)' == 'Debug'">$(GitHash)</BuildHash>
+      <BuildHash>$(GitHash)</BuildHash>
       <BuildBranch>$(GitBranch)</BuildBranch>
     </PropertyGroup>
   </Target>
@@ -799,7 +801,7 @@
     </ItemGroup>
     <!-- defines the AssemblyMetadata attribute that will be written -->
     <ItemGroup>
-      <AssemblyAttributes Include="AssemblyMetadata" Condition="'$(Configuration)' == 'Debug'">
+      <AssemblyAttributes Include="AssemblyMetadata">
         <_Parameter1>GitHash</_Parameter1>
         <_Parameter2>$(BuildHash)</_Parameter2>
       </AssemblyAttributes>

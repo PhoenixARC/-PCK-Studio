@@ -424,7 +424,7 @@ namespace PckStudio
 		private void BuildMainTreeView()
 		{
 			// In case the Rename function was just used and the selected node name no longer matches the file name
-			string selectedNodeText = treeViewMain.SelectedNode is TreeNode node ? node.Text : string.Empty;
+			string selectedNodeText = treeViewMain.SelectedNode is TreeNode node ? node.FullPath : string.Empty;
 			previewPictureBox.Image = Resources.NoImageFound;
 			treeMeta.Nodes.Clear();
 			treeViewMain.Nodes.Clear();
@@ -441,9 +441,8 @@ namespace PckStudio
 			}
 			treeViewMain.Sort();
 
-			TreeNode[] selectedNodes;
-			if (!string.IsNullOrEmpty(selectedNodeText) &&
-				(selectedNodes = treeViewMain.Nodes.Find(selectedNodeText, true)).Length > 0)
+			TreeNode[] selectedNodes = treeViewMain.FindPath(selectedNodeText);
+			if (selectedNodes.Length > 0)
 			{
 				treeViewMain.SelectedNode = selectedNodes[0];
 			}
@@ -2505,6 +2504,7 @@ namespace PckStudio
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
+			PckManager?.Close();
             Application.Exit();
         }
 
@@ -2643,6 +2643,12 @@ namespace PckStudio
                 cloneFileToolStripMenuItem.Visible = false;
 				setFileTypeToolStripMenuItem.Visible = false;
 			}
+        }
+
+        private void treeViewMain_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+			if (e.Node is not null)
+				treeViewMain.SelectedNode = e.Node;
         }
     }
 }
