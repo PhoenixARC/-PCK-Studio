@@ -11,6 +11,7 @@ using PckStudio.Internal;
 using PckStudio.Extensions;
 using PckStudio.Internal.Skin;
 using PckStudio.Forms.Additional_Popups;
+using PckStudio.Properties;
 
 namespace PckStudio.Forms.Editor
 {
@@ -239,7 +240,7 @@ namespace PckStudio.Forms.Editor
         {
             var img = e.NewTexture;
             // Skins can only be a 1:1 ratio (base 64x64) or a 2:1 ratio (base 64x32)
-            if (img.Width != img.Height && img.Height != img.Width / 2)
+            if (Settings.Default.ValidateImageDimension && img.Width != img.Height && img.Height != img.Width / 2)
             {
                 e.Cancel = true;
                 MessageBox.Show("The selected image does not suit a skin texture.", "Invalid image dimensions.", MessageBoxButtons.OK, MessageBoxIcon.Error);

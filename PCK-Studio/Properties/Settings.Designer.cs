@@ -126,5 +126,17 @@ namespace PckStudio.Properties {
                 this["RecentFiles"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ValidateImageDimension {
+            get {
+                return ((bool)(this["ValidateImageDimension"]));
+            }
+            set {
+                this["ValidateImageDimension"] = value;
+            }
+        }
     }
 }

@@ -55,6 +55,11 @@ namespace PckStudio.Forms
             Settings.Default.UsePrerelease = usePrereleaseCheckBox.Checked;
         }
 
+        private void validateSkinDimenssionCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            Settings.Default.ValidateImageDimension = validateSkinDimenssionCheckBox.Checked;
+        }
+
         private void LoadCheckboxState(CheckBox checkBox, EventHandler eventHandler, bool state)
         {
             checkBox.CheckedChanged -= eventHandler;
@@ -71,6 +76,7 @@ namespace PckStudio.Forms
             LoadCheckboxState(autoUpdateCheckBox, autoUpdateCheckBox_CheckedChanged, Settings.Default.AutoUpdate);
             LoadCheckboxState(usePrereleaseCheckBox, usePrereleaseCheckBox_CheckedChanged, Settings.Default.UsePrerelease);
             LoadCheckboxState(grf_paramKeyComboBoxCheckBox, grf_paramKeyComboBoxCheckBox_CheckedChanged, Settings.Default.UseComboBoxForGRFParameter);
+            LoadCheckboxState(validateSkinDimenssionCheckBox, validateSkinDimenssionCheckBox_CheckedChanged, Settings.Default.ValidateImageDimension);
         }
 
         private void AppBehaviorSettingsForm_FormClosing(object sender, FormClosingEventArgs e)
