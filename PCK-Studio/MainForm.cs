@@ -91,7 +91,7 @@ namespace PckStudio
 
 			Text = Application.ProductName;
 
-			labelVersion.Text = $"{Application.ProductName}: {Application.ProductVersion}";
+			labelVersion.Text = $"{Application.ProductName}: {ApplicationScope.CurrentVersion}";
 			ChangelogRichTextBox.Text = Resources.CHANGELOG;
 
 			pckFileTypeHandler = new Dictionary<PckAssetType, Action<PckAsset>>(15)
