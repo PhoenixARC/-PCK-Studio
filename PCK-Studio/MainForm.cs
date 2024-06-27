@@ -92,7 +92,7 @@ namespace PckStudio
 
 			Text = Application.ProductName;
 
-			labelVersion.Text = $"{Application.ProductName}: {Application.ProductVersion}";
+			labelVersion.Text = $"{Application.ProductName}: {ApplicationScope.CurrentVersion}";
 			ChangelogRichTextBox.Text = Resources.CHANGELOG;
 
 			pckFileTypeHandler = new Dictionary<PckAssetType, Action<PckAsset>>(15)
@@ -2494,12 +2494,7 @@ namespace PckStudio
 
 		private void checkForUpdatesToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (Program.Updater.IsUpdateAvailable(Application.ProductVersion))
-			{
-				Program.UpdateToLatest("Would you like to download it?", MessageBoxButtons.YesNo, MessageBoxIcon.Question, DialogResult.Yes);
-				return;
-			}
-			MessageBox.Show(this, "Already up to date.", "No update available");
+			Program.UpdateToLatest();
 		}
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)

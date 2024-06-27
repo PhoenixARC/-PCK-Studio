@@ -21,6 +21,8 @@ namespace PckStudio.Internal.App
         private static Image[] _entityImages;
         public static Image[] EntityImages => _entityImages;
 
+        public static Version CurrentVersion { get; } = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+
         internal static void Initialize()
         {
             Profiler.Start();

@@ -11,8 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OMI Filetype Library", "Ven
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpMss32", "Vendor\SharpMss32\SharpMss32\SharpMss32.csproj", "{E8D0B671-3AB1-48B6-A767-58DF67BD5D11}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PCK-Studio-Updater", "PCK-Studio-Updater\PCK-Studio-Updater.csproj", "{5B223556-15B9-41DA-AA0B-5E7F45E743BF}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Beta|Any CPU = Beta|Any CPU
@@ -80,24 +78,6 @@ Global
 		{E8D0B671-3AB1-48B6-A767-58DF67BD5D11}.Release|x64.Build.0 = Release|Any CPU
 		{E8D0B671-3AB1-48B6-A767-58DF67BD5D11}.Release|x86.ActiveCfg = Release|Any CPU
 		{E8D0B671-3AB1-48B6-A767-58DF67BD5D11}.Release|x86.Build.0 = Release|Any CPU
-		{5B223556-15B9-41DA-AA0B-5E7F45E743BF}.Beta|Any CPU.ActiveCfg = Debug|Any CPU
-		{5B223556-15B9-41DA-AA0B-5E7F45E743BF}.Beta|Any CPU.Build.0 = Debug|Any CPU
-		{5B223556-15B9-41DA-AA0B-5E7F45E743BF}.Beta|x64.ActiveCfg = Debug|Any CPU
-		{5B223556-15B9-41DA-AA0B-5E7F45E743BF}.Beta|x64.Build.0 = Debug|Any CPU
-		{5B223556-15B9-41DA-AA0B-5E7F45E743BF}.Beta|x86.ActiveCfg = Debug|Any CPU
-		{5B223556-15B9-41DA-AA0B-5E7F45E743BF}.Beta|x86.Build.0 = Debug|Any CPU
-		{5B223556-15B9-41DA-AA0B-5E7F45E743BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5B223556-15B9-41DA-AA0B-5E7F45E743BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5B223556-15B9-41DA-AA0B-5E7F45E743BF}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{5B223556-15B9-41DA-AA0B-5E7F45E743BF}.Debug|x64.Build.0 = Debug|Any CPU
-		{5B223556-15B9-41DA-AA0B-5E7F45E743BF}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{5B223556-15B9-41DA-AA0B-5E7F45E743BF}.Debug|x86.Build.0 = Debug|Any CPU
-		{5B223556-15B9-41DA-AA0B-5E7F45E743BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5B223556-15B9-41DA-AA0B-5E7F45E743BF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5B223556-15B9-41DA-AA0B-5E7F45E743BF}.Release|x64.ActiveCfg = Release|Any CPU
-		{5B223556-15B9-41DA-AA0B-5E7F45E743BF}.Release|x64.Build.0 = Release|Any CPU
-		{5B223556-15B9-41DA-AA0B-5E7F45E743BF}.Release|x86.ActiveCfg = Release|Any CPU
-		{5B223556-15B9-41DA-AA0B-5E7F45E743BF}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -712,6 +712,9 @@
     <PackageReference Include="AnimatedGif">
       <Version>1.0.5</Version>
     </PackageReference>
+    <PackageReference Include="Autoupdater.NET.Official">
+      <Version>1.9.1</Version>
+    </PackageReference>
     <PackageReference Include="Costura.Fody">
       <Version>5.8.0-alpha0098</Version>
       <IncludeAssets>compile; runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -755,10 +758,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PCK-Studio-Updater\PCK-Studio-Updater.csproj">
-      <Project>{5B223556-15B9-41DA-AA0B-5E7F45E743BF}</Project>
-      <Name>PCK-Studio-Updater</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Vendor\OMI-Lib\OMI Filetypes Library\OMI Filetype Library.csproj">
       <Project>{693AEBC1-293D-4DF0-BCAE-26A1099FE7BB}</Project>
       <Name>OMI Filetype Library</Name>

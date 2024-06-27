@@ -27,7 +27,7 @@ namespace PckStudio.Forms
 #else
             buildConfig = "unknown";
 #endif
-            buildLabel.Text = $"Verion: {Application.ProductVersion}\nBuild Config: {buildConfig}\nBranch: {CommitInfo.BranchName}@{CommitInfo.CommitHash}";
+            buildLabel.Text = $"Verion: {ApplicationScope.CurrentVersion}\nBuild Config: {buildConfig}\nBranch: {CommitInfo.BranchName}@{CommitInfo.CommitHash}";
         }
 
         protected override void OnLoad(EventArgs e)
