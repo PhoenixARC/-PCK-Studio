@@ -46,11 +46,11 @@ namespace PckStudio.Popups
 
             skinPictureBox.Image = newSkin.Model.Texture = img;
             labelSelectTexture.Visible = false;
-            //capePictureBox.Visible = true;
-            //buttonCape.Visible = true;
-            //capeLabel.Visible = true;
-            //buttonDone.Enabled = true;
-            //buttonAnimGen.Enabled = true;
+            capePictureBox.Visible = true;
+            buttonCape.Visible = true;
+            capeLabel.Visible = true;
+            buttonDone.Enabled = true;
+            buttonAnimGen.Enabled = true;
         }
 
         private void DrawModel()
