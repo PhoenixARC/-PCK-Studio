@@ -308,6 +308,7 @@
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.buttonCape);
             this.Controls.Add(this.buttonAnimGen);
             this.Controls.Add(this.capeLabel);
             this.Controls.Add(this.textThemeName);
@@ -318,7 +319,6 @@
             this.Controls.Add(this.radioButtonAuto);
             this.Controls.Add(this.buttonDone);
             this.Controls.Add(this.buttonModelGen);
-            this.Controls.Add(this.buttonCape);
             this.Controls.Add(this.buttonSkin);
             this.Controls.Add(this.capePictureBox);
             this.Controls.Add(this.skinPictureBox);
