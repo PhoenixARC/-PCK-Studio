@@ -1020,7 +1020,7 @@ namespace PckStudio
 		{
 			LOCFile locFile = null;
 			TryGetLocFile(out locFile);
-			using AddNewSkin add = new AddNewSkin(locFile);
+			using AddSkinPrompt add = new AddSkinPrompt(locFile);
 			if (add.ShowDialog(this) == DialogResult.OK)
 			{
 				if (currentPCK.HasAsset("Skins.pck", PckAssetType.SkinDataFile)) // Prioritize Skins.pck

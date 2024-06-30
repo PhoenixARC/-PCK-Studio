@@ -1,6 +1,6 @@
-﻿namespace PckStudio.Popups
+﻿namespace PckStudio.Forms.Additional_Popups
 {
-    partial class AddNewSkin
+    partial class AddSkinPrompt
     {
         /// <summary>
         /// Required designer variable.
@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.Label label3;
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddNewSkin));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddSkinPrompt));
             System.Windows.Forms.Label label2;
             System.Windows.Forms.Label label1;
             this.textTheme = new System.Windows.Forms.TextBox();

@@ -13,9 +13,9 @@ using PckStudio.Properties;
 using PckStudio.Forms;
 using PckStudio.Extensions;
 
-namespace PckStudio.Popups
+namespace PckStudio.Forms.Additional_Popups
 {
-    public partial class AddNewSkin : MetroFramework.Forms.MetroForm
+    public partial class AddSkinPrompt : MetroFramework.Forms.MetroForm
     {
         public PckAsset SkinAsset => _skin;
         public PckAsset CapeAsset => _cape;
@@ -39,7 +39,7 @@ namespace PckStudio.Popups
             Custom,
         }
 
-        public AddNewSkin(LOCFile loc)
+        public AddSkinPrompt(LOCFile loc)
         {
             InitializeComponent();
             currentLoc = loc;

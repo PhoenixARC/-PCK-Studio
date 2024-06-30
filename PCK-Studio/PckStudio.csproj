@@ -352,11 +352,11 @@
     <Compile Include="Forms\Additional-Popups\AddPropertyPrompt.Designer.cs">
       <DependentUpon>AddPropertyPrompt.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Skins-And-Textures\AddNewSkin.cs">
+    <Compile Include="Forms\Additional-Popups\AddSkinPrompt.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Skins-And-Textures\AddNewSkin.Designer.cs">
-      <DependentUpon>AddNewSkin.cs</DependentUpon>
+    <Compile Include="Forms\Additional-Popups\AddSkinPrompt.Designer.cs">
+      <DependentUpon>AddSkinPrompt.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Skins-And-Textures\AdvancedOptions.cs">
       <SubType>Form</SubType>
@@ -501,11 +501,11 @@
     <EmbeddedResource Include="Forms\Additional-Popups\AddPropertyPrompt.resx">
       <DependentUpon>AddPropertyPrompt.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Skins-And-Textures\AddNewSkin.ja.resx">
-      <DependentUpon>AddNewSkin.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Additional-Popups\AddSkinPrompt.ja.resx">
+      <DependentUpon>AddSkinPrompt.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Skins-And-Textures\AddNewSkin.resx">
-      <DependentUpon>AddNewSkin.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Additional-Popups\AddSkinPrompt.resx">
+      <DependentUpon>AddSkinPrompt.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Skins-And-Textures\AdvancedOptions.ja.resx">
