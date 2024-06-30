@@ -30,6 +30,7 @@ using OMI.Formats.Pck;
 using OMI.Workers.Color;
 
 using PckStudio.Extensions;
+using PckStudio.Internal;
 using PckStudio.Internal.Deserializer;
 using PckStudio.Internal.Json;
 using PckStudio.Internal.Serializer;
@@ -54,7 +55,7 @@ namespace PckStudio.Forms.Editor
         private readonly Size _areaSize;
         private readonly int _rowCount;
         private readonly int _columnCount;
-        private readonly string _atlasType;
+        private readonly ResourceLocation _atlasType;
         private readonly List<AtlasTile> _tiles;
 
         private AtlasTile _selectedTile;
@@ -93,7 +94,7 @@ namespace PckStudio.Forms.Editor
 
         private const ImageLayoutDirection _imageLayout = ImageLayoutDirection.Horizontal;
 
-        public TextureAtlasEditor(PckFile pckFile, string path, Image atlas, Size areaSize)
+        public TextureAtlasEditor(PckFile pckFile, ResourceLocation resourceLocation, Image atlas)
         {
             InitializeComponent();
 
@@ -101,23 +102,24 @@ namespace PckStudio.Forms.Editor
 
             _workingTexture = atlas;
 
-            _areaSize = areaSize;
+            _areaSize = resourceLocation.GetTileArea(atlas.Size);
             _pckFile = pckFile;
-            _rowCount = atlas.Width / areaSize.Width;
-            _columnCount = atlas.Height / areaSize.Height;
-            (var tileInfos, _atlasType) = Path.GetFileNameWithoutExtension(path) switch
+            _rowCount = atlas.Width / _areaSize.Width;
+            _columnCount = atlas.Height / _areaSize.Height;
+            _atlasType = resourceLocation;
+            var tileInfos = resourceLocation.Category switch
             {
-                "terrain" => (Tiles.BlockTileInfos, "blocks"),
-                "items" => (Tiles.ItemTileInfos, "items"),
-                "particles" => (Tiles.ParticleTileInfos, "particles"),
-                "mapicons" => (Tiles.MapIconTileInfos, "map_icons"),
-                "additionalmapicons" => (Tiles.AdditionalMapIconTileInfos, "additional_map_icons"),
-                "moon_phases" => (Tiles.MoonPhaseTileInfos, "moon_phases"),
-                "xporb" => (Tiles.ExperienceOrbTileInfos, "experience_orbs"),
-                "explosion" => (Tiles.ExplosionTileInfos, "explosions"),
-                "kz" => (Tiles.PaintingTileInfos, "paintings"),
-                "Banner_Atlas" => (Tiles.BannerTileInfos, "banners"),
-                _ => (null, null),
+                ResourceCategory.BlockAtlas => Tiles.BlockTileInfos,
+                ResourceCategory.ItemAtlas => Tiles.ItemTileInfos,
+                ResourceCategory.ParticleAtlas => Tiles.ParticleTileInfos,
+                ResourceCategory.MapIconAtlas => Tiles.MapIconTileInfos,
+                ResourceCategory.AdditionalMapIconsAtlas => Tiles.AdditionalMapIconTileInfos,
+                ResourceCategory.MoonPhaseAtlas => Tiles.MoonPhaseTileInfos,
+                ResourceCategory.ExperienceOrbAtlas => Tiles.ExperienceOrbTileInfos,
+                ResourceCategory.ExplosionAtlas => Tiles.ExplosionTileInfos,
+                ResourceCategory.PaintingAtlas => Tiles.PaintingTileInfos,
+                ResourceCategory.BannerAtlas => Tiles.BannerTileInfos,
+                _ => null,
             };
 
             originalPictureBox.Image = atlas.GetArea(new Rectangle(0, 0, atlas.Width, atlas.Height));
@@ -156,7 +158,7 @@ namespace PckStudio.Forms.Editor
 
             SelectedIndex = 0;
 
-            bool isParticles = _atlasType == "particles";
+            bool isParticles = _atlasType.Category == ResourceCategory.ParticleAtlas;
 
             // this is directly based on Java's source code for handling enchanted hits
             // the particle is assigned a random grayscale color between roughly 154 and 230
@@ -239,7 +241,7 @@ namespace PckStudio.Forms.Editor
             selectTilePictureBox.BlendColor = GetBlendColor();
             selectTilePictureBox.UseBlendColor = applyColorMaskToolStripMenuItem.Checked;
 
-            if (animationButton.Enabled = _atlasType == "blocks" || _atlasType == "items")
+            if (animationButton.Enabled = _atlasType.Category == ResourceCategory.BlockAtlas || _atlasType.Category == ResourceCategory.ItemAtlas)
             {
                 PckAsset animationAsset;
 
