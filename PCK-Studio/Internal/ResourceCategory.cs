@@ -22,6 +22,16 @@ namespace PckStudio.Internal
     {
         Unknown = -1,
         ItemAnimation,
-        BlockAnimation
+        BlockAnimation,
+        ItemAtlas,
+        BlockAtlas,
+        ParticleAtlas,
+        BannerAtlas,
+        PaintingAtlas,
+        ExplosionAtlas,
+        ExperienceOrbAtlas,
+        MoonPhaseAtlas,
+        MapIconAtlas,
+        AdditionalMapIconsAtlas,
     }
 }

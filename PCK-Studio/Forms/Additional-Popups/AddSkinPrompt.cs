@@ -16,16 +16,16 @@ using System.Linq;
 using System.Diagnostics;
 using PckStudio.Internal.Skin;
 
-namespace PckStudio.Popups
+namespace PckStudio.Forms.Additional_Popups
 {
-    public partial class AddNewSkin : MetroFramework.Forms.MetroForm
+    public partial class AddSkinPrompt : MetroFramework.Forms.MetroForm
     {
         public Skin NewSkin => newSkin;
 
         private Skin newSkin;
         private Random rng = new Random();
 
-        public AddNewSkin()
+        public AddSkinPrompt()
         {
             InitializeComponent();
             newSkin = new Skin("", Resources.classic_template);
