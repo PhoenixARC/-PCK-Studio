@@ -457,71 +457,19 @@ namespace PckStudio
 				return;
 			}
 
-			bool isTerrain = asset.Filename == "res/terrain.png";
-			bool isItems = asset.Filename == "res/items.png";
-			bool isParticles = asset.Filename == "res/particles.png";
-			bool isMoonPhases = asset.Filename == "res/terrain/moon_phases.png";
-			bool isMapIcons = asset.Filename == "res/misc/mapicons.png";
-			bool isAdditionalMapIcons = asset.Filename == "res/misc/additionalmapicons.png";
-			bool isXPOrbs = asset.Filename == "res/item/xporb.png";
-			bool isExplosions = asset.Filename == "res/misc/explosion.png";
-			bool isPaintings = asset.Filename == "res/art/kz.png";
-			bool isBanners = asset.Filename == "res/item/banner/Banner_Atlas.png";
+			ResourceLocation resourceLocation = ResourceLocation.GetFromPath(asset.Filename);
+			Debug.WriteLine("Handling Resource file: " + resourceLocation?.ToString());
+			if (resourceLocation is null || resourceLocation.Category == ResourceCategory.Unknown)
+				return;
 
-			if (
-				isTerrain || isItems || isParticles || isMoonPhases || isPaintings ||
-				isMapIcons || isAdditionalMapIcons || isXPOrbs || isExplosions || isBanners
-				)
+			if (resourceLocation.Category != ResourceCategory.BlockAnimation &&
+				resourceLocation.Category != ResourceCategory.ItemAnimation)
 			{
                 Image img = asset.GetTexture();
-				var tile_size = new Size();
-
-                int banner_scale = img.Width / Resources.banners_atlas.Width;
-
-				if (isBanners)
-				{
-					// The banner atlas has extra space on it that has to be truncated for the editor
-					img = img.GetArea(new Rectangle(0, 0, img.Width - (4 * banner_scale), img.Height - (1 * banner_scale)));
-
-					// banners are 42x41 because of course they are
-					tile_size = new Size(42 * banner_scale, 41 * banner_scale);
-				}
-
-                // most atlases have 4 columns
-                int columnCount = isBanners ? 6 : 4;
-
-				if (isTerrain || isItems || isParticles || isPaintings) columnCount = 16;
-
-				if (!isBanners)
-                {
-                    int resolution = img.Width / columnCount;
-					tile_size = new Size(resolution, resolution);
-				}
-
-				var viewer = new TextureAtlasEditor(currentPCK, asset.Filename, img, tile_size);
+				var viewer = new TextureAtlasEditor(currentPCK, resourceLocation, img);
 				if (viewer.ShowDialog(this) == DialogResult.OK)
 				{
                     Image texture = viewer.FinalTexture;
-					if(isBanners)
-                    {
-						var graphicsConfig = new GraphicsConfig()
-						{
-							InterpolationMode = InterpolationMode.NearestNeighbor,
-							PixelOffsetMode = PixelOffsetMode.HighQuality
-						};
-
-						var _img = new Bitmap((Resources.banners_atlas.Width + 4) * banner_scale,
-									(Resources.banners_atlas.Height + 1) * banner_scale);
-
-						using (Graphics g = Graphics.FromImage(_img))
-                        {
-							g.ApplyConfig(graphicsConfig);
-							g.DrawImage(texture, 0, 0, texture.Width, texture.Height);
-                        }
-
-						texture = _img;
-                    }
-
 					asset.SetTexture(texture);
 					wasModified = true;
 					BuildMainTreeView();
@@ -529,24 +477,24 @@ namespace PckStudio
 				return;
 			}
 
-			if (!asset.Filename.StartsWith(ResourceLocation.GetPathFromCategory(ResourceCategory.ItemAnimation)) &&
-				!asset.Filename.StartsWith(ResourceLocation.GetPathFromCategory(ResourceCategory.BlockAnimation)))
+			if (resourceLocation.Category != ResourceCategory.ItemAnimation &&
+				resourceLocation.Category != ResourceCategory.BlockAnimation)
 				return;
 
             Animation animation = asset.GetDeserializedData(AnimationDeserializer.DefaultDeserializer);
-			string filename = Path.GetFileNameWithoutExtension(asset.Filename);
+			string internalName = Path.GetFileNameWithoutExtension(asset.Filename);
 
-            var textureInfos = ResourceLocation.GetCategoryFromPath(asset.Filename) switch
+            var textureInfos = resourceLocation.Category switch
 			{
 				ResourceCategory.BlockAnimation => Tiles.BlockTileInfos,
 				ResourceCategory.ItemAnimation => Tiles.ItemTileInfos,
 				_ => Array.Empty<JsonTileInfo>().ToList()
 			};
-			string displayname = textureInfos.FirstOrDefault(p => p.InternalName == filename)?.DisplayName ?? filename;
+			string displayname = textureInfos.FirstOrDefault(p => p.InternalName == internalName)?.DisplayName ?? internalName;
 
             string[] specialTileNames = { "clock", "compass" };
 
-            using (AnimationEditor animationEditor = new AnimationEditor(animation, displayname, filename.ToLower().EqualsAny(specialTileNames)))
+            using (AnimationEditor animationEditor = new AnimationEditor(animation, displayname, internalName.ToLower().EqualsAny(specialTileNames)))
 			{
 				if (animationEditor.ShowDialog(this) == DialogResult.OK)
 				{
@@ -708,34 +656,24 @@ namespace PckStudio
 								Debug.WriteLine(string.Format("An error occured of type: {0} with message: {1}", ex.GetType(), ex.Message), "Exception");
 							}
 
-							if ((asset.Filename.StartsWith(ResourceLocation.GetPathFromCategory(ResourceCategory.ItemAnimation)) ||
-								 asset.Filename.StartsWith(ResourceLocation.GetPathFromCategory(ResourceCategory.BlockAnimation))) &&
-								asset.Type == PckAssetType.TextureFile
-								&& !asset.IsMipmappedFile())
+							if (asset.Type != PckAssetType.TextureFile)
+								break;
+
+							ResourceLocation resourceLocation = ResourceLocation.GetFromPath(asset.Filename);
+							if (resourceLocation is null || resourceLocation.Category == ResourceCategory.Unknown)
+								break;
+
+							if (resourceLocation.Category == ResourceCategory.ItemAnimation ||
+								resourceLocation.Category == ResourceCategory.BlockAnimation &&
+								!asset.IsMipmappedFile())
 							{
 								buttonEdit.Text = "EDIT TILE ANIMATION";
 								buttonEdit.Visible = true;
+								break;
 							}
 
-                            bool isTerrain = asset.Filename == "res/terrain.png";
-                            bool isItems = asset.Filename == "res/items.png";
-                            bool isParticles = asset.Filename == "res/particles.png";
-                            bool isMoonPhases = asset.Filename == "res/terrain/moon_phases.png";
-                            bool isMapIcons = asset.Filename == "res/misc/mapicons.png";
-                            bool isAdditionalMapIcons = asset.Filename == "res/misc/additionalmapicons.png";
-                            bool isXPOrbs = asset.Filename == "res/item/xporb.png";
-                            bool isExplosions = asset.Filename == "res/misc/explosion.png";
-                            bool isPaintings = asset.Filename == "res/art/kz.png";
-                            bool isBanners = asset.Filename == "res/item/banner/Banner_Atlas.png";
-
-                            if ((
-                                isTerrain || isItems || isParticles || isMoonPhases || isPaintings ||
-                                isMapIcons || isAdditionalMapIcons || isXPOrbs || isExplosions || isBanners
-                                ) && asset.Type == PckAssetType.TextureFile)
-							{
-								buttonEdit.Text = "EDIT TEXTURE ATLAS";
-								buttonEdit.Visible = true;
-							}
+							buttonEdit.Text = "EDIT TEXTURE ATLAS";
+							buttonEdit.Visible = true;
 						}
 						break;
 
