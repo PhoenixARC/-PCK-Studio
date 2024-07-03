@@ -122,7 +122,7 @@ namespace PckStudio.Forms.Editor
                 _ => null,
             };
 
-            originalPictureBox.Image = atlas.GetArea(new Rectangle(0, 0, atlas.Width, atlas.Height));
+            originalPictureBox.Image = new Bitmap(atlas);
 
             var images = atlas.Split(_tileAreaSize, _imageLayout);
 
