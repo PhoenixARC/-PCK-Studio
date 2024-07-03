@@ -529,7 +529,7 @@ namespace PckStudio.Forms.Editor
 
             var animation = file.GetDeserializedData(AnimationDeserializer.DefaultDeserializer);
 
-            var animationEditor = new AnimationEditor(animation, _selectedTile.Tile.InternalName, GetBlendColor());
+            var animationEditor = new AnimationEditor(animation, _selectedTile.Tile.DisplayName);
             if (animationEditor.ShowDialog(this) != DialogResult.OK)
             {
                 return;
