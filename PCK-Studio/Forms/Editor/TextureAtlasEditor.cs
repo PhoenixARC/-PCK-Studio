@@ -95,6 +95,12 @@ namespace PckStudio.Forms.Editor
 
         private const ImageLayoutDirection _imageLayout = ImageLayoutDirection.Horizontal;
 
+        private readonly GraphicsConfig _graphicsConfig = new GraphicsConfig()
+        {
+            InterpolationMode = InterpolationMode.NearestNeighbor,
+            PixelOffsetMode = PixelOffsetMode.HighQuality
+        };
+
         public TextureAtlasEditor(PckFile pckFile, ResourceLocation resourceLocation, Image atlas)
         {
             InitializeComponent();
@@ -184,14 +190,9 @@ namespace PckStudio.Forms.Editor
 
         private void UpdateAtlasDisplay()
         {
-            var graphicsConfig = new GraphicsConfig()
-            {
-                InterpolationMode = selectTilePictureBox.InterpolationMode,
-                PixelOffsetMode = PixelOffsetMode.HighQuality
-            };
             using (var g = Graphics.FromImage(originalPictureBox.Image))
             {
-                g.ApplyConfig(graphicsConfig);
+                g.ApplyConfig(_graphicsConfig);
                 g.Clear(Color.Transparent);
                 g.DrawImage(_atlasTexture, 0, 0, _atlasTexture.Width, _atlasTexture.Height);
 
@@ -381,28 +382,19 @@ namespace PckStudio.Forms.Editor
 
         private void SetTile(Image texture)
         {
-            var graphicsConfig = new GraphicsConfig()
-            {
-                InterpolationMode = selectTilePictureBox.InterpolationMode,
-                PixelOffsetMode = PixelOffsetMode.HighQuality
-            };
             if (texture.Size != _tileAreaSize)
-                texture = texture.Resize(_tileAreaSize, graphicsConfig);
+                texture = texture.Resize(_tileAreaSize, _graphicsConfig);
+
             using (var g = Graphics.FromImage(_atlasTexture))
             {
-                g.ApplyConfig(graphicsConfig);
+                g.ApplyConfig(_graphicsConfig);
                 g.Fill(dataTile.Area, Color.Transparent);
                 g.DrawImage(texture, dataTile.Area);
             }
 
-            var _finalTexture = _atlasTexture.GetArea(new Rectangle(dataTile.Area.X, dataTile.Area.Y, dataTile.Area.Width, dataTile.Area.Height));
-
-            if(_selectedTile != dataTile) 
-                _tiles[dataTile.Index] = new AtlasTile(dataTile.Index, dataTile.Area, dataTile.Tile, _finalTexture);
-            else 
-                _tiles[_selectedTile.Index] = new AtlasTile(_selectedTile.Index, _selectedTile.Area, _selectedTile.Tile, _finalTexture);
-            selectTilePictureBox.Image = _finalTexture;
-
+            var tile = _selectedTile != dataTile ? dataTile : _selectedTile;
+            _tiles[tile.Index] = new AtlasTile(tile.Index, tile.Area, tile.Tile, texture);
+            selectTilePictureBox.Image = texture;
             UpdateAtlasDisplay();
         }
 
