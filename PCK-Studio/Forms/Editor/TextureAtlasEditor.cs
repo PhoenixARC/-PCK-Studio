@@ -39,28 +39,29 @@ namespace PckStudio.Forms.Editor
 {
     internal partial class TextureAtlasEditor : MetroForm
     {
-        private Image _workingTexture;
+        private Image _atlasTexture;
         public Image FinalTexture
         {
             get
             {
                 if (DialogResult != DialogResult.OK)
                     return null;
-                return _workingTexture;
+                return _atlasTexture;
             }
         }
 
         private readonly PckFile _pckFile;
         private ColorContainer _colourTable;
-        private readonly Size _areaSize;
+        private readonly Size _tileAreaSize;
         private readonly int _rowCount;
         private readonly int _columnCount;
-        private readonly ResourceLocation _atlasType;
+        private readonly ResourceLocation _resourceLocation;
         private readonly List<AtlasTile> _tiles;
 
         private AtlasTile _selectedTile;
         // the "parent" tile for tiles that share name; i.e. parts of water_flow
         private AtlasTile dataTile;
+
         private sealed class AtlasTile
         {
             internal readonly int Index;
@@ -100,13 +101,12 @@ namespace PckStudio.Forms.Editor
 
             AcquireColorTable(pckFile);
 
-            _workingTexture = atlas;
-
-            _areaSize = resourceLocation.GetTileArea(atlas.Size);
+            _atlasTexture = atlas;
+            _tileAreaSize = resourceLocation.GetTileArea(atlas.Size);
             _pckFile = pckFile;
-            _rowCount = atlas.Width / _areaSize.Width;
-            _columnCount = atlas.Height / _areaSize.Height;
-            _atlasType = resourceLocation;
+            _rowCount = atlas.Width / _tileAreaSize.Width;
+            _columnCount = atlas.Height / _tileAreaSize.Height;
+            _resourceLocation = resourceLocation;
             var tileInfos = resourceLocation.Category switch
             {
                 ResourceCategory.BlockAtlas => Tiles.BlockTileInfos,
@@ -124,7 +124,7 @@ namespace PckStudio.Forms.Editor
 
             originalPictureBox.Image = atlas.GetArea(new Rectangle(0, 0, atlas.Width, atlas.Height));
 
-            var images = atlas.Split(_areaSize, _imageLayout);
+            var images = atlas.Split(_tileAreaSize, _imageLayout);
 
             var tiles = images.enumerate().Select(
                     p => new AtlasTile(
@@ -138,7 +138,7 @@ namespace PckStudio.Forms.Editor
                                 ? tileInfos[p.index].Height : 1, 
                             _rowCount, 
                             _columnCount, 
-                            _areaSize, 
+                            _tileAreaSize, 
                             _imageLayout),
 
                         tileInfos.IndexInRange(p.index)
@@ -148,17 +148,17 @@ namespace PckStudio.Forms.Editor
                         tileInfos.IndexInRange(p.index)
                             ? atlas.GetArea(
                                 new Rectangle(
-                                    GetSelectedPoint(p.index, _rowCount, _columnCount, _imageLayout).X * _areaSize.Width,
-                                    GetSelectedPoint(p.index, _rowCount, _columnCount, _imageLayout).Y * _areaSize.Height,
-                                tileInfos[p.index].Width * _areaSize.Width,
-                                tileInfos[p.index].Height * _areaSize.Height))
+                                    GetSelectedPoint(p.index, _rowCount, _columnCount, _imageLayout).X * _tileAreaSize.Width,
+                                    GetSelectedPoint(p.index, _rowCount, _columnCount, _imageLayout).Y * _tileAreaSize.Height,
+                                tileInfos[p.index].Width * _tileAreaSize.Width,
+                                tileInfos[p.index].Height * _tileAreaSize.Height))
                             : p.value)
                 );
             _tiles = new List<AtlasTile>(tiles);
 
             SelectedIndex = 0;
 
-            bool isParticles = _atlasType.Category == ResourceCategory.ParticleAtlas;
+            bool isParticles = _resourceLocation.Category == ResourceCategory.ParticleAtlas;
 
             // this is directly based on Java's source code for handling enchanted hits
             // the particle is assigned a random grayscale color between roughly 154 and 230
@@ -193,14 +193,10 @@ namespace PckStudio.Forms.Editor
             {
                 g.ApplyConfig(graphicsConfig);
                 g.Clear(Color.Transparent);
-                g.DrawImage(_workingTexture, 0, 0, _workingTexture.Width, _workingTexture.Height);
+                g.DrawImage(_atlasTexture, 0, 0, _atlasTexture.Width, _atlasTexture.Height);
 
                 SolidBrush brush = new SolidBrush(Color.FromArgb(127, 255, 255, 255));
-
-                var rect = new Rectangle(_selectedTile.Area.X, _selectedTile.Area.Y,
-                    _areaSize.Width, _areaSize.Height);
-
-                g.FillRectangle(brush, rect);
+                g.FillRectangle(brush, _selectedTile.Area);
             }
 
             originalPictureBox.Invalidate();
@@ -241,13 +237,14 @@ namespace PckStudio.Forms.Editor
             selectTilePictureBox.BlendColor = GetBlendColor();
             selectTilePictureBox.UseBlendColor = applyColorMaskToolStripMenuItem.Checked;
 
-            if (animationButton.Enabled = _atlasType.Category == ResourceCategory.BlockAtlas || _atlasType.Category == ResourceCategory.ItemAtlas)
+            if (animationButton.Enabled = _resourceLocation.Category == ResourceCategory.BlockAtlas || _resourceLocation.Category == ResourceCategory.ItemAtlas)
             {
                 PckAsset animationAsset;
+                ResourceCategory animationResourceCategory = _resourceLocation.Category == ResourceCategory.ItemAtlas ? ResourceCategory.ItemAnimation : ResourceCategory.BlockAnimation;
 
                 bool hasAnimation =
-                    _pckFile.TryGetValue($"res/textures/{_atlasType}/{dataTile.Tile.InternalName}.png", PckAssetType.TextureFile, out animationAsset) ||
-                    _pckFile.TryGetValue($"res/textures/{_atlasType}/{dataTile.Tile.InternalName}.tga", PckAssetType.TextureFile, out animationAsset);
+                    _pckFile.TryGetValue($"{ResourceLocation.GetPathFromCategory(animationResourceCategory)}/{dataTile.Tile.InternalName}.png", PckAssetType.TextureFile, out animationAsset) ||
+                    _pckFile.TryGetValue($"{ResourceLocation.GetPathFromCategory(animationResourceCategory)}/{dataTile.Tile.InternalName}.tga", PckAssetType.TextureFile, out animationAsset);
                 animationButton.Text = hasAnimation ? "Edit Animation" : "Create Animation";
 
                 if (playAnimationsToolStripMenuItem.Checked &&
@@ -389,16 +386,16 @@ namespace PckStudio.Forms.Editor
                 InterpolationMode = selectTilePictureBox.InterpolationMode,
                 PixelOffsetMode = PixelOffsetMode.HighQuality
             };
-            if (texture.Size != _areaSize)
-                texture = texture.Resize(_areaSize, graphicsConfig);
-            using (var g = Graphics.FromImage(_workingTexture))
+            if (texture.Size != _tileAreaSize)
+                texture = texture.Resize(_tileAreaSize, graphicsConfig);
+            using (var g = Graphics.FromImage(_atlasTexture))
             {
                 g.ApplyConfig(graphicsConfig);
                 g.Fill(dataTile.Area, Color.Transparent);
                 g.DrawImage(texture, dataTile.Area);
             }
 
-            var _finalTexture = _workingTexture.GetArea(new Rectangle(dataTile.Area.X, dataTile.Area.Y, dataTile.Area.Width, dataTile.Area.Height));
+            var _finalTexture = _atlasTexture.GetArea(new Rectangle(dataTile.Area.X, dataTile.Area.Y, dataTile.Area.Width, dataTile.Area.Height));
 
             if(_selectedTile != dataTile) 
                 _tiles[dataTile.Index] = new AtlasTile(dataTile.Index, dataTile.Area, dataTile.Tile, _finalTexture);
@@ -500,8 +497,8 @@ namespace PckStudio.Forms.Editor
 
             int index = GetSelectedImageIndex(
                 originalPictureBox.Size,
-                _workingTexture.Size,
-                _areaSize,
+                _atlasTexture.Size,
+                _tileAreaSize,
                 e.Location,
                 originalPictureBox.SizeMode,
                 _imageLayout);
@@ -534,8 +531,10 @@ namespace PckStudio.Forms.Editor
 
         private void animationButton_Click(object sender, EventArgs e)
         {
+            ResourceCategory animationResourceCategory = _resourceLocation.Category == ResourceCategory.ItemAtlas ? ResourceCategory.ItemAnimation : ResourceCategory.BlockAnimation;
+
             var file = _pckFile.GetOrCreate(
-                    $"res/textures/{_atlasType}/{_selectedTile.Tile.InternalName}.png",
+                    $"{ResourceLocation.GetPathFromCategory(animationResourceCategory)}/{_selectedTile.Tile.InternalName}.png",
                     PckAssetType.TextureFile
                 );
 
