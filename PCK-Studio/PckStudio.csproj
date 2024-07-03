@@ -148,6 +148,7 @@
     <Compile Include="Forms\ContributorsForm.Designer.cs">
       <DependentUpon>ContributorsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Internal\GameConstants.cs" />
     <Compile Include="Internal\IO\TGA\TGADeserializer.cs" />
     <Compile Include="Internal\IO\TGA\TGASerializer.cs" />
     <Compile Include="Extensions\LocFileExtensions.cs" />

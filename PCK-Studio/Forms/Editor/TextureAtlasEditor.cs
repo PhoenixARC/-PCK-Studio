@@ -590,27 +590,24 @@ namespace PckStudio.Forms.Editor
             colorPick.AnyColor = true;
             colorPick.SolidColorOnly = true;
 
-            // custom colors are read as BGR for some reason, so hex values are "backwards"
-            // values below are the default Minecraft dyed leather armor values for convenience
+            //Debug.Assert(Color.FromArgb(0xf9fffe).ToBGR() == 0xfefff9); // White
+            //Debug.Assert(Color.FromArgb(0xf9801d).ToBGR() == 0x1d80f9); // Orange
+            //Debug.Assert(Color.FromArgb(0xc74ebd).ToBGR() == 0xbd4ec7); // Magenta
+            //Debug.Assert(Color.FromArgb(0x3ab3da).ToBGR() == 0xdab33a); // Light Blue
+            //Debug.Assert(Color.FromArgb(0xfed83d).ToBGR() == 0x3dd8fe); // Yellow
+            //Debug.Assert(Color.FromArgb(0x80c71f).ToBGR() == 0x1fc780); // Lime
+            //Debug.Assert(Color.FromArgb(0xf38baa).ToBGR() == 0xaa8bf3); // Pink
+            //Debug.Assert(Color.FromArgb(0x474f52).ToBGR() == 0x524f47); // Gray
+            //Debug.Assert(Color.FromArgb(0x9d9d97).ToBGR() == 0x979d9d); // Light Gray
+            //Debug.Assert(Color.FromArgb(0x169c9c).ToBGR() == 0x9c9c16); // Cyan
+            //Debug.Assert(Color.FromArgb(0x8932b8).ToBGR() == 0xb83289); // Purple
+            //Debug.Assert(Color.FromArgb(0x3c44aa).ToBGR() == 0xaa443c); // Blue
+            //Debug.Assert(Color.FromArgb(0x835432).ToBGR() == 0x325483); // Brown
+            //Debug.Assert(Color.FromArgb(0x5e7c16).ToBGR() == 0x167c5e); // Green
+            //Debug.Assert(Color.FromArgb(0xb02e26).ToBGR() == 0x262eb0); // Red
+            //Debug.Assert(Color.FromArgb(0x1d1d21).ToBGR() == 0x211d1d); // Black
 
-            colorPick.CustomColors = new int[] {
-                0xfefff9, // White
-                0x1d80f9, // Orange
-                0xbd4ec7, // Magenta
-                0xdab33a, // Light Blue
-                0x3dd8fe, // Yellow
-                0x1fc780, // Lime
-                0xaa8bf3, // Pink
-                0x524f47, // Gray
-                0x979d9d, // Light Gray
-                0x9c9c16, // Cyan
-                0xb83289, // Purple
-                0xaa443c, // Blue
-                0x325483, // Brown
-                0x167c5e, // Green
-                0x262eb0, // Red
-                0x211d1d  // Black
-            };
+            colorPick.CustomColors = GameConstants.DyeColors.Select(c => c.ToBGR()).ToArray();
             
             if (colorPick.ShowDialog(this) != DialogResult.OK) return;
 
