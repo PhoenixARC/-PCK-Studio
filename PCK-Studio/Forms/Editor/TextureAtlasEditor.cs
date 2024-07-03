@@ -17,6 +17,7 @@
 **/
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
@@ -228,8 +229,6 @@ namespace PckStudio.Forms.Editor
             selectTilePictureBox.BlendColor = GetBlendColor();
             selectTilePictureBox.UseBlendColor = applyColorMaskToolStripMenuItem.Checked;
 
-
-
             tileNameLabel.Text = $"{dataTile.Tile.DisplayName}";
             internalTileNameLabel.Text = $"{dataTile.Tile.InternalName}";
 
@@ -255,10 +254,9 @@ namespace PckStudio.Forms.Editor
 
             setColorButton.Enabled = dataTile.Tile.AllowCustomColour;
 
-            if (setColorButton.Enabled)
+            variantComboBox.Enabled = variantComboBox.Visible = dataTile.Tile.HasColourEntry && dataTile.Tile.ColourEntry?.Variants?.Length > 1;
+            if (variantComboBox.Enabled)
             {
-                variantComboBox.Enabled = variantComboBox.Visible = dataTile.Tile.ColourEntry.Variants.Length > 1;
-
                 if (dataTile.Tile.ColourEntry.IsWaterColour)
                 {
                     foreach (ColorContainer.WaterColor col in _colourTable.WaterColors)
@@ -268,6 +266,7 @@ namespace PckStudio.Forms.Editor
                     }
                 }
 
+                // TODO: only add variants that are available in the color table
                 variantComboBox.Items.AddRange(dataTile.Tile.ColourEntry.Variants);
                 
                 if (variantComboBox.Items.Count > 0)
@@ -445,6 +444,7 @@ namespace PckStudio.Forms.Editor
                 }
             }
 
+            Debug.WriteLine("Could not find: " + colorKey);
             return Color.White;
         }
 
