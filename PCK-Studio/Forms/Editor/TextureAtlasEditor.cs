@@ -136,34 +136,26 @@ namespace PckStudio.Forms.Editor
 
             var images = atlas.Split(_tileAreaSize, _imageLayout);
 
-            var tiles = images.enumerate().Select(
-                    p => new AtlasTile(
-                        p.index, 
+            var tiles = images.enumerate().Select(MakeTile);
 
-                        GetAtlasArea(
-                            p.index, 
-                            tileInfos.IndexInRange(p.index) 
-                                ? tileInfos[p.index].Width : 1,                        
-                            tileInfos.IndexInRange(p.index) 
-                                ? tileInfos[p.index].Height : 1, 
-                            _rowCount, 
-                            _columnCount, 
-                            _tileAreaSize, 
-                            _imageLayout),
+            AtlasTile MakeTile((int index, Image value) p)
+            {
+                int i = p.index;
+                JsonTileInfo tileInfo = tileInfos.IndexInRange(i) ? tileInfos[i] : null;
 
-                        tileInfos.IndexInRange(p.index)
-                            ? tileInfos[p.index] : null,
+                Rectangle atlasArea = GetAtlasArea(i, tileInfo?.TileWidth ?? 1, tileInfo?.TileHeight ?? 1, _rowCount, _columnCount, _tileAreaSize, _imageLayout);
 
                         // get texture for tiles that are not 1x1 tiles
-                        tileInfos.IndexInRange(p.index)
-                            ? atlas.GetArea(
-                                new Rectangle(
-                                    GetSelectedPoint(p.index, _rowCount, _columnCount, _imageLayout).X * _tileAreaSize.Width,
-                                    GetSelectedPoint(p.index, _rowCount, _columnCount, _imageLayout).Y * _tileAreaSize.Height,
-                                tileInfos[p.index].Width * _tileAreaSize.Width,
-                                tileInfos[p.index].Height * _tileAreaSize.Height))
-                            : p.value)
-                );
+                Point selectedPoint = GetSelectedPoint(i, _rowCount, _columnCount, _imageLayout);
+                
+                var textureLocation = new Point(selectedPoint.X * _tileAreaSize.Width, selectedPoint.Y * _tileAreaSize.Height);
+                var textureSize = new Size(tileInfos[i].TileWidth * _tileAreaSize.Width, tileInfos[i].TileHeight * _tileAreaSize.Height);
+                var textureArea = new Rectangle(textureLocation, textureSize);
+                
+                Image texture = tileInfos.IndexInRange(i) ? atlas.GetArea(textureArea) : p.value;
+                return new AtlasTile(i, atlasArea, tileInfo, texture);
+            }
+
             _tiles = new List<AtlasTile>(tiles);
 
             SelectedIndex = 0;
@@ -369,11 +361,11 @@ namespace PckStudio.Forms.Editor
             };
         }
 
-        private static Rectangle GetAtlasArea(int index, int width, int height, int rowCount, int columnCount, Size size, ImageLayoutDirection imageLayout)
+        private static Rectangle GetAtlasArea(int index, int tileWidth, int tileHeight, int rowCount, int columnCount, Size size, ImageLayoutDirection imageLayout)
         {
             var p = GetSelectedPoint(index, rowCount, columnCount, imageLayout);
             var ap = new Point(p.X * size.Width, p.Y * size.Height);
-            return new Rectangle(ap, new Size(size.Width * width, size.Height * height));
+            return new Rectangle(ap, new Size(size.Width * tileWidth, size.Height * tileHeight));
         }
 
         private static Point GetSelectedPoint(int index, int rowCount, int columnCount, ImageLayoutDirection imageLayout)
