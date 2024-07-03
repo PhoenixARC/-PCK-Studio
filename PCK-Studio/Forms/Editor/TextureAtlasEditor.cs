@@ -160,14 +160,15 @@ namespace PckStudio.Forms.Editor
 
             SelectedIndex = 0;
 
-            bool isParticles = _resourceLocation.Category == ResourceCategory.ParticleAtlas;
-
             // this is directly based on Java's source code for handling enchanted hits
             // the particle is assigned a random grayscale color between roughly 154 and 230
             // since critical hit is the only particle with this distinction, we just need to check the atlas type
-            colorSlider.Maximum = isParticles ? 230 : 255;
-            colorSlider.Minimum = isParticles ? 154 : 0;
-            colorSlider.Value = isParticles ? colorSlider.Maximum : colorSlider.Minimum;
+            if (_resourceLocation.Category == ResourceCategory.ParticleAtlas)
+            {
+                colorSlider.Minimum = 154;
+                colorSlider.Maximum = 230;
+                colorSlider.Value = colorSlider.Maximum;
+            }
         }
 
         private bool AcquireColorTable(PckFile pckFile)
