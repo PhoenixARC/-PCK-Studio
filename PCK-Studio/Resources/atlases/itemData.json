@@ -5,9 +5,9 @@
 		{
 			"internalName": "helmetCloth",
 			"displayName": "Leather Cap",
+			"allowCustomColour": true,
 			"hasColourEntry": true,
 			"colourEntry": {
-				"hasCustomColour": true,
 				"defaultName": "Armour_Default_Leather_Colour",
 				"variants": [ "Armour_Default_Leather_Colour" ]
 			}
@@ -75,9 +75,9 @@
 		{
 			"internalName": "chestplateCloth",
 			"displayName": "Leather Tunic",
+			"allowCustomColour": true,
 			"hasColourEntry": true,
 			"colourEntry": {
-				"hasCustomColour": true,
 				"defaultName": "Armour_Default_Leather_Colour",
 				"variants": [ "Armour_Default_Leather_Colour" ]
 			}
@@ -145,9 +145,9 @@
 		{
 			"internalName": "leggingsCloth",
 			"displayName": "Leather Pants",
+			"allowCustomColour": true,
 			"hasColourEntry": true,
 			"colourEntry": {
-				"hasCustomColour": true,
 				"defaultName": "Armour_Default_Leather_Colour",
 				"variants": [ "Armour_Default_Leather_Colour" ]
 			}
@@ -215,9 +215,9 @@
 		{
 			"internalName": "bootsCloth",
 			"displayName": "Leather Boots",
+			"allowCustomColour": true,
 			"hasColourEntry": true,
 			"colourEntry": {
-				"hasCustomColour": true,
 				"defaultName": "Armour_Default_Leather_Colour",
 				"variants": [ "Armour_Default_Leather_Colour" ]
 			}
@@ -593,11 +593,11 @@
 		{
 			"internalName": "potion_contents",
 			"displayName": "Potion (Overlay)",
+			"allowCustomColour": true,
 			"hasColourEntry": true,
 			"colourEntry": {
 				"defaultName": "Potion_BaseColour",
-				"hasCustomColour": true,
-				"variants": [ 
+				"variants": [
 					"Potion_BaseColour",
 					"Effect_MovementSpeed",
 					"Effect_MovementSlowDown",
@@ -1013,12 +1013,7 @@
 		{
 			"internalName": "fireworks_charge_overlay",
 			"displayName": "Firework Star (Overlay)",
-			"hasColourEntry": true,
-			"colourEntry": {
-				"hasCustomColour": true,
-				"defaultName": "",
-				"variants": [""]
-			}
+			"allowCustomColour": true
 		},
 		{
 			"internalName": "netherquartz",
@@ -1099,9 +1094,9 @@
 		{
 			"internalName": "leather_horse_armor_base",
 			"displayName": "Leather Horse Armor",
+			"allowCustomColour": true,
 			"hasColourEntry": true,
 			"colourEntry": {
-				"hasCustomColour": true,
 				"defaultName": "Armour_Default_Leather_Colour",
 				"variants": [ "Armour_Default_Leather_Colour" ]
 			}

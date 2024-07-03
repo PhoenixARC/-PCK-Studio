@@ -301,12 +301,7 @@
 			"displayName": "Firework Flash",
 			"width": 4,
 			"height": 4,
-			"hasColourEntry": true,
-			"colourEntry": {
-				"hasCustomColour": true,
-				"defaultName": "",
-				"variants": [""]
-			}
+			"allowCustomColour": true
 		},
 		{
 			"internalName": "flash",
@@ -754,10 +749,10 @@
 			"internalName": "effect_0",
 			"displayName": "Effect (Stage 1)",
 			"hasColourEntry": true,
+			"allowCustomColour": true,
 			"colourEntry": {
 				"defaultName": "Potion_BaseColour",
-				"hasCustomColour": true,
-				"variants": [ 
+				"variants": [
 					"Potion_BaseColour",
 					"Effect_MovementSpeed",
 					"Effect_MovementSlowDown",
@@ -794,10 +789,10 @@
 			"internalName": "effect_1",
 			"displayName": "Effect (Stage 2)",
 			"hasColourEntry": true,
+			"allowCustomColour": true,
 			"colourEntry": {
 				"defaultName": "Potion_BaseColour",
-				"hasCustomColour": true,
-				"variants": [ 
+				"variants": [
 					"Potion_BaseColour",
 					"Effect_MovementSpeed",
 					"Effect_MovementSlowDown",
@@ -833,11 +828,11 @@
 		{
 			"internalName": "effect_2",
 			"displayName": "Effect (Stage 3)",
+			"allowCustomColour": true,
 			"hasColourEntry": true,
 			"colourEntry": {
 				"defaultName": "Potion_BaseColour",
-				"hasCustomColour": true,
-				"variants": [ 
+				"variants": [
 					"Potion_BaseColour",
 					"Effect_MovementSpeed",
 					"Effect_MovementSlowDown",
@@ -873,11 +868,11 @@
 		{
 			"internalName": "effect_3",
 			"displayName": "Effect (Stage 4)",
+			"allowCustomColour": true,
 			"hasColourEntry": true,
 			"colourEntry": {
 				"defaultName": "Potion_BaseColour",
-				"hasCustomColour": true,
-				"variants": [ 
+				"variants": [
 					"Potion_BaseColour",
 					"Effect_MovementSpeed",
 					"Effect_MovementSlowDown",
@@ -913,11 +908,11 @@
 		{
 			"internalName": "effect_4",
 			"displayName": "Effect (Stage 5)",
+			"allowCustomColour": true,
 			"hasColourEntry": true,
 			"colourEntry": {
 				"defaultName": "Potion_BaseColour",
-				"hasCustomColour": true,
-				"variants": [ 
+				"variants": [
 					"Potion_BaseColour",
 					"Effect_MovementSpeed",
 					"Effect_MovementSlowDown",
@@ -953,11 +948,11 @@
 		{
 			"internalName": "effect_5",
 			"displayName": "Effect (Stage 6)",
+			"allowCustomColour": true,
 			"hasColourEntry": true,
 			"colourEntry": {
 				"defaultName": "Potion_BaseColour",
-				"hasCustomColour": true,
-				"variants": [ 
+				"variants": [
 					"Potion_BaseColour",
 					"Effect_MovementSpeed",
 					"Effect_MovementSlowDown",
@@ -993,11 +988,11 @@
 		{
 			"internalName": "effect_6",
 			"displayName": "Effect (Stage 7)",
+			"allowCustomColour": true,
 			"hasColourEntry": true,
 			"colourEntry": {
 				"defaultName": "Potion_BaseColour",
-				"hasCustomColour": true,
-				"variants": [ 
+				"variants": [
 					"Potion_BaseColour",
 					"Effect_MovementSpeed",
 					"Effect_MovementSlowDown",
@@ -1033,11 +1028,11 @@
 		{
 			"internalName": "effect_7",
 			"displayName": "Effect (Stage 8)",
+			"allowCustomColour": true,
 			"hasColourEntry": true,
 			"colourEntry": {
 				"defaultName": "Potion_BaseColour",
-				"hasCustomColour": true,
-				"variants": [ 
+				"variants": [
 					"Potion_BaseColour",
 					"Effect_MovementSpeed",
 					"Effect_MovementSlowDown",
@@ -1105,11 +1100,11 @@
 		{
 			"internalName": "spell_0",
 			"displayName": "Splash Effect (Stage 1)",
+			"allowCustomColour": true,
 			"hasColourEntry": true,
 			"colourEntry": {
 				"defaultName": "Potion_BaseColour",
-				"hasCustomColour": true,
-				"variants": [ 
+				"variants": [
 					"Potion_BaseColour",
 					"Effect_MovementSpeed",
 					"Effect_MovementSlowDown",
@@ -1145,11 +1140,11 @@
 		{
 			"internalName": "spell_1",
 			"displayName": "Splash Effect (Stage 2)",
+			"allowCustomColour": true,
 			"hasColourEntry": true,
 			"colourEntry": {
 				"defaultName": "Potion_BaseColour",
-				"hasCustomColour": true,
-				"variants": [ 
+				"variants": [
 					"Potion_BaseColour",
 					"Effect_MovementSpeed",
 					"Effect_MovementSlowDown",
@@ -1185,11 +1180,11 @@
 		{
 			"internalName": "spell_2",
 			"displayName": "Splash Effect (Stage 3)",
+			"allowCustomColour": true,
 			"hasColourEntry": true,
 			"colourEntry": {
 				"defaultName": "Potion_BaseColour",
-				"hasCustomColour": true,
-				"variants": [ 
+				"variants": [
 					"Potion_BaseColour",
 					"Effect_MovementSpeed",
 					"Effect_MovementSlowDown",
@@ -1225,11 +1220,11 @@
 		{
 			"internalName": "spell_3",
 			"displayName": "Splash Effect (Stage 4)",
+			"allowCustomColour": true,
 			"hasColourEntry": true,
 			"colourEntry": {
 				"defaultName": "Potion_BaseColour",
-				"hasCustomColour": true,
-				"variants": [ 
+				"variants": [
 					"Potion_BaseColour",
 					"Effect_MovementSpeed",
 					"Effect_MovementSlowDown",
@@ -1265,11 +1260,11 @@
 		{
 			"internalName": "spell_4",
 			"displayName": "Splash Effect (Stage 5)",
+			"allowCustomColour": true,
 			"hasColourEntry": true,
 			"colourEntry": {
 				"defaultName": "Potion_BaseColour",
-				"hasCustomColour": true,
-				"variants": [ 
+				"variants": [
 					"Potion_BaseColour",
 					"Effect_MovementSpeed",
 					"Effect_MovementSlowDown",
@@ -1305,11 +1300,11 @@
 		{
 			"internalName": "spell_5",
 			"displayName": "Splash Effect (Stage 6)",
+			"allowCustomColour": true,
 			"hasColourEntry": true,
 			"colourEntry": {
 				"defaultName": "Potion_BaseColour",
-				"hasCustomColour": true,
-				"variants": [ 
+				"variants": [
 					"Potion_BaseColour",
 					"Effect_MovementSpeed",
 					"Effect_MovementSlowDown",
@@ -1345,11 +1340,11 @@
 		{
 			"internalName": "spell_6",
 			"displayName": "Splash Effect (Stage 7)",
+			"allowCustomColour": true,
 			"hasColourEntry": true,
 			"colourEntry": {
 				"defaultName": "Potion_BaseColour",
-				"hasCustomColour": true,
-				"variants": [ 
+				"variants": [
 					"Potion_BaseColour",
 					"Effect_MovementSpeed",
 					"Effect_MovementSlowDown",
@@ -1385,11 +1380,11 @@
 		{
 			"internalName": "spell_7",
 			"displayName": "Splash Effect (Stage 8)",
+			"allowCustomColour": true,
 			"hasColourEntry": true,
 			"colourEntry": {
 				"defaultName": "Potion_BaseColour",
-				"hasCustomColour": true,
-				"variants": [ 
+				"variants": [
 					"Potion_BaseColour",
 					"Effect_MovementSpeed",
 					"Effect_MovementSlowDown",
@@ -1457,9 +1452,9 @@
 		{
 			"internalName": "spark_0",
 			"displayName": "Firework Spark (Stage 1)",
+			"allowCustomColour": true,
 			"hasColourEntry": true,
 			"colourEntry": {
-				"hasCustomColour": true,
 				"defaultName": "None",
 				"variants": [
 					"None",
@@ -1472,9 +1467,9 @@
 		{
 			"internalName": "spark_1",
 			"displayName": "Firework Spark (Stage 2)",
+			"allowCustomColour": true,
 			"hasColourEntry": true,
 			"colourEntry": {
-				"hasCustomColour": true,
 				"defaultName": "None",
 				"variants": [
 					"None",
@@ -1487,9 +1482,9 @@
 		{
 			"internalName": "spark_2",
 			"displayName": "Firework Spark (Stage 3)",
+			"allowCustomColour": true,
 			"hasColourEntry": true,
 			"colourEntry": {
-				"hasCustomColour": true,
 				"defaultName": "None",
 				"variants": [
 					"None",
@@ -1502,9 +1497,9 @@
 		{
 			"internalName": "spark_3",
 			"displayName": "Firework Spark (Stage 4)",
+			"allowCustomColour": true,
 			"hasColourEntry": true,
 			"colourEntry": {
-				"hasCustomColour": true,
 				"defaultName": "None",
 				"variants": [
 					"None",
@@ -1517,9 +1512,9 @@
 		{
 			"internalName": "spark_4",
 			"displayName": "Firework Spark (Stage 5)",
+			"allowCustomColour": true,
 			"hasColourEntry": true,
 			"colourEntry": {
-				"hasCustomColour": true,
 				"defaultName": "None",
 				"variants": [
 					"None",
@@ -1532,9 +1527,9 @@
 		{
 			"internalName": "spark_5",
 			"displayName": "Firework Spark (Stage 6)",
+			"allowCustomColour": true,
 			"hasColourEntry": true,
 			"colourEntry": {
-				"hasCustomColour": true,
 				"defaultName": "None",
 				"variants": [
 					"None",
@@ -1547,9 +1542,9 @@
 		{
 			"internalName": "spark_6",
 			"displayName": "Firework Spark (Stage 7)",
+			"allowCustomColour": true,
 			"hasColourEntry": true,
 			"colourEntry": {
-				"hasCustomColour": true,
 				"defaultName": "None",
 				"variants": [
 					"None",
@@ -1562,9 +1557,9 @@
 		{
 			"internalName": "spark_7",
 			"displayName": "Firework Spark (Stage 8)",
+			"allowCustomColour": true,
 			"hasColourEntry": true,
 			"colourEntry": {
-				"hasCustomColour": true,
 				"defaultName": "None",
 				"variants": [
 					"None",

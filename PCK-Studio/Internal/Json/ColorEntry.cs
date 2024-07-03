@@ -15,9 +15,6 @@ namespace PckStudio.Internal.Json
         [JsonProperty("isWaterColour", DefaultValueHandling = DefaultValueHandling.Populate)]
         public bool IsWaterColour { get; set; }
 
-        [JsonProperty("hasCustomColour", DefaultValueHandling = DefaultValueHandling.Populate)]
-        public bool HasCustomColour { get; set; }
-
         [JsonProperty("variants", DefaultValueHandling = DefaultValueHandling.Populate)]
         public string[] Variants { get; set; }
     }

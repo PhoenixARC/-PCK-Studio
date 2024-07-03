@@ -255,7 +255,9 @@ namespace PckStudio.Forms.Editor
                 }
             }
 
-            if (setColorButton.Enabled = clearColorButton.Enabled = dataTile.Tile.HasColourEntry)
+            setColorButton.Enabled = dataTile.Tile.AllowCustomColour;
+
+            if (setColorButton.Enabled)
             {
                 setColorButton.Enabled = clearColorButton.Enabled = dataTile.Tile.ColourEntry.HasCustomColour;
                 clearColorButton.Enabled = false;
