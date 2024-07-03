@@ -9,6 +9,7 @@ namespace PckStudio.Internal
 {
     internal static class GameConstants
     {
+        // See: https://minecraft.fandom.com/wiki/Dye#Color_values for more information.
         public static readonly Color[] DyeColors = [
             Color.FromArgb(0xf9fffe), // White
             Color.FromArgb(0xf9801d), // Orange
