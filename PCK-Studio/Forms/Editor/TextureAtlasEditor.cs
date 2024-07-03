@@ -105,7 +105,11 @@ namespace PckStudio.Forms.Editor
         {
             InitializeComponent();
 
-            AcquireColorTable(pckFile);
+            if (!AcquireColorTable(pckFile))
+            {
+                MessageBox.Show("Failed to acquire color information", "Acquire failure", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+                return;
+            }
 
             _atlasTexture = atlas;
             _tileAreaSize = resourceLocation.GetTileArea(atlas.Size);
