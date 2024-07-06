@@ -16,10 +16,15 @@ namespace PckStudio.Internal.Deserializer
     internal sealed class ImageDeserializer : IPckAssetDeserializer<Image>
     {
         public static readonly ImageDeserializer DefaultDeserializer = new ImageDeserializer();
+        // TODO: replace empty image with image displaying something went wrong
         private static Image EmptyImage = new Bitmap(1, 1, PixelFormat.Format32bppArgb);
 
         public Image Deserialize(PckAsset asset)
         {
+            _ = asset ?? throw new ArgumentNullException(nameof(asset));
+            if (asset.Size == 0)
+                return EmptyImage;
+
             using var stream = new MemoryStream(asset.Data);
             try
             {

@@ -16,16 +16,19 @@ namespace PckStudio.Internal.Json
         public string InternalName { get; set; }
 
         [JsonProperty("width")]
-        public int Width { get; set; } = 1;
+        public int TileWidth { get; set; } = 1;
 
         [JsonProperty("height")]
-        public int Height { get; set; } = 1;
+        public int TileHeight { get; set; } = 1;
 
         [JsonProperty("hasColourEntry", DefaultValueHandling = DefaultValueHandling.Populate)]
         public bool HasColourEntry { get; set; }
 
         [JsonProperty("colourEntry", DefaultValueHandling = DefaultValueHandling.Populate)]
         public JsonColorEntry ColourEntry { get; set; }
+
+        [JsonProperty("allowCustomColour", DefaultValueHandling = DefaultValueHandling.Populate)]
+        public bool AllowCustomColour { get; set; }
 
         public JsonTileInfo(string displayName, string internalName)
         {

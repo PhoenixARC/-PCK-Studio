@@ -152,6 +152,7 @@
     <Compile Include="Extensions\OpenTkMatrixExtensions.cs" />
     <Compile Include="Internal\IO\PSM\PSMFileReader.cs" />
     <Compile Include="Internal\IO\PSM\PSMFileWriter.cs" />
+    <Compile Include="Internal\GameConstants.cs" />
     <Compile Include="Internal\IO\TGA\TGADeserializer.cs" />
     <Compile Include="Internal\IO\TGA\TGASerializer.cs" />
     <Compile Include="Extensions\LocFileExtensions.cs" />

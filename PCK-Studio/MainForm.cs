@@ -459,7 +459,7 @@ namespace PckStudio
 			}
 
 			ResourceLocation resourceLocation = ResourceLocation.GetFromPath(asset.Filename);
-			Debug.WriteLine("Handling Resource file: " + resourceLocation.ToString());
+			Debug.WriteLine("Handling Resource file: " + resourceLocation?.ToString());
 			if (resourceLocation is null || resourceLocation.Category == ResourceCategory.Unknown)
 				return;
 
