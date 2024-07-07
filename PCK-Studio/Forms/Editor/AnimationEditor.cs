@@ -465,14 +465,7 @@ namespace PckStudio.Forms.Editor
 			};
 			if (fileDialog.ShowDialog(this) != DialogResult.OK)
 				return;
-
-            using (var gifWriter = AnimatedGif.AnimatedGif.Create(fileDialog.FileName, Animation.GameTickInMilliseconds, repeat: 0))
-			{
-				foreach (var frame in _animation.GetInterpolatedFrames())
-				{
-					gifWriter.AddFrame(frame.Texture, frame.Ticks * Animation.GameTickInMilliseconds, GifQuality.Bit8);
-				}
-			}
+			_animation.CreateAnimationImage().Save(fileDialog.FileName);
 		}
 
 		private void frameTimeandTicksToolStripMenuItem_Click(object sender, EventArgs e)

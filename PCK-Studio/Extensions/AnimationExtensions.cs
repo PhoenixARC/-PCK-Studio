@@ -20,10 +20,10 @@ namespace PckStudio.Extensions
                 return null;
             }
             var ms = new System.IO.MemoryStream();
-            var generateor = new AnimatedGifCreator(ms, Animation.GameTickInMilliseconds, 0);
+            var generateor = new AnimatedGifCreator(ms, GameConstants.GameTickInMilliseconds, 0);
             foreach (var frame in animation.GetInterpolatedFrames())
             {
-                generateor.AddFrame(frame.Texture, frame.Ticks * Animation.GameTickInMilliseconds, GifQuality.Bit8);
+                generateor.AddFrame(frame.Texture, frame.Ticks * GameConstants.GameTickInMilliseconds, GifQuality.Bit8);
             }
             ms.Position = 0;
             return Image.FromStream(ms);

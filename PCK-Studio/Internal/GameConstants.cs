@@ -9,6 +9,9 @@ namespace PckStudio.Internal
 {
     internal static class GameConstants
     {
+
+        public const int GameTickInMilliseconds = 50;
+
         // See: https://minecraft.fandom.com/wiki/Dye#Color_values for more information.
         public static readonly Color[] DyeColors = [
             Color.FromArgb(0xf9fffe), // White
