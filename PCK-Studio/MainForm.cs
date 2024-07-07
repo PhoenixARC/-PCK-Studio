@@ -1944,7 +1944,7 @@ namespace PckStudio
 		private void OpenPck_DragEnter(object sender, DragEventArgs e)
 		{
 			pckOpen.Image = Resources.pckDrop;
-			string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop) ?? Array.Empty<string>();
 			foreach (string file in files)
 			{
                 string ext = Path.GetExtension(file);
