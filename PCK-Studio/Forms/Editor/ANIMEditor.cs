@@ -70,6 +70,7 @@ namespace PckStudio.Forms.Editor
                 {
                     IgnoreAndDo(item.Key, checkbox =>
                     {
+                        checkbox.Enabled = true; // fix for checkboxes being stuck as disabled
                         checkbox.Checked = state;
                         switch(checkBoxLinkage[checkbox])
 						{
@@ -82,7 +83,8 @@ namespace PckStudio.Forms.Editor
                                 checkbox.Enabled = state;
                                 break;
                             case SkinAnimFlag.RESOLUTION_64x64:
-                                if (state) checkbox.Checked = false; // Prioritize slim model > classic model, LCE would
+                                checkbox.Enabled = !state;
+                                if(state) checkbox.Checked = false; // Prioritize slim model > classic model, LCE would
                                 break;
 						}
                         anim.SetFlag(item.Value, checkbox.Checked);
@@ -96,6 +98,12 @@ namespace PckStudio.Forms.Editor
                 this.anim = anim;
                 foreach (var item in checkBoxLinkage)
                 {
+                    /*
+                     * not the best way to do this but whatever lol
+                     * fix for both model flags being unset when both are set to true, with slim model prioritized of course
+                     */
+                    if (item.Value == SkinAnimFlag.RESOLUTION_64x64 && anim.GetFlag(SkinAnimFlag.SLIM_MODEL)) continue;
+
                     item.Key.Checked = anim.GetFlag(item.Value);
                 }
             }

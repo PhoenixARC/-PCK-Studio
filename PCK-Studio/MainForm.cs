@@ -1,40 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using System.Drawing.Drawing2D;
 using System.Diagnostics;
-using System.Drawing.Imaging;
-using OMI.Formats.Archive;
 using OMI.Formats.Pck;
 using OMI.Formats.GameRule;
 using OMI.Formats.Languages;
-using OMI.Formats.Model;
-using OMI.Workers.Archive;
 using OMI.Workers.Pck;
 using OMI.Workers.GameRule;
 using OMI.Workers.Language;
-using OMI.Workers.Model;
 using PckStudio.Properties;
 using PckStudio.Forms;
-using PckStudio.Forms.Editor;
-using PckStudio.Forms.Additional_Popups.Animation;
 using PckStudio.Forms.Additional_Popups;
-using PckStudio.Classes.Misc;
-using PckStudio.IO.PckAudio;
-using PckStudio.IO._3DST;
+using PckStudio.Internal.Misc;
 using PckStudio.Internal;
-using PckStudio.Features;
+using PckStudio.Forms.Features;
 using PckStudio.Extensions;
 using PckStudio.Popups;
-using PckStudio.Classes.Utils;
-using PckStudio.Helper;
+using PckStudio.External.API.Miles;
+using PckStudio.Internal.App;
 using PckStudio.Controls;
 using PckStudio.Interfaces;
-using PCKStudio_Updater;
 
 namespace PckStudio
 {
@@ -43,8 +31,6 @@ namespace PckStudio
 		private PckManager PckManager = null;
 
 		private Dictionary<string, TabPage> openFiles = new Dictionary<string, TabPage>();
-
-		IComparer NodeSorter = new PckNodeSorter();
 
 		public MainForm()
 		{
@@ -123,15 +109,15 @@ namespace PckStudio
 		{
 			var pack = new PckFile(3);
 
-            PckAsset zeroFile = pack.CreateNewFile("0", PckAssetType.InfoFile);
-			zeroFile.AddProperty("PACKID", packId);
-			zeroFile.AddProperty("PACKVERSION", packVersion);
+            PckAsset zeroAsset = pack.CreateNewAsset("0", PckAssetType.InfoFile);
+			zeroAsset.AddProperty("PACKID", packId);
+			zeroAsset.AddProperty("PACKVERSION", packVersion);
 
 			var locFile = new LOCFile();
 			locFile.InitializeDefault(packName);
-			pack.CreateNewFile("localisation.loc", PckAssetType.LocalisationFile, new LOCFileWriter(locFile, 2));
+			pack.CreateNewAsset("localisation.loc", PckAssetType.LocalisationFile, new LOCFileWriter(locFile, 2));
 
-			pack.CreateNewFileIf(createSkinsPCK, "Skins.pck", PckAssetType.SkinDataFile, new PckFileWriter(new PckFile(3, true),
+			pack.CreateNewAssetIf(createSkinsPCK, "Skins.pck", PckAssetType.SkinDataFile, new PckFileWriter(new PckFile(3, true),
 				LittleEndianCheckBox.Checked
 					? OMI.Endianness.LittleEndian
 					: OMI.Endianness.BigEndian));
@@ -144,17 +130,17 @@ namespace PckStudio
 			var pack = InitializePack(packId, packVersion, packName, createSkinsPCK);
 			PckFile infoPCK = new PckFile(3);
 
-            PckAsset icon = infoPCK.CreateNewFile("icon.png", PckAssetType.TextureFile);
-			icon.SetTexture(Resources.TexturePackIcon);
+            PckAsset iconAsset = infoPCK.CreateNewAsset("icon.png", PckAssetType.TextureFile);
+			iconAsset.SetTexture(Resources.TexturePackIcon);
 
-            PckAsset comparison = infoPCK.CreateNewFile("comparison.png", PckAssetType.TextureFile);
-			comparison.SetTexture(Resources.Comparison);
+            PckAsset comparisonAsset = infoPCK.CreateNewAsset("comparison.png", PckAssetType.TextureFile);
+			comparisonAsset.SetTexture(Resources.Comparison);
 
-            PckAsset texturepackInfo = pack.CreateNewFile($"{res}/{res}Info.pck", PckAssetType.TexturePackInfoFile);
-			texturepackInfo.AddProperty("PACKID", "0");
-			texturepackInfo.AddProperty("DATAPATH", $"{res}Data.pck");
+            PckAsset texturepackInfoAsset = pack.CreateNewAsset($"{res}/{res}Info.pck", PckAssetType.TexturePackInfoFile);
+			texturepackInfoAsset.AddProperty("PACKID", "0");
+			texturepackInfoAsset.AddProperty("DATAPATH", $"{res}Data.pck");
 
-			texturepackInfo.SetData(new PckFileWriter(infoPCK, LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian));
+			texturepackInfoAsset.SetData(new PckFileWriter(infoPCK, LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian));
 
 			return pack;
 		}
@@ -162,7 +148,7 @@ namespace PckStudio
 		private PckFile InitializeMashUpPack(int packId, int packVersion, string packName, string res)
 		{
             PckFile pack = InitializeTexturePack(packId, packVersion, packName, res, true);
-            PckAsset gameRuleFile = pack.CreateNewFile("GameRules.grf", PckAssetType.GameRulesFile);
+            PckAsset gameRuleAsset = pack.CreateNewAsset("GameRules.grf", PckAssetType.GameRulesFile);
             GameRuleFile grfFile = new GameRuleFile();
 			grfFile.AddRule("MapOptions",
 				new KeyValuePair<string, string>("seed", "0"),
@@ -179,7 +165,7 @@ namespace PckStudio
 				new KeyValuePair<string, string>("spawnZ", "0")
 				);
 
-			gameRuleFile.SetData(new GameRuleFileWriter(grfFile));
+			gameRuleAsset.SetData(new GameRuleFileWriter(grfFile));
 
 			return pack;
 		}
@@ -273,7 +259,7 @@ namespace PckStudio
 
 		private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			using CreditsForm info = new CreditsForm();
+			using ContributorsForm info = new ContributorsForm();
 			info.ShowDialog();
 		}
 
@@ -308,7 +294,7 @@ namespace PckStudio
 								MessageBoxButtons.OK, MessageBoxIcon.Error);
 						}
 					}
-					foreach (PckAsset file in pckfile.GetFiles())
+					foreach (PckAsset file in pckfile.GetAssets())
 					{
 						string filepath = $"{sfd.SelectedPath}/{file.Filename}";
 						Directory.CreateDirectory(filepath);
@@ -445,7 +431,7 @@ namespace PckStudio
 		private void OpenPck_DragEnter(object sender, DragEventArgs e)
 		{
 			pckOpen.Image = Resources.pckDrop;
-			string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop) ?? Array.Empty<string>();
 			foreach (string file in files)
 			{
                 string ext = Path.GetExtension(file);

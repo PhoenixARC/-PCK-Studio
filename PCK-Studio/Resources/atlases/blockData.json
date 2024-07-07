@@ -2317,11 +2317,11 @@
 		{
 			"internalName": "cauldron_water",
 			"displayName": "Cauldron Water",
+			"allowCustomColour": true,
 			"hasColourEntry": true,
 			"colourEntry": {
-				"hasCustomColour": true,
 				"defaultName": "Cauldron_Water",
-				"variants": [ 
+				"variants": [
 					"Cauldron_Water",
 					"Effect_MovementSpeed",
 					"Effect_MovementSlowDown",

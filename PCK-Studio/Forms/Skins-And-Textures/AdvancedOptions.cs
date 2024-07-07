@@ -1,4 +1,5 @@
-﻿using OMI;
+﻿using DiscordRPC;
+using OMI;
 using OMI.Formats.Pck;
 using OMI.Workers.Pck;
 using PckStudio.Extensions;
@@ -37,27 +38,27 @@ namespace PckStudio.Popups
         {
             if (fileTypeComboBox.SelectedIndex >= 0 && fileTypeComboBox.SelectedIndex <= 13)
             {
-                applyBulkProperties(_pckFile.GetFiles(), fileTypeComboBox.SelectedIndex - 1);
+                applyBulkProperties(_pckFile.GetAssets(), fileTypeComboBox.SelectedIndex - 1);
                 DialogResult = DialogResult.OK;
                 return;
             }
             MessageBox.Show(this, "Please select a filetype before applying");
         }
 
-        private void applyBulkProperties(IReadOnlyCollection<PckAsset> files, int index)
+        private void applyBulkProperties(IReadOnlyCollection<PckAsset> assets, int index)
 		{
-            foreach (PckAsset file in files)
+            foreach (PckAsset asset in assets)
             {
-                if (file.Type == PckAssetType.TexturePackInfoFile ||
-                file.Type == PckAssetType.SkinDataFile)
+                if (asset.Type == PckAssetType.TexturePackInfoFile ||
+                asset.Type == PckAssetType.SkinDataFile)
                 {
                     try
                     {
                         var reader = new PckFileReader(_endianness);
-                        using var ms = new MemoryStream(file.Data);
+                        using var ms = new MemoryStream(asset.Data);
                         PckFile subPCK = reader.FromStream(ms);
-                        applyBulkProperties(subPCK.GetFiles(), index);
-                        file.SetData(new PckFileWriter(subPCK, _endianness));
+                        applyBulkProperties(subPCK.GetAssets(), index);
+                        asset.SetData(new PckFileWriter(subPCK, _endianness));
                     }
                     catch (OverflowException ex)
                     {
@@ -65,9 +66,9 @@ namespace PckStudio.Popups
                     }
                 }
 
-                if (index == -1 || (Enum.IsDefined(typeof(PckAssetType), index) && (int)file.Type == index))
+                if (index == -1 || (Enum.IsDefined(typeof(PckAssetType), index) && (int)asset.Type == index))
                 {
-                    file.AddProperty(propertyKeyTextBox.Text, propertyValueTextBox.Text);
+                    asset.AddProperty(propertyKeyTextBox.Text, propertyValueTextBox.Text);
                 }
             }
 

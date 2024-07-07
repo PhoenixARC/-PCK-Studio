@@ -15,13 +15,14 @@ using PckStudio.Properties;
 using PckStudio.Internal;
 using PckStudio.Extensions;
 using PckStudio.Internal.Json;
+using PckStudio.Internal.App;
 
 namespace PckStudio.Forms.Editor
 {
 	public partial class BehaviourEditor : MetroForm
 	{
 		// Behaviours File Format research by Miku and MattNL
-		private readonly PckAsset _file;
+		private readonly PckAsset _asset;
 		BehaviourFile behaviourFile;
 
 		private readonly List<EntityInfo> BehaviourData = Entities.BehaviourInfos;
@@ -54,15 +55,15 @@ namespace PckStudio.Forms.Editor
 			treeView1.EndUpdate();
 		}
 
-		public BehaviourEditor(PckAsset file)
+		public BehaviourEditor(PckAsset asset)
 		{
 			InitializeComponent();
 
 			saveToolStripMenuItem1.Visible = !Settings.Default.AutoSaveChanges;
 
-            _file = file;
+            _asset = asset;
 
-			using (var stream = new MemoryStream(file.Data))
+			using (var stream = new MemoryStream(asset.Data))
 			{
 				var reader = new BehavioursReader();
 				behaviourFile = reader.FromStream(stream);
@@ -150,7 +151,6 @@ namespace PckStudio.Forms.Editor
 			if (!(treeView1.SelectedNode.Tag is BehaviourFile.RiderPositionOverride entry)) return;
 
 			var diag = new AddEntry("behaviours", ApplicationScope.EntityImages);
-			diag.acceptBtn.Text = "Save";
 
 			if (diag.ShowDialog(this) == DialogResult.OK)
 			{
@@ -255,7 +255,7 @@ namespace PckStudio.Forms.Editor
 				}
 			}
 
-			_file.SetData(new BehavioursWriter(behaviourFile));
+			_asset.SetData(new BehavioursWriter(behaviourFile));
 
 			DialogResult = DialogResult.OK;
 		}

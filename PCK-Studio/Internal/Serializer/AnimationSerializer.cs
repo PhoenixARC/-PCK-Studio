@@ -17,12 +17,12 @@ namespace PckStudio.Internal.Serializer
     {
         public static readonly AnimationSerializer DefaultSerializer = new AnimationSerializer();
 
-        public void Serialize(Animation animation, ref PckAsset file)
+        public void Serialize(Animation animation, ref PckAsset asset)
         {
             string anim = animation.BuildAnim();
-            file.SetProperty("ANIM", anim);
+            asset.SetProperty("ANIM", anim);
             var texture = animation.BuildTexture();
-            file.SetTexture(texture);
+            asset.SetTexture(texture);
         }
     }
 }

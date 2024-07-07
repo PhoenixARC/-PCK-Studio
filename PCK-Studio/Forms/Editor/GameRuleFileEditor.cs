@@ -21,7 +21,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using PckStudio.Forms.Additional_Popups.Grf;
-using PckStudio.Classes.Misc;
+using PckStudio.Internal.Misc;
 using OMI.Formats.GameRule;
 using OMI.Workers.GameRule;
 using System.Diagnostics;

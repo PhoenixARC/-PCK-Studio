@@ -13,13 +13,14 @@ using OMI.Workers.Material;
 using PckStudio.Internal;
 using PckStudio.Extensions;
 using PckStudio.Internal.Json;
+using PckStudio.Internal.App;
 
 namespace PckStudio.Forms.Editor
 {
 	public partial class MaterialsEditor : MetroForm
 	{
 		// Materials File Format research by PhoenixARC
-		private readonly PckAsset _file;
+		private readonly PckAsset _asset;
 		MaterialContainer materialFile;
 
 		private readonly List<EntityInfo> MaterialData = Entities.BehaviourInfos;
@@ -64,12 +65,12 @@ namespace PckStudio.Forms.Editor
 			treeView1.EndUpdate();
 		}
 
-		public MaterialsEditor(PckAsset file)
+		public MaterialsEditor(PckAsset asset)
 		{
 			InitializeComponent();
-			_file = file;
+			_asset = asset;
 
-			using (var stream = new MemoryStream(file.Data))
+			using (var stream = new MemoryStream(asset.Data))
 			{
 				var reader = new MaterialFileReader();
 				materialFile = reader.FromStream(stream);
@@ -136,7 +137,7 @@ namespace PckStudio.Forms.Editor
 				materialFile.Add(mat);
 			}
 
-			_file.SetData(new MaterialFileWriter(materialFile));
+			_asset.SetData(new MaterialFileWriter(materialFile));
 			
 			DialogResult = DialogResult.OK;
 		}

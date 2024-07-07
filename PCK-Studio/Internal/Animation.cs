@@ -29,8 +29,6 @@ namespace PckStudio.Internal
 	{
 		public const int MinimumFrameTime = 1;
 
-		public const int GameTickInMilliseconds = 50;
-
 		public int FrameCount => frames.Count;
 
 		public int TextureCount => textures.Count;
