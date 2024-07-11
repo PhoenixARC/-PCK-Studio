@@ -17,7 +17,6 @@ namespace PckStudio.Forms.Editor
 {
 	public partial class LOCEditor : MetroForm
     {
-		DataTable tbl;
 		LOCFile currentLoc;
 		PckAsset _asset;
 
@@ -30,13 +29,6 @@ namespace PckStudio.Forms.Editor
 				var reader = new LOCFileReader();
                 currentLoc = reader.FromStream(ms);
             }
-			tbl = new DataTable();
-			tbl.Columns.Add(new DataColumn("Language") { ReadOnly = true });
-			tbl.Columns.Add("Display Name");
-			dataGridViewLocEntryData.DataSource = tbl;
-            DataGridViewColumn column = dataGridViewLocEntryData.Columns[1];
-            column.Width = dataGridViewLocEntryData.Width;
-
 			saveToolStripMenuItem.Visible = !Settings.Default.AutoSaveChanges;
         }
 
@@ -61,17 +53,15 @@ namespace PckStudio.Forms.Editor
 
 		private void addDisplayIDToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (treeViewLocKeys.SelectedNode is TreeNode)
-				using (TextPrompt prompt = new TextPrompt())
+			using (TextPrompt prompt = new TextPrompt())
+			{
+				prompt.OKButtonText = "Add";
+				if (prompt.ShowDialog(this) == DialogResult.OK && 
+					currentLoc.AddLocKey(prompt.NewText, ""))
 				{
-					prompt.OKButtonText = "Add";
-					if (prompt.ShowDialog(this) == DialogResult.OK && 
-						!currentLoc.LocKeys.ContainsKey(prompt.NewText) &&
-						currentLoc.AddLocKey(prompt.NewText, ""))
-					{
-						treeViewLocKeys.Nodes.Add(prompt.NewText);
-					}
+					treeViewLocKeys.Nodes.Add(prompt.NewText);
 				}
+			}
         }
 
         private void deleteDisplayIDToolStripMenuItem_Click(object sender, EventArgs e)
@@ -79,18 +69,23 @@ namespace PckStudio.Forms.Editor
 			if (treeViewLocKeys.SelectedNode is TreeNode t && currentLoc.RemoveLocKey(t.Text))
 			{
 				treeViewLocKeys.SelectedNode.Remove();
+				ReloadTranslationTable();
             }
 		}
 
 		private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
 		{
-			if (e.ColumnIndex != 1 ||
-				treeViewLocKeys.SelectedNode == null)
+            if (e.ColumnIndex != 1 ||
+				treeViewLocKeys.SelectedNode is null)
             {
 				MessageBox.Show(this, "something went wrong");
 				return;
             }
-			currentLoc.SetLocEntry(treeViewLocKeys.SelectedNode.Text, tbl.Rows[e.RowIndex][0].ToString(), tbl.Rows[e.RowIndex][1].ToString());
+			var row = dataGridViewLocEntryData.Rows[e.RowIndex];
+			string locKey = treeViewLocKeys.SelectedNode.Text;
+            string language = row.Cells[0].Value.ToString();
+			string value    = row.Cells[1].Value.ToString();
+            currentLoc.SetLocEntry(locKey, language, value);
         }
 
         private void treeView1_KeyDown(object sender, KeyEventArgs e)
@@ -101,25 +96,21 @@ namespace PckStudio.Forms.Editor
 
 		private void buttonReplaceAll_Click(object sender, EventArgs e)
 		{
-            for (int i = 0; i < tbl.Rows.Count; i++)
+            for (int i = 0; i < dataGridViewLocEntryData.Rows.Count; i++)
             {
-                tbl.Rows[i][1] = textBoxReplaceAll.Text;
+                dataGridViewLocEntryData.Rows[i].Cells[1].Value = textBoxReplaceAll.Text;
             }
 
 			currentLoc.SetLocEntry(treeViewLocKeys.SelectedNode.Text, textBoxReplaceAll.Text);
 		}
 
-        private void LOCEditor_Resize(object sender, EventArgs e)
-        {
-			DataGridViewColumn column = dataGridViewLocEntryData.Columns[1];
-			column.Width = dataGridViewLocEntryData.Width - dataGridViewLocEntryData.Columns[0].Width;
-		}
-
 		private void ReloadTranslationTable()
         {
-			tbl.Rows.Clear();
+			dataGridViewLocEntryData.Rows.Clear();
+			if (treeViewLocKeys.SelectedNode is null)
+				return;
 			foreach (var l in currentLoc.GetLocEntries(treeViewLocKeys.SelectedNode.Text))
-				tbl.Rows.Add(l.Key, l.Value);
+                dataGridViewLocEntryData.Rows.Add(l.Key, l.Value);
 		}
 
 		private IEnumerable<string> GetAvailableLanguages()
