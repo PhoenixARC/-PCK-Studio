@@ -44,15 +44,15 @@ namespace PckStudio.FileFormats
 			}
 
 			public string Name { get; set; } = string.Empty;
-            public EAudioParameterType parameterType { get; }
-			public EAudioType audioType { get; }
+			public EAudioType AudioType { get; }
 			public List<string> SongNames { get;  } = new List<string>();
+            public EAudioParameterType parameterType { get; }
 
 			public AudioCategory(string name, EAudioParameterType parameterType, EAudioType audioType)
 			{
 				this.Name = name;
 				this.parameterType = parameterType;
-				this.audioType = audioType;
+				this.AudioType = audioType;
 			}
 		}
 

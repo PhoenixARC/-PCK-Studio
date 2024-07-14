@@ -71,7 +71,7 @@ namespace PckStudio.Internal.IO.PckAudio
             foreach (var category in _file.Categories)
             {
                 writer.Write((int)category.parameterType);
-                writer.Write((int)category.audioType);
+                writer.Write((int)category.AudioType);
                 WriteString(writer, category.Name);
             }
         }

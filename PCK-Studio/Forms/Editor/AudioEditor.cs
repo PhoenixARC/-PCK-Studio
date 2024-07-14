@@ -89,7 +89,7 @@ namespace PckStudio.Forms.Editor
 				foreach (string songname in category.SongNames.FindAll(s => s.Contains('\\')))
 					category.SongNames[category.SongNames.IndexOf(songname)] = songname.Replace('\\', '/');
 
-				if (category.audioType == PckAudioFile.AudioCategory.EAudioType.Creative)
+				if (category.AudioType == PckAudioFile.AudioCategory.EAudioType.Creative)
 				{
 					if (category.Name == "include_overworld" &&
 						_audioFile.TryGetCategory(PckAudioFile.AudioCategory.EAudioType.Overworld, out PckAudioFile.AudioCategory overworldCategory))
@@ -104,7 +104,7 @@ namespace PckStudio.Forms.Editor
 					playOverworldInCreative.Visible = true;
 				}
 
-				TreeNode treeNode = new TreeNode(GetCategoryFromId(category.audioType), (int)category.audioType, (int)category.audioType);
+				TreeNode treeNode = new TreeNode(GetCategoryFromId(category.AudioType), (int)category.AudioType, (int)category.AudioType);
 				treeNode.Tag = category;
 				treeView1.Nodes.Add(treeNode);
 			}
@@ -153,7 +153,7 @@ namespace PckStudio.Forms.Editor
 					playOverworldInCreative.Checked = false;
 				}
 
-				TreeNode treeNode = new TreeNode(GetCategoryFromId(category.audioType), (int)category.audioType, (int)category.audioType);
+			TreeNode treeNode = new TreeNode(GetCategoryFromId(category.AudioType), (int)category.AudioType, (int)category.AudioType);
 				treeNode.Tag = category;
 				treeView1.Nodes.Add(treeNode);
 
@@ -386,7 +386,7 @@ namespace PckStudio.Forms.Editor
 				}
 
 				category.Name = "";
-				if (playOverworldInCreative.Checked && category.audioType == PckAudioFile.AudioCategory.EAudioType.Creative)
+				if (playOverworldInCreative.Checked && category.AudioType == PckAudioFile.AudioCategory.EAudioType.Creative)
 				{
 					foreach (var name in overworldCategory.SongNames)
 					{
@@ -576,9 +576,9 @@ namespace PckStudio.Forms.Editor
 				add.ButtonText = "Save";
 				if (add.ShowDialog(this) != DialogResult.OK) return;
 
-				_audioFile.RemoveCategory(category.audioType);
+				_audioFile.RemoveCategory(category.AudioType);
 
-				_audioFile.AddCategory(category.parameterType, GetCategoryId(add.SelectedItem), category.audioType == PckAudioFile.AudioCategory.EAudioType.Overworld && playOverworldInCreative.Checked ? "include_overworld" : "");
+				_audioFile.AddCategory(category.parameterType, GetCategoryId(add.SelectedItem), category.AudioType == PckAudioFile.AudioCategory.EAudioType.Overworld && playOverworldInCreative.Checked ? "include_overworld" : "");
 
 				var newCategory = _audioFile.GetCategory(GetCategoryId(add.SelectedItem));
 
