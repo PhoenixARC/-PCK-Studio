@@ -567,7 +567,7 @@ namespace PckStudio
 		{
 			using COLEditor diag = new COLEditor(asset);
 			wasModified = diag.ShowDialog(this) == DialogResult.OK;
-		}
+        }
 
 		public void HandleSkinFile(PckAsset asset)
 		{
@@ -1687,8 +1687,10 @@ namespace PckStudio
 			if (!HasDataFolder())
 			{
 				DialogResult result = MessageBox.Show(this, "There is not a \"Data\" folder present in the pack folder. Would you like to create one?", "Folder missing", MessageBoxButtons.YesNo);
-				if (result == DialogResult.No) return false;
-				else Directory.CreateDirectory(GetDataPath());
+				if (result == DialogResult.No)
+					return false;
+				else
+					Directory.CreateDirectory(GetDataPath());
 			}
 			return true;
 		}
@@ -1926,7 +1928,7 @@ namespace PckStudio
 		{
 			if (currentPCK is not null &&
 				wasModified &&
-				MessageBox.Show(this, "Save PCK?", "Unsaved PCK", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+				MessageBox.Show(this, "Save PCK?", "Unsaved PCK", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
 			{
 				if (isTemplateFile || string.IsNullOrEmpty(saveLocation))
 				{
@@ -2125,13 +2127,12 @@ namespace PckStudio
 							currentPCK.RemoveAsset(currentPCK.GetAsset(mippedPath, PckAssetType.TextureFile));
 						PckAsset mipMappedAsset = new PckAsset(mippedPath, PckAssetType.TextureFile);
 
-
 						Image originalTexture = asset.GetTexture();
-						int NewWidth = Math.Max(originalTexture.Width / (int)Math.Pow(2, i - 1), 1);
-						int NewHeight = Math.Max(originalTexture.Height / (int)Math.Pow(2, i - 1), 1);
+						int newWidth = Math.Max(originalTexture.Width / (int)Math.Pow(2, i - 1), 1);
+						int newHeight = Math.Max(originalTexture.Height / (int)Math.Pow(2, i - 1), 1);
 
-						Rectangle tileArea = new Rectangle(0, 0, NewWidth, NewHeight);
-						Image mippedTexture = new Bitmap(NewWidth, NewHeight);
+						Rectangle tileArea = new Rectangle(0, 0, newWidth, newHeight);
+						Image mippedTexture = new Bitmap(newWidth, newHeight);
 						using (Graphics gfx = Graphics.FromImage(mippedTexture))
 						{
 							gfx.SmoothingMode = SmoothingMode.None;
