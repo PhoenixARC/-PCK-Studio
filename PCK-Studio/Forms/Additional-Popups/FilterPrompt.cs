@@ -29,6 +29,8 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 		public string AcceptButtonText { get => acceptButton.Text; set => acceptButton.Text = value; }
 		public string CancelButtonText { get => cancelButton.Text; set => cancelButton.Text = value; }
 
+		public Color PageBackColor { get; set; } = Color.FromArgb(64, 64, 64);
+
 		private object selectedItem;
 		public object SelectedItem => selectedItem;
 
@@ -56,7 +58,7 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 			var pageView = new TreeView()
 			{
 				Dock = DockStyle.Fill,
-				BackColor = Color.FromArgb(64, 64, 64),
+				BackColor = PageBackColor,
 			};
 			pageView.AfterSelect += (sender, e) =>
 			{
