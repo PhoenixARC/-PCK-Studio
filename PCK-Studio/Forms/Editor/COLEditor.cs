@@ -63,26 +63,30 @@ namespace PckStudio.Forms.Editor
 				if (result == DialogResult.No) return;
 			}
 
-			var reader = new COLFileReader();
-
-			switch (ID)
+			byte[] colorData = ID switch
 			{
-				case 0: using (var stream = new MemoryStream(Properties.Resources.tu12colours)) default_colourfile = reader.FromStream(stream); break;
-				case 1: using (var stream = new MemoryStream(Properties.Resources.tu13colours)) default_colourfile = reader.FromStream(stream); break;
-				case 2: using (var stream = new MemoryStream(Properties.Resources.tu14colours)) default_colourfile = reader.FromStream(stream); break;
-				case 3: using (var stream = new MemoryStream(Properties.Resources.tu19colours)) default_colourfile = reader.FromStream(stream); break;
-				case 4: using (var stream = new MemoryStream(Properties.Resources.tu31colours)) default_colourfile = reader.FromStream(stream); break;
-				case 5: using (var stream = new MemoryStream(Properties.Resources.tu32colours)) default_colourfile = reader.FromStream(stream); break;
-				case 6: using (var stream = new MemoryStream(Properties.Resources.tu43colours)) default_colourfile = reader.FromStream(stream); break;
-				case 7: using (var stream = new MemoryStream(Properties.Resources.tu46colours)) default_colourfile = reader.FromStream(stream); break;
-				case 8: using (var stream = new MemoryStream(Properties.Resources.tu51colours)) default_colourfile = reader.FromStream(stream); break;
-				case 9: using (var stream = new MemoryStream(Properties.Resources.tu53colours)) default_colourfile = reader.FromStream(stream); break;
-				case 10: using (var stream = new MemoryStream(Properties.Resources.tu54colours)) default_colourfile = reader.FromStream(stream); break;
-				case 11: using (var stream = new MemoryStream(Properties.Resources.tu69colours)) default_colourfile = reader.FromStream(stream); break;
-				case 12: using (var stream = new MemoryStream(Properties.Resources._1_91_colours)) default_colourfile = reader.FromStream(stream); break;
-				default: return;
-			}
-			SetUpTable(targetVersion);
+				0 => Resources.tu12colours,
+				1 => Resources.tu13colours,
+				2 => Resources.tu14colours,
+				3 => Resources.tu19colours,
+				4 => Resources.tu31colours,
+				5 => Resources.tu32colours,
+				6 => Resources.tu43colours,
+				7 => Resources.tu46colours,
+				8 => Resources.tu51colours,
+				9 => Resources.tu53colours,
+				10 => Resources.tu54colours,
+				11 => Resources.tu69colours,
+				12 => Resources._1_91_colours,
+				_ => throw new ArgumentOutOfRangeException(nameof(ID)),
+			};
+			var reader = new COLFileReader();
+            using (var stream = new MemoryStream(colorData))
+			{
+				default_colourfile = reader.FromStream(stream);
+            }
+
+            SetUpTable(targetVersion);
 		}
 
 		void AddEntry(TreeView treeView, List<TreeNode> cache, string name, object tag)
