@@ -72,11 +72,7 @@ namespace PckStudio.Forms.Editor
             _isLittleEndian = isLittleEndian;
 
 			_audioAsset = asset;
-			using (var stream = new MemoryStream(asset.Data))
-			{
-				var reader = new PckAudioFileReader(isLittleEndian ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
-                _audioFile = reader.FromStream(stream);
-			}
+            _audioFile = _audioAsset.GetData(new PckAudioFileReader(isLittleEndian ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian));
 
 			SetUpTree();
 		}

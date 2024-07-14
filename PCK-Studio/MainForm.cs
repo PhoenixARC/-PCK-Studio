@@ -1752,11 +1752,7 @@ namespace PckStudio
 
 			try
 			{
-				using (var stream = new MemoryStream(locAsset.Data))
-				{
-					var reader = new LOCFileReader();
-					locFile = reader.FromStream(stream);
-				}
+                locFile = locAsset.GetData(new LOCFileReader());
 				return true;
 			}
 			catch (Exception ex)

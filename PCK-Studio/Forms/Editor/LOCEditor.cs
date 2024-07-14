@@ -24,11 +24,7 @@ namespace PckStudio.Forms.Editor
 		{
 			InitializeComponent();
 			_asset = asset;
-            using (var ms = new MemoryStream(asset.Data))
-            {
-				var reader = new LOCFileReader();
-                currentLoc = reader.FromStream(ms);
-            }
+			currentLoc = asset.GetData(new LOCFileReader());
 			saveToolStripMenuItem.Visible = !Settings.Default.AutoSaveChanges;
         }
 

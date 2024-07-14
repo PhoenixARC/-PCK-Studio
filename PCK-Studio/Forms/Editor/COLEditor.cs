@@ -33,12 +33,7 @@ namespace PckStudio.Forms.Editor
 			saveToolStripMenuItem1.Visible = !Settings.Default.AutoSaveChanges;
 
             _asset = asset;
-
-			using(var stream = new MemoryStream(asset.Data))
-			{
-				var reader = new COLFileReader();
-                colourfile = reader.FromStream(stream);
-			}
+			colourfile = asset.GetData(new COLFileReader());
 
 			TU12ToolStripMenuItem.Click += (sender, e) => SetUpDefaultFile(sender, e, 0);
 			TU13ToolStripMenuItem.Click += (sender, e) => SetUpDefaultFile(sender, e, 1);
