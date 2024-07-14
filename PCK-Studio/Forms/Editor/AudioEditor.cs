@@ -33,7 +33,7 @@ namespace PckStudio.Forms.Editor
 		bool _isLittleEndian = false;
         MainForm parent = null;
 
-        public static readonly List<string> Categories = new List<string>
+        private static readonly List<string> Categories = new List<string>
 		{
 			"Overworld",
 			"Nether",
@@ -114,55 +114,60 @@ namespace PckStudio.Forms.Editor
 
 		private void verifyFileLocationToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (treeView1.SelectedNode == null || treeView2.SelectedNode == null) return;
+			if (treeView1.SelectedNode == null || treeView2.SelectedNode == null)
+				return;
 			var entry = treeView2.SelectedNode;
 
-			if (!parent.CreateDataFolder()) return;
+			if (!parent.CreateDataFolder())
+				return;
 			string FileName = Path.Combine(parent.GetDataPath(), entry.Text + ".binka");
 
-			if (File.Exists(FileName)) MessageBox.Show(this, "\"" + entry.Text + ".binka\" exists in the \"Data\" folder", "File found");
-			else MessageBox.Show(this, "\"" + entry.Text + ".binka\" does not exist in the \"Data\" folder. The game will crash when attempting to load this track.", "File missing");
+			if (File.Exists(FileName))
+				MessageBox.Show(this, $"\"{entry.Text}.binka\" exists in the \"Data\" folder", "File found");
+			else
+				MessageBox.Show(this, $"\"{entry.Text}.binka\" does not exist in the \"Data\" folder. The game will crash when attempting to load this track.", "File missing");
 		}
 
 		private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
 		{
 			treeView2.Nodes.Clear();
 			if (e.Node.Tag is PckAudioFile.AudioCategory category)
+			{
 				foreach (var name in category.SongNames)
 				{
 					treeView2.Nodes.Add(name);
 				}
-			if (treeView2.Nodes.Count > 0) treeView2.SelectedNode = treeView2.Nodes[0];
+			}
+			if (treeView2.Nodes.Count > 0)
+				treeView2.SelectedNode = treeView2.Nodes[0];
 		}
 
 		private void addCategoryStripMenuItem_Click(object sender, EventArgs e)
 		{
 			string[] available = Categories.FindAll(str => !_audioFile.HasCategory(GetCategoryId(str))).ToArray();
-			if (available.Length > 0)
-			{
-				using ItemSelectionPopUp add = new ItemSelectionPopUp(available);
-				if (add.ShowDialog(this) == DialogResult.OK)
-					_audioFile.AddCategory(GetCategoryId(add.SelectedItem));
-				else return;
-
-				var category = _audioFile.GetCategory(GetCategoryId(add.SelectedItem));
-
-				if (GetCategoryId(add.SelectedItem) == PckAudioFile.AudioCategory.EAudioType.Creative)
-				{
-					playOverworldInCreative.Visible = true;
-					playOverworldInCreative.Checked = false;
-				}
-
-			TreeNode treeNode = new TreeNode(GetCategoryFromId(category.AudioType), (int)category.AudioType, (int)category.AudioType);
-				treeNode.Tag = category;
-				treeView1.Nodes.Add(treeNode);
-
-				SetUpTree();
-			}
-			else
+			if (available.Length == 0)
 			{
 				MessageBox.Show(this, "There are no more categories that could be added", "All possible categories are used");
 			}
+			
+			using ItemSelectionPopUp add = new ItemSelectionPopUp(available);
+			if (add.ShowDialog(this) == DialogResult.OK)
+				_audioFile.AddCategory(GetCategoryId(add.SelectedItem));
+			else return;
+
+			var category = _audioFile.GetCategory(GetCategoryId(add.SelectedItem));
+
+			if (GetCategoryId(add.SelectedItem) == PckAudioFile.AudioCategory.EAudioType.Creative)
+			{
+				playOverworldInCreative.Visible = true;
+				playOverworldInCreative.Checked = false;
+			}
+
+			TreeNode treeNode = new TreeNode(GetCategoryFromId(category.AudioType), (int)category.AudioType, (int)category.AudioType);
+			treeNode.Tag = category;
+			treeView1.Nodes.Add(treeNode);
+
+			SetUpTree();
 		}
 
 		private void addEntryMenuItem_Click(object sender, EventArgs e)
