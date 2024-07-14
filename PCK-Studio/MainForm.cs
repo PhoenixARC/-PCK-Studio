@@ -429,15 +429,15 @@ namespace PckStudio
 			treeViewMain.Nodes.Clear();
 			BuildPckTreeView(treeViewMain.Nodes, currentPCK);
 
-			if (isTemplateFile && currentPCK.HasAsset("Skins.pck", PckAssetType.SkinDataFile))
-			{
-				TreeNode skinsNode = treeViewMain.Nodes.Find("Skins.pck", false).FirstOrDefault();
-				TreeNode folderNode = CreateNode("Skins");
-				folderNode.ImageIndex = 0;
-				folderNode.SelectedImageIndex = 0;
-				if (!skinsNode.Nodes.ContainsKey("Skins"))
-					skinsNode.Nodes.Add(folderNode);
-			}
+			//if (isTemplateFile && currentPCK.HasAsset("Skins.pck", PckAssetType.SkinDataFile))
+			//{
+			//	TreeNode skinsNode = treeViewMain.Nodes.Find("Skins.pck", false).FirstOrDefault();
+			//	TreeNode folderNode = CreateNode("Skins");
+			//	folderNode.ImageIndex = 0;
+			//	folderNode.SelectedImageIndex = 0;
+			//	if (!skinsNode.Nodes.ContainsKey("Skins"))
+			//		skinsNode.Nodes.Add(folderNode);
+			//}
 			treeViewMain.Sort();
 
 			TreeNode[] selectedNodes = treeViewMain.FindPath(selectedNodeText);
@@ -2238,12 +2238,6 @@ namespace PckStudio
 					LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian));
 
 			BuildMainTreeView();
-
-			TreeNode skinsNode = treeViewMain.Nodes.Find("Skins.pck", false).FirstOrDefault();
-			TreeNode folderNode = CreateNode("Skins");
-			folderNode.ImageIndex = 0;
-			folderNode.SelectedImageIndex = 0;
-			skinsNode.Nodes.Add(folderNode);
 		}
 
 		private void editAllEntriesToolStripMenuItem_Click(object sender, EventArgs e)
