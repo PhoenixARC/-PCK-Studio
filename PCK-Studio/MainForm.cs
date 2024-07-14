@@ -961,36 +961,36 @@ namespace PckStudio
 			using AddSkinPrompt add = new AddSkinPrompt(locFile);
 			if (add.ShowDialog(this) == DialogResult.OK)
 			{
-				if (currentPCK.HasAsset("Skins.pck", PckAssetType.SkinDataFile)) // Prioritize Skins.pck
-				{
-					TreeNode subPCK = treeViewMain.Nodes.Find("Skins.pck", false).FirstOrDefault();
-					if (subPCK.Nodes.ContainsKey("Skins")) add.SkinAsset.Filename = add.SkinAsset.Filename.Insert(0, "Skins/");
-					add.SkinAsset.Filename = add.SkinAsset.Filename.Insert(0, "Skins.pck/");
-					TreeNode newNode = new TreeNode(Path.GetFileName(add.SkinAsset.Filename));
-					newNode.Tag = add.SkinAsset;
-					SetNodeIcon(newNode, PckAssetType.SkinFile);
-					subPCK.Nodes.Add(newNode);
-					RebuildSubPCK(newNode.FullPath);
-				}
-				else
+				//if (currentPCK.HasAsset("Skins.pck", PckAssetType.SkinDataFile)) // Prioritize Skins.pck
+				//{
+				//	TreeNode subPCK = treeViewMain.Nodes.Find("Skins.pck", false).FirstOrDefault();
+				//	if (subPCK.Nodes.ContainsKey("Skins")) add.SkinAsset.Filename = add.SkinAsset.Filename.Insert(0, "Skins/");
+				//	add.SkinAsset.Filename = add.SkinAsset.Filename.Insert(0, "Skins.pck/");
+				//	TreeNode newNode = new TreeNode(Path.GetFileName(add.SkinAsset.Filename));
+				//	newNode.Tag = add.SkinAsset;
+				//	SetNodeIcon(newNode, PckAssetType.SkinFile);
+				//	subPCK.Nodes.Add(newNode);
+				//	RebuildSubPCK(newNode.FullPath);
+				//}
+				//else
 				{
 					if (treeViewMain.Nodes.ContainsKey("Skins")) add.SkinAsset.Filename = add.SkinAsset.Filename.Insert(0, "Skins/"); // Then Skins folder
 					currentPCK.AddAsset(add.SkinAsset);
 				}
 				if (add.HasCape)
 				{
-					if (currentPCK.HasAsset("Skins.pck", PckAssetType.SkinDataFile)) // Prioritize Skins.pck
-					{
-						TreeNode subPCK = treeViewMain.Nodes.Find("Skins.pck", false).FirstOrDefault();
-						if (subPCK.Nodes.ContainsKey("Skins")) add.CapeAsset.Filename = add.CapeAsset.Filename.Insert(0, "Skins/");
-						add.CapeAsset.Filename = add.CapeAsset.Filename.Insert(0, "Skins.pck/");
-						TreeNode newNode = new TreeNode(Path.GetFileName(add.CapeAsset.Filename));
-						newNode.Tag = add.CapeAsset;
-						SetNodeIcon(newNode, PckAssetType.SkinFile);
-						subPCK.Nodes.Add(newNode);
-						RebuildSubPCK(newNode.FullPath);
-					}
-					else
+					//if (currentPCK.HasAsset("Skins.pck", PckAssetType.SkinDataFile)) // Prioritize Skins.pck
+					//{
+					//	TreeNode subPCK = treeViewMain.Nodes.Find("Skins.pck", false).FirstOrDefault();
+					//	if (subPCK.Nodes.ContainsKey("Skins")) add.CapeAsset.Filename = add.CapeAsset.Filename.Insert(0, "Skins/");
+					//	add.CapeAsset.Filename = add.CapeAsset.Filename.Insert(0, "Skins.pck/");
+					//	TreeNode newNode = new TreeNode(Path.GetFileName(add.CapeAsset.Filename));
+					//	newNode.Tag = add.CapeAsset;
+					//	SetNodeIcon(newNode, PckAssetType.SkinFile);
+					//	subPCK.Nodes.Add(newNode);
+					//	RebuildSubPCK(newNode.FullPath);
+					//}
+					//else
 					{
 						if (treeViewMain.Nodes.ContainsKey("Skins")) add.CapeAsset.Filename = add.CapeAsset.Filename.Insert(0, "Skins/"); // Then Skins folder
 						currentPCK.AddAsset(add.CapeAsset);
