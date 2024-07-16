@@ -22,8 +22,8 @@ namespace PckStudio.Forms.Features
 {
     public partial class PckManager : MetroFramework.Forms.MetroForm
     {
-        private Control currentlyShowingControl;
-        private string currentlyShowingControlName;
+        private Control _currentlyShowingControl;
+        private string _currentlyShowingControlName;
         private const string CemU = "Cemu";
 
         // TODO: Implement these Panels
@@ -47,29 +47,29 @@ namespace PckStudio.Forms.Features
 
         protected override void OnGotFocus(EventArgs e)
         {
-            currentlyShowingControl?.Focus();
+            _currentlyShowingControl?.Focus();
         }
 
         private void supportedPlatformComboBox_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            if (!supportedPlatformComboBox.SelectedItem.Equals(currentlyShowingControlName))
+            if (!supportedPlatformComboBox.SelectedItem.Equals(_currentlyShowingControlName))
             {
-                mainPanel.Controls.Remove(currentlyShowingControl);
-                currentlyShowingControlName = supportedPlatformComboBox.Items[supportedPlatformComboBox.SelectedIndex].ToString();
+                mainPanel.Controls.Remove(_currentlyShowingControl);
+                _currentlyShowingControlName = supportedPlatformComboBox.Items[supportedPlatformComboBox.SelectedIndex].ToString();
                 try
                 {
-                    currentlyShowingControl = currentlyShowingControlName switch
+                    _currentlyShowingControl = _currentlyShowingControlName switch
                     {
                         CemU => new CemuPanel(),
                         //WiiU => throw new NotImplementedException($"{text}-Panel is currently not implemented."),
                         //PS3 => throw new NotImplementedException($"{text}-Panel is currently not implemented."),
                         //PSVita => throw new NotImplementedException($"{text}-Panel is currently not implemented."),
                         //RPCS3 => throw new NotImplementedException($"{text}-Panel is currently not implemented."),
-                        _ => throw new Exception($"No Panel found for: {currentlyShowingControlName}"),
+                        _ => throw new Exception($"No Panel found for: {_currentlyShowingControlName}"),
                     };
-                    currentlyShowingControl.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Right;
-                    mainPanel.SetColumnSpan(currentlyShowingControl, 2);
-                    mainPanel.Controls.Add(currentlyShowingControl, 0, 1);
+                    _currentlyShowingControl.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Right;
+                    mainPanel.SetColumnSpan(_currentlyShowingControl, 2);
+                    mainPanel.Controls.Add(_currentlyShowingControl, 0, 1);
                 }
                 catch (NotImplementedException ex)
                 {

@@ -17,7 +17,6 @@
 **/
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using MetroFramework.Forms;
@@ -31,8 +30,8 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 
 		public Color PageBackColor { get; set; } = Color.FromArgb(64, 64, 64);
 
-		private object selectedItem;
-		public object SelectedItem => selectedItem;
+		private object _selectedItem;
+		public object SelectedItem => _selectedItem;
 
 		public int SelectedTabIndex => tabController.SelectedIndex;
 
@@ -62,7 +61,7 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 			};
 			pageView.AfterSelect += (sender, e) =>
 			{
-				selectedItem = e.Node.Tag;
+				_selectedItem = e.Node.Tag;
 				Events[nameof(OnSelectedItemChanged)]?.DynamicInvoke(this, EventArgs.Empty);
             };
             pageView.Tag = new List<TreeNode>(4);
@@ -114,7 +113,7 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 
 		private void AcceptBtn_Click(object sender, EventArgs e)
 		{
-            DialogResult = selectedItem is null ? DialogResult.Cancel : DialogResult.OK;
+            DialogResult = _selectedItem is null ? DialogResult.Cancel : DialogResult.OK;
 		}
 	}
 }

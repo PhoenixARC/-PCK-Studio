@@ -9,26 +9,26 @@ namespace PckStudio.Forms
 {
     public partial class SkinPreview : Form
     {
-        Image Texture;
-        ModelBase Model;
+        Image _texture;
+        ModelBase _model;
 
         public SkinPreview(Image img, SkinANIM anim, ModelBase model = null)
         {
             InitializeComponent();
-            Texture = img;
+            _texture = img;
 
-            Model = model ?? new Steve64x32Model(Texture);
+            _model = model ?? new Steve64x32Model(_texture);
             if (img.Width == 64 && img.Height == 64)
             {
-                Model = model ?? new Steve64x64Model(Texture, anim);
+                _model = model ?? new Steve64x64Model(_texture, anim);
             }
         }
 
-        private void SkinPreview_Load(object sender, EventArgs e) => RenderModel(Texture);
+        private void SkinPreview_Load(object sender, EventArgs e) => RenderModel(_texture);
         
         public void RenderModel(Image source)
         {
-			Model.AddToModelView(ModelView);
+			_model.AddToModelView(ModelView);
 		}
     }
 }

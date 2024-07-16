@@ -82,7 +82,7 @@ namespace PckStudio.Forms.Editor
 			treeView1.BeginUpdate();
 			treeView1.Nodes.Clear();
 
-			foreach (var category in _audioFile.Categories)
+			foreach (PckAudioFile.AudioCategory category in _audioFile.Categories)
 			{
 				// fix songs with directories using backslash instead of forward slash
 				// Songs with a backslash instead of a forward slash would not play in RPCS3
@@ -116,7 +116,7 @@ namespace PckStudio.Forms.Editor
 		{
 			if (treeView1.SelectedNode == null || treeView2.SelectedNode == null)
 				return;
-			var entry = treeView2.SelectedNode;
+            TreeNode entry = treeView2.SelectedNode;
 
 			if (!parent.CreateDataFolder())
 				return;
@@ -151,11 +151,11 @@ namespace PckStudio.Forms.Editor
 			}
 			
 			using ItemSelectionPopUp add = new ItemSelectionPopUp(available);
-			if (add.ShowDialog(this) == DialogResult.OK)
-				_audioFile.AddCategory(GetCategoryId(add.SelectedItem));
-			else return;
+			if (add.ShowDialog(this) != DialogResult.OK)
+				return;
 
-			var category = _audioFile.GetCategory(GetCategoryId(add.SelectedItem));
+			_audioFile.AddCategory(GetCategoryId(add.SelectedItem));
+            PckAudioFile.AudioCategory category = _audioFile.GetCategory(GetCategoryId(add.SelectedItem));
 
 			if (GetCategoryId(add.SelectedItem) == PckAudioFile.AudioCategory.EAudioType.Creative)
 			{
@@ -174,7 +174,8 @@ namespace PckStudio.Forms.Editor
 		{
 			if (treeView1.SelectedNode is TreeNode t && t.Tag is PckAudioFile.AudioCategory)
 			{
-				if (!parent.CreateDataFolder()) return;
+				if (!parent.CreateDataFolder())
+					return;
 
 				OpenFileDialog ofn = new OpenFileDialog();
 				ofn.Multiselect = true;
@@ -182,7 +183,9 @@ namespace PckStudio.Forms.Editor
 				ofn.Title = "Please choose WAV or BINKA files to add to your pack";
 				ofn.ShowDialog(this);
 				ofn.Dispose();
-				if (string.IsNullOrEmpty(ofn.FileName)) return; // Return if name is null or if the user cancels
+				// Return if name is null or if the user cancels
+				if (string.IsNullOrEmpty(ofn.FileName))
+					return;
 
 				ProcessEntries(ofn.FileNames);
 			}
@@ -224,7 +227,7 @@ namespace PckStudio.Forms.Editor
 			}
 		}
 
-		async void ProcessEntries(string[] FileList)
+		async void ProcessEntries(string[] fileList)
 		{
 			int success = 0;
 			int exitCode = 0;
@@ -235,7 +238,7 @@ namespace PckStudio.Forms.Editor
 
 			Directory.CreateDirectory(ApplicationScope.DataCacher.CacheDirectory); // create directory in case it doesn't exist
 
-			foreach (string file in FileList)
+			foreach (string file in fileList)
 			{
 				if (Path.GetExtension(file) == ".binka" || Path.GetExtension(file) == ".wav")
 				{
@@ -243,7 +246,8 @@ namespace PckStudio.Forms.Editor
 					songName = Regex.Replace(songName, @"[^\u0000-\u007F]+", "_"); // Replace UTF characters
 					string cacheSongFile = Path.Combine(ApplicationScope.DataCacher.CacheDirectory, songName + Path.GetExtension(file));
 
-					if(File.Exists(cacheSongFile)) File.Delete(cacheSongFile);
+					if (File.Exists(cacheSongFile))
+						File.Delete(cacheSongFile);
 
 					string new_loc = Path.Combine(parent.GetDataPath(), songName + ".binka");
 					bool is_duplicate_file = false; // To handle if a file already in the pack is dropped back in
@@ -264,13 +268,14 @@ namespace PckStudio.Forms.Editor
 
 						string diag_text = "A file named \"" + Path.GetFileNameWithoutExtension(file) + ".binka\" already exists in the Data folder.";
 
-						if (is_duplicate_file) diag_text = "\"" + Path.GetFileNameWithoutExtension(file) + ".binka\" has an identical copy present in the Data folder.";
+						if (is_duplicate_file)
+							diag_text = "\"" + Path.GetFileNameWithoutExtension(file) + ".binka\" has an identical copy present in the Data folder.";
 
 						diag_text += " Pressing yes will replace the existing file. By pressing no, the song entry will be added without affecting the file." +
 							"You can also cancel this operation and all files in queue.";
 
 						DialogResult user_prompt = MessageBox.Show(this, diag_text, "File already exists", MessageBoxButtons.YesNoCancel);
-						while (user_prompt == DialogResult.None) ; // Stops the editor from adding or processing the file until the user has made their choice
+						while (user_prompt == DialogResult.None) // Stops the editor from adding or processing the file until the user has made their choice
 						if (user_prompt == DialogResult.Cancel)
 						{
 							break;
@@ -290,7 +295,8 @@ namespace PckStudio.Forms.Editor
 						{
 							// deletes the file so that the copy function can happen safely
 							// and ignore duplicate files because well... they're duplicates lol
-							if (File.Exists(new_loc) && !is_duplicate_file) File.Delete(new_loc);
+							if (File.Exists(new_loc) && !is_duplicate_file)
+								File.Delete(new_loc);
 						}
 					}
 
@@ -314,7 +320,8 @@ namespace PckStudio.Forms.Editor
                             exitCode = Binka.ToBinka(cacheSongFile, new_loc, (int)compressionUpDown.Value);
 						});
 
-						if (!File.Exists(cacheSongFile)) MessageBox.Show(this, $"\"{songName}.wav\" failed to convert for some reason. Please report this on the communtiy Discord server, which can be found under \"More\" in the toolbar at the top of the program.", "Conversion failed");
+						if (!File.Exists(cacheSongFile))
+							MessageBox.Show(this, $"\"{songName}.wav\" failed to convert for some reason. Please report this on the communtiy Discord server, which can be found under \"More\" in the toolbar at the top of the program.", "Conversion failed");
 						else
 						{
 							success++;
@@ -323,7 +330,8 @@ namespace PckStudio.Forms.Editor
 
 						Cursor.Current = Cursors.Default;
 
-						if (exitCode != 0) continue;
+						if (exitCode != 0)
+							continue;
 					}
 
 					// if the file is NOT a .wav and doesn't exist, copy the file
@@ -344,7 +352,7 @@ namespace PckStudio.Forms.Editor
 			waitDiag.Close();
 			waitDiag.Dispose();
 
-			MessageBox.Show(this, $"Successfully processed and/or converted {success}/{FileList.Length} file{(FileList.Length != 1 ? "s" : "" )}", "Done!");
+			MessageBox.Show(this, $"Successfully processed and/or converted {success}/{fileList.Length} file{(fileList.Length != 1 ? "s" : "" )}", "Done!");
 		}
 
 		private void Binka_DragDrop(object sender, DragEventArgs e)
@@ -353,7 +361,8 @@ namespace PckStudio.Forms.Editor
 			// Gets the MainForm so we can access the Save Location
 			if (treeView1.SelectedNode != null)
 			{
-				if (!parent.CreateDataFolder()) return;
+				if (!parent.CreateDataFolder())
+					return;
 
 				ProcessEntries((string[])e.Data.GetData(DataFormats.FileDrop, false));
 			}
@@ -372,7 +381,7 @@ namespace PckStudio.Forms.Editor
 			PckAudioFile.AudioCategory overworldCategory = _audioFile.GetCategory(PckAudioFile.AudioCategory.EAudioType.Overworld);
 
 			bool songs_missing = false;
-			foreach (var category in _audioFile.Categories)
+			foreach (PckAudioFile.AudioCategory category in _audioFile.Categories)
 			{
 				if (category.SongNames.Count < 1)
 				{
@@ -432,7 +441,8 @@ namespace PckStudio.Forms.Editor
 		private void deleteUnusedBINKAsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			DialogResult dr = MessageBox.Show(this, "This will delete all unused BINKA songs in the Data directory. This cannot be undone. Are you sure you want to continue?", "Warning", MessageBoxButtons.YesNo);
-			if (dr != DialogResult.Yes) return;
+			if (dr != DialogResult.Yes)
+				return;
 			var totalSongList = new List<string>();
 			foreach (string song in _audioFile.Categories.SelectMany(cat => cat.SongNames))
 			{
@@ -440,7 +450,8 @@ namespace PckStudio.Forms.Editor
 				totalSongList.Add(song);
 			}
 
-			if (!parent.CreateDataFolder()) return;
+			if (!parent.CreateDataFolder())
+				return;
 			int totalDeleted = 0;
 			foreach (string song in Directory.GetFiles(parent.GetDataPath(), "*.binka"))
 			{
@@ -500,19 +511,23 @@ namespace PckStudio.Forms.Editor
 
 		private void openDataFolderToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (!parent.CreateDataFolder()) return;
+			if (!parent.CreateDataFolder())
+				return;
 			Process.Start("explorer.exe", parent.GetDataPath());
 		}
 
 		private void AudioEditor_Shown(object sender, EventArgs e)
 		{
-			if (Owner.Owner is MainForm p) parent = p;
-			else Close();
+			if (Owner.Owner is MainForm p)
+				parent = p;
+			else
+				Close();
 		}
 
 		private async void bulkReplaceExistingFilesToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (!parent.CreateDataFolder()) return;
+			if (!parent.CreateDataFolder())
+				return;
 
 			int exitCode = 0;
 
@@ -523,7 +538,10 @@ namespace PckStudio.Forms.Editor
 			ofn.Title = "Please choose WAV or BINKA files to replace existing track files";
 			ofn.ShowDialog(this);
 			ofn.Dispose();
-			if (string.IsNullOrEmpty(ofn.FileName)) return; // Return if name is null or if the user cancels
+			
+			// Return if name is null or if the user cancels
+			if (string.IsNullOrEmpty(ofn.FileName))
+				return;
 
 			var totalSongList = new List<string>();
 			foreach (string song in _audioFile.Categories.SelectMany(cat => cat.SongNames))
@@ -536,7 +554,8 @@ namespace PckStudio.Forms.Editor
 				string song_name = Path.GetFileNameWithoutExtension(file);
 				string file_ext = Path.GetExtension(file).ToLower();
 				string new_loc = Path.Combine(parent.GetDataPath(), Path.GetFileNameWithoutExtension(file) + ".binka");
-				if (!totalSongList.Contains(song_name) || file == new_loc) continue;
+				if (!totalSongList.Contains(song_name) || file == new_loc)
+					continue;
 
 				Console.WriteLine(file);
 				File.Delete(new_loc);
@@ -556,9 +575,11 @@ namespace PckStudio.Forms.Editor
 					waitDiag.Dispose();
 					Cursor.Current = Cursors.Default;
 
-					if (exitCode != 0) continue;
+					if (exitCode != 0)
+						continue;
 				}
-                else if(file_ext == ".binka") File.Copy(file, Path.Combine(parent.GetDataPath(), Path.GetFileName(file)));
+                else if(file_ext == ".binka")
+					File.Copy(file, Path.Combine(parent.GetDataPath(), Path.GetFileName(file)));
 			}
 		}
 
@@ -572,20 +593,22 @@ namespace PckStudio.Forms.Editor
 
 		private void setCategoryToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (!(treeView1.SelectedNode is TreeNode t && t.Tag is PckAudioFile.AudioCategory category)) return;
+			if (!(treeView1.SelectedNode is TreeNode t && t.Tag is PckAudioFile.AudioCategory category))
+				return;
 
 			string[] available = Categories.FindAll(str => !_audioFile.HasCategory(GetCategoryId(str))).ToArray();
 			if (available.Length > 0)
 			{
 				using ItemSelectionPopUp add = new ItemSelectionPopUp(available);
 				add.ButtonText = "Save";
-				if (add.ShowDialog(this) != DialogResult.OK) return;
+				if (add.ShowDialog(this) != DialogResult.OK)
+					return;
 
 				_audioFile.RemoveCategory(category.AudioType);
 
 				_audioFile.AddCategory(category.parameterType, GetCategoryId(add.SelectedItem), category.AudioType == PckAudioFile.AudioCategory.EAudioType.Overworld && playOverworldInCreative.Checked ? "include_overworld" : "");
 
-				var newCategory = _audioFile.GetCategory(GetCategoryId(add.SelectedItem));
+                PckAudioFile.AudioCategory newCategory = _audioFile.GetCategory(GetCategoryId(add.SelectedItem));
 
 				category.SongNames.ForEach(c => newCategory.SongNames.Add(c));
 
@@ -601,10 +624,11 @@ namespace PckStudio.Forms.Editor
 		{
 			if(MessageBox.Show(this, "This function will move all binka files in the \"Data\" folder into a \"Music\" folder, to keep your data better organized. Would you like to continue?", "Move tracks?", MessageBoxButtons.YesNo) == DialogResult.Yes)
 			{
-				if (treeView1.Nodes.Count < 1 || !parent.CreateDataFolder()) return;
+				if (treeView1.Nodes.Count < 1 || !parent.CreateDataFolder())
+					return;
 				string musicdir = Path.Combine(parent.GetDataPath(), "Music");
 				Directory.CreateDirectory(musicdir);
-				foreach (var category in _audioFile.Categories)
+				foreach (PckAudioFile.AudioCategory category in _audioFile.Categories)
 				{
 					for (var i = 0; i < category.SongNames.Count; i++) // using standard for loop so the list can be modified
 					{

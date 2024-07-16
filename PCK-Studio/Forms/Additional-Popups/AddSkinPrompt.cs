@@ -185,7 +185,7 @@ namespace PckStudio.Forms.Additional_Popups
                 {
                     if (ofd.FileName.EndsWith(".3dst"))
                     {
-                        using (var fs = File.OpenRead(ofd.FileName))
+                        using (FileStream fs = File.OpenRead(ofd.FileName))
                         {
                             var reader = new _3DSTextureReader();
                             CheckImage(reader.FromStream(fs));

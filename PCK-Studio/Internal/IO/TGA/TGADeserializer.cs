@@ -22,11 +22,11 @@ namespace PckStudio.Internal.IO.TGA
 {
     internal static class TGADeserializer
     {
-        private static TGAReader reader = new TGAReader();
+        private static TGAReader _reader = new TGAReader();
 
         public static Image DeserializeFromStream(Stream stream)
         {
-            TGAFileData tgaImg = reader.FromStream(stream);
+            TGAFileData tgaImg = _reader.FromStream(stream);
             return tgaImg.Bitmap;
         }
     }

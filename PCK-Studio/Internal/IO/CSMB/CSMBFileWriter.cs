@@ -17,7 +17,7 @@ namespace PckStudio.Internal.IO.CSMB
 
         public void WriteToFile(string filename)
         {
-            using(var fs = File.OpenWrite(filename))
+            using (FileStream fs = File.OpenWrite(filename))
             {
                 WriteToStream(fs);
             }

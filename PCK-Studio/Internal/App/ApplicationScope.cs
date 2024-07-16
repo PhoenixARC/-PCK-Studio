@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Diagnostics;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using PckStudio.Properties;
@@ -55,7 +55,7 @@ namespace PckStudio.Internal.App
         internal static void GetContributors()
         {
             var ghClient = new Octokit.GitHubClient(new Octokit.ProductHeaderValue(Application.ProductName + "Credits"));
-            var allContributorsAct = ghClient.Repository.GetAllContributors("PhoenixARC", "-PCK-Studio");
+            Task<IReadOnlyList<Octokit.RepositoryContributor>> allContributorsAct = ghClient.Repository.GetAllContributors("PhoenixARC", "-PCK-Studio");
             allContributorsAct.Wait();
             Contributors = allContributorsAct.Result.ToArray();
         }

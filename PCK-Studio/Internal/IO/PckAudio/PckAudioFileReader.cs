@@ -3,7 +3,6 @@ using OMI.Workers;
 using PckStudio.FileFormats;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -34,7 +33,7 @@ namespace PckStudio.Internal.IO.PckAudio
             if(File.Exists(filename))
             {
                 PckAudioFile file;
-                using(var fs = File.OpenRead(filename))
+                using(FileStream fs = File.OpenRead(filename))
                 {
                     file = FromStream(fs);
                 }
@@ -95,7 +94,7 @@ namespace PckStudio.Internal.IO.PckAudio
         {
             List<string> credits = new List<string>();
             List<string> creditIds = new List<string>();
-            foreach (var c in _OriginalAudioTypeOrder)
+            foreach (PckAudioFile.AudioCategory.EAudioType c in _OriginalAudioTypeOrder)
             {
                 int audioCount = reader.ReadInt32();
                 for (; 0 < audioCount; audioCount--)
@@ -118,8 +117,8 @@ namespace PckStudio.Internal.IO.PckAudio
                             throw new InvalidDataException(nameof(key));
                     }
                 }
-            };
-            foreach (var credit in credits.Zip(creditIds, (str, id) => (str, id)))
+            }
+            foreach ((string str, string id) credit in credits.Zip(creditIds, (str, id) => (str, id)))
             {
                 _file.SetCredit(credit.id, credit.str);
             }

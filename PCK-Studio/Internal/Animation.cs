@@ -29,21 +29,21 @@ namespace PckStudio.Internal
 	{
 		public const int MinimumFrameTime = 1;
 
-		public int FrameCount => frames.Count;
+		public int FrameCount => _frames.Count;
 
-		public int TextureCount => textures.Count;
+		public int TextureCount => _textures.Count;
 
 		public bool Interpolate { get; set; } = false;
 
-        private readonly List<Image> textures;
+        private readonly List<Image> _textures;
 
-		private readonly IList<Frame> frames = new List<Frame>();
+        private readonly IList<Frame> _frames = new List<Frame>();
 
 		private object _syncLock = new object();
 
 		public Animation(IEnumerable<Image> textures)
 		{
-			this.textures = new List<Image>(textures);
+			_textures = new List<Image>(textures);
         }
 
 		public Animation(IEnumerable<Image> textures, string ANIM)
@@ -63,7 +63,7 @@ namespace PckStudio.Internal
 				}
 				set
 				{
-					lock(l_ticks)
+					lock(_syncObject)
 					{
 						_ticks = value;
 					}
@@ -71,7 +71,7 @@ namespace PckStudio.Internal
 			}
 
 			private int _ticks;
-			private object l_ticks = new object();
+			private object _syncObject = new object();
 
 			public Frame(Image texture) : this(texture, MinimumFrameTime)
 			{ }
@@ -119,7 +119,7 @@ namespace PckStudio.Internal
 
 		private void CheckTextureIndex(int index)
 		{
-            if (!textures.IndexInRange(index))
+            if (!_textures.IndexInRange(index))
                 throw new ArgumentOutOfRangeException(nameof(index));
         }
 
@@ -127,8 +127,8 @@ namespace PckStudio.Internal
 		public Frame AddFrame(int textureIndex, int frameTime)
 		{
 			CheckTextureIndex(textureIndex);
-			Frame frame = new Frame(textures[textureIndex], frameTime);
-			frames.Add(frame);
+			Frame frame = new Frame(_textures[textureIndex], frameTime);
+			_frames.Add(frame);
 			return frame;
 		}
 
@@ -142,15 +142,15 @@ namespace PckStudio.Internal
 
 		public bool RemoveFrame(int frameIndex)
 		{
-			frames.RemoveAt(frameIndex);
+			_frames.RemoveAt(frameIndex);
 			return true;
 		}
 
-		public Frame GetFrame(int index) => frames[index];
+		public Frame GetFrame(int index) => _frames[index];
 
 		public IReadOnlyCollection<Frame> GetFrames()
 		{
-			return new ReadOnlyCollection<Frame>(frames);
+			return new ReadOnlyCollection<Frame>(_frames);
 		}
 
 		public IReadOnlyCollection<Frame> GetInterpolatedFrames()
@@ -166,10 +166,10 @@ namespace PckStudio.Internal
 		{
 			for (int i = 0; i < FrameCount; i++)
 			{
-				Frame currentFrame = frames[i];
-				Frame nextFrame = frames[0];
+				Frame currentFrame = _frames[i];
+				Frame nextFrame = _frames[0];
 				if (i + 1 < FrameCount)
-					nextFrame = frames[i + 1];
+					nextFrame = _frames[i + 1];
 				for (int tick = 0; tick < currentFrame.Ticks; tick++)
 				{
 					double delta = 1.0f - tick / (double)currentFrame.Ticks;
@@ -182,50 +182,50 @@ namespace PckStudio.Internal
 
         public IReadOnlyCollection<Image> GetTextures()
 		{
-			return textures;
+			return _textures;
 		}
 
 		public int GetTextureIndex(Image frameTexture)
 		{
 			_ = frameTexture ?? throw new ArgumentNullException(nameof(frameTexture));
-			return textures.IndexOf(frameTexture);
+			return _textures.IndexOf(frameTexture);
 		}
 
 		public void SetFrame(int frameIndex, Frame frame)
 		{
 			lock(_syncLock)
 			{
-				frames[frameIndex] = frame;
+				_frames[frameIndex] = frame;
 			}
         }
 
 		public void SetFrame(int frameIndex, int textureIndex, int frameTime = MinimumFrameTime)
 		{
 			CheckTextureIndex(textureIndex);
-			SetFrame(frameIndex, new Frame(textures[textureIndex], frameTime));
+			SetFrame(frameIndex, new Frame(_textures[textureIndex], frameTime));
 		}
 
 		public string BuildAnim()
 		{
 			StringBuilder stringBuilder = new StringBuilder(Interpolate ? "#" : string.Empty);
-			foreach (var frame in frames)
+            foreach (Frame frame in _frames)
 				stringBuilder.Append($"{GetTextureIndex(frame.Texture)}*{frame.Ticks},");
 			return stringBuilder.ToString(0, stringBuilder.Length - 1);
 		}
 
 		public Image BuildTexture()
 		{	
-			if (textures[0].Width != textures[0].Height)
+			if (_textures[0].Width != _textures[0].Height)
 				throw new Exception("Invalid size");
 
-            return textures.Combine(ImageLayoutDirection.Vertical);
+            return _textures.Combine(ImageLayoutDirection.Vertical);
 		}
 
         internal void SetFrameTicks(int ticks)
         {
 			lock(_syncLock)
 			{
-				foreach (var frame in frames)
+                foreach (Frame frame in _frames)
 				{
 					frame.Ticks = ticks;
 				}
@@ -236,7 +236,7 @@ namespace PckStudio.Internal
         {
 			lock(_syncLock)
 			{
-				frames.Swap(sourceIndex, destinationIndex);
+				_frames.Swap(sourceIndex, destinationIndex);
 			}
         }
 

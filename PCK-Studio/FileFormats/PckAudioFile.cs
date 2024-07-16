@@ -72,7 +72,7 @@ namespace PckStudio.FileFormats
 		/// </summary>
 		public void ApplyCredits(LOCFile locFile)
         {
-			foreach (var credit in Credits)
+            foreach (KeyValuePair<string, string> credit in Credits)
             {
 				locFile.SetLocEntry(credit.Key, credit.Value);
             }
@@ -135,7 +135,8 @@ namespace PckStudio.FileFormats
 				category > AudioCategory.EAudioType.Unused)
 				throw new InvalidCategoryException(nameof(category));
 			bool exists = HasCategory(category);
-			if (!exists) _categories[(int)category] = new AudioCategory(name, parameterType, category);
+			if (!exists)
+				_categories[(int)category] = new AudioCategory(name, parameterType, category);
 			return !exists;
 		}
 
@@ -149,7 +150,8 @@ namespace PckStudio.FileFormats
 		public bool RemoveCategory(AudioCategory.EAudioType category)
         {
 			bool exists = HasCategory(category);
-			if (exists) _categories[(int)category] = null;
+			if (exists)
+				_categories[(int)category] = null;
 			return exists;
 		}
 

@@ -134,7 +134,7 @@ namespace PckStudio.Internal.IO.TGA
 
         public void WriteToFile(string filename, Image image)
         {
-            using (var fs = File.OpenWrite(filename))
+            using (FileStream fs = File.OpenWrite(filename))
             {
                 WriteToStream(fs, image);
             }

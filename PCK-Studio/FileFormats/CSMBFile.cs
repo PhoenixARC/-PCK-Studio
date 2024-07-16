@@ -47,7 +47,7 @@ namespace PckStudio.FileFormats
 		public CSMBParentPart Parent = 0;
 		public float posX, posY, posZ = 0.0f;
 		public float sizeX, sizeY, sizeZ = 0.0f;
-		public int uvX, uvY = 0;
+        public int uvX, uvY = 0;
 		public bool HideWArmour, MirrorTexture = false;
 		public float Inflation = 0.0f;
 	}

@@ -19,14 +19,14 @@ namespace PckStudio.Forms.Additional_Popups.EntityForms
 		{
 			filterPrompt = new FilterPrompt();
             filterPrompt.OnSelectedItemChanged += FilterPrompt_OnSelectedItemChanged;
-            var treeViewEntity = filterPrompt.AddFilterPage("Entities", null, filterPredicate);
+            TreeView treeViewEntity = filterPrompt.AddFilterPage("Entities", null, filterPredicate);
             ImageList entities = new ImageList();
 			entities.ColorDepth = ColorDepth.Depth32Bit;
 			entities.ImageSize = new System.Drawing.Size(32, 32);
 			entities.Images.AddRange(entityImages);
 			treeViewEntity.ImageList = entities;
 
-			var entityInfos = dataType switch
+            List<EntityInfo> entityInfos = dataType switch
 			{
 				"models" => Entities.ModelInfos,
 				"materials" => Entities.MaterialInfos,
@@ -36,7 +36,7 @@ namespace PckStudio.Forms.Additional_Popups.EntityForms
 
 			int i = 0;
 
-			foreach(var entity in entityInfos)
+			foreach(EntityInfo entity in entityInfos)
             {
 				TreeNode entityNode = new TreeNode(entity.DisplayName)
 				{

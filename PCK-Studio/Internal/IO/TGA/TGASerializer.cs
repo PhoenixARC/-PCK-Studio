@@ -22,11 +22,11 @@ namespace PckStudio.Internal.IO.TGA
 {
     internal static class TGASerializer
     {
-        private static TGAWriter writer = new TGAWriter();
+        private static TGAWriter _writer = new TGAWriter();
 
         public static void SerializeToStream(Stream stream, Image image)
         {
-            writer.WriteToStream(stream, image);
+            _writer.WriteToStream(stream, image);
         }
     }
 }

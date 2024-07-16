@@ -38,7 +38,7 @@ namespace PckStudio.Internal.IO.TGA
         {
             if (File.Exists(filename))
             {
-                using( var fs = File.OpenRead(filename) )
+                using(FileStream fs = File.OpenRead(filename) )
                 {
                     return FromStream(fs);
                 }

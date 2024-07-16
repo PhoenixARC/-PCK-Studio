@@ -15,9 +15,9 @@ namespace PckStudio.Forms.Editor
 {
 	public partial class COLEditor : MetroForm
 	{
-		ColorContainer default_colourfile;
-        ColorContainer colourfile;
-        string clipboard_color = "#FFFFFF";
+		ColorContainer _defaultColourfile;
+        ColorContainer _colourfile;
+        string _clipboard_color = "#FFFFFF";
 
 		private readonly PckAsset _asset;
 
@@ -33,7 +33,7 @@ namespace PckStudio.Forms.Editor
 			saveToolStripMenuItem1.Visible = !Settings.Default.AutoSaveChanges;
 
             _asset = asset;
-			colourfile = asset.GetData(new COLFileReader());
+			_colourfile = asset.GetData(new COLFileReader());
 
 			TU12ToolStripMenuItem.Click += (sender, e) => SetUpDefaultFile(sender, e, 0);
 			TU13ToolStripMenuItem.Click += (sender, e) => SetUpDefaultFile(sender, e, 1);
@@ -55,15 +55,16 @@ namespace PckStudio.Forms.Editor
 			colorTreeView.SelectedNode = colorTreeView.Nodes[0];
 		}
 
-		private void SetUpDefaultFile(object sender, EventArgs e, int ID, bool targetVersion = true)
+		private void SetUpDefaultFile(object sender, EventArgs e, int id, bool showMessageBox = true)
 		{
-			if(targetVersion)
+			if (showMessageBox)
 			{
-				var result = MessageBox.Show(this, "This function will set up your colour table to match that of the chosen version. You may lose some entries in the table. Are you sure you would like to continue?", "Target update version?", MessageBoxButtons.YesNo);
-				if (result == DialogResult.No) return;
+                DialogResult result = MessageBox.Show(this, "This function will set up your colour table to match that of the chosen version. You may lose some entries in the table. Are you sure you would like to continue?", "Target update version?", MessageBoxButtons.YesNo);
+				if (result == DialogResult.No)
+					return;
 			}
 
-			byte[] colorData = ID switch
+			byte[] colorData = id switch
 			{
 				0 => Resources.tu12colours,
 				1 => Resources.tu13colours,
@@ -78,15 +79,15 @@ namespace PckStudio.Forms.Editor
 				10 => Resources.tu54colours,
 				11 => Resources.tu69colours,
 				12 => Resources._1_91_colours,
-				_ => throw new ArgumentOutOfRangeException(nameof(ID)),
+				_ => throw new ArgumentOutOfRangeException(nameof(id)),
 			};
 			var reader = new COLFileReader();
             using (var stream = new MemoryStream(colorData))
 			{
-				default_colourfile = reader.FromStream(stream);
+				_defaultColourfile = reader.FromStream(stream);
             }
 
-            SetUpTable(targetVersion);
+            SetUpTable(showMessageBox);
 		}
 
 		void AddEntry(TreeView treeView, List<TreeNode> cache, string name, object tag)
@@ -110,7 +111,7 @@ namespace PckStudio.Forms.Editor
 			underwaterTreeView.Nodes.Clear();
 			fogTreeView.Nodes.Clear();
 
-			ColorContainer temp = targetVersion ? default_colourfile : colourfile;
+			ColorContainer temp = targetVersion ? _defaultColourfile : _colourfile;
 
 			List<string> CurrentEntries = new List<string>();
 
@@ -122,19 +123,21 @@ namespace PckStudio.Forms.Editor
 			// fixes the duplicate entry bug
 			if (targetVersion)
             {
-				foreach(var col in colourfile.Colors)
+				foreach(ColorContainer.Color col in _colourfile.Colors)
                 {
-					if (default_colourfile.Colors.Find(c => c.Name == col.Name) == null) continue;
+					if (_defaultColourfile.Colors.Find(c => c.Name == col.Name) == null)
+						continue;
 					CurrentEntries.Add(col.Name);
 					AddEntry(colorTreeView, colorCache, col.Name, col);
 				}
             }
 
-			foreach (var col in temp.Colors)
+			foreach (ColorContainer.Color col in temp.Colors)
 			{
-				var entry = colourfile.Colors.Find(color => color.Name == col.Name);
-				if (CurrentEntries.Contains(col.Name)) continue;
-				var color = entry ?? col;
+                ColorContainer.Color entry = _colourfile.Colors.Find(color => color.Name == col.Name);
+				if (CurrentEntries.Contains(col.Name))
+					continue;
+                ColorContainer.Color color = entry ?? col;
 				AddEntry(colorTreeView, colorCache, color.Name, color);
 			}
 			CurrentEntries.Clear();
@@ -142,22 +145,24 @@ namespace PckStudio.Forms.Editor
 			// fixes the duplicate entry bug
 			if (targetVersion)
 			{
-				foreach (var col in colourfile.WaterColors)
+				foreach (ColorContainer.WaterColor col in _colourfile.WaterColors)
 				{
-					if (default_colourfile.WaterColors.Find(c => c.Name == col.Name) == null) continue;
-					var entry = colourfile.WaterColors.Find(color => color.Name == col.Name);
-					var color = entry ?? col;
+					if (_defaultColourfile.WaterColors.Find(c => c.Name == col.Name) == null)
+						continue;
+                    ColorContainer.WaterColor entry = _colourfile.WaterColors.Find(color => color.Name == col.Name);
+                    ColorContainer.WaterColor color = entry ?? col;
 					AddEntry(waterTreeView, waterCache, color.Name, color);
 					AddEntry(underwaterTreeView, underwaterCache, color.Name, color);
 					AddEntry(fogTreeView, fogCache, color.Name, color);
 				}
 			}
 
-			foreach (var col in temp.WaterColors)
+			foreach (ColorContainer.WaterColor col in temp.WaterColors)
 			{
-				var entry = colourfile.WaterColors.Find(color => color.Name == col.Name);
-				if (CurrentEntries.Contains(col.Name)) continue;
-				var color = entry ?? col;
+                ColorContainer.WaterColor entry = _colourfile.WaterColors.Find(color => color.Name == col.Name);
+				if (CurrentEntries.Contains(col.Name))
+					continue;
+                ColorContainer.WaterColor color = entry ?? col;
 				AddEntry(waterTreeView, waterCache, color.Name, color);
 				AddEntry(underwaterTreeView, underwaterCache, color.Name, color);
 				AddEntry(fogTreeView, fogCache, color.Name, color);
@@ -287,14 +292,14 @@ namespace PckStudio.Forms.Editor
 
 		private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
-			_asset.SetData(new COLFileWriter(colourfile));
+			_asset.SetData(new COLFileWriter(_colourfile));
 			
             DialogResult = DialogResult.OK;
         }
 
 		public void treeView1_KeyDown(object sender, KeyEventArgs e)
 		{
-			var node = colorTreeView.SelectedNode;
+            TreeNode node = colorTreeView.SelectedNode;
 			if (e.KeyCode == Keys.Delete && node.Tag is ColorContainer.Color)
 			{
 				restoreOriginalColorToolStripMenuItem_Click(sender, e);
@@ -311,7 +316,7 @@ namespace PckStudio.Forms.Editor
 
         private void treeView2_KeyDown(object sender, KeyEventArgs e)
         {
-			var node = waterTreeView.SelectedNode;
+			TreeNode node = waterTreeView.SelectedNode;
 			if (e.KeyCode == Keys.Delete && node.Tag is ColorContainer.WaterColor)
 			{
 				restoreOriginalColorToolStripMenuItem_Click(sender, e);
@@ -328,7 +333,7 @@ namespace PckStudio.Forms.Editor
 
 		private void treeView3_KeyDown(object sender, KeyEventArgs e)
 		{
-			var node = underwaterTreeView.SelectedNode;
+            TreeNode node = underwaterTreeView.SelectedNode;
 			if (e.KeyCode == Keys.Delete && node.Tag is ColorContainer.WaterColor)
 			{
 				restoreOriginalColorToolStripMenuItem_Click(sender, e);
@@ -345,7 +350,7 @@ namespace PckStudio.Forms.Editor
 
 		private void treeView4_KeyDown(object sender, KeyEventArgs e)
 		{
-			var node = fogTreeView.SelectedNode;
+            TreeNode node = fogTreeView.SelectedNode;
 			if (e.KeyCode == Keys.Delete && node.Tag is ColorContainer.WaterColor)
 			{
 				restoreOriginalColorToolStripMenuItem_Click(sender, e);
@@ -390,9 +395,12 @@ namespace PckStudio.Forms.Editor
             {
 				var waterColorEntry = (tabControl.SelectedTab.Controls[0] as TreeView).SelectedNode.Tag as ColorContainer.WaterColor;
 
-				if (tabControl.SelectedTab == waterTab) waterColorEntry.SurfaceColor = color;
-				else if (tabControl.SelectedTab == underwaterTab) waterColorEntry.UnderwaterColor = color;
-				else waterColorEntry.FogColor = color;
+				if (tabControl.SelectedTab == waterTab)
+					waterColorEntry.SurfaceColor = color;
+				else if (tabControl.SelectedTab == underwaterTab)
+					waterColorEntry.UnderwaterColor = color;
+				else
+					waterColorEntry.FogColor = color;
 			}
 
 			pictureBox1.BackColor = color;
@@ -405,7 +413,8 @@ namespace PckStudio.Forms.Editor
 			colorPick.AllowFullOpen = true;
 			colorPick.AnyColor = true;
 			colorPick.SolidColorOnly = tabControl.SelectedTab == colorsTab;
-			if (colorPick.ShowDialog(this) != DialogResult.OK) return;
+			if (colorPick.ShowDialog(this) != DialogResult.OK)
+				return;
             pictureBox1.BackColor = colorPick.Color;
 			if (tabControl.SelectedTab == waterTab && waterTreeView.SelectedNode != null &&
 				waterTreeView.SelectedNode.Tag != null && waterTreeView.SelectedNode.Tag is ColorContainer.WaterColor)
@@ -465,9 +474,10 @@ namespace PckStudio.Forms.Editor
 
 				if (tab == colorsTab)
                 {
-					ColorContainer.Color col_entry = default_colourfile.Colors.Find(color => color.Name == node.Text);
+					ColorContainer.Color col_entry = _defaultColourfile.Colors.Find(color => color.Name == node.Text);
 
-                    if (col_entry == null) return;
+                    if (col_entry == null)
+						return;
 
                     color = col_entry.ColorPallette;
 
@@ -475,9 +485,10 @@ namespace PckStudio.Forms.Editor
 				}
 				else
                 {
-                    ColorContainer.WaterColor WaterEntry = default_colourfile.WaterColors.Find(color => color.Name == node.Text);
+                    ColorContainer.WaterColor WaterEntry = _defaultColourfile.WaterColors.Find(color => color.Name == node.Text);
 
-					if (WaterEntry == null) return;
+					if (WaterEntry == null)
+						return;
 
 					color = 
 						tab == waterTab ? WaterEntry.SurfaceColor : 
@@ -569,12 +580,12 @@ namespace PckStudio.Forms.Editor
 
 		private void copyColorToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			clipboard_color = colorTextbox.Text;
+			_clipboard_color = colorTextbox.Text;
 		}
 
 		private void pasteColorToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			colorTextbox.Text = clipboard_color;
+			colorTextbox.Text = _clipboard_color;
 		}
 
         private void COLEditor_FormClosing(object sender, FormClosingEventArgs e)
@@ -594,7 +605,7 @@ namespace PckStudio.Forms.Editor
 
         private void stripPS4BiomesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-			if(colourfile.WaterColors.Count > 0)
+			if(_colourfile.WaterColors.Count > 0)
             {
 				List<string> PS4Biomes = new List<string>
 				{
@@ -605,9 +616,10 @@ namespace PckStudio.Forms.Editor
 					"mega_taiga_mutated"
 				};
 
-				foreach (var col in colourfile.WaterColors.ToList())
+				foreach (ColorContainer.WaterColor col in _colourfile.WaterColors.ToList())
 				{
-					if (PS4Biomes.Contains(col.Name)) colourfile.WaterColors.Remove(col);
+					if (PS4Biomes.Contains(col.Name))
+						_colourfile.WaterColors.Remove(col);
 				}
 
 				SetUpTable(false);
@@ -628,12 +640,12 @@ namespace PckStudio.Forms.Editor
 						entry.Name = prompt.NewText;
 						entry.ColorPallette = Color.FromArgb(0xFFFFFF);
 
-						if(colourfile.Colors.Find(c => c.Name == entry.Name) != null)
+						if(_colourfile.Colors.Find(c => c.Name == entry.Name) != null)
 						{
 							MessageBox.Show(this, $"\"{entry.Name}\" already exists in this color table", "Color not added");
 						}
 
-						colourfile.Colors.Add(entry);
+						_colourfile.Colors.Add(entry);
 						AddEntry(colorTreeView, colorCache, entry.Name, entry);
                     }
 				}
@@ -647,7 +659,7 @@ namespace PckStudio.Forms.Editor
 				&& entry != null 
 				&& entry.Tag is ColorContainer.Color color)
             {
-                colourfile.Colors.Remove(color);
+                _colourfile.Colors.Remove(color);
                 RemoveEntry(entry, colorCache);
             }
         }

@@ -96,8 +96,8 @@ namespace PckStudio.Forms.Features
                         reader.ReadLine();
                         xml.Load(reader);
                     }
-                    var configNode = xml.SelectSingleNode("config");
-                    var mlcpathNode = configNode.SelectSingleNode("MlcPath");
+                    XmlNode configNode = xml.SelectSingleNode("config");
+                    XmlNode mlcpathNode = configNode.SelectSingleNode("MlcPath");
                     GameDirectoryTextBox.Text = mlcpathNode.InnerText;
                     GameDirectoryTextBox.Enabled = false;
                     BrowseDirectoryBtn.Enabled = false;
@@ -171,9 +171,9 @@ namespace PckStudio.Forms.Features
             {
                 _basePckPath = directory.GetFiles().FirstOrDefault(f => f.Name.EndsWith(".pck")).FullName;
                 _ = _basePckPath ?? throw new NullReferenceException($"Could not find any '.pck' inside {directory.Name}");
-                if (TryGetDataDirectory(directory, out var dataDir))
+                if (TryGetDataDirectory(directory, out DirectoryInfo dataDir))
                 {
-                    var tpFileInfo = dataDir.GetFiles().FirstOrDefault(f => !f.Name.Equals("audio.pck") && f.Name.EndsWith(".pck"));
+                    FileInfo tpFileInfo = dataDir.GetFiles().FirstOrDefault(f => !f.Name.Equals("audio.pck") && f.Name.EndsWith(".pck"));
                     _hasTexturePack = tpFileInfo is not null;
                     _texturePackPath = _hasTexturePack ? tpFileInfo.FullName : string.Empty;
                 }
@@ -186,7 +186,7 @@ namespace PckStudio.Forms.Features
 
             private bool TryGetDataDirectory(DirectoryInfo directory, out DirectoryInfo dataDirectory)
             {
-                var dirs = directory.GetDirectories("Data", SearchOption.TopDirectoryOnly);
+                DirectoryInfo[] dirs = directory.GetDirectories("Data", SearchOption.TopDirectoryOnly);
                 dataDirectory = dirs.Length != 0 ? dirs[0] : null;
                 return dirs.Length != 0;
             }
@@ -219,11 +219,11 @@ namespace PckStudio.Forms.Features
                 return;
             }
 
-            foreach (var directoryInfo in dlcDirectory.GetDirectories())
+            foreach (DirectoryInfo directoryInfo in dlcDirectory.GetDirectories())
             {
                 if (directoryInfo.GetFileSystemInfos().Length != 0)
                 {
-                    var node = DLCTreeView.Nodes.Add(directoryInfo.Name);
+                    TreeNode node = DLCTreeView.Nodes.Add(directoryInfo.Name);
                     node.Tag = new DLCDirectoryInfo(directoryInfo);
                 }
             }
@@ -302,7 +302,7 @@ namespace PckStudio.Forms.Features
         private void removePckToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string pckName = DLCTreeView.SelectedNode.Text;
-            var result = MessageBox.Show(this, $"Are you sure you want to permanently delete '{pckName}'?", "Hold up!", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show(this, $"Are you sure you want to permanently delete '{pckName}'?", "Hold up!", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
                 string directoryPath = GetContentSubDirectory("WiiU", "DLC", pckName);

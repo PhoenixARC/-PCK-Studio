@@ -1,7 +1,6 @@
 ﻿using System;
 using MetroFramework.Forms;
 using System.Windows.Forms;
-using System.Diagnostics;
 
 namespace PckStudio.Forms.Additional_Popups.Animation
 {

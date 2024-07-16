@@ -17,7 +17,7 @@ namespace PckStudio.Internal.IO._3DST
             if (File.Exists(filename))
             {
                 Image img = null;
-                using (var fs = File.OpenRead(filename))
+                using (FileStream fs = File.OpenRead(filename))
                 {
                     img = FromStream(fs);
                 }

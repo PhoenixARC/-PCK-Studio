@@ -21,7 +21,7 @@ namespace PckStudio.Forms.Editor
 	{
 		// Materials File Format research by PhoenixARC
 		private readonly PckAsset _asset;
-		MaterialContainer materialFile;
+		MaterialContainer _materialFile;
 
 		private readonly List<EntityInfo> MaterialData = Entities.BehaviourInfos;
 
@@ -34,11 +34,11 @@ namespace PckStudio.Forms.Editor
 		{
 			treeView1.BeginUpdate();
 			treeView1.Nodes.Clear();
-			foreach (var entry in materialFile)
+			foreach (MaterialContainer.Material entry in _materialFile)
 			{
 				TreeNode EntryNode = new TreeNode(entry.Name);
 
-				var material = MaterialData.Find(m => m.InternalName == entry.Name);
+                EntityInfo material = MaterialData.Find(m => m.InternalName == entry.Name);
 				if(material != null)
                 {
 					EntryNode.Text = material.DisplayName;
@@ -73,9 +73,9 @@ namespace PckStudio.Forms.Editor
 			using (var stream = new MemoryStream(asset.Data))
 			{
 				var reader = new MaterialFileReader();
-				materialFile = reader.FromStream(stream);
+				_materialFile = reader.FromStream(stream);
 
-				if (materialFile.hasInvalidEntries())
+				if (_materialFile.hasInvalidEntries())
                 {
 					DialogResult dr = MessageBox.Show(this, "Unsupported entities were found in this file. Would you like to display them?", "Invalid data found", MessageBoxButtons.YesNo);
 
@@ -91,7 +91,8 @@ namespace PckStudio.Forms.Editor
 
 		private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
 		{
-			if (e.Node == null) return;
+			if (e.Node == null)
+				return;
 
 			bool enable = e.Node.Tag is MaterialContainer.Material && treeView1.SelectedNode != null;
 			materialComboBox.Enabled = enable;
@@ -105,7 +106,8 @@ namespace PckStudio.Forms.Editor
 		}
 		private void removeToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (treeView1.SelectedNode == null) return;
+			if (treeView1.SelectedNode == null)
+				return;
 
 			treeView1.SelectedNode.Remove();
 		}
@@ -117,27 +119,28 @@ namespace PckStudio.Forms.Editor
 
 		private void treeView1_KeyDown(object sender, KeyEventArgs e)
 		{
-			if (e.KeyCode == Keys.Delete) removeToolStripMenuItem_Click(sender, e);
+			if (e.KeyCode == Keys.Delete)
+				removeToolStripMenuItem_Click(sender, e);
 		}
 
 		private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
-			materialFile = new MaterialContainer();
+			_materialFile = new MaterialContainer();
 
 			foreach (TreeNode node in treeView1.Nodes)
 			{
 				if(node.Tag is MaterialContainer.Material entry)
 				{
-					materialFile.Add(entry);
+					_materialFile.Add(entry);
 				}
 			}
 
 			foreach (MaterialContainer.Material mat in hiddenInvalidEntries)
 			{
-				materialFile.Add(mat);
+				_materialFile.Add(mat);
 			}
 
-			_asset.SetData(new MaterialFileWriter(materialFile));
+			_asset.SetData(new MaterialFileWriter(_materialFile));
 			
 			DialogResult = DialogResult.OK;
 		}
@@ -148,22 +151,23 @@ namespace PckStudio.Forms.Editor
 
 			if (diag.ShowDialog(this) == DialogResult.OK)
 			{
-				if (string.IsNullOrEmpty(diag.SelectedEntity)) return;
-				if (materialFile.FindAll(mat => mat.Name == diag.SelectedEntity).Count() > 0)
+				if (string.IsNullOrEmpty(diag.SelectedEntity))
+					return;
+				if (_materialFile.FindAll(mat => mat.Name == diag.SelectedEntity).Count() > 0)
 				{
 					MessageBox.Show(this, "You cannot have two entries for one entity. Please use the \"Add New Position Override\" tool to add multiple overrides for entities", "Error", MessageBoxButtons.OK);
 					return;
 				}
-				var NewEntry = new MaterialContainer.Material(diag.SelectedEntity, "entity_alphatest");
+				var newEntry = new MaterialContainer.Material(diag.SelectedEntity, "entity_alphatest");
 
-				TreeNode NewEntryNode = new TreeNode(NewEntry.Name);
-				NewEntryNode.Tag = NewEntry;
+				TreeNode newEntryNode = new TreeNode(newEntry.Name);
+				newEntryNode.Tag = newEntry;
 
-				var material = MaterialData.Find(m => m.InternalName == NewEntry.Name);
-				NewEntryNode.Text = material.DisplayName;
-				NewEntryNode.ImageIndex = MaterialData.IndexOf(material);
-				NewEntryNode.SelectedImageIndex = NewEntryNode.ImageIndex;
-				treeView1.Nodes.Add(NewEntryNode);
+                EntityInfo material = MaterialData.Find(m => m.InternalName == newEntry.Name);
+				newEntryNode.Text = material.DisplayName;
+				newEntryNode.ImageIndex = MaterialData.IndexOf(material);
+                newEntryNode.SelectedImageIndex = newEntryNode.ImageIndex;
+				treeView1.Nodes.Add(newEntryNode);
 			}
 		}
 
