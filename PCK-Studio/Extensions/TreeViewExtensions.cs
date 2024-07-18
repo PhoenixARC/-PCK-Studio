@@ -23,7 +23,7 @@ namespace PckStudio.Extensions
             string segment = path.Substring(0, path.IndexOf(treeView.PathSeparator));
             if (treeView.Nodes.ContainsKey(segment))
             {
-                var res = treeView.Nodes[segment].GetChildNodes().Where(node => node.FullPath == path).ToArray();
+                TreeNode[] res = treeView.Nodes[segment].GetChildNodes().Where(node => node.FullPath == path).ToArray();
                 return res;
             }
             return Array.Empty<TreeNode>();

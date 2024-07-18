@@ -62,16 +62,16 @@ namespace PckStudio.Internal.Skin
 		
 		public int ToValue() => _flags.Data;
 
-		public static SkinANIM operator |(SkinANIM _this, SkinANIM other) => new SkinANIM(_this._flags.Data | other._flags.Data);
+		public static SkinANIM operator |(SkinANIM @this, SkinANIM other) => new SkinANIM(@this._flags.Data | other._flags.Data);
 		
-		public static SkinANIM operator |(SkinANIM _this, SkinAnimMask mask) => new SkinANIM(_this._flags.Data | (int)mask);
+		public static SkinANIM operator |(SkinANIM @this, SkinAnimMask mask) => new SkinANIM(@this._flags.Data | (int)mask);
 
 		public static implicit operator SkinANIM(SkinAnimMask mask) => new SkinANIM(mask);
 
-		public static bool operator ==(SkinANIM _this, SkinAnimMask mask) => _this.Equals(mask);
-		public static bool operator !=(SkinANIM _this, SkinAnimMask mask) => !_this.Equals(mask);
-		public static bool operator ==(SkinANIM _this, SkinANIM other) => _this.Equals(other);
-		public static bool operator !=(SkinANIM _this, SkinANIM other) => !_this.Equals(other);
+		public static bool operator ==(SkinANIM @this, SkinAnimMask mask) => @this.Equals(mask);
+		public static bool operator !=(SkinANIM @this, SkinAnimMask mask) => !@this.Equals(mask);
+		public static bool operator ==(SkinANIM @this, SkinANIM other) => @this.Equals(other);
+		public static bool operator !=(SkinANIM @this, SkinANIM other) => !@this.Equals(other);
 
         public bool Equals(SkinANIM other)
         {

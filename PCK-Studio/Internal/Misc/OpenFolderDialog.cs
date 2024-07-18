@@ -2,15 +2,15 @@
  * Source by: Simon Mourier(https://stackoverflow.com/users/403671/simon-mourier)
  */
 
+using System;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.ComTypes;
+using System.Windows; // for WPF support
+using System.Windows.Interop;  // for WPF support
+
 namespace PckStudio.Internal.Misc
 {
-    using System;
-    using System.Diagnostics;
-    using System.Runtime.InteropServices;
-    using System.Runtime.InteropServices.ComTypes;
-    using System.Windows; // for WPF support
-    using System.Windows.Interop;  // for WPF support
-
     public class OpenFolderDialog
     {
         public virtual string ResultPath { get; protected set; }
@@ -43,13 +43,13 @@ namespace PckStudio.Internal.Misc
             var dialog = (IFileOpenDialog)new FileOpenDialog();
             if (!string.IsNullOrEmpty(InputPath))
             {
-                if (CheckHr(SHCreateItemFromParsingName(InputPath, null, typeof(IShellItem).GUID, out var item), throwOnError) != 0)
+                if (CheckHr(SHCreateItemFromParsingName(InputPath, null, typeof(IShellItem).GUID, out IShellItem item), throwOnError) != 0)
                     return null;
 
                 dialog.SetFolder(item);
             }
 
-            var options = FOS.FOS_PICKFOLDERS;
+            FOS options = FOS.FOS_PICKFOLDERS;
             options = (FOS)SetOptions((int)options);
             dialog.SetOptions(options);
 
@@ -84,7 +84,7 @@ namespace PckStudio.Internal.Misc
             if (CheckHr(hr, throwOnError) != 0)
                 return null;
 
-            if (CheckHr(dialog.GetResult(out var result), throwOnError) != 0)
+            if (CheckHr(dialog.GetResult(out IShellItem result), throwOnError) != 0)
                 return null;
 
             if (CheckHr(result.GetDisplayName(SIGDN.SIGDN_DESKTOPABSOLUTEPARSING, out var path), throwOnError) != 0)

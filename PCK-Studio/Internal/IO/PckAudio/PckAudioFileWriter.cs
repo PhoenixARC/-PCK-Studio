@@ -27,7 +27,7 @@ namespace PckStudio.Internal.IO.PckAudio
 
         public void WriteToFile(string filename)
         {
-            using(var fs = File.OpenWrite(filename))
+            using (FileStream fs = File.OpenWrite(filename))
             {
                 WriteToStream(fs);
             }
@@ -68,10 +68,10 @@ namespace PckStudio.Internal.IO.PckAudio
         private void WriteCategories(EndiannessAwareBinaryWriter writer)
         {
             writer.Write(_file.Categories.Length);
-            foreach (var category in _file.Categories)
+            foreach (PckAudioFile.AudioCategory category in _file.Categories)
             {
                 writer.Write((int)category.parameterType);
-                writer.Write((int)category.audioType);
+                writer.Write((int)category.AudioType);
                 WriteString(writer, category.Name);
             }
         }
@@ -79,7 +79,7 @@ namespace PckStudio.Internal.IO.PckAudio
         private void WriteCategorySongs(EndiannessAwareBinaryWriter writer)
         {
             bool addCredit = true;
-            foreach (var category in _file.Categories)
+            foreach (PckAudioFile.AudioCategory category in _file.Categories)
             {
                 writer.Write(category.SongNames.Count + (addCredit ? _file.Credits.Count * 2 : 0));
                 foreach (var name in category.SongNames)
@@ -89,7 +89,7 @@ namespace PckStudio.Internal.IO.PckAudio
                 }
                 if (addCredit)
                 {
-                    foreach (var credit in _file.Credits)
+                    foreach (KeyValuePair<string, string> credit in _file.Credits)
                     { 
                         writer.Write(LUT.IndexOf("CREDIT"));
                         WriteString(writer, credit.Value);

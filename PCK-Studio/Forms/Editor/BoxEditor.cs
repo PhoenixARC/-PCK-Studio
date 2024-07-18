@@ -24,7 +24,7 @@ namespace PckStudio.Forms.Editor
                 throw new Exception("Failed to parse BOX value");
             }
 
-            closeButton.Visible =!Settings.Default.AutoSaveChanges;
+            closeButton.Visible = !Settings.Default.AutoSaveChanges;
 
             inflationUpDown.Enabled = hasInflation;
 

@@ -113,9 +113,9 @@ namespace PckStudio.Internal.Skin
                 throw new ArgumentException("Arguments must have at least a length of 9");
             }
             var type = arguments[0];
-            var pos = TryGetVector3(arguments, 1);
-            var size = TryGetVector3(arguments, 4);
-            var uv = TryGetVector2(arguments, 7);
+            Vector3 pos = TryGetVector3(arguments, 1);
+            Vector3 size = TryGetVector3(arguments, 4);
+            Vector2 uv = TryGetVector2(arguments, 7);
             var skinBox = new SkinBOX(type, pos, size, uv);
             if (arguments.Length >= 10)
                 skinBox.HideWithArmor = arguments[9] == "1";
@@ -159,9 +159,9 @@ namespace PckStudio.Internal.Skin
 
         private static Vector3 TryGetVector3(string[] arguments, int startIndex)
         {
-            var vec2 = TryGetVector2(arguments, startIndex);
+            Vector2 xy = TryGetVector2(arguments, startIndex);
             float.TryParse(arguments[startIndex + 2], out float z);
-            return new Vector3(vec2, z);
+            return new Vector3(xy, z);
         }
 
         public override int GetHashCode()

@@ -194,7 +194,7 @@ namespace PckStudio.Extensions
         internal static string SerializePropertiesToString(this PckAsset asset)
         {
             StringBuilder builder = new StringBuilder(asset.PropertyCount * 20);
-            foreach (var property in asset.GetProperties())
+            foreach (KeyValuePair<string, string> property in asset.GetProperties())
             {
                 builder.AppendLine(property.Key + ": " + property.Value);
             }

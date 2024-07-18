@@ -9,7 +9,7 @@ namespace PckStudio.Internal
 {
     internal static class ModelPartSpecifics
     {
-        private static Dictionary<string, PositioningInfo> posisioningInfos = new Dictionary<string, PositioningInfo>()
+        private static Dictionary<string, PositioningInfo> _posisioningInfos = new Dictionary<string, PositioningInfo>()
         {
             ["HEAD"] = new PositioningInfo(),
             ["BODY"] = new PositioningInfo(),
@@ -25,7 +25,7 @@ namespace PckStudio.Internal
         {
             if (SkinBOX.IsOverlayPart(partName))
                 partName = SkinBOXExtensions.GetBaseType(partName);
-            return posisioningInfos.ContainsKey(partName) ? posisioningInfos[partName] : default;
+            return _posisioningInfos.ContainsKey(partName) ? _posisioningInfos[partName] : default;
         }
     }
 }

@@ -60,9 +60,9 @@ namespace PckStudio.Forms.Additional_Popups.Animation
                 ResourceCategory.ItemAnimation => (Tiles.ItemTileInfos, Tiles.ItemImageList, "Items"),
 				_ => throw new InvalidOperationException(nameof(key))
 			};
-			var view = filterPrompt.AddFilterPage(name, null, filterPredicate);
+            TreeView view = filterPrompt.AddFilterPage(name, null, filterPredicate);
 			view.ImageList = imgList;
-			foreach ((int i, var tileData) in textureInfos?.enumerate())
+			foreach ((int i, JsonTileInfo tileData) in textureInfos?.enumerate())
 			{
 				if (string.IsNullOrEmpty(tileData.InternalName) || view.Nodes.ContainsKey(tileData.InternalName))
 					continue;

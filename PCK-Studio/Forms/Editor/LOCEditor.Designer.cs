@@ -45,6 +45,8 @@
             this.dataGridViewLocEntryData = new System.Windows.Forms.DataGridView();
             this.textBoxReplaceAll = new System.Windows.Forms.TextBox();
             this.treeViewLocKeys = new System.Windows.Forms.TreeView();
+            this.Language = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DisplayName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.contextMenuStrip1.SuspendLayout();
             this.GridContextMenu.SuspendLayout();
             this.menuStrip.SuspendLayout();
@@ -95,9 +97,10 @@
             // menuStrip
             // 
             this.menuStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
+            this.locSort.SetColumnSpan(this.menuStrip, 3);
+            resources.ApplyResources(this.menuStrip, "menuStrip");
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem});
-            resources.ApplyResources(this.menuStrip, "menuStrip");
             this.menuStrip.Name = "menuStrip";
             // 
             // fileToolStripMenuItem
@@ -118,10 +121,11 @@
             // 
             this.locSort.AccessibleRole = System.Windows.Forms.AccessibleRole.Table;
             resources.ApplyResources(this.locSort, "locSort");
-            this.locSort.Controls.Add(this.buttonReplaceAll, 2, 0);
-            this.locSort.Controls.Add(this.dataGridViewLocEntryData, 1, 1);
-            this.locSort.Controls.Add(this.textBoxReplaceAll, 1, 0);
-            this.locSort.Controls.Add(this.treeViewLocKeys, 0, 0);
+            this.locSort.Controls.Add(this.buttonReplaceAll, 2, 1);
+            this.locSort.Controls.Add(this.dataGridViewLocEntryData, 1, 2);
+            this.locSort.Controls.Add(this.menuStrip, 0, 0);
+            this.locSort.Controls.Add(this.textBoxReplaceAll, 1, 1);
+            this.locSort.Controls.Add(this.treeViewLocKeys, 0, 1);
             this.locSort.Name = "locSort";
             // 
             // buttonReplaceAll
@@ -136,6 +140,8 @@
             // 
             this.dataGridViewLocEntryData.AllowUserToAddRows = false;
             this.dataGridViewLocEntryData.AllowUserToDeleteRows = false;
+            this.dataGridViewLocEntryData.AllowUserToResizeColumns = false;
+            this.dataGridViewLocEntryData.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridViewLocEntryData.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
             this.dataGridViewLocEntryData.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
@@ -145,7 +151,10 @@
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridViewLocEntryData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.dataGridViewLocEntryData.ColumnHeadersVisible = false;
+            this.dataGridViewLocEntryData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.dataGridViewLocEntryData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Language,
+            this.DisplayName});
             this.locSort.SetColumnSpan(this.dataGridViewLocEntryData, 2);
             this.dataGridViewLocEntryData.ContextMenuStrip = this.GridContextMenu;
             resources.ApplyResources(this.dataGridViewLocEntryData, "dataGridViewLocEntryData");
@@ -171,18 +180,28 @@
             this.treeViewLocKeys.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewLocKeys_AfterSelect);
             this.treeViewLocKeys.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView1_KeyDown);
             // 
+            // Language
+            // 
+            this.Language.FillWeight = 15F;
+            resources.ApplyResources(this.Language, "Language");
+            this.Language.Name = "Language";
+            this.Language.ReadOnly = true;
+            // 
+            // DisplayName
+            // 
+            resources.ApplyResources(this.DisplayName, "DisplayName");
+            this.DisplayName.Name = "DisplayName";
+            // 
             // LOCEditor
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.menuStrip);
             this.Controls.Add(this.locSort);
             this.Name = "LOCEditor";
             this.Style = MetroFramework.MetroColorStyle.Silver;
             this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LOCEditor_FormClosing);
             this.Load += new System.EventHandler(this.LOCEditor_Load);
-            this.Resize += new System.EventHandler(this.LOCEditor_Resize);
             this.contextMenuStrip1.ResumeLayout(false);
             this.GridContextMenu.ResumeLayout(false);
             this.menuStrip.ResumeLayout(false);
@@ -191,7 +210,6 @@
             this.locSort.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewLocEntryData)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -211,5 +229,7 @@
         private System.Windows.Forms.MenuStrip menuStrip;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Language;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DisplayName;
     }
 }

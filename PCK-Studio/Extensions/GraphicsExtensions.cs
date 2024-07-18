@@ -38,7 +38,7 @@ namespace PckStudio.Extensions
 
         internal static Graphics Fill(this Graphics graphics, Rectangle area, Color color)
         {
-            var clip = graphics.Clip;
+            Region clip = graphics.Clip;
             graphics.SetClip(area, CombineMode.Replace);
             graphics.Clear(color);
             graphics.SetClip(clip, CombineMode.Replace);

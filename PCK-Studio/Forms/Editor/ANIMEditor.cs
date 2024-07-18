@@ -21,7 +21,7 @@ namespace PckStudio.Forms.Editor
 
         sealed class ANIMRuleSet
         {
-            public SkinANIM Value => anim;
+            public SkinANIM Value => _anim;
             public Action<SkinANIM> OnCheckboxChanged;
 
             private class Bictionary<T1, T2> : Dictionary<T1, T2>
@@ -42,15 +42,15 @@ namespace PckStudio.Forms.Editor
 
                 internal void AddRange(IEnumerable<(T1, T2)> range)
                 {
-                    foreach (var (key, value) in range)
+                    foreach ((T1 key, T2 value) in range)
                     {
                         Add(key, value);
                     }
                 }
             }
             private Bictionary<CheckBox, SkinAnimFlag> checkBoxLinkage;
-            private SkinANIM anim;
-            private bool ignoreCheckChanged = false;
+            private SkinANIM _anim;
+            private bool _ignoreCheckChanged = false;
 
             public ANIMRuleSet(params (CheckBox, SkinAnimFlag)[] linkage)
             {
@@ -59,7 +59,7 @@ namespace PckStudio.Forms.Editor
                     Debug.WriteLine($"Not all {nameof(SkinAnimFlag)} are mapped to a given checkbox.");
 
                 checkBoxLinkage.AddRange(linkage);
-                foreach (var (checkbox, _) in linkage)
+                foreach ((CheckBox checkbox, SkinAnimFlag _) in linkage)
                 {
                     checkbox.CheckedChanged += checkedChanged;
                 }
@@ -67,7 +67,7 @@ namespace PckStudio.Forms.Editor
 
             internal void SetAll(bool state)
             {
-                foreach (var item in checkBoxLinkage)
+                foreach (KeyValuePair<CheckBox, SkinAnimFlag> item in checkBoxLinkage)
                 {
                     IgnoreAndDo(item.Key, checkbox =>
                     {
@@ -85,25 +85,28 @@ namespace PckStudio.Forms.Editor
                                 break;
                             case SkinAnimFlag.RESOLUTION_64x64:
                                 checkbox.Enabled = !state;
-                                if(state) checkbox.Checked = false; // Prioritize slim model > classic model, LCE would
+                                // Prioritize slim model > classic model, LCE would
+                                if(state)
+                                    checkbox.Checked = false;
                                 break;
 						}
-                        anim.SetFlag(item.Value, checkbox.Checked);
+                        _anim.SetFlag(item.Value, checkbox.Checked);
                     });
                 }
-                OnCheckboxChanged?.Invoke(anim);
+                OnCheckboxChanged?.Invoke(_anim);
             }
 
             internal void ApplyAnim(SkinANIM anim)
             {
-                this.anim = anim;
-                foreach (var item in checkBoxLinkage)
+                this._anim = anim;
+                foreach (KeyValuePair<CheckBox, SkinAnimFlag> item in checkBoxLinkage)
                 {
                     /*
                      * not the best way to do this but whatever lol
                      * fix for both model flags being unset when both are set to true, with slim model prioritized of course
                      */
-                    if (item.Value == SkinAnimFlag.RESOLUTION_64x64 && anim.GetFlag(SkinAnimFlag.SLIM_MODEL)) continue;
+                    if (item.Value == SkinAnimFlag.RESOLUTION_64x64 && anim.GetFlag(SkinAnimFlag.SLIM_MODEL))
+                        continue;
 
                     item.Key.Checked = anim.GetFlag(item.Value);
                 }
@@ -111,7 +114,7 @@ namespace PckStudio.Forms.Editor
 
             private void checkedChanged(object sender, EventArgs e)
             {
-                if (!ignoreCheckChanged && sender is CheckBox checkBox && checkBoxLinkage.ContainsKey(checkBox))
+                if (!_ignoreCheckChanged && sender is CheckBox checkBox && checkBoxLinkage.ContainsKey(checkBox))
                 {
                     switch (checkBoxLinkage[checkBox])
                     {
@@ -152,8 +155,8 @@ namespace PckStudio.Forms.Editor
                         default:
                             break;
                     }
-                    anim.SetFlag(checkBoxLinkage[checkBox], checkBox.Checked && checkBox.Enabled);
-                    OnCheckboxChanged?.Invoke(anim);
+                    _anim.SetFlag(checkBoxLinkage[checkBox], checkBox.Checked && checkBox.Enabled);
+                    OnCheckboxChanged?.Invoke(_anim);
                 }
             }
 
@@ -164,9 +167,9 @@ namespace PckStudio.Forms.Editor
 
             private void IgnoreAndDo(CheckBox checkBox, Action<CheckBox> action)
             {
-                ignoreCheckChanged = true;
+                _ignoreCheckChanged = true;
                 action.Invoke(checkBox);
-                ignoreCheckChanged = false;
+                _ignoreCheckChanged = false;
             }
         }
 
@@ -177,14 +180,14 @@ namespace PckStudio.Forms.Editor
             saveButton.Visible = !Settings.Default.AutoSaveChanges;
         }
 
-        public ANIMEditor(string ANIM) : this()
+        public ANIMEditor(string animString) : this()
         {
-            if (!SkinANIM.IsValidANIM(ANIM))
+            if (!SkinANIM.IsValidANIM(animString))
             {
                 DialogResult = DialogResult.Abort;
                 Close();
             }
-            var anim = initialANIM = SkinANIM.FromString(ANIM);
+            SkinANIM anim = initialANIM = SkinANIM.FromString(animString);
             setDisplayAnim(anim);
             ruleset.ApplyAnim(anim);
         }
@@ -255,7 +258,8 @@ namespace PckStudio.Forms.Editor
             string value = string.Empty;
             while (!SkinANIM.IsValidANIM(value))
             {
-                if (!string.IsNullOrWhiteSpace(value)) MessageBox.Show(this, $"The following value \"{value}\" is not valid. Please try again.");
+                if (!string.IsNullOrWhiteSpace(value))
+                    MessageBox.Show(this, $"The following value \"{value}\" is not valid. Please try again.");
                 TextPrompt diag = new TextPrompt(value);
                 diag.LabelText = "ANIM";
                 diag.OKButtonText = "Ok";
@@ -263,7 +267,8 @@ namespace PckStudio.Forms.Editor
                 {
                     value = diag.NewText;
                 }
-                else return;
+                else
+                    return;
             }
             ruleset.ApplyAnim(SkinANIM.FromString(value));
         }
@@ -307,15 +312,24 @@ namespace PckStudio.Forms.Editor
                     graphic.FillRectangle(Brushes.Magenta, new Rectangle(16, 16, 24, 16));
                 if (img.Height == 64)
                 {
-                    if (ruleset.Value.GetFlag(SkinAnimFlag.RIGHT_ARM_DISABLED)) graphic.FillRectangle(Brushes.Magenta, new Rectangle(40, 16, 16, 16));
-                    if (ruleset.Value.GetFlag(SkinAnimFlag.RIGHT_LEG_DISABLED)) graphic.FillRectangle(Brushes.Magenta, new Rectangle(0, 16, 16, 16));
-                    if (ruleset.Value.GetFlag(SkinAnimFlag.BODY_OVERLAY_DISABLED)) graphic.FillRectangle(Brushes.Magenta, new Rectangle(16, 32, 24, 16));
-                    if (ruleset.Value.GetFlag(SkinAnimFlag.RIGHT_ARM_OVERLAY_DISABLED)) graphic.FillRectangle(Brushes.Magenta, new Rectangle(40, 32, 16, 16));
-                    if (ruleset.Value.GetFlag(SkinAnimFlag.RIGHT_LEG_OVERLAY_DISABLED)) graphic.FillRectangle(Brushes.Magenta, new Rectangle(0, 32, 16, 16));
-                    if (ruleset.Value.GetFlag(SkinAnimFlag.LEFT_LEG_OVERLAY_DISABLED)) graphic.FillRectangle(Brushes.Magenta, new Rectangle(0, 48, 16, 16));
-                    if (ruleset.Value.GetFlag(SkinAnimFlag.LEFT_LEG_DISABLED)) graphic.FillRectangle(Brushes.Magenta, new Rectangle(16, 48, 16, 16));
-                    if (ruleset.Value.GetFlag(SkinAnimFlag.LEFT_ARM_DISABLED)) graphic.FillRectangle(Brushes.Magenta, new Rectangle(32, 48, 16, 16));
-                    if (ruleset.Value.GetFlag(SkinAnimFlag.LEFT_ARM_OVERLAY_DISABLED)) graphic.FillRectangle(Brushes.Magenta, new Rectangle(48, 48, 16, 16));
+                    if (ruleset.Value.GetFlag(SkinAnimFlag.RIGHT_ARM_DISABLED))
+                        graphic.FillRectangle(Brushes.Magenta, new Rectangle(40, 16, 16, 16));
+                    if (ruleset.Value.GetFlag(SkinAnimFlag.RIGHT_LEG_DISABLED))
+                        graphic.FillRectangle(Brushes.Magenta, new Rectangle(0, 16, 16, 16));
+                    if (ruleset.Value.GetFlag(SkinAnimFlag.BODY_OVERLAY_DISABLED))
+                        graphic.FillRectangle(Brushes.Magenta, new Rectangle(16, 32, 24, 16));
+                    if (ruleset.Value.GetFlag(SkinAnimFlag.RIGHT_ARM_OVERLAY_DISABLED))
+                        graphic.FillRectangle(Brushes.Magenta, new Rectangle(40, 32, 16, 16));
+                    if (ruleset.Value.GetFlag(SkinAnimFlag.RIGHT_LEG_OVERLAY_DISABLED))
+                        graphic.FillRectangle(Brushes.Magenta, new Rectangle(0, 32, 16, 16));
+                    if (ruleset.Value.GetFlag(SkinAnimFlag.LEFT_LEG_OVERLAY_DISABLED))
+                        graphic.FillRectangle(Brushes.Magenta, new Rectangle(0, 48, 16, 16));
+                    if (ruleset.Value.GetFlag(SkinAnimFlag.LEFT_LEG_DISABLED))
+                        graphic.FillRectangle(Brushes.Magenta, new Rectangle(16, 48, 16, 16));
+                    if (ruleset.Value.GetFlag(SkinAnimFlag.LEFT_ARM_DISABLED))
+                        graphic.FillRectangle(Brushes.Magenta, new Rectangle(32, 48, 16, 16));
+                    if (ruleset.Value.GetFlag(SkinAnimFlag.LEFT_ARM_OVERLAY_DISABLED))
+                        graphic.FillRectangle(Brushes.Magenta, new Rectangle(48, 48, 16, 16));
                 }
                 else
                 {

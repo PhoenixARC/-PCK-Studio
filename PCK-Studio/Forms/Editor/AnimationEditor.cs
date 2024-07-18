@@ -32,7 +32,6 @@ using PckStudio.Forms.Additional_Popups.Animation;
 using PckStudio.Extensions;
 using PckStudio.Properties;
 using PckStudio.Internal;
-using AnimatedGif;
 using PckStudio.Internal.Deserializer;
 
 namespace PckStudio.Forms.Editor
@@ -157,7 +156,8 @@ namespace PckStudio.Forms.Editor
 		{
 			foreach (TreeNode node in treeNode.Nodes)
 			{
-				if (node.Text.ToLower() == name.ToLower()) return node;
+				if (node.Text.ToLower() == name.ToLower())
+					return node;
 				return FindNodeByName(node, name);
 			}
 			return null;
@@ -241,8 +241,10 @@ namespace PckStudio.Forms.Editor
 		private bool ContainsNode(TreeNode node1, TreeNode node2)
 		{
 			// Check the parent node of the second node.
-			if (node2.Parent == null) return false;
-			if (node2.Parent.Equals(node1)) return true;
+			if (node2.Parent == null)
+				return false;
+			if (node2.Parent.Equals(node1))
+				return true;
 
 			// If the parent node is not null or equal to the first node, 
 			// call the ContainsNode method recursively using the parent of 
@@ -252,7 +254,7 @@ namespace PckStudio.Forms.Editor
 
 		private void treeView1_doubleClick(object sender, EventArgs e)
 		{
-            var frame = _animation.GetFrame(frameTreeView.SelectedNode.Index);
+            Animation.Frame frame = _animation.GetFrame(frameTreeView.SelectedNode.Index);
             using FrameEditor diag = new FrameEditor(frame.Ticks, _animation.GetTextureIndex(frame.Texture), TextureIcons);
 			if (diag.ShowDialog(this) == DialogResult.OK)
             {
@@ -319,7 +321,8 @@ namespace PckStudio.Forms.Editor
                 // -MattNL
                 Filter = "Animation Scripts (*.mcmeta)|*.png.mcmeta"
             };
-            if (fileDialog.ShowDialog(this) != DialogResult.OK) return;
+            if (fileDialog.ShowDialog(this) != DialogResult.OK)
+				return;
 			Debug.WriteLine("Selected Animation Script: " + fileDialog.FileName);
 
 			string textureFile = fileDialog.FileName.Substring(0, fileDialog.FileName.Length - ".mcmeta".Length);
@@ -355,7 +358,7 @@ namespace PckStudio.Forms.Editor
                 string jsondata = JsonConvert.SerializeObject(mcmeta, Formatting.Indented);
                 string filename = fileDialog.FileName;
                 File.WriteAllText(filename, jsondata);
-                var finalTexture = _animation.BuildTexture();
+                Image finalTexture = _animation.BuildTexture();
 				// removes ".mcmeta" from filename
 				string texturePath = Path.Combine(Path.GetDirectoryName(filename), Path.GetFileNameWithoutExtension(filename));
                 finalTexture.Save(texturePath);

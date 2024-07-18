@@ -58,10 +58,8 @@ namespace PckStudio.Internal.Misc
             string destinationFilepath = Path.Combine(_cacheDirectory, filename);
             if (!File.Exists(destinationFilepath))
             {
-                using (FileStream fsDst = File.OpenWrite(destinationFilepath))
-                {
-                    fsDst.Write(data, 0, data.Length);
-                }
+                using FileStream fsDst = File.OpenWrite(destinationFilepath);
+                fsDst.Write(data, 0, data.Length);
             }
         }
     }

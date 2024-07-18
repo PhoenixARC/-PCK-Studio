@@ -16,9 +16,9 @@ namespace PckStudio.Extensions
 
         internal static bool TryGetTagData<TOut>(this TreeNode node, out TOut tagData) where TOut : class
         {
-            if (node?.Tag is TOut _data)
+            if (node?.Tag is TOut data)
             {
-                tagData = _data;
+                tagData = data;
                 return true;
             }
             tagData = default;

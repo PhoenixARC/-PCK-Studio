@@ -346,20 +346,24 @@ namespace PckStudio.Internal.IO._3DST
                     int[] etc1Order = etc1Scramble(width, height);
 
                     int i = 0;
-                    for (int tY = 0; tY < height / 4; tY++) {
-	                    for (int tX = 0; tX < width / 4; tX++) {
+                    for (int tY = 0; tY < height / 4; tY++)
+                    {
+	                    for (int tX = 0; tX < width / 4; tX++)
+                        {
                             int TX = etc1Order[i] % (width / 4);
                             int TY = (etc1Order[i] - TX) / (width / 4);
-		                    for (int y = 0; y < 4; y++) {
-			                    for (int x = 0; x < 4; x++) {
-				                    dataOffset = ((TX * 4) + x + (((TY * 4) + y) * width)) * 4;
+		                    for (int y = 0; y < 4; y++)
+                            {
+                                for (int x = 0; x < 4; x++)
+                                {
+                                    dataOffset = ((TX * 4) + x + (((TY * 4) + y) * width)) * 4;
                                     long outputOffset = ((tX * 4) + x + (((tY * 4 + y)) * width)) * 4;
 
                                     Buffer.BlockCopy(decodedData, (int)dataOffset, output, (int)outputOffset, 4);
 			                    }
 		                    }
 		                    i += 1;
-	                    }
+                        }
                     }
 
                     break;
@@ -577,8 +581,10 @@ namespace PckStudio.Internal.IO._3DST
 
         private static byte saturate(int value)
         {
-            if (value > 0xff) return 0xff;
-            if (value < 0) return 0;
+            if (value > 0xff)
+                return 0xff;
+            if (value < 0)
+                return 0;
             return (byte)(value & 0xff);
         }
 

@@ -14,9 +14,6 @@ namespace PckStudio.Forms
         public ContributorsForm()
         {
             InitializeComponent();
-#if false
-            Task.Run(GetContributors);
-#endif
             string buildConfig = "";
 #if BETA
             buildConfig = "Beta";
@@ -33,7 +30,7 @@ namespace PckStudio.Forms
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            foreach (var contributorsName in ApplicationScope.Contributors)
+            foreach (Octokit.RepositoryContributor contributorsName in ApplicationScope.Contributors)
             {
                 if (InvokeRequired)
                     Invoke(() => contributorsLayoutPanel.Controls.Add(new GithubUserPanel(contributorsName)));

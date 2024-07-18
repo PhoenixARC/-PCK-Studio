@@ -17,7 +17,6 @@
 **/
 using System.IO;
 using System.Drawing;
-using System;
 
 namespace PckStudio.Internal.IO.TGA
 {

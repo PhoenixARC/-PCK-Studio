@@ -8,7 +8,7 @@ namespace PckStudio.Extensions
         public static IEnumerable<(int index, T value)>enumerate<T>(this IEnumerable<T> array)
         {
             int i = 0;
-            foreach (var item in array)
+            foreach (T item in array)
             {
                 yield return (i++, item);
             }
@@ -17,7 +17,7 @@ namespace PckStudio.Extensions
 
         public static bool EqualsAny<T>(this T type, params T[] items)
         {
-            foreach (var item in items)
+            foreach (T item in items)
             {
                 if (item.Equals(type))
                     return true;
@@ -27,7 +27,7 @@ namespace PckStudio.Extensions
 
         public static bool ContainsAny<T>(this IEnumerable<T> array, params T[] items)
         {
-            foreach (var item in array)
+            foreach (T item in array)
             {
                 if (items.Contains(item))
                     return true;

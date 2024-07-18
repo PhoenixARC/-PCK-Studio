@@ -214,7 +214,7 @@
     <value>165, 23</value>
   </data>
   <data name="InputTextBox.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
+    <value>1</value>
   </data>
   <data name="&gt;&gt;InputTextBox.Name" xml:space="preserve">
     <value>InputTextBox</value>

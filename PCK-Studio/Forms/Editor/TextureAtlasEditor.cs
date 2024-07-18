@@ -110,7 +110,7 @@ namespace PckStudio.Forms.Editor
             _rowCount = atlas.Width / _tileAreaSize.Width;
             _columnCount = atlas.Height / _tileAreaSize.Height;
             _resourceLocation = resourceLocation;
-            var tileInfos = resourceLocation.Category switch
+            List<JsonTileInfo> tileInfos = resourceLocation.Category switch
             {
                 ResourceCategory.BlockAtlas => Tiles.BlockTileInfos,
                 ResourceCategory.ItemAtlas => Tiles.ItemTileInfos,
@@ -127,7 +127,7 @@ namespace PckStudio.Forms.Editor
 
             originalPictureBox.Image = new Bitmap(atlas);
 
-            var images = atlas.Split(_tileAreaSize, _imageLayout);
+            IEnumerable<Image> images = atlas.Split(_tileAreaSize, _imageLayout);
 
             AtlasTile MakeTile((int index, Image value) p)
             {
@@ -168,7 +168,7 @@ namespace PckStudio.Forms.Editor
 
         private bool AcquireColorTable(PckFile pckFile)
         {
-            if (pckFile.TryGetAsset("colours.col", PckAssetType.ColourTableFile, out var colAsset) &&
+            if (pckFile.TryGetAsset("colours.col", PckAssetType.ColourTableFile, out PckAsset colAsset) &&
                 colAsset.Size > 0)
             {
                 using var ms = new MemoryStream(colAsset.Data);
@@ -246,7 +246,7 @@ namespace PckStudio.Forms.Editor
                 // asset size check dont have to be done here the deserializer handles it. -Miku
                 if (playAnimationsToolStripMenuItem.Checked && hasAnimation)
                 {
-                    var animation = animationAsset.GetDeserializedData(AnimationDeserializer.DefaultDeserializer);
+                    Animation animation = animationAsset.GetDeserializedData(AnimationDeserializer.DefaultDeserializer);
                     selectTilePictureBox.Image = animation.CreateAnimationImage();
                     selectTilePictureBox.Start();
                 }
@@ -343,7 +343,7 @@ namespace PckStudio.Forms.Editor
                 
                 default:
                     break;
-            };
+            }
             return GetSelectedIndex(result.X, result.Y, rowCount, columnCount, imageLayout);
         }
 
@@ -359,7 +359,7 @@ namespace PckStudio.Forms.Editor
 
         private static Rectangle GetAtlasArea(int index, int tileWidth, int tileHeight, int rowCount, int columnCount, Size size, ImageLayoutDirection imageLayout)
         {
-            var p = GetSelectedPoint(index, rowCount, columnCount, imageLayout);
+            Point p = GetSelectedPoint(index, rowCount, columnCount, imageLayout);
             var ap = new Point(p.X * size.Width, p.Y * size.Height);
             return new Rectangle(ap, new Size(size.Width * tileWidth, size.Height * tileHeight));
         }
@@ -384,7 +384,7 @@ namespace PckStudio.Forms.Editor
                 g.DrawImage(texture, dataTile.Area);
             }
 
-            var tile = _selectedTile != dataTile ? dataTile : _selectedTile;
+            AtlasTile tile = _selectedTile != dataTile ? dataTile : _selectedTile;
             _tiles[tile.Index] = new AtlasTile(tile.Index, tile.Area, tile.Tile, texture);
             selectTilePictureBox.Image = texture;
             UpdateAtlasDisplay();
@@ -394,7 +394,7 @@ namespace PckStudio.Forms.Editor
         {
             if (dataTile.Tile.HasColourEntry && dataTile.Tile.ColourEntry is not null)
             {
-                var col = FindBlendColorByKey(dataTile.Tile.ColourEntry.DefaultName);
+                Color col = FindBlendColorByKey(dataTile.Tile.ColourEntry.DefaultName);
                 return col;
             }
             
@@ -518,14 +518,14 @@ namespace PckStudio.Forms.Editor
         {
             ResourceCategory animationResourceCategory = _resourceLocation.Category == ResourceCategory.ItemAtlas ? ResourceCategory.ItemAnimation : ResourceCategory.BlockAnimation;
             string animationAssetPath = $"{ResourceLocation.GetPathFromCategory(animationResourceCategory)}/{_selectedTile.Tile.InternalName}.png";
-            var file = _pckFile.GetOrCreate(animationAssetPath, PckAssetType.TextureFile);
+            PckAsset asset = _pckFile.GetOrCreate(animationAssetPath, PckAssetType.TextureFile);
 
-            var animation = file.GetDeserializedData(AnimationDeserializer.DefaultDeserializer);
+            Animation animation = asset.GetDeserializedData(AnimationDeserializer.DefaultDeserializer);
 
             var animationEditor = new AnimationEditor(animation, _selectedTile.Tile.DisplayName);
             if (animationEditor.ShowDialog(this) == DialogResult.OK)
             {
-                file.SetSerializedData(animationEditor.Result, AnimationSerializer.DefaultSerializer);
+                asset.SetSerializedData(animationEditor.Result, AnimationSerializer.DefaultSerializer);
                 // so animations can automatically update upon saving
                 SelectedIndex = _selectedTile.Index;
             }
@@ -597,7 +597,8 @@ namespace PckStudio.Forms.Editor
 
             colorPick.CustomColors = GameConstants.DyeColors.Select(c => c.ToBGR()).ToArray();
             
-            if (colorPick.ShowDialog(this) != DialogResult.OK) return;
+            if (colorPick.ShowDialog(this) != DialogResult.OK)
+                return;
 
             selectTilePictureBox.BlendColor = colorPick.Color;
             selectTilePictureBox.Image = dataTile.Texture;

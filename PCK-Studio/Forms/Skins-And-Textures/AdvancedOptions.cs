@@ -23,7 +23,7 @@ namespace PckStudio.Popups
                 _endianness = value ? Endianness.LittleEndian : Endianness.BigEndian;
             }
         }
-        private PckFile _pckFile;
+        private readonly PckFile _pckFile;
         private Endianness _endianness;
 
         public AdvancedOptions(PckFile pckFile)

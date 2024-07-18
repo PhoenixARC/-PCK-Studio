@@ -22,7 +22,7 @@ namespace PckStudio.Extensions
 
         internal static PckAsset CreateNewAsset(this PckFile pck, string filename, PckAssetType filetype, IDataFormatWriter writer)
         {
-            var asset = pck.CreateNewAsset(filename, filetype);
+            PckAsset asset = pck.CreateNewAsset(filename, filetype);
             asset.SetData(writer);
             return asset;
         }

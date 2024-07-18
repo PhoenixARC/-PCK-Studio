@@ -243,7 +243,7 @@ namespace PckStudio.Internal
 
             ANIM2BOX(modelInfo.ANIM, AddElement);
 
-            foreach (var box in modelInfo.AdditionalBoxes)
+            foreach (SkinBOX box in modelInfo.AdditionalBoxes)
             {
                 AddElement(box);
             }
@@ -448,7 +448,7 @@ namespace PckStudio.Internal
 
             ANIM2BOX(modelInfo.ANIM, AddElement);
 
-            foreach (var box in modelInfo.AdditionalBoxes)
+            foreach (SkinBOX box in modelInfo.AdditionalBoxes)
             {
                 AddElement(box);
             }
@@ -557,15 +557,15 @@ namespace PckStudio.Internal
                 InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor,
                 PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality
             });
-            foreach (var box in modelInfo.AdditionalBoxes)
+            foreach (SkinBOX box in modelInfo.AdditionalBoxes)
             {
                 if (box.Size == Vector3.One || box.Size == Vector3.Zero)
                     continue;
                 var imgPos = Point.Truncate(new PointF(box.UV.X + box.Size.X + box.Size.Z, box.UV.Y));
                 var area = new RectangleF(imgPos, Size.Truncate(new SizeF(box.Size.X, box.Size.Z)));
-                var targetAreaImage = modelInfo.Texture.GetArea(Rectangle.Truncate(area));
+                Image targetAreaImage = modelInfo.Texture.GetArea(Rectangle.Truncate(area));
                 targetAreaImage.RotateFlip(RotateFlipType.RotateNoneFlipY);
-                var clip = g.Clip;
+                Region clip = g.Clip;
                 g.SetClip(area);
                 g.Clear(Color.Transparent);
                 g.DrawImage(targetAreaImage, imgPos);
@@ -582,7 +582,7 @@ namespace PckStudio.Internal
             }
             if (partOffsets.Any(o => o.Type == name))
             {
-                var partOffset = partOffsets.First(o => o.Type == name);
+                SkinPartOffset partOffset = partOffsets.First(o => o.Type == name);
                 offsetLookUp.Add(name, partOffset);
                 return -partOffset.Value * Vector3.UnitY;
             }

@@ -21,7 +21,7 @@ namespace PckStudio.Extensions
             }
             var ms = new System.IO.MemoryStream();
             var generateor = new AnimatedGifCreator(ms, GameConstants.GameTickInMilliseconds, 0);
-            foreach (var frame in animation.GetInterpolatedFrames())
+            foreach (Animation.Frame frame in animation.GetInterpolatedFrames())
             {
                 generateor.AddFrame(frame.Texture, frame.Ticks * GameConstants.GameTickInMilliseconds, GifQuality.Bit8);
             }
@@ -36,13 +36,13 @@ namespace PckStudio.Extensions
             mcmeta["comment"] = $"Animation converted with {Application.ProductName}";
             mcmeta["animation"] = janimation;
             JArray jframes = new JArray();
-            foreach (var frame in animation.GetFrames())
+            foreach (Animation.Frame frame in animation.GetFrames())
             {
                 JObject jframe = new JObject();
                 jframe["index"] = animation.GetTextureIndex(frame.Texture);
                 jframe["time"] = frame.Ticks;
                 jframes.Add(jframe);
-            };
+            }
             janimation["interpolation"] = animation.Interpolate;
             janimation["frames"] = jframes;
             return mcmeta;

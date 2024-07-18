@@ -101,11 +101,11 @@ namespace PckStudio.Extensions
 
             using (var graphic = Graphics.FromImage(image))
             {
-                foreach (var (i, texture) in sources.enumerate())
+                foreach ((int i, Image texture) in sources.enumerate())
                 {
                     var info = new ImageSection(texture.Size, i, layoutDirection);
                     graphic.DrawImage(texture, info.Point);
-                };
+                }
             }
             return image;
         }
