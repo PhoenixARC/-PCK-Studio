@@ -33,6 +33,7 @@ using PckStudio.Extensions;
 using PckStudio.Properties;
 using PckStudio.Internal;
 using PckStudio.Internal.Deserializer;
+using PckStudio.Internal.Serializer;
 
 namespace PckStudio.Forms.Editor
 {
@@ -353,11 +354,11 @@ namespace PckStudio.Forms.Editor
 			fileDialog.Filter = "Animation Scripts (*.mcmeta)|*.png.mcmeta";
 			if (fileDialog.ShowDialog(this) == DialogResult.OK)
             {
-                JObject mcmeta = _animation.ConvertToJavaAnimation();
+                JObject mcmeta = AnimationSerializer.SerializeJavaAnimation(_animation);
                 string jsondata = JsonConvert.SerializeObject(mcmeta, Formatting.Indented);
                 string filename = fileDialog.FileName;
                 File.WriteAllText(filename, jsondata);
-                Image finalTexture = _animation.BuildTexture();
+                Image finalTexture = AnimationSerializer.SerializeTexture(_animation);
 				// removes ".mcmeta" from filename
 				string texturePath = Path.Combine(Path.GetDirectoryName(filename), Path.GetFileNameWithoutExtension(filename));
                 finalTexture.Save(texturePath);
@@ -421,7 +422,7 @@ namespace PckStudio.Forms.Editor
 				return;
 			}
 
-			var oldResolution = _animation.BuildTexture().Width;
+			var oldResolution = _animation.GetFrame(0).Texture.Width;
 
             FrameDimension dimension = new FrameDimension(gif.FrameDimensionsList[0]);
             int frameCount = gif.GetFrameCount(dimension);
