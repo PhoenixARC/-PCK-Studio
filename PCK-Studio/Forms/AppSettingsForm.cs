@@ -1,71 +1,74 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Configuration;
+using System.Diagnostics;
 using System.Windows.Forms;
-using CBH.Controls;
+using MetroFramework.Controls;
 using MetroFramework.Forms;
 using PckStudio.Properties;
-using PckStudio.ToolboxItems;
 
 namespace PckStudio.Forms
 {
-    public partial class AppSettingsForm : ThemeForm
+    public partial class AppSettingsForm : MetroForm
     {
+        private ApplicationSettingsBase _applicationSettings;
+
         public AppSettingsForm()
+            : this(Settings.Default)
+        {
+        }
+
+        public AppSettingsForm(ApplicationSettingsBase applicationSettings)
         {
             InitializeComponent();
+            _applicationSettings = applicationSettings;
             LoadSettings();
         }
 
-        private void autoSaveCheckBox_CheckedChanged(object sender, EventArgs e)
+        private static Dictionary<string, string> CheckBoxText = new Dictionary<string, string>()
         {
-            Settings.Default.AutoSaveChanges = autoSaveCheckBox.Checked;
-        }
+            ["ShowRichPresence"]           = "Show Rich Presence",
+            ["AutoSaveChanges"]            = "Auto Save",
+            ["UseLittleEndianAsDefault"]   = "Open as Little Endian",
+            ["AutoUpdate"]                 = "Auto Update",
+            ["LoadSubPcks"]                = "Load Sub Pcks",
+            ["UsePrerelease"]              = "Use Prerelease",
+        };
 
-        private void endianCheckBox_CheckedChanged(object sender, EventArgs e)
+        private void CheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            Settings.Default.UseLittleEndianAsDefault = endianCheckBox.Checked;
-        }
-
-        private void autoLoadPckCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            Settings.Default.LoadSubPcks = autoLoadPckCheckBox.Checked;
-        }
-
-        private void showPresenceCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            Settings.Default.ShowRichPresence = showPresenceCheckBox.Checked;
-        }
-
-        private void grf_paramKeyComboBoxCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            Settings.Default.UseComboBoxForGRFParameter = grf_paramKeyComboBoxCheckBox.Checked;
-        }
-
-        private void LoadCheckboxState(CheckBox checkBox, EventHandler eventHandler, bool state)
-        {
-            checkBox.CheckedChanged -= eventHandler;
-            checkBox.Checked = state;
-            checkBox.CheckedChanged += eventHandler;
+            if (sender is CheckBox checkBox && checkBox.Tag is string settingsKey && _applicationSettings[settingsKey] is bool)
+            {
+                _applicationSettings[settingsKey] = checkBox.Checked;
+            }
         }
 
         private void LoadSettings()
         {
-            LoadCheckboxState(autoSaveCheckBox, autoSaveCheckBox_CheckedChanged, Settings.Default.AutoSaveChanges);
-            LoadCheckboxState(endianCheckBox, endianCheckBox_CheckedChanged, Settings.Default.UseLittleEndianAsDefault);
-            LoadCheckboxState(autoLoadPckCheckBox, autoLoadPckCheckBox_CheckedChanged, Settings.Default.LoadSubPcks);
-            LoadCheckboxState(showPresenceCheckBox, showPresenceCheckBox_CheckedChanged, Settings.Default.ShowRichPresence);
-            LoadCheckboxState(grf_paramKeyComboBoxCheckBox, grf_paramKeyComboBoxCheckBox_CheckedChanged, Settings.Default.UseComboBoxForGRFParameter);
+            foreach (SettingsPropertyValue item in _applicationSettings.PropertyValues)
+            {
+                Debug.WriteLine($"{item.Property.Name}: {item.Property.PropertyType}");
+                if (!item.Property.Attributes.ContainsKey(typeof(UserScopedSettingAttribute)) || item.Property.PropertyType != typeof(bool))
+                    continue;
+                var checkBox = new MetroCheckBox
+                {
+                    Name = item.Name,
+                    Tag = item.Name,
+                    Text = CheckBoxText.ContainsKey(item.Name) ? CheckBoxText[item.Name] : item.Name,
+                    Checked = (bool)item.PropertyValue,
+
+                    AutoSize = true,
+                    Theme = MetroFramework.MetroThemeStyle.Dark,
+                    Style = MetroFramework.MetroColorStyle.White,
+                };
+                checkBox.CheckedChanged += CheckBox_CheckedChanged;
+                flowLayoutPanel.Controls.Add(checkBox);
+            }
         }
 
         private void AppBehaviorSettingsForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Settings.Default.Save();
+            _applicationSettings.Save();
         }
     }
 }

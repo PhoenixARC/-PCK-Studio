@@ -2,9 +2,9 @@
 using System.Windows.Forms;
 using PckStudio.ToolboxItems;
 
-namespace PckStudio
+namespace PckStudio.Forms.Additional_Popups
 {
-    public partial class CreateTexturePack : ThemeForm
+    public partial class CreateTexturePackPrompt : ThemeForm
 	{
 		/// <summary>
 		/// Text entered <c>only access when DialogResult == DialogResult.OK</c>
@@ -13,7 +13,7 @@ namespace PckStudio
 		public string PackName => InputTextBox.Text;
 		public string PackRes => metroComboBox1.Text;
 
-		public CreateTexturePack()
+		public CreateTexturePackPrompt()
 		{
 			InitializeComponent();
 		}

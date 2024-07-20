@@ -11,6 +11,7 @@ namespace PckStudio.Forms.Additional_Popups.Loc
         {
             InitializeComponent();
             LanguageComboBox.Items.AddRange(avalibleLanguages);
+            LanguageComboBox.SelectedIndex = 0;
         }
 
         private void AddBtn_Click(object sender, EventArgs e)

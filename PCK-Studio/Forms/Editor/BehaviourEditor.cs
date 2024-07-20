@@ -14,37 +14,31 @@ using OMI.Formats.Pck;
 using PckStudio.Properties;
 using PckStudio.Internal;
 using PckStudio.Extensions;
+using PckStudio.Internal.Json;
+using PckStudio.Internal.App;
 
 namespace PckStudio.Forms.Editor
 {
 	public partial class BehaviourEditor : MetroForm
 	{
 		// Behaviours File Format research by Miku and MattNL
-		private readonly PckFileData _file;
-		BehaviourFile behaviourFile;
+		private readonly PckAsset _asset;
+        BehaviourFile _behaviourFile;
 
-		private readonly JObject EntityJSONData = JObject.Parse(Properties.Resources.entityData);
+		private readonly List<EntityInfo> BehaviourData = Entities.BehaviourInfos;
 
 		void SetUpTree()
 		{
 			treeView1.BeginUpdate();
 			treeView1.Nodes.Clear();
-			foreach (var entry in behaviourFile.entries)
+			foreach (var entry in _behaviourFile.entries)
 			{
 				TreeNode EntryNode = new TreeNode(entry.name);
 
-				foreach (JObject content in EntityJSONData["behaviours"].Children())
-				{
-					var prop = content.Properties().FirstOrDefault(prop => prop.Name == entry.name);
-					if (prop is JProperty)
-					{
-						EntryNode.Text = (string)prop.Value;
-						EntryNode.ImageIndex = EntityJSONData["behaviours"].Children().ToList().IndexOf(content);
-						EntryNode.SelectedImageIndex = EntryNode.ImageIndex;
-						break;
-					}
-				}
-
+				var behaviour = BehaviourData.Find(b => b.InternalName == entry.name);
+				EntryNode.Text = behaviour.DisplayName;
+				EntryNode.ImageIndex = BehaviourData.IndexOf(behaviour);
+				EntryNode.SelectedImageIndex = EntryNode.ImageIndex;
 				EntryNode.Tag = entry;
 
 				foreach (var posOverride in entry.overrides)
@@ -61,19 +55,14 @@ namespace PckStudio.Forms.Editor
 			treeView1.EndUpdate();
 		}
 
-		public BehaviourEditor(PckFileData file)
+		public BehaviourEditor(PckAsset asset)
 		{
 			InitializeComponent();
 
 			saveToolStripMenuItem1.Visible = !Settings.Default.AutoSaveChanges;
 
-            _file = file;
-
-			using (var stream = new MemoryStream(file.Data))
-			{
-				var reader = new BehavioursReader();
-				behaviourFile = reader.FromStream(stream);
-			}
+            _asset = asset;
+			_behaviourFile = asset.GetData(new BehavioursReader());
 
 			treeView1.ImageList = new ImageList();
             treeView1.ImageList.Images.AddRange(ApplicationScope.EntityImages);
@@ -83,10 +72,10 @@ namespace PckStudio.Forms.Editor
 
 		private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
 		{
-			if (e.Node is null) return;
+			if (treeView1.SelectedNode is null)
+				return;
 
-			bool isValidOverride = e.Node.Tag is BehaviourFile.RiderPositionOverride.PositionOverride &&
-				treeView1.SelectedNode != null;
+			bool isValidOverride = treeView1.SelectedNode.Tag is BehaviourFile.RiderPositionOverride.PositionOverride;
 			MobIsTamedCheckbox.Enabled = isValidOverride;
 			MobHasSaddleCheckbox.Enabled = isValidOverride;
 			xUpDown.Enabled = isValidOverride;
@@ -97,7 +86,7 @@ namespace PckStudio.Forms.Editor
 
 			if (isValidOverride)
 			{
-                var posOverride = e.Node.Tag as BehaviourFile.RiderPositionOverride.PositionOverride;
+                var posOverride = treeView1.SelectedNode.Tag as BehaviourFile.RiderPositionOverride.PositionOverride;
                 MobIsTamedCheckbox.Checked = posOverride.EntityIsTamed;
 				MobHasSaddleCheckbox.Checked = posOverride.EntityHasSaddle;
 				xUpDown.Value = (decimal)posOverride.x;
@@ -108,7 +97,8 @@ namespace PckStudio.Forms.Editor
 
 		private void removeToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (treeView1.SelectedNode is null) return;
+			if (treeView1.SelectedNode is null)
+				return;
 			treeView1.SelectedNode.Remove();
 		}
 
@@ -154,15 +144,18 @@ namespace PckStudio.Forms.Editor
 
 		private void changeToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (treeView1.SelectedNode == null) return;
-			if (!(treeView1.SelectedNode.Tag is BehaviourFile.RiderPositionOverride entry)) return;
+			if (treeView1.SelectedNode == null)
+				return;
+			if (!(treeView1.SelectedNode.Tag is BehaviourFile.RiderPositionOverride entry))
+				return;
 
 			var diag = new AddEntry("behaviours", ApplicationScope.EntityImages);
 
-			if (diag.ShowDialog() == DialogResult.OK)
+			if (diag.ShowDialog(this) == DialogResult.OK)
 			{
-				if (String.IsNullOrEmpty(diag.SelectedEntity)) return;
-				if (behaviourFile.entries.FindAll(behaviour => behaviour.name == diag.SelectedEntity).Count() > 0)
+				if (string.IsNullOrEmpty(diag.SelectedEntity))
+					return;
+				if (_behaviourFile.entries.FindAll(behaviour => behaviour.name == diag.SelectedEntity).Count() > 0)
 				{
 					MessageBox.Show(this, "You cannot have two entries for one entity. Please use the \"Add New Position Override\" tool to add multiple overrides for entities", "Error", MessageBoxButtons.OK);
 					return;
@@ -171,17 +164,11 @@ namespace PckStudio.Forms.Editor
 				entry.name = diag.SelectedEntity;
 				treeView1.SelectedNode.Tag = entry;
 
-				foreach (JObject content in EntityJSONData["behaviours"].Children())
-				{
-					var prop = content.Properties().FirstOrDefault(prop => prop.Name == entry.name);
-					if (prop is JProperty)
-					{
-						treeView1.SelectedNode.Text = (string)prop.Value;
-						treeView1.SelectedNode.ImageIndex = EntityJSONData["behaviours"].Children().ToList().IndexOf(content);
-						treeView1.SelectedNode.SelectedImageIndex = treeView1.SelectedNode.ImageIndex;
-						break;
-					}
-				}
+                EntityInfo behaviour = BehaviourData.Find(b => b.InternalName == entry.name);
+
+				treeView1.SelectedNode.Text = behaviour.DisplayName;
+				treeView1.SelectedNode.ImageIndex = BehaviourData.IndexOf(behaviour);
+				treeView1.SelectedNode.SelectedImageIndex = treeView1.SelectedNode.ImageIndex;
 			}
 		}
 
@@ -196,7 +183,8 @@ namespace PckStudio.Forms.Editor
 
 		private void addNewPositionOverrideToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (treeView1.SelectedNode.Tag is BehaviourFile.RiderPositionOverride.PositionOverride) treeView1.SelectedNode = treeView1.SelectedNode.Parent;
+			if (treeView1.SelectedNode.Tag is BehaviourFile.RiderPositionOverride.PositionOverride)
+				treeView1.SelectedNode = treeView1.SelectedNode.Parent;
 
 			if (treeView1.SelectedNode.Tag is BehaviourFile.RiderPositionOverride)
 			{
@@ -212,10 +200,11 @@ namespace PckStudio.Forms.Editor
 		{
 			var diag = new AddEntry("behaviours", ApplicationScope.EntityImages);
 
-			if(diag.ShowDialog() == DialogResult.OK)
+			if(diag.ShowDialog(this) == DialogResult.OK)
 			{
-				if (string.IsNullOrEmpty(diag.SelectedEntity)) return;
-				if (behaviourFile.entries.FindAll(behaviour => behaviour.name == diag.SelectedEntity).Count() > 0)
+				if (string.IsNullOrEmpty(diag.SelectedEntity))
+					return;
+				if (_behaviourFile.entries.FindAll(behaviour => behaviour.name == diag.SelectedEntity).Count() > 0)
 				{
 					MessageBox.Show(this, "You cannot have two entries for one entity. Please use the \"Add New Position Override\" tool to add multiple overrides for entities", "Error", MessageBoxButtons.OK);
 					return;
@@ -224,17 +213,12 @@ namespace PckStudio.Forms.Editor
 
 				TreeNode NewOverrideNode = new TreeNode(NewOverride.name);
 				NewOverrideNode.Tag = NewOverride;
-				foreach (JObject content in EntityJSONData["behaviours"].Children())
-				{
-					var prop = content.Properties().FirstOrDefault(prop => prop.Name == NewOverride.name);
-					if (prop is JProperty)
-					{
-						NewOverrideNode.Text = (string)prop.Value;
-						NewOverrideNode.ImageIndex = EntityJSONData["behaviours"].Children().ToList().IndexOf(content);
-						NewOverrideNode.SelectedImageIndex = NewOverrideNode.ImageIndex;
-						break;
-					}
-				}
+
+                EntityInfo behaviour = BehaviourData.Find(b => b.InternalName == NewOverride.name);
+				NewOverrideNode.Text = behaviour.DisplayName;
+				NewOverrideNode.ImageIndex = BehaviourData.IndexOf(behaviour);
+				NewOverrideNode.SelectedImageIndex = NewOverrideNode.ImageIndex;
+
 				treeView1.Nodes.Add(NewOverrideNode);
 				treeView1.SelectedNode = NewOverrideNode;
 
@@ -244,7 +228,8 @@ namespace PckStudio.Forms.Editor
 
 		private void treeView1_KeyDown(object sender, KeyEventArgs e)
 		{
-			if (e.KeyCode == Keys.Delete) removeToolStripMenuItem_Click(sender, e);
+			if (e.KeyCode == Keys.Delete)
+				removeToolStripMenuItem_Click(sender, e);
 		}
 
 		private void treeView1_MouseHover(object sender, EventArgs e)
@@ -254,7 +239,7 @@ namespace PckStudio.Forms.Editor
 
 		private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
-			behaviourFile = new BehaviourFile();
+			_behaviourFile = new BehaviourFile();
 			foreach (TreeNode node in treeView1.Nodes)
 			{
 				if(node.Tag is BehaviourFile.RiderPositionOverride entry)
@@ -269,11 +254,11 @@ namespace PckStudio.Forms.Editor
 						}
 					}
 
-					behaviourFile.entries.Add(entry);
+					_behaviourFile.entries.Add(entry);
 				}
 			}
 
-			_file.SetData(new BehavioursWriter(behaviourFile));
+			_asset.SetData(new BehavioursWriter(_behaviourFile));
 
 			DialogResult = DialogResult.OK;
 		}

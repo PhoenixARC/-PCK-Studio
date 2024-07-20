@@ -1,63 +1,68 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using MetroFramework.Forms;
-using Newtonsoft.Json.Linq;
-using PckStudio.ToolboxItems;
+using PckStudio.Forms.Additional_Popups.Animation;
+using PckStudio.Internal.Json;
+
 
 namespace PckStudio.Forms.Additional_Popups.EntityForms
 {
-	public partial class AddEntry : ThemeForm
+	/// Wrapper class kept for simplicity
+	public class AddEntry
 	{
         string selectedEntity = "";
-
-		private static JObject EntityJSONData = JObject.Parse(Properties.Resources.entityData);
 		public string SelectedEntity => selectedEntity;
 
-		List<TreeNode> treeViewEntityCache = new List<TreeNode>();
+		private FilterPrompt filterPrompt;
 
 		public AddEntry(string dataType, System.Drawing.Image[] entityImages)
 		{
-			InitializeComponent();
-			ImageList entities = new ImageList();
+			filterPrompt = new FilterPrompt();
+            filterPrompt.OnSelectedItemChanged += FilterPrompt_OnSelectedItemChanged;
+            TreeView treeViewEntity = filterPrompt.AddFilterPage("Entities", null, filterPredicate);
+            ImageList entities = new ImageList();
 			entities.ColorDepth = ColorDepth.Depth32Bit;
 			entities.ImageSize = new System.Drawing.Size(32, 32);
 			entities.Images.AddRange(entityImages);
 			treeViewEntity.ImageList = entities;
 
-			try
+            List<EntityInfo> entityInfos = dataType switch
 			{
-				int i = 0;
+				"models" => Entities.ModelInfos,
+				"materials" => Entities.MaterialInfos,
+				"behaviours" => Entities.BehaviourInfos,
+				_ => null,
+			};
 
-				if (EntityJSONData[dataType] != null)
+			int i = 0;
+
+			foreach(EntityInfo entity in entityInfos)
+            {
+				TreeNode entityNode = new TreeNode(entity.DisplayName)
 				{
-					foreach (JObject content in EntityJSONData[dataType].Children())
-					{
-						foreach (JProperty prop in content.Properties())
-						{
-							if (!string.IsNullOrEmpty((string)prop.Value))
-							{
-								TreeNode entityNode = new TreeNode((string)prop.Value)
-								{
-									Tag = prop.Name,
-									ImageIndex = i,
-									SelectedImageIndex = i,
-								};
-								treeViewEntity.Nodes.Add(entityNode);
-								treeViewEntityCache.Add(entityNode);
-							}
-							i++;
-						}
-					}
+					Tag = entity.InternalName,
+					ImageIndex = i,
+					SelectedImageIndex = i,
+				};
+				i++;
+				if (!string.IsNullOrEmpty(entity.InternalName))
+                {
+					treeViewEntity.Nodes.Add(entityNode);
+					(treeViewEntity.Tag as List<TreeNode>).Add(entityNode);
 				}
-			}
-			catch (Newtonsoft.Json.JsonException j_ex)
-			{
-				MessageBox.Show(j_ex.Message, "Error");
-				return;
 			}
 
 			treeViewEntity.Sort();
+		}
+
+        private void FilterPrompt_OnSelectedItemChanged(object sender, EventArgs e)
+        {
+			selectedEntity = filterPrompt.SelectedItem.ToString();
+        }
+
+        public DialogResult ShowDialog(IWin32Window owner)
+		{
+			return filterPrompt.ShowDialog(owner);
 		}
 
 		private void treeViews_AfterSelect(object sender, TreeViewEventArgs e)
@@ -65,51 +70,12 @@ namespace PckStudio.Forms.Additional_Popups.EntityForms
 			if (e.Node.Tag is string entityData)
 			{
 				selectedEntity = entityData;
-				Console.WriteLine(selectedEntity);
 			}
 		}
 
-		void filter_TextChanged(object sender, EventArgs e)
+		private bool filterPredicate(string filterText, object nodeTag)
 		{
-			// Some code in this function is modified code from this StackOverflow answer - MattNL
-			//https://stackoverflow.com/questions/8260322/filter-a-treeview-with-a-textbox-in-a-c-sharp-winforms-app
-
-			//blocks repainting tree until all objects loaded
-			treeViewEntity.BeginUpdate();
-			treeViewEntity.Nodes.Clear();
-			if (!string.IsNullOrEmpty(metroTextBox1.Text))
-			{
-				foreach (TreeNode _node in treeViewEntityCache)
-				{
-					if (_node.Text.ToLower().Contains(metroTextBox1.Text.ToLower()) || 
-						(_node.Tag as string).ToLower().Contains(metroTextBox1.Text.ToLower()))
-					{
-						treeViewEntity.Nodes.Add((TreeNode)_node.Clone());
-					}
-				}
-			}
-			else
-			{
-				foreach (TreeNode _node in treeViewEntityCache)
-				{
-					treeViewEntity.Nodes.Add((TreeNode)_node.Clone());
-				}
-			}
-			//enables redrawing tree after all objects have been added
-			treeViewEntity.EndUpdate();
-		}
-
-        private void CancelBtn_Click(object sender, EventArgs e)
-        {
-            DialogResult = DialogResult.Cancel;
-            Close();
+			return nodeTag is string a && a.ToLower().Contains(filterText.ToLower());
         }
-
-        private void AddNtb_Click(object sender, EventArgs e)
-        {
-            if (string.IsNullOrEmpty(selectedEntity)) CancelBtn_Click(sender, e);
-            DialogResult = DialogResult.OK;
-            Close();
-        }
-    }
+	}
 }

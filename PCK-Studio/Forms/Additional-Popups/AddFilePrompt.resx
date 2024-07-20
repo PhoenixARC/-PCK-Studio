@@ -247,39 +247,36 @@
     <value>TextureFile (*.png)</value>
   </data>
   <data name="FileTypeComboBox.Items3" xml:space="preserve">
-    <value>UIDataFile (UNUSED)</value>
-  </data>
-  <data name="FileTypeComboBox.Items4" xml:space="preserve">
     <value>InfoFile (0)</value>
   </data>
-  <data name="FileTypeComboBox.Items5" xml:space="preserve">
+  <data name="FileTypeComboBox.Items4" xml:space="preserve">
     <value>TexturePackInfoFile (x&lt;Resolution&gt;Info.pck)</value>
   </data>
-  <data name="FileTypeComboBox.Items6" xml:space="preserve">
+  <data name="FileTypeComboBox.Items5" xml:space="preserve">
     <value>LocalisationFile (languages.loc/localisation.loc)</value>
   </data>
-  <data name="FileTypeComboBox.Items7" xml:space="preserve">
+  <data name="FileTypeComboBox.Items6" xml:space="preserve">
     <value>GameRulesFile (*.grf)</value>
   </data>
-  <data name="FileTypeComboBox.Items8" xml:space="preserve">
+  <data name="FileTypeComboBox.Items7" xml:space="preserve">
     <value>AudioFile (*.pck)</value>
   </data>
-  <data name="FileTypeComboBox.Items9" xml:space="preserve">
+  <data name="FileTypeComboBox.Items8" xml:space="preserve">
     <value>ColourTableFile (colours.col)</value>
   </data>
-  <data name="FileTypeComboBox.Items10" xml:space="preserve">
+  <data name="FileTypeComboBox.Items9" xml:space="preserve">
     <value>GameRulesHeader (*.grh)</value>
   </data>
-  <data name="FileTypeComboBox.Items11" xml:space="preserve">
+  <data name="FileTypeComboBox.Items10" xml:space="preserve">
     <value>SkinDataFile (*.pck)</value>
   </data>
-  <data name="FileTypeComboBox.Items12" xml:space="preserve">
+  <data name="FileTypeComboBox.Items11" xml:space="preserve">
     <value>ModelsFile (models.bin)</value>
   </data>
-  <data name="FileTypeComboBox.Items13" xml:space="preserve">
+  <data name="FileTypeComboBox.Items12" xml:space="preserve">
     <value>BehavioursFile (behaviours.bin)</value>
   </data>
-  <data name="FileTypeComboBox.Items14" xml:space="preserve">
+  <data name="FileTypeComboBox.Items13" xml:space="preserve">
     <value>MaterialFile (entityMaterials.bin)</value>
   </data>
   <data name="FileTypeComboBox.Location" type="System.Drawing.Point, System.Drawing">

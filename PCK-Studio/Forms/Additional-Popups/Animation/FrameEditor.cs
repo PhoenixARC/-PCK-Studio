@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Drawing;
+using MetroFramework.Forms;
 using System.Windows.Forms;
-using PckStudio.ToolboxItems;
 
 namespace PckStudio.Forms.Additional_Popups.Animation
 {
-	public partial class FrameEditor : ThemeForm
+	public partial class FrameEditor : MetroForm
 	{
 		public int FrameTextureIndex => FrameList.SelectedNode.Index;
 		public int FrameTime => (int)FrameTimeUpDown.Value;
@@ -29,18 +27,13 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 			FrameTimeUpDown.Value = frameTime;
 		}
 
-        private void FrameEditor_Load(object sender, EventArgs e)
-        {
+		private void SaveBtn_Click(object sender, EventArgs e)
+		{
+			DialogResult = DialogResult.OK;
+			Close();
+		}
 
-        }
-
-        private void SaveButton_Click(object sender, EventArgs e)
-        {
-            DialogResult = DialogResult.OK;
-            Close();
-        }
-
-		private void CancelButton_Click(object sender, EventArgs e)
+		private void CancelBtn_Click(object sender, EventArgs e)
 		{
             DialogResult = DialogResult.Cancel;
             Close();

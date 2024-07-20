@@ -48,7 +48,8 @@ namespace PckStudio
 			{
 				MessageBox.Show(this, "Please insert a value in the text box.", "Empty string");
 			}
-			else DialogResult = DialogResult.OK;
+			else
+				DialogResult = DialogResult.OK;
         }
 
 		private void RenamePrompt_Load(object sender, EventArgs e)

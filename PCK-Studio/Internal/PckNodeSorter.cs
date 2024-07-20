@@ -15,8 +15,8 @@ namespace PckStudio.Internal
 
 		private bool CheckForSkinAndCapeFiles(TreeNode node)
 		{
-			return node.TryGetTagData(out PckFileData file) &&
-				(file.Filetype == PckFileType.SkinFile || file.Filetype == PckFileType.CapeFile);
+			return node.TryGetTagData(out PckAsset asset) &&
+				(asset.Type == PckAssetType.SkinFile || asset.Type == PckAssetType.CapeFile);
 		}
 
         public int Compare(object x, object y)
@@ -39,9 +39,9 @@ namespace PckStudio.Internal
 
 		private int InternalCompare(TreeNode first, TreeNode second)
 		{
-			if (first.IsTagOfType<PckFileData>() && !second.IsTagOfType<PckFileData>())
+			if (first.IsTagOfType<PckAsset>() && !second.IsTagOfType<PckAsset>())
 				return -1;
-			if (!first.IsTagOfType<PckFileData>() && second.IsTagOfType<PckFileData>())
+			if (!first.IsTagOfType<PckAsset>() && second.IsTagOfType<PckAsset>())
 				return 1;
 
 			if (CheckForSkinAndCapeFiles(first))

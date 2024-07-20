@@ -33,7 +33,14 @@ namespace PckStudio.Forms.Editor
 		{
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(COLEditor));
-            this.filterTextBox = new MetroFramework.Controls.MetroTextBox();
+            this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
+            this.metroTextBox1 = new MetroFramework.Controls.MetroTextBox();
+            this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
+            this.setColorBtn = new MetroFramework.Controls.MetroButton();
+            this.blueUpDown = new System.Windows.Forms.NumericUpDown();
+            this.greenUpDown = new System.Windows.Forms.NumericUpDown();
+            this.redUpDown = new System.Windows.Forms.NumericUpDown();
+            this.alphaUpDown = new System.Windows.Forms.NumericUpDown();
             this.alphaLabel = new MetroFramework.Controls.MetroLabel();
             this.blueLabel = new MetroFramework.Controls.MetroLabel();
             this.greenLabel = new MetroFramework.Controls.MetroLabel();
@@ -44,7 +51,9 @@ namespace PckStudio.Forms.Editor
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.targetUpdateToolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.stripPS4BiomesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.targetUpdateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TU12ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TU13ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TU14ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -61,9 +70,11 @@ namespace PckStudio.Forms.Editor
             this.waterTab = new System.Windows.Forms.TabPage();
             this.waterTreeView = new System.Windows.Forms.TreeView();
             this.ColorContextMenu = new MetroFramework.Controls.MetroContextMenu(this.components);
-            this.restoreOriginalColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pasteColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.restoreOriginalColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.removeColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.underwaterTreeView = new System.Windows.Forms.TreeView();
             this.fogTreeView = new System.Windows.Forms.TreeView();
             this.colorsTab = new System.Windows.Forms.TabPage();
@@ -71,18 +82,11 @@ namespace PckStudio.Forms.Editor
             this.tabControl = new MetroFramework.Controls.MetroTabControl();
             this.underwaterTab = new System.Windows.Forms.TabPage();
             this.fogTab = new System.Windows.Forms.TabPage();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.SetColorButton = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
-            this.colorSliderVertical1 = new CBH.Controls.CrEaTiiOn_ColorSliderVertical();
-            this.colorBox2D1 = new CBH.Controls.CrEaTiiOn_ColorBox2D();
-            this.blueUpDown = new System.Windows.Forms.NumericUpDown();
-            this.greenUpDown = new System.Windows.Forms.NumericUpDown();
-            this.redUpDown = new System.Windows.Forms.NumericUpDown();
-            this.alphaUpDown = new System.Windows.Forms.NumericUpDown();
-            this.crEaTiiOn_ModernSlider3 = new CBH.Controls.CrEaTiiOn_ModernSlider();
-            this.crEaTiiOn_ModernSlider4 = new CBH.Controls.CrEaTiiOn_ModernSlider();
-            this.crEaTiiOn_ModernSlider2 = new CBH.Controls.CrEaTiiOn_ModernSlider();
-            this.crEaTiiOn_ModernSlider1 = new CBH.Controls.CrEaTiiOn_ModernSlider();
+            this.metroPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.blueUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.greenUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.redUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.alphaUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip.SuspendLayout();
             this.waterTab.SuspendLayout();
@@ -91,83 +95,160 @@ namespace PckStudio.Forms.Editor
             this.tabControl.SuspendLayout();
             this.underwaterTab.SuspendLayout();
             this.fogTab.SuspendLayout();
-            this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.blueUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.greenUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.redUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.alphaUpDown)).BeginInit();
             this.SuspendLayout();
             // 
-            // filterTextBox
+            // metroPanel1
+            // 
+            this.metroPanel1.Controls.Add(this.metroTextBox1);
+            this.metroPanel1.Controls.Add(this.metroLabel2);
+            this.metroPanel1.Controls.Add(this.setColorBtn);
+            this.metroPanel1.Controls.Add(this.blueUpDown);
+            this.metroPanel1.Controls.Add(this.greenUpDown);
+            this.metroPanel1.Controls.Add(this.redUpDown);
+            this.metroPanel1.Controls.Add(this.alphaUpDown);
+            this.metroPanel1.Controls.Add(this.alphaLabel);
+            this.metroPanel1.Controls.Add(this.blueLabel);
+            this.metroPanel1.Controls.Add(this.greenLabel);
+            this.metroPanel1.Controls.Add(this.redLabel);
+            this.metroPanel1.Controls.Add(this.colorTextbox);
+            this.metroPanel1.Controls.Add(this.metroLabel1);
+            this.metroPanel1.Controls.Add(this.pictureBox1);
+            resources.ApplyResources(this.metroPanel1, "metroPanel1");
+            this.metroPanel1.HorizontalScrollbarBarColor = true;
+            this.metroPanel1.HorizontalScrollbarHighlightOnWheel = false;
+            this.metroPanel1.HorizontalScrollbarSize = 10;
+            this.metroPanel1.Name = "metroPanel1";
+            this.metroPanel1.Style = MetroFramework.MetroColorStyle.Silver;
+            this.metroPanel1.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.metroPanel1.VerticalScrollbarBarColor = true;
+            this.metroPanel1.VerticalScrollbarHighlightOnWheel = false;
+            this.metroPanel1.VerticalScrollbarSize = 10;
+            // 
+            // metroTextBox1
             // 
             // 
             // 
             // 
-            this.filterTextBox.CustomButton.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image")));
-            this.filterTextBox.CustomButton.ImeMode = ((System.Windows.Forms.ImeMode)(resources.GetObject("resource.ImeMode")));
-            this.filterTextBox.CustomButton.Location = ((System.Drawing.Point)(resources.GetObject("resource.Location")));
-            this.filterTextBox.CustomButton.Name = "";
-            this.filterTextBox.CustomButton.Size = ((System.Drawing.Size)(resources.GetObject("resource.Size")));
-            this.filterTextBox.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-            this.filterTextBox.CustomButton.TabIndex = ((int)(resources.GetObject("resource.TabIndex")));
-            this.filterTextBox.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.filterTextBox.CustomButton.UseSelectable = true;
-            this.filterTextBox.CustomButton.Visible = ((bool)(resources.GetObject("resource.Visible")));
-            this.filterTextBox.Lines = new string[0];
-            resources.ApplyResources(this.filterTextBox, "filterTextBox");
-            this.filterTextBox.MaxLength = 32767;
-            this.filterTextBox.Name = "filterTextBox";
-            this.filterTextBox.PasswordChar = '\0';
-            this.filterTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.filterTextBox.SelectedText = "";
-            this.filterTextBox.SelectionLength = 0;
-            this.filterTextBox.SelectionStart = 0;
-            this.filterTextBox.ShortcutsEnabled = true;
-            this.filterTextBox.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.filterTextBox.UseSelectable = true;
-            this.filterTextBox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-            this.filterTextBox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
-            this.filterTextBox.TextChanged += new System.EventHandler(this.metroTextBox1_TextChanged);
+            this.metroTextBox1.CustomButton.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image")));
+            this.metroTextBox1.CustomButton.Location = ((System.Drawing.Point)(resources.GetObject("resource.Location")));
+            this.metroTextBox1.CustomButton.Name = "";
+            this.metroTextBox1.CustomButton.Size = ((System.Drawing.Size)(resources.GetObject("resource.Size")));
+            this.metroTextBox1.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.metroTextBox1.CustomButton.TabIndex = ((int)(resources.GetObject("resource.TabIndex")));
+            this.metroTextBox1.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.metroTextBox1.CustomButton.UseSelectable = true;
+            this.metroTextBox1.CustomButton.Visible = ((bool)(resources.GetObject("resource.Visible")));
+            this.metroTextBox1.Lines = new string[0];
+            resources.ApplyResources(this.metroTextBox1, "metroTextBox1");
+            this.metroTextBox1.MaxLength = 32767;
+            this.metroTextBox1.Name = "metroTextBox1";
+            this.metroTextBox1.PasswordChar = '\0';
+            this.metroTextBox1.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.metroTextBox1.SelectedText = "";
+            this.metroTextBox1.SelectionLength = 0;
+            this.metroTextBox1.SelectionStart = 0;
+            this.metroTextBox1.ShortcutsEnabled = true;
+            this.metroTextBox1.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.metroTextBox1.UseSelectable = true;
+            this.metroTextBox1.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.metroTextBox1.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            this.metroTextBox1.TextChanged += new System.EventHandler(this.metroTextBox1_TextChanged);
+            // 
+            // metroLabel2
+            // 
+            resources.ApplyResources(this.metroLabel2, "metroLabel2");
+            this.metroLabel2.Name = "metroLabel2";
+            this.metroLabel2.Theme = MetroFramework.MetroThemeStyle.Dark;
+            // 
+            // setColorBtn
+            // 
+            resources.ApplyResources(this.setColorBtn, "setColorBtn");
+            this.setColorBtn.Name = "setColorBtn";
+            this.setColorBtn.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.setColorBtn.UseSelectable = true;
+            this.setColorBtn.Click += new System.EventHandler(this.setColorBtn_Click);
+            // 
+            // blueUpDown
+            // 
+            this.blueUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            this.blueUpDown.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
+            resources.ApplyResources(this.blueUpDown, "blueUpDown");
+            this.blueUpDown.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.blueUpDown.Name = "blueUpDown";
+            // 
+            // greenUpDown
+            // 
+            this.greenUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            this.greenUpDown.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
+            resources.ApplyResources(this.greenUpDown, "greenUpDown");
+            this.greenUpDown.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.greenUpDown.Name = "greenUpDown";
+            // 
+            // redUpDown
+            // 
+            this.redUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            this.redUpDown.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
+            resources.ApplyResources(this.redUpDown, "redUpDown");
+            this.redUpDown.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.redUpDown.Name = "redUpDown";
+            // 
+            // alphaUpDown
+            // 
+            this.alphaUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            this.alphaUpDown.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
+            resources.ApplyResources(this.alphaUpDown, "alphaUpDown");
+            this.alphaUpDown.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.alphaUpDown.Name = "alphaUpDown";
+            this.alphaUpDown.ValueChanged += new System.EventHandler(this.alpha_ValueChanged);
             // 
             // alphaLabel
             // 
             resources.ApplyResources(this.alphaLabel, "alphaLabel");
             this.alphaLabel.Name = "alphaLabel";
             this.alphaLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.alphaLabel.UseCustomBackColor = true;
-            this.alphaLabel.UseCustomForeColor = true;
             // 
             // blueLabel
             // 
             resources.ApplyResources(this.blueLabel, "blueLabel");
             this.blueLabel.Name = "blueLabel";
             this.blueLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.blueLabel.UseCustomBackColor = true;
-            this.blueLabel.UseCustomForeColor = true;
             // 
             // greenLabel
             // 
             resources.ApplyResources(this.greenLabel, "greenLabel");
             this.greenLabel.Name = "greenLabel";
             this.greenLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.greenLabel.UseCustomBackColor = true;
-            this.greenLabel.UseCustomForeColor = true;
             // 
             // redLabel
             // 
             resources.ApplyResources(this.redLabel, "redLabel");
             this.redLabel.Name = "redLabel";
             this.redLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.redLabel.UseCustomBackColor = true;
-            this.redLabel.UseCustomForeColor = true;
             // 
             // colorTextbox
             // 
+            this.colorTextbox.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             // 
             // 
             // 
             this.colorTextbox.CustomButton.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image1")));
-            this.colorTextbox.CustomButton.ImeMode = ((System.Windows.Forms.ImeMode)(resources.GetObject("resource.ImeMode1")));
+            this.colorTextbox.CustomButton.ImeMode = ((System.Windows.Forms.ImeMode)(resources.GetObject("resource.ImeMode")));
             this.colorTextbox.CustomButton.Location = ((System.Drawing.Point)(resources.GetObject("resource.Location1")));
             this.colorTextbox.CustomButton.Name = "";
             this.colorTextbox.CustomButton.Size = ((System.Drawing.Size)(resources.GetObject("resource.Size1")));
@@ -178,7 +259,7 @@ namespace PckStudio.Forms.Editor
             this.colorTextbox.CustomButton.Visible = ((bool)(resources.GetObject("resource.Visible1")));
             this.colorTextbox.Lines = new string[0];
             resources.ApplyResources(this.colorTextbox, "colorTextbox");
-            this.colorTextbox.MaxLength = 32767;
+            this.colorTextbox.MaxLength = 6;
             this.colorTextbox.Name = "colorTextbox";
             this.colorTextbox.PasswordChar = '\0';
             this.colorTextbox.ScrollBars = System.Windows.Forms.ScrollBars.None;
@@ -191,14 +272,13 @@ namespace PckStudio.Forms.Editor
             this.colorTextbox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.colorTextbox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
             this.colorTextbox.TextChanged += new System.EventHandler(this.colorBox_TextChanged);
+            this.colorTextbox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.colorTextbox_KeyPress);
             // 
             // metroLabel1
             // 
             resources.ApplyResources(this.metroLabel1, "metroLabel1");
             this.metroLabel1.Name = "metroLabel1";
             this.metroLabel1.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.metroLabel1.UseCustomBackColor = true;
-            this.metroLabel1.UseCustomForeColor = true;
             // 
             // pictureBox1
             // 
@@ -210,10 +290,10 @@ namespace PckStudio.Forms.Editor
             // menuStrip
             // 
             resources.ApplyResources(this.menuStrip, "menuStrip");
-            this.menuStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.menuStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.targetUpdateToolToolStripMenuItem});
+            this.toolsToolStripMenuItem});
             this.menuStrip.Name = "menuStrip";
             // 
             // fileToolStripMenuItem
@@ -221,8 +301,8 @@ namespace PckStudio.Forms.Editor
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.saveToolStripMenuItem1});
             this.fileToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            resources.ApplyResources(this.fileToolStripMenuItem, "fileToolStripMenuItem");
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            resources.ApplyResources(this.fileToolStripMenuItem, "fileToolStripMenuItem");
             // 
             // saveToolStripMenuItem1
             // 
@@ -230,9 +310,24 @@ namespace PckStudio.Forms.Editor
             this.saveToolStripMenuItem1.Name = "saveToolStripMenuItem1";
             this.saveToolStripMenuItem1.Click += new System.EventHandler(this.saveToolStripMenuItem1_Click);
             // 
-            // targetUpdateToolToolStripMenuItem
+            // toolsToolStripMenuItem
             // 
-            this.targetUpdateToolToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.stripPS4BiomesToolStripMenuItem,
+            this.targetUpdateToolStripMenuItem});
+            this.toolsToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
+            resources.ApplyResources(this.toolsToolStripMenuItem, "toolsToolStripMenuItem");
+            // 
+            // stripPS4BiomesToolStripMenuItem
+            // 
+            this.stripPS4BiomesToolStripMenuItem.Name = "stripPS4BiomesToolStripMenuItem";
+            resources.ApplyResources(this.stripPS4BiomesToolStripMenuItem, "stripPS4BiomesToolStripMenuItem");
+            this.stripPS4BiomesToolStripMenuItem.Click += new System.EventHandler(this.stripPS4BiomesToolStripMenuItem_Click);
+            // 
+            // targetUpdateToolStripMenuItem
+            // 
+            this.targetUpdateToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.TU12ToolStripMenuItem,
             this.TU13ToolStripMenuItem,
             this.TU14ToolStripMenuItem,
@@ -246,9 +341,8 @@ namespace PckStudio.Forms.Editor
             this.TU54ToolStripMenuItem,
             this.TU69ToolStripMenuItem,
             this._1_9_1ToolStripMenuItem});
-            this.targetUpdateToolToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            resources.ApplyResources(this.targetUpdateToolToolStripMenuItem, "targetUpdateToolToolStripMenuItem");
-            this.targetUpdateToolToolStripMenuItem.Name = "targetUpdateToolToolStripMenuItem";
+            this.targetUpdateToolStripMenuItem.Name = "targetUpdateToolStripMenuItem";
+            resources.ApplyResources(this.targetUpdateToolStripMenuItem, "targetUpdateToolStripMenuItem");
             // 
             // TU12ToolStripMenuItem
             // 
@@ -324,8 +418,7 @@ namespace PckStudio.Forms.Editor
             // 
             // waterTreeView
             // 
-            this.waterTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.waterTreeView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.waterTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.waterTreeView.ContextMenuStrip = this.ColorContextMenu;
             resources.ApplyResources(this.waterTreeView, "waterTreeView");
             this.waterTreeView.ForeColor = System.Drawing.Color.White;
@@ -336,45 +429,62 @@ namespace PckStudio.Forms.Editor
             // ColorContextMenu
             // 
             this.ColorContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.restoreOriginalColorToolStripMenuItem,
             this.copyColorToolStripMenuItem,
-            this.pasteColorToolStripMenuItem});
+            this.pasteColorToolStripMenuItem,
+            this.restoreOriginalColorToolStripMenuItem,
+            this.addColorToolStripMenuItem,
+            this.removeColorToolStripMenuItem});
             this.ColorContextMenu.Name = "ColorContextMenu";
             resources.ApplyResources(this.ColorContextMenu, "ColorContextMenu");
             // 
-            // restoreOriginalColorToolStripMenuItem
-            // 
-            this.restoreOriginalColorToolStripMenuItem.Name = "restoreOriginalColorToolStripMenuItem";
-            resources.ApplyResources(this.restoreOriginalColorToolStripMenuItem, "restoreOriginalColorToolStripMenuItem");
-            this.restoreOriginalColorToolStripMenuItem.Click += new System.EventHandler(this.restoreOriginalColorToolStripMenuItem_Click);
-            // 
             // copyColorToolStripMenuItem
             // 
+            this.copyColorToolStripMenuItem.Image = global::PckStudio.Properties.Resources.file_copy;
             this.copyColorToolStripMenuItem.Name = "copyColorToolStripMenuItem";
             resources.ApplyResources(this.copyColorToolStripMenuItem, "copyColorToolStripMenuItem");
             this.copyColorToolStripMenuItem.Click += new System.EventHandler(this.copyColorToolStripMenuItem_Click);
             // 
             // pasteColorToolStripMenuItem
             // 
+            this.pasteColorToolStripMenuItem.Image = global::PckStudio.Properties.Resources.file_paste;
             this.pasteColorToolStripMenuItem.Name = "pasteColorToolStripMenuItem";
             resources.ApplyResources(this.pasteColorToolStripMenuItem, "pasteColorToolStripMenuItem");
             this.pasteColorToolStripMenuItem.Click += new System.EventHandler(this.pasteColorToolStripMenuItem_Click);
             // 
+            // restoreOriginalColorToolStripMenuItem
+            // 
+            this.restoreOriginalColorToolStripMenuItem.Image = global::PckStudio.Properties.Resources.file_restore;
+            this.restoreOriginalColorToolStripMenuItem.Name = "restoreOriginalColorToolStripMenuItem";
+            resources.ApplyResources(this.restoreOriginalColorToolStripMenuItem, "restoreOriginalColorToolStripMenuItem");
+            this.restoreOriginalColorToolStripMenuItem.Click += new System.EventHandler(this.restoreOriginalColorToolStripMenuItem_Click);
+            // 
+            // addColorToolStripMenuItem
+            // 
+            this.addColorToolStripMenuItem.Image = global::PckStudio.Properties.Resources.file_new;
+            this.addColorToolStripMenuItem.Name = "addColorToolStripMenuItem";
+            resources.ApplyResources(this.addColorToolStripMenuItem, "addColorToolStripMenuItem");
+            this.addColorToolStripMenuItem.Click += new System.EventHandler(this.addColorToolStripMenuItem_Click);
+            // 
+            // removeColorToolStripMenuItem
+            // 
+            this.removeColorToolStripMenuItem.Image = global::PckStudio.Properties.Resources.file_delete;
+            this.removeColorToolStripMenuItem.Name = "removeColorToolStripMenuItem";
+            resources.ApplyResources(this.removeColorToolStripMenuItem, "removeColorToolStripMenuItem");
+            this.removeColorToolStripMenuItem.Click += new System.EventHandler(this.removeColorToolStripMenuItem_Click);
+            // 
             // underwaterTreeView
             // 
-            this.underwaterTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.underwaterTreeView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.underwaterTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.underwaterTreeView.ContextMenuStrip = this.ColorContextMenu;
-            resources.ApplyResources(this.underwaterTreeView, "underwaterTreeView");
             this.underwaterTreeView.ForeColor = System.Drawing.Color.White;
+            resources.ApplyResources(this.underwaterTreeView, "underwaterTreeView");
             this.underwaterTreeView.Name = "underwaterTreeView";
             this.underwaterTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView3_AfterSelect);
             this.underwaterTreeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView3_KeyDown);
             // 
             // fogTreeView
             // 
-            this.fogTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.fogTreeView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.fogTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.fogTreeView.ContextMenuStrip = this.ColorContextMenu;
             this.fogTreeView.ForeColor = System.Drawing.Color.White;
             resources.ApplyResources(this.fogTreeView, "fogTreeView");
@@ -391,8 +501,7 @@ namespace PckStudio.Forms.Editor
             // 
             // colorTreeView
             // 
-            this.colorTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.colorTreeView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.colorTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.colorTreeView.ContextMenuStrip = this.ColorContextMenu;
             resources.ApplyResources(this.colorTreeView, "colorTreeView");
             this.colorTreeView.ForeColor = System.Drawing.Color.White;
@@ -427,217 +536,24 @@ namespace PckStudio.Forms.Editor
             resources.ApplyResources(this.fogTab, "fogTab");
             this.fogTab.Name = "fogTab";
             // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.SetColorButton);
-            this.panel1.Controls.Add(this.colorSliderVertical1);
-            this.panel1.Controls.Add(this.colorBox2D1);
-            this.panel1.Controls.Add(this.blueUpDown);
-            this.panel1.Controls.Add(this.greenUpDown);
-            this.panel1.Controls.Add(this.redUpDown);
-            this.panel1.Controls.Add(this.alphaUpDown);
-            this.panel1.Controls.Add(this.crEaTiiOn_ModernSlider3);
-            this.panel1.Controls.Add(this.crEaTiiOn_ModernSlider4);
-            this.panel1.Controls.Add(this.crEaTiiOn_ModernSlider2);
-            this.panel1.Controls.Add(this.crEaTiiOn_ModernSlider1);
-            this.panel1.Controls.Add(this.blueLabel);
-            this.panel1.Controls.Add(this.alphaLabel);
-            this.panel1.Controls.Add(this.greenLabel);
-            this.panel1.Controls.Add(this.redLabel);
-            this.panel1.Controls.Add(this.colorTextbox);
-            this.panel1.Controls.Add(this.pictureBox1);
-            this.panel1.Controls.Add(this.metroLabel1);
-            resources.ApplyResources(this.panel1, "panel1");
-            this.panel1.Name = "panel1";
-            // 
-            // SetColorButton
-            // 
-            this.SetColorButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.SetColorButton.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.SetColorButton.BorderRadius = 10;
-            this.SetColorButton.BorderSize = 1;
-            this.SetColorButton.ClickedColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.SetColorButton.FlatAppearance.BorderSize = 0;
-            this.SetColorButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.SetColorButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(250)))), ((int)(((byte)(165)))));
-            resources.ApplyResources(this.SetColorButton, "SetColorButton");
-            this.SetColorButton.ForeColor = System.Drawing.Color.White;
-            this.SetColorButton.GradientColorPrimary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
-            this.SetColorButton.GradientColorSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
-            this.SetColorButton.HoverOverColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(250)))), ((int)(((byte)(165)))));
-            this.SetColorButton.Name = "SetColorButton";
-            this.SetColorButton.TextColor = System.Drawing.Color.White;
-            this.SetColorButton.UseVisualStyleBackColor = false;
-            this.SetColorButton.Click += new System.EventHandler(this.SetColorButton_Click);
-            // 
-            // colorSliderVertical1
-            // 
-            this.colorSliderVertical1.BackColor = System.Drawing.Color.Transparent;
-            this.colorSliderVertical1.ColorMode = CBH.Controls.ColorModes.Hue;
-            this.colorSliderVertical1.ColorRGB = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            resources.ApplyResources(this.colorSliderVertical1, "colorSliderVertical1");
-            this.colorSliderVertical1.Name = "colorSliderVertical1";
-            this.colorSliderVertical1.NubColor = System.Drawing.Color.Empty;
-            this.colorSliderVertical1.Position = 0;
-            // 
-            // colorBox2D1
-            // 
-            this.colorBox2D1.ColorMode = CBH.Controls.ColorModes.Hue;
-            this.colorBox2D1.ColorRGB = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            resources.ApplyResources(this.colorBox2D1, "colorBox2D1");
-            this.colorBox2D1.Name = "colorBox2D1";
-            // 
-            // blueUpDown
-            // 
-            this.blueUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.blueUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.blueUpDown.ForeColor = System.Drawing.Color.White;
-            resources.ApplyResources(this.blueUpDown, "blueUpDown");
-            this.blueUpDown.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.blueUpDown.Name = "blueUpDown";
-            // 
-            // greenUpDown
-            // 
-            this.greenUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.greenUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.greenUpDown.ForeColor = System.Drawing.Color.White;
-            resources.ApplyResources(this.greenUpDown, "greenUpDown");
-            this.greenUpDown.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.greenUpDown.Name = "greenUpDown";
-            // 
-            // redUpDown
-            // 
-            this.redUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.redUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.redUpDown.ForeColor = System.Drawing.Color.White;
-            resources.ApplyResources(this.redUpDown, "redUpDown");
-            this.redUpDown.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.redUpDown.Name = "redUpDown";
-            // 
-            // alphaUpDown
-            // 
-            this.alphaUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.alphaUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.alphaUpDown.ForeColor = System.Drawing.Color.White;
-            resources.ApplyResources(this.alphaUpDown, "alphaUpDown");
-            this.alphaUpDown.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.alphaUpDown.Name = "alphaUpDown";
-            // 
-            // crEaTiiOn_ModernSlider3
-            // 
-            this.crEaTiiOn_ModernSlider3.BarThickness = 4;
-            this.crEaTiiOn_ModernSlider3.BigStepIncrement = 10;
-            this.crEaTiiOn_ModernSlider3.Colors = ((System.Collections.Generic.List<System.Drawing.Color>)(resources.GetObject("crEaTiiOn_ModernSlider3.Colors")));
-            this.crEaTiiOn_ModernSlider3.CompositingQualityType = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
-            this.crEaTiiOn_ModernSlider3.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.crEaTiiOn_ModernSlider3.FilledColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(119)))), ((int)(((byte)(215)))));
-            this.crEaTiiOn_ModernSlider3.InterpolationType = System.Drawing.Drawing2D.InterpolationMode.HighQualityBilinear;
-            this.crEaTiiOn_ModernSlider3.KnobColor = System.Drawing.Color.Gray;
-            this.crEaTiiOn_ModernSlider3.KnobImage = null;
-            resources.ApplyResources(this.crEaTiiOn_ModernSlider3, "crEaTiiOn_ModernSlider3");
-            this.crEaTiiOn_ModernSlider3.Max = 100;
-            this.crEaTiiOn_ModernSlider3.Name = "crEaTiiOn_ModernSlider3";
-            this.crEaTiiOn_ModernSlider3.Percentage = 50;
-            this.crEaTiiOn_ModernSlider3.PixelOffsetType = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
-            this.crEaTiiOn_ModernSlider3.Positions = ((System.Collections.Generic.List<float>)(resources.GetObject("crEaTiiOn_ModernSlider3.Positions")));
-            this.crEaTiiOn_ModernSlider3.QuickHopping = false;
-            this.crEaTiiOn_ModernSlider3.SliderStyle = CBH.Controls.CrEaTiiOn_ModernSlider.Style.Windows10;
-            this.crEaTiiOn_ModernSlider3.SmoothingType = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            this.crEaTiiOn_ModernSlider3.UnfilledColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(169)))), ((int)(((byte)(219)))));
-            // 
-            // crEaTiiOn_ModernSlider4
-            // 
-            this.crEaTiiOn_ModernSlider4.BarThickness = 4;
-            this.crEaTiiOn_ModernSlider4.BigStepIncrement = 10;
-            this.crEaTiiOn_ModernSlider4.Colors = ((System.Collections.Generic.List<System.Drawing.Color>)(resources.GetObject("crEaTiiOn_ModernSlider4.Colors")));
-            this.crEaTiiOn_ModernSlider4.CompositingQualityType = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
-            this.crEaTiiOn_ModernSlider4.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.crEaTiiOn_ModernSlider4.FilledColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(119)))), ((int)(((byte)(215)))));
-            this.crEaTiiOn_ModernSlider4.InterpolationType = System.Drawing.Drawing2D.InterpolationMode.HighQualityBilinear;
-            this.crEaTiiOn_ModernSlider4.KnobColor = System.Drawing.Color.Gray;
-            this.crEaTiiOn_ModernSlider4.KnobImage = null;
-            resources.ApplyResources(this.crEaTiiOn_ModernSlider4, "crEaTiiOn_ModernSlider4");
-            this.crEaTiiOn_ModernSlider4.Max = 100;
-            this.crEaTiiOn_ModernSlider4.Name = "crEaTiiOn_ModernSlider4";
-            this.crEaTiiOn_ModernSlider4.Percentage = 50;
-            this.crEaTiiOn_ModernSlider4.PixelOffsetType = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
-            this.crEaTiiOn_ModernSlider4.Positions = ((System.Collections.Generic.List<float>)(resources.GetObject("crEaTiiOn_ModernSlider4.Positions")));
-            this.crEaTiiOn_ModernSlider4.QuickHopping = false;
-            this.crEaTiiOn_ModernSlider4.SliderStyle = CBH.Controls.CrEaTiiOn_ModernSlider.Style.Windows10;
-            this.crEaTiiOn_ModernSlider4.SmoothingType = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            this.crEaTiiOn_ModernSlider4.UnfilledColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(169)))), ((int)(((byte)(219)))));
-            // 
-            // crEaTiiOn_ModernSlider2
-            // 
-            this.crEaTiiOn_ModernSlider2.BarThickness = 4;
-            this.crEaTiiOn_ModernSlider2.BigStepIncrement = 10;
-            this.crEaTiiOn_ModernSlider2.Colors = ((System.Collections.Generic.List<System.Drawing.Color>)(resources.GetObject("crEaTiiOn_ModernSlider2.Colors")));
-            this.crEaTiiOn_ModernSlider2.CompositingQualityType = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
-            this.crEaTiiOn_ModernSlider2.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.crEaTiiOn_ModernSlider2.FilledColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(119)))), ((int)(((byte)(215)))));
-            this.crEaTiiOn_ModernSlider2.InterpolationType = System.Drawing.Drawing2D.InterpolationMode.HighQualityBilinear;
-            this.crEaTiiOn_ModernSlider2.KnobColor = System.Drawing.Color.Gray;
-            this.crEaTiiOn_ModernSlider2.KnobImage = null;
-            resources.ApplyResources(this.crEaTiiOn_ModernSlider2, "crEaTiiOn_ModernSlider2");
-            this.crEaTiiOn_ModernSlider2.Max = 100;
-            this.crEaTiiOn_ModernSlider2.Name = "crEaTiiOn_ModernSlider2";
-            this.crEaTiiOn_ModernSlider2.Percentage = 50;
-            this.crEaTiiOn_ModernSlider2.PixelOffsetType = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
-            this.crEaTiiOn_ModernSlider2.Positions = ((System.Collections.Generic.List<float>)(resources.GetObject("crEaTiiOn_ModernSlider2.Positions")));
-            this.crEaTiiOn_ModernSlider2.QuickHopping = false;
-            this.crEaTiiOn_ModernSlider2.SliderStyle = CBH.Controls.CrEaTiiOn_ModernSlider.Style.Windows10;
-            this.crEaTiiOn_ModernSlider2.SmoothingType = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            this.crEaTiiOn_ModernSlider2.UnfilledColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(169)))), ((int)(((byte)(219)))));
-            // 
-            // crEaTiiOn_ModernSlider1
-            // 
-            this.crEaTiiOn_ModernSlider1.BarThickness = 4;
-            this.crEaTiiOn_ModernSlider1.BigStepIncrement = 10;
-            this.crEaTiiOn_ModernSlider1.Colors = ((System.Collections.Generic.List<System.Drawing.Color>)(resources.GetObject("crEaTiiOn_ModernSlider1.Colors")));
-            this.crEaTiiOn_ModernSlider1.CompositingQualityType = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
-            this.crEaTiiOn_ModernSlider1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.crEaTiiOn_ModernSlider1.FilledColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(119)))), ((int)(((byte)(215)))));
-            this.crEaTiiOn_ModernSlider1.InterpolationType = System.Drawing.Drawing2D.InterpolationMode.HighQualityBilinear;
-            this.crEaTiiOn_ModernSlider1.KnobColor = System.Drawing.Color.Gray;
-            this.crEaTiiOn_ModernSlider1.KnobImage = null;
-            resources.ApplyResources(this.crEaTiiOn_ModernSlider1, "crEaTiiOn_ModernSlider1");
-            this.crEaTiiOn_ModernSlider1.Max = 100;
-            this.crEaTiiOn_ModernSlider1.Name = "crEaTiiOn_ModernSlider1";
-            this.crEaTiiOn_ModernSlider1.Percentage = 50;
-            this.crEaTiiOn_ModernSlider1.PixelOffsetType = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
-            this.crEaTiiOn_ModernSlider1.Positions = ((System.Collections.Generic.List<float>)(resources.GetObject("crEaTiiOn_ModernSlider1.Positions")));
-            this.crEaTiiOn_ModernSlider1.QuickHopping = false;
-            this.crEaTiiOn_ModernSlider1.SliderStyle = CBH.Controls.CrEaTiiOn_ModernSlider.Style.Windows10;
-            this.crEaTiiOn_ModernSlider1.SmoothingType = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            this.crEaTiiOn_ModernSlider1.UnfilledColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(169)))), ((int)(((byte)(219)))));
-            // 
             // COLEditor
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.Controls.Add(this.tabControl);
-            this.Controls.Add(this.panel1);
-            this.Controls.Add(this.filterTextBox);
             this.Controls.Add(this.menuStrip);
-            this.ForeColor = System.Drawing.Color.White;
+            this.Controls.Add(this.tabControl);
+            this.Controls.Add(this.metroPanel1);
+            this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.Name = "COLEditor";
+            this.Style = MetroFramework.MetroColorStyle.Silver;
+            this.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.COLEditor_FormClosing);
+            this.metroPanel1.ResumeLayout(false);
+            this.metroPanel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.blueUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.greenUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.redUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.alphaUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
@@ -647,17 +563,13 @@ namespace PckStudio.Forms.Editor
             this.tabControl.ResumeLayout(false);
             this.underwaterTab.ResumeLayout(false);
             this.fogTab.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.blueUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.greenUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.redUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.alphaUpDown)).EndInit();
             this.ResumeLayout(false);
 
 		}
 
 		#endregion
+
+		private MetroFramework.Controls.MetroPanel metroPanel1;
 		private TreeView colorTreeView;
 		private TreeView waterTreeView;
 		private TreeView fogTreeView;
@@ -670,43 +582,41 @@ namespace PckStudio.Forms.Editor
 		private MetroFramework.Controls.MetroLabel greenLabel;
 		private MetroFramework.Controls.MetroLabel redLabel;
 		private MetroFramework.Controls.MetroLabel alphaLabel;
+		private System.Windows.Forms.NumericUpDown alphaUpDown;
 		private TabPage waterTab;
 		private TabPage colorsTab;
 		private MetroFramework.Controls.MetroTabControl tabControl;
+		private MetroFramework.Controls.MetroButton setColorBtn;
 		private TabPage underwaterTab;
 		private TabPage fogTab;
+		private NumericUpDown blueUpDown;
+		private NumericUpDown greenUpDown;
+		private NumericUpDown redUpDown;
 		private MetroFramework.Controls.MetroTextBox colorTextbox;
 		private MetroFramework.Controls.MetroLabel metroLabel1;
 		private MetroFramework.Controls.MetroContextMenu ColorContextMenu;
 		private ToolStripMenuItem restoreOriginalColorToolStripMenuItem;
-		private MetroFramework.Controls.MetroTextBox filterTextBox;
-		private ToolStripMenuItem targetUpdateToolToolStripMenuItem;
-		private ToolStripMenuItem TU12ToolStripMenuItem;
-		private ToolStripMenuItem TU13ToolStripMenuItem;
-		private ToolStripMenuItem TU14ToolStripMenuItem;
-		private ToolStripMenuItem TU19ToolStripMenuItem;
-		private ToolStripMenuItem TU31ToolStripMenuItem;
-		private ToolStripMenuItem TU32ToolStripMenuItem;
-		private ToolStripMenuItem TU43ToolStripMenuItem;
-		private ToolStripMenuItem TU46ToolStripMenuItem;
-		private ToolStripMenuItem TU51ToolStripMenuItem;
-		private ToolStripMenuItem TU53ToolStripMenuItem;
-		private ToolStripMenuItem TU54ToolStripMenuItem;
-		private ToolStripMenuItem TU69ToolStripMenuItem;
-		private ToolStripMenuItem _1_9_1ToolStripMenuItem;
-		private ToolStripMenuItem copyColorToolStripMenuItem;
-		private ToolStripMenuItem pasteColorToolStripMenuItem;
-        private Panel panel1;
-        private CBH.Controls.CrEaTiiOn_ColorSliderVertical colorSliderVertical1;
-        private CBH.Controls.CrEaTiiOn_ColorBox2D colorBox2D1;
-        private NumericUpDown blueUpDown;
-        private NumericUpDown greenUpDown;
-        private NumericUpDown redUpDown;
-        private NumericUpDown alphaUpDown;
-        private CBH.Controls.CrEaTiiOn_ModernSlider crEaTiiOn_ModernSlider3;
-        private CBH.Controls.CrEaTiiOn_ModernSlider crEaTiiOn_ModernSlider4;
-        private CBH.Controls.CrEaTiiOn_ModernSlider crEaTiiOn_ModernSlider2;
-        private CBH.Controls.CrEaTiiOn_ModernSlider crEaTiiOn_ModernSlider1;
-        private CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton SetColorButton;
+		private MetroFramework.Controls.MetroTextBox metroTextBox1;
+		private MetroFramework.Controls.MetroLabel metroLabel2;
+        private ToolStripMenuItem copyColorToolStripMenuItem;
+        private ToolStripMenuItem pasteColorToolStripMenuItem;
+        private ToolStripMenuItem toolsToolStripMenuItem;
+        private ToolStripMenuItem targetUpdateToolStripMenuItem;
+        private ToolStripMenuItem TU12ToolStripMenuItem;
+        private ToolStripMenuItem TU13ToolStripMenuItem;
+        private ToolStripMenuItem TU14ToolStripMenuItem;
+        private ToolStripMenuItem TU19ToolStripMenuItem;
+        private ToolStripMenuItem TU31ToolStripMenuItem;
+        private ToolStripMenuItem TU32ToolStripMenuItem;
+        private ToolStripMenuItem TU43ToolStripMenuItem;
+        private ToolStripMenuItem TU46ToolStripMenuItem;
+        private ToolStripMenuItem TU51ToolStripMenuItem;
+        private ToolStripMenuItem TU53ToolStripMenuItem;
+        private ToolStripMenuItem TU54ToolStripMenuItem;
+        private ToolStripMenuItem TU69ToolStripMenuItem;
+        private ToolStripMenuItem _1_9_1ToolStripMenuItem;
+        private ToolStripMenuItem stripPS4BiomesToolStripMenuItem;
+        private ToolStripMenuItem addColorToolStripMenuItem;
+        private ToolStripMenuItem removeColorToolStripMenuItem;
     }
 }

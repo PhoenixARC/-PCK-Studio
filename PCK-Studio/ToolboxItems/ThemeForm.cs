@@ -17,21 +17,12 @@
 **/
 using System.ComponentModel;
 using System.Windows.Forms;
-using Dark.Net;
 
 namespace PckStudio.ToolboxItems
 {
     public class ThemeForm : Form
     {
-        public ThemeForm(Theme theme)
-            : base()
-        {
-            if (!DesignMode)
-                DarkNet.Instance.SetWindowThemeForms(this, theme);
-        }
-
         public ThemeForm()
-            : this(Theme.Auto)
         {
         }
 

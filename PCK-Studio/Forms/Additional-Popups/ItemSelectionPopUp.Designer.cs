@@ -84,7 +84,6 @@
             this.addBtn.GradientColorPrimary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
             this.addBtn.GradientColorSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
             this.addBtn.HoverOverColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(250)))), ((int)(((byte)(165)))));
-            this.addBtn.Image = global::PckStudio.Properties.Resources.plus___24px;
             this.addBtn.Name = "addBtn";
             this.addBtn.TextColor = System.Drawing.Color.White;
             this.addBtn.UseVisualStyleBackColor = false;

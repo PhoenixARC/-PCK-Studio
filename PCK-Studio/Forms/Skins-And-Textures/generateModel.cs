@@ -10,7 +10,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 
 using Newtonsoft.Json;
-using PckStudio.ToolboxItems;
+using MetroFramework.Forms;
 using OMI.Formats.Pck;
 using PckStudio.Internal;
 using PckStudio.Extensions;
@@ -20,10 +20,11 @@ using System.Text;
 
 namespace PckStudio.Forms
 {
-    public partial class GenerateModel : ThemeForm
+    [Obsolete]
+    public partial class generateModel : MetroForm
     {
         [Obsolete("We don't need a full control to get an image")]
-        private PictureBox skinPreview = new PictureBox();
+        private PictureBox _skinPreview = new PictureBox();
 
         private Image _previewImage;
         public Image PreviewImage => _previewImage;
@@ -38,7 +39,7 @@ namespace PckStudio.Forms
             left,
         }
 
-        private PckFileData _file;
+        private PckAsset _asset;
         private SkinANIM _ANIM;
 
         private static Color _backgroundColor = Color.FromArgb(0xff, 0x50, 0x50, 0x50);
@@ -125,22 +126,22 @@ namespace PckStudio.Forms
             }
         }
 
-        public GenerateModel(PckFileData file)
+        public generateModel(PckAsset asset)
         {
             MessageBox.Show(this, "This feature is now considered deprecated and will no longer recieve updates. A better alternative is currently under development. Use at your own risk.", "Deprecated Feature", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             InitializeComponent();
 
-            _file = file;
-            if (file.Size > 0)
+            _asset = asset;
+            if (asset.Size > 0)
             {
-                using (var ms = new MemoryStream(file.Data))
+                using (var ms = new MemoryStream(asset.Data))
                 {
                     texturePreview.Image = Image.FromStream(ms);
                 }
             }
             comboParent.Items.Clear();
             comboParent.Items.AddRange(ValidModelBoxTypes);
-            LoadData(file.Properties);
+            LoadData(asset);
         }
         private static readonly Regex sWhitespace = new Regex(@"\s+");
         public static string ReplaceWhitespace(string input, string replacement)
@@ -148,9 +149,9 @@ namespace PckStudio.Forms
             return sWhitespace.Replace(input, replacement);
         }
 
-        private void LoadData(PckFileProperties properties)
+        private void LoadData(PckAsset asset)
         {
-            comboParent.Enabled = properties.GetProperties("BOX").All(kv => {
+            comboParent.Enabled = asset.GetMultipleProperties("BOX").All(kv => {
                 var box = SkinBOX.FromString(kv.Value);
                 if (ValidModelBoxTypes.Contains(box.Type))
                 {
@@ -159,7 +160,7 @@ namespace PckStudio.Forms
                 }
                 return false;
             });
-            properties.GetProperties("OFFSET").All(kv => {
+            asset.GetMultipleProperties("OFFSET").All(kv => {
                 string[] offset = ReplaceWhitespace(kv.Value, ",").TrimEnd('\n', '\r', ' ').Split(',');
                 if (offset.Length < 3)
                     return false;
@@ -175,7 +176,7 @@ namespace PckStudio.Forms
                 return false;
             });
 
-            _ANIM = properties.GetPropertyValue("ANIM", SkinANIM.FromString);
+            _ANIM = asset.GetProperty("ANIM", SkinANIM.FromString);
             UpdateListView();
             Rerender();
         }
@@ -548,7 +549,7 @@ namespace PckStudio.Forms
             using (Graphics graphics = Graphics.FromImage(texturePreview.Image))
             {
                 graphics.ApplyConfig(_graphicsConfig);
-                foreach (var part in modelBoxes)
+                foreach (SkinBOX part in modelBoxes)
                 {
                     float width = part.Size.X * 2;
                     float height = part.Size.Y * 2;
@@ -873,9 +874,9 @@ namespace PckStudio.Forms
 
         private void generateModel_Load(object sender, EventArgs e)
         {
-            if (Screen.PrimaryScreen.Bounds.Height >= 780 && Screen.PrimaryScreen.Bounds.Width >= 1080) {
+            if (Screen.PrimaryScreen.Bounds.Height >= 780 && Screen.PrimaryScreen.Bounds.Width >= 1080)
                 return;
-            }
+            
             Rerender();
         }
 
@@ -1051,7 +1052,7 @@ namespace PckStudio.Forms
             Bitmap bitmap = new Bitmap(texturePreview.Image, 64, 64);
             using SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "PNG Image Files | *.png";
-            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            if (saveFileDialog.ShowDialog(this) == DialogResult.OK)
             {
                 bitmap.Save(saveFileDialog.FileName, ImageFormat.Png);
             }
@@ -1065,14 +1066,13 @@ namespace PckStudio.Forms
             openFileDialog.Filter = "PNG Image Files | *.png";
             openFileDialog.Title = "Select Skin Texture";
 
-            if (openFileDialog.ShowDialog() == DialogResult.OK) // skins can only be a 1:1 ratio (base 64x64) or a 2:1 ratio (base 64x32)
+            if (openFileDialog.ShowDialog(this) == DialogResult.OK) // skins can only be a 1:1 ratio (base 64x64) or a 2:1 ratio (base 64x32)
             {
                 using (var img = Image.FromFile(openFileDialog.FileName))
 				{
                     if ((img.Width == img.Height || img.Height == img.Width / 2))
                     {
                         checkTextureGenerate.Checked = false;
-                        texturePreview.Image ??= new Bitmap(img);
                         using (Graphics graphics = Graphics.FromImage(texturePreview.Image))
                         {
                             graphics.ApplyConfig(_graphicsConfig);
@@ -1092,16 +1092,16 @@ namespace PckStudio.Forms
         // Creates Model Data and Finalizes
         private void buttonDone_Click(object sender, EventArgs e)
         {
-            foreach (var part in modelBoxes)
+            foreach (SkinBOX part in modelBoxes)
             {
-                _file.Properties.Add("BOX", part);
+                _asset.AddProperty("BOX", part);
             }
 
             //Bitmap bitmap2 = new Bitmap(64, 64);
             //using (Graphics graphics = Graphics.FromImage(bitmap2))
             //{
             //    graphics.ApplyConfig(_graphicsConfig);
-            //    graphics.DrawImage(uvPictureBox.Image, 0, 0, 64, 64);
+            //    graphics.DrawImage(texturePreview.Image, 0, 0, 64, 64);
             //}
             _previewImage = new Bitmap(displayBox.Width, displayBox.Height);
             Close();
@@ -1117,7 +1117,7 @@ namespace PckStudio.Forms
         private void listView1_DoubleClick(object sender, EventArgs e)
         {
             ColorDialog colorDialog = new ColorDialog();
-            if (colorDialog.ShowDialog() == DialogResult.OK)
+            if (colorDialog.ShowDialog(this) == DialogResult.OK)
                 listViewBoxes.SelectedItems[0].ForeColor = colorDialog.Color;
             Rerender();
         }
@@ -1154,7 +1154,7 @@ namespace PckStudio.Forms
         private void UpdateListView()
         {
             listViewBoxes.Items.Clear();
-            foreach (var part in modelBoxes)
+            foreach (SkinBOX part in modelBoxes)
             {
                 ListViewItem listViewItem = new ListViewItem(part.Type);
                 listViewItem.Tag = part;
@@ -1175,7 +1175,7 @@ namespace PckStudio.Forms
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "Custom Skin Model File | *.CSM";
-            if (saveFileDialog.ShowDialog() != DialogResult.OK)
+            if (saveFileDialog.ShowDialog(this) != DialogResult.OK)
                 return;
             string contents = "";
             foreach (ListViewItem listViewItem in listViewBoxes.Items)
@@ -1199,7 +1199,7 @@ namespace PckStudio.Forms
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Custom Skin Model File | *.CSM";
             openFileDialog.Title = "Select Custom Skin Model File";
-            if (MessageBox.Show("Import custom model project file? Your current work will be lost!", "", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1) == DialogResult.Yes && openFileDialog.ShowDialog() == DialogResult.OK)
+            if (MessageBox.Show(this, "Import custom model project file? Your current work will be lost!", "", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1) == DialogResult.Yes && openFileDialog.ShowDialog(this) == DialogResult.OK)
             {
                 listViewBoxes.Items.Clear();
                 modelBoxes.Clear();
@@ -1209,15 +1209,15 @@ namespace PckStudio.Forms
                     reader.ReadLine();
                     string part = reader.ReadLine();
                     reader.ReadLine();
-                    var PosX = reader.ReadLine();
-                    var PosY = reader.ReadLine();
-                    var PosZ = reader.ReadLine();
-                    var SizeX = reader.ReadLine();
-                    var SizeY = reader.ReadLine();
-                    var SizeZ = reader.ReadLine();
-                    var UvX = reader.ReadLine();
-                    var UvY = reader.ReadLine();
-                    modelBoxes.Add(SkinBOX.FromString($"{part} {PosX} {PosY} {PosZ} {SizeX} {SizeY} {SizeZ} {UvX} {UvY}"));
+                    var posX = reader.ReadLine();
+                    var posY = reader.ReadLine();
+                    var posZ = reader.ReadLine();
+                    var sizeX = reader.ReadLine();
+                    var sizeY = reader.ReadLine();
+                    var sizeZ = reader.ReadLine();
+                    var uvX = reader.ReadLine();
+                    var uvY = reader.ReadLine();
+                    modelBoxes.Add(SkinBOX.FromString($"{part} {posX} {posY} {posZ} {sizeX} {sizeY} {sizeZ} {uvX} {uvY}"));
                 }
 
             }
@@ -1231,7 +1231,7 @@ namespace PckStudio.Forms
             try
             {
                 ListViewItem listViewItem = new ListViewItem();
-                var selected = listViewBoxes.SelectedItems[0];
+                ListViewItem selected = listViewBoxes.SelectedItems[0];
                 listViewItem.Text = selected.Text;
                 listViewItem.Tag = selected.Tag;
                 int num = 0;
@@ -1246,7 +1246,7 @@ namespace PckStudio.Forms
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                MessageBox.Show("Please Select a Part");
+                MessageBox.Show(this, "Please Select a Part");
             }
         }
 
@@ -1261,7 +1261,7 @@ namespace PckStudio.Forms
         private void changeColorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ColorDialog colorDialog = new ColorDialog();
-            if (colorDialog.ShowDialog() == DialogResult.OK)
+            if (colorDialog.ShowDialog(this) == DialogResult.OK)
                 listViewBoxes.SelectedItems[0].ForeColor = colorDialog.Color;
             Rerender();
         }
@@ -1368,7 +1368,7 @@ namespace PckStudio.Forms
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "JSON Model File | *.JSON";
             openFileDialog.Title = "Select JSON Model File";
-            if (MessageBox.Show("Import custom model project file? Your current work will be lost!", "", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1) == DialogResult.Yes && openFileDialog.ShowDialog() == DialogResult.OK)
+            if (MessageBox.Show(this, "Import custom model project file? Your current work will be lost!", "", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1) == DialogResult.Yes && openFileDialog.ShowDialog(this) == DialogResult.OK)
             {
                 listViewBoxes.Items.Clear();
                 string str1 = JSONToCSM(openFileDialog.FileName);
@@ -1423,26 +1423,26 @@ namespace PckStudio.Forms
         }
 
         [Obsolete("Just whyyyyy")]
-        public string JSONToCSM(string InputFilePath)
+        public string JSONToCSM(string inputFilePath)
         {
-            CSMJObject jsonDe = JsonConvert.DeserializeObject<CSMJObject>(File.ReadAllText(InputFilePath));
+            CSMJObject jsonDe = JsonConvert.DeserializeObject<CSMJObject>(File.ReadAllText(inputFilePath));
             StringBuilder sb = new StringBuilder();
             foreach (CSMJObjectGroup group in jsonDe.Groups)
             {
-                string PARENT = group.Name;
+                string parent = group.Name;
                 foreach (int i in group.children)
                 {
                     string name = jsonDe.Elements[i].Name;
-                    float PosX = jsonDe.Elements[i].from[0] + group.origin[0];
-                    float PosY = jsonDe.Elements[i].from[1] + group.origin[1];
-                    float PosZ = jsonDe.Elements[i].from[2] + group.origin[2];
-                    float SizeX = jsonDe.Elements[i].to[0] - jsonDe.Elements[i].from[0];
-                    float SizeY = jsonDe.Elements[i].to[1] - jsonDe.Elements[i].from[1];
-                    float SizeZ = jsonDe.Elements[i].to[2] - jsonDe.Elements[i].from[2];
-                    float U = 0;
-                    float V = 0;
+                    float posX = jsonDe.Elements[i].from[0] + group.origin[0];
+                    float posY = jsonDe.Elements[i].from[1] + group.origin[1];
+                    float posZ = jsonDe.Elements[i].from[2] + group.origin[2];
+                    float sizeX = jsonDe.Elements[i].to[0] - jsonDe.Elements[i].from[0];
+                    float sizeY = jsonDe.Elements[i].to[1] - jsonDe.Elements[i].from[1];
+                    float sizeZ = jsonDe.Elements[i].to[2] - jsonDe.Elements[i].from[2];
+                    float u = 0;
+                    float v = 0;
 
-                    sb.AppendLine(name + "\n" + PARENT + "\n" + name + "\n" + PosX + "\n" + PosY + "\n" + PosZ + "\n" + SizeX + "\n" + SizeY + "\n" + SizeZ + "\n" + U + "\n" + V);
+                    sb.AppendLine(name + "\n" + parent + "\n" + name + "\n" + posX + "\n" + posY + "\n" + posZ + "\n" + sizeX + "\n" + sizeY + "\n" + sizeZ + "\n" + u + "\n" + v);
                 }
             }
             return sb.ToString();

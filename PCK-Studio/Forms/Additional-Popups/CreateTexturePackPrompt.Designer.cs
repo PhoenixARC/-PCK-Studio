@@ -1,6 +1,6 @@
-﻿namespace PckStudio
+﻿namespace PckStudio.Forms.Additional_Popups
 {
-    partial class CreateTexturePack
+    partial class CreateTexturePackPrompt
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CreateTexturePack));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CreateTexturePackPrompt));
             this.OkButton = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
             this.label1 = new System.Windows.Forms.Label();
             this.metroComboBox1 = new MetroFramework.Controls.MetroComboBox();

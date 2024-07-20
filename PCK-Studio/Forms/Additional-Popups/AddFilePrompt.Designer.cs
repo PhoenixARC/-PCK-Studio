@@ -98,8 +98,7 @@
             resources.GetString("FileTypeComboBox.Items10"),
             resources.GetString("FileTypeComboBox.Items11"),
             resources.GetString("FileTypeComboBox.Items12"),
-            resources.GetString("FileTypeComboBox.Items13"),
-            resources.GetString("FileTypeComboBox.Items14")});
+            resources.GetString("FileTypeComboBox.Items13")});
             this.FileTypeComboBox.Name = "FileTypeComboBox";
             this.FileTypeComboBox.Style = MetroFramework.MetroColorStyle.Blue;
             this.FileTypeComboBox.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -120,7 +119,6 @@
             this.AddBtn.GradientColorPrimary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
             this.AddBtn.GradientColorSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
             this.AddBtn.HoverOverColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(250)))), ((int)(((byte)(165)))));
-            this.AddBtn.Image = global::PckStudio.Properties.Resources.plus___24px;
             this.AddBtn.Name = "AddBtn";
             this.AddBtn.TextColor = System.Drawing.Color.White;
             this.AddBtn.UseVisualStyleBackColor = false;

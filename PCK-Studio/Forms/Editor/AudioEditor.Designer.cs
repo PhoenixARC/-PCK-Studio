@@ -203,7 +203,6 @@ namespace PckStudio.Forms.Editor
 			// 
 			this.whatIsEachCategoryToolStripMenuItem.Name = "whatIsEachCategoryToolStripMenuItem";
 			resources.ApplyResources(this.whatIsEachCategoryToolStripMenuItem, "whatIsEachCategoryToolStripMenuItem");
-			this.whatIsEachCategoryToolStripMenuItem.Click += new System.EventHandler(this.whatIsEachCategoryToolStripMenuItem_Click);
 			// 
 			// howToEditCreditsToolStripMenuItem
 			// 

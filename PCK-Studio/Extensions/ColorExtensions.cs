@@ -15,6 +15,11 @@ namespace PckStudio.Extensions
             return new Vector4(color.R / 255f, color.G / 255f, color.B / 255f, color.A / 255f);
         }
 
+        internal static int ToBGR(this Color color)
+        {
+            return color.B << 16 | color.G << 8 | color.R;
+        }
+
         internal static byte BlendValues(byte source, byte overlay, BlendMode blendType)
         {
             return (byte)MathExtensions.Clamp(BlendValues(source / 255f, overlay / 255f, blendType) * 255, 0, 255);

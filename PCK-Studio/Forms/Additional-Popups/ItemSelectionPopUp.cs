@@ -7,6 +7,7 @@ namespace PckStudio.Forms.Additional_Popups
 	public partial class ItemSelectionPopUp : ThemeForm
 	{
 		public string SelectedItem => DialogResult == DialogResult.OK ? ComboBox.Text : string.Empty;
+		public int SelectedIndex => DialogResult == DialogResult.OK ? ComboBox.SelectedIndex : -1;
 
 		public string LabelText
         {

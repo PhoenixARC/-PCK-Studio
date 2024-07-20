@@ -26,8 +26,7 @@ using System.Linq;
 using PckStudio.Internal;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using System.IO;
-using System.Net;
+using PckStudio.Internal.App;
 
 namespace PckStudio.Extensions
 {
@@ -88,40 +87,41 @@ namespace PckStudio.Extensions
             yield break;
         }
 
-        internal static Image Combine(this IList<Image> sources, ImageLayoutDirection layoutDirection)
+        internal static Image Combine(this IEnumerable<Image> sources, ImageLayoutDirection layoutDirection)
         {
             Size imageSize = CalculateImageSize(sources, layoutDirection);
             var image = new Bitmap(imageSize.Width, imageSize.Height);
 
             using (var graphic = Graphics.FromImage(image))
             {
-                foreach (var (i, texture) in sources.enumerate())
+                foreach ((int i, Image texture) in sources.enumerate())
                 {
                     var info = new ImageSection(texture.Size, i, layoutDirection);
                     graphic.DrawImage(texture, info.Point);
-                };
+                }
             }
             return image;
         }
 
-        private static Size CalculateImageSize(IList<Image> sources, ImageLayoutDirection layoutDirection)
+        private static Size CalculateImageSize(IEnumerable<Image> sources, ImageLayoutDirection layoutDirection)
         {
-            if (sources.Count < 2)
-            {
-                return sources.Count < 1 ? Size.Empty : sources[0].Size;
-            }
-            var horizontal = layoutDirection == ImageLayoutDirection.Horizontal;
+            Size size = sources.First().Size;
+            int width = size.Width;
+            int height = size.Height;
+            int count = sources.Count();
 
-            int width = sources[0].Width;
-            int height = sources[0].Height;
+            if (count < 2)
+                return count < 1 ? Size.Empty : size;
+
+            var horizontal = layoutDirection == ImageLayoutDirection.Horizontal;
 
             if (!sources.All(img => img.Width.Equals(width) && img.Height.Equals(height)))
                 throw new InvalidOperationException("Images must have the same width and height.");
 
             if (horizontal)
-                width *= sources.Count;
+                width *= count;
             else
-                height *= sources.Count;
+                height *= count;
 
             return new Size(width, height);
         }
@@ -234,53 +234,39 @@ namespace PckStudio.Extensions
                 return image1;
 
             BitmapData baseImageData = baseImage.LockBits(new Rectangle(Point.Empty, baseImage.Size),
-                ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
+                ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
             byte[] baseImageBuffer = new byte[baseImageData.Stride * baseImageData.Height];
 
             Marshal.Copy(baseImageData.Scan0, baseImageBuffer, 0, baseImageBuffer.Length);
 
+            baseImage.UnlockBits(baseImageData);
+
             BitmapData overlayImageData = overlayImage.LockBits(new Rectangle(Point.Empty, overlayImage.Size),
                 ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
-            byte[] overlayImageBuffer = new byte[overlayImageData.Stride * overlayImageData.Height];
 
+            byte[] overlayImageBuffer = new byte[overlayImageData.Stride * overlayImageData.Height];
+            
             Marshal.Copy(overlayImageData.Scan0, overlayImageBuffer, 0, overlayImageBuffer.Length);
 
+            overlayImage.UnlockBits(overlayImageData);
+
+            byte[] finalBuffer = new byte[baseImageData.Stride * baseImageData.Height];
             for (int k = 0; k < baseImageBuffer.Length && k < overlayImageBuffer.Length; k += 4)
             {
-                baseImageBuffer[k + 0] = ColorExtensions.Mix(delta, baseImageBuffer[k + 0], overlayImageBuffer[k + 0]);
-                baseImageBuffer[k + 1] = ColorExtensions.Mix(delta, baseImageBuffer[k + 1], overlayImageBuffer[k + 1]);
-                baseImageBuffer[k + 2] = ColorExtensions.Mix(delta, baseImageBuffer[k + 2], overlayImageBuffer[k + 2]);
+                finalBuffer[k + 0] = ColorExtensions.Mix(delta, baseImageBuffer[k + 0], overlayImageBuffer[k + 0]);
+                finalBuffer[k + 1] = ColorExtensions.Mix(delta, baseImageBuffer[k + 1], overlayImageBuffer[k + 1]);
+                finalBuffer[k + 2] = ColorExtensions.Mix(delta, baseImageBuffer[k + 2], overlayImageBuffer[k + 2]);
+                finalBuffer[k + 3] = ColorExtensions.Mix(delta, baseImageBuffer[k + 3], overlayImageBuffer[k + 3]);
             }
 
             Bitmap bitmapResult = new Bitmap(baseImage.Width, baseImage.Height, PixelFormat.Format32bppArgb);
             BitmapData resultImageData = bitmapResult.LockBits(new Rectangle(Point.Empty, bitmapResult.Size),
                 ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
 
-            Marshal.Copy(baseImageBuffer, 0, resultImageData.Scan0, baseImageBuffer.Length);
+            Marshal.Copy(finalBuffer, 0, resultImageData.Scan0, finalBuffer.Length);
 
             bitmapResult.UnlockBits(resultImageData);
-            baseImage.UnlockBits(baseImageData);
-            overlayImage.UnlockBits(overlayImageData);
             return bitmapResult;
-        }
-
-        public static Image ImageFromUrl(string imageUrl)
-        {
-            WebClient client = new WebClient();
-            Stream stream = client.OpenRead(imageUrl);
-            Bitmap bitmap = new Bitmap(stream);
-            stream.Flush();
-            stream.Close();
-            client.Dispose();
-            return bitmap;
-        }
-
-        public static Image ImageFromBuffer(byte[] buffer)
-        {
-            var ms = new MemoryStream(buffer);
-            var img = Image.FromStream(ms);
-            ms.Close();
-            return img;
         }
     }
 }

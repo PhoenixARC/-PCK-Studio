@@ -138,7 +138,7 @@ namespace PckStudio.Forms.Additional_Popups.Animation
             this.CancelButton.TextColor = System.Drawing.Color.White;
             this.CancelButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.CancelButton.UseVisualStyleBackColor = false;
-            this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
+            this.CancelButton.Click += new System.EventHandler(this.CancelBtn_Click);
             // 
             // SaveButton
             // 
@@ -167,7 +167,7 @@ namespace PckStudio.Forms.Additional_Popups.Animation
             this.SaveButton.TextColor = System.Drawing.Color.White;
             this.SaveButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.SaveButton.UseVisualStyleBackColor = false;
-            this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
+            this.SaveButton.Click += new System.EventHandler(this.SaveBtn_Click);
             // 
             // FrameEditor
             // 
@@ -191,7 +191,6 @@ namespace PckStudio.Forms.Additional_Popups.Animation
             this.Name = "FrameEditor";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Frame Editor";
-            this.Load += new System.EventHandler(this.FrameEditor_Load);
             ((System.ComponentModel.ISupportInitialize)(this.FrameTimeUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

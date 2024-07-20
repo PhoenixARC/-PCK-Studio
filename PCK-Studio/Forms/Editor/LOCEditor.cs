@@ -4,8 +4,8 @@ using System.Data;
 using System.Linq;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using PckStudio.ToolboxItems;
-using PckStudio.Classes.Misc;
+using MetroFramework.Forms;
+using PckStudio.Internal.Misc;
 using PckStudio.Forms.Additional_Popups.Loc;
 using OMI.Formats.Languages;
 using OMI.Workers.Language;
@@ -15,45 +15,33 @@ using PckStudio.Extensions;
 
 namespace PckStudio.Forms.Editor
 {
-	public partial class LOCEditor : ThemeForm
+	public partial class LOCEditor : MetroForm
     {
-		DataTable tbl;
-		LOCFile currentLoc;
-		PckFileData _file;
+		LOCFile _currentLoc;
+		PckAsset _asset;
 
-		public LOCEditor(PckFileData file)
+		public LOCEditor(PckAsset asset)
 		{
 			InitializeComponent();
-			_file = file;
-            using (var ms = new MemoryStream(file.Data))
-            {
-				var reader = new LOCFileReader();
-                currentLoc = reader.FromStream(ms);
-            }
-			tbl = new DataTable();
-			tbl.Columns.Add(new DataColumn("Language") { ReadOnly = true });
-			tbl.Columns.Add("Display Name");
-			dataGridViewLocEntryData.DataSource = tbl;
-            DataGridViewColumn column = dataGridViewLocEntryData.Columns[1];
-            column.Width = dataGridViewLocEntryData.Width;
-
+			_asset = asset;
+			_currentLoc = asset.GetData(new LOCFileReader());
 			saveToolStripMenuItem.Visible = !Settings.Default.AutoSaveChanges;
         }
 
 		private void LOCEditor_Load(object sender, EventArgs e)
 		{
 			RPC.SetPresence("LOC Editor", "Editing localization File.");
-			foreach(string locKey in currentLoc.LocKeys.Keys)
+			foreach(string locKey in _currentLoc.LocKeys.Keys)
 				treeViewLocKeys.Nodes.Add(locKey);
 		}
 
 		private void treeViewLocKeys_AfterSelect(object sender, TreeViewEventArgs e)
 		{
-			var node = e.Node;
+            TreeNode node = e.Node;
 			if (node == null ||
-				!currentLoc.LocKeys.ContainsKey(node.Text))
+				!_currentLoc.LocKeys.ContainsKey(node.Text))
 			{
-				MessageBox.Show("Selected Node does not seem to be in the loc file");
+				MessageBox.Show(this, "Selected Node does not seem to be in the loc file");
 				return;
 			}
 			ReloadTranslationTable();
@@ -61,36 +49,39 @@ namespace PckStudio.Forms.Editor
 
 		private void addDisplayIDToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (treeViewLocKeys.SelectedNode is TreeNode)
-				using (TextPrompt prompt = new TextPrompt())
+			using (TextPrompt prompt = new TextPrompt())
+			{
+				prompt.OKButtonText = "Add";
+				if (prompt.ShowDialog(this) == DialogResult.OK && 
+					_currentLoc.AddLocKey(prompt.NewText, ""))
 				{
-					prompt.OKButtonText = "Add";
-					if (prompt.ShowDialog() == DialogResult.OK && 
-						!currentLoc.LocKeys.ContainsKey(prompt.NewText) &&
-						currentLoc.AddLocKey(prompt.NewText, ""))
-					{
-						treeViewLocKeys.Nodes.Add(prompt.NewText);
-					}
+					treeViewLocKeys.Nodes.Add(prompt.NewText);
 				}
+			}
         }
 
         private void deleteDisplayIDToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (treeViewLocKeys.SelectedNode is TreeNode t && currentLoc.RemoveLocKey(t.Text))
+			if (treeViewLocKeys.SelectedNode is TreeNode t && _currentLoc.RemoveLocKey(t.Text))
 			{
 				treeViewLocKeys.SelectedNode.Remove();
+				ReloadTranslationTable();
             }
 		}
 
 		private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
 		{
-			if (e.ColumnIndex != 1 ||
-				treeViewLocKeys.SelectedNode == null)
+            if (e.ColumnIndex != 1 ||
+				treeViewLocKeys.SelectedNode is null)
             {
-				MessageBox.Show("something went wrong");
+				MessageBox.Show(this, "something went wrong");
 				return;
             }
-			currentLoc.SetLocEntry(treeViewLocKeys.SelectedNode.Text, tbl.Rows[e.RowIndex][0].ToString(), tbl.Rows[e.RowIndex][1].ToString());
+            DataGridViewRow row = dataGridViewLocEntryData.Rows[e.RowIndex];
+			string locKey = treeViewLocKeys.SelectedNode.Text;
+            string language = row.Cells[0].Value.ToString();
+			string value    = row.Cells[1].Value.ToString();
+            _currentLoc.SetLocEntry(locKey, language, value);
         }
 
         private void treeView1_KeyDown(object sender, KeyEventArgs e)
@@ -101,27 +92,29 @@ namespace PckStudio.Forms.Editor
 
 		private void buttonReplaceAll_Click(object sender, EventArgs e)
 		{
+            for (int i = 0; i < dataGridViewLocEntryData.Rows.Count; i++)
+            {
+                dataGridViewLocEntryData.Rows[i].Cells[1].Value = textBoxReplaceAll.Text;
+            }
 
-		}
-
-        private void LOCEditor_Resize(object sender, EventArgs e)
-        {
-			DataGridViewColumn column = dataGridViewLocEntryData.Columns[1];
-			column.Width = dataGridViewLocEntryData.Width - dataGridViewLocEntryData.Columns[0].Width;
+			_currentLoc.SetLocEntry(treeViewLocKeys.SelectedNode.Text, textBoxReplaceAll.Text);
 		}
 
 		private void ReloadTranslationTable()
         {
-			tbl.Rows.Clear();
-			foreach (var l in currentLoc.GetLocEntries(treeViewLocKeys.SelectedNode.Text))
-				tbl.Rows.Add(l.Key, l.Value);
+			dataGridViewLocEntryData.Rows.Clear();
+			if (treeViewLocKeys.SelectedNode is null)
+				return;
+			foreach (KeyValuePair<string, string> locEntry in _currentLoc.GetLocEntries(treeViewLocKeys.SelectedNode.Text))
+                dataGridViewLocEntryData.Rows.Add(locEntry.Key, locEntry.Value);
 		}
 
 		private IEnumerable<string> GetAvailableLanguages()
         {
 			foreach (var lang in LOCFile.ValidLanguages)
 			{
-				if (currentLoc.Languages.Contains(lang)) continue;
+				if (_currentLoc.Languages.Contains(lang))
+					continue;
 				yield return lang;
 			}
 			yield break;
@@ -131,16 +124,16 @@ namespace PckStudio.Forms.Editor
 		{
 			string[] avalibleLang = GetAvailableLanguages().ToArray();
 			using (var dialog = new AddLanguage(avalibleLang))
-				if (dialog.ShowDialog() == DialogResult.OK)
+				if (dialog.ShowDialog(this) == DialogResult.OK)
 				{
-					currentLoc.AddLanguage(dialog.SelectedLanguage);
+					_currentLoc.AddLanguage(dialog.SelectedLanguage);
 					ReloadTranslationTable();
 				}
 		}
 
 		private void saveToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-            _file.SetData(new LOCFileWriter(currentLoc, 2));
+            _asset.SetData(new LOCFileWriter(_currentLoc, 2));
 			DialogResult = DialogResult.OK;
         }
 
@@ -150,16 +143,6 @@ namespace PckStudio.Forms.Editor
 			{
 				saveToolStripMenuItem_Click(sender, EventArgs.Empty);
 			}
-        }
-
-        private void ReplaceAllButton_Click(object sender, EventArgs e)
-        {
-            for (int i = 0; i < tbl.Rows.Count; i++)
-            {
-                tbl.Rows[i][1] = textBoxReplaceAll.Text;
-            }
-
-            currentLoc.SetLocEntry(treeViewLocKeys.SelectedNode.Text, textBoxReplaceAll.Text);
         }
     }
 }
