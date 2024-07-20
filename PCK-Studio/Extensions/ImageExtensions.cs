@@ -87,40 +87,41 @@ namespace PckStudio.Extensions
             yield break;
         }
 
-        internal static Image Combine(this IList<Image> sources, ImageLayoutDirection layoutDirection)
+        internal static Image Combine(this IEnumerable<Image> sources, ImageLayoutDirection layoutDirection)
         {
             Size imageSize = CalculateImageSize(sources, layoutDirection);
             var image = new Bitmap(imageSize.Width, imageSize.Height);
 
             using (var graphic = Graphics.FromImage(image))
             {
-                foreach (var (i, texture) in sources.enumerate())
+                foreach ((int i, Image texture) in sources.enumerate())
                 {
                     var info = new ImageSection(texture.Size, i, layoutDirection);
                     graphic.DrawImage(texture, info.Point);
-                };
+                }
             }
             return image;
         }
 
-        private static Size CalculateImageSize(IList<Image> sources, ImageLayoutDirection layoutDirection)
+        private static Size CalculateImageSize(IEnumerable<Image> sources, ImageLayoutDirection layoutDirection)
         {
-            if (sources.Count < 2)
-            {
-                return sources.Count < 1 ? Size.Empty : sources[0].Size;
-            }
-            var horizontal = layoutDirection == ImageLayoutDirection.Horizontal;
+            Size size = sources.First().Size;
+            int width = size.Width;
+            int height = size.Height;
+            int count = sources.Count();
 
-            int width = sources[0].Width;
-            int height = sources[0].Height;
+            if (count < 2)
+                return count < 1 ? Size.Empty : size;
+
+            var horizontal = layoutDirection == ImageLayoutDirection.Horizontal;
 
             if (!sources.All(img => img.Width.Equals(width) && img.Height.Equals(height)))
                 throw new InvalidOperationException("Images must have the same width and height.");
 
             if (horizontal)
-                width *= sources.Count;
+                width *= count;
             else
-                height *= sources.Count;
+                height *= count;
 
             return new Size(width, height);
         }

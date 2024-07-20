@@ -23,8 +23,9 @@ namespace PckStudio.Internal.Deserializer
             {
                 Image texture = asset.GetTexture();
                 IEnumerable<Image> frameTextures = texture.Split(ImageLayoutDirection.Vertical);
-                var _animation = new Animation(frameTextures, asset.GetProperty("ANIM"));
-                return _animation;
+                Animation animation = new Animation(frameTextures);
+                animation.ApplyAnim(asset.GetProperty("ANIM"));
+                return animation;
             }
             return Animation.CreateEmpty();
         }

@@ -22,6 +22,7 @@ using PckStudio.Extensions;
 using System.Text;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Diagnostics;
 
 namespace PckStudio.Internal
 {
@@ -41,16 +42,12 @@ namespace PckStudio.Internal
 
 		private object _syncLock = new object();
 
-		public Animation(IEnumerable<Image> textures)
+		public Animation(IEnumerable<Image> textures, bool initFramesFromTextures = false)
 		{
 			_textures = new List<Image>(textures);
+            if (initFramesFromTextures)
+                AddTexturesAsFrames(MinimumFrameTime);
         }
-
-		public Animation(IEnumerable<Image> textures, string ANIM)
-			: this(textures)
-		{
-            ParseAnim(ANIM);
-		}
 
 		public class Frame
 		{
@@ -83,47 +80,12 @@ namespace PckStudio.Internal
 			}
 		}
 
-		private void ParseAnim(string anim)
-		{
-			if (string.IsNullOrEmpty(anim))
-			{
-				AddSingleFrames();
-				return;
-			}
-			anim = anim.Trim();
-			anim = (Interpolate = anim.StartsWith("#")) ? anim.Substring(1) : anim;
-			string[] animData = anim.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-			int lastFrameTime = MinimumFrameTime;
-			if (animData.Length <= 0)
-			{
-				AddSingleFrames();
-                return;
-			}
-			
-			foreach (string frameInfo in animData)
-			{
-				string[] frameData = frameInfo.Split('*');
-				int currentFrameIndex = 0;
-                int.TryParse(frameData[0], out currentFrameIndex);
-
-				// Some textures like the Halloween 2015's Lava texture don't have a
-				// frame time parameter for certain frames.
-				// This will detect that and place the last frame time in its place.
-				// This is accurate to console edition behavior.
-				// - MattNL
-				int currentFrameTime = frameData.Length < 2 || string.IsNullOrEmpty(frameData[1]) ? lastFrameTime : int.Parse(frameData[1]);
-				AddFrame(currentFrameIndex, currentFrameTime);
-				lastFrameTime = currentFrameTime;
-			}
-		}
-
 		private void CheckTextureIndex(int index)
 		{
             if (!_textures.IndexInRange(index))
                 throw new ArgumentOutOfRangeException(nameof(index));
         }
 
-		public Frame AddFrame(int textureIndex) => AddFrame(textureIndex, MinimumFrameTime);
 		public Frame AddFrame(int textureIndex, int frameTime)
 		{
 			CheckTextureIndex(textureIndex);
@@ -132,11 +94,11 @@ namespace PckStudio.Internal
 			return frame;
 		}
 
-		private void AddSingleFrames()
+		private void AddTexturesAsFrames(int frameTime)
 		{
             for (int i = 0; i < TextureCount; i++)
             {
-                AddFrame(i);
+                AddFrame(i, frameTime);
             }
         }
 
@@ -203,22 +165,6 @@ namespace PckStudio.Internal
 		{
 			CheckTextureIndex(textureIndex);
 			SetFrame(frameIndex, new Frame(_textures[textureIndex], frameTime));
-		}
-
-		public string BuildAnim()
-		{
-			StringBuilder stringBuilder = new StringBuilder(Interpolate ? "#" : string.Empty);
-            foreach (Frame frame in _frames)
-				stringBuilder.Append($"{GetTextureIndex(frame.Texture)}*{frame.Ticks},");
-			return stringBuilder.ToString(0, stringBuilder.Length - 1);
-		}
-
-		public Image BuildTexture()
-		{	
-			if (_textures[0].Width != _textures[0].Height)
-				throw new Exception("Invalid size");
-
-            return _textures.Combine(ImageLayoutDirection.Vertical);
 		}
 
         internal void SetFrameTicks(int ticks)

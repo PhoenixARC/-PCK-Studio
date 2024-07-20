@@ -336,7 +336,6 @@ namespace PckStudio.Forms.Editor
 				var img = Image.FromFile(textureFile);
 				JObject mcmeta = JObject.Parse(File.ReadAllText(fileDialog.FileName));
                 Animation javaAnimation = AnimationDeserializer.DefaultDeserializer.DeserializeJavaAnimation(mcmeta, img);
-				//javaAnimation.Category = _animation.Category;
 				_animation = javaAnimation;
 				LoadAnimationTreeView();
 			}
@@ -436,10 +435,7 @@ namespace PckStudio.Forms.Editor
 				textures.Add(new Bitmap(gif, oldResolution, oldResolution));
 			}
 
-            // TODO: Add function or a other way to initialize the frames by textures.
-            // Currently single frames only get added when an anim has an invalid format or is empty.
-            // -Miku
-            _animation = new Animation(textures, "");
+            _animation = new Animation(textures, initFramesFromTextures: true);
             _animation.Interpolate = InterpolationCheckbox.Checked;
 			LoadAnimationTreeView();
         }
@@ -453,9 +449,9 @@ namespace PckStudio.Forms.Editor
             };
             if (ofd.ShowDialog(this) != DialogResult.OK)
                 return;
-            Image img = Image.FromFile(ofd.FileName);
+            using Image img = Image.FromFile(ofd.FileName);
             IEnumerable<Image> textures = img.Split(ImageLayoutDirection.Vertical);
-			_animation = new Animation(textures, string.Empty);
+			_animation = new Animation(textures, initFramesFromTextures: true);
 			LoadAnimationTreeView();
         }
 
