@@ -33,6 +33,7 @@ using PckStudio.Extensions;
 using PckStudio.Properties;
 using PckStudio.Internal;
 using PckStudio.Internal.Deserializer;
+using PckStudio.Internal.Serializer;
 
 namespace PckStudio.Forms.Editor
 {
@@ -336,7 +337,6 @@ namespace PckStudio.Forms.Editor
 				var img = Image.FromFile(textureFile).ReleaseFromFile();
 				JObject mcmeta = JObject.Parse(File.ReadAllText(fileDialog.FileName));
                 Animation javaAnimation = AnimationDeserializer.DefaultDeserializer.DeserializeJavaAnimation(mcmeta, img);
-				//javaAnimation.Category = _animation.Category;
 				_animation = javaAnimation;
 				LoadAnimationTreeView();
 			}
@@ -354,11 +354,11 @@ namespace PckStudio.Forms.Editor
 			fileDialog.Filter = "Animation Scripts (*.mcmeta)|*.png.mcmeta";
 			if (fileDialog.ShowDialog(this) == DialogResult.OK)
             {
-                JObject mcmeta = _animation.ConvertToJavaAnimation();
+                JObject mcmeta = AnimationSerializer.SerializeJavaAnimation(_animation);
                 string jsondata = JsonConvert.SerializeObject(mcmeta, Formatting.Indented);
                 string filename = fileDialog.FileName;
                 File.WriteAllText(filename, jsondata);
-                Image finalTexture = _animation.BuildTexture();
+                Image finalTexture = AnimationSerializer.SerializeTexture(_animation);
 				// removes ".mcmeta" from filename
 				string texturePath = Path.Combine(Path.GetDirectoryName(filename), Path.GetFileNameWithoutExtension(filename));
                 finalTexture.Save(texturePath);
@@ -422,7 +422,7 @@ namespace PckStudio.Forms.Editor
 				return;
 			}
 
-			var oldResolution = _animation.BuildTexture().Width;
+			var oldResolution = _animation.GetFrame(0).Texture.Width;
 
             FrameDimension dimension = new FrameDimension(gif.FrameDimensionsList[0]);
             int frameCount = gif.GetFrameCount(dimension);
@@ -436,10 +436,7 @@ namespace PckStudio.Forms.Editor
 				textures.Add(new Bitmap(gif, oldResolution, oldResolution));
 			}
 
-            // TODO: Add function or a other way to initialize the frames by textures.
-            // Currently single frames only get added when an anim has an invalid format or is empty.
-            // -Miku
-            _animation = new Animation(textures, "");
+            _animation = new Animation(textures, initFramesFromTextures: true);
             _animation.Interpolate = InterpolationCheckbox.Checked;
 			LoadAnimationTreeView();
         }
@@ -453,9 +450,9 @@ namespace PckStudio.Forms.Editor
             };
             if (ofd.ShowDialog(this) != DialogResult.OK)
                 return;
-            Image img = Image.FromFile(ofd.FileName).ReleaseFromFile();
-            var textures = img.Split(ImageLayoutDirection.Vertical);
-			_animation = new Animation(textures, string.Empty);
+            using Image img = Image.FromFile(ofd.FileName);
+            IEnumerable<Image> textures = img.Split(ImageLayoutDirection.Vertical);
+			_animation = new Animation(textures, initFramesFromTextures: true);
 			LoadAnimationTreeView();
         }
 

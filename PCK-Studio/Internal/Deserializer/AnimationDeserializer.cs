@@ -23,10 +23,49 @@ namespace PckStudio.Internal.Deserializer
             {
                 Image texture = asset.GetTexture();
                 IEnumerable<Image> frameTextures = texture.Split(ImageLayoutDirection.Vertical);
-                var _animation = new Animation(frameTextures, asset.GetProperty("ANIM"));
-                return _animation;
+                Animation animation = new Animation(frameTextures);
+                DeserializeAnimationAnim(ref animation, asset.GetProperty("ANIM"));
+                return animation;
             }
             return Animation.CreateEmpty();
+        }
+
+        private static bool DeserializeAnimationAnim(ref Animation animation, string animString)
+        {
+            if (string.IsNullOrEmpty(animString))
+            {
+                Trace.TraceError($"[{nameof(AnimationExtensions)}:{nameof(DeserializeAnimationAnim)}] Failed to parse anim. anim was null or empty.");
+                return false;
+            }
+            animString = animString.Trim();
+
+            animation.Interpolate = animString.StartsWith("#");
+            animString = animation.Interpolate ? animString.Substring(1) : animString;
+
+            string[] animData = animString.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            if (animData.Length <= 0)
+            {
+                Trace.TraceError($"[{nameof(AnimationExtensions)}:{nameof(DeserializeAnimationAnim)}] Failed to parse anim. animData was empty.");
+                return false;
+            }
+
+            int lastFrameTime = Animation.MinimumFrameTime;
+            foreach (string frameInfo in animData)
+            {
+                string[] frameData = frameInfo.Split('*');
+                int currentFrameIndex = 0;
+                int.TryParse(frameData[0], out currentFrameIndex);
+
+                // Some textures like the Halloween 2015's Lava texture don't have a
+                // frame time parameter for certain frames.
+                // This will detect that and place the last frame time in its place.
+                // This is accurate to console edition behavior.
+                // - MattNL
+                int currentFrameTime = frameData.Length < 2 || string.IsNullOrEmpty(frameData[1]) ? lastFrameTime : int.Parse(frameData[1]);
+                animation.AddFrame(currentFrameIndex, currentFrameTime);
+                lastFrameTime = currentFrameTime;
+            }
+            return true;
         }
 
         public Animation DeserializeJavaAnimation(JObject jsonObject, Image texture)

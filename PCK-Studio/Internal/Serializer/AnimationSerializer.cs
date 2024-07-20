@@ -15,10 +15,16 @@
  *    misrepresented as being the original software.
  * 3. This notice may not be removed or altered from any source distribution.
 **/
+using System.Collections.Generic;
+using System;
 using System.Drawing;
+using System.Text;
 using OMI.Formats.Pck;
 using PckStudio.Extensions;
 using PckStudio.Interfaces;
+using System.Linq;
+using Newtonsoft.Json.Linq;
+using System.Windows.Forms;
 
 namespace PckStudio.Internal.Serializer
 {
@@ -28,10 +34,47 @@ namespace PckStudio.Internal.Serializer
 
         public void Serialize(Animation animation, ref PckAsset asset)
         {
-            string anim = animation.BuildAnim();
+            string anim = SerializeAnim(animation);
             asset.SetProperty("ANIM", anim);
-            Image texture = animation.BuildTexture();
+            Image texture = SerializeTexture(animation);
             asset.SetTexture(texture);
+        }
+
+        private static string SerializeAnim(Animation animation)
+        {
+            StringBuilder stringBuilder = new StringBuilder(animation.Interpolate ? "#" : string.Empty);
+            foreach (Animation.Frame frame in animation.GetFrames())
+                stringBuilder.Append($"{animation.GetTextureIndex(frame.Texture)}*{frame.Ticks},");
+            return stringBuilder.ToString(0, stringBuilder.Length - 1);
+        }
+
+        internal static Image SerializeTexture(Animation animation)
+        {
+            IReadOnlyCollection<Image> textures = animation.GetTextures();
+            Size size = textures.First().Size;
+            if (size.Width != size.Height)
+                throw new Exception("Invalid size");
+
+            return textures.Combine(ImageLayoutDirection.Vertical);
+        }
+
+        internal static JObject SerializeJavaAnimation(Animation animation)
+        {
+            JObject janimation = new JObject();
+            JObject mcmeta = new JObject();
+            mcmeta["comment"] = $"Animation converted with {Application.ProductName}";
+            mcmeta["animation"] = janimation;
+            JArray jframes = new JArray();
+            foreach (Animation.Frame frame in animation.GetFrames())
+            {
+                JObject jframe = new JObject();
+                jframe["index"] = animation.GetTextureIndex(frame.Texture);
+                jframe["time"] = frame.Ticks;
+                jframes.Add(jframe);
+            }
+            janimation["interpolation"] = animation.Interpolate;
+            janimation["frames"] = jframes;
+            return mcmeta;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -28,25 +29,5 @@ namespace PckStudio.Extensions
             ms.Position = 0;
             return Image.FromStream(ms);
         }
-
-        internal static JObject ConvertToJavaAnimation(this Animation animation)
-        {
-            JObject janimation = new JObject();
-            JObject mcmeta = new JObject();
-            mcmeta["comment"] = $"Animation converted with {Application.ProductName}";
-            mcmeta["animation"] = janimation;
-            JArray jframes = new JArray();
-            foreach (Animation.Frame frame in animation.GetFrames())
-            {
-                JObject jframe = new JObject();
-                jframe["index"] = animation.GetTextureIndex(frame.Texture);
-                jframe["time"] = frame.Ticks;
-                jframes.Add(jframe);
-            }
-            janimation["interpolation"] = animation.Interpolate;
-            janimation["frames"] = jframes;
-            return mcmeta;
-        }
-
     }
 }

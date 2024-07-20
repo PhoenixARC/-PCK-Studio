@@ -33,7 +33,6 @@ namespace PckStudio.Forms
             ["AutoUpdate"]                 = "Auto Update",
             ["LoadSubPcks"]                = "Load Sub Pcks",
             ["UsePrerelease"]              = "Use Prerelease",
-            ["UseComboBoxForGRFParameter"] = "Easy Grf Param",
         };
 
         private void CheckBox_CheckedChanged(object sender, EventArgs e)
