@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OMI.Formats.Languages;
+﻿using OMI.Formats.Languages;
 
 namespace PckStudio.Extensions
 {
@@ -15,7 +10,7 @@ namespace PckStudio.Extensions
         public static void Initialize(this LOCFile locFile, string language, params (string, string)[] locKeyValuePairs)
         {
             locFile.AddLanguage(language);
-            foreach (var locKeyValue in locKeyValuePairs)
+            foreach ((string, string) locKeyValue in locKeyValuePairs)
                 locFile.AddLocKey(locKeyValue.Item1, locKeyValue.Item2);
         }
     }

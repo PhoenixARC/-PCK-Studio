@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using PckStudio.Internal.App;
 
 namespace PckStudio.Extensions
 {
@@ -23,7 +19,7 @@ namespace PckStudio.Extensions
             string segment = path.Substring(0, path.IndexOf(treeView.PathSeparator));
             if (treeView.Nodes.ContainsKey(segment))
             {
-                var res = treeView.Nodes[segment].GetChildNodes().Where(node => node.FullPath == path).ToArray();
+                TreeNode[] res = treeView.Nodes[segment].GetChildNodes().Where(node => node.FullPath == path).ToArray();
                 return res;
             }
             return Array.Empty<TreeNode>();

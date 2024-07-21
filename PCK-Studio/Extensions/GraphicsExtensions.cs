@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Text;
 
 namespace PckStudio.Extensions
 {
@@ -38,7 +34,7 @@ namespace PckStudio.Extensions
 
         internal static Graphics Fill(this Graphics graphics, Rectangle area, Color color)
         {
-            var clip = graphics.Clip;
+            Region clip = graphics.Clip;
             graphics.SetClip(area, CombineMode.Replace);
             graphics.Clear(color);
             graphics.SetClip(clip, CombineMode.Replace);

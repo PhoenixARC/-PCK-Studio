@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using OMI.Formats.Pck;
 using OMI.Workers;
 using PckStudio.Interfaces;
@@ -104,7 +100,7 @@ namespace PckStudio.Extensions
         internal static string SerializePropertiesToString(this PckAsset asset)
         {
             StringBuilder builder = new StringBuilder(asset.PropertyCount * 20);
-            foreach (var property in asset.GetProperties())
+            foreach (KeyValuePair<string, string> property in asset.GetProperties())
             {
                 builder.AppendLine(property.Key + ": " + property.Value);
             }
