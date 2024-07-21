@@ -1,20 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using OMI.Formats.Languages;
 using OMI.Formats.Pck;
 using OMI.Workers;
-using PckStudio.Internal;
 using PckStudio.Interfaces;
 using PckStudio.Internal.Deserializer;
 using PckStudio.Internal.Serializer;
 using PckStudio.Internal.Skin;
+using System.Linq;
+using System.Diagnostics;
 
 namespace PckStudio.Extensions
 {

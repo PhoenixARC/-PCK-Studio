@@ -23,7 +23,6 @@ using System.Drawing.Drawing2D;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Linq;
-using PckStudio.Internal;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using PckStudio.Internal.App;
@@ -113,8 +112,6 @@ namespace PckStudio.Extensions
         private static Size CalculateImageSize(IEnumerable<Image> sources, ImageLayoutDirection layoutDirection)
         {
             Size size = sources.First().Size;
-            int width = size.Width;
-            int height = size.Height;
             int count = sources.Count();
 
             if (count < 2)
@@ -122,15 +119,15 @@ namespace PckStudio.Extensions
 
             var horizontal = layoutDirection == ImageLayoutDirection.Horizontal;
 
-            if (!sources.All(img => img.Width.Equals(width) && img.Height.Equals(height)))
+            if (!sources.All(img => img.Size == size))
                 throw new InvalidOperationException("Images must have the same width and height.");
 
             if (horizontal)
-                width *= count;
+                size.Width *= count;
             else
-                height *= count;
+                size.Height *= count;
 
-            return new Size(width, height);
+            return size;
         }
 
         internal static Image Resize(this Image image, Size size, GraphicsConfig graphicsConfig)

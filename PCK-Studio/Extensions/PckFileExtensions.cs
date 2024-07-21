@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OMI.Formats.Pck;
+﻿using OMI.Formats.Pck;
 using OMI.Workers;
 
 namespace PckStudio.Extensions
