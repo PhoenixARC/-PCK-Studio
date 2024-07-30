@@ -599,7 +599,7 @@ namespace PckStudio
 		public void HandleModelsFile(PckAsset file)
 		{
 			ModelContainer modelContainer = file.GetData(new ModelFileReader());
-			if (modelContainer.Models.Count == 0)
+			if (modelContainer.ModelCount == 0)
 			{
 				MessageBox.Show("No models found.", "Empty Model file", MessageBoxButtons.OK, MessageBoxIcon.Information);
 				return;
@@ -619,10 +619,10 @@ namespace PckStudio
 			Debug.WriteLineIf(modelMetaData.Count > 0, JsonConvert.SerializeObject(modelMetaData, Formatting.Indented));
 #endif
 
-			using ItemSelectionPopUp itemSelection = new ItemSelectionPopUp(modelContainer.Models.Keys.ToArray());
-			if (itemSelection.ShowDialog() == DialogResult.OK && modelContainer.Models.ContainsKey(itemSelection.SelectedItem))
+			using ItemSelectionPopUp itemSelection = new ItemSelectionPopUp(modelContainer.GetModelNames().ToArray());
+			if (itemSelection.ShowDialog() == DialogResult.OK && modelContainer.ContainsModel(itemSelection.SelectedItem))
 			{
-				Model model = modelContainer.Models[itemSelection.SelectedItem];
+				Model model = modelContainer.GetModelByName(itemSelection.SelectedItem);
 				Debug.WriteLine(model.Name + "; ");
 				Debug.WriteLine(model.TextureSize + "; ");
 			

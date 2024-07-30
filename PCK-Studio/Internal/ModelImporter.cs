@@ -265,10 +265,10 @@ namespace PckStudio.Internal
             {
                 var outline = new Outline(part.Name);
 
-                Vector3 partTranslation = new Vector3(part.TranslationX, part.TranslationY, part.TranslationZ);
+                Vector3 partTranslation = part.Translation;
                 outline.Origin = TranslateToInternalPosition("", partTranslation, Vector3.Zero, transformAxis);
 
-                Vector3 rotation = new Vector3(part.UnknownFloat, part.TextureOffsetX, part.TextureOffsetY) + new Vector3(part.RotationX, part.RotationY, part.RotationZ);
+                Vector3 rotation = part.Rotation + part.AdditionalRotation;
                 outline.Rotation = rotation * TransformSpace(Vector3.One, Vector3.Zero, transformAxis);
 
                 foreach (ModelBox box in part.Boxes)
@@ -316,10 +316,10 @@ namespace PckStudio.Internal
 
         private static Element CreateElement(ModelBox box, Vector3 origin, string name)
         {
-            Vector3 pos = new Vector3(box.PositionX, box.PositionY, box.PositionZ);
-            Vector3 size = new Vector3(box.Length, box.Height, box.Width);
+            Vector3 pos = box.Position;
+            Vector3 size = box.Size;
             Vector3 transformPos = TranslateToInternalPosition("", pos + origin, size, new Vector3(1, 1, 0));
-            return CreateElement(name, new Vector2(box.UvX, box.UvY), transformPos, size, box.Scale, box.Mirror);
+            return CreateElement(name, box.Uv, transformPos, size, box.Scale, box.Mirror);
         }
 
         private static Element CreateElement(Vector2 uvOffset, Vector3 pos, Vector3 size, float inflate, bool mirror)
