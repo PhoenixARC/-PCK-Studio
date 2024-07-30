@@ -379,69 +379,6 @@
   <data name="Replace" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons\Replace.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="file_export" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icons\file_export.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="file_import" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icons\file_import.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ranch" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icons\ranch.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ProjectLogo" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\ProjectLogo.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="moon_phases_atlas" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\atlases\moon_phases.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="additional_map_icons_atlas" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\atlases\additional_mapicons.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="map_icons_atlas" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\atlases\map_icons.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="experience_orbs_atlas" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\atlases\experience_orbs.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="blockData" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\atlases\blockData.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="experienceOrbData" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\atlases\experienceOrbData.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="explosionData" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\atlases\explosionData.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="explosions_atlas" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\atlases\explosion.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="itemData" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\atlases\itemData.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="mapIconData" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\atlases\mapIconData.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="moonPhaseData" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\atlases\moonPhaseData.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="particleData" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\atlases\particleData.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="particles_atlas" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\atlases\particles.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="bannerData" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\atlases\bannerData.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="banners_atlas" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\atlases\banners.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="paintingData" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\atlases\paintingData.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="paintings_atlas" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\atlases\paintings.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="skinVertexShader" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\shader\skinVertexShader.glsl;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
@@ -475,12 +412,6 @@
   <data name="armor" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\armor.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="trello" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\external\trello.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="entityBehavioursData" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\atlases\entityBehavioursData.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
   <data name="slim_template" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\anim_editor\slim_template.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -489,5 +420,8 @@
   </data>
   <data name="file_restore" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons\file_restore.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="modelTextureLocations" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\model\modelTextureLocations.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
 </root>

@@ -2,6 +2,7 @@
 using System.Buffers.Text;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -11,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using PckStudio.Internal;
 
 namespace PckStudio.External.Format
 {
@@ -49,7 +51,7 @@ namespace PckStudio.External.Format
         [JsonProperty("inflate")]
         internal float Inflate;
         
-        [JsonProperty("origin")]
+        [JsonProperty("origin", NullValueHandling = NullValueHandling.Ignore)]
         private float[] origin;
 
         [JsonProperty("from")]
@@ -60,6 +62,9 @@ namespace PckStudio.External.Format
 
         [JsonProperty("uv_offset")]
         private int[] uv_offset;
+
+        [JsonProperty("rotation", NullValueHandling = NullValueHandling.Ignore)]
+        private float[] rotation;
 
         [JsonIgnore()]
         internal Vector3 Origin
@@ -128,6 +133,23 @@ namespace PckStudio.External.Format
             }
         }
 
+        [JsonIgnore()]
+        internal Vector3 Rotation
+        {
+            get
+            {
+                return new Vector3(rotation?[0] ?? 0, rotation?[1] ?? 0, rotation?[2] ?? 0);
+            }
+            set
+            {
+                if (rotation is null || rotation.Length < 3)
+                    rotation = new float[3];
+                rotation[0] = value.X;
+                rotation[1] = value.Y;
+                rotation[2] = value.Z;
+            }
+        }
+
         [JsonProperty("type")]
         internal string Type;
 
@@ -137,37 +159,51 @@ namespace PckStudio.External.Format
 
     internal class Texture
     {
-        public static implicit operator Texture(Image image) => new Texture(image);
         public static implicit operator Image(Texture texture) => texture.GetImage();
+        public static implicit operator Texture(Image image) => new Texture(image);
+        public static implicit operator Texture(NamedTexture namedTexture) => new Texture(namedTexture.Name, namedTexture.Texture);
         
-        private Texture() { }
+        private const string _TEXTUREDATAHEAD = "data:image/png;base64,";
+
+        internal Texture(string name, Image image)
+            : this(image)
+        {
+            Name = name;
+        }
 
         internal Texture(Image image)
         {
-            var ms = new MemoryStream();
-            image.Save(ms, ImageFormat.Png);
-            TextureSource = "data:image/png;base64," + Convert.ToBase64String(ms.ToArray());
+            if (image is not null)
+            {
+                SetImage(image);
+                return;
+            }
+            Debug.WriteLine($"param: {nameof(image)} is null");
         }
 
         [JsonProperty("name")]
-        internal string Name;
+        internal string Name { get; }
         
         [JsonProperty("source")]
-        internal string TextureSource;
+        internal string TextureSource { get; private set; }
 
         private Image GetImage()
         {
             string data = TextureSource;
-            const string dataHead = "data:image/png;base64,";
-            if (data.StartsWith(dataHead))
+            if (data.StartsWith(_TEXTUREDATAHEAD))
             {
-                byte[] encodedData = Convert.FromBase64String(data.Substring(dataHead.Length));
-                using (var ms = new MemoryStream(encodedData))
-                {
-                    return Image.FromStream(ms);
-                }
+                byte[] encodedData = Convert.FromBase64String(data.Substring(_TEXTUREDATAHEAD.Length));
+                using var ms = new MemoryStream(encodedData);
+                return Image.FromStream(ms);
             }
             return null;
+        }
+
+        private void SetImage(Image image)
+        {
+            var ms = new MemoryStream();
+            image.Save(ms, ImageFormat.Png);
+            TextureSource = _TEXTUREDATAHEAD + Convert.ToBase64String(ms.ToArray());
         }
     }
 
@@ -190,6 +226,40 @@ namespace PckStudio.External.Format
                 origin[0] = value.X;
                 origin[1] = value.Y;
                 origin[2] = value.Z;
+            }
+        }
+
+        [JsonProperty("rotation")]
+        private float[] rotation;
+
+        [JsonIgnore]
+        public Vector3 Rotation
+        {
+            get => new Vector3(rotation?[0] ?? 0, rotation?[1] ?? 0, rotation?[2] ?? 0);
+            set
+            {
+                if (rotation is null || rotation.Length < 3)
+                    rotation = new float[3];
+                rotation[0] = value.X;
+                rotation[1] = value.Y;
+                rotation[2] = value.Z;
+            }
+        }
+        
+        [JsonProperty("pivot")]
+        private float[] pivot;
+
+        [JsonIgnore]
+        public Vector3 Pivot
+        {
+            get => new Vector3(pivot?[0] ?? 0, pivot?[1] ?? 0, pivot?[2] ?? 0);
+            set
+            {
+                if (pivot is null || pivot.Length < 3)
+                    pivot = new float[3];
+                pivot[0] = value.X;
+                pivot[1] = value.Y;
+                pivot[2] = value.Z;
             }
         }
 

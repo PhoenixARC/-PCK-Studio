@@ -26,7 +26,6 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-using PckStudio.Rendering;
 using PckStudio.Extensions;
 using PckStudio.External.Format;
 using PckStudio.Internal.IO.PSM;
@@ -34,6 +33,10 @@ using PckStudio.Internal.FileFormats;
 using PckStudio.Forms.Additional_Popups;
 using System.Drawing;
 using PckStudio.Internal.Skin;
+using OMI.Formats.Model;
+using PckStudio.Internal.Json;
+using System.Collections.ObjectModel;
+using PckStudio.Properties;
 
 namespace PckStudio.Internal
 {
@@ -47,6 +50,13 @@ namespace PckStudio.Internal
         ];
 
         internal static string SupportedModelFileFormatsFilter { get; } = string.Join("|", SupportedModelFormts);
+
+        internal static ReadOnlyDictionary<string, JsonModelMetaData> ModelTextureLocations { get; private set; }
+
+        static ModelImporter()
+        {
+            ModelTextureLocations = JsonConvert.DeserializeObject<ReadOnlyDictionary<string, JsonModelMetaData>>(Resources.modelTextureLocations);
+        }
 
         internal static SkinModelInfo Import(string fileName)
         {
@@ -185,7 +195,7 @@ namespace PckStudio.Internal
             if (!element.UseBoxUv || !element.IsVisibile)
                 return;
 
-            BoundingBox boundingBox = new BoundingBox(element.From, element.To);
+            var boundingBox = new Rendering.BoundingBox(element.From, element.To);
             Vector3 pos = boundingBox.Start;
             Vector3 size = boundingBox.Volume;
             Vector2 uv = element.UvOffset;
@@ -202,19 +212,7 @@ namespace PckStudio.Internal
         internal static void ExportBlockBenchModel(string fileName, SkinModelInfo modelInfo)
         {
             Image exportTexture = FixTexture(modelInfo);
-            BlockBenchModel blockBenchModel = new BlockBenchModel()
-            {
-                Name = Path.GetFileNameWithoutExtension(fileName),
-                Textures = [exportTexture],
-                TextureResolution = new TextureRes(64, exportTexture.Width == exportTexture.Height ? 64 : 32),
-                ModelIdentifier = "",
-                Metadata = new Meta()
-                {
-                    FormatVersion = "4.5",
-                    ModelFormat = "free",
-                    UseBoxUv = true,
-                }
-            };
+            BlockBenchModel blockBenchModel = CreateBlockBenchModel(Path.GetFileNameWithoutExtension(fileName), new Size(64, exportTexture.Width == exportTexture.Height ? 64 : 32), [exportTexture]);
 
             Dictionary<string, Outline> outliners = new Dictionary<string, Outline>(5);
             List<Element> elements = new List<Element>(modelInfo.AdditionalBoxes.Count);
@@ -254,26 +252,97 @@ namespace PckStudio.Internal
             File.WriteAllText(fileName, content);
         }
 
+        internal static void ExportBlockBenchModel(string fileName, Model model, IEnumerable<NamedTexture> textures)
+        {
+            BlockBenchModel blockBenchModel = CreateBlockBenchModel(Path.GetFileNameWithoutExtension(fileName), model.TextureSize, textures.Select(nt => (Texture)nt));
+
+            List<Outline> outliners = new List<Outline>(5);
+            List<Element> elements = new List<Element>(model.Parts.Count);
+
+            Vector3 transformAxis = new Vector3(1, 1, 0);
+
+            foreach (ModelPart part in model.Parts.Values)
+            {
+                var outline = new Outline(part.Name);
+
+                Vector3 partTranslation = new Vector3(part.TranslationX, part.TranslationY, part.TranslationZ);
+                outline.Origin = TranslateToInternalPosition("", partTranslation, Vector3.Zero, transformAxis);
+
+                Vector3 rotation = new Vector3(part.UnknownFloat, part.TextureOffsetX, part.TextureOffsetY) + new Vector3(part.RotationX, part.RotationY, part.RotationZ);
+                outline.Rotation = rotation * TransformSpace(Vector3.One, Vector3.Zero, transformAxis);
+
+                foreach (ModelBox box in part.Boxes)
+                {
+                    Element element = CreateElement(box, partTranslation, part.Name);
+                    element.Origin = outline.Origin;
+                    elements.Add(element);
+                    outline.Children.Add(element.Uuid);
+                }
+                outliners.Add(outline);
+            }
+
+            blockBenchModel.Elements = elements.ToArray();
+            blockBenchModel.Outliner = JArray.FromObject(outliners);
+
+            string content = JsonConvert.SerializeObject(blockBenchModel);
+            File.WriteAllText(fileName, content);
+        }
+
+        private static BlockBenchModel CreateBlockBenchModel(string name, Size textureResolution, IEnumerable<Texture> textures)
+        {
+            return new BlockBenchModel()
+            {
+                Name = name,
+                Textures = textures.ToArray(),
+                TextureResolution = textureResolution,
+                ModelIdentifier = "",
+                Metadata = new Meta()
+                {
+                    FormatVersion = "4.5",
+                    ModelFormat = "free",
+                    UseBoxUv = true,
+                }
+            };
+        }
+
         private static Element CreateElement(SkinBOX box)
         {
-            Element element = new Element
+            Vector3 transformPos = TranslateFromInternalPosistion(box, new Vector3(1, 1, 0));
+            Element element = CreateElement(box.UV, transformPos, box.Size, box.Scale, box.Mirror);
+            if (box.IsOverlayPart())
+                element.Inflate = box.Type == "HEADWEAR" ? 0.5f : 0.25f;
+            return element;
+        }
+
+        private static Element CreateElement(ModelBox box, Vector3 origin, string name)
             {
-                Name = "cube",
+            Vector3 pos = new Vector3(box.PositionX, box.PositionY, box.PositionZ);
+            Vector3 size = new Vector3(box.Length, box.Height, box.Width);
+            Vector3 transformPos = TranslateToInternalPosition("", pos + origin, size, new Vector3(1, 1, 0));
+            return CreateElement(name, new Vector2(box.UvX, box.UvY), transformPos, size, box.Scale, box.Mirror);
+        }
+
+        private static Element CreateElement(Vector2 uvOffset, Vector3 pos, Vector3 size, float inflate, bool mirror)
+        {
+            return CreateElement("cube", uvOffset, pos, size, inflate, mirror);
+        }
+
+        private static Element CreateElement(string name, Vector2 uvOffset, Vector3 pos, Vector3 size, float inflate, bool mirror)
+        {
+            return new Element
+            {
+                Name = name,
                 UseBoxUv = true,
                 Locked = false,
                 Rescale = false,
                 Type = "cube",
                 Uuid = Guid.NewGuid(),
-                UvOffset = box.UV,
-                MirrorUv = box.Mirror
+                UvOffset = uvOffset,
+                MirrorUv = mirror,
+                Inflate = inflate,
+                From = pos,
+                To = pos + size
             };
-            Vector3 transformPos = TranslateFromInternalPosistion(box, new Vector3(1, 1, 0));
-
-            element.From = transformPos;
-            element.To = transformPos + box.Size;
-            if (box.IsOverlayPart())
-                element.Inflate = box.Type == "HEADWEAR" ? 0.5f : 0.25f;
-            return element;
         }
 
         internal static SkinModelInfo ImportBedrockJson(string fileName)

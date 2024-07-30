@@ -245,9 +245,8 @@ namespace PckStudio.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 7.0 (IN DEVELOPMENT)  
+        ///   Looks up a localized string similar to 7.0.0.0
         ///====================  
-        ///Some features may be completely missing or incomplete at this point in time!  
         ///
         ///-Added .3dst (3DS Texture) support  
         ///-Semi-added Sub-Pck editing  
@@ -258,7 +257,8 @@ namespace PckStudio.Properties {
         ///-Massive codebase overhaul and optimization lead by miku-666 (aka NessieHax)!!!  
         ///-Some UI redesigned by yaboiFoxx  
         ///-Improved the changelog!  
-        ///-New icons for each o [rest of string was truncated]&quot;;.
+        ///-New icons for each of the file types, with unique image icons for skin, texture, and cape files  
+        ///-Added the abili [rest of string was truncated]&quot;;.
         /// </summary>
         public static string CHANGELOG {
             get {
@@ -727,9 +727,9 @@ namespace PckStudio.Properties {
         ///		{
         ///			&quot;internalName&quot;: &quot;helmetCloth&quot;,
         ///			&quot;displayName&quot;: &quot;Leather Cap&quot;,
+        ///			&quot;allowCustomColour&quot;: true,
         ///			&quot;hasColourEntry&quot;: true,
         ///			&quot;colourEntry&quot;: {
-        ///				&quot;hasCustomColour&quot;: true,
         ///				&quot;defaultName&quot;: &quot;Armour_Default_Leather_Colour&quot;,
         ///				&quot;variants&quot;: [ &quot;Armour_Default_Leather_Colour&quot; ]
         ///			}
@@ -739,7 +739,7 @@ namespace PckStudio.Properties {
         ///			&quot;displayName&quot;: &quot;Chain Helmet&quot;
         ///		},
         ///		{
-        ///			&quot;internalName&quot;: &quot; [rest of string was truncated]&quot;;.
+        ///			&quot;internalName&quot;:  [rest of string was truncated]&quot;;.
         /// </summary>
         public static string itemData {
             get {
@@ -821,6 +821,26 @@ namespace PckStudio.Properties {
             get {
                 object obj = ResourceManager.GetObject("MODELS_ICON", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///  &quot;bat&quot;: [ &quot;res/mob/bat&quot; ],
+        ///  &quot;bed&quot;: [ &quot;res/item/bed&quot; ],
+        ///  &quot;blaze&quot;: [ &quot;res/mob/fire&quot; ],
+        ///  &quot;boat&quot;: [ &quot;res/item/boat/boat_acacia&quot;, &quot;res/item/boat/boat_birch&quot;, &quot;res/item/boat/boat_darkoak&quot;, &quot;res/item/boat/boat_jungle&quot;, &quot;res/item/boat/boat_oak&quot;, &quot;res/item/boat/boat_spruce&quot; ],
+        ///  &quot;chicken&quot;: [ &quot;res/mob/chicken&quot; ],
+        ///  &quot;cow&quot;: [ &quot;res/mob/cow&quot; ],
+        ///  &quot;creeper&quot;: [ &quot;res/mob/creeper&quot; ],
+        ///  &quot;creeper_head&quot;: [ &quot;res/mob/creeper&quot; ],
+        ///  &quot;dolphin&quot;: [ &quot;res/mob/dolphin&quot; ],
+        ///  &quot;dragon&quot;: [ &quot;res/mob/enderdragon/ender&quot; ],
+        ///  &quot;d [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string modelTextureLocations {
+            get {
+                return ResourceManager.GetString("modelTextureLocations", resourceCulture);
             }
         }
         

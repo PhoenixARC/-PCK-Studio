@@ -1,0 +1,404 @@
+{
+  "bat": {
+    "textureLocations": [
+      "res/mob/bat"
+    ],
+    "parents": {
+      "rightEar": "head",
+      "leftEar": "head"
+    }
+  },
+  "bed": {
+    "textureLocations": [
+      "res/item/bed"
+    ]
+  },
+  "blaze": {
+    "textureLocations": [
+      "res/mob/fire"
+    ]
+
+  },
+  "boat": {
+    "textureLocations": [
+      "res/item/boat/boat_acacia",
+      "res/item/boat/boat_birch",
+      "res/item/boat/boat_darkoak",
+      "res/item/boat/boat_jungle",
+      "res/item/boat/boat_oak",
+      "res/item/boat/boat_spruce"
+    ]
+  },
+  "chicken": {
+    "textureLocations": [
+      "res/mob/chicken"
+    ],
+    "parents": {
+      "comb": "head",
+      "beak": "head"
+    }
+  },
+  "cow": {
+    "textureLocations": [
+      "res/mob/cow"
+    ]
+  },
+  "creeper": {
+    "textureLocations": [
+      "res/mob/creeper"
+    ]
+  },
+  "creeper_head": {
+    "textureLocations": [
+      "res/mob/creeper"
+    ]
+  },
+  "dolphin": {
+    "textureLocations": [
+      "res/mob/dolphin"
+    ]
+  },
+  "dragon": {
+    "textureLocations": [
+      "res/mob/enderdragon/ender"
+    ]
+  },
+  "dragon_head": {
+    "textureLocations": [
+      "res/mob/enderdragon/ender"
+    ]
+  },
+  "enderman": {
+    "textureLocations": [
+      "res/mob/enderman"
+    ]
+  },
+  "evoker": {
+    "textureLocations": [
+      "res/mob/illager/evoker"
+    ]
+  },
+  "ghast": {
+    "textureLocations": [
+      "res/mob/ghast",
+      "res/mob/ghast_fire"
+    ]
+  },
+  "guardian": {
+    "textureLocations": [
+      "res/mob/guardian",
+      "res/mob/guardian_elder"
+    ]
+  },
+  "irongolem": {
+    "textureLocations": [
+      "res/mob/villager_golem"
+    ]
+  },
+  "lavaslime": {
+    "textureLocations": [
+      "res/mob/lava"
+    ]
+  },
+  "llama": {
+    "textureLocations": [
+      "res/mob/llama/llama",
+      "res/mob/llama/llama_brown",
+      "res/mob/llama/llama_creamy",
+      "res/mob/llama/llama_gray",
+      "res/mob/llama/llama_white"
+    ]
+  },
+  "minecart": {
+    "textureLocations": [
+      "res/item/cart"
+    ]
+  },
+  "ocelot": {
+    "textureLocations": [
+      "res/mob/ozelot"
+    ]
+  },
+  "parrot": {
+    "textureLocations": [
+      "res/mob/parrot/parrot_blue",
+      "res/mob/parrot/parrot_green",
+      "res/mob/parrot/parrot_grey",
+      "res/mob/parrot/parrot_red_blue",
+      "res/mob/parrot/parrot_yellow_blue"
+    ]
+  },
+  "phantom": {
+    "textureLocations": [
+      "res/mob/phantom"
+    ]
+  },
+  "pig": {
+    "textureLocations": [
+      "res/mob/pig",
+      "res/mob/saddle"
+    ]
+  },
+  "pigzombie": {
+    "textureLocations": [
+      "res/mob/pigzombie"
+    ]
+  },
+  "polarbear": {
+    "textureLocations": [
+      "res/mob/bear/polarbear"
+    ]
+  },
+  "rabbit": {
+    "textureLocations": [
+      "res/mob/rabbit/black",
+      "res/mob/rabbit/brown",
+      "res/mob/rabbit/caerbannog",
+      "res/mob/rabbit/gold",
+      "res/mob/rabbit/salt",
+      "res/mob/rabbit/toast",
+      "res/mob/rabbit/white",
+      "res/mob/rabbit/white_splotched"
+    ]
+  },
+  "sheep": {
+    "textureLocations": [
+      "res/mob/sheep"
+    ]
+  },
+  "sheep.sheared": {
+    "textureLocations": [
+      ""
+    ]
+  },
+  "shulker": {
+    "textureLocations": [
+      "res/mob/shulker/endergolem",
+      "res/mob/shulker/spark"
+    ]
+  },
+  "silverfish": {
+    "textureLocations": [
+      "res/mob/silverfish"
+    ]
+  },
+  "skeleton": {
+    "textureLocations": [
+      "res/mob/skeleton"
+    ]
+  },
+  "skeleton.stray": {
+    "textureLocations": [
+      "res/mob/skeleton/stray"
+    ]
+  },
+  "skeleton.wither": {
+    "textureLocations": [
+      "res/mob/skeleton_wither"
+    ]
+  },
+  "slime": {
+    "textureLocations": [
+      "res/mob/slime"
+    ]
+  },
+  "slime.armor": {
+    "textureLocations": [
+      ""
+    ]
+  },
+  "snowgolem": {
+    "textureLocations": [
+      "res/mob/snowman"
+    ]
+  },
+  "spider": {
+    "textureLocations": [
+      "res/mob/spider"
+    ]
+  },
+  "squid": {
+    "textureLocations": [
+      "res/mob/squid"
+    ]
+  },
+  "trident": {
+    "textureLocations": [
+      "res/item/trident"
+    ]
+  },
+  "turtle": {
+    "textureLocations": [
+      "res/mob/sea_turtle"
+    ]
+  },
+  "vex": {
+    "textureLocations": [
+      "res/mob/illager/vex",
+      "res/mob/illager/vex_charging"
+    ]
+  },
+  "villager": {
+    "textureLocations": [
+      "res/mob/villager/villager",
+      "res/mob/villager/butcher",
+      "res/mob/villager/farmer",
+      "res/mob/villager/librarian",
+      "res/mob/villager/priest",
+      "res/mob/villager/smith"
+    ]
+  },
+  "villager.witch": {
+    "textureLocations": [
+      "res/mob/witch"
+    ]
+  },
+  "vindicator": {
+    "textureLocations": [
+      "res/mob/illager/vindicator"
+    ]
+  },
+  "witherBoss": {
+    "textureLocations": [
+      "res/mob/wither/wither",
+      "res/mob/wither/wither_invulnerable"
+    ]
+  },
+  "wolf": {
+    "textureLocations": [
+      "res/mob/wolf",
+      "res/mob/wolf_angry",
+      "res/mob/wolf_tame"
+    ]
+  },
+  "zombie": {
+    "textureLocations": [
+      "res/mob/zombie"
+    ]
+  },
+  "zombie.husk": {
+    "textureLocations": [
+      "res/mob/zombie/husk"
+    ]
+  },
+  "zombie.villager": {
+    "textureLocations": [
+      "res/mob/zombie_villager/zombie_villager",
+      "res/mob/zombie_villager/zombie_butcher",
+      "res/mob/zombie_villager/zombie_farmer",
+      "res/mob/zombie_villager/zombie_librarian",
+      "res/mob/zombie_villager/zombie_priest",
+      "res/mob/zombie_villager/zombie_smith"
+    ]
+  },
+  "horse.v2": {
+    // markings and armor no included
+    "textureLocations": [
+      "res/mob/horse/donkey",
+      "res/mob/horse/horse_black",
+      "res/mob/horse/horse_brown",
+      "res/mob/horse/horse_chestnut",
+      "res/mob/horse/horse_creamy",
+      "res/mob/horse/horse_darkbrown",
+      "res/mob/horse/horse_gray",
+      "res/mob/horse/horse_skeleton",
+      "res/mob/horse/horse_white",
+      "res/mob/horse/horse_zombie",
+      "res/mob/horse/mule"
+    ]
+  },
+  "cat": {
+    "textureLocations": [
+      "res/mob/cat_black",
+      "res/mob/cat_red",
+      "res/mob/cat_siamese"
+    ]
+  },
+  "cod": {
+    "textureLocations": [
+      "res/mob/fish/cod"
+    ]
+  },
+  "zombie.drowned": {
+    "textureLocations": [
+      "res/mob/zombie/drowned"
+    ]
+  },
+  "endermite": {
+    "textureLocations": [
+      "res/mob/endermite"
+    ]
+  },
+  "panda": {
+    "textureLocations": [
+      null
+    ]
+  },
+  "pufferfish.large": {
+    "textureLocations": [
+      "res/mob/fish/pufferfish"
+    ]
+  },
+  "pufferfish.mid": {
+    "textureLocations": [
+      "res/mob/fish/pufferfish"
+    ]
+  },
+  "pufferfish.small": {
+    "textureLocations": [
+      "res/mob/fish/pufferfish"
+    ]
+  },
+  "salmon": {
+    "textureLocations": [
+      "res/mob/fish/salmon"
+    ]
+  },
+  "skeleton_head": {
+    "textureLocations": [
+      "res/mob/skeleton"
+    ]
+  },
+  "skeleton_wither_head": {
+    "textureLocations": [
+      "res/mob/skeleton_wither"
+    ]
+  },
+  "stray.armor": {
+    "textureLocations": [
+      "res/mob/skeleton/stray_overlay"
+    ]
+  },
+  "stray_armor": {
+    "textureLocations": [
+      "res/mob/skeleton/stray_overlay"
+    ]
+  },
+  "tropicalfish_a": {
+    // not including patterns 1-6
+    "textureLocations": [
+      "res/mob/fish/tropical_a"
+    ]
+  },
+  "tropicalfish_b": {
+    // not including patterns 1-6
+    "textureLocations": [
+      "res/mob/fish/tropical_b"
+    ]
+  },
+  "zombie_head": {
+    "textureLocations": [
+      "res/mob/zombie"
+    ]
+  },
+  "mooshroom": {
+    "textureLocations": [
+      "res/mob/redcow"
+    ]
+  },
+  "witherBoss.armor": {
+    "textureLocations": [
+      "res/mob/wither/wither_armor"
+    ]
+  }
+}

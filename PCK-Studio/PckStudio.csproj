@@ -169,6 +169,8 @@
     <Compile Include="Internal\Misc\RichPresenceClient.cs" />
     <Compile Include="Internal\ModelImporter.cs" />
     <Compile Include="Internal\ModelPartSpecifics.cs" />
+    <Compile Include="Internal\Json\JsonModelMetaData.cs" />
+    <Compile Include="Internal\NamedTexture.cs" />
     <Compile Include="Internal\Serializer\AnimationSerializer.cs" />
     <Compile Include="Internal\Deserializer\AnimationDeserializer.cs" />
     <Compile Include="Interfaces\IPckAssetDeserializer.cs" />
@@ -627,6 +629,7 @@
     <None Include="Resources\atlases\moonPhaseData.json" />
     <None Include="Resources\atlases\paintingData.json" />
     <None Include="Resources\atlases\particleData.json" />
+    <None Include="Resources\model\modelTextureLocations.json" />
     <None Include="Resources\shader\framebufferFragmentShader.glsl" />
     <None Include="Resources\shader\framebufferVertexShader.glsl" />
     <None Include="Resources\shader\plainColorFragmentShader.glsl" />

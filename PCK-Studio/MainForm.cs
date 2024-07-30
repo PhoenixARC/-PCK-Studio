@@ -109,7 +109,7 @@ namespace PckStudio
 				[PckAssetType.ColourTableFile] = HandleColourFile,
 				[PckAssetType.GameRulesHeader] = HandleGameRuleFile,
 				[PckAssetType.SkinDataFile] = null, // HandleInnerPckFile,
-				[PckAssetType.ModelsFile] = null, //HandleModelsFile, // Note: Uncomment when implemented
+				[PckAssetType.ModelsFile] = HandleModelsFile, // Note: Uncomment when implemented
 				[PckAssetType.BehavioursFile] = HandleBehavioursFile,
 				[PckAssetType.MaterialFile] = HandleMaterialFile,
 			};
@@ -598,7 +598,59 @@ namespace PckStudio
 
 		public void HandleModelsFile(PckAsset file)
 		{
-			MessageBox.Show(this, "Models.bin support has not been implemented. You can use the Spark Editor for the time being to edit these files.", "Not implemented yet.");
+			ModelContainer modelContainer = file.GetData(new ModelFileReader());
+			if (modelContainer.Models.Count == 0)
+			{
+				MessageBox.Show("No models found.", "Empty Model file", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				return;
+			}
+
+#if false
+			Dictionary<string, JsonModelMetaData> modelMetaData = new();
+			foreach (Model model in modelContainer.Models.Values)
+			{
+				bool hasMetaData = ModelImporter.ModelTextureLocations.ContainsKey(model.Name);
+				if (!hasMetaData)
+				{
+					Debug.WriteLine("No meta data found for: " + model.Name);
+					modelMetaData.Add(model.Name, new JsonModelMetaData() { TextureLocations = new string[1] });
+				}
+			}
+			Debug.WriteLineIf(modelMetaData.Count > 0, JsonConvert.SerializeObject(modelMetaData, Formatting.Indented));
+#endif
+
+			using ItemSelectionPopUp itemSelection = new ItemSelectionPopUp(modelContainer.Models.Keys.ToArray());
+			if (itemSelection.ShowDialog() == DialogResult.OK && modelContainer.Models.ContainsKey(itemSelection.SelectedItem))
+			{
+				Model model = modelContainer.Models[itemSelection.SelectedItem];
+				Debug.WriteLine(model.Name + "; ");
+				Debug.WriteLine(model.TextureSize + "; ");
+			
+				using SaveFileDialog openFileDialog = new SaveFileDialog();
+				openFileDialog.FileName = model.Name;
+				openFileDialog.Filter = "Block bench model(*.bbmodel)|*.bbmodel";
+
+				IEnumerable<NamedTexture> GetModelTextures(string modelName)
+				{
+					if (!ModelImporter.ModelTextureLocations.ContainsKey(modelName) || ModelImporter.ModelTextureLocations[modelName]?.TextureLocations?.Length <= 0)
+						return Array.Empty<NamedTexture>();
+
+                    return ModelImporter.ModelTextureLocations[modelName].TextureLocations.Select(texturePath =>
+					{
+						if (currentPCK.TryGetAsset(texturePath + ".png", PckAssetType.TextureFile, out PckAsset modelTextureAsset) ||
+							currentPCK.TryGetAsset(texturePath + ".tga", PckAssetType.TextureFile, out modelTextureAsset))
+							return new NamedTexture(Path.GetFileName(texturePath), modelTextureAsset.GetTexture());
+						return default!;
+                    });
+                }
+
+                IEnumerable<NamedTexture> textures = GetModelTextures(model.Name);
+				
+				if (openFileDialog.ShowDialog() == DialogResult.OK)
+				{
+					ModelImporter.ExportBlockBenchModel(openFileDialog.FileName, model, textures);
+				}
+			}
 		}
 
 		public void HandleBehavioursFile(PckAsset asset)
