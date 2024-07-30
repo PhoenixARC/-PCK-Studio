@@ -15,7 +15,7 @@ namespace PckStudio.External.Format
         public string FormatVersion { get; set; }
 
         [JsonProperty("minecraft:geometry")]
-        public List<Geometry> Models;
+        public List<Geometry> Models { get; } = new List<Geometry>();
     }
 
     internal class Geometry
@@ -24,7 +24,7 @@ namespace PckStudio.External.Format
         public GeometryDescription Description { get; set; }
 
         [JsonProperty("bones")]
-        public List<Bone> Bones;
+        public List<Bone> Bones { get; } = new List<Bone>();
     }
 
     internal class GeometryDescription
@@ -61,6 +61,10 @@ namespace PckStudio.External.Format
             Cubes = new List<Cube>();
         }
 
+
+        [JsonProperty("parent", NullValueHandling = NullValueHandling.Ignore)]
+        public string Parent { get; set; } = "";
+        
         [JsonIgnore]
         public Vector3 Pivot
         {
@@ -99,6 +103,20 @@ namespace PckStudio.External.Format
                 origin[2] = value.Z;
             }
         }
+        
+        [JsonProperty("rotation")]
+        private float[] rotation { get; set; } = new float[3];
+        [JsonIgnore]
+        public Vector3 Rotation
+        {
+            get => rotation.Length < 3 ? Vector3.Zero : new Vector3(rotation[0], rotation[1], rotation[2]);
+            set
+            {
+                rotation[0] = value.X;
+                rotation[1] = value.Y;
+                rotation[2] = value.Z;
+            }
+        }
 
         [JsonProperty("size")]
         private float[] size { get; set; } = new float[3];
@@ -134,7 +152,7 @@ namespace PckStudio.External.Format
         [JsonProperty("inflate")]
         public float Inflate { get; set; } = 0f;
 
-        [JsonProperty("mirror", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        public bool Mirror;
+        [JsonProperty("mirror", NullValueHandling = NullValueHandling.Ignore, DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public bool Mirror { get; set; } = false;
     }
 }

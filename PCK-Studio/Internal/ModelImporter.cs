@@ -523,7 +523,7 @@ namespace PckStudio.Internal
             }
 
             Geometry selectedGeometry = new Geometry();
-            selectedGeometry.Bones = bones.Values.ToList();
+            selectedGeometry.Bones.AddRange(bones.Values);
             object bedrockModel = null;
             // Bedrock Entity (Model)
             if (fileName.EndsWith(".geo.json"))
@@ -536,7 +536,7 @@ namespace PckStudio.Internal
                 bedrockModel = new BedrockModel
                 {
                     FormatVersion = "1.12.0",
-                    Models = new List<Geometry>() { selectedGeometry }
+                    Models = { selectedGeometry }
                 };
             }
             // Bedrock Legacy Model
