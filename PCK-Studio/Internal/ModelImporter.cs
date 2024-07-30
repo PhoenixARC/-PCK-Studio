@@ -564,7 +564,8 @@ namespace PckStudio.Internal
 
         private static void ANIM2BOX(SkinANIM anim, Action<SkinBOX> converter)
         {
-            bool is32x64 = !(anim.GetFlag(SkinAnimFlag.RESOLUTION_64x64) || anim.GetFlag(SkinAnimFlag.SLIM_MODEL));
+            bool isSlim = anim.GetFlag(SkinAnimFlag.SLIM_MODEL);
+            bool is32x64 = !(anim.GetFlag(SkinAnimFlag.RESOLUTION_64x64) || isSlim);
             if (!anim.GetFlag(SkinAnimFlag.HEAD_DISABLED))
                 converter(new SkinBOX("HEAD", new Vector3(-4, -8, -4), new Vector3(8), Vector2.Zero));
 
@@ -578,16 +579,16 @@ namespace PckStudio.Internal
                 converter(new SkinBOX("JACKET", new(-4, 0, -2), new(8, 12, 4), new(16, 32)));
 
             if (!anim.GetFlag(SkinAnimFlag.RIGHT_ARM_DISABLED))
-                converter(new SkinBOX("ARM0", new(-3, -2, -2), new(4, 12, 4), new(40, 16)));
+                converter(new SkinBOX("ARM0", new(isSlim ? -2 : - 3, -2, -2), new(isSlim ? 3 : 4, 12, 4), new(40, 16)));
 
             if (!is32x64 && !anim.GetFlag(SkinAnimFlag.RIGHT_ARM_OVERLAY_DISABLED))
-                converter(new SkinBOX("SLEEVE0", new(-3, -2, -2), new(4, 12, 4), new(40, 32)));
+                converter(new SkinBOX("SLEEVE0", new(isSlim ? -2 : - 3, -2, -2), new(isSlim ? 3 : 4, 12, 4), new(40, 32)));
 
             if (!anim.GetFlag(SkinAnimFlag.LEFT_ARM_DISABLED))
-                converter(new SkinBOX("ARM1", new(-1, -2, -2), new(4, 12, 4), is32x64 ? new(40, 16) : new(32, 48), mirror: is32x64));
+                converter(new SkinBOX("ARM1", new(-1, -2, -2), new(isSlim ? 3 : 4, 12, 4), is32x64 ? new(40, 16) : new(32, 48), mirror: is32x64));
 
             if (!is32x64 && !anim.GetFlag(SkinAnimFlag.LEFT_ARM_OVERLAY_DISABLED))
-                converter(new SkinBOX("SLEEVE1", new(-1, -2, -2), new(4, 12, 4), new(48, 48)));
+                converter(new SkinBOX("SLEEVE1", new(-1, -2, -2), new(isSlim ? 3 : 4, 12, 4), new(48, 48)));
 
             if (!anim.GetFlag(SkinAnimFlag.RIGHT_LEG_DISABLED))
                 converter(new SkinBOX("LEG0", new(-2, 0, -2), new(4, 12, 4), new(0, 16)));
