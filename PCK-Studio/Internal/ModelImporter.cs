@@ -315,7 +315,7 @@ namespace PckStudio.Internal
         }
 
         private static Element CreateElement(ModelBox box, Vector3 origin, string name)
-            {
+        {
             Vector3 pos = new Vector3(box.PositionX, box.PositionY, box.PositionZ);
             Vector3 size = new Vector3(box.Length, box.Height, box.Width);
             Vector3 transformPos = TranslateToInternalPosition("", pos + origin, size, new Vector3(1, 1, 0));
@@ -620,25 +620,31 @@ namespace PckStudio.Internal
 
         private static Image FixTexture(SkinModelInfo modelInfo)
         {
-            Image result = new Bitmap(modelInfo.Texture);
+            return FixTexture(modelInfo.Texture, modelInfo.AdditionalBoxes.Where(box => !(box.Size == Vector3.One || box.Size == Vector3.Zero)).Select(box =>
+            {
+                var imgPos = Point.Truncate(new PointF(box.UV.X + box.Size.X + box.Size.Z, box.UV.Y));
+                var area = new RectangleF(imgPos, Size.Truncate(new SizeF(box.Size.X, box.Size.Z)));
+                return Rectangle.Truncate(area);
+            }));
+        }
+
+        private static Image FixTexture(Image texture, IEnumerable<Rectangle> areasToFix)
+        {
+            Image result = new Bitmap(texture);
             using var g = Graphics.FromImage(result);
             g.ApplyConfig(new GraphicsConfig()
             {
                 InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor,
                 PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality
             });
-            foreach (SkinBOX box in modelInfo.AdditionalBoxes)
+            foreach (Rectangle area in areasToFix)
             {
-                if (box.Size == Vector3.One || box.Size == Vector3.Zero)
-                    continue;
-                var imgPos = Point.Truncate(new PointF(box.UV.X + box.Size.X + box.Size.Z, box.UV.Y));
-                var area = new RectangleF(imgPos, Size.Truncate(new SizeF(box.Size.X, box.Size.Z)));
-                Image targetAreaImage = modelInfo.Texture.GetArea(Rectangle.Truncate(area));
+                Image targetAreaImage = texture.GetArea(area);
                 targetAreaImage.RotateFlip(RotateFlipType.RotateNoneFlipY);
                 Region clip = g.Clip;
                 g.SetClip(area);
                 g.Clear(Color.Transparent);
-                g.DrawImage(targetAreaImage, imgPos);
+                g.DrawImage(targetAreaImage, area.Location);
                 g.Clip = clip;
             }
             return result;
