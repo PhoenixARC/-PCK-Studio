@@ -248,8 +248,8 @@ namespace PckStudio.Rendering
 
         private float defaultArmRotation => 5f;
 
-        private Matrix4 RightArmMatrix => Matrix4.CreateFromAxisAngle(Vector3.UnitZ, MathHelper.DegreesToRadians(-defaultArmRotation));
-        private Matrix4 LeftArmMatrix => Matrix4.CreateFromAxisAngle(Vector3.UnitZ, MathHelper.DegreesToRadians(defaultArmRotation));
+        private Matrix4 RightArmMatrix => Matrix4.CreateFromAxisAngle(Vector3.UnitZ, MathHelper.DegreesToRadians(defaultArmRotation));
+        private Matrix4 LeftArmMatrix => Matrix4.CreateFromAxisAngle(Vector3.UnitZ, MathHelper.DegreesToRadians(-defaultArmRotation));
 
         private static Vector3[] cubeVertices = new Vector3[]
         {
@@ -316,13 +316,13 @@ namespace PckStudio.Rendering
             InitializeShaders();
             InitializeFramebuffer();
             Renderer.SetClearColor(BackColor);
-            var layout = CubeGroupMesh.GetLayout();
-            foreach (var item in meshStorage)
+            VertexBufferLayout layout = CubeGroupMesh.GetLayout();
+            foreach (KeyValuePair<string, CubeGroupMesh> item in meshStorage)
             {
                 item.Value.Initialize(layout);
             }
             UploadMeshData();
-            foreach (var cubeMesh in offsetSpecificMeshStorage?.Values)
+            foreach (CubeGroupMesh cubeMesh in offsetSpecificMeshStorage?.Values)
             {
                 cubeMesh.Initialize(layout);
                 cubeMesh.UploadData();
@@ -352,22 +352,22 @@ namespace PckStudio.Rendering
             body.AddCube(new(-4, 0, -2), new(8, 12, 4), new(16, 16));
             body.AddCube(new(-4, 0, -2), new(8, 12, 4), new(16, 32), OverlayScale);
 
-            var rightArmInfo = ModelPartSpecifics.GetPositioningInfo("ARM0");
+            ModelPartSpecifics.PositioningInfo rightArmInfo = ModelPartSpecifics.GetPositioningInfo("ARM0");
             rightArm ??= new CubeGroupMesh("Right Arm", rightArmInfo.Translation.ToOpenTKVector(), rightArmInfo.Pivot.ToOpenTKVector());
             rightArm.AddCube(new(-3, -2, -2), new(4, 12, 4), new(40, 16));
             rightArm.AddCube(new(-3, -2, -2), new(4, 12, 4), new(40, 32), OverlayScale);
 
-            var leftArmInfo = ModelPartSpecifics.GetPositioningInfo("ARM1");
+            ModelPartSpecifics.PositioningInfo leftArmInfo = ModelPartSpecifics.GetPositioningInfo("ARM1");
             leftArm ??= new CubeGroupMesh("Left Arm", leftArmInfo.Translation.ToOpenTKVector(), leftArmInfo.Pivot.ToOpenTKVector());
             leftArm.AddCube(new(-1, -2, -2), new(4, 12, 4), new(32, 48));
             leftArm.AddCube(new(-1, -2, -2), new(4, 12, 4), new(48, 48), inflate: OverlayScale);
 
-            var rightLegInfo = ModelPartSpecifics.GetPositioningInfo("LEG0");
+            ModelPartSpecifics.PositioningInfo rightLegInfo = ModelPartSpecifics.GetPositioningInfo("LEG0");
             rightLeg ??= new CubeGroupMesh("Right Leg", rightLegInfo.Translation.ToOpenTKVector(), rightLegInfo.Pivot.ToOpenTKVector());
             rightLeg.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 16));
             rightLeg.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 32), OverlayScale);
 
-            var leftLegInfo = ModelPartSpecifics.GetPositioningInfo("LEG1");
+            ModelPartSpecifics.PositioningInfo leftLegInfo = ModelPartSpecifics.GetPositioningInfo("LEG1");
             leftLeg ??= new CubeGroupMesh("Left Leg", leftLegInfo.Translation.ToOpenTKVector(), leftLegInfo.Pivot.ToOpenTKVector());
             leftLeg.AddCube(new(-2, 0, -2), new(4, 12, 4), new(16, 48));
             leftLeg.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 48), OverlayScale);
@@ -775,12 +775,12 @@ namespace PckStudio.Rendering
 
         internal IEnumerable<SkinPartOffset> GetOffsets()
         {
-            foreach (var mesh in meshStorage)
+            foreach (KeyValuePair<string, CubeGroupMesh> mesh in meshStorage)
             {
                 if (SkinPartOffset.ValidModelOffsetTypes.Contains(mesh.Key) && mesh.Value.Offset.Y != 0f)
                     yield return new SkinPartOffset(mesh.Key, mesh.Value.Offset.Y);
             }
-            foreach (var offsetmesh in offsetSpecificMeshStorage)
+            foreach (KeyValuePair<string, CubeGroupMesh> offsetmesh in offsetSpecificMeshStorage)
             {
                 if (offsetmesh.Value.Offset.Y != 0f)
                     yield return new SkinPartOffset(offsetmesh.Key, offsetmesh.Value.Offset.Y);
@@ -829,7 +829,7 @@ namespace PckStudio.Rendering
         [Conditional("DEBUG")]
         private void GLErrorCheck()
         {
-            var error = GL.GetError();
+            ErrorCode error = GL.GetError();
             Debug.Assert(error == ErrorCode.NoError, error.ToString());
         }
 
@@ -893,7 +893,7 @@ namespace PckStudio.Rendering
                 case Keys.Escape:
                     ReleaseMouse();
                     var point = new Point(Parent.Location.X + Location.X, Parent.Location.Y + Location.Y);
-                    contextMenuStrip1.Show(point);
+                    debugContextMenuStrip1.Show(point);
                     return true;
 #endif
                 case Keys.F3:
@@ -901,7 +901,7 @@ namespace PckStudio.Rendering
                     return true;
                 case Keys.R:
                     Camera.Distance = DefaultCameraDistance;
-                    Camera.FocalPoint = head.GetCenter(0) * new Vector3(1, -1, -1);
+                    Camera.FocalPoint = head.GetCenter(0);
                     Camera.Yaw = 0f;
                     Camera.Pitch = 0f;
                     return true;
@@ -934,8 +934,8 @@ namespace PckStudio.Rendering
                 }
 
                 CubeGroupMesh cubeMesh = meshStorage[skinBox.Type];
-                var center = Cube.FromSkinBox(skinBox).Center * new Vector3(1, -1, -1);
-                Camera.FocalPoint = cubeMesh.GetWorldPosition(center);
+                Vector3 center = Cube.FromSkinBox(skinBox).Center;
+                Camera.FocalPoint = (cubeMesh.Transform * Matrix4.CreateTranslation(center)).Inverted().ExtractTranslation();
                 Camera.Distance = skinBox.Size.Length() * 2;
             }
         }
@@ -997,14 +997,14 @@ namespace PckStudio.Rendering
             {
                 GL.DepthFunc(DepthFunction.Lequal);
                 GL.DepthMask(false);
-                var skyboxShader = _shaders.GetShader("SkyboxShader");
+                ShaderProgram skyboxShader = _shaders.GetShader("SkyboxShader");
                 skyboxShader.Bind();
                 _skyboxTexture.Bind();
 
-                var view = new Matrix4(new Matrix3(Matrix4.LookAt(Camera.WorldPosition, Camera.WorldPosition + Camera.Orientation, Camera.Up)))
+                Matrix4 view = new Matrix4(new Matrix3(Matrix4.LookAt(Camera.WorldPosition, Camera.WorldPosition + Camera.Orientation, Camera.Up)))
                     * Matrix4.CreateRotationY(MathHelper.DegreesToRadians(Camera.Yaw))
                     * Matrix4.CreateRotationX(MathHelper.DegreesToRadians(Camera.Pitch));
-                var viewproj = view * Camera.GetProjection();
+                Matrix4 viewproj = view * Camera.GetProjection();
                 skyboxShader.SetUniformMat4("ViewProjection", ref viewproj);
                 Renderer.Draw(skyboxShader, _skyboxRenderBuffer);
                 GL.DepthMask(true);
@@ -1027,19 +1027,19 @@ namespace PckStudio.Rendering
                 if (showWireFrame)
                     GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
 
-                Matrix4 transform = Matrix4.CreateTranslation(0f, 0f, 0f);
+                Matrix4 transform = Matrix4.Identity;
 
-                var skinShader = _shaders.GetShader("SkinShader");
+                ShaderProgram skinShader = _shaders.GetShader("SkinShader");
                 skinShader.Bind();
                 skinShader.SetUniformMat4("u_ViewProjection", ref viewProjection);
                 skinShader.SetUniform2("u_TexSize", new Vector2(TextureSize.Width, TextureSize.Height));
 
                 skinTexture.Bind();
 
-                var legRightMatrix = Matrix4.Identity;
-                var legLeftMatrix = Matrix4.Identity;
-                var armRightMatrix = Matrix4.Identity;
-                var armLeftMatrix = Matrix4.Identity;
+                Matrix4 legRightMatrix = Matrix4.Identity;
+                Matrix4 legLeftMatrix = Matrix4.Identity;
+                Matrix4 armRightMatrix = Matrix4.Identity;
+                Matrix4 armLeftMatrix = Matrix4.Identity;
                 if (Animate)
                 {
                     if (ANIM.GetFlag(SkinAnimFlag.DINNERBONE))
@@ -1158,11 +1158,11 @@ namespace PckStudio.Rendering
                 if (ModelData.IndexInRange(SelectedIndex))
                 {
                     SkinBOX box = ModelData[SelectedIndex];
-                    var cubeBoundingBox = Cube.FromSkinBox(box).GetBoundingBox();
+                    BoundingBox cubeBoundingBox = Cube.FromSkinBox(box).GetBoundingBox();
 
                     if (meshStorage.ContainsKey(box.Type))
                     {
-                        var cubeMesh = meshStorage[box.Type];
+                        CubeGroupMesh cubeMesh = meshStorage[box.Type];
 
                         Matrix4 GetGroupTransform(string type)
                         {
@@ -1185,10 +1185,11 @@ namespace PckStudio.Rendering
                             }
                         }
 
-                        transform *= GetGroupTransform(box.Type);
-                        transform *= cubeMesh.Transform;
+                        Matrix4 bbTransform = cubeMesh.Transform;
+                        bbTransform *= GetGroupTransform(box.Type);
+                        bbTransform *= transform;
                         GL.BlendFunc(BlendingFactor.DstAlpha, BlendingFactor.OneMinusSrcAlpha);
-                        DrawBoundingBox(transform, cubeBoundingBox, HighlightlingColor);
+                        DrawBoundingBox(bbTransform, cubeBoundingBox, HighlightlingColor);
                         GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
                     }
                 }
@@ -1315,7 +1316,7 @@ namespace PckStudio.Rendering
 
         private void ReInitialzeSkinData()
         {
-            foreach (var mesh in meshStorage.Values)
+            foreach (CubeGroupMesh mesh in meshStorage.Values)
             {
                 mesh.ClearData();
             }
@@ -1327,7 +1328,7 @@ namespace PckStudio.Rendering
 
         private void UpdateModelData()
         {
-            foreach (var item in ModelData)
+            foreach (SkinBOX item in ModelData)
             {
                 AddCustomModelPart(item);
             }
@@ -1340,7 +1341,7 @@ namespace PckStudio.Rendering
             // Debug point render
             {
                 ColorVertex[] vertices = [
-                    new ColorVertex(Vector3.Zero, Color.White)
+                    new ColorVertex(Vector3.Zero, Color.White),
                 ];
                 VertexArray vao = new VertexArray();
                 var debugVBO = new VertexBuffer();
@@ -1348,11 +1349,12 @@ namespace PckStudio.Rendering
                 vao.AddBuffer(debugVBO, plainColorVertexBufferLayout);
                 d_debugPointDrawContext = new DrawContext(vao, debugVBO.GenIndexBuffer(), PrimitiveType.Points);
             }
-            // Debug point render
+            // Debug line render
             {
                 ColorVertex[] vertices = [
-                    new ColorVertex(Vector3.Zero),
-                    new ColorVertex(Vector3.One)
+                    new ColorVertex(Vector3.Zero, Color.Red)  , new ColorVertex(Vector3.UnitX, Color.Red),
+                    new ColorVertex(Vector3.Zero, Color.Green), new ColorVertex(Vector3.UnitY, Color.Green),
+                    new ColorVertex(Vector3.Zero, Color.Blue) , new ColorVertex(Vector3.UnitZ, Color.Blue),
                 ];
                 VertexArray vao = new VertexArray();
                 var debugVBO = new VertexBuffer();
@@ -1367,7 +1369,9 @@ namespace PckStudio.Rendering
         private void RenderDebug()
         {
 #if DEBUG
-            var colorShader = _shaders.GetShader("PlainColorShader");
+            ShaderProgram colorShader = _shaders.GetShader("PlainColorShader");
+            Matrix4 viewProjection = Camera.GetViewProjection();
+            colorShader.SetUniformMat4("ViewProjection", ref viewProjection);
             if (d_showFocalPoint)
             {
                 GL.BlendFunc(BlendingFactor.DstAlpha, BlendingFactor.OneMinusSrcAlpha);
@@ -1375,10 +1379,8 @@ namespace PckStudio.Rendering
                 GL.DepthMask(false);
                 GL.Enable(EnableCap.PointSmooth);
                 colorShader.Bind();
-                var viewProjection = Camera.GetViewProjection();
-                var transform = Matrix4.CreateTranslation(Camera.FocalPoint).Inverted();
+                Matrix4 transform = Matrix4.CreateTranslation(Camera.FocalPoint).Inverted();
                 colorShader.SetUniformMat4("Transform", ref transform);
-                colorShader.SetUniformMat4("ViewProjection", ref viewProjection);
                 colorShader.SetUniform1("intensity", 0.75f);
                 colorShader.SetUniform4("baseColor", Color.DeepPink);
                 GL.PointSize(5f);
@@ -1395,31 +1397,18 @@ namespace PckStudio.Rendering
                 GL.DepthMask(false);
                 GL.Enable(EnableCap.LineSmooth);
                 colorShader.Bind();
-                
-                var viewProjection = Camera.GetViewProjection();
-                var transform = Matrix4.Identity;
+
+                Matrix4 transform = Matrix4.CreateScale(1,-1,-1);
                 transform *= Matrix4.CreateTranslation(Vector3.Zero);
                 transform *= Matrix4.CreateScale(Camera.Distance / 4f).Inverted();
                 transform.Invert();
                 colorShader.SetUniformMat4("Transform", ref transform);
-                colorShader.SetUniformMat4("ViewProjection", ref viewProjection);
                 colorShader.SetUniform1("intensity", 0.75f);
-                
-                
+                colorShader.SetUniform4("baseColor", Color.White);
+
                 Renderer.SetLineWidth(2f);
 
-                VertexBuffer lineVertexBuffer = d_debugLineDrawContext.VertexArray.GetBuffer(0);
-
-                void DrawLine(Color color, params ColorVertex[] positions)
-                {
-                    colorShader.SetUniform4("baseColor", color);
-                    lineVertexBuffer.SetData(positions);
-                    Renderer.Draw(colorShader, d_debugLineDrawContext);
-                };
-
-                DrawLine(Color.Red,   Vector3.Zero, Vector3.UnitX);
-                DrawLine(Color.Green, Vector3.Zero, Vector3.UnitY);
-                DrawLine(Color.Blue,  Vector3.Zero, Vector3.UnitZ);
+                Renderer.Draw(colorShader, d_debugLineDrawContext);
 
                 Renderer.SetLineWidth(1f);
 
@@ -1436,18 +1425,18 @@ namespace PckStudio.Rendering
         {
 #if DEBUG
             reToolStripMenuItem = new ToolStripMenuItem();
-            contextMenuStrip1 = new ContextMenuStrip(this.components);
+            debugContextMenuStrip1 = new ContextMenuStrip(this.components);
             guidelineModeToolStripMenuItem = new ToolStripMenuItem();
-            contextMenuStrip1.SuspendLayout();
+            debugContextMenuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // contextMenuStrip1
             // 
-            contextMenuStrip1.Items.AddRange(new ToolStripItem[] {
+            debugContextMenuStrip1.Items.AddRange(new ToolStripItem[] {
             reToolStripMenuItem,
             guidelineModeToolStripMenuItem});
-            contextMenuStrip1.Name = "contextMenuStrip1";
-            contextMenuStrip1.Size = new Size(159, 48);
+            debugContextMenuStrip1.Name = "contextMenuStrip1";
+            debugContextMenuStrip1.Size = new Size(159, 48);
             // 
             // reToolStripMenuItem
             // 
@@ -1478,21 +1467,21 @@ namespace PckStudio.Rendering
             var debugCameraToolStripMenuItem = new ToolStripMenuItem("Show Camera debug information");
             debugCameraToolStripMenuItem.CheckOnClick = true;
             debugCameraToolStripMenuItem.Click += (s, e) => d_debugLabel.Visible = debugCameraToolStripMenuItem.Checked;
-            contextMenuStrip1.Items.Add(debugCameraToolStripMenuItem);
+            debugContextMenuStrip1.Items.Add(debugCameraToolStripMenuItem);
 
             var debugShowFocalPointToolStripMenuItem = new ToolStripMenuItem("Show Camera Focal point");
             debugShowFocalPointToolStripMenuItem.CheckOnClick = true;
             debugShowFocalPointToolStripMenuItem.Click += (s, e) => d_showFocalPoint = debugShowFocalPointToolStripMenuItem.Checked;
-            contextMenuStrip1.Items.Add(debugShowFocalPointToolStripMenuItem);
+            debugContextMenuStrip1.Items.Add(debugShowFocalPointToolStripMenuItem);
 
             var debugShowDirectionArrows = new ToolStripMenuItem("Show Direction Arrows");
             debugShowDirectionArrows.CheckOnClick = true;
             debugShowDirectionArrows.Click += (s, e) => d_showDirectionArrows = debugShowDirectionArrows.Checked;
-            contextMenuStrip1.Items.Add(debugShowDirectionArrows);
+            debugContextMenuStrip1.Items.Add(debugShowDirectionArrows);
 
             Controls.Add(d_debugLabel);
 
-            this.contextMenuStrip1.ResumeLayout(false);
+            this.debugContextMenuStrip1.ResumeLayout(false);
 #endif
         }
 
@@ -1503,7 +1492,7 @@ namespace PckStudio.Rendering
         private DrawContext d_debugLineDrawContext;
         private Label d_debugLabel;
         private ToolStripMenuItem reToolStripMenuItem;
-        private ContextMenuStrip contextMenuStrip1;
+        private ContextMenuStrip debugContextMenuStrip1;
         private ToolStripMenuItem guidelineModeToolStripMenuItem;
 
         private void reInitToolStripMenuItem_Click(object sender, EventArgs e)

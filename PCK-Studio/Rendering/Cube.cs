@@ -92,7 +92,7 @@ namespace PckStudio.Rendering
 
         public Vector3 GetFaceCenter(Face face)
         {
-            var result = Center;
+            Vector3 result = Center;
             switch (face)
             {
                 case Face.Top:

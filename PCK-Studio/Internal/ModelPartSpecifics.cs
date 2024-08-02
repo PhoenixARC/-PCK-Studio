@@ -13,10 +13,10 @@ namespace PckStudio.Internal
         {
             ["HEAD"] = new PositioningInfo(),
             ["BODY"] = new PositioningInfo(),
-            ["ARM0"] = new PositioningInfo(new(-5f,  -2f, 0f), new( 6f,  2f, 0f)),
-            ["ARM1"] = new PositioningInfo(new( 5f,  -2f, 0f), new(-6f,  2f, 0f)),
-            ["LEG0"] = new PositioningInfo(new(-2f, -12f, 0f), new( 2f, 12f, 0f)),
-            ["LEG1"] = new PositioningInfo(new( 2f, -12f, 0f), new(-2f, 12f, 0f)),
+            ["ARM0"] = new PositioningInfo(new(-5f,  2f, 0f), new( 6f,  2f, 0f)),
+            ["ARM1"] = new PositioningInfo(new( 5f,  2f, 0f), new(-6f,  2f, 0f)),
+            ["LEG0"] = new PositioningInfo(new(-2f, 12f, 0f), new( 2f, 12f, 0f)),
+            ["LEG1"] = new PositioningInfo(new( 2f, 12f, 0f), new(-2f, 12f, 0f)),
         };
 
         internal record struct PositioningInfo(Vector3 Translation, Vector3 Pivot);

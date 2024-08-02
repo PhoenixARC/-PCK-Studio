@@ -11,5 +11,5 @@ out vec4 color;
 void main()
 {
 	color = a_Color;
-	gl_Position = ViewProjection * Transform * vec4(a_Pos.x, a_Pos.yz * -1.0, 1.0);
+	gl_Position = ViewProjection * Transform * vec4(a_Pos.xyz, 1.0);
 };

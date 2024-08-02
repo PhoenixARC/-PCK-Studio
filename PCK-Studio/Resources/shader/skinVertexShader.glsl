@@ -14,6 +14,5 @@ out geometryData
 void main()
 {
 	dataOut.TexCoord = texCoord;
-	vec4 invertedVertex = vec4(vertexPosition.x, vertexPosition.yz * -1.0, 1.0);
-	gl_Position = u_ViewProjection * u_Transform * invertedVertex;
+	gl_Position = u_ViewProjection * u_Transform * vec4(vertexPosition, 1.0);
 };

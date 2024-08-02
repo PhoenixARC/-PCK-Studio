@@ -139,17 +139,15 @@ namespace PckStudio.Rendering
 
         internal Matrix4 Transform
         {
-            get => Matrix4.Identity.Pivoted(Translation - Offset, Pivot + Offset);
+            get => Matrix4.CreateTranslation(Translation) * Matrix4.CreateScale(1f, -1f, -1f);
         }
-
-        internal Vector3 GetWorldPosition(Vector3 localPosition) => (Matrix4.CreateTranslation(localPosition) * Transform).Inverted().ExtractTranslation();
 
         internal Vector3 GetCenter(int index)
         {
             if (!cubes.IndexInRange(index))
                 throw new IndexOutOfRangeException();
 
-            return GetWorldPosition(cubes[index].Center) + Offset;
+            return cubes[index].Center + Offset;
         }
 
         internal BoundingBox GetCubeBoundingBox(int index)
@@ -158,15 +156,14 @@ namespace PckStudio.Rendering
                 throw new IndexOutOfRangeException();
 
             CubeMesh cube = cubes[index];
-            var bb = cube.GetBoundingBox();
-            return new BoundingBox(GetWorldPosition(bb.Start.ToOpenTKVector() * new Vector3(1, -1, -1)).ToNumericsVector(), GetWorldPosition(bb.End.ToOpenTKVector() * new Vector3(1, -1, -1)).ToNumericsVector());
+            return cube.GetBoundingBox(Transform);
         }
 
         internal Vector3 GetFaceCenter(int index, Cube.Face face)
         {
             if (!cubes.IndexInRange(index))
                 throw new IndexOutOfRangeException();
-            return GetWorldPosition(cubes[index].GetFaceCenter(face) * new Vector3(1,-1,-1));
+            return Vector3.TransformPosition(cubes[index].GetFaceCenter(face), Transform);
         }
 
         internal void SetEnabled(int index, bool enable)
