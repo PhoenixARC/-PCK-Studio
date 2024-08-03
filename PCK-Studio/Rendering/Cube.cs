@@ -25,43 +25,21 @@ namespace PckStudio.Rendering
 {
     internal class Cube
     {
-        internal Vector3 Position
-        {
-            get => _position;
-            set => _position = value;
-        }
+        internal Vector3 Position { get; set; }
 
-        internal Vector3 Size
-        {
-            get => _size;
-            set => _size = value;
-        }
-
-        internal Vector2 Uv
-        {
-            get => _uv;
-            set => _uv = value;
-        }
-
-        internal float Inflate
-        {
-            get => _inflate;
-            set => _inflate = value;
-        }
-
-        internal bool MirrorTexture
-        {
-            get => _mirrorTexture;
-            set => _mirrorTexture = value;
-        }
-
-        internal bool FlipZMapping
-        {
-            get => _flipZMapping;
-            set => _flipZMapping = value;
-        }
+        internal Vector3 Size { get; set; }
         
-        public Vector3 Center => Position + Size / 2f;
+        internal Vector3 Rotation { get; set; }
+
+        internal Vector2 Uv { get; set; }
+
+        internal float Inflate { get; set; }
+
+        internal bool MirrorTexture { get; set; }
+
+        internal bool FlipZMapping { get; set; }
+        
+        internal Vector3 Center => Position + Size / 2f;
         
         internal enum Face
         {
@@ -82,12 +60,12 @@ namespace PckStudio.Rendering
 
         public Cube(Vector3 position, Vector3 size, Vector2 uv, float inflate, bool mirrorTexture, bool flipZMapping)
         {
-            _position = position;
-            _size = size;
-            _uv = uv;
-            _inflate = inflate;
-            _mirrorTexture = mirrorTexture;
-            _flipZMapping = flipZMapping;
+            Position = position;
+            Size = size;
+            Uv = uv;
+            Inflate = inflate;
+            MirrorTexture = mirrorTexture;
+            FlipZMapping = flipZMapping;
         }
 
         public Vector3 GetFaceCenter(Face face)
@@ -129,13 +107,5 @@ namespace PckStudio.Rendering
             Vector3 end   = transformedCenter + halfSizeInflated;
             return new BoundingBox(start.ToNumericsVector(), end.ToNumericsVector());
         }
-
-
-        protected Vector3 _position = Vector3.Zero;
-        protected Vector3 _size = Vector3.One;
-        protected Vector2 _uv = Vector2.Zero;
-        protected float _inflate = 0f;
-        protected bool _mirrorTexture = false;
-        protected bool _flipZMapping = false;
     }
 }

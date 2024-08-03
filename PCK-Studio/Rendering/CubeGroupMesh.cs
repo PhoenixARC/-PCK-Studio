@@ -81,13 +81,13 @@ namespace PckStudio.Rendering
         }
 
         /// <summary>
-        /// Uploads MeshData
+        /// Uploads vertex data
         /// </summary>
         // TODO: rename function
         internal void UploadData()
         {
             ResetBuffers();
-            foreach (var cube in cubes)
+            foreach (CubeMesh cube in cubes)
             {
                 if (!cube.ShouldRender)
                     continue;
@@ -121,17 +121,18 @@ namespace PckStudio.Rendering
             if (!cubes.IndexInRange(index))
                 throw new IndexOutOfRangeException();
 
-            var cube = cubes[index];
+            CubeMesh cube = cubes[index];
             cube.Position = position;
             cube.Size = size;
             cube.Uv = uv;
             cube.Inflate = inflate;
             cube.MirrorTexture = mirrorTexture;
+            cube.Update();
         }
 
         private void UpdateCollection()
         {
-            foreach (var cube in cubes)
+            foreach (CubeMesh cube in cubes)
             {
                 cube.FlipZMapping = FlipZMapping;
             }
@@ -139,7 +140,7 @@ namespace PckStudio.Rendering
 
         internal Matrix4 Transform
         {
-            get => Matrix4.CreateTranslation(Translation) * Matrix4.CreateScale(1f, -1f, -1f);
+            get => Matrix4.CreateTranslation(Translation + Offset) * Matrix4.CreateScale(1f, -1f, -1f);
         }
 
         internal Vector3 GetCenter(int index)
@@ -147,7 +148,7 @@ namespace PckStudio.Rendering
             if (!cubes.IndexInRange(index))
                 throw new IndexOutOfRangeException();
 
-            return cubes[index].Center + Offset;
+            return Vector3.TransformPosition(cubes[index].Center + Offset, Transform);
         }
 
         internal BoundingBox GetCubeBoundingBox(int index)

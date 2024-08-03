@@ -30,84 +30,6 @@ namespace PckStudio.Rendering
     internal class CubeMesh : Cube
     {
         internal bool ShouldRender { get; set; } = true;
-        
-        internal new Vector3 Position
-        {
-            get => _position;
-            set
-            {
-                if (_position != value)
-                {
-                    _position = value;
-                    UpdateVertices();
-                }
-            }
-        }
-        
-        internal new Vector3 Size
-        {
-            get => _size;
-            set
-            {
-                if (_size != value)
-                {
-                    _size = value;
-                    UpdateVertices();
-                }
-            }
-        }
-        
-        internal new Vector2 Uv
-        {
-            get => _uv;
-            set
-            {
-                if (_uv != value)
-                {
-                    _uv = value;
-                    UpdateVertices();
-                }
-            }
-        }
-        
-        internal new float Inflate
-        {
-            get => _inflate;
-            set
-            {
-                if (_inflate != value)
-                {
-                    _inflate = value;
-                    UpdateVertices();
-                }
-            }
-        }
-        
-        internal new bool MirrorTexture
-        {
-            get => _mirrorTexture;
-            set
-            {
-                if (_mirrorTexture != value)
-                {
-                    _mirrorTexture = value;
-                    UpdateVertices();
-                }
-            }
-        }
-        
-        internal new bool FlipZMapping
-        {
-            get => _flipZMapping;
-            set
-            {
-                if (_flipZMapping != value)
-                {
-                    _flipZMapping = value;
-                    UpdateVertices();
-                }
-            }
-        }
 
         private static int[] indicesData = [
                     // Face 1 (Back)
@@ -139,27 +61,12 @@ namespace PckStudio.Rendering
         /// <param name="mirrorTexture"></param>
         /// <param name="flipZMapping">Flips the bottom face mapping of the uv mapping</param>
         public CubeMesh(bool enabled, Vector3 position, Vector3 size, Vector2 uv, float inflate, bool mirrorTexture, bool flipZMapping)
-            : base()
+            : base(position, size, uv, inflate, mirrorTexture, flipZMapping)
         {
             ShouldRender = enabled;
-            Position = position;
-            Size = size;
-            Uv = uv;
-            Inflate = inflate;
-            MirrorTexture = mirrorTexture;
-            FlipZMapping = flipZMapping;
-            UpdateVertices();
+            Update();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="position"></param>
-        /// <param name="size"></param>
-        /// <param name="uv"></param>
-        /// <param name="inflate"></param>
-        /// <param name="mirrorTexture"></param>
-        /// <param name="flipZMapping">Flips the bottom face mapping of the uv mapping</param>
         public CubeMesh(Vector3 position, Vector3 size, Vector2 uv, float inflate, bool mirrorTexture, bool flipZMapping)
             : this(true, position, size, uv, inflate, mirrorTexture, flipZMapping)
         {
@@ -240,7 +147,7 @@ namespace PckStudio.Rendering
             return vertices.ToArray();
         }
 
-        private void UpdateVertices()
+        internal void Update()
         {
             vertices = GetCubeVertexData();
         }
