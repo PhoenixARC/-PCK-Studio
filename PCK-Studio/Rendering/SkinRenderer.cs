@@ -15,7 +15,6 @@
  *    misrepresented as being the original software.
  * 3. This notice may not be removed or altered from any source distribution.
 **/
-//#define USE_FRAMEBUFFER
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -212,14 +211,6 @@ namespace PckStudio.Rendering
         private Texture2D capeTexture;
         private Texture2D armorTexture;
 
-#if USE_FRAMEBUFFER
-        private FrameBuffer framebuffer;
-        private Texture2D framebufferTexture;
-        private ShaderProgram framebufferShader;
-        private VertexArray framebufferVAO;
-        private int framebufferRenderBuffer;
-#endif
-
         private DrawContext _cubicalDrawContext;
         private DrawContext _skeletonDrawContext;
         private DrawContext _groundDrawContext;
@@ -265,15 +256,6 @@ namespace PckStudio.Rendering
             new Vector3(-1.0f,  1.0f, -1.0f)
         };
 
-        private static Vector4[] rectVertices = new Vector4[]
-        {
-            new Vector4( 1.0f, -1.0f, 1.0f, 0.0f),
-            new Vector4(-1.0f, -1.0f, 0.0f, 0.0f),
-            new Vector4(-1.0f,  1.0f, 0.0f, 1.0f),
-            new Vector4( 1.0f,  1.0f, 1.0f, 1.0f),
-            new Vector4( 1.0f, -1.0f, 1.0f, 0.0f),
-            new Vector4(-1.0f,  1.0f, 0.0f, 1.0f),
-        };
         private bool initialized = false;
 
         public SkinRenderer() : base()
@@ -314,7 +296,6 @@ namespace PckStudio.Rendering
             autoInflateOverlayParts = inflateOverlayParts;
             MakeCurrent();
             InitializeShaders();
-            InitializeFramebuffer();
             Renderer.SetClearColor(BackColor);
             VertexBufferLayout layout = CubeGroupMesh.GetLayout();
             foreach (KeyValuePair<string, CubeGroupMesh> item in meshStorage)
@@ -537,17 +518,6 @@ namespace PckStudio.Rendering
                 GLErrorCheck();
             }
 
-#if USE_FRAMEBUFFER
-            // Framebuffer shader
-            {
-                framebufferShader = ShaderProgram.Create(Resources.framebufferVertexShader, Resources.framebufferFragmentShader);
-                framebufferShader.Bind();
-                framebufferShader.SetUniform1("screenTexture", 0);
-                framebufferShader.Validate();
-            
-                GLErrorCheck();
-            }
-#endif
             // Plain color shader
             {
                 var lineShader = ShaderProgram.Create(Resources.plainColorVertexShader, Resources.plainColorFragmentShader);
@@ -671,45 +641,6 @@ namespace PckStudio.Rendering
             GLErrorCheck();
         }
 
-        [Conditional("USE_FRAMEBUFFER")]
-        private void InitializeFramebuffer()
-        {
-#if USE_FRAMEBUFFER
-            framebuffer = new FrameBuffer();
-            framebuffer.Bind();
-            framebufferTexture = new Texture2D(0);
-            framebufferTexture.PixelFormat = OpenTK.Graphics.OpenGL.PixelFormat.Rgb;
-            framebufferTexture.InternalPixelFormat = PixelInternalFormat.Rgb;
-            framebufferTexture.SetSize(Size);
-            framebufferTexture.WrapS = TextureWrapMode.ClampToEdge;
-            framebufferTexture.WrapT = TextureWrapMode.ClampToEdge;
-            framebufferTexture.MinFilter = TextureMinFilter.Nearest;
-            framebufferTexture.MagFilter = TextureMagFilter.Nearest;
-
-            framebufferTexture.AttachToFramebuffer(framebuffer, FramebufferAttachment.ColorAttachment0);
-
-            framebufferRenderBuffer = GL.GenRenderbuffer();
-            GL.BindRenderbuffer(RenderbufferTarget.Renderbuffer, framebufferRenderBuffer);
-            GL.RenderbufferStorage(RenderbufferTarget.Renderbuffer, RenderbufferStorage.Depth24Stencil8, Size.Width, Size.Height);
-            GL.FramebufferRenderbuffer(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthStencilAttachment, RenderbufferTarget.Renderbuffer, framebufferRenderBuffer);
-
-            framebufferVAO = new VertexArray();
-            VertexBuffer vertexBuffer = new VertexBuffer();
-            vertexBuffer.SetData(rectVertices);
-            VertexBufferLayout layout = new VertexBufferLayout();
-            layout.Add(ShaderDataType.Float4);
-            framebufferVAO.AddBuffer(vertexBuffer, layout);
-            framebuffer.CheckStatus();
-
-            if (framebuffer.Status != FramebufferErrorCode.FramebufferComplete)
-            {
-                Debug.Fail($"Framebuffer status: '{framebuffer.Status}'");
-            }
-
-            framebuffer.Unbind();
-#endif
-        }
-
         private void UpdateMesh(string name)
         {
             if (!meshStorage.ContainsKey(name))
@@ -826,13 +757,6 @@ namespace PckStudio.Rendering
             cubeMesh.AddSkinBox(skinBox, autoInflateOverlayParts && skinBox.IsOverlayPart() ? skinBox.Type == "HEADWEAR" ? OverlayScale * 2 : OverlayScale : 0f);
         }
 
-        [Conditional("DEBUG")]
-        private void GLErrorCheck()
-        {
-            ErrorCode error = GL.GetError();
-            Debug.Assert(error == ErrorCode.NoError, error.ToString());
-        }
-
         private void OnANIMUpdate()
         {
             head.SetEnabled(0, !ANIM.GetFlag(SkinAnimFlag.HEAD_DISABLED));
@@ -940,40 +864,6 @@ namespace PckStudio.Rendering
             }
         }
 
-#if USE_FRAMEBUFFER
-        [Conditional("USE_FRAMEBUFFER")]
-        private void SetFramebufferSize(Size size)
-        {
-            MakeCurrent();
-            if (framebuffer is not null)
-            {
-                framebuffer.Bind();
-
-                framebufferTexture.Bind();
-                framebufferTexture.SetSize(size);
-
-                GL.BindRenderbuffer(RenderbufferTarget.Renderbuffer, framebufferRenderBuffer);
-                GL.RenderbufferStorage(RenderbufferTarget.Renderbuffer, RenderbufferStorage.Depth24Stencil8, size.Width, size.Height);
-                GL.FramebufferRenderbuffer(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthStencilAttachment, RenderbufferTarget.Renderbuffer, framebufferRenderBuffer);
-
-                FramebufferErrorCode status = GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer);
-                if (status != FramebufferErrorCode.FramebufferComplete)
-                {
-                    Debug.Fail($"Framebuffer status: '{framebuffer.Status}'");
-                }
-                framebuffer.Unbind();
-            }
-        }
-
-        protected override void OnResize(EventArgs e)
-        {
-            base.OnResize(e);
-            if (!IsHandleCreated || DesignMode)
-                return;
-            SetFramebufferSize(Size);
-        }
-#endif
-
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
@@ -984,9 +874,8 @@ namespace PckStudio.Rendering
 
             MakeCurrent();
 
-#if USE_FRAMEBUFFER
-            framebuffer.Bind();
-#endif
+            FramebufferBegin();
+
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             
             GL.Enable(EnableCap.DepthTest); // Enable correct Z Drawings
@@ -1214,18 +1103,7 @@ namespace PckStudio.Rendering
 
             // Debug
             RenderDebug();
-
-#if USE_FRAMEBUFFER
-            framebuffer.Unbind();
-            GL.Disable(EnableCap.DepthTest);
-            framebufferShader.Bind();
-            framebufferVAO.Bind();
-            framebufferTexture.Bind();
-
-            GL.DrawArrays(PrimitiveType.Triangles, 0, 6);
-
-            framebufferTexture.Unbind();
-#endif
+            FramebufferEnd();
             SwapBuffers();
 
         }

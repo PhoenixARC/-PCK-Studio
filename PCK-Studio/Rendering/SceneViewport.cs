@@ -24,7 +24,7 @@ SOFTWARE.
 https://github.com/KareemMAX/Minecraft-Skiner
 https://github.com/KareemMAX/Minecraft-Skiner/blob/master/src/Minecraft%20skiner/UserControls/Renderer3D.vb
  */
-
+#define USE_FRAMEBUFFER
 using System;
 using System.Diagnostics;
 using System.Drawing;
@@ -34,6 +34,7 @@ using OpenTK.Graphics.OpenGL;
 using PckStudio.Properties;
 using PckStudio.Rendering.Camera;
 using PckStudio.Rendering.Shader;
+using PckStudio.Rendering.Texture;
 
 namespace PckStudio.Rendering
 {
@@ -77,6 +78,26 @@ namespace PckStudio.Rendering
         private ShaderProgram colorShader;
         private DrawContext boundingBoxDrawContext;
 
+
+#if USE_FRAMEBUFFER
+        private FrameBuffer framebuffer;
+        private Texture2D framebufferTexture;
+        private ShaderProgram framebufferShader;
+        private VertexArray framebufferVAO;
+        private int framebufferRenderBuffer;
+        private bool _started = false;
+
+        private static Vector4[] rectVertices = new Vector4[]
+        {
+            new Vector4( 1.0f, -1.0f, 1.0f, 0.0f),
+            new Vector4(-1.0f, -1.0f, 0.0f, 0.0f),
+            new Vector4(-1.0f,  1.0f, 0.0f, 1.0f),
+            new Vector4( 1.0f,  1.0f, 1.0f, 1.0f),
+            new Vector4( 1.0f, -1.0f, 1.0f, 0.0f),
+            new Vector4(-1.0f,  1.0f, 0.0f, 1.0f),
+        };
+#endif
+
         protected void Init()
         {
             if (isInitialized)
@@ -93,6 +114,21 @@ namespace PckStudio.Rendering
             vao.AddNewBuffer(layout);
             var ibo = IndexBuffer.Create(BoundingBox.GetIndecies());
             boundingBoxDrawContext = new DrawContext(vao, ibo, PrimitiveType.Lines);
+
+            InitializeFramebuffer();
+
+#if USE_FRAMEBUFFER
+            // Framebuffer shader
+            {
+                framebufferShader = ShaderProgram.Create(Resources.framebufferVertexShader, Resources.framebufferFragmentShader);
+                framebufferShader.Bind();
+                framebufferShader.SetUniform1("screenTexture", 0);
+                framebufferShader.Validate();
+            
+                GLErrorCheck();
+            }
+#endif
+
             isInitialized = true;
         }
 
@@ -149,6 +185,117 @@ namespace PckStudio.Rendering
             GL.DepthFunc(DepthFunction.Less);
             Renderer.SetLineWidth(1f);
         }
+
+
+        [Conditional("DEBUG")]
+        protected void GLErrorCheck()
+        {
+            ErrorCode error = GL.GetError();
+            Debug.Assert(error == ErrorCode.NoError, error.ToString());
+        }
+
+        [Conditional("USE_FRAMEBUFFER")]
+        private void InitializeFramebuffer()
+        {
+#if USE_FRAMEBUFFER
+            framebuffer = new FrameBuffer();
+            framebuffer.Bind();
+            framebufferTexture = new Texture2D(0);
+            framebufferTexture.PixelFormat = OpenTK.Graphics.OpenGL.PixelFormat.Rgb;
+            framebufferTexture.InternalPixelFormat = PixelInternalFormat.Rgb;
+            framebufferTexture.SetSize(Size);
+            framebufferTexture.WrapS = TextureWrapMode.ClampToEdge;
+            framebufferTexture.WrapT = TextureWrapMode.ClampToEdge;
+            framebufferTexture.MinFilter = TextureMinFilter.Nearest;
+            framebufferTexture.MagFilter = TextureMagFilter.Nearest;
+
+            framebufferTexture.AttachToFramebuffer(framebuffer, FramebufferAttachment.ColorAttachment0);
+
+            framebufferRenderBuffer = GL.GenRenderbuffer();
+            GL.BindRenderbuffer(RenderbufferTarget.Renderbuffer, framebufferRenderBuffer);
+            GL.RenderbufferStorage(RenderbufferTarget.Renderbuffer, RenderbufferStorage.Depth24Stencil8, Size.Width, Size.Height);
+            GL.FramebufferRenderbuffer(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthStencilAttachment, RenderbufferTarget.Renderbuffer, framebufferRenderBuffer);
+
+            framebufferVAO = new VertexArray();
+            VertexBuffer vertexBuffer = new VertexBuffer();
+            vertexBuffer.SetData(rectVertices);
+            VertexBufferLayout layout = new VertexBufferLayout();
+            layout.Add(ShaderDataType.Float4);
+            framebufferVAO.AddBuffer(vertexBuffer, layout);
+            framebuffer.CheckStatus();
+
+            if (framebuffer.Status != FramebufferErrorCode.FramebufferComplete)
+            {
+                Debug.Fail($"Framebuffer status: '{framebuffer.Status}'");
+            }
+
+            framebuffer.Unbind();
+#endif
+        }
+
+        [Conditional("USE_FRAMEBUFFER")]
+        protected void FramebufferBegin()
+        {
+#if USE_FRAMEBUFFER
+            if (_started)
+                Debug.Fail("FramebufferBegin: already begun.");
+            _started = true;
+            framebuffer.Bind();
+#endif
+        }
+
+        [Conditional("USE_FRAMEBUFFER")]
+        protected void FramebufferEnd()
+        {
+#if USE_FRAMEBUFFER
+            if (!_started)
+                Debug.Fail("FramebufferEnd: framebuffer didn't start yet.");
+            framebuffer.Unbind();
+            GL.Disable(EnableCap.DepthTest);
+            framebufferShader.Bind();
+            framebufferVAO.Bind();
+            framebufferTexture.Bind();
+
+            GL.DrawArrays(PrimitiveType.Triangles, 0, 6);
+
+            framebufferTexture.Unbind();
+            _started = false;
+#endif
+        }
+
+#if USE_FRAMEBUFFER
+        [Conditional("USE_FRAMEBUFFER")]
+        private void SetFramebufferSize(Size size)
+        {
+            MakeCurrent();
+            if (framebuffer is not null)
+            {
+                framebuffer.Bind();
+
+                framebufferTexture.Bind();
+                framebufferTexture.SetSize(size);
+
+                GL.BindRenderbuffer(RenderbufferTarget.Renderbuffer, framebufferRenderBuffer);
+                GL.RenderbufferStorage(RenderbufferTarget.Renderbuffer, RenderbufferStorage.Depth24Stencil8, size.Width, size.Height);
+                GL.FramebufferRenderbuffer(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthStencilAttachment, RenderbufferTarget.Renderbuffer, framebufferRenderBuffer);
+
+                FramebufferErrorCode status = GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer);
+                if (status != FramebufferErrorCode.FramebufferComplete)
+                {
+                    Debug.Fail($"Framebuffer status: '{framebuffer.Status}'");
+                }
+                framebuffer.Unbind();
+            }
+        }
+
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+            if (!IsHandleCreated || DesignMode)
+                return;
+            SetFramebufferSize(Size);
+        }
+#endif
 
         private void TimerTick(object sender, EventArgs e)
         {
