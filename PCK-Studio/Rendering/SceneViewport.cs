@@ -55,17 +55,7 @@ namespace PckStudio.Rendering
 
         protected PerspectiveCamera Camera { get; }
 
-        protected class TimestepEventArgs : EventArgs
-        {
-            public readonly float Delta;
-
-            public TimestepEventArgs(double seconds)
-            {
-                Delta = (float)seconds;
-            }
-        }
-
-        protected virtual void OnUpdate(object sender, TimestepEventArgs e)
+        protected virtual void OnUpdate(object sender, TimeSpan timestep)
         {
 
         }
@@ -78,6 +68,7 @@ namespace PckStudio.Rendering
         private ShaderProgram colorShader;
         private DrawContext boundingBoxDrawContext;
 
+        private long _lastTick = 0L;
 
 #if USE_FRAMEBUFFER
         private FrameBuffer framebuffer;
@@ -299,11 +290,10 @@ namespace PckStudio.Rendering
 
         private void TimerTick(object sender, EventArgs e)
         {
-            stopwatch.Stop();
-            double deltaTime = stopwatch.Elapsed.TotalMilliseconds;
-            OnUpdate(sender, new TimestepEventArgs(deltaTime));
-            stopwatch.Restart();
+            long tick = DateTime.UtcNow.Ticks - _lastTick;
             Refresh();
+            _lastTick = DateTime.UtcNow.Ticks;
+            OnUpdate(sender, TimeSpan.FromTicks(tick));
         }
 
         protected override void OnSizeChanged(EventArgs e)

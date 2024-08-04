@@ -1182,14 +1182,19 @@ namespace PckStudio.Rendering
             cubeMesh.Draw(shader);
         }
 
-        protected override void OnUpdate(object sender, TimestepEventArgs e)
+        protected override void OnUpdate(object sender, TimeSpan timestep)
         {
-            base.OnUpdate(sender, e);
+            double delta = timestep.TotalMilliseconds;
+            base.OnUpdate(sender, timestep);
             if (!Animate)
                 return;
-            animationCurrentRotationAngle += animationRotationSpeed;
-            if (animationCurrentRotationAngle >= animationMaxAngleInDegrees || animationCurrentRotationAngle <= -animationMaxAngleInDegrees)
-                animationRotationSpeed = -animationRotationSpeed;
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine(delta.ToString());
+            sb.AppendLine(animationCurrentRotationAngle.ToString());
+            d_debugLabel.Text = sb.ToString();
+            animationCurrentRotationAngle = (float)Math.Sin(delta * 100) * animationRotationSpeed;
+            //if (animationCurrentRotationAngle >= animationMaxAngleInDegrees || animationCurrentRotationAngle <= -animationMaxAngleInDegrees)
+            //    animationRotationSpeed = -animationRotationSpeed;
         }
 
         private void ReInitialzeSkinData()
