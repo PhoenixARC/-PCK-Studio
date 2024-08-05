@@ -18,33 +18,20 @@ namespace PckStudio.Extensions
             var types = new byte[9];
             var points = new PointF[9];
 
-            types[0] = (byte)PathPointType.Start;
-            types[1] = (byte)PathPointType.Line;
-            types[2] = (byte)PathPointType.Line;
-            types[3] = (byte)PathPointType.Line;
-            types[4] = (byte)PathPointType.Line;
-            types[5] = (byte)PathPointType.Line;
-            types[6] = (byte)PathPointType.Line;
-            types[7] = (byte)PathPointType.Line;
-            types[8] = (byte)PathPointType.Line;
+            var path = new GraphicsPath(FillMode.Winding);
 
-            points[0] = new PointF(skinBOX.UV.X, skinBOX.UV.Y + skinBOX.Size.Z);
-            points[1] = new PointF(skinBOX.UV.X + skinBOX.Size.Z, skinBOX.UV.Y + skinBOX.Size.Z);
-            points[2] = new PointF(skinBOX.UV.X + skinBOX.Size.Z, skinBOX.UV.Y);
-            points[3] = new PointF(skinBOX.UV.X + skinBOX.Size.Z + skinBOX.Size.X * 2, skinBOX.UV.Y);
-            points[4] = new PointF(skinBOX.UV.X + skinBOX.Size.Z + skinBOX.Size.X * 2, skinBOX.UV.Y + skinBOX.Size.Z);
-            points[5] = new PointF(skinBOX.UV.X + skinBOX.Size.Z * 2 + skinBOX.Size.X * 2, skinBOX.UV.Y + skinBOX.Size.Z);
-            points[6] = new PointF(skinBOX.UV.X + skinBOX.Size.Z * 2 + skinBOX.Size.X * 2, skinBOX.UV.Y + skinBOX.Size.Z + skinBOX.Size.Y);
-            points[7] = new PointF(skinBOX.UV.X, skinBOX.UV.Y + skinBOX.Size.Z + skinBOX.Size.Y);
-            points[8] = points[0];
+            Vector2 uv = skinBOX.UV;
+            Vector3 size = skinBOX.Size;
 
-            for (int i = 0; i < points.Length; i++)
-            {
-                points[i] = new PointF(points[i].X * tillingFactor.X, points[i].Y * tillingFactor.Y);
-            }
+            path.AddRectangle(new RectangleF(new PointF((uv.X                      ) * tillingFactor.X, (uv.Y + size.Z) * tillingFactor.Y), new SizeF(size.Z * tillingFactor.X, size.Y * tillingFactor.Y)));
+            path.AddRectangle(new RectangleF(new PointF((uv.X + size.Z             ) * tillingFactor.X, (uv.Y + size.Z) * tillingFactor.Y), new SizeF(size.X * tillingFactor.X, size.Y * tillingFactor.Y)));
+            path.AddRectangle(new RectangleF(new PointF((uv.X + size.Z + size.X    ) * tillingFactor.X, (uv.Y + size.Z) * tillingFactor.Y), new SizeF(size.Z * tillingFactor.X, size.Y * tillingFactor.Y)));
+            path.AddRectangle(new RectangleF(new PointF((uv.X + size.Z * 2 + size.X) * tillingFactor.X, (uv.Y + size.Z) * tillingFactor.Y), new SizeF(size.X * tillingFactor.X, size.Y * tillingFactor.Y)));
+            
+            path.AddRectangle(new RectangleF(new PointF((uv.X + size.Z             ) * tillingFactor.X, (uv.Y         ) * tillingFactor.Y), new SizeF(size.X * tillingFactor.X, size.Z * tillingFactor.Y)));
+            path.AddRectangle(new RectangleF(new PointF((uv.X + size.Z + size.X    ) * tillingFactor.X, (uv.Y         ) * tillingFactor.Y), new SizeF(size.X * tillingFactor.X, size.Z * tillingFactor.Y)));
 
-            return new GraphicsPath(points, types);
-
+            return path;
         }
 
         public static GraphicsPath GetUVGraphicsPath(this SkinBOX skinBox)
