@@ -64,6 +64,7 @@ namespace PckStudio.Forms.Editor
             if (_skin.HasCape)
                 renderer3D1.CapeTexture = _skin.CapeTexture;
             LoadModelData();
+            LoadRenderSettings();
         }
 
         private void LoadModelData()
@@ -456,18 +457,18 @@ namespace PckStudio.Forms.Editor
 
         RenderSettings renderSettings = new RenderSettings();
 
-        private void renderSettingsButton_Click(object sender, EventArgs e)
-        {
-            using AppSettingsForm settingsForm = new AppSettingsForm("Render Settings", renderSettings);
-            settingsForm.ShowDialog();
-            LoadRenderSettings(renderSettings);
-        }
-
-        private void LoadRenderSettings(RenderSettings renderSettings)
+        private void LoadRenderSettings()
         {
             renderer3D1.Animate = renderSettings.ShouldAnimate;
             renderer3D1.LockMousePosition = renderSettings.LockMouse;
             outlineColorButton.Visible = renderer3D1.ShowGuideLines = renderSettings.ShowGuidelines;
+        }
+
+        private void renderSettingsButton_Click(object sender, EventArgs e)
+        {
+            using AppSettingsForm settingsForm = new AppSettingsForm("Render Settings", renderSettings);
+            settingsForm.ShowDialog();
+            LoadRenderSettings();
         }
     }
 }
