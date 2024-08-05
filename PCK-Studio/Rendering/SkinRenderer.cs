@@ -241,7 +241,7 @@ namespace PckStudio.Rendering
         private bool showWireFrame = false;
         private bool autoInflateOverlayParts;
 
-        private float defaultArmRotation => 5f;
+        private const float defaultArmRotation = 5f;
 
         private Matrix4 RightArmMatrix => Matrix4.CreateFromAxisAngle(Vector3.UnitZ, MathHelper.DegreesToRadians(defaultArmRotation));
         private Matrix4 LeftArmMatrix => Matrix4.CreateFromAxisAngle(Vector3.UnitZ, MathHelper.DegreesToRadians(-defaultArmRotation));
@@ -302,9 +302,9 @@ namespace PckStudio.Rendering
             InitializeShaders();
             Renderer.SetClearColor(BackColor);
             VertexBufferLayout layout = CubeGroupMesh.GetLayout();
-            foreach (KeyValuePair<string, CubeGroupMesh> item in meshStorage)
+            foreach (CubeGroupMesh cubeMesh in meshStorage?.Values)
             {
-                item.Value.Initialize(layout);
+                cubeMesh.Initialize(layout);
             }
             UploadMeshData();
             foreach (CubeGroupMesh cubeMesh in offsetSpecificMeshStorage?.Values)
@@ -1195,11 +1195,6 @@ namespace PckStudio.Rendering
             if (!Animate)
                 return;
             
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine(delta.ToString());
-            sb.AppendLine(animationCurrentRotationAngle.ToString());
-            sb.AppendLine(animationRotationSpeed.ToString());
-            d_debugLabel.Text = sb.ToString();
             animationCurrentRotationAngle += (float)delta * animationRotationSpeed;
             animationCurrentRotationAngle = MathHelper.Clamp(animationCurrentRotationAngle, -animationMaxAngleInDegrees, animationMaxAngleInDegrees);
             if (animationCurrentRotationAngle >= animationMaxAngleInDegrees || animationCurrentRotationAngle <= -animationMaxAngleInDegrees)
@@ -1290,7 +1285,7 @@ namespace PckStudio.Rendering
                 GL.Enable(EnableCap.LineSmooth);
                 colorShader.Bind();
 
-                Matrix4 transform = Matrix4.CreateScale(1,-1,-1);
+                Matrix4 transform = Matrix4.CreateScale(1, -1, -1);
                 transform *= Matrix4.CreateTranslation(Vector3.Zero);
                 transform *= Matrix4.CreateScale(Camera.Distance / 4f).Inverted();
                 transform.Invert();
