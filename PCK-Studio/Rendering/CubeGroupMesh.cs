@@ -148,7 +148,7 @@ namespace PckStudio.Rendering
             if (!cubes.IndexInRange(index))
                 throw new IndexOutOfRangeException();
 
-            return Vector3.TransformPosition(cubes[index].Center + Offset, Transform);
+            return (Transform * Matrix4.CreateTranslation(cubes[index].Center)).ExtractTranslation();
         }
 
         internal BoundingBox GetCubeBoundingBox(int index)

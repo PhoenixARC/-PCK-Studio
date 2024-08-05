@@ -863,7 +863,9 @@ namespace PckStudio.Rendering
 
                 CubeGroupMesh cubeMesh = meshStorage[skinBox.Type];
                 Vector3 center = Cube.FromSkinBox(skinBox).Center;
-                Camera.FocalPoint = (cubeMesh.Transform * Matrix4.CreateTranslation(center)).Inverted().ExtractTranslation();
+                Matrix4 camMat = (Matrix4.CreateTranslation(cubeMesh.Translation) * Matrix4.CreateTranslation(center) * Matrix4.CreateScale(-1, 1, 1));
+                Vector3 camPos = camMat.ExtractTranslation();
+                Camera.FocalPoint = camPos;
                 Camera.Distance = skinBox.Size.Length() * 2;
             }
         }
