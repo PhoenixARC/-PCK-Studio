@@ -198,6 +198,10 @@ namespace PckStudio.Rendering
             }
         }
 
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public bool LockMousePosition { get; set; } = false;
+
         private Point PreviousMouseLocation;
         private Point CurrentMouseLocation;
 
@@ -1110,8 +1114,10 @@ namespace PckStudio.Rendering
         {
             base.OnMouseMove(e);
 
-            float deltaX = (Cursor.Position.X - CurrentMouseLocation.X) * MouseSensetivity;
-            float deltaY = (Cursor.Position.Y - CurrentMouseLocation.Y) * MouseSensetivity;
+            float mouseSensetivity = LockMousePosition ? MouseSensetivity : 64f * 3 * (1f/56f) * MouseSensetivity;
+
+            float deltaX = (Cursor.Position.X - CurrentMouseLocation.X) * mouseSensetivity;
+            float deltaY = (Cursor.Position.Y - CurrentMouseLocation.Y) * mouseSensetivity;
 
             switch (e.Button)
             {
@@ -1127,7 +1133,8 @@ namespace PckStudio.Rendering
                     Camera.Pan(deltaX, deltaY);
                     goto default;
                 default:
-                    Cursor.Position = new Point((int)Math.Round(Screen.PrimaryScreen.Bounds.Width / 2d), (int)Math.Round(Screen.PrimaryScreen.Bounds.Height / 2d));
+                    if (LockMousePosition)
+                        Cursor.Position = PointToScreen(new Point((int)Math.Round(Bounds.Width / 2d), (int)Math.Round(Bounds.Height / 2d)));
                     CurrentMouseLocation = Cursor.Position;
                     break;
             }
@@ -1146,10 +1153,11 @@ namespace PckStudio.Rendering
 
         private void ReleaseMouse()
         {
-            if (IsMouseHidden)
+            if (LockMousePosition)
             {
-                IsMouseHidden = false;
                 Cursor.Position = PreviousMouseLocation;
+            if (IsMouseHidden)
+                IsMouseHidden = false;
             }
         }
 
@@ -1158,8 +1166,8 @@ namespace PckStudio.Rendering
             base.OnMouseDown(e);
             if (e.Button == MouseButtons.Right || e.Button == MouseButtons.Left)
             {
-                IsMouseHidden = true;
                 CurrentMouseLocation = PreviousMouseLocation = Cursor.Position;
+                IsMouseHidden = LockMousePosition;
             }
         }
 
