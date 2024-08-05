@@ -231,7 +231,7 @@ namespace PckStudio.Rendering
         private CubeGroupMesh leftLeg;
 
         private float animationCurrentRotationAngle;
-        private float animationRotationSpeed = 0.5f;
+        private float animationRotationSpeed = 16f;
         private float animationMaxAngleInDegrees = 5f;
 
         private bool showWireFrame = false;
@@ -1182,17 +1182,20 @@ namespace PckStudio.Rendering
 
         protected override void OnUpdate(object sender, TimeSpan timestep)
         {
-            double delta = timestep.TotalMilliseconds;
             base.OnUpdate(sender, timestep);
+            double delta = timestep.TotalSeconds;
             if (!Animate)
                 return;
+            
             StringBuilder sb = new StringBuilder();
             sb.AppendLine(delta.ToString());
             sb.AppendLine(animationCurrentRotationAngle.ToString());
+            sb.AppendLine(animationRotationSpeed.ToString());
             d_debugLabel.Text = sb.ToString();
-            animationCurrentRotationAngle = (float)Math.Sin(delta * 100) * animationRotationSpeed;
-            //if (animationCurrentRotationAngle >= animationMaxAngleInDegrees || animationCurrentRotationAngle <= -animationMaxAngleInDegrees)
-            //    animationRotationSpeed = -animationRotationSpeed;
+            animationCurrentRotationAngle += (float)delta * animationRotationSpeed;
+            animationCurrentRotationAngle = MathHelper.Clamp(animationCurrentRotationAngle, -animationMaxAngleInDegrees, animationMaxAngleInDegrees);
+            if (animationCurrentRotationAngle >= animationMaxAngleInDegrees || animationCurrentRotationAngle <= -animationMaxAngleInDegrees)
+                animationRotationSpeed = -animationRotationSpeed;
         }
 
         private void ReInitialzeSkinData()
