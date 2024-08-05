@@ -1074,8 +1074,8 @@ namespace PckStudio.Rendering
                             }
                         }
 
-                        Matrix4 bbTransform = cubeMesh.Transform;
-                        bbTransform *= GetGroupTransform(box.Type);
+                        Matrix4 bbTransform = GetGroupTransform(box.Type);
+                        bbTransform *= cubeMesh.Transform;
                         bbTransform *= transform;
                         GL.BlendFunc(BlendingFactor.DstAlpha, BlendingFactor.OneMinusSrcAlpha);
                         DrawBoundingBox(bbTransform, cubeBoundingBox, HighlightlingColor);
