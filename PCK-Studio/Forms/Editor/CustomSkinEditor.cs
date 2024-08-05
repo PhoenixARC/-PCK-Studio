@@ -12,6 +12,8 @@ using PckStudio.Extensions;
 using PckStudio.Internal.Skin;
 using PckStudio.Forms.Additional_Popups;
 using PckStudio.Properties;
+using System.Configuration;
+using System.Collections.Generic;
 
 namespace PckStudio.Forms.Editor
 {
@@ -57,6 +59,7 @@ namespace PckStudio.Forms.Editor
             base.OnLoad(e);
             renderer3D1.Initialize(_inflateOverlayParts);
             renderer3D1.GuideLineColor = Color.LightCoral;
+            framerateSlider_ValueChanged(this, EventArgs.Empty);
             skinNameLabel.Text = _skin.MetaData.Name;
             if (_skin.HasCape)
                 renderer3D1.CapeTexture = _skin.CapeTexture;
@@ -314,11 +317,6 @@ namespace PckStudio.Forms.Editor
             }
         }
 
-        private void checkGuide_CheckedChanged(object sender, EventArgs e)
-        {
-            outlineColorButton.Visible = renderer3D1.ShowGuideLines = checkGuide.Checked;
-        }
-
         private void showArmorCheckbox_CheckedChanged(object sender, EventArgs e)
         {
             renderer3D1.ShowArmor = showArmorCheckbox.Checked;
@@ -398,10 +396,6 @@ namespace PckStudio.Forms.Editor
             uvPictureBox.Image = _skin.Model.Texture;
         }
 
-        private void skinAnimateCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            renderer3D1.Animate = skinAnimateCheckBox.Checked;
-        }
 
         private void centerSelectionCheckbox_CheckedChanged(object sender, EventArgs e)
         {
@@ -414,6 +408,66 @@ namespace PckStudio.Forms.Editor
             {
                 GenerateUVTextureMap(skinBox);
             }
+        }
+
+        private void framerateSlider_ValueChanged(object sender, EventArgs e)
+        {
+            renderer3D1.RefreshRate = framerateSlider.Value * 30 + 30;
+            framerateLabel.Text = "FPS: " + renderer3D1.RefreshRate.ToString();
+        }
+
+        class RenderSettings : ApplicationSettingsBase
+        {
+            internal bool ShouldAnimate
+            {
+                get => (bool)this["shouldAnimate"];
+            }
+
+            internal bool LockMouse
+            {
+                get => (bool)this["lockMouse"];
+            }
+
+            internal bool ShowGuidelines
+            {
+                get => (bool)this["showGuidelines"];
+            }
+
+            public RenderSettings()
+            {
+                AddSetting("shouldAnimate",  "Animate skin", true);
+                AddSetting("lockMouse",      "Lock mouse when paning or rotating", true);
+                AddSetting("showGuidelines", "Show guidelines", false);
+            }
+
+            void AddSetting<T>(string name, string displayName, T value)
+            {
+                if (!Context.ContainsKey(AppSettingsForm.keyToStringContextKey))
+                {
+                    Context.Add(AppSettingsForm.keyToStringContextKey, new Dictionary<string, string>());
+                }
+                var settingsProperty = new SettingsProperty(name, typeof(T), null, false, default(T), SettingsSerializeAs.String, null, false, false);
+                Properties.Add(settingsProperty);
+                PropertyValues.Add(new SettingsPropertyValue(settingsProperty) { PropertyValue = value});
+                if (Context[AppSettingsForm.keyToStringContextKey] is Dictionary<string, string> dict)
+                    dict.Add(name, displayName);
+            }
+        }
+
+        RenderSettings renderSettings = new RenderSettings();
+
+        private void renderSettingsButton_Click(object sender, EventArgs e)
+        {
+            using AppSettingsForm settingsForm = new AppSettingsForm("Render Settings", renderSettings);
+            settingsForm.ShowDialog();
+            LoadRenderSettings(renderSettings);
+        }
+
+        private void LoadRenderSettings(RenderSettings renderSettings)
+        {
+            renderer3D1.Animate = renderSettings.ShouldAnimate;
+            renderer3D1.LockMousePosition = renderSettings.LockMouse;
+            outlineColorButton.Visible = renderer3D1.ShowGuideLines = renderSettings.ShowGuidelines;
         }
     }
 }

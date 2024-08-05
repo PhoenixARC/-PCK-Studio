@@ -47,7 +47,6 @@
             this.exportSkinButton = new MetroFramework.Controls.MetroButton();
             this.outlineColorButton = new MetroFramework.Controls.MetroButton();
             this.generateTextureCheckBox = new MetroFramework.Controls.MetroCheckBox();
-            this.checkGuide = new MetroFramework.Controls.MetroCheckBox();
             this.showArmorCheckbox = new MetroFramework.Controls.MetroCheckBox();
             this.skinPartListBox = new System.Windows.Forms.ListBox();
             this.captureScreenshotButton = new MetroFramework.Controls.MetroButton();
@@ -62,9 +61,11 @@
             this.removeOffsetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.renderer3D1 = new PckStudio.Rendering.SkinRenderer();
             this.uvPictureBox = new PckStudio.ToolboxItems.InterpolationPictureBox();
-            this.skinAnimateCheckBox = new MetroFramework.Controls.MetroCheckBox();
             this.centerSelectionCheckbox = new MetroFramework.Controls.MetroCheckBox();
             this.textureSizeLabel = new System.Windows.Forms.Label();
+            this.framerateSlider = new System.Windows.Forms.TrackBar();
+            this.framerateLabel = new MetroFramework.Controls.MetroLabel();
+            this.renderSettingsButton = new MetroFramework.Controls.MetroButton();
             labelTextureMapping = new System.Windows.Forms.Label();
             groupBox1 = new System.Windows.Forms.GroupBox();
             groupBox1.SuspendLayout();
@@ -74,6 +75,7 @@
             this.skinOffsetsTabPage.SuspendLayout();
             this.offsetTabContextMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uvPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.framerateSlider)).BeginInit();
             this.SuspendLayout();
             // 
             // labelTextureMapping
@@ -206,14 +208,6 @@
             this.generateTextureCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.generateTextureCheckBox.UseSelectable = true;
             // 
-            // checkGuide
-            // 
-            resources.ApplyResources(this.checkGuide, "checkGuide");
-            this.checkGuide.Name = "checkGuide";
-            this.checkGuide.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.checkGuide.UseSelectable = true;
-            this.checkGuide.CheckedChanged += new System.EventHandler(this.checkGuide_CheckedChanged);
-            // 
             // showArmorCheckbox
             // 
             resources.ApplyResources(this.showArmorCheckbox, "showArmorCheckbox");
@@ -320,7 +314,7 @@
             this.renderer3D1.HighlightlingColor = System.Drawing.Color.Aqua;
             this.renderer3D1.MouseSensetivity = 0.01F;
             this.renderer3D1.Name = "renderer3D1";
-            this.renderer3D1.RefreshRate = 50;
+            this.renderer3D1.RefreshRate = 120;
             this.renderer3D1.SelectedIndex = -1;
             this.renderer3D1.ShowArmor = false;
             this.renderer3D1.ShowGuideLines = false;
@@ -336,16 +330,6 @@
             this.uvPictureBox.Name = "uvPictureBox";
             this.uvPictureBox.TabStop = false;
             // 
-            // skinAnimateCheckBox
-            // 
-            resources.ApplyResources(this.skinAnimateCheckBox, "skinAnimateCheckBox");
-            this.skinAnimateCheckBox.Checked = true;
-            this.skinAnimateCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.skinAnimateCheckBox.Name = "skinAnimateCheckBox";
-            this.skinAnimateCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.skinAnimateCheckBox.UseSelectable = true;
-            this.skinAnimateCheckBox.CheckedChanged += new System.EventHandler(this.skinAnimateCheckBox_CheckedChanged);
-            // 
             // centerSelectionCheckbox
             // 
             resources.ApplyResources(this.centerSelectionCheckbox, "centerSelectionCheckbox");
@@ -360,13 +344,40 @@
             this.textureSizeLabel.ForeColor = System.Drawing.Color.White;
             this.textureSizeLabel.Name = "textureSizeLabel";
             // 
+            // framerateSlider
+            // 
+            this.framerateSlider.AccessibleRole = System.Windows.Forms.AccessibleRole.Slider;
+            resources.ApplyResources(this.framerateSlider, "framerateSlider");
+            this.framerateSlider.LargeChange = 1;
+            this.framerateSlider.Maximum = 3;
+            this.framerateSlider.Name = "framerateSlider";
+            this.framerateSlider.Tag = "";
+            this.framerateSlider.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
+            this.framerateSlider.ValueChanged += new System.EventHandler(this.framerateSlider_ValueChanged);
+            // 
+            // framerateLabel
+            // 
+            resources.ApplyResources(this.framerateLabel, "framerateLabel");
+            this.framerateLabel.Name = "framerateLabel";
+            this.framerateLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
+            // 
+            // renderSettingsButton
+            // 
+            resources.ApplyResources(this.renderSettingsButton, "renderSettingsButton");
+            this.renderSettingsButton.Name = "renderSettingsButton";
+            this.renderSettingsButton.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.renderSettingsButton.UseSelectable = true;
+            this.renderSettingsButton.Click += new System.EventHandler(this.renderSettingsButton_Click);
+            // 
             // CustomSkinEditor
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.renderSettingsButton);
+            this.Controls.Add(this.framerateLabel);
+            this.Controls.Add(this.framerateSlider);
             this.Controls.Add(this.textureSizeLabel);
             this.Controls.Add(groupBox1);
-            this.Controls.Add(this.skinAnimateCheckBox);
             this.Controls.Add(this.metroTabControl1);
             this.Controls.Add(this.skinNameLabel);
             this.Controls.Add(this.showToolsCheckBox);
@@ -374,7 +385,6 @@
             this.Controls.Add(this.centerSelectionCheckbox);
             this.Controls.Add(this.renderer3D1);
             this.Controls.Add(this.showArmorCheckbox);
-            this.Controls.Add(this.checkGuide);
             this.Controls.Add(this.generateTextureCheckBox);
             this.Controls.Add(this.outlineColorButton);
             this.Controls.Add(this.exportSkinButton);
@@ -396,6 +406,7 @@
             this.skinOffsetsTabPage.ResumeLayout(false);
             this.offsetTabContextMenu.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.uvPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.framerateSlider)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -415,7 +426,6 @@
         private MetroFramework.Controls.MetroButton importTextureButton;
         private MetroFramework.Controls.MetroButton exportTextureButton;
         private MetroFramework.Controls.MetroCheckBox generateTextureCheckBox;
-        private MetroFramework.Controls.MetroCheckBox checkGuide;
         private MetroFramework.Controls.MetroCheckBox showArmorCheckbox;
         private Rendering.SkinRenderer renderer3D1;
         private System.Windows.Forms.ListBox skinPartListBox;
@@ -429,11 +439,13 @@
         private MetroFramework.Controls.MetroContextMenu offsetTabContextMenu;
         private System.Windows.Forms.ToolStripMenuItem addOffsetToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem removeOffsetToolStripMenuItem;
-        private MetroFramework.Controls.MetroCheckBox skinAnimateCheckBox;
         private MetroFramework.Controls.MetroCheckBox centerSelectionCheckbox;
         private System.Windows.Forms.Label positionLabel;
         private System.Windows.Forms.Label sizeLabel;
         private System.Windows.Forms.Label uvLabel;
         private System.Windows.Forms.Label textureSizeLabel;
+        private System.Windows.Forms.TrackBar framerateSlider;
+        private MetroFramework.Controls.MetroLabel framerateLabel;
+        private MetroFramework.Controls.MetroButton renderSettingsButton;
     }
 }
