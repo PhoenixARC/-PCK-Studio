@@ -68,10 +68,10 @@ namespace PckStudio.Forms.Editor
 
         private void LoadModelData()
         {
-            var modelInfo = _skin.Model;
+            SkinModelInfo modelInfo = _skin.Model;
 
-            var boxProperties = modelInfo.AdditionalBoxes;
-            var offsetProperties = modelInfo.PartOffsets;
+            List<SkinBOX> boxProperties = modelInfo.AdditionalBoxes;
+            List<SkinPartOffset> offsetProperties = modelInfo.PartOffsets;
             
             renderer3D1.ANIM = modelInfo.ANIM;
 
@@ -128,7 +128,7 @@ namespace PckStudio.Forms.Editor
             var boxEditor = new BoxEditor(SkinBOX.Empty, _allowInflate);
             if (boxEditor.ShowDialog() == DialogResult.OK)
             {
-                var newBox = boxEditor.Result;
+                SkinBOX newBox = boxEditor.Result;
                 renderer3D1.ModelData.Add(newBox);
                 _skin.Model.AdditionalBoxes.Add(newBox);
                 skinPartListBindingSource.ResetBindings(false);
@@ -241,16 +241,16 @@ namespace PckStudio.Forms.Editor
 
         private void renderer3D1_TextureChanging(object sender, Rendering.TextureChangingEventArgs e)
         {
-            var img = e.NewTexture;
+            Image texture = e.NewTexture;
             // Skins can only be a 1:1 ratio (base 64x64) or a 2:1 ratio (base 64x32)
-            if (Settings.Default.ValidateImageDimension && img.Width != img.Height && img.Height != img.Width / 2)
+            if (Settings.Default.ValidateImageDimension && texture.Width != texture.Height && texture.Height != texture.Width / 2)
             {
                 e.Cancel = true;
                 MessageBox.Show("The selected image does not suit a skin texture.", "Invalid image dimensions.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            uvPictureBox.Image = _skin.Model.Texture = img;
-            textureSizeLabel.Text = $"{img.Width}x{img.Height}";
+            uvPictureBox.Image = _skin.Model.Texture = texture;
+            textureSizeLabel.Text = $"{texture.Width}x{texture.Height}";
         }
 
         private void skinPartListBox_DoubleClick(object sender, EventArgs e)
