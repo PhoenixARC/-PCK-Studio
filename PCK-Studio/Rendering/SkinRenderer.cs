@@ -1104,8 +1104,6 @@ namespace PckStudio.Rendering
             // Debug
             RenderDebug();
             FramebufferEnd();
-            SwapBuffers();
-
         }
 
         protected override void OnMouseMove(MouseEventArgs e)

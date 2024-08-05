@@ -57,7 +57,7 @@ namespace PckStudio.Rendering
 
         protected virtual void OnUpdate(object sender, TimeSpan timestep)
         {
-
+            SwapBuffers();
         }
 
         private int refreshRate = 120;
