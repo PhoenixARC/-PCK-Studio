@@ -266,22 +266,37 @@ namespace PckStudio.Forms.Editor
         // TODO: fixed outline rendering
         private void skinPartListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int scale = 4;
+            int scale = 1;
             if (skinPartListBox.SelectedItem is SkinBOX box)
             {
                 renderer3D1.SelectedIndex = skinPartListBox.SelectedIndex;
                 uvLabel.Text = $"UV: {box.UV}";
                 sizeLabel.Text = $"Size: {box.Size}";
                 positionLabel.Text = $"Position: {box.Pos}";
+
+                Image uvArea = _skin.Model.Texture.GetArea(Rectangle.Truncate(new RectangleF(box.UV.X, box.UV.Y, box.Size.X * 2 + box.Size.Z * 2, box.Size.Z + box.Size.Y)));
+
+                Bitmap refImg = new Bitmap(1, 1);
+
+                using (var g = Graphics.FromImage(refImg))
+                {
+                    g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                    g.DrawImage(uvArea, new Rectangle(0, 0, 1, 1));
+                }
+
+                renderer3D1.HighlightlingColor = refImg.GetPixel(0, 0).Inversed();
+
                 Size scaleSize = new Size(_skin.Model.Texture.Width * scale, _skin.Model.Texture.Height * scale);
                 uvPictureBox.Image = new Bitmap(scaleSize.Width, scaleSize.Height);
                 using (Graphics g = Graphics.FromImage(uvPictureBox.Image))
                 {
                     float lineWidth = ((_skin.Model.Texture.Width / renderer3D1.TextureSize.Width) + (_skin.Model.Texture.Height / renderer3D1.TextureSize.Height)) / 2f;
                     GraphicsPath graphicsPath = box.GetUVGraphicsPath(new System.Numerics.Vector2(scaleSize.Width * renderer3D1.TillingFactor.X, scaleSize.Height * renderer3D1.TillingFactor.Y));
+                    var brush = new SolidBrush(Color.FromArgb(127, renderer3D1.HighlightlingColor));
                     g.ApplyConfig(_graphicsConfig);
                     g.DrawImage(_skin.Model.Texture, new Rectangle(Point.Empty, scaleSize), new Rectangle(Point.Empty, _skin.Model.Texture.Size), GraphicsUnit.Pixel);
-                    g.DrawPath(new Pen(renderer3D1.HighlightlingColor, lineWidth), graphicsPath);
+                    g.FillPath(brush, graphicsPath);
+                    //g.DrawPath(new Pen(brush), graphicsPath);
                 }
                 uvPictureBox.Invalidate();
             }

@@ -14,6 +14,11 @@ namespace PckStudio.Extensions
             return new Vector4(color.R / 255f, color.G / 255f, color.B / 255f, color.A / 255f);
         }
 
+        internal static Color Inversed(this Color color)
+        {
+            return Color.FromArgb(color.A, 255 - color.R, 255 - color.G, 255 - color.B);
+        }
+
         internal static int ToBGR(this Color color)
         {
             return color.B << 16 | color.G << 8 | color.R;
