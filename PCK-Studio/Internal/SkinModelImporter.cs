@@ -37,67 +37,105 @@ using OMI.Formats.Model;
 using PckStudio.Internal.Json;
 using System.Collections.ObjectModel;
 using PckStudio.Properties;
+using PckStudio.Interfaces;
 
 namespace PckStudio.Internal
 {
-    internal static class ModelImporter
+    internal static class SkinModelImporter
     {
-        internal static FileDialogFilter[] SupportedModelFormts { get; } =
-        [
-            new ("Pck skin model(*.psm)", "*.psm"),
-            new ("Block bench model(*.bbmodel)", "*.bbmodel"),
-            new ("Bedrock (Legacy) Model(*.geo.json;*.json)", "*.geo.json;*.json"),
-        ];
+        private static Dictionary<string, ISkinModelImportProvider> _importProviders = new Dictionary<string, ISkinModelImportProvider>();
 
-        internal static string SupportedModelFileFormatsFilter { get; } = string.Join("|", SupportedModelFormts);
+        private sealed class SimpleSkinImportProvider : ISkinModelImportProvider
+        {
+            public string Name => nameof(SimpleSkinImportProvider);
+
+            public FileDialogFilter DialogFilter => _dialogFilter;
+
+            private FileDialogFilter _dialogFilter;
+            private Func<string, SkinModelInfo> _import;
+            private Action<string, SkinModelInfo> _export;
+
+            public SimpleSkinImportProvider(FileDialogFilter dialogFilter, Func<string, SkinModelInfo> import, Action<string, SkinModelInfo> export)
+            {
+                _dialogFilter = dialogFilter;
+                _import = import;
+                _export = export;
+            }
+
+            public void Export(string filename, SkinModelInfo model)
+            {
+                _ = _export ?? throw new NotImplementedException();
+                _export(filename, model);
+            }
+
+            public SkinModelInfo Import(string filename)
+            {
+                _ = _import ?? throw new NotImplementedException();
+                return _import(filename);
+            }
+
+            public void Export(ref Stream stream, SkinModelInfo model)
+            {
+                throw new NotImplementedException();
+            }
+
+            public SkinModelInfo Import(Stream stream)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        internal static string SupportedModelFileFormatsFilter => string.Join("|", _importProviders.Values.Select(p => p.DialogFilter));
 
         internal static ReadOnlyDictionary<string, JsonModelMetaData> ModelTextureLocations { get; private set; }
 
-        static ModelImporter()
+        internal static void Initialize()
         {
             ModelTextureLocations = JsonConvert.DeserializeObject<ReadOnlyDictionary<string, JsonModelMetaData>>(Resources.modelTextureLocations);
+            InternalAddProvider(new("Pck skin model(*.psm)", "*.psm"), ImportPsm, ExportPsm);
+            InternalAddProvider(new("Block bench model(*.bbmodel)", "*.bbmodel"), ImportBlockBenchModel, ExportBlockBenchModel);
+            InternalAddProvider(new("Bedrock (Legacy) Model(*.geo.json;*.json)", "*.geo.json;*.json"), ImportBedrockJson, ExportBedrockJson);
+        }
+
+        internal static bool AddProvider(ISkinModelImportProvider provider)
+        {
+            if (_importProviders.ContainsKey(provider.DialogFilter.Extension))
+                return false;
+
+            _importProviders.Add(provider.DialogFilter.Extension, provider);
+            return true;
+        }
+
+        private static bool InternalAddProvider(FileDialogFilter dialogFilter, Func<string, SkinModelInfo> import, Action<string, SkinModelInfo> export)
+        {
+            if (import == null || export == null)
+                return false;
+
+            return AddProvider(new SimpleSkinImportProvider(dialogFilter, import, export));
         }
 
         internal static SkinModelInfo Import(string fileName)
         {
             string fileExtension = Path.GetExtension(fileName);
-            switch (fileExtension)
-            {
-                case ".psm":
-                    return ImportPsm(fileName);
-                case ".bbmodel":
-                    return ImportBlockBenchModel(fileName);
-                case ".json":
-                    return ImportBedrockJson(fileName);
-                default:
-                    Trace.TraceWarning($"[{nameof(ModelImporter)}:Import] Model file format: '{fileExtension}' is not supported.");
-                    return null;
-            }
+            if (_importProviders.ContainsKey(fileExtension) && _importProviders[fileExtension] is not null)
+                return _importProviders[fileExtension].Import(fileName);
+    
+            Trace.TraceWarning($"[{nameof(SkinModelImporter)}:Import] No provider found for '{fileExtension}'.");
+            return null;
         }
 
         internal static void Export(string fileName, SkinModelInfo model)
         {
             if (model is null)
             {
-                Trace.TraceError($"[{nameof(ModelImporter)}:Export] Model is null.");
+                Trace.TraceError($"[{nameof(SkinModelImporter)}:Export] Model is null.");
                 return;
             }
             string fileExtension = Path.GetExtension(fileName);
-            switch (fileExtension)
-            {
-                case ".psm":
-                    ExportPsm(fileName, model);
-                    break;
-                case ".bbmodel":
-                    ExportBlockBenchModel(fileName, model);
-                    break;
-                case ".json":
-                    ExportBedrockJson(fileName, model);
-                    break;
-                default:
-                    Trace.TraceWarning($"[{nameof(ModelImporter)}:Export] Model file format: '{fileExtension}' is not supported.");
-                    return;
-            }
+            if (_importProviders.ContainsKey(fileExtension) && _importProviders[fileExtension] is not null)
+                _importProviders[fileExtension].Export(fileName, model);
+           
+            Trace.TraceWarning($"[{nameof(SkinModelImporter)}:Export] No provider found for '{fileExtension}'.");
         }
 
         internal static SkinModelInfo ImportPsm(string fileName)
@@ -256,17 +294,27 @@ namespace PckStudio.Internal
         {
             BlockBenchModel blockBenchModel = CreateBlockBenchModel(Path.GetFileNameWithoutExtension(fileName), model.TextureSize, textures.Select(nt => (Texture)nt));
 
-            List<Outline> outliners = new List<Outline>(5);
+            Dictionary<string, Outline> outliners = new Dictionary<string, Outline>(5);
             List<Element> elements = new List<Element>(model.Parts.Count);
 
             Vector3 transformAxis = new Vector3(1, 1, 0);
 
+            Outline GetOrCreateOutline(string partName)
+            {
+                if (!outliners.ContainsKey(partName))
+                    outliners.Add(partName, new Outline(partName));
+                return outliners[partName];
+            }
+
             foreach (ModelPart part in model.Parts.Values)
             {
+                //Outline outline = GetOrCreateOutline(part.Name);
+
                 var outline = new Outline(part.Name);
 
                 Vector3 partTranslation = part.Translation;
-                outline.Origin = TranslateToInternalPosition("", partTranslation, Vector3.Zero, transformAxis);
+                outline.Origin = TransformSpace(partTranslation, Vector3.Zero, transformAxis);
+                outline.Origin += Vector3.UnitY * 24f;
 
                 Vector3 rotation = part.Rotation + part.AdditionalRotation;
                 outline.Rotation = rotation * TransformSpace(Vector3.One, Vector3.Zero, transformAxis);
@@ -278,7 +326,7 @@ namespace PckStudio.Internal
                     elements.Add(element);
                     outline.Children.Add(element.Uuid);
                 }
-                outliners.Add(outline);
+                outliners.Add(part.Name, outline);
             }
 
             blockBenchModel.Elements = elements.ToArray();

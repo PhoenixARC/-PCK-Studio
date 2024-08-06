@@ -1,9 +1,13 @@
-﻿namespace PckStudio.Internal
+﻿using System.IO;
+
+namespace PckStudio.Internal
 {
     internal readonly struct FileDialogFilter
     {
         public readonly string Description;
         public readonly string Pattern;
+
+        public string Extension => Path.GetExtension(Pattern);
 
         public FileDialogFilter(string description, string pattern)
         {

@@ -46,6 +46,7 @@ namespace PckStudio.Internal.App
                 _ = Tiles.MoonPhaseImageList;
                 _ = Tiles.PaintingImageList;
                 SettingsManager.Initialize();
+                SkinModelImporter.Initialize();
                 CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
                 Task.Run(GetContributors);
             }

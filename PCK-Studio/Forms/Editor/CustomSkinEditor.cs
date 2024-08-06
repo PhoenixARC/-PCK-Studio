@@ -181,20 +181,20 @@ namespace PckStudio.Forms.Editor
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Title = "Save Model File";
-            saveFileDialog.Filter = ModelImporter.SupportedModelFileFormatsFilter;
+            saveFileDialog.Filter = SkinModelImporter.SupportedModelFileFormatsFilter;
             saveFileDialog.FileName = _skin.MetaData.Name.TrimEnd(new char[] { '\n', '\r' }).Replace(' ', '_');
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
-                ModelImporter.Export(saveFileDialog.FileName, _skin.Model);
+                SkinModelImporter.Export(saveFileDialog.FileName, _skin.Model);
         }
 
         private void importSkinButton_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Title = "Select Model File";
-            openFileDialog.Filter = ModelImporter.SupportedModelFileFormatsFilter;
+            openFileDialog.Filter = SkinModelImporter.SupportedModelFileFormatsFilter;
             if (MessageBox.Show("Import custom model project file? Your current work will be lost!", "", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1) == DialogResult.Yes && openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                SkinModelInfo modelInfo = ModelImporter.Import(openFileDialog.FileName);
+                SkinModelInfo modelInfo = SkinModelImporter.Import(openFileDialog.FileName);
                 if (modelInfo is not null)
                 {
                     _skin.Model = modelInfo;
