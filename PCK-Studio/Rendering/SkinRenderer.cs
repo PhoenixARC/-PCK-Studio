@@ -1158,8 +1158,8 @@ namespace PckStudio.Rendering
             if (LockMousePosition)
             {
                 Cursor.Position = PreviousMouseLocation;
-            if (IsMouseHidden)
-                IsMouseHidden = false;
+                if (IsMouseHidden)
+                    IsMouseHidden = false;
             }
         }
 
@@ -1196,7 +1196,7 @@ namespace PckStudio.Rendering
             double delta = timestep.TotalSeconds;
             if (!Animate)
                 return;
-            
+
             animationCurrentRotationAngle += (float)delta * animationRotationSpeed;
             animationCurrentRotationAngle = MathHelper.Clamp(animationCurrentRotationAngle, -animationMaxAngleInDegrees, animationMaxAngleInDegrees);
             if (animationCurrentRotationAngle >= animationMaxAngleInDegrees || animationCurrentRotationAngle <= -animationMaxAngleInDegrees)
@@ -1213,6 +1213,7 @@ namespace PckStudio.Rendering
             InitializeSkinData();
             UpdateModelData();
             OnANIMUpdate();
+            UploadMeshData();
         }
 
         private void UpdateModelData()
