@@ -91,7 +91,7 @@ namespace PckStudio.Rendering
             {
                 if (!cube.ShouldRender)
                     continue;
-
+                cube.Update();
                 TextureVertex[] cubeVertices = cube.GetVertices();
                 vertices.AddRange(cubeVertices);
                 var indexStorage = cube.GetIndices();
