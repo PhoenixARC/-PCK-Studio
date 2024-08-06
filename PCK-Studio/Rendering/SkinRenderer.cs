@@ -1053,7 +1053,12 @@ namespace PckStudio.Rendering
                 if (ModelData.IndexInRange(SelectedIndex))
                 {
                     SkinBOX box = ModelData[SelectedIndex];
-                    BoundingBox cubeBoundingBox = Cube.FromSkinBox(box).GetBoundingBox();
+
+                    Cube cube = Cube.FromSkinBox(box);
+
+                    cube.Inflate = autoInflateOverlayParts && box.IsOverlayPart() ? box.Type == "HEADWEAR" ? OverlayScale * 2 : OverlayScale : 0f;
+                    
+                    BoundingBox cubeBoundingBox = cube.GetBoundingBox();
 
                     if (meshStorage.ContainsKey(box.Type))
                     {
