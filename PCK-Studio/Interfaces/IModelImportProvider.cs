@@ -15,6 +15,9 @@ namespace PckStudio.Interfaces
 
         public FileDialogFilter DialogFilter { get; }
 
+        public bool SupportImport { get; }
+        public bool SupportExport { get; }
+
         public T Import(string filename);
         public T Import(Stream stream);
 

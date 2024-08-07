@@ -20,6 +20,10 @@ namespace PckStudio.Internal
 
             public FileDialogFilter DialogFilter => _dialogFilter;
 
+            public bool SupportImport => _import != null;
+
+            public bool SupportExport => _export != null;
+
             private FileDialogFilter _dialogFilter;
             private Func<string, T> _import;
             private Action<string, T> _export;
@@ -58,11 +62,19 @@ namespace PckStudio.Internal
 
         public T Import(string filename)
         {
-            if (HasProvider(filename))
-                return GetProvider(filename).Import(filename);
+            if (!HasProvider(filename))
+            {
+                Trace.TraceWarning($"[{nameof(SkinModelImporter)}:Import] No provider found for '{Path.GetExtension(filename)}'.");
+                return default;
+            }
 
-            Trace.TraceWarning($"[{nameof(SkinModelImporter)}:Import] No provider found for '{Path.GetExtension(filename)}'.");
-            return default;
+            IModelImportProvider<T> provider = GetProvider(filename);
+            if (!provider.SupportImport)
+            {
+                throw new NotSupportedException($"Provider '{provider.Name}' does not support importing.");
+            }
+
+            return provider.Import(filename);
         }
 
         public void Export(string filename, T model)
@@ -72,13 +84,19 @@ namespace PckStudio.Internal
                 Trace.TraceError($"[{nameof(SkinModelImporter)}:Export] Model is null.");
                 return;
             }
+
             if (!HasProvider(filename))
             {
-                string fileExtension = Path.GetExtension(filename);
-                Trace.TraceWarning($"[{nameof(SkinModelImporter)}:Export] No provider found for '{fileExtension}'.");
+                Trace.TraceWarning($"[{nameof(SkinModelImporter)}:Export] No provider found for '{Path.GetExtension(filename)}'.");
                 return;
             }
-            GetProvider(filename).Export(filename, model);
+
+            IModelImportProvider<T> provider = GetProvider(filename);
+            if (!provider.SupportExport)
+            {
+                throw new NotSupportedException($"Provider '{provider.Name}' does not support exporting.");
+            }
+            provider.Export(filename, model);
         }
 
         internal bool AddProvider(IModelImportProvider<T> provider)
@@ -104,9 +122,6 @@ namespace PckStudio.Internal
 
         protected bool InternalAddProvider(FileDialogFilter dialogFilter, Func<string, T> import, Action<string, T> export)
         {
-            if (import == null || export == null)
-                return false;
-
             return AddProvider(new SimpleSkinImportProvider(dialogFilter, import, export));
         }
 

@@ -18,10 +18,11 @@ namespace PckStudio.Internal
 
         private GameModelImporter()
         {
-            InternalAddProvider(new FileDialogFilter("", "*.bbmodel"), null, ExportBlockBenchModel);
+            // TODO: add import functionality -miku
+            InternalAddProvider(new FileDialogFilter("Block bench model(*.bbmodel)", "*.bbmodel"), null, ExportBlockBenchModel);
         }
 
-        internal static void ExportBlockBenchModel(string fileName, GameModelInfo modelInfo)
+        private static void ExportBlockBenchModel(string fileName, GameModelInfo modelInfo)
         {
             BlockBenchModel blockBenchModel = BlockBenchModel.Create(Path.GetFileNameWithoutExtension(fileName), modelInfo.Model.TextureSize, modelInfo.Textures.Select(nt => (Texture)nt));
 
@@ -61,7 +62,7 @@ namespace PckStudio.Internal
             }
 
             blockBenchModel.Elements = elements.ToArray();
-            blockBenchModel.Outliner = JArray.FromObject(outliners);
+            blockBenchModel.Outliner = JArray.FromObject(outliners.Values);
 
             string content = JsonConvert.SerializeObject(blockBenchModel);
             File.WriteAllText(fileName, content);

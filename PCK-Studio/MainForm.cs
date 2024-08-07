@@ -628,7 +628,7 @@ namespace PckStudio
 			
 				using SaveFileDialog openFileDialog = new SaveFileDialog();
 				openFileDialog.FileName = model.Name;
-				openFileDialog.Filter = "Block bench model(*.bbmodel)|*.bbmodel";
+				openFileDialog.Filter = GameModelImporter.Default.SupportedModelFileFormatsFilter;
 
 				IEnumerable<NamedTexture> GetModelTextures(string modelName)
 				{
